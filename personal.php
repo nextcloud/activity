@@ -20,8 +20,6 @@
 * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-OCP\Util::addScript('files_external', 'settings');
-OCP\Util::addStyle('files_external', 'settings');
 OCP\Util::addScript('activity', 'settings');
 OCP\Util::addStyle('activity', 'settings');
 
