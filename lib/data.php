@@ -214,14 +214,14 @@ class Data
 	 * @param string $app The app where this event comes from
 	 * @param string $text The text including placeholders
 	 * @param array $params The parameter for the placeholder
-	 * @param bool $strip_path Shall we strip the path from file names?
-	 * @param bool $highlight_params Shall we highlight the parameters in the string?
+	 * @param bool $stripPath Shall we strip the path from file names?
+	 * @param bool $highlightParams Shall we highlight the parameters in the string?
 	 *             They will be highlighted with `<strong>`, all data will be passed through
 	 *             \OC_Util::sanitizeHTML() before, so no XSS is possible.
 	 * @param \OC_L10N $l Language object, if you want to use a different language (f.e. to send an email)
 	 * @return string translated
 	 */
-	public static function translation($app, $text, $params, $strip_path = false, $highlight_params = false, \OC_L10N $l = null) {
+	public static function translation($app, $text, $params, $stripPath = false, $highlightParams = false, \OC_L10N $l = null) {
 		if (!$text) {
 			return '';
 		}
@@ -230,7 +230,7 @@ class Data
 		}
 
 		if ($app === 'files') {
-			$params = self::prepareFilesParams($app, $text, $params, 0, $strip_path, $highlight_params);
+			$params = self::prepareFilesParams($app, $text, $params, 0, $stripPath, $highlightParams);
 			if ($text === 'created_self') {
 				return $l->t('You created %1$s', $params);
 			}
@@ -293,18 +293,19 @@ class Data
 		$l = \OC_L10N::get('activity');
 		$types = \OCA\Activity\Data::getNotificationTypes($l);
 
+		$userActivities = array();
 		foreach ($types as $type => $desc) {
 			if (self::getUserSetting($user, $method, $type)) {
-				$user_activities[] = $type;
+				$userActivities[] = $type;
 			}
 		}
 
 		// We don't want to display any activities
-		if (empty($user_activities)) {
+		if (empty($userActivities)) {
 			return '1 = 0';
 		}
 
-		return "`type` IN ('" . implode("','", $user_activities) . "')";
+		return "`type` IN ('" . implode("','", $userActivities) . "')";
 	}
 
 	/**
@@ -316,13 +317,13 @@ class Data
 	public static function read($start, $count) {
 		// get current user
 		$user = \OCP\User::getUser();
-		$limit_activities_type = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream');
+		$limitActivitiesType = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream');
 
 		// fetch from DB
 		$query = \OCP\DB::prepare(
 			'SELECT `activity_id`, `app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `timestamp`, `priority`, `type`, `user`, `affecteduser` '
 			. ' FROM `*PREFIX*activity` '
-			. ' WHERE `affecteduser` = ? ' . $limit_activities_type
+			. ' WHERE `affecteduser` = ? ' . $limitActivitiesType
 			. ' ORDER BY `timestamp` desc',
 			$count, $start);
 		$result = $query->execute(array($user));
@@ -357,13 +358,13 @@ class Data
 	public static function search($txt, $count) {
 		// get current user
 		$user = \OCP\User::getUser();
-		$limit_activities_type = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream');
+		$limitActivitiesType = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream');
 
 		// search in DB
 		$query = \OCP\DB::prepare(
 			'SELECT `activity_id`, `app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `timestamp`, `priority`, `type`, `user`, `affecteduser` '
 			. ' FROM `*PREFIX*activity` '
-			. 'WHERE `affecteduser` = ? AND ((`subject` LIKE ?) OR (`message` LIKE ?) OR (`file` LIKE ?)) ' . $limit_activities_type
+			. 'WHERE `affecteduser` = ? AND ((`subject` LIKE ?) OR (`message` LIKE ?) OR (`file` LIKE ?)) ' . $limitActivitiesType
 			. 'ORDER BY `timestamp` desc'
 			, $count);
 		$result = $query->execute(array($user, '%' . $txt . '%', '%' . $txt . '%', '%' . $txt . '%')); //$result = $query->execute(array($user,'%'.$txt.''));
