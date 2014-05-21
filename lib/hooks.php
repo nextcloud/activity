@@ -37,6 +37,8 @@ class Hooks {
 		\OCP\Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\Hooks', 'file_delete');
 		\OCP\Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\Hooks', 'share');
 
+		\OCP\Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\Hooks', 'deleteUser');
+
 		// hooking up the activity manager
 		$am = \OC::$server->getActivityManager();
 		$am->registerConsumer(function() {
@@ -365,5 +367,23 @@ class Hooks {
 		}
 
 		return $filteredUsers;
+	}
+
+	/**
+	 * Delete remaining activities and emails when a user is deleted
+	 * @param array $params The hook params
+	 */
+	public static function deleteUser($params) {
+		// Delete activity entries
+		$query = \OCP\DB::prepare(
+			'DELETE FROM `*PREFIX*activity` '
+			. ' WHERE `affecteduser` = ?');
+		$query->execute(array($params['uid']));
+
+		// Delete entries from mail queue
+		$query = \OCP\DB::prepare(
+			'DELETE FROM `*PREFIX*activity_mq` '
+			. ' WHERE `amq_affecteduser` = ?');
+		$query->execute(array($params['uid']));
 	}
 }
