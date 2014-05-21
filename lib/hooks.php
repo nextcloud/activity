@@ -27,9 +27,6 @@ namespace OCA\Activity;
  * @brief The class to handle the filesystem hooks
  */
 class Hooks {
-	public static $createhookfired = false;
-	public static $createhookfile = '';
-
 	/**
 	 * @brief Registers the filesystem hooks for basic filesystem operations.
 	 * All other events has to be triggered by the apps.
@@ -356,12 +353,12 @@ class Hooks {
 		if (!empty($users)) {
 			// If the setting is enabled by default,
 			// we add all users that didn't set the preference yet.
-			if (\OCA\Activity\Data::getUserDefaultSetting($method, $type)) {
+			if (Data::getUserDefaultSetting($method, $type)) {
 				foreach ($users as $user) {
 					if ($method == 'stream') {
 						$filteredUsers[$user] = true;
 					} else {
-						$filteredUsers[$user] = \OCA\Activity\Data::getUserDefaultSetting('setting', 'batchtime');
+						$filteredUsers[$user] = Data::getUserDefaultSetting('setting', 'batchtime');
 					}
 				}
 			}
