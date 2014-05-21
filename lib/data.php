@@ -467,7 +467,7 @@ class Data
 	/**
 	 * @brief Generate an RSS feed
 	 * @param string $link
-	 * @param string $content
+	 * @param array $content
 	 */
 	public static function generaterss($link, $content) {
 
