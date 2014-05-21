@@ -137,22 +137,32 @@ class Data
 		return true;
 	}
 
-	public static function prepare_files_params($app, $text, $params, $file_position = false, $strip_path = false, $highlight_params = false) {
-		if ($app === 'files') {
-			$prepared_params = array();
+	/**
+	 * Prepares the parameters before we use them in the subject or message
+	 * @param string $app
+	 * @param string $text
+	 * @param array $params
+	 * @param mixed $filePosition Position of a file in $params
+	 * @param bool $stripPath Shall we remove the path from the filename
+	 * @param bool $highlightParams
+	 * @return array
+	 */
+	public static function prepareFilesParams($app, $text, $params, $filePosition = false, $stripPath = false, $highlightParams = false) {
+		if ($app === 'files' && $text) {
+			$preparedParams = array();
 			foreach ($params as $i => $param) {
-				if ($strip_path === true && $file_position === $i) {
+				if ($stripPath === true && $filePosition === $i) {
 					// Remove the path from the file string
 					$param = substr($param, strrpos($param, '/') + 1);
 				}
 
-				if ($highlight_params) {
-					$prepared_params[] = '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
+				if ($highlightParams) {
+					$preparedParams[] = '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
 				} else {
-					$prepared_params[] = $param;
+					$preparedParams[] = $param;
 				}
 			}
-			return $prepared_params;
+			return $preparedParams;
 		}
 		return $params;
 	}
@@ -220,7 +230,7 @@ class Data
 		}
 
 		if ($app === 'files') {
-			$params = self::prepare_files_params($app, $text, $params, 0, $strip_path, $highlight_params);
+			$params = self::prepareFilesParams($app, $text, $params, 0, $strip_path, $highlight_params);
 			if ($text === 'created_self') {
 				return $l->t('You created %1$s', $params);
 			}
