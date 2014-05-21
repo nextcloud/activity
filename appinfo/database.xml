@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <database>
-	 <name>*dbname*</name>
-	 <create>true</create>
-	 <overwrite>false</overwrite>
-	 <charset>latin1</charset>
-	 <table>
+	<name>*dbname*</name>
+	<create>true</create>
+	<overwrite>false</overwrite>
+	<charset>latin1</charset>
+	<table>
 		<name>*dbprefix*activity</name>
 		<declaration>
 			<field>
@@ -89,9 +89,20 @@
 				<notnull>false</notnull>
 				<length>255</length>
 			</field>
+
+			<index>
+				<name>activity_user_time</name>
+				<field>
+					<name>affecteduser</name>
+				</field>
+				<field>
+					<name>timestamp</name>
+					<sorting>descending</sorting>
+				</field>
+			</index>
 		</declaration>
-	  </table>
-	 <table>
+	</table>
+	<table>
 		<name>*dbprefix*activity_mq</name>
 		<declaration>
 			<field>
@@ -167,5 +178,5 @@
 				</field>
 			</index>
 		</declaration>
-	  </table>
+	</table>
 </database>
