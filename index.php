@@ -36,11 +36,7 @@ OCP\Util::addScript('activity', 'script');
 OCP\Util::addStyle('activity', 'style');
 
 // get the page that is requested. Needed for endless scrolling
-if (isset($_GET['page'])) {
-	$page = intval($_GET['page']) - 1;
-} else {
-	$page = 0;
-}
+$page = \OCA\Activity\Data::getPageFromParam() - 1;
 
 // get rss url
 $rsslink = \OCP\Util::linkToAbsolute('activity', 'rss.php');
@@ -48,7 +44,7 @@ $nextpage = \OCP\Util::linkToAbsolute('activity', 'index.php', array('page' => $
 
 // read activities data
 $count = 30;
-$activity = OCA\Activity\Data::read(($page) * $count, 30);
+$activity = OCA\Activity\Data::read($page * $count, $count);
 
 // show activity template
 $tmpl = new \OCP\Template('activity', 'list', 'user');

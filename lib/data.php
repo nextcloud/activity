@@ -440,6 +440,19 @@ class Data
 	}
 
 	/**
+	 * Get the casted page number from $_GET
+	 * @param string $paramName
+	 * @return int
+	 */
+	public static function getPageFromParam($paramName = 'page') {
+		if (isset($_GET[$paramName])) {
+			return (int) $_GET[$paramName];
+		}
+
+		return 1;
+	}
+
+	/**
 	 * @brief Expire old events
 	 */
 	public static function expire() {
