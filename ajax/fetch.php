@@ -25,16 +25,10 @@
 OCP\JSON::checkLoggedIn();
 OCP\JSON::checkAppEnabled('activity');
 
-// read the next 30 items for the endless scrolling
-// get the page that is requested. Needed for endless scrolling
+// Read the next 30 items for the endless scrolling
 $count = 30;
-if (isset($_GET['page'])) {
-	$page = intval($_GET['page']) - 1;
-} else {
-	$page = 0;
-}
-
-$activity=OCA\Activity\Data::read($page * $count, $count);
+$page = \OCA\Activity\Data::getPageFromParam() - 1;
+$activity = \OCA\Activity\Data::read($page * $count, $count);
 $nextpage = \OCP\Util::linkToAbsolute('activity', 'index.php', array('page' => $page + 2));
 
 // show the next 30 entries

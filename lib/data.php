@@ -317,25 +317,7 @@ class Data
 			$count, $start);
 		$result = $query->execute(array($user));
 
-		$activity = array();
-		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('OCA\Activity\Data::read', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
-		} else {
-			while ($row = $result->fetchRow()) {
-				$row['subjectparams'] = unserialize($row['subjectparams']);
-				$row['messageparams'] = unserialize($row['messageparams']);
-
-				$row['subject_short'] = Data::translation($row['app'], $row['subject'], $row['subjectparams'], true);
-				$row['message_short'] = Data::translation($row['app'], $row['message'], $row['messageparams'], true);
-
-				$row['subject_long'] = Data::translation($row['app'], $row['subject'], $row['subjectparams']);
-				$row['message_long'] = Data::translation($row['app'], $row['message'], $row['messageparams']);
-
-				$activity[] = $row;
-			}
-		}
-		return $activity;
-
+		return self::getActivitiesFromQueryResult($result);
 	}
 
 	/**
@@ -358,9 +340,19 @@ class Data
 			, $count);
 		$result = $query->execute(array($user, '%' . $txt . '%', '%' . $txt . '%', '%' . $txt . '%')); //$result = $query->execute(array($user,'%'.$txt.''));
 
+		return self::getActivitiesFromQueryResult($result);
+	}
+
+	/**
+	 * Process the result and return the activities
+	 *
+	 * @param \OC_DB_StatementWrapper|int $result
+	 * @return array
+	 */
+	public static function getActivitiesFromQueryResult($result) {
 		$activity = array();
 		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('OCA\Activity\Data::search', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
+			\OCP\Util::writeLog('Activity', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
 		} else {
 			while ($row = $result->fetchRow()) {
 				$row['subjectparams'] = unserialize($row['subjectparams']);
@@ -376,7 +368,6 @@ class Data
 			}
 		}
 		return $activity;
-
 	}
 
 	/**
@@ -440,6 +431,19 @@ class Data
 	}
 
 	/**
+	 * Get the casted page number from $_GET
+	 * @param string $paramName
+	 * @return int
+	 */
+	public static function getPageFromParam($paramName = 'page') {
+		if (isset($_GET[$paramName])) {
+			return (int) $_GET[$paramName];
+		}
+
+		return 1;
+	}
+
+	/**
 	 * @brief Expire old events
 	 */
 	public static function expire() {
@@ -454,7 +458,7 @@ class Data
 	/**
 	 * @brief Generate an RSS feed
 	 * @param string $link
-	 * @param string $content
+	 * @param array $content
 	 */
 	public static function generaterss($link, $content) {
 
