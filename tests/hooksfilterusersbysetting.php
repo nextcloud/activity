@@ -41,6 +41,7 @@ class HooksFilterUsersBySetting extends \PHPUnit_Framework_TestCase {
 			array('test2', 'activity', 'notify_email_type2', '0'),
 			array('test3', 'activity', 'notify_email_type1', ''),
 			array('test4', 'activity', 'notify_email_type1', '3'),
+			array('test5', 'activity', 'notify_email_type1', '1'),
 
 			array('test1', 'activity', 'notify_setting_batchtime', '1'),
 			array('test2', 'activity', 'notify_setting_batchtime', '2'),
@@ -58,7 +59,7 @@ class HooksFilterUsersBySetting extends \PHPUnit_Framework_TestCase {
 		return array(
 			array(array(), 'stream', 'type1', array()),
 			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'stream', 'type1', array('test1' => true, 'test4' => true)),
-			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'email', 'type1', array('test1' => '1', 'test4' => '4')),
+			array(array('test', 'test1', 'test2', 'test3', 'test4', 'test5'), 'email', 'type1', array('test1' => '1', 'test4' => '4', 'test5' => true)),
 		);
 	}
 
