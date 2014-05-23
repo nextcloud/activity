@@ -297,39 +297,23 @@ class Hooks {
 	 *               Returns a "username => i:batchtime" Map for method = email
 	 */
 	public static function filterUsersBySetting($users, $method, $type) {
-		if (empty($users) || !is_array($users)) return array();
+		if (empty($users) || !is_array($users)) {
+			return array();
+		}
 
+		$preferences = new \OC\Preferences(\OC_DB::getConnection());
 		$filteredUsers = array();
 
-		$chunked_users = array_chunk($users, 50, true);
-		$placeholders_50 = implode(',', array_fill(0, 50, '?'));
-
-		foreach ($chunked_users as $chunk) {
-			$placeholders = (sizeof($chunk) == 50) ? $placeholders_50 : implode(',', array_fill(0, sizeof($chunk), '?'));
-
-			$query = \OCP\DB::prepare(
-				'SELECT `userid`, `configvalue` '
-				. ' FROM `*PREFIX*preferences` '
-				. ' WHERE `appid` = ? AND `configkey` = ? AND `userid` IN (' . $placeholders . ')');
-			$result = $query->execute(array_merge(array(
-				'activity',
-				'notify_' . $method . '_' . $type,
-			), $chunk));
-
-			if (\OCP\DB::isError($result)) {
-				\OCP\Util::writeLog('OCA\Activity\Hooks::filterUsersBySetting', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
-			} else {
-				while ($row = $result->fetchRow()) {
-					if ($row['configvalue']) {
-						$filteredUsers[$row['userid']] = true;
-					}
-					unset($users[array_search($row['userid'], $chunk)]);
-				}
+		$potentialUsers = $preferences->getValueForUsers('activity', 'notify_' . $method . '_' . $type, $users);
+		foreach ($potentialUsers as $user => $value) {
+			if ($value) {
+				$filteredUsers[$user] = true;
 			}
 		}
 
 		// Get the batch time setting from the database
 		if ($method == 'email') {
+			$placeholders_50 = implode(',', array_fill(0, 50, '?'));
 			$chunkedFilteredUsers = array_chunk(array_keys($filteredUsers), 50);
 			foreach ($chunkedFilteredUsers as $chunk) {
 				$placeholders = (sizeof($chunk) == 50) ? $placeholders_50 : implode(',', array_fill(0, sizeof($chunk), '?'));
