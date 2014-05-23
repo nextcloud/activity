@@ -35,11 +35,17 @@ class HooksFilterUsersBySetting extends \PHPUnit_Framework_TestCase {
 			array('test3', 'activity', 'notify_stream_type1', ''),
 			array('test4', 'activity', 'notify_stream_type1', '3'),
 
-			array('test1', 'activity', 'notify_email_type1', 'preference1-1'),
-			array('test1', 'activity', 'notify_email_type2', 'preference1-2'),
-			array('test2', 'activity', 'notify_email_type1', 'preference2-1'),
-			array('test2', 'activity', 'notify_email_type2', 'preference2-2'),
-			array('test0', 'activity', 'notify_email_type3', 'preference0-3'),
+			array('test1', 'activity', 'notify_email_type1', '1'),
+			array('test1', 'activity', 'notify_email_type2', '2'),
+			array('test2', 'activity', 'notify_email_type1', '0'),
+			array('test2', 'activity', 'notify_email_type2', '0'),
+			array('test3', 'activity', 'notify_email_type1', ''),
+			array('test4', 'activity', 'notify_email_type1', '3'),
+
+			array('test1', 'activity', 'notify_setting_batchtime', '1'),
+			array('test2', 'activity', 'notify_setting_batchtime', '2'),
+			array('test3', 'activity', 'notify_setting_batchtime', '3'),
+			array('test4', 'activity', 'notify_setting_batchtime', '4'),
 		);
 
 		$query = \OCP\DB::prepare('INSERT INTO `*PREFIX*preferences`(`userid`, `appid`, `configkey`, `configvalue`)' . ' VALUES(?, ?, ?, ?)');
@@ -52,6 +58,7 @@ class HooksFilterUsersBySetting extends \PHPUnit_Framework_TestCase {
 		return array(
 			array(array(), 'stream', 'type1', array()),
 			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'stream', 'type1', array('test1' => true, 'test4' => true)),
+			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'email', 'type1', array('test1' => '1', 'test4' => '4')),
 		);
 	}
 
