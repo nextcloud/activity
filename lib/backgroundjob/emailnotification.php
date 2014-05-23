@@ -68,8 +68,9 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 			return 0;
 		}
 
-		$userLanguages = $this->getPreferencesForUsers($affectedUsers, 'core', 'lang');
-		$userEmails = $this->getPreferencesForUsers($affectedUsers, 'settings', 'email');
+		$preferences = new \OC\Preferences(\OC_DB::getConnection());
+		$userLanguages = $preferences->getValueForUsers('core', 'lang', $affectedUsers);
+		$userEmails = $preferences->getValueForUsers('settings', 'email', $affectedUsers);
 
 		// Get all items for these users
 		// We do use don't use time() but "time() - 1" here, so we don't run into
@@ -95,32 +96,5 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 		$this->mqHandler->deleteSentItems($affectedUsers, $sendTime);
 
 		return sizeof($affectedUsers);
-	}
-
-	protected function getPreferencesForUsers($users, $appId, $configKey) {
-		$placeholders = implode(',', array_fill(0, sizeof($users), '?'));
-
-		$queryParams = $users;
-		array_unshift($queryParams, $configKey);
-		array_unshift($queryParams, $appId);
-
-		$query = \OCP\DB::prepare(
-			'SELECT `userid`, `configvalue` '
-			. ' FROM `*PREFIX*preferences` '
-			. ' WHERE `appid` = ? AND `configkey` = ?'
-			. ' AND `userid` IN (' . $placeholders . ')'
-		);
-		$result = $query->execute($queryParams);
-
-		$userPreferences = array();
-		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('Activity', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
-		} else {
-			while ($row = $result->fetchRow()) {
-				$userPreferences[$row['userid']] = $row['configvalue'];
-			}
-		}
-
-		return $userPreferences;
 	}
 }
