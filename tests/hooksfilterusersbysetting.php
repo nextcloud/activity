@@ -57,17 +57,17 @@ class HooksFilterUsersBySetting extends \PHPUnit_Framework_TestCase {
 
 	public function filterUsersBySettingData() {
 		return array(
-			array(array(), 'stream', 'type1', array()),
-			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'stream', 'type1', array('test1' => true, 'test4' => true)),
-			array(array('test', 'test1', 'test2', 'test3', 'test4', 'test5'), 'email', 'type1', array('test1' => '1', 'test4' => '4', 'test5' => true)),
+			array(array(), 'stream', array()),
+			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'stream', array('test1' => true, 'test4' => true)),
+			array(array('test', 'test1', 'test2', 'test3', 'test4', 'test5'), 'email', array('test1' => '1', 'test4' => '4', 'test5' => true)),
 		);
 	}
 
 	/**
 	 * @dataProvider filterUsersBySettingData
 	 */
-	public function testFilterUsersBySetting($users, $method, $type, $expected) {
-		$this->assertEquals($expected, Hooks::filterUsersBySetting($users, $method, $type));
+	public function testFilterUsersBySetting($users, $method, $expected) {
+		$this->assertEquals($expected, Hooks::filterUsersBySetting($users, $method, 'type1'));
 	}
 
 	public function tearDown() {
