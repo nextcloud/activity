@@ -55,6 +55,9 @@ class HooksDeleteUser extends \PHPUnit_Framework_TestCase {
 		$this->assertUserActivities(array('delete', 'otherUser'));
 		Hooks::deleteUser(array('uid' => 'delete'));
 		$this->assertUserActivities(array('otherUser'));
+
+		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity`');
+		$query->execute();
 	}
 
 	protected function assertUserActivities($expected) {
