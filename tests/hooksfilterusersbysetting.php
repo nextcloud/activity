@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * ownCloud - Activity App
+ *
+ * @author Joas Schilling
+ * @copyright 2014 Joas Schilling nickvergessen@owncloud.com
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU AFFERO GENERAL PUBLIC LICENSE for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+namespace OCA\Activity\Tests;
+
+use OCA\Activity\Data;
+use OCA\Activity\Hooks;
+
+class HooksFilterUsersBySetting extends \PHPUnit_Framework_TestCase {
+	public function setUp() {
+		$preferences = array(
+			array('test1', 'activity', 'notify_stream_type1', '1'),
+			array('test1', 'activity', 'notify_stream_type2', '2'),
+			array('test2', 'activity', 'notify_stream_type1', '0'),
+			array('test2', 'activity', 'notify_stream_type2', '0'),
+			array('test3', 'activity', 'notify_stream_type1', ''),
+			array('test4', 'activity', 'notify_stream_type1', '3'),
+
+			array('test1', 'activity', 'notify_email_type1', 'preference1-1'),
+			array('test1', 'activity', 'notify_email_type2', 'preference1-2'),
+			array('test2', 'activity', 'notify_email_type1', 'preference2-1'),
+			array('test2', 'activity', 'notify_email_type2', 'preference2-2'),
+			array('test0', 'activity', 'notify_email_type3', 'preference0-3'),
+		);
+
+		$query = \OCP\DB::prepare('INSERT INTO `*PREFIX*preferences`(`userid`, `appid`, `configkey`, `configvalue`)' . ' VALUES(?, ?, ?, ?)');
+		foreach ($preferences as $preference) {
+			$query->execute($preference);
+		}
+	}
+
+	public function filterUsersBySettingData() {
+		return array(
+			array(array(), 'stream', 'type1', array()),
+			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'stream', 'type1', array('test1' => true, 'test4' => true)),
+		);
+	}
+
+	/**
+	 * @dataProvider filterUsersBySettingData
+	 */
+	public function testFilterUsersBySetting($users, $method, $type, $expected) {
+		$this->assertEquals($expected, Hooks::filterUsersBySetting($users, $method, $type));
+	}
+
+	public function tearDown() {
+		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*preferences` WHERE `appid` = ?');
+		$query->execute(array('activity'));
+	}
+}
