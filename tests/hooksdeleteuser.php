@@ -26,7 +26,9 @@ use OCA\Activity\Data;
 use OCA\Activity\Hooks;
 
 class HooksDeleteUser extends \PHPUnit_Framework_TestCase {
-	public function testHooksDeleteUser() {
+	public function setUp() {
+		parent::setUp();
+
 		$activities = array(
 			array('affectedUser' => 'delete', 'subject' => 'subject'),
 			array('affectedUser' => 'delete', 'subject' => 'subject2'),
@@ -61,17 +63,24 @@ class HooksDeleteUser extends \PHPUnit_Framework_TestCase {
 				time() + 10,
 			));
 		}
+	}
+
+	public function tearDown() {
+		parent::tearDown();
+
+		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity`');
+		$query->execute();
+		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity_mq`');
+		$query->execute();
+	}
+
+	public function testHooksDeleteUser() {
 
 		$this->assertUserActivities(array('delete', 'otherUser'));
 		$this->assertUserMailQueue(array('delete', 'otherUser'));
 		Hooks::deleteUser(array('uid' => 'delete'));
 		$this->assertUserActivities(array('otherUser'));
 		$this->assertUserMailQueue(array('otherUser'));
-
-		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity`');
-		$query->execute();
-		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity_mq`');
-		$query->execute();
 	}
 
 	protected function assertUserActivities($expected) {
@@ -84,7 +93,7 @@ class HooksDeleteUser extends \PHPUnit_Framework_TestCase {
 		$this->assertTableKeys($expected, $query, 'amq_affecteduser');
 	}
 
-	protected function assertTableKeys($expected, $query, $keyName) {
+	protected function assertTableKeys($expected, \OC_DB_StatementWrapper $query, $keyName) {
 		$result = $query->execute();
 
 		$users = array();
