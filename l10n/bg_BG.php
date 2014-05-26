@@ -6,6 +6,8 @@ $TRANSLATIONS = array(
 "_%n more..._::_%n more..._" => array("",""),
 "RSS feed" => "RSS хранилище",
 "No activities yet." => "Няма активност още.",
-"You will see a list of events here when you start to use your %s." => "Вие ще видите списък на събития тук когато почнете да ползвате вашия %s."
+"You will see a list of events here when you start to use your %s." => "Вие ще видите списък на събития тук когато почнете да ползвате вашия %s.",
+"Daily" => "Дневно",
+"Weekly" => "Седмично"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

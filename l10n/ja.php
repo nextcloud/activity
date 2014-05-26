@@ -8,12 +8,24 @@ $TRANSLATIONS = array(
 "A new file or folder has been <strong>created</strong> in a shared folder" => "共有フォルダで、ファイルもしくはフォルダが<strong>作成</strong>されました",
 "A file or folder has been <strong>changed</strong> in a shared folder" => "共有フォルダで、ファイルもしくはフォルダが<strong>変更</strong>されました",
 "A file or folder has been <strong>deleted</strong> from a shared folder" => "共有フォルダから、ファイルもしくはフォルダが<strong>削除</strong>されました",
+"You created %1$s" => "あなたは %1$s を作成しました",
+"%2$s created %1$s" => "%2$s は%1$s を作成しました",
+"You changed %1$s" => "あなたは %1$s を変更しました",
+"%2$s changed %1$s" => "%2$s は%1$s を変更しました",
+"You deleted %1$s" => "あなたは %1$s を削除しました",
+"%2$s deleted %1$s" => "%2$s は %1$s を削除しました",
+"You shared %1$s with %2$s" => "あなたは %1$s を %2$s と共有しました",
+"You shared %1$s with group %2$s" => "あなたは %1$s をグループ %2$s と共有しました",
+"%2$s shared %1$s with you" => "%2$s は %1$s をあなたと共有しました",
+"You shared %1$s" => "あなたは %1$s を共有しました",
 "_%n more..._::_%n more..._" => array("残り %n あります"),
 "RSS feed" => "RSSフィード",
 "No activities yet." => "アクティビティはまだありません。",
 "You will see a list of events here when you start to use your %s." => "%s の使用を開始すると、ここでイベントリストを見ることができます。",
 "Notifications" => "通知",
 "Mail" => "メール",
-"Stream" => "ストリーム"
+"Stream" => "ストリーム",
+"Daily" => "毎日",
+"Weekly" => "毎週"
 );
 $PLURAL_FORMS = "nplurals=1; plural=0;";

@@ -24,6 +24,8 @@ $TRANSLATIONS = array(
 "You will see a list of events here when you start to use your %s." => "当您开始使用%s，您会在此看到一系列事件。",
 "Notifications" => "提示",
 "Mail" => "邮件",
-"Stream" => "流"
+"Stream" => "流",
+"Daily" => "每天",
+"Weekly" => "每周"
 );
 $PLURAL_FORMS = "nplurals=1; plural=0;";

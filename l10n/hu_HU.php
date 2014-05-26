@@ -20,6 +20,8 @@ $TRANSLATIONS = array(
 "RSS feed" => "RSS hírcsatorna",
 "No activities yet." => "Nincs megjeleníthető aktivitás.",
 "You will see a list of events here when you start to use your %s." => "Az események itt lesznek láthatóak, miután elkezdte használni a %s szolgáltatást.",
-"Notifications" => "Értesítések"
+"Notifications" => "Értesítések",
+"Daily" => "Naponta",
+"Weekly" => "Hetente"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

@@ -7,6 +7,8 @@ $TRANSLATIONS = array(
 "RSS feed" => "Fuente RSS",
 "No activities yet." => "Todavía no hay actividades",
 "You will see a list of events here when you start to use your %s." => "Vas a ver una lista de eventos cuando empieces a usar tu %s.",
-"Notifications" => "Notificaciones"
+"Notifications" => "Notificaciones",
+"Daily" => "Diariamente",
+"Weekly" => "Semanalmente"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

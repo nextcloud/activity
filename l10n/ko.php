@@ -8,6 +8,8 @@ $TRANSLATIONS = array(
 "RSS feed" => "RSS 피드",
 "No activities yet." => "활동이 없습니다.",
 "You will see a list of events here when you start to use your %s." => "%s 사용을 시작하면 여기에서 이벤트 목록을 볼 수 있습니다.",
-"Notifications" => "알림"
+"Notifications" => "알림",
+"Daily" => "매일",
+"Weekly" => "매주"
 );
 $PLURAL_FORMS = "nplurals=1; plural=0;";
