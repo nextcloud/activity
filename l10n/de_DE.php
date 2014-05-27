@@ -18,6 +18,8 @@ $TRANSLATIONS = array(
 "You shared %1$s with group %2$s" => "Sie teilen %1$s mit der Gruppe %2$s",
 "%2$s shared %1$s with you" => "%2$s teilt %1$s mit Ihnen",
 "You shared %1$s" => "Sie teilen %1$s",
+"in the last hour" => "in der letzten Stunde",
+"in the last week" => "in der letzten Woche",
 "_%n more..._::_%n more..._" => array("Ein weiterer","%n weitere"),
 "RSS feed" => "RSS-Feed",
 "No activities yet." => "Bisher keine Aktivitäten.",
@@ -25,6 +27,8 @@ $TRANSLATIONS = array(
 "Notifications" => "Benachrichtigungen",
 "Mail" => "Mail",
 "Stream" => "Stream",
+"Send mails:" => "Emails versenden",
+"Hourly" => "Stündlich",
 "Daily" => "täglich",
 "Weekly" => "wöchentlich"
 );
