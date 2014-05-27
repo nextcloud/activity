@@ -27,9 +27,6 @@ namespace OCA\Activity;
  * @brief The class to handle the filesystem hooks
  */
 class Hooks {
-	public static $createhookfired = false;
-	public static $createhookfile = '';
-
 	/**
 	 * @brief Registers the filesystem hooks for basic filesystem operations.
 	 * All other events has to be triggered by the apps.
@@ -39,6 +36,8 @@ class Hooks {
 		\OCP\Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Activity\Hooks', 'file_update');
 		\OCP\Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\Hooks', 'file_delete');
 		\OCP\Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\Hooks', 'share');
+
+		\OCP\Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\Hooks', 'deleteUser');
 
 		// hooking up the activity manager
 		$am = \OC::$server->getActivityManager();
@@ -323,17 +322,35 @@ class Hooks {
 		if (!empty($users)) {
 			// If the setting is enabled by default,
 			// we add all users that didn't set the preference yet.
-			if (\OCA\Activity\Data::getUserDefaultSetting($method, $type)) {
+			if (Data::getUserDefaultSetting($method, $type)) {
 				foreach ($users as $user) {
 					if ($method == 'stream') {
 						$filteredUsers[$user] = true;
 					} else {
-						$filteredUsers[$user] = \OCA\Activity\Data::getUserDefaultSetting('setting', 'batchtime');
+						$filteredUsers[$user] = Data::getUserDefaultSetting('setting', 'batchtime');
 					}
 				}
 			}
 		}
 
 		return $filteredUsers;
+	}
+
+	/**
+	 * Delete remaining activities and emails when a user is deleted
+	 * @param array $params The hook params
+	 */
+	public static function deleteUser($params) {
+		// Delete activity entries
+		$query = \OCP\DB::prepare(
+			'DELETE FROM `*PREFIX*activity` '
+			. ' WHERE `affecteduser` = ?');
+		$query->execute(array($params['uid']));
+
+		// Delete entries from mail queue
+		$query = \OCP\DB::prepare(
+			'DELETE FROM `*PREFIX*activity_mq` '
+			. ' WHERE `amq_affecteduser` = ?');
+		$query->execute(array($params['uid']));
 	}
 }
