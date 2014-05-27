@@ -6,11 +6,22 @@
 /** @var OC_L10N $l */
 /** @var array $_ */
 
-p($l->t("Hello %s,\n", array($_['username']))); ?>
+p($l->t('Hello %s,', array($_['username'])));
+p("\n");
+p("\n");
 
-<?php p($l->t("You receive this email because %s the following things happened at %s\n", array($_['timeframe'], $_['owncloud_installation']))); ?>
+if ($_['timeframe'] == \OCA\Activity\Data::EMAIL_SEND_HOURLY) {
+	p($l->t('You are receiving this email because in the last hour the following things happened at %s', array($_['owncloud_installation'])));
+} else if ($_['timeframe'] == \OCA\Activity\Data::EMAIL_SEND_DAILY) {
+	p($l->t('You are receiving this email because in the last day the following things happened at %s', array($_['owncloud_installation'])));
+} else {
+	p($l->t('You are receiving this email because in the last week the following things happened at %s', array($_['owncloud_installation'])));
+}
+p("\n");
+p("\n");
 
-<?php foreach ($_['activities'] as $activity) {
-	p($l->t("* %s\n", array($activity)));
+foreach ($_['activities'] as $activity) {
+	p($l->t('* %s', array($activity)));
+	p("\n");
 }
 p("\n");
