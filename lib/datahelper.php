@@ -39,7 +39,7 @@ class DataHelper
 		if ($app === 'files' && $text) {
 			$preparedParams = array();
 			foreach ($params as $i => $param) {
-				if ($stripPath === true && $filePosition === $i) {
+				if ($stripPath === true && $filePosition === $i && strrpos($param, '/') !== false) {
 					// Remove the path from the file string
 					$param = substr($param, strrpos($param, '/') + 1);
 				}
