@@ -137,21 +137,20 @@ class MailQueueHandler {
 	}
 
 	/**
-	 * Get the language string for a time frame
+	 * Get the selected setting for a time frame
 	 * However we are not very accurate here, so we match the setting of the user
-	 * a bit better
+	 * a bit better.
 	 *
-	 * @param \OC_L10N $l
 	 * @param int $timestamp
-	 * @return \OC_L10N_String
+	 * @return int Email send option that is used.
 	 */
-	protected function getLangForApproximatedTimeFrame(\OC_L10N $l, $timestamp) {
+	protected function getLangForApproximatedTimeFrame($timestamp) {
 		if (time() - $timestamp < 4000) {
-			return $l->t('in the last hour');
+			return Data::EMAIL_SEND_HOURLY;
 		} else if (time() - $timestamp < 90000) {
-			return $l->t('in the last day');
+			return Data::EMAIL_SEND_DAILY;
 		} else {
-			return $l->t('in the last week');
+			return Data::EMAIL_SEND_WEEKLY;
 		}
 	}
 
@@ -176,7 +175,7 @@ class MailQueueHandler {
 
 		$alttext = new \OCP\Template('activity', 'email.notification', '');
 		$alttext->assign('username', $user);
-		$alttext->assign('timeframe', $this->getLangForApproximatedTimeFrame($l, $mailData[0]['amq_timestamp']));
+		$alttext->assign('timeframe', $this->getLangForApproximatedTimeFrame($mailData[0]['amq_timestamp']));
 		$alttext->assign('activities', $activityList);
 		$alttext->assign('owncloud_installation', \OC_Helper::makeURLAbsolute('/'));
 		$emailText = $alttext->fetchPage();
