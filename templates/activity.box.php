@@ -9,21 +9,24 @@
 
 <div class="box">
 	<div class="messagecontainer">
-			<?php if ($_['event']['link']): ?><a href="<?php p($_['event']['link']) ?>"><?php endif ?>
-			<div class="activity-icon <?php p($_['typeIcon']) ?>"></div>
-			<div class="activitysubject" title="<?php p($_['event']['subject_long']) ?>">
-				<?php print_unescaped(
-					\OCA\Activity\DataHelper::translation($_['event']['app'], $_['event']['subject'], $_['event']['subjectparams'], true, true)
-				) ?>
+		<?php if ($_['event']['link']): ?><a href="<?php p($_['event']['link']) ?>"><?php endif ?>
+		<div class="activity-icon <?php p($_['typeIcon']) ?>"></div>
+
+		<div class="activitysubject" title="<?php p($_['event']['subject_long']) ?>">
+			<?php print_unescaped(
+				\OCA\Activity\DataHelper::translation($_['event']['app'], $_['event']['subject'], $_['event']['subjectparams'], true, true)
+			) ?>
+		</div>
+
+		<span class="activitytime tooltip" title="<?php p($_['formattedDate']) ?>">
+			<?php p($_['formattedTimestamp']) ?>
+		</span>
+
+		<?php if ($_['event']['message_long']): ?>
+			<div class="activitymessage" title="<?php p($_['event']['message_long']) ?>">
+				<?php p($_['event']['message_short']) ?>
 			</div>
-			<span class="activitytime tooltip" title="<?php p($_['formattedDate']) ?>">
-				<?php p($_['formattedTimestamp']) ?>
-			</span>
-			<?php if ($_['event']['message_long']): ?>
-				<div class="activitymessage" title="<?php p($_['event']['message_long']) ?>">
-					<?php p($_['event']['message_short']) ?>
-				</div>
-			<?php endif ?>
+		<?php endif ?>
 
 		<?php if (!empty($_['previewImageLink'])): ?>
 			<img class="preview<?php if (!empty($_['previewLinkIsDir'])): ?> preview-dir-icon<?php endif ?>" src="<?php p($_['previewImageLink']) ?>" alt="<?php p($_['event']['message_long']) ?>"/>
