@@ -61,7 +61,7 @@ class DataHelper
 	 * Removes the path from filenames and adds highlights
 	 *
 	 * @param string $param
-	 * @param mixed $isFilePosition Are we on the filename position?
+	 * @param bool $isFilePosition Are we on the filename position?
 	 * @param bool $stripPath Shall we remove the path from the filename
 	 * @param bool $highlightParams
 	 * @return string
