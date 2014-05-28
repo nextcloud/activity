@@ -133,36 +133,6 @@ class Data
 	}
 
 	/**
-	 * Prepares the parameters before we use them in the subject or message
-	 * @param string $app
-	 * @param string $text
-	 * @param array $params
-	 * @param mixed $filePosition Position of a file in $params
-	 * @param bool $stripPath Shall we remove the path from the filename
-	 * @param bool $highlightParams
-	 * @return array
-	 */
-	public static function prepareFilesParams($app, $text, $params, $filePosition = false, $stripPath = false, $highlightParams = false) {
-		if ($app === 'files' && $text) {
-			$preparedParams = array();
-			foreach ($params as $i => $param) {
-				if ($stripPath === true && $filePosition === $i) {
-					// Remove the path from the file string
-					$param = substr($param, strrpos($param, '/') + 1);
-				}
-
-				if ($highlightParams) {
-					$preparedParams[] = '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
-				} else {
-					$preparedParams[] = $param;
-				}
-			}
-			return $preparedParams;
-		}
-		return $params;
-	}
-
-	/**
 	 * @brief Send an event into the activity stream
 	 *
 	 * @param string $app The app where this event is associated with
@@ -202,66 +172,6 @@ class Data
 		));
 
 		return true;
-	}
-
-	/**
-	 * @brief Translate an event string with the translations from the app where it was send from
-	 * @param string $app The app where this event comes from
-	 * @param string $text The text including placeholders
-	 * @param array $params The parameter for the placeholder
-	 * @param bool $stripPath Shall we strip the path from file names?
-	 * @param bool $highlightParams Shall we highlight the parameters in the string?
-	 *             They will be highlighted with `<strong>`, all data will be passed through
-	 *             \OC_Util::sanitizeHTML() before, so no XSS is possible.
-	 * @param \OC_L10N $l Language object, if you want to use a different language (f.e. to send an email)
-	 * @return string translated
-	 */
-	public static function translation($app, $text, $params, $stripPath = false, $highlightParams = false, \OC_L10N $l = null) {
-		if (!$text) {
-			return '';
-		}
-		if ($l === null) {
-			$l = \OCP\Util::getL10N('activity');
-		}
-
-		if ($app === 'files') {
-			$params = self::prepareFilesParams($app, $text, $params, 0, $stripPath, $highlightParams);
-			if ($text === 'created_self') {
-				return $l->t('You created %1$s', $params);
-			}
-			else if ($text === 'created_by') {
-				return $l->t('%2$s created %1$s', $params);
-			}
-			else if ($text === 'changed_self') {
-				return $l->t('You changed %1$s', $params);
-			}
-			else if ($text === 'changed_by') {
-				return $l->t('%2$s changed %1$s', $params);
-			}
-			else if ($text === 'deleted_self') {
-				return $l->t('You deleted %1$s', $params);
-			}
-			else if ($text === 'deleted_by') {
-				return $l->t('%2$s deleted %1$s', $params);
-			}
-			else if ($text === 'shared_user_self') {
-				return $l->t('You shared %1$s with %2$s', $params);
-			}
-			else if ($text === 'shared_group_self') {
-				return $l->t('You shared %1$s with group %2$s', $params);
-			}
-			else if ($text === 'shared_with_by') {
-				return $l->t('%2$s shared %1$s with you', $params);
-			}
-			else if ($text === 'shared_link_self') {
-				return $l->t('You shared %1$s', $params);
-			}
-
-			return $l->t($text, $params);
-		} else {
-			$l = \OCP\Util::getL10N($app);
-			return $l->t($text, $params);
-		}
 	}
 
 	/**
@@ -364,11 +274,11 @@ class Data
 				$row['subjectparams'] = unserialize($row['subjectparams']);
 				$row['messageparams'] = unserialize($row['messageparams']);
 
-				$row['subject_short'] = Data::translation($row['app'], $row['subject'], $row['subjectparams'], true);
-				$row['message_short'] = Data::translation($row['app'], $row['message'], $row['messageparams'], true);
+				$row['subject_short'] = DataHelper::translation($row['app'], $row['subject'], $row['subjectparams'], true);
+				$row['message_short'] = DataHelper::translation($row['app'], $row['message'], $row['messageparams'], true);
 
-				$row['subject_long'] = Data::translation($row['app'], $row['subject'], $row['subjectparams']);
-				$row['message_long'] = Data::translation($row['app'], $row['message'], $row['messageparams']);
+				$row['subject_long'] = DataHelper::translation($row['app'], $row['subject'], $row['subjectparams']);
+				$row['message_long'] = DataHelper::translation($row['app'], $row['message'], $row['messageparams']);
 
 				$activity[] = $row;
 			}
