@@ -56,4 +56,28 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 			\OCA\Activity\DataHelper::prepareFilesParams('files', 'action', $params, $filePosition, $stripPath, $highlightParams)
 		);
 	}
+
+	public function translationData() {
+		return array(
+			array('created_self', array('/SubFolder/A.txt'), false, false, 'You created /SubFolder/A.txt'),
+			array('created_self', array('/SubFolder/A.txt'), true, false, 'You created A.txt'),
+			array('created_self', array('/SubFolder/A.txt'), false, true, 'You created <strong>/SubFolder/A.txt</strong>'),
+			array('created_self', array('/SubFolder/A.txt'), true, true, 'You created <strong>A.txt</strong>'),
+
+			array('created_by', array('/SubFolder/A.txt', 'UserB'), false, false, 'UserB created /SubFolder/A.txt'),
+			array('created_by', array('/SubFolder/A.txt', 'UserB'), true, false, 'UserB created A.txt'),
+			array('created_by', array('/SubFolder/A.txt', 'UserB'), false, true, '<strong>UserB</strong> created <strong>/SubFolder/A.txt</strong>'),
+			array('created_by', array('/SubFolder/A.txt', 'UserB'), true, true, '<strong>UserB</strong> created <strong>A.txt</strong>'),
+		);
+	}
+
+	/**
+	 * @dataProvider translationData
+	 */
+	public function testTranslation($text, $params, $stripPath, $highlightParams, $expected) {
+		$this->assertEquals(
+			$expected,
+			(string) \OCA\Activity\DataHelper::translation('files', $text, $params, $stripPath, $highlightParams)
+		);
+	}
 }
