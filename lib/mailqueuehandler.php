@@ -168,7 +168,7 @@ class MailQueueHandler {
 
 		$activityList = array();
 		foreach ($mailData as $activity) {
-			$activityList[] = \OCA\Activity\Data::translation(
+			$activityList[] = \OCA\Activity\DataHelper::translation(
 				$activity['amq_appid'], $activity['amq_subject'], unserialize($activity['amq_subjectparams']),
 				false, false, $l
 			);
