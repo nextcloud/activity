@@ -38,8 +38,5 @@ OCA\Activity\Hooks::register();
 // Personal settings for notifications and emails
 OCP\App::registerPersonal('activity', 'personal');
 
-// Search
-OC_Search::registerProvider('\OCA\Activity\Search');
-
 // Cron job for sending Emails
 OCP\Backgroundjob::registerJob('OCA\Activity\BackgroundJob\EmailNotification');
