@@ -69,6 +69,49 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 			array('created_by', array('/SubFolder/A.txt', 'UserB'), true, false, 'UserB created A.txt'),
 			array('created_by', array('/SubFolder/A.txt', 'UserB'), false, true, '<strong>UserB</strong> created <strong>/SubFolder/A.txt</strong>'),
 			array('created_by', array('/SubFolder/A.txt', 'UserB'), true, true, '<strong>UserB</strong> created <strong>A.txt</strong>'),
+
+			array(
+				'created_self',
+				array(array('/SubFolder/A.txt')),
+				false,
+				false,
+				'You created /SubFolder/A.txt',
+			),
+			array(
+				'created_self',
+				array(array('/SubFolder/A.txt', '/SubFolder/B.txt')),
+				false,
+				false,
+				'You created /SubFolder/A.txt and /SubFolder/B.txt',
+			),
+			array(
+				'created_self',
+				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt')),
+				false,
+				false,
+				'You created /SubFolder/A.txt, /SubFolder/B.txt, /SubFolder/C.txt, /SubFolder/D.txt and /SubFolder/E.txt',
+			),
+			array(
+				'created_self',
+				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
+				false,
+				false,
+				'You created /SubFolder/A.txt, /SubFolder/B.txt, /SubFolder/C.txt and 3 more',
+			),
+			array(
+				'created_self',
+				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
+				true,
+				false,
+				'You created A.txt, B.txt, C.txt and 3 more',
+			),
+			array(
+				'created_self',
+				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
+				false,
+				true,
+				'You created <strong>/SubFolder/A.txt</strong>, <strong>/SubFolder/B.txt</strong>, <strong>/SubFolder/C.txt</strong> and <strong>3</strong> more',
+			),
 		);
 	}
 
