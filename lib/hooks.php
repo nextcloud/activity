@@ -67,7 +67,7 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public static function file_delete($params) {
-		self::add_hooks_for_files($params['path'], Data::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_self');
+		self::add_hooks_for_files($params['path'], Data::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
 	}
 
 	/**
