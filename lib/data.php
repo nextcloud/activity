@@ -285,8 +285,6 @@ class Data
 	 * @param array $event An array with all the event data in it
 	 */
 	public static function show($event) {
-		$l = \OC_L10N::get('lib');
-
 		$tmpl = new \OCP\Template('activity', 'activity.box');
 		$tmpl->assign('formattedDate', \OCP\Util::formatDate($event['timestamp']));
 		$tmpl->assign('formattedTimestamp', \OCP\relative_modified_date($event['timestamp']));
