@@ -85,9 +85,9 @@ class DataHelper
 	 * 2 parameters are joined by "and":
 	 * => A and B
 	 * Up to 5 parameters are joined by "," and "and":
-	 * => A, B, C, D, and E
+	 * => A, B, C, D and E
 	 * More than 5 parameters are joined by "," and trimmed:
-	 * => A, B, C, and #n more
+	 * => A, B, C and #n more
 	 *
 	 * @param \OC_L10N $l
 	 * @param array $parameterList
@@ -109,20 +109,20 @@ class DataHelper
 		else if ($count == 2)
 		{
 			$firstItem = array_pop($parameterList);
-			return $l->t('%s and %s', $firstItem, $lastItem);
+			return $l->t('%s and %s', array($firstItem, $lastItem));
 		}
 		else if ($count <= 5)
 		{
 			$list = implode($l->t(', '), $parameterList);
-			return $l->t('%s, and %s', $list, $lastItem);
+			return $l->t('%s and %s', array($list, $lastItem));
 		}
 
 		$firstParams = array_slice($parameterList, 0, 3);
 		$list = implode($l->t(', '), $firstParams);
 		if ($highlightParams) {
-			return $l->n('%s, and <strong>%n</strong> more', '%s, and <strong>%n</strong> more', $count - 3, array($list));
+			return $l->n('%s and <strong>%n</strong> more', '%s and <strong>%n</strong> more', $count - 3, array($list));
 		}
-		return $l->n('%s, and %n more', '%s, and %n more', $count - 3, array($list));
+		return $l->n('%s and %n more', '%s and %n more', $count - 3, array($list));
 	}
 
 	/**
