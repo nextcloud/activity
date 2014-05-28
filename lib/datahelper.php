@@ -27,6 +27,7 @@ class DataHelper
 {
 	/**
 	 * Prepares the parameters before we use them in the subject or message
+	 * @param \OC_L10N $l Language object, if you want to use a different language (f.e. to send an email)
 	 * @param string $app
 	 * @param string $text
 	 * @param array $params
@@ -35,24 +36,93 @@ class DataHelper
 	 * @param bool $highlightParams
 	 * @return array
 	 */
-	public static function prepareFilesParams($app, $text, $params, $filePosition = false, $stripPath = false, $highlightParams = false) {
+	public static function prepareFilesParams(\OC_L10N $l, $app, $text, $params, $filePosition = false, $stripPath = false, $highlightParams = false) {
 		if ($app === 'files' && $text) {
 			$preparedParams = array();
 			foreach ($params as $i => $param) {
-				if ($stripPath === true && $filePosition === $i && strrpos($param, '/') !== false) {
-					// Remove the path from the file string
-					$param = substr($param, strrpos($param, '/') + 1);
-				}
-
-				if ($highlightParams) {
-					$preparedParams[] = '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
+				if (is_array($param)) {
+					$parameterList = array();
+					foreach ($param as $parameter) {
+						$parameterList[] = self::prepareParam($parameter, $filePosition === $i, $stripPath, $highlightParams);
+					}
+					$preparedParams[] = self::joinParameterList($l, $parameterList, $highlightParams);
 				} else {
-					$preparedParams[] = $param;
+					$preparedParams[] = self::prepareParam($param, $filePosition === $i, $stripPath, $highlightParams);
 				}
 			}
 			return $preparedParams;
 		}
 		return $params;
+	}
+
+	/**
+	 * Prepares the parameter for usage
+	 *
+	 * Removes the path from filenames and adds highlights
+	 *
+	 * @param string $param
+	 * @param mixed $isFilePosition Are we on the filename position?
+	 * @param bool $stripPath Shall we remove the path from the filename
+	 * @param bool $highlightParams
+	 * @return string
+	 */
+	protected static function prepareParam($param, $isFilePosition, $stripPath, $highlightParams) {
+		if ($stripPath === true && $isFilePosition && strrpos($param, '/') !== false) {
+			// Remove the path from the file string
+			$param = substr($param, strrpos($param, '/') + 1);
+		}
+
+		if ($highlightParams) {
+			return '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
+		} else {
+			return $param;
+		}
+	}
+
+	/**
+	 * Returns a list of grouped parameters
+	 *
+	 * 2 parameters are joined by "and":
+	 * => A and B
+	 * Up to 5 parameters are joined by "," and "and":
+	 * => A, B, C, D, and E
+	 * More than 5 parameters are joined by "," and trimmed:
+	 * => A, B, C, and #n more
+	 *
+	 * @param \OC_L10N $l
+	 * @param array $parameterList
+	 * @param bool $highlightParams
+	 * @return string
+	 */
+	protected static function joinParameterList(\OC_L10N $l, $parameterList, $highlightParams) {
+		if (empty($parameterList)) {
+			return '';
+		}
+
+		$count = sizeof($parameterList);
+		$lastItem = array_pop($parameterList);
+
+		if ($count == 1)
+		{
+			return $lastItem;
+		}
+		else if ($count == 2)
+		{
+			$firstItem = array_pop($parameterList);
+			return $l->t('%s and %s', $firstItem, $lastItem);
+		}
+		else if ($count <= 5)
+		{
+			$list = implode($l->t(', '), $parameterList);
+			return $l->t('%s, and %s', $list, $lastItem);
+		}
+
+		$firstParams = array_slice($parameterList, 0, 3);
+		$list = implode($l->t(', '), $firstParams);
+		if ($highlightParams) {
+			return $l->n('%s, and <strong>%n</strong> more', '%s, and <strong>%n</strong> more', $count - 3, array($list));
+		}
+		return $l->n('%s, and %n more', '%s, and %n more', $count - 3, array($list));
 	}
 
 	/**
@@ -76,7 +146,7 @@ class DataHelper
 		}
 
 		if ($app === 'files') {
-			$params = self::prepareFilesParams($app, $text, $params, 0, $stripPath, $highlightParams);
+			$params = self::prepareFilesParams($l, $app, $text, $params, 0, $stripPath, $highlightParams);
 			if ($text === 'created_self') {
 				return $l->t('You created %1$s', $params);
 			}
@@ -113,5 +183,22 @@ class DataHelper
 			$l = \OCP\Util::getL10N($app);
 			return $l->t($text, $params);
 		}
+	}
+
+	/**
+	 * Process the rows from the database and also groups them if requested
+	 *
+	 * @param array $activities
+	 * @param bool $allowGrouping
+	 * @return array
+	 */
+	public static function prepareActivities($activities, $allowGrouping = true) {
+		$helper = new \OCA\Activity\GroupHelper($allowGrouping);
+
+		foreach ($activities as $row) {
+			$helper->addActivity($row);
+		}
+
+		return $helper->getActivities();
 	}
 }

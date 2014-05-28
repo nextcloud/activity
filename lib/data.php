@@ -217,9 +217,10 @@ class Data
 	 * @brief Read a list of events from the activity stream
 	 * @param int $start The start entry
 	 * @param int $count The number of statements to read
+	 * @param bool $allowGrouping Allow activities to be grouped
 	 * @return array
 	 */
-	public static function read($start, $count) {
+	public static function read($start, $count, $allowGrouping = true) {
 		// get current user
 		$user = \OCP\User::getUser();
 		$limitActivitiesType = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream');
@@ -233,7 +234,7 @@ class Data
 			$count, $start);
 		$result = $query->execute(array($user));
 
-		return self::getActivitiesFromQueryResult($result);
+		return self::getActivitiesFromQueryResult($result, $allowGrouping);
 	}
 
 	/**
@@ -256,34 +257,27 @@ class Data
 			, $count);
 		$result = $query->execute(array($user, '%' . $txt . '%', '%' . $txt . '%', '%' . $txt . '%')); //$result = $query->execute(array($user,'%'.$txt.''));
 
-		return self::getActivitiesFromQueryResult($result);
+		return self::getActivitiesFromQueryResult($result, false);
 	}
 
 	/**
 	 * Process the result and return the activities
 	 *
 	 * @param \OC_DB_StatementWrapper|int $result
+	 * @param bool $allowGrouping Allow activities to be grouped
 	 * @return array
 	 */
-	public static function getActivitiesFromQueryResult($result) {
-		$activity = array();
+	public static function getActivitiesFromQueryResult($result, $allowGrouping = true) {
+		$helper = new \OCA\Activity\GroupHelper($allowGrouping);
 		if (\OCP\DB::isError($result)) {
 			\OCP\Util::writeLog('Activity', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
 		} else {
 			while ($row = $result->fetchRow()) {
-				$row['subjectparams'] = unserialize($row['subjectparams']);
-				$row['messageparams'] = unserialize($row['messageparams']);
-
-				$row['subject_short'] = DataHelper::translation($row['app'], $row['subject'], $row['subjectparams'], true);
-				$row['message_short'] = DataHelper::translation($row['app'], $row['message'], $row['messageparams'], true);
-
-				$row['subject_long'] = DataHelper::translation($row['app'], $row['subject'], $row['subjectparams']);
-				$row['message_long'] = DataHelper::translation($row['app'], $row['message'], $row['messageparams']);
-
-				$activity[] = $row;
+				$helper->addActivity($row);
 			}
 		}
-		return $activity;
+
+		return $helper->getActivities();
 	}
 
 	/**
