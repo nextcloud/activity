@@ -47,8 +47,8 @@ class GroupHelper
 	 * @param array $activity
 	 */
 	public function addActivity($activity) {
-		$activity['subjectparams'] = unserialize($activity['subjectparams']);
-		$activity['messageparams'] = unserialize($activity['messageparams']);
+		$activity['subjectparams'] = (array) unserialize($activity['subjectparams']);
+		$activity['messageparams'] = (array) unserialize($activity['messageparams']);
 
 		if (!$this->allowGrouping) {
 			$this->activities[] = $activity;
