@@ -18,6 +18,7 @@ $TRANSLATIONS = array(
 "You shared %1$s with group %2$s" => "Du delade %1$s med grupp %2$s",
 "%2$s shared %1$s with you" => "%2$s delade %1$s med dig",
 "You shared %1$s" => "Du delade %1$s",
+"Activity notification" => "Aktivitet notifiering",
 "_%n more..._::_%n more..._" => array("%n mer...","%n mer..."),
 "RSS feed" => "RSS-flöde",
 "No activities yet." => "Inga aktiviteter ännu.",
@@ -25,6 +26,8 @@ $TRANSLATIONS = array(
 "Notifications" => "Notifieringar",
 "Mail" => "Post",
 "Stream" => "Ström",
+"You need to set up your email address before you can receive notification emails." => "Du måste ställa in din e-postadress innan du kan ta emot e-postmeddelanden.",
+"Hourly" => "Timme",
 "Daily" => "Dagligen",
 "Weekly" => "Varje vecka"
 );
