@@ -4,11 +4,17 @@ $TRANSLATIONS = array(
 "Activity" => "Activitate",
 "No more activities to load." => "Nu mai sunt activitati de incarcat.",
 "Loading older activities" => "Se incarca activitati mai vechi",
+"You changed %1$s" => "Ai schimbat %1$s",
+"You deleted %1$s" => "Ai şters %1$s",
+"Activity notification" => "Notificări ",
 "_%n more..._::_%n more..._" => array("","",""),
+"* %s" => "* %s",
 "RSS feed" => "Feed RSS",
 "No activities yet." => "Inca nu exista activitati.",
 "You will see a list of events here when you start to use your %s." => "Cand incepeti sa folositi propriul %s veti vedea aici o lista a evenimentelor.",
 "Notifications" => "Notificari",
+"Mail" => "Mail",
+"Send emails:" => "Trimite email-ul",
 "Daily" => "Zilnic",
 "Weekly" => "Săptămânal"
 );
