@@ -67,15 +67,21 @@ class DataHelper
 	 * @return string
 	 */
 	protected static function prepareParam($param, $isFilePosition, $stripPath, $highlightParams) {
+		if ($isFilePosition && strpos($param, '/') === 0) {
+			// Remove the path from the file string
+			$param = substr($param, 1);
+		}
+
+		$newParam = $param;
 		if ($stripPath === true && $isFilePosition && strrpos($param, '/') !== false) {
 			// Remove the path from the file string
-			$param = substr($param, strrpos($param, '/') + 1);
+			$newParam = substr($param, strrpos($param, '/') + 1);
 		}
 
 		if ($highlightParams) {
-			return '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
+			return '<strong class="tooltip" title="' . \OC_Util::sanitizeHTML($param) . '">' . \OC_Util::sanitizeHTML($newParam) . '</strong>';
 		} else {
-			return $param;
+			return $newParam;
 		}
 	}
 
