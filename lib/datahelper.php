@@ -124,11 +124,17 @@ class DataHelper
 		}
 
 		$firstParams = array_slice($parameterList, 0, 3);
-		$list = implode($l->t(', '), $firstParams);
+		$trimmedParams = array_slice($parameterList, 3);
+		$firstList = implode($l->t(', '), $firstParams);
+		$trimmedList = implode($l->t(', '), $trimmedParams);
 		if ($highlightParams) {
-			return $l->n('%s and <strong>%n</strong> more', '%s and <strong>%n</strong> more', $count - 3, array($list));
+			return $l->n(
+				'%s and <strong>%n</strong> more',
+				'%s and <strong>%n</strong> more',
+				$count - 3,
+				array($firstList));
 		}
-		return $l->n('%s and %n more', '%s and %n more', $count - 3, array($list));
+		return $l->n('%s and %n more', '%s and %n more', $count - 3, array($firstList));
 	}
 
 	/**
