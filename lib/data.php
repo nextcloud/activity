@@ -397,18 +397,23 @@ class Data
 		// items
 		for ($i = 0; $i < count($content); $i++) {
 			xmlwriter_start_element($writer, 'item');
-			if (isset($content[$i]['subject_long'])) {
-				xmlwriter_write_element($writer, 'title', $content[$i]['subject_long']);
+			if (!empty($content[$i]['subject_full'])) {
+				xmlwriter_write_element($writer, 'title', $content[$i]['subject_full']);
 			}
 
-			if (isset($content[$i]['link'])) xmlwriter_write_element($writer, 'link', $content[$i]['link']);
-			if (isset($content[$i]['link'])) xmlwriter_write_element($writer, 'guid', $content[$i]['link']);
-			if (isset($content[$i]['timestamp'])) xmlwriter_write_element($writer, 'pubDate', date('r', $content[$i]['timestamp']));
+			if (!empty($content[$i]['link'])) {
+				xmlwriter_write_element($writer, 'link', $content[$i]['link']);
+				xmlwriter_write_element($writer, 'guid', $content[$i]['link']);
+			}
 
-			if (isset($content[$i]['message_long'])) {
+			if (!empty($content[$i]['timestamp'])) {
+				xmlwriter_write_element($writer, 'pubDate', date('r', $content[$i]['timestamp']));
+			}
+
+			if (!empty($content[$i]['message_full'])) {
 				xmlwriter_start_element($writer, 'description');
 				xmlwriter_start_cdata($writer);
-				xmlwriter_text($writer, $content[$i]['message_long']);
+				xmlwriter_text($writer, $content[$i]['message_full']);
 				xmlwriter_end_cdata($writer);
 				xmlwriter_end_element($writer);
 			}
