@@ -91,7 +91,8 @@ class DataHelper
 	 * @return string
 	 */
 	protected static function prepareFileParam($param, $stripPath, $highlightParams) {
-		$fileLink = \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($param)));
+		$parent_dir = (substr_count($param, '/') == 1) ? '/' : dirname($param);
+		$fileLink = \OCP\Util::linkTo('files', 'index.php', array('dir' => $parent_dir));
 
 		// Remove the path from the file string
 		$param = substr($param, 1);

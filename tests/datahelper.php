@@ -108,6 +108,10 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 				'created_by', array('/SubFolder/A.txt', 'UserB'), true, true,
 				'<strong>UserB</strong> created <a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="SubFolder/A.txt">A.txt</a>',
 			),
+			array(
+				'created_by', array('/A.txt', 'UserB'), true, true,
+				'<strong>UserB</strong> created <a class="filename tooltip" href="/index.php/apps/files?dir=%2F" title="A.txt">A.txt</a>',
+			),
 
 			array(
 				'created_self',
