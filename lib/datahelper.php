@@ -36,19 +36,28 @@ class DataHelper
 	 * @param bool $highlightParams
 	 * @return array
 	 */
-	public static function prepareFilesParams(\OC_L10N $l, $app, $text, $params, $filePosition = false, $stripPath = false, $highlightParams = false) {
+	public static function prepareParameters(\OC_L10N $l, $app, $text, $params, $filePosition = false, $stripPath = false, $highlightParams = false) {
 		if ($app === 'files' && $text) {
 			$preparedParams = array();
 			foreach ($params as $i => $param) {
 				if (is_array($param)) {
 					$parameterList = $plainParameterList = array();
 					foreach ($param as $parameter) {
-						$parameterList[] = self::prepareParam($parameter, $filePosition === $i, $stripPath, $highlightParams);
-						$plainParameterList[] = self::prepareParam($parameter, $filePosition === $i, false, false);
+						if ($filePosition === $i) {
+							$parameterList[] = self::prepareFileParam($parameter, $stripPath, $highlightParams);
+							$plainParameterList[] = self::prepareFileParam($parameter, false, false);
+						} else {
+							$parameterList[] = self::prepareParam($parameter, $highlightParams);
+							$plainParameterList[] = self::prepareParam($parameter, false);
+						}
 					}
 					$preparedParams[] = self::joinParameterList($l, $parameterList, $plainParameterList, $highlightParams);
 				} else {
-					$preparedParams[] = self::prepareParam($param, $filePosition === $i, $stripPath, $highlightParams);
+					if ($filePosition === $i) {
+						$preparedParams[] = self::prepareFileParam($param, $stripPath, $highlightParams);
+					} else {
+						$preparedParams[] = self::prepareParam($param, $highlightParams);
+					}
 				}
 			}
 			return $preparedParams;
@@ -57,41 +66,54 @@ class DataHelper
 	}
 
 	/**
-	 * Prepares the parameter for usage
+	 * Prepares a parameter for usage by adding highlights
+	 *
+	 * @param string $param
+	 * @param bool $highlightParams
+	 * @return string
+	 */
+	protected static function prepareParam($param, $highlightParams) {
+		if ($highlightParams) {
+			return '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
+		} else {
+			return $param;
+		}
+	}
+
+	/**
+	 * Prepares a file parameter for usage
 	 *
 	 * Removes the path from filenames and adds highlights
 	 *
 	 * @param string $param
-	 * @param bool $isFilePosition Are we on the filename position?
 	 * @param bool $stripPath Shall we remove the path from the filename
 	 * @param bool $highlightParams
 	 * @return string
 	 */
-	protected static function prepareParam($param, $isFilePosition, $stripPath, $highlightParams) {
-		$fileLink = '';
-		if ($isFilePosition && strpos($param, '/') === 0) {
-			$fileLink = \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($param)));
+	protected static function prepareFileParam($param, $stripPath, $highlightParams) {
+		$fileLink = \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($param)));
+		if (strpos($param, '/') === 0) {
 			// Remove the path from the file string
 			$param = substr($param, 1);
 		}
 
 		$newParam = $param;
-		if ($stripPath === true && $isFilePosition && strrpos($param, '/') !== false) {
+		if ($stripPath === true && strrpos($param, '/') !== false) {
 			// Remove the path from the file string
 			$newParam = substr($param, strrpos($param, '/') + 1);
 		}
 
-		if ($isFilePosition && $highlightParams) {
-			if (!$stripPath) {
-				return '<a class="filename" href="' . $fileLink . '">' . \OC_Util::sanitizeHTML($newParam) . '</a>';
-			}
-			$title = ' title="' . \OC_Util::sanitizeHTML($param) . '"';
-			return '<a class="filename' . (($title) ? ' tooltip' : '') . '" href="' . $fileLink . '"' . $title . '>' . \OC_Util::sanitizeHTML($newParam) . '</a>';
-		} else if ($highlightParams) {
-			return '<strong>' . \OC_Util::sanitizeHTML($newParam) . '</strong>';
-		} else {
+		if (!$highlightParams) {
 			return $newParam;
 		}
+
+		if (!$stripPath) {
+			return '<a class="filename" href="' . $fileLink . '">' . \OC_Util::sanitizeHTML($newParam) . '</a>';
+		}
+
+		$title = ' title="' . \OC_Util::sanitizeHTML($param) . '"';
+		return '<a class="filename' . (($title) ? ' tooltip' : '') . '" href="' . $fileLink . '"' . $title . '>' . \OC_Util::sanitizeHTML($newParam) . '</a>';
+
 	}
 
 	/**
@@ -168,7 +190,7 @@ class DataHelper
 		}
 
 		if ($app === 'files') {
-			$params = self::prepareFilesParams($l, $app, $text, $params, 0, $stripPath, $highlightParams);
+			$params = self::prepareParameters($l, $app, $text, $params, 0, $stripPath, $highlightParams);
 			if ($text === 'created_self') {
 				return $l->t('You created %1$s', $params);
 			}
