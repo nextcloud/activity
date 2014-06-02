@@ -79,7 +79,8 @@ class DataHelper
 		}
 
 		if ($highlightParams) {
-			return '<strong class="tooltip" title="' . \OC_Util::sanitizeHTML($param) . '">' . \OC_Util::sanitizeHTML($newParam) . '</strong>';
+			$title = ($isFilePosition && $stripPath) ? ' class="tooltip" title="' . \OC_Util::sanitizeHTML($param) . '"' : '';
+			return '<strong' . $title . '>' . \OC_Util::sanitizeHTML($newParam) . '</strong>';
 		} else {
 			return $newParam;
 		}

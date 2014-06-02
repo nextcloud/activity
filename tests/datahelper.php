@@ -35,15 +35,15 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 
 			// Valid file position
 			array(array('/foo/bar.file'), 0, true, false, array('bar.file')),
-			array(array('/foo/bar.file'), 0, true, true, array('<strong>bar.file</strong>')),
+			array(array('/foo/bar.file'), 0, true, true, array('<strong class="tooltip" title="foo/bar.file">bar.file</strong>')),
 			array(array('/foo/bar.file'), 1, true, false, array('/foo/bar.file')),
 			array(array('/foo/bar.file'), 1, true, true, array('<strong>/foo/bar.file</strong>')),
 
 			// Valid file position
 			array(array('UserA', '/foo/bar.file'), 0, true, false, array('UserA', '/foo/bar.file')),
-			array(array('UserA', '/foo/bar.file'), 0, true, true, array('<strong>UserA</strong>', '<strong>/foo/bar.file</strong>')),
 			array(array('UserA', '/foo/bar.file'), 1, true, false, array('UserA', 'bar.file')),
-			array(array('UserA', '/foo/bar.file'), 1, true, true, array('<strong>UserA</strong>', '<strong>bar.file</strong>')),
+			array(array('UserA', '/foo/bar.file'), 1, true, true, array('<strong>UserA</strong>', '<strong class="tooltip" title="foo/bar.file">bar.file</strong>')),
+			array(array('UserA', '/foo/bar.file'), 2, true, true, array('<strong>UserA</strong>', '<strong>/foo/bar.file</strong>')),
 		);
 	}
 
@@ -60,43 +60,43 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 
 	public function translationData() {
 		return array(
-			array('created_self', array('/SubFolder/A.txt'), false, false, 'You created /SubFolder/A.txt'),
+			array('created_self', array('/SubFolder/A.txt'), false, false, 'You created SubFolder/A.txt'),
 			array('created_self', array('/SubFolder/A.txt'), true, false, 'You created A.txt'),
-			array('created_self', array('/SubFolder/A.txt'), false, true, 'You created <strong>/SubFolder/A.txt</strong>'),
-			array('created_self', array('/SubFolder/A.txt'), true, true, 'You created <strong>A.txt</strong>'),
+			array('created_self', array('/SubFolder/A.txt'), false, true, 'You created <strong>SubFolder/A.txt</strong>'),
+			array('created_self', array('/SubFolder/A.txt'), true, true, 'You created <strong class="tooltip" title="SubFolder/A.txt">A.txt</strong>'),
 
-			array('created_by', array('/SubFolder/A.txt', 'UserB'), false, false, 'UserB created /SubFolder/A.txt'),
+			array('created_by', array('/SubFolder/A.txt', 'UserB'), false, false, 'UserB created SubFolder/A.txt'),
 			array('created_by', array('/SubFolder/A.txt', 'UserB'), true, false, 'UserB created A.txt'),
-			array('created_by', array('/SubFolder/A.txt', 'UserB'), false, true, '<strong>UserB</strong> created <strong>/SubFolder/A.txt</strong>'),
-			array('created_by', array('/SubFolder/A.txt', 'UserB'), true, true, '<strong>UserB</strong> created <strong>A.txt</strong>'),
+			array('created_by', array('/SubFolder/A.txt', 'UserB'), false, true, '<strong>UserB</strong> created <strong>SubFolder/A.txt</strong>'),
+			array('created_by', array('/SubFolder/A.txt', 'UserB'), true, true, '<strong>UserB</strong> created <strong class="tooltip" title="SubFolder/A.txt">A.txt</strong>'),
 
 			array(
 				'created_self',
 				array(array('/SubFolder/A.txt')),
 				false,
 				false,
-				'You created /SubFolder/A.txt',
+				'You created SubFolder/A.txt',
 			),
 			array(
 				'created_self',
 				array(array('/SubFolder/A.txt', '/SubFolder/B.txt')),
 				false,
 				false,
-				'You created /SubFolder/A.txt and /SubFolder/B.txt',
+				'You created SubFolder/A.txt and SubFolder/B.txt',
 			),
 			array(
 				'created_self',
 				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt')),
 				false,
 				false,
-				'You created /SubFolder/A.txt, /SubFolder/B.txt, /SubFolder/C.txt, /SubFolder/D.txt and /SubFolder/E.txt',
+				'You created SubFolder/A.txt, SubFolder/B.txt, SubFolder/C.txt, SubFolder/D.txt and SubFolder/E.txt',
 			),
 			array(
 				'created_self',
-				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
+				array(array('SubFolder/A.txt', 'SubFolder/B.txt', 'SubFolder/C.txt', 'SubFolder/D.txt', 'SubFolder/E.txt', '/SubFolder/F.txt')),
 				false,
 				false,
-				'You created /SubFolder/A.txt, /SubFolder/B.txt, /SubFolder/C.txt and 3 more',
+				'You created SubFolder/A.txt, SubFolder/B.txt, SubFolder/C.txt and 3 more',
 			),
 			array(
 				'created_self',
@@ -110,7 +110,7 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
 				false,
 				true,
-				'You created <strong>/SubFolder/A.txt</strong>, <strong>/SubFolder/B.txt</strong>, <strong>/SubFolder/C.txt</strong> and <strong>3</strong> more',
+				'You created <strong>SubFolder/A.txt</strong>, <strong>SubFolder/B.txt</strong>, <strong>SubFolder/C.txt</strong> and <strong>3</strong> more',
 			),
 		);
 	}
