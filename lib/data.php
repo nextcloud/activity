@@ -302,6 +302,7 @@ class Data
 
 			// show a preview image if the file still exists
 			if (!$is_dir && $exist) {
+				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($event['file']))));
 				$tmpl->assign('previewImageLink',
 					\OCP\Util::linkToRoute('core_ajax_preview', array(
 						'file' => $event['file'],
@@ -310,6 +311,7 @@ class Data
 					))
 				);
 			} else if ($exist) {
+				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($event['file']))));
 				$tmpl->assign('previewImageLink', \OC_Helper::mimetypeIcon('dir'));
 				$tmpl->assign('previewLinkIsDir', true);
 			}
