@@ -27,6 +27,7 @@ class DataHelper
 {
 	/**
 	 * Prepares the parameters before we use them in the subject or message
+	 * @param \OC_L10N $l Language object, if you want to use a different language (f.e. to send an email)
 	 * @param string $app
 	 * @param string $text
 	 * @param array $params
@@ -35,24 +36,137 @@ class DataHelper
 	 * @param bool $highlightParams
 	 * @return array
 	 */
-	public static function prepareFilesParams($app, $text, $params, $filePosition = false, $stripPath = false, $highlightParams = false) {
+	public static function prepareParameters(\OC_L10N $l, $app, $text, $params, $filePosition = false, $stripPath = false, $highlightParams = false) {
 		if ($app === 'files' && $text) {
 			$preparedParams = array();
 			foreach ($params as $i => $param) {
-				if ($stripPath === true && $filePosition === $i && strrpos($param, '/') !== false) {
-					// Remove the path from the file string
-					$param = substr($param, strrpos($param, '/') + 1);
-				}
-
-				if ($highlightParams) {
-					$preparedParams[] = '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
+				if (is_array($param)) {
+					$parameterList = $plainParameterList = array();
+					foreach ($param as $parameter) {
+						if ($filePosition === $i) {
+							$parameterList[] = self::prepareFileParam($parameter, $stripPath, $highlightParams);
+							$plainParameterList[] = self::prepareFileParam($parameter, false, false);
+						} else {
+							$parameterList[] = self::prepareParam($parameter, $highlightParams);
+							$plainParameterList[] = self::prepareParam($parameter, false);
+						}
+					}
+					$preparedParams[] = self::joinParameterList($l, $parameterList, $plainParameterList, $highlightParams);
 				} else {
-					$preparedParams[] = $param;
+					if ($filePosition === $i) {
+						$preparedParams[] = self::prepareFileParam($param, $stripPath, $highlightParams);
+					} else {
+						$preparedParams[] = self::prepareParam($param, $highlightParams);
+					}
 				}
 			}
 			return $preparedParams;
 		}
 		return $params;
+	}
+
+	/**
+	 * Prepares a parameter for usage by adding highlights
+	 *
+	 * @param string $param
+	 * @param bool $highlightParams
+	 * @return string
+	 */
+	protected static function prepareParam($param, $highlightParams) {
+		if ($highlightParams) {
+			return '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
+		} else {
+			return $param;
+		}
+	}
+
+	/**
+	 * Prepares a file parameter for usage
+	 *
+	 * Removes the path from filenames and adds highlights
+	 *
+	 * @param string $param
+	 * @param bool $stripPath Shall we remove the path from the filename
+	 * @param bool $highlightParams
+	 * @return string
+	 */
+	protected static function prepareFileParam($param, $stripPath, $highlightParams) {
+		$parent_dir = (substr_count($param, '/') == 1) ? '/' : dirname($param);
+		$fileLink = \OCP\Util::linkTo('files', 'index.php', array('dir' => $parent_dir));
+
+		// Remove the path from the file string
+		$param = substr($param, 1);
+
+		$newParam = $param;
+		if ($stripPath && strrpos($param, '/') !== false) {
+			// Remove the path from the file string
+			$newParam = substr($param, strrpos($param, '/') + 1);
+		}
+
+		if (!$highlightParams) {
+			return $newParam;
+		}
+
+		if (!$stripPath) {
+			return '<a class="filename" href="' . $fileLink . '">' . \OC_Util::sanitizeHTML($newParam) . '</a>';
+		}
+
+		$title = ' title="' . \OC_Util::sanitizeHTML($param) . '"';
+		return '<a class="filename tooltip" href="' . $fileLink . '"' . $title . '>' . \OC_Util::sanitizeHTML($newParam) . '</a>';
+
+	}
+
+	/**
+	 * Returns a list of grouped parameters
+	 *
+	 * 2 parameters are joined by "and":
+	 * => A and B
+	 * Up to 5 parameters are joined by "," and "and":
+	 * => A, B, C, D and E
+	 * More than 5 parameters are joined by "," and trimmed:
+	 * => A, B, C and #n more
+	 *
+	 * @param \OC_L10N $l
+	 * @param array $parameterList
+	 * @param array $plainParameterList
+	 * @param bool $highlightParams
+	 * @return string
+	 */
+	protected static function joinParameterList(\OC_L10N $l, $parameterList, $plainParameterList, $highlightParams) {
+		if (empty($parameterList)) {
+			return '';
+		}
+
+		$count = sizeof($parameterList);
+		$lastItem = array_pop($parameterList);
+
+		if ($count == 1)
+		{
+			return $lastItem;
+		}
+		else if ($count == 2)
+		{
+			$firstItem = array_pop($parameterList);
+			return $l->t('%s and %s', array($firstItem, $lastItem));
+		}
+		else if ($count <= 5)
+		{
+			$list = implode($l->t(', '), $parameterList);
+			return $l->t('%s and %s', array($list, $lastItem));
+		}
+
+		$firstParams = array_slice($parameterList, 0, 3);
+		$firstList = implode($l->t(', '), $firstParams);
+		$trimmedParams = array_slice($plainParameterList, 3);
+		$trimmedList = implode($l->t(', '), $trimmedParams);
+		if ($highlightParams) {
+			return $l->n(
+				'%s and <strong class="tooltip" title="%s">%n more</strong>',
+				'%s and <strong class="tooltip" title="%s">%n more</strong>',
+				$count - 3,
+				array($firstList, $trimmedList));
+		}
+		return $l->n('%s and %n more', '%s and %n more', $count - 3, array($firstList));
 	}
 
 	/**
@@ -76,7 +190,7 @@ class DataHelper
 		}
 
 		if ($app === 'files') {
-			$params = self::prepareFilesParams($app, $text, $params, 0, $stripPath, $highlightParams);
+			$params = self::prepareParameters($l, $app, $text, $params, 0, $stripPath, $highlightParams);
 			if ($text === 'created_self') {
 				return $l->t('You created %1$s', $params);
 			}
@@ -113,5 +227,22 @@ class DataHelper
 			$l = \OCP\Util::getL10N($app);
 			return $l->t($text, $params);
 		}
+	}
+
+	/**
+	 * Process the rows from the database and also groups them if requested
+	 *
+	 * @param array $activities
+	 * @param bool $allowGrouping
+	 * @return array
+	 */
+	public static function prepareActivities($activities, $allowGrouping = true) {
+		$helper = new \OCA\Activity\GroupHelper($allowGrouping);
+
+		foreach ($activities as $row) {
+			$helper->addActivity($row);
+		}
+
+		return $helper->getActivities();
 	}
 }

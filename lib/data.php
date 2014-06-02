@@ -217,9 +217,10 @@ class Data
 	 * @brief Read a list of events from the activity stream
 	 * @param int $start The start entry
 	 * @param int $count The number of statements to read
+	 * @param bool $allowGrouping Allow activities to be grouped
 	 * @return array
 	 */
-	public static function read($start, $count) {
+	public static function read($start, $count, $allowGrouping = true) {
 		// get current user
 		$user = \OCP\User::getUser();
 		$limitActivitiesType = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream');
@@ -233,7 +234,7 @@ class Data
 			$count, $start);
 		$result = $query->execute(array($user));
 
-		return self::getActivitiesFromQueryResult($result);
+		return self::getActivitiesFromQueryResult($result, $allowGrouping);
 	}
 
 	/**
@@ -256,34 +257,27 @@ class Data
 			, $count);
 		$result = $query->execute(array($user, '%' . $txt . '%', '%' . $txt . '%', '%' . $txt . '%')); //$result = $query->execute(array($user,'%'.$txt.''));
 
-		return self::getActivitiesFromQueryResult($result);
+		return self::getActivitiesFromQueryResult($result, false);
 	}
 
 	/**
 	 * Process the result and return the activities
 	 *
 	 * @param \OC_DB_StatementWrapper|int $result
+	 * @param bool $allowGrouping Allow activities to be grouped
 	 * @return array
 	 */
-	public static function getActivitiesFromQueryResult($result) {
-		$activity = array();
+	public static function getActivitiesFromQueryResult($result, $allowGrouping = true) {
+		$helper = new \OCA\Activity\GroupHelper($allowGrouping);
 		if (\OCP\DB::isError($result)) {
 			\OCP\Util::writeLog('Activity', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
 		} else {
 			while ($row = $result->fetchRow()) {
-				$row['subjectparams'] = unserialize($row['subjectparams']);
-				$row['messageparams'] = unserialize($row['messageparams']);
-
-				$row['subject_short'] = DataHelper::translation($row['app'], $row['subject'], $row['subjectparams'], true);
-				$row['message_short'] = DataHelper::translation($row['app'], $row['message'], $row['messageparams'], true);
-
-				$row['subject_long'] = DataHelper::translation($row['app'], $row['subject'], $row['subjectparams']);
-				$row['message_long'] = DataHelper::translation($row['app'], $row['message'], $row['messageparams']);
-
-				$activity[] = $row;
+				$helper->addActivity($row);
 			}
 		}
-		return $activity;
+
+		return $helper->getActivities();
 	}
 
 	/**
@@ -291,8 +285,6 @@ class Data
 	 * @param array $event An array with all the event data in it
 	 */
 	public static function show($event) {
-		$l = \OC_L10N::get('lib');
-
 		$tmpl = new \OCP\Template('activity', 'activity.box');
 		$tmpl->assign('formattedDate', \OCP\Util::formatDate($event['timestamp']));
 		$tmpl->assign('formattedTimestamp', \OCP\relative_modified_date($event['timestamp']));
@@ -310,6 +302,7 @@ class Data
 
 			// show a preview image if the file still exists
 			if (!$is_dir && $exist) {
+				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($event['file']))));
 				$tmpl->assign('previewImageLink',
 					\OCP\Util::linkToRoute('core_ajax_preview', array(
 						'file' => $event['file'],
@@ -318,6 +311,7 @@ class Data
 					))
 				);
 			} else if ($exist) {
+				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($event['file']))));
 				$tmpl->assign('previewImageLink', \OC_Helper::mimetypeIcon('dir'));
 				$tmpl->assign('previewLinkIsDir', true);
 			}
@@ -404,18 +398,23 @@ class Data
 		// items
 		for ($i = 0; $i < count($content); $i++) {
 			xmlwriter_start_element($writer, 'item');
-			if (isset($content[$i]['subject_long'])) {
-				xmlwriter_write_element($writer, 'title', $content[$i]['subject_long']);
+			if (!empty($content[$i]['subject_full'])) {
+				xmlwriter_write_element($writer, 'title', $content[$i]['subject_full']);
 			}
 
-			if (isset($content[$i]['link'])) xmlwriter_write_element($writer, 'link', $content[$i]['link']);
-			if (isset($content[$i]['link'])) xmlwriter_write_element($writer, 'guid', $content[$i]['link']);
-			if (isset($content[$i]['timestamp'])) xmlwriter_write_element($writer, 'pubDate', date('r', $content[$i]['timestamp']));
+			if (!empty($content[$i]['link'])) {
+				xmlwriter_write_element($writer, 'link', $content[$i]['link']);
+				xmlwriter_write_element($writer, 'guid', $content[$i]['link']);
+			}
 
-			if (isset($content[$i]['message_long'])) {
+			if (!empty($content[$i]['timestamp'])) {
+				xmlwriter_write_element($writer, 'pubDate', date('r', $content[$i]['timestamp']));
+			}
+
+			if (!empty($content[$i]['message_full'])) {
 				xmlwriter_start_element($writer, 'description');
 				xmlwriter_start_cdata($writer);
-				xmlwriter_text($writer, $content[$i]['message_long']);
+				xmlwriter_text($writer, $content[$i]['message_full']);
 				xmlwriter_end_cdata($writer);
 				xmlwriter_end_element($writer);
 			}

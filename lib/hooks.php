@@ -100,11 +100,10 @@ class Hooks {
 				$user_subject = $subject_by;
 				$user_params = array($path, \OCP\User::getUser());
 			}
-			$link = \OCP\Util::linkToAbsolute('files', 'index.php', array('dir' => dirname($path)));
 
 			// Add activities to stream
 			if (!empty($filteredStreamUsers[$user])) {
-				Data::send('files', $user_subject, $user_params, '', array(), $path, $link, $user, $activity_type, Data::PRIORITY_HIGH);
+				Data::send('files', $user_subject, $user_params, '', array(), $path, '', $user, $activity_type, Data::PRIORITY_HIGH);
 			}
 
 			// Add activity to mail queue
@@ -171,13 +170,9 @@ class Hooks {
 		list($path, $uidOwner) = self::getSourcePathAndOwner($file_path);
 
 		// Folder owner
-		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
-			'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
-		));
-
 		// Add activity to stream
 		if (Data::getUserSetting($uidOwner, 'stream', Data::TYPE_SHARED)) {
-			Data::send('files', 'shared_user_self', array($file_path, $params['shareWith']), '', array(), $path, $link, $uidOwner, Data::TYPE_SHARED, Data::PRIORITY_MEDIUM );
+			Data::send('files', 'shared_user_self', array($file_path, $params['shareWith']), '', array(), $path, '', $uidOwner, Data::TYPE_SHARED, Data::PRIORITY_MEDIUM );
 		}
 		// Add activity to mail queue
 		if (Data::getUserSetting($uidOwner, 'email', Data::TYPE_SHARED)) {
@@ -187,13 +182,10 @@ class Hooks {
 
 		// New shared user
 		$path = $params['fileTarget'];
-		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
-			'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
-		));
 
 		// Add activity to stream
 		if (Data::getUserSetting($params['shareWith'], 'stream', Data::TYPE_SHARED)) {
-			Data::send('files', 'shared_with_by', array($path, \OCP\User::getUser()), '', array(), $path, $link, $params['shareWith'], Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
+			Data::send('files', 'shared_with_by', array($path, \OCP\User::getUser()), '', array(), $path, '', $params['shareWith'], Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
 		}
 		// Add activity to mail queue
 		if (Data::getUserSetting($uidOwner, 'email', Data::TYPE_SHARED)) {
@@ -211,13 +203,9 @@ class Hooks {
 		list($path, $uidOwner) = self::getSourcePathAndOwner($file_path);
 
 		// Folder owner
-		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
-			'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
-		));
-
 		// Add activity to stream
 		if (Data::getUserSetting($uidOwner, 'stream', Data::TYPE_SHARED)) {
-			Data::send('files', 'shared_group_self', array($file_path, $params['shareWith']), '', array(), $path, $link, $uidOwner, Data::TYPE_SHARED, Data::PRIORITY_MEDIUM );
+			Data::send('files', 'shared_group_self', array($file_path, $params['shareWith']), '', array(), $path, '', $uidOwner, Data::TYPE_SHARED, Data::PRIORITY_MEDIUM );
 		}
 		// Add activity to mail queue
 		if (Data::getUserSetting($uidOwner, 'email', Data::TYPE_SHARED)) {
@@ -253,13 +241,9 @@ class Hooks {
 					continue;
 				}
 
-				$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
-					'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
-				));
-
 				// Add activity to stream
 				if (!empty($filteredStreamUsersInGroup[$user])) {
-					Data::send('files', 'shared_with_by', array($path, \OCP\User::getUser()), '', array(), $path, $link, $user, Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
+					Data::send('files', 'shared_with_by', array($path, \OCP\User::getUser()), '', array(), $path, '', $user, Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
 				}
 
 				// Add activity to mail queue
@@ -277,12 +261,9 @@ class Hooks {
 	 */
 	public static function shareFileOrFolder($params) {
 		$path = \OC\Files\Filesystem::getPath($params['fileSource']);
-		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
-			'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
-		));
 
 		if (Data::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED)) {
-			Data::send('files', 'shared_link_self', array($path), '', array(), $path, $link, \OCP\User::getUser(), Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
+			Data::send('files', 'shared_link_self', array($path), '', array(), $path, '', \OCP\User::getUser(), Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
 		}
 	}
 

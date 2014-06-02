@@ -33,8 +33,8 @@ if (isset($_SERVER['HTTP_ACCEPT']) && stristr($_SERVER['HTTP_ACCEPT'], 'applicat
 	header('Content-Type: text/xml; charset=UTF-8');
 }
 
-// read the  data
-$activities=OCA\Activity\Data::read(0,30);
+// read the data
+$activities=OCA\Activity\Data::read(0, 30, false);
 
 // generate an absolute link to the rss feed.
 $rsslink=\OCP\Util::linkToAbsolute('activity','rss.php');
