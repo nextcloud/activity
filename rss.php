@@ -21,7 +21,6 @@
  *
  */
 
-
 // check if the user has the right permissions.
 OCP\User::checkLoggedIn();
 OCP\App::checkAppEnabled('activity');
@@ -33,12 +32,13 @@ if (isset($_SERVER['HTTP_ACCEPT']) && stristr($_SERVER['HTTP_ACCEPT'], 'applicat
 	header('Content-Type: text/xml; charset=UTF-8');
 }
 
-// read the data
-$activities=OCA\Activity\Data::read(0, 30, false);
-
-// generate an absolute link to the rss feed.
-$rsslink=\OCP\Util::linkToAbsolute('activity','rss.php');
-
 // generate and show the rss feed
-echo(OCA\Activity\Data::generaterss($rsslink, $activities));
+$tmpl = new \OCP\Template('activity', 'rss');
 
+$tmpl->assign('rssLang', \OC_Preferences::getValue(\OCP\User::getUser(), 'core', 'lang'));
+$tmpl->assign('rssLink', \OCP\Util::linkToAbsolute('activity','rss.php'));
+$tmpl->assign('rssPubDate', date('r'));
+$tmpl->assign('user', \OCP\User::getUser());
+$tmpl->assign('activities', \OCA\Activity\Data::read(0, 30, false));
+
+$tmpl->printPage();
