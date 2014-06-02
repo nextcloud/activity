@@ -55,6 +55,8 @@ class DataHelper
 				} else {
 					if (isset($paramTypes[$i]) && $paramTypes[$i] === 'file') {
 						$preparedParams[] = self::prepareFileParam($param, $stripPath, $highlightParams);
+					} else if (isset($paramTypes[$i]) && $paramTypes[$i] === 'username') {
+						$preparedParams[] = self::prepareUserParam($param, $highlightParams);
 					} else {
 						$preparedParams[] = self::prepareParam($param, $highlightParams);
 					}
@@ -75,6 +77,25 @@ class DataHelper
 	protected static function prepareParam($param, $highlightParams) {
 		if ($highlightParams) {
 			return '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
+		} else {
+			return $param;
+		}
+	}
+
+	/**
+	 * Prepares a user name parameter for usage
+	 *
+	 * Add an avatar to usernames
+	 *
+	 * @param string $param
+	 * @param bool $highlightParams
+	 * @return string
+	 */
+	protected static function prepareUserParam($param, $highlightParams) {
+		if ($highlightParams) {
+			$param = \OC_Util::sanitizeHTML($param);
+			return '<div class="avatar" data-user="' . $param . '"></div>'
+				. '<strong>' . $param . '</strong>';
 		} else {
 			return $param;
 		}
@@ -192,7 +213,7 @@ class DataHelper
 		if ($app === 'files') {
 			$preparedParams = self::prepareParameters(
 				$l, $app, $text,
-				$params, array(0 => 'file', 1 => 'user'),
+				$params, array(0 => 'file', 1 => 'username'),
 				$stripPath, $highlightParams
 			);
 			if ($text === 'created_self') {
@@ -217,6 +238,12 @@ class DataHelper
 				return $l->t('You shared %1$s with %2$s', $preparedParams);
 			}
 			else if ($text === 'shared_group_self') {
+				// Second parameter is not a username here
+				$preparedParams = self::prepareParameters(
+					$l, $app, $text,
+					$params, array(0 => 'file'),
+					$stripPath, $highlightParams
+				);
 				return $l->t('You shared %1$s with group %2$s', $preparedParams);
 			}
 			else if ($text === 'shared_with_by') {

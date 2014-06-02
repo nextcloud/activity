@@ -335,7 +335,7 @@ class Data
 			case self::TYPE_SHARE_DELETED:
 				return 'icon-delete-color';
 			case self::TYPE_SHARED:
-				return 'icon-shared';
+				return 'icon-share';
 		}
 		return '';
 	}

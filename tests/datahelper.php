@@ -65,6 +65,15 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 				'<strong>UserA</strong>',
 				'<strong>/foo/bar.file</strong>',
 			)),
+			array(array('UserA', '/foo/bar.file'), array(0 => 'username'), true, true, array(
+				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
+				'<strong>/foo/bar.file</strong>',
+			)),
+
+			array(array('UserA', '/foo/bar.file'), array(0 => 'username', 1 => 'file'), true, true, array(
+				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/bar.file">bar.file</a>',
+			)),
 		);
 	}
 
@@ -102,15 +111,18 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 			array('created_by', array('/SubFolder/A.txt', 'UserB'), true, false, 'UserB created A.txt'),
 			array(
 				'created_by', array('/SubFolder/A.txt', 'UserB'), false, true,
-				'<strong>UserB</strong> created <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder">SubFolder/A.txt</a>',
+				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
+				. '<a class="filename" href="/index.php/apps/files?dir=%2FSubFolder">SubFolder/A.txt</a>',
 			),
 			array(
 				'created_by', array('/SubFolder/A.txt', 'UserB'), true, true,
-				'<strong>UserB</strong> created <a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="SubFolder/A.txt">A.txt</a>',
+				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
+				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="SubFolder/A.txt">A.txt</a>',
 			),
 			array(
 				'created_by', array('/A.txt', 'UserB'), true, true,
-				'<strong>UserB</strong> created <a class="filename tooltip" href="/index.php/apps/files?dir=%2F" title="A.txt">A.txt</a>',
+				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
+				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2F" title="A.txt">A.txt</a>',
 			),
 
 			array(
