@@ -377,6 +377,7 @@ class Data
 	 * @param array $content
 	 */
 	public static function generaterss($link, $content) {
+		$l = \OCP\Util::getL10N('activity');
 
 		$writer = xmlwriter_open_memory();
 		xmlwriter_set_indent($writer, 4);
@@ -387,10 +388,10 @@ class Data
 		xmlwriter_write_attribute($writer, 'xmlns:atom', 'http://www.w3.org/2005/Atom');
 		xmlwriter_start_element($writer, 'channel');
 
-		xmlwriter_write_element($writer, 'title', 'my ownCloud');
-		xmlwriter_write_element($writer, 'language', 'en-us');
+		xmlwriter_write_element($writer, 'title', $l->t('Activity feed'));
+		xmlwriter_write_element($writer, 'language', \OC_Preferences::getValue(\OCP\User::getUser(), 'core', 'lang'));
 		xmlwriter_write_element($writer, 'link', $link);
-		xmlwriter_write_element($writer, 'description', 'A personal ownCloud activities');
+		xmlwriter_write_element($writer, 'description', $l->t('Personal activity feed for %s', \OCP\User::getUser()));
 		xmlwriter_write_element($writer, 'pubDate', date('r'));
 		xmlwriter_write_element($writer, 'lastBuildDate', date('r'));
 
