@@ -55,12 +55,12 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 			array(array('/foo/bar.file'), 1, true, true, array('<strong>/foo/bar.file</strong>')),
 
 			// Valid file position
-			array(array('UserA', '/foo/bar.file'), 0, true, false, array('UserA', '/foo/bar.file')),
 			array(array('UserA', '/foo/bar.file'), 1, true, false, array('UserA', 'bar.file')),
 			array(array('UserA', '/foo/bar.file'), 1, true, true, array(
 				'<strong>UserA</strong>',
 				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/bar.file">bar.file</a>',
 			)),
+			array(array('UserA', '/foo/bar.file'), 2, true, false, array('UserA', '/foo/bar.file')),
 			array(array('UserA', '/foo/bar.file'), 2, true, true, array(
 				'<strong>UserA</strong>',
 				'<strong>/foo/bar.file</strong>',
@@ -132,7 +132,7 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 			),
 			array(
 				'created_self',
-				array(array('SubFolder/A.txt', 'SubFolder/B.txt', 'SubFolder/C.txt', 'SubFolder/D.txt', 'SubFolder/E.txt', '/SubFolder/F.txt')),
+				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
 				false,
 				false,
 				'You created SubFolder/A.txt, SubFolder/B.txt, SubFolder/C.txt and 3 more',
