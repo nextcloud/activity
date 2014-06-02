@@ -68,7 +68,9 @@ class DataHelper
 	 * @return string
 	 */
 	protected static function prepareParam($param, $isFilePosition, $stripPath, $highlightParams) {
+		$fileLink = '';
 		if ($isFilePosition && strpos($param, '/') === 0) {
+			$fileLink = \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($param)));
 			// Remove the path from the file string
 			$param = substr($param, 1);
 		}
@@ -79,9 +81,14 @@ class DataHelper
 			$newParam = substr($param, strrpos($param, '/') + 1);
 		}
 
-		if ($highlightParams) {
-			$title = ($isFilePosition && $stripPath) ? ' class="tooltip" title="' . \OC_Util::sanitizeHTML($param) . '"' : '';
-			return '<strong' . $title . '>' . \OC_Util::sanitizeHTML($newParam) . '</strong>';
+		if ($isFilePosition && $highlightParams) {
+			if (!$stripPath) {
+				return '<a class="filename" href="' . $fileLink . '">' . \OC_Util::sanitizeHTML($newParam) . '</a>';
+			}
+			$title = ' title="' . \OC_Util::sanitizeHTML($param) . '"';
+			return '<a class="filename' . (($title) ? ' tooltip' : '') . '" href="' . $fileLink . '"' . $title . '>' . \OC_Util::sanitizeHTML($newParam) . '</a>';
+		} else if ($highlightParams) {
+			return '<strong>' . \OC_Util::sanitizeHTML($newParam) . '</strong>';
 		} else {
 			return $newParam;
 		}

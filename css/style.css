@@ -155,6 +155,10 @@
 	color: #555;
 }
 
+.activity-section a.filename {
+	font-weight: bold;
+}
+
 /* colored icons, in addition to core ones */
 .activity-icon {
 	min-width: 16px;
