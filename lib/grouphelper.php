@@ -119,6 +119,9 @@ class GroupHelper
 			$activity['subject_short'] = DataHelper::translation($activity['app'], $activity['subject'], $activity['subjectparams'], true);
 			$activity['message_short'] = DataHelper::translation($activity['app'], $activity['message'], $activity['messageparams'], true);
 
+			$activity['subject_markup'] = DataHelper::translation($activity['app'], $activity['subject'], $activity['subjectparams'], true, true);
+			$activity['message_markup'] = DataHelper::translation($activity['app'], $activity['message'], $activity['messageparams'], true, true);
+
 			$activity['subject_long'] = DataHelper::translation($activity['app'], $activity['subject'], $activity['subjectparams']);
 			$activity['message_long'] = DataHelper::translation($activity['app'], $activity['message'], $activity['messageparams']);
 
