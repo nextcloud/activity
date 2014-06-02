@@ -47,8 +47,8 @@ class GroupHelper
 	 * @param array $activity
 	 */
 	public function addActivity($activity) {
-		$activity['subjectparams'] = (array) unserialize($activity['subjectparams']);
-		$activity['messageparams'] = (array) unserialize($activity['messageparams']);
+		$activity['subjectparams_array'] = unserialize($activity['subjectparams']);
+		$activity['messageparams_array'] = unserialize($activity['messageparams']);
 
 		if (!$this->allowGrouping) {
 			$this->activities[] = $activity;
@@ -56,10 +56,10 @@ class GroupHelper
 			if ($this->getGroupKey($activity) && $this->getGroupKey($activity) === $this->groupKey) {
 				$parameter = $this->getGroupParameter($activity);
 				if ($parameter !== false) {
-					if (!is_array($this->openGroup['subjectparams'][$parameter])) {
-						$this->openGroup['subjectparams'][$parameter] = array($this->openGroup['subjectparams'][$parameter]);
+					if (!is_array($this->openGroup['subjectparams_array'][$parameter])) {
+						$this->openGroup['subjectparams_array'][$parameter] = array($this->openGroup['subjectparams_array'][$parameter]);
 					}
-					$this->openGroup['subjectparams'][$parameter][] = $activity['subjectparams'][$parameter];
+					$this->openGroup['subjectparams_array'][$parameter][] = $activity['subjectparams_array'][$parameter];
 				}
 			} else {
 				if (!empty($this->openGroup)) {
@@ -116,14 +116,15 @@ class GroupHelper
 
 		$return = array();
 		foreach ($this->activities as $activity) {
-			$activity['subject_short'] = DataHelper::translation($activity['app'], $activity['subject'], $activity['subjectparams'], true);
-			$activity['message_short'] = DataHelper::translation($activity['app'], $activity['message'], $activity['messageparams'], true);
+			$activity['subjectparams'] = $activity['subjectparams_array'];
+			$activity['messageparams'] = $activity['messageparams_array'];
 
 			$activity['subject_markup'] = DataHelper::translation($activity['app'], $activity['subject'], $activity['subjectparams'], true, true);
 			$activity['message_markup'] = DataHelper::translation($activity['app'], $activity['message'], $activity['messageparams'], true, true);
-
-			$activity['subject_long'] = DataHelper::translation($activity['app'], $activity['subject'], $activity['subjectparams']);
-			$activity['message_long'] = DataHelper::translation($activity['app'], $activity['message'], $activity['messageparams']);
+			$activity['subject_short'] = DataHelper::translation($activity['app'], $activity['subject'], $activity['subjectparams'], true);
+			$activity['message_short'] = DataHelper::translation($activity['app'], $activity['message'], $activity['messageparams'], true);
+			$activity['subject_full'] = DataHelper::translation($activity['app'], $activity['subject'], $activity['subjectparams']);
+			$activity['message_full'] = DataHelper::translation($activity['app'], $activity['message'], $activity['messageparams']);
 
 			$return[] = $activity;
 		}
