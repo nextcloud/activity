@@ -11,12 +11,12 @@
 	</testsuite>
 	<!-- filters for code coverage -->
 	<filter>
-		<blacklist>
-			<directory suffix=".php">../../..</directory>
-			<directory suffix=".php">../../activity/tests</directory>
-		</blacklist>
 		<whitelist>
 			<directory suffix=".php">../../activity</directory>
+			<exclude>
+				<directory suffix=".php">../../activity/l10n</directory>
+				<directory suffix=".php">../../activity/tests</directory>
+			</exclude>
 		</whitelist>
 	</filter>
 	<logging>
