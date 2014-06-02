@@ -92,13 +92,12 @@ class DataHelper
 	 */
 	protected static function prepareFileParam($param, $stripPath, $highlightParams) {
 		$fileLink = \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($param)));
-		if (strpos($param, '/') === 0) {
-			// Remove the path from the file string
-			$param = substr($param, 1);
-		}
+
+		// Remove the path from the file string
+		$param = substr($param, 1);
 
 		$newParam = $param;
-		if ($stripPath === true && strrpos($param, '/') !== false) {
+		if ($stripPath && strrpos($param, '/') !== false) {
 			// Remove the path from the file string
 			$newParam = substr($param, strrpos($param, '/') + 1);
 		}
@@ -112,7 +111,7 @@ class DataHelper
 		}
 
 		$title = ' title="' . \OC_Util::sanitizeHTML($param) . '"';
-		return '<a class="filename' . (($title) ? ' tooltip' : '') . '" href="' . $fileLink . '"' . $title . '>' . \OC_Util::sanitizeHTML($newParam) . '</a>';
+		return '<a class="filename tooltip" href="' . $fileLink . '"' . $title . '>' . \OC_Util::sanitizeHTML($newParam) . '</a>';
 
 	}
 
