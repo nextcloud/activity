@@ -81,11 +81,6 @@
 	opacity: 0;
 }
 
-.box .avatar{
-	float: left;
-	margin-right: 20px;
-}
-
 .box .header{
 	height: 32px;
 	margin-bottom: 10px;
@@ -159,6 +154,12 @@
 	font-weight: bold;
 }
 
+.activity-section .avatar {
+	vertical-align: middle;
+	display: inline-block;
+	margin-right: 5px;
+}
+
 /* colored icons, in addition to core ones */
 .activity-icon {
 	min-width: 16px;
@@ -177,7 +178,7 @@
 }
 /* grey the changed and shared icons so they are less intense */
 .icon-change,
-.icon-shared,
+.icon-share,
 .icon-public {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 	filter: alpha(opacity=50);

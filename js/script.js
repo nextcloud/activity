@@ -3,7 +3,7 @@ $(function(){
 	function processElements($elem){
 		$elem.find('.avatar').each(function(){
 			var $this = $(this);
-			$this.avatar($this.data('user'), 32);
+			$this.avatar($this.data('user'), 28);
 		});
 		$elem.find('.tooltip').tipsy({gravity:'s', fade:true});
 	}

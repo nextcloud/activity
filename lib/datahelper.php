@@ -31,19 +31,19 @@ class DataHelper
 	 * @param string $app
 	 * @param string $text
 	 * @param array $params
-	 * @param mixed $filePosition Position of a file in $params
+	 * @param array $paramTypes Type of parameters, if they need special handling
 	 * @param bool $stripPath Shall we remove the path from the filename
 	 * @param bool $highlightParams
 	 * @return array
 	 */
-	public static function prepareParameters(\OC_L10N $l, $app, $text, $params, $filePosition = false, $stripPath = false, $highlightParams = false) {
+	public static function prepareParameters(\OC_L10N $l, $app, $text, $params, $paramTypes = array(), $stripPath = false, $highlightParams = false) {
 		if ($app === 'files' && $text) {
 			$preparedParams = array();
 			foreach ($params as $i => $param) {
 				if (is_array($param)) {
 					$parameterList = $plainParameterList = array();
 					foreach ($param as $parameter) {
-						if ($filePosition === $i) {
+						if (isset($paramTypes[$i]) && $paramTypes[$i] === 'file') {
 							$parameterList[] = self::prepareFileParam($parameter, $stripPath, $highlightParams);
 							$plainParameterList[] = self::prepareFileParam($parameter, false, false);
 						} else {
@@ -53,8 +53,10 @@ class DataHelper
 					}
 					$preparedParams[] = self::joinParameterList($l, $parameterList, $plainParameterList, $highlightParams);
 				} else {
-					if ($filePosition === $i) {
+					if (isset($paramTypes[$i]) && $paramTypes[$i] === 'file') {
 						$preparedParams[] = self::prepareFileParam($param, $stripPath, $highlightParams);
+					} else if (isset($paramTypes[$i]) && $paramTypes[$i] === 'username') {
+						$preparedParams[] = self::prepareUserParam($param, $highlightParams);
 					} else {
 						$preparedParams[] = self::prepareParam($param, $highlightParams);
 					}
@@ -75,6 +77,25 @@ class DataHelper
 	protected static function prepareParam($param, $highlightParams) {
 		if ($highlightParams) {
 			return '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
+		} else {
+			return $param;
+		}
+	}
+
+	/**
+	 * Prepares a user name parameter for usage
+	 *
+	 * Add an avatar to usernames
+	 *
+	 * @param string $param
+	 * @param bool $highlightParams
+	 * @return string
+	 */
+	protected static function prepareUserParam($param, $highlightParams) {
+		if ($highlightParams) {
+			$param = \OC_Util::sanitizeHTML($param);
+			return '<div class="avatar" data-user="' . $param . '"></div>'
+				. '<strong>' . $param . '</strong>';
 		} else {
 			return $param;
 		}
@@ -190,39 +211,49 @@ class DataHelper
 		}
 
 		if ($app === 'files') {
-			$params = self::prepareParameters($l, $app, $text, $params, 0, $stripPath, $highlightParams);
+			$preparedParams = self::prepareParameters(
+				$l, $app, $text,
+				$params, array(0 => 'file', 1 => 'username'),
+				$stripPath, $highlightParams
+			);
 			if ($text === 'created_self') {
-				return $l->t('You created %1$s', $params);
+				return $l->t('You created %1$s', $preparedParams);
 			}
 			else if ($text === 'created_by') {
-				return $l->t('%2$s created %1$s', $params);
+				return $l->t('%2$s created %1$s', $preparedParams);
 			}
 			else if ($text === 'changed_self') {
-				return $l->t('You changed %1$s', $params);
+				return $l->t('You changed %1$s', $preparedParams);
 			}
 			else if ($text === 'changed_by') {
-				return $l->t('%2$s changed %1$s', $params);
+				return $l->t('%2$s changed %1$s', $preparedParams);
 			}
 			else if ($text === 'deleted_self') {
-				return $l->t('You deleted %1$s', $params);
+				return $l->t('You deleted %1$s', $preparedParams);
 			}
 			else if ($text === 'deleted_by') {
-				return $l->t('%2$s deleted %1$s', $params);
+				return $l->t('%2$s deleted %1$s', $preparedParams);
 			}
 			else if ($text === 'shared_user_self') {
-				return $l->t('You shared %1$s with %2$s', $params);
+				return $l->t('You shared %1$s with %2$s', $preparedParams);
 			}
 			else if ($text === 'shared_group_self') {
-				return $l->t('You shared %1$s with group %2$s', $params);
+				// Second parameter is not a username here
+				$preparedParams = self::prepareParameters(
+					$l, $app, $text,
+					$params, array(0 => 'file'),
+					$stripPath, $highlightParams
+				);
+				return $l->t('You shared %1$s with group %2$s', $preparedParams);
 			}
 			else if ($text === 'shared_with_by') {
-				return $l->t('%2$s shared %1$s with you', $params);
+				return $l->t('%2$s shared %1$s with you', $preparedParams);
 			}
 			else if ($text === 'shared_link_self') {
-				return $l->t('You shared %1$s', $params);
+				return $l->t('You shared %1$s', $preparedParams);
 			}
 
-			return $l->t($text, $params);
+			return $l->t($text, $preparedParams);
 		} else {
 			$l = \OCP\Util::getL10N($app);
 			return $l->t($text, $params);

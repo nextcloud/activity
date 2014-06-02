@@ -36,42 +36,51 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 		parent::tearDown();
 	}
 
-	public function prepareFilesParamsData() {
+	public function prepareParametersData() {
 		return array(
 			array(array(), false, false, false, array()),
 
 			// No file position: no path strip
-			array(array('/foo/bar.file'), false, false, false, array('/foo/bar.file')),
-			array(array('/foo/bar.file'), false, true, false, array('/foo/bar.file')),
-			array(array('/foo/bar.file'), false, false, true, array('<strong>/foo/bar.file</strong>')),
-			array(array('/foo/bar.file'), false, true, true, array('<strong>/foo/bar.file</strong>')),
+			array(array('/foo/bar.file'), array(), false, false, array('/foo/bar.file')),
+			array(array('/foo/bar.file'), array(), true, false, array('/foo/bar.file')),
+			array(array('/foo/bar.file'), array(), false, true, array('<strong>/foo/bar.file</strong>')),
+			array(array('/foo/bar.file'), array(), true, true, array('<strong>/foo/bar.file</strong>')),
 
 			// Valid file position
-			array(array('/foo/bar.file'), 0, true, false, array('bar.file')),
-			array(array('/foo/bar.file'), 0, true, true, array(
+			array(array('/foo/bar.file'), array(0 => 'file'), true, false, array('bar.file')),
+			array(array('/foo/bar.file'), array(0 => 'file'), true, true, array(
 				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/bar.file">bar.file</a>',
 			)),
-			array(array('/foo/bar.file'), 1, true, false, array('/foo/bar.file')),
-			array(array('/foo/bar.file'), 1, true, true, array('<strong>/foo/bar.file</strong>')),
+			array(array('/foo/bar.file'), array(1 => 'file'), true, false, array('/foo/bar.file')),
+			array(array('/foo/bar.file'), array(1 => 'file'), true, true, array('<strong>/foo/bar.file</strong>')),
 
 			// Valid file position
-			array(array('UserA', '/foo/bar.file'), 1, true, false, array('UserA', 'bar.file')),
-			array(array('UserA', '/foo/bar.file'), 1, true, true, array(
+			array(array('UserA', '/foo/bar.file'), array(1 => 'file'), true, false, array('UserA', 'bar.file')),
+			array(array('UserA', '/foo/bar.file'), array(1 => 'file'), true, true, array(
 				'<strong>UserA</strong>',
 				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/bar.file">bar.file</a>',
 			)),
-			array(array('UserA', '/foo/bar.file'), 2, true, false, array('UserA', '/foo/bar.file')),
-			array(array('UserA', '/foo/bar.file'), 2, true, true, array(
+			array(array('UserA', '/foo/bar.file'), array(2 => 'file'), true, false, array('UserA', '/foo/bar.file')),
+			array(array('UserA', '/foo/bar.file'), array(2 => 'file'), true, true, array(
 				'<strong>UserA</strong>',
 				'<strong>/foo/bar.file</strong>',
+			)),
+			array(array('UserA', '/foo/bar.file'), array(0 => 'username'), true, true, array(
+				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
+				'<strong>/foo/bar.file</strong>',
+			)),
+
+			array(array('UserA', '/foo/bar.file'), array(0 => 'username', 1 => 'file'), true, true, array(
+				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/bar.file">bar.file</a>',
 			)),
 		);
 	}
 
 	/**
-	 * @dataProvider prepareFilesParamsData
+	 * @dataProvider prepareParametersData
 	 */
-	public function testPrepareFilesParams($params, $filePosition, $stripPath, $highlightParams, $expected) {
+	public function testPrepareParameters($params, $filePosition, $stripPath, $highlightParams, $expected) {
 		$l = \OC_L10N::get('activity');
 		$this->assertEquals(
 			$expected,
@@ -102,15 +111,18 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 			array('created_by', array('/SubFolder/A.txt', 'UserB'), true, false, 'UserB created A.txt'),
 			array(
 				'created_by', array('/SubFolder/A.txt', 'UserB'), false, true,
-				'<strong>UserB</strong> created <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder">SubFolder/A.txt</a>',
+				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
+				. '<a class="filename" href="/index.php/apps/files?dir=%2FSubFolder">SubFolder/A.txt</a>',
 			),
 			array(
 				'created_by', array('/SubFolder/A.txt', 'UserB'), true, true,
-				'<strong>UserB</strong> created <a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="SubFolder/A.txt">A.txt</a>',
+				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
+				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="SubFolder/A.txt">A.txt</a>',
 			),
 			array(
 				'created_by', array('/A.txt', 'UserB'), true, true,
-				'<strong>UserB</strong> created <a class="filename tooltip" href="/index.php/apps/files?dir=%2F" title="A.txt">A.txt</a>',
+				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
+				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2F" title="A.txt">A.txt</a>',
 			),
 
 			array(
