@@ -41,11 +41,12 @@ class DataHelper
 			$preparedParams = array();
 			foreach ($params as $i => $param) {
 				if (is_array($param)) {
-					$parameterList = array();
+					$parameterList = $plainParameterList = array();
 					foreach ($param as $parameter) {
 						$parameterList[] = self::prepareParam($parameter, $filePosition === $i, $stripPath, $highlightParams);
+						$plainParameterList[] = self::prepareParam($parameter, $filePosition === $i, false, false);
 					}
-					$preparedParams[] = self::joinParameterList($l, $parameterList, $highlightParams);
+					$preparedParams[] = self::joinParameterList($l, $parameterList, $plainParameterList, $highlightParams);
 				} else {
 					$preparedParams[] = self::prepareParam($param, $filePosition === $i, $stripPath, $highlightParams);
 				}
@@ -98,10 +99,11 @@ class DataHelper
 	 *
 	 * @param \OC_L10N $l
 	 * @param array $parameterList
+	 * @param array $plainParameterList
 	 * @param bool $highlightParams
 	 * @return string
 	 */
-	protected static function joinParameterList(\OC_L10N $l, $parameterList, $highlightParams) {
+	protected static function joinParameterList(\OC_L10N $l, $parameterList, $plainParameterList, $highlightParams) {
 		if (empty($parameterList)) {
 			return '';
 		}
@@ -125,15 +127,15 @@ class DataHelper
 		}
 
 		$firstParams = array_slice($parameterList, 0, 3);
-		$trimmedParams = array_slice($parameterList, 3);
 		$firstList = implode($l->t(', '), $firstParams);
+		$trimmedParams = array_slice($plainParameterList, 3);
 		$trimmedList = implode($l->t(', '), $trimmedParams);
 		if ($highlightParams) {
 			return $l->n(
-				'%s and <strong>%n</strong> more',
-				'%s and <strong>%n</strong> more',
+				'%s and <strong class="tooltip" title="%s">%n more</strong>',
+				'%s and <strong class="tooltip" title="%s">%n more</strong>',
 				$count - 3,
-				array($firstList));
+				array($firstList, $trimmedList));
 		}
 		return $l->n('%s and %n more', '%s and %n more', $count - 3, array($firstList));
 	}

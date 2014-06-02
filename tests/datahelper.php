@@ -110,7 +110,7 @@ class DataHelper extends \PHPUnit_Framework_TestCase {
 				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
 				false,
 				true,
-				'You created <strong>SubFolder/A.txt</strong>, <strong>SubFolder/B.txt</strong>, <strong>SubFolder/C.txt</strong> and <strong>3</strong> more',
+				'You created <strong>SubFolder/A.txt</strong>, <strong>SubFolder/B.txt</strong>, <strong>SubFolder/C.txt</strong> and <strong class="tooltip" title="SubFolder/D.txt, SubFolder/E.txt, SubFolder/F.txt">3 more</strong>',
 			),
 		);
 	}
