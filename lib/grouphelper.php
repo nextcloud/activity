@@ -59,7 +59,9 @@ class GroupHelper
 					if (!is_array($this->openGroup['subjectparams_array'][$parameter])) {
 						$this->openGroup['subjectparams_array'][$parameter] = array($this->openGroup['subjectparams_array'][$parameter]);
 					}
+
 					$this->openGroup['subjectparams_array'][$parameter][] = $activity['subjectparams_array'][$parameter];
+					$this->openGroup['subjectparams_array'][$parameter] = array_unique($this->openGroup['subjectparams_array'][$parameter]);
 				}
 			} else {
 				if (!empty($this->openGroup)) {
