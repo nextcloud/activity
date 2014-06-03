@@ -246,6 +246,7 @@ class Data
 		$user = \OCP\User::getUser();
 		$parameters = array($user);
 		$limitActivities = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream', $filter);
+
 		if ($filter === 'self') {
 			$limitActivities .= ' AND `user` = ?';
 			$parameters[] = $user;
@@ -253,6 +254,21 @@ class Data
 		else if ($filter === 'by') {
 			$limitActivities .= ' AND `user` <> ?';
 			$parameters[] = $user;
+		}
+		else if ($filter !== 'all') {
+			switch ($filter) {
+				case 'files':
+					$limitActivities .= ' AND `app` = ?';
+					$parameters[] = 'files';
+				break;
+
+				default:
+					\OCP\Util::emitHook('OC_Activity', 'get_filter', array(
+						'filter'			=> $filter,
+						'limitActivities'	=> &$limitActivities,
+						'parameters'		=> &$parameters,
+					));
+			}
 		}
 
 		// fetch from DB
@@ -265,29 +281,6 @@ class Data
 		$result = $query->execute($parameters);
 
 		return self::getActivitiesFromQueryResult($result, $allowGrouping);
-	}
-
-	/**
-	 * @brief Get a list of events which contain the query string
-	 * @param string $txt The query string
-	 * @param int $count The number of statements to read
-	 * @return array
-	 */
-	public static function search($txt, $count) {
-		// get current user
-		$user = \OCP\User::getUser();
-		$limitActivitiesType = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream');
-
-		// search in DB
-		$query = \OCP\DB::prepare(
-			'SELECT * '
-			. ' FROM `*PREFIX*activity` '
-			. 'WHERE `affecteduser` = ? AND ((`subject` LIKE ?) OR (`message` LIKE ?) OR (`file` LIKE ?)) ' . $limitActivitiesType
-			. 'ORDER BY `timestamp` desc'
-			, $count);
-		$result = $query->execute(array($user, '%' . $txt . '%', '%' . $txt . '%', '%' . $txt . '%')); //$result = $query->execute(array($user,'%'.$txt.''));
-
-		return self::getActivitiesFromQueryResult($result, false);
 	}
 
 	/**
@@ -394,10 +387,17 @@ class Data
 			case 'self':
 			case 'shares':
 			case 'all':
+			case 'files':
 				return $_GET[$paramName];
 			default:
-				// @todo Emit event
-				return 'all';
+				$filter = 'all';
+
+				\OCP\Util::emitHook('OC_Activity', 'get_filter', array(
+					'paramName'		=> $paramName,
+					'filte'		=> &$filter,
+				));
+
+				return $filter;
 		}
 	}
 

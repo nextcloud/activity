@@ -7,8 +7,11 @@
 /** @var $_ array */
 ?>
 <div id="app-navigation">
-	<ul>
-		<?php foreach ($_['topNavigation'] as $navigation) { ?>
+	<?php foreach ($_['navigations'] as $navigationGroup => $navigationEntries) { ?>
+		<?php if ($navigationGroup === 'bottom'): ?><div id="app-settings"><?php endif; ?>
+		<?php if ($navigationGroup !== 'apps'): ?><ul><?php endif; ?>
+
+		<?php foreach ($navigationEntries as $navigation) { ?>
 		<li>
 			<a
 				<?php if ($_['activeNavigation'] == $navigation['id']): ?> class="active"<?php endif; ?>
@@ -19,16 +22,8 @@
 			</a>
 		</li>
 		<?php } ?>
-	</ul>
-	<div id="app-settings">
-		<ul>
-			<?php foreach ($_['bottomNavigation'] as $navigation) { ?>
-			<li>
-				<a href="<?php p($navigation['url']) ?>" data-navigation="<?php p($navigation['id']) ?>">
-					<?php p($navigation['name']) ?>
-				</a>
-			</li>
-			<?php } ?>
-		</ul>
-	</div>
+
+		<?php if ($navigationGroup !== 'top'): ?></ul><?php endif; ?>
+		<?php if ($navigationGroup === 'bottom'): ?></div><?php endif; ?>
+	<?php } ?>
 </div>

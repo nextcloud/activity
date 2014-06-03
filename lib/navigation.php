@@ -52,7 +52,7 @@ class Navigation {
 	public function getTemplate($forceActive = null) {
 		$active = $forceActive ?: $this->active;
 
-		$template = new \OCP\Template('activity', 'appnavigation', '');
+		$template = new \OCP\Template('activity', 'navigation', '');
 		$entries = $this->getLinkList();
 
 		\OCP\Util::emitHook('OC_Activity', 'get_navigation', array(
@@ -61,8 +61,7 @@ class Navigation {
 		));
 
 		$template->assign('activeNavigation', $active);
-		$template->assign('topNavigation', $entries['top']);
-		$template->assign('bottomNavigation', $entries['bottom']);
+		$template->assign('navigations', $entries);
 
 		return $template;
 	}
@@ -97,6 +96,15 @@ class Navigation {
 				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'shares')),
 			),
 		);
+
+		$appFilterEntries = array(
+			array(
+				'id' => 'files',
+				'name' => (string) $this->l->t('Files'),
+				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'files')),
+			),
+		);
+
 		$bottomEntries = array(
 			array(
 				'id' => 'rss',
@@ -107,6 +115,7 @@ class Navigation {
 
 		return array(
 			'top'		=> $topEntries,
+			'apps'		=> $appFilterEntries,
 			'bottom'	=> $bottomEntries,
 		);
 	}
