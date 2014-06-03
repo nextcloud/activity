@@ -192,9 +192,10 @@ class Data
 	/**
 	 * @param string	$user	Name of the user
 	 * @param string	$method	Should be one of 'stream', 'email'
+	 * @param string	$filter	Further filter the activities
 	 * @return string	Part of the SQL query limiting the activities
 	 */
-	public static function getUserNotificationTypesQuery($user, $method) {
+	public static function getUserNotificationTypesQuery($user, $method, $filter) {
 		$l = \OC_L10N::get('activity');
 		$types = \OCA\Activity\Data::getNotificationTypes($l);
 
@@ -205,6 +206,8 @@ class Data
 			}
 		}
 
+		$userActivities = self::filterNotificationTypes($userActivities, $filter);
+
 		// We don't want to display any activities
 		if (empty($userActivities)) {
 			return '1 = 0';
@@ -214,50 +217,70 @@ class Data
 	}
 
 	/**
+	 * Filter the activity types
+	 *
+	 * @param array $types
+	 * @param string $filter
+	 * @return array
+	 */
+	protected static function filterNotificationTypes($types, $filter) {
+		switch ($filter) {
+			case 'shares':
+				return array_intersect(array(
+					Data::TYPE_SHARED,
+				), $types);
+		}
+		return $types;
+	}
+
+	/**
 	 * @brief Read a list of events from the activity stream
 	 * @param int $start The start entry
 	 * @param int $count The number of statements to read
+	 * @param string $filter Filter the activities
 	 * @param bool $allowGrouping Allow activities to be grouped
 	 * @return array
 	 */
-	public static function read($start, $count, $allowGrouping = true) {
+	public static function read($start, $count, $filter = 'all', $allowGrouping = true) {
 		// get current user
 		$user = \OCP\User::getUser();
-		$limitActivitiesType = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream');
+		$parameters = array($user);
+		$limitActivities = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream', $filter);
+
+		if ($filter === 'self') {
+			$limitActivities .= ' AND `user` = ?';
+			$parameters[] = $user;
+		}
+		else if ($filter === 'by') {
+			$limitActivities .= ' AND `user` <> ?';
+			$parameters[] = $user;
+		}
+		else if ($filter !== 'all') {
+			switch ($filter) {
+				case 'files':
+					$limitActivities .= ' AND `app` = ?';
+					$parameters[] = 'files';
+				break;
+
+				default:
+					\OCP\Util::emitHook('OC_Activity', 'get_filter', array(
+						'filter'			=> $filter,
+						'limitActivities'	=> &$limitActivities,
+						'parameters'		=> &$parameters,
+					));
+			}
+		}
 
 		// fetch from DB
 		$query = \OCP\DB::prepare(
 			'SELECT * '
 			. ' FROM `*PREFIX*activity` '
-			. ' WHERE `affecteduser` = ? ' . $limitActivitiesType
+			. ' WHERE `affecteduser` = ? ' . $limitActivities
 			. ' ORDER BY `timestamp` desc',
 			$count, $start);
-		$result = $query->execute(array($user));
+		$result = $query->execute($parameters);
 
 		return self::getActivitiesFromQueryResult($result, $allowGrouping);
-	}
-
-	/**
-	 * @brief Get a list of events which contain the query string
-	 * @param string $txt The query string
-	 * @param int $count The number of statements to read
-	 * @return array
-	 */
-	public static function search($txt, $count) {
-		// get current user
-		$user = \OCP\User::getUser();
-		$limitActivitiesType = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream');
-
-		// search in DB
-		$query = \OCP\DB::prepare(
-			'SELECT * '
-			. ' FROM `*PREFIX*activity` '
-			. 'WHERE `affecteduser` = ? AND ((`subject` LIKE ?) OR (`message` LIKE ?) OR (`file` LIKE ?)) ' . $limitActivitiesType
-			. 'ORDER BY `timestamp` desc'
-			, $count);
-		$result = $query->execute(array($user, '%' . $txt . '%', '%' . $txt . '%', '%' . $txt . '%')); //$result = $query->execute(array($user,'%'.$txt.''));
-
-		return self::getActivitiesFromQueryResult($result, false);
 	}
 
 	/**
@@ -351,6 +374,31 @@ class Data
 		}
 
 		return 1;
+	}
+
+	/**
+	 * Get the casted page number from $_GET
+	 * @param string $paramName
+	 * @return int
+	 */
+	public static function getFilterFromParam($paramName = 'filter') {
+		switch ($_GET[$paramName]) {
+			case 'by':
+			case 'self':
+			case 'shares':
+			case 'all':
+			case 'files':
+				return $_GET[$paramName];
+			default:
+				$filter = 'all';
+
+				\OCP\Util::emitHook('OC_Activity', 'get_filter', array(
+					'paramName'		=> $paramName,
+					'filte'		=> &$filter,
+				));
+
+				return $filter;
+		}
 	}
 
 	/**

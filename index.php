@@ -35,23 +35,23 @@ OCP\Util::addScript('activity', 'jquery.infinitescroll.min');
 OCP\Util::addScript('activity', 'script');
 OCP\Util::addStyle('activity', 'style');
 
+$navigation = new \OCA\Activity\Navigation(\OCP\Util::getL10N('activity'));
+
 // get the page that is requested. Needed for endless scrolling
 $page = \OCA\Activity\Data::getPageFromParam() - 1;
-
-$nav = new OCP\Template('activity', 'appnavigation', '');
-$nav->assign('rsslink', \OCP\Util::linkToAbsolute('activity', 'rss.php'));
-
-// get rss url
-$nextpage = \OCP\Util::linkToAbsolute('activity', 'index.php', array('page' => $page + 2));
+$filter = \OCA\Activity\Data::getFilterFromParam();
 
 // read activities data
 $count = 30;
-$activity = OCA\Activity\Data::read($page * $count, $count);
+$activity = OCA\Activity\Data::read($page * $count, $count, $filter);
 
 // show activity template
 $tmpl = new \OCP\Template('activity', 'list', 'user');
 $tmpl->assign('activity', $activity);
-$tmpl->assign('appNavigation', $nav);
+$tmpl->assign('filter', $filter);
+$tmpl->assign('appNavigation', $navigation->getTemplate($filter));
 
-if ($page == 0) $tmpl->assign('nextpage', $nextpage);
+if ($page == 0) {
+	$tmpl->assign('nextpage', \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => $filter, 'page' => 2)));
+}
 $tmpl->printPage();

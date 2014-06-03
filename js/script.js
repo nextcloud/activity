@@ -21,12 +21,13 @@ $(function(){
 	$container.infinitescroll({
 			navSelector  : '#page-nav',    // selector for the paged navigation
 			nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
-			itemSelector : '.group',     // selector for all items you'll retrieve
+			itemSelector : '.group',       // selector for all items you'll retrieve
 			pixelsFromNavToBottom: 150,
 			extraScrollPx: 50,
 			binder: $('#app-content'),
 			path : function(page){
-				return OC.filePath('activity', 'ajax', 'fetch.php') + '?page=' + page;
+				return OC.filePath('activity', 'ajax', 'fetch.php') +
+					'?filter=' + $('#container').attr('data-activity-filter') + '&page=' + page;
 			},
 			loading: {
 				finishedMsg: t('activity', 'No more activities to load.'),
