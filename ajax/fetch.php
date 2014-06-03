@@ -28,11 +28,11 @@ OCP\JSON::checkAppEnabled('activity');
 // Read the next 30 items for the endless scrolling
 $count = 30;
 $page = \OCA\Activity\Data::getPageFromParam() - 1;
-$activity = \OCA\Activity\Data::read($page * $count, $count);
-$nextpage = \OCP\Util::linkToAbsolute('activity', 'index.php', array('page' => $page + 2));
+$filter = \OCA\Activity\Data::getFilterFromParam();
+
+$activity = \OCA\Activity\Data::read($page * $count, $count, $filter);
 
 // show the next 30 entries
 $tmpl = new \OCP\Template('activity', 'activities.part', '');
 $tmpl->assign('activity', $activity);
-if ($page == 0) $tmpl->assign('nextpage', $nextpage);
 $tmpl->printPage();

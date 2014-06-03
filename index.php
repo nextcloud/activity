@@ -39,16 +39,19 @@ $navigation = new \OCA\Activity\Navigation(\OCP\Util::getL10N('activity'));
 
 // get the page that is requested. Needed for endless scrolling
 $page = \OCA\Activity\Data::getPageFromParam() - 1;
-$nextpage = \OCP\Util::linkToAbsolute('activity', 'index.php', array('page' => $page + 2));
+$filter = \OCA\Activity\Data::getFilterFromParam();
 
 // read activities data
 $count = 30;
-$activity = OCA\Activity\Data::read($page * $count, $count);
+$activity = OCA\Activity\Data::read($page * $count, $count, $filter);
 
 // show activity template
 $tmpl = new \OCP\Template('activity', 'list', 'user');
 $tmpl->assign('activity', $activity);
-$tmpl->assign('appNavigation', $navigation->getTemplate());
+$tmpl->assign('filter', $filter);
+$tmpl->assign('appNavigation', $navigation->getTemplate($filter));
 
-if ($page == 0) $tmpl->assign('nextpage', $nextpage);
+if ($page == 0) {
+	$tmpl->assign('nextpage', \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => $filter, 'page' => 2)));
+}
 $tmpl->printPage();

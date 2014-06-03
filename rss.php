@@ -36,9 +36,9 @@ if (isset($_SERVER['HTTP_ACCEPT']) && stristr($_SERVER['HTTP_ACCEPT'], 'applicat
 $tmpl = new \OCP\Template('activity', 'rss');
 
 $tmpl->assign('rssLang', \OC_Preferences::getValue(\OCP\User::getUser(), 'core', 'lang'));
-$tmpl->assign('rssLink', \OCP\Util::linkToAbsolute('activity','rss.php'));
+$tmpl->assign('rssLink', \OCP\Util::linkToAbsolute('activity', 'rss.php'));
 $tmpl->assign('rssPubDate', date('r'));
 $tmpl->assign('user', \OCP\User::getUser());
-$tmpl->assign('activities', \OCA\Activity\Data::read(0, 30, false));
+$tmpl->assign('activities', \OCA\Activity\Data::read(0, 30, 'by', false));
 
 $tmpl->printPage();

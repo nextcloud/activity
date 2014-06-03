@@ -79,7 +79,22 @@ class Navigation {
 			array(
 				'id' => 'all',
 				'name' => (string) $this->l->t('All Activities'),
-				'url' => '#',
+				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php'),
+			),
+			array(
+				'id' => 'by',
+				'name' => (string) $this->l->t('Activities by others'),
+				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'by')),
+			),
+			array(
+				'id' => 'self',
+				'name' => (string) $this->l->t('Activities by you'),
+				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'self')),
+			),
+			array(
+				'id' => 'shares',
+				'name' => (string) $this->l->t('Shares'),
+				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'shares')),
 			),
 		);
 		$bottomEntries = array(

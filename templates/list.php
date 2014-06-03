@@ -36,7 +36,7 @@
 <?php else:
 	// Show the activities. The container is needed for the endless scrolling
 	?>
-	<div id="container">
+	<div id="container" data-activity-filter="<?php p($_['filter']) ?>">
 		<?php
 			$tmpl = new \OCP\Template('activity', 'activities.part', '');
 			$tmpl->assign('activity', $_['activity']);
