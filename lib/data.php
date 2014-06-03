@@ -355,13 +355,14 @@ class Data
 
 	/**
 	 * @brief Expire old events
+	 * @param int $expireDays Minimum 1 day
+	 * @return null
 	 */
-	public static function expire() {
-		// keep activity feed entries for one year
-		$ttl = (60 * 60 * 24 * 365);
+	public static function expire($expireDays = 365) {
+		$ttl = (60 * 60 * 24 * max(1, $expireDays));
 
 		$timelimit = time() - $ttl;
-		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity` where `timestamp`<?');
+		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity` where `timestamp` < ?');
 		$query->execute(array($timelimit));
 	}
 }
