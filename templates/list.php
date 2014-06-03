@@ -25,8 +25,9 @@
 /** @var $theme OC_Defaults */
 /** @var $_ array */
 ?>
-<a href="<?php p($_['rsslink']) ?>" class="button rssbutton"><?php p($l->t('RSS feed')) ?></a>
+<?php $_['appNavigation']->printPage(); ?>
 
+<div id="app-content">
 <?php if (empty($_['activity'])): ?>
 	<div class="noactivities">
 		<div class="head"><?php p($l->t('No activities yet.')) ?></div>
@@ -51,3 +52,4 @@
 		</nav>
 	<?php endif; ?>
 <?php endif; ?>
+</div>

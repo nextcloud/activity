@@ -38,8 +38,10 @@ OCP\Util::addStyle('activity', 'style');
 // get the page that is requested. Needed for endless scrolling
 $page = \OCA\Activity\Data::getPageFromParam() - 1;
 
+$nav = new OCP\Template('activity', 'appnavigation', '');
+$nav->assign('rsslink', \OCP\Util::linkToAbsolute('activity', 'rss.php'));
+
 // get rss url
-$rsslink = \OCP\Util::linkToAbsolute('activity', 'rss.php');
 $nextpage = \OCP\Util::linkToAbsolute('activity', 'index.php', array('page' => $page + 2));
 
 // read activities data
@@ -48,8 +50,8 @@ $activity = OCA\Activity\Data::read($page * $count, $count);
 
 // show activity template
 $tmpl = new \OCP\Template('activity', 'list', 'user');
-$tmpl->assign('rsslink', $rsslink);
 $tmpl->assign('activity', $activity);
+$tmpl->assign('appNavigation', $nav);
+
 if ($page == 0) $tmpl->assign('nextpage', $nextpage);
 $tmpl->printPage();
-
