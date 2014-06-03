@@ -8,19 +8,27 @@
 ?>
 <div id="app-navigation">
 	<ul>
+		<?php foreach ($_['topNavigation'] as $navigation) { ?>
 		<li>
-			<a class="active" href="#">
-				<?php p($l->t('All Activities')) ?>
+			<a
+				<?php if ($_['activeNavigation'] == $navigation['id']): ?> class="active"<?php endif; ?>
+				data-navigation="<?php p($navigation['id']) ?>"
+				href="<?php p($navigation['url']) ?>"
+			>
+				<?php p($navigation['name']) ?>
 			</a>
 		</li>
+		<?php } ?>
 	</ul>
 	<div id="app-settings">
 		<ul>
+			<?php foreach ($_['bottomNavigation'] as $navigation) { ?>
 			<li>
-				<a href="<?php p($_['rsslink']) ?>">
-					<?php p($l->t('RSS feed')) ?>
+				<a href="<?php p($navigation['url']) ?>" data-navigation="<?php p($navigation['id']) ?>">
+					<?php p($navigation['name']) ?>
 				</a>
 			</li>
+			<?php } ?>
 		</ul>
 	</div>
 </div>
