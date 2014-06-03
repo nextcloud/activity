@@ -60,6 +60,12 @@ class Navigation {
 			'entries'		=> &$entries,
 		));
 
+		if (sizeof($entries['apps']) === 1) {
+			// If there is only the files app, we simply do not show it,
+			// as it is the same as the 'all' filter.
+			$entries['apps'] = array();
+		}
+
 		$template->assign('activeNavigation', $active);
 		$template->assign('navigations', $entries);
 
