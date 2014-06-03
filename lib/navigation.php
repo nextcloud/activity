@@ -32,6 +32,9 @@ class Navigation {
 	/** @var \OC_L10N */
 	protected $l;
 
+	/** @var string */
+	protected $active;
+
 	/**
 	 * Construct
 	 *
@@ -87,14 +90,14 @@ class Navigation {
 				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php'),
 			),
 			array(
-				'id' => 'by',
-				'name' => (string) $this->l->t('Activities by others'),
-				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'by')),
-			),
-			array(
 				'id' => 'self',
 				'name' => (string) $this->l->t('Activities by you'),
 				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'self')),
+			),
+			array(
+				'id' => 'by',
+				'name' => (string) $this->l->t('Activities by others'),
+				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'by')),
 			),
 			array(
 				'id' => 'shares',

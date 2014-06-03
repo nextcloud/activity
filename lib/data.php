@@ -223,7 +223,7 @@ class Data
 	 * @param string $filter
 	 * @return array
 	 */
-	public static function filterNotificationTypes($types, $filter) {
+	protected static function filterNotificationTypes($types, $filter) {
 		switch ($filter) {
 			case 'shares':
 				return array_intersect(array(
