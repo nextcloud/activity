@@ -40,14 +40,6 @@
 	font-size: 1em;
 }
 
-.rssbutton {
-	font-size: 0.8em;
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 10px 5px;
-}
-
 #container {
   background: #FFF;
   margin-bottom: 20px;

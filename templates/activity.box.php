@@ -9,7 +9,7 @@
 
 <div class="box">
 	<div class="messagecontainer">
-		<div class="activity-icon <?php p($_['typeIcon']) ?>"></div>
+		<div class="activity-icon <?php p($_['typeIcon']) ?><?php if ($_['typeIcon']): ?> svg<?php endif; ?>"></div>
 
 		<div class="activitysubject">
 			<?php if ($_['event']['link']): ?><a href="<?php p($_['event']['link']) ?>"><?php endif ?>
