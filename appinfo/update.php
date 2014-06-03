@@ -65,6 +65,15 @@ if (version_compare($installedVersion, '1.1.6', '<')) {
 	$query->execute(array('activity', 'notify_stream', 'notify_email'));
 }
 
+if (version_compare($installedVersion, '1.1.11', '<')) {
+	$query = \OC_DB::prepare(
+		'DELETE FROM `*PREFIX*activity`'
+		. ' WHERE `subject` = ?'
+	);
+
+	$query->execute(array('%s shared %s with you'));
+}
+
 if (version_compare($installedVersion, '1.1.10', '<')) {
 	$subject_map = array(
 		'%s created'		=> 'created_self',
@@ -82,20 +91,5 @@ if (version_compare($installedVersion, '1.1.10', '<')) {
 	foreach ($subject_map as $old_subject => $new_subject) {
 		$query = \OC_DB::prepare('UPDATE `*PREFIX*activity` SET `subject` = ? WHERE `subject` = ?');
 		$query->execute(array($new_subject, $old_subject));
-	}
-}
-
-if (version_compare($installedVersion, '1.1.11', '<')) {
-	$query = \OC_DB::prepare(
-		'SELECT `activity_id`, `subjectparams` '
-		. 'FROM `*PREFIX*activity` '
-		. 'WHERE `subject` = ?');
-	$result = $query->execute(array('shared_with_by'));
-	while ($row = $result->fetchRow()) {
-		$subjectparams = unserialize($row['subjectparams']);
-		$username = array_shift($subjectparams);
-		array_push($subjectparams, $username);
-		$query = \OC_DB::prepare('UPDATE `*PREFIX*activity` SET `subjectparams` = ? WHERE `activity_id` = ?');
-		$query->execute(array(serialize($subjectparams), $row['activity_id']));
 	}
 }

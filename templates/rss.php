@@ -24,7 +24,6 @@
 <?php endif; ?>
 <?php if (!empty($activity['link'])): ?>
 			<link><?php p($activity['link']); ?></link>
-			<guid><?php p($activity['link']); ?></guid>
 <?php endif; ?>
 <?php if (!empty($activity['timestamp'])): ?>
 			<pubDate><?php p(date('r', $activity['timestamp'])); ?></pubDate>
