@@ -23,6 +23,7 @@
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\UserSettings;
+use OCA\Activity\Data;
 
 class UserSettingsTest extends \PHPUnit_Framework_TestCase {
 	public function setUp() {
@@ -33,6 +34,8 @@ class UserSettingsTest extends \PHPUnit_Framework_TestCase {
 			array('test2', 'activity', 'notify_stream_type2', '0'),
 			array('test3', 'activity', 'notify_stream_type1', ''),
 			array('test4', 'activity', 'notify_stream_type1', '3'),
+			array('test6', 'activity', 'notify_stream_file_nodefault', '1'),
+			array('test6', 'activity', 'notify_stream_file_created', '1'),
 
 			array('test1', 'activity', 'notify_email_type1', '1'),
 			array('test1', 'activity', 'notify_email_type2', '2'),
@@ -41,11 +44,14 @@ class UserSettingsTest extends \PHPUnit_Framework_TestCase {
 			array('test3', 'activity', 'notify_email_type1', ''),
 			array('test4', 'activity', 'notify_email_type1', '3'),
 			array('test5', 'activity', 'notify_email_type1', '1'),
+			array('test6', 'activity', 'notify_email_shared', '1'),
+			array('test6', 'activity', 'notify_email_file_created', '1'),
 
 			array('test1', 'activity', 'notify_setting_batchtime', '1'),
 			array('test2', 'activity', 'notify_setting_batchtime', '2'),
 			array('test3', 'activity', 'notify_setting_batchtime', '3'),
 			array('test4', 'activity', 'notify_setting_batchtime', '4'),
+			array('test6', 'activity', 'notify_setting_batchtime', '2700'),
 		);
 
 		$query = \OCP\DB::prepare('INSERT INTO `*PREFIX*preferences`(`userid`, `appid`, `configkey`, `configvalue`)' . ' VALUES(?, ?, ?, ?)');
@@ -54,23 +60,59 @@ class UserSettingsTest extends \PHPUnit_Framework_TestCase {
 		}
 	}
 
+	public function tearDown() {
+		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*preferences` WHERE `appid` = ?');
+		$query->execute(array('activity'));
+	}
+
+	public function getDefaultSettingData() {
+		return array(
+			array('stream', Data::TYPE_SHARED, true),
+			array('stream', Data::TYPE_SHARE_CREATED, true),
+			array('email', Data::TYPE_SHARED, true),
+			array('email', Data::TYPE_SHARE_CREATED, false),
+			array('setting', 'batchtime', 3600),
+		);
+	}
+
+	/**
+	 * @dataProvider getDefaultSettingData
+	 */
+	public function testGetDefaultSetting($method, $type, $expected) {
+		$this->assertEquals($expected, UserSettings::getDefaultSetting($method, $type));
+	}
+
+	public function getNotificationTypesData() {
+		return array(
+			array('test1', 'stream', array('shared', 'file_created', 'file_changed', 'file_deleted')),
+			array('noPreferences', 'email', array('shared')),
+		);
+	}
+
+	/**
+	 * @dataProvider getNotificationTypesData
+	 */
+	public function testGetNotificationTypes($user, $method, $expected) {
+		$this->assertEquals($expected, UserSettings::getNotificationTypes($user, $method));
+	}
+
 	public function filterUsersBySettingData() {
 		return array(
-			array(array(), 'stream', array()),
-			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'stream', array('test1' => true, 'test4' => true)),
-			array(array('test', 'test1', 'test2', 'test3', 'test4', 'test5'), 'email', array('test1' => '1', 'test4' => '4', 'test5' => true)),
+			array(array(), 'stream', 'type1', array()),
+			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'stream', 'type1', array('test1' => true, 'test4' => true)),
+			array(array('test', 'test1', 'test2', 'test3', 'test4', 'test5'), 'email', 'type1', array('test1' => '1', 'test4' => '4', 'test5' => true)),
+			array(array('test', 'test6'), 'stream', 'file_created', array('test' => true, 'test6' => true)),
+			array(array('test', 'test6'), 'stream', 'file_nodefault', array('test6' => true)),
+			array(array('test6'), 'email', 'shared', array('test6' => '2700')),
+			array(array('test', 'test6'), 'email', 'shared', array('test' => '3600', 'test6' => '2700')),
+			array(array('test', 'test6'), 'email', 'file_created', array('test6' => '2700')),
 		);
 	}
 
 	/**
 	 * @dataProvider filterUsersBySettingData
 	 */
-	public function testFilterUsersBySetting($users, $method, $expected) {
-		$this->assertEquals($expected, UserSettings::filterUsersBySetting($users, $method, 'type1'));
-	}
-
-	public function tearDown() {
-		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*preferences` WHERE `appid` = ?');
-		$query->execute(array('activity'));
+	public function testFilterUsersBySetting($users, $method, $type, $expected) {
+		$this->assertEquals($expected, UserSettings::filterUsersBySetting($users, $method, $type));
 	}
 }
