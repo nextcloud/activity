@@ -66,15 +66,21 @@ class Data
 	}
 
 	/**
-	 * @brief Send an event into the activity stream
+	 * Send an event into the activity stream
+	 *
 	 * @param string $app The app where this event is associated with
 	 * @param string $subject A short description of the event
+	 * @param array  $subjectparams Array with parameters that are filled in the subject
 	 * @param string $message A longer description of the event
+	 * @param array  $messageparams Array with parameters that are filled in the message
 	 * @param string $file The file including path where this event is associated with. (optional)
 	 * @param string $link A link where this event is associated with (optional)
-	 * @return boolean
+	 * @param string $affecteduser If empty the current user will be used
+	 * @param string $type Type of the notification
+	 * @param int    $prio Priority of the notification
+	 * @return null
 	 */
-	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = 0, $prio = Data::PRIORITY_MEDIUM) {
+	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = '', $prio = Data::PRIORITY_MEDIUM) {
 		$timestamp = time();
 		$user = \OCP\User::getUser();
 		
