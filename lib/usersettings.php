@@ -36,16 +36,48 @@ class UserSettings
 	const EMAIL_SEND_DAILY = 1;
 	const EMAIL_SEND_WEEKLY = 2;
 
-	public static function getUserDefaultSetting($method, $type) {
+	/**
+	 * Get a setting for a user
+	 *
+	 * Falls back to some good default values if the user does not have a preference
+	 *
+	 * @param string $user
+	 * @param string $method Should be one of 'stream', 'email' or 'setting'
+	 * @param string $type One of the activity types or 'batchtime'
+	 * @return string|int
+	 */
+	public static function getUserSetting($user, $method, $type) {
+		return Config::getUserValue(
+			$user,
+			'activity',
+			'notify_' . $method . '_' . $type,
+			self::getDefaultSetting($method, $type)
+		);
+	}
+
+	/**
+	 * Get a good default setting for a preference
+	 *
+	 * @param string $method Should be one of 'stream', 'email' or 'setting'
+	 * @param string $type One of the activity types or 'batchtime'
+	 * @return string|int
+	 */
+	public static function getDefaultSetting($method, $type) {
 		if ($method == 'setting' && $type == 'batchtime') {
 			return 3600;
 		}
 
-		$settings = self::getUserDefaultSettings($method);
+		$settings = self::getDefaultTypes($method);
 		return in_array($type, $settings);
 	}
 
-	public static function getUserDefaultSettings($method) {
+	/**
+	 * Get the default selection of types for a method
+	 *
+	 * @param string $method Should be one of 'stream' or 'email'
+	 * @return array Array of strings
+	 */
+	public static function getDefaultTypes($method) {
 		$settings = array();
 		switch ($method) {
 			case 'stream':
@@ -71,27 +103,14 @@ class UserSettings
 	}
 
 	/**
-	 * @param string $user
-	 * @param string $method
-	 * @param string $type
-	 * @return string|int
-	 */
-	public static function getUserSetting($user, $method, $type) {
-		return Config::getUserValue(
-			$user,
-			'activity',
-			'notify_' . $method . '_' . $type,
-			self::getUserDefaultSetting($method, $type)
-		);
-	}
-
-	/**
+	 * Get a query condition with the list of type the user selected
+	 *
 	 * @param string	$user	Name of the user
-	 * @param string	$method	Should be one of 'stream', 'email'
+	 * @param string	$method	Should be one of 'stream' or 'email'
 	 * @param string	$filter	Further filter the activities
 	 * @return string	Part of the SQL query limiting the activities
 	 */
-	public static function getUserNotificationTypesQuery($user, $method, $filter) {
+	public static function getNotificationTypeQuery($user, $method, $filter) {
 		$l = \OC_L10N::get('activity');
 		$types = Data::getNotificationTypes($l);
 

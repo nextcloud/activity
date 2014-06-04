@@ -49,7 +49,7 @@ class Data
 	const TYPE_STORAGE_QUOTA_90 = 'storage_quota_90';
 	const TYPE_STORAGE_FAILURE = 'storage_failure';
 
-	public static function getNotificationTypes($l) {
+	public static function getNotificationTypes(\OC_L10N $l) {
 		return array(
 			\OCA\Activity\Data::TYPE_SHARED => $l->t('A file or folder has been <strong>shared</strong>'),
 //			\OCA\Activity\Data::TYPE_SHARE_UNSHARED => $l->t('Previously shared file or folder has been <strong>unshared</strong>'),
@@ -165,7 +165,7 @@ class Data
 		// get current user
 		$user = \OCP\User::getUser();
 		$parameters = array($user);
-		$limitActivities = 'AND ' . UserSettings::getUserNotificationTypesQuery($user, 'stream', $filter);
+		$limitActivities = 'AND ' . UserSettings::getNotificationTypeQuery($user, 'stream', $filter);
 
 		if ($filter === 'self') {
 			$limitActivities .= ' AND `user` = ?';
