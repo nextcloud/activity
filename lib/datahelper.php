@@ -112,6 +112,11 @@ class DataHelper
 	 * @return string
 	 */
 	protected static function prepareFileParam($param, $stripPath, $highlightParams) {
+		if (strpos($param, '/') !== 0) {
+			// Prepend leading slash to legacy activities
+			$param = '/' . $param;
+		}
+
 		$parent_dir = (substr_count($param, '/') == 1) ? '/' : dirname($param);
 		$fileLink = \OCP\Util::linkTo('files', 'index.php', array('dir' => $parent_dir));
 
