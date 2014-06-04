@@ -22,7 +22,7 @@
 
 namespace OCA\Activity\Tests;
 
-class DataHelper extends \PHPUnit_Framework_TestCase {
+class DataHelperTest extends \PHPUnit_Framework_TestCase {
 	protected $originalWEBROOT;
 
 	public function setUp() {

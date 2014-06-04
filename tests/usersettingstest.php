@@ -24,7 +24,7 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\UserSettings;
 
-class HooksFilterUsersBySetting extends \PHPUnit_Framework_TestCase {
+class UserSettingsTest extends \PHPUnit_Framework_TestCase {
 	public function setUp() {
 		$preferences = array(
 			array('test1', 'activity', 'notify_stream_type1', '1'),
