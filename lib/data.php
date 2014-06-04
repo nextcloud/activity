@@ -34,10 +34,6 @@ class Data
 	const PRIORITY_HIGH	= 40;
 	const PRIORITY_VERYHIGH	= 50;
 
-	const EMAIL_SEND_HOURLY = 0;
-	const EMAIL_SEND_DAILY = 1;
-	const EMAIL_SEND_WEEKLY = 2;
-
 	const TYPE_SHARED = 'shared';
 	const TYPE_SHARE_EXPIRED = 'share_expired';
 	const TYPE_SHARE_UNSHARED = 'share_unshared';
@@ -67,40 +63,6 @@ class Data
 //			\OCA\Activity\Data::TYPE_STORAGE_QUOTA_90 => $l->t('<strong>Storage usage</strong> is at 90%%'),
 //			\OCA\Activity\Data::TYPE_STORAGE_FAILURE => $l->t('An <strong>external storage</strong> has an error'),
 		);
-	}
-
-	public static function getUserDefaultSetting($method, $type) {
-		if ($method == 'setting' && $type == 'batchtime') {
-			return 3600;
-		}
-
-		$settings = self::getUserDefaultSettings($method);
-		return in_array($type, $settings);
-	}
-
-	public static function getUserDefaultSettings($method) {
-		$settings = array();
-		switch ($method) {
-			case 'stream':
-				$settings[] = Data::TYPE_SHARE_CREATED;
-				$settings[] = Data::TYPE_SHARE_CHANGED;
-				$settings[] = Data::TYPE_SHARE_DELETED;
-//				$settings[] = Data::TYPE_SHARE_RESHARED;
-//
-//				$settings[] = Data::TYPE_SHARE_DOWNLOADED;
-
-			case 'email':
-				$settings[] = Data::TYPE_SHARED;
-//				$settings[] = Data::TYPE_SHARE_EXPIRED;
-//				$settings[] = Data::TYPE_SHARE_UNSHARED;
-//
-//				$settings[] = Data::TYPE_SHARE_UPLOADED;
-//
-//				$settings[] = Data::TYPE_STORAGE_QUOTA_90;
-//				$settings[] = Data::TYPE_STORAGE_FAILURE;
-		}
-
-		return $settings;
 	}
 
 	/**
@@ -175,55 +137,13 @@ class Data
 	}
 
 	/**
-	 * @param string $user
-	 * @param string $method
-	 * @param string $type
-	 * @return string|int
-	 */
-	public static function getUserSetting($user, $method, $type) {
-		return \OCP\Config::getUserValue(
-			$user,
-			'activity',
-			'notify_' . $method . '_' . $type,
-			\OCA\Activity\Data::getUserDefaultSetting($method, $type)
-		);
-	}
-
-	/**
-	 * @param string	$user	Name of the user
-	 * @param string	$method	Should be one of 'stream', 'email'
-	 * @param string	$filter	Further filter the activities
-	 * @return string	Part of the SQL query limiting the activities
-	 */
-	public static function getUserNotificationTypesQuery($user, $method, $filter) {
-		$l = \OC_L10N::get('activity');
-		$types = \OCA\Activity\Data::getNotificationTypes($l);
-
-		$userActivities = array();
-		foreach ($types as $type => $desc) {
-			if (self::getUserSetting($user, $method, $type)) {
-				$userActivities[] = $type;
-			}
-		}
-
-		$userActivities = self::filterNotificationTypes($userActivities, $filter);
-
-		// We don't want to display any activities
-		if (empty($userActivities)) {
-			return '1 = 0';
-		}
-
-		return "`type` IN ('" . implode("','", $userActivities) . "')";
-	}
-
-	/**
 	 * Filter the activity types
 	 *
 	 * @param array $types
 	 * @param string $filter
 	 * @return array
 	 */
-	protected static function filterNotificationTypes($types, $filter) {
+	public static function filterNotificationTypes($types, $filter) {
 		switch ($filter) {
 			case 'shares':
 				return array_intersect(array(
@@ -245,7 +165,7 @@ class Data
 		// get current user
 		$user = \OCP\User::getUser();
 		$parameters = array($user);
-		$limitActivities = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream', $filter);
+		$limitActivities = 'AND ' . UserSettings::getUserNotificationTypesQuery($user, 'stream', $filter);
 
 		if ($filter === 'self') {
 			$limitActivities .= ' AND `user` = ?';

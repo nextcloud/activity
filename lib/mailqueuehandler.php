@@ -146,11 +146,11 @@ class MailQueueHandler {
 	 */
 	protected function getLangForApproximatedTimeFrame($timestamp) {
 		if (time() - $timestamp < 4000) {
-			return Data::EMAIL_SEND_HOURLY;
+			return UserSettings::EMAIL_SEND_HOURLY;
 		} else if (time() - $timestamp < 90000) {
-			return Data::EMAIL_SEND_DAILY;
+			return UserSettings::EMAIL_SEND_DAILY;
 		} else {
-			return Data::EMAIL_SEND_WEEKLY;
+			return UserSettings::EMAIL_SEND_WEEKLY;
 		}
 	}
 
