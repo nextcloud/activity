@@ -54,6 +54,16 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 			array(array('/foo/bar.file'), array(1 => 'file'), true, false, array('/foo/bar.file')),
 			array(array('/foo/bar.file'), array(1 => 'file'), true, true, array('<strong>/foo/bar.file</strong>')),
 
+			// Legacy: stored without leading slash
+			array(array('foo/bar.file'), array(0 => 'file'), false, false, array('foo/bar.file')),
+			array(array('foo/bar.file'), array(0 => 'file'), false, true, array(
+				'<a class="filename" href="/index.php/apps/files?dir=%2Ffoo">foo/bar.file</a>',
+			)),
+			array(array('foo/bar.file'), array(0 => 'file'), true, false, array('bar.file')),
+			array(array('foo/bar.file'), array(0 => 'file'), true, true, array(
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/bar.file">bar.file</a>',
+			)),
+
 			// Valid file position
 			array(array('UserA', '/foo/bar.file'), array(1 => 'file'), true, false, array('UserA', 'bar.file')),
 			array(array('UserA', '/foo/bar.file'), array(1 => 'file'), true, true, array(
