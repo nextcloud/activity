@@ -103,32 +103,24 @@ class UserSettings
 	}
 
 	/**
-	 * Get a query condition with the list of type the user selected
+	 * Get a list with enabled notification types for a user
 	 *
 	 * @param string	$user	Name of the user
 	 * @param string	$method	Should be one of 'stream' or 'email'
-	 * @param string	$filter	Further filter the activities
-	 * @return string	Part of the SQL query limiting the activities
+	 * @return array
 	 */
-	public static function getNotificationTypeQuery($user, $method, $filter) {
+	public static function getNotificationTypes($user, $method) {
 		$l = \OC_L10N::get('activity');
 		$types = Data::getNotificationTypes($l);
 
-		$userActivities = array();
+		$notificationTypes = array();
 		foreach ($types as $type => $desc) {
 			if (self::getUserSetting($user, $method, $type)) {
-				$userActivities[] = $type;
+				$notificationTypes[] = $type;
 			}
 		}
 
-		$userActivities = Data::filterNotificationTypes($userActivities, $filter);
-
-		// We don't want to display any activities
-		if (empty($userActivities)) {
-			return '1 = 0';
-		}
-
-		return "`type` IN ('" . implode("','", $userActivities) . "')";
+		return $notificationTypes;
 	}
 
 	/**

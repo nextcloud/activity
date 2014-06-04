@@ -164,8 +164,16 @@ class Data
 	public static function read($start, $count, $filter = 'all', $allowGrouping = true) {
 		// get current user
 		$user = \OCP\User::getUser();
+		$enabledNotifications = UserSettings::getNotificationTypes($user, 'stream');
+		$enabledNotifications = Data::filterNotificationTypes($enabledNotifications, $filter);
+
+		// We don't want to display any activities
+		if (empty($enabledNotifications)) {
+			return array();
+		}
+
 		$parameters = array($user);
-		$limitActivities = 'AND ' . UserSettings::getNotificationTypeQuery($user, 'stream', $filter);
+		$limitActivities = " AND `type` IN ('" . implode("','", $enabledNotifications) . "')";
 
 		if ($filter === 'self') {
 			$limitActivities .= ' AND `user` = ?';
