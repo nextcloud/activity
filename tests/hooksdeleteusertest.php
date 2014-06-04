@@ -25,7 +25,7 @@ namespace OCA\Activity\Tests;
 use OCA\Activity\Data;
 use OCA\Activity\Hooks;
 
-class HooksDeleteUser extends \PHPUnit_Framework_TestCase {
+class HooksDeleteUserTest extends \PHPUnit_Framework_TestCase {
 	public function setUp() {
 		parent::setUp();
 

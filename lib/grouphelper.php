@@ -37,6 +37,9 @@ class GroupHelper
 	/** @var bool */
 	protected $allowGrouping;
 
+	/**
+	 * @param bool $allowGrouping
+	 */
 	public function __construct($allowGrouping) {
 		$this->allowGrouping = $allowGrouping;
 	}

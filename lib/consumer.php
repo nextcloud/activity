@@ -27,17 +27,19 @@ use OCP\Activity\IConsumer;
 class Consumer implements IConsumer
 {
 	/**
-	 * @param $app
-	 * @param $subject
-	 * @param $subjectParams
-	 * @param $message
-	 * @param $messageParams
-	 * @param $file
-	 * @param $link
-	 * @param $affectedUser
-	 * @param $type
-	 * @param $priority
-	 * @return mixed
+	 * Send an event into the activity stream of a user
+	 *
+	 * @param string $app The app where this event is associated with
+	 * @param string $subject A short description of the event
+	 * @param array  $subjectparams Array with parameters that are filled in the subject
+	 * @param string $message A longer description of the event
+	 * @param array  $messageparams Array with parameters that are filled in the message
+	 * @param string $file The file including path where this event is associated with. (optional)
+	 * @param string $link A link where this event is associated with (optional)
+	 * @param string $affecteduser If empty the current user will be used
+	 * @param string $type Type of the notification
+	 * @param int    $prio Priority of the notification
+	 * @return null
 	 */
 	function receive($app, $subject, $subjectParams, $message, $messageParams, $file, $link, $affectedUser, $type, $priority) {
 		Data::send($app, $subject, $subjectParams, $message, $messageParams, $file, $link, $affectedUser, $type, $priority);

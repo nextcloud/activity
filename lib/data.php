@@ -34,10 +34,6 @@ class Data
 	const PRIORITY_HIGH	= 40;
 	const PRIORITY_VERYHIGH	= 50;
 
-	const EMAIL_SEND_HOURLY = 0;
-	const EMAIL_SEND_DAILY = 1;
-	const EMAIL_SEND_WEEKLY = 2;
-
 	const TYPE_SHARED = 'shared';
 	const TYPE_SHARE_EXPIRED = 'share_expired';
 	const TYPE_SHARE_UNSHARED = 'share_unshared';
@@ -53,7 +49,7 @@ class Data
 	const TYPE_STORAGE_QUOTA_90 = 'storage_quota_90';
 	const TYPE_STORAGE_FAILURE = 'storage_failure';
 
-	public static function getNotificationTypes($l) {
+	public static function getNotificationTypes(\OC_L10N $l) {
 		return array(
 			\OCA\Activity\Data::TYPE_SHARED => $l->t('A file or folder has been <strong>shared</strong>'),
 //			\OCA\Activity\Data::TYPE_SHARE_UNSHARED => $l->t('Previously shared file or folder has been <strong>unshared</strong>'),
@@ -69,50 +65,22 @@ class Data
 		);
 	}
 
-	public static function getUserDefaultSetting($method, $type) {
-		if ($method == 'setting' && $type == 'batchtime') {
-			return 3600;
-		}
-
-		$settings = self::getUserDefaultSettings($method);
-		return in_array($type, $settings);
-	}
-
-	public static function getUserDefaultSettings($method) {
-		$settings = array();
-		switch ($method) {
-			case 'stream':
-				$settings[] = Data::TYPE_SHARE_CREATED;
-				$settings[] = Data::TYPE_SHARE_CHANGED;
-				$settings[] = Data::TYPE_SHARE_DELETED;
-//				$settings[] = Data::TYPE_SHARE_RESHARED;
-//
-//				$settings[] = Data::TYPE_SHARE_DOWNLOADED;
-
-			case 'email':
-				$settings[] = Data::TYPE_SHARED;
-//				$settings[] = Data::TYPE_SHARE_EXPIRED;
-//				$settings[] = Data::TYPE_SHARE_UNSHARED;
-//
-//				$settings[] = Data::TYPE_SHARE_UPLOADED;
-//
-//				$settings[] = Data::TYPE_STORAGE_QUOTA_90;
-//				$settings[] = Data::TYPE_STORAGE_FAILURE;
-		}
-
-		return $settings;
-	}
-
 	/**
-	 * @brief Send an event into the activity stream
+	 * Send an event into the activity stream
+	 *
 	 * @param string $app The app where this event is associated with
 	 * @param string $subject A short description of the event
+	 * @param array  $subjectparams Array with parameters that are filled in the subject
 	 * @param string $message A longer description of the event
+	 * @param array  $messageparams Array with parameters that are filled in the message
 	 * @param string $file The file including path where this event is associated with. (optional)
 	 * @param string $link A link where this event is associated with (optional)
-	 * @return boolean
+	 * @param string $affecteduser If empty the current user will be used
+	 * @param string $type Type of the notification
+	 * @param int    $prio Priority of the notification
+	 * @return null
 	 */
-	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = 0, $prio = Data::PRIORITY_MEDIUM) {
+	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = '', $prio = Data::PRIORITY_MEDIUM) {
 		$timestamp = time();
 		$user = \OCP\User::getUser();
 		
@@ -175,55 +143,13 @@ class Data
 	}
 
 	/**
-	 * @param string $user
-	 * @param string $method
-	 * @param string $type
-	 * @return string|int
-	 */
-	public static function getUserSetting($user, $method, $type) {
-		return \OCP\Config::getUserValue(
-			$user,
-			'activity',
-			'notify_' . $method . '_' . $type,
-			\OCA\Activity\Data::getUserDefaultSetting($method, $type)
-		);
-	}
-
-	/**
-	 * @param string	$user	Name of the user
-	 * @param string	$method	Should be one of 'stream', 'email'
-	 * @param string	$filter	Further filter the activities
-	 * @return string	Part of the SQL query limiting the activities
-	 */
-	public static function getUserNotificationTypesQuery($user, $method, $filter) {
-		$l = \OC_L10N::get('activity');
-		$types = \OCA\Activity\Data::getNotificationTypes($l);
-
-		$userActivities = array();
-		foreach ($types as $type => $desc) {
-			if (self::getUserSetting($user, $method, $type)) {
-				$userActivities[] = $type;
-			}
-		}
-
-		$userActivities = self::filterNotificationTypes($userActivities, $filter);
-
-		// We don't want to display any activities
-		if (empty($userActivities)) {
-			return '1 = 0';
-		}
-
-		return "`type` IN ('" . implode("','", $userActivities) . "')";
-	}
-
-	/**
 	 * Filter the activity types
 	 *
 	 * @param array $types
 	 * @param string $filter
 	 * @return array
 	 */
-	protected static function filterNotificationTypes($types, $filter) {
+	public static function filterNotificationTypes($types, $filter) {
 		switch ($filter) {
 			case 'shares':
 				return array_intersect(array(
@@ -244,8 +170,16 @@ class Data
 	public static function read($start, $count, $filter = 'all', $allowGrouping = true) {
 		// get current user
 		$user = \OCP\User::getUser();
+		$enabledNotifications = UserSettings::getNotificationTypes($user, 'stream');
+		$enabledNotifications = Data::filterNotificationTypes($enabledNotifications, $filter);
+
+		// We don't want to display any activities
+		if (empty($enabledNotifications)) {
+			return array();
+		}
+
 		$parameters = array($user);
-		$limitActivities = 'AND ' . self::getUserNotificationTypesQuery($user, 'stream', $filter);
+		$limitActivities = " AND `type` IN ('" . implode("','", $enabledNotifications) . "')";
 
 		if ($filter === 'self') {
 			$limitActivities .= ' AND `user` = ?';
@@ -304,66 +238,6 @@ class Data
 	}
 
 	/**
-	 * @brief Show a specific event in the activities
-	 * @param array $event An array with all the event data in it
-	 */
-	public static function show($event) {
-		$tmpl = new \OCP\Template('activity', 'activity.box');
-		$tmpl->assign('formattedDate', \OCP\Util::formatDate($event['timestamp']));
-		$tmpl->assign('formattedTimestamp', \OCP\relative_modified_date($event['timestamp']));
-		$tmpl->assign('user', $event['user']);
-		$tmpl->assign('displayName', \OCP\User::getDisplayName($event['user']));
-		$tmpl->assign('event', $event);
-		$tmpl->assign('typeIcon', self::getTypeIcon($event['type']));
-		$tmpl->assign('isGrouped', !empty($event['isGrouped']));
-
-		$rootView = new \OC\Files\View('');
-		if ($event['file'] !== null){
-			$exist = $rootView->file_exists('/' . $event['user'] . '/files' . $event['file']);
-			$is_dir = $rootView->is_dir('/' . $event['user'] . '/files' . $event['file']);
-			unset($rootView);
-
-			// show a preview image if the file still exists
-			if (!$is_dir && $exist) {
-				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($event['file']))));
-				$tmpl->assign('previewImageLink',
-					\OCP\Util::linkToRoute('core_ajax_preview', array(
-						'file' => $event['file'],
-						'x' => 150,
-						'y' => 150,
-					))
-				);
-			} else if ($exist) {
-				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($event['file']))));
-				$tmpl->assign('previewImageLink', \OC_Helper::mimetypeIcon('dir'));
-				$tmpl->assign('previewLinkIsDir', true);
-			}
-		}
-
-		$tmpl->printPage();
-	}
-
-	/**
-	 * @param string $type
-	 * @return string
-	 */
-	public static function getTypeIcon($type)
-	{
-		switch ($type)
-		{
-			case self::TYPE_SHARE_CHANGED:
-				return 'icon-change';
-			case self::TYPE_SHARE_CREATED:
-				return 'icon-add-color';
-			case self::TYPE_SHARE_DELETED:
-				return 'icon-delete-color';
-			case self::TYPE_SHARED:
-				return 'icon-share';
-		}
-		return '';
-	}
-
-	/**
 	 * Get the casted page number from $_GET
 	 * @param string $paramName
 	 * @return int
@@ -402,7 +276,8 @@ class Data
 	}
 
 	/**
-	 * @brief Expire old events
+	 * Delete old events
+	 *
 	 * @param int $expireDays Minimum 1 day
 	 * @return null
 	 */
@@ -410,7 +285,33 @@ class Data
 		$ttl = (60 * 60 * 24 * max(1, $expireDays));
 
 		$timelimit = time() - $ttl;
-		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity` where `timestamp` < ?');
-		$query->execute(array($timelimit));
+		self::deleteActivities(array(
+			'timestamp' => array($timelimit, '<'),
+		));
+	}
+
+	/**
+	 * Delete activities that match certain conditions
+	 *
+	 * @param array $conditions Array with conditions that have to be met
+	 *                      'field' => 'value'  => `field` = 'value'
+	 *    'field' => array('value', 'operator') => `field` operator 'value'
+	 * @return null
+	 */
+	public static function deleteActivities($conditions) {
+		$sqlWhere = '';
+		$sqlParameters = $sqlWhereList = array();
+		foreach ($conditions as $column => $comparison) {
+			$sqlWhereList[] = " `$column` " . ((is_array($comparison) && isset($comparison[1])) ? $comparison[1] : '=') . ' ? ';
+			$sqlParameters[] = (is_array($comparison)) ? $comparison[0] : $comparison;
+		}
+
+		if (!empty($sqlWhereList)) {
+			$sqlWhere = ' WHERE ' . implode(' AND ', $sqlWhereList);
+		}
+
+		$query = \OCP\DB::prepare(
+			'DELETE FROM `*PREFIX*activity`' . $sqlWhere);
+		$query->execute($sqlParameters);
 	}
 }
