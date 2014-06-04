@@ -52,7 +52,7 @@ foreach ($_['activity'] as $event) {
 	<div class="boxcontainer">
 <?php
 	}
-	\OCA\Activity\Display::show($event);
+	echo \OCA\Activity\Display::show($event);
 }
 ?>
 	</div>

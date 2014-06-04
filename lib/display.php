@@ -31,43 +31,44 @@ namespace OCA\Activity;
 class Display
 {
 	/**
-	 * Show a specific event in the activities
-	 * @param array $event An array with all the activity data in it
+	 * Get the template for a specific activity-event in the activities
+	 *
+	 * @param array $activity An array with all the activity data in it
+	 * @param return string
 	 */
-	public static function show($event) {
+	public static function show($activity) {
 		$tmpl = new \OCP\Template('activity', 'activity.box');
-		$tmpl->assign('formattedDate', \OCP\Util::formatDate($event['timestamp']));
-		$tmpl->assign('formattedTimestamp', \OCP\relative_modified_date($event['timestamp']));
-		$tmpl->assign('user', $event['user']);
-		$tmpl->assign('displayName', \OCP\User::getDisplayName($event['user']));
-		$tmpl->assign('event', $event);
-		$tmpl->assign('typeIcon', self::getTypeIcon($event['type']));
-		$tmpl->assign('isGrouped', !empty($event['isGrouped']));
+		$tmpl->assign('formattedDate', \OCP\Util::formatDate($activity['timestamp']));
+		$tmpl->assign('formattedTimestamp', \OCP\relative_modified_date($activity['timestamp']));
+		$tmpl->assign('user', $activity['user']);
+		$tmpl->assign('displayName', \OCP\User::getDisplayName($activity['user']));
+		$tmpl->assign('event', $activity);
+		$tmpl->assign('typeIcon', self::getTypeIcon($activity['type']));
 
 		$rootView = new \OC\Files\View('');
-		if ($event['file'] !== null){
-			$exist = $rootView->file_exists('/' . $event['user'] . '/files' . $event['file']);
-			$is_dir = $rootView->is_dir('/' . $event['user'] . '/files' . $event['file']);
+		if ($activity['file'] !== null){
+			$exist = $rootView->file_exists('/' . $activity['user'] . '/files' . $activity['file']);
+			$is_dir = $rootView->is_dir('/' . $activity['user'] . '/files' . $activity['file']);
 			unset($rootView);
 
 			// show a preview image if the file still exists
 			if (!$is_dir && $exist) {
-				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($event['file']))));
+				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($activity['file']))));
 				$tmpl->assign('previewImageLink',
 					\OCP\Util::linkToRoute('core_ajax_preview', array(
-						'file' => $event['file'],
+						'file' => $activity['file'],
 						'x' => 150,
 						'y' => 150,
 					))
 				);
 			} else if ($exist) {
-				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($event['file']))));
+				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($activity['file']))));
 				$tmpl->assign('previewImageLink', \OC_Helper::mimetypeIcon('dir'));
 				$tmpl->assign('previewLinkIsDir', true);
 			}
 		}
 
-		$tmpl->printPage();
+		return $tmpl->fetchPage();
 	}
 
 	/**
