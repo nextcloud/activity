@@ -8,8 +8,10 @@ $TRANSLATIONS = array(
 "A new file or folder has been <strong>created</strong> in a shared folder" => "Paylaşılan bir klasörde bir dosya veya klasör <strong>oluşturuldu</strong>",
 "A file or folder has been <strong>changed</strong> in a shared folder" => "Paylaşılan bir klasörde bir dosya veya klasör <strong>değiştirildi</strong>",
 "A file or folder has been <strong>deleted</strong> from a shared folder" => "Paylaşılan bir klasörden bir dosya veya klasör <strong>silindi</strong>",
-"_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("",""),
-"_%s and %n more_::_%s and %n more_" => array("",""),
+"%s and %s" => "%s ve %s",
+", " => ", ",
+"_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("%s ve <strong class=\"tooltip\" title=\"%s\">%n daha fazla</strong>","%s ve <strong class=\"tooltip\" title=\"%s\">%n daha fazla</strong>"),
+"_%s and %n more_::_%s and %n more_" => array("%s ve %n daha fazla","%s ve %n daha fazla"),
 "You created %1\$s" => "%1\$s dosyasını oluşturdunuz",
 "%2\$s created %1\$s" => "%2\$s, %1\$s dosyasını oluşturdu",
 "You changed %1\$s" => "%1\$s dosyasını değiştirdiniz",
@@ -21,12 +23,12 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s sizinle %1\$s dosyasını paylaştı",
 "You shared %1\$s" => "%1\$s dosyasını paylaştınız",
 "Activity notification" => "Etkinlik bildirimi",
+"RSS feed" => "RSS beslemesi",
 "Hello %s," => "Merhaba %s,",
 "You are receiving this email because in the last hour the following things happened at %s" => "Bu e-postayı alma sebebiniz son saatte %s üzerinde aşağıdaki şeylerin gerçekleşmesi:",
 "You are receiving this email because in the last day the following things happened at %s" => "Bu e-postayı alma sebebiniz son günde %s üzerinde aşağıdaki şeylerin gerçekleşmesi:",
 "You are receiving this email because in the last week the following things happened at %s" => "Bu e-postayı alma sebebiniz son haftada %s üzerinde aşağıdaki şeylerin gerçekleşmesi:",
 "* %s" => "* %s",
-"RSS feed" => "RSS beslemesi",
 "No activities yet." => "Henüz bir etkinlik yok.",
 "You will see a list of events here when you start to use your %s." => "%s kullanmaya başladığınızda burada olayların bir listesini göreceksiniz.",
 "Notifications" => "Bildirimler",
@@ -36,6 +38,8 @@ $TRANSLATIONS = array(
 "Send emails:" => "E-postaları gönder:",
 "Hourly" => "Her saat",
 "Daily" => "Her gün",
-"Weekly" => "Her hafta"
+"Weekly" => "Her hafta",
+"Activity feed" => "Etkinlik beslemesi",
+"Personal activity feed for %s" => "%s kişisel etkinlik beslemesi"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n > 1);";

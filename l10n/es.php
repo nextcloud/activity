@@ -8,8 +8,10 @@ $TRANSLATIONS = array(
 "A new file or folder has been <strong>created</strong> in a shared folder" => "Un nuevo archivo o carpeta ha sido <strong>creado/a</strong> en una carpeta compartida",
 "A file or folder has been <strong>changed</strong> in a shared folder" => "Un archivo o carpeta ha sido <strong>modificado/a</strong> en una carpeta compartida",
 "A file or folder has been <strong>deleted</strong> from a shared folder" => "Un archivo o carpeta ha sido <strong>eliminado/a</strong> de una carpeta compartida",
-"_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("",""),
-"_%s and %n more_::_%s and %n more_" => array("",""),
+"%s and %s" => "%s y %s",
+", " => ", ",
+"_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("%s y <strong class=\"tooltip\" title=\"%s\">%n más</strong>","%s y <strong class=\"tooltip\" title=\"%s\">%n más</strong>"),
+"_%s and %n more_::_%s and %n more_" => array("%s y %n más","%s y %n más"),
 "You created %1\$s" => "Usted ha creado %1\$s",
 "%2\$s created %1\$s" => "%2\$s ha creado %1\$s",
 "You changed %1\$s" => "Usted ha modificado %1\$s",
@@ -21,12 +23,12 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s ha compartido %1\$s con usted",
 "You shared %1\$s" => "Usted ha compartido %1\$s",
 "Activity notification" => "Notificación de actividad",
+"RSS feed" => "Fuente RSS",
 "Hello %s," => "Estimado/a %s:",
 "You are receiving this email because in the last hour the following things happened at %s" => "Está recibiendo este mensaje porque durante la última hora han pasado las siguientes cosas en %s",
 "You are receiving this email because in the last day the following things happened at %s" => "Está recibiendo este mensaje porque durante el último día han pasado las siguientes cosas en %s",
 "You are receiving this email because in the last week the following things happened at %s" => "Está recibiendo este mensaje porque durante la última semana han pasado las siguientes cosas en %s ",
 "* %s" => "* %s",
-"RSS feed" => "Fuente RSS",
 "No activities yet." => "Aún no hay actividades.",
 "You will see a list of events here when you start to use your %s." => "Aquí aparecerá una lista de eventos cuando comience a usar su %s.",
 "Notifications" => "Notificaciones",
@@ -36,6 +38,8 @@ $TRANSLATIONS = array(
 "Send emails:" => "Enviar mensajes:",
 "Hourly" => "Cada hora",
 "Daily" => "Diariamente",
-"Weekly" => "Semanalmente"
+"Weekly" => "Semanalmente",
+"Activity feed" => "Alimentador de actividad",
+"Personal activity feed for %s" => "Alimentador de actividad personal para %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

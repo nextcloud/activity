@@ -8,8 +8,10 @@ $TRANSLATIONS = array(
 "A new file or folder has been <strong>created</strong> in a shared folder" => "<strong>Creouse</strong> un novo ficheiro no cartafol compartido",
 "A file or folder has been <strong>changed</strong> in a shared folder" => "<strong>Cambiouse</strong> un ficheiro ou cartafol no cartafol compartido",
 "A file or folder has been <strong>deleted</strong> from a shared folder" => "<strong>Eliminouse</strong> un ficheiro ou cartafol no cartafol compartido",
-"_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("",""),
-"_%s and %n more_::_%s and %n more_" => array("",""),
+"%s and %s" => "%s e %s",
+", " => ", ",
+"_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("%s e <strong class=\"tooltip\" title=\"%s\">%n máis</strong>","%s e <strong class=\"tooltip\" title=\"%s\">%n máis</strong>"),
+"_%s and %n more_::_%s and %n more_" => array("%s e %n máis","%s e %n máis"),
 "You created %1\$s" => "Creou %1\$s",
 "%2\$s created %1\$s" => "%2\$s creado %1\$s",
 "You changed %1\$s" => "Cambiou %1\$s",
@@ -21,12 +23,12 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s compartiu %1\$s con vostede",
 "You shared %1\$s" => "Compartiu %1\$s",
 "Activity notification" => "Notificación da actividade",
+"RSS feed" => "Fonte RSS",
 "Hello %s," => "Ola %s,",
 "You are receiving this email because in the last hour the following things happened at %s" => "Recibe este correo porque na última hora sucederon as seguintes cousas en %s",
 "You are receiving this email because in the last day the following things happened at %s" => "Recibe este correo porque no último día sucederon as seguintes cousas en %s",
 "You are receiving this email because in the last week the following things happened at %s" => "Recibe este correo porque na última semana sucederon as seguintes cousas en %s",
 "* %s" => "* %s",
-"RSS feed" => "Fonte RSS",
 "No activities yet." => "Aínda non houbo actividade",
 "You will see a list of events here when you start to use your %s." => "Verá una lista de accións cando se comece a utilizar o seu %s.",
 "Notifications" => "Notificacións",
@@ -35,7 +37,9 @@ $TRANSLATIONS = array(
 "You need to set up your email address before you can receive notification emails." => "É necesario estabelecer o enderezo correo para poder recibir correos de notificación.",
 "Send emails:" => "Enviar os correos:",
 "Hourly" => "Cada hora",
-"Daily" => "Diariamente",
-"Weekly" => "Semanalmente"
+"Daily" => "A diario",
+"Weekly" => "Semanalmente",
+"Activity feed" => "Fonte da actividade",
+"Personal activity feed for %s" => "Fonte da actividade persoal para %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

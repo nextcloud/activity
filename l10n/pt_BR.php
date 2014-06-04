@@ -8,6 +8,8 @@ $TRANSLATIONS = array(
 "A new file or folder has been <strong>created</strong> in a shared folder" => "Um novo arquivo ou pasta foi <strong>criado</strong> em uma pasta compartilhada",
 "A file or folder has been <strong>changed</strong> in a shared folder" => "Um arquivo ou pasta foi <strong>alterado</strong> em uma pasta compartilhada",
 "A file or folder has been <strong>deleted</strong> from a shared folder" => "Um novo arquivo ou pasta foi <strong>apagada</strong> de uma pasta compartilhada",
+"%s and %s" => "%s e %s",
+", " => ",",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("",""),
 "_%s and %n more_::_%s and %n more_" => array("",""),
 "You created %1\$s" => "Você criou %1\$s",
@@ -21,12 +23,12 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s compartilhou %1\$s com você",
 "You shared %1\$s" => "Você compartilhou %1\$s",
 "Activity notification" => "Notificação de atividade",
+"RSS feed" => "Alimentação RSS",
 "Hello %s," => "Olá %s,",
 "You are receiving this email because in the last hour the following things happened at %s" => "Você está recebendo este e-mail porque na última hora as seguintes coisas aconteceram em %s",
 "You are receiving this email because in the last day the following things happened at %s" => "Você está recebendo este e-mail porque no último dia as seguintes coisas aconteceram em %s",
 "You are receiving this email because in the last week the following things happened at %s" => "Você está recebendo este e-mail porque na última semana as seguintes coisas aconteceram em %s",
 "* %s" => "* %s",
-"RSS feed" => "Alimentação RSS",
 "No activities yet." => "Nenhuma atividade ainda.",
 "You will see a list of events here when you start to use your %s." => "Você verá uma lista de eventos aqui quando começar a usar o seu %s.",
 "Notifications" => "Notificações",
@@ -36,6 +38,8 @@ $TRANSLATIONS = array(
 "Send emails:" => "Enviar e-mails:",
 "Hourly" => "De hora em hora",
 "Daily" => "Diário",
-"Weekly" => "Semanal"
+"Weekly" => "Semanal",
+"Activity feed" => "Alimentação de atividade",
+"Personal activity feed for %s" => "Alimentação de atividade pessoal para %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n > 1);";
