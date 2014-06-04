@@ -287,7 +287,9 @@ class Data
 	/**
 	 * Delete activities that match certain conditions
 	 *
-	 * @param int $expireDays Minimum 1 day
+	 * @param array $conditions Array with conditions that have to be met
+	 *                      'field' => 'value'  => `field` = 'value'
+	 *    'field' => array('value', 'operator') => `field` operator 'value'
 	 * @return null
 	 */
 	public static function deleteActivities($conditions) {
