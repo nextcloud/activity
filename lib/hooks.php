@@ -273,10 +273,7 @@ class Hooks {
 	 */
 	public static function deleteUser($params) {
 		// Delete activity entries
-		$query = \OCP\DB::prepare(
-			'DELETE FROM `*PREFIX*activity` '
-			. ' WHERE `affecteduser` = ?');
-		$query->execute(array($params['uid']));
+		Data::deleteActivities(array('affecteduser' => $params['uid']));
 
 		// Delete entries from mail queue
 		$query = \OCP\DB::prepare(

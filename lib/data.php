@@ -262,7 +262,8 @@ class Data
 	}
 
 	/**
-	 * @brief Expire old events
+	 * Delete old events
+	 *
 	 * @param int $expireDays Minimum 1 day
 	 * @return null
 	 */
@@ -270,7 +271,31 @@ class Data
 		$ttl = (60 * 60 * 24 * max(1, $expireDays));
 
 		$timelimit = time() - $ttl;
-		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity` where `timestamp` < ?');
-		$query->execute(array($timelimit));
+		self::deleteActivities(array(
+			'timestamp' => array($timelimit, '<'),
+		));
+	}
+
+	/**
+	 * Delete activities that match certain conditions
+	 *
+	 * @param int $expireDays Minimum 1 day
+	 * @return null
+	 */
+	public static function deleteActivities($conditions) {
+		$sqlWhere = '';
+		$sqlParameters = $sqlWhereList = array();
+		foreach ($conditions as $column => $comparison) {
+			$sqlWhereList[] = " `$column` " . ((isset($comparison[1])) ? $comparison[1] : '=') . ' ? ';
+			$sqlParameters[] = (is_array($comparison)) ? $comparison[0] : $comparison;
+		}
+
+		if (!empty($sqlWhereList)) {
+			$sqlWhere = ' WHERE ' . implode(' AND ', $sqlWhere);
+		}
+
+		$query = \OCP\DB::prepare(
+			'DELETE FROM `*PREFIX*activity`' . $sqlWhere);
+		$query->execute($sqlParameters);
 	}
 }
