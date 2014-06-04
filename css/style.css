@@ -58,6 +58,7 @@
 .box {
 	width: 100%;
 	display: block;
+	margin-bottom: 10px;
 }
 
 .box.loaded{
@@ -158,6 +159,7 @@
 	min-height: 16px;
 	display: inline-block;
 	vertical-align: top;
+	margin-top: 2px;
 }
 .icon-add-color {
 	background-image: url('../img/add-color.svg');
