@@ -22,8 +22,7 @@
 
 namespace OCA\Activity\Tests;
 
-use OCA\Activity\Data;
-use OCA\Activity\Hooks;
+use OCA\Activity\UserSettings;
 
 class HooksFilterUsersBySetting extends \PHPUnit_Framework_TestCase {
 	public function setUp() {
@@ -67,7 +66,7 @@ class HooksFilterUsersBySetting extends \PHPUnit_Framework_TestCase {
 	 * @dataProvider filterUsersBySettingData
 	 */
 	public function testFilterUsersBySetting($users, $method, $expected) {
-		$this->assertEquals($expected, Hooks::filterUsersBySetting($users, $method, 'type1'));
+		$this->assertEquals($expected, UserSettings::filterUsersBySetting($users, $method, 'type1'));
 	}
 
 	public function tearDown() {
