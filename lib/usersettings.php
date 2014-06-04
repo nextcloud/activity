@@ -156,16 +156,18 @@ class UserSettings
 			}
 		}
 
-		if (!empty($users)) {
-			// If the setting is enabled by default,
-			// we add all users that didn't set the preference yet.
-			if (UserSettings::getDefaultSetting($method, $type)) {
-				foreach ($users as $user) {
-					if ($method == 'stream') {
-						$filteredUsers[$user] = true;
-					} else {
-						$filteredUsers[$user] = self::getDefaultSetting('setting', 'batchtime');
-					}
+		if (empty($users)) {
+			return $filteredUsers;
+		}
+
+		// If the setting is enabled by default,
+		// we add all users that didn't set the preference yet.
+		if (UserSettings::getDefaultSetting($method, $type)) {
+			foreach ($users as $user) {
+				if ($method == 'stream') {
+					$filteredUsers[$user] = true;
+				} else {
+					$filteredUsers[$user] = self::getDefaultSetting('setting', 'batchtime');
 				}
 			}
 		}
