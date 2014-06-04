@@ -135,7 +135,7 @@
 #infscr-loading {
 	text-align: center;
 	z-index: 100;
-	position: fixed;
+	position: relative;
 	left: 45%;
 	bottom: 20px;
 	width: 200px;
