@@ -286,12 +286,12 @@ class Data
 		$sqlWhere = '';
 		$sqlParameters = $sqlWhereList = array();
 		foreach ($conditions as $column => $comparison) {
-			$sqlWhereList[] = " `$column` " . ((isset($comparison[1])) ? $comparison[1] : '=') . ' ? ';
+			$sqlWhereList[] = " `$column` " . ((is_array($comparison) && isset($comparison[1])) ? $comparison[1] : '=') . ' ? ';
 			$sqlParameters[] = (is_array($comparison)) ? $comparison[0] : $comparison;
 		}
 
 		if (!empty($sqlWhereList)) {
-			$sqlWhere = ' WHERE ' . implode(' AND ', $sqlWhere);
+			$sqlWhere = ' WHERE ' . implode(' AND ', $sqlWhereList);
 		}
 
 		$query = \OCP\DB::prepare(
