@@ -133,13 +133,14 @@
 
 /* Infinite Scroll loader */
 #infscr-loading {
+	display: block !important;
 	text-align: center;
 	z-index: 100;
-	position: fixed;
-	left: 45%;
+	position: relative;
+	margin: 0 auto;
 	bottom: 20px;
 	width: 200px;
-	padding: 10px;
+	padding: 50px 0;
 	color: #555;
 }
 
