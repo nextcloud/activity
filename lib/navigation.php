@@ -78,8 +78,6 @@ class Navigation {
 	/**
 	 * Get all items for the users we want to send an email to
 	 *
-	 * @param array $affectedUsers
-	 * @param int $maxTime
 	 * @return array Notification data (user => array of rows from the table)
 	 */
 	protected function getLinkList() {
