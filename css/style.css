@@ -137,7 +137,7 @@
 	text-align: center;
 	z-index: 100;
 	position: relative;
-	left: 45%;
+	margin: 0 auto;
 	bottom: 20px;
 	width: 200px;
 	padding: 50px 0;
