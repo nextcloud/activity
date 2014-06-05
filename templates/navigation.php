@@ -8,7 +8,6 @@
 ?>
 <div id="app-navigation">
 	<?php foreach ($_['navigations'] as $navigationGroup => $navigationEntries) { ?>
-		<?php if ($navigationGroup === 'bottom'): ?><div id="app-settings"><?php endif; ?>
 		<?php if ($navigationGroup !== 'apps'): ?><ul><?php endif; ?>
 
 		<?php foreach ($navigationEntries as $navigation) { ?>
@@ -24,6 +23,17 @@
 		<?php } ?>
 
 		<?php if ($navigationGroup !== 'top'): ?></ul><?php endif; ?>
-		<?php if ($navigationGroup === 'bottom'): ?></div><?php endif; ?>
 	<?php } ?>
+
+	<div id="app-settings">
+		<div id="app-settings-header">
+			<button class="settings-button" data-apps-slide-toggle="#app-settings-content"></button>
+		</div>
+
+		<div id="app-settings-content">
+			<input type="checkbox"<?php if ($_['rssLink']): ?> checked="checked"<?php endif; ?> id="enable_rss" />
+			<label for="enable_rss"><?php p($l->t('Enable RSS feed'));?></label>
+			<input id="rssurl"<?php if (!$_['rssLink']): ?> class="hidden"<?php endif; ?> type="text" readonly="readonly" value="<?php p($_['rssLink']); ?>" />
+		</div>
+	</div>
 </div>
