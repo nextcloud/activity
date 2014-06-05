@@ -46,21 +46,39 @@ class NavigationTest extends \PHPUnit_Framework_TestCase {
 						),
 					),
 					array(
-						'tag'		=> 'div',
-						'id'		=> 'app-settings',
+						'tag'		=> 'ul',
+						'parent'	=> array(
+							'tag'		=> 'div',
+							'id'		=> 'app-navigation',
+						),
 						'descendant'	=> array(
 							'tag'		=> 'a',
 							'attributes' => array(
-								'data-navigation'	=> 'rss',
+								'data-navigation'	=> 'self',
 							),
 						),
 					),
 				),
-				array(),
+				array(
+					array(
+						'tag'		=> 'ul',
+						'parent'	=> array(
+							'tag'		=> 'div',
+							'id'		=> 'app-navigation',
+						),
+						'descendant'	=> array(
+							'tag'		=> 'a',
+							'attributes' => array(
+								'data-navigation'	=> 'self',
+								'class'				=> 'active',
+							),
+						),
+					),
+				),
 			),
 			array(
 				'all',
-				'rss',
+				'self',
 				array(
 					array(
 						'tag'		=> 'ul',
@@ -76,12 +94,16 @@ class NavigationTest extends \PHPUnit_Framework_TestCase {
 						),
 					),
 					array(
-						'tag'		=> 'div',
-						'id'		=> 'app-settings',
+						'tag'		=> 'ul',
+						'parent'	=> array(
+							'tag'		=> 'div',
+							'id'		=> 'app-navigation',
+						),
 						'descendant'	=> array(
 							'tag'		=> 'a',
 							'attributes' => array(
-								'data-navigation'	=> 'rss',
+								'data-navigation'	=> 'self',
+								'class'				=> 'active',
 							),
 						),
 					),
@@ -121,12 +143,15 @@ class NavigationTest extends \PHPUnit_Framework_TestCase {
 						),
 					),
 					array(
-						'tag'		=> 'div',
-						'id'		=> 'app-settings',
+						'tag'		=> 'ul',
+						'parent'	=> array(
+							'tag'		=> 'div',
+							'id'		=> 'app-navigation',
+						),
 						'descendant'	=> array(
 							'tag'		=> 'a',
 							'attributes' => array(
-								'data-navigation'	=> 'rss',
+								'data-navigation'	=> 'self',
 							),
 						),
 					),
@@ -167,12 +192,15 @@ class NavigationTest extends \PHPUnit_Framework_TestCase {
 						),
 					),
 					array(
-						'tag'		=> 'div',
-						'id'		=> 'app-settings',
+						'tag'		=> 'ul',
+						'parent'	=> array(
+							'tag'		=> 'div',
+							'id'		=> 'app-navigation',
+						),
 						'descendant'	=> array(
 							'tag'		=> 'a',
 							'attributes' => array(
-								'data-navigation'	=> 'rss',
+								'data-navigation'	=> 'self',
 							),
 						),
 					),
