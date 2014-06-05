@@ -30,8 +30,6 @@ OCP\App::checkAppEnabled('activity');
 OCP\App::setActiveNavigationEntry('activity');
 
 // load the needed js scripts and css
-OCP\Util::addScript('activity', 'jquery.masonry.min');
-OCP\Util::addScript('activity', 'jquery.infinitescroll.min');
 OCP\Util::addScript('activity', 'script');
 OCP\Util::addStyle('activity', 'style');
 
@@ -41,17 +39,8 @@ $navigation = new \OCA\Activity\Navigation(\OCP\Util::getL10N('activity'));
 $page = \OCA\Activity\Data::getPageFromParam() - 1;
 $filter = \OCA\Activity\Data::getFilterFromParam();
 
-// read activities data
-$count = 30;
-$activity = OCA\Activity\Data::read($page * $count, $count, $filter);
-
 // show activity template
 $tmpl = new \OCP\Template('activity', 'list', 'user');
-$tmpl->assign('activity', $activity);
 $tmpl->assign('filter', $filter);
 $tmpl->assign('appNavigation', $navigation->getTemplate($filter));
-
-if ($page == 0) {
-	$tmpl->assign('nextpage', \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => $filter, 'page' => 2)));
-}
 $tmpl->printPage();
