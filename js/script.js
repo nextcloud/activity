@@ -1,81 +1,67 @@
 $(function(){
 
-	function processElements($elem){
-		$elem.find('.avatar').each(function(){
+	function processChildren(parentElement){
+		parentElement.find('.avatar').each(function(){
 			var $this = $(this);
 			$this.avatar($this.data('user'), 28);
 		});
-		$elem.find('.tooltip').tipsy({gravity:'s', fade:true});
+		parentElement.find('.tooltip').tipsy({gravity:'s', fade:true});
 	}
 
-	var $container = $('#container');
-	processElements($container);
+	function _onScroll() {
+		if (content.scrollTop() + content.height() > container.height() - 100 && !ignoreScroll) {
+			currentPage++;
 
-	$container.imagesLoaded(function(){
-		$container.find('.boxcontainer').masonry({
-			itemSelector: '.box',
-			isAnimated: true
-		});
-	});
-
-	$container.infinitescroll({
-			navSelector  : '#page-nav',    // selector for the paged navigation
-			nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
-			itemSelector : '.group',       // selector for all items you'll retrieve
-			pixelsFromNavToBottom: 150,
-			extraScrollPx: 50,
-			binder: $('#app-content'),
-			path : function(page){
-				return OC.filePath('activity', 'ajax', 'fetch.php') +
-					'?filter=' + $('#container').attr('data-activity-filter') + '&page=' + page;
-			},
-			loading: {
-				finishedMsg: t('activity', 'No more activities to load.'),
-				msgText: t('activity', 'Loading older activities'),
-				img: OC.filePath('core', 'img', 'loading.gif')
-			}
-		},
-		// trigger Masonry as a callback
-		function( newGroups ) {
-			// hide new items while they are loading
-			var $newGroups = $( newGroups );
-			var $newBoxes;
-
-			// check whether first new group has the same date
-			// as the last group we had before
-			// If that's the case, we'll merge its boxes into the last group's
-			// container.
-			var $firstNewGroup = $newGroups.first();
-			var $lastGroup = $firstNewGroup.prevAll('.group:first');
-			var $appendedBoxes;
-			if ( $lastGroup.data('date') === $firstNewGroup.data('date') ){
-				// append the boxes
-				$appendedBoxes = $firstNewGroup.find('.box').addClass('loading');
-				var $lastBoxContainer = $lastGroup.find('.boxcontainer');
-
-				$lastBoxContainer.append($appendedBoxes);
-				processElements($appendedBoxes);
-				$lastBoxContainer.masonry('appended', $appendedBoxes, true);
-				$appendedBoxes.imagesLoaded(function(){
-					// append the boxes into the last group
-					$appendedBoxes.toggleClass('loading loaded');
-				});
-				// remove from list to process
-				$newGroups.slice(1);
-				// discard the ajax-returned header
-				$firstNewGroup.remove();
-			}
-
-			$newBoxes = $newGroups.find('.box').addClass('loading');
-
-			processElements($newBoxes);
-			$newGroups.find('.boxcontainer').masonry();
-			// ensure that images load before adding to masonry layout
-			$newBoxes.imagesLoaded(function(){
-				// show elems now they're ready
-				$newBoxes.toggleClass('loading loaded');
-			});
+			ignoreScroll = true;
+			$.get(
+				OC.filePath('activity', 'ajax', 'fetch.php'),
+				'filter=' + container.attr('data-activity-filter') + '&page=' + currentPage,
+				function(data) {
+					container.append(data);
+					ignoreScroll = false;
+					if (!data.length) {
+						// Page is empty - No more activities :(
+						$('#nomoreactivities').removeClass('hidden');
+					}
+				}
+			);
 		}
-	);
+	}
+
+	var container = $('#container'),
+		content = $('#app-content'),
+		currentPage = 0,
+		ignoreScroll = false;
+	processChildren(container);
+
+	function prefill() {
+		if (content.scrollTop() + content.height() > container.height() - 100) {
+			currentPage++;
+
+			//ignoreScroll = true;
+			$.get(
+				OC.filePath('activity', 'ajax', 'fetch.php'),
+				'filter=' + container.attr('data-activity-filter') + '&page=' + currentPage,
+				function(data) {
+					container.append(data);
+					if (data.length) {
+						// Continue prefill
+						prefill();
+					}
+					else if (currentPage == 1) {
+						// First page is empty - No activities :(
+						$('#noactivities').removeClass('hidden');
+					}
+					else {
+						// Page is empty - No more activities :(
+						$('#nomoreactivities').removeClass('hidden');
+					}
+				}
+			);
+		}
+	}
+
+	prefill();
+	content.on('scroll', _onScroll);
 });
 
