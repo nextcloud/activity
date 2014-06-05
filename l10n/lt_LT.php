@@ -5,6 +5,7 @@ $TRANSLATIONS = array(
 "Loading older activities" => "Įkeliamos senesnės veiklos",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("","",""),
 "_%s and %n more_::_%s and %n more_" => array("","",""),
+"Files" => "Failai",
 "RSS feed" => "RSS sklaidos kanalas",
 "No activities yet." => "Dar nėra veiklų.",
 "You will see a list of events here when you start to use your %s." => "Matysite įvykių sąrašą kai pradėsite naudoti savo %s.",

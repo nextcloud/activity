@@ -20,6 +20,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "你把 %1\$s 分享给了 %2\$s组",
 "%2\$s shared %1\$s with you" => "%2\$s 把 %1\$s 分享给了您",
 "You shared %1\$s" => "您已分享了 %1\$s",
+"Files" => "文件",
 "RSS feed" => "RSS源",
 "No activities yet." => "暂无动态",
 "You will see a list of events here when you start to use your %s." => "当您开始使用%s，您会在此看到一系列事件。",

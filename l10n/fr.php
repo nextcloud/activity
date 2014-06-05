@@ -21,6 +21,7 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s a partagé %1\$s avec vous",
 "You shared %1\$s" => "Vous avez partagé %1\$s",
 "Activity notification" => "Notification d'activité",
+"Files" => "Fichiers",
 "RSS feed" => "Flux RSS",
 "Hello %s," => "Bonjour %s,",
 "You are receiving this email because in the last hour the following things happened at %s" => "Vous recevez ce courriel car pendant l'heure précédente l'activité suivante a eu lieu sur %s",

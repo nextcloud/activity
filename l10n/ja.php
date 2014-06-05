@@ -4,10 +4,10 @@ $TRANSLATIONS = array(
 "Activity" => "アクティビティ",
 "No more activities to load." => "これ以上読み込むアクティビティはありません。",
 "Loading older activities" => "古いアクティビティを読み込み中",
-"A file or folder has been <strong>shared</strong>" => "ファイルもしくはフォルダが<strong>共有</strong>されました",
-"A new file or folder has been <strong>created</strong> in a shared folder" => "共有フォルダで、ファイルもしくはフォルダが<strong>作成</strong>されました",
-"A file or folder has been <strong>changed</strong> in a shared folder" => "共有フォルダで、ファイルもしくはフォルダが<strong>変更</strong>されました",
-"A file or folder has been <strong>deleted</strong> from a shared folder" => "共有フォルダから、ファイルもしくはフォルダが<strong>削除</strong>されました",
+"A file or folder has been <strong>shared</strong>" => "ファイルまたはフォルダーが<strong>共有</strong>されました",
+"A new file or folder has been <strong>created</strong> in a shared folder" => "共有フォルダ内でファイルまたはフォルダーが<strong>作成</strong>されました",
+"A file or folder has been <strong>changed</strong> in a shared folder" => "共有フォルダ内でファイルまたはフォルダーが<strong>変更</strong>されました",
+"A file or folder has been <strong>deleted</strong> from a shared folder" => "共有フォルダからファイルまたはフォルダーが<strong>削除</strong>されました",
 "%s and %s" => "%s と %s",
 ", " => ", ",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array(""),
@@ -23,6 +23,11 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s は %1\$s をあなたと共有しました",
 "You shared %1\$s" => "あなたは %1\$s を共有しました",
 "Activity notification" => "アクティビティ通知",
+"All Activities" => "すべてのアクティビティ",
+"Activities by you" => "あなたのアクティビティ",
+"Activities by others" => "他人のアクティビティ",
+"Shares" => "共有",
+"Files" => "ファイル",
 "RSS feed" => "RSSフィード",
 "Hello %s," => "%s さんこんにちは、",
 "* %s" => "* %s",
@@ -34,6 +39,7 @@ $TRANSLATIONS = array(
 "You need to set up your email address before you can receive notification emails." => "通知メールを受け取る前にメールアドレスを設定する必要があります。",
 "Send emails:" => "メールを送信:",
 "Daily" => "毎日",
-"Weekly" => "毎週"
+"Weekly" => "毎週",
+"Activity feed" => "アクティビティフィード"
 );
 $PLURAL_FORMS = "nplurals=1; plural=0;";

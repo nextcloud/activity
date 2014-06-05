@@ -21,6 +21,7 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s បាន​ចែករំលែក %1\$s ជាមួយ​អ្នក",
 "You shared %1\$s" => "អ្នក​បាន​ចែករំលែក %1\$s",
 "Activity notification" => "សេចក្ដីជូន​ដំណឺង​ស្ដីពីសកម្មភាព",
+"Files" => "ឯកសារ",
 "RSS feed" => "ព័ត៌មាន RSS",
 "Hello %s," => "សួស្ដី %s,",
 "No activities yet." => "មិន​ទាន់​មាន​សកម្មភាព​ទេ។",

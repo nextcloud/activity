@@ -9,6 +9,7 @@ $TRANSLATIONS = array(
 "You changed %1\$s" => "Ai schimbat %1\$s",
 "You deleted %1\$s" => "Ai şters %1\$s",
 "Activity notification" => "Notificări ",
+"Files" => "Fișiere",
 "RSS feed" => "Feed RSS",
 "* %s" => "* %s",
 "No activities yet." => "Inca nu exista activitati.",

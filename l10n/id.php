@@ -10,6 +10,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong> from a shared folder" => "Sebuah berkas dan folder baru telah <strong>dihapus</strong> di folder bagi",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array(""),
 "_%s and %n more_::_%s and %n more_" => array(""),
+"Files" => "Berkas",
 "RSS feed" => "Umpan RSS",
 "No activities yet." => "Tidak ada kegiatan.",
 "You will see a list of events here when you start to use your %s." => "Anda akan melihat daftar peristiwa disini ketika mulai menggunakan %s Anda.",

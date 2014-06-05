@@ -10,6 +10,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong> from a shared folder" => "Ei fil eller mappe har blitt <strong>sletta</strong> frå ei delt mappe",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("",""),
 "_%s and %n more_::_%s and %n more_" => array("",""),
+"Files" => "Filer",
 "RSS feed" => "RSS-straum",
 "No activities yet." => "Ingen aktivitetar enno.",
 "You will see a list of events here when you start to use your %s." => "Du får sjå ei liste med hendingar her når du byrjar å bruka %s.",

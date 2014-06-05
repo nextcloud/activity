@@ -10,6 +10,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong> from a shared folder" => "V mapi, določeni za souporabo, je bila <strong>izbrisana</strong> datoteka.",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("","","",""),
 "_%s and %n more_::_%s and %n more_" => array("","","",""),
+"Files" => "Datoteke",
 "RSS feed" => "Vir RSS",
 "No activities yet." => "Ni še zabeleženih nobenih dejavnosti.",
 "You will see a list of events here when you start to use your %s." => "Tu bo izpisan seznam dogodkov, ko bo %s v uporabi.",

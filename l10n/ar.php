@@ -19,6 +19,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "شاركت %1\$s مع %2\$s",
 "You shared %1\$s with group %2\$s" => "أنت شاركت %1\$s مع مجموعة %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s شارك %1\$s معك",
+"Files" => "الملفات",
 "RSS feed" => "تغذية RSS",
 "Hello %s," => "مرحبا%so ,",
 "No activities yet." => "لا يوجد أي أنشطة حتى الأن.",

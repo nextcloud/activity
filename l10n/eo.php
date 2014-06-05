@@ -20,6 +20,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Vi kunhavigis %1\$s kun la grupo %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s kunhavigis %1\$s kun vi",
 "You shared %1\$s" => "Vi kunhavigis %1\$s",
+"Files" => "Dosieroj",
 "RSS feed" => "RSS-fluo",
 "No activities yet." => "Estas neniu ago ankoraŭ.",
 "You will see a list of events here when you start to use your %s." => "Vi vidos liston de okazaĵoj ĉi tie kiam vi ekuzos vian %s.",

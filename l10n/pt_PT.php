@@ -21,6 +21,7 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s partilhou %1\$s consigo",
 "You shared %1\$s" => "Você partilhou %1\$s",
 "Activity notification" => "Notificação de actividade",
+"Files" => "Ficheiros",
 "RSS feed" => "RSS feed",
 "Hello %s," => "Olá %s,",
 "* %s" => "* %s",

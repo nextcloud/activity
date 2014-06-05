@@ -22,6 +22,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Jaoit kohteen %1\$s ryhmän %2\$s kanssa",
 "%2\$s shared %1\$s with you" => "%2\$s jakoi kohteen %1\$s kanssasi",
 "You shared %1\$s" => "Jaoit kohteen %1\$s",
+"Files" => "Tiedostot",
 "RSS feed" => "RSS-syöte",
 "Hello %s," => "Hei %s,",
 "* %s" => "* %s",

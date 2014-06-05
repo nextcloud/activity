@@ -21,6 +21,7 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "Ο %2\$s διαμοιράστηκε το %1\$s με εσάς",
 "You shared %1\$s" => "Διαμοιραστήκατε %1\$s",
 "Activity notification" => "Ειδοποίηση δραστηριότητας",
+"Files" => "Αρχεία",
 "RSS feed" => "Ροή RSS",
 "Hello %s," => "Καλωσήρθατε %s,",
 "You are receiving this email because in the last hour the following things happened at %s" => "Λαμβάνετε αυτό το email γιατί την τελευταία ώρα τα παρακάτω γεγονότα συνέβησαν στο %s",

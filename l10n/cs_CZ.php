@@ -20,6 +20,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Byl sdílen %1\$s se skupinou %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s vám sdílel %1\$s",
 "You shared %1\$s" => "Byl sdílen %1\$s",
+"Files" => "Soubory",
 "RSS feed" => "RSS kanál",
 "No activities yet." => "Zatím žádné aktivity.",
 "You will see a list of events here when you start to use your %s." => "Zde uvidíte seznam událostí jakmile začnete používat váš %s.",

@@ -18,6 +18,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with group %2\$s" => "Megosztottad ezt: %1\$s ezzel a csoporttal: %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s megosztotta veled ezt: %1\$s",
 "You shared %1\$s" => "Megosztottad: %1\$s",
+"Files" => "Fájlok",
 "RSS feed" => "RSS hírcsatorna",
 "No activities yet." => "Nincs megjeleníthető aktivitás.",
 "You will see a list of events here when you start to use your %s." => "Az események itt lesznek láthatóak, miután elkezdte használni a %s szolgáltatást.",

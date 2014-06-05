@@ -23,6 +23,7 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s współdzieli %1\$s z Tobą",
 "You shared %1\$s" => "Współdzielisz %1\$s",
 "Activity notification" => "Powiadomienie o aktywniości",
+"Files" => "Pliki",
 "RSS feed" => "Kanał RSS",
 "Hello %s," => "Witaj %s,",
 "You are receiving this email because in the last hour the following things happened at %s" => "Otrzymujesz ten email, ponieważ w ostatniej godzinie zdarzyły się następujące rzeczy w %s",
