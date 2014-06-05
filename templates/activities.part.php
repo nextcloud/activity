@@ -54,6 +54,7 @@ foreach ($_['activity'] as $event) {
 	}
 	echo \OCA\Activity\Display::show($event);
 }
-?>
+if (!empty($_['activity'])): ?>
 	</div>
 </div>
+<?php endif;
