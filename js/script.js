@@ -131,5 +131,21 @@ $(function(){
 		OCActivity.Filter.setFilter($(this).attr('data-navigation'));
 		event.preventDefault();
 	});
+
+	$('#enable_rss').change(function () {
+		if (this.checked) {
+			$('#rssurl').removeClass('hidden');
+		} else {
+			$('#rssurl').addClass('hidden');
+		}
+		$.post(OC.filePath('activity', 'ajax', 'rssfeed.php'), 'enable=' + this.checked, function(data){
+			console.log(data);
+			$('#rssurl').val(data.data.rsslink);
+		});
+	});
+
+	$('#rssurl').on('click', function () {
+		$('#rssurl').select();
+	});
 });
 

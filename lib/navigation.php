@@ -82,7 +82,7 @@ class Navigation {
 
 	public function setRSSToken($rssToken) {
 		if ($rssToken) {
-			$this->rssLink =  \OCP\Util::linkToAbsolute('activity', 'rss.php', array('token' => $rssToken));
+			$this->rssLink = \OCP\Util::linkToAbsolute('activity', 'rss.php', array('token' => $rssToken));
 		}
 		else {
 			$this->rssLink = '';
