@@ -28,28 +28,14 @@
 <?php $_['appNavigation']->printPage(); ?>
 
 <div id="app-content">
-<?php if (empty($_['activity'])): ?>
-	<div class="noactivities">
-		<div class="head"><?php p($l->t('No activities yet.')) ?></div>
+	<div id="noactivities" class="hidden">
 		<div class="body"><?php p($l->t('You will see a list of events here when you start to use your %s.', $theme->getTitle())) ?></div>
 	</div>
-<?php else:
-	// Show the activities. The container is needed for the endless scrolling
-	?>
+
 	<div id="container" data-activity-filter="<?php p($_['filter']) ?>">
-		<?php
-			$tmpl = new \OCP\Template('activity', 'activities.part', '');
-			$tmpl->assign('activity', $_['activity']);
-			$tmpl->printPage();
-		?>
 	</div>
 
-	<?php
-	// Dummy navigation. Needed for endless scrolling
-	if (isset($_['nextpage'])): ?>
-		<nav id="page-nav">
-			<a href="<?php p($_['nextpage']) ?>"></a>
-		</nav>
-	<?php endif; ?>
-<?php endif; ?>
+	<div id="nomoreactivities" class="hidden">
+		<?php p($l->t('No more events to load')) ?>
+	</div>
 </div>
