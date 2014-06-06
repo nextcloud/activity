@@ -138,8 +138,7 @@ $(function(){
 		} else {
 			$('#rssurl').addClass('hidden');
 		}
-		$.post(OC.filePath('activity', 'ajax', 'rssfeed.php'), 'enable=' + this.checked, function(data){
-			console.log(data);
+		$.post(OC.filePath('activity', 'ajax', 'rssfeed.php'), 'enable=' + this.checked, function(data) {
 			$('#rssurl').val(data.data.rsslink);
 		});
 	});
