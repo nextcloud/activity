@@ -1,22 +1,55 @@
 $(function(){
 	var OCActivity={};
 
-	OCActivity.InfinitScrolling = {
-		prefill: function () {
-			if (content.scrollTop() + content.height() > container.height() - 100) {
-				currentPage++;
+	OCActivity.Filter = {
+		filter: undefined,
+		currentPage: 0,
+		navigation: $('#app-navigation'),
 
-				//ignoreScroll = true;
+		setFilter: function (filter) {
+			if (filter === this.filter) {
+				return;
+			}
+
+			this.navigation.find('a[data-navigation=' + this.filter + ']').removeClass('active');
+			this.currentPage = 0;
+
+			this.filter = filter;
+			OC.Util.History.pushState('filter=' + filter);
+
+			OCActivity.InfinitScrolling.container.animate({ scrollTop: 0 }, 'slow');
+			OCActivity.InfinitScrolling.container.children().remove();
+			$('#no_activities').addClass('hidden');
+			$('#no_more_activities').addClass('hidden');
+			$('#loading_activities').removeClass('hidden');
+			OCActivity.InfinitScrolling.ignoreScroll = false;
+
+			this.navigation.find('a[data-navigation=' + filter + ']').addClass('active');
+
+			OCActivity.InfinitScrolling.prefill();
+		}
+	};
+
+	OCActivity.InfinitScrolling = {
+		ignoreScroll: false,
+		container: $('#container'),
+		content: $('#app-content'),
+
+		prefill: function () {
+			if (this.content.scrollTop() + this.content.height() > this.container.height() - 100) {
+				OCActivity.Filter.currentPage++;
+
 				$.get(
 					OC.filePath('activity', 'ajax', 'fetch.php'),
-					'filter=' + container.attr('data-activity-filter') + '&page=' + currentPage,
+					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
 					function(data) {
-						OCActivity.InfinitScrolling.appendContent(data);
 						if (data.length) {
+							OCActivity.InfinitScrolling.appendContent(data);
+
 							// Continue prefill
 							OCActivity.InfinitScrolling.prefill();
 						}
-						else if (currentPage == 1) {
+						else if (OCActivity.Filter.currentPage == 1) {
 							// First page is empty - No activities :(
 							$('#no_activities').removeClass('hidden');
 							$('#loading_activities').addClass('hidden');
@@ -32,22 +65,23 @@ $(function(){
 		},
 
 		onScroll: function () {
-			if (!ignoreScroll && content.scrollTop() + content.height() > container.height() - 100) {
-				currentPage++;
+			if (!OCActivity.InfinitScrolling.ignoreScroll && OCActivity.InfinitScrolling.content.scrollTop() +
+			 OCActivity.InfinitScrolling.content.height() > OCActivity.InfinitScrolling.container.height() - 100) {
+				OCActivity.Filter.currentPage++;
 
-				ignoreScroll = true;
+				OCActivity.InfinitScrolling.ignoreScroll = true;
 				$.get(
 					OC.filePath('activity', 'ajax', 'fetch.php'),
-					'filter=' + container.attr('data-activity-filter') + '&page=' + currentPage,
+					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
 					function(data) {
 						OCActivity.InfinitScrolling.appendContent(data);
-						ignoreScroll = false;
+						OCActivity.InfinitScrolling.ignoreScroll = false;
 
 						if (!data.length) {
 							// Page is empty - No more activities :(
 							$('#no_more_activities').removeClass('hidden');
 							$('#loading_activities').addClass('hidden');
-							ignoreScroll = true;
+							OCActivity.InfinitScrolling.ignoreScroll = true;
 						}
 					}
 				);
@@ -56,23 +90,25 @@ $(function(){
 
 		appendContent: function (content) {
 			var firstNewGroup = $(content).first(),
-				lastGroup = container.children().last();
+				lastGroup = this.container.children().last();
 
 			// Is the first new container the same as the last one?
-			if (lastGroup.data('date') === firstNewGroup.data('date')) {
+			if (lastGroup && lastGroup.data('date') === firstNewGroup.data('date')) {
 				var appendedBoxes = firstNewGroup.find('.box'),
 					lastBoxContainer = lastGroup.find('.boxcontainer');
 
 				// Move content into the last box
+				OCActivity.InfinitScrolling.processElements(appendedBoxes);
 				lastBoxContainer.append(appendedBoxes);
 
 				// Remove the first box, so it's not duplicated
 				content = $(content).slice(1);
+			} else {
+				content = $(content);
 			}
 
-			container.append(content);
-
-			OCActivity.InfinitScrolling.processElements(container);
+			OCActivity.InfinitScrolling.processElements(content);
+			this.container.append(content);
 		},
 
 		processElements: function (parentElement) {
@@ -88,12 +124,12 @@ $(function(){
 		}
 	};
 
-	var container = $('#container'),
-		content = $('#app-content'),
-		currentPage = 0,
-		ignoreScroll = false;
+	OCActivity.Filter.setFilter(OCActivity.InfinitScrolling.container.attr('data-activity-filter'));
+	OCActivity.InfinitScrolling.content.on('scroll', OCActivity.InfinitScrolling.onScroll);
 
-	OCActivity.InfinitScrolling.prefill();
-	content.on('scroll', OCActivity.InfinitScrolling.onScroll);
+	OCActivity.Filter.navigation.find('a[data-navigation]').on('click', function (event) {
+		OCActivity.Filter.setFilter($(this).attr('data-navigation'));
+		event.preventDefault();
+	});
 });
 
