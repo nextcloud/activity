@@ -19,25 +19,44 @@
 	overflow-x: hidden;
 }
 
-.noactivities{
+#no_activities {
 	position: absolute;
 	text-align: center;
 	top: 40%;
 	width: 100%;
 	padding: 20px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
 }
-.noactivities .head{
+
+#no_activities .head, #no_more_activities .head {
 	font-size: 1.5em;
 	color: #333;
 	font-weight: bold;
-	text-shadow: #fff 0 1px 0;
+	text-shadow: #aaa 0 1px 0;
 }
-.noactivities .body{
+
+#no_activities .body {
 	color: #666;
 	margin-top: 10px;
 	font-size: 1em;
+}
+
+#no_more_activities {
+	position: relative;
+	top: 50px;
+	width: 100%;
+	text-align: center;
+	padding: 50px 0;
+
+	z-index: 100;
+	margin: 40px auto;
+	bottom: 20px;
+	color: #555;
+}
+
+#loading_activities {
+	height: 50px;
+	margin: 0 auto;
+	padding: 20px;
 }
 
 #container {
@@ -131,19 +150,7 @@
 	color: #666;
 }
 
-/* Infinite Scroll loader */
-#infscr-loading {
-	display: block !important;
-	text-align: center;
-	z-index: 100;
-	position: relative;
-	margin: 0 auto;
-	bottom: 20px;
-	width: 200px;
-	padding: 50px 0;
-	color: #555;
-}
-
+/* Style for in event parameters */
 .activity-section a.filename {
 	font-weight: bold;
 }

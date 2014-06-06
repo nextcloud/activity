@@ -1,81 +1,135 @@
 $(function(){
+	var OCActivity={};
 
-	function processElements($elem){
-		$elem.find('.avatar').each(function(){
-			var $this = $(this);
-			$this.avatar($this.data('user'), 28);
-		});
-		$elem.find('.tooltip').tipsy({gravity:'s', fade:true});
-	}
+	OCActivity.Filter = {
+		filter: undefined,
+		currentPage: 0,
+		navigation: $('#app-navigation'),
 
-	var $container = $('#container');
-	processElements($container);
+		setFilter: function (filter) {
+			if (filter === this.filter) {
+				return;
+			}
 
-	$container.imagesLoaded(function(){
-		$container.find('.boxcontainer').masonry({
-			itemSelector: '.box',
-			isAnimated: true
-		});
-	});
+			this.navigation.find('a[data-navigation=' + this.filter + ']').removeClass('active');
+			this.currentPage = 0;
 
-	$container.infinitescroll({
-			navSelector  : '#page-nav',    // selector for the paged navigation
-			nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
-			itemSelector : '.group',       // selector for all items you'll retrieve
-			pixelsFromNavToBottom: 150,
-			extraScrollPx: 50,
-			binder: $('#app-content'),
-			path : function(page){
-				return OC.filePath('activity', 'ajax', 'fetch.php') +
-					'?filter=' + $('#container').attr('data-activity-filter') + '&page=' + page;
-			},
-			loading: {
-				finishedMsg: t('activity', 'No more activities to load.'),
-				msgText: t('activity', 'Loading older activities'),
-				img: OC.filePath('core', 'img', 'loading.gif')
+			this.filter = filter;
+			OC.Util.History.pushState('filter=' + filter);
+
+			OCActivity.InfinitScrolling.container.animate({ scrollTop: 0 }, 'slow');
+			OCActivity.InfinitScrolling.container.children().remove();
+			$('#no_activities').addClass('hidden');
+			$('#no_more_activities').addClass('hidden');
+			$('#loading_activities').removeClass('hidden');
+			OCActivity.InfinitScrolling.ignoreScroll = false;
+
+			this.navigation.find('a[data-navigation=' + filter + ']').addClass('active');
+
+			OCActivity.InfinitScrolling.prefill();
+		}
+	};
+
+	OCActivity.InfinitScrolling = {
+		ignoreScroll: false,
+		container: $('#container'),
+		content: $('#app-content'),
+
+		prefill: function () {
+			if (this.content.scrollTop() + this.content.height() > this.container.height() - 100) {
+				OCActivity.Filter.currentPage++;
+
+				$.get(
+					OC.filePath('activity', 'ajax', 'fetch.php'),
+					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
+					function(data) {
+						if (data.length) {
+							OCActivity.InfinitScrolling.appendContent(data);
+
+							// Continue prefill
+							OCActivity.InfinitScrolling.prefill();
+						}
+						else if (OCActivity.Filter.currentPage == 1) {
+							// First page is empty - No activities :(
+							$('#no_activities').removeClass('hidden');
+							$('#loading_activities').addClass('hidden');
+						}
+						else {
+							// Page is empty - No more activities :(
+							$('#no_more_activities').removeClass('hidden');
+							$('#loading_activities').addClass('hidden');
+						}
+					}
+				);
 			}
 		},
-		// trigger Masonry as a callback
-		function( newGroups ) {
-			// hide new items while they are loading
-			var $newGroups = $( newGroups );
-			var $newBoxes;
 
-			// check whether first new group has the same date
-			// as the last group we had before
-			// If that's the case, we'll merge its boxes into the last group's
-			// container.
-			var $firstNewGroup = $newGroups.first();
-			var $lastGroup = $firstNewGroup.prevAll('.group:first');
-			var $appendedBoxes;
-			if ( $lastGroup.data('date') === $firstNewGroup.data('date') ){
-				// append the boxes
-				$appendedBoxes = $firstNewGroup.find('.box').addClass('loading');
-				var $lastBoxContainer = $lastGroup.find('.boxcontainer');
+		onScroll: function () {
+			if (!OCActivity.InfinitScrolling.ignoreScroll && OCActivity.InfinitScrolling.content.scrollTop() +
+			 OCActivity.InfinitScrolling.content.height() > OCActivity.InfinitScrolling.container.height() - 100) {
+				OCActivity.Filter.currentPage++;
 
-				$lastBoxContainer.append($appendedBoxes);
-				processElements($appendedBoxes);
-				$lastBoxContainer.masonry('appended', $appendedBoxes, true);
-				$appendedBoxes.imagesLoaded(function(){
-					// append the boxes into the last group
-					$appendedBoxes.toggleClass('loading loaded');
-				});
-				// remove from list to process
-				$newGroups.slice(1);
-				// discard the ajax-returned header
-				$firstNewGroup.remove();
+				OCActivity.InfinitScrolling.ignoreScroll = true;
+				$.get(
+					OC.filePath('activity', 'ajax', 'fetch.php'),
+					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
+					function(data) {
+						OCActivity.InfinitScrolling.appendContent(data);
+						OCActivity.InfinitScrolling.ignoreScroll = false;
+
+						if (!data.length) {
+							// Page is empty - No more activities :(
+							$('#no_more_activities').removeClass('hidden');
+							$('#loading_activities').addClass('hidden');
+							OCActivity.InfinitScrolling.ignoreScroll = true;
+						}
+					}
+				);
+			}
+		},
+
+		appendContent: function (content) {
+			var firstNewGroup = $(content).first(),
+				lastGroup = this.container.children().last();
+
+			// Is the first new container the same as the last one?
+			if (lastGroup && lastGroup.data('date') === firstNewGroup.data('date')) {
+				var appendedBoxes = firstNewGroup.find('.box'),
+					lastBoxContainer = lastGroup.find('.boxcontainer');
+
+				// Move content into the last box
+				OCActivity.InfinitScrolling.processElements(appendedBoxes);
+				lastBoxContainer.append(appendedBoxes);
+
+				// Remove the first box, so it's not duplicated
+				content = $(content).slice(1);
+			} else {
+				content = $(content);
 			}
 
-			$newBoxes = $newGroups.find('.box').addClass('loading');
+			OCActivity.InfinitScrolling.processElements(content);
+			this.container.append(content);
+		},
 
-			processElements($newBoxes);
-			$newGroups.find('.boxcontainer').masonry();
-			// ensure that images load before adding to masonry layout
-			$newBoxes.imagesLoaded(function(){
-				// show elems now they're ready
-				$newBoxes.toggleClass('loading loaded');
+		processElements: function (parentElement) {
+			$(parentElement).find('.avatar').each(function() {
+				var element = $(this);
+				element.avatar(element.data('user'), 28);
+			});
+
+			$(parentElement).find('.tooltip').tipsy({
+				gravity:	's',
+				fade:		true
 			});
 		}
-	);
+	};
+
+	OCActivity.Filter.setFilter(OCActivity.InfinitScrolling.container.attr('data-activity-filter'));
+	OCActivity.InfinitScrolling.content.on('scroll', OCActivity.InfinitScrolling.onScroll);
+
+	OCActivity.Filter.navigation.find('a[data-navigation]').on('click', function (event) {
+		OCActivity.Filter.setFilter($(this).attr('data-navigation'));
+		event.preventDefault();
+	});
 });
 
