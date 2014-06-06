@@ -19,7 +19,7 @@
 	overflow-x: hidden;
 }
 
-#noactivities {
+#no_activities {
 	position: absolute;
 	text-align: center;
 	top: 40%;
@@ -27,20 +27,20 @@
 	padding: 20px;
 }
 
-#noactivities .head, #nomoreactivities .head {
+#no_activities .head, #no_more_activities .head {
 	font-size: 1.5em;
 	color: #333;
 	font-weight: bold;
 	text-shadow: #aaa 0 1px 0;
 }
 
-#noactivities .body {
+#no_activities .body {
 	color: #666;
 	margin-top: 10px;
 	font-size: 1em;
 }
 
-#nomoreactivities {
+#no_more_activities {
 	position: relative;
 	top: 50px;
 	width: 100%;
@@ -51,6 +51,12 @@
 	margin: 40px auto;
 	bottom: 20px;
 	color: #555;
+}
+
+#loading_activities {
+	height: 50px;
+	width: 100%;
+	padding: 20px;
 }
 
 #container {

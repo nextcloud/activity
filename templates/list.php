@@ -28,14 +28,16 @@
 <?php $_['appNavigation']->printPage(); ?>
 
 <div id="app-content">
-	<div id="noactivities" class="hidden">
+	<div id="no_activities" class="hidden">
 		<div class="body"><?php p($l->t('You will see a list of events here when you start to use your %s.', $theme->getTitle())) ?></div>
 	</div>
 
 	<div id="container" data-activity-filter="<?php p($_['filter']) ?>">
 	</div>
 
-	<div id="nomoreactivities" class="hidden">
+	<div id="loading_activities" class="icon-loading"></div>
+
+	<div id="no_more_activities" class="hidden">
 		<?php p($l->t('No more events to load')) ?>
 	</div>
 </div>

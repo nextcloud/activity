@@ -18,11 +18,13 @@ $(function(){
 						}
 						else if (currentPage == 1) {
 							// First page is empty - No activities :(
-							$('#noactivities').removeClass('hidden');
+							$('#no_activities').removeClass('hidden');
+							$('#loading_activities').addClass('hidden');
 						}
 						else {
 							// Page is empty - No more activities :(
-							$('#nomoreactivities').removeClass('hidden');
+							$('#no_more_activities').removeClass('hidden');
+							$('#loading_activities').addClass('hidden');
 						}
 					}
 				);
@@ -43,7 +45,8 @@ $(function(){
 
 						if (!data.length) {
 							// Page is empty - No more activities :(
-							$('#nomoreactivities').removeClass('hidden');
+							$('#no_more_activities').removeClass('hidden');
+							$('#loading_activities').addClass('hidden');
 							ignoreScroll = true;
 						}
 					}
