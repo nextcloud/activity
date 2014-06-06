@@ -8,6 +8,8 @@ $TRANSLATIONS = array(
 "A new file or folder has been <strong>created</strong> in a shared folder" => "Ένα νέο αρχείο ή ένας κατάλογος έχει <strong>δημιουργηθεί</strong> σε έναν διαμοιραζόμενο κατάλογο",
 "A file or folder has been <strong>changed</strong> in a shared folder" => "Ένα αρχείο ή ένας κατάλογος έχει <strong>τροποποιηθεί</strong> σε έναν διαμοιραζόμενο κατάλογο",
 "A file or folder has been <strong>deleted</strong> from a shared folder" => "Ένα αρχείο ή ένας κατάλογος έχει <strong>διαγραφεί</strong> από έναν διαμοιραζόμενο κατάλογο",
+"%s and %s" => "%s και %s",
+", " => ", ",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("",""),
 "_%s and %n more_::_%s and %n more_" => array("",""),
 "You created %1\$s" => "Δημιουργήσατε %1\$s",
@@ -21,12 +23,17 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "Ο %2\$s διαμοιράστηκε το %1\$s με εσάς",
 "You shared %1\$s" => "Διαμοιραστήκατε %1\$s",
 "Activity notification" => "Ειδοποίηση δραστηριότητας",
+"All Activities" => "Όλες οι Δραστηριότητες",
+"Activities by you" => "Δραστηριότητες από εσάς",
+"Activities by others" => "Δραστηριότητες από άλλους",
+"Shares" => "Κοινόχρηστα",
 "Files" => "Αρχεία",
 "RSS feed" => "Ροή RSS",
 "Hello %s," => "Καλωσήρθατε %s,",
 "You are receiving this email because in the last hour the following things happened at %s" => "Λαμβάνετε αυτό το email γιατί την τελευταία ώρα τα παρακάτω γεγονότα συνέβησαν στο %s",
 "You are receiving this email because in the last day the following things happened at %s" => "Λαμβάνετε αυτό το email γιατί την τελευταία ημέρα τα παρακάτω γεγονότα συνέβησαν στο %s",
 "You are receiving this email because in the last week the following things happened at %s" => "Λαμβάνετε αυτό το email γιατί την τελευταία εβδομάδα τα παρακάτω γεγονότα συνέβησαν στο %s",
+"* %s" => "* %s",
 "No activities yet." => "Καμία δραστηριότητα μέχρι τώρα.",
 "You will see a list of events here when you start to use your %s." => "Θα δείτε εδώ μια λίστα από συμβάντα όταν ξεκινήσετε να χρησιμοποιείτε το %s σας.",
 "Notifications" => "Ειδοποιήσεις",
@@ -36,6 +43,8 @@ $TRANSLATIONS = array(
 "Send emails:" => "Αποστολή email:",
 "Hourly" => "Ωριαία",
 "Daily" => "Καθημερινά",
-"Weekly" => "Εβδομαδιαία"
+"Weekly" => "Εβδομαδιαία",
+"Activity feed" => "Ροή Δραστηριότητας",
+"Personal activity feed for %s" => "Προσωπική ροή δραστηριότητας για %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";

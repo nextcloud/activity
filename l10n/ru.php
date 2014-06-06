@@ -8,6 +8,8 @@ $TRANSLATIONS = array(
 "A new file or folder has been <strong>created</strong> in a shared folder" => "Файл или папка был(а) <strong> создан(а) </strong> в опубликованной папке",
 "A file or folder has been <strong>changed</strong> in a shared folder" => "Файл или папка был(а) <strong> изменен(а) </strong> в опубликованной папке",
 "A file or folder has been <strong>deleted</strong> from a shared folder" => "Файл или папка был(а) <strong> удален/а </strong> в опубликованной папке",
+"%s and %s" => "%s и %s",
+", " => ",",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("","",""),
 "_%s and %n more_::_%s and %n more_" => array("","",""),
 "You created %1\$s" => "Вы создали %1\$s",

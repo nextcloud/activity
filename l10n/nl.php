@@ -8,8 +8,10 @@ $TRANSLATIONS = array(
 "A new file or folder has been <strong>created</strong> in a shared folder" => "Een nieuw bestand of map is <string>aangemaakt</strong> in een gedeelde map",
 "A file or folder has been <strong>changed</strong> in a shared folder" => "Een bestand of map is <string>gewijzigd</strong> in een gedeelde map",
 "A file or folder has been <strong>deleted</strong> from a shared folder" => "Een bestand of map is <string>verwijderd</strong> uit een gedeelde map",
-"_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("",""),
-"_%s and %n more_::_%s and %n more_" => array("",""),
+"%s and %s" => "%s en %s",
+", " => ", ",
+"_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("%s en <strong class=\"tooltip\" title=\"%s\">%n meer</strong>","%s en <strong class=\"tooltip\" title=\"%s\">%n meer</strong>"),
+"_%s and %n more_::_%s and %n more_" => array("%s en %n meer","%s en %n meer"),
 "You created %1\$s" => "U creëerde %1\$s",
 "%2\$s created %1\$s" => "%2\$s creëerde %1\$s",
 "You changed %1\$s" => "U wijzigde %1\$s",
@@ -21,6 +23,10 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s deelde %1\$s met u",
 "You shared %1\$s" => "U deelde %1\$s",
 "Activity notification" => "Activiteitenmelding",
+"All Activities" => "Alle activiteiten",
+"Activities by you" => "Activiteiten van uzelf",
+"Activities by others" => "Activiteiten van anderen",
+"Shares" => "Shares",
 "Files" => "Bestanden",
 "RSS feed" => "RSS feed",
 "Hello %s," => "Hallo %s,",
@@ -37,6 +43,8 @@ $TRANSLATIONS = array(
 "Send emails:" => "Verstuur e-mails:",
 "Hourly" => "Per uur",
 "Daily" => "Dagelijks",
-"Weekly" => "Wekelijks"
+"Weekly" => "Wekelijks",
+"Activity feed" => "Activiteitenkanaal",
+"Personal activity feed for %s" => "Persoonlijk activiteitenkanaal voor %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";
