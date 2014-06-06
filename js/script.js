@@ -1,67 +1,81 @@
 $(function(){
+	var OCActivity={};
 
-	function processChildren(parentElement){
-		parentElement.find('.avatar').each(function(){
-			var $this = $(this);
-			$this.avatar($this.data('user'), 28);
-		});
-		parentElement.find('.tooltip').tipsy({gravity:'s', fade:true});
-	}
+	OCActivity.InfinitScrolling = {
+		prefill: function () {
+			if (content.scrollTop() + content.height() > container.height() - 100) {
+				currentPage++;
 
-	function _onScroll() {
-		if (content.scrollTop() + content.height() > container.height() - 100 && !ignoreScroll) {
-			currentPage++;
-
-			ignoreScroll = true;
-			$.get(
-				OC.filePath('activity', 'ajax', 'fetch.php'),
-				'filter=' + container.attr('data-activity-filter') + '&page=' + currentPage,
-				function(data) {
-					container.append(data);
-					ignoreScroll = false;
-					if (!data.length) {
-						// Page is empty - No more activities :(
-						$('#nomoreactivities').removeClass('hidden');
+				//ignoreScroll = true;
+				$.get(
+					OC.filePath('activity', 'ajax', 'fetch.php'),
+					'filter=' + container.attr('data-activity-filter') + '&page=' + currentPage,
+					function(data) {
+						OCActivity.InfinitScrolling.appendContent(data);
+						if (data.length) {
+							// Continue prefill
+							OCActivity.InfinitScrolling.prefill();
+						}
+						else if (currentPage == 1) {
+							// First page is empty - No activities :(
+							$('#noactivities').removeClass('hidden');
+						}
+						else {
+							// Page is empty - No more activities :(
+							$('#nomoreactivities').removeClass('hidden');
+						}
 					}
-				}
-			);
+				);
+			}
+		},
+
+		onScroll: function () {
+			if (!ignoreScroll && content.scrollTop() + content.height() > container.height() - 100) {
+				currentPage++;
+
+				ignoreScroll = true;
+				$.get(
+					OC.filePath('activity', 'ajax', 'fetch.php'),
+					'filter=' + container.attr('data-activity-filter') + '&page=' + currentPage,
+					function(data) {
+						OCActivity.InfinitScrolling.appendContent(data);
+						ignoreScroll = false;
+
+						if (!data.length) {
+							// Page is empty - No more activities :(
+							$('#nomoreactivities').removeClass('hidden');
+							ignoreScroll = true;
+						}
+					}
+				);
+			}
+		},
+
+		appendContent: function (content) {
+			container.append(content);
+			OCActivity.InfinitScrolling.processElements(container);
+		},
+
+		processElements: function (parentElement) {
+			$(parentElement).find('.avatar').each(function() {
+				var element = $(this);
+				console.log($(this));
+				element.avatar(element.data('user'), 28);
+			});
+
+			$(parentElement).find('.tooltip').tipsy({
+				gravity:	's',
+				fade:		true
+			});
 		}
-	}
+	};
 
 	var container = $('#container'),
 		content = $('#app-content'),
 		currentPage = 0,
 		ignoreScroll = false;
-	processChildren(container);
 
-	function prefill() {
-		if (content.scrollTop() + content.height() > container.height() - 100) {
-			currentPage++;
-
-			//ignoreScroll = true;
-			$.get(
-				OC.filePath('activity', 'ajax', 'fetch.php'),
-				'filter=' + container.attr('data-activity-filter') + '&page=' + currentPage,
-				function(data) {
-					container.append(data);
-					if (data.length) {
-						// Continue prefill
-						prefill();
-					}
-					else if (currentPage == 1) {
-						// First page is empty - No activities :(
-						$('#noactivities').removeClass('hidden');
-					}
-					else {
-						// Page is empty - No more activities :(
-						$('#nomoreactivities').removeClass('hidden');
-					}
-				}
-			);
-		}
-	}
-
-	prefill();
-	content.on('scroll', _onScroll);
+	OCActivity.InfinitScrolling.prefill();
+	content.on('scroll', OCActivity.InfinitScrolling.onScroll);
 });
 
