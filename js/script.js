@@ -55,14 +55,29 @@ $(function(){
 		},
 
 		appendContent: function (content) {
+			var firstNewGroup = $(content).first(),
+				lastGroup = container.children().last();
+
+			// Is the first new container the same as the last one?
+			if (lastGroup.data('date') === firstNewGroup.data('date')) {
+				var appendedBoxes = firstNewGroup.find('.box'),
+					lastBoxContainer = lastGroup.find('.boxcontainer');
+
+				// Move content into the last box
+				lastBoxContainer.append(appendedBoxes);
+
+				// Remove the first box, so it's not duplicated
+				content = $(content).slice(1);
+			}
+
 			container.append(content);
+
 			OCActivity.InfinitScrolling.processElements(container);
 		},
 
 		processElements: function (parentElement) {
 			$(parentElement).find('.avatar').each(function() {
 				var element = $(this);
-				console.log($(this));
 				element.avatar(element.data('user'), 28);
 			});
 
