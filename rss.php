@@ -23,6 +23,7 @@
 
 \OCP\App::checkAppEnabled('activity');
 
+$forceUserLogout = false;
 if (!\OCP\User::isLoggedIn()) {
 	if (!isset($_GET['token']) || strlen($_GET['token']) !== 30) {
 		// Token missing or invalid
@@ -41,6 +42,7 @@ if (!\OCP\User::isLoggedIn()) {
 
 	// Token found login as that user
 	\OC_User::setUserId(array_shift($users));
+	$forceUserLogout = true;
 }
 
 // check if the user has the right permissions.
@@ -63,3 +65,7 @@ $tmpl->assign('user', \OCP\User::getUser());
 $tmpl->assign('activities', \OCA\Activity\Data::read(0, 30, 'by', false));
 
 $tmpl->printPage();
+
+if ($forceUserLogout) {
+	\OC_User::logout();
+}
