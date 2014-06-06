@@ -21,9 +21,32 @@
  *
  */
 
+\OCP\App::checkAppEnabled('activity');
+
+$forceUserLogout = false;
+if (!\OCP\User::isLoggedIn()) {
+	if (!isset($_GET['token']) || strlen($_GET['token']) !== 30) {
+		// Token missing or invalid
+		header('HTTP/1.0 404 Not Found');
+		exit;
+	}
+
+	$preferences = new \OC\Preferences(\OC_DB::getConnection());
+	$users = $preferences->getUsersForValue('activity', 'rsstoken', $_GET['token']);
+
+	if (sizeof($users) !== 1) {
+		// User not found
+		header('HTTP/1.0 404 Not Found');
+		exit;
+	}
+
+	// Token found login as that user
+	\OC_User::setUserId(array_shift($users));
+	$forceUserLogout = true;
+}
+
 // check if the user has the right permissions.
-OCP\User::checkLoggedIn();
-OCP\App::checkAppEnabled('activity');
+\OCP\User::checkLoggedIn();
 
 // rss is of content type text/xml
 if (isset($_SERVER['HTTP_ACCEPT']) && stristr($_SERVER['HTTP_ACCEPT'], 'application/rss+xml')) {
@@ -42,3 +65,7 @@ $tmpl->assign('user', \OCP\User::getUser());
 $tmpl->assign('activities', \OCA\Activity\Data::read(0, 30, 'by', false));
 
 $tmpl->printPage();
+
+if ($forceUserLogout) {
+	\OC_User::logout();
+}

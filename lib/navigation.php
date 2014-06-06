@@ -35,6 +35,9 @@ class Navigation {
 	/** @var string */
 	protected $active;
 
+	/** @var string */
+	protected $rssLink;
+
 	/**
 	 * Construct
 	 *
@@ -44,6 +47,7 @@ class Navigation {
 	public function __construct(\OC_L10N $l, $active = 'all') {
 		$this->l = $l;
 		$this->active = $active;
+		$this->rssLink = '';
 	}
 
 	/**
@@ -71,8 +75,18 @@ class Navigation {
 
 		$template->assign('activeNavigation', $active);
 		$template->assign('navigations', $entries);
+		$template->assign('rssLink', $this->rssLink);
 
 		return $template;
+	}
+
+	public function setRSSToken($rssToken) {
+		if ($rssToken) {
+			$this->rssLink = \OCP\Util::linkToAbsolute('activity', 'rss.php', array('token' => $rssToken));
+		}
+		else {
+			$this->rssLink = '';
+		}
 	}
 
 	/**
@@ -112,18 +126,9 @@ class Navigation {
 			),
 		);
 
-		$bottomEntries = array(
-			array(
-				'id' => 'rss',
-				'name' => (string) $this->l->t('RSS feed'),
-				'url' => \OCP\Util::linkToAbsolute('activity', 'rss.php'),
-			),
-		);
-
 		return array(
 			'top'		=> $topEntries,
 			'apps'		=> $appFilterEntries,
-			'bottom'	=> $bottomEntries,
 		);
 	}
 }
