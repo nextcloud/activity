@@ -2,8 +2,6 @@
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Via agordo ĝisdatigitas.",
 "Activity" => "Agoj",
-"No more activities to load." => "Ne estas pliaj agoj por ŝarĝi.",
-"Loading older activities" => "Ŝargante pli malnovaj agoj",
 "A file or folder has been <strong>shared</strong>" => "Dosiero aŭ dosierujo <strong>kunhaviĝis</strong>",
 "A new file or folder has been <strong>created</strong> in a shared folder" => "Nova dosiero aŭ dosierujo <strong>kreiĝis</strong> en kunhavata dosierujo",
 "A file or folder has been <strong>changed</strong> in a shared folder" => "Dosiero aŭ dosierujo <strong>ŝanĝiĝis</strong> en kunhavata dosierujo",
@@ -21,8 +19,6 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s kunhavigis %1\$s kun vi",
 "You shared %1\$s" => "Vi kunhavigis %1\$s",
 "Files" => "Dosieroj",
-"RSS feed" => "RSS-fluo",
-"No activities yet." => "Estas neniu ago ankoraŭ.",
 "You will see a list of events here when you start to use your %s." => "Vi vidos liston de okazaĵoj ĉi tie kiam vi ekuzos vian %s.",
 "Notifications" => "Sciigoj",
 "Mail" => "Retpoŝto",

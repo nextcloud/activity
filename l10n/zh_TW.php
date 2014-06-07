@@ -2,8 +2,6 @@
 $TRANSLATIONS = array(
 "Your settings have been updated." => "您的設定已更新.",
 "Activity" => "活動",
-"No more activities to load." => "沒有更多活動要讀取。",
-"Loading older activities" => "讀取舊的活動中",
 "A file or folder has been <strong>shared</strong>" => "檔案或目錄已經被 <strong>分享</strong>",
 "A new file or folder has been <strong>created</strong> in a shared folder" => "新的檔案或目錄在分享的目錄中被 <strong>建立</strong> ",
 "A file or folder has been <strong>changed</strong> in a shared folder" => "檔案或目錄在分享的目錄中被 <strong>更改</strong> ",
@@ -17,8 +15,6 @@ $TRANSLATIONS = array(
 "You deleted %1\$s" => "您刪除了 %1\$s",
 "%2\$s deleted %1\$s" => "%2\$s 已刪除 %1\$s",
 "Files" => "檔案",
-"RSS feed" => "RSS 來源",
-"No activities yet." => "沒有正在活動的。",
 "You will see a list of events here when you start to use your %s." => "當您開始使用您的 %s 時候，您將會在這看到事件列表。",
 "Notifications" => "通知",
 "Mail" => "電子郵件",

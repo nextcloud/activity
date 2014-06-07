@@ -1,13 +1,9 @@
 <?php
 $TRANSLATIONS = array(
 "Activity" => "Активність",
-"No more activities to load." => "Більше немає заходів для завантаження.",
-"Loading older activities" => "Завантаження старіших заходів",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("","",""),
 "_%s and %n more_::_%s and %n more_" => array("","",""),
 "Files" => "Файли",
-"RSS feed" => "Стрічка RSS",
-"No activities yet." => "Поки ніякої активності",
 "You will see a list of events here when you start to use your %s." => "Ви тут побачите список подій, коли починаєте використовувати свій %s.",
 "Daily" => "Щоденно",
 "Weekly" => "Щотижня"

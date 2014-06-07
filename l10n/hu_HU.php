@@ -2,8 +2,6 @@
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Beállításaid sikeresen frissítve.",
 "Activity" => "Aktivitás",
-"No more activities to load." => "Nincs több betöltendő aktivitás.",
-"Loading older activities" => "Korábbi aktivitások betöltése",
 "A file or folder has been <strong>shared</strong>" => "Fájl vagy könyvtár <strong>megosztva</strong>",
 "A new file or folder has been <strong>created</strong> in a shared folder" => "Fájl vagy könyvtár <strong>létrejött</strong> a megosztott könyvtárban",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("",""),
@@ -19,10 +17,10 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s megosztotta veled ezt: %1\$s",
 "You shared %1\$s" => "Megosztottad: %1\$s",
 "Files" => "Fájlok",
-"RSS feed" => "RSS hírcsatorna",
-"No activities yet." => "Nincs megjeleníthető aktivitás.",
+"Hello %s," => "Helló %s!",
 "You will see a list of events here when you start to use your %s." => "Az események itt lesznek láthatóak, miután elkezdte használni a %s szolgáltatást.",
 "Notifications" => "Értesítések",
+"Hourly" => "Óránként",
 "Daily" => "Naponta",
 "Weekly" => "Hetente"
 );

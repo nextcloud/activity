@@ -1,13 +1,9 @@
 <?php
 $TRANSLATIONS = array(
 "Activity" => "Hoạt động",
-"No more activities to load." => "Không có nhiều hoạt động để tải.",
-"Loading older activities" => "Tải các hoạt động cũ",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array(""),
 "_%s and %n more_::_%s and %n more_" => array(""),
 "Files" => "Tập tin",
-"RSS feed" => "RSS feed",
-"No activities yet." => "Chưa có hoạt động nào.",
 "You will see a list of events here when you start to use your %s." => "Bạn sẽ thấy danh sách các sự kiện ở đây khi bạn bắt đầu sử dụng %s .",
 "Notifications" => "Thông b",
 "Daily" => "Hàng ngày",

@@ -2,8 +2,6 @@
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Vaše nastavenia boli aktualizované.",
 "Activity" => "Aktivita",
-"No more activities to load." => "Žiadne ďalšie aktivity na načítanie.",
-"Loading older activities" => "Načítavam staršie aktivity",
 "A file or folder has been <strong>shared</strong>" => "Súbor alebo priečinok bol <strong>zdieľaný</strong>",
 "A new file or folder has been <strong>created</strong> in a shared folder" => "Nový súbor alebo priečinok bol <strong>vytvorený</strong> v zdieľanom priečinku",
 "A file or folder has been <strong>changed</strong> in a shared folder" => "Súbor alebo priečinok bol <strong>zmenený</strong> v zdieľanom priečinku",
@@ -11,8 +9,6 @@ $TRANSLATIONS = array(
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("","",""),
 "_%s and %n more_::_%s and %n more_" => array("","",""),
 "Files" => "Súbory",
-"RSS feed" => "RSS kanál",
-"No activities yet." => "Zatiaľ žiadne aktivity.",
 "You will see a list of events here when you start to use your %s." => "Tu uvidíte zoznam udalostí hneď ako začnete používať svoj %s.",
 "Notifications" => "Oznámenia",
 "Mail" => "Mail",
