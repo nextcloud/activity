@@ -6,8 +6,10 @@ $TRANSLATIONS = array(
 "A new file or folder has been <strong>created</strong> in a shared folder" => "En fil eller mappe har blitt <strong>opprettet</strong> i en delt mappe",
 "A file or folder has been <strong>changed</strong> in a shared folder" => "En fil eller mappe har blitt <strong>endret</strong> i en delt mappe",
 "A file or folder has been <strong>deleted</strong> from a shared folder" => "En fil eller mappe har blitt <strong>slettet</strong> fra en delt mappe",
-"_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("",""),
-"_%s and %n more_::_%s and %n more_" => array("",""),
+"%s and %s" => "%s og %s",
+", " => ", ",
+"_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("%s og <strong class=\"tooltip\" title=\"%s\">%n til</strong>","%s og <strong class=\"tooltip\" title=\"%s\">%n flere</strong>"),
+"_%s and %n more_::_%s and %n more_" => array("%s og %n til","%s og %n flere"),
 "You created %1\$s" => "Du slettet %1\$s",
 "%2\$s created %1\$s" => "%2\$s opprettet %1\$s",
 "You changed %1\$s" => "Du endret %1\$s",
@@ -19,6 +21,10 @@ $TRANSLATIONS = array(
 "%2\$s shared %1\$s with you" => "%2\$s delte %1\$s med deg",
 "You shared %1\$s" => "Du delte %1\$s",
 "Activity notification" => "Varsel om aktivitet",
+"All Activities" => "Alle aktiviteter",
+"Activities by you" => "Dine aktiviteter",
+"Activities by others" => "Andres aktiviteter",
+"Shares" => "Delinger",
 "Files" => "Filer",
 "Hello %s," => "Hei %s,",
 "You are receiving this email because in the last hour the following things happened at %s" => "Du mottar denne e-posten fordi følgende har skjedd på %s den siste timen",
@@ -26,6 +32,8 @@ $TRANSLATIONS = array(
 "You are receiving this email because in the last week the following things happened at %s" => "Du mottar denne e-posten fordi følgende har skjedd på %s den siste uken",
 "* %s" => "* %s",
 "You will see a list of events here when you start to use your %s." => "Du vil se en liste av hendelser her når du starter å bruke din %s.",
+"No more events to load" => "Ingen flere hendelser å laste",
+"Enable RSS feed" => "Aktiver RSS-strøm",
 "Notifications" => "Varsler",
 "Mail" => "E-post",
 "Stream" => "Strøm",
@@ -33,6 +41,8 @@ $TRANSLATIONS = array(
 "Send emails:" => "Send e-poster:",
 "Hourly" => "Hver time",
 "Daily" => "Daglig",
-"Weekly" => "Ukentlig"
+"Weekly" => "Ukentlig",
+"Activity feed" => "Aktivitetsstrøm",
+"Personal activity feed for %s" => "Personlig aktivitetsstrøm for %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";
