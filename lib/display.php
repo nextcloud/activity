@@ -42,6 +42,12 @@ class Display
 		$tmpl->assign('formattedTimestamp', \OCP\relative_modified_date($activity['timestamp']));
 		$tmpl->assign('user', $activity['user']);
 		$tmpl->assign('displayName', \OCP\User::getDisplayName($activity['user']));
+
+		if ($activity['app'] === 'files') {
+			// We do not link the subject as we create links for the parameters instead
+			$activity['link'] = '';
+		}
+
 		$tmpl->assign('event', $activity);
 
 		$rootView = new \OC\Files\View('');
