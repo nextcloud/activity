@@ -21,7 +21,10 @@
  *
  */
 
-
-// register an ocs api call
-OCP\API::register('get', '/cloud/activity', array('OCA\Activity\OCS', 'getActivities'), 'activity', OC_API::ADMIN_AUTH);
-
+// Register an OCS API call
+OC_API::register(
+	'get',
+	'/cloud/activity',
+	array('OCA\Activity\Api', 'get'),
+	'activity'
+);
