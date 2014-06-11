@@ -43,7 +43,6 @@ class Display
 		$tmpl->assign('user', $activity['user']);
 		$tmpl->assign('displayName', \OCP\User::getDisplayName($activity['user']));
 		$tmpl->assign('event', $activity);
-		$tmpl->assign('typeIcon', self::getTypeIcon($activity['type']));
 
 		$rootView = new \OC\Files\View('');
 		if ($activity['file'] !== null){
@@ -69,27 +68,5 @@ class Display
 		}
 
 		return $tmpl->fetchPage();
-	}
-
-	/**
-	 * Get the icon for a given activity type
-	 *
-	 * @param string $type
-	 * @return string CSS class which adds the icon
-	 */
-	public static function getTypeIcon($type)
-	{
-		switch ($type)
-		{
-			case Data::TYPE_SHARE_CHANGED:
-				return 'icon-change';
-			case Data::TYPE_SHARE_CREATED:
-				return 'icon-add-color';
-			case Data::TYPE_SHARE_DELETED:
-				return 'icon-delete-color';
-			case Data::TYPE_SHARED:
-				return 'icon-share';
-		}
-		return '';
 	}
 }

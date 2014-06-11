@@ -281,4 +281,49 @@ class DataHelper
 
 		return $helper->getActivities();
 	}
+
+	/**
+	 * Format strings for display
+	 *
+	 * @param array $activity
+	 * @param string $message 'subject' or 'message'
+	 * @return array Modified $activity
+	 */
+	public static function formatStrings($activity, $message) {
+		$activity[$message . 'params'] = $activity[$message . 'params_array'];
+		unset($activity[$message . 'params_array']);
+
+		$activity[$message . 'formatted'] = array(
+			'trimmed'	=> DataHelper::translation($activity['app'], $activity[$message], $activity[$message . 'params'], true),
+			'full'		=> DataHelper::translation($activity['app'], $activity[$message], $activity[$message . 'params']),
+			'markup'	=> array(
+				'trimmed'	=> DataHelper::translation($activity['app'], $activity[$message], $activity[$message . 'params'], true, true),
+				'full'		=> DataHelper::translation($activity['app'], $activity[$message], $activity[$message . 'params'], false, true),
+			),
+		);
+
+		return $activity;
+	}
+
+	/**
+	 * Get the icon for a given activity type
+	 *
+	 * @param string $type
+	 * @return string CSS class which adds the icon
+	 */
+	public static function getTypeIcon($type)
+	{
+		switch ($type)
+		{
+			case Data::TYPE_SHARE_CHANGED:
+				return 'icon-change';
+			case Data::TYPE_SHARE_CREATED:
+				return 'icon-add-color';
+			case Data::TYPE_SHARE_DELETED:
+				return 'icon-delete-color';
+			case Data::TYPE_SHARED:
+				return 'icon-share';
+		}
+		return '';
+	}
 }

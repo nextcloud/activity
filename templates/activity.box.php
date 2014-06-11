@@ -9,11 +9,11 @@
 
 <div class="box">
 	<div class="messagecontainer">
-		<div class="activity-icon <?php p($_['typeIcon']) ?><?php if ($_['typeIcon']): ?> svg<?php endif; ?>"></div>
+		<div class="activity-icon <?php p($_['event']['typeicon']) ?><?php if ($_['event']['typeicon']): ?> svg<?php endif; ?>"></div>
 
 		<div class="activitysubject">
 			<?php if ($_['event']['link']): ?><a href="<?php p($_['event']['link']) ?>"><?php endif ?>
-			<?php print_unescaped($_['event']['subject_markup']) ?>
+			<?php print_unescaped($_['event']['subjectformatted']['markup']['trimmed']) ?>
 			<?php if ($_['event']['link']): ?></a><?php endif; ?>
 		</div>
 
@@ -21,15 +21,15 @@
 			<?php p($_['formattedTimestamp']) ?>
 		</span>
 
-		<?php if ($_['event']['message_long']): ?>
+		<?php if ($_['event']['message']): ?>
 			<div class="activitymessage">
-				<?php p($_['event']['message_short']) ?>
+				<?php p($_['event']['messageformatted']['markup']['trimmed']) ?>
 			</div>
 		<?php endif ?>
 
 		<?php if (!empty($_['previewImageLink'])): ?>
 			<?php if ($_['previewLink']): ?><a href="<?php p($_['previewLink']) ?>"><?php endif ?>
-			<img class="preview<?php if (!empty($_['previewLinkIsDir'])): ?> preview-dir-icon<?php endif ?>" src="<?php p($_['previewImageLink']) ?>" alt="<?php p($_['event']['message_long']) ?>"/>
+			<img class="preview<?php if (!empty($_['previewLinkIsDir'])): ?> preview-dir-icon<?php endif ?>" src="<?php p($_['previewImageLink']) ?>" alt="<?php p($_['event']['subjectformatted']['trimmed']) ?>"/>
 			<?php if ($_['previewLink']): ?></a><?php endif; ?>
 		<?php endif ?>
 

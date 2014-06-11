@@ -69,9 +69,13 @@ class GroupHelper
 					if (!is_array($this->openGroup['subjectparams_array'][$parameter])) {
 						$this->openGroup['subjectparams_array'][$parameter] = array($this->openGroup['subjectparams_array'][$parameter]);
 					}
+					if (!isset($this->openGroup['activity_ids'])) {
+						$this->openGroup['activity_ids'] = array((int) $this->openGroup['activity_id']);
+					}
 
 					$this->openGroup['subjectparams_array'][$parameter][] = $activity['subjectparams_array'][$parameter];
 					$this->openGroup['subjectparams_array'][$parameter] = array_unique($this->openGroup['subjectparams_array'][$parameter]);
+					$this->openGroup['activity_ids'][] = (int) $activity['activity_id'];
 				}
 			} else {
 				if (!empty($this->openGroup)) {
@@ -128,16 +132,10 @@ class GroupHelper
 
 		$return = array();
 		foreach ($this->activities as $activity) {
-			$activity['subjectparams'] = $activity['subjectparams_array'];
-			$activity['messageparams'] = $activity['messageparams_array'];
+			$activity = DataHelper::formatStrings($activity, 'subject');
+			$activity = DataHelper::formatStrings($activity, 'message');
 
-			$activity['subject_markup'] = DataHelper::translation($activity['app'], $activity['subject'], $activity['subjectparams'], true, true);
-			$activity['message_markup'] = DataHelper::translation($activity['app'], $activity['message'], $activity['messageparams'], true, true);
-			$activity['subject_short'] = DataHelper::translation($activity['app'], $activity['subject'], $activity['subjectparams'], true);
-			$activity['message_short'] = DataHelper::translation($activity['app'], $activity['message'], $activity['messageparams'], true);
-			$activity['subject_full'] = DataHelper::translation($activity['app'], $activity['subject'], $activity['subjectparams']);
-			$activity['message_full'] = DataHelper::translation($activity['app'], $activity['message'], $activity['messageparams']);
-
+			$activity['typeicon'] = DataHelper::getTypeIcon($activity['type']);
 			$return[] = $activity;
 		}
 
