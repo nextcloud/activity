@@ -62,7 +62,7 @@ $tmpl->assign('rssLang', \OC_Preferences::getValue(\OCP\User::getUser(), 'core',
 $tmpl->assign('rssLink', \OCP\Util::linkToAbsolute('activity', 'rss.php'));
 $tmpl->assign('rssPubDate', date('r'));
 $tmpl->assign('user', \OCP\User::getUser());
-$tmpl->assign('activities', \OCA\Activity\Data::read(0, 30, 'by', false));
+$tmpl->assign('activities', \OCA\Activity\Data::read(0, 30, 'all', false));
 
 $tmpl->printPage();
 

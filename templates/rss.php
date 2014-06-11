@@ -20,8 +20,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <?php foreach ($_['activities'] as $activity) { ?>
 		<item>
 			<guid isPermaLink="false"><?php p($activity['activity_id']); ?></guid>
-<?php if (!empty($activity['subject_full'])): ?>
-			<title><?php p($activity['subject_full']); ?></title>
+<?php if (!empty($activity['subject'])): ?>
+			<title><?php p($activity['subjectformatted']['full']); ?></title>
 <?php endif; ?>
 <?php if (!empty($activity['link'])): ?>
 			<link><?php p($activity['link']); ?></link>
@@ -29,8 +29,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <?php if (!empty($activity['timestamp'])): ?>
 			<pubDate><?php p(date('r', $activity['timestamp'])); ?></pubDate>
 <?php endif; ?>
-<?php if (!empty($activity['message_full'])): ?>
-			<description><![CDATA[<?php p($activity['message_full']); ?>]]></description>
+<?php if (!empty($activity['message'])): ?>
+			<description><![CDATA[<?php p($activity['messageformatted']['full']); ?>]]></description>
 <?php endif; ?>
 		</item>
 <?php } ?>

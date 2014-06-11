@@ -42,8 +42,13 @@ class Display
 		$tmpl->assign('formattedTimestamp', \OCP\relative_modified_date($activity['timestamp']));
 		$tmpl->assign('user', $activity['user']);
 		$tmpl->assign('displayName', \OCP\User::getDisplayName($activity['user']));
+
+		if ($activity['app'] === 'files') {
+			// We do not link the subject as we create links for the parameters instead
+			$activity['link'] = '';
+		}
+
 		$tmpl->assign('event', $activity);
-		$tmpl->assign('typeIcon', self::getTypeIcon($activity['type']));
 
 		$rootView = new \OC\Files\View('');
 		if ($activity['file'] !== null){
@@ -69,27 +74,5 @@ class Display
 		}
 
 		return $tmpl->fetchPage();
-	}
-
-	/**
-	 * Get the icon for a given activity type
-	 *
-	 * @param string $type
-	 * @return string CSS class which adds the icon
-	 */
-	public static function getTypeIcon($type)
-	{
-		switch ($type)
-		{
-			case Data::TYPE_SHARE_CHANGED:
-				return 'icon-change';
-			case Data::TYPE_SHARE_CREATED:
-				return 'icon-add-color';
-			case Data::TYPE_SHARE_DELETED:
-				return 'icon-delete-color';
-			case Data::TYPE_SHARED:
-				return 'icon-share';
-		}
-		return '';
 	}
 }
