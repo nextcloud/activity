@@ -2,6 +2,10 @@
 $TRANSLATIONS = array(
 "Your settings have been updated." => "Zure ezarpenak eguneratu dira.",
 "Activity" => "Jarduera",
+"A file or folder has been <strong>shared</strong>" => "Fitxategia edo karpeta <strong>konpartitu</strong> da",
+"A new file or folder has been <strong>created</strong> in a shared folder" => "Fitxategi edo karpeta berria  <strong>sortu</strong> da konpartitutako karpetan",
+"A file or folder has been <strong>changed</strong> in a shared folder" => "Fitxategia edo karpeta <strong>aldatu</strong> da konpartitutako karpetan",
+"A file or folder has been <strong>deleted</strong> from a shared folder" => "Fitxategia edo karpeta  <strong>ezabatu</strong> da konpartitutako karpetan",
 "%s and %s" => "%s eta %s",
 ", " => ", ",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("",""),
