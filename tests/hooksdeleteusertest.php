@@ -68,9 +68,10 @@ class HooksDeleteUserTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown() {
 		parent::tearDown();
 
-		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity`');
-		$query->execute();
-		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity_mq`');
+		Data::deleteActivities(array(
+			'type' => 'test',
+		));
+		$query = \OCP\DB::prepare("DELETE FROM `*PREFIX*activity_mq` WHERE `amq_type` = 'test'");
 		$query->execute();
 	}
 
@@ -84,12 +85,12 @@ class HooksDeleteUserTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	protected function assertUserActivities($expected) {
-		$query = \OCP\DB::prepare('SELECT `affecteduser` FROM `*PREFIX*activity`');
+		$query = \OCP\DB::prepare("SELECT `affecteduser` FROM `*PREFIX*activity` WHERE `type` = 'test'");
 		$this->assertTableKeys($expected, $query, 'affecteduser');
 	}
 
 	protected function assertUserMailQueue($expected) {
-		$query = \OCP\DB::prepare('SELECT `amq_affecteduser` FROM `*PREFIX*activity_mq`');
+		$query = \OCP\DB::prepare("SELECT `amq_affecteduser` FROM `*PREFIX*activity_mq` WHERE `amq_type` = 'test'");
 		$this->assertTableKeys($expected, $query, 'amq_affecteduser');
 	}
 
