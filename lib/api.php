@@ -41,8 +41,8 @@ class Api
 		foreach($activities as $entry) {
 			$data[] = array(
 				'id' => $entry['activity_id'],
-				'subject' => $entry['subjectformatted']['full'],
-				'message' => $entry['messageformatted']['full'],
+				'subject' => (string) $entry['subjectformatted']['full'],
+				'message' => (string) $entry['messageformatted']['full'],
 				'file' => $entry['file'],
 				'link' => $entry['link'],
 				'date' => date('c', $entry['timestamp']),
