@@ -100,17 +100,26 @@ class Hooks {
 				$user_subject = $subject_by;
 				$user_params = array($path, \OCP\User::getUser());
 			}
-			$link = \OCP\Util::linkToAbsolute('files', 'index.php', array('dir' => dirname($path)));
 
-			// Add activities to stream
-			if (!empty($filteredStreamUsers[$user])) {
-				Data::send('files', $user_subject, $user_params, '', array(), $path, $link, $user, $activity_type, Data::PRIORITY_HIGH);
-			}
+			self::addNotificationsForUser(
+				$user, $user_subject, $user_params,
+				$path, true,
+				!empty($filteredStreamUsers[$user]),
+				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
+				$activity_type, Data::PRIORITY_HIGH
+			);
 
-			// Add activity to mail queue
-			if (isset($filteredEmailUsers[$user])) {
-				Data::storeMail('files', $user_subject, $user_params, $user, $activity_type, time() + $filteredEmailUsers[$user]);
-			}
+//			$link = \OCP\Util::linkToAbsolute('files', 'index.php', array('dir' => dirname($path)));
+//
+//			// Add activities to stream
+//			if (!empty($filteredStreamUsers[$user])) {
+//				Data::send('files', $user_subject, $user_params, '', array(), $path, $link, $user, $activity_type, Data::PRIORITY_HIGH);
+//			}
+//
+//			// Add activity to mail queue
+//			if (isset($filteredEmailUsers[$user])) {
+//				Data::storeMail('files', $user_subject, $user_params, $user, $activity_type, time() + $filteredEmailUsers[$user]);
+//			}
 		}
 	}
 
@@ -171,7 +180,7 @@ class Hooks {
 //		list($path, $uidOwner) = self::getSourcePathAndOwner($file_path);
 
 		// User performing the share
-		self::addNotificationsForShares(
+		self::addNotificationsForUser(
 			\OCP\User::getUser(), 'shared_user_self', array($file_path, $params['shareWith']),
 			$file_path, ($params['itemType'] === 'file'),
 			UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED),
@@ -193,7 +202,7 @@ class Hooks {
 
 		// New shared user
 		$path = $params['fileTarget'];
-		self::addNotificationsForShares(
+		self::addNotificationsForUser(
 			$params['shareWith'], 'shared_with_by', array($path, \OCP\User::getUser()),
 			$path, ($params['itemType'] === 'file'),
 			UserSettings::getUserSetting($params['shareWith'], 'stream', Data::TYPE_SHARED),
@@ -237,7 +246,7 @@ class Hooks {
 //			Data::storeMail('files', 'shared_group_self', array($file_path, $params['shareWith']), $uidOwner, Data::TYPE_SHARED, $latestSend);
 //		}
 		// User performing the share
-		self::addNotificationsForShares(
+		self::addNotificationsForUser(
 			\OCP\User::getUser(), 'shared_group_self', array($file_path, $params['shareWith']),
 			$file_path, ($params['itemType'] === 'file'),
 			UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED),
@@ -287,7 +296,7 @@ class Hooks {
 //					Data::storeMail('files', 'shared_with_by', array($path, \OCP\User::getUser()), $user, Data::TYPE_SHARED, $latestSend);
 //				}
 
-				self::addNotificationsForShares(
+				self::addNotificationsForUser(
 					$user, 'shared_with_by', array($path, \OCP\User::getUser()),
 					$path, ($params['itemType'] === 'file'),
 					!empty($filteredStreamUsersInGroup[$user]),
@@ -297,20 +306,20 @@ class Hooks {
 		}
 	}
 
-	protected static function addNotificationsForShares($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting) {
+	protected static function addNotificationsForUser($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting, $type = Data::TYPE_SHARED, $priority = Data::PRIORITY_MEDIUM) {
 		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
 			'dir' => ($isFile) ? dirname($path) : $path,
 		));
 
 		// Add activity to stream
 		if ($streamSetting) {
-			Data::send('files', $subject, $subjectParams, '', array(), $path, $link, $user, Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
+			Data::send('files', $subject, $subjectParams, '', array(), $path, $link, $user, $type, $priority);
 		}
 
 		// Add activity to mail queue
 		if ($emailSetting) {
 			$latestSend = time() + $emailSetting;
-			Data::storeMail('files', $subject, $subjectParams, $user, Data::TYPE_SHARED, $latestSend);
+			Data::storeMail('files', $subject, $subjectParams, $user, $type, $latestSend);
 		}
 	}
 
