@@ -48,6 +48,9 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 
 			// Valid file position
 			array(array('/foo/bar.file'), array(0 => 'file'), true, false, array('bar.file')),
+			array(array('/folder/trailingslash/fromsharing/'), array(0 => 'file'), true, false, array('fromsharing')),
+			array(array('/foo/bar.file'), array(0 => 'file'), false, false, array('foo/bar.file')),
+			array(array('/folder/trailingslash/fromsharing/'), array(0 => 'file'), false, false, array('folder/trailingslash/fromsharing')),
 			array(array('/foo/bar.file'), array(0 => 'file'), true, true, array(
 				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/bar.file">bar.file</a>',
 			)),
