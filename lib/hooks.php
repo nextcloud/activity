@@ -206,34 +206,39 @@ class Hooks {
 			$affectedUsers[$user] = $params['fileTarget'];
 		}
 
-		if (!empty($affectedUsers)) {
-			$filteredStreamUsersInGroup = UserSettings::filterUsersBySetting($usersInGroup, 'stream', Data::TYPE_SHARED);
-			$filteredEmailUsersInGroup = UserSettings::filterUsersBySetting($usersInGroup, 'email', Data::TYPE_SHARED);
+		// Remove the triggering user, we already managed his notifications
+		unset($affectedUsers[\OCP\User::getUser()]);
 
-			// Check when there was a naming conflict and the target is different
-			// for some of the users
-			$query = \OC_DB::prepare('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ');
-			$result = $query->execute(array($params['id']));
-			if (\OCP\DB::isError($result)) {
-				\OCP\Util::writeLog('OCA\Activity\Hooks::shareFileOrFolderWithGroup', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
-			} else {
-				while ($row = $result->fetchRow()) {
-					$affectedUsers[$row['share_with']] = $row['file_target'];
-				}
+		if (empty($affectedUsers)) {
+			return;
+		}
+
+		$filteredStreamUsersInGroup = UserSettings::filterUsersBySetting($usersInGroup, 'stream', Data::TYPE_SHARED);
+		$filteredEmailUsersInGroup = UserSettings::filterUsersBySetting($usersInGroup, 'email', Data::TYPE_SHARED);
+
+		// Check when there was a naming conflict and the target is different
+		// for some of the users
+		$query = \OC_DB::prepare('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ');
+		$result = $query->execute(array($params['id']));
+		if (\OCP\DB::isError($result)) {
+			\OCP\Util::writeLog('OCA\Activity\Hooks::shareFileOrFolderWithGroup', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
+		} else {
+			while ($row = $result->fetchRow()) {
+				$affectedUsers[$row['share_with']] = $row['file_target'];
+			}
+		}
+
+		foreach ($affectedUsers as $user => $path) {
+			if (empty($filteredStreamUsersInGroup[$user]) && empty($filteredEmailUsersInGroup[$user])) {
+				continue;
 			}
 
-			foreach ($affectedUsers as $user => $path) {
-				if ($user == \OCP\User::getUser() || (empty($filteredStreamUsersInGroup[$user]) && empty($filteredEmailUsersInGroup[$user]))) {
-					continue;
-				}
-
-				self::addNotificationsForUser(
-					$user, 'shared_with_by', array($path, \OCP\User::getUser()),
-					$path, ($params['itemType'] === 'file'),
-					!empty($filteredStreamUsersInGroup[$user]),
-					!empty($filteredEmailUsersInGroup[$user]) ? $filteredEmailUsersInGroup[$user] : 0
-				);
-			}
+			self::addNotificationsForUser(
+				$user, 'shared_with_by', array($path, \OCP\User::getUser()),
+				$path, ($params['itemType'] === 'file'),
+				!empty($filteredStreamUsersInGroup[$user]),
+				!empty($filteredEmailUsersInGroup[$user]) ? $filteredEmailUsersInGroup[$user] : 0
+			);
 		}
 	}
 
