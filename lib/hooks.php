@@ -108,18 +108,6 @@ class Hooks {
 				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
 				$activity_type, Data::PRIORITY_HIGH
 			);
-
-//			$link = \OCP\Util::linkToAbsolute('files', 'index.php', array('dir' => dirname($path)));
-//
-//			// Add activities to stream
-//			if (!empty($filteredStreamUsers[$user])) {
-//				Data::send('files', $user_subject, $user_params, '', array(), $path, $link, $user, $activity_type, Data::PRIORITY_HIGH);
-//			}
-//
-//			// Add activity to mail queue
-//			if (isset($filteredEmailUsers[$user])) {
-//				Data::storeMail('files', $user_subject, $user_params, $user, $activity_type, time() + $filteredEmailUsers[$user]);
-//			}
 		}
 	}
 
@@ -177,7 +165,6 @@ class Hooks {
 	 */
 	public static function shareFileOrFolderWithUser($params) {
 		$file_path = \OC\Files\Filesystem::getPath($params['fileSource']);
-//		list($path, $uidOwner) = self::getSourcePathAndOwner($file_path);
 
 		// User performing the share
 		self::addNotificationsForUser(
@@ -186,19 +173,6 @@ class Hooks {
 			UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED),
 			UserSettings::getUserSetting(\OCP\User::getUser(), 'email', Data::TYPE_SHARED) ? UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'batchtime') : 0
 		);
-//		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
-//			'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
-//		));
-//
-//		// Add activity to stream
-//		if (UserSettings::getUserSetting($uidOwner, 'stream', Data::TYPE_SHARED)) {
-//			Data::send('files', 'shared_user_self', array($file_path, $params['shareWith']), '', array(), $path, $link, $uidOwner, Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
-//		}
-//		// Add activity to mail queue
-//		if (UserSettings::getUserSetting($uidOwner, 'email', Data::TYPE_SHARED)) {
-//			$latestSend = time() + UserSettings::getUserSetting($uidOwner, 'setting', 'batchtime');
-//			Data::storeMail('files', 'shared_user_self', array($file_path, $params['shareWith']), $uidOwner, Data::TYPE_SHARED, $latestSend);
-//		}
 
 		// New shared user
 		$path = $params['fileTarget'];
@@ -208,19 +182,6 @@ class Hooks {
 			UserSettings::getUserSetting($params['shareWith'], 'stream', Data::TYPE_SHARED),
 			UserSettings::getUserSetting($params['shareWith'], 'email', Data::TYPE_SHARED) ? UserSettings::getUserSetting($params['shareWith'], 'setting', 'batchtime') : 0
 		);
-//		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
-//			'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
-//		));
-//
-//		// Add activity to stream
-//		if (UserSettings::getUserSetting($params['shareWith'], 'stream', Data::TYPE_SHARED)) {
-//			Data::send('files', 'shared_with_by', array($path, \OCP\User::getUser()), '', array(), $path, $link, $params['shareWith'], Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
-//		}
-//		// Add activity to mail queue
-//		if (UserSettings::getUserSetting($uidOwner, 'email', Data::TYPE_SHARED)) {
-//			$latestSend = UserSettings::getUserSetting($params['shareWith'], 'setting', 'batchtime') + time();
-//			Data::storeMail('files', 'shared_with_by', array($path, \OCP\User::getUser()), $params['shareWith'], Data::TYPE_SHARED, $latestSend);
-//		}
 	}
 
 	/**
@@ -229,22 +190,7 @@ class Hooks {
 	 */
 	public static function shareFileOrFolderWithGroup($params) {
 		$file_path = \OC\Files\Filesystem::getPath($params['fileSource']);
-//		list($path, $uidOwner) = self::getSourcePathAndOwner($file_path);
 
-		// Folder owner
-//		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
-//			'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
-//		));
-//
-//		// Add activity to stream
-//		if (UserSettings::getUserSetting($uidOwner, 'stream', Data::TYPE_SHARED)) {
-//			Data::send('files', 'shared_group_self', array($file_path, $params['shareWith']), '', array(), $path, $link, $uidOwner, Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
-//		}
-//		// Add activity to mail queue
-//		if (UserSettings::getUserSetting($uidOwner, 'email', Data::TYPE_SHARED)) {
-//			$latestSend = time() + UserSettings::getUserSetting($uidOwner, 'setting', 'batchtime');
-//			Data::storeMail('files', 'shared_group_self', array($file_path, $params['shareWith']), $uidOwner, Data::TYPE_SHARED, $latestSend);
-//		}
 		// User performing the share
 		self::addNotificationsForUser(
 			\OCP\User::getUser(), 'shared_group_self', array($file_path, $params['shareWith']),
@@ -280,21 +226,6 @@ class Hooks {
 				if ($user == \OCP\User::getUser() || (empty($filteredStreamUsersInGroup[$user]) && empty($filteredEmailUsersInGroup[$user]))) {
 					continue;
 				}
-
-//				$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
-//					'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
-//				));
-//
-//				// Add activity to stream
-//				if (!empty($filteredStreamUsersInGroup[$user])) {
-//					Data::send('files', 'shared_with_by', array($path, \OCP\User::getUser()), '', array(), $path, $link, $user, Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
-//				}
-//
-//				// Add activity to mail queue
-//				if (!empty($filteredEmailUsersInGroup[$user])) {
-//					$latestSend = time() + $filteredEmailUsersInGroup[$user];
-//					Data::storeMail('files', 'shared_with_by', array($path, \OCP\User::getUser()), $user, Data::TYPE_SHARED, $latestSend);
-//				}
 
 				self::addNotificationsForUser(
 					$user, 'shared_with_by', array($path, \OCP\User::getUser()),
