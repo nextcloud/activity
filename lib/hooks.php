@@ -32,9 +32,9 @@ class Hooks {
 	 * All other events has to be triggered by the apps.
 	 */
 	public static function register() {
-		\OCP\Util::connectHook('OC_Filesystem', 'post_create', 'OCA\Activity\Hooks', 'file_create');
-		\OCP\Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Activity\Hooks', 'file_update');
-		\OCP\Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\Hooks', 'file_delete');
+		\OCP\Util::connectHook('OC_Filesystem', 'post_create', 'OCA\Activity\Hooks', 'fileCreate');
+		\OCP\Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Activity\Hooks', 'fileUpdate');
+		\OCP\Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\Hooks', 'fileDelete');
 		\OCP\Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\Hooks', 'share');
 
 		\OCP\Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\Hooks', 'deleteUser');
@@ -50,43 +50,43 @@ class Hooks {
 	 * @brief Store the create hook events
 	 * @param array $params The hook params
 	 */
-	public static function file_create($params) {
-		self::add_hooks_for_files($params['path'], Data::TYPE_SHARE_CREATED, 'created_self', 'created_by');
+	public static function fileCreate($params) {
+		self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CREATED, 'created_self', 'created_by');
 	}
 
 	/**
 	 * @brief Store the update hook events
 	 * @param array $params The hook params
 	 */
-	public static function file_update($params) {
-		self::add_hooks_for_files($params['path'], Data::TYPE_SHARE_CHANGED, 'changed_self', 'changed_by');
+	public static function fileUpdate($params) {
+		self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CHANGED, 'changed_self', 'changed_by');
 	}
 
 	/**
 	 * @brief Store the delete hook events
 	 * @param array $params The hook params
 	 */
-	public static function file_delete($params) {
-		self::add_hooks_for_files($params['path'], Data::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
+	public static function fileDelete($params) {
+		self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
 	}
 
 	/**
 	 * Creates the entries for file actions on $file_path
 	 *
-	 * @param string $file_path        The file that is being changed
-	 * @param int    $activity_type    The activity type
+	 * @param string $filePath         The file that is being changed
+	 * @param int    $activityType     The activity type
 	 * @param string $subject          The subject for the actor
-	 * @param string $subject_by       The subject for other users (with "by $actor")
+	 * @param string $subjectBy        The subject for other users (with "by $actor")
 	 */
-	public static function add_hooks_for_files($file_path, $activity_type, $subject, $subject_by) {
+	public static function addNotificationsForFileAction($filePath, $activityType, $subject, $subjectBy) {
 		// Do not add activities for .part-files
-		if (substr($file_path, -5) === '.part') {
+		if (substr($filePath, -5) === '.part') {
 			return;
 		}
 
-		$affectedUsers = self::getUserPathsFromPath($file_path);
-		$filteredStreamUsers = UserSettings::filterUsersBySetting(array_keys($affectedUsers), 'stream', $activity_type);
-		$filteredEmailUsers = UserSettings::filterUsersBySetting(array_keys($affectedUsers), 'email', $activity_type);
+		$affectedUsers = self::getUserPathsFromPath($filePath);
+		$filteredStreamUsers = UserSettings::filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
+		$filteredEmailUsers = UserSettings::filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
 
 		foreach ($affectedUsers as $user => $path) {
 			if (empty($filteredStreamUsers[$user]) && empty($filteredEmailUsers[$user])) {
@@ -94,19 +94,19 @@ class Hooks {
 			}
 
 			if ($user === \OCP\User::getUser()) {
-				$user_subject = $subject;
-				$user_params = array($path);
+				$userSubject = $subject;
+				$userParams = array($path);
 			} else {
-				$user_subject = $subject_by;
-				$user_params = array($path, \OCP\User::getUser());
+				$userSubject = $subjectBy;
+				$userParams = array($path, \OCP\User::getUser());
 			}
 
 			self::addNotificationsForUser(
-				$user, $user_subject, $user_params,
+				$user, $userSubject, $userParams,
 				$path, true,
 				!empty($filteredStreamUsers[$user]),
 				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
-				$activity_type, Data::PRIORITY_HIGH
+				$activityType, Data::PRIORITY_HIGH
 			);
 		}
 	}
