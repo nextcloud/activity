@@ -78,7 +78,7 @@ class Data
 	 * @param string $affecteduser If empty the current user will be used
 	 * @param string $type Type of the notification
 	 * @param int    $prio Priority of the notification
-	 * @return null
+	 * @return bool
 	 */
 	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = '', $prio = Data::PRIORITY_MEDIUM) {
 		$timestamp = time();

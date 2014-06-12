@@ -122,6 +122,10 @@ class DataHelper
 
 		// Remove the path from the file string
 		$param = substr($param, 1);
+		if (substr($param, -1) === '/') {
+			// Remove trailing slash from folder names
+			$param = substr($param, 0, -1);
+		}
 
 		$newParam = $param;
 		if ($stripPath && strrpos($param, '/') !== false) {

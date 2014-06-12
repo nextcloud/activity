@@ -31,14 +31,14 @@ class Consumer implements IConsumer
 	 *
 	 * @param string $app The app where this event is associated with
 	 * @param string $subject A short description of the event
-	 * @param array  $subjectparams Array with parameters that are filled in the subject
+	 * @param array  $subjectParams Array with parameters that are filled in the subject
 	 * @param string $message A longer description of the event
-	 * @param array  $messageparams Array with parameters that are filled in the message
+	 * @param array  $messageParams Array with parameters that are filled in the message
 	 * @param string $file The file including path where this event is associated with. (optional)
 	 * @param string $link A link where this event is associated with (optional)
-	 * @param string $affecteduser If empty the current user will be used
+	 * @param string $affectedUser If empty the current user will be used
 	 * @param string $type Type of the notification
-	 * @param int    $prio Priority of the notification
+	 * @param int    $priority Priority of the notification
 	 * @return null
 	 */
 	function receive($app, $subject, $subjectParams, $message, $messageParams, $file, $link, $affectedUser, $type, $priority) {
