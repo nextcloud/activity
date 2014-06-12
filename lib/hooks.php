@@ -306,6 +306,19 @@ class Hooks {
 		}
 	}
 
+	/**
+	 * Adds the activity and email for a user when the settings require it
+	 *
+	 * @param string $user
+	 * @param string $subject
+	 * @param array $subjectParams
+	 * @param string $path
+	 * @param bool $isFile If the item is a file, we link to the parent directory
+	 * @param bool $streamSetting
+	 * @param int $emailSetting
+	 * @param string $type
+	 * @param int $priority
+	 */
 	protected static function addNotificationsForUser($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting, $type = Data::TYPE_SHARED, $priority = Data::PRIORITY_MEDIUM) {
 		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
 			'dir' => ($isFile) ? dirname($path) : $path,
