@@ -37,34 +37,35 @@ class DataHelper
 	 * @return array
 	 */
 	public static function prepareParameters(\OC_L10N $l, $app, $text, $params, $paramTypes = array(), $stripPath = false, $highlightParams = false) {
-		if ($app === 'files' && $text) {
-			$preparedParams = array();
-			foreach ($params as $i => $param) {
-				if (is_array($param)) {
-					$parameterList = $plainParameterList = array();
-					foreach ($param as $parameter) {
-						if (isset($paramTypes[$i]) && $paramTypes[$i] === 'file') {
-							$parameterList[] = self::prepareFileParam($parameter, $stripPath, $highlightParams);
-							$plainParameterList[] = self::prepareFileParam($parameter, false, false);
-						} else {
-							$parameterList[] = self::prepareParam($parameter, $highlightParams);
-							$plainParameterList[] = self::prepareParam($parameter, false);
-						}
-					}
-					$preparedParams[] = self::joinParameterList($l, $parameterList, $plainParameterList, $highlightParams);
-				} else {
+		if ($app !== 'files' || !$text) {
+			return $params;
+		}
+
+		$preparedParams = array();
+		foreach ($params as $i => $param) {
+			if (is_array($param)) {
+				$parameterList = $plainParameterList = array();
+				foreach ($param as $parameter) {
 					if (isset($paramTypes[$i]) && $paramTypes[$i] === 'file') {
-						$preparedParams[] = self::prepareFileParam($param, $stripPath, $highlightParams);
-					} else if (isset($paramTypes[$i]) && $paramTypes[$i] === 'username') {
-						$preparedParams[] = self::prepareUserParam($param, $highlightParams);
+						$parameterList[] = self::prepareFileParam($parameter, $stripPath, $highlightParams);
+						$plainParameterList[] = self::prepareFileParam($parameter, false, false);
 					} else {
-						$preparedParams[] = self::prepareParam($param, $highlightParams);
+						$parameterList[] = self::prepareParam($parameter, $highlightParams);
+						$plainParameterList[] = self::prepareParam($parameter, false);
 					}
 				}
+				$preparedParams[] = self::joinParameterList($l, $parameterList, $plainParameterList, $highlightParams);
+			} else {
+				if (isset($paramTypes[$i]) && $paramTypes[$i] === 'file') {
+					$preparedParams[] = self::prepareFileParam($param, $stripPath, $highlightParams);
+				} else if (isset($paramTypes[$i]) && $paramTypes[$i] === 'username') {
+					$preparedParams[] = self::prepareUserParam($param, $highlightParams);
+				} else {
+					$preparedParams[] = self::prepareParam($param, $highlightParams);
+				}
 			}
-			return $preparedParams;
 		}
-		return $params;
+		return $preparedParams;
 	}
 
 	/**
@@ -298,11 +299,11 @@ class DataHelper
 		unset($activity[$message . 'params_array']);
 
 		$activity[$message . 'formatted'] = array(
-			'trimmed'	=> DataHelper::translation($activity['app'], $activity[$message], $activity[$message . 'params'], true),
-			'full'		=> DataHelper::translation($activity['app'], $activity[$message], $activity[$message . 'params']),
+			'trimmed'	=> self::translation($activity['app'], $activity[$message], $activity[$message . 'params'], true),
+			'full'		=> self::translation($activity['app'], $activity[$message], $activity[$message . 'params']),
 			'markup'	=> array(
-				'trimmed'	=> DataHelper::translation($activity['app'], $activity[$message], $activity[$message . 'params'], true, true),
-				'full'		=> DataHelper::translation($activity['app'], $activity[$message], $activity[$message . 'params'], false, true),
+				'trimmed'	=> self::translation($activity['app'], $activity[$message], $activity[$message . 'params'], true, true),
+				'full'		=> self::translation($activity['app'], $activity[$message], $activity[$message . 'params'], false, true),
 			),
 		);
 
