@@ -139,38 +139,51 @@ class ParameterHelper
 	 * @return string
 	 */
 	protected static function prepareFileParam($param, $stripPath, $highlightParams) {
-		if (strpos($param, '/') !== 0) {
-			// Prepend leading slash to legacy activities
-			$param = '/' . $param;
-		}
+		$param = self::fixLegacyFilename($param);
 
 		$parent_dir = (substr_count($param, '/') == 1) ? '/' : dirname($param);
 		$fileLink = \OCP\Util::linkTo('files', 'index.php', array('dir' => $parent_dir));
+		$param = trim($param, '/');
 
-		// Remove the path from the file string
-		$param = substr($param, 1);
-		if (substr($param, -1) === '/') {
-			// Remove trailing slash from folder names
-			$param = substr($param, 0, -1);
-		}
-
-		$newParam = $param;
-		if ($stripPath && strrpos($param, '/') !== false) {
-			// Remove the path from the file string
-			$newParam = substr($param, strrpos($param, '/') + 1);
+		if (!$stripPath) {
+			if (!$highlightParams) {
+				return $param;
+			}
+			return '<a class="filename" href="' . $fileLink . '">' . \OC_Util::sanitizeHTML($param) . '</a>';
 		}
 
 		if (!$highlightParams) {
-			return $newParam;
-		}
-
-		if (!$stripPath) {
-			return '<a class="filename" href="' . $fileLink . '">' . \OC_Util::sanitizeHTML($newParam) . '</a>';
+			return self::stripPathFromFilename($param);
 		}
 
 		$title = ' title="' . \OC_Util::sanitizeHTML($param) . '"';
+		$newParam = self::stripPathFromFilename($param);
 		return '<a class="filename tooltip" href="' . $fileLink . '"' . $title . '>' . \OC_Util::sanitizeHTML($newParam) . '</a>';
+	}
 
+	/**
+	 * Prepend leading slash to filenames of legacy activities
+	 * @param string $filename
+	 * @return string
+	 */
+	protected static function fixLegacyFilename($filename) {
+		if (strpos($filename, '/') !== 0) {
+			return '/' . $filename;
+		}
+		return $filename;
+	}
+
+	/**
+	 * Remove the path from the file string
+	 * @param string $filename
+	 * @return string
+	 */
+	protected static function stripPathFromFilename($filename) {
+		if (strrpos($filename, '/') !== false) {
+			// Remove the path from the file string
+			return substr($filename, strrpos($filename, '/') + 1);
+		}
+		return $filename;
 	}
 
 	/**
