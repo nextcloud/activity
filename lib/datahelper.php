@@ -122,9 +122,9 @@ class DataHelper
 		if ($highlightParams) {
 			$param = \OC_Util::sanitizeHTML($param);
 			return '<div class="avatar" data-user="' . $param . '"></div>'
-				. '<strong>' . $param . '</strong>';
+				. '<strong>' . \OC_User::getDisplayName($param) . '</strong>';
 		} else {
-			return $param;
+			return \OC_User::getDisplayName($param);
 		}
 	}
 
