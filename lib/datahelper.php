@@ -44,28 +44,54 @@ class DataHelper
 		$preparedParams = array();
 		foreach ($params as $i => $param) {
 			if (is_array($param)) {
-				$parameterList = $plainParameterList = array();
-				foreach ($param as $parameter) {
-					if (isset($paramTypes[$i]) && $paramTypes[$i] === 'file') {
-						$parameterList[] = self::prepareFileParam($parameter, $stripPath, $highlightParams);
-						$plainParameterList[] = self::prepareFileParam($parameter, false, false);
-					} else {
-						$parameterList[] = self::prepareParam($parameter, $highlightParams);
-						$plainParameterList[] = self::prepareParam($parameter, false);
-					}
-				}
-				$preparedParams[] = self::joinParameterList($l, $parameterList, $plainParameterList, $highlightParams);
+				$preparedParams[] = self::prepareArrayParameter($l, $param, $paramTypes[$i], $stripPath, $highlightParams);
 			} else {
-				if (isset($paramTypes[$i]) && $paramTypes[$i] === 'file') {
-					$preparedParams[] = self::prepareFileParam($param, $stripPath, $highlightParams);
-				} else if (isset($paramTypes[$i]) && $paramTypes[$i] === 'username') {
-					$preparedParams[] = self::prepareUserParam($param, $highlightParams);
-				} else {
-					$preparedParams[] = self::prepareParam($param, $highlightParams);
-				}
+				$preparedParams[] = self::prepareStringParameter($param, isset($paramTypes[$i]) ? $paramTypes[$i] : '', $stripPath, $highlightParams);
 			}
 		}
 		return $preparedParams;
+	}
+
+	/**
+	 * Prepares a string parameter before we use it in the subject or message
+	 *
+	 * @param string $param
+	 * @param string $paramType Type of parameter, if it needs special handling
+	 * @param bool $stripPath Shall we remove the path from the filename
+	 * @param bool $highlightParams
+	 * @return string
+	 */
+	public static function prepareStringParameter($param, $paramType, $stripPath, $highlightParams) {
+		if ($paramType === 'file') {
+			return self::prepareFileParam($param, $stripPath, $highlightParams);
+		} else if ($paramType === 'username') {
+			return self::prepareUserParam($param, $highlightParams);
+		}
+		return self::prepareParam($param, $highlightParams);
+	}
+
+	/**
+	 * Prepares an array parameter before we use it in the subject or message
+	 *
+	 * @param \OC_L10N $l Language object, if you want to use a different language (f.e. to send an email)
+	 * @param array $params
+	 * @param string $paramType Type of parameters, if it needs special handling
+	 * @param bool $stripPath Shall we remove the path from the filename
+	 * @param bool $highlightParams
+	 * @return string
+	 */
+	public static function prepareArrayParameter(\OC_L10N $l, $params, $paramType, $stripPath, $highlightParams) {
+		$parameterList = $plainParameterList = array();
+		foreach ($params as $parameter) {
+			if ($paramType === 'file') {
+				$parameterList[] = self::prepareFileParam($parameter, $stripPath, $highlightParams);
+				$plainParameterList[] = self::prepareFileParam($parameter, false, false);
+			} else {
+				$parameterList[] = self::prepareParam($parameter, $highlightParams);
+				$plainParameterList[] = self::prepareParam($parameter, false);
+			}
+		}
+		return self::joinParameterList($l, $parameterList, $plainParameterList, $highlightParams);
 	}
 
 	/**
