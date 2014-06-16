@@ -51,38 +51,30 @@ class DataHelper
 				$params, ParameterHelper::getSpecialParameterList($app, $text),
 				$stripPath, $highlightParams
 			);
-			if ($text === 'created_self') {
-				return $l->t('You created %1$s', $preparedParams);
+			switch ($text) {
+				case 'created_self':
+					return $l->t('You created %1$s', $preparedParams);
+				case 'created_by':
+					return $l->t('%2$s created %1$s', $preparedParams);
+				case 'changed_self':
+					return $l->t('You changed %1$s', $preparedParams);
+				case 'changed_by':
+					return $l->t('%2$s changed %1$s', $preparedParams);
+				case 'deleted_self':
+					return $l->t('You deleted %1$s', $preparedParams);
+				case 'deleted_by':
+					return $l->t('%2$s deleted %1$s', $preparedParams);
+				case 'shared_user_self':
+					return $l->t('You shared %1$s with %2$s', $preparedParams);
+				case 'shared_group_self':
+					return $l->t('You shared %1$s with group %2$s', $preparedParams);
+				case 'shared_with_by':
+					return $l->t('%2$s shared %1$s with you', $preparedParams);
+				case 'shared_link_self':
+					return $l->t('You shared %1$s', $preparedParams);
+				default:
+					return $l->t($text, $preparedParams);
 			}
-			else if ($text === 'created_by') {
-				return $l->t('%2$s created %1$s', $preparedParams);
-			}
-			else if ($text === 'changed_self') {
-				return $l->t('You changed %1$s', $preparedParams);
-			}
-			else if ($text === 'changed_by') {
-				return $l->t('%2$s changed %1$s', $preparedParams);
-			}
-			else if ($text === 'deleted_self') {
-				return $l->t('You deleted %1$s', $preparedParams);
-			}
-			else if ($text === 'deleted_by') {
-				return $l->t('%2$s deleted %1$s', $preparedParams);
-			}
-			else if ($text === 'shared_user_self') {
-				return $l->t('You shared %1$s with %2$s', $preparedParams);
-			}
-			else if ($text === 'shared_group_self') {
-				return $l->t('You shared %1$s with group %2$s', $preparedParams);
-			}
-			else if ($text === 'shared_with_by') {
-				return $l->t('%2$s shared %1$s with you', $preparedParams);
-			}
-			else if ($text === 'shared_link_self') {
-				return $l->t('You shared %1$s', $preparedParams);
-			}
-
-			return $l->t($text, $preparedParams);
 		} else {
 			$l = \OCP\Util::getL10N($app);
 			return $l->t($text, $params);
