@@ -62,29 +62,30 @@ class GroupHelper
 
 		if (!$this->allowGrouping) {
 			$this->activities[] = $activity;
-		} else {
-			if ($this->getGroupKey($activity) && $this->getGroupKey($activity) === $this->groupKey) {
-				$parameter = $this->getGroupParameter($activity);
-				if ($parameter !== false) {
-					if (!is_array($this->openGroup['subjectparams_array'][$parameter])) {
-						$this->openGroup['subjectparams_array'][$parameter] = array($this->openGroup['subjectparams_array'][$parameter]);
-					}
-					if (!isset($this->openGroup['activity_ids'])) {
-						$this->openGroup['activity_ids'] = array((int) $this->openGroup['activity_id']);
-					}
+			return;
+		}
 
-					$this->openGroup['subjectparams_array'][$parameter][] = $activity['subjectparams_array'][$parameter];
-					$this->openGroup['subjectparams_array'][$parameter] = array_unique($this->openGroup['subjectparams_array'][$parameter]);
-					$this->openGroup['activity_ids'][] = (int) $activity['activity_id'];
+		if ($this->getGroupKey($activity) && $this->getGroupKey($activity) === $this->groupKey) {
+			$parameter = $this->getGroupParameter($activity);
+			if ($parameter !== false) {
+				if (!is_array($this->openGroup['subjectparams_array'][$parameter])) {
+					$this->openGroup['subjectparams_array'][$parameter] = array($this->openGroup['subjectparams_array'][$parameter]);
 				}
-			} else {
-				if (!empty($this->openGroup)) {
-					$this->activities[] = $this->openGroup;
+				if (!isset($this->openGroup['activity_ids'])) {
+					$this->openGroup['activity_ids'] = array((int) $this->openGroup['activity_id']);
 				}
 
-				$this->groupKey = $this->getGroupKey($activity);
-				$this->openGroup = $activity;
+				$this->openGroup['subjectparams_array'][$parameter][] = $activity['subjectparams_array'][$parameter];
+				$this->openGroup['subjectparams_array'][$parameter] = array_unique($this->openGroup['subjectparams_array'][$parameter]);
+				$this->openGroup['activity_ids'][] = (int) $activity['activity_id'];
 			}
+		} else {
+			if (!empty($this->openGroup)) {
+				$this->activities[] = $this->openGroup;
+			}
+
+			$this->groupKey = $this->getGroupKey($activity);
+			$this->openGroup = $activity;
 		}
 	}
 
