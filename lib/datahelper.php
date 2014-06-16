@@ -227,6 +227,23 @@ class DataHelper
 	}
 
 	/**
+	 * List with special parameters for the message
+	 *
+	 * @param string $app
+	 * @param string $text
+	 * @return array
+	 */
+	public static function getSpecialParameterList($app, $text) {
+		if ($app === 'files' && $text === 'shared_group_self') {
+			return array(0 => 'file');
+		}
+		else if ($app === 'files') {
+			return array(0 => 'file', 1 => 'username');
+		}
+		return array();
+	}
+
+	/**
 	 * @brief Translate an event string with the translations from the app where it was send from
 	 * @param string $app The app where this event comes from
 	 * @param string $text The text including placeholders
@@ -249,7 +266,7 @@ class DataHelper
 		if ($app === 'files') {
 			$preparedParams = self::prepareParameters(
 				$l, $app, $text,
-				$params, array(0 => 'file', 1 => 'username'),
+				$params, self::getSpecialParameterList($app, $text),
 				$stripPath, $highlightParams
 			);
 			if ($text === 'created_self') {
@@ -274,12 +291,6 @@ class DataHelper
 				return $l->t('You shared %1$s with %2$s', $preparedParams);
 			}
 			else if ($text === 'shared_group_self') {
-				// Second parameter is not a username here
-				$preparedParams = self::prepareParameters(
-					$l, $app, $text,
-					$params, array(0 => 'file'),
-					$stripPath, $highlightParams
-				);
 				return $l->t('You shared %1$s with group %2$s', $preparedParams);
 			}
 			else if ($text === 'shared_with_by') {
