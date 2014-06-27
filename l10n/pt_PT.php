@@ -27,9 +27,13 @@ $TRANSLATIONS = array(
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("%s e <strong class=\"tooltip\" title=\"%s\">%n mais</strong>","%s e <strong class=\"tooltip\" title=\"%s\">%n mais</strong>"),
 "_%s and %n more_::_%s and %n more_" => array("%s e %n mais","%s e %n mais"),
 "Hello %s," => "Olá %s,",
+"You are receiving this email because in the last hour the following things happened at %s" => "A receção deste email deve-se à realização das seguintes ações, na última hora, por %s",
+"You are receiving this email because in the last day the following things happened at %s" => "A receção deste email deve-se à realização das seguintes ações, no último dia, por %s",
+"You are receiving this email because in the last week the following things happened at %s" => "A receção deste email deve-se à realização das seguintes ações, na última semana, por %s",
 "* %s" => "* %s",
 "You will see a list of events here when you start to use your %s." => "Irá ver aqui uma lista de eventos, quando começar a utilizar a sua %s",
 "No more events to load" => "Sem mais eventos para carrregar",
+"Enable RSS feed" => "Ativar receção de conteúdo por RSS",
 "Notifications" => "Notificações",
 "Mail" => "Correio",
 "Stream" => "Fluxo",
@@ -37,6 +41,8 @@ $TRANSLATIONS = array(
 "Send emails:" => "Enviar emails:",
 "Hourly" => "Hora a hora",
 "Daily" => "Diariamente",
-"Weekly" => "Semanalmente"
+"Weekly" => "Semanalmente",
+"Activity feed" => "Atividade",
+"Personal activity feed for %s" => "Últimas ações de %s"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";
