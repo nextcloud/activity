@@ -34,6 +34,9 @@ class GroupHelper
 	/** @var string */
 	protected $groupKey = '';
 
+	/** @var int */
+	protected $groupTime = 0;
+
 	/** @var bool */
 	protected $allowGrouping;
 
@@ -60,12 +63,16 @@ class GroupHelper
 			$activity['messageparams_array'] = array($activity['messageparams_array']);
 		}
 
-		if (!$this->allowGrouping) {
+		if (!$this->getGroupKey($activity)) {
 			$this->activities[] = $activity;
 			return;
 		}
 
-		if ($this->getGroupKey($activity) && $this->getGroupKey($activity) === $this->groupKey) {
+		// Only group when the event has the same group key
+		// and the time difference is not bigger than 3 days.
+		if ($this->getGroupKey($activity) === $this->groupKey &&
+			abs($activity['timestamp'] - $this->groupTime) < (3 * 24 * 60 * 60)
+		) {
 			$parameter = $this->getGroupParameter($activity);
 			if ($parameter !== false) {
 				if (!is_array($this->openGroup['subjectparams_array'][$parameter])) {
@@ -85,6 +92,7 @@ class GroupHelper
 			}
 
 			$this->groupKey = $this->getGroupKey($activity);
+			$this->groupTime = $activity['timestamp'];
 			$this->openGroup = $activity;
 		}
 	}
