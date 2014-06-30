@@ -71,7 +71,7 @@ class DataHelper
 				case 'shared_with_by':
 					return $l->t('%2$s shared %1$s with you', $preparedParams);
 				case 'shared_link_self':
-					return $l->t('You shared %1$s', $preparedParams);
+					return $l->t('You shared %1$s via link', $preparedParams);
 				default:
 					return $l->t($text, $preparedParams);
 			}
