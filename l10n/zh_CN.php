@@ -15,7 +15,6 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "您把 %1\$s分享给了 %2\$s",
 "You shared %1\$s with group %2\$s" => "你把 %1\$s 分享给了 %2\$s组",
 "%2\$s shared %1\$s with you" => "%2\$s 把 %1\$s 分享给了您",
-"You shared %1\$s" => "您已分享了 %1\$s",
 "Activity notification" => "动态通知",
 "All Activities" => "所有动态",
 "Activities by you" => "你的动态",

@@ -15,7 +15,6 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "Διαμοιραστήκατε το %1\$s με %2\$s",
 "You shared %1\$s with group %2\$s" => "Διαμοιραστήκατε %1\$s με την ομάδα %2\$s",
 "%2\$s shared %1\$s with you" => "Ο %2\$s διαμοιράστηκε το %1\$s με εσάς",
-"You shared %1\$s" => "Διαμοιραστήκατε %1\$s",
 "Activity notification" => "Ειδοποίηση δραστηριότητας",
 "All Activities" => "Όλες οι Δραστηριότητες",
 "Activities by you" => "Δραστηριότητες από εσάς",

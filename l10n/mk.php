@@ -13,7 +13,6 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "Вие споделивте %1\$s со %2\$s",
 "You shared %1\$s with group %2\$s" => "Вие споделивте %1\$s со групата %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s споделено %1\$s со вас",
-"You shared %1\$s" => "Вие соделивте %1\$s",
 "Activity notification" => "Известување за Активности",
 "All Activities" => "Сите активности",
 "Activities by you" => "Ваши активности",

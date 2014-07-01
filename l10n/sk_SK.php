@@ -15,7 +15,6 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "Bol zdieľaný %1\$s s %2\$s",
 "You shared %1\$s with group %2\$s" => "Bol zdieľaný %1\$s so skupinou %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s vám zdieľal %1\$s",
-"You shared %1\$s" => "Bol zdieľaný %1\$s",
 "Activity notification" => "Upozornenia na aktivity",
 "All Activities" => "Všetky aktivity",
 "Activities by you" => "Vaše aktivity",

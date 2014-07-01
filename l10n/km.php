@@ -15,7 +15,6 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "អ្នក​បាន​ចែករំលែក %1\$s ជាមួយ %2\$s",
 "You shared %1\$s with group %2\$s" => "អ្នក​បាន​ចែករំលែក %1\$s ជាមួយ​ក្រុម %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s បាន​ចែករំលែក %1\$s ជាមួយ​អ្នក",
-"You shared %1\$s" => "អ្នក​បាន​ចែករំលែក %1\$s",
 "Activity notification" => "សេចក្ដីជូន​ដំណឺង​ស្ដីពីសកម្មភាព",
 "Files" => "ឯកសារ",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array(""),

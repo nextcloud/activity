@@ -15,7 +15,6 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "Omogočili ste souporabo %1\$s z uporabnikom %2\$s",
 "You shared %1\$s with group %2\$s" => "Omogočili ste souporabo %1\$s s skupino %2\$s",
 "%2\$s shared %1\$s with you" => "Uporabnik %2\$s je omogočil souporabo %1\$s",
-"You shared %1\$s" => "Omogočili ste souporabo %1\$s",
 "Activity notification" => "Obvestila o dejavnosti",
 "All Activities" => "Vse dejavnosti",
 "Activities by you" => "Vaše dejavnosti",

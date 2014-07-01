@@ -13,7 +13,6 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "Megosztottad ezt: %1\$s vele: %2\$s",
 "You shared %1\$s with group %2\$s" => "Megosztottad ezt: %1\$s ezzel a csoporttal: %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s megosztotta veled ezt: %1\$s",
-"You shared %1\$s" => "Megosztottad: %1\$s",
 "Files" => "Fájlok",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("",""),
 "_%s and %n more_::_%s and %n more_" => array("",""),

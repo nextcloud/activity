@@ -15,7 +15,6 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "Vi kunhavigis %1\$s kun %2\$s",
 "You shared %1\$s with group %2\$s" => "Vi kunhavigis %1\$s kun la grupo %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s kunhavigis %1\$s kun vi",
-"You shared %1\$s" => "Vi kunhavigis %1\$s",
 "Files" => "Dosieroj",
 "%s and %s" => "%s kaj %s",
 ", " => ",",
