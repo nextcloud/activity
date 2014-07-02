@@ -50,8 +50,8 @@ class Display
 
 		$tmpl->assign('event', $activity);
 
-		$rootView = new \OC\Files\View('');
-		if ($activity['file'] !== null){
+		if ($activity['file']) {
+			$rootView = new \OC\Files\View('');
 			$exist = $rootView->file_exists('/' . $activity['user'] . '/files' . $activity['file']);
 			$is_dir = $rootView->is_dir('/' . $activity['user'] . '/files' . $activity['file']);
 			unset($rootView);

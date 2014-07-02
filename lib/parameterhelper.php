@@ -28,7 +28,6 @@ class ParameterHelper
 	/**
 	 * Prepares the parameters before we use them in the subject or message
 	 * @param \OC_L10N $l Language object, if you want to use a different language (f.e. to send an email)
-	 * @param string $app
 	 * @param string $text
 	 * @param array $params
 	 * @param array $paramTypes Type of parameters, if they need special handling
@@ -36,8 +35,8 @@ class ParameterHelper
 	 * @param bool $highlightParams
 	 * @return array
 	 */
-	public static function prepareParameters(\OC_L10N $l, $app, $text, $params, $paramTypes = array(), $stripPath = false, $highlightParams = false) {
-		if ($app !== 'files' || !$text) {
+	public static function prepareParameters(\OC_L10N $l, $text, $params, $paramTypes = array(), $stripPath = false, $highlightParams = false) {
+		if (!$text) {
 			return $params;
 		}
 

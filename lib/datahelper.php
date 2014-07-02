@@ -47,7 +47,7 @@ class DataHelper
 
 		if ($app === 'files') {
 			$preparedParams = ParameterHelper::prepareParameters(
-				$l, $app, $text,
+				$l, $text,
 				$params, ParameterHelper::getSpecialParameterList($app, $text),
 				$stripPath, $highlightParams
 			);
@@ -72,13 +72,19 @@ class DataHelper
 					return $l->t('%2$s shared %1$s with you', $preparedParams);
 				case 'shared_link_self':
 					return $l->t('You shared %1$s via link', $preparedParams);
-				default:
-					return $l->t($text, $preparedParams);
 			}
-		} else {
-			$l = \OCP\Util::getL10N($app);
-			return $l->t($text, $params);
 		}
+
+		// Allow other apps to correctly translate their activities
+		$translation = \OC::$server->getActivityManager()->translate(
+			$app, $text, $params, $stripPath, $highlightParams, $l->getLanguageCode());
+
+		if ($translation !== false) {
+			return $translation;
+		}
+
+		$l = \OCP\Util::getL10N($app);
+		return $l->t($text, $params);
 	}
 
 	/**
@@ -140,6 +146,8 @@ class DataHelper
 			case Data::TYPE_SHARED:
 				return 'icon-share';
 		}
-		return '';
+
+		// Allow other apps to add a icon for their notifications
+		return \OC::$server->getActivityManager()->getTypeIcon($type);
 	}
 }
