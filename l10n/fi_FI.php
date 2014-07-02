@@ -15,6 +15,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "Jaoit kohteen %1\$s käyttäjän %2\$s kanssa",
 "You shared %1\$s with group %2\$s" => "Jaoit kohteen %1\$s ryhmän %2\$s kanssa",
 "%2\$s shared %1\$s with you" => "%2\$s jakoi kohteen %1\$s kanssasi",
+"You shared %1\$s via link" => "Jaoit kohteen %1\$s linkin kautta",
 "Activity notification" => "Ilmoitus toiminnasta",
 "All Activities" => "Kaikki toimet",
 "Activities by you" => "Omat toimet",
