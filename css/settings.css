@@ -1,5 +1,6 @@
 table.activitysettings {
 	max-width: 550px;
+	white-space: normal;
 }
 
 table.activitysettings th.small {
