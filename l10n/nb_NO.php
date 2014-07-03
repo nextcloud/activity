@@ -15,6 +15,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "Du delte %1\$s med %2\$s",
 "You shared %1\$s with group %2\$s" => "Du delte %1\$s med gruppe %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s delte %1\$s med deg",
+"You shared %1\$s via link" => "Du delte %1\$s via lenke",
 "Activity notification" => "Varsel om aktivitet",
 "All Activities" => "Alle aktiviteter",
 "Activities by you" => "Dine aktiviteter",

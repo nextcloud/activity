@@ -15,6 +15,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "Ati dat share la %1\$s cu  %2\$s",
 "You shared %1\$s with group %2\$s" => "Ati dat share la %1\$s grupului %2\$s",
 "%2\$s shared %1\$s with you" => "%2\$s a dat share la  %1\$s pentru tine",
+"You shared %1\$s via link" => "Ai partajat %1\$s prin link",
 "Activity notification" => "Notificări ",
 "All Activities" => "Toate actiunile",
 "Activities by you" => "Actiunile tale",
