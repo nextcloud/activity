@@ -33,12 +33,12 @@ class MailQueueHandlerTest extends \PHPUnit_Framework_TestCase {
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 
-		$query->execute(array($app, 'Test data', '', 'user1', 150, 'phpunit', 0));
-		$query->execute(array($app, 'Test data', '', 'user1', 150, 'phpunit', 0));
-		$query->execute(array($app, 'Test data', '', 'user2', 150, 'phpunit', 0));
-		$query->execute(array($app, 'Test data', '', 'user2', 150, 'phpunit', 0));
-		$query->execute(array($app, 'Test data', '', 'user3', 150, 'phpunit', 0));
-		$query->execute(array($app, 'Test data', '', 'user3', 150, 'phpunit', 0));
+		$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 0));
+		$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 0));
+		$query->execute(array($app, 'Test data', 'Param1', 'user2', 150, 'phpunit', 0));
+		$query->execute(array($app, 'Test data', 'Param1', 'user2', 150, 'phpunit', 0));
+		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 0));
+		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 0));
 	}
 
 	public function testGetAffectedUsers() {
