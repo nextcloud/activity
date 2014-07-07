@@ -156,7 +156,8 @@ class ParameterHelper
 			return self::stripPathFromFilename($param);
 		}
 
-		$title = ' title="' . \OC_Util::sanitizeHTML($param) . '"';
+		$title = $param;
+		$title = ' title="' . \OC_Util::sanitizeHTML($title) . '"';
 		$newParam = self::stripPathFromFilename($param);
 		return '<a class="filename tooltip" href="' . $fileLink . '"' . $title . '>' . \OC_Util::sanitizeHTML($newParam) . '</a>';
 	}
