@@ -27,25 +27,46 @@ use OCA\Activity\MailQueueHandler;
 class MailQueueHandlerTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp() {
+		parent::setUp();
 		$app = uniqid('MailQueueHandlerTest');
 
 		$query = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 
-		$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 0));
-		$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 0));
-		$query->execute(array($app, 'Test data', 'Param1', 'user2', 150, 'phpunit', 0));
-		$query->execute(array($app, 'Test data', 'Param1', 'user2', 150, 'phpunit', 0));
-		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 0));
-		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 0));
+		$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 152));
+		$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 153));
+		$query->execute(array($app, 'Test data', 'Param1', 'user2', 150, 'phpunit', 150));
+		$query->execute(array($app, 'Test data', 'Param1', 'user2', 150, 'phpunit', 151));
+		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 154));
+		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 155));
 	}
 
-	public function testGetAffectedUsers() {
+	public function tearDown() {
+		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity_mq`');
+		$query->execute();
+
+		parent::tearDown();
+	}
+
+	public function getAffectedUsersData()
+	{
+		return array(
+			array(null, array('user2', 'user1', 'user3')),
+			array(5, array('user2', 'user1', 'user3')),
+			array(3, array('user2', 'user1', 'user3')),
+			array(2, array('user2', 'user1')),
+			array(1, array('user2')),
+		);
+	}
+
+	/**
+	 * @dataProvider getAffectedUsersData
+	 */
+	public function testGetAffectedUsers($limit, $expected) {
 		$mq = new MailQueueHandler();
-		$users = $mq->getAffectedUsers(null);
+		$users = $mq->getAffectedUsers($limit);
 
-		$this->assertEquals(3, sizeof($users));
-
+		$this->assertEquals($expected, $users);
 	}
 }
