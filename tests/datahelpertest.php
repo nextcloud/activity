@@ -82,6 +82,10 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
 				'<strong>/foo/bar.file</strong>',
 			)),
+			array(array('U<ser>A', '/foo/bar.file'), array(0 => 'username'), true, true, array(
+				'<div class="avatar" data-user="U&lt;ser&gt;A"></div><strong>U&lt;ser&gt;A</strong>',
+				'<strong>/foo/bar.file</strong>',
+			)),
 
 			array(array('UserA', '/foo/bar.file'), array(0 => 'username', 1 => 'file'), true, true, array(
 				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
