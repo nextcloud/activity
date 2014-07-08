@@ -15,6 +15,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "あなたは %1\$s を %2\$s と共有しました",
 "You shared %1\$s with group %2\$s" => "あなたは %1\$s をグループ %2\$s と共有しました",
 "%2\$s shared %1\$s with you" => "%2\$s は %1\$s をあなたと共有しました",
+"You shared %1\$s via link" => "リンク経由で %1\$s を共有しています",
 "Activity notification" => "アクティビティ通知",
 "All Activities" => "すべてのアクティビティ",
 "Activities by you" => "あなたのアクティビティ",
