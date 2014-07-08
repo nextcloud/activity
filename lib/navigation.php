@@ -62,10 +62,9 @@ class Navigation {
 		$template = new \OCP\Template('activity', 'navigation', '');
 		$entries = $this->getLinkList();
 
-		\OCP\Util::emitHook('OC_Activity', 'get_navigation', array(
-			'active'		=> &$active,
-			'entries'		=> &$entries,
-		));
+		$additionalEntries = \OC::$server->getActivityManager()->getNavigation();
+		$entries['apps'] = array_merge($entries['apps'], $additionalEntries['apps']);
+		$entries['top'] = array_merge($entries['top'], $additionalEntries['top']);
 
 		if (sizeof($entries['apps']) === 1) {
 			// If there is only the files app, we simply do not show it,

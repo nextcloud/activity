@@ -97,7 +97,7 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 		$l = \OC_L10N::get('activity');
 		$this->assertEquals(
 			$expected,
-			\OCA\Activity\ParameterHelper::prepareParameters($l, 'files', 'action', $params, $filePosition, $stripPath, $highlightParams)
+			\OCA\Activity\ParameterHelper::prepareParameters($l, 'action', $params, $filePosition, $stripPath, $highlightParams)
 		);
 	}
 

@@ -49,8 +49,19 @@ class Data
 	const TYPE_STORAGE_QUOTA_90 = 'storage_quota_90';
 	const TYPE_STORAGE_FAILURE = 'storage_failure';
 
+	static protected $notificationTypes = array();
+
+	/**
+	 * @param \OC_L10N $l
+	 * @return array Array "stringID of the type" => "translated string description for the setting"
+	 */
 	public static function getNotificationTypes(\OC_L10N $l) {
-		return array(
+		if (isset(self::$notificationTypes[$l->getLanguageCode()]))
+		{
+			return self::$notificationTypes[$l->getLanguageCode()];
+		}
+
+		$notificationTypes = array(
 			\OCA\Activity\Data::TYPE_SHARED => $l->t('A file or folder has been <strong>shared</strong>'),
 //			\OCA\Activity\Data::TYPE_SHARE_UNSHARED => $l->t('Previously shared file or folder has been <strong>unshared</strong>'),
 //			\OCA\Activity\Data::TYPE_SHARE_EXPIRED => $l->t('Expiration date of shared file or folder <strong>expired</strong>'),
@@ -63,6 +74,14 @@ class Data
 //			\OCA\Activity\Data::TYPE_STORAGE_QUOTA_90 => $l->t('<strong>Storage usage</strong> is at 90%%'),
 //			\OCA\Activity\Data::TYPE_STORAGE_FAILURE => $l->t('An <strong>external storage</strong> has an error'),
 		);
+
+		// Allow other apps to add new notification types
+		$additionalNotificationTypes = \OC::$server->getActivityManager()->getNotificationTypes($l->getLanguageCode());
+		$notificationTypes = array_merge($notificationTypes, $additionalNotificationTypes);
+
+		self::$notificationTypes[$l->getLanguageCode()] = $notificationTypes;
+
+		return $notificationTypes;
 	}
 
 	/**
@@ -156,7 +175,9 @@ class Data
 					Data::TYPE_SHARED,
 				), $types);
 		}
-		return $types;
+
+		// Allow other apps to add new notification types
+		return \OC::$server->getActivityManager()->filterNotificationTypes($types, $filter);
 	}
 
 	/**
@@ -197,11 +218,14 @@ class Data
 				break;
 
 				default:
-					\OCP\Util::emitHook('OC_Activity', 'get_filter', array(
-						'filter'			=> $filter,
-						'limitActivities'	=> &$limitActivities,
-						'parameters'		=> &$parameters,
-					));
+					list($condition, $params) = \OC::$server->getActivityManager()->getQueryForFilter($filter);
+					if (!is_null($condition)) {
+						$limitActivities .= ' ';
+						$limitActivities .= $condition;
+						if (is_array($params)) {
+							$parameters = array_merge($parameters, $params);
+						}
+					}
 			}
 		}
 
@@ -239,39 +263,37 @@ class Data
 
 	/**
 	 * Get the casted page number from $_GET
-	 * @param string $paramName
 	 * @return int
 	 */
-	public static function getPageFromParam($paramName = 'page') {
-		if (isset($_GET[$paramName])) {
-			return (int) $_GET[$paramName];
+	public static function getPageFromParam() {
+		if (isset($_GET['page'])) {
+			return (int) $_GET['page'];
 		}
 
 		return 1;
 	}
 
 	/**
-	 * Get the casted page number from $_GET
-	 * @param string $paramName
-	 * @return int
+	 * Get the filter from $_GET
+	 * @return string
 	 */
-	public static function getFilterFromParam($paramName = 'filter') {
-		switch ($_GET[$paramName]) {
+	public static function getFilterFromParam() {
+		if (!isset($_GET['filter']))
+			return 'all';
+
+		$filterValue = $_GET['filter'];
+		switch ($filterValue) {
 			case 'by':
 			case 'self':
 			case 'shares':
 			case 'all':
 			case 'files':
-				return $_GET[$paramName];
+				return $filterValue;
 			default:
-				$filter = 'all';
-
-				\OCP\Util::emitHook('OC_Activity', 'get_filter', array(
-					'paramName'		=> $paramName,
-					'filte'		=> &$filter,
-				));
-
-				return $filter;
+				if (\OC::$server->getActivityManager()->isFilterValid($filterValue)) {
+					return $filterValue;
+				}
+				return 'all';
 		}
 	}
 

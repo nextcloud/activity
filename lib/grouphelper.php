@@ -126,7 +126,9 @@ class GroupHelper
 					return 0;
 			}
 		}
-		return false;
+
+		// Allow other apps to group their notifications
+		return \OC::$server->getActivityManager()->getGroupParameter($activity);
 	}
 
 	/**

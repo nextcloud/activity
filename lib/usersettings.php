@@ -99,6 +99,10 @@ class UserSettings
 //				$settings[] = Data::TYPE_STORAGE_FAILURE;
 		}
 
+		// Allow other apps to add notification types to the default setting
+		$additionalSettings = \OC::$server->getActivityManager()->getDefaultTypes($method);
+		$settings = array_merge($settings, $additionalSettings);
+
 		return $settings;
 	}
 
