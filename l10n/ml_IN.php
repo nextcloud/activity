@@ -15,6 +15,7 @@ $TRANSLATIONS = array(
 "You shared %1\$s with %2\$s" => "നിങ്ങൾ %1\$s %2\$sനു പങ്കുവെച്ചു",
 "You shared %1\$s with group %2\$s" => "നിങ്ങൾ %1\$s %2\$s കൂട്ടത്തിന് പങ്കുവെച്ചു",
 "%2\$s shared %1\$s with you" => "%2\$s %1\$s നിങ്ങൾക്ക് പങ്കുവെച്ചു",
+"You shared %1\$s via link" => "താങ്കൾ %1\$s ലിങ്കിലൂടെ പങ്കുവെച്ചിരിക്കുന്നു",
 "Activity notification" => "പ്രവർത്തന അറിയിപ്പ്",
 "All Activities" => "എല്ലാ പ്രവൃത്തികളും",
 "Activities by you" => "താങ്കളുടെ പ്രവൃത്തികൾ",
@@ -32,12 +33,16 @@ $TRANSLATIONS = array(
 "* %s" => "* %s",
 "You will see a list of events here when you start to use your %s." => "നിങ്ങൾ നിങ്ങളുടെ %s ഉപയോഗിക്കാൻ  തുടങ്ങി കഴിയുമ്പോൾ കാര്യങ്ങളുടെ ഒരു പട്ടിക കാണാം",
 "No more events to load" => "ലഭ്യമാക്കാൻ ഇനി ചടങ്ങുകളൊന്നുമില്ല",
+"Enable RSS feed" => "ആർഎസ്‌എസ് ഫീഡ് പ്രവർത്തനസജ്ജമാക്കുക",
 "Notifications" => "അറിയിപ്പ്",
 "Mail" => "കത്ത്",
 "Stream" => "പ്രവാഹം",
 "You need to set up your email address before you can receive notification emails." => "അറിയിപ്പ് ഈമെയിലുകൾ ലഭിക്കുന്നതിനായി താങ്കൾ താങ്കളുടെ ഈമെയിൽ വിലാസം സജ്ജമാക്കേണ്ടതുണ്ട്.",
 "Send emails:" => "ഈമെയിലുകൾ അയയ്ക്കുക:",
 "Hourly" => "ഓരോ മണിക്കൂറും",
-"Weekly" => "ആഴ്ച "
+"Daily" => "ദിവസേന",
+"Weekly" => "ആഴ്ച ",
+"Activity feed" => "പ്രവൃത്തികളുടെ ഫീഡ്",
+"Personal activity feed for %s" => "%sനു് വേണ്ടിയുള്ള സ്വകാര്യ പ്രവൃത്തികളുടെ ഫീഡ്"
 );
 $PLURAL_FORMS = "nplurals=2; plural=(n != 1);";
