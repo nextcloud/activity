@@ -38,6 +38,7 @@ $TRANSLATIONS = array(
 "Stream" => "Stream",
 "You need to set up your email address before you can receive notification emails." => "Du skal indstille din e-mail adresse før du kan modtage notifikationer via e-mail.",
 "Send emails:" => "Send e-mails:",
+"Hourly" => "I timen",
 "Daily" => "Dagligt",
 "Weekly" => "Ugentligt",
 "Activity feed" => "Begivenheder",
