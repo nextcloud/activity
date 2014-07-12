@@ -94,6 +94,10 @@ class Hooks {
 			}
 
 			if ($user === \OCP\User::getUser()) {
+				if (!UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'self')) {
+					continue;
+				}
+
 				$userSubject = $subject;
 				$userParams = array($path);
 			} else {
@@ -164,15 +168,17 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public static function shareFileOrFolderWithUser($params) {
-		$file_path = \OC\Files\Filesystem::getPath($params['fileSource']);
-
 		// User performing the share
-		self::addNotificationsForUser(
-			\OCP\User::getUser(), 'shared_user_self', array($file_path, $params['shareWith']),
-			$file_path, ($params['itemType'] === 'file'),
-			UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED),
-			UserSettings::getUserSetting(\OCP\User::getUser(), 'email', Data::TYPE_SHARED) ? UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'batchtime') : 0
-		);
+		if (UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'self')) {
+			$file_path = \OC\Files\Filesystem::getPath($params['fileSource']);
+
+			self::addNotificationsForUser(
+				\OCP\User::getUser(), 'shared_user_self', array($file_path, $params['shareWith']),
+				$file_path, ($params['itemType'] === 'file'),
+				UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED),
+				UserSettings::getUserSetting(\OCP\User::getUser(), 'email', Data::TYPE_SHARED) ? UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'batchtime') : 0
+			);
+		}
 
 		// New shared user
 		$path = $params['fileTarget'];
@@ -189,15 +195,17 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public static function shareFileOrFolderWithGroup($params) {
-		$file_path = \OC\Files\Filesystem::getPath($params['fileSource']);
-
 		// User performing the share
-		self::addNotificationsForUser(
-			\OCP\User::getUser(), 'shared_group_self', array($file_path, $params['shareWith']),
-			$file_path, ($params['itemType'] === 'file'),
-			UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED),
-			UserSettings::getUserSetting(\OCP\User::getUser(), 'email', Data::TYPE_SHARED) ? UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'batchtime') : 0
-		);
+		if (UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'self')) {
+			$file_path = \OC\Files\Filesystem::getPath($params['fileSource']);
+
+			self::addNotificationsForUser(
+				\OCP\User::getUser(), 'shared_group_self', array($file_path, $params['shareWith']),
+				$file_path, ($params['itemType'] === 'file'),
+				UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED),
+				UserSettings::getUserSetting(\OCP\User::getUser(), 'email', Data::TYPE_SHARED) ? UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'batchtime') : 0
+			);
+		}
 
 		// Members of the new group
 		$affectedUsers = array();
@@ -277,12 +285,14 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public static function shareFileOrFolder($params) {
-		$path = \OC\Files\Filesystem::getPath($params['fileSource']);
-		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
-			'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
-		));
+		if (UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'self') &&
+			UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED)) {
 
-		if (UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED)) {
+			$path = \OC\Files\Filesystem::getPath($params['fileSource']);
+			$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
+				'dir' => ($params['itemType'] === 'file') ? dirname($path) : $path,
+			));
+
 			Data::send('files', 'shared_link_self', array($path), '', array(), $path, $link, \OCP\User::getUser(), Data::TYPE_SHARED, Data::PRIORITY_MEDIUM);
 		}
 	}
