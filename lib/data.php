@@ -210,7 +210,7 @@ class Data
 			'SELECT * '
 			. ' FROM `*PREFIX*activity` '
 			. ' WHERE `affecteduser` = ? ' . $limitActivities
-			. ' ORDER BY `timestamp` desc',
+			. ' ORDER BY `timestamp` DESC',
 			$count, $start);
 		$result = $query->execute($parameters);
 
