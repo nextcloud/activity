@@ -44,6 +44,12 @@
 		</tbody>
 	</table>
 
+	<br />
+	<input id="notify_setting_self" name="notify_setting_self" type="checkbox"
+		value="1" <?php if ($_['notify_self']): ?> checked="checked"<?php endif; ?> />
+	<label for="notify_setting_self"><?php p($l->t('Notify about my own actions')); ?></label>
+	<br />
+
 	<?php if (empty($_['activity_email'])): ?>
 		<br />
 		<strong><?php p($l->t('You need to set up your email address before you can receive notification emails.')); ?></strong>

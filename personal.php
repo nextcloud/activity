@@ -48,5 +48,7 @@ else {
 	$template->assign('setting_batchtime', \OCA\Activity\UserSettings::EMAIL_SEND_HOURLY);
 }
 $template->assign('activity_email', \OCP\Config::getUserValue($user, 'settings', 'email', ''));
+#var_dump(\OCA\Activity\UserSettings::getUserSetting($user, 'setting', 'self'));
+$template->assign('notify_self', \OCA\Activity\UserSettings::getUserSetting($user, 'setting', 'self'));
 
 return $template->fetchPage();
