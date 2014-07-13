@@ -143,7 +143,16 @@ class ParameterHelper
 	protected static function prepareFileParam($param, $stripPath, $highlightParams) {
 		$param = self::fixLegacyFilename($param);
 
-		$parent_dir = (substr_count($param, '/') == 1) ? '/' : dirname($param);
+		$rootView = new \OC\Files\View('');
+		$is_dir = $rootView->is_dir('/' . \OCP\User::getUser() . '/files' . $param);
+		unset($rootView);
+
+		if ($is_dir) {
+			$parent_dir = $param;
+		} else {
+			$parent_dir = (substr_count($param, '/') == 1) ? '/' : dirname($param);
+		}
+
 		$fileLink = \OCP\Util::linkTo('files', 'index.php', array('dir' => $parent_dir));
 		$param = trim($param, '/');
 
