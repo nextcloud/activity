@@ -23,6 +23,8 @@
 
 namespace OCA\Activity;
 
+use \OCP\Activity\IManager;
+
 class GroupHelper
 {
 	/** @var array */
@@ -40,11 +42,22 @@ class GroupHelper
 	/** @var bool */
 	protected $allowGrouping;
 
+	/** @var \OCP\Activity\IManager */
+	protected $activityManager;
+
+	/** @var \OCA\Activity\DataHelper */
+	protected $dataHelper;
+
 	/**
+	 * @param \OCP\Activity\IManager $activityManager
+	 * @param \OCA\Activity\DataHelper $dataHelper
 	 * @param bool $allowGrouping
 	 */
-	public function __construct($allowGrouping) {
+	public function __construct(IManager $activityManager, DataHelper $dataHelper, $allowGrouping) {
 		$this->allowGrouping = $allowGrouping;
+
+		$this->activityManager = $activityManager;
+		$this->dataHelper = $dataHelper;
 	}
 
 	/**
@@ -134,7 +147,7 @@ class GroupHelper
 		}
 
 		// Allow other apps to group their notifications
-		return \OC::$server->getActivityManager()->getGroupParameter($activity);
+		return $this->activityManager->getGroupParameter($activity);
 	}
 
 	/**
@@ -149,10 +162,10 @@ class GroupHelper
 
 		$return = array();
 		foreach ($this->activities as $activity) {
-			$activity = DataHelper::formatStrings($activity, 'subject');
-			$activity = DataHelper::formatStrings($activity, 'message');
+			$activity = $this->dataHelper->formatStrings($activity, 'subject');
+			$activity = $this->dataHelper->formatStrings($activity, 'message');
 
-			$activity['typeicon'] = DataHelper::getTypeIcon($activity['type']);
+			$activity['typeicon'] = $this->dataHelper->getTypeIcon($activity['type']);
 			$return[] = $activity;
 		}
 

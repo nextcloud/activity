@@ -22,7 +22,9 @@
 
 namespace OCA\Activity\Tests;
 
+use OCA\Activity\DataHelper;
 use OCA\Activity\GroupHelper;
+use OCA\Activity\ParameterHelper;
 
 class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 	public function groupHelperData() {
@@ -472,7 +474,26 @@ class GroupHelperTest extends \PHPUnit_Framework_TestCase {
 	 * @dataProvider groupHelperData
 	 */
 	public function testGroupHelper($allowGrouping, $activities, $expected) {
-		$helper = new GroupHelper($allowGrouping);
+		$activityManager = $this->getMock('\OCP\Activity\IManager');
+		$activityManager->expects($this->any())
+			->method('getGroupParameter')
+			->with($this->anything())
+			->will($this->returnValue(false));
+		$activityLanguage = \OCP\Util::getL10N('activity');
+
+		$helper = new GroupHelper(
+			$activityManager,
+			new DataHelper(
+				$activityManager,
+				new ParameterHelper(
+					new \OC\Files\View(''),
+					$activityLanguage
+				),
+				$activityLanguage
+			),
+			$allowGrouping
+		);
+
 		foreach ($activities as $activity) {
 			$helper->addActivity($activity);
 		}
