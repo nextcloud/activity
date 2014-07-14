@@ -43,7 +43,7 @@ class UserSettings
 	 *
 	 * @param string $user
 	 * @param string $method Should be one of 'stream', 'email' or 'setting'
-	 * @param string $type One of the activity types or 'batchtime'
+	 * @param string $type One of the activity types, 'batchtime' or 'self'
 	 * @return mixed
 	 */
 	public static function getUserSetting($user, $method, $type) {
@@ -59,12 +59,16 @@ class UserSettings
 	 * Get a good default setting for a preference
 	 *
 	 * @param string $method Should be one of 'stream', 'email' or 'setting'
-	 * @param string $type One of the activity types or 'batchtime'
+	 * @param string $type One of the activity types, 'batchtime' or 'self'
 	 * @return bool|int
 	 */
 	public static function getDefaultSetting($method, $type) {
-		if ($method == 'setting' && $type == 'batchtime') {
-			return 3600;
+		if ($method == 'setting') {
+			if ($type == 'batchtime') {
+				return 3600;
+			} else if ($type == 'self') {
+				return true;
+			}
 		}
 
 		$settings = self::getDefaultTypes($method);
