@@ -169,16 +169,7 @@ class Hooks {
 	 */
 	public static function shareFileOrFolderWithUser($params) {
 		// User performing the share
-		if (UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'self')) {
-			$file_path = \OC\Files\Filesystem::getPath($params['fileSource']);
-
-			self::addNotificationsForUser(
-				\OCP\User::getUser(), 'shared_user_self', array($file_path, $params['shareWith']),
-				$file_path, ($params['itemType'] === 'file'),
-				UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED),
-				UserSettings::getUserSetting(\OCP\User::getUser(), 'email', Data::TYPE_SHARED) ? UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'batchtime') : 0
-			);
-		}
+		self::shareNotificationForSharer('shared_user_self', $params['shareWith'], $params['fileSource'], $params['itemType']);
 
 		// New shared user
 		$path = $params['fileTarget'];
@@ -196,16 +187,7 @@ class Hooks {
 	 */
 	public static function shareFileOrFolderWithGroup($params) {
 		// User performing the share
-		if (UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'self')) {
-			$file_path = \OC\Files\Filesystem::getPath($params['fileSource']);
-
-			self::addNotificationsForUser(
-				\OCP\User::getUser(), 'shared_group_self', array($file_path, $params['shareWith']),
-				$file_path, ($params['itemType'] === 'file'),
-				UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED),
-				UserSettings::getUserSetting(\OCP\User::getUser(), 'email', Data::TYPE_SHARED) ? UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'batchtime') : 0
-			);
-		}
+		self::shareNotificationForSharer('shared_group_self', $params['shareWith'], $params['fileSource'], $params['itemType']);
 
 		// Members of the new group
 		$affectedUsers = array();
@@ -246,6 +228,28 @@ class Hooks {
 				$path, ($params['itemType'] === 'file'),
 				!empty($filteredStreamUsersInGroup[$user]),
 				!empty($filteredEmailUsersInGroup[$user]) ? $filteredEmailUsersInGroup[$user] : 0
+			);
+		}
+	}
+
+	/**
+	 * Add notifications for the user that shares a file/folder
+	 *
+	 * @param string $subject
+	 * @param string $shareWith
+	 * @param int $fileSource
+	 * @param string $itemType
+	 */
+	public static function shareNotificationForSharer($subject, $shareWith, $fileSource, $itemType) {
+		// User performing the share
+		if (UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'self')) {
+			$file_path = \OC\Files\Filesystem::getPath($fileSource);
+
+			self::addNotificationsForUser(
+				\OCP\User::getUser(), $subject, array($file_path, $shareWith),
+				$file_path, ($itemType === 'file'),
+				UserSettings::getUserSetting(\OCP\User::getUser(), 'stream', Data::TYPE_SHARED),
+				UserSettings::getUserSetting(\OCP\User::getUser(), 'email', Data::TYPE_SHARED) ? UserSettings::getUserSetting(\OCP\User::getUser(), 'setting', 'batchtime') : 0
 			);
 		}
 	}
