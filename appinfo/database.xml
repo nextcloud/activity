@@ -39,13 +39,13 @@
 				<name>user</name>
 				<type>text</type>
 				<notnull>true</notnull>
-				<length>255</length>
+				<length>64</length>
 			</field>
 			<field>
 				<name>affecteduser</name>
 				<type>text</type>
 				<notnull>true</notnull>
-				<length>255</length>
+				<length>64</length>
 			</field>
 			<field>
 				<name>app</name>
@@ -165,7 +165,7 @@
 				<name>amq_affecteduser</name>
 				<type>text</type>
 				<notnull>true</notnull>
-				<length>255</length>
+				<length>64</length>
 			</field>
 			<field>
 				<name>amq_appid</name>
