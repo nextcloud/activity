@@ -64,6 +64,12 @@ class GroupHelper
 		}
 
 		if (!$this->getGroupKey($activity)) {
+			if (!empty($this->openGroup)) {
+				$this->activities[] = $this->openGroup;
+				$this->openGroup = array();
+				$this->groupKey = '';
+				$this->groupTime = 0;
+			}
 			$this->activities[] = $activity;
 			return;
 		}
