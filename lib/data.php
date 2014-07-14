@@ -23,6 +23,11 @@
 
 namespace OCA\Activity;
 
+use \OCP\DB;
+use \OCP\User;
+use \OCP\Util;
+use \OC\Files\View;
+
 /**
  * @brief Class for managing the data in the activities
  */
@@ -48,6 +53,13 @@ class Data
 
 	const TYPE_STORAGE_QUOTA_90 = 'storage_quota_90';
 	const TYPE_STORAGE_FAILURE = 'storage_failure';
+
+	/** @var \OCP\Activity\IManager */
+	protected $activityManager;
+
+	public function __construct(\OCP\Activity\IManager $activityManager){
+		$this->activityManager = $activityManager;
+	}
 
 	static protected $notificationTypes = array();
 
@@ -101,16 +113,16 @@ class Data
 	 */
 	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = '', $prio = Data::PRIORITY_MEDIUM) {
 		$timestamp = time();
-		$user = \OCP\User::getUser();
+		$user = User::getUser();
 		
 		if ($affecteduser === '') {
-			$auser = \OCP\User::getUser();
+			$auser = $user;
 		} else {
 			$auser = $affecteduser;
 		}
 
 		// store in DB
-		$query = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
+		$query = DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
 		$query->execute(array($app, $subject, serialize($subjectparams), $message, serialize($messageparams), $file, $link, $user, $auser, $timestamp, $prio, $type));
 
 		// fire a hook so that other apps like notification systems can connect
@@ -134,7 +146,7 @@ class Data
 		$timestamp = time();
 
 		// store in DB
-		$query = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
+		$query = DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 		$query->execute(array(
@@ -168,7 +180,7 @@ class Data
 	 * @param string $filter
 	 * @return array
 	 */
-	public static function filterNotificationTypes($types, $filter) {
+	public function filterNotificationTypes($types, $filter) {
 		switch ($filter) {
 			case 'shares':
 				return array_intersect(array(
@@ -177,22 +189,22 @@ class Data
 		}
 
 		// Allow other apps to add new notification types
-		return \OC::$server->getActivityManager()->filterNotificationTypes($types, $filter);
+		return $this->activityManager->filterNotificationTypes($types, $filter);
 	}
 
 	/**
 	 * @brief Read a list of events from the activity stream
+	 * @param GroupHelper $groupHelper Allows activities to be grouped
 	 * @param int $start The start entry
 	 * @param int $count The number of statements to read
 	 * @param string $filter Filter the activities
-	 * @param bool $allowGrouping Allow activities to be grouped
 	 * @return array
 	 */
-	public static function read($start, $count, $filter = 'all', $allowGrouping = true) {
+	public function read(GroupHelper $groupHelper, $start, $count, $filter = 'all') {
 		// get current user
-		$user = \OCP\User::getUser();
+		$user = User::getUser();
 		$enabledNotifications = UserSettings::getNotificationTypes($user, 'stream');
-		$enabledNotifications = Data::filterNotificationTypes($enabledNotifications, $filter);
+		$enabledNotifications = $this->filterNotificationTypes($enabledNotifications, $filter);
 
 		// We don't want to display any activities
 		if (empty($enabledNotifications)) {
@@ -218,7 +230,7 @@ class Data
 				break;
 
 				default:
-					list($condition, $params) = \OC::$server->getActivityManager()->getQueryForFilter($filter);
+					list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
 					if (!is_null($condition)) {
 						$limitActivities .= ' ';
 						$limitActivities .= $condition;
@@ -230,7 +242,7 @@ class Data
 		}
 
 		// fetch from DB
-		$query = \OCP\DB::prepare(
+		$query = DB::prepare(
 			'SELECT * '
 			. ' FROM `*PREFIX*activity` '
 			. ' WHERE `affecteduser` = ? ' . $limitActivities
@@ -238,34 +250,33 @@ class Data
 			$count, $start);
 		$result = $query->execute($parameters);
 
-		return self::getActivitiesFromQueryResult($result, $allowGrouping);
+		return $this->getActivitiesFromQueryResult($result, $groupHelper);
 	}
 
 	/**
 	 * Process the result and return the activities
 	 *
 	 * @param \OC_DB_StatementWrapper|int $result
-	 * @param bool $allowGrouping Allow activities to be grouped
+	 * @param \OCA\Activity\GroupHelper $groupHelper
 	 * @return array
 	 */
-	public static function getActivitiesFromQueryResult($result, $allowGrouping = true) {
-		$helper = new \OCA\Activity\GroupHelper($allowGrouping);
-		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('Activity', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
+	public function getActivitiesFromQueryResult($result, GroupHelper $groupHelper) {
+		if (DB::isError($result)) {
+			Util::writeLog('Activity', DB::getErrorMessage($result), Util::ERROR);
 		} else {
 			while ($row = $result->fetchRow()) {
-				$helper->addActivity($row);
+				$groupHelper->addActivity($row);
 			}
 		}
 
-		return $helper->getActivities();
+		return $groupHelper->getActivities();
 	}
 
 	/**
 	 * Get the casted page number from $_GET
 	 * @return int
 	 */
-	public static function getPageFromParam() {
+	public function getPageFromParam() {
 		if (isset($_GET['page'])) {
 			return (int) $_GET['page'];
 		}
@@ -277,7 +288,7 @@ class Data
 	 * Get the filter from $_GET
 	 * @return string
 	 */
-	public static function getFilterFromParam() {
+	public function getFilterFromParam() {
 		if (!isset($_GET['filter']))
 			return 'all';
 
@@ -290,7 +301,7 @@ class Data
 			case 'files':
 				return $filterValue;
 			default:
-				if (\OC::$server->getActivityManager()->isFilterValid($filterValue)) {
+				if ($this->activityManager->isFilterValid($filterValue)) {
 					return $filterValue;
 				}
 				return 'all';
@@ -303,11 +314,11 @@ class Data
 	 * @param int $expireDays Minimum 1 day
 	 * @return null
 	 */
-	public static function expire($expireDays = 365) {
+	public function expire($expireDays = 365) {
 		$ttl = (60 * 60 * 24 * max(1, $expireDays));
 
 		$timelimit = time() - $ttl;
-		self::deleteActivities(array(
+		$this->deleteActivities(array(
 			'timestamp' => array($timelimit, '<'),
 		));
 	}
@@ -320,7 +331,7 @@ class Data
 	 *    'field' => array('value', 'operator') => `field` operator 'value'
 	 * @return null
 	 */
-	public static function deleteActivities($conditions) {
+	public function deleteActivities($conditions) {
 		$sqlWhere = '';
 		$sqlParameters = $sqlWhereList = array();
 		foreach ($conditions as $column => $comparison) {
@@ -332,7 +343,7 @@ class Data
 			$sqlWhere = ' WHERE ' . implode(' AND ', $sqlWhereList);
 		}
 
-		$query = \OCP\DB::prepare(
+		$query = DB::prepare(
 			'DELETE FROM `*PREFIX*activity`' . $sqlWhere);
 		$query->execute($sqlParameters);
 	}

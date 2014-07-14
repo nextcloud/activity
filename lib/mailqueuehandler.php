@@ -164,12 +164,12 @@ class MailQueueHandler {
 	 */
 	public function sendEmailToUser($user, $email, $lang, $mailData) {
 		$l = $this->getLanguage($lang);
+		$dataHelper = new DataHelper(\OC::$server->getActivityManager(), new ParameterHelper(new \OC\Files\View(''), $l), $l);
 
 		$activityList = array();
 		foreach ($mailData as $activity) {
-			$activityList[] = \OCA\Activity\DataHelper::translation(
-				$activity['amq_appid'], $activity['amq_subject'], unserialize($activity['amq_subjectparams']),
-				false, false, $l
+			$activityList[] = $dataHelper->translation(
+				$activity['amq_appid'], $activity['amq_subject'], unserialize($activity['amq_subjectparams'])
 			);
 		}
 
@@ -187,7 +187,7 @@ class MailQueueHandler {
 				$this->getSenderData('email'), $this->getSenderData('name')
 			);
 		} catch (\Exception $e) {
-			\OCP\Util::writeLog('Activity', 'A problem occurred while sending the e-mail. Please revisit your settings.', \OC_Log::ERROR);
+			\OCP\Util::writeLog('Activity', 'A problem occurred while sending the e-mail. Please revisit your settings.', \OCP\Util::ERROR);
 		}
 	}
 
@@ -209,7 +209,7 @@ class MailQueueHandler {
 		$result = $query->execute($queryParams);
 
 		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('Activity', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
+			\OCP\Util::writeLog('Activity', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
 		}
 	}
 }

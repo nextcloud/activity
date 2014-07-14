@@ -56,13 +56,26 @@ if (isset($_SERVER['HTTP_ACCEPT']) && stristr($_SERVER['HTTP_ACCEPT'], 'applicat
 }
 
 // generate and show the rss feed
+$l = \OCP\Util::getL10N('activity');
+$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
+$groupHelper = new \OCA\Activity\GroupHelper(
+	\OC::$server->getActivityManager(),
+	new \OCA\Activity\DataHelper(
+		\OC::$server->getActivityManager(),
+		new \OCA\Activity\ParameterHelper(new \OC\Files\View(''), $l),
+		$l
+	),
+	false
+);
+
 $tmpl = new \OCP\Template('activity', 'rss');
 
 $tmpl->assign('rssLang', \OC_Preferences::getValue(\OCP\User::getUser(), 'core', 'lang'));
 $tmpl->assign('rssLink', \OCP\Util::linkToAbsolute('activity', 'rss.php'));
 $tmpl->assign('rssPubDate', date('r'));
 $tmpl->assign('user', \OCP\User::getUser());
-$tmpl->assign('activities', \OCA\Activity\Data::read(0, 30, 'all', false));
+
+$tmpl->assign('activities', $data->read($groupHelper, 0, 30, 'all'));
 
 $tmpl->printPage();
 

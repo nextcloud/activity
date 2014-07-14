@@ -22,15 +22,27 @@
 */
 
 // some housekeeping
-OCP\JSON::checkLoggedIn();
-OCP\JSON::checkAppEnabled('activity');
+\OCP\JSON::checkLoggedIn();
+\OCP\JSON::checkAppEnabled('activity');
+
+$l = \OCP\Util::getL10N('activity');
+$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
+$groupHelper = new \OCA\Activity\GroupHelper(
+	\OC::$server->getActivityManager(),
+	new \OCA\Activity\DataHelper(
+		\OC::$server->getActivityManager(),
+		new \OCA\Activity\ParameterHelper(new \OC\Files\View(''), $l),
+		$l
+	),
+	true
+);
+
+$page = $data->getPageFromParam() - 1;
+$filter = $data->getFilterFromParam();
 
 // Read the next 30 items for the endless scrolling
 $count = 30;
-$page = \OCA\Activity\Data::getPageFromParam() - 1;
-$filter = \OCA\Activity\Data::getFilterFromParam();
-
-$activity = \OCA\Activity\Data::read($page * $count, $count, $filter);
+$activity = $data->read($groupHelper, $page * $count, $count, $filter);
 
 // show the next 30 entries
 $tmpl = new \OCP\Template('activity', 'activities.part', '');

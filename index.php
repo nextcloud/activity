@@ -37,8 +37,11 @@ $navigation = new \OCA\Activity\Navigation(\OCP\Util::getL10N('activity'));
 $navigation->setRSSToken(\OCP\Config::getUserValue(\OCP\User::getUser(), 'activity', 'rsstoken'));
 
 // get the page that is requested. Needed for endless scrolling
-$page = \OCA\Activity\Data::getPageFromParam() - 1;
-$filter = \OCA\Activity\Data::getFilterFromParam();
+$data = new \OCA\Activity\Data(
+	\OC::$server->getActivityManager()
+);
+$page = $data->getPageFromParam() - 1;
+$filter = $data->getFilterFromParam();
 
 // show activity template
 $tmpl = new \OCP\Template('activity', 'list', 'user');
