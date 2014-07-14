@@ -61,37 +61,37 @@ class Data
 		$this->activityManager = $activityManager;
 	}
 
-	static protected $notificationTypes = array();
+	protected $notificationTypes = array();
 
 	/**
 	 * @param \OC_L10N $l
 	 * @return array Array "stringID of the type" => "translated string description for the setting"
 	 */
-	public static function getNotificationTypes(\OC_L10N $l) {
-		if (isset(self::$notificationTypes[$l->getLanguageCode()]))
+	public function getNotificationTypes(\OC_L10N $l) {
+		if (isset($this->notificationTypes[$l->getLanguageCode()]))
 		{
-			return self::$notificationTypes[$l->getLanguageCode()];
+			return $this->notificationTypes[$l->getLanguageCode()];
 		}
 
 		$notificationTypes = array(
-			\OCA\Activity\Data::TYPE_SHARED => $l->t('A file or folder has been <strong>shared</strong>'),
-//			\OCA\Activity\Data::TYPE_SHARE_UNSHARED => $l->t('Previously shared file or folder has been <strong>unshared</strong>'),
-//			\OCA\Activity\Data::TYPE_SHARE_EXPIRED => $l->t('Expiration date of shared file or folder <strong>expired</strong>'),
-			\OCA\Activity\Data::TYPE_SHARE_CREATED => $l->t('A new file or folder has been <strong>created</strong>'),
-			\OCA\Activity\Data::TYPE_SHARE_CHANGED => $l->t('A file or folder has been <strong>changed</strong>'),
-			\OCA\Activity\Data::TYPE_SHARE_DELETED => $l->t('A file or folder has been <strong>deleted</strong>'),
-//			\OCA\Activity\Data::TYPE_SHARE_RESHARED => $l->t('A file or folder has been <strong>reshared</strong>'),
-//			\OCA\Activity\Data::TYPE_SHARE_DOWNLOADED => $l->t('A file or folder shared via link has been <strong>downloaded</strong>'),
-//			\OCA\Activity\Data::TYPE_SHARE_UPLOADED => $l->t('A file has been <strong>uploaded</strong> into a folder shared via link'),
-//			\OCA\Activity\Data::TYPE_STORAGE_QUOTA_90 => $l->t('<strong>Storage usage</strong> is at 90%%'),
-//			\OCA\Activity\Data::TYPE_STORAGE_FAILURE => $l->t('An <strong>external storage</strong> has an error'),
+			self::TYPE_SHARED => $l->t('A file or folder has been <strong>shared</strong>'),
+//			self::TYPE_SHARE_UNSHARED => $l->t('Previously shared file or folder has been <strong>unshared</strong>'),
+//			self::TYPE_SHARE_EXPIRED => $l->t('Expiration date of shared file or folder <strong>expired</strong>'),
+			self::TYPE_SHARE_CREATED => $l->t('A new file or folder has been <strong>created</strong>'),
+			self::TYPE_SHARE_CHANGED => $l->t('A file or folder has been <strong>changed</strong>'),
+			self::TYPE_SHARE_DELETED => $l->t('A file or folder has been <strong>deleted</strong>'),
+//			self::TYPE_SHARE_RESHARED => $l->t('A file or folder has been <strong>reshared</strong>'),
+//			self::TYPE_SHARE_DOWNLOADED => $l->t('A file or folder shared via link has been <strong>downloaded</strong>'),
+//			self::TYPE_SHARE_UPLOADED => $l->t('A file has been <strong>uploaded</strong> into a folder shared via link'),
+//			self::TYPE_STORAGE_QUOTA_90 => $l->t('<strong>Storage usage</strong> is at 90%%'),
+//			self::TYPE_STORAGE_FAILURE => $l->t('An <strong>external storage</strong> has an error'),
 		);
 
 		// Allow other apps to add new notification types
-		$additionalNotificationTypes = \OC::$server->getActivityManager()->getNotificationTypes($l->getLanguageCode());
+		$additionalNotificationTypes = $this->activityManager->getNotificationTypes($l->getLanguageCode());
 		$notificationTypes = array_merge($notificationTypes, $additionalNotificationTypes);
 
-		self::$notificationTypes[$l->getLanguageCode()] = $notificationTypes;
+		$this->notificationTypes[$l->getLanguageCode()] = $notificationTypes;
 
 		return $notificationTypes;
 	}

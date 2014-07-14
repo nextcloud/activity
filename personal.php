@@ -24,7 +24,8 @@ OCP\Util::addScript('activity', 'settings');
 OCP\Util::addStyle('activity', 'settings');
 
 $l=OC_L10N::get('activity');
-$types = \OCA\Activity\Data::getNotificationTypes($l);
+$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
+$types = $data->getNotificationTypes($l);
 
 $user = OCP\User::getUser();
 $activities = array();
