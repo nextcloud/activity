@@ -23,6 +23,10 @@
 
 namespace OCA\Activity;
 
+use \OCP\User;
+use \OCP\Util;
+use \OC\Files\View;
+
 class ParameterHelper
 {
 	/** @var \OC\Files\View */
@@ -31,7 +35,7 @@ class ParameterHelper
 	/** @var \OC_L10N */
 	protected $l;
 
-	public function __construct(\OC\Files\View $rootView, \OC_L10N $l) {
+	public function __construct(View $rootView, \OC_L10N $l) {
 		$this->rootView = $rootView;
 		$this->l = $l;
 	}
@@ -111,7 +115,7 @@ class ParameterHelper
 	 */
 	protected function prepareParam($param, $highlightParams) {
 		if ($highlightParams) {
-			return '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
+			return '<strong>' . Util::sanitizeHTML($param) . '</strong>';
 		} else {
 			return $param;
 		}
@@ -127,9 +131,9 @@ class ParameterHelper
 	 * @return string
 	 */
 	protected function prepareUserParam($param, $highlightParams) {
-		$displayName = \OCP\User::getDisplayName($param);
-		$param = \OCP\Util::sanitizeHTML($param);
-		$displayName = \OCP\Util::sanitizeHTML($displayName);
+		$displayName = User::getDisplayName($param);
+		$param = Util::sanitizeHTML($param);
+		$displayName = Util::sanitizeHTML($displayName);
 
 		if ($highlightParams) {
 			return '<div class="avatar" data-user="' . $param . '"></div>'
@@ -151,7 +155,7 @@ class ParameterHelper
 	 */
 	protected function prepareFileParam($param, $stripPath, $highlightParams) {
 		$param = $this->fixLegacyFilename($param);
-		$is_dir = $this->rootView->is_dir('/' . \OCP\User::getUser() . '/files' . $param);
+		$is_dir = $this->rootView->is_dir('/' . User::getUser() . '/files' . $param);
 
 		if ($is_dir) {
 			$parent_dir = $param;
@@ -159,14 +163,14 @@ class ParameterHelper
 			$parent_dir = (substr_count($param, '/') == 1) ? '/' : dirname($param);
 		}
 
-		$fileLink = \OCP\Util::linkTo('files', 'index.php', array('dir' => $parent_dir));
+		$fileLink = Util::linkTo('files', 'index.php', array('dir' => $parent_dir));
 		$param = trim($param, '/');
 
 		if (!$stripPath) {
 			if (!$highlightParams) {
 				return $param;
 			}
-			return '<a class="filename" href="' . $fileLink . '">' . \OC_Util::sanitizeHTML($param) . '</a>';
+			return '<a class="filename" href="' . $fileLink . '">' . Util::sanitizeHTML($param) . '</a>';
 		}
 
 		if (!$highlightParams) {
@@ -174,9 +178,9 @@ class ParameterHelper
 		}
 
 		$title = $param;
-		$title = ' title="' . \OC_Util::sanitizeHTML($title) . '"';
+		$title = ' title="' . Util::sanitizeHTML($title) . '"';
 		$newParam = $this->stripPathFromFilename($param);
-		return '<a class="filename tooltip" href="' . $fileLink . '"' . $title . '>' . \OC_Util::sanitizeHTML($newParam) . '</a>';
+		return '<a class="filename tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($newParam) . '</a>';
 	}
 
 	/**
