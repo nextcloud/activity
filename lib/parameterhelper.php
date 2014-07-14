@@ -118,12 +118,15 @@ class ParameterHelper
 	 * @return string
 	 */
 	protected static function prepareUserParam($param, $highlightParams) {
+		$displayName = \OC_User::getDisplayName($param);
+		$param = \OC_Util::sanitizeHTML($param);
+		$displayName = \OC_Util::sanitizeHTML($displayName);
+
 		if ($highlightParams) {
-			$param = \OC_Util::sanitizeHTML($param);
 			return '<div class="avatar" data-user="' . $param . '"></div>'
-				. '<strong>' . \OC_User::getDisplayName($param) . '</strong>';
+				. '<strong>' . $displayName . '</strong>';
 		} else {
-			return \OC_User::getDisplayName($param);
+			return $displayName;
 		}
 	}
 
