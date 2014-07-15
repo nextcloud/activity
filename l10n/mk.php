@@ -3,7 +3,6 @@ $TRANSLATIONS = array(
 "Your settings have been updated." => "Вашите нагодувања беа освежени.",
 "Activity" => "Активност",
 "A file or folder has been <strong>shared</strong>" => "Датотека или фолдер беше <strong>споделен</strong>",
-"A new file or folder has been <strong>created</strong> in a shared folder" => "Нова датотека или фолдер беше <strong>креиран</strong> во споделен фолдер",
 "You created %1\$s" => "Вие креиравте %1\$s",
 "%2\$s created %1\$s" => "%2\$s креирано %1\$s",
 "You changed %1\$s" => "Вие изменивте %1\$s",

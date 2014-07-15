@@ -3,7 +3,6 @@ $TRANSLATIONS = array(
 "Your settings have been updated." => "Beállításaid sikeresen frissítve.",
 "Activity" => "Aktivitás",
 "A file or folder has been <strong>shared</strong>" => "Fájl vagy könyvtár <strong>megosztva</strong>",
-"A new file or folder has been <strong>created</strong> in a shared folder" => "Fájl vagy könyvtár <strong>létrejött</strong> a megosztott könyvtárban",
 "You created %1\$s" => "Létrehoztad ezt: %1\$s",
 "%2\$s created %1\$s" => "%2\$s létrehozta ezt: %1\$s",
 "You changed %1\$s" => "Megváltoztattad ezt: %1\$s",
