@@ -70,15 +70,19 @@ class ApiTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function tearDown() {
-		Data::deleteActivities(array(
+		$data = new Data(
+			$this->getMock('\OCP\Activity\IManager')
+		);
+
+		$data->deleteActivities(array(
 			'affecteduser' => 'activity-api-user1',
 		));
 		\OC_User::deleteUser('activity-api-user1');
-		Data::deleteActivities(array(
+		$data->deleteActivities(array(
 			'affecteduser' => 'activity-api-user2',
 		));
 		\OC_User::deleteUser('activity-api-user2');
-		Data::deleteActivities(array(
+		$data->deleteActivities(array(
 			'type' => 'test',
 		));
 		\OC::$WEBROOT = $this->originalWEBROOT;

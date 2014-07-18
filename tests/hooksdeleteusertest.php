@@ -68,7 +68,10 @@ class HooksDeleteUserTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown() {
 		parent::tearDown();
 
-		Data::deleteActivities(array(
+		$data = new Data(
+			$this->getMock('\OCP\Activity\IManager')
+		);
+		$data->deleteActivities(array(
 			'type' => 'test',
 		));
 		$query = \OCP\DB::prepare("DELETE FROM `*PREFIX*activity_mq` WHERE `amq_type` = 'test'");

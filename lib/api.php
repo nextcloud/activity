@@ -33,10 +33,22 @@ class Api
 	const DEFAULT_LIMIT = 30;
 
 	static public function get($param) {
+		$l = \OCP\Util::getL10N('activity');
+		$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
+		$groupHelper = new \OCA\Activity\GroupHelper(
+			\OC::$server->getActivityManager(),
+			new \OCA\Activity\DataHelper(
+				\OC::$server->getActivityManager(),
+				new \OCA\Activity\ParameterHelper(new \OC\Files\View(''), $l),
+				$l
+			),
+			false
+		);
+
 		$start = isset($_GET['start']) ? $_GET['start'] : 0;
 		$count = isset($_GET['count']) ? $_GET['count'] : self::DEFAULT_LIMIT;
 
-		$activities = Data::read($start, $count, 'all', false);
+		$activities = $data->read($groupHelper, $start, $count, 'all');
 		$data = array();
 		foreach($activities as $entry) {
 			$data[] = array(

@@ -119,7 +119,8 @@ class UserSettings
 	 */
 	public static function getNotificationTypes($user, $method) {
 		$l = \OC_L10N::get('activity');
-		$types = Data::getNotificationTypes($l);
+		$data = new Data(\OC::$server->getActivityManager());
+		$types = $data->getNotificationTypes($l);
 
 		$notificationTypes = array();
 		foreach ($types as $type => $desc) {

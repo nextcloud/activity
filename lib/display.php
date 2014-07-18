@@ -67,7 +67,7 @@ class Display
 					))
 				);
 			} else if ($exist) {
-				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($activity['file']))));
+				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => $activity['file'])));
 				$tmpl->assign('previewImageLink', \OC_Helper::mimetypeIcon('dir'));
 				$tmpl->assign('previewLinkIsDir', true);
 			}

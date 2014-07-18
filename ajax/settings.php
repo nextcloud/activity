@@ -28,7 +28,8 @@ OCP\JSON::callCheck();
 $notify_email = $notify_stream = array();
 
 $l = OCP\Util::getL10N('activity');
-$types = \OCA\Activity\Data::getNotificationTypes($l);
+$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
+$types = $data->getNotificationTypes($l);
 foreach ($types as $type => $desc) {
 	OCP\Config::setUserValue(OCP\User::getUser(), 'activity', 'notify_email_' . $type, !empty($_POST[$type . '_email']));
 	OCP\Config::setUserValue(OCP\User::getUser(), 'activity', 'notify_stream_' . $type, !empty($_POST[$type . '_stream']));

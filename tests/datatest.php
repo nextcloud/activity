@@ -44,9 +44,12 @@ class DataTest extends \PHPUnit_Framework_TestCase {
 			$_GET['filter'] = $globalValue;
 		}
 
+		$data = new \OCA\Activity\Data(
+			$this->getMock('\OCP\Activity\IManager')
+		);
 		$this->assertEquals(
 			$expected,
-			\OCA\Activity\Data::getFilterFromParam()
+			$data->getFilterFromParam()
 		);
 	}
 }

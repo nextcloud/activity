@@ -23,11 +23,25 @@
 
 namespace OCA\Activity;
 
+use \OCP\User;
+use \OCP\Util;
+use \OC\Files\View;
+
 class ParameterHelper
 {
+	/** @var \OC\Files\View */
+	protected $rootView;
+
+	/** @var \OC_L10N */
+	protected $l;
+
+	public function __construct(View $rootView, \OC_L10N $l) {
+		$this->rootView = $rootView;
+		$this->l = $l;
+	}
+
 	/**
 	 * Prepares the parameters before we use them in the subject or message
-	 * @param \OC_L10N $l Language object, if you want to use a different language (f.e. to send an email)
 	 * @param string $text
 	 * @param array $params
 	 * @param array $paramTypes Type of parameters, if they need special handling
@@ -35,7 +49,7 @@ class ParameterHelper
 	 * @param bool $highlightParams
 	 * @return array
 	 */
-	public static function prepareParameters(\OC_L10N $l, $text, $params, $paramTypes = array(), $stripPath = false, $highlightParams = false) {
+	public function prepareParameters($text, $params, $paramTypes = array(), $stripPath = false, $highlightParams = false) {
 		if (!$text) {
 			return $params;
 		}
@@ -43,9 +57,9 @@ class ParameterHelper
 		$preparedParams = array();
 		foreach ($params as $i => $param) {
 			if (is_array($param)) {
-				$preparedParams[] = self::prepareArrayParameter($l, $param, $paramTypes[$i], $stripPath, $highlightParams);
+				$preparedParams[] = $this->prepareArrayParameter($param, $paramTypes[$i], $stripPath, $highlightParams);
 			} else {
-				$preparedParams[] = self::prepareStringParameter($param, isset($paramTypes[$i]) ? $paramTypes[$i] : '', $stripPath, $highlightParams);
+				$preparedParams[] = $this->prepareStringParameter($param, isset($paramTypes[$i]) ? $paramTypes[$i] : '', $stripPath, $highlightParams);
 			}
 		}
 		return $preparedParams;
@@ -60,37 +74,36 @@ class ParameterHelper
 	 * @param bool $highlightParams
 	 * @return string
 	 */
-	public static function prepareStringParameter($param, $paramType, $stripPath, $highlightParams) {
+	public function prepareStringParameter($param, $paramType, $stripPath, $highlightParams) {
 		if ($paramType === 'file') {
-			return self::prepareFileParam($param, $stripPath, $highlightParams);
+			return $this->prepareFileParam($param, $stripPath, $highlightParams);
 		} else if ($paramType === 'username') {
-			return self::prepareUserParam($param, $highlightParams);
+			return $this->prepareUserParam($param, $highlightParams);
 		}
-		return self::prepareParam($param, $highlightParams);
+		return $this->prepareParam($param, $highlightParams);
 	}
 
 	/**
 	 * Prepares an array parameter before we use it in the subject or message
 	 *
-	 * @param \OC_L10N $l Language object, if you want to use a different language (f.e. to send an email)
 	 * @param array $params
 	 * @param string $paramType Type of parameters, if it needs special handling
 	 * @param bool $stripPath Shall we remove the path from the filename
 	 * @param bool $highlightParams
 	 * @return string
 	 */
-	public static function prepareArrayParameter(\OC_L10N $l, $params, $paramType, $stripPath, $highlightParams) {
+	public function prepareArrayParameter($params, $paramType, $stripPath, $highlightParams) {
 		$parameterList = $plainParameterList = array();
 		foreach ($params as $parameter) {
 			if ($paramType === 'file') {
-				$parameterList[] = self::prepareFileParam($parameter, $stripPath, $highlightParams);
-				$plainParameterList[] = self::prepareFileParam($parameter, false, false);
+				$parameterList[] = $this->prepareFileParam($parameter, $stripPath, $highlightParams);
+				$plainParameterList[] = $this->prepareFileParam($parameter, false, false);
 			} else {
-				$parameterList[] = self::prepareParam($parameter, $highlightParams);
-				$plainParameterList[] = self::prepareParam($parameter, false);
+				$parameterList[] = $this->prepareParam($parameter, $highlightParams);
+				$plainParameterList[] = $this->prepareParam($parameter, false);
 			}
 		}
-		return self::joinParameterList($l, $parameterList, $plainParameterList, $highlightParams);
+		return $this->joinParameterList($parameterList, $plainParameterList, $highlightParams);
 	}
 
 	/**
@@ -100,9 +113,9 @@ class ParameterHelper
 	 * @param bool $highlightParams
 	 * @return string
 	 */
-	protected static function prepareParam($param, $highlightParams) {
+	protected function prepareParam($param, $highlightParams) {
 		if ($highlightParams) {
-			return '<strong>' . \OC_Util::sanitizeHTML($param) . '</strong>';
+			return '<strong>' . Util::sanitizeHTML($param) . '</strong>';
 		} else {
 			return $param;
 		}
@@ -117,10 +130,10 @@ class ParameterHelper
 	 * @param bool $highlightParams
 	 * @return string
 	 */
-	protected static function prepareUserParam($param, $highlightParams) {
-		$displayName = \OC_User::getDisplayName($param);
-		$param = \OC_Util::sanitizeHTML($param);
-		$displayName = \OC_Util::sanitizeHTML($displayName);
+	protected function prepareUserParam($param, $highlightParams) {
+		$displayName = User::getDisplayName($param);
+		$param = Util::sanitizeHTML($param);
+		$displayName = Util::sanitizeHTML($displayName);
 
 		if ($highlightParams) {
 			return '<div class="avatar" data-user="' . $param . '"></div>'
@@ -140,28 +153,34 @@ class ParameterHelper
 	 * @param bool $highlightParams
 	 * @return string
 	 */
-	protected static function prepareFileParam($param, $stripPath, $highlightParams) {
-		$param = self::fixLegacyFilename($param);
+	protected function prepareFileParam($param, $stripPath, $highlightParams) {
+		$param = $this->fixLegacyFilename($param);
+		$is_dir = $this->rootView->is_dir('/' . User::getUser() . '/files' . $param);
 
-		$parent_dir = (substr_count($param, '/') == 1) ? '/' : dirname($param);
-		$fileLink = \OCP\Util::linkTo('files', 'index.php', array('dir' => $parent_dir));
+		if ($is_dir) {
+			$parent_dir = $param;
+		} else {
+			$parent_dir = (substr_count($param, '/') == 1) ? '/' : dirname($param);
+		}
+
+		$fileLink = Util::linkTo('files', 'index.php', array('dir' => $parent_dir));
 		$param = trim($param, '/');
 
 		if (!$stripPath) {
 			if (!$highlightParams) {
 				return $param;
 			}
-			return '<a class="filename" href="' . $fileLink . '">' . \OC_Util::sanitizeHTML($param) . '</a>';
+			return '<a class="filename" href="' . $fileLink . '">' . Util::sanitizeHTML($param) . '</a>';
 		}
 
 		if (!$highlightParams) {
-			return self::stripPathFromFilename($param);
+			return $this->stripPathFromFilename($param);
 		}
 
 		$title = $param;
-		$title = ' title="' . \OC_Util::sanitizeHTML($title) . '"';
-		$newParam = self::stripPathFromFilename($param);
-		return '<a class="filename tooltip" href="' . $fileLink . '"' . $title . '>' . \OC_Util::sanitizeHTML($newParam) . '</a>';
+		$title = ' title="' . Util::sanitizeHTML($title) . '"';
+		$newParam = $this->stripPathFromFilename($param);
+		return '<a class="filename tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($newParam) . '</a>';
 	}
 
 	/**
@@ -169,7 +188,7 @@ class ParameterHelper
 	 * @param string $filename
 	 * @return string
 	 */
-	protected static function fixLegacyFilename($filename) {
+	protected function fixLegacyFilename($filename) {
 		if (strpos($filename, '/') !== 0) {
 			return '/' . $filename;
 		}
@@ -181,7 +200,7 @@ class ParameterHelper
 	 * @param string $filename
 	 * @return string
 	 */
-	protected static function stripPathFromFilename($filename) {
+	protected function stripPathFromFilename($filename) {
 		if (strrpos($filename, '/') !== false) {
 			// Remove the path from the file string
 			return substr($filename, strrpos($filename, '/') + 1);
@@ -199,13 +218,12 @@ class ParameterHelper
 	 * More than 5 parameters are joined by "," and trimmed:
 	 * => A, B, C and #n more
 	 *
-	 * @param \OC_L10N $l
 	 * @param array $parameterList
 	 * @param array $plainParameterList
 	 * @param bool $highlightParams
 	 * @return string
 	 */
-	protected static function joinParameterList(\OC_L10N $l, $parameterList, $plainParameterList, $highlightParams) {
+	protected function joinParameterList($parameterList, $plainParameterList, $highlightParams) {
 		if (empty($parameterList)) {
 			return '';
 		}
@@ -220,26 +238,26 @@ class ParameterHelper
 		else if ($count == 2)
 		{
 			$firstItem = array_pop($parameterList);
-			return $l->t('%s and %s', array($firstItem, $lastItem));
+			return $this->l->t('%s and %s', array($firstItem, $lastItem));
 		}
 		else if ($count <= 5)
 		{
-			$list = implode($l->t(', '), $parameterList);
-			return $l->t('%s and %s', array($list, $lastItem));
+			$list = implode($this->l->t(', '), $parameterList);
+			return $this->l->t('%s and %s', array($list, $lastItem));
 		}
 
 		$firstParams = array_slice($parameterList, 0, 3);
-		$firstList = implode($l->t(', '), $firstParams);
+		$firstList = implode($this->l->t(', '), $firstParams);
 		$trimmedParams = array_slice($plainParameterList, 3);
-		$trimmedList = implode($l->t(', '), $trimmedParams);
+		$trimmedList = implode($this->l->t(', '), $trimmedParams);
 		if ($highlightParams) {
-			return $l->n(
+			return $this->l->n(
 				'%s and <strong class="tooltip" title="%s">%n more</strong>',
 				'%s and <strong class="tooltip" title="%s">%n more</strong>',
 				$count - 3,
 				array($firstList, $trimmedList));
 		}
-		return $l->n('%s and %n more', '%s and %n more', $count - 3, array($firstList));
+		return $this->l->n('%s and %n more', '%s and %n more', $count - 3, array($firstList));
 	}
 
 	/**
@@ -249,7 +267,7 @@ class ParameterHelper
 	 * @param string $text
 	 * @return array
 	 */
-	public static function getSpecialParameterList($app, $text) {
+	public function getSpecialParameterList($app, $text) {
 		if ($app === 'files' && $text === 'shared_group_self') {
 			return array(0 => 'file');
 		}
