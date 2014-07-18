@@ -10,13 +10,13 @@
 	margin-bottom: 5px;
 	margin-left: 5px;
 	text-overflow: ellipsis;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 .activitymessage {
 	font-size:0.8em;
 	color:#666;
 	text-overflow: ellipsis;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 #no_activities {
