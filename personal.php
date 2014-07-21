@@ -20,14 +20,14 @@
 * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-OCP\Util::addScript('activity', 'settings');
-OCP\Util::addStyle('activity', 'settings');
+\OCP\Util::addScript('activity', 'settings');
+\OCP\Util::addStyle('activity', 'settings');
 
-$l=OC_L10N::get('activity');
+$l = \OCP\Util::getL10N('activity');
 $data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
 $types = $data->getNotificationTypes($l);
 
-$user = OCP\User::getUser();
+$user = \OCP\User::getUser();
 $activities = array();
 foreach ($types as $type => $desc) {
 	$activities[$type] = array(
@@ -37,7 +37,7 @@ foreach ($types as $type => $desc) {
 	);
 }
 
-$template = new OCP\Template('activity', 'personal');
+$template = new \OCP\Template('activity', 'personal');
 $template->assign('activities', $activities);
 if (\OCA\Activity\UserSettings::getUserSetting($user, 'setting', 'batchtime') == 3600 * 24 * 7) {
 	$template->assign('setting_batchtime', \OCA\Activity\UserSettings::EMAIL_SEND_WEEKLY);
