@@ -23,15 +23,15 @@
 
 
 // check if the user has the right permissions to access the activities
-OCP\User::checkLoggedIn();
-OCP\App::checkAppEnabled('activity');
+\OCP\User::checkLoggedIn();
+\OCP\App::checkAppEnabled('activity');
 
 // activate the right navigation entry
-OCP\App::setActiveNavigationEntry('activity');
+\OCP\App::setActiveNavigationEntry('activity');
 
 // load the needed js scripts and css
-OCP\Util::addScript('activity', 'script');
-OCP\Util::addStyle('activity', 'style');
+\OCP\Util::addScript('activity', 'script');
+\OCP\Util::addStyle('activity', 'style');
 
 $navigation = new \OCA\Activity\Navigation(\OCP\Util::getL10N('activity'));
 $navigation->setRSSToken(\OCP\Config::getUserValue(\OCP\User::getUser(), 'activity', 'rsstoken'));

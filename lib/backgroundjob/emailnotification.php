@@ -80,7 +80,7 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 		$mailData = $this->mqHandler->getItemsForUsers($affectedUsers, $sendTime);
 
 		// Send Email
-		$default_lang = \OC_Config::getValue('default_language', 'en');
+		$default_lang = \OCP\Config::getSystemValue('default_language', 'en');
 		foreach ($mailData as $user => $data) {
 			if (!isset($userEmails[$user])) {
 				// The user did not setup an email address

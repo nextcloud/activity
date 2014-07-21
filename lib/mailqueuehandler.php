@@ -59,7 +59,7 @@ class MailQueueHandler {
 
 		$affectedUsers = array();
 		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('OCA\Activity', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
+			\OCP\Util::writeLog('OCA\Activity', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
 		} else {
 			while ($row = $result->fetchRow()) {
 				$affectedUsers[] = $row['amq_affecteduser'];
@@ -92,7 +92,7 @@ class MailQueueHandler {
 
 		$userActivityMap = array();
 		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('Activity', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
+			\OCP\Util::writeLog('Activity', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
 		} else {
 			while ($row = $result->fetchRow()) {
 				$userActivityMap[$row['amq_affecteduser']][] = $row;
@@ -126,7 +126,7 @@ class MailQueueHandler {
 			$this->senderAddress = \OCP\Util::getDefaultEmailAddress('no-reply');
 		}
 		if (empty($this->senderName)) {
-			$defaults = new \OC_Defaults();
+			$defaults = new \OCP\Defaults();
 			$this->senderName = $defaults->getName();
 		}
 
@@ -181,7 +181,7 @@ class MailQueueHandler {
 		$emailText = $alttext->fetchPage();
 
 		try {
-			\OC_Mail::send(
+			\OCP\Util::sendMail(
 				$email, $user,
 				$l->t('Activity notification'), $emailText,
 				$this->getSenderData('email'), $this->getSenderData('name')

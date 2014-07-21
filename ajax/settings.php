@@ -21,18 +21,18 @@
 *
 */
 
-OCP\JSON::checkLoggedIn();
-OCP\JSON::checkAppEnabled('activity');
-OCP\JSON::callCheck();
+\OCP\JSON::checkLoggedIn();
+\OCP\JSON::checkAppEnabled('activity');
+\OCP\JSON::callCheck();
 
 $notify_email = $notify_stream = array();
 
-$l = OCP\Util::getL10N('activity');
+$l = \OCP\Util::getL10N('activity');
 $data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
 $types = $data->getNotificationTypes($l);
 foreach ($types as $type => $desc) {
-	OCP\Config::setUserValue(OCP\User::getUser(), 'activity', 'notify_email_' . $type, !empty($_POST[$type . '_email']));
-	OCP\Config::setUserValue(OCP\User::getUser(), 'activity', 'notify_stream_' . $type, !empty($_POST[$type . '_stream']));
+	\OCP\Config::setUserValue(\OCP\User::getUser(), 'activity', 'notify_email_' . $type, !empty($_POST[$type . '_email']));
+	\OCP\Config::setUserValue(\OCP\User::getUser(), 'activity', 'notify_stream_' . $type, !empty($_POST[$type . '_stream']));
 }
 
 $email_batch_time = 3600;
@@ -42,7 +42,7 @@ if ($_POST['notify_setting_batchtime'] == \OCA\Activity\UserSettings::EMAIL_SEND
 if ($_POST['notify_setting_batchtime'] == \OCA\Activity\UserSettings::EMAIL_SEND_WEEKLY) {
 	$email_batch_time = 3600 * 24 * 7;
 }
-OCP\Config::setUserValue(OCP\User::getUser(), 'activity', 'notify_setting_batchtime', $email_batch_time);
-OCP\Config::setUserValue(OCP\User::getUser(), 'activity', 'notify_setting_self', !empty($_POST['notify_setting_self']));
+\OCP\Config::setUserValue(\OCP\User::getUser(), 'activity', 'notify_setting_batchtime', $email_batch_time);
+\OCP\Config::setUserValue(\OCP\User::getUser(), 'activity', 'notify_setting_self', !empty($_POST['notify_setting_self']));
 
-OC_JSON::success(array("data" => array( "message" => $l->t('Your settings have been updated.'))));
+\OCP\JSON::success(array("data" => array( "message" => $l->t('Your settings have been updated.'))));

@@ -208,10 +208,10 @@ class Hooks {
 
 		// Check when there was a naming conflict and the target is different
 		// for some of the users
-		$query = \OC_DB::prepare('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ');
+		$query = \OCP\DB::prepare('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ');
 		$result = $query->execute(array($params['id']));
 		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('OCA\Activity\Hooks::shareFileOrFolderWithGroup', \OC_DB::getErrorMessage($result), \OC_Log::ERROR);
+			\OCP\Util::writeLog('OCA\Activity\Hooks::shareFileOrFolderWithGroup', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
 		} else {
 			while ($row = $result->fetchRow()) {
 				$affectedUsers[$row['share_with']] = $row['file_target'];

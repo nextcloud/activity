@@ -26,7 +26,6 @@ namespace OCA\Activity;
 use \OCP\DB;
 use \OCP\User;
 use \OCP\Util;
-use \OC\Files\View;
 
 /**
  * @brief Class for managing the data in the activities
@@ -126,7 +125,7 @@ class Data
 		$query->execute(array($app, $subject, serialize($subjectparams), $message, serialize($messageparams), $file, $link, $user, $auser, $timestamp, $prio, $type));
 
 		// fire a hook so that other apps like notification systems can connect
-		\OCP\Util::emitHook('OC_Activity', 'post_event', array('app' => $app, 'subject' => $subject, 'user' => $user, 'affecteduser' => $affecteduser, 'message' => $message, 'file' => $file, 'link'=> $link, 'prio' => $prio, 'type' => $type));
+		Util::emitHook('OC_Activity', 'post_event', array('app' => $app, 'subject' => $subject, 'user' => $user, 'affecteduser' => $affecteduser, 'message' => $message, 'file' => $file, 'link'=> $link, 'prio' => $prio, 'type' => $type));
 
 		return true;
 	}
@@ -160,7 +159,7 @@ class Data
 		));
 
 		// fire a hook so that other apps like notification systems can connect
-		\OCP\Util::emitHook('OC_Activity', 'post_email', array(
+		Util::emitHook('OC_Activity', 'post_email', array(
 			'app'			=> $app,
 			'subject'		=> $subject,
 			'subjectparams'	=> $subjectParams,

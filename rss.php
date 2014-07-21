@@ -80,5 +80,5 @@ $tmpl->assign('activities', $data->read($groupHelper, 0, 30, 'all'));
 $tmpl->printPage();
 
 if ($forceUserLogout) {
-	\OC_User::logout();
+	\OCP\User::logout();
 }
