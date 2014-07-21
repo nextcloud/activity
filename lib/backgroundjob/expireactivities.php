@@ -37,6 +37,9 @@ class ExpireActivities extends \OC\BackgroundJob\TimedJob {
 	protected function run($argument) {
 		// Remove activities that are older then one year
 		$expireDays = \OCP\Config::getSystemValue('activity_expire_days', 365);
-		\OCA\Activity\Data::expire($expireDays);
+		$data = new \OCA\Activity\Data(
+			\OC::$server->getActivityManager()
+		);
+		$data->expire($expireDays);
 	}
 }
