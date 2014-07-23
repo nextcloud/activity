@@ -35,6 +35,7 @@ $TRANSLATIONS = array(
 "No more events to load" => "Ei enempää tapahtumia ladattavaksi",
 "Enable RSS feed" => "Käytä RSS-syötettä",
 "Notifications" => "Ilmoitukset",
+"Mail" => "Sähköposti",
 "Notify about my own actions" => "Ilmoita omista toimistani",
 "You need to set up your email address before you can receive notification emails." => "Aseta sähköpostiosoite, jotta voit vastaanottaa sähköposti-ilmoituksia.",
 "Send emails:" => "Lähetä sähköpostit:",
