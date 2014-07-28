@@ -173,7 +173,7 @@ class ParameterHelper
 			return $name;
 		}
 
-		$title = ' title="' . Util::sanitizeHTML($path) . '"';
+		$title = ' title="' . $this->l->t('in %s', array(Util::sanitizeHTML($path))) . '"';
 		return '<a class="filename tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($name) . '</a>';
 	}
 
