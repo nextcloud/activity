@@ -166,7 +166,8 @@ class ParameterHelper
 		$fileLink = Util::linkTo('files', 'index.php', array('dir' => $parent_dir));
 		$param = trim($param, '/');
 
-		if (!$stripPath) {
+		list($path, $name) = $this->splitPathFromFilename($param);
+		if (!$stripPath || $path === '') {
 			if (!$highlightParams) {
 				return $param;
 			}
@@ -174,13 +175,11 @@ class ParameterHelper
 		}
 
 		if (!$highlightParams) {
-			return $this->stripPathFromFilename($param);
+			return $name;
 		}
 
-		$title = $param;
-		$title = ' title="' . Util::sanitizeHTML($title) . '"';
-		$newParam = $this->stripPathFromFilename($param);
-		return '<a class="filename tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($newParam) . '</a>';
+		$title = ' title="' . Util::sanitizeHTML($path) . '"';
+		return '<a class="filename tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($name) . '</a>';
 	}
 
 	/**
@@ -196,16 +195,19 @@ class ParameterHelper
 	}
 
 	/**
-	 * Remove the path from the file string
+	 * Split the path from the filename string
+	 *
 	 * @param string $filename
-	 * @return string
+	 * @return array Array with path and filename
 	 */
-	protected function stripPathFromFilename($filename) {
+	protected function splitPathFromFilename($filename) {
 		if (strrpos($filename, '/') !== false) {
-			// Remove the path from the file string
-			return substr($filename, strrpos($filename, '/') + 1);
+			return array(
+				ltrim(substr($filename, 0, strrpos($filename, '/') + 1), '/'),
+				substr($filename, strrpos($filename, '/') + 1),
+			);
 		}
-		return $filename;
+		return array('', $filename);
 	}
 
 	/**

@@ -52,7 +52,10 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 			array(array('/foo/bar.file'), array(0 => 'file'), false, false, array('foo/bar.file')),
 			array(array('/folder/trailingslash/fromsharing/'), array(0 => 'file'), false, false, array('folder/trailingslash/fromsharing')),
 			array(array('/foo/bar.file'), array(0 => 'file'), true, true, array(
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/bar.file">bar.file</a>',
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/">bar.file</a>',
+			)),
+			array(array('/0/bar.file'), array(0 => 'file'), true, true, array(
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2F0" title="0/">bar.file</a>',
 			)),
 			array(array('/foo/bar.file'), array(1 => 'file'), true, false, array('/foo/bar.file')),
 			array(array('/foo/bar.file'), array(1 => 'file'), true, true, array('<strong>/foo/bar.file</strong>')),
@@ -64,14 +67,14 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 			)),
 			array(array('foo/bar.file'), array(0 => 'file'), true, false, array('bar.file')),
 			array(array('foo/bar.file'), array(0 => 'file'), true, true, array(
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/bar.file">bar.file</a>',
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/">bar.file</a>',
 			)),
 
 			// Valid file position
 			array(array('UserA', '/foo/bar.file'), array(1 => 'file'), true, false, array('UserA', 'bar.file')),
 			array(array('UserA', '/foo/bar.file'), array(1 => 'file'), true, true, array(
 				'<strong>UserA</strong>',
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/bar.file">bar.file</a>',
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/">bar.file</a>',
 			)),
 			array(array('UserA', '/foo/bar.file'), array(2 => 'file'), true, false, array('UserA', '/foo/bar.file')),
 			array(array('UserA', '/foo/bar.file'), array(2 => 'file'), true, true, array(
@@ -89,7 +92,7 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 
 			array(array('UserA', '/foo/bar.file'), array(0 => 'username', 1 => 'file'), true, true, array(
 				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/bar.file">bar.file</a>',
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="foo/">bar.file</a>',
 			)),
 		);
 	}
@@ -122,7 +125,7 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 			),
 			array(
 				'created_self', array('/SubFolder/A.txt'), true, true,
-				'You created <a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="SubFolder/A.txt">A.txt</a>',
+				'You created <a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="SubFolder/">A.txt</a>',
 			),
 
 			array('created_by', array('/SubFolder/A.txt', 'UserB'), false, false, 'UserB created SubFolder/A.txt'),
@@ -135,12 +138,12 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 			array(
 				'created_by', array('/SubFolder/A.txt', 'UserB'), true, true,
 				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
-				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="SubFolder/A.txt">A.txt</a>',
+				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="SubFolder/">A.txt</a>',
 			),
 			array(
 				'created_by', array('/A.txt', 'UserB'), true, true,
 				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
-				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2F" title="A.txt">A.txt</a>',
+				. '<a class="filename" href="/index.php/apps/files?dir=%2F">A.txt</a>',
 			),
 
 			array(
