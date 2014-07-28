@@ -42,18 +42,13 @@ class ParameterHelper
 
 	/**
 	 * Prepares the parameters before we use them in the subject or message
-	 * @param string $text
 	 * @param array $params
 	 * @param array $paramTypes Type of parameters, if they need special handling
 	 * @param bool $stripPath Shall we remove the path from the filename
 	 * @param bool $highlightParams
 	 * @return array
 	 */
-	public function prepareParameters($text, $params, $paramTypes = array(), $stripPath = false, $highlightParams = false) {
-		if (!$text) {
-			return $params;
-		}
-
+	public function prepareParameters($params, $paramTypes = array(), $stripPath = false, $highlightParams = false) {
 		$preparedParams = array();
 		foreach ($params as $i => $param) {
 			if (is_array($param)) {

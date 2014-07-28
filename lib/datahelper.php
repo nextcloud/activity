@@ -61,7 +61,7 @@ class DataHelper
 
 		if ($app === 'files') {
 			$preparedParams = $this->parameterHelper->prepareParameters(
-				$text, $params, $this->parameterHelper->getSpecialParameterList($app, $text),
+				$params, $this->parameterHelper->getSpecialParameterList($app, $text),
 				$stripPath, $highlightParams
 			);
 			switch ($text) {
