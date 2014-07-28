@@ -174,7 +174,7 @@ class MailQueueHandler {
 		}
 
 		$alttext = new \OCP\Template('activity', 'email.notification', '');
-		$alttext->assign('username', $user);
+		$alttext->assign('username', \OCP\User::getDisplayName($user));
 		$alttext->assign('timeframe', $this->getLangForApproximatedTimeFrame($mailData[0]['amq_timestamp']));
 		$alttext->assign('activities', $activityList);
 		$alttext->assign('owncloud_installation', \OC_Helper::makeURLAbsolute('/'));
