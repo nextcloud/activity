@@ -52,7 +52,7 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 			),
 			array(
 				'created_self', array('/SubFolder/A.txt'), true, true,
-				'You created <a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="in SubFolder/">A.txt</a>',
+				'You created <a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="in SubFolder">A.txt</a>',
 			),
 
 			array('created_by', array('/SubFolder/A.txt', 'UserB'), false, false, 'UserB created SubFolder/A.txt'),
@@ -65,7 +65,7 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 			array(
 				'created_by', array('/SubFolder/A.txt', 'UserB'), true, true,
 				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
-				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="in SubFolder/">A.txt</a>',
+				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="in SubFolder">A.txt</a>',
 			),
 			array(
 				'created_by', array('/A.txt', 'UserB'), true, true,

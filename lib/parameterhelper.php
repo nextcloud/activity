@@ -198,7 +198,7 @@ class ParameterHelper
 	protected function splitPathFromFilename($filename) {
 		if (strrpos($filename, '/') !== false) {
 			return array(
-				ltrim(substr($filename, 0, strrpos($filename, '/') + 1), '/'),
+				trim(substr($filename, 0, strrpos($filename, '/')), '/'),
 				substr($filename, strrpos($filename, '/') + 1),
 			);
 		}
