@@ -22,6 +22,7 @@ $TRANSLATIONS = array(
 "Activities by others" => "Действия других пользователей",
 "Shares" => "Общие файлы",
 "Files" => "Файлы",
+"in %s" => "в %s",
 "%s and %s" => "%s и %s",
 ", " => ",",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("%s и <strong class=\"tooltip\" title=\"%s\">%n ещё</strong>","%s и <strong class=\"tooltip\" title=\"%s\">%n ещё</strong>","%s и <strong class=\"tooltip\" title=\"%s\">%n ещё</strong>"),
