@@ -22,6 +22,7 @@ $TRANSLATIONS = array(
 "Activities by others" => "Δραστηριότητες από άλλους",
 "Shares" => "Κοινόχρηστοι φάκελοι",
 "Files" => "Αρχεία",
+"in %s" => "σε %s",
 "%s and %s" => "%s και %s",
 ", " => ", ",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("%s και <strong class=\"tooltip\" title=\"%s\"> %n περισσότερο</strong>","%s και <strong class=\"tooltip\" title=\"%s\"> %n περισσότερα</strong>"),
