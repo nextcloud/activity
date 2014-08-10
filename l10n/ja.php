@@ -22,6 +22,7 @@ $TRANSLATIONS = array(
 "Activities by others" => "他人のアクティビティ",
 "Shares" => "共有",
 "Files" => "ファイル",
+"in %s" => "%s で",
 "%s and %s" => "%s と %s",
 ", " => ", ",
 "_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("%s と <strong class=\"tooltip\" title=\"%s\">それ以外に %n 個</strong>"),
