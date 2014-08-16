@@ -25,7 +25,7 @@ $TRANSLATIONS = array(
 "in %s" => "در %s",
 "%s and %s" => "%s و %s",
 ", " => "رشته های ترجمه نشده",
-"_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array(""),
+"_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_::_%s and <strong class=\_tooltip\_ title=\_%s\_>%n more</strong>_" => array("%s و <strong class=\"tooltip\" title=\"%s\">%n بیشتر</strong>"),
 "_%s and %n more_::_%s and %n more_" => array("%s و %s بیشتر"),
 "Hello %s," => "سلام %s",
 "You are receiving this email because in the last hour the following things happened at %s" => "شما این ایمیل را دریافت کردید زیرا در یک ساعت گذشته موارد زیر در %s اتفاق افتاده است",
