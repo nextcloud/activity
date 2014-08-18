@@ -51,7 +51,11 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public static function fileCreate($params) {
-		self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CREATED, 'created_self', 'created_by');
+		if (\OCP\User::getUser() !== false) {
+			self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CREATED, 'created_self', 'created_by');
+		} else {
+			self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CREATED, '', 'created_public');
+		}
 	}
 
 	/**

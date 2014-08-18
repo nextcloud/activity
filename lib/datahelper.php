@@ -69,6 +69,8 @@ class DataHelper
 					return $this->l->t('You created %1$s', $preparedParams);
 				case 'created_by':
 					return $this->l->t('%2$s created %1$s', $preparedParams);
+				case 'created_public':
+					return $this->l->t('%1$s was created in a public folder', $preparedParams);
 				case 'changed_self':
 					return $this->l->t('You changed %1$s', $preparedParams);
 				case 'changed_by':
