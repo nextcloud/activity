@@ -6,7 +6,7 @@
 /** @var OC_L10N $l */
 /** @var array $_ */
 
-p($l->t('Hello %s,', array($_['username'])));
+print_unescaped($l->t('Hello %s,', array($_['username'])));
 p("\n");
 p("\n");
 
@@ -21,7 +21,7 @@ p("\n");
 p("\n");
 
 foreach ($_['activities'] as $activity) {
-	p($l->t('* %s', array($activity)));
+	print_unescaped($l->t('* %s', array($activity)));
 	p("\n");
 }
 p("\n");
