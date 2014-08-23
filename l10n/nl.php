@@ -8,6 +8,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong>" => "Een bestand of map is <strong>verwijderd</strong>",
 "You created %1\$s" => "U creëerde %1\$s",
 "%2\$s created %1\$s" => "%2\$s creëerde %1\$s",
+"%1\$s was created in a public folder" => "%1\$s werd gecreëerd in een openbare map",
 "You changed %1\$s" => "U wijzigde %1\$s",
 "%2\$s changed %1\$s" => "%2\$s wijzigde %1\$s",
 "You deleted %1\$s" => "U verwijderde %1\$s",

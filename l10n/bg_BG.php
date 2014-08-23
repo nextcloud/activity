@@ -8,6 +8,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong>" => "Файл или папка беше <strong>изтрит</strong>",
 "You created %1\$s" => "Ти създаде %1\$s.",
 "%2\$s created %1\$s" => "%2\$s създаде %1\$s.",
+"%1\$s was created in a public folder" => "%1\$s е създаден в публична папка",
 "You changed %1\$s" => "Ти промени %1\$s.",
 "%2\$s changed %1\$s" => "%2\$s промени %1\$s.",
 "You deleted %1\$s" => "Ти изтри %1\$s.",

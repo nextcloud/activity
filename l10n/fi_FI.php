@@ -8,6 +8,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong>" => "Tiedosto tai kansio on <strong>poistettu</strong>",
 "You created %1\$s" => "Loit kohteen %1\$s",
 "%2\$s created %1\$s" => "%2\$s loi kohteen %1\$s",
+"%1\$s was created in a public folder" => "%1\$s luotiin julkiseen kansioon",
 "You changed %1\$s" => "Muutit kohdetta %1\$s",
 "%2\$s changed %1\$s" => "%2\$s muutti kohdetta %1\$s",
 "You deleted %1\$s" => "Poistit kohteen %1\$s",

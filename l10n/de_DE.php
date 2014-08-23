@@ -8,6 +8,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong>" => "Eine Datei oder Ordner wurde <strong>gelöscht</strong>",
 "You created %1\$s" => "Sie haben %1\$s erstellt",
 "%2\$s created %1\$s" => "%2\$s hat %1\$s erstellt",
+"%1\$s was created in a public folder" => "%1\$s wurde in einem öffentlichen Ordner erstellt",
 "You changed %1\$s" => "Sie haben %1\$s geändert",
 "%2\$s changed %1\$s" => "%2\$s hat %1\$s geändert",
 "You deleted %1\$s" => "Sie haben %1\$s gelöscht",

@@ -8,6 +8,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong>" => "Fitxategi edo karpeta bat <strong>ezabatu da</strong>",
 "You created %1\$s" => "Zuk sortua %1\$s",
 "%2\$s created %1\$s" => "%2\$sk sortua %1\$s",
+"%1\$s was created in a public folder" => "%1\$s sortu da karpeta publiko batean",
 "You changed %1\$s" => "%1\$s aldatu duzu",
 "%2\$s changed %1\$s" => "%2\$sk aldatuta %1\$s",
 "You deleted %1\$s" => "%1\$s ezabatu duzu",
