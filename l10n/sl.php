@@ -8,6 +8,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong>" => "Datoteka ali mapa je <strong>izbrisana</strong>.",
 "You created %1\$s" => "Ustvarili ste %1\$s",
 "%2\$s created %1\$s" => "%2\$s je ustvaril %1\$s",
+"%1\$s was created in a public folder" => "Datoteka %1\$s je ustvarjena v javni mapi.",
 "You changed %1\$s" => "Spremenili ste %1\$s",
 "%2\$s changed %1\$s" => "%2\$s je spremenil %1\$s",
 "You deleted %1\$s" => "Izbrisali ste %1\$s",
