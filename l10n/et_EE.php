@@ -8,6 +8,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong>" => "Fail või kataloog on <strong>kustutatud</strong>",
 "You created %1\$s" => "Sa tekitasid %1\$s",
 "%2\$s created %1\$s" => "%2\$s tekitatud %1\$s",
+"%1\$s was created in a public folder" => "%1\$s lisati avalikku kausta",
 "You changed %1\$s" => "Sa muutsid %1\$s",
 "%2\$s changed %1\$s" => "%2\$s muutis %1\$s",
 "You deleted %1\$s" => "Sa kustutasid %1\$s",

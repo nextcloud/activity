@@ -8,6 +8,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong>" => "Foi <strong>apagado</strong> um ficheiro ou pasta",
 "You created %1\$s" => "Criou %1\$s",
 "%2\$s created %1\$s" => "%2\$s criado %1\$s",
+"%1\$s was created in a public folder" => "%1\$s foi criado numa pasta pública",
 "You changed %1\$s" => "Alterado %1\$s",
 "%2\$s changed %1\$s" => "%2\$s alterado %1\$s",
 "You deleted %1\$s" => "Apagou %1\$s",
