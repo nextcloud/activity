@@ -8,6 +8,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong>" => "একটি ফাইল বা ফোলডার <strong>মোছা</strong> হয়েছে",
 "You created %1\$s" => "আপনি তৈরি করেছেন %1\$s",
 "%2\$s created %1\$s" => "%2\$s তৈরি হয়েছে %1\$s",
+"%1\$s was created in a public folder" => "একটি পাবলিক ফোল্ডারে %1\$s তৈরী করা হয়েছে",
 "You changed %1\$s" => "আপনি পরিবরতন করেছেন %1\$s",
 "%2\$s changed %1\$s" => "%2\$s পরিবরতন করেছে %1\$s",
 "You deleted %1\$s" => "আপনি ডিলিট করেছেন %1\$s",
