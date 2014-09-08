@@ -62,10 +62,6 @@ class Navigation {
 		$template = new \OCP\Template('activity', 'navigation', '');
 		$entries = $this->getLinkList();
 
-		$additionalEntries = \OC::$server->getActivityManager()->getNavigation();
-		$entries['apps'] = array_merge($entries['apps'], $additionalEntries['apps']);
-		$entries['top'] = array_merge($entries['top'], $additionalEntries['top']);
-
 		if (sizeof($entries['apps']) === 1) {
 			// If there is only the files app, we simply do not show it,
 			// as it is the same as the 'all' filter.
@@ -93,7 +89,7 @@ class Navigation {
 	 *
 	 * @return array Notification data (user => array of rows from the table)
 	 */
-	protected function getLinkList() {
+	public function getLinkList() {
 		$topEntries = array(
 			array(
 				'id' => 'all',
@@ -124,6 +120,10 @@ class Navigation {
 				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'files')),
 			),
 		);
+
+		$additionalEntries = \OC::$server->getActivityManager()->getNavigation();
+		$topEntries = array_merge($topEntries, $additionalEntries['top']);
+		$appFilterEntries = array_merge($appFilterEntries, $additionalEntries['apps']);
 
 		return array(
 			'top'		=> $topEntries,
