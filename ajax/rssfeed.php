@@ -39,7 +39,7 @@ if ($_POST['enable'] === 'true') {
 		$conflicts = $preferences->getUsersForValue('activity', 'rsstoken', $token);
 	}
 	$tokenUrl = \OC::$server->getURLGenerator()->getAbsoluteURL(
-		\OC::$server->getURLGenerator()->linkToRoute('activity_ajax_rssfeed', array('token' => $token))
+		\OC::$server->getURLGenerator()->linkToRoute('activity.rss', array('token' => $token))
 	);
 }
 

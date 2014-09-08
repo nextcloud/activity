@@ -72,7 +72,7 @@ $tmpl = new \OCP\Template('activity', 'rss');
 
 $tmpl->assign('rssLang', \OC_Preferences::getValue(\OCP\User::getUser(), 'core', 'lang'));
 $tmpl->assign('rssLink', \OC::$server->getURLGenerator()->getAbsoluteURL(
-	\OC::$server->getURLGenerator()->linkToRoute('activity_rss')
+	\OC::$server->getURLGenerator()->linkToRoute('activity.rss')
 ));
 $tmpl->assign('rssPubDate', date('r'));
 $tmpl->assign('user', \OCP\User::getUser());

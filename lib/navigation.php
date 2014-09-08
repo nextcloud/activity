@@ -92,7 +92,9 @@ class Navigation {
 
 	public function setRSSToken($rssToken) {
 		if ($rssToken) {
-			$this->rssLink = $this->URLGenerator->getAbsoluteURL($this->URLGenerator->linkToRoute('activity_rss', array('token' => $rssToken)));
+			$this->rssLink = $this->URLGenerator->getAbsoluteURL(
+				$this->URLGenerator->linkToRoute('activity.rss', array('token' => $rssToken))
+			);
 		}
 		else {
 			$this->rssLink = '';
@@ -109,22 +111,22 @@ class Navigation {
 			array(
 				'id' => 'all',
 				'name' => (string) $this->l->t('All Activities'),
-				'url' => Util::linkToRoute('activity_index'),
+				'url' => Util::linkToRoute('activity.index'),
 			),
 			array(
 				'id' => 'self',
 				'name' => (string) $this->l->t('Activities by you'),
-				'url' => Util::linkToRoute('activity_index', array('filter' => 'self')),
+				'url' => Util::linkToRoute('activity.index', array('filter' => 'self')),
 			),
 			array(
 				'id' => 'by',
 				'name' => (string) $this->l->t('Activities by others'),
-				'url' => Util::linkToRoute('activity_index', array('filter' => 'by')),
+				'url' => Util::linkToRoute('activity.index', array('filter' => 'by')),
 			),
 			array(
 				'id' => 'shares',
 				'name' => (string) $this->l->t('Shares'),
-				'url' => Util::linkToRoute('activity_index', array('filter' => 'shares')),
+				'url' => Util::linkToRoute('activity.index', array('filter' => 'shares')),
 			),
 		);
 
@@ -132,7 +134,7 @@ class Navigation {
 			array(
 				'id' => 'files',
 				'name' => (string) $this->l->t('Files'),
-				'url' => Util::linkToRoute('activity_index', array('filter' => 'files')),
+				'url' => Util::linkToRoute('activity.index', array('filter' => 'files')),
 			),
 		);
 
