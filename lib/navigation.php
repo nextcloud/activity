@@ -24,6 +24,7 @@
 namespace OCA\Activity;
 
 use \OCP\Activity\IManager;
+use \OCP\IURLGenerator;
 use \OCP\Template;
 use \OCP\Util;
 
@@ -39,6 +40,9 @@ class Navigation {
 	/** @var \OCP\Activity\IManager */
 	protected $activityManager;
 
+	/** @var \OCP\IURLGenerator */
+	protected $URLGenerator;
+
 	/** @var string */
 	protected $active;
 
@@ -50,11 +54,13 @@ class Navigation {
 	 *
 	 * @param \OC_L10N $l
 	 * @param \OCP\Activity\IManager $manager
+	 * @param \OCP\IURLGenerator $URLGenerator
 	 * @param null|string $active Navigation entry that should be marked as active
 	 */
-	public function __construct(\OC_L10N $l, IManager $manager, $active = 'all') {
+	public function __construct(\OC_L10N $l, IManager $manager, IURLGenerator $URLGenerator, $active = 'all') {
 		$this->l = $l;
 		$this->activityManager = $manager;
+		$this->URLGenerator = $URLGenerator;
 		$this->active = $active;
 		$this->rssLink = '';
 	}
@@ -86,7 +92,7 @@ class Navigation {
 
 	public function setRSSToken($rssToken) {
 		if ($rssToken) {
-			$this->rssLink = Util::linkToAbsolute('activity', 'rss.php', array('token' => $rssToken));
+			$this->rssLink = $this->URLGenerator->getAbsoluteURL($this->URLGenerator->linkToRoute('activity_rss', array('token' => $rssToken)));
 		}
 		else {
 			$this->rssLink = '';
@@ -103,22 +109,22 @@ class Navigation {
 			array(
 				'id' => 'all',
 				'name' => (string) $this->l->t('All Activities'),
-				'url' => Util::linkToAbsolute('activity', 'index.php'),
+				'url' => Util::linkToRoute('activity_index'),
 			),
 			array(
 				'id' => 'self',
 				'name' => (string) $this->l->t('Activities by you'),
-				'url' => Util::linkToAbsolute('activity', 'index.php', array('filter' => 'self')),
+				'url' => Util::linkToRoute('activity_index', array('filter' => 'self')),
 			),
 			array(
 				'id' => 'by',
 				'name' => (string) $this->l->t('Activities by others'),
-				'url' => Util::linkToAbsolute('activity', 'index.php', array('filter' => 'by')),
+				'url' => Util::linkToRoute('activity_index', array('filter' => 'by')),
 			),
 			array(
 				'id' => 'shares',
 				'name' => (string) $this->l->t('Shares'),
-				'url' => Util::linkToAbsolute('activity', 'index.php', array('filter' => 'shares')),
+				'url' => Util::linkToRoute('activity_index', array('filter' => 'shares')),
 			),
 		);
 
@@ -126,7 +132,7 @@ class Navigation {
 			array(
 				'id' => 'files',
 				'name' => (string) $this->l->t('Files'),
-				'url' => Util::linkToAbsolute('activity', 'index.php', array('filter' => 'files')),
+				'url' => Util::linkToRoute('activity_index', array('filter' => 'files')),
 			),
 		);
 
