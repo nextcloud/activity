@@ -32,6 +32,9 @@ class Navigation {
 	/** @var \OC_L10N */
 	protected $l;
 
+	/** @var \OCP\Activity\IManager */
+	protected $activityManager;
+
 	/** @var string */
 	protected $active;
 
@@ -42,10 +45,12 @@ class Navigation {
 	 * Construct
 	 *
 	 * @param \OC_L10N $l
+	 * @param \OCP\Activity\IManager $manager
 	 * @param null|string $active Navigation entry that should be marked as active
 	 */
-	public function __construct(\OC_L10N $l, $active = 'all') {
+	public function __construct(\OC_L10N $l, \OCP\Activity\IManager $manager, $active = 'all') {
 		$this->l = $l;
+		$this->activityManager = $manager;
 		$this->active = $active;
 		$this->rssLink = '';
 	}
@@ -121,7 +126,7 @@ class Navigation {
 			),
 		);
 
-		$additionalEntries = \OC::$server->getActivityManager()->getNavigation();
+		$additionalEntries = $this->activityManager->getNavigation();
 		$topEntries = array_merge($topEntries, $additionalEntries['top']);
 		$appFilterEntries = array_merge($appFilterEntries, $additionalEntries['apps']);
 

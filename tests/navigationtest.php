@@ -38,7 +38,7 @@ class NavigationTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testHooksDeleteUser($constructorActive, $forceActive) {
 		$l = \OCP\Util::getL10N('activity');
-		$navigation = new Navigation($l, $constructorActive);
+		$navigation = new Navigation($l, \OC::$server->getActivityManager(), $constructorActive);
 		$output = $navigation->getTemplate($forceActive)->fetchPage();
 
 		// Get only the template part with the navigation links

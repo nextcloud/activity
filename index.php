@@ -33,7 +33,7 @@
 \OCP\Util::addScript('activity', 'script');
 \OCP\Util::addStyle('activity', 'style');
 
-$navigation = new \OCA\Activity\Navigation(\OCP\Util::getL10N('activity'));
+$navigation = new \OCA\Activity\Navigation(\OCP\Util::getL10N('activity'), \OC::$server->getActivityManager());
 $navigation->setRSSToken(\OCP\Config::getUserValue(\OCP\User::getUser(), 'activity', 'rsstoken'));
 
 // get the page that is requested. Needed for endless scrolling
