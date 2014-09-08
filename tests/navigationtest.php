@@ -27,203 +27,56 @@ use OCA\Activity\Navigation;
 class NavigationTest extends \PHPUnit_Framework_TestCase {
 	public function getTemplateData() {
 		return array(
-			array(
-				'all',
-				null,
-				array(
-					array(
-						'tag'		=> 'ul',
-						'parent'	=> array(
-							'tag'		=> 'div',
-							'id'		=> 'app-navigation',
-						),
-						'descendant'	=> array(
-							'tag'		=> 'a',
-							'attributes' => array(
-								'data-navigation'	=> 'all',
-								'class'				=> 'active',
-							),
-						),
-					),
-					array(
-						'tag'		=> 'ul',
-						'parent'	=> array(
-							'tag'		=> 'div',
-							'id'		=> 'app-navigation',
-						),
-						'descendant'	=> array(
-							'tag'		=> 'a',
-							'attributes' => array(
-								'data-navigation'	=> 'self',
-							),
-						),
-					),
-				),
-				array(
-					array(
-						'tag'		=> 'ul',
-						'parent'	=> array(
-							'tag'		=> 'div',
-							'id'		=> 'app-navigation',
-						),
-						'descendant'	=> array(
-							'tag'		=> 'a',
-							'attributes' => array(
-								'data-navigation'	=> 'self',
-								'class'				=> 'active',
-							),
-						),
-					),
-				),
-			),
-			array(
-				'all',
-				'self',
-				array(
-					array(
-						'tag'		=> 'ul',
-						'parent'	=> array(
-							'tag'		=> 'div',
-							'id'		=> 'app-navigation',
-						),
-						'descendant'	=> array(
-							'tag'		=> 'a',
-							'attributes' => array(
-								'data-navigation'	=> 'all',
-							),
-						),
-					),
-					array(
-						'tag'		=> 'ul',
-						'parent'	=> array(
-							'tag'		=> 'div',
-							'id'		=> 'app-navigation',
-						),
-						'descendant'	=> array(
-							'tag'		=> 'a',
-							'attributes' => array(
-								'data-navigation'	=> 'self',
-								'class'				=> 'active',
-							),
-						),
-					),
-				),
-				array(
-					array(
-						'tag'		=> 'ul',
-						'parent'	=> array(
-							'tag'		=> 'div',
-							'id'		=> 'app-navigation',
-						),
-						'descendant'	=> array(
-							'tag'		=> 'a',
-							'attributes' => array(
-								'data-navigation'	=> 'all',
-								'class'				=> 'active',
-							),
-						),
-					),
-				),
-			),
-			array(
-				'random',
-				null,
-				array(
-					array(
-						'tag'		=> 'ul',
-						'parent'	=> array(
-							'tag'		=> 'div',
-							'id'		=> 'app-navigation',
-						),
-						'descendant'	=> array(
-							'tag'		=> 'a',
-							'attributes' => array(
-								'data-navigation'	=> 'all',
-							),
-						),
-					),
-					array(
-						'tag'		=> 'ul',
-						'parent'	=> array(
-							'tag'		=> 'div',
-							'id'		=> 'app-navigation',
-						),
-						'descendant'	=> array(
-							'tag'		=> 'a',
-							'attributes' => array(
-								'data-navigation'	=> 'self',
-							),
-						),
-					),
-				),
-				array(
-					array(
-						'tag'		=> 'ul',
-						'parent'	=> array(
-							'tag'		=> 'div',
-							'id'		=> 'app-navigation',
-						),
-						'descendant'	=> array(
-							'tag'		=> 'a',
-							'attributes' => array(
-								'data-navigation'	=> 'all',
-								'class'				=> 'active',
-							),
-						),
-					),
-				),
-			),
-			array(
-				'random',
-				'all',
-				array(
-					array(
-						'tag'		=> 'ul',
-						'parent'	=> array(
-							'tag'		=> 'div',
-							'id'		=> 'app-navigation',
-						),
-						'descendant'	=> array(
-							'tag'		=> 'a',
-							'attributes' => array(
-								'data-navigation'	=> 'all',
-								'class'				=> 'active',
-							),
-						),
-					),
-					array(
-						'tag'		=> 'ul',
-						'parent'	=> array(
-							'tag'		=> 'div',
-							'id'		=> 'app-navigation',
-						),
-						'descendant'	=> array(
-							'tag'		=> 'a',
-							'attributes' => array(
-								'data-navigation'	=> 'self',
-							),
-						),
-					),
-				),
-				array(),
-			),
+			array('all', null),
+			array('all', 'self'),
+			array('random', null),
 		);
 	}
 
 	/**
 	 * @dataProvider getTemplateData
 	 */
-	public function testHooksDeleteUser($constructorActive, $forceActive, $matchTags, $notMatchTags) {
+	public function testHooksDeleteUser($constructorActive, $forceActive) {
 		$l = \OCP\Util::getL10N('activity');
-		$navigation = new Navigation($l, $constructorActive);
+		$navigation = new Navigation($l, \OC::$server->getActivityManager(), $constructorActive);
 		$output = $navigation->getTemplate($forceActive)->fetchPage();
 
-		foreach ($matchTags as $matcher) {
-			$this->assertTag($matcher, $output);
+		// Get only the template part with the navigation links
+		$navigationLinks = substr($output, strpos($output, '<li>') + 4);
+		$navigationLinks = substr($navigationLinks, 0, strrpos($navigationLinks, '</li>'));
+
+		// Remove tabs and new lines
+		$navigationLinks = str_replace(array("\t", "\n"), '', $navigationLinks);
+
+		// Turn the list of links into an array
+		$navigationEntries = explode('</li><li>', $navigationLinks);
+
+		$links = $navigation->getLinkList();
+
+		// Check whether all top links are available
+		foreach ($links['top'] as $link) {
+			$found = false;
+			foreach ($navigationEntries as $navigationEntry) {
+				if (strpos($navigationEntry, 'data-navigation="' . $link['id'] . '"') !== false) {
+					$found = true;
+					$this->assertContains(
+						'href="' . $link['url'] . '">' . $link['name']. '</a>',
+						$navigationEntry
+					);
+					if ($forceActive == $link['id']) {
+						$this->assertContains('class="active"', $navigationEntry);
+					}
+					else if ($forceActive == null && $constructorActive == $link['id']) {
+						$this->assertContains('class="active"', $navigationEntry);
+					}
+				}
+			}
+			$this->assertTrue($found, 'Could not find navigation entry "' . $link['name'] . '"');
 		}
-		foreach ($notMatchTags as $matcher) {
-			$this->assertNotTag($matcher, $output);
-		}
+
+		// Check size of app links
+		$this->assertSame(1, sizeof($links['apps']));
+		$this->assertNotContains('data-navigation="files"', $navigationLinks, 'Files app should not be included when there are no other apps.');
 	}
 
 }

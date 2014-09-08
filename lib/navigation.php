@@ -23,6 +23,10 @@
 
 namespace OCA\Activity;
 
+use \OCP\Activity\IManager;
+use \OCP\Template;
+use \OCP\Util;
+
 /**
  * Class Navigation
  *
@@ -31,6 +35,9 @@ namespace OCA\Activity;
 class Navigation {
 	/** @var \OC_L10N */
 	protected $l;
+
+	/** @var \OCP\Activity\IManager */
+	protected $activityManager;
 
 	/** @var string */
 	protected $active;
@@ -42,10 +49,12 @@ class Navigation {
 	 * Construct
 	 *
 	 * @param \OC_L10N $l
+	 * @param \OCP\Activity\IManager $manager
 	 * @param null|string $active Navigation entry that should be marked as active
 	 */
-	public function __construct(\OC_L10N $l, $active = 'all') {
+	public function __construct(\OC_L10N $l, IManager $manager, $active = 'all') {
 		$this->l = $l;
+		$this->activityManager = $manager;
 		$this->active = $active;
 		$this->rssLink = '';
 	}
@@ -59,12 +68,8 @@ class Navigation {
 	public function getTemplate($forceActive = null) {
 		$active = $forceActive ?: $this->active;
 
-		$template = new \OCP\Template('activity', 'navigation', '');
+		$template = new Template('activity', 'navigation', '');
 		$entries = $this->getLinkList();
-
-		$additionalEntries = \OC::$server->getActivityManager()->getNavigation();
-		$entries['apps'] = array_merge($entries['apps'], $additionalEntries['apps']);
-		$entries['top'] = array_merge($entries['top'], $additionalEntries['top']);
 
 		if (sizeof($entries['apps']) === 1) {
 			// If there is only the files app, we simply do not show it,
@@ -81,7 +86,7 @@ class Navigation {
 
 	public function setRSSToken($rssToken) {
 		if ($rssToken) {
-			$this->rssLink = \OCP\Util::linkToAbsolute('activity', 'rss.php', array('token' => $rssToken));
+			$this->rssLink = Util::linkToAbsolute('activity', 'rss.php', array('token' => $rssToken));
 		}
 		else {
 			$this->rssLink = '';
@@ -93,27 +98,27 @@ class Navigation {
 	 *
 	 * @return array Notification data (user => array of rows from the table)
 	 */
-	protected function getLinkList() {
+	public function getLinkList() {
 		$topEntries = array(
 			array(
 				'id' => 'all',
 				'name' => (string) $this->l->t('All Activities'),
-				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php'),
+				'url' => Util::linkToAbsolute('activity', 'index.php'),
 			),
 			array(
 				'id' => 'self',
 				'name' => (string) $this->l->t('Activities by you'),
-				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'self')),
+				'url' => Util::linkToAbsolute('activity', 'index.php', array('filter' => 'self')),
 			),
 			array(
 				'id' => 'by',
 				'name' => (string) $this->l->t('Activities by others'),
-				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'by')),
+				'url' => Util::linkToAbsolute('activity', 'index.php', array('filter' => 'by')),
 			),
 			array(
 				'id' => 'shares',
 				'name' => (string) $this->l->t('Shares'),
-				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'shares')),
+				'url' => Util::linkToAbsolute('activity', 'index.php', array('filter' => 'shares')),
 			),
 		);
 
@@ -121,9 +126,13 @@ class Navigation {
 			array(
 				'id' => 'files',
 				'name' => (string) $this->l->t('Files'),
-				'url' => \OCP\Util::linkToAbsolute('activity', 'index.php', array('filter' => 'files')),
+				'url' => Util::linkToAbsolute('activity', 'index.php', array('filter' => 'files')),
 			),
 		);
+
+		$additionalEntries = $this->activityManager->getNavigation();
+		$topEntries = array_merge($topEntries, $additionalEntries['top']);
+		$appFilterEntries = array_merge($appFilterEntries, $additionalEntries['apps']);
 
 		return array(
 			'top'		=> $topEntries,
