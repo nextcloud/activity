@@ -21,6 +21,19 @@
  *
  */
 
+/** @var $this OC\Route\Router */
+
+$this->create('activity.index', '')
+	->actionInclude('activity/index.php');
+$this->create('activity.ajax.fetch', 'ajax/fetch.php')
+	->actionInclude('activity/ajax/fetch.php');
+$this->create('activity.ajax.rssfeed', 'ajax/rssfeed.php')
+	->actionInclude('activity/ajax/rssfeed.php');
+$this->create('activity.ajax.settings', 'ajax/settings.php')
+	->actionInclude('activity/ajax/settings.php');
+$this->create('activity.rss', 'rss.php')
+	->actionInclude('activity/rss.php');
+
 // Register an OCS API call
 OC_API::register(
 	'get',

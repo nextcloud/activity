@@ -38,7 +38,9 @@ if ($_POST['enable'] === 'true') {
 		$token = \OCP\Util::generateRandomBytes();
 		$conflicts = $preferences->getUsersForValue('activity', 'rsstoken', $token);
 	}
-	$tokenUrl = \OCP\Util::linkToAbsolute('activity', 'rss.php', array('token' => $token));
+	$tokenUrl = \OC::$server->getURLGenerator()->getAbsoluteURL(
+		\OC::$server->getURLGenerator()->linkToRoute('activity.rss', array('token' => $token))
+	);
 }
 
 \OCP\Config::setUserValue(\OCP\User::getUser(), 'activity', 'rsstoken', $token);

@@ -27,7 +27,7 @@ $l = OC_L10N::get('activity');
 OCP\App::addNavigationEntry(array(
 	'id' => 'activity',
 	'order' => 1,
-	'href' => OCP\Util::linkTo('activity', 'index.php'),
+	'href' => OCP\Util::linkToRoute('activity.index'),
 	'icon' => OCP\Util::imagePath('activity', 'activity.svg'),
 	'name' => $l->t('Activity'),
 ));
