@@ -178,6 +178,7 @@ class MailQueueHandler {
 		$alttext->assign('timeframe', $this->getLangForApproximatedTimeFrame($mailData[0]['amq_timestamp']));
 		$alttext->assign('activities', $activityList);
 		$alttext->assign('owncloud_installation', \OC_Helper::makeURLAbsolute('/'));
+		$alttext->assign('overwriteL10N', $l);
 		$emailText = $alttext->fetchPage();
 
 		try {
