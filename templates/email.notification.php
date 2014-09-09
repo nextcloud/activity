@@ -5,6 +5,7 @@
 
 /** @var OC_L10N $l */
 /** @var array $_ */
+$l = $_['overwriteL10N'];
 
 print_unescaped($l->t('Hello %s,', array($_['username'])));
 p("\n");
