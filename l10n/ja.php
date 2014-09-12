@@ -8,6 +8,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong>" => "ファイルまたはフォルダーを<strong>削除</strong>しました",
 "You created %1\$s" => "あなたは %1\$s を作成しました",
 "%2\$s created %1\$s" => "%2\$s は%1\$s を作成しました",
+"%1\$s was created in a public folder" => "公開フォルダに %1\$s が作成されました",
 "You changed %1\$s" => "あなたは %1\$s を変更しました",
 "%2\$s changed %1\$s" => "%2\$s は%1\$s を変更しました",
 "You deleted %1\$s" => "あなたは %1\$s を削除しました",
