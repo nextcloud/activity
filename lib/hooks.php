@@ -35,6 +35,7 @@ class Hooks {
 		\OCP\Util::connectHook('OC_Filesystem', 'post_create', 'OCA\Activity\Hooks', 'fileCreate');
 		\OCP\Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Activity\Hooks', 'fileUpdate');
 		\OCP\Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\Hooks', 'fileDelete');
+		\OCP\Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Activity\Hooks', 'fileRestore');
 		\OCP\Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\Hooks', 'share');
 
 		\OCP\Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\Hooks', 'deleteUser');
@@ -72,6 +73,14 @@ class Hooks {
 	 */
 	public static function fileDelete($params) {
 		self::addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
+	}
+
+	/**
+	 * @brief Store the restore hook events
+	 * @param array $params The hook params
+	 */
+	public static function fileRestore($params) {
+		self::addNotificationsForFileAction($params['filePath'], Data::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
 	}
 
 	/**

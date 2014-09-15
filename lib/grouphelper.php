@@ -142,6 +142,8 @@ class GroupHelper
 				case 'changed_by':
 				case 'deleted_self':
 				case 'deleted_by':
+				case 'restored_self':
+				case 'restored_by':
 					return 0;
 			}
 		}
