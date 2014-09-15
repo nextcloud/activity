@@ -59,7 +59,7 @@ class UserSettings
 	 * Get a good default setting for a preference
 	 *
 	 * @param string $method Should be one of 'stream', 'email' or 'setting'
-	 * @param string $type One of the activity types, 'batchtime' or 'self'
+	 * @param string $type One of the activity types, 'batchtime', 'self' or 'selfemail'
 	 * @return bool|int
 	 */
 	public static function getDefaultSetting($method, $type) {
@@ -68,6 +68,8 @@ class UserSettings
 				return 3600;
 			} else if ($type == 'self') {
 				return true;
+			} else if ($type == 'selfemail') {
+				return false;
 			}
 		}
 
