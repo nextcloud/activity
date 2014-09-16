@@ -8,6 +8,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong>" => "Un nou fisier sau folder a fost <strong>sters</strong>",
 "You created %1\$s" => "Ati creat %1\$s",
 "%2\$s created %1\$s" => "%2\$s a creat %1\$s",
+"%1\$s was created in a public folder" => "%1\$s a fost creat in folderul public",
 "You changed %1\$s" => "Ati schimbat %1\$s",
 "%2\$s changed %1\$s" => "%2\$s a schimbat %1\$s",
 "You deleted %1\$s" => "Ati şters %1\$s",
