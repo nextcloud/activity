@@ -8,6 +8,7 @@ $TRANSLATIONS = array(
 "A file or folder has been <strong>deleted</strong>" => "Súbor alebo priečinok bol <strong>odstránený</strong>",
 "You created %1\$s" => "Bol vytvorený %1\$s",
 "%2\$s created %1\$s" => "%2\$s vytvoril %1\$s",
+"%1\$s was created in a public folder" => "%1\$s vytvorený vo verejnom priečinku",
 "You changed %1\$s" => "Bol zmenený %1\$s",
 "%2\$s changed %1\$s" => "%2\$s zmenil %1\$s",
 "You deleted %1\$s" => "Bol zmazaný %1\$s",
