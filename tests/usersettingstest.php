@@ -84,7 +84,7 @@ class UserSettingsTest extends \PHPUnit_Framework_TestCase {
 
 	public function getNotificationTypesData() {
 		return array(
-			array('test1', 'stream', array('shared', 'file_created', 'file_changed', 'file_deleted')),
+			array('test1', 'stream', array('shared', 'file_created', 'file_changed', 'file_deleted', 'file_restored')),
 			array('noPreferences', 'email', array('shared')),
 		);
 	}

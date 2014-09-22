@@ -89,7 +89,8 @@ class UserSettings
 				$settings[] = Data::TYPE_SHARE_CHANGED;
 				$settings[] = Data::TYPE_SHARE_DELETED;
 //				$settings[] = Data::TYPE_SHARE_RESHARED;
-//
+				$settings[] = Data::TYPE_SHARE_RESTORED;
+
 //				$settings[] = Data::TYPE_SHARE_DOWNLOADED;
 
 			case 'email':

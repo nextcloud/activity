@@ -46,6 +46,7 @@ class Data
 	const TYPE_SHARE_CHANGED = 'file_changed';
 	const TYPE_SHARE_DELETED = 'file_deleted';
 	const TYPE_SHARE_RESHARED = 'file_reshared';
+	const TYPE_SHARE_RESTORED = 'file_restored';
 
 	const TYPE_SHARE_DOWNLOADED = 'file_downloaded';
 	const TYPE_SHARE_UPLOADED = 'file_uploaded';
@@ -80,6 +81,7 @@ class Data
 			self::TYPE_SHARE_CHANGED => $l->t('A file or folder has been <strong>changed</strong>'),
 			self::TYPE_SHARE_DELETED => $l->t('A file or folder has been <strong>deleted</strong>'),
 //			self::TYPE_SHARE_RESHARED => $l->t('A file or folder has been <strong>reshared</strong>'),
+			self::TYPE_SHARE_RESTORED => $l->t('A file or folder has been <strong>restored</strong>'),
 //			self::TYPE_SHARE_DOWNLOADED => $l->t('A file or folder shared via link has been <strong>downloaded</strong>'),
 //			self::TYPE_SHARE_UPLOADED => $l->t('A file has been <strong>uploaded</strong> into a folder shared via link'),
 //			self::TYPE_STORAGE_QUOTA_90 => $l->t('<strong>Storage usage</strong> is at 90%%'),

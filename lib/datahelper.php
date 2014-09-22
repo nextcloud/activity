@@ -79,6 +79,10 @@ class DataHelper
 					return $this->l->t('You deleted %1$s', $preparedParams);
 				case 'deleted_by':
 					return $this->l->t('%2$s deleted %1$s', $preparedParams);
+				case 'restored_self':
+					return $this->l->t('You restored %1$s', $preparedParams);
+				case 'restored_by':
+					return $this->l->t('%2$s restored %1$s', $preparedParams);
 				case 'shared_user_self':
 					return $this->l->t('You shared %1$s with %2$s', $preparedParams);
 				case 'shared_group_self':
