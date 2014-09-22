@@ -168,8 +168,11 @@ class MailQueueHandler {
 
 		$activityList = array();
 		foreach ($mailData as $activity) {
-			$activityList[] = $dataHelper->translation(
-				$activity['amq_appid'], $activity['amq_subject'], unserialize($activity['amq_subjectparams'])
+			$activityList[] = array(
+				$dataHelper->translation(
+					$activity['amq_appid'], $activity['amq_subject'], unserialize($activity['amq_subjectparams'])
+				),
+				$this->generateRelativeDatetime($l, $activity['amq_timestamp']),
 			);
 		}
 
@@ -190,6 +193,29 @@ class MailQueueHandler {
 		} catch (\Exception $e) {
 			\OCP\Util::writeLog('Activity', 'A problem occurred while sending the e-mail. Please revisit your settings.', \OCP\Util::ERROR);
 		}
+	}
+
+	/**
+	 * Creates a relative datetime string (with today, yesterday) or the normal date
+	 *
+	 * @param \OC_L10N $l
+	 * @param $timestamp
+	 * @return string
+	 */
+	protected function generateRelativeDatetime(\OC_L10N $l, $timestamp) {
+		$dateOfTimestamp = $l->l('date', $timestamp);
+		$dateOfToday = $l->l('date', time());
+		$dateOfYesterday = $l->l('date', time() - 3600 * 24);
+
+		if ($dateOfTimestamp === $dateOfToday) {
+			return (string) $l->t('Today %s', $l->l('time', $timestamp));
+		}
+
+		if ($dateOfTimestamp === $dateOfYesterday) {
+			return (string) $l->t('Yesterday %s', $l->l('time', $timestamp));
+		}
+
+		return (string) $l->l('datetime', $timestamp);
 	}
 
 	/**
