@@ -32,7 +32,6 @@ $TRANSLATIONS = array(
 "You are receiving this email because in the last hour the following things happened at %s" => "E levél arról ad tájékoztatást,  hogy mi történt az elmúlt órában ezen a szolgáltatáson: %s",
 "You are receiving this email because in the last day the following things happened at %s" => "E levél arról ad tájékoztatást,  hogy mi történt tegnap ezen a szolgáltatáson: %s",
 "You are receiving this email because in the last week the following things happened at %s" => "E levél arról ad tájékoztatást,  hogy mi történt az elmúlt héten ezen a szolgáltatáson: %s",
-"* %s" => "* %s",
 "You will see a list of events here when you start to use your %s." => "Az események itt lesznek láthatóak, miután elkezdte használni a %s szolgáltatást.",
 "No more events to load" => "Nincs több esemény",
 "Enable RSS feed" => "RSS-hírcsatorna engedélyezése",

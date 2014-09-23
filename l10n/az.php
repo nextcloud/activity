@@ -32,7 +32,6 @@ $TRANSLATIONS = array(
 "You are receiving this email because in the last hour the following things happened at %s" => "Sız elektron məktubu ona görə aldınız ki, aşağıdakı hadısələr %s ünvanında son saatda baş vermişdir",
 "You are receiving this email because in the last day the following things happened at %s" => "Siz elektron məktubu ona görə aldınız ki, keçən gün %s ünvanında aşağıdakı hadisələr baş vermişdir.",
 "You are receiving this email because in the last week the following things happened at %s" => "Siz elektron məktubu ona görə aldınız ki, keçən həftə %s unvanında aşağıdakı hadəsələr baş vermişdir ",
-"* %s" => "* %s",
 "You will see a list of events here when you start to use your %s." => "Siz %s istifadəyə başladıqda, baş verən hadısələrin siyahısını burda görəcəksiniz.",
 "No more events to load" => "Yüklənə biləcək digər səbəb yoxdur",
 "Enable RSS feed" => "RSS ötürməsinin işə salinmaslı",

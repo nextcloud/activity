@@ -31,7 +31,6 @@ $TRANSLATIONS = array(
 "You are receiving this email because in the last hour the following things happened at %s" => "এই ইমেলটি পাচ্ছেন কারন গত ঘন্টায় %s এ নিম্নোক্ত ঘটনা ঘটেছে ",
 "You are receiving this email because in the last day the following things happened at %s" => "এই ইমেলটি পাচ্ছেন কারন গতদিনে %s এ নিম্নোক্ত ঘটনা ঘটেছে ",
 "You are receiving this email because in the last week the following things happened at %s" => "এই ইমেলটি পাচ্ছেন কারন গত সপ্তাহে %s এ নিম্নোক্ত ঘটনা ঘটেছে ",
-"* %s" => "* %s",
 "You will see a list of events here when you start to use your %s." => "আপনি %s ব্যবহার করতে শুরু করলে এখানে ঘটনার একটি তালিকা দেখতে পাবেন",
 "No more events to load" => "লোড করার কোনো ঘটনা",
 "Enable RSS feed" => "এনাব্ল RSS ফিড",

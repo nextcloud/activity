@@ -32,7 +32,6 @@ $TRANSLATIONS = array(
 "You are receiving this email because in the last hour the following things happened at %s" => "A receção deste email deve-se à realização das seguintes ações, na última hora, por %s",
 "You are receiving this email because in the last day the following things happened at %s" => "A receção deste email deve-se à realização das seguintes ações, no último dia, por %s",
 "You are receiving this email because in the last week the following things happened at %s" => "A receção deste email deve-se à realização das seguintes ações, na última semana, por %s",
-"* %s" => "* %s",
 "You will see a list of events here when you start to use your %s." => "Irá ver aqui uma lista de eventos, quando começar a utilizar a sua %s",
 "No more events to load" => "Sem mais eventos para carrregar",
 "Enable RSS feed" => "Ativar receção de conteúdo por RSS",

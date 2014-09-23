@@ -32,7 +32,6 @@ $TRANSLATIONS = array(
 "You are receiving this email because in the last hour the following things happened at %s" => "Λαμβάνετε αυτό το μήνυμα ηλ. ταχυδρομείου γιατί την τελευταία ώρα τα παρακάτω γεγονότα συνέβησαν στο %s",
 "You are receiving this email because in the last day the following things happened at %s" => "Λαμβάνετε αυτό το μήνυμα ηλ. ταχυδρομείου γιατί την τελευταία ημέρα τα παρακάτω γεγονότα συνέβησαν στο %s",
 "You are receiving this email because in the last week the following things happened at %s" => "Λαμβάνετε αυτό το μήνυμα ηλ. ταχυδρομείου γιατί την τελευταία εβδομάδα τα παρακάτω γεγονότα συνέβησαν στο %s",
-"* %s" => "* %s",
 "You will see a list of events here when you start to use your %s." => "Θα δείτε εδώ μια λίστα από συμβάντα όταν ξεκινήσετε να χρησιμοποιείτε το %s σας.",
 "No more events to load" => "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
 "Enable RSS feed" => "Ενεργοποίηση ροής RSS",

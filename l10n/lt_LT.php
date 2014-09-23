@@ -30,7 +30,6 @@ $TRANSLATIONS = array(
 "You are receiving this email because in the last hour the following things happened at %s" => "Gaunate šį laišką, nes per paskutinę valandą sekanti veikla buvo užfiksuota %s",
 "You are receiving this email because in the last day the following things happened at %s" => "Gaunate šį laišką, nes per paskutinę dieną sekanti veikla buvo užfiksuota %s",
 "You are receiving this email because in the last week the following things happened at %s" => "Gaunate šį laišką, nes per paskutinę savaitę sekanti veikla buvo užfiksuota %s",
-"* %s" => "* %s",
 "You will see a list of events here when you start to use your %s." => "Matysite įvykių sąrašą kai pradėsite naudoti savo %s.",
 "No more events to load" => "Nėra daugiau įkeltinų įvykių",
 "Enable RSS feed" => "Įjungti RSS sklaidos kanalą",

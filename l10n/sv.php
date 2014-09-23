@@ -27,7 +27,6 @@ $TRANSLATIONS = array(
 "You are receiving this email because in the last hour the following things happened at %s" => "Du har fått detta e-postmeddelande på grund av att under den senaste timmen har följande hänt på %s",
 "You are receiving this email because in the last day the following things happened at %s" => "Du har fått detta e-postmeddelande på grund av att under det senaste dygnet har följande hänt på %s",
 "You are receiving this email because in the last week the following things happened at %s" => "Du har fått detta e-postmeddelande på grund av att under den senaste veckan har följande hänt på %s",
-"* %s" => "* %s",
 "You will see a list of events here when you start to use your %s." => "Du kommer att se en lista utav evenemang här när du börjar använda din %s",
 "No more events to load" => "Inga fler aktiviteter att ladda.",
 "Enable RSS feed" => "Aktivera RSS-flöde",

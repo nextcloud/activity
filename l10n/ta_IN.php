@@ -30,7 +30,6 @@ $TRANSLATIONS = array(
 "You are receiving this email because in the last hour the following things happened at %s" => "கடந்த மணி நேரம் முன்பு பின்வரும் விஷயங்கள் %s 'ல் நடந்தது , ஆகையால் நீங்கள் இந்த மின்னஞ்சலை பெறுகிறீர்கள். ",
 "You are receiving this email because in the last day the following things happened at %s" => "நேற்று பின்வரும் விஷயங்கள் %s 'ல் நடந்தது , ஆகையால் நீங்கள் இந்த மின்னஞ்சலை பெறுகிறீர்கள். ",
 "You are receiving this email because in the last week the following things happened at %s" => "கடந்த வாரம் பின்வரும் விஷயங்கள் %s 'ல் நடந்தது , ஆகையால் நீங்கள் இந்த மின்னஞ்சலை பெறுகிறீர்கள். ",
-"* %s" => "* %s",
 "You will see a list of events here when you start to use your %s." => "நீங்கள் உங்கள் %s பயன்படுத்த தொடங்கும் பொழுது நீங்கள் இங்கே நிகழ்வுகளின் பட்டியலை பார்ப்பீர்கள்.",
 "No more events to load" => "மேலும் வேறு நிகழ்வுகள் இல்லை.",
 "Enable RSS feed" => "RSS feed 'ஐ இயக்கவும்.",

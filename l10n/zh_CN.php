@@ -32,7 +32,6 @@ $TRANSLATIONS = array(
 "You are receiving this email because in the last hour the following things happened at %s" => "你收到此邮件，是因为在上一个小时里 %s 发生了以下的活动",
 "You are receiving this email because in the last day the following things happened at %s" => "你收到此邮件，是因为在昨天 %s 发生了以下的活动",
 "You are receiving this email because in the last week the following things happened at %s" => "你收到此邮件，是因为上周 %s 发生了以下的活动",
-"* %s" => "* %s",
 "You will see a list of events here when you start to use your %s." => "当您开始使用%s，您会在此看到一系列事件。",
 "No more events to load" => "已无更多事件",
 "Enable RSS feed" => "启用 RSS 源",
