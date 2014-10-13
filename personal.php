@@ -50,5 +50,6 @@ else {
 }
 $template->assign('activity_email', \OCP\Config::getUserValue($user, 'settings', 'email', ''));
 $template->assign('notify_self', \OCA\Activity\UserSettings::getUserSetting($user, 'setting', 'self'));
+$template->assign('notify_selfemail', \OCA\Activity\UserSettings::getUserSetting($user, 'setting', 'selfemail'));
 
 return $template->fetchPage();
