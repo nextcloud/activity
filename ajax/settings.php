@@ -44,5 +44,6 @@ if ($_POST['notify_setting_batchtime'] == \OCA\Activity\UserSettings::EMAIL_SEND
 }
 \OCP\Config::setUserValue(\OCP\User::getUser(), 'activity', 'notify_setting_batchtime', $email_batch_time);
 \OCP\Config::setUserValue(\OCP\User::getUser(), 'activity', 'notify_setting_self', !empty($_POST['notify_setting_self']));
+\OCP\Config::setUserValue(\OCP\User::getUser(), 'activity', 'notify_setting_selfemail', !empty($_POST['notify_setting_selfemail']));
 
 \OCP\JSON::success(array("data" => array( "message" => $l->t('Your settings have been updated.'))));
