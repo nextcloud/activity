@@ -29,7 +29,7 @@
 
 		<?php if (!empty($_['previewImageLink'])): ?>
 			<?php if ($_['previewLink']): ?><a href="<?php p($_['previewLink']) ?>"><?php endif ?>
-			<img class="preview<?php if (!empty($_['previewLinkIsDir'])): ?> preview-dir-icon<?php endif ?>" src="<?php p($_['previewImageLink']) ?>" alt="<?php p($_['event']['subjectformatted']['trimmed']) ?>"/>
+			<img class="preview<?php if (!empty($_['previewLinkIsDir'])): ?> preview-dir-icon<?php endif ?>" src="<?php p($_['previewImageLink']) ?>" alt=""/>
 			<?php if ($_['previewLink']): ?></a><?php endif; ?>
 		<?php endif ?>
 
