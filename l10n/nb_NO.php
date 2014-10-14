@@ -44,7 +44,6 @@ $TRANSLATIONS = array(
 "Notifications" => "Varsler",
 "Mail" => "E-post",
 "Stream" => "Strøm",
-"Notify about my own actions" => "Varsle meg om mine egne handlinger",
 "You need to set up your email address before you can receive notification emails." => "Du må sette opp e-postadressen din før du kan motta varslinger på e-post.",
 "Send emails:" => "Send e-poster:",
 "Hourly" => "Hver time",

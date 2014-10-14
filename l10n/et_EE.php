@@ -38,7 +38,6 @@ $TRANSLATIONS = array(
 "Notifications" => "Teavitused",
 "Mail" => "Kirjad",
 "Stream" => "Voog",
-"Notify about my own actions" => "Teavita mind minu tegevustest",
 "You need to set up your email address before you can receive notification emails." => "Enne teavituskirjade saamist pead sa lisama oma e-posti aadressi.",
 "Send emails:" => "Saada kirjad:",
 "Hourly" => "Iga tund",

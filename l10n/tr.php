@@ -44,7 +44,6 @@ $TRANSLATIONS = array(
 "Notifications" => "Bildirimler",
 "Mail" => "Posta",
 "Stream" => "Akış",
-"Notify about my own actions" => "Kendi eylemlerimi bildir",
 "You need to set up your email address before you can receive notification emails." => "Bildirim e-postalarını almadan önce e-posta adresinizi ayarlamanız gerekiyor.",
 "Send emails:" => "E-postaları gönder:",
 "Hourly" => "Her saat",

@@ -44,7 +44,6 @@ $TRANSLATIONS = array(
 "Notifications" => "通知",
 "Mail" => "メール",
 "Stream" => "ストリーム",
-"Notify about my own actions" => "自身のアクションを通知する",
 "You need to set up your email address before you can receive notification emails." => "通知メールを受け取る前にメールアドレスを設定する必要があります。",
 "Send emails:" => "メールを送信:",
 "Hourly" => "1時間毎",

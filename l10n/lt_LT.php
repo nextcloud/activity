@@ -44,7 +44,6 @@ $TRANSLATIONS = array(
 "Notifications" => "Pranešimai",
 "Mail" => "Paštas",
 "Stream" => "Transliacija",
-"Notify about my own actions" => "Informuoti apie mano paties veiksmus",
 "You need to set up your email address before you can receive notification emails." => "Jums reikia nurodyti el. pašto adresą, kad gauti pranešimų el. laiškus.",
 "Send emails:" => "Siųsti el. laiškus:",
 "Hourly" => "Kas valandą",

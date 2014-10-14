@@ -36,7 +36,6 @@ $TRANSLATIONS = array(
 "Notifications" => "அறிவிப்புகள்",
 "Mail" => "மின்னஞ்சல்",
 "Stream" => "தொடரோடி",
-"Notify about my own actions" => "என் சொந்த நடவடிக்கைகள் பற்றி அறிவிக்கவும்.",
 "You need to set up your email address before you can receive notification emails." => "நீங்கள் அறிவிப்பு மின்னஞ்சல்களை பெறுவதற்கு முன் உங்கள் மின்னஞ்சல் முகவரியை பதிவு செய்ய வேண்டும்.",
 "Send emails:" => "மின்னஞ்சல்களை அனுப்பவும்:",
 "Hourly" => "மணிநேர",

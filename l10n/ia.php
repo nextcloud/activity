@@ -44,7 +44,6 @@ $TRANSLATIONS = array(
 "Notifications" => "Notificationes",
 "Mail" => "Posta",
 "Stream" => "Fluxo",
-"Notify about my own actions" => "Notifica re mi proprie actiones",
 "You need to set up your email address before you can receive notification emails." => "Tu necessita configurar tu adresse de e-posta ante que tu pote reciper messages de e-posta de notification.",
 "Send emails:" => "Invia messages de e-posta:",
 "Hourly" => "De cata ora",

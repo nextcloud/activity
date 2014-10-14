@@ -37,7 +37,6 @@ $TRANSLATIONS = array(
 "Enable RSS feed" => "לאפשר הזנת RSS",
 "Notifications" => "דיווחים",
 "Mail" => "דואר",
-"Notify about my own actions" => "לדווח על פעילות שלי",
 "You need to set up your email address before you can receive notification emails." => "יש להגדיר כתובת דואר אלקטרוני לפני שניתן יהיה לקבל דיווחים.",
 "Send emails:" => "שליחת הודעות דואר אלקטרוני:",
 "Hourly" => "שעתי",

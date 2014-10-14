@@ -37,7 +37,6 @@ $TRANSLATIONS = array(
 "Notifications" => "বিজ্ঞপ্তি",
 "Mail" => "মেইল",
 "Stream" => "প্রবাহ",
-"Notify about my own actions" => "আমার নিজের কর্মের সম্পর্কে সূচিত করুন",
 "You need to set up your email address before you can receive notification emails." => "আপনার সূচনা ইমেল পাওয়ার জন্যে আগে আপনার ইমেইল ঠিকানা সেট আপ করতে হবে।",
 "Send emails:" => "ইমেইলস পাঠান:",
 "Hourly" => "প্রতি ঘণ্টায়",

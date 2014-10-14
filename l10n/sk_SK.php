@@ -38,7 +38,6 @@ $TRANSLATIONS = array(
 "Notifications" => "Oznámenia",
 "Mail" => "Pošta",
 "Stream" => "Stream",
-"Notify about my own actions" => "Oznámiť moje vlastné činnosti",
 "You need to set up your email address before you can receive notification emails." => "Ak chcete dostávať oznámenia emailom, musíte najskôr vyplniť vašu emailovú adresu.",
 "Send emails:" => "Odoslať emaily:",
 "Hourly" => "Každú hodinu",

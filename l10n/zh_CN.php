@@ -44,7 +44,6 @@ $TRANSLATIONS = array(
 "Notifications" => "提示",
 "Mail" => "邮件",
 "Stream" => "流",
-"Notify about my own actions" => "通知我的动态",
 "You need to set up your email address before you can receive notification emails." => "要接收通知邮件，你需要设置你的电子邮件地址。",
 "Send emails:" => "发送邮件：",
 "Hourly" => "每小时",

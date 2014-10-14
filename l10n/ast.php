@@ -37,7 +37,6 @@ $TRANSLATIONS = array(
 "Notifications" => "Notificaciones",
 "Mail" => "Corréu",
 "Stream" => "Fluxu de rede",
-"Notify about my own actions" => "Notificar tocante a los mios propios contautos",
 "You need to set up your email address before you can receive notification emails." => "Necesites configurar la to direición de corréu enantes que puedas recibir correos de notificación",
 "Send emails:" => "Unviar correos:",
 "Hourly" => "Cada hora",

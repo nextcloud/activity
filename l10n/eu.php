@@ -38,7 +38,6 @@ $TRANSLATIONS = array(
 "Notifications" => "Jakinarazpenak",
 "Mail" => "Posta",
 "Stream" => "Jarioa",
-"Notify about my own actions" => "Notifikatu neure ekintzak",
 "You need to set up your email address before you can receive notification emails." => "Zure epostaren  zehaztu behar duzu jakinarazpen epostak jaso aurretik.",
 "Send emails:" => "Bidali epostak:",
 "Hourly" => "Orduro",

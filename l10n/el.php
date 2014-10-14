@@ -44,7 +44,6 @@ $TRANSLATIONS = array(
 "Notifications" => "Ειδοποιήσεις",
 "Mail" => "Ταχυδρομείο",
 "Stream" => "Ροή",
-"Notify about my own actions" => "Ειδοποίησέ με για τις ενέργειές μου",
 "You need to set up your email address before you can receive notification emails." => "Πρέπει να ρυθμίσετε τη διεύθυνση ηλ. ταχυδρομείου σας για να μπορείτε να λαμβάνετε ειδοποιήσεις μέσω ηλ. ταχυδρομείου.",
 "Send emails:" => "Αποστολή μηνυμάτων ηλ. ταχυδρομείου:",
 "Hourly" => "Ωριαίως",

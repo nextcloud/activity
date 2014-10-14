@@ -38,7 +38,6 @@ $TRANSLATIONS = array(
 "Notifications" => "Értesítések",
 "Mail" => "levél",
 "Stream" => "aktivitási lista",
-"Notify about my own actions" => "Értesítést kérek a saját tevékenységeimről",
 "You need to set up your email address before you can receive notification emails." => "Értesítő üzenetek fogadásához adja meg az e-mail cimét!",
 "Send emails:" => "E-mail küldése",
 "Hourly" => "óránként",

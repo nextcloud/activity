@@ -37,7 +37,6 @@ $TRANSLATIONS = array(
 "Notifications" => "هشدارها",
 "Mail" => "ایمیل",
 "Stream" => "پخش",
-"Notify about my own actions" => "فعالیت های خودم را به من اطلاع بده",
 "You need to set up your email address before you can receive notification emails." => "قبل از دریافت ایمیل های هشدار می بایست ادرس ایمیل خود را تنظیم کنید",
 "Send emails:" => "ارسال ایمیل ها:",
 "Hourly" => "ساعتی",

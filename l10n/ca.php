@@ -38,7 +38,6 @@ $TRANSLATIONS = array(
 "Notifications" => "Notificacions",
 "Mail" => "Correu electrónic",
 "Stream" => "Cadena",
-"Notify about my own actions" => "Notifica'm les meves accions",
 "You need to set up your email address before you can receive notification emails." => "Heu d'establir l'adreça de correu electrònic abans que pugueu rebre correus de notificació",
 "Send emails:" => "Envia correus electrònics:",
 "Hourly" => "Horàriament",
