@@ -153,14 +153,17 @@ class ParameterHelper
 		$is_dir = $this->rootView->is_dir('/' . User::getUser() . '/files' . $param);
 
 		if ($is_dir) {
-			$parent_dir = $param;
+			$fileLink = Util::linkTo('files', 'index.php', array('dir' => $param));
 		} else {
-			$parent_dir = (substr_count($param, '/') == 1) ? '/' : dirname($param);
+			$parentDir = (substr_count($param, '/') == 1) ? '/' : dirname($param);
+			$fileName = basename($param);
+			$fileLink = Util::linkTo('files', 'index.php', array(
+				'dir' => $parentDir,
+				'scrollto' => $fileName,
+			));
 		}
 
-		$fileLink = Util::linkTo('files', 'index.php', array('dir' => $parent_dir));
 		$param = trim($param, '/');
-
 		list($path, $name) = $this->splitPathFromFilename($param);
 		if (!$stripPath || $path === '') {
 			if (!$highlightParams) {
