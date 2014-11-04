@@ -60,10 +60,10 @@ class ParameterHelperTest extends \PHPUnit_Framework_TestCase {
 			array(array('/foo/bar.file'), array(0 => 'file'), false, false, array('foo/bar.file')),
 			array(array('/folder/trailingslash/fromsharing/'), array(0 => 'file'), false, false, array('folder/trailingslash/fromsharing')),
 			array(array('/foo/bar.file'), array(0 => 'file'), true, true, array(
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="in foo">bar.file</a>',
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
 			)),
 			array(array('/0/bar.file'), array(0 => 'file'), true, true, array(
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2F0" title="in 0">bar.file</a>',
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2F0&scrollto=bar.file" title="in 0">bar.file</a>',
 			)),
 			array(array('/foo/bar.file'), array(1 => 'file'), true, false, array('/foo/bar.file')),
 			array(array('/foo/bar.file'), array(1 => 'file'), true, true, array('<strong>/foo/bar.file</strong>')),
@@ -71,18 +71,18 @@ class ParameterHelperTest extends \PHPUnit_Framework_TestCase {
 			// Legacy: stored without leading slash
 			array(array('foo/bar.file'), array(0 => 'file'), false, false, array('foo/bar.file')),
 			array(array('foo/bar.file'), array(0 => 'file'), false, true, array(
-				'<a class="filename" href="/index.php/apps/files?dir=%2Ffoo">foo/bar.file</a>',
+				'<a class="filename" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file">foo/bar.file</a>',
 			)),
 			array(array('foo/bar.file'), array(0 => 'file'), true, false, array('bar.file')),
 			array(array('foo/bar.file'), array(0 => 'file'), true, true, array(
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="in foo">bar.file</a>',
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
 			)),
 
 			// Valid file position
 			array(array('UserA', '/foo/bar.file'), array(1 => 'file'), true, false, array('UserA', 'bar.file')),
 			array(array('UserA', '/foo/bar.file'), array(1 => 'file'), true, true, array(
 				'<strong>UserA</strong>',
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="in foo">bar.file</a>',
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
 			)),
 			array(array('UserA', '/foo/bar.file'), array(2 => 'file'), true, false, array('UserA', '/foo/bar.file')),
 			array(array('UserA', '/foo/bar.file'), array(2 => 'file'), true, true, array(
@@ -100,7 +100,7 @@ class ParameterHelperTest extends \PHPUnit_Framework_TestCase {
 
 			array(array('UserA', '/foo/bar.file'), array(0 => 'username', 1 => 'file'), true, true, array(
 				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo" title="in foo">bar.file</a>',
+				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
 			)),
 			array(array('UserA', '/tmp/test'), array(0 => 'username', 1 => 'file'), true, true, array(
 				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
