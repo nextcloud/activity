@@ -48,11 +48,11 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 			),
 			array(
 				'created_self', array('/SubFolder/A.txt'), false, true,
-				'You created <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder">SubFolder/A.txt</a>',
+				'You created <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt">SubFolder/A.txt</a>',
 			),
 			array(
 				'created_self', array('/SubFolder/A.txt'), true, true,
-				'You created <a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="in SubFolder">A.txt</a>',
+				'You created <a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt" title="in SubFolder">A.txt</a>',
 			),
 
 			array('created_by', array('/SubFolder/A.txt', 'UserB'), false, false, 'UserB created SubFolder/A.txt'),
@@ -60,17 +60,17 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 			array(
 				'created_by', array('/SubFolder/A.txt', 'UserB'), false, true,
 				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
-				. '<a class="filename" href="/index.php/apps/files?dir=%2FSubFolder">SubFolder/A.txt</a>',
+				. '<a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt">SubFolder/A.txt</a>',
 			),
 			array(
 				'created_by', array('/SubFolder/A.txt', 'UserB'), true, true,
 				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
-				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder" title="in SubFolder">A.txt</a>',
+				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt" title="in SubFolder">A.txt</a>',
 			),
 			array(
 				'created_by', array('/A.txt', 'UserB'), true, true,
 				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
-				. '<a class="filename" href="/index.php/apps/files?dir=%2F">A.txt</a>',
+				. '<a class="filename" href="/index.php/apps/files?dir=%2F&scrollto=A.txt">A.txt</a>',
 			),
 
 			array(
@@ -113,9 +113,9 @@ class DataHelperTest extends \PHPUnit_Framework_TestCase {
 				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
 				false,
 				true,
-				'You created <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder">SubFolder/A.txt</a>,'
-				. ' <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder">SubFolder/B.txt</a>,'
-				. ' <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder">SubFolder/C.txt</a>'
+				'You created <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt">SubFolder/A.txt</a>,'
+				. ' <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=B.txt">SubFolder/B.txt</a>,'
+				. ' <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=C.txt">SubFolder/C.txt</a>'
 				. ' and <strong class="tooltip" title="SubFolder/D.txt, SubFolder/E.txt, SubFolder/F.txt">3 more</strong>',
 			),
 		);
