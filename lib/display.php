@@ -57,7 +57,8 @@ class Display
 			unset($rootView);
 
 			// show a preview image if the file still exists
-			if (!$is_dir && $exist) {
+			$mimetype = \OC_Helper::getFileNameMimeType($activity['file']);
+			if (!$is_dir && \OC::$server->getPreviewManager()->isMimeSupported($mimetype) && $exist) {
 				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => dirname($activity['file']))));
 				$tmpl->assign('previewImageLink',
 					\OCP\Util::linkToRoute('core_ajax_preview', array(
@@ -66,9 +67,9 @@ class Display
 						'y' => 150,
 					))
 				);
-			} else if ($exist) {
+			} else {
 				$tmpl->assign('previewLink', \OCP\Util::linkTo('files', 'index.php', array('dir' => $activity['file'])));
-				$tmpl->assign('previewImageLink', \OC_Helper::mimetypeIcon('dir'));
+				$tmpl->assign('previewImageLink', \OC_Helper::mimetypeIcon($is_dir ? 'dir' : $mimetype));
 				$tmpl->assign('previewLinkIsDir', true);
 			}
 		}
