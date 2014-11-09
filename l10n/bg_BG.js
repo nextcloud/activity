@@ -45,6 +45,8 @@ OC.L10N.register(
     "Notifications" : "Известия",
     "Mail" : "Поща",
     "Stream" : "Поток",
+    "List your own actions in the stream" : "Показвай собствените действия в потока",
+    "Notify about your own actions via email" : "Уведомявай за собствени действия чрез електронна поща",
     "You need to set up your email address before you can receive notification emails." : "Първо трябва да настроиш твоя e-mail адрес преди да започнеш да получаваш известия.",
     "Send emails:" : "Изпрати имейли:",
     "Hourly" : "Всеки час",
