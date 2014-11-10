@@ -25,8 +25,10 @@ namespace OCA\Activity\Tests;
 use OCA\Activity\UserSettings;
 use OCA\Activity\Data;
 
-class UserSettingsTest extends \PHPUnit_Framework_TestCase {
-	public function setUp() {
+class UserSettingsTest extends \Test\TestCase {
+	protected function setUp() {
+		parent::setUp();
+
 		$preferences = array(
 			array('test1', 'activity', 'notify_stream_type1', '1'),
 			array('test1', 'activity', 'notify_stream_type2', '2'),
@@ -60,9 +62,11 @@ class UserSettingsTest extends \PHPUnit_Framework_TestCase {
 		}
 	}
 
-	public function tearDown() {
+	protected function tearDown() {
 		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*preferences` WHERE `appid` = ?');
 		$query->execute(array('activity'));
+
+		parent::tearDown();
 	}
 
 	public function getDefaultSettingData() {

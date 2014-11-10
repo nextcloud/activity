@@ -22,7 +22,7 @@
 
 namespace OCA\Activity\Tests;
 
-class DataTest extends \PHPUnit_Framework_TestCase {
+class DataTest extends \Test\TestCase {
 	public function getFilterFromParamData() {
 		return array(
 			array('test', 'all'),

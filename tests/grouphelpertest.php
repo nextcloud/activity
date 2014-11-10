@@ -26,7 +26,7 @@ use OCA\Activity\DataHelper;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\ParameterHelper;
 
-class GroupHelperTest extends \PHPUnit_Framework_TestCase {
+class GroupHelperTest extends \Test\TestCase {
 	public function groupHelperData() {
 		return array(
 			array(

@@ -24,11 +24,11 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\Data;
 
-class DataDeleteActivitiesTest extends \PHPUnit_Framework_TestCase {
+class DataDeleteActivitiesTest extends \Test\TestCase {
 	/** @var \OCA\Activity\Data */
 	protected $data;
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
 
 		$activities = array(
@@ -60,7 +60,7 @@ class DataDeleteActivitiesTest extends \PHPUnit_Framework_TestCase {
 		);
 	}
 
-	public function tearDown() {
+	protected function tearDown() {
 		$this->data->deleteActivities(array(
 			'type' => 'test',
 		));
