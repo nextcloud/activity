@@ -22,16 +22,17 @@
 
 namespace OCA\Activity\Tests;
 
-class DataHelperTest extends \PHPUnit_Framework_TestCase {
+class DataHelperTest extends \Test\TestCase {
 	protected $originalWEBROOT;
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
+
 		$this->originalWEBROOT =\OC::$WEBROOT;
 		\OC::$WEBROOT = '';
 	}
 
-	public function tearDown() {
+	protected function tearDown() {
 		\OC::$WEBROOT = $this->originalWEBROOT;
 		parent::tearDown();
 	}

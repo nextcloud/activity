@@ -24,7 +24,7 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\Navigation;
 
-class NavigationTest extends \PHPUnit_Framework_TestCase {
+class NavigationTest extends \Test\TestCase {
 	public function getTemplateData() {
 		return array(
 			array('all', null),

@@ -25,8 +25,8 @@ namespace OCA\Activity\Tests;
 use OCA\Activity\Data;
 use OCA\Activity\Hooks;
 
-class HooksDeleteUserTest extends \PHPUnit_Framework_TestCase {
-	public function setUp() {
+class HooksDeleteUserTest extends \Test\TestCase {
+	protected function setUp() {
 		parent::setUp();
 
 		$activities = array(
@@ -65,9 +65,7 @@ class HooksDeleteUserTest extends \PHPUnit_Framework_TestCase {
 		}
 	}
 
-	public function tearDown() {
-		parent::tearDown();
-
+	protected function tearDown() {
 		$data = new Data(
 			$this->getMock('\OCP\Activity\IManager')
 		);
@@ -76,6 +74,8 @@ class HooksDeleteUserTest extends \PHPUnit_Framework_TestCase {
 		));
 		$query = \OCP\DB::prepare("DELETE FROM `*PREFIX*activity_mq` WHERE `amq_type` = 'test'");
 		$query->execute();
+
+		parent::tearDown();
 	}
 
 	public function testHooksDeleteUser() {

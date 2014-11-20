@@ -22,7 +22,7 @@
 
 namespace OCA\Activity\Tests;
 
-class ParameterHelperTest extends \PHPUnit_Framework_TestCase {
+class ParameterHelperTest extends \Test\TestCase {
 	/** @var string */
 	protected $originalWEBROOT;
 	/** @var \OCA\Activity\ParameterHelper */
@@ -30,8 +30,9 @@ class ParameterHelperTest extends \PHPUnit_Framework_TestCase {
 	/** @var \OC\Files\View */
 	protected $view;
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
+
 		$this->originalWEBROOT =\OC::$WEBROOT;
 		\OC::$WEBROOT = '';
 		$l = \OCP\Util::getL10N('activity');
@@ -39,7 +40,7 @@ class ParameterHelperTest extends \PHPUnit_Framework_TestCase {
 		$this->parameterHelper = new \OCA\Activity\ParameterHelper($this->view, $l);
 	}
 
-	public function tearDown() {
+	protected function tearDown() {
 		\OC::$WEBROOT = $this->originalWEBROOT;
 		parent::tearDown();
 	}

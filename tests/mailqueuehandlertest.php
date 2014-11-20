@@ -24,11 +24,11 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\MailQueueHandler;
 
-class MailQueueHandlerTest extends \PHPUnit_Framework_TestCase {
-
-	public function setUp() {
+class MailQueueHandlerTest extends \Test\TestCase {
+	protected function setUp() {
 		parent::setUp();
-		$app = uniqid('MailQueueHandlerTest');
+
+		$app = $this->getUniqueID('MailQueueHandlerTest');
 
 		$query = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
@@ -42,7 +42,7 @@ class MailQueueHandlerTest extends \PHPUnit_Framework_TestCase {
 		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 155));
 	}
 
-	public function tearDown() {
+	protected function tearDown() {
 		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity_mq`');
 		$query->execute();
 
