@@ -160,9 +160,10 @@ class MailQueueHandler {
 	 * @param string $user Username of the recipient
 	 * @param string $email Email address of the recipient
 	 * @param string $lang Selected language of the recipient
+	 * @param string $timezone Selected timezone of the recipient
 	 * @param array $mailData Notification data we send to the user
 	 */
-	public function sendEmailToUser($user, $email, $lang, $mailData) {
+	public function sendEmailToUser($user, $email, $lang, $timezone, $mailData) {
 		$l = $this->getLanguage($lang);
 		$dataHelper = new DataHelper(\OC::$server->getActivityManager(), new ParameterHelper(new \OC\Files\View(''), $l), $l);
 
@@ -172,7 +173,7 @@ class MailQueueHandler {
 				$dataHelper->translation(
 					$activity['amq_appid'], $activity['amq_subject'], unserialize($activity['amq_subjectparams'])
 				),
-				$this->generateRelativeDatetime($l, $activity['amq_timestamp']),
+				$this->generateRelativeDatetime($l, $activity['amq_timestamp'], $timezone),
 			);
 		}
 
@@ -199,13 +200,24 @@ class MailQueueHandler {
 	 * Creates a relative datetime string (with today, yesterday) or the normal date
 	 *
 	 * @param \OC_L10N $l
-	 * @param $timestamp
+	 * @param int $timestamp
+	 * @param string $timeZone
 	 * @return string
 	 */
-	protected function generateRelativeDatetime(\OC_L10N $l, $timestamp) {
+	protected function generateRelativeDatetime(\OC_L10N $l, $timestamp, $timeZone) {
+		$offset = 0;
+		if ($timeZone) {
+			if (!$timeZone instanceof \DateTimeZone) {
+				$timeZone = new \DateTimeZone($timeZone);
+			}
+			$dt = new \DateTime("@$timestamp");
+			$offset = $timeZone->getOffset($dt);
+		}
+
+		$timestamp = $timestamp + $offset;
 		$dateOfTimestamp = $l->l('date', $timestamp);
-		$dateOfToday = $l->l('date', time());
-		$dateOfYesterday = $l->l('date', time() - 3600 * 24);
+		$dateOfToday = $l->l('date', time() + $offset);
+		$dateOfYesterday = $l->l('date', time() - 3600 * 24 + $offset);
 
 		if ($dateOfTimestamp === $dateOfToday) {
 			return (string) $l->t('Today %s', $l->l('time', $timestamp));

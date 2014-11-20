@@ -70,6 +70,7 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 
 		$preferences = new \OC\Preferences(\OC_DB::getConnection());
 		$userLanguages = $preferences->getValueForUsers('core', 'lang', $affectedUsers);
+		$userTimezones = $preferences->getValueForUsers('core', 'timezone', $affectedUsers);
 		$userEmails = $preferences->getValueForUsers('settings', 'email', $affectedUsers);
 
 		// Get all items for these users
@@ -89,7 +90,8 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 			}
 
 			$language = (isset($userLanguages[$user])) ? $userLanguages[$user] : $default_lang;
-			$this->mqHandler->sendEmailToUser($user, $userEmails[$user], $language, $data);
+			$timezone = (isset($userTimezones[$user])) ? $userTimezones[$user] : '';
+			$this->mqHandler->sendEmailToUser($user, $userEmails[$user], $language, $timezone, $data);
 		}
 
 		// Delete all entries we dealt with

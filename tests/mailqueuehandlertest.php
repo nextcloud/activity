@@ -43,7 +43,7 @@ class MailQueueHandlerTest extends \Test\TestCase {
 	}
 
 	protected function tearDown() {
-		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity_mq`');
+		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity_mq` WHERE `amq_timestamp` < 200');
 		$query->execute();
 
 		parent::tearDown();
@@ -68,5 +68,75 @@ class MailQueueHandlerTest extends \Test\TestCase {
 		$users = $mq->getAffectedUsers($limit);
 
 		$this->assertEquals($expected, $users);
+	}
+
+	public function generateRelativeDatetimeDataToday()
+	{
+		return array(
+			array(time(), ''),
+			array(time(), 'Europe/Berlin'),
+		);
+	}
+
+	/**
+	 * @dataProvider generateRelativeDatetimeDataToday
+	 */
+	public function testGenerateRelativeDatetimeToday($time, $timezone) {
+		$mq = new MailQueueHandler();
+		$l = \OC_L10N::get('activity');
+
+		$this->assertStringStartsWith((string) $l->t('Today %s', ''), \Test_Helper::invokePrivate($mq, 'generateRelativeDatetime', array(
+			$l,
+			$time,
+			$timezone
+		)));
+	}
+
+	public function generateRelativeDatetimeDataYesterday()
+	{
+		return array(
+			array(time() - 3600 * 24, ''),
+			array(time() - 3600 * 24, 'Europe/Berlin'),
+		);
+	}
+
+	/**
+	 * @dataProvider generateRelativeDatetimeDataYesterday
+	 */
+	public function testGenerateRelativeDatetimeYesterday($time, $timezone) {
+		$mq = new MailQueueHandler();
+		$l = \OC_L10N::get('activity');
+
+		$this->assertStringStartsWith((string) $l->t('Yesterday %s', ''), \Test_Helper::invokePrivate($mq, 'generateRelativeDatetime', array(
+			$l,
+			$time,
+			$timezone
+		)));
+	}
+
+	public function generateRelativeDatetimeDataOthers()
+	{
+		return array(
+			array(time() - 3600 * 48, ''),
+			array(time() - 3600 * 48, 'Europe/Berlin'),
+			array(time() + 3600 * 24, ''),
+			array(time() + 3600 * 24, 'Europe/Berlin'),
+		);
+	}
+
+	/**
+	 * @dataProvider generateRelativeDatetimeDataOthers
+	 */
+	public function testGenerateRelativeDatetimeOthers($time, $timezone) {
+		$mq = new MailQueueHandler();
+		$l = \OC_L10N::get('activity');
+		$result = \Test_Helper::invokePrivate($mq, 'generateRelativeDatetime', array(
+			$l,
+			$time,
+			$timezone
+		));
+
+		$this->assertStringStartsNotWith((string) $l->t('Today %s', ''), $result);
+		$this->assertStringStartsNotWith((string) $l->t('Yesterday %s', ''), $result);
 	}
 }
