@@ -51,9 +51,9 @@ class Display
 		$tmpl->assign('event', $activity);
 
 		if ($activity['file']) {
-			$rootView = new \OC\Files\View('');
-			$exist = $rootView->file_exists('/' . $activity['user'] . '/files' . $activity['file']);
-			$is_dir = $rootView->is_dir('/' . $activity['user'] . '/files' . $activity['file']);
+			$rootView = new \OC\Files\View('/' . $activity['affecteduser'] . '/files');
+			$exist = $rootView->file_exists($activity['file']);
+			$is_dir = $rootView->is_dir($activity['file']);
 			unset($rootView);
 
 			// show a preview image if the file still exists
