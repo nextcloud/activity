@@ -70,7 +70,7 @@ $groupHelper = new \OCA\Activity\GroupHelper(
 
 $tmpl = new \OCP\Template('activity', 'rss');
 
-$tmpl->assign('rssLang', \OC_Preferences::getValue(\OCP\User::getUser(), 'core', 'lang'));
+$tmpl->assign('rssLang', \OC::$server->getConfig()->getUserValue(\OCP\User::getUser(), 'core', 'lang'));
 $tmpl->assign('rssLink', \OC::$server->getURLGenerator()->getAbsoluteURL(
 	\OC::$server->getURLGenerator()->linkToRoute('activity.rss')
 ));
