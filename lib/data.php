@@ -23,21 +23,16 @@
 
 namespace OCA\Activity;
 
-use \OCP\DB;
-use \OCP\User;
-use \OCP\Util;
+use OCP\Activity\IExtension;
+use OCP\DB;
+use OCP\User;
+use OCP\Util;
 
 /**
  * @brief Class for managing the data in the activities
  */
 class Data
 {
-	const PRIORITY_VERYLOW 	= 10;
-	const PRIORITY_LOW	= 20;
-	const PRIORITY_MEDIUM	= 30;
-	const PRIORITY_HIGH	= 40;
-	const PRIORITY_VERYHIGH	= 50;
-
 	const TYPE_SHARED = 'shared';
 	const TYPE_SHARE_EXPIRED = 'share_expired';
 	const TYPE_SHARE_UNSHARED = 'share_unshared';
@@ -112,7 +107,7 @@ class Data
 	 * @param int    $prio Priority of the notification
 	 * @return bool
 	 */
-	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = '', $prio = Data::PRIORITY_MEDIUM) {
+	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = '', $prio = IExtension::PRIORITY_MEDIUM) {
 		$timestamp = time();
 		$user = User::getUser();
 		

@@ -23,6 +23,8 @@
 
 namespace OCA\Activity;
 
+use OCP\Activity\IExtension;
+
 /**
  * @brief The class to handle the filesystem hooks
  */
@@ -119,7 +121,7 @@ class Hooks {
 				$path, true,
 				!empty($filteredStreamUsers[$user]),
 				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
-				$activityType, Data::PRIORITY_HIGH
+				$activityType, IExtension::PRIORITY_HIGH
 			);
 		}
 	}
@@ -274,7 +276,7 @@ class Hooks {
 	 * @param string $type
 	 * @param int $priority
 	 */
-	protected static function addNotificationsForUser($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting, $type = Data::TYPE_SHARED, $priority = Data::PRIORITY_MEDIUM) {
+	protected static function addNotificationsForUser($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting, $type = Data::TYPE_SHARED, $priority = IExtension::PRIORITY_MEDIUM) {
 		if (!$streamSetting && !$emailSetting) {
 			return;
 		}
