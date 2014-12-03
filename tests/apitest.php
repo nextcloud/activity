@@ -21,7 +21,9 @@
  */
 
 namespace OCA\Activity\Tests;
+
 use OCA\Activity\Data;
+use OCP\Activity\IExtension;
 
 class ApiTest extends \Test\TestCase {
 	protected $originalWEBROOT;
@@ -63,7 +65,7 @@ class ApiTest extends \Test\TestCase {
 				'user',
 				$activity['affectedUser'],
 				time() + $loop,
-				Data::PRIORITY_MEDIUM,
+				IExtension::PRIORITY_MEDIUM,
 				$activity['type'],
 			));
 			$loop++;

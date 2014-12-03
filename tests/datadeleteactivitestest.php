@@ -23,6 +23,7 @@
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\Data;
+use OCP\Activity\IExtension;
 
 class DataDeleteActivitiesTest extends \Test\TestCase {
 	/** @var \OCA\Activity\Data */
@@ -51,7 +52,7 @@ class DataDeleteActivitiesTest extends \Test\TestCase {
 				'user',
 				$activity['affectedUser'],
 				$activity['time'],
-				Data::PRIORITY_MEDIUM,
+				IExtension::PRIORITY_MEDIUM,
 				'test',
 			));
 		}

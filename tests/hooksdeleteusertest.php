@@ -24,6 +24,7 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\Data;
 use OCA\Activity\Hooks;
+use OCP\Activity\IExtension;
 
 class HooksDeleteUserTest extends \Test\TestCase {
 	protected function setUp() {
@@ -50,7 +51,7 @@ class HooksDeleteUserTest extends \Test\TestCase {
 				'user',
 				$activity['affectedUser'],
 				time(),
-				Data::PRIORITY_MEDIUM,
+				IExtension::PRIORITY_MEDIUM,
 				'test',
 			));
 			$queryMailQueue->execute(array(
