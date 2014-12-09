@@ -27,6 +27,7 @@
 
 $l = \OCP\Util::getL10N('activity');
 $data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
+$userSettings = new \OCA\Activity\UserSettings(\OC::$server->getActivityManager());
 $groupHelper = new \OCA\Activity\GroupHelper(
 	\OC::$server->getActivityManager(),
 	new \OCA\Activity\DataHelper(
@@ -42,7 +43,7 @@ $filter = $data->getFilterFromParam();
 
 // Read the next 30 items for the endless scrolling
 $count = 30;
-$activity = $data->read($groupHelper, $page * $count, $count, $filter);
+$activity = $data->read($groupHelper, $userSettings, $page * $count, $count, $filter);
 
 // show the next 30 entries
 $tmpl = new \OCP\Template('activity', 'activities.part', '');

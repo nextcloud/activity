@@ -22,10 +22,14 @@
 
 namespace OCA\Activity\Tests;
 
+use OC\ActivityManager;
 use OCA\Activity\UserSettings;
 use OCA\Activity\Data;
 
-class UserSettingsTest extends \Test\TestCase {
+class UserSettingsTest extends TestCase {
+	/** @var UserSettings */
+	protected $userSettings;
+
 	protected function setUp() {
 		parent::setUp();
 
@@ -60,6 +64,8 @@ class UserSettingsTest extends \Test\TestCase {
 		foreach ($preferences as $preference) {
 			$query->execute($preference);
 		}
+
+		$this->userSettings = new UserSettings(new ActivityManager());
 	}
 
 	protected function tearDown() {
@@ -83,7 +89,7 @@ class UserSettingsTest extends \Test\TestCase {
 	 * @dataProvider getDefaultSettingData
 	 */
 	public function testGetDefaultSetting($method, $type, $expected) {
-		$this->assertEquals($expected, UserSettings::getDefaultSetting($method, $type));
+		$this->assertEquals($expected, $this->userSettings->getDefaultSetting($method, $type));
 	}
 
 	public function getNotificationTypesData() {
@@ -97,7 +103,7 @@ class UserSettingsTest extends \Test\TestCase {
 	 * @dataProvider getNotificationTypesData
 	 */
 	public function testGetNotificationTypes($user, $method, $expected) {
-		$this->assertEquals($expected, UserSettings::getNotificationTypes($user, $method));
+		$this->assertEquals($expected, $this->userSettings->getNotificationTypes($user, $method));
 	}
 
 	public function filterUsersBySettingData() {
@@ -117,6 +123,6 @@ class UserSettingsTest extends \Test\TestCase {
 	 * @dataProvider filterUsersBySettingData
 	 */
 	public function testFilterUsersBySetting($users, $method, $type, $expected) {
-		$this->assertEquals($expected, UserSettings::filterUsersBySetting($users, $method, $type));
+		$this->assertEquals($expected, $this->userSettings->filterUsersBySetting($users, $method, $type));
 	}
 }

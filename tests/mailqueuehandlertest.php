@@ -24,7 +24,7 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\MailQueueHandler;
 
-class MailQueueHandlerTest extends \Test\TestCase {
+class MailQueueHandlerTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 

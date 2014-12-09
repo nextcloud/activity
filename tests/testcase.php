@@ -22,34 +22,5 @@
 
 namespace OCA\Activity\Tests;
 
-class DataTest extends TestCase {
-	public function getFilterFromParamData() {
-		return array(
-			array('test', 'all'),
-			array('all', 'all'),
-			array('by', 'by'),
-			array('files', 'files'),
-			array('self', 'self'),
-			array('shares', 'shares'),
-			array('test', 'all'),
-			array(null, 'all'),
-		);
-	}
-
-	/**
-	 * @dataProvider getFilterFromParamData
-	 */
-	public function testGetFilterFromParam($globalValue, $expected) {
-		if ($globalValue !== null) {
-			$_GET['filter'] = $globalValue;
-		}
-
-		$data = new \OCA\Activity\Data(
-			$this->getMock('\OCP\Activity\IManager')
-		);
-		$this->assertEquals(
-			$expected,
-			$data->getFilterFromParam()
-		);
-	}
+abstract class TestCase extends \Test\TestCase {
 }

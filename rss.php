@@ -58,6 +58,7 @@ if (isset($_SERVER['HTTP_ACCEPT']) && stristr($_SERVER['HTTP_ACCEPT'], 'applicat
 // generate and show the rss feed
 $l = \OCP\Util::getL10N('activity');
 $data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
+$userSettings = new \OCA\Activity\UserSettings(\OC::$server->getActivityManager());
 $groupHelper = new \OCA\Activity\GroupHelper(
 	\OC::$server->getActivityManager(),
 	new \OCA\Activity\DataHelper(
@@ -77,7 +78,7 @@ $tmpl->assign('rssLink', \OC::$server->getURLGenerator()->getAbsoluteURL(
 $tmpl->assign('rssPubDate', date('r'));
 $tmpl->assign('user', \OCP\User::getUser());
 
-$tmpl->assign('activities', $data->read($groupHelper, 0, 30, 'all'));
+$tmpl->assign('activities', $data->read($groupHelper, $userSettings, 0, 30, 'all'));
 
 $tmpl->printPage();
 

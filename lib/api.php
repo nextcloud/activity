@@ -35,6 +35,7 @@ class Api
 	static public function get($param) {
 		$l = \OCP\Util::getL10N('activity');
 		$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
+		$userSettings = new \OCA\Activity\UserSettings(\OC::$server->getActivityManager());
 		$groupHelper = new \OCA\Activity\GroupHelper(
 			\OC::$server->getActivityManager(),
 			new \OCA\Activity\DataHelper(
@@ -48,7 +49,7 @@ class Api
 		$start = isset($_GET['start']) ? $_GET['start'] : 0;
 		$count = isset($_GET['count']) ? $_GET['count'] : self::DEFAULT_LIMIT;
 
-		$activities = $data->read($groupHelper, $start, $count, 'all');
+		$activities = $data->read($groupHelper, $userSettings, $start, $count, 'all');
 		$data = array();
 		foreach($activities as $entry) {
 			$data[] = array(

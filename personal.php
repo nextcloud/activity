@@ -25,6 +25,7 @@
 
 $l = \OCP\Util::getL10N('activity');
 $data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
+$userSettings = new \OCA\Activity\UserSettings(\OC::$server->getActivityManager());
 $types = $data->getNotificationTypes($l);
 
 $user = \OCP\User::getUser();
@@ -32,24 +33,24 @@ $activities = array();
 foreach ($types as $type => $desc) {
 	$activities[$type] = array(
 		'desc'		=> $desc,
-		'email'		=> \OCA\Activity\UserSettings::getUserSetting($user, 'email', $type),
-		'stream'	=> \OCA\Activity\UserSettings::getUserSetting($user, 'stream', $type),
+		'email'		=> $userSettings->getUserSetting($user, 'email', $type),
+		'stream'	=> $userSettings->getUserSetting($user, 'stream', $type),
 	);
 }
 
 $template = new \OCP\Template('activity', 'personal');
 $template->assign('activities', $activities);
-if (\OCA\Activity\UserSettings::getUserSetting($user, 'setting', 'batchtime') == 3600 * 24 * 7) {
+if ($userSettings->getUserSetting($user, 'setting', 'batchtime') == 3600 * 24 * 7) {
 	$template->assign('setting_batchtime', \OCA\Activity\UserSettings::EMAIL_SEND_WEEKLY);
 }
-else if (\OCA\Activity\UserSettings::getUserSetting($user, 'setting', 'batchtime') == 3600 * 24) {
+else if ($userSettings->getUserSetting($user, 'setting', 'batchtime') == 3600 * 24) {
 	$template->assign('setting_batchtime', \OCA\Activity\UserSettings::EMAIL_SEND_DAILY);
 }
 else {
 	$template->assign('setting_batchtime', \OCA\Activity\UserSettings::EMAIL_SEND_HOURLY);
 }
 $template->assign('activity_email', \OCP\Config::getUserValue($user, 'settings', 'email', ''));
-$template->assign('notify_self', \OCA\Activity\UserSettings::getUserSetting($user, 'setting', 'self'));
-$template->assign('notify_selfemail', \OCA\Activity\UserSettings::getUserSetting($user, 'setting', 'selfemail'));
+$template->assign('notify_self', $userSettings->getUserSetting($user, 'setting', 'self'));
+$template->assign('notify_selfemail', $userSettings->getUserSetting($user, 'setting', 'selfemail'));
 
 return $template->fetchPage();

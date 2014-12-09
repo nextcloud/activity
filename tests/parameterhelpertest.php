@@ -22,7 +22,7 @@
 
 namespace OCA\Activity\Tests;
 
-class ParameterHelperTest extends \Test\TestCase {
+class ParameterHelperTest extends TestCase {
 	/** @var string */
 	protected $originalWEBROOT;
 	/** @var \OCA\Activity\ParameterHelper */

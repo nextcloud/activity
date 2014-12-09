@@ -191,15 +191,16 @@ class Data
 	/**
 	 * @brief Read a list of events from the activity stream
 	 * @param GroupHelper $groupHelper Allows activities to be grouped
+	 * @param UserSettings $userSettings Gets the settings of the user
 	 * @param int $start The start entry
 	 * @param int $count The number of statements to read
 	 * @param string $filter Filter the activities
 	 * @return array
 	 */
-	public function read(GroupHelper $groupHelper, $start, $count, $filter = 'all') {
+	public function read(GroupHelper $groupHelper, UserSettings $userSettings, $start, $count, $filter = 'all') {
 		// get current user
 		$user = User::getUser();
-		$enabledNotifications = UserSettings::getNotificationTypes($user, 'stream');
+		$enabledNotifications = $userSettings->getNotificationTypes($user, 'stream');
 		$enabledNotifications = $this->filterNotificationTypes($enabledNotifications, $filter);
 
 		// We don't want to display any activities
