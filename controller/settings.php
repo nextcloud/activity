@@ -30,10 +30,18 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
+use OCP\IURLGenerator;
+use OCP\Security\ISecureRandom;
 
 class Settings extends Controller {
 	/** @var \OCP\IConfig */
 	protected $config;
+
+	/** @var \OCP\Security\ISecureRandom */
+	protected $random;
+
+	/** @var \OCP\IURLGenerator */
+	protected $urlGenerator;
 
 	/** @var \OCA\Activity\Data */
 	protected $dataHelper;
@@ -50,13 +58,17 @@ class Settings extends Controller {
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param IConfig $config
+	 * @param ISecureRandom $random
+	 * @param IURLGenerator $urlGenerator
 	 * @param Data $data
 	 * @param IL10N $l10n
 	 * @param string $user
 	 */
-	public function __construct($appName, IRequest $request, IConfig $config, Data $data, IL10N $l10n, $user) {
+	public function __construct($appName, IRequest $request, IConfig $config, ISecureRandom $random, IURLGenerator $urlGenerator, Data $data, IL10N $l10n, $user) {
 		parent::__construct($appName, $request);
 		$this->config = $config;
+		$this->random = $random;
+		$this->urlGenerator = $urlGenerator;
 		$this->dataHelper = $data;
 		$this->l10n = $l10n;
 		$this->user = $user;
@@ -112,6 +124,37 @@ class Settings extends Controller {
 			'status'	=>'success',
 			'data'		=> array(
 				'message'	=> $this->l10n->t('Your settings have been updated.'),
+			),
+		));
+	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+	 * @return DataResponse
+	 */
+	public function feed() {
+		$token = $tokenUrl = '';
+
+		if ($this->request->getParam('enable') === 'true') {
+			$conflicts = true;
+
+			// Check for collisions
+			while (!empty($conflicts)) {
+				$token = $this->random->generate(30);
+				$conflicts = $this->config->getUsersForUserValue('activity', 'rsstoken', $token);
+			}
+
+			$tokenUrl = $this->urlGenerator->linkToRouteAbsolute('activity.rss', array('token' => $token)); //FIXME
+		}
+
+		$this->config->setUserValue($this->user, 'activity', 'rsstoken', $token);
+
+		return new DataResponse(array(
+			'status'	=>'success',
+			'data'		=> array(
+				'message'	=> $this->l10n->t('Your settings have been updated.'),
+				'rsslink'	=> $tokenUrl,
 			),
 		));
 	}

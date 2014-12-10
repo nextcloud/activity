@@ -39,14 +39,18 @@ class Application extends App {
 		});
 
 		$container->registerService('ActivityL10N', function(IContainer $c) {
-			return \OCP\Util::getL10N('activity');
+			return $c->query('ServerContainer')->getL10N('activity');
 		});
 
 		$container->registerService('ActivitySettingsController', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
 			return new Settings(
 				$c->query('AppName'),
 				$c->query('Request'),
-				$c->query('ServerContainer')->getConfig(),
+				$server->getConfig(),
+				$server->getSecureRandom()->getMediumStrengthGenerator(),
+				$server->getURLGenerator(),
 				$c->query('ActivityData'),
 				$c->query('ActivityL10N'),
 				$c->query('ServerContainer')->getUserSession()->getUser()->getUID()

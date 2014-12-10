@@ -28,8 +28,6 @@ $this->create('activity.index', '')
 	->actionInclude('activity/index.php');
 $this->create('activity.ajax.fetch', 'ajax/fetch.php')
 	->actionInclude('activity/ajax/fetch.php');
-$this->create('activity.ajax.rssfeed', 'ajax/rssfeed.php')
-	->actionInclude('activity/ajax/rssfeed.php');
 $this->create('activity.rss', 'rss.php')
 	->actionInclude('activity/rss.php');
 
@@ -44,4 +42,5 @@ $this->create('activity.rss', 'rss.php')
 $application = new \OCA\Activity\AppInfo\Application();
 $application->registerRoutes($this, ['routes' => [
 	['name' => 'ActivitySettings#personal', 'url' => '/settings', 'verb' => 'POST'],
+	['name' => 'ActivitySettings#feed', 'url' => '/settings/feed', 'verb' => 'POST'],
 ]]);
