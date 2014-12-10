@@ -77,9 +77,15 @@ class Settings extends Controller {
 	/**
 	 * @NoAdminRequired
 	 *
+	 * @param int	$notify_setting_batchtime
+	 * @param bool	$notify_setting_self
+	 * @param bool	$notify_setting_selfemail
 	 * @return DataResponse
 	 */
-	public function personal() {
+	public function personal(
+			$notify_setting_batchtime = UserSettings::EMAIL_SEND_HOURLY,
+			$notify_setting_self = false,
+			$notify_setting_selfemail = false) {
 		$types = $this->dataHelper->getNotificationTypes($this->l10n);
 
 		foreach ($types as $type => $desc) {
@@ -97,10 +103,10 @@ class Settings extends Controller {
 		}
 
 		$email_batch_time = 3600;
-		if ($this->request->getParam('notify_setting_batchtime') == UserSettings::EMAIL_SEND_DAILY) {
+		if ($notify_setting_batchtime == UserSettings::EMAIL_SEND_DAILY) {
 			$email_batch_time = 3600 * 24;
 		}
-		if ($this->request->getParam('notify_setting_batchtime') == UserSettings::EMAIL_SEND_WEEKLY) {
+		if ($notify_setting_batchtime == UserSettings::EMAIL_SEND_WEEKLY) {
 			$email_batch_time = 3600 * 24 * 7;
 		}
 
@@ -112,12 +118,12 @@ class Settings extends Controller {
 		$this->config->setUserValue(
 			$this->user, 'activity',
 			'notify_setting_self',
-			$this->request->getParam('notify_setting_self', false)
+			$notify_setting_self
 		);
 		$this->config->setUserValue(
 			$this->user, 'activity',
 			'notify_setting_selfemail',
-			$this->request->getParam('notify_setting_selfemail', false)
+			$notify_setting_selfemail
 		);
 
 		return new DataResponse(array(
@@ -131,12 +137,13 @@ class Settings extends Controller {
 	/**
 	 * @NoAdminRequired
 	 *
+	 * @param string $enable	'true' if the feed is enabled
 	 * @return DataResponse
 	 */
-	public function feed() {
+	public function feed($enable) {
 		$token = $tokenUrl = '';
 
-		if ($this->request->getParam('enable') === 'true') {
+		if ($enable === 'true') {
 			$conflicts = true;
 
 			// Check for collisions
