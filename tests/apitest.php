@@ -25,7 +25,7 @@ namespace OCA\Activity\Tests;
 use OCA\Activity\Data;
 use OCP\Activity\IExtension;
 
-class ApiTest extends \Test\TestCase {
+class ApiTest extends TestCase {
 	protected $originalWEBROOT;
 
 	protected function setUp() {

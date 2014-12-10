@@ -23,10 +23,10 @@
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\Data;
-use OCA\Activity\Hooks;
+use OCA\Activity\HooksStatic;
 use OCP\Activity\IExtension;
 
-class HooksDeleteUserTest extends \Test\TestCase {
+class HooksDeleteUserTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
@@ -83,7 +83,7 @@ class HooksDeleteUserTest extends \Test\TestCase {
 
 		$this->assertUserActivities(array('delete', 'otherUser'));
 		$this->assertUserMailQueue(array('delete', 'otherUser'));
-		Hooks::deleteUser(array('uid' => 'delete'));
+		HooksStatic::deleteUser(array('uid' => 'delete'));
 		$this->assertUserActivities(array('otherUser'));
 		$this->assertUserMailQueue(array('otherUser'));
 	}

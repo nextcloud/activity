@@ -25,7 +25,7 @@ namespace OCA\Activity\Tests;
 use OCA\Activity\Data;
 use OCP\Activity\IExtension;
 
-class DataDeleteActivitiesTest extends \Test\TestCase {
+class DataDeleteActivitiesTest extends TestCase {
 	/** @var \OCA\Activity\Data */
 	protected $data;
 

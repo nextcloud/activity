@@ -22,7 +22,7 @@
 
 namespace OCA\Activity\Tests;
 
-class DataHelperTest extends \Test\TestCase {
+class DataHelperTest extends TestCase {
 	protected $originalWEBROOT;
 
 	protected function setUp() {
