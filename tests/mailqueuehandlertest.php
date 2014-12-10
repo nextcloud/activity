@@ -64,79 +64,11 @@ class MailQueueHandlerTest extends TestCase {
 	 * @dataProvider getAffectedUsersData
 	 */
 	public function testGetAffectedUsers($limit, $expected) {
-		$mq = new MailQueueHandler();
-		$users = $mq->getAffectedUsers($limit);
+		$mq = new MailQueueHandler(
+			$this->getMock('\OCP\IDateTimeFormatter')
+		);
+		$users = $mq->getAffectedUsers($limit, time());
 
 		$this->assertEquals($expected, $users);
-	}
-
-	public function generateRelativeDatetimeDataToday()
-	{
-		return array(
-			array(time(), ''),
-			array(time(), 'Europe/Berlin'),
-		);
-	}
-
-	/**
-	 * @dataProvider generateRelativeDatetimeDataToday
-	 */
-	public function testGenerateRelativeDatetimeToday($time, $timezone) {
-		$mq = new MailQueueHandler();
-		$l = \OC_L10N::get('activity');
-
-		$this->assertStringStartsWith((string) $l->t('Today %s', ''), \Test_Helper::invokePrivate($mq, 'generateRelativeDatetime', array(
-			$l,
-			$time,
-			$timezone
-		)));
-	}
-
-	public function generateRelativeDatetimeDataYesterday()
-	{
-		return array(
-			array(time() - 3600 * 24, ''),
-			array(time() - 3600 * 24, 'Europe/Berlin'),
-		);
-	}
-
-	/**
-	 * @dataProvider generateRelativeDatetimeDataYesterday
-	 */
-	public function testGenerateRelativeDatetimeYesterday($time, $timezone) {
-		$mq = new MailQueueHandler();
-		$l = \OC_L10N::get('activity');
-
-		$this->assertStringStartsWith((string) $l->t('Yesterday %s', ''), \Test_Helper::invokePrivate($mq, 'generateRelativeDatetime', array(
-			$l,
-			$time,
-			$timezone
-		)));
-	}
-
-	public function generateRelativeDatetimeDataOthers()
-	{
-		return array(
-			array(time() - 3600 * 48, ''),
-			array(time() - 3600 * 48, 'Europe/Berlin'),
-			array(time() + 3600 * 24, ''),
-			array(time() + 3600 * 24, 'Europe/Berlin'),
-		);
-	}
-
-	/**
-	 * @dataProvider generateRelativeDatetimeDataOthers
-	 */
-	public function testGenerateRelativeDatetimeOthers($time, $timezone) {
-		$mq = new MailQueueHandler();
-		$l = \OC_L10N::get('activity');
-		$result = \Test_Helper::invokePrivate($mq, 'generateRelativeDatetime', array(
-			$l,
-			$time,
-			$timezone
-		));
-
-		$this->assertStringStartsNotWith((string) $l->t('Today %s', ''), $result);
-		$this->assertStringStartsNotWith((string) $l->t('Yesterday %s', ''), $result);
 	}
 }
