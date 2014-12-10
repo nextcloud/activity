@@ -25,6 +25,10 @@ namespace OCA\Activity\AppInfo;
 use \OCP\AppFramework\App;
 use \OCP\IContainer;
 use \OCA\Activity\Data;
+use \OCA\Activity\DataHelper;
+use \OCA\Activity\GroupHelper;
+use \OCA\Activity\UserSettings;
+use \OCA\Activity\Controller\Activities;
 use \OCA\Activity\Controller\Settings;
 
 class Application extends App {
@@ -35,6 +39,28 @@ class Application extends App {
 		$container->registerService('ActivityData', function(IContainer $c) {
 			return new Data(
 				$c->query('ServerContainer')->query('ActivityManager')
+			);
+		});
+
+		$container->registerService('UserSettings', function(IContainer $c) {
+			return new UserSettings(
+				$c->query('ServerContainer')->query('ActivityManager')
+			);
+		});
+
+		$container->registerService('GroupHelper', function(IContainer $c) {
+			return new GroupHelper(
+				$c->query('ServerContainer')->query('ActivityManager'),
+				$c->query('DataHelper'),
+				true
+			);
+		});
+
+		$container->registerService('DataHelper', function(IContainer $c) {
+			return new DataHelper(
+				$c->query('ServerContainer')->query('ActivityManager'),
+				new \OCA\Activity\ParameterHelper(new \OC\Files\View(''), $c->query('ActivityL10N')),
+				$c->query('ActivityL10N')
 			);
 		});
 
@@ -54,6 +80,16 @@ class Application extends App {
 				$c->query('ActivityData'),
 				$c->query('ActivityL10N'),
 				$c->query('ServerContainer')->getUserSession()->getUser()->getUID()
+			);
+		});
+
+		$container->registerService('ActivityActivitiesController', function(IContainer $c) {
+			return new Activities(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('ActivityData'),
+				$c->query('GroupHelper'),
+				$c->query('UserSettings')
 			);
 		});
 	}

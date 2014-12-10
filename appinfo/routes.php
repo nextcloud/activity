@@ -43,4 +43,5 @@ $application = new \OCA\Activity\AppInfo\Application();
 $application->registerRoutes($this, ['routes' => [
 	['name' => 'ActivitySettings#personal', 'url' => '/settings', 'verb' => 'POST'],
 	['name' => 'ActivitySettings#feed', 'url' => '/settings/feed', 'verb' => 'POST'],
+	['name' => 'ActivityActivities#fetch', 'url' => '/activities/fetch', 'verb' => 'GET'],
 ]]);
