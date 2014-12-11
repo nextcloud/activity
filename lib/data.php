@@ -284,12 +284,26 @@ class Data
 	/**
 	 * Get the filter from $_GET
 	 * @return string
+	 * @deprecated Use validateFilter() instead
 	 */
 	public function getFilterFromParam() {
 		if (!isset($_GET['filter']))
 			return 'all';
 
-		$filterValue = $_GET['filter'];
+		return $this->validateFilter($_GET['filter']);
+	}
+
+	/**
+	 * Verify that the filter is valid
+	 *
+	 * @param string $filter
+	 * @return string
+	 */
+	public function validateFilter($filterValue) {
+		if (!isset($filterValue)) {
+			return 'all';
+		}
+
 		switch ($filterValue) {
 			case 'by':
 			case 'self':

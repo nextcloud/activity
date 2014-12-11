@@ -40,9 +40,10 @@ $(function(){
 				OCActivity.Filter.currentPage++;
 
 				$.get(
-					OC.filePath('activity', 'ajax', 'fetch.php'),
+					OC.generateUrl('/apps/activity/activities/fetch'),
 					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
 					function(data) {
+						console.log(data);
 						if (data.length) {
 							OCActivity.InfinitScrolling.appendContent(data);
 
@@ -71,7 +72,7 @@ $(function(){
 
 				OCActivity.InfinitScrolling.ignoreScroll = true;
 				$.get(
-					OC.filePath('activity', 'ajax', 'fetch.php'),
+					OC.generateUrl('/apps/activity/activities/fetch'),
 					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
 					function(data) {
 						OCActivity.InfinitScrolling.appendContent(data);
