@@ -26,8 +26,7 @@ namespace OCA\Activity;
 use \OCP\Util;
 use \OCP\Activity\IManager;
 
-class DataHelper
-{
+class DataHelper {
 	/** @var \OCP\Activity\IManager */
 	protected $activityManager;
 
@@ -59,11 +58,12 @@ class DataHelper
 			return '';
 		}
 
+		$preparedParams = $this->parameterHelper->prepareParameters(
+			$params, $this->parameterHelper->getSpecialParameterList($app, $text),
+			$stripPath, $highlightParams
+		);
+
 		if ($app === 'files') {
-			$preparedParams = $this->parameterHelper->prepareParameters(
-				$params, $this->parameterHelper->getSpecialParameterList($app, $text),
-				$stripPath, $highlightParams
-			);
 			switch ($text) {
 				case 'created_self':
 					return $this->l->t('You created %1$s', $preparedParams);
@@ -96,14 +96,14 @@ class DataHelper
 
 		// Allow other apps to correctly translate their activities
 		$translation = $this->activityManager->translate(
-			$app, $text, $params, $stripPath, $highlightParams, $this->l->getLanguageCode());
+			$app, $text, $preparedParams, $stripPath, $highlightParams, $this->l->getLanguageCode());
 
 		if ($translation !== false) {
 			return $translation;
 		}
 
 		$l = Util::getL10N($app);
-		return $l->t($text, $params);
+		return $l->t($text, $preparedParams);
 	}
 
 	/**

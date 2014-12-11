@@ -37,7 +37,15 @@ class ParameterHelperTest extends TestCase {
 		\OC::$WEBROOT = '';
 		$l = \OCP\Util::getL10N('activity');
 		$this->view = new \OC\Files\View('');
-		$this->parameterHelper = new \OCA\Activity\ParameterHelper($this->view, $l);
+		$manager = $this->getMock('\OCP\Activity\IManager');
+		$manager->expects($this->any())
+			->method('getSpecialParameterList')
+			->will($this->returnValue(false));
+		$this->parameterHelper = new \OCA\Activity\ParameterHelper(
+			$manager,
+			$this->view,
+			$l
+		);
 	}
 
 	protected function tearDown() {
