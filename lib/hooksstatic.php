@@ -33,13 +33,13 @@ class HooksStatic {
 	 * All other events has to be triggered by the apps.
 	 */
 	public static function register() {
-		Util::connectHook('OC_Filesystem', 'post_create', 'OCA\Activity\Hooks', 'fileCreate');
-		Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Activity\Hooks', 'fileUpdate');
-		Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\Hooks', 'fileDelete');
-		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Activity\Hooks', 'fileRestore');
-		Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\Hooks', 'share');
+		Util::connectHook('OC_Filesystem', 'post_create', 'OCA\Activity\HooksStatic', 'fileCreate');
+		Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Activity\HooksStatic', 'fileUpdate');
+		Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\HooksStatic', 'fileDelete');
+		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Activity\HooksStatic', 'fileRestore');
+		Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\HooksStatic', 'share');
 
-		Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\Hooks', 'deleteUser');
+		Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\HooksStatic', 'deleteUser');
 
 		// hooking up the activity manager
 		$am = \OC::$server->getActivityManager();
