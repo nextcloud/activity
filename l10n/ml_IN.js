@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "നിങ്ങളുടെ താത്പര്യങ്ങൾ പരിഷ്കരിച്ചു",
     "Activity" : "പ്രവൃത്തി",
+    "Your settings have been updated." : "നിങ്ങളുടെ താത്പര്യങ്ങൾ പരിഷ്കരിച്ചു",
     "A file or folder has been <strong>shared</strong>" : "ഒരു ഫയലോ അറയോ <strong>പങ്കിട്ടിരിക്കുന്നു</strong>",
     "You created %1$s" : "നിങ്ങൾ %1$s സൃഷ്ടിച്ചു",
     "%2$s created %1$s" : "%2$s %1$s സൃഷ്ടിച്ചു",

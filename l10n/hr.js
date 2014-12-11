@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Vaše su postavke ažurirane",
     "Activity" : "Aktivnost",
+    "Your settings have been updated." : "Vaše su postavke ažurirane",
     "A file or folder has been <strong>shared</strong>" : "Datoteka ili mapa su <strong>podijeljeni</strong>",
     "A new file or folder has been <strong>created</strong>" : "Nova datoteka ili nova mapa su <strong>kreirani</strong>",
     "A file or folder has been <strong>changed</strong>" : "Datoteka ili mapa su <strong>promijenjeni</strong>",

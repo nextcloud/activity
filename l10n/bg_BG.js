@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Вашите настройки са актуализирани",
     "Activity" : "Активност",
+    "Your settings have been updated." : "Вашите настройки са актуализирани",
     "A file or folder has been <strong>shared</strong>" : "Файл или папка беше <strong>споделен</strong>",
     "A new file or folder has been <strong>created</strong>" : "Нов файл или папка беше <strong>създаден</strong>",
     "A file or folder has been <strong>changed</strong>" : "Файл или папка беше <strong>променен</strong>",

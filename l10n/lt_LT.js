@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Jūsų nustatymai buvo atnaujinti.",
     "Activity" : "Veikla",
+    "Your settings have been updated." : "Jūsų nustatymai buvo atnaujinti.",
     "A file or folder has been <strong>shared</strong>" : "Failas ar aplankas buvo <strong>pasidalintas</strong>",
     "A new file or folder has been <strong>created</strong>" : "Naujas failas ar aplankas buvo <strong>sukurtas</strong>",
     "A file or folder has been <strong>changed</strong>" : "Failas ar aplankas buvo <strong>pakeistas</strong>",

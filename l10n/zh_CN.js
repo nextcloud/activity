@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "您的设置已更新。",
     "Activity" : "动态",
+    "Your settings have been updated." : "您的设置已更新。",
     "A file or folder has been <strong>shared</strong>" : "一个文件或文件夹已<strong>共享</strong>。",
     "A new file or folder has been <strong>created</strong>" : "一个新的文件或文件夹已被<strong>创建</strong>",
     "A file or folder has been <strong>changed</strong>" : "一个文件或文件夹已被<strong>修改</strong>",

@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Sizin configləriniz yenilendi.",
     "Activity" : "Fəallıq",
+    "Your settings have been updated." : "Sizin configləriniz yenilendi.",
     "A file or folder has been <strong>shared</strong>" : "Fayl və ya direktoriya <strong>yayımlandı</strong>",
     "A new file or folder has been <strong>created</strong>" : "Yeni fayl və ya direktoriya <strong>yaradılmışdır</strong>",
     "A file or folder has been <strong>changed</strong>" : "Fayl və ya direktoriya <strong>dəyişdirilib</strong>",

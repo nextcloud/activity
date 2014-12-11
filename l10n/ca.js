@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "La configuració s'ha actualitzat.",
     "Activity" : "Activitat",
+    "Your settings have been updated." : "La configuració s'ha actualitzat.",
     "A file or folder has been <strong>shared</strong>" : "S'ha <strong>compartit</strong> un fitxer o una carpeta",
     "A new file or folder has been <strong>created</strong>" : "S'ha <strong>creat</strong> un nou fitxer o una nova carpeta",
     "A file or folder has been <strong>changed</strong>" : "S'ha <strong>canviat</strong> un fitxer o una carpeta",

@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Zure ezarpenak eguneratu dira.",
     "Activity" : "Jarduera",
+    "Your settings have been updated." : "Zure ezarpenak eguneratu dira.",
     "A file or folder has been <strong>shared</strong>" : "Fitxategia edo karpeta <strong>konpartitu</strong> da",
     "A new file or folder has been <strong>created</strong>" : "Fitxategi edo karpeta berri bat <strong>sortu da</strong>",
     "A file or folder has been <strong>changed</strong>" : "Fitxategi edo karpeta bat <strong>aldatu da</strong>",

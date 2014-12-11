@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Anováronse los tos axustes.",
     "Activity" : "Actividá",
+    "Your settings have been updated." : "Anováronse los tos axustes.",
     "A file or folder has been <strong>shared</strong>" : "<strong>Compartióse</strong> un ficheru o direutoriu",
     "A new file or folder has been <strong>created</strong>" : "<strong>Creóse</strong> un ficheru o carpeta nuevos",
     "A file or folder has been <strong>changed</strong>" : "<strong>Camudóse</strong> un ficheru o carpeta",

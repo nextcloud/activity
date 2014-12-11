@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "تنظیمات شما به روز رسانی شد",
     "Activity" : "فعالیت",
+    "Your settings have been updated." : "تنظیمات شما به روز رسانی شد",
     "A file or folder has been <strong>shared</strong>" : "فایل یا پوشه ای به <strong>اشتراک</strong> گذاشته شد",
     "A new file or folder has been <strong>created</strong>" : "فایل یا پوشه ای <strong>ایجاد</strong> شد",
     "A file or folder has been <strong>changed</strong>" : "فایل یا پوشه ای به <strong>تغییر</strong> یافت",

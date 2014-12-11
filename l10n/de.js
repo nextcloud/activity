@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Deine Einstellungen wurden aktualisiert.",
     "Activity" : "Aktivität",
+    "Your settings have been updated." : "Deine Einstellungen wurden aktualisiert.",
     "A file or folder has been <strong>shared</strong>" : "Eine Datei oder Ordner wurde <strong>geteilt</strong>",
     "A new file or folder has been <strong>created</strong>" : "Eine Datei oder Ordner wurde <strong>erstellt</strong>",
     "A file or folder has been <strong>changed</strong>" : "Eine Datei oder Ordner wurde <strong>geändert</strong>",

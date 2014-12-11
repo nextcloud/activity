@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Setările au fost actualizate",
     "Activity" : "Activitate",
+    "Your settings have been updated." : "Setările au fost actualizate",
     "A file or folder has been <strong>shared</strong>" : "Un fișier sau director a fost <strong>partajat</strong>",
     "A new file or folder has been <strong>created</strong>" : "Un nou fișier sau director a fost <strong>creat</strong>",
     "A file or folder has been <strong>changed</strong>" : "Un nou fișier sau director a fost <strong>modificat</strong>",

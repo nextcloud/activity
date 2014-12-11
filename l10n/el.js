@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Οι ρυθμίσεις σας έχουν ενημερωθεί.",
     "Activity" : "Δραστηριότητα",
+    "Your settings have been updated." : "Οι ρυθμίσεις σας έχουν ενημερωθεί.",
     "A file or folder has been <strong>shared</strong>" : "Ένα αρχείο ή φάκελος <strong>διαμοιράστηκε</strong>",
     "A new file or folder has been <strong>created</strong>" : "Ένα νέο αρχείο ή κατάλογος έχουν <strong>δημιουργηθεί</strong>",
     "A file or folder has been <strong>changed</strong>" : "Ένα αρχείο ή κατάλογος έχουν <strong>αλλάξει</strong>",

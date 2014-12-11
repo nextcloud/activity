@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Asetuksesi on päivitetty.",
     "Activity" : "Toimet",
+    "Your settings have been updated." : "Asetuksesi on päivitetty.",
     "A file or folder has been <strong>shared</strong>" : "Tiedosto tai kansio on <strong>jaettu</strong>",
     "A new file or folder has been <strong>created</strong>" : "Uusi tiedosto tai kansio on <strong>luotu</strong>",
     "A file or folder has been <strong>changed</strong>" : "Tiedostoa tai kansiota on <strong>muutettu</strong>",

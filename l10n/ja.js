@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "設定を更新しました。",
     "Activity" : "アクティビティ",
+    "Your settings have been updated." : "設定を更新しました。",
     "A file or folder has been <strong>shared</strong>" : "ファイルまたはフォルダーを<strong>共有</strong>しました",
     "A new file or folder has been <strong>created</strong>" : "新しいファイルまたはフォルダーを<strong>作成</strong>しました",
     "A file or folder has been <strong>changed</strong>" : "ファイルまたはフォルダーを<strong>変更</strong>しました",

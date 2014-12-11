@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Ваші налаштування було оновлено.",
     "Activity" : "Активність",
+    "Your settings have been updated." : "Ваші налаштування було оновлено.",
     "A file or folder has been <strong>shared</strong>" : "Файл або теку було відкрито для <strong> спільного користування </strong>",
     "A new file or folder has been <strong>created</strong>" : "Новий файл або теку було <strong>створено</strong>",
     "A file or folder has been <strong>changed</strong>" : "Файл або теку було <strong> змінено </strong>",

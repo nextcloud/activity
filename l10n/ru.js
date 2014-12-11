@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Настройки обновлены.",
     "Activity" : "Журнал",
+    "Your settings have been updated." : "Настройки обновлены.",
     "A file or folder has been <strong>shared</strong>" : "Файл или папка был(а) <strong> опубликована </strong>",
     "A new file or folder has been <strong>created</strong>" : "<strong>Создан</strong> новый файл или папка",
     "A file or folder has been <strong>changed</strong>" : "<strong>Изменен</strong> файл или папка",

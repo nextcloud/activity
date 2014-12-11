@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Uw instellingen zijn bijgewerkt",
     "Activity" : "Activiteit",
+    "Your settings have been updated." : "Uw instellingen zijn bijgewerkt",
     "A file or folder has been <strong>shared</strong>" : "Een bestand of map is <strong>gedeeld</strong>",
     "A new file or folder has been <strong>created</strong>" : "Een nieuw bestand of map is <strong>aangemaakt</strong>",
     "A file or folder has been <strong>changed</strong>" : "Een bestand of map is <strong>gewijzigd</strong>",

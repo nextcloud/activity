@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Your settings have been updated." : "Beállításait sikeresen frissítettük.",
     "Activity" : "Aktivitás",
+    "Your settings have been updated." : "Beállításait sikeresen frissítettük.",
     "A file or folder has been <strong>shared</strong>" : "Fájl vagy könyvtár <strong>megosztása</strong>",
     "A new file or folder has been <strong>created</strong>" : "Új fájl vagy könyvtár <strong>létrehozása</strong>",
     "A file or folder has been <strong>changed</strong>" : "Fájl vagy könyvtár <strong>módosítása</strong>",
