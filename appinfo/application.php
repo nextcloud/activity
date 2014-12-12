@@ -131,14 +131,12 @@ class Application extends App {
 		$container->registerService('ActivitiesController', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
-
 			$user = $server->getUserSession()->getUser();
 			$userName = ($user) ? $user->getUID() : '';
 
 			return new Activities(
 				$c->query('AppName'),
 				$c->query('Request'),
-				$server->getConfig(),
 				$c->query('ActivityData'),
 				$c->query('GroupHelper'),
 				$c->query('Navigation'),
