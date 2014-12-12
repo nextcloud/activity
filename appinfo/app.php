@@ -21,22 +21,26 @@
  *
  */
 
-$l = OC_L10N::get('activity');
+namespace OCA\Activity\AppInfo;
+
+$app = new Application();
+$c = $app->getContainer();
 
 // add an navigation entry
-OCP\App::addNavigationEntry(array(
-	'id' => 'activity',
+$navigationEntry = array(
+	'id' => $c->getAppName(),
 	'order' => 1,
-	'href' => OCP\Util::linkToRoute('activity.index'),
-	'icon' => OCP\Util::imagePath('activity', 'activity.svg'),
-	'name' => $l->t('Activity'),
-));
+	'name' => $c->query('ActivityL10N')->t('Activity'),
+	'href' => $c->query('URLGenerator')->linkToRoute('activity.Activities.showList'),
+	'icon' => $c->query('URLGenerator')->imagePath('activity', 'activity.svg'),
+);
+$c->query('ServerContainer')->getNavigationManager()->add($navigationEntry);
 
 // register the hooks for filesystem operations. All other events from other apps has to be send via the public api
-OCA\Activity\HooksStatic::register();
+\OCA\Activity\HooksStatic::register();
 
 // Personal settings for notifications and emails
-OCP\App::registerPersonal('activity', 'personal');
+\OCP\App::registerPersonal($c->getAppName(), 'personal');
 
 // Cron job for sending Emails
-OCP\Backgroundjob::registerJob('OCA\Activity\BackgroundJob\EmailNotification');
+\OCP\Backgroundjob::registerJob('OCA\Activity\BackgroundJob\EmailNotification');

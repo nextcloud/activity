@@ -28,14 +28,15 @@ use OCA\Activity\Controller\Settings;
 use OCA\Activity\Data;
 use OCA\Activity\DataHelper;
 use OCA\Activity\GroupHelper;
+use OCA\Activity\Navigation;
 use OCA\Activity\ParameterHelper;
 use OCA\Activity\UserSettings;
 use OCP\AppFramework\App;
 use OCP\IContainer;
 
 class Application extends App {
-	public function __construct (array $urlParams=[]) {
-		parent::__construct('Activity', $urlParams);
+	public function __construct (array $urlParams = array()) {
+		parent::__construct('activity', $urlParams);
 		$container = $this->getContainer();
 
 		$container->registerService('ActivityData', function(IContainer $c) {
@@ -72,11 +73,23 @@ class Application extends App {
 			);
 		});
 
+		$container->registerService('Navigation', function(IContainer $c) {
+			return new Navigation(
+				$c->query('ActivityL10N'),
+				$c->query('ServerContainer')->query('ActivityManager'),
+				$c->query('URLGenerator')
+			);
+		});
+
 		$container->registerService('ActivityL10N', function(IContainer $c) {
 			return $c->query('ServerContainer')->getL10N('activity');
 		});
 
-		$container->registerService('ActivitySettingsController', function(IContainer $c) {
+		$container->registerService('URLGenerator', function(IContainer $c) {
+			return $c->query('ServerContainer')->getURLGenerator();
+		});
+
+		$container->registerService('SettingsController', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 			return new Settings(
@@ -84,20 +97,25 @@ class Application extends App {
 				$c->query('Request'),
 				$server->getConfig(),
 				$server->getSecureRandom()->getMediumStrengthGenerator(),
-				$server->getURLGenerator(),
+				$c->query('URLGenerator'),
 				$c->query('ActivityData'),
 				$c->query('ActivityL10N'),
-				$c->query('ServerContainer')->getUserSession()->getUser()->getUID()
+				$server->getUserSession()->getUser()->getUID()
 			);
 		});
 
-		$container->registerService('ActivityActivitiesController', function(IContainer $c) {
+		$container->registerService('ActivitiesController', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
 			return new Activities(
 				$c->query('AppName'),
 				$c->query('Request'),
+				$server->getConfig(),
 				$c->query('ActivityData'),
 				$c->query('GroupHelper'),
-				$c->query('UserSettings')
+				$c->query('Navigation'),
+				$c->query('UserSettings'),
+				$server->getUserSession()->getUser()->getUID()
 			);
 		});
 	}

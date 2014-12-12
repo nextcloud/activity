@@ -24,10 +24,6 @@
 namespace OCA\Activity\AppInfo;
 
 /** @var $this \OC\Route\Router */
-$this->create('activity.index', '')
-	->actionInclude('activity/index.php');
-$this->create('activity.ajax.fetch', 'ajax/fetch.php')
-	->actionInclude('activity/ajax/fetch.php');
 $this->create('activity.rss', 'rss.php')
 	->actionInclude('activity/rss.php');
 
@@ -39,9 +35,10 @@ $this->create('activity.rss', 'rss.php')
 	'activity'
 );
 
-$application = new \OCA\Activity\AppInfo\Application();
+$application = new Application();
 $application->registerRoutes($this, ['routes' => [
-	['name' => 'ActivitySettings#personal', 'url' => '/settings', 'verb' => 'POST'],
-	['name' => 'ActivitySettings#feed', 'url' => '/settings/feed', 'verb' => 'POST'],
-	['name' => 'ActivityActivities#fetch', 'url' => '/activities/fetch', 'verb' => 'GET'],
+	['name' => 'Settings#personal', 'url' => '/settings', 'verb' => 'POST'],
+	['name' => 'Settings#feed', 'url' => '/settings/feed', 'verb' => 'POST'],
+	['name' => 'Activities#showList', 'url' => '/', 'verb' => 'GET'],
+	['name' => 'Activities#fetch', 'url' => '/activities/fetch', 'verb' => 'GET'],
 ]]);

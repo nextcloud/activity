@@ -24,7 +24,10 @@
 /** @var $l OC_L10N */
 /** @var $theme OC_Defaults */
 /** @var $_ array */
+script('activity', 'script');
+style('activity', 'style');
 ?>
+
 <?php $_['appNavigation']->printPage(); ?>
 
 <div id="app-content">
