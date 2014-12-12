@@ -39,24 +39,17 @@ class Application extends App {
 		parent::__construct('activity', $urlParams);
 		$container = $this->getContainer();
 
+		/**
+		 * Activity Services
+		 */
 		$container->registerService('ActivityData', function(IContainer $c) {
 			return new Data(
 				$c->query('ServerContainer')->query('ActivityManager')
 			);
 		});
 
-		$container->registerService('UserSettings', function(IContainer $c) {
-			return new UserSettings(
-				$c->query('ServerContainer')->query('ActivityManager')
-			);
-		});
-
-		$container->registerService('GroupHelper', function(IContainer $c) {
-			return new GroupHelper(
-				$c->query('ServerContainer')->query('ActivityManager'),
-				$c->query('DataHelper'),
-				true
-			);
+		$container->registerService('ActivityL10N', function(IContainer $c) {
+			return $c->query('ServerContainer')->getL10N('activity');
 		});
 
 		$container->registerService('DataHelper', function(IContainer $c) {
@@ -73,6 +66,14 @@ class Application extends App {
 			);
 		});
 
+		$container->registerService('GroupHelper', function(IContainer $c) {
+			return new GroupHelper(
+				$c->query('ServerContainer')->query('ActivityManager'),
+				$c->query('DataHelper'),
+				true
+			);
+		});
+
 		$container->registerService('Navigation', function(IContainer $c) {
 			return new Navigation(
 				$c->query('ActivityL10N'),
@@ -81,14 +82,22 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('ActivityL10N', function(IContainer $c) {
-			return $c->query('ServerContainer')->getL10N('activity');
+		$container->registerService('UserSettings', function(IContainer $c) {
+			return new UserSettings(
+				$c->query('ServerContainer')->query('ActivityManager')
+			);
 		});
 
+		/**
+		 * Core Services
+		 */
 		$container->registerService('URLGenerator', function(IContainer $c) {
 			return $c->query('ServerContainer')->getURLGenerator();
 		});
 
+		/**
+		 * Controller
+		 */
 		$container->registerService('SettingsController', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
