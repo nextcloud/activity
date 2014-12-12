@@ -23,19 +23,23 @@
 
 namespace OCA\Activity;
 
-use \OCP\User;
-use \OCP\Util;
-use \OC\Files\View;
+use OCP\Activity\IManager;
+use OCP\User;
+use OCP\Util;
+use OC\Files\View;
 
-class ParameterHelper
-{
+class ParameterHelper {
+	/** @var \OCP\Activity\IManager */
+	protected $activityManager;
+
 	/** @var \OC\Files\View */
 	protected $rootView;
 
 	/** @var \OC_L10N */
 	protected $l;
 
-	public function __construct(View $rootView, \OC_L10N $l) {
+	public function __construct(IManager $activityManager, View $rootView, \OC_L10N $l) {
+		$this->activityManager = $activityManager;
 		$this->rootView = $rootView;
 		$this->l = $l;
 	}
@@ -274,6 +278,13 @@ class ParameterHelper
 		else if ($app === 'files') {
 			return array(0 => 'file', 1 => 'username');
 		}
+
+		$specialParameters = $this->activityManager->getSpecialParameterList($app, $text);
+
+		if ($specialParameters !== false) {
+			return $specialParameters;
+		}
+
 		return array();
 	}
 }

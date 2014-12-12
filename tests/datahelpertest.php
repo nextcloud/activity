@@ -129,6 +129,7 @@ class DataHelperTest extends TestCase {
 		$dataHelper = new \OCA\Activity\DataHelper(
 			$this->getMock('\OCP\Activity\IManager'),
 			new \OCA\Activity\ParameterHelper(
+				$this->getMock('\OCP\Activity\IManager'),
 				new \OC\Files\View(''),
 				\OCP\Util::getL10N('activity')
 			),

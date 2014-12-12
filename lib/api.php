@@ -40,7 +40,11 @@ class Api
 			\OC::$server->getActivityManager(),
 			new \OCA\Activity\DataHelper(
 				\OC::$server->getActivityManager(),
-				new \OCA\Activity\ParameterHelper(new \OC\Files\View(''), $l),
+				new \OCA\Activity\ParameterHelper(
+					\OC::$server->getActivityManager(),
+					new \OC\Files\View(''),
+					$l
+				),
 				$l
 			),
 			false

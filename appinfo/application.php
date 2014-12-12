@@ -22,14 +22,16 @@
 
 namespace OCA\Activity\AppInfo;
 
-use \OCP\AppFramework\App;
-use \OCP\IContainer;
-use \OCA\Activity\Data;
-use \OCA\Activity\DataHelper;
-use \OCA\Activity\GroupHelper;
-use \OCA\Activity\UserSettings;
-use \OCA\Activity\Controller\Activities;
-use \OCA\Activity\Controller\Settings;
+use OC\Files\View;
+use OCA\Activity\Controller\Activities;
+use OCA\Activity\Controller\Settings;
+use OCA\Activity\Data;
+use OCA\Activity\DataHelper;
+use OCA\Activity\GroupHelper;
+use OCA\Activity\ParameterHelper;
+use OCA\Activity\UserSettings;
+use OCP\AppFramework\App;
+use OCP\IContainer;
 
 class Application extends App {
 	public function __construct (array $urlParams=[]) {
@@ -57,9 +59,15 @@ class Application extends App {
 		});
 
 		$container->registerService('DataHelper', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
 			return new DataHelper(
-				$c->query('ServerContainer')->query('ActivityManager'),
-				new \OCA\Activity\ParameterHelper(new \OC\Files\View(''), $c->query('ActivityL10N')),
+				$server->query('ActivityManager'),
+				new ParameterHelper (
+					$server->query('ActivityManager'),
+					new View(''),
+					$c->query('ActivityL10N')
+				),
 				$c->query('ActivityL10N')
 			);
 		});
