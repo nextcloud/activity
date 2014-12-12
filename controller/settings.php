@@ -77,9 +77,9 @@ class Settings extends Controller {
 	/**
 	 * @NoAdminRequired
 	 *
-	 * @param int	$notify_setting_batchtime
-	 * @param bool	$notify_setting_self
-	 * @param bool	$notify_setting_selfemail
+	 * @param int $notify_setting_batchtime
+	 * @param bool $notify_setting_self
+	 * @param bool $notify_setting_selfemail
 	 * @return DataResponse
 	 */
 	public function personal(

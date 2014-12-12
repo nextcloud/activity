@@ -25,13 +25,18 @@ namespace OCA\Activity\Controller;
 
 use OCA\Activity\Data;
 use OCA\Activity\GroupHelper;
+use OCA\Activity\Navigation;
 use OCA\Activity\UserSettings;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IConfig;
 use OCP\IRequest;
 
 class Activities extends Controller {
 	const DEFAULT_PAGE_SIZE = 30;
+
+	/** @var \OCP\IConfig */
+	protected $config;
 
 	/** @var \OCA\Activity\Data */
 	protected $data;
@@ -39,33 +44,64 @@ class Activities extends Controller {
 	/** @var \OCA\Activity\GroupHelper */
 	protected $helper;
 
+	/** @var \OCA\Activity\Navigation */
+	protected $navigation;
+
 	/** @var \OCA\Activity\UserSettings */
 	protected $settings;
+
+	/** @var string */
+	protected $user;
 
 	/**
 	 * constructor of the controller
 	 *
 	 * @param string $appName
 	 * @param IRequest $request
+	 * @param IConfig $config
 	 * @param Data $data
 	 * @param GroupHelper $helper
+	 * @param Navigation $navigation
 	 * @param UserSettings $settings
+	 * @param string $user
 	 */
-	public function __construct($appName, IRequest $request, Data $data, GroupHelper $helper, UserSettings $settings) {
+	public function __construct($appName, IRequest $request, IConfig $config, Data $data, GroupHelper $helper, Navigation $navigation, UserSettings $settings, $user) {
 		parent::__construct($appName, $request);
+		$this->config = $config;
 		$this->data = $data;
 		$this->helper = $helper;
+		$this->navigation = $navigation;
 		$this->settings = $settings;
+		$this->user = $user;
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 *
+	 * @param string $filter
+	 * @return TemplateResponse
+	 */
+	public function showList($filter = 'all') {
+
+		$filter = $this->data->validateFilter($filter);
+
+		$this->navigation->setRSSToken($this->config->getUserValue($this->user, 'activity', 'rsstoken'));
+
+		return new TemplateResponse('activity', 'list', [
+			'appNavigation'	=> $this->navigation->getTemplate($filter),
+			'filter'		=> $filter,
+		]);
 	}
 
 	/**
 	 * @NoAdminRequired
 	 *
-	 * @param int		$page
-	 * @param string	$filter
+	 * @param int $page
+	 * @param string $filter
 	 * @return TemplateResponse
 	 */
-	public function fetch($page, $filter) {
+	public function fetch($page, $filter = 'all') {
 		$pageOffset = $page - 1;
 		$filter = $this->data->validateFilter($filter);
 

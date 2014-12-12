@@ -111,22 +111,22 @@ class Navigation {
 			array(
 				'id' => 'all',
 				'name' => (string) $this->l->t('All Activities'),
-				'url' => Util::linkToRoute('activity.index'),
+				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList'),
 			),
 			array(
 				'id' => 'self',
 				'name' => (string) $this->l->t('Activities by you'),
-				'url' => Util::linkToRoute('activity.index', array('filter' => 'self')),
+				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'self')),
 			),
 			array(
 				'id' => 'by',
 				'name' => (string) $this->l->t('Activities by others'),
-				'url' => Util::linkToRoute('activity.index', array('filter' => 'by')),
+				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'by')),
 			),
 			array(
 				'id' => 'shares',
 				'name' => (string) $this->l->t('Shares'),
-				'url' => Util::linkToRoute('activity.index', array('filter' => 'shares')),
+				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'shares')),
 			),
 		);
 
@@ -134,7 +134,7 @@ class Navigation {
 			array(
 				'id' => 'files',
 				'name' => (string) $this->l->t('Files'),
-				'url' => Util::linkToRoute('activity.index', array('filter' => 'files')),
+				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'files')),
 			),
 		);
 
