@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s сподели %1$s с теб.",
     "You shared %1$s via link" : "Ти сподели %1$s посредством връзка.",
     "Activity notification" : "Известия за активност",
-    "Today %s" : "Днес %s",
-    "Yesterday %s" : "Вчера %s",
     "All Activities" : "Активност на всички",
     "Activities by you" : "Твоята активност",
     "Activities by others" : "Активността на другите",

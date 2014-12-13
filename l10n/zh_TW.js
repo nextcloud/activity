@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s 與您分享了 %1$s",
     "You shared %1$s via link" : "您以連結分享了 %1$s",
     "Activity notification" : "活動通知",
-    "Today %s" : "今天 %s",
-    "Yesterday %s" : "昨天 %s",
     "All Activities" : "所有活動",
     "Activities by you" : "您的活動",
     "Activities by others" : "其他人的活動",

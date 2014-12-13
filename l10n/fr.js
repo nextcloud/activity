@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s a partagé %1$s avec vous",
     "You shared %1$s via link" : "Vous avez partagé %1$s via lien public",
     "Activity notification" : "Notification d'activité",
-    "Today %s" : "Aujourd'hui %s",
-    "Yesterday %s" : "Hier %s",
     "All Activities" : "Toutes activités",
     "Activities by you" : "Vos activités",
     "Activities by others" : "L'activité des autres",

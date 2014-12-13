@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "Ο %2$s διαμοιράστηκε το %1$s με εσάς",
     "You shared %1$s via link" : "Μοιραστήκατε το %1$s μέσω συνδέσμου",
     "Activity notification" : "Ειδοποίηση δραστηριότητας",
-    "Today %s" : "Σήμερα %s",
-    "Yesterday %s" : "Χθές %s",
     "All Activities" : "Όλες οι Δραστηριότητες",
     "Activities by you" : "Δραστηριότητες από εσάς",
     "Activities by others" : "Δραστηριότητες από άλλους",

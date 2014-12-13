@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s megosztotta velem ezt: %1$s",
     "You shared %1$s via link" : "Megosztottam link segítségével: %1$s",
     "Activity notification" : "Aktivitási értesítés",
-    "Today %s" : "ma %s",
-    "Yesterday %s" : "tegnap %s",
     "All Activities" : "Minden tevékenység",
     "Activities by you" : "Saját tevékenységem",
     "Activities by others" : "Mások tevékenysége",

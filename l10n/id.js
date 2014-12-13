@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s membagikan %1$s dengan Anda",
     "You shared %1$s via link" : "Anda membagikan %1$s via tautan",
     "Activity notification" : "Pemberitahuan aktivitas",
-    "Today %s" : "Hari ini %s",
-    "Yesterday %s" : "Kemarin %s",
     "All Activities" : "Semua Aktivitas",
     "Activities by you" : "Aktivitas oleh Anda",
     "Activities by others" : "Aktivitas oleh orang lain",

@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s vám zdieľal %1$s",
     "You shared %1$s via link" : "Zdieľate %1$s prostredníctvom odkazu",
     "Activity notification" : "Upozornenia na aktivity",
-    "Today %s" : "Dnes %s",
-    "Yesterday %s" : "Včera %s",
     "All Activities" : "Všetky aktivity",
     "Activities by you" : "Vaše aktivity",
     "Activities by others" : "Aktivity ostatných",

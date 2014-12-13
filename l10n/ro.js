@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s a partajat %1$s cu tine",
     "You shared %1$s via link" : "Ai partajat %1$s prin legătură",
     "Activity notification" : "Notificări de activitate",
-    "Today %s" : "Azi %s",
-    "Yesterday %s" : "Ieri %s",
     "All Activities" : "Toate acțiunile",
     "Activities by you" : "Activitățile tale",
     "Activities by others" : "Activitățile altora",

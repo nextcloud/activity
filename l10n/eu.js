@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$sk zurekin %1$s elkarbanatu du",
     "You shared %1$s via link" : "Konpartitu duzu %1$s esteka baten bidez",
     "Activity notification" : "Jarduera jakinarazpenak",
-    "Today %s" : "Gaur %s",
-    "Yesterday %s" : "Atzo %s",
     "All Activities" : "Jarduera guztiak",
     "Activities by you" : "Zure jarduerak",
     "Activities by others" : "Besteen jarduerak",

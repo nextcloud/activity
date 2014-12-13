@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s delade %1$s med dig",
     "You shared %1$s via link" : "Du delade %1$s via länk",
     "Activity notification" : "Aktivitet notifiering",
-    "Today %s" : "Idag %s",
-    "Yesterday %s" : "Igår %s",
     "All Activities" : "Alla aktiviteter",
     "Activities by you" : "Aktivitet av dig",
     "Activities by others" : "Aktiviteter av andra",

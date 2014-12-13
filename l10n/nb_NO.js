@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s delte %1$s med deg",
     "You shared %1$s via link" : "Du delte %1$s via lenke",
     "Activity notification" : "Varsel om aktivitet",
-    "Today %s" : "I dag %s",
-    "Yesterday %s" : "I går %s",
     "All Activities" : "Alle aktiviteter",
     "Activities by you" : "Dine aktiviteter",
     "Activities by others" : "Andres aktiviteter",

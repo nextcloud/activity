@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s compartió %1$s contigo",
     "You shared %1$s via link" : "Compartisti %1$s per enllaz",
     "Activity notification" : "Notificación d'actividá",
-    "Today %s" : "Güei %s",
-    "Yesterday %s" : "Ayeri %s",
     "All Activities" : "Toles actividaes",
     "Activities by you" : "Actividaes propies",
     "Activities by others" : "Actividaes d'otros",

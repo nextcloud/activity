@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s открыл Вам доступ к %1$s",
     "You shared %1$s via link" : "Вы открыли доступ к %1$s по ссылке",
     "Activity notification" : "Уведомление об активности",
-    "Today %s" : "Сегодня %s",
-    "Yesterday %s" : "Вчера %s",
     "All Activities" : "Все действия",
     "Activities by you" : "Ваши действия",
     "Activities by others" : "Действия других пользователей",

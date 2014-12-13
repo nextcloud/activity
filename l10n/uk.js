@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s поділився %1$s з вами",
     "You shared %1$s via link" : "Ви поділилися %1$s використовуючи лінк",
     "Activity notification" : "Повідомлення активності",
-    "Today %s" : "Сьогодні %s",
-    "Yesterday %s" : "Вчора %s",
     "All Activities" : "Вся Активність",
     "Activities by you" : "Ваша активність",
     "Activities by others" : "Інша активність",

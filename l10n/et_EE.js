@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s jagas sinuga %1$s",
     "You shared %1$s via link" : "Jagasid %1$s lingiga",
     "Activity notification" : "Tegvuste teavitused",
-    "Today %s" : "Täna %s",
-    "Yesterday %s" : "Eile %s",
     "All Activities" : "Kõik tegevused",
     "Activities by you" : "Sinu toimingud",
     "Activities by others" : "Teiste toimingud",

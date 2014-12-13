@@ -22,8 +22,6 @@ OC.L10N.register(
     "%2$s shared %1$s with you" : "%2$s は %1$s をあなたと共有しました",
     "You shared %1$s via link" : "リンク経由で %1$s を共有しています",
     "Activity notification" : "アクティビティ通知",
-    "Today %s" : "今日 %s",
-    "Yesterday %s" : "昨日 %s",
     "All Activities" : "すべてのアクティビティ",
     "Activities by you" : "あなたのアクティビティ",
     "Activities by others" : "他人のアクティビティ",
