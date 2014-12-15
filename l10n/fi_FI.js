@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Muiden toimet",
     "Shares" : "Jaot",
     "Files" : "Tiedostot",
+    "in %s" : "polussa %s",
     "%s and %s" : "%s ja %s",
     ", " : ", ",
     "%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>::%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>" : ["%s ja <strong class=\"tooltip\" title=\"%s\">%n lisää</strong>","%s ja <strong class=\"tooltip\" title=\"%s\">%n lisää</strong>"],
