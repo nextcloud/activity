@@ -23,6 +23,7 @@
 namespace OCA\Activity\AppInfo;
 
 use OC\Files\View;
+use OCA\Activity\Consumer;
 use OCA\Activity\Controller\Activities;
 use OCA\Activity\Controller\Settings;
 use OCA\Activity\Data;
@@ -50,6 +51,13 @@ class Application extends App {
 
 		$container->registerService('ActivityL10N', function(IContainer $c) {
 			return $c->query('ServerContainer')->getL10N('activity');
+		});
+
+
+		$container->registerService('Consumer', function(IContainer $c) {
+			return new Consumer(
+				$c->query('UserSettings')
+			);
 		});
 
 		$container->registerService('DataHelper', function(IContainer $c) {

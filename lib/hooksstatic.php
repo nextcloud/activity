@@ -40,12 +40,6 @@ class HooksStatic {
 		Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\HooksStatic', 'share');
 
 		Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\HooksStatic', 'deleteUser');
-
-		// hooking up the activity manager
-		$am = \OC::$server->getActivityManager();
-		$am->registerConsumer(function() {
-			return new Consumer();
-		});
 	}
 
 	/**
