@@ -75,16 +75,25 @@ class Application extends App {
 		});
 
 		$container->registerService('Navigation', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
+			$user = $server->getUserSession()->getUser();
+			$rssToken = ($user) ? $server->getConfig()->getUserValue($user->getUID(), 'activity', 'rsstoken') : '';
+
 			return new Navigation(
 				$c->query('ActivityL10N'),
-				$c->query('ServerContainer')->query('ActivityManager'),
-				$c->query('URLGenerator')
+				$server->query('ActivityManager'),
+				$c->query('URLGenerator'),
+				$rssToken
 			);
 		});
 
 		$container->registerService('UserSettings', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
 			return new UserSettings(
-				$c->query('ServerContainer')->query('ActivityManager')
+				$server->query('ActivityManager')
 			);
 		});
 
@@ -92,7 +101,9 @@ class Application extends App {
 		 * Core Services
 		 */
 		$container->registerService('URLGenerator', function(IContainer $c) {
-			return $c->query('ServerContainer')->getURLGenerator();
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+			return $server->getURLGenerator();
 		});
 
 		/**
@@ -101,6 +112,10 @@ class Application extends App {
 		$container->registerService('SettingsController', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
+
+			$user = $server->getUserSession()->getUser();
+			$userName = ($user) ? $user->getUID() : '';
+
 			return new Settings(
 				$c->query('AppName'),
 				$c->query('Request'),
@@ -109,22 +124,24 @@ class Application extends App {
 				$c->query('URLGenerator'),
 				$c->query('ActivityData'),
 				$c->query('ActivityL10N'),
-				$server->getUserSession()->getUser()->getUID()
+				$userName
 			);
 		});
 
 		$container->registerService('ActivitiesController', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
+			$user = $server->getUserSession()->getUser();
+			$userName = ($user) ? $user->getUID() : '';
+
 			return new Activities(
 				$c->query('AppName'),
 				$c->query('Request'),
-				$server->getConfig(),
 				$c->query('ActivityData'),
 				$c->query('GroupHelper'),
 				$c->query('Navigation'),
 				$c->query('UserSettings'),
-				$server->getUserSession()->getUser()->getUID()
+				$userName
 			);
 		});
 	}

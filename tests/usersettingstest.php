@@ -81,7 +81,10 @@ class UserSettingsTest extends TestCase {
 			array('stream', Data::TYPE_SHARE_CREATED, true),
 			array('email', Data::TYPE_SHARED, true),
 			array('email', Data::TYPE_SHARE_CREATED, false),
+			array('setting', 'self', true),
+			array('setting', 'selfemail', false),
 			array('setting', 'batchtime', 3600),
+			array('setting', 'not-exists', false),
 		);
 	}
 

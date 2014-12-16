@@ -22,6 +22,11 @@
 
 namespace OCA\Activity\Tests;
 
+use OC\Files\View;
+use OCA\Activity\DataHelper;
+use OCA\Activity\ParameterHelper;
+use OCP\Util;
+
 class DataHelperTest extends TestCase {
 	protected $originalWEBROOT;
 
@@ -119,6 +124,17 @@ class DataHelperTest extends TestCase {
 				. ' <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=C.txt">SubFolder/C.txt</a>'
 				. ' and <strong class="tooltip" title="SubFolder/D.txt, SubFolder/E.txt, SubFolder/F.txt">3 more</strong>',
 			),
+
+			['created_public', ['/SubFolder/A.txt'], true, false, 'A.txt was created in a public folder'],
+			['changed_self', ['/SubFolder/A.txt'], true, false, 'You changed A.txt'],
+			['changed_by', ['/SubFolder/A.txt', 'UserB'], true, false, 'UserB changed A.txt'],
+			['deleted_self', ['/SubFolder/A.txt'], true, false, 'You deleted A.txt'],
+			['deleted_by', ['/SubFolder/A.txt', 'UserB'], true, false, 'UserB deleted A.txt'],
+			['restored_self', ['/SubFolder/A.txt'], true, false, 'You restored A.txt'],
+			['restored_by', ['/SubFolder/A.txt', 'UserB'], true, false, 'UserB restored A.txt'],
+			['shared_user_self', ['/SubFolder/A.txt', 'UserB'], true, false, 'You shared A.txt with UserB'],
+			['shared_group_self', ['/SubFolder/A.txt', 'GroupC'], true, false, 'You shared A.txt with group GroupC'],
+			['shared_with_by', ['/SubFolder/A.txt', 'UserB'], true, false, 'UserB shared A.txt with you'],
 		);
 	}
 
@@ -126,19 +142,94 @@ class DataHelperTest extends TestCase {
 	 * @dataProvider translationData
 	 */
 	public function testTranslation($text, $params, $stripPath, $highlightParams, $expected) {
-		$dataHelper = new \OCA\Activity\DataHelper(
+		$dataHelper = new DataHelper(
 			$this->getMock('\OCP\Activity\IManager'),
-			new \OCA\Activity\ParameterHelper(
+			new ParameterHelper(
 				$this->getMock('\OCP\Activity\IManager'),
-				new \OC\Files\View(''),
-				\OCP\Util::getL10N('activity')
+				new View(''),
+				Util::getL10N('activity')
 			),
-			\OCP\Util::getL10N('activity')
+			Util::getL10N('activity')
 		);
 
 		$this->assertEquals(
 			$expected,
 			(string) $dataHelper->translation('files', $text, $params, $stripPath, $highlightParams)
 		);
+	}
+
+	public function translationNotActivityAppData() {
+		return array(
+			array(
+				'You created %1$s', array('/SubFolder/A.txt'), false, false,
+				'You created /SubFolder/A.txt',
+			),
+			array(
+				'You created %1$s', array('/SubFolder/A.txt'), true, false,
+				'You created /SubFolder/A.txt',
+			),
+			array(
+				'You created %1$s', array('/SubFolder/A.txt'), false, true,
+				'You created <strong>/SubFolder/A.txt</strong>',
+			),
+			array(
+				'You created %1$s', array('/SubFolder/A.txt'), true, true,
+				'You created <strong>/SubFolder/A.txt</strong>',
+			),
+		);
+	}
+
+
+	/**
+	 * @dataProvider translationNotActivityAppData
+	 */
+	public function testTranslationNotActivityApp($text, $params, $stripPath, $highlightParams, $expected) {
+		$manager = $this->getMock('\OCP\Activity\IManager');
+		$manager->expects($this->any())
+			->method('translate')
+			->willReturn(false);
+		$dataHelper = new DataHelper(
+			$manager,
+			new ParameterHelper(
+				$manager,
+				new View(''),
+				Util::getL10N('activity')
+			),
+			Util::getL10N('activity')
+		);
+
+		$this->assertEquals(
+			$expected,
+			(string) $dataHelper->translation('activity', $text, $params, $stripPath, $highlightParams)
+		);
+	}
+
+	public function getTypeIconData() {
+		return [
+			['file_changed', 'icon-change'],
+			['otherApp', ''],
+		];
+	}
+
+
+	/**
+	 * @dataProvider getTypeIconData
+	 */
+	public function testGetTypeIcon($type, $expected) {
+		$manager = $this->getMock('\OCP\Activity\IManager');
+		$manager->expects($this->any())
+			->method('getTypeIcon')
+			->willReturn('');
+		$dataHelper = new DataHelper(
+			$manager,
+			new ParameterHelper(
+				$manager,
+				new View(''),
+				Util::getL10N('activity')
+			),
+			Util::getL10N('activity')
+		);
+
+		$this->assertEquals($expected, $dataHelper->getTypeIcon($type));
 	}
 }

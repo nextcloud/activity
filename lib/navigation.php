@@ -55,14 +55,22 @@ class Navigation {
 	 * @param \OC_L10N $l
 	 * @param \OCP\Activity\IManager $manager
 	 * @param \OCP\IURLGenerator $URLGenerator
+	 * @param string $rssToken
 	 * @param null|string $active Navigation entry that should be marked as active
 	 */
-	public function __construct(\OC_L10N $l, IManager $manager, IURLGenerator $URLGenerator, $active = 'all') {
+	public function __construct(\OC_L10N $l, IManager $manager, IURLGenerator $URLGenerator, $rssToken, $active = 'all') {
 		$this->l = $l;
 		$this->activityManager = $manager;
 		$this->URLGenerator = $URLGenerator;
 		$this->active = $active;
-		$this->rssLink = '';
+
+		if ($rssToken) {
+			$this->rssLink = $this->URLGenerator->getAbsoluteURL(
+				$this->URLGenerator->linkToRoute('activity.rss', array('token' => $rssToken))
+			);
+		} else {
+			$this->rssLink = '';
+		}
 	}
 
 	/**
@@ -88,17 +96,6 @@ class Navigation {
 		$template->assign('rssLink', $this->rssLink);
 
 		return $template;
-	}
-
-	public function setRSSToken($rssToken) {
-		if ($rssToken) {
-			$this->rssLink = $this->URLGenerator->getAbsoluteURL(
-				$this->URLGenerator->linkToRoute('activity.rss', array('token' => $rssToken))
-			);
-		}
-		else {
-			$this->rssLink = '';
-		}
 	}
 
 	/**

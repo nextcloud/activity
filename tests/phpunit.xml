@@ -15,7 +15,9 @@
 			<directory suffix=".php">../../activity</directory>
 			<exclude>
 				<directory suffix=".php">../../activity/l10n</directory>
+				<directory suffix=".php">../../activity/templates</directory>
 				<directory suffix=".php">../../activity/tests</directory>
+				<file>../../activity/appinfo/update.php</file>
 			</exclude>
 		</whitelist>
 	</filter>
