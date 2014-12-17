@@ -28,6 +28,7 @@ use OCA\Activity\Controller\Settings;
 use OCA\Activity\Data;
 use OCA\Activity\DataHelper;
 use OCA\Activity\GroupHelper;
+use OCA\Activity\Hooks;
 use OCA\Activity\Navigation;
 use OCA\Activity\ParameterHelper;
 use OCA\Activity\UserSettings;
@@ -56,9 +57,9 @@ class Application extends App {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 			return new DataHelper(
-				$server->query('ActivityManager'),
+				$server->getActivityManager(),
 				new ParameterHelper (
-					$server->query('ActivityManager'),
+					$server->getActivityManager(),
 					new View(''),
 					$c->query('ActivityL10N')
 				),
@@ -68,22 +69,28 @@ class Application extends App {
 
 		$container->registerService('GroupHelper', function(IContainer $c) {
 			return new GroupHelper(
-				$c->query('ServerContainer')->query('ActivityManager'),
+				$c->query('ServerContainer')->getActivityManager(),
 				$c->query('DataHelper'),
 				true
+			);
+		});
+
+		$container->registerService('Hooks', function(IContainer $c) {
+			return new Hooks(
+				$c->query('ActivityData'),
+				$c->query('UserSettings'),
+				$c->query('CurrentUID')
 			);
 		});
 
 		$container->registerService('Navigation', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
-
-			$user = $server->getUserSession()->getUser();
-			$rssToken = ($user) ? $server->getConfig()->getUserValue($user->getUID(), 'activity', 'rsstoken') : '';
+			$rssToken = ($c->query('CurrentUID') !== '') ? $server->getConfig()->getUserValue($c->query('CurrentUID'), 'activity', 'rsstoken') : '';
 
 			return new Navigation(
 				$c->query('ActivityL10N'),
-				$server->query('ActivityManager'),
+				$server->getActivityManager(),
 				$c->query('URLGenerator'),
 				$rssToken
 			);
@@ -93,7 +100,9 @@ class Application extends App {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 			return new UserSettings(
-				$server->query('ActivityManager')
+				$server->getActivityManager(),
+				$server->getConfig(),
+				$c->query('ActivityData')
 			);
 		});
 
@@ -106,15 +115,20 @@ class Application extends App {
 			return $server->getURLGenerator();
 		});
 
+		$container->registerService('CurrentUID', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
+			$user = $server->getUserSession()->getUser();
+			return ($user) ? $user->getUID() : '';
+		});
+
 		/**
 		 * Controller
 		 */
 		$container->registerService('SettingsController', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
-
-			$user = $server->getUserSession()->getUser();
-			$userName = ($user) ? $user->getUID() : '';
 
 			return new Settings(
 				$c->query('AppName'),
@@ -124,16 +138,11 @@ class Application extends App {
 				$c->query('URLGenerator'),
 				$c->query('ActivityData'),
 				$c->query('ActivityL10N'),
-				$userName
+				$c->query('CurrentUID')
 			);
 		});
 
 		$container->registerService('ActivitiesController', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-			$user = $server->getUserSession()->getUser();
-			$userName = ($user) ? $user->getUID() : '';
-
 			return new Activities(
 				$c->query('AppName'),
 				$c->query('Request'),
@@ -141,7 +150,7 @@ class Application extends App {
 				$c->query('GroupHelper'),
 				$c->query('Navigation'),
 				$c->query('UserSettings'),
-				$userName
+				$c->query('CurrentUID')
 			);
 		});
 	}

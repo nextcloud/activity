@@ -20,15 +20,15 @@
 * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-\OCP\Util::addScript('activity', 'settings');
-\OCP\Util::addStyle('activity', 'settings');
+$app = new \OCA\Activity\AppInfo\Application();
+$container = $app->getContainer();
+$server = $app->getContainer()->getServer();
 
-$l = \OCP\Util::getL10N('activity');
-$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
-$userSettings = new \OCA\Activity\UserSettings(\OC::$server->getActivityManager());
-$types = $data->getNotificationTypes($l);
+$data = $container->query('ActivityData');
+$userSettings = $container->query('UserSettings');
+$types = $data->getNotificationTypes($container->query('ActivityL10N'));
 
-$user = \OCP\User::getUser();
+$user = $server->getUserSession()->getUser()->getUID();
 $activities = array();
 foreach ($types as $type => $desc) {
 	$activities[$type] = array(
@@ -49,7 +49,7 @@ else if ($userSettings->getUserSetting($user, 'setting', 'batchtime') == 3600 * 
 else {
 	$template->assign('setting_batchtime', \OCA\Activity\UserSettings::EMAIL_SEND_HOURLY);
 }
-$template->assign('activity_email', \OCP\Config::getUserValue($user, 'settings', 'email', ''));
+$template->assign('activity_email', $server->getConfig()->getUserValue($user, 'settings', 'email', ''));
 $template->assign('notify_self', $userSettings->getUserSetting($user, 'setting', 'self'));
 $template->assign('notify_selfemail', $userSettings->getUserSetting($user, 'setting', 'selfemail'));
 

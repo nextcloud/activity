@@ -23,7 +23,9 @@
 
 namespace OCA\Activity;
 
-use \OCP\Config;
+use OCP\Activity\IManager;
+use OCP\IConfig;
+use OCP\Util;
 
 /**
  * Class UserSettings
@@ -31,15 +33,28 @@ use \OCP\Config;
  * @package OCA\Activity
  */
 class UserSettings {
-	/** @var \OCP\Activity\IManager */
+	/** @var IManager */
 	protected $manager;
+
+	/** @var IConfig */
+	protected $config;
+
+	/** @var Data */
+	protected $data;
 
 	const EMAIL_SEND_HOURLY = 0;
 	const EMAIL_SEND_DAILY = 1;
 	const EMAIL_SEND_WEEKLY = 2;
 
-	public function __construct(\OCP\Activity\IManager $manager) {
+	/**
+	 * @param IManager $manager
+	 * @param IConfig $config
+	 * @param Data $data
+	 */
+	public function __construct(IManager $manager, IConfig $config, Data $data) {
 		$this->manager = $manager;
+		$this->config = $config;
+		$this->data = $data;
 	}
 
 	/**
@@ -53,7 +68,7 @@ class UserSettings {
 	 * @return mixed
 	 */
 	public function getUserSetting($user, $method, $type) {
-		return Config::getUserValue( // FIXME
+		return $this->config->getUserValue(
 			$user,
 			'activity',
 			'notify_' . $method . '_' . $type,
@@ -91,25 +106,25 @@ class UserSettings {
 	 */
 	public function getDefaultTypes($method) {
 		$settings = array();
-		switch ($method) {
-			case 'stream':
-				$settings[] = Data::TYPE_SHARE_CREATED;
-				$settings[] = Data::TYPE_SHARE_CHANGED;
-				$settings[] = Data::TYPE_SHARE_DELETED;
-//				$settings[] = Data::TYPE_SHARE_RESHARED;
-				$settings[] = Data::TYPE_SHARE_RESTORED;
+		if ($method === 'stream') {
+			$settings[] = Data::TYPE_SHARE_CREATED;
+			$settings[] = Data::TYPE_SHARE_CHANGED;
+			$settings[] = Data::TYPE_SHARE_DELETED;
+//			$settings[] = Data::TYPE_SHARE_RESHARED;
+			$settings[] = Data::TYPE_SHARE_RESTORED;
 
-//				$settings[] = Data::TYPE_SHARE_DOWNLOADED;
+//			$settings[] = Data::TYPE_SHARE_DOWNLOADED;
+		}
 
-			case 'email':
-				$settings[] = Data::TYPE_SHARED;
-//				$settings[] = Data::TYPE_SHARE_EXPIRED;
-//				$settings[] = Data::TYPE_SHARE_UNSHARED;
+		if ($method === 'stream' || $method === 'email') {
+			$settings[] = Data::TYPE_SHARED;
+//			$settings[] = Data::TYPE_SHARE_EXPIRED;
+//			$settings[] = Data::TYPE_SHARE_UNSHARED;
 //
-//				$settings[] = Data::TYPE_SHARE_UPLOADED;
+//			$settings[] = Data::TYPE_SHARE_UPLOADED;
 //
-//				$settings[] = Data::TYPE_STORAGE_QUOTA_90;
-//				$settings[] = Data::TYPE_STORAGE_FAILURE;
+//			$settings[] = Data::TYPE_STORAGE_QUOTA_90;
+//			$settings[] = Data::TYPE_STORAGE_FAILURE;
 		}
 
 		// Allow other apps to add notification types to the default setting
@@ -127,9 +142,8 @@ class UserSettings {
 	 * @return array
 	 */
 	public function getNotificationTypes($user, $method) {
-		$l = \OC_L10N::get('activity');// FIXME
-		$data = new Data($this->manager); // FIXME
-		$types = $data->getNotificationTypes($l);
+		$l = Util::getL10N('activity');
+		$types = $this->data->getNotificationTypes($l);
 
 		$notificationTypes = array();
 		foreach ($types as $type => $desc) {
@@ -155,10 +169,8 @@ class UserSettings {
 			return array();
 		}
 
-		$preferences = new \OC\Preferences(\OC_DB::getConnection()); // FIXME
 		$filteredUsers = array();
-
-		$potentialUsers = $preferences->getValueForUsers('activity', 'notify_' . $method . '_' . $type, $users); // FIXME
+		$potentialUsers = $this->config->getUserValueForUsers('activity', 'notify_' . $method . '_' . $type, $users);
 		foreach ($potentialUsers as $user => $value) {
 			if ($value) {
 				$filteredUsers[$user] = true;
@@ -168,7 +180,7 @@ class UserSettings {
 
 		// Get the batch time setting from the database
 		if ($method == 'email') {
-			$potentialUsers = $preferences->getValueForUsers('activity', 'notify_setting_batchtime', array_keys($filteredUsers)); // FIXME
+			$potentialUsers = $this->config->getUserValueForUsers('activity', 'notify_setting_batchtime', array_keys($filteredUsers));
 			foreach ($potentialUsers as $user => $value) {
 				$filteredUsers[$user] = $value;
 			}

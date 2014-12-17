@@ -52,7 +52,8 @@ class HooksStatic {
 	 * @return Hooks
 	 */
 	static protected function getHooks() {
-		return new Hooks(new Data(\OC::$server->getActivityManager()), new UserSettings(\OC::$server->getActivityManager()), \OC::$server->getUserSession()->getUser()->getUID());
+		$app = new AppInfo\Application();
+		return $app->getContainer()->query('Hooks');
 	}
 
 	/**

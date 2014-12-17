@@ -33,30 +33,21 @@ class Api
 	const DEFAULT_LIMIT = 30;
 
 	static public function get($param) {
-		$l = \OCP\Util::getL10N('activity');
-		$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
-		$userSettings = new \OCA\Activity\UserSettings(\OC::$server->getActivityManager());
-		$groupHelper = new \OCA\Activity\GroupHelper(
-			\OC::$server->getActivityManager(),
-			new \OCA\Activity\DataHelper(
-				\OC::$server->getActivityManager(),
-				new \OCA\Activity\ParameterHelper(
-					\OC::$server->getActivityManager(),
-					new \OC\Files\View(''),
-					$l
-				),
-				$l
-			),
-			false
-		);
+		$app = new AppInfo\Application();
+		$data = $app->getContainer()->query('ActivityData');
 
 		$start = isset($_GET['start']) ? $_GET['start'] : 0;
 		$count = isset($_GET['count']) ? $_GET['count'] : self::DEFAULT_LIMIT;
 
-		$activities = $data->read($groupHelper, $userSettings, $start, $count, 'all');
-		$data = array();
+		$activities = $data->read(
+			$app->getContainer()->query('GroupHelper'),
+			$app->getContainer()->query('UserSettings'),
+			$start, $count, 'all'
+		);
+
+		$entries = array();
 		foreach($activities as $entry) {
-			$data[] = array(
+			$entries[] = array(
 				'id' => $entry['activity_id'],
 				'subject' => (string) $entry['subjectformatted']['full'],
 				'message' => (string) $entry['messageformatted']['full'],
@@ -66,6 +57,6 @@ class Api
 			);
 		}
 
-		return new \OC_OCS_Result($data);
+		return new \OC_OCS_Result($entries);
 	}
 }

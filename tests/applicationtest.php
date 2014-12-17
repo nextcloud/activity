@@ -48,6 +48,7 @@ class ApplicationTest extends TestCase {
 			array('ActivityL10N', 'OCP\IL10N'),
 			array('DataHelper', 'OCA\Activity\DataHelper'),
 			array('GroupHelper', 'OCA\Activity\GroupHelper'),
+			array('Hooks', 'OCA\Activity\Hooks'),
 			array('Navigation', 'OCA\Activity\Navigation'),
 			array('UserSettings', 'OCA\Activity\UserSettings'),
 			array('URLGenerator', 'OCP\IURLGenerator'),

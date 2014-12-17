@@ -55,26 +55,14 @@ if (isset($_SERVER['HTTP_ACCEPT']) && stristr($_SERVER['HTTP_ACCEPT'], 'applicat
 	header('Content-Type: text/xml; charset=UTF-8');
 }
 
+$app = new OCA\Activity\AppInfo\Application();
+$container = $app->getContainer();
+$data = $container->query('ActivityData');
+$userSettings = $container->query('UserSettings');
+$groupHelper = $container->query('GroupHelper');
+
 // generate and show the rss feed
-$l = \OCP\Util::getL10N('activity');
-$data = new \OCA\Activity\Data(\OC::$server->getActivityManager());
-$userSettings = new \OCA\Activity\UserSettings(\OC::$server->getActivityManager());
-$groupHelper = new \OCA\Activity\GroupHelper(
-	\OC::$server->getActivityManager(),
-	new \OCA\Activity\DataHelper(
-		\OC::$server->getActivityManager(),
-		new \OCA\Activity\ParameterHelper(
-			\OC::$server->getActivityManager(),
-			new \OC\Files\View(''),
-			$l
-		),
-		$l
-	),
-	false
-);
-
 $tmpl = new \OCP\Template('activity', 'rss');
-
 $tmpl->assign('rssLang', \OC::$server->getConfig()->getUserValue(\OCP\User::getUser(), 'core', 'lang'));
 $tmpl->assign('rssLink', \OC::$server->getURLGenerator()->getAbsoluteURL(
 	\OC::$server->getURLGenerator()->linkToRoute('activity.rss')
