@@ -21,6 +21,9 @@ class SettingsTest extends TestCase {
 	protected $config;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $request;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $urlGenerator;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
@@ -49,13 +52,14 @@ class SettingsTest extends TestCase {
 			->getMock();
 
 		$this->config = $this->getMock('OCP\IConfig');
+		$this->request = $this->getMock('OCP\IRequest');
 		$this->urlGenerator = $this->getMock('OCP\IURLGenerator');
 		$this->random = $this->getMock('OCP\Security\ISecureRandom');
 		$this->l10n = \OCP\Util::getL10N('activity', 'en');
 
 		$this->controller = new Settings(
 			'activity',
-			$this->getMock('OCP\IRequest'),
+			$this->request,
 			$this->config,
 			$this->random,
 			$this->urlGenerator,
@@ -66,7 +70,102 @@ class SettingsTest extends TestCase {
 		);
 	}
 
-	public function testTypeTable() {
+
+	public function personalNonTypeSettingsData() {
+		return [
+			[3600, false, false, 0, false, false],
+			[3600 * 24, true, false, 1, true, false],
+			[3600 * 24 * 7, false, true, 2, false, true],
+		];
+	}
+
+	/**
+	 * @dataProvider personalNonTypeSettingsData
+	 *
+	 * @param int $expectedBatchTime
+	 * @param bool $notifyEmail
+	 * @param bool $notifyStream
+	 * @param int $notifySettingBatchTime
+	 * @param bool $notifySettingSelf
+	 * @param bool $notifySettingSelfEmail
+	 */
+	public function testPersonalNonTypeSettings($expectedBatchTime, $notifyEmail, $notifyStream, $notifySettingBatchTime, $notifySettingSelf, $notifySettingSelfEmail) {
+		$this->data->expects($this->any())
+			->method('getNotificationTypes')
+			->willReturn(['NotificationTestTypeShared' => 'Share description']);
+
+		$this->request->expects($this->any())
+			->method('getParam')
+			->willReturnMap([
+				['NotificationTestTypeShared_email', false, $notifyEmail],
+				['NotificationTestTypeShared_stream', false, $notifyStream],
+			]);
+
+		$this->config->expects($this->exactly(5))
+			->method('setUserValue');
+		$this->config->expects($this->at(0))
+			->method('setUserValue')
+			->with(
+				'test',
+				'activity',
+				'notify_email_NotificationTestTypeShared',
+				$notifyEmail
+			);
+		$this->config->expects($this->at(1))
+			->method('setUserValue')
+			->with(
+				'test',
+				'activity',
+				'notify_stream_NotificationTestTypeShared',
+				$notifyStream
+			);
+		$this->config->expects($this->at(2))
+			->method('setUserValue')
+			->with(
+				'test',
+				'activity',
+				'notify_setting_batchtime',
+				$expectedBatchTime
+			);
+		$this->config->expects($this->at(3))
+			->method('setUserValue')
+			->with(
+				'test',
+				'activity',
+				'notify_setting_self',
+				$notifySettingSelf
+			);
+		$this->config->expects($this->at(4))
+			->method('setUserValue')
+			->with(
+				'test',
+				'activity',
+				'notify_setting_selfemail',
+				$notifySettingSelfEmail
+			);
+
+		$response = $this->controller->personal(
+			$notifySettingBatchTime,
+			$notifySettingSelf,
+			$notifySettingSelfEmail
+		)->getData();
+		$this->assertDataResponse($response);
+	}
+
+	/**
+	 * @param array $response
+	 */
+	protected function assertDataResponse($response) {
+		$this->assertEquals(2, sizeof($response));
+		$this->assertArrayHasKey('status', $response);
+		$this->assertArrayHasKey('data', $response);
+		$data = $response['data'];
+		$this->assertEquals(1, sizeof($data));
+		$this->assertArrayHasKey('message', $data);
+		$this->assertEquals('Your settings have been updated.', $data['message']);
+	}
+
+	public function testDisplayPanelTypeTable() {
 		$this->data->expects($this->any())
 			->method('getNotificationTypes')
 			->willReturn(['NotificationTestTypeShared' => 'Share description']);
@@ -83,7 +182,7 @@ class SettingsTest extends TestCase {
 		$this->assertContains('<td class="activity_select_group" data-select-group="NotificationTestTypeShared">Share description</td>', $cleanedResponse);
 	}
 
-	public function emailWarningData() {
+	public function displayPanelEmailWarningData() {
 		return [
 			['', true],
 			['test@localhost', false],
@@ -91,12 +190,12 @@ class SettingsTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider emailWarningData
+	 * @dataProvider displayPanelEmailWarningData
 	 *
 	 * @param string $email
 	 * @param bool $containsWarning
 	 */
-	public function testEmailWarning($email, $containsWarning) {
+	public function testDisplayPanelEmailWarning($email, $containsWarning) {
 		$this->data->expects($this->any())
 			->method('getNotificationTypes')
 			->willReturn([]);
@@ -114,7 +213,7 @@ class SettingsTest extends TestCase {
 		}
 	}
 
-	public function emailSendBatchSettingData() {
+	public function displayPanelEmailSendBatchSettingData() {
 		return [
 			[0, 0, 'Hourly'],
 			['foobar', 0, 'Hourly'],
@@ -125,13 +224,13 @@ class SettingsTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider emailSendBatchSettingData
+	 * @dataProvider displayPanelEmailSendBatchSettingData
 	 *
 	 * @param string $setting
 	 * @param int $selectedValue
 	 * @param string $selectedLabel
 	 */
-	public function testEmailSendBatchSetting($setting, $selectedValue, $selectedLabel) {
+	public function testDisplayPanelEmailSendBatchSetting($setting, $selectedValue, $selectedLabel) {
 		$this->data->expects($this->any())
 			->method('getNotificationTypes')
 			->willReturn([]);
