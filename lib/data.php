@@ -59,7 +59,7 @@ class Data
 	protected $notificationTypes = array();
 
 	/**
-	 * @param \OC_L10N $l
+	 * @param \OCP\IL10N $l
 	 * @return array Array "stringID of the type" => "translated string description for the setting"
 	 */
 	public function getNotificationTypes(\OCP\IL10N $l) {

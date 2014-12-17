@@ -5,6 +5,9 @@
 
 /** @var $l OC_L10N */
 /** @var $_ array */
+
+script('activity', 'settings');
+style('activity', 'settings');
 ?>
 
 <form id="activity_notifications" class="section">
