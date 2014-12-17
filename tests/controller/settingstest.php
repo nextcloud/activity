@@ -21,7 +21,13 @@ class SettingsTest extends TestCase {
 	protected $config;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $urlGenerator;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $data;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $random;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $userSettings;
@@ -38,20 +44,21 @@ class SettingsTest extends TestCase {
 		$this->data = $this->getMockBuilder('OCA\Activity\Data')
 			->disableOriginalConstructor()
 			->getMock();
-
 		$this->userSettings = $this->getMockBuilder('OCA\Activity\UserSettings')
 			->disableOriginalConstructor()
 			->getMock();
 
 		$this->config = $this->getMock('OCP\IConfig');
+		$this->urlGenerator = $this->getMock('OCP\IURLGenerator');
+		$this->random = $this->getMock('OCP\Security\ISecureRandom');
 		$this->l10n = \OCP\Util::getL10N('activity', 'en');
 
 		$this->controller = new Settings(
 			'activity',
 			$this->getMock('OCP\IRequest'),
 			$this->config,
-			$this->getMock('OCP\Security\ISecureRandom'),
-			$this->getMock('OCP\IURLGenerator'),
+			$this->random,
+			$this->urlGenerator,
 			$this->data,
 			$this->userSettings,
 			$this->l10n,
@@ -136,5 +143,48 @@ class SettingsTest extends TestCase {
 		$this->assertContains('<form id="activity_notifications" class="section">', $renderedResponse);
 
 		$this->assertContains('<option value="' . $selectedValue . '" selected="selected">' . $selectedLabel . '</option>', $renderedResponse);
+	}
+
+	public function feedData() {
+		return [
+			['true', '012345678901234567890123456789', 'feedurl::'],
+			['false', '', ''],
+		];
+	}
+
+	/**
+	 * @dataProvider feedData
+	 *
+	 * @param string $enabled
+	 * @param string $token
+	 * @param string $urlPrefix
+	 */
+	public function testFeed($enabled, $token, $urlPrefix) {
+		$this->data->expects($this->any())
+			->method('getNotificationTypes')
+			->willReturn([]);
+		$this->random->expects($this->any())
+			->method('generate')
+			->with(30)
+			->willReturn('012345678901234567890123456789');
+		$this->urlGenerator->expects($this->any())
+			->method('linkToRouteAbsolute')
+			->with('activity.rss', ['token' => '012345678901234567890123456789'])
+			->willReturn('feedurl::012345678901234567890123456789');
+		$this->config->expects($this->once())
+			->method('setUserValue')
+			->with('test', 'activity', 'rsstoken', $token);
+
+		$response = $this->controller->feed($enabled)->getData();
+		$this->assertEquals(2, sizeof($response));
+		$this->assertArrayHasKey('status', $response);
+		$this->assertArrayHasKey('data', $response);
+		$data = $response['data'];
+		$this->assertEquals(2, sizeof($data));
+		$this->assertArrayHasKey('message', $data);
+		$this->assertArrayHasKey('rsslink', $data);
+
+		$this->assertEquals($urlPrefix . $token, $data['rsslink']);
+		$this->assertEquals('Your settings have been updated.', $data['message']);
 	}
 }
