@@ -43,6 +43,8 @@ OC.L10N.register(
     "Notifications" : "Pranešimai",
     "Mail" : "Paštas",
     "Stream" : "Transliacija",
+    "List your own actions in the stream" : "Rikiuoti savo veiksmus sraute",
+    "Notify about your own actions via email" : "Informuoti apie mano paties veiksmus per el. paštą",
     "You need to set up your email address before you can receive notification emails." : "Jums reikia nurodyti el. pašto adresą, kad gauti pranešimų el. laiškus.",
     "Send emails:" : "Siųsti el. laiškus:",
     "Hourly" : "Kas valandą",
