@@ -46,6 +46,8 @@ class ApplicationTest extends TestCase {
 		return array(
 			array('ActivityData', 'OCA\Activity\Data'),
 			array('ActivityL10N', 'OCP\IL10N'),
+			array('Consumer', 'OCA\Activity\Consumer'),
+			array('Consumer', 'OCP\Activity\IConsumer'),
 			array('DataHelper', 'OCA\Activity\DataHelper'),
 			array('GroupHelper', 'OCA\Activity\GroupHelper'),
 			array('Hooks', 'OCA\Activity\Hooks'),
