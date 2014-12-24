@@ -27,6 +27,7 @@ use OCA\Activity\Data;
 use OCA\Activity\UserSettings;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
@@ -44,7 +45,10 @@ class Settings extends Controller {
 	protected $urlGenerator;
 
 	/** @var \OCA\Activity\Data */
-	protected $dataHelper;
+	protected $data;
+
+	/** @var \OCA\Activity\UserSettings */
+	protected $userSettings;
 
 	/** @var \OCP\IL10N */
 	protected $l10n;
@@ -61,15 +65,17 @@ class Settings extends Controller {
 	 * @param ISecureRandom $random
 	 * @param IURLGenerator $urlGenerator
 	 * @param Data $data
+	 * @param UserSettings $userSettings
 	 * @param IL10N $l10n
 	 * @param string $user
 	 */
-	public function __construct($appName, IRequest $request, IConfig $config, ISecureRandom $random, IURLGenerator $urlGenerator, Data $data, IL10N $l10n, $user) {
+	public function __construct($appName, IRequest $request, IConfig $config, ISecureRandom $random, IURLGenerator $urlGenerator, Data $data, UserSettings $userSettings, IL10N $l10n, $user) {
 		parent::__construct($appName, $request);
 		$this->config = $config;
 		$this->random = $random;
 		$this->urlGenerator = $urlGenerator;
-		$this->dataHelper = $data;
+		$this->data = $data;
+		$this->userSettings = $userSettings;
 		$this->l10n = $l10n;
 		$this->user = $user;
 	}
@@ -86,7 +92,7 @@ class Settings extends Controller {
 			$notify_setting_batchtime = UserSettings::EMAIL_SEND_HOURLY,
 			$notify_setting_self = false,
 			$notify_setting_selfemail = false) {
-		$types = $this->dataHelper->getNotificationTypes($this->l10n);
+		$types = $this->data->getNotificationTypes($this->l10n);
 
 		foreach ($types as $type => $desc) {
 			$this->config->setUserValue(
@@ -132,6 +138,42 @@ class Settings extends Controller {
 				'message'	=> $this->l10n->t('Your settings have been updated.'),
 			),
 		));
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 *
+	 * @return TemplateResponse
+	 */
+	public function displayPanel() {
+		$types = $this->data->getNotificationTypes($this->l10n);
+
+		$activities = array();
+		foreach ($types as $type => $desc) {
+			$activities[$type] = array(
+				'desc'		=> $desc,
+				'email'		=> $this->userSettings->getUserSetting($this->user, 'email', $type),
+				'stream'	=> $this->userSettings->getUserSetting($this->user, 'stream', $type),
+			);
+		}
+
+		$settingBatchTime = UserSettings::EMAIL_SEND_HOURLY;
+		if ($this->userSettings->getUserSetting($this->user, 'setting', 'batchtime') == 3600 * 24 * 7) {
+			$settingBatchTime = UserSettings::EMAIL_SEND_WEEKLY;
+		} else if ($this->userSettings->getUserSetting($this->user, 'setting', 'batchtime') == 3600 * 24) {
+			$settingBatchTime = UserSettings::EMAIL_SEND_DAILY;
+		}
+
+		return new TemplateResponse('activity', 'personal', [
+			'activities'		=> $activities,
+			'activity_email'	=> $this->config->getUserValue($this->user, 'settings', 'email', ''),
+
+			'setting_batchtime'	=> $settingBatchTime,
+
+			'notify_self'		=> $this->userSettings->getUserSetting($this->user, 'setting', 'self'),
+			'notify_selfemail'	=> $this->userSettings->getUserSetting($this->user, 'setting', 'selfemail'),
+		], '');
 	}
 
 	/**

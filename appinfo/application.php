@@ -145,6 +145,7 @@ class Application extends App {
 				$server->getSecureRandom()->getMediumStrengthGenerator(),
 				$c->query('URLGenerator'),
 				$c->query('ActivityData'),
+				$c->query('UserSettings'),
 				$c->query('ActivityL10N'),
 				$c->query('CurrentUID')
 			);
