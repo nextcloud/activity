@@ -25,7 +25,7 @@ OC.L10N.register(
     "All Activities" : "Alle activiteiten",
     "Activities by you" : "Activiteiten van uzelf",
     "Activities by others" : "Activiteiten van anderen",
-    "Shares" : "Shares",
+    "Shares" : "Gedeelde mappen en bestanden",
     "Files" : "Bestanden",
     "in %s" : "in %s",
     "%s and %s" : "%s en %s",
