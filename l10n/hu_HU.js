@@ -43,6 +43,8 @@ OC.L10N.register(
     "Notifications" : "Értesítések",
     "Mail" : "levél",
     "Stream" : "aktivitási lista",
+    "List your own actions in the stream" : "Listázd a saját tevékenységemet a hírfolyamban",
+    "Notify about your own actions via email" : "Értesits a saját tevékenységeimről",
     "You need to set up your email address before you can receive notification emails." : "Értesítő üzenetek fogadásához adja meg az e-mail cimét!",
     "Send emails:" : "E-mail küldése",
     "Hourly" : "óránként",
