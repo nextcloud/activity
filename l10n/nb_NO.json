@@ -41,6 +41,8 @@
     "Notifications" : "Varsler",
     "Mail" : "E-post",
     "Stream" : "Strøm",
+    "List your own actions in the stream" : "List dine egne handlinger i strømmen",
+    "Notify about your own actions via email" : "Varsle om dine egne handliger via e-post",
     "You need to set up your email address before you can receive notification emails." : "Du må sette opp e-postadressen din før du kan motta varslinger på e-post.",
     "Send emails:" : "Send e-poster:",
     "Hourly" : "Hver time",
