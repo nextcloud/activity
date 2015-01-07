@@ -45,3 +45,4 @@ $c->getServer()->getNavigationManager()->add($navigationEntry);
 
 // Cron job for sending Emails
 \OCP\Backgroundjob::registerJob('OCA\Activity\BackgroundJob\EmailNotification');
+\OCP\Backgroundjob::registerJob('OCA\Activity\BackgroundJob\ExpireActivities');
