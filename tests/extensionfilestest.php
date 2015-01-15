@@ -68,8 +68,35 @@ class ExtensionFilesTest extends TestCase {
 		$this->assertReturnIsNotFalse($return, $expected);
 	}
 
-	public function testGetSpecialParameterList() {
-		$this->assertFalse($this->filesExtension->getSpecialParameterList('', ''));
+	public function dataGetSpecialParameterList() {
+		return [
+			['AnotherApp', 'created_self', false],
+			['files', 'AnotherApp', false],
+			['files', 'created_self', ['file', 'username']],
+			['files', 'created_by', ['file', 'username']],
+			['files', 'created_public', ['file', 'username']],
+			['files', 'changed_self', ['file', 'username']],
+			['files', 'changed_by', ['file', 'username']],
+			['files', 'deleted_self', ['file', 'username']],
+			['files', 'deleted_by', ['file', 'username']],
+			['files', 'restored_self', ['file', 'username']],
+			['files', 'restored_by', ['file', 'username']],
+			['files', 'shared_user_self', ['file', 'username']],
+			['files', 'shared_group_self', ['file']],
+			['files', 'shared_with_by', ['file', 'username']],
+			['files', 'shared_link_self', ['file', 'username']],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetSpecialParameterList
+	 *
+	 * @param string $app
+	 * @param string $subject
+	 * @param mixed $expected
+	 */
+	public function testGetSpecialParameterList($app, $subject, $expected) {
+		$this->assertEquals($expected, $this->filesExtension->getSpecialParameterList($app, $subject));
 	}
 
 	public function dataGetTypeIcon() {

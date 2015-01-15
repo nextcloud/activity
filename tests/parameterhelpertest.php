@@ -22,6 +22,9 @@
 
 namespace OCA\Activity\Tests;
 
+use OC\ActivityManager;
+use OCA\Activity\Extension\Files;
+
 class ParameterHelperTest extends TestCase {
 	/** @var string */
 	protected $originalWEBROOT;
@@ -35,16 +38,16 @@ class ParameterHelperTest extends TestCase {
 
 		$this->originalWEBROOT =\OC::$WEBROOT;
 		\OC::$WEBROOT = '';
-		$l = \OCP\Util::getL10N('activity');
 		$this->view = new \OC\Files\View('');
-		$manager = $this->getMock('\OCP\Activity\IManager');
-		$manager->expects($this->any())
-			->method('getSpecialParameterList')
-			->will($this->returnValue(false));
+		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
+		$activityManager = new ActivityManager();
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files($activityLanguage);
+		});
 		$this->parameterHelper = new \OCA\Activity\ParameterHelper(
-			$manager,
+			$activityManager,
 			$this->view,
-			$l
+			$activityLanguage
 		);
 	}
 
@@ -160,8 +163,8 @@ class ParameterHelperTest extends TestCase {
 	public function getSpecialParameterListData() {
 		return array(
 			array('files', 'shared_group_self', array(0 => 'file')),
-			array('files', 'shared_group', array(0 => 'file', 1 => 'username')),
-			array('files', '', array(0 => 'file', 1 => 'username')),
+			array('files', 'shared_user_self', array(0 => 'file', 1 => 'username')),
+			array('files', '', array()),
 			array('calendar', 'shared_group', array()),
 			array('calendar', '', array()),
 		);

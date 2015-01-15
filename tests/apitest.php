@@ -22,7 +22,9 @@
 
 namespace OCA\Activity\Tests;
 
+use OC\ActivityManager;
 use OCA\Activity\Data;
+use OCA\Activity\Extension\Files;
 use OCP\Activity\IExtension;
 
 class ApiTest extends TestCase {
@@ -145,7 +147,14 @@ class ApiTest extends TestCase {
 		$_GET['count'] = $count;
 		\OC_User::setUserId($user);
 		$this->assertEquals($user, \OC_User::getUser());
+
+		$activityManager = new ActivityManager();
+		$activityManager->registerExtension(function() {
+			return new Files(\OCP\Util::getL10N('activity', 'en'));
+		});
+		$this->registerActivityManager($activityManager);
 		$result = \OCA\Activity\Api::get(array('_route' => 'get_cloud_activity'));
+		$this->registerActivityManager($this->oldManager);
 
 		$this->assertEquals(100, $result->getStatusCode());
 		$data = $result->getData();
@@ -161,5 +170,19 @@ class ApiTest extends TestCase {
 				}
 			}
 		}
+	}
+
+	/** @var \OCP\Activity\IManager */
+	protected $oldManager;
+
+	/**
+	 * Register an mock for testing purposes.
+	 * @param \OCP\Activity\IManager $manager
+	 */
+	protected function registerActivityManager(\OCP\Activity\IManager $manager) {
+		$this->oldManager = \OC::$server->query('ActivityManager');
+		\OC::$server->registerService('ActivityManager', function ($c) use ($manager) {
+			return $manager;
+		});
 	}
 }

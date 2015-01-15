@@ -282,13 +282,6 @@ class ParameterHelper {
 	 * @return array
 	 */
 	public function getSpecialParameterList($app, $text) {
-		if ($app === 'files' && $text === 'shared_group_self') {
-			return array(0 => 'file');
-		}
-		else if ($app === 'files') {
-			return array(0 => 'file', 1 => 'username');
-		}
-
 		$specialParameters = $this->activityManager->getSpecialParameterList($app, $text);
 
 		if ($specialParameters !== false) {

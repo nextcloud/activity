@@ -122,6 +122,26 @@ class Files implements IExtension {
 	 * @return array|false
 	 */
 	function getSpecialParameterList($app, $text) {
+		if ($app === 'files' && $text === 'shared_group_self') {
+			return [0 => 'file'];
+		} else if ($app === 'files') {
+			switch ($text) {
+				case 'created_self':
+				case 'created_by':
+				case 'created_public':
+				case 'changed_self':
+				case 'changed_by':
+				case 'deleted_self':
+				case 'deleted_by':
+				case 'restored_self':
+				case 'restored_by':
+				case 'shared_user_self':
+				case 'shared_with_by':
+				case 'shared_link_self':
+					return [0 => 'file', 1 => 'username'];
+			}
+		}
+
 		return false;
 	}
 
