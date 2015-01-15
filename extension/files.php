@@ -14,8 +14,19 @@ namespace OCA\Activity\Extension;
 
 use OCA\Activity\Data;
 use OCP\Activity\IExtension;
+use OCP\IL10N;
 
-class Files implements IExtension{
+class Files implements IExtension {
+	/** @var IL10N */
+	protected $l;
+
+	/**
+	 * @param IL10N $l
+	 */
+	public function __construct(IL10N $l) {
+		$this->l = $l;
+	}
+
 	/**
 	 * The extension can return an array of additional notification types.
 	 * If no additional types are to be added false is to be returned
@@ -63,7 +74,40 @@ class Files implements IExtension{
 	 * @return string|false
 	 */
 	public function translate($app, $text, $params, $stripPath, $highlightParams, $languageCode) {
-		return false;
+		if ($app !== 'files') {
+			return false;
+		}
+
+		switch ($text) {
+			case 'created_self':
+				return (string) $this->l->t('You created %1$s', $params);
+			case 'created_by':
+				return (string) $this->l->t('%2$s created %1$s', $params);
+			case 'created_public':
+				return (string) $this->l->t('%1$s was created in a public folder', $params);
+			case 'changed_self':
+				return (string) $this->l->t('You changed %1$s', $params);
+			case 'changed_by':
+				return (string) $this->l->t('%2$s changed %1$s', $params);
+			case 'deleted_self':
+				return (string) $this->l->t('You deleted %1$s', $params);
+			case 'deleted_by':
+				return (string) $this->l->t('%2$s deleted %1$s', $params);
+			case 'restored_self':
+				return (string) $this->l->t('You restored %1$s', $params);
+			case 'restored_by':
+				return (string) $this->l->t('%2$s restored %1$s', $params);
+			case 'shared_user_self':
+				return (string) $this->l->t('You shared %1$s with %2$s', $params);
+			case 'shared_group_self':
+				return (string) $this->l->t('You shared %1$s with group %2$s', $params);
+			case 'shared_with_by':
+				return (string) $this->l->t('%2$s shared %1$s with you', $params);
+			case 'shared_link_self':
+				return (string) $this->l->t('You shared %1$s via link', $params);
+			default:
+				return false;
+		}
 	}
 
 	/**

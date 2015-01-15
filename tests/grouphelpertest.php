@@ -476,11 +476,11 @@ class GroupHelperTest extends TestCase {
 	 * @dataProvider groupHelperData
 	 */
 	public function testGroupHelper($allowGrouping, $activities, $expected) {
+		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new ActivityManager();
-		$activityManager->registerExtension(function() {
-			return new Files();
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files($activityLanguage);
 		});
-		$activityLanguage = \OCP\Util::getL10N('activity');
 
 		$helper = new GroupHelper(
 			$activityManager,

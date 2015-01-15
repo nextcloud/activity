@@ -77,7 +77,7 @@ class Application extends App {
 		});
 
 		$container->registerService('FilesExtension', function(IContainer $c) {
-			return new Files();
+			return new Files($c->query('ActivityL10N'));
 		});
 
 		$container->registerService('GroupHelper', function(IContainer $c) {

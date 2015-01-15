@@ -21,7 +21,7 @@ class ExtensionFilesTest extends TestCase {
 
 	protected function setUp() {
 		parent::setUp();
-		$this->filesExtension = new Files();
+		$this->filesExtension = new Files(\OCP\Util::getL10N('activity', 'en'));
 	}
 
 	public function testGetNotificationTypes() {
@@ -36,8 +36,36 @@ class ExtensionFilesTest extends TestCase {
 		$this->assertFalse($this->filesExtension->getDefaultTypes(''));
 	}
 
-	public function testTranslate() {
-		$this->assertFalse($this->filesExtension->translate('', '', [], false, false, 'en'));
+	public function dataTranslate() {
+		return [
+			['AnotherApp', '', false],
+			['files', 'AnotherApp', false],
+			['files', 'created_self', true],
+			['files', 'created_by', true],
+			['files', 'created_public', true],
+			['files', 'changed_self', true],
+			['files', 'changed_by', true],
+			['files', 'deleted_self', true],
+			['files', 'deleted_by', true],
+			['files', 'restored_self', true],
+			['files', 'restored_by', true],
+			['files', 'shared_user_self', true],
+			['files', 'shared_group_self', true],
+			['files', 'shared_with_by', true],
+			['files', 'shared_link_self', true],
+		];
+	}
+
+	/**
+	 * @dataProvider dataTranslate
+	 *
+	 * @param string $app
+	 * @param string $text
+	 * @param bool $expected
+	 */
+	public function testTranslate($app, $text, $expected) {
+		$return = $this->filesExtension->translate($app, $text, ['param1', 'param2'], false, false, 'en');
+		$this->assertReturnIsNotFalse($return, $expected);
 	}
 
 	public function testGetSpecialParameterList() {
@@ -62,11 +90,7 @@ class ExtensionFilesTest extends TestCase {
 	 * @param bool $expected
 	 */
 	public function testGetTypeIcon($type, $expected) {
-		if ($expected) {
-			$this->assertNotFalse($this->filesExtension->getTypeIcon($type));
-		} else {
-			$this->assertFalse($this->filesExtension->getTypeIcon($type));
-		}
+		$this->assertReturnIsNotFalse($this->filesExtension->getTypeIcon($type), $expected);
 	}
 
 	public function testGetGroupParameter() {
@@ -83,5 +107,17 @@ class ExtensionFilesTest extends TestCase {
 
 	public function testGetQueryForFilter() {
 		$this->assertFalse($this->filesExtension->getQueryForFilter(''));
+	}
+
+	/**
+	 * @param mixed $return
+	 * @param bool $expected
+	 */
+	protected function assertReturnIsNotFalse($return, $expected) {
+		if ($expected) {
+			$this->assertNotFalse($return);
+		} else {
+			$this->assertFalse($return);
+		}
 	}
 }

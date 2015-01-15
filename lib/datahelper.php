@@ -23,8 +23,9 @@
 
 namespace OCA\Activity;
 
-use \OCP\Util;
-use \OCP\Activity\IManager;
+use OCP\Activity\IManager;
+use OCP\IL10N;
+use OCP\Util;
 
 class DataHelper {
 	/** @var \OCP\Activity\IManager */
@@ -33,10 +34,10 @@ class DataHelper {
 	/** @var \OCA\Activity\ParameterHelper */
 	protected $parameterHelper;
 
-	/** @var \OC_L10N */
+	/** @var IL10N */
 	protected $l;
 
-	public function __construct(IManager $activityManager, ParameterHelper $parameterHelper, \OC_L10N $l) {
+	public function __construct(IManager $activityManager, ParameterHelper $parameterHelper, IL10N $l) {
 		$this->activityManager = $activityManager;
 		$this->parameterHelper = $parameterHelper;
 		$this->l = $l;
@@ -63,38 +64,7 @@ class DataHelper {
 			$stripPath, $highlightParams
 		);
 
-		if ($app === 'files') {
-			switch ($text) {
-				case 'created_self':
-					return $this->l->t('You created %1$s', $preparedParams);
-				case 'created_by':
-					return $this->l->t('%2$s created %1$s', $preparedParams);
-				case 'created_public':
-					return $this->l->t('%1$s was created in a public folder', $preparedParams);
-				case 'changed_self':
-					return $this->l->t('You changed %1$s', $preparedParams);
-				case 'changed_by':
-					return $this->l->t('%2$s changed %1$s', $preparedParams);
-				case 'deleted_self':
-					return $this->l->t('You deleted %1$s', $preparedParams);
-				case 'deleted_by':
-					return $this->l->t('%2$s deleted %1$s', $preparedParams);
-				case 'restored_self':
-					return $this->l->t('You restored %1$s', $preparedParams);
-				case 'restored_by':
-					return $this->l->t('%2$s restored %1$s', $preparedParams);
-				case 'shared_user_self':
-					return $this->l->t('You shared %1$s with %2$s', $preparedParams);
-				case 'shared_group_self':
-					return $this->l->t('You shared %1$s with group %2$s', $preparedParams);
-				case 'shared_with_by':
-					return $this->l->t('%2$s shared %1$s with you', $preparedParams);
-				case 'shared_link_self':
-					return $this->l->t('You shared %1$s via link', $preparedParams);
-			}
-		}
-
-		// Allow other apps to correctly translate their activities
+		// Allow apps to correctly translate their activities
 		$translation = $this->activityManager->translate(
 			$app, $text, $preparedParams, $stripPath, $highlightParams, $this->l->getLanguageCode());
 
@@ -102,7 +72,7 @@ class DataHelper {
 			return $translation;
 		}
 
-		$l = Util::getL10N($app);
+		$l = Util::getL10N($app, $this->l->getLanguageCode());
 		return $l->t($text, $preparedParams);
 	}
 
