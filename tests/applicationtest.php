@@ -56,6 +56,8 @@ class ApplicationTest extends TestCase {
 			array('URLGenerator', 'OCP\IURLGenerator'),
 			array('SettingsController', 'OCP\AppFramework\Controller'),
 			array('ActivitiesController', 'OCP\AppFramework\Controller'),
+			array('FilesExtension', 'OCP\Activity\IExtension'),
+			array('FilesExtension', 'OCA\Activity\Extension\Files'),
 		);
 	}
 

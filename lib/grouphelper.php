@@ -167,7 +167,7 @@ class GroupHelper
 			$activity = $this->dataHelper->formatStrings($activity, 'subject');
 			$activity = $this->dataHelper->formatStrings($activity, 'message');
 
-			$activity['typeicon'] = $this->dataHelper->getTypeIcon($activity['type']);
+			$activity['typeicon'] = $this->activityManager->getTypeIcon($activity['type']);
 			$return[] = $activity;
 		}
 

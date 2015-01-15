@@ -203,33 +203,4 @@ class DataHelperTest extends TestCase {
 			(string) $dataHelper->translation('activity', $text, $params, $stripPath, $highlightParams)
 		);
 	}
-
-	public function getTypeIconData() {
-		return [
-			['file_changed', 'icon-change'],
-			['otherApp', ''],
-		];
-	}
-
-
-	/**
-	 * @dataProvider getTypeIconData
-	 */
-	public function testGetTypeIcon($type, $expected) {
-		$manager = $this->getMock('\OCP\Activity\IManager');
-		$manager->expects($this->any())
-			->method('getTypeIcon')
-			->willReturn('');
-		$dataHelper = new DataHelper(
-			$manager,
-			new ParameterHelper(
-				$manager,
-				new View(''),
-				Util::getL10N('activity')
-			),
-			Util::getL10N('activity')
-		);
-
-		$this->assertEquals($expected, $dataHelper->getTypeIcon($type));
-	}
 }

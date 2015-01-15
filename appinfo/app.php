@@ -36,6 +36,10 @@ $navigationEntry = array(
 );
 $c->getServer()->getNavigationManager()->add($navigationEntry);
 
+$c->getServer()->getActivityManager()->registerExtension(function() use ($c) {
+	return $c->query('FilesExtension');
+});
+
 // register the hooks for filesystem operations. All other events from other apps has to be send via the public api
 \OCA\Activity\HooksStatic::register();
 \OCA\Activity\Consumer::register($c->getServer()->getActivityManager(), $c);

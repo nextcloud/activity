@@ -22,7 +22,9 @@
 
 namespace OCA\Activity\Tests;
 
+use OC\ActivityManager;
 use OCA\Activity\DataHelper;
+use OCA\Activity\Extension\Files;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\ParameterHelper;
 
@@ -474,11 +476,10 @@ class GroupHelperTest extends TestCase {
 	 * @dataProvider groupHelperData
 	 */
 	public function testGroupHelper($allowGrouping, $activities, $expected) {
-		$activityManager = $this->getMock('\OCP\Activity\IManager');
-		$activityManager->expects($this->any())
-			->method('getGroupParameter')
-			->with($this->anything())
-			->will($this->returnValue(false));
+		$activityManager = new ActivityManager();
+		$activityManager->registerExtension(function() {
+			return new Files();
+		});
 		$activityLanguage = \OCP\Util::getL10N('activity');
 
 		$helper = new GroupHelper(

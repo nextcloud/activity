@@ -128,28 +128,4 @@ class DataHelper {
 
 		return $activity;
 	}
-
-	/**
-	 * Get the icon for a given activity type
-	 *
-	 * @param string $type
-	 * @return string CSS class which adds the icon
-	 */
-	public function getTypeIcon($type)
-	{
-		switch ($type)
-		{
-			case Data::TYPE_SHARE_CHANGED:
-				return 'icon-change';
-			case Data::TYPE_SHARE_CREATED:
-				return 'icon-add-color';
-			case Data::TYPE_SHARE_DELETED:
-				return 'icon-delete-color';
-			case Data::TYPE_SHARED:
-				return 'icon-share';
-		}
-
-		// Allow other apps to add a icon for their notifications
-		return $this->activityManager->getTypeIcon($type);
-	}
 }

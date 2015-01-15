@@ -28,6 +28,7 @@ use OCA\Activity\Controller\Activities;
 use OCA\Activity\Controller\Settings;
 use OCA\Activity\Data;
 use OCA\Activity\DataHelper;
+use OCA\Activity\Extension\Files;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Hooks;
 use OCA\Activity\Navigation;
@@ -73,6 +74,10 @@ class Application extends App {
 				),
 				$c->query('ActivityL10N')
 			);
+		});
+
+		$container->registerService('FilesExtension', function(IContainer $c) {
+			return new Files();
 		});
 
 		$container->registerService('GroupHelper', function(IContainer $c) {
