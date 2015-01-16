@@ -38,6 +38,9 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 	/** @var \OCP\IConfig */
 	protected $config;
 
+	/** @var \OCP\ILogger */
+	protected $logger;
+
 	public function __construct() {
 		// Run all 15 Minutes
 		$this->setInterval(15 * 60);
@@ -45,6 +48,7 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 			\OC::$server->query('DateTimeFormatter')
 		);
 		$this->config = \OC::$server->getConfig();
+		$this->logger = \OC::$server->getLogger();
 	}
 
 	protected function run($argument) {
@@ -92,6 +96,7 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 			if (!isset($userEmails[$user])) {
 				// The user did not setup an email address
 				// So we will not send an email :(
+				$this->logger->debug("Couldn't send notification email to user '" . $user . "' (email address isn't set for that user)", ['app' => 'activity']);
 				continue;
 			}
 
