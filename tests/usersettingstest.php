@@ -23,8 +23,9 @@
 namespace OCA\Activity\Tests;
 
 use OC\ActivityManager;
-use OCA\Activity\UserSettings;
+use OCA\Activity\Extension\Files;
 use OCA\Activity\Data;
+use OCA\Activity\UserSettings;
 
 class UserSettingsTest extends TestCase {
 	/** @var UserSettings */
@@ -36,9 +37,13 @@ class UserSettingsTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$am = new ActivityManager();
+		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
+		$activityManager = new ActivityManager();
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files($activityLanguage);
+		});
 		$this->config = $this->getMock('OCP\IConfig');
-		$this->userSettings = new UserSettings($am, $this->config, new Data($am));
+		$this->userSettings = new UserSettings($activityManager, $this->config, new Data($activityManager));
 	}
 
 	protected function tearDown() {

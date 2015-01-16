@@ -24,8 +24,22 @@ class ExtensionFilesTest extends TestCase {
 		$this->filesExtension = new Files(\OCP\Util::getL10N('activity', 'en'));
 	}
 
-	public function testGetNotificationTypes() {
-		$this->assertFalse($this->filesExtension->getNotificationTypes('en'));
+	public function dataGetNotificationTypes() {
+		return [
+			[Data::TYPE_SHARE_CREATED],
+			[Data::TYPE_SHARE_CHANGED],
+			[Data::TYPE_SHARE_DELETED],
+			[Data::TYPE_SHARE_RESTORED],
+			[Data::TYPE_SHARED],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetNotificationTypes
+	 * @param string $typeKey
+	 */
+	public function testGetNotificationTypes($typeKey) {
+		$this->assertArrayHasKey($typeKey, $this->filesExtension->getNotificationTypes('en'));
 	}
 
 	public function testFilterNotificationTypes() {

@@ -35,7 +35,21 @@ class Files implements IExtension {
 	 * @return array|false
 	 */
 	public function getNotificationTypes($languageCode) {
-		return false;
+		$l = \OCP\Util::getL10N('activity', $languageCode);
+		return [
+			Data::TYPE_SHARED => (string) $l->t('A file or folder has been <strong>shared</strong>'),
+//			self::TYPE_SHARE_UNSHARED => $l->t('Previously shared file or folder has been <strong>unshared</strong>'),
+//			self::TYPE_SHARE_EXPIRED => $l->t('Expiration date of shared file or folder <strong>expired</strong>'),
+			Data::TYPE_SHARE_CREATED => (string) $l->t('A new file or folder has been <strong>created</strong>'),
+			Data::TYPE_SHARE_CHANGED => (string) $l->t('A file or folder has been <strong>changed</strong>'),
+			Data::TYPE_SHARE_DELETED => (string) $l->t('A file or folder has been <strong>deleted</strong>'),
+//			self::TYPE_SHARE_RESHARED => $l->t('A file or folder has been <strong>reshared</strong>'),
+			Data::TYPE_SHARE_RESTORED => (string) $l->t('A file or folder has been <strong>restored</strong>'),
+//			self::TYPE_SHARE_DOWNLOADED => $l->t('A file or folder shared via link has been <strong>downloaded</strong>'),
+//			self::TYPE_SHARE_UPLOADED => $l->t('A file has been <strong>uploaded</strong> into a folder shared via link'),
+//			self::TYPE_STORAGE_QUOTA_90 => $l->t('<strong>Storage usage</strong> is at 90%%'),
+//			self::TYPE_STORAGE_FAILURE => $l->t('An <strong>external storage</strong> has an error'),
+		];
 	}
 
 	/**
