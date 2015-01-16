@@ -61,6 +61,18 @@ class Files implements IExtension {
 	 * @return array|false
 	 */
 	public function filterNotificationTypes($types, $filter) {
+		switch ($filter) {
+			case 'shares':
+				return array_intersect([Data::TYPE_SHARED], $types);
+			case 'files':
+				return array_intersect([
+					Data::TYPE_SHARED,
+					Data::TYPE_SHARE_CREATED,
+					Data::TYPE_SHARE_CHANGED,
+					Data::TYPE_SHARE_DELETED,
+					Data::TYPE_SHARE_RESTORED,
+				], $types);
+		}
 		return false;
 	}
 

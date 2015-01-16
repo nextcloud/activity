@@ -42,8 +42,23 @@ class ExtensionFilesTest extends TestCase {
 		$this->assertArrayHasKey($typeKey, $this->filesExtension->getNotificationTypes('en'));
 	}
 
-	public function testFilterNotificationTypes() {
-		$this->assertFalse($this->filesExtension->filterNotificationTypes('', ''));
+	public function dataFilterNotificationTypes() {
+		return [
+			['shares', [Data::TYPE_SHARED, Data::TYPE_SHARE_CREATED], [Data::TYPE_SHARED]],
+			['files', ['AnotherApp', Data::TYPE_SHARED], [Data::TYPE_SHARED]],
+			['AnotherApp', [Data::TYPE_SHARED, Data::TYPE_SHARE_CREATED], false],
+		];
+	}
+
+	/**
+	 * @dataProvider dataFilterNotificationTypes
+	 *
+	 * @param string $filter
+	 * @param array $types
+	 * @param mixed $expected
+	 */
+	public function testFilterNotificationTypes($filter, $types, $expected) {
+		$this->assertEquals($expected, $this->filesExtension->filterNotificationTypes($types, $filter));
 	}
 
 	public function testGetDefaultTypes() {

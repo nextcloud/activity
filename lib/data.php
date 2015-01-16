@@ -158,14 +158,7 @@ class Data
 	 * @return array
 	 */
 	public function filterNotificationTypes($types, $filter) {
-		switch ($filter) {
-			case 'shares':
-				return array_intersect(array(
-					Data::TYPE_SHARED,
-				), $types);
-		}
-
-		// Allow other apps to add new notification types
+		// Allow apps to add new notification types
 		return $this->activityManager->filterNotificationTypes($types, $filter);
 	}
 
@@ -277,7 +270,7 @@ class Data
 	/**
 	 * Verify that the filter is valid
 	 *
-	 * @param string $filter
+	 * @param string $filterValue
 	 * @return string
 	 */
 	public function validateFilter($filterValue) {
