@@ -147,7 +147,7 @@ class DataHelperTest extends TestCase {
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files($activityLanguage);
+			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
 
 		$dataHelper = new DataHelper(
@@ -195,7 +195,7 @@ class DataHelperTest extends TestCase {
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files($activityLanguage);
+			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
 
 		$dataHelper = new DataHelper(

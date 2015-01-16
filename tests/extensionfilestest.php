@@ -21,7 +21,7 @@ class ExtensionFilesTest extends TestCase {
 
 	protected function setUp() {
 		parent::setUp();
-		$this->filesExtension = new Files(\OCP\Util::getL10N('activity', 'en'));
+		$this->filesExtension = new Files(\OCP\Util::getL10N('activity', 'en'), $this->getMock('\OCP\IURLGenerator'));
 	}
 
 	public function dataGetNotificationTypes() {
@@ -202,7 +202,12 @@ class ExtensionFilesTest extends TestCase {
 	}
 
 	public function testGetNavigation() {
-		$this->assertFalse($this->filesExtension->getNavigation(''));
+		$navigation = $this->filesExtension->getNavigation();
+		$this->assertNotEmpty($navigation);
+		$this->assertArrayHasKey('top', $navigation);
+		$this->assertNotEmpty($navigation['top']);
+		$this->assertArrayHasKey('apps', $navigation);
+		$this->assertNotEmpty($navigation['apps']);
 	}
 
 	public function dataIsFilterValid() {

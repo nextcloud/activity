@@ -120,28 +120,14 @@ class Navigation {
 				'name' => (string) $this->l->t('Activities by others'),
 				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'by')),
 			),
-			array(
-				'id' => 'shares',
-				'name' => (string) $this->l->t('Shares'),
-				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'shares')),
-			),
-		);
-
-		$appFilterEntries = array(
-			array(
-				'id' => 'files',
-				'name' => (string) $this->l->t('Files'),
-				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'files')),
-			),
 		);
 
 		$additionalEntries = $this->activityManager->getNavigation();
 		$topEntries = array_merge($topEntries, $additionalEntries['top']);
-		$appFilterEntries = array_merge($appFilterEntries, $additionalEntries['apps']);
 
 		return array(
 			'top'		=> $topEntries,
-			'apps'		=> $appFilterEntries,
+			'apps'		=> $additionalEntries['apps'],
 		);
 	}
 }

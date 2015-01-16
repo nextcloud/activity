@@ -150,7 +150,7 @@ class ApiTest extends TestCase {
 
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() {
-			return new Files(\OCP\Util::getL10N('activity', 'en'));
+			return new Files(\OCP\Util::getL10N('activity', 'en'), $this->getMock('\OCP\IURLGenerator'));
 		});
 		$this->registerActivityManager($activityManager);
 		$result = \OCA\Activity\Api::get(array('_route' => 'get_cloud_activity'));

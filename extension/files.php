@@ -15,16 +15,22 @@ namespace OCA\Activity\Extension;
 use OCA\Activity\Data;
 use OCP\Activity\IExtension;
 use OCP\IL10N;
+use OCP\IURLGenerator;
 
 class Files implements IExtension {
 	/** @var IL10N */
 	protected $l;
 
+	/** @var IURLGenerator */
+	protected $URLGenerator;
+
 	/**
 	 * @param IL10N $l
+	 * @param IURLGenerator $URLGenerator
 	 */
-	public function __construct(IL10N $l) {
+	public function __construct(IL10N $l, $URLGenerator) {
 		$this->l = $l;
+		$this->URLGenerator = $URLGenerator;
 	}
 
 	/**
@@ -183,8 +189,7 @@ class Files implements IExtension {
 	 * @return string|false
 	 */
 	public function getTypeIcon($type) {
-		switch ($type)
-		{
+		switch ($type) {
 			case Data::TYPE_SHARE_CHANGED:
 				return 'icon-change';
 			case Data::TYPE_SHARE_CREATED:
@@ -231,7 +236,18 @@ class Files implements IExtension {
 	 * @return array|false
 	 */
 	public function getNavigation() {
-		return false;
+		return [
+			'top' => ['shares' => [
+				'id' => 'shares',
+				'name' => (string) $this->l->t('Shares'),
+				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', ['filter' => 'shares']),
+			]],
+			'apps' => ['files' => [
+				'id' => 'files',
+				'name' => (string) $this->l->t('Files'),
+				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', ['filter' => 'files']),
+			]],
+		];
 	}
 
 	/**

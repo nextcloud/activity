@@ -39,7 +39,7 @@ class DataTest extends TestCase {
 		$this->activityLanguage = $activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files($activityLanguage);
+			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
 		$this->data = new Data($activityManager);
 	}

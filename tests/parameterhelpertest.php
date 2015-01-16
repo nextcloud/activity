@@ -42,7 +42,7 @@ class ParameterHelperTest extends TestCase {
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files($activityLanguage);
+			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
 		$this->parameterHelper = new \OCA\Activity\ParameterHelper(
 			$activityManager,
