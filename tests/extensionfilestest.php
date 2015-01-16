@@ -61,8 +61,28 @@ class ExtensionFilesTest extends TestCase {
 		$this->assertEquals($expected, $this->filesExtension->filterNotificationTypes($types, $filter));
 	}
 
-	public function testGetDefaultTypes() {
-		$this->assertFalse($this->filesExtension->getDefaultTypes(''));
+	public function dataGetDefaultTypes() {
+		return [
+			['email', [Data::TYPE_SHARED]],
+			['stream', [
+				Data::TYPE_SHARE_CREATED,
+				Data::TYPE_SHARE_CHANGED,
+				Data::TYPE_SHARE_DELETED,
+				Data::TYPE_SHARE_RESTORED,
+				Data::TYPE_SHARED,
+			]],
+			['AnotherType', false],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetDefaultTypes
+	 *
+	 * @param string $method
+	 * @param mixed $expected
+	 */
+	public function testGetDefaultTypes($method, $expected) {
+		$this->assertEquals($expected, $this->filesExtension->getDefaultTypes($method));
 	}
 
 	public function dataTranslate() {

@@ -94,44 +94,8 @@ class UserSettings {
 			}
 		}
 
-		$settings = $this->getDefaultTypes($method);
+		$settings = $this->manager->getDefaultTypes($method);
 		return in_array($type, $settings);
-	}
-
-	/**
-	 * Get the default selection of types for a method
-	 *
-	 * @param string $method Should be one of 'stream' or 'email'
-	 * @return array Array of strings
-	 */
-	public function getDefaultTypes($method) {
-		$settings = array();
-		if ($method === 'stream') {
-			$settings[] = Data::TYPE_SHARE_CREATED;
-			$settings[] = Data::TYPE_SHARE_CHANGED;
-			$settings[] = Data::TYPE_SHARE_DELETED;
-//			$settings[] = Data::TYPE_SHARE_RESHARED;
-			$settings[] = Data::TYPE_SHARE_RESTORED;
-
-//			$settings[] = Data::TYPE_SHARE_DOWNLOADED;
-		}
-
-		if ($method === 'stream' || $method === 'email') {
-			$settings[] = Data::TYPE_SHARED;
-//			$settings[] = Data::TYPE_SHARE_EXPIRED;
-//			$settings[] = Data::TYPE_SHARE_UNSHARED;
-//
-//			$settings[] = Data::TYPE_SHARE_UPLOADED;
-//
-//			$settings[] = Data::TYPE_STORAGE_QUOTA_90;
-//			$settings[] = Data::TYPE_STORAGE_FAILURE;
-		}
-
-		// Allow other apps to add notification types to the default setting
-		$additionalSettings = $this->manager->getDefaultTypes($method);
-		$settings = array_merge($settings, $additionalSettings);
-
-		return $settings;
 	}
 
 	/**
