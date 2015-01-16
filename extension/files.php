@@ -176,6 +176,20 @@ class Files implements IExtension {
 	 * @return integer|false
 	 */
 	public function getGroupParameter($activity) {
+		if ($activity['app'] === 'files') {
+			switch ($activity['subject']) {
+				case 'created_self':
+				case 'created_by':
+				case 'changed_self':
+				case 'changed_by':
+				case 'deleted_self':
+				case 'deleted_by':
+				case 'restored_self':
+				case 'restored_by':
+					return 0;
+			}
+		}
+
 		return false;
 	}
 

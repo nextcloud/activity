@@ -120,8 +120,36 @@ class ExtensionFilesTest extends TestCase {
 		$this->assertReturnIsNotFalse($this->filesExtension->getTypeIcon($type), $expected);
 	}
 
-	public function testGetGroupParameter() {
-		$this->assertFalse($this->filesExtension->getGroupParameter(''));
+
+	public function dataGetGroupParameter() {
+		return [
+			['AnotherApp', 'created_self', false],
+			['files', 'AnotherApp', false],
+			['files', 'created_self', 0],
+			['files', 'created_by', 0],
+			['files', 'created_public', false],
+			['files', 'changed_self', 0],
+			['files', 'changed_by', 0],
+			['files', 'deleted_self', 0],
+			['files', 'deleted_by', 0],
+			['files', 'restored_self', 0],
+			['files', 'restored_by', 0],
+			['files', 'shared_user_self', false],
+			['files', 'shared_group_self', false],
+			['files', 'shared_with_by', false],
+			['files', 'shared_link_self', false],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetGroupParameter
+	 *
+	 * @param string $app
+	 * @param string $subject
+	 * @param mixed $expected
+	 */
+	public function testGetGroupParameter($app, $subject, $expected) {
+		$this->assertSame($expected, $this->filesExtension->getGroupParameter(['app' => $app, 'subject' => $subject]));
 	}
 
 	public function testGetNavigation() {
