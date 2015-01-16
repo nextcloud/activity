@@ -185,12 +185,38 @@ class ExtensionFilesTest extends TestCase {
 		$this->assertFalse($this->filesExtension->getNavigation(''));
 	}
 
-	public function testIsFilterValid() {
-		$this->assertFalse($this->filesExtension->isFilterValid(''));
+	public function dataIsFilterValid() {
+		return [
+			['files', true],
+			['shares', true],
+			['AnotherApp', false],
+		];
 	}
 
-	public function testGetQueryForFilter() {
-		$this->assertFalse($this->filesExtension->getQueryForFilter(''));
+	/**
+	 * @dataProvider dataIsFilterValid
+	 *
+	 * @param string $filter
+	 * @param mixed $expected
+	 */
+	public function testIsFilterValid($filter, $expected) {
+		$this->assertEquals($expected, $this->filesExtension->isFilterValid($filter));
+	}
+
+	public function dataGetQueryForFilter() {
+		return [
+			['files', true],
+			['AnotherApp', false],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetQueryForFilter
+	 * @param string $filter
+	 * @param bool $expected
+	 */
+	public function testGetQueryForFilter($filter, $expected) {
+		$this->assertReturnIsNotFalse($this->filesExtension->getQueryForFilter($filter), $expected);
 	}
 
 	/**

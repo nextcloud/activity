@@ -195,11 +195,6 @@ class Data
 		}
 		else if ($filter !== 'all') {
 			switch ($filter) {
-				case 'files':
-					$limitActivities .= ' AND `app` = ?';
-					$parameters[] = 'files';
-				break;
-
 				default:
 					list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
 					if (!is_null($condition)) {
@@ -281,9 +276,7 @@ class Data
 		switch ($filterValue) {
 			case 'by':
 			case 'self':
-			case 'shares':
 			case 'all':
-			case 'files':
 				return $filterValue;
 			default:
 				if ($this->activityManager->isFilterValid($filterValue)) {

@@ -237,6 +237,11 @@ class Files implements IExtension {
 	 * @return boolean
 	 */
 	public function isFilterValid($filterValue) {
+		switch ($filterValue) {
+			case 'shares':
+			case 'files':
+				return true;
+		}
 		return false;
 	}
 
@@ -250,6 +255,10 @@ class Files implements IExtension {
 	 * @return array|false
 	 */
 	public function getQueryForFilter($filter) {
+		switch ($filter) {
+			case 'files':
+				return [' AND `app` = ?', ['files']];
+		}
 		return false;
 	}
 }
