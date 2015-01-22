@@ -43,7 +43,7 @@ OC.L10N.register(
     "Notifications" : "Benachrichtigungen",
     "Mail" : "Mail",
     "Stream" : "Stream",
-    "List your own actions in the stream" : "Deine eigenen Aktivitäten im Stream anzeigen",
+    "List your own actions in the stream" : "Deine eigenen Aktivitäten im Stream auflisten",
     "Notify about your own actions via email" : "Über Deine eigenen Aktivitäten via E-Mail benachrichtigen",
     "You need to set up your email address before you can receive notification emails." : "Sie müssen ihre E-Mail Adresse zum Empfang von Erinnerungsmails einrichten.",
     "Send emails:" : "Sende E-Mails:",
