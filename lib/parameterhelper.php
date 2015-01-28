@@ -130,6 +130,16 @@ class ParameterHelper {
 	 * @return string
 	 */
 	protected function prepareUserParam($param, $highlightParams) {
+		// If the username is empty, the action has been performed by a remote
+		// user, or via a public share. We don't know the username in that case
+		if ($param === '') {
+			if ($highlightParams) {
+				return '<strong>' . $this->l->t('"remote user"') . '</strong>';
+			} else {
+				return $this->l->t('"remote user"');
+			}
+		}
+
 		$displayName = User::getDisplayName($param);
 		$param = Util::sanitizeHTML($param);
 		$displayName = Util::sanitizeHTML($displayName);
