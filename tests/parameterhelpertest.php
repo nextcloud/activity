@@ -106,6 +106,14 @@ class ParameterHelperTest extends TestCase {
 				'<div class="avatar" data-user="U&lt;ser&gt;A"></div><strong>U&lt;ser&gt;A</strong>',
 				'<strong>/foo/bar.file</strong>',
 			)),
+			array(array('', '/foo/bar.file'), array(0 => 'username'), true, true, array(
+				'<strong>"remote user"</strong>',
+				'<strong>/foo/bar.file</strong>',
+			)),
+			array(array('', '/foo/bar.file'), array(0 => 'username'), true, false, array(
+				'"remote user"',
+				'/foo/bar.file',
+			)),
 
 			array(array('UserA', '/foo/bar.file'), array(0 => 'username', 1 => 'file'), true, true, array(
 				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
