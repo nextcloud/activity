@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Aktivity ostatních",
     "Shares" : "Sdílení",
     "Files" : "Soubory",
+    "\"remote user\"" : "\"vzdálený uživatel\"",
     "in %s" : "v %s",
     "%s and %s" : "%s a %s",
     ", " : ", ",

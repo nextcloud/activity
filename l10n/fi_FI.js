@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Muiden toimet",
     "Shares" : "Jaot",
     "Files" : "Tiedostot",
+    "\"remote user\"" : "\"etäkäyttäjä\"",
     "in %s" : "polussa %s",
     "%s and %s" : "%s ja %s",
     ", " : ", ",

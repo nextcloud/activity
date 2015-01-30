@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Başkalarının etkinlikleri",
     "Shares" : "Paylaşımlar",
     "Files" : "Dosyalar",
+    "\"remote user\"" : "\"uzak kullanıcı\"",
     "in %s" : "%s içinde",
     "%s and %s" : "%s ve %s",
     ", " : ", ",

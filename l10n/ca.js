@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Activitats dels altres",
     "Shares" : "Compartits",
     "Files" : "Fitxers",
+    "\"remote user\"" : "\"usuari remot\"",
     "in %s" : "en %s",
     "%s and %s" : "%s i %s",
     ", " : ", ",
