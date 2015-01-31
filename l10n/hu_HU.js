@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Mások tevékenysége",
     "Shares" : "Megosztások",
     "Files" : "Fájlok",
+    "\"remote user\"" : "\"távoli felhasználó\"",
     "in %s" : "itt:  %s",
     "%s and %s" : "%s és %s",
     ", " : ", ",

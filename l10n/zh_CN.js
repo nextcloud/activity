@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "别人的动态",
     "Shares" : "共享",
     "Files" : "文件",
+    "\"remote user\"" : "远程用户",
     "in %s" : "位于 %s",
     "%s and %s" : "%s 和 %s",
     ", " : "，",
