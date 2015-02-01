@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Kitų veikla",
     "Shares" : "Dalijimaisi",
     "Files" : "Failai",
+    "\"remote user\"" : "\"Nuotolinis vartotojas\"",
     "in %s" : "per %s",
     "%s and %s" : "%s ir %s",
     ", " : ",",
