@@ -17,11 +17,8 @@ use OCP\Activity\IExtension;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 
-class Files implements IExtension {
-	const TYPE_SHARE_CREATED = 'file_created';
-	const TYPE_SHARE_CHANGED = 'file_changed';
-	const TYPE_SHARE_DELETED = 'file_deleted';
-	const TYPE_SHARE_RESTORED = 'file_restored';
+class Files_Sharing implements IExtension {
+	const TYPE_SHARED = 'shared';
 
 	/** @var IL10N */
 	protected $l;
@@ -48,10 +45,7 @@ class Files implements IExtension {
 	public function getNotificationTypes($languageCode) {
 		$l = \OCP\Util::getL10N('activity', $languageCode);
 		return [
-			self::TYPE_SHARE_CREATED => (string) $l->t('A new file or folder has been <strong>created</strong>'),
-			self::TYPE_SHARE_CHANGED => (string) $l->t('A file or folder has been <strong>changed</strong>'),
-			self::TYPE_SHARE_DELETED => (string) $l->t('A file or folder has been <strong>deleted</strong>'),
-			self::TYPE_SHARE_RESTORED => (string) $l->t('A file or folder has been <strong>restored</strong>'),
+			self::TYPE_SHARED => (string) $l->t('A file or folder has been <strong>shared</strong>'),
 		];
 	}
 
@@ -65,13 +59,8 @@ class Files implements IExtension {
 	 */
 	public function filterNotificationTypes($types, $filter) {
 		switch ($filter) {
-			case 'files':
-				return array_intersect([
-					self::TYPE_SHARE_CREATED,
-					self::TYPE_SHARE_CHANGED,
-					self::TYPE_SHARE_DELETED,
-					self::TYPE_SHARE_RESTORED,
-				], $types);
+			case 'shares':
+				return array_intersect([self::TYPE_SHARED], $types);
 		}
 		return false;
 	}
@@ -84,13 +73,8 @@ class Files implements IExtension {
 	 * @return array|false
 	 */
 	public function getDefaultTypes($method) {
-		if ($method === 'stream') {
-			$settings = array();
-			$settings[] = self::TYPE_SHARE_CREATED;
-			$settings[] = self::TYPE_SHARE_CHANGED;
-			$settings[] = self::TYPE_SHARE_DELETED;
-			$settings[] = self::TYPE_SHARE_RESTORED;
-			return $settings;
+		if ($method === 'stream' || $method === 'email') {
+			return [self::TYPE_SHARED];
 		}
 
 		return false;
@@ -114,24 +98,14 @@ class Files implements IExtension {
 		}
 
 		switch ($text) {
-			case 'created_self':
-				return (string) $this->l->t('You created %1$s', $params);
-			case 'created_by':
-				return (string) $this->l->t('%2$s created %1$s', $params);
-			case 'created_public':
-				return (string) $this->l->t('%1$s was created in a public folder', $params);
-			case 'changed_self':
-				return (string) $this->l->t('You changed %1$s', $params);
-			case 'changed_by':
-				return (string) $this->l->t('%2$s changed %1$s', $params);
-			case 'deleted_self':
-				return (string) $this->l->t('You deleted %1$s', $params);
-			case 'deleted_by':
-				return (string) $this->l->t('%2$s deleted %1$s', $params);
-			case 'restored_self':
-				return (string) $this->l->t('You restored %1$s', $params);
-			case 'restored_by':
-				return (string) $this->l->t('%2$s restored %1$s', $params);
+			case 'shared_user_self':
+				return (string) $this->l->t('You shared %1$s with %2$s', $params);
+			case 'shared_group_self':
+				return (string) $this->l->t('You shared %1$s with group %2$s', $params);
+			case 'shared_with_by':
+				return (string) $this->l->t('%2$s shared %1$s with you', $params);
+			case 'shared_link_self':
+				return (string) $this->l->t('You shared %1$s via link', $params);
 
 			default:
 				return false;
@@ -150,17 +124,13 @@ class Files implements IExtension {
 	 * @return array|false
 	 */
 	function getSpecialParameterList($app, $text) {
-		if ($app === 'files') {
+		if ($app === 'files' && $text === 'shared_group_self') {
+			return [0 => 'file'];
+		} else if ($app === 'files') {
 			switch ($text) {
-				case 'created_self':
-				case 'created_by':
-				case 'created_public':
-				case 'changed_self':
-				case 'changed_by':
-				case 'deleted_self':
-				case 'deleted_by':
-				case 'restored_self':
-				case 'restored_by':
+				case 'shared_user_self':
+				case 'shared_with_by':
+				case 'shared_link_self':
 					return [0 => 'file', 1 => 'username'];
 			}
 		}
@@ -176,17 +146,11 @@ class Files implements IExtension {
 	 * @return string|false
 	 */
 	public function getTypeIcon($type) {
-		switch ($type) {
-			case Files::TYPE_SHARE_CHANGED:
-				return 'icon-change';
-			case Files::TYPE_SHARE_CREATED:
-				return 'icon-add-color';
-			case Files::TYPE_SHARE_DELETED:
-				return 'icon-delete-color';
-
-			default:
-				return false;
+		if ($type == self::TYPE_SHARED) {
+			return 'icon-share';
 		}
+
+		return false;
 	}
 
 	/**
@@ -197,20 +161,6 @@ class Files implements IExtension {
 	 * @return integer|false
 	 */
 	public function getGroupParameter($activity) {
-		if ($activity['app'] === 'files') {
-			switch ($activity['subject']) {
-				case 'created_self':
-				case 'created_by':
-				case 'changed_self':
-				case 'changed_by':
-				case 'deleted_self':
-				case 'deleted_by':
-				case 'restored_self':
-				case 'restored_by':
-					return 0;
-			}
-		}
-
 		return false;
 	}
 
@@ -223,14 +173,14 @@ class Files implements IExtension {
 	 */
 	public function getNavigation() {
 		return [
-			'apps' => [
-				'files' => [
-					'id' => 'files',
-					'name' => (string) $this->l->t('Files'),
-					'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', ['filter' => 'files']),
+			'apps' => [],
+			'top' => [
+				'shares' => [
+					'id' => 'shares',
+					'name' => (string) $this->l->t('Shares'),
+					'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', ['filter' => 'shares']),
 				],
 			],
-			'top' => [],
 		];
 	}
 
@@ -241,7 +191,7 @@ class Files implements IExtension {
 	 * @return boolean
 	 */
 	public function isFilterValid($filterValue) {
-		return $filterValue === 'files';
+		return $filterValue === 'shares';
 	}
 
 	/**
@@ -254,9 +204,6 @@ class Files implements IExtension {
 	 * @return array|false
 	 */
 	public function getQueryForFilter($filter) {
-		if ($filter === 'files') {
-			return [' AND `app` = ?', ['files']];
-		}
 		return false;
 	}
 }

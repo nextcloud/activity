@@ -26,6 +26,7 @@ use OC\ActivityManager;
 use OC\Files\View;
 use OCA\Activity\DataHelper;
 use OCA\Activity\Extension\Files;
+use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\ParameterHelper;
 use OCP\Util;
 
@@ -149,6 +150,9 @@ class DataHelperTest extends TestCase {
 		$activityManager->registerExtension(function() use ($activityLanguage) {
 			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files_Sharing($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+		});
 
 		$dataHelper = new DataHelper(
 			$activityManager,
@@ -194,9 +198,6 @@ class DataHelperTest extends TestCase {
 	public function testTranslationNotActivityApp($text, $params, $stripPath, $highlightParams, $expected) {
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new ActivityManager();
-		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
-		});
 
 		$dataHelper = new DataHelper(
 			$activityManager,

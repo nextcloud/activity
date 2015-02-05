@@ -25,6 +25,7 @@ namespace OCA\Activity\Tests;
 use OC\ActivityManager;
 use OCA\Activity\DataHelper;
 use OCA\Activity\Extension\Files;
+use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\ParameterHelper;
 
@@ -480,6 +481,9 @@ class GroupHelperTest extends TestCase {
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() use ($activityLanguage) {
 			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+		});
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files_Sharing($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
 
 		$helper = new GroupHelper(

@@ -24,6 +24,7 @@ namespace OCA\Activity\Tests;
 
 use OC\ActivityManager;
 use OCA\Activity\Extension\Files;
+use OCA\Activity\Extension\Files_Sharing;
 
 class ParameterHelperTest extends TestCase {
 	/** @var string */
@@ -43,6 +44,9 @@ class ParameterHelperTest extends TestCase {
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() use ($activityLanguage) {
 			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+		});
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files_Sharing($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
 		$this->parameterHelper = new \OCA\Activity\ParameterHelper(
 			$activityManager,

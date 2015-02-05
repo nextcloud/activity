@@ -36,8 +36,12 @@ $navigationEntry = array(
 );
 $c->getServer()->getNavigationManager()->add($navigationEntry);
 
+// TODO Should be moved into the respective app
 $c->getServer()->getActivityManager()->registerExtension(function() use ($c) {
 	return $c->query('FilesExtension');
+});
+$c->getServer()->getActivityManager()->registerExtension(function() use ($c) {
+	return $c->query('FilesSharingExtension');
 });
 
 // register the hooks for filesystem operations. All other events from other apps has to be send via the public api

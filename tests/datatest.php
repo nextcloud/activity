@@ -25,6 +25,7 @@ namespace OCA\Activity\Tests;
 use OC\ActivityManager;
 use OCA\Activity\Data;
 use OCA\Activity\Extension\Files;
+use OCA\Activity\Extension\Files_Sharing;
 
 class DataTest extends TestCase {
 	/** @var \OCA\Activity\Data */
@@ -41,6 +42,9 @@ class DataTest extends TestCase {
 		$activityManager->registerExtension(function() use ($activityLanguage) {
 			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files_Sharing($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+		});
 		$this->data = new Data($activityManager);
 	}
 
@@ -50,7 +54,7 @@ class DataTest extends TestCase {
 			[Files::TYPE_SHARE_CHANGED],
 			[Files::TYPE_SHARE_DELETED],
 			[Files::TYPE_SHARE_RESTORED],
-			[Files::TYPE_SHARED],
+			[Files_Sharing::TYPE_SHARED],
 		];
 	}
 

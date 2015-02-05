@@ -14,6 +14,7 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\Data;
 use OCA\Activity\Extension\Files;
+use OCA\Activity\Extension\Files_Sharing;
 
 class ExtensionFilesTest extends TestCase {
 	/** @var \OCA\Activity\Extension\Files */
@@ -30,7 +31,6 @@ class ExtensionFilesTest extends TestCase {
 			[Files::TYPE_SHARE_CHANGED],
 			[Files::TYPE_SHARE_DELETED],
 			[Files::TYPE_SHARE_RESTORED],
-			[Files::TYPE_SHARED],
 		];
 	}
 
@@ -44,9 +44,8 @@ class ExtensionFilesTest extends TestCase {
 
 	public function dataFilterNotificationTypes() {
 		return [
-			['shares', [Files::TYPE_SHARED, Files::TYPE_SHARE_CREATED], [Files::TYPE_SHARED]],
-			['files', ['AnotherApp', Files::TYPE_SHARED], [Files::TYPE_SHARED]],
-			['AnotherApp', [Files::TYPE_SHARED, Files::TYPE_SHARE_CREATED], false],
+			['files', ['AnotherApp', Files::TYPE_SHARE_CREATED], [Files::TYPE_SHARE_CREATED]],
+			['AnotherApp', [Files::TYPE_SHARE_DELETED, Files::TYPE_SHARE_CREATED], false],
 		];
 	}
 
@@ -63,13 +62,12 @@ class ExtensionFilesTest extends TestCase {
 
 	public function dataGetDefaultTypes() {
 		return [
-			['email', [Files::TYPE_SHARED]],
+			['email', false],
 			['stream', [
 				Files::TYPE_SHARE_CREATED,
 				Files::TYPE_SHARE_CHANGED,
 				Files::TYPE_SHARE_DELETED,
 				Files::TYPE_SHARE_RESTORED,
-				Files::TYPE_SHARED,
 			]],
 			['AnotherType', false],
 		];
@@ -89,6 +87,7 @@ class ExtensionFilesTest extends TestCase {
 		return [
 			['AnotherApp', '', false],
 			['files', 'AnotherApp', false],
+
 			['files', 'created_self', true],
 			['files', 'created_by', true],
 			['files', 'created_public', true],
@@ -98,10 +97,6 @@ class ExtensionFilesTest extends TestCase {
 			['files', 'deleted_by', true],
 			['files', 'restored_self', true],
 			['files', 'restored_by', true],
-			['files', 'shared_user_self', true],
-			['files', 'shared_group_self', true],
-			['files', 'shared_with_by', true],
-			['files', 'shared_link_self', true],
 		];
 	}
 
@@ -121,6 +116,7 @@ class ExtensionFilesTest extends TestCase {
 		return [
 			['AnotherApp', 'created_self', false],
 			['files', 'AnotherApp', false],
+
 			['files', 'created_self', ['file', 'username']],
 			['files', 'created_by', ['file', 'username']],
 			['files', 'created_public', ['file', 'username']],
@@ -130,10 +126,6 @@ class ExtensionFilesTest extends TestCase {
 			['files', 'deleted_by', ['file', 'username']],
 			['files', 'restored_self', ['file', 'username']],
 			['files', 'restored_by', ['file', 'username']],
-			['files', 'shared_user_self', ['file', 'username']],
-			['files', 'shared_group_self', ['file']],
-			['files', 'shared_with_by', ['file', 'username']],
-			['files', 'shared_link_self', ['file', 'username']],
 		];
 	}
 
@@ -150,7 +142,6 @@ class ExtensionFilesTest extends TestCase {
 
 	public function dataGetTypeIcon() {
 		return [
-			[Files::TYPE_SHARED, true],
 			[Files::TYPE_SHARE_CREATED, true],
 			[Files::TYPE_SHARE_CHANGED, true],
 			[Files::TYPE_SHARE_DELETED, true],
@@ -183,10 +174,6 @@ class ExtensionFilesTest extends TestCase {
 			['files', 'deleted_by', 0],
 			['files', 'restored_self', 0],
 			['files', 'restored_by', 0],
-			['files', 'shared_user_self', false],
-			['files', 'shared_group_self', false],
-			['files', 'shared_with_by', false],
-			['files', 'shared_link_self', false],
 		];
 	}
 
@@ -205,7 +192,7 @@ class ExtensionFilesTest extends TestCase {
 		$navigation = $this->filesExtension->getNavigation();
 		$this->assertNotEmpty($navigation);
 		$this->assertArrayHasKey('top', $navigation);
-		$this->assertNotEmpty($navigation['top']);
+		$this->assertEmpty($navigation['top']);
 		$this->assertArrayHasKey('apps', $navigation);
 		$this->assertNotEmpty($navigation['apps']);
 	}
@@ -213,7 +200,7 @@ class ExtensionFilesTest extends TestCase {
 	public function dataIsFilterValid() {
 		return [
 			['files', true],
-			['shares', true],
+			['shares', false],
 			['AnotherApp', false],
 		];
 	}
