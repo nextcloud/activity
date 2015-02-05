@@ -18,6 +18,15 @@ use OCP\IL10N;
 use OCP\IURLGenerator;
 
 class Files implements IExtension {
+// TODO this belongs into the sharing extension
+	const TYPE_SHARED = 'shared';
+	const TYPE_SHARE_RESHARED = 'file_reshared';
+
+	const TYPE_SHARE_CREATED = 'file_created';
+	const TYPE_SHARE_CHANGED = 'file_changed';
+	const TYPE_SHARE_DELETED = 'file_deleted';
+	const TYPE_SHARE_RESTORED = 'file_restored';
+
 	/** @var IL10N */
 	protected $l;
 
@@ -44,12 +53,12 @@ class Files implements IExtension {
 		$l = \OCP\Util::getL10N('activity', $languageCode);
 		return [
 // TODO this belongs into the sharing extension
-			Data::TYPE_SHARED => (string) $l->t('A file or folder has been <strong>shared</strong>'),
+			self::TYPE_SHARED => (string) $l->t('A file or folder has been <strong>shared</strong>'),
 
-			Data::TYPE_SHARE_CREATED => (string) $l->t('A new file or folder has been <strong>created</strong>'),
-			Data::TYPE_SHARE_CHANGED => (string) $l->t('A file or folder has been <strong>changed</strong>'),
-			Data::TYPE_SHARE_DELETED => (string) $l->t('A file or folder has been <strong>deleted</strong>'),
-			Data::TYPE_SHARE_RESTORED => (string) $l->t('A file or folder has been <strong>restored</strong>'),
+			self::TYPE_SHARE_CREATED => (string) $l->t('A new file or folder has been <strong>created</strong>'),
+			self::TYPE_SHARE_CHANGED => (string) $l->t('A file or folder has been <strong>changed</strong>'),
+			self::TYPE_SHARE_DELETED => (string) $l->t('A file or folder has been <strong>deleted</strong>'),
+			self::TYPE_SHARE_RESTORED => (string) $l->t('A file or folder has been <strong>restored</strong>'),
 		];
 	}
 
@@ -65,16 +74,16 @@ class Files implements IExtension {
 		switch ($filter) {
 			case 'files':
 				return array_intersect([
-					Data::TYPE_SHARED,
-					Data::TYPE_SHARE_CREATED,
-					Data::TYPE_SHARE_CHANGED,
-					Data::TYPE_SHARE_DELETED,
-					Data::TYPE_SHARE_RESTORED,
+					self::TYPE_SHARED,
+					self::TYPE_SHARE_CREATED,
+					self::TYPE_SHARE_CHANGED,
+					self::TYPE_SHARE_DELETED,
+					self::TYPE_SHARE_RESTORED,
 				], $types);
 
 // TODO this belongs into the sharing extension
 			case 'shares':
-				return array_intersect([Data::TYPE_SHARED], $types);
+				return array_intersect([self::TYPE_SHARED], $types);
 		}
 		return false;
 	}
@@ -89,15 +98,15 @@ class Files implements IExtension {
 	public function getDefaultTypes($method) {
 		$settings = array();
 		if ($method === 'stream') {
-			$settings[] = Data::TYPE_SHARE_CREATED;
-			$settings[] = Data::TYPE_SHARE_CHANGED;
-			$settings[] = Data::TYPE_SHARE_DELETED;
-			$settings[] = Data::TYPE_SHARE_RESTORED;
+			$settings[] = self::TYPE_SHARE_CREATED;
+			$settings[] = self::TYPE_SHARE_CHANGED;
+			$settings[] = self::TYPE_SHARE_DELETED;
+			$settings[] = self::TYPE_SHARE_RESTORED;
 		}
 
 // TODO this belongs into the sharing extension
 		if ($method === 'stream' || $method === 'email') {
-			$settings[] = Data::TYPE_SHARED;
+			$settings[] = self::TYPE_SHARED;
 		}
 
 		return !empty($settings) ? $settings : false;
@@ -204,15 +213,15 @@ class Files implements IExtension {
 	 */
 	public function getTypeIcon($type) {
 		switch ($type) {
-			case Data::TYPE_SHARE_CHANGED:
+			case Files::TYPE_SHARE_CHANGED:
 				return 'icon-change';
-			case Data::TYPE_SHARE_CREATED:
+			case Files::TYPE_SHARE_CREATED:
 				return 'icon-add-color';
-			case Data::TYPE_SHARE_DELETED:
+			case Files::TYPE_SHARE_DELETED:
 				return 'icon-delete-color';
 
 // TODO this belongs into the sharing extension
-			case Data::TYPE_SHARED:
+			case Files::TYPE_SHARED:
 				return 'icon-share';
 
 			default:

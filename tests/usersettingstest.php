@@ -52,10 +52,10 @@ class UserSettingsTest extends TestCase {
 
 	public function getDefaultSettingData() {
 		return array(
-			array('stream', Data::TYPE_SHARED, true),
-			array('stream', Data::TYPE_SHARE_CREATED, true),
-			array('email', Data::TYPE_SHARED, true),
-			array('email', Data::TYPE_SHARE_CREATED, false),
+			array('stream', Files::TYPE_SHARED, true),
+			array('stream', Files::TYPE_SHARE_CREATED, true),
+			array('email', Files::TYPE_SHARED, true),
+			array('email', Files::TYPE_SHARE_CREATED, false),
 			array('setting', 'self', true),
 			array('setting', 'selfemail', false),
 			array('setting', 'batchtime', 3600),

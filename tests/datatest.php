@@ -46,11 +46,11 @@ class DataTest extends TestCase {
 
 	public function dataGetNotificationTypes() {
 		return [
-			[Data::TYPE_SHARE_CREATED],
-			[Data::TYPE_SHARE_CHANGED],
-			[Data::TYPE_SHARE_DELETED],
-			[Data::TYPE_SHARE_RESTORED],
-			[Data::TYPE_SHARED],
+			[Files::TYPE_SHARE_CREATED],
+			[Files::TYPE_SHARE_CHANGED],
+			[Files::TYPE_SHARE_DELETED],
+			[Files::TYPE_SHARE_RESTORED],
+			[Files::TYPE_SHARED],
 		];
 	}
 

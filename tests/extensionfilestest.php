@@ -26,11 +26,11 @@ class ExtensionFilesTest extends TestCase {
 
 	public function dataGetNotificationTypes() {
 		return [
-			[Data::TYPE_SHARE_CREATED],
-			[Data::TYPE_SHARE_CHANGED],
-			[Data::TYPE_SHARE_DELETED],
-			[Data::TYPE_SHARE_RESTORED],
-			[Data::TYPE_SHARED],
+			[Files::TYPE_SHARE_CREATED],
+			[Files::TYPE_SHARE_CHANGED],
+			[Files::TYPE_SHARE_DELETED],
+			[Files::TYPE_SHARE_RESTORED],
+			[Files::TYPE_SHARED],
 		];
 	}
 
@@ -44,9 +44,9 @@ class ExtensionFilesTest extends TestCase {
 
 	public function dataFilterNotificationTypes() {
 		return [
-			['shares', [Data::TYPE_SHARED, Data::TYPE_SHARE_CREATED], [Data::TYPE_SHARED]],
-			['files', ['AnotherApp', Data::TYPE_SHARED], [Data::TYPE_SHARED]],
-			['AnotherApp', [Data::TYPE_SHARED, Data::TYPE_SHARE_CREATED], false],
+			['shares', [Files::TYPE_SHARED, Files::TYPE_SHARE_CREATED], [Files::TYPE_SHARED]],
+			['files', ['AnotherApp', Files::TYPE_SHARED], [Files::TYPE_SHARED]],
+			['AnotherApp', [Files::TYPE_SHARED, Files::TYPE_SHARE_CREATED], false],
 		];
 	}
 
@@ -63,13 +63,13 @@ class ExtensionFilesTest extends TestCase {
 
 	public function dataGetDefaultTypes() {
 		return [
-			['email', [Data::TYPE_SHARED]],
+			['email', [Files::TYPE_SHARED]],
 			['stream', [
-				Data::TYPE_SHARE_CREATED,
-				Data::TYPE_SHARE_CHANGED,
-				Data::TYPE_SHARE_DELETED,
-				Data::TYPE_SHARE_RESTORED,
-				Data::TYPE_SHARED,
+				Files::TYPE_SHARE_CREATED,
+				Files::TYPE_SHARE_CHANGED,
+				Files::TYPE_SHARE_DELETED,
+				Files::TYPE_SHARE_RESTORED,
+				Files::TYPE_SHARED,
 			]],
 			['AnotherType', false],
 		];
@@ -150,11 +150,11 @@ class ExtensionFilesTest extends TestCase {
 
 	public function dataGetTypeIcon() {
 		return [
-			[Data::TYPE_SHARED, true],
-			[Data::TYPE_SHARE_CREATED, true],
-			[Data::TYPE_SHARE_CHANGED, true],
-			[Data::TYPE_SHARE_DELETED, true],
-			[Data::TYPE_SHARE_RESTORED, false],
+			[Files::TYPE_SHARED, true],
+			[Files::TYPE_SHARE_CREATED, true],
+			[Files::TYPE_SHARE_CHANGED, true],
+			[Files::TYPE_SHARE_DELETED, true],
+			[Files::TYPE_SHARE_RESTORED, false],
 			['AnotherApp', false],
 		];
 	}

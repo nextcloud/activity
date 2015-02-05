@@ -31,28 +31,15 @@ use OCP\Util;
 /**
  * @brief Class for managing the data in the activities
  */
-class Data
-{
-	const TYPE_SHARED = 'shared';
-	const TYPE_SHARE_EXPIRED = 'share_expired';
-	const TYPE_SHARE_UNSHARED = 'share_unshared';
-
-	const TYPE_SHARE_CREATED = 'file_created';
-	const TYPE_SHARE_CHANGED = 'file_changed';
-	const TYPE_SHARE_DELETED = 'file_deleted';
-	const TYPE_SHARE_RESHARED = 'file_reshared';
-	const TYPE_SHARE_RESTORED = 'file_restored';
-
-	const TYPE_SHARE_DOWNLOADED = 'file_downloaded';
-	const TYPE_SHARE_UPLOADED = 'file_uploaded';
-
-	const TYPE_STORAGE_QUOTA_90 = 'storage_quota_90';
-	const TYPE_STORAGE_FAILURE = 'storage_failure';
+class Data {
 
 	/** @var \OCP\Activity\IManager */
 	protected $activityManager;
 
-	public function __construct(\OCP\Activity\IManager $activityManager){
+	/**
+	 * @param \OCP\Activity\IManager $activityManager
+	 */
+	public function __construct(\OCP\Activity\IManager $activityManager) {
 		$this->activityManager = $activityManager;
 	}
 

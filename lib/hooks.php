@@ -22,6 +22,7 @@
 
 namespace OCA\Activity;
 
+use OCA\Activity\Extension\Files;
 use OCP\Activity\IExtension;
 
 /**
@@ -57,9 +58,9 @@ class Hooks {
 	 */
 	public function fileCreate($params) {
 		if ($this->currentUser !== false) {
-			$this->addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CREATED, 'created_self', 'created_by');
+			$this->addNotificationsForFileAction($params['path'], Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
 		} else {
-			$this->addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CREATED, '', 'created_public');
+			$this->addNotificationsForFileAction($params['path'], Files::TYPE_SHARE_CREATED, '', 'created_public');
 		}
 	}
 
@@ -68,7 +69,7 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public function fileUpdate($params) {
-		$this->addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CHANGED, 'changed_self', 'changed_by');
+		$this->addNotificationsForFileAction($params['path'], Files::TYPE_SHARE_CHANGED, 'changed_self', 'changed_by');
 	}
 
 	/**
@@ -76,7 +77,7 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public function fileDelete($params) {
-		$this->addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
+		$this->addNotificationsForFileAction($params['path'], Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
 	}
 
 	/**
@@ -84,7 +85,7 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public function fileRestore($params) {
-		$this->addNotificationsForFileAction($params['filePath'], Data::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
+		$this->addNotificationsForFileAction($params['filePath'], Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
 	}
 
 	/**
@@ -189,8 +190,8 @@ class Hooks {
 		$this->addNotificationsForUser(
 			$params['shareWith'], 'shared_with_by', array($path, $this->currentUser),
 			$path, ($params['itemType'] === 'file'),
-			$this->userSettings->getUserSetting($params['shareWith'], 'stream', Data::TYPE_SHARED),
-			$this->userSettings->getUserSetting($params['shareWith'], 'email', Data::TYPE_SHARED) ? $this->userSettings->getUserSetting($params['shareWith'], 'setting', 'batchtime') : 0
+			$this->userSettings->getUserSetting($params['shareWith'], 'stream', Files::TYPE_SHARED),
+			$this->userSettings->getUserSetting($params['shareWith'], 'email', Files::TYPE_SHARED) ? $this->userSettings->getUserSetting($params['shareWith'], 'setting', 'batchtime') : 0
 		);
 	}
 
@@ -216,8 +217,8 @@ class Hooks {
 			return;
 		}
 
-		$filteredStreamUsersInGroup = $this->userSettings->filterUsersBySetting($usersInGroup, 'stream', Data::TYPE_SHARED);
-		$filteredEmailUsersInGroup = $this->userSettings->filterUsersBySetting($usersInGroup, 'email', Data::TYPE_SHARED);
+		$filteredStreamUsersInGroup = $this->userSettings->filterUsersBySetting($usersInGroup, 'stream', Files::TYPE_SHARED);
+		$filteredEmailUsersInGroup = $this->userSettings->filterUsersBySetting($usersInGroup, 'email', Files::TYPE_SHARED);
 
 		// Check when there was a naming conflict and the target is different
 		// for some of the users
@@ -260,8 +261,8 @@ class Hooks {
 		$this->addNotificationsForUser(
 			$this->currentUser, $subject, array($file_path, $shareWith),
 			$file_path, ($itemType === 'file'),
-			$this->userSettings->getUserSetting($this->currentUser, 'stream', Data::TYPE_SHARED),
-			$this->userSettings->getUserSetting($this->currentUser, 'email', Data::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
+			$this->userSettings->getUserSetting($this->currentUser, 'stream', Files::TYPE_SHARED),
+			$this->userSettings->getUserSetting($this->currentUser, 'email', Files::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
 		);
 	}
 
@@ -278,7 +279,7 @@ class Hooks {
 	 * @param string $type
 	 * @param int $priority
 	 */
-	protected function addNotificationsForUser($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting, $type = Data::TYPE_SHARED, $priority = IExtension::PRIORITY_MEDIUM) {
+	protected function addNotificationsForUser($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting, $type = Files::TYPE_SHARED, $priority = IExtension::PRIORITY_MEDIUM) {
 		if (!$streamSetting && !$emailSetting) {
 			return;
 		}
@@ -310,8 +311,8 @@ class Hooks {
 		$this->addNotificationsForUser(
 			$this->currentUser, 'shared_link_self', array($path),
 			$path, ($params['itemType'] === 'file'),
-			$this->userSettings->getUserSetting($this->currentUser, 'stream', Data::TYPE_SHARED),
-			$this->userSettings->getUserSetting($this->currentUser, 'email', Data::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
+			$this->userSettings->getUserSetting($this->currentUser, 'stream', Files::TYPE_SHARED),
+			$this->userSettings->getUserSetting($this->currentUser, 'email', Files::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
 		);
 	}
 
