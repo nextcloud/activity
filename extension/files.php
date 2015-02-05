@@ -43,7 +43,9 @@ class Files implements IExtension {
 	public function getNotificationTypes($languageCode) {
 		$l = \OCP\Util::getL10N('activity', $languageCode);
 		return [
+// TODO this belongs into the sharing extension
 			Data::TYPE_SHARED => (string) $l->t('A file or folder has been <strong>shared</strong>'),
+
 			Data::TYPE_SHARE_CREATED => (string) $l->t('A new file or folder has been <strong>created</strong>'),
 			Data::TYPE_SHARE_CHANGED => (string) $l->t('A file or folder has been <strong>changed</strong>'),
 			Data::TYPE_SHARE_DELETED => (string) $l->t('A file or folder has been <strong>deleted</strong>'),
@@ -61,8 +63,6 @@ class Files implements IExtension {
 	 */
 	public function filterNotificationTypes($types, $filter) {
 		switch ($filter) {
-			case 'shares':
-				return array_intersect([Data::TYPE_SHARED], $types);
 			case 'files':
 				return array_intersect([
 					Data::TYPE_SHARED,
@@ -71,6 +71,10 @@ class Files implements IExtension {
 					Data::TYPE_SHARE_DELETED,
 					Data::TYPE_SHARE_RESTORED,
 				], $types);
+
+// TODO this belongs into the sharing extension
+			case 'shares':
+				return array_intersect([Data::TYPE_SHARED], $types);
 		}
 		return false;
 	}
@@ -91,9 +95,11 @@ class Files implements IExtension {
 			$settings[] = Data::TYPE_SHARE_RESTORED;
 		}
 
+// TODO this belongs into the sharing extension
 		if ($method === 'stream' || $method === 'email') {
 			$settings[] = Data::TYPE_SHARED;
 		}
+
 		return !empty($settings) ? $settings : false;
 	}
 
@@ -133,6 +139,8 @@ class Files implements IExtension {
 				return (string) $this->l->t('You restored %1$s', $params);
 			case 'restored_by':
 				return (string) $this->l->t('%2$s restored %1$s', $params);
+
+// TODO this belongs into the sharing extension
 			case 'shared_user_self':
 				return (string) $this->l->t('You shared %1$s with %2$s', $params);
 			case 'shared_group_self':
@@ -141,6 +149,7 @@ class Files implements IExtension {
 				return (string) $this->l->t('%2$s shared %1$s with you', $params);
 			case 'shared_link_self':
 				return (string) $this->l->t('You shared %1$s via link', $params);
+
 			default:
 				return false;
 		}
@@ -158,8 +167,10 @@ class Files implements IExtension {
 	 * @return array|false
 	 */
 	function getSpecialParameterList($app, $text) {
+// TODO this belongs into the sharing extension
 		if ($app === 'files' && $text === 'shared_group_self') {
 			return [0 => 'file'];
+
 		} else if ($app === 'files') {
 			switch ($text) {
 				case 'created_self':
@@ -171,9 +182,12 @@ class Files implements IExtension {
 				case 'deleted_by':
 				case 'restored_self':
 				case 'restored_by':
+
+// TODO this belongs into the sharing extension
 				case 'shared_user_self':
 				case 'shared_with_by':
 				case 'shared_link_self':
+
 					return [0 => 'file', 1 => 'username'];
 			}
 		}
@@ -196,8 +210,11 @@ class Files implements IExtension {
 				return 'icon-add-color';
 			case Data::TYPE_SHARE_DELETED:
 				return 'icon-delete-color';
+
+// TODO this belongs into the sharing extension
 			case Data::TYPE_SHARED:
 				return 'icon-share';
+
 			default:
 				return false;
 		}
@@ -237,16 +254,21 @@ class Files implements IExtension {
 	 */
 	public function getNavigation() {
 		return [
-			'top' => ['shares' => [
-				'id' => 'shares',
-				'name' => (string) $this->l->t('Shares'),
-				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', ['filter' => 'shares']),
-			]],
-			'apps' => ['files' => [
-				'id' => 'files',
-				'name' => (string) $this->l->t('Files'),
-				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', ['filter' => 'files']),
-			]],
+			'apps' => [
+				'files' => [
+					'id' => 'files',
+					'name' => (string) $this->l->t('Files'),
+					'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', ['filter' => 'files']),
+				],
+			],
+			'top' => [
+// TODO this belongs into the sharing extension
+				'shares' => [
+					'id' => 'shares',
+					'name' => (string) $this->l->t('Shares'),
+					'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', ['filter' => 'shares']),
+				],
+			],
 		];
 	}
 
@@ -258,7 +280,9 @@ class Files implements IExtension {
 	 */
 	public function isFilterValid($filterValue) {
 		switch ($filterValue) {
+// TODO this belongs into the sharing extension
 			case 'shares':
+
 			case 'files':
 				return true;
 		}
