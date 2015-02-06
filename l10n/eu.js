@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Besteen jarduerak",
     "Shares" : "Partekatuak",
     "Files" : "Fitxategiak",
+    "\"remote user\"" : "\"urruneko erabiltzailea\"",
     "in %s" : "%s-an",
     "%s and %s" : "%s eta %s",
     ", " : ", ",
