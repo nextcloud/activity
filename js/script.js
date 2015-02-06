@@ -42,20 +42,17 @@ $(function(){
 				$.get(
 					OC.generateUrl('/apps/activity/activities/fetch'),
 					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
-					function(data) {
-						console.log(data);
-						if (data.length) {
+					function (data) {
+						if (data.trim().length) {
 							OCActivity.InfinitScrolling.appendContent(data);
 
 							// Continue prefill
 							OCActivity.InfinitScrolling.prefill();
-						}
-						else if (OCActivity.Filter.currentPage == 1) {
+						} else if (OCActivity.Filter.currentPage == 1) {
 							// First page is empty - No activities :(
 							$('#no_activities').removeClass('hidden');
 							$('#loading_activities').addClass('hidden');
-						}
-						else {
+						} else {
 							// Page is empty - No more activities :(
 							$('#no_more_activities').removeClass('hidden');
 							$('#loading_activities').addClass('hidden');
@@ -74,11 +71,11 @@ $(function(){
 				$.get(
 					OC.generateUrl('/apps/activity/activities/fetch'),
 					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
-					function(data) {
+					function (data) {
 						OCActivity.InfinitScrolling.appendContent(data);
 						OCActivity.InfinitScrolling.ignoreScroll = false;
 
-						if (!data.length) {
+						if (!data.trim().length) {
 							// Page is empty - No more activities :(
 							$('#no_more_activities').removeClass('hidden');
 							$('#loading_activities').addClass('hidden');
