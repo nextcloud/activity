@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Andres aktiviteter",
     "Shares" : "Delinger",
     "Files" : "Filer",
+    "\"remote user\"" : "\"ekstern bruker\"",
     "in %s" : "i %s",
     "%s and %s" : "%s og %s",
     ", " : ", ",
