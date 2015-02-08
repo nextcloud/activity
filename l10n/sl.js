@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Dejavnosti drugih",
     "Shares" : "Souporaba",
     "Files" : "Datoteke",
+    "\"remote user\"" : "oddaljeni uporabnik",
     "in %s" : "v %s",
     "%s and %s" : "%s in %s",
     ", " : ",",
