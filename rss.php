@@ -31,8 +31,7 @@ if (!\OCP\User::isLoggedIn()) {
 		exit;
 	}
 
-	$preferences = new \OC\Preferences(\OC_DB::getConnection());
-	$users = $preferences->getUsersForValue('activity', 'rsstoken', $_GET['token']);
+	$users = \OC::$server->getConfig()->getUsersForUserValue('activity', 'rsstoken', $_GET['token']);
 
 	if (sizeof($users) !== 1) {
 		// User not found
