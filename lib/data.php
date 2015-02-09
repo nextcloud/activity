@@ -181,16 +181,13 @@ class Data {
 			$parameters[] = $user;
 		}
 		else if ($filter !== 'all') {
-			switch ($filter) {
-				default:
-					list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
-					if (!is_null($condition)) {
-						$limitActivities .= ' ';
-						$limitActivities .= $condition;
-						if (is_array($params)) {
-							$parameters = array_merge($parameters, $params);
-						}
-					}
+			list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
+			if (!is_null($condition)) {
+				$limitActivities .= ' ';
+				$limitActivities .= $condition;
+				if (is_array($params)) {
+					$parameters = array_merge($parameters, $params);
+				}
 			}
 		}
 
