@@ -43,6 +43,6 @@ $c->getServer()->getNavigationManager()->add($navigationEntry);
 // Personal settings for notifications and emails
 \OCP\App::registerPersonal($c->getAppName(), 'personal');
 
-// Cron job for sending Emails
-\OCP\Backgroundjob::registerJob('OCA\Activity\BackgroundJob\EmailNotification');
-\OCP\Backgroundjob::registerJob('OCA\Activity\BackgroundJob\ExpireActivities');
+// Cron job for sending emails and pruning the activity list
+$c->getServer()->getJobList()->add('OCA\Activity\BackgroundJob\EmailNotification');
+$c->getServer()->getJobList()->add('OCA\Activity\BackgroundJob\ExpireActivities');
