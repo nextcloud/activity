@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Citu veiktās izmaiņas",
     "Shares" : "Koplietotie",
     "Files" : "Datnes",
+    "\"remote user\"" : "\"attālināts lietotājs\"",
     "in %s" : "iekš %s",
     "%s and %s" : "%s un %s",
     ", " : ",",
