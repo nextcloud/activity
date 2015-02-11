@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Інша активність",
     "Shares" : "Розподільні",
     "Files" : "Файли",
+    "\"remote user\"" : "\"віддалений користувач\"",
     "in %s" : "в %s",
     "%s and %s" : "%s і %s",
     ", " : ",",
