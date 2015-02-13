@@ -23,8 +23,10 @@
 namespace OCA\Activity\Tests;
 
 use OC\ActivityManager;
-use OCA\Activity\UserSettings;
+use OCA\Activity\Extension\Files;
 use OCA\Activity\Data;
+use OCA\Activity\Extension\Files_Sharing;
+use OCA\Activity\UserSettings;
 
 class UserSettingsTest extends TestCase {
 	/** @var UserSettings */
@@ -36,9 +38,16 @@ class UserSettingsTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$am = new ActivityManager();
+		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
+		$activityManager = new ActivityManager();
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+		});
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files_Sharing($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+		});
 		$this->config = $this->getMock('OCP\IConfig');
-		$this->userSettings = new UserSettings($am, $this->config, new Data($am));
+		$this->userSettings = new UserSettings($activityManager, $this->config, new Data($activityManager));
 	}
 
 	protected function tearDown() {
@@ -47,10 +56,8 @@ class UserSettingsTest extends TestCase {
 
 	public function getDefaultSettingData() {
 		return array(
-			array('stream', Data::TYPE_SHARED, true),
-			array('stream', Data::TYPE_SHARE_CREATED, true),
-			array('email', Data::TYPE_SHARED, true),
-			array('email', Data::TYPE_SHARE_CREATED, false),
+			array('stream', Files::TYPE_SHARE_CREATED, true),
+			array('email', Files::TYPE_SHARE_CREATED, false),
 			array('setting', 'self', true),
 			array('setting', 'selfemail', false),
 			array('setting', 'batchtime', 3600),
@@ -71,7 +78,7 @@ class UserSettingsTest extends TestCase {
 
 	public function getNotificationTypesData() {
 		return array(
-			array('test1', 'stream', array('shared', 'file_created', 'file_changed', 'file_deleted', 'file_restored')),
+			array('test1', 'stream', array('file_created', 'file_changed', 'file_deleted', 'file_restored', 'shared')),
 			array('noPreferences', 'email', array('shared')),
 		);
 	}

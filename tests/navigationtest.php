@@ -22,6 +22,9 @@
 
 namespace OCA\Activity\Tests;
 
+use OC\ActivityManager;
+use OCA\Activity\Extension\Files;
+use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\Navigation;
 
 class NavigationTest extends TestCase {
@@ -36,9 +39,16 @@ class NavigationTest extends TestCase {
 	/**
 	 * @dataProvider getTemplateData
 	 */
-	public function testHooksDeleteUser($constructorActive, $forceActive) {
-		$l = \OCP\Util::getL10N('activity');
-		$navigation = new Navigation($l, \OC::$server->getActivityManager(), \OC::$server->getURLGenerator(), $constructorActive);
+	public function testGetTemplate($constructorActive, $forceActive) {
+		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
+		$activityManager = new ActivityManager();
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+		});
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files_Sharing($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+		});
+		$navigation = new Navigation($activityLanguage, $activityManager, \OC::$server->getURLGenerator(), $constructorActive);
 		$output = $navigation->getTemplate($forceActive)->fetchPage();
 
 		// Get only the template part with the navigation links

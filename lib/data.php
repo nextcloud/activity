@@ -31,28 +31,15 @@ use OCP\Util;
 /**
  * @brief Class for managing the data in the activities
  */
-class Data
-{
-	const TYPE_SHARED = 'shared';
-	const TYPE_SHARE_EXPIRED = 'share_expired';
-	const TYPE_SHARE_UNSHARED = 'share_unshared';
-
-	const TYPE_SHARE_CREATED = 'file_created';
-	const TYPE_SHARE_CHANGED = 'file_changed';
-	const TYPE_SHARE_DELETED = 'file_deleted';
-	const TYPE_SHARE_RESHARED = 'file_reshared';
-	const TYPE_SHARE_RESTORED = 'file_restored';
-
-	const TYPE_SHARE_DOWNLOADED = 'file_downloaded';
-	const TYPE_SHARE_UPLOADED = 'file_uploaded';
-
-	const TYPE_STORAGE_QUOTA_90 = 'storage_quota_90';
-	const TYPE_STORAGE_FAILURE = 'storage_failure';
+class Data {
 
 	/** @var \OCP\Activity\IManager */
 	protected $activityManager;
 
-	public function __construct(\OCP\Activity\IManager $activityManager){
+	/**
+	 * @param \OCP\Activity\IManager $activityManager
+	 */
+	public function __construct(\OCP\Activity\IManager $activityManager) {
 		$this->activityManager = $activityManager;
 	}
 
@@ -63,32 +50,13 @@ class Data
 	 * @return array Array "stringID of the type" => "translated string description for the setting"
 	 */
 	public function getNotificationTypes(\OCP\IL10N $l) {
-		if (isset($this->notificationTypes[$l->getLanguageCode()]))
-		{
+		if (isset($this->notificationTypes[$l->getLanguageCode()])) {
 			return $this->notificationTypes[$l->getLanguageCode()];
 		}
 
-		$notificationTypes = array(
-			self::TYPE_SHARED => $l->t('A file or folder has been <strong>shared</strong>'),
-//			self::TYPE_SHARE_UNSHARED => $l->t('Previously shared file or folder has been <strong>unshared</strong>'),
-//			self::TYPE_SHARE_EXPIRED => $l->t('Expiration date of shared file or folder <strong>expired</strong>'),
-			self::TYPE_SHARE_CREATED => $l->t('A new file or folder has been <strong>created</strong>'),
-			self::TYPE_SHARE_CHANGED => $l->t('A file or folder has been <strong>changed</strong>'),
-			self::TYPE_SHARE_DELETED => $l->t('A file or folder has been <strong>deleted</strong>'),
-//			self::TYPE_SHARE_RESHARED => $l->t('A file or folder has been <strong>reshared</strong>'),
-			self::TYPE_SHARE_RESTORED => $l->t('A file or folder has been <strong>restored</strong>'),
-//			self::TYPE_SHARE_DOWNLOADED => $l->t('A file or folder shared via link has been <strong>downloaded</strong>'),
-//			self::TYPE_SHARE_UPLOADED => $l->t('A file has been <strong>uploaded</strong> into a folder shared via link'),
-//			self::TYPE_STORAGE_QUOTA_90 => $l->t('<strong>Storage usage</strong> is at 90%%'),
-//			self::TYPE_STORAGE_FAILURE => $l->t('An <strong>external storage</strong> has an error'),
-		);
-
-		// Allow other apps to add new notification types
-		$additionalNotificationTypes = $this->activityManager->getNotificationTypes($l->getLanguageCode());
-		$notificationTypes = array_merge($notificationTypes, $additionalNotificationTypes);
-
+		// Allow apps to add new notification types
+		$notificationTypes = $this->activityManager->getNotificationTypes($l->getLanguageCode());
 		$this->notificationTypes[$l->getLanguageCode()] = $notificationTypes;
-
 		return $notificationTypes;
 	}
 
@@ -177,14 +145,7 @@ class Data
 	 * @return array
 	 */
 	public function filterNotificationTypes($types, $filter) {
-		switch ($filter) {
-			case 'shares':
-				return array_intersect(array(
-					Data::TYPE_SHARED,
-				), $types);
-		}
-
-		// Allow other apps to add new notification types
+		// Allow apps to add new notification types
 		return $this->activityManager->filterNotificationTypes($types, $filter);
 	}
 
@@ -220,21 +181,13 @@ class Data
 			$parameters[] = $user;
 		}
 		else if ($filter !== 'all') {
-			switch ($filter) {
-				case 'files':
-					$limitActivities .= ' AND `app` = ?';
-					$parameters[] = 'files';
-				break;
-
-				default:
-					list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
-					if (!is_null($condition)) {
-						$limitActivities .= ' ';
-						$limitActivities .= $condition;
-						if (is_array($params)) {
-							$parameters = array_merge($parameters, $params);
-						}
-					}
+			list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
+			if (!is_null($condition)) {
+				$limitActivities .= ' ';
+				$limitActivities .= $condition;
+				if (is_array($params)) {
+					$parameters = array_merge($parameters, $params);
+				}
 			}
 		}
 
@@ -296,7 +249,7 @@ class Data
 	/**
 	 * Verify that the filter is valid
 	 *
-	 * @param string $filter
+	 * @param string $filterValue
 	 * @return string
 	 */
 	public function validateFilter($filterValue) {
@@ -307,9 +260,7 @@ class Data
 		switch ($filterValue) {
 			case 'by':
 			case 'self':
-			case 'shares':
 			case 'all':
-			case 'files':
 				return $filterValue;
 			default:
 				if ($this->activityManager->isFilterValid($filterValue)) {

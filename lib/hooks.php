@@ -22,7 +22,14 @@
 
 namespace OCA\Activity;
 
+use OC\Files\Filesystem;
+use OC\Files\View;
+use OCA\Activity\Extension\Files;
+use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IExtension;
+use OCP\DB;
+use OCP\Share;
+use OCP\Util;
 
 /**
  * The class to handle the filesystem hooks
@@ -57,9 +64,9 @@ class Hooks {
 	 */
 	public function fileCreate($params) {
 		if ($this->currentUser !== false) {
-			$this->addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CREATED, 'created_self', 'created_by');
+			$this->addNotificationsForFileAction($params['path'], Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
 		} else {
-			$this->addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CREATED, '', 'created_public');
+			$this->addNotificationsForFileAction($params['path'], Files::TYPE_SHARE_CREATED, '', 'created_public');
 		}
 	}
 
@@ -68,7 +75,7 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public function fileUpdate($params) {
-		$this->addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_CHANGED, 'changed_self', 'changed_by');
+		$this->addNotificationsForFileAction($params['path'], Files::TYPE_SHARE_CHANGED, 'changed_self', 'changed_by');
 	}
 
 	/**
@@ -76,7 +83,7 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public function fileDelete($params) {
-		$this->addNotificationsForFileAction($params['path'], Data::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
+		$this->addNotificationsForFileAction($params['path'], Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
 	}
 
 	/**
@@ -84,7 +91,7 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	public function fileRestore($params) {
-		$this->addNotificationsForFileAction($params['filePath'], Data::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
+		$this->addNotificationsForFileAction($params['filePath'], Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
 	}
 
 	/**
@@ -136,7 +143,7 @@ class Hooks {
 	 */
 	protected function getUserPathsFromPath($path) {
 		list($file_path, $uidOwner) = $this->getSourcePathAndOwner($path);
-		return \OCP\Share::getUsersSharingFile($file_path, $uidOwner, true, true);
+		return Share::getUsersSharingFile($file_path, $uidOwner, true, true);
 	}
 
 	/**
@@ -146,12 +153,12 @@ class Hooks {
 	 * @return array
 	 */
 	protected function getSourcePathAndOwner($path) {
-		$uidOwner = \OC\Files\Filesystem::getOwner($path);
+		$uidOwner = Filesystem::getOwner($path);
 
 		if ($uidOwner != $this->currentUser) {
-			\OC\Files\Filesystem::initMountPoints($uidOwner);
-			$info = \OC\Files\Filesystem::getFileInfo($path);
-			$ownerView = new \OC\Files\View('/'.$uidOwner.'/files');
+			Filesystem::initMountPoints($uidOwner);
+			$info = Filesystem::getFileInfo($path);
+			$ownerView = new View('/'.$uidOwner.'/files');
 			$path = $ownerView->getPath($info['fileid']);
 		}
 
@@ -165,9 +172,9 @@ class Hooks {
 	public function share($params) {
 		if ($params['itemType'] === 'file' || $params['itemType'] === 'folder') {
 			if ($params['shareWith']) {
-				if ($params['shareType'] == \OCP\Share::SHARE_TYPE_USER) {
+				if ($params['shareType'] == Share::SHARE_TYPE_USER) {
 					$this->shareFileOrFolderWithUser($params);
-				} else if ($params['shareType'] == \OCP\Share::SHARE_TYPE_GROUP) {
+				} else if ($params['shareType'] == Share::SHARE_TYPE_GROUP) {
 					$this->shareFileOrFolderWithGroup($params);
 				}
 			} else {
@@ -189,8 +196,8 @@ class Hooks {
 		$this->addNotificationsForUser(
 			$params['shareWith'], 'shared_with_by', array($path, $this->currentUser),
 			$path, ($params['itemType'] === 'file'),
-			$this->userSettings->getUserSetting($params['shareWith'], 'stream', Data::TYPE_SHARED),
-			$this->userSettings->getUserSetting($params['shareWith'], 'email', Data::TYPE_SHARED) ? $this->userSettings->getUserSetting($params['shareWith'], 'setting', 'batchtime') : 0
+			$this->userSettings->getUserSetting($params['shareWith'], 'stream', Files_Sharing::TYPE_SHARED),
+			$this->userSettings->getUserSetting($params['shareWith'], 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($params['shareWith'], 'setting', 'batchtime') : 0
 		);
 	}
 
@@ -216,15 +223,15 @@ class Hooks {
 			return;
 		}
 
-		$filteredStreamUsersInGroup = $this->userSettings->filterUsersBySetting($usersInGroup, 'stream', Data::TYPE_SHARED);
-		$filteredEmailUsersInGroup = $this->userSettings->filterUsersBySetting($usersInGroup, 'email', Data::TYPE_SHARED);
+		$filteredStreamUsersInGroup = $this->userSettings->filterUsersBySetting($usersInGroup, 'stream', Files_Sharing::TYPE_SHARED);
+		$filteredEmailUsersInGroup = $this->userSettings->filterUsersBySetting($usersInGroup, 'email', Files_Sharing::TYPE_SHARED);
 
 		// Check when there was a naming conflict and the target is different
 		// for some of the users
-		$query = \OCP\DB::prepare('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ');
+		$query = DB::prepare('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ');
 		$result = $query->execute(array($params['id']));
-		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('OCA\Activity\Hooks::shareFileOrFolderWithGroup', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
+		if (DB::isError($result)) {
+			Util::writeLog('OCA\Activity\Hooks::shareFileOrFolderWithGroup', DB::getErrorMessage($result), Util::ERROR);
 		} else {
 			while ($row = $result->fetchRow()) {
 				$affectedUsers[$row['share_with']] = $row['file_target'];
@@ -255,13 +262,13 @@ class Hooks {
 	 */
 	protected function shareNotificationForSharer($subject, $shareWith, $fileSource, $itemType) {
 		// User performing the share
-		$file_path = \OC\Files\Filesystem::getPath($fileSource);
+		$file_path = Filesystem::getPath($fileSource);
 
 		$this->addNotificationsForUser(
 			$this->currentUser, $subject, array($file_path, $shareWith),
 			$file_path, ($itemType === 'file'),
-			$this->userSettings->getUserSetting($this->currentUser, 'stream', Data::TYPE_SHARED),
-			$this->userSettings->getUserSetting($this->currentUser, 'email', Data::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
+			$this->userSettings->getUserSetting($this->currentUser, 'stream', Files_Sharing::TYPE_SHARED),
+			$this->userSettings->getUserSetting($this->currentUser, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
 		);
 	}
 
@@ -278,13 +285,13 @@ class Hooks {
 	 * @param string $type
 	 * @param int $priority
 	 */
-	protected function addNotificationsForUser($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting, $type = Data::TYPE_SHARED, $priority = IExtension::PRIORITY_MEDIUM) {
+	protected function addNotificationsForUser($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting, $type = Files_Sharing::TYPE_SHARED, $priority = IExtension::PRIORITY_MEDIUM) {
 		if (!$streamSetting && !$emailSetting) {
 			return;
 		}
 
 		$selfAction = substr($subject, -5) !== '_self';
-		$link = \OCP\Util::linkToAbsolute('files', 'index.php', array(
+		$link = Util::linkToAbsolute('files', 'index.php', array(
 			'dir' => ($isFile) ? dirname($path) : $path,
 		));
 
@@ -305,13 +312,13 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	protected function shareFileOrFolder($params) {
-		$path = \OC\Files\Filesystem::getPath($params['fileSource']);
+		$path = Filesystem::getPath($params['fileSource']);
 
 		$this->addNotificationsForUser(
 			$this->currentUser, 'shared_link_self', array($path),
 			$path, ($params['itemType'] === 'file'),
-			$this->userSettings->getUserSetting($this->currentUser, 'stream', Data::TYPE_SHARED),
-			$this->userSettings->getUserSetting($this->currentUser, 'email', Data::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
+			$this->userSettings->getUserSetting($this->currentUser, 'stream', Files_Sharing::TYPE_SHARED),
+			$this->userSettings->getUserSetting($this->currentUser, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
 		);
 	}
 
@@ -324,7 +331,7 @@ class Hooks {
 		$this->activityData->deleteActivities(array('affecteduser' => $params['uid']));
 
 		// Delete entries from mail queue
-		$query = \OCP\DB::prepare(
+		$query = DB::prepare(
 			'DELETE FROM `*PREFIX*activity_mq` '
 			. ' WHERE `amq_affecteduser` = ?');
 		$query->execute(array($params['uid']));

@@ -22,7 +22,52 @@
 
 namespace OCA\Activity\Tests;
 
+use OC\ActivityManager;
+use OCA\Activity\Data;
+use OCA\Activity\Extension\Files;
+use OCA\Activity\Extension\Files_Sharing;
+
 class DataTest extends TestCase {
+	/** @var \OCA\Activity\Data */
+	protected $data;
+
+	/** @var \OCP\IL10N */
+	protected $activityLanguage;
+
+	protected function setUp() {
+		parent::setUp();
+
+		$this->activityLanguage = $activityLanguage = \OCP\Util::getL10N('activity', 'en');
+		$activityManager = new ActivityManager();
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+		});
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files_Sharing($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+		});
+		$this->data = new Data($activityManager);
+	}
+
+	public function dataGetNotificationTypes() {
+		return [
+			[Files::TYPE_SHARE_CREATED],
+			[Files::TYPE_SHARE_CHANGED],
+			[Files::TYPE_SHARE_DELETED],
+			[Files::TYPE_SHARE_RESTORED],
+			[Files_Sharing::TYPE_SHARED],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetNotificationTypes
+	 * @param string $typeKey
+	 */
+	public function testGetNotificationTypes($typeKey) {
+		$this->assertArrayHasKey($typeKey, $this->data->getNotificationTypes($this->activityLanguage));
+		// Check cached version aswell
+		$this->assertArrayHasKey($typeKey, $this->data->getNotificationTypes($this->activityLanguage));
+	}
+
 	public function getFilterFromParamData() {
 		return array(
 			array('test', 'all'),
@@ -38,18 +83,18 @@ class DataTest extends TestCase {
 
 	/**
 	 * @dataProvider getFilterFromParamData
+	 *
+	 * @param string $globalValue
+	 * @param string $expected
 	 */
 	public function testGetFilterFromParam($globalValue, $expected) {
 		if ($globalValue !== null) {
 			$_GET['filter'] = $globalValue;
 		}
 
-		$data = new \OCA\Activity\Data(
-			$this->getMock('\OCP\Activity\IManager')
-		);
 		$this->assertEquals(
 			$expected,
-			$data->getFilterFromParam()
+			$this->data->getFilterFromParam()
 		);
 	}
 }

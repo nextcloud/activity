@@ -134,20 +134,6 @@ class GroupHelper
 			return false;
 		}
 
-		if ($activity['app'] === 'files') {
-			switch ($activity['subject']) {
-				case 'created_self':
-				case 'created_by':
-				case 'changed_self':
-				case 'changed_by':
-				case 'deleted_self':
-				case 'deleted_by':
-				case 'restored_self':
-				case 'restored_by':
-					return 0;
-			}
-		}
-
 		// Allow other apps to group their notifications
 		return $this->activityManager->getGroupParameter($activity);
 	}
@@ -167,7 +153,7 @@ class GroupHelper
 			$activity = $this->dataHelper->formatStrings($activity, 'subject');
 			$activity = $this->dataHelper->formatStrings($activity, 'message');
 
-			$activity['typeicon'] = $this->dataHelper->getTypeIcon($activity['type']);
+			$activity['typeicon'] = $this->activityManager->getTypeIcon($activity['type']);
 			$return[] = $activity;
 		}
 

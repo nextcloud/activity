@@ -22,8 +22,11 @@
 
 namespace OCA\Activity\Tests;
 
+use OC\ActivityManager;
 use OC\Files\View;
 use OCA\Activity\DataHelper;
+use OCA\Activity\Extension\Files;
+use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\ParameterHelper;
 use OCP\Util;
 
@@ -142,14 +145,23 @@ class DataHelperTest extends TestCase {
 	 * @dataProvider translationData
 	 */
 	public function testTranslation($text, $params, $stripPath, $highlightParams, $expected) {
+		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
+		$activityManager = new ActivityManager();
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+		});
+		$activityManager->registerExtension(function() use ($activityLanguage) {
+			return new Files_Sharing($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+		});
+
 		$dataHelper = new DataHelper(
-			$this->getMock('\OCP\Activity\IManager'),
+			$activityManager,
 			new ParameterHelper(
-				$this->getMock('\OCP\Activity\IManager'),
+				$activityManager,
 				new View(''),
-				Util::getL10N('activity')
+				$activityLanguage
 			),
-			Util::getL10N('activity')
+			$activityLanguage
 		);
 
 		$this->assertEquals(
@@ -184,52 +196,22 @@ class DataHelperTest extends TestCase {
 	 * @dataProvider translationNotActivityAppData
 	 */
 	public function testTranslationNotActivityApp($text, $params, $stripPath, $highlightParams, $expected) {
-		$manager = $this->getMock('\OCP\Activity\IManager');
-		$manager->expects($this->any())
-			->method('translate')
-			->willReturn(false);
+		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
+		$activityManager = new ActivityManager();
+
 		$dataHelper = new DataHelper(
-			$manager,
+			$activityManager,
 			new ParameterHelper(
-				$manager,
+				$activityManager,
 				new View(''),
-				Util::getL10N('activity')
+				$activityLanguage
 			),
-			Util::getL10N('activity')
+			$activityLanguage
 		);
 
 		$this->assertEquals(
 			$expected,
 			(string) $dataHelper->translation('activity', $text, $params, $stripPath, $highlightParams)
 		);
-	}
-
-	public function getTypeIconData() {
-		return [
-			['file_changed', 'icon-change'],
-			['otherApp', ''],
-		];
-	}
-
-
-	/**
-	 * @dataProvider getTypeIconData
-	 */
-	public function testGetTypeIcon($type, $expected) {
-		$manager = $this->getMock('\OCP\Activity\IManager');
-		$manager->expects($this->any())
-			->method('getTypeIcon')
-			->willReturn('');
-		$dataHelper = new DataHelper(
-			$manager,
-			new ParameterHelper(
-				$manager,
-				new View(''),
-				Util::getL10N('activity')
-			),
-			Util::getL10N('activity')
-		);
-
-		$this->assertEquals($expected, $dataHelper->getTypeIcon($type));
 	}
 }
