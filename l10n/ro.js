@@ -27,6 +27,7 @@ OC.L10N.register(
     "Activities by others" : "Activitățile altora",
     "Shares" : "Partajări",
     "Files" : "Fișiere",
+    "\"remote user\"" : "utilizator la distanță",
     "in %s" : "în %s",
     "%s and %s" : "%s și %s",
     ", " : ",",
