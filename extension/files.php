@@ -255,7 +255,7 @@ class Files implements IExtension {
 	 */
 	public function getQueryForFilter($filter) {
 		if ($filter === 'files') {
-			return [' AND `app` = ?', ['files']];
+			return ['`app` = ?', ['files']];
 		}
 		return false;
 	}
