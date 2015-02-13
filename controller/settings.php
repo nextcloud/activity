@@ -133,7 +133,6 @@ class Settings extends Controller {
 		);
 
 		return new DataResponse(array(
-			'status'	=>'success',
 			'data'		=> array(
 				'message'	=> (string) $this->l10n->t('Your settings have been updated.'),
 			),
@@ -200,7 +199,6 @@ class Settings extends Controller {
 		$this->config->setUserValue($this->user, 'activity', 'rsstoken', $token);
 
 		return new DataResponse(array(
-			'status'	=>'success',
 			'data'		=> array(
 				'message'	=> (string) $this->l10n->t('Your settings have been updated.'),
 				'rsslink'	=> $tokenUrl,

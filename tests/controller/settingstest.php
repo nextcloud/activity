@@ -156,8 +156,7 @@ class SettingsTest extends TestCase {
 	 * @param array $response
 	 */
 	protected function assertDataResponse($response) {
-		$this->assertEquals(2, sizeof($response));
-		$this->assertArrayHasKey('status', $response);
+		$this->assertEquals(1, sizeof($response));
 		$this->assertArrayHasKey('data', $response);
 		$data = $response['data'];
 		$this->assertEquals(1, sizeof($data));
@@ -275,8 +274,7 @@ class SettingsTest extends TestCase {
 			->with('test', 'activity', 'rsstoken', $token);
 
 		$response = $this->controller->feed($enabled)->getData();
-		$this->assertEquals(2, sizeof($response));
-		$this->assertArrayHasKey('status', $response);
+		$this->assertEquals(1, sizeof($response));
 		$this->assertArrayHasKey('data', $response);
 		$data = $response['data'];
 		$this->assertEquals(2, sizeof($data));

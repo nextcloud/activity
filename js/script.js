@@ -136,8 +136,8 @@ $(function(){
 		} else {
 			$('#rssurl').addClass('hidden');
 		}
-		$.post(OC.generateUrl('/apps/activity/settings/feed'), 'enable=' + this.checked, function(data) {
-			$('#rssurl').val(data.data.rsslink);
+		$.post(OC.generateUrl('/apps/activity/settings/feed'), 'enable=' + this.checked, function(response) {
+			$('#rssurl').val(response.data.rsslink);
 		});
 	});
 
