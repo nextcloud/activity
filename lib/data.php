@@ -163,14 +163,16 @@ class Data {
 		$user = User::getUser();
 		$enabledNotifications = $userSettings->getNotificationTypes($user, 'stream');
 		$enabledNotifications = $this->filterNotificationTypes($enabledNotifications, $filter);
+		$parameters = array_unique($enabledNotifications);
 
 		// We don't want to display any activities
-		if (empty($enabledNotifications)) {
+		if (empty($parameters)) {
 			return array();
 		}
 
-		$parameters = array($user);
-		$limitActivities = " AND `type` IN ('" . implode("','", $enabledNotifications) . "')";
+		$placeholders = implode(',', array_fill(0, sizeof($parameters), '?'));
+		$limitActivities = " AND `type` IN (" . $placeholders . ")";
+		array_unshift($parameters, $user);
 
 		if ($filter === 'self') {
 			$limitActivities .= ' AND `user` = ?';
