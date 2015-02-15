@@ -27,7 +27,7 @@ OC.L10N.register(
     "All Activities" : "Todas as actividades",
     "Activities by you" : "Actividades súas",
     "Activities by others" : "Actividades doutros",
-    "\"remote user\"" : "\"usuario remoto\"",
+    "\"remote user\"" : "«usuario remoto»",
     "in %s" : "en %s",
     "%s and %s" : "%s e %s",
     ", " : ", ",
