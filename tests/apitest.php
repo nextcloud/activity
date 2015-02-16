@@ -24,7 +24,7 @@ namespace OCA\Activity\Tests;
 
 use OC\ActivityManager;
 use OCA\Activity\Data;
-use OCA\Activity\Extension\Files;
+use OCA\Activity\Tests\Mock\Extension;
 use OCP\Activity\IExtension;
 
 class ApiTest extends TestCase {
@@ -33,7 +33,7 @@ class ApiTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$this->originalWEBROOT =\OC::$WEBROOT;
+		$this->originalWEBROOT = \OC::$WEBROOT;
 		\OC::$WEBROOT = '';
 		\OC_User::createUser('activity-api-user1', 'activity-api-user1');
 		\OC_User::createUser('activity-api-user2', 'activity-api-user2');
@@ -41,15 +41,15 @@ class ApiTest extends TestCase {
 		$activities = array(
 			array(
 				'affectedUser' => 'activity-api-user1',
-				'subject' => 'created_self',
+				'subject' => 'subject1',
 				'subjectparams' => array('/A/B.txt'),
-				'type' => 'file_created',
+				'type' => 'type1',
 			),
 			array(
 				'affectedUser' => 'activity-api-user1',
-				'subject' => 'deleted_by',
-				'subjectparams' => array('/A/B.txt', 'Deleter'),
-				'type' => 'file_deleted',
+				'subject' => 'subject2',
+				'subjectparams' => array('/A/B.txt', 'User'),
+				'type' => 'type2',
 			),
 		);
 
@@ -57,7 +57,7 @@ class ApiTest extends TestCase {
 		$loop = 0;
 		foreach ($activities as $activity) {
 			$queryActivity->execute(array(
-				'files',
+				'app1',
 				$activity['subject'],
 				serialize($activity['subjectparams']),
 				'',
@@ -88,7 +88,7 @@ class ApiTest extends TestCase {
 		));
 		\OC_User::deleteUser('activity-api-user2');
 		$data->deleteActivities(array(
-			'type' => 'test',
+			'app' => 'app1',
 		));
 		\OC::$WEBROOT = $this->originalWEBROOT;
 
@@ -105,7 +105,7 @@ class ApiTest extends TestCase {
 					'date' => null,
 					'id' => null,
 					'message' => '',
-					'subject' => 'Deleter deleted A/B.txt',
+					'subject' => 'Subject2 @User #A/B.txt',
 				),
 				array(
 					'link' => 'link',
@@ -113,7 +113,7 @@ class ApiTest extends TestCase {
 					'date' => null,
 					'id' => null,
 					'message' => '',
-					'subject' => 'You created A/B.txt',
+					'subject' => 'Subject1 #A/B.txt',
 				),
 			)),
 			array('activity-api-user1', 0, 1, array(
@@ -123,7 +123,7 @@ class ApiTest extends TestCase {
 					'date' => null,
 					'id' => null,
 					'message' => '',
-					'subject' => 'Deleter deleted A/B.txt',
+					'subject' => 'Subject2 @User #A/B.txt',
 				),
 			)),
 			array('activity-api-user1', 1, 1, array(
@@ -133,7 +133,7 @@ class ApiTest extends TestCase {
 					'date' => null,
 					'id' => null,
 					'message' => '',
-					'subject' => 'You created A/B.txt',
+					'subject' => 'Subject1 #A/B.txt',
 				),
 			)),
 		);
@@ -150,7 +150,7 @@ class ApiTest extends TestCase {
 
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() {
-			return new Files(\OCP\Util::getL10N('activity', 'en'), $this->getMock('\OCP\IURLGenerator'));
+			return new Extension(\OCP\Util::getL10N('activity', 'en'), $this->getMock('\OCP\IURLGenerator'));
 		});
 		$this->registerActivityManager($activityManager);
 		$result = \OCA\Activity\Api::get(array('_route' => 'get_cloud_activity'));
@@ -181,7 +181,7 @@ class ApiTest extends TestCase {
 	 */
 	protected function registerActivityManager(\OCP\Activity\IManager $manager) {
 		$this->oldManager = \OC::$server->query('ActivityManager');
-		\OC::$server->registerService('ActivityManager', function ($c) use ($manager) {
+		\OC::$server->registerService('ActivityManager', function () use ($manager) {
 			return $manager;
 		});
 	}

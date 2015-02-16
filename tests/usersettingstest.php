@@ -23,9 +23,8 @@
 namespace OCA\Activity\Tests;
 
 use OC\ActivityManager;
-use OCA\Activity\Extension\Files;
 use OCA\Activity\Data;
-use OCA\Activity\Extension\Files_Sharing;
+use OCA\Activity\Tests\Mock\Extension;
 use OCA\Activity\UserSettings;
 
 class UserSettingsTest extends TestCase {
@@ -41,10 +40,7 @@ class UserSettingsTest extends TestCase {
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
-		});
-		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files_Sharing($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
 		$this->config = $this->getMock('OCP\IConfig');
 		$this->userSettings = new UserSettings($activityManager, $this->config, new Data($activityManager));
@@ -56,8 +52,8 @@ class UserSettingsTest extends TestCase {
 
 	public function getDefaultSettingData() {
 		return array(
-			array('stream', Files::TYPE_SHARE_CREATED, true),
-			array('email', Files::TYPE_SHARE_CREATED, false),
+			array('stream', 'type1', true),
+			array('email', 'type1', false),
 			array('setting', 'self', true),
 			array('setting', 'selfemail', false),
 			array('setting', 'batchtime', 3600),
@@ -78,8 +74,8 @@ class UserSettingsTest extends TestCase {
 
 	public function getNotificationTypesData() {
 		return array(
-			array('test1', 'stream', array('file_created', 'file_changed', 'file_deleted', 'file_restored', 'shared')),
-			array('noPreferences', 'email', array('shared')),
+			#array('test1', 'stream', array('type1')),
+			array('noPreferences', 'email', array('type2')),
 		);
 	}
 
@@ -95,12 +91,10 @@ class UserSettingsTest extends TestCase {
 			->method('getUserValue')
 			->with($this->anything(), 'activity', $this->stringStartsWith('notify_'), $this->anything())
 			->willReturnMap([
-				['test1', 'activity', 'notify_stream_shared', true, true],
-				['test1', 'activity', 'notify_stream_file_created', true, true],
-				['test1', 'activity', 'notify_stream_file_changed', true, true],
-				['test1', 'activity', 'notify_stream_file_deleted', true, true],
-				['test1', 'activity', 'notify_stream_file_restored', true, true],
-				['noPreferences', 'activity', 'notify_email_shared', true, true],
+				['test1', 'activity', 'notify_stream_type1', true, true],
+				['test1', 'activity', 'notify_stream_type2', true, false],
+				['noPreferences', 'activity', 'notify_email_type1', false, false],
+				['noPreferences', 'activity', 'notify_email_type2', true, true],
 			]);
 
 		$this->assertEquals($expected, $this->userSettings->getNotificationTypes($user, $method));
@@ -109,13 +103,13 @@ class UserSettingsTest extends TestCase {
 	public function filterUsersBySettingData() {
 		return array(
 			array(array(), 'stream', 'type1', array()),
-			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'stream', 'type1', array('test1' => true, 'test4' => true)),
-			array(array('test', 'test1', 'test2', 'test3', 'test4', 'test5'), 'email', 'type1', array('test1' => '1', 'test4' => '4', 'test5' => true)),
-			array(array('test', 'test6'), 'stream', 'file_created', array('test' => true, 'test6' => true)),
-			array(array('test', 'test6'), 'stream', 'file_nodefault', array('test6' => true)),
-			array(array('test6'), 'email', 'shared', array('test6' => '2700')),
-			array(array('test', 'test6'), 'email', 'shared', array('test' => '3600', 'test6' => '2700')),
-			array(array('test', 'test6'), 'email', 'file_created', array('test6' => '2700')),
+			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'stream', 'type3', array('test1' => true, 'test4' => true)),
+			array(array('test', 'test1', 'test2', 'test3', 'test4', 'test5'), 'email', 'type3', array('test1' => '1', 'test4' => '4', 'test5' => true)),
+			array(array('test', 'test6'), 'stream', 'type1', array('test' => true, 'test6' => true)),
+			array(array('test', 'test6'), 'stream', 'type4', array('test6' => true)),
+			array(array('test6'), 'email', 'type2', array('test6' => '2700')),
+			array(array('test', 'test6'), 'email', 'type2', array('test' => '3600', 'test6' => '2700')),
+			array(array('test', 'test6'), 'email', 'type1', array('test6' => '2700')),
 		);
 	}
 
@@ -132,14 +126,14 @@ class UserSettingsTest extends TestCase {
 			->method('getUserValueForUsers')
 			->with($this->anything(), $this->anything(), $this->anything())
 			->willReturnMap([
-				['activity', 'notify_stream_file_created', ['test', 'test6'], ['test6' => '1']],
-				['activity', 'notify_stream_file_nodefault', ['test', 'test6'], ['test6' => '1']],
-				['activity', 'notify_stream_type1', ['test', 'test1', 'test2', 'test3', 'test4'], ['test1' => '1', 'test2' => '0', 'test3' => '', 'test4' => '1']],
+				['activity', 'notify_stream_type1', ['test', 'test6'], ['test6' => '1']],
+				['activity', 'notify_stream_type4', ['test', 'test6'], ['test6' => '1']],
+				['activity', 'notify_stream_type3', ['test', 'test1', 'test2', 'test3', 'test4'], ['test1' => '1', 'test2' => '0', 'test3' => '', 'test4' => '1']],
 
-				['activity', 'notify_email_file_created', ['test', 'test6'], ['test6' => '1']],
-				['activity', 'notify_email_shared', ['test6'], ['test6' => '1']],
-				['activity', 'notify_email_shared', ['test', 'test6'], ['test6' => '1']],
-				['activity', 'notify_email_type1', ['test', 'test1', 'test2', 'test3', 'test4', 'test5'], ['test1' => '1', 'test2' => '0', 'test3' => '', 'test4' => '3', 'test5' => '1']],
+				['activity', 'notify_email_type1', ['test', 'test6'], ['test6' => '1']],
+				['activity', 'notify_email_type2', ['test6'], ['test6' => '1']],
+				['activity', 'notify_email_type2', ['test', 'test6'], ['test6' => '1']],
+				['activity', 'notify_email_type3', ['test', 'test1', 'test2', 'test3', 'test4', 'test5'], ['test1' => '1', 'test2' => '0', 'test3' => '', 'test4' => '3', 'test5' => '1']],
 
 				['activity', 'notify_setting_batchtime', ['test6'], ['test6' => '2700']],
 				['activity', 'notify_setting_batchtime', ['test', 'test6'], ['test6' => '2700']],
