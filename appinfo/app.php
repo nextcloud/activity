@@ -45,7 +45,7 @@ $c->getServer()->getActivityManager()->registerExtension(function() use ($c) {
 });
 
 // register the hooks for filesystem operations. All other events from other apps has to be send via the public api
-\OCA\Activity\HooksStatic::register();
+\OCA\Activity\FilesHooksStatic::register();
 \OCA\Activity\Consumer::register($c->getServer()->getActivityManager(), $c);
 
 // Personal settings for notifications and emails

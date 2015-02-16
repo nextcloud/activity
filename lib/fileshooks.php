@@ -34,7 +34,7 @@ use OCP\Util;
 /**
  * The class to handle the filesystem hooks
  */
-class Hooks {
+class FilesHooks {
 
 	/** @var \OCA\Activity\Data */
 	protected $activityData;

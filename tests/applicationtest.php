@@ -50,7 +50,7 @@ class ApplicationTest extends TestCase {
 			array('Consumer', 'OCP\Activity\IConsumer'),
 			array('DataHelper', 'OCA\Activity\DataHelper'),
 			array('GroupHelper', 'OCA\Activity\GroupHelper'),
-			array('Hooks', 'OCA\Activity\Hooks'),
+			array('Hooks', 'OCA\Activity\FilesHooks'),
 			array('Navigation', 'OCA\Activity\Navigation'),
 			array('UserSettings', 'OCA\Activity\UserSettings'),
 			array('URLGenerator', 'OCP\IURLGenerator'),

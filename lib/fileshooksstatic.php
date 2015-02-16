@@ -27,23 +27,23 @@ use OCP\Util;
 /**
  * The class to handle the filesystem hooks
  */
-class HooksStatic {
+class FilesHooksStatic {
 	/**
 	 * Registers the filesystem hooks for basic filesystem operations.
 	 * All other events has to be triggered by the apps.
 	 */
 	public static function register() {
-		Util::connectHook('OC_Filesystem', 'post_create', 'OCA\Activity\HooksStatic', 'fileCreate');
-		Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Activity\HooksStatic', 'fileUpdate');
-		Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\HooksStatic', 'fileDelete');
-		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Activity\HooksStatic', 'fileRestore');
-		Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\HooksStatic', 'share');
+		Util::connectHook('OC_Filesystem', 'post_create', 'OCA\Activity\FilesHooksStatic', 'fileCreate');
+		Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Activity\FilesHooksStatic', 'fileUpdate');
+		Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\FilesHooksStatic', 'fileDelete');
+		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Activity\FilesHooksStatic', 'fileRestore');
+		Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\FilesHooksStatic', 'share');
 
-		Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\HooksStatic', 'deleteUser');
+		Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\FilesHooksStatic', 'deleteUser');
 	}
 
 	/**
-	 * @return Hooks
+	 * @return FilesHooks
 	 */
 	static protected function getHooks() {
 		$app = new AppInfo\Application();
