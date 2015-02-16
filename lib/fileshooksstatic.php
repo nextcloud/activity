@@ -38,8 +38,6 @@ class FilesHooksStatic {
 		Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\FilesHooksStatic', 'fileDelete');
 		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Activity\FilesHooksStatic', 'fileRestore');
 		Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\FilesHooksStatic', 'share');
-
-		Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\FilesHooksStatic', 'deleteUser');
 	}
 
 	/**
@@ -88,13 +86,5 @@ class FilesHooksStatic {
 	 */
 	public static function share($params) {
 		self::getHooks()->share($params);
-	}
-
-	/**
-	 * Delete remaining activities and emails when a user is deleted
-	 * @param array $params The hook params
-	 */
-	public static function deleteUser($params) {
-		self::getHooks()->deleteUser($params);
 	}
 }

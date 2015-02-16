@@ -321,19 +321,4 @@ class FilesHooks {
 			$this->userSettings->getUserSetting($this->currentUser, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
 		);
 	}
-
-	/**
-	 * Delete remaining activities and emails when a user is deleted
-	 * @param array $params The hook params
-	 */
-	public function deleteUser($params) {
-		// Delete activity entries
-		$this->activityData->deleteActivities(array('affecteduser' => $params['uid']));
-
-		// Delete entries from mail queue
-		$query = DB::prepare(
-			'DELETE FROM `*PREFIX*activity_mq` '
-			. ' WHERE `amq_affecteduser` = ?');
-		$query->execute(array($params['uid']));
-	}
 }
