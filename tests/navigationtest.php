@@ -23,9 +23,8 @@
 namespace OCA\Activity\Tests;
 
 use OC\ActivityManager;
-use OCA\Activity\Extension\Files;
-use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\Navigation;
+use OCA\Activity\Tests\Mock\Extension;
 
 class NavigationTest extends TestCase {
 	public function getTemplateData() {
@@ -43,10 +42,7 @@ class NavigationTest extends TestCase {
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
-		});
-		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files_Sharing($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
 		$navigation = new Navigation($activityLanguage, $activityManager, \OC::$server->getURLGenerator(), $constructorActive);
 		$output = $navigation->getTemplate($forceActive)->fetchPage();

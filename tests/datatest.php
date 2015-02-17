@@ -24,8 +24,7 @@ namespace OCA\Activity\Tests;
 
 use OC\ActivityManager;
 use OCA\Activity\Data;
-use OCA\Activity\Extension\Files;
-use OCA\Activity\Extension\Files_Sharing;
+use OCA\Activity\Tests\Mock\Extension;
 
 class DataTest extends TestCase {
 	/** @var \OCA\Activity\Data */
@@ -40,21 +39,14 @@ class DataTest extends TestCase {
 		$this->activityLanguage = $activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
-		});
-		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files_Sharing($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
 		$this->data = new Data($activityManager);
 	}
 
 	public function dataGetNotificationTypes() {
 		return [
-			[Files::TYPE_SHARE_CREATED],
-			[Files::TYPE_SHARE_CHANGED],
-			[Files::TYPE_SHARE_DELETED],
-			[Files::TYPE_SHARE_RESTORED],
-			[Files_Sharing::TYPE_SHARED],
+			['type1'],
 		];
 	}
 
@@ -70,12 +62,15 @@ class DataTest extends TestCase {
 
 	public function getFilterFromParamData() {
 		return array(
-			array('test', 'all'),
+			// Default filters
 			array('all', 'all'),
 			array('by', 'by'),
-			array('files', 'files'),
 			array('self', 'self'),
-			array('shares', 'shares'),
+
+			// Filter from extension
+			array('filter1', 'filter1'),
+
+			// Inexistent or empty filter
 			array('test', 'all'),
 			array(null, 'all'),
 		);

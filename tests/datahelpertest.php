@@ -25,10 +25,8 @@ namespace OCA\Activity\Tests;
 use OC\ActivityManager;
 use OC\Files\View;
 use OCA\Activity\DataHelper;
-use OCA\Activity\Extension\Files;
-use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\ParameterHelper;
-use OCP\Util;
+use OCA\Activity\Tests\Mock\Extension;
 
 class DataHelperTest extends TestCase {
 	protected $originalWEBROOT;
@@ -48,96 +46,85 @@ class DataHelperTest extends TestCase {
 	public function translationData() {
 		return array(
 			array(
-				'created_self', array('/SubFolder/A.txt'), false, false,
-				'You created SubFolder/A.txt',
+				'subject1', array('/SubFolder/A.txt'), false, false,
+				'Subject1 #SubFolder/A.txt',
 			),
 			array(
-				'created_self', array('/SubFolder/A.txt'), true, false,
-				'You created A.txt',
+				'subject1', array('/SubFolder/A.txt'), true, false,
+				'Subject1 #A.txt',
 			),
 			array(
-				'created_self', array('/SubFolder/A.txt'), false, true,
-				'You created <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt">SubFolder/A.txt</a>',
+				'subject1', array('/SubFolder/A.txt'), false, true,
+				'Subject1 #<a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt">SubFolder/A.txt</a>',
 			),
 			array(
-				'created_self', array('/SubFolder/A.txt'), true, true,
-				'You created <a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt" title="in SubFolder">A.txt</a>',
+				'subject1', array('/SubFolder/A.txt'), true, true,
+				'Subject1 #<a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt" title="in SubFolder">A.txt</a>',
 			),
 
-			array('created_by', array('/SubFolder/A.txt', 'UserB'), false, false, 'UserB created SubFolder/A.txt'),
-			array('created_by', array('/SubFolder/A.txt', 'UserB'), true, false, 'UserB created A.txt'),
+			array('subject2', array('/SubFolder/A.txt', 'UserB'), false, false, 'Subject2 @UserB #SubFolder/A.txt'),
+			array('subject2', array('/SubFolder/A.txt', 'UserB'), true, false, 'Subject2 @UserB #A.txt'),
 			array(
-				'created_by', array('/SubFolder/A.txt', 'UserB'), false, true,
-				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
+				'subject2', array('/SubFolder/A.txt', 'UserB'), false, true,
+				'Subject2 @<div class="avatar" data-user="UserB"></div><strong>UserB</strong> #'
 				. '<a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt">SubFolder/A.txt</a>',
 			),
 			array(
-				'created_by', array('/SubFolder/A.txt', 'UserB'), true, true,
-				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
+				'subject2', array('/SubFolder/A.txt', 'UserB'), true, true,
+				'Subject2 @<div class="avatar" data-user="UserB"></div><strong>UserB</strong> #'
 				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt" title="in SubFolder">A.txt</a>',
 			),
 			array(
-				'created_by', array('/A.txt', 'UserB'), true, true,
-				'<div class="avatar" data-user="UserB"></div><strong>UserB</strong> created '
+				'subject2', array('/A.txt', 'UserB'), true, true,
+				'Subject2 @<div class="avatar" data-user="UserB"></div><strong>UserB</strong> #'
 				. '<a class="filename" href="/index.php/apps/files?dir=%2F&scrollto=A.txt">A.txt</a>',
 			),
 
 			array(
-				'created_self',
+				'subject1',
 				array(array('/SubFolder/A.txt')),
 				false,
 				false,
-				'You created SubFolder/A.txt',
+				'Subject1 #SubFolder/A.txt',
 			),
 			array(
-				'created_self',
+				'subject1',
 				array(array('/SubFolder/A.txt', '/SubFolder/B.txt')),
 				false,
 				false,
-				'You created SubFolder/A.txt and SubFolder/B.txt',
+				'Subject1 #SubFolder/A.txt and SubFolder/B.txt',
 			),
 			array(
-				'created_self',
+				'subject1',
 				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt')),
 				false,
 				false,
-				'You created SubFolder/A.txt, SubFolder/B.txt, SubFolder/C.txt, SubFolder/D.txt and SubFolder/E.txt',
+				'Subject1 #SubFolder/A.txt, SubFolder/B.txt, SubFolder/C.txt, SubFolder/D.txt and SubFolder/E.txt',
 			),
 			array(
-				'created_self',
+				'subject1',
 				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
 				false,
 				false,
-				'You created SubFolder/A.txt, SubFolder/B.txt, SubFolder/C.txt and 3 more',
+				'Subject1 #SubFolder/A.txt, SubFolder/B.txt, SubFolder/C.txt and 3 more',
 			),
 			array(
-				'created_self',
+				'subject1',
 				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
 				true,
 				false,
-				'You created A.txt, B.txt, C.txt and 3 more',
+				'Subject1 #A.txt, B.txt, C.txt and 3 more',
 			),
 			array(
-				'created_self',
+				'subject1',
 				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
 				false,
 				true,
-				'You created <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt">SubFolder/A.txt</a>,'
+				'Subject1 #<a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt">SubFolder/A.txt</a>,'
 				. ' <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=B.txt">SubFolder/B.txt</a>,'
 				. ' <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=C.txt">SubFolder/C.txt</a>'
 				. ' and <strong class="tooltip" title="SubFolder/D.txt, SubFolder/E.txt, SubFolder/F.txt">3 more</strong>',
 			),
-
-			['created_public', ['/SubFolder/A.txt'], true, false, 'A.txt was created in a public folder'],
-			['changed_self', ['/SubFolder/A.txt'], true, false, 'You changed A.txt'],
-			['changed_by', ['/SubFolder/A.txt', 'UserB'], true, false, 'UserB changed A.txt'],
-			['deleted_self', ['/SubFolder/A.txt'], true, false, 'You deleted A.txt'],
-			['deleted_by', ['/SubFolder/A.txt', 'UserB'], true, false, 'UserB deleted A.txt'],
-			['restored_self', ['/SubFolder/A.txt'], true, false, 'You restored A.txt'],
-			['restored_by', ['/SubFolder/A.txt', 'UserB'], true, false, 'UserB restored A.txt'],
-			['shared_user_self', ['/SubFolder/A.txt', 'UserB'], true, false, 'You shared A.txt with UserB'],
-			['shared_group_self', ['/SubFolder/A.txt', 'GroupC'], true, false, 'You shared A.txt with group GroupC'],
-			['shared_with_by', ['/SubFolder/A.txt', 'UserB'], true, false, 'UserB shared A.txt with you'],
 		);
 	}
 
@@ -148,10 +135,7 @@ class DataHelperTest extends TestCase {
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
-		});
-		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Files_Sharing($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
 
 		$dataHelper = new DataHelper(
@@ -166,7 +150,7 @@ class DataHelperTest extends TestCase {
 
 		$this->assertEquals(
 			$expected,
-			(string) $dataHelper->translation('files', $text, $params, $stripPath, $highlightParams)
+			(string) $dataHelper->translation('app1', $text, $params, $stripPath, $highlightParams)
 		);
 	}
 
