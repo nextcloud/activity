@@ -200,7 +200,7 @@ class MailQueueHandler {
 
 			$activityList[] = array(
 				$dataHelper->translation(
-					$activity['amq_appid'], $activity['amq_subject'], unserialize($activity['amq_subjectparams'])
+					$activity['amq_appid'], $activity['amq_subject'], json_decode($activity['amq_subjectparams'], true)
 				),
 				$relativeDateTime,
 			);

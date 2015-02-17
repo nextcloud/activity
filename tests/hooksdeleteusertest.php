@@ -43,9 +43,9 @@ class HooksDeleteUserTest extends TestCase {
 			$queryActivity->execute(array(
 				'app',
 				$activity['subject'],
-				serialize(array()),
+				json_encode([]),
 				'',
-				serialize(array()),
+				json_encode([]),
 				'file',
 				'link',
 				'user',
@@ -57,7 +57,7 @@ class HooksDeleteUserTest extends TestCase {
 			$queryMailQueue->execute(array(
 				'app',
 				$activity['subject'],
-				serialize(array()),
+				json_encode([]),
 				$activity['affectedUser'],
 				time(),
 				'test',

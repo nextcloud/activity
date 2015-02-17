@@ -44,9 +44,9 @@ class DataDeleteActivitiesTest extends TestCase {
 			$queryActivity->execute(array(
 				'app',
 				$activity['subject'],
-				serialize(array()),
+				json_encode([]),
 				'',
-				serialize(array()),
+				json_encode([]),
 				'file',
 				'link',
 				'user',
