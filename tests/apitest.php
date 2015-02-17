@@ -59,9 +59,9 @@ class ApiTest extends TestCase {
 			$queryActivity->execute(array(
 				'app1',
 				$activity['subject'],
-				serialize($activity['subjectparams']),
+				json_encode($activity['subjectparams']),
 				'',
-				serialize(array()),
+				json_encode([]),
 				'file',
 				'link',
 				'user',

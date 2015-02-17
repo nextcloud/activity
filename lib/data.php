@@ -87,7 +87,7 @@ class Data {
 
 		// store in DB
 		$query = DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
-		$query->execute(array($app, $subject, serialize($subjectparams), $message, serialize($messageparams), $file, $link, $user, $auser, $timestamp, $prio, $type));
+		$query->execute(array($app, $subject, json_encode($subjectparams), $message, json_encode($messageparams), $file, $link, $user, $auser, $timestamp, $prio, $type));
 
 		// fire a hook so that other apps like notification systems can connect
 		Util::emitHook('OC_Activity', 'post_event', array('app' => $app, 'subject' => $subject, 'user' => $user, 'affecteduser' => $affecteduser, 'message' => $message, 'file' => $file, 'link'=> $link, 'prio' => $prio, 'type' => $type));
@@ -116,7 +116,7 @@ class Data {
 		$query->execute(array(
 			$app,
 			$subject,
-			serialize($subjectParams),
+			json_encode($subjectParams),
 			$affectedUser,
 			$timestamp,
 			$type,
