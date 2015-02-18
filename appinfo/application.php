@@ -77,15 +77,6 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('FilesExtension', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-			return new Files(
-				$c->query('ActivityL10N'),
-				$server->getURLGenerator()
-			);
-		});
-
 		$container->registerService('FilesSharingExtension', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
