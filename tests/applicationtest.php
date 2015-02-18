@@ -59,7 +59,6 @@ class ApplicationTest extends TestCase {
 			array('FilesExtension', 'OCP\Activity\IExtension'),
 			array('FilesExtension', 'OCA\Activity\Extension\Files'),
 			array('FilesExtension', 'OCP\Activity\IExtension'),
-			array('FilesSharingExtension', 'OCA\Activity\Extension\Files_Sharing'),
 		);
 	}
 
