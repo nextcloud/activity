@@ -31,7 +31,7 @@ use OCA\Activity\DataHelper;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\GroupHelper;
-use OCA\Activity\Hooks;
+use OCA\Activity\FilesHooks;
 use OCA\Activity\Navigation;
 use OCA\Activity\ParameterHelper;
 use OCA\Activity\UserSettings;
@@ -86,7 +86,7 @@ class Application extends App {
 		});
 
 		$container->registerService('Hooks', function(IContainer $c) {
-			return new Hooks(
+			return new FilesHooks(
 				$c->query('ActivityData'),
 				$c->query('UserSettings'),
 				$c->query('CurrentUID')
