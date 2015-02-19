@@ -3,19 +3,6 @@ OC.L10N.register(
     {
     "Activity" : "សកម្មភាព",
     "Your settings have been updated." : "ការ​កំណត់​របស់​អ្នក​ត្រូវ​បាន​ធ្វើ​បច្ចុប្បន្នភាព។",
-    "You created %1$s" : "អ្នក​បាន​បង្កើត %1$s",
-    "%2$s created %1$s" : "%2$s បាន​បង្កើត %1$s",
-    "You changed %1$s" : "អ្នក​បាន​ផ្លាស់​ប្ដូរ %1$s",
-    "%2$s changed %1$s" : "%2$s បាន​ផ្លាស់​ប្ដូរ %1$s",
-    "You deleted %1$s" : "អ្នក​បាន​លុប %1$s",
-    "%2$s deleted %1$s" : "%2$s បាន​លុប %1$s",
-    "Files" : "ឯកសារ",
-    "A file or folder has been <strong>shared</strong>" : "<strong>បាន​ចែករំលែក</strong> ឯកសារ​ឬ​ថត",
-    "You shared %1$s with %2$s" : "អ្នក​បាន​ចែករំលែក %1$s ជាមួយ %2$s",
-    "You shared %1$s with group %2$s" : "អ្នក​បាន​ចែករំលែក %1$s ជាមួយ​ក្រុម %2$s",
-    "%2$s shared %1$s with you" : "%2$s បាន​ចែករំលែក %1$s ជាមួយ​អ្នក",
-    "You shared %1$s via link" : "អ្នក​បាន​ចែក​រំលែក %1$s តាម​រយៈ​តំណរភ្ជាប់",
-    "Shares" : "ចែក​រំលែក",
     "Activity notification" : "សេចក្ដីជូន​ដំណឺង​ស្ដីពីសកម្មភាព",
     "All Activities" : "សកម្មភាព​ទាំង​អស់",
     "Activities by you" : "សកម្មភាព​ធ្វើ​ដោយ​អ្នក",
@@ -40,6 +27,7 @@ OC.L10N.register(
     "Daily" : "រាល់ថ្ងៃ",
     "Weekly" : "រាល់​សប្ដាហ៍",
     "Activity feed" : "សកម្មភាព feed",
-    "Personal activity feed for %s" : "សកម្មភាព feed ផ្ទាល់​ខ្លួន​សម្រាប់ %s"
+    "Personal activity feed for %s" : "សកម្មភាព feed ផ្ទាល់​ខ្លួន​សម្រាប់ %s",
+    "Files" : "ឯកសារ"
 },
 "nplurals=1; plural=0;");

@@ -1,26 +1,6 @@
 { "translations": {
     "Activity" : "Attività",
     "Your settings have been updated." : "Le tue impostazioni sono state aggiornate.",
-    "A new file or folder has been <strong>created</strong>" : "Un nuovo file o cartella è stato <strong>creato</strong>",
-    "A file or folder has been <strong>changed</strong>" : "Un file o una cartella è stato <strong>modificato</strong>",
-    "A file or folder has been <strong>deleted</strong>" : "Un file o una cartella è stato <strong>eliminato</strong>",
-    "A file or folder has been <strong>restored</strong>" : "Un file o una cartella è stato <strong>ripristinato</strong>",
-    "You created %1$s" : "Hai creato %1$s",
-    "%2$s created %1$s" : "%2$s ha creato %1$s",
-    "%1$s was created in a public folder" : "%1$s è stato creato in una cartella pubblica",
-    "You changed %1$s" : "Hai modificato %1$s",
-    "%2$s changed %1$s" : "%2$s ha modificato %1$s",
-    "You deleted %1$s" : "Hai eliminato %1$s",
-    "%2$s deleted %1$s" : "%2$s ha eliminato %1$s",
-    "You restored %1$s" : "Hai ripristinato %1$s",
-    "%2$s restored %1$s" : "%2$s ha ripristinato %1$s",
-    "Files" : "File",
-    "A file or folder has been <strong>shared</strong>" : "Un file o una cartella è stato <strong>condiviso</strong>",
-    "You shared %1$s with %2$s" : "Hai condiviso %1$s con %2$s",
-    "You shared %1$s with group %2$s" : "Hai condiviso %1$s con il gruppo %2$s",
-    "%2$s shared %1$s with you" : "%2$s ha condiviso %1$s con te",
-    "You shared %1$s via link" : "Hai condiviso %1$s tramite collegamento",
-    "Shares" : "Condivisioni",
     "Activity notification" : "Notifica delle attività",
     "All Activities" : "Tutte le attività",
     "Activities by you" : "Le tue attività",
@@ -50,6 +30,7 @@
     "Daily" : "Quotidiano",
     "Weekly" : "Settimanale",
     "Activity feed" : "Fonte delle attività",
-    "Personal activity feed for %s" : "Fonte delle attività personali per %s"
+    "Personal activity feed for %s" : "Fonte delle attività personali per %s",
+    "Files" : "File"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

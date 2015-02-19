@@ -1,26 +1,6 @@
 { "translations": {
     "Activity" : "Toimingud",
     "Your settings have been updated." : "Seaded on uuendatud.",
-    "A new file or folder has been <strong>created</strong>" : "Uus fail või kataloog on <strong>loodud</strong>",
-    "A file or folder has been <strong>changed</strong>" : "Fail või kataloog on <strong>muudetud</strong>",
-    "A file or folder has been <strong>deleted</strong>" : "Fail või kataloog on <strong>kustutatud</strong>",
-    "A file or folder has been <strong>restored</strong>" : "Fail või kaust on <strong>taastatud</strong>",
-    "You created %1$s" : "Sa tekitasid %1$s",
-    "%2$s created %1$s" : "%2$s tekitatud %1$s",
-    "%1$s was created in a public folder" : "%1$s lisati avalikku kausta",
-    "You changed %1$s" : "Sa muutsid %1$s",
-    "%2$s changed %1$s" : "%2$s muutis %1$s",
-    "You deleted %1$s" : "Sa kustutasid %1$s",
-    "%2$s deleted %1$s" : "%2$s kustutas %1$s",
-    "You restored %1$s" : "Sa taastasid %1$s",
-    "%2$s restored %1$s" : "%2$s taastas %1$s",
-    "Files" : "Failid",
-    "A file or folder has been <strong>shared</strong>" : "Fail või kataloog on <strong>jagatud</strong>",
-    "You shared %1$s with %2$s" : "Jagasid %1$s  %2$s kasutajaga",
-    "You shared %1$s with group %2$s" : "Jagasid %1$s %2$s grupiga",
-    "%2$s shared %1$s with you" : "%2$s jagas sinuga %1$s",
-    "You shared %1$s via link" : "Jagasid %1$s lingiga",
-    "Shares" : "Jagamised",
     "Activity notification" : "Tegvuste teavitused",
     "All Activities" : "Kõik tegevused",
     "Activities by you" : "Sinu toimingud",
@@ -49,6 +29,7 @@
     "Daily" : "Iga päev",
     "Weekly" : "Iga nädal",
     "Activity feed" : "Toimingute voog",
-    "Personal activity feed for %s" : "Isiklik toimingute voog %s"
+    "Personal activity feed for %s" : "Isiklik toimingute voog %s",
+    "Files" : "Failid"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -1,26 +1,6 @@
 { "translations": {
     "Activity" : "Активність",
     "Your settings have been updated." : "Ваші налаштування було оновлено.",
-    "A new file or folder has been <strong>created</strong>" : "Новий файл або теку було <strong>створено</strong>",
-    "A file or folder has been <strong>changed</strong>" : "Файл або теку було <strong> змінено </strong>",
-    "A file or folder has been <strong>deleted</strong>" : "Файл або теку було <strong> видалено </strong>",
-    "A file or folder has been <strong>restored</strong>" : "Файл або теку було <strong> відновлено </strong>",
-    "You created %1$s" : "Вами створено %1$s",
-    "%2$s created %1$s" : "%2$s створено %1$s",
-    "%1$s was created in a public folder" : "%1$s створено у публічній теці",
-    "You changed %1$s" : "Вами змінено %1$s",
-    "%2$s changed %1$s" : "%2$s змінено %1$s",
-    "You deleted %1$s" : "Вами видалене %1$s",
-    "%2$s deleted %1$s" : "%2$s видалене %1$s",
-    "You restored %1$s" : "Вами відновлено %1$s",
-    "%2$s restored %1$s" : "%2$s відновлено %1$s",
-    "Files" : "Файли",
-    "A file or folder has been <strong>shared</strong>" : "Файл або теку було відкрито для <strong> спільного користування </strong>",
-    "You shared %1$s with %2$s" : "Ви поділилися %1$s з %2$s",
-    "You shared %1$s with group %2$s" : "Ви поділилися %1$s з групою %2$s",
-    "%2$s shared %1$s with you" : "%2$s поділився %1$s з вами",
-    "You shared %1$s via link" : "Ви поділилися %1$s використовуючи лінк",
-    "Shares" : "Розподільні",
     "Activity notification" : "Повідомлення активності",
     "All Activities" : "Вся Активність",
     "Activities by you" : "Ваша активність",
@@ -50,6 +30,7 @@
     "Daily" : "Щоденно",
     "Weekly" : "Щотижня",
     "Activity feed" : "Стрічка оновлень",
-    "Personal activity feed for %s" : "Персональна стрічка оновлень для %s"
+    "Personal activity feed for %s" : "Персональна стрічка оновлень для %s",
+    "Files" : "Файли"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }

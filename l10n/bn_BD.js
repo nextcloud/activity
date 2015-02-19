@@ -3,23 +3,6 @@ OC.L10N.register(
     {
     "Activity" : "সক্রিয়তা",
     "Your settings have been updated." : "আপনার সেটিং নবায়ন করা হয়েছে৷",
-    "A new file or folder has been <strong>created</strong>" : "একটি ফাইল বা ফোলডার <strong>তৈরি</strong> করা হয়েছে",
-    "A file or folder has been <strong>changed</strong>" : "একটি ফাইল বা ফোলডার <strong>পরিবরতন</strong> করা হয়েছে",
-    "A file or folder has been <strong>deleted</strong>" : "একটি ফাইল বা ফোলডার <strong>মোছা</strong> হয়েছে",
-    "You created %1$s" : "আপনি তৈরি করেছেন %1$s",
-    "%2$s created %1$s" : "%2$s তৈরি হয়েছে %1$s",
-    "%1$s was created in a public folder" : "একটি পাবলিক ফোল্ডারে %1$s তৈরী করা হয়েছে",
-    "You changed %1$s" : "আপনি পরিবরতন করেছেন %1$s",
-    "%2$s changed %1$s" : "%2$s পরিবরতন করেছে %1$s",
-    "You deleted %1$s" : "আপনি ডিলিট করেছেন %1$s",
-    "%2$s deleted %1$s" : "%2$s ডিলিট করেছে %1$s",
-    "Files" : "ফাইল",
-    "A file or folder has been <strong>shared</strong>" : "একটি ফাইল বা ফোলডার <strong>ভাগাভাগি</strong> করা হয়েছে",
-    "You shared %1$s with %2$s" : "আপনি %1$sকে %2$sএর সাথে ভাগাভাগি করেছেন",
-    "You shared %1$s with group %2$s" : "আপনি %1$s কে %2$s দলের সাথে ভাগাভাগি করেছেন",
-    "%2$s shared %1$s with you" : "%2$s আপনার সাথে %1$s ভাগাভাগি করেছেন",
-    "You shared %1$s via link" : "আপনি %1$s লিংকের মাধধমে ভাগাভাগি করেছেন",
-    "Shares" : "ভাগাভাগি",
     "Activity notification" : "সক্রিয়তা বিগগপতি",
     "All Activities" : "সকল সক্রিয়তা",
     "Activities by you" : "আপনার সক্রিয়তা",
@@ -45,6 +28,7 @@ OC.L10N.register(
     "Daily" : "দৈনিক",
     "Weekly" : "সাপ্তাহিক",
     "Activity feed" : "সক্রিয়তা বারতা",
-    "Personal activity feed for %s" : "%s এর জনন সক্রিয়তা বারতা"
+    "Personal activity feed for %s" : "%s এর জনন সক্রিয়তা বারতা",
+    "Files" : "ফাইল"
 },
 "nplurals=2; plural=(n != 1);");

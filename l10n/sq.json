@@ -1,26 +1,6 @@
 { "translations": {
     "Activity" : "Aktiviteti",
     "Your settings have been updated." : "Të dhënat tuaja janë azhornuar",
-    "A new file or folder has been <strong>created</strong>" : "Një skedar ose një dosje e re është <strong>krijuar</strong>",
-    "A file or folder has been <strong>changed</strong>" : "Një skedar ose një dosje ka <strong>ndryshuar</strong>",
-    "A file or folder has been <strong>deleted</strong>" : "Një skedar ose një dosje është <strong>fshirë</strong>",
-    "A file or folder has been <strong>restored</strong>" : "Një skedar ose dosje është <strong>rikthyer</strong>",
-    "You created %1$s" : "Ju krijuat %1$s",
-    "%2$s created %1$s" : "%2$s krijuar %1$s",
-    "%1$s was created in a public folder" : "%1$s është krijuar në një dosje publike",
-    "You changed %1$s" : "Ju ndryshuat %1$s",
-    "%2$s changed %1$s" : "%2$s ndryshuar %1$s",
-    "You deleted %1$s" : "Ju fshitë %1$s",
-    "%2$s deleted %1$s" : "%2$s fshirë %1$s",
-    "You restored %1$s" : "Ju rikthyet %1$s",
-    "%2$s restored %1$s" : "%2$s riktheu %1$s",
-    "Files" : "Skedarë",
-    "A file or folder has been <strong>shared</strong>" : "Një skedar ose dosje është <strong>ndarë</strong>",
-    "You shared %1$s with %2$s" : "Ju ndatë %1$s me %2$s",
-    "You shared %1$s with group %2$s" : "Ju ndatë %1$s me grupin %2$s",
-    "%2$s shared %1$s with you" : "%2$s ndau %1$s me ju",
-    "You shared %1$s via link" : "Ju ndatë %1$s me lidhje",
-    "Shares" : "ndarjet",
     "Activity notification" : "Njoftim për aktivitetin",
     "All Activities" : "I gjithë aktiviteti",
     "Activities by you" : "Aktiviteti juaj",
@@ -49,6 +29,7 @@
     "Daily" : "Përditë",
     "Weekly" : "Javore",
     "Activity feed" : "Lista e aktiviteteve",
-    "Personal activity feed for %s" : "Lista personale e veprimeve për %s"
+    "Personal activity feed for %s" : "Lista personale e veprimeve për %s",
+    "Files" : "Skedarë"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -1,19 +1,6 @@
 { "translations": {
     "Activity" : "പ്രവൃത്തി",
     "Your settings have been updated." : "നിങ്ങളുടെ താത്പര്യങ്ങൾ പരിഷ്കരിച്ചു",
-    "You created %1$s" : "നിങ്ങൾ %1$s സൃഷ്ടിച്ചു",
-    "%2$s created %1$s" : "%2$s %1$s സൃഷ്ടിച്ചു",
-    "You changed %1$s" : "നിങ്ങൾ %1$s പരിഷ്കരിച്ചു",
-    "%2$s changed %1$s" : "%2$s %1$s പരിഷ്കരിച്ചു",
-    "You deleted %1$s" : "നിങ്ങൾ %1$s മായ്ച്ചു",
-    "%2$s deleted %1$s" : "%2$s %1$s മായ്ച്ചു",
-    "Files" : "ഫയലുകൾ",
-    "A file or folder has been <strong>shared</strong>" : "ഒരു ഫയലോ അറയോ <strong>പങ്കിട്ടിരിക്കുന്നു</strong>",
-    "You shared %1$s with %2$s" : "നിങ്ങൾ %1$s %2$sനു പങ്കുവെച്ചു",
-    "You shared %1$s with group %2$s" : "നിങ്ങൾ %1$s %2$s കൂട്ടത്തിന് പങ്കുവെച്ചു",
-    "%2$s shared %1$s with you" : "%2$s %1$s നിങ്ങൾക്ക് പങ്കുവെച്ചു",
-    "You shared %1$s via link" : "താങ്കൾ %1$s ലിങ്കിലൂടെ പങ്കുവെച്ചിരിക്കുന്നു",
-    "Shares" : "പങ്കിടലുകൾ",
     "Activity notification" : "പ്രവർത്തന അറിയിപ്പ്",
     "All Activities" : "എല്ലാ പ്രവൃത്തികളും",
     "Activities by you" : "താങ്കളുടെ പ്രവൃത്തികൾ",
@@ -38,6 +25,7 @@
     "Daily" : "ദിവസേന",
     "Weekly" : "ആഴ്ച ",
     "Activity feed" : "പ്രവൃത്തികളുടെ ഫീഡ്",
-    "Personal activity feed for %s" : "%sനു് വേണ്ടിയുള്ള സ്വകാര്യ പ്രവൃത്തികളുടെ ഫീഡ്"
+    "Personal activity feed for %s" : "%sനു് വേണ്ടിയുള്ള സ്വകാര്യ പ്രവൃത്തികളുടെ ഫീഡ്",
+    "Files" : "ഫയലുകൾ"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

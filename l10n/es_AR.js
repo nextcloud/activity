@@ -3,22 +3,6 @@ OC.L10N.register(
     {
     "Activity" : "Actividad",
     "Your settings have been updated." : "Tu configuración ha sido actualizada",
-    "A new file or folder has been <strong>created</strong>" : "Un archivo o carpeta ha sido <strong>creado</strong>",
-    "A file or folder has been <strong>changed</strong>" : "Un archivo o carpeta ha sido <strong>modificado</strong>",
-    "A file or folder has been <strong>deleted</strong>" : "Un archivo o carpeta ha sido <strong>eliminado</strong>",
-    "You created %1$s" : "Has creado %1$s",
-    "%2$s created %1$s" : "%2$s creó %1$s",
-    "You changed %1$s" : "Modificaste %1$s",
-    "%2$s changed %1$s" : "%2$s modificó %1$s",
-    "You deleted %1$s" : "Eliminaste %1$s",
-    "%2$s deleted %1$s" : "%2$s eliminó %1$s",
-    "Files" : "Archivos",
-    "A file or folder has been <strong>shared</strong>" : "Un archivo o carpeta ha sido <strong>compartido</strong>",
-    "You shared %1$s with %2$s" : "Has compartido %1$s con %2$s",
-    "You shared %1$s with group %2$s" : "Has compartido %1$s en el grupo %2$s",
-    "%2$s shared %1$s with you" : "%2$s compartió %1$s contigo",
-    "You shared %1$s via link" : "Has compartido %1$s a través del enlace",
-    "Shares" : "Compartidos",
     "Activity notification" : "Notificación de Actividad",
     "All Activities" : "Todas las Actividades",
     "Activities by you" : "Tus Actividades",
@@ -44,6 +28,7 @@ OC.L10N.register(
     "Daily" : "Diariamente",
     "Weekly" : "Semanalmente",
     "Activity feed" : "Secuencia de Actividad",
-    "Personal activity feed for %s" : "Secuencia de actividad Personal para %s"
+    "Personal activity feed for %s" : "Secuencia de actividad Personal para %s",
+    "Files" : "Archivos"
 },
 "nplurals=2; plural=(n != 1);");
