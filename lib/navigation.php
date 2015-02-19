@@ -82,7 +82,7 @@ class Navigation {
 	public function getTemplate($forceActive = null) {
 		$active = $forceActive ?: $this->active;
 
-		$template = new Template('activity', 'navigation', '');
+		$template = new Template('activity', 'stream.app.navigation', '');
 		$entries = $this->getLinkList();
 
 		if (sizeof($entries['apps']) === 1) {

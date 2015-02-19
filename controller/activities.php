@@ -79,7 +79,7 @@ class Activities extends Controller {
 	public function showList($filter = 'all') {
 		$filter = $this->data->validateFilter($filter);
 
-		return new TemplateResponse('activity', 'list', [
+		return new TemplateResponse('activity', 'stream.body', [
 			'appNavigation'	=> $this->navigation->getTemplate($filter),
 			'filter'		=> $filter,
 		]);
@@ -96,7 +96,7 @@ class Activities extends Controller {
 		$pageOffset = $page - 1;
 		$filter = $this->data->validateFilter($filter);
 
-		return new TemplateResponse('activity', 'activities.part', [
+		return new TemplateResponse('activity', 'stream.list', [
 			'activity' => $this->data->read($this->helper, $this->settings, $pageOffset * self::DEFAULT_PAGE_SIZE, self::DEFAULT_PAGE_SIZE, $filter)
 		], '');
 	}
