@@ -42,7 +42,7 @@ class Display
 	 * @return string
 	 */
 	public static function show($activity) {
-		$tmpl = new Template('activity', 'activity.box');
+		$tmpl = new Template('activity', 'stream.item');
 		$tmpl->assign('formattedDate', Util::formatDate($activity['timestamp']));
 		$tmpl->assign('formattedTimestamp', \OCP\relative_modified_date($activity['timestamp']));
 		$tmpl->assign('user', $activity['user']);

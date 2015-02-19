@@ -28,8 +28,6 @@ use OCA\Activity\Controller\Activities;
 use OCA\Activity\Controller\Settings;
 use OCA\Activity\Data;
 use OCA\Activity\DataHelper;
-use OCA\Activity\Extension\Files;
-use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\FilesHooks;
 use OCA\Activity\Navigation;
