@@ -33,8 +33,7 @@ use OCP\Util;
  *
  * @package OCA\Activity
  */
-class Display
-{
+class Display {
 	/**
 	 * Get the template for a specific activity-event in the activities
 	 *
@@ -44,7 +43,7 @@ class Display
 	public static function show($activity) {
 		$tmpl = new Template('activity', 'stream.item');
 		$tmpl->assign('formattedDate', Util::formatDate($activity['timestamp']));
-		$tmpl->assign('formattedTimestamp', \OCP\relative_modified_date($activity['timestamp']));
+		$tmpl->assign('formattedTimestamp', Template::relative_modified_date($activity['timestamp']));
 		$tmpl->assign('user', $activity['user']);
 		$tmpl->assign('displayName', User::getDisplayName($activity['user']));
 
