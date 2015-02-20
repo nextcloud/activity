@@ -30,7 +30,7 @@ class ParameterHelperTest extends TestCase {
 	protected $originalWEBROOT;
 	/** @var \OCA\Activity\ParameterHelper */
 	protected $parameterHelper;
-	/** @var \OC\Files\View */
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $view;
 
 	protected function setUp() {
@@ -38,16 +38,20 @@ class ParameterHelperTest extends TestCase {
 
 		$this->originalWEBROOT =\OC::$WEBROOT;
 		\OC::$WEBROOT = '';
-		$this->view = new \OC\Files\View('');
+		$this->view = $view = $this->getMockBuilder('\OC\Files\View')
+			->disableOriginalConstructor()
+			->getMock();
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new ActivityManager();
 		$activityManager->registerExtension(function() use ($activityLanguage) {
 			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
+		/** @var \OC\Files\View $view */
 		$this->parameterHelper = new \OCA\Activity\ParameterHelper(
 			$activityManager,
-			$this->view,
-			$activityLanguage
+			$view,
+			$activityLanguage,
+			'test'
 		);
 	}
 
@@ -125,7 +129,7 @@ class ParameterHelperTest extends TestCase {
 			array(array('UserA', '/tmp/test'), array(0 => 'username', 1 => 'file'), true, true, array(
 				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
 				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ftmp%2Ftest" title="in tmp">test</a>',
-			), 'tmp/test/'),
+			), '/test/files/tmp/test'),
 		);
 	}
 
@@ -134,7 +138,10 @@ class ParameterHelperTest extends TestCase {
 	 */
 	public function testPrepareParameters($params, $filePosition, $stripPath, $highlightParams, $expected, $createFolder = '') {
 		if ($createFolder !== '') {
-			$this->view->mkdir('/' . \OCP\User::getUser() . '/files/' . $createFolder);
+			$this->view->expects($this->any())
+				->method('is_dir')
+				->with($createFolder)
+				->willReturn(true);
 		}
 		$this->assertEquals(
 			$expected,

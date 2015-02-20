@@ -70,7 +70,8 @@ class Application extends App {
 				new ParameterHelper (
 					$server->getActivityManager(),
 					new View(''),
-					$c->query('ActivityL10N')
+					$c->query('ActivityL10N'),
+					$c->query('CurrentUID')
 				),
 				$c->query('ActivityL10N')
 			);

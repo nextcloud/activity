@@ -489,7 +489,8 @@ class GroupHelperTest extends TestCase {
 				new ParameterHelper(
 					$activityManager,
 					new \OC\Files\View(''),
-					$activityLanguage
+					$activityLanguage,
+					'test'
 				),
 				$activityLanguage
 			),

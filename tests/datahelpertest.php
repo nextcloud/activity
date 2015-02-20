@@ -143,7 +143,8 @@ class DataHelperTest extends TestCase {
 			new ParameterHelper(
 				$activityManager,
 				new View(''),
-				$activityLanguage
+				$activityLanguage,
+				'test'
 			),
 			$activityLanguage
 		);
@@ -188,7 +189,8 @@ class DataHelperTest extends TestCase {
 			new ParameterHelper(
 				$activityManager,
 				new View(''),
-				$activityLanguage
+				$activityLanguage,
+				'test'
 			),
 			$activityLanguage
 		);

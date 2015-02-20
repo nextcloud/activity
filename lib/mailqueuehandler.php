@@ -180,12 +180,14 @@ class MailQueueHandler {
 	 */
 	public function sendEmailToUser($user, $email, $lang, $timezone, $mailData) {
 		$l = $this->getLanguage($lang);
+		// NOTE: DO NOT TRY TO INJECT THIS, it depends on a different language
 		$dataHelper = new DataHelper(
 			\OC::$server->getActivityManager(),
 			new ParameterHelper(
 				\OC::$server->getActivityManager(),
 				new \OC\Files\View(''),
-				$l
+				$l,
+				$user
 			),
 			$l
 		);
