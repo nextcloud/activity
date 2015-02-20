@@ -25,6 +25,7 @@ namespace OCA\Activity\AppInfo;
 use OC\Files\View;
 use OCA\Activity\Consumer;
 use OCA\Activity\Controller\Activities;
+use OCA\Activity\Controller\Feed;
 use OCA\Activity\Controller\Settings;
 use OCA\Activity\Data;
 use OCA\Activity\DataHelper;
@@ -159,6 +160,23 @@ class Application extends App {
 				$c->query('GroupHelper'),
 				$c->query('Navigation'),
 				$c->query('UserSettings'),
+				$c->query('CurrentUID')
+			);
+		});
+
+		$container->registerService('FeedController', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
+			return new Feed(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('ActivityData'),
+				$c->query('GroupHelper'),
+				$c->query('Navigation'),
+				$c->query('UserSettings'),
+				$server->getUserSession(),
+				$server->getConfig(),
 				$c->query('CurrentUID')
 			);
 		});

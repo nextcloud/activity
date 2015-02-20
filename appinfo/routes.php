@@ -41,4 +41,6 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'Settings#feed', 'url' => '/settings/feed', 'verb' => 'POST'],
 	['name' => 'Activities#showList', 'url' => '/', 'verb' => 'GET'],
 	['name' => 'Activities#fetch', 'url' => '/activities/fetch', 'verb' => 'GET'],
+	// TODO rename to rss.php so the old links work
+	['name' => 'Feed#show', 'url' => '/feedcontroller', 'verb' => 'GET'],
 ]]);
