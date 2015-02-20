@@ -138,18 +138,6 @@ class Data {
 	}
 
 	/**
-	 * Filter the activity types
-	 *
-	 * @param array $types
-	 * @param string $filter
-	 * @return array
-	 */
-	public function filterNotificationTypes($types, $filter) {
-		// Allow apps to add new notification types
-		return $this->activityManager->filterNotificationTypes($types, $filter);
-	}
-
-	/**
 	 * @brief Read a list of events from the activity stream
 	 * @param GroupHelper $groupHelper Allows activities to be grouped
 	 * @param UserSettings $userSettings Gets the settings of the user
@@ -162,7 +150,7 @@ class Data {
 		// get current user
 		$user = User::getUser();
 		$enabledNotifications = $userSettings->getNotificationTypes($user, 'stream');
-		$enabledNotifications = $this->filterNotificationTypes($enabledNotifications, $filter);
+		$enabledNotifications = $this->activityManager->filterNotificationTypes($enabledNotifications, $filter);
 		$parameters = array_unique($enabledNotifications);
 
 		// We don't want to display any activities
@@ -222,30 +210,6 @@ class Data {
 		}
 
 		return $groupHelper->getActivities();
-	}
-
-	/**
-	 * Get the casted page number from $_GET
-	 * @return int
-	 */
-	public function getPageFromParam() {
-		if (isset($_GET['page'])) {
-			return (int) $_GET['page'];
-		}
-
-		return 1;
-	}
-
-	/**
-	 * Get the filter from $_GET
-	 * @return string
-	 * @deprecated Use validateFilter() instead
-	 */
-	public function getFilterFromParam() {
-		if (!isset($_GET['filter']))
-			return 'all';
-
-		return $this->validateFilter($_GET['filter']);
 	}
 
 	/**

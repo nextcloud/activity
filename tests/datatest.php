@@ -60,7 +60,7 @@ class DataTest extends TestCase {
 		$this->assertArrayHasKey($typeKey, $this->data->getNotificationTypes($this->activityLanguage));
 	}
 
-	public function getFilterFromParamData() {
+	public function validateFilterData() {
 		return array(
 			// Default filters
 			array('all', 'all'),
@@ -77,19 +77,12 @@ class DataTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider getFilterFromParamData
+	 * @dataProvider validateFilterData
 	 *
-	 * @param string $globalValue
+	 * @param string $filter
 	 * @param string $expected
 	 */
-	public function testGetFilterFromParam($globalValue, $expected) {
-		if ($globalValue !== null) {
-			$_GET['filter'] = $globalValue;
-		}
-
-		$this->assertEquals(
-			$expected,
-			$this->data->getFilterFromParam()
-		);
+	public function testValidateFilter($filter, $expected) {
+		$this->assertEquals($expected, $this->data->validateFilter($filter));
 	}
 }
