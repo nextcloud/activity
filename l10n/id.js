@@ -17,9 +17,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Anda menerima email ini karena dalam satu hari terakhir hal-hal berikut terjadi di %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Anda menerima email ini karena dalam satu minggu terakhir hal-hal berikut terjadi di %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Anda akan melihat daftar peristiwa disini ketika mulai menggunakan %s Anda.",
-    "No more events to load" : "Tidak ada lagi acara untuk dimuat",
-    "Enable RSS feed" : "Aktifkan RSS feed",
     "Notifications" : "Pemberitahuan",
     "Mail" : "Email",
     "Stream" : "Alir",
@@ -32,6 +29,9 @@ OC.L10N.register(
     "Weekly" : "Setiap minggu",
     "Activity feed" : "Feed aktivitas",
     "Personal activity feed for %s" : "Feed aktivitas pribadi untuk %s",
+    "Enable RSS feed" : "Aktifkan RSS feed",
+    "You will see a list of events here when you start to use your %s." : "Anda akan melihat daftar peristiwa disini ketika mulai menggunakan %s Anda.",
+    "No more events to load" : "Tidak ada lagi acara untuk dimuat",
     "Files" : "Berkas"
 },
 "nplurals=1; plural=0;");

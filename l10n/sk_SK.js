@@ -18,9 +18,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Tento email dostávate preto, lebo za posledný deň došlo v %s k týmto udalostiam",
     "You are receiving this email because in the last week the following things happened at %s" : "Tento email dostávate preto, lebo za posledný týždeň došlo v %s k týmto udalostiam",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Tu uvidíte zoznam udalostí hneď ako začnete používať svoj %s.",
-    "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
-    "Enable RSS feed" : "Povoliť RSS kanál",
     "Notifications" : "Oznámenia",
     "Mail" : "Pošta",
     "Stream" : "Stream",
@@ -33,6 +30,9 @@ OC.L10N.register(
     "Weekly" : "Týždenne",
     "Activity feed" : "Prehľad aktivít",
     "Personal activity feed for %s" : "Prehľad aktivít pre používateľa %s",
+    "Enable RSS feed" : "Povoliť RSS kanál",
+    "You will see a list of events here when you start to use your %s." : "Tu uvidíte zoznam udalostí hneď ako začnete používať svoj %s.",
+    "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
     "Files" : "Súbory"
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");

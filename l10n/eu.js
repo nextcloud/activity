@@ -18,9 +18,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Posta hau jaso duzu azkenengo egunean %sko hurrengo gertaerak direla eta",
     "You are receiving this email because in the last week the following things happened at %s" : "Posta hau jaso duzu azkenengo astean %sko hurrengo gertaerak direla eta",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Gertaeren zerrenda bat ikusiko duzu zure %s erabiltzen hasten zarenean.",
-    "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
-    "Enable RSS feed" : "Gaitu RSS jarioa",
     "Notifications" : "Jakinarazpenak",
     "Mail" : "Posta",
     "Stream" : "Jarioa",
@@ -33,6 +30,9 @@ OC.L10N.register(
     "Weekly" : "Astero",
     "Activity feed" : "Jarduera jarioa",
     "Personal activity feed for %s" : "%sen jarduera jario pertsonala",
+    "Enable RSS feed" : "Gaitu RSS jarioa",
+    "You will see a list of events here when you start to use your %s." : "Gertaeren zerrenda bat ikusiko duzu zure %s erabiltzen hasten zarenean.",
+    "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
     "Files" : "Fitxategiak"
 },
 "nplurals=2; plural=(n != 1);");

@@ -16,9 +16,6 @@
     "You are receiving this email because in the last day the following things happened at %s" : "U ontvangt dit bericht omdat de afgelopen dag het volgende gebeurde op %s",
     "You are receiving this email because in the last week the following things happened at %s" : "U ontvangt dit bericht omdat de afgelopen week het volgende gebeurde op %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "U ziet hier een lijst met activiteiten als u gebruik gaat maken van uw %s.",
-    "No more events to load" : "Geen activiteiten meer om te laden ",
-    "Enable RSS feed" : "Aanzetten RSS kanaal",
     "Notifications" : "Meldingen",
     "Mail" : "E-mail",
     "Stream" : "Doorlopend",
@@ -31,6 +28,9 @@
     "Weekly" : "Wekelijks",
     "Activity feed" : "Activiteitenkanaal",
     "Personal activity feed for %s" : "Persoonlijk activiteitenkanaal voor %s",
+    "Enable RSS feed" : "Aanzetten RSS kanaal",
+    "You will see a list of events here when you start to use your %s." : "U ziet hier een lijst met activiteiten als u gebruik gaat maken van uw %s.",
+    "No more events to load" : "Geen activiteiten meer om te laden ",
     "Files" : "Bestanden"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

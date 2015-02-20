@@ -18,9 +18,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Jūs saņemat šo e-pastu, jo pēdējās diennakts laikā %s ir notikušas šādas izmaiņas:",
     "You are receiving this email because in the last week the following things happened at %s" : "Jūs saņemat šo e-pastu, jo pēdējās nedēļas laikā %s ir notikušas šādas izmaiņas:",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Kad sāksi lietot %s, šeit redzēsi sarakstu ar dažādiem notikumiem.",
-    "No more events to load" : "Nav vairs notikumu, ko ielādēt",
-    "Enable RSS feed" : "Ieslēgt RSS plūsmu",
     "Notifications" : "Paziņojumi",
     "Mail" : "E-pasts",
     "Stream" : "Datu straume",
@@ -33,6 +30,9 @@ OC.L10N.register(
     "Weekly" : "Katru nedēļu",
     "Activity feed" : "Izmaiņu plūsma",
     "Personal activity feed for %s" : "%s personīgā izmaiņu plūsma ",
+    "Enable RSS feed" : "Ieslēgt RSS plūsmu",
+    "You will see a list of events here when you start to use your %s." : "Kad sāksi lietot %s, šeit redzēsi sarakstu ar dažādiem notikumiem.",
+    "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "Files" : "Datnes"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

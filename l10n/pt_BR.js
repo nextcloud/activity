@@ -18,9 +18,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Você está recebendo este e-mail porque no último dia as seguintes coisas aconteceram em %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Você está recebendo este e-mail porque na última semana as seguintes coisas aconteceram em %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Você verá uma lista de eventos aqui quando começar a usar o seu %s.",
-    "No more events to load" : "Não ha mais eventos para carregar",
-    "Enable RSS feed" : "Habilitar alimentação RRS",
     "Notifications" : "Notificações",
     "Mail" : "EMail",
     "Stream" : "Fluxo",
@@ -33,6 +30,9 @@ OC.L10N.register(
     "Weekly" : "Semanal",
     "Activity feed" : "Alimentação de atividade",
     "Personal activity feed for %s" : "Alimentação de atividade pessoal para %s",
+    "Enable RSS feed" : "Habilitar alimentação RRS",
+    "You will see a list of events here when you start to use your %s." : "Você verá uma lista de eventos aqui quando começar a usar o seu %s.",
+    "No more events to load" : "Não ha mais eventos para carregar",
     "Files" : "Arquivos"
 },
 "nplurals=2; plural=(n > 1);");

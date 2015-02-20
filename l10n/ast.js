@@ -17,9 +17,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Tas recibiendo esti corréu porque nel caberu día asocedieron les siguientes coses en %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Tas recibiendo esti corréu porque na cabera selmana asocedieron les siguientes coses en %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Vas ver una llista d'eventos equí cuando entames a usar %s.",
-    "No more events to load" : "Nun hai eventos a cargar",
-    "Enable RSS feed" : "Habilitar feed RSS",
     "Notifications" : "Notificaciones",
     "Mail" : "Corréu",
     "Stream" : "Fluxu de rede",
@@ -32,6 +29,9 @@ OC.L10N.register(
     "Weekly" : "Selmanalmente",
     "Activity feed" : "Feed d'actividá",
     "Personal activity feed for %s" : "Feed d'actividá personal pa %s",
+    "Enable RSS feed" : "Habilitar feed RSS",
+    "You will see a list of events here when you start to use your %s." : "Vas ver una llista d'eventos equí cuando entames a usar %s.",
+    "No more events to load" : "Nun hai eventos a cargar",
     "Files" : "Ficheros"
 },
 "nplurals=2; plural=(n != 1);");

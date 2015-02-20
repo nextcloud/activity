@@ -18,9 +18,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Ви отримали цей лист, тому що за останню добу сталися зміни в %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Ви отримали цей лист, тому що за останній тиждень сталися зміни в %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Ви тут побачите список подій, коли починаєте використовувати свій %s.",
-    "No more events to load" : "Немає більше подій для відображення",
-    "Enable RSS feed" : "Активувати RSS стрічку",
     "Notifications" : "Сповіщення",
     "Mail" : "Повідомлення",
     "Stream" : "Потік",
@@ -33,6 +30,9 @@ OC.L10N.register(
     "Weekly" : "Щотижня",
     "Activity feed" : "Стрічка оновлень",
     "Personal activity feed for %s" : "Персональна стрічка оновлень для %s",
+    "Enable RSS feed" : "Активувати RSS стрічку",
+    "You will see a list of events here when you start to use your %s." : "Ви тут побачите список подій, коли починаєте використовувати свій %s.",
+    "No more events to load" : "Немає більше подій для відображення",
     "Files" : "Файли"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

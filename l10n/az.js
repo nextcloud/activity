@@ -18,9 +18,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Siz elektron məktubu ona görə aldınız ki, keçən gün %s ünvanında aşağıdakı hadisələr baş vermişdir.",
     "You are receiving this email because in the last week the following things happened at %s" : "Siz elektron məktubu ona görə aldınız ki, keçən həftə %s unvanında aşağıdakı hadəsələr baş vermişdir ",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Siz %s istifadəyə başladıqda, baş verən hadısələrin siyahısını burda görəcəksiniz.",
-    "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur",
-    "Enable RSS feed" : "RSS ötürməsinin işə salinmaslı",
     "Notifications" : "Xəbərdarlıqlar",
     "Mail" : "Məktub",
     "Stream" : "Axın",
@@ -33,6 +30,9 @@ OC.L10N.register(
     "Weekly" : "Həftəlik",
     "Activity feed" : "Fəaliyyətin ötürülməsi",
     "Personal activity feed for %s" : "%s üçün şəxsi fəaliyyətin ötürülməsi",
+    "Enable RSS feed" : "RSS ötürməsinin işə salinmaslı",
+    "You will see a list of events here when you start to use your %s." : "Siz %s istifadəyə başladıqda, baş verən hadısələrin siyahısını burda görəcəksiniz.",
+    "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur",
     "Files" : "Fayllar"
 },
 "nplurals=2; plural=(n != 1);");

@@ -17,9 +17,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Sa sead selle teavituse, kuna viimase päeva jooksul toimusid %s sellised tegevused",
     "You are receiving this email because in the last week the following things happened at %s" : "Sa sead selle teavituse, kuna viimase nädala jooksul toimusid %s sellised tegevused",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Siin näed sa sündmuste nimekirja kui sa hakkad %s kasutama.",
-    "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
-    "Enable RSS feed" : "Luba RSS voog",
     "Notifications" : "Teavitused",
     "Mail" : "Kirjad",
     "Stream" : "Voog",
@@ -32,6 +29,9 @@ OC.L10N.register(
     "Weekly" : "Iga nädal",
     "Activity feed" : "Toimingute voog",
     "Personal activity feed for %s" : "Isiklik toimingute voog %s",
+    "Enable RSS feed" : "Luba RSS voog",
+    "You will see a list of events here when you start to use your %s." : "Siin näed sa sündmuste nimekirja kui sa hakkad %s kasutama.",
+    "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
     "Files" : "Failid"
 },
 "nplurals=2; plural=(n != 1);");

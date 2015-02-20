@@ -18,9 +18,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "このメールは、最近１日間に %s で以下の事象が発生したことをお知らせするものです。",
     "You are receiving this email because in the last week the following things happened at %s" : "このメールは、最近１週間に %s で以下の事象が発生したことをお知らせするものです。",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "%s の使用を開始すると、ここでイベントリストを見ることができます。",
-    "No more events to load" : "これ以上読み込むイベントはありません",
-    "Enable RSS feed" : "RSSフィードを有効にする",
     "Notifications" : "通知",
     "Mail" : "メール",
     "Stream" : "ストリーム",
@@ -33,6 +30,9 @@ OC.L10N.register(
     "Weekly" : "毎週",
     "Activity feed" : "アクティビティフィード",
     "Personal activity feed for %s" : "\"%s\" の個人アクティビティフィード",
+    "Enable RSS feed" : "RSSフィードを有効にする",
+    "You will see a list of events here when you start to use your %s." : "%s の使用を開始すると、ここでイベントリストを見ることができます。",
+    "No more events to load" : "これ以上読み込むイベントはありません",
     "Files" : "ファイル"
 },
 "nplurals=1; plural=0;");

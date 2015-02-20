@@ -17,9 +17,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "شما این ایمیل را دریافت کردید زیرا در یک روز گذشته موارد زیر در %s اتفاق افتاده است",
     "You are receiving this email because in the last week the following things happened at %s" : "شما این ایمیل را دریافت کردید زیرا در یک هفته گذشته موارد زیر در %s اتفاق افتاده است",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "وقتی که از%s خود استفاده کنید لیستی از وقایع را اینجا مشاهده خواهید کرد.",
-    "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
-    "Enable RSS feed" : "فعالسازی فید RSS",
     "Notifications" : "هشدارها",
     "Mail" : "ایمیل",
     "Stream" : "پخش",
@@ -32,6 +29,9 @@ OC.L10N.register(
     "Weekly" : "هفتهگی",
     "Activity feed" : "فید فعالیت",
     "Personal activity feed for %s" : "فعالیت شخصی فید برای %s",
+    "Enable RSS feed" : "فعالسازی فید RSS",
+    "You will see a list of events here when you start to use your %s." : "وقتی که از%s خود استفاده کنید لیستی از وقایع را اینجا مشاهده خواهید کرد.",
+    "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
     "Files" : "فایل ها"
 },
 "nplurals=1; plural=0;");

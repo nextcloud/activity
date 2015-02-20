@@ -7,7 +7,7 @@ OC.L10N.register(
     "All Activities" : "Todas as Atividades",
     "Activities by you" : "As suas atividades",
     "Activities by others" : "Atividades de outros",
-    "\"remote user\"" : "utilizador remoto",
+    "\"remote user\"" : "\"utilizador remoto\"",
     "in %s" : "em %s",
     "%s and %s" : "%s e %s",
     ", " : ", ",
@@ -18,9 +18,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Está a receber este e-mail porque no último dia ocorreram as seguintes ações às %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Está a receber este e-mail porque na última semana ocorreram as seguintes ações às %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Irá ver aqui uma lista de eventos, quando começar a utilizar a sua %s",
-    "No more events to load" : "Sem mais eventos para carregar",
-    "Enable RSS feed" : "Ativar feed RSS",
     "Notifications" : "Notificações",
     "Mail" : "Correio",
     "Stream" : "Transmissão",
@@ -33,6 +30,9 @@ OC.L10N.register(
     "Weekly" : "Semanalmente",
     "Activity feed" : "Atividade de feed",
     "Personal activity feed for %s" : "Atividade pessoal de feed para %s",
+    "Enable RSS feed" : "Ativar feed RSS",
+    "You will see a list of events here when you start to use your %s." : "Irá ver aqui uma lista de eventos, quando começar a utilizar a sua %s",
+    "No more events to load" : "Sem mais eventos para carregar",
     "Files" : "Ficheiros"
 },
 "nplurals=2; plural=(n != 1);");

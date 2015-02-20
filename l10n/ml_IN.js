@@ -15,9 +15,6 @@ OC.L10N.register(
     "You are receiving this email because in the last hour the following things happened at %s" : "%sൽ കഴിഞ്ഞ ഒരു മണിക്കൂറിൽ താഴെ പറയുന്നവ സംഭവിച്ചതിനാലാണ് താങ്കൾക്ക് ഈ ഈമെയിൽ ലഭിക്കുന്നത്.",
     "You are receiving this email because in the last day the following things happened at %s" : "%sൽ കഴിഞ്ഞ ദിവസം താഴെ പറയുന്നവ സംഭവിച്ചതിനാലാണ് താങ്കൾക്ക് ഈ ഈമെയിൽ ലഭിക്കുന്നത്.",
     "You are receiving this email because in the last week the following things happened at %s" : "%sൽ കഴിഞ്ഞ ആഴ്ച താഴെ പറയുന്നവ സംഭവിച്ചതിനാലാണ് താങ്കൾക്ക് ഈ ഈമെയിൽ ലഭിക്കുന്നത്.",
-    "You will see a list of events here when you start to use your %s." : "നിങ്ങൾ നിങ്ങളുടെ %s ഉപയോഗിക്കാൻ  തുടങ്ങി കഴിയുമ്പോൾ കാര്യങ്ങളുടെ ഒരു പട്ടിക കാണാം",
-    "No more events to load" : "ലഭ്യമാക്കാൻ ഇനി ചടങ്ങുകളൊന്നുമില്ല",
-    "Enable RSS feed" : "ആർഎസ്‌എസ് ഫീഡ് പ്രവർത്തനസജ്ജമാക്കുക",
     "Notifications" : "അറിയിപ്പ്",
     "Mail" : "കത്ത്",
     "Stream" : "പ്രവാഹം",
@@ -28,6 +25,9 @@ OC.L10N.register(
     "Weekly" : "ആഴ്ച ",
     "Activity feed" : "പ്രവൃത്തികളുടെ ഫീഡ്",
     "Personal activity feed for %s" : "%sനു് വേണ്ടിയുള്ള സ്വകാര്യ പ്രവൃത്തികളുടെ ഫീഡ്",
+    "Enable RSS feed" : "ആർഎസ്‌എസ് ഫീഡ് പ്രവർത്തനസജ്ജമാക്കുക",
+    "You will see a list of events here when you start to use your %s." : "നിങ്ങൾ നിങ്ങളുടെ %s ഉപയോഗിക്കാൻ  തുടങ്ങി കഴിയുമ്പോൾ കാര്യങ്ങളുടെ ഒരു പട്ടിക കാണാം",
+    "No more events to load" : "ലഭ്യമാക്കാൻ ഇനി ചടങ്ങുകളൊന്നുമില്ല",
     "Files" : "ഫയലുകൾ"
 },
 "nplurals=2; plural=(n != 1);");

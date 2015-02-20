@@ -18,9 +18,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Λαμβάνετε αυτό το μήνυμα ηλ. ταχυδρομείου γιατί την τελευταία ημέρα τα παρακάτω γεγονότα συνέβησαν στο %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Λαμβάνετε αυτό το μήνυμα ηλ. ταχυδρομείου γιατί την τελευταία εβδομάδα τα παρακάτω γεγονότα συνέβησαν στο %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Θα δείτε εδώ μια λίστα από συμβάντα όταν ξεκινήσετε να χρησιμοποιείτε το %s σας.",
-    "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
-    "Enable RSS feed" : "Ενεργοποίηση ροής RSS",
     "Notifications" : "Ειδοποιήσεις",
     "Mail" : "Ταχυδρομείο",
     "Stream" : "Ροή",
@@ -33,6 +30,9 @@ OC.L10N.register(
     "Weekly" : "Εβδομαδιαίως",
     "Activity feed" : "Ροή Δραστηριότητας",
     "Personal activity feed for %s" : "Προσωπική ροή δραστηριότητας για %s",
+    "Enable RSS feed" : "Ενεργοποίηση ροής RSS",
+    "You will see a list of events here when you start to use your %s." : "Θα δείτε εδώ μια λίστα από συμβάντα όταν ξεκινήσετε να χρησιμοποιείτε το %s σας.",
+    "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "Files" : "Αρχεία"
 },
 "nplurals=2; plural=(n != 1);");

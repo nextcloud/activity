@@ -16,9 +16,6 @@ OC.L10N.register(
     "You are receiving this email because in the last hour the following things happened at %s" : "הודעת דואר אלקטרוני זו נשלחת כיוון שבשעה האחרונה אירעו הדברים הבאים ב- %s",
     "You are receiving this email because in the last day the following things happened at %s" : "הודעת דואר אלקטרוני זו נשלחת כיוון שביום האחרון אירעו הדברים הבאים ב- %s",
     "You are receiving this email because in the last week the following things happened at %s" : "הודעת דואר אלקטרוני זו נשלחת כיוון שבשבוע האחרון אירעו הדברים הבאים ב- %s",
-    "You will see a list of events here when you start to use your %s." : "תיראו פה רשימת אירועים כשתתחילו להשתמתש ב %s.",
-    "No more events to load" : "אין אירועים נוספים לטעינה",
-    "Enable RSS feed" : "לאפשר הזנת RSS",
     "Notifications" : "דיווחים",
     "Mail" : "דואר",
     "You need to set up your email address before you can receive notification emails." : "יש להגדיר כתובת דואר אלקטרוני לפני שניתן יהיה לקבל דיווחים.",
@@ -28,6 +25,9 @@ OC.L10N.register(
     "Weekly" : "שבועי",
     "Activity feed" : "דיווחי פעילות",
     "Personal activity feed for %s" : "הזנת פעילות עצמית עבור %s",
+    "Enable RSS feed" : "לאפשר הזנת RSS",
+    "You will see a list of events here when you start to use your %s." : "תיראו פה רשימת אירועים כשתתחילו להשתמתש ב %s.",
+    "No more events to load" : "אין אירועים נוספים לטעינה",
     "Files" : "קבצים"
 },
 "nplurals=2; plural=(n != 1);");

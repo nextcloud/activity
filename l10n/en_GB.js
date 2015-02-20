@@ -18,9 +18,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "You are receiving this email because the following things happened at %s in the last day",
     "You are receiving this email because in the last week the following things happened at %s" : "You are receiving this email because the following things happened at %s in the last week",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "You will see a list of events here when you start to use your %s.",
-    "No more events to load" : "No more events to load",
-    "Enable RSS feed" : "Enable RSS feed",
     "Notifications" : "Notifications",
     "Mail" : "Mail",
     "Stream" : "Stream",
@@ -33,6 +30,9 @@ OC.L10N.register(
     "Weekly" : "Weekly",
     "Activity feed" : "Activity feed",
     "Personal activity feed for %s" : "Personal activity feed for %s",
+    "Enable RSS feed" : "Enable RSS feed",
+    "You will see a list of events here when you start to use your %s." : "You will see a list of events here when you start to use your %s.",
+    "No more events to load" : "No more events to load",
     "Files" : "Files"
 },
 "nplurals=2; plural=(n != 1);");

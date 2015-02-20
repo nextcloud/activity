@@ -17,9 +17,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Ovu e-poštu primate zato jer su se proteklog dana sljedeće stvari dogodile na %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Ovu e-poštu primate zato jer su se proteklog tjedna sljedeće stvari dogodile na %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Popis događaja vidjet ćete ovdje kad počnete koristiti svoj %s.",
-    "No more events to load" : "Nema više događaja za učitavanje",
-    "Enable RSS feed" : "Omogućite RSS sažetak događaja",
     "Notifications" : "Notifikacije",
     "Mail" : "Pošta",
     "Stream" : "Strujanje",
@@ -32,6 +29,9 @@ OC.L10N.register(
     "Weekly" : "Svaki tjedan",
     "Activity feed" : "Sažetak aktivnosti",
     "Personal activity feed for %s" : "Sažetak osobnih aktivnosti za %s",
+    "Enable RSS feed" : "Omogućite RSS sažetak događaja",
+    "You will see a list of events here when you start to use your %s." : "Popis događaja vidjet ćete ovdje kad počnete koristiti svoj %s.",
+    "No more events to load" : "Nema više događaja za učitavanje",
     "Files" : "Datoteke"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

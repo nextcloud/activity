@@ -18,9 +18,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Primeșto acest e-mail deoarece în ultima zi următoarele lucruri s-au întâmplat îla %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Primești acest e-mail deoarece în ultima săptămână următoarele lucruri s-au întâmplat la %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "Vei vedea o listă de evenimente când vei începe să folosești %s tale.",
-    "No more events to load" : "Nu mai sunt evenimente de încărcat",
-    "Enable RSS feed" : "Activați RSS feed",
     "Notifications" : "Notificări",
     "Mail" : "Mail",
     "Stream" : "Flux",
@@ -33,6 +30,9 @@ OC.L10N.register(
     "Weekly" : "Săptămânal",
     "Activity feed" : "Flux de activitate",
     "Personal activity feed for %s" : "Activitate recenta personala pentru %s",
+    "Enable RSS feed" : "Activați RSS feed",
+    "You will see a list of events here when you start to use your %s." : "Vei vedea o listă de evenimente când vei începe să folosești %s tale.",
+    "No more events to load" : "Nu mai sunt evenimente de încărcat",
     "Files" : "Fișiere"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

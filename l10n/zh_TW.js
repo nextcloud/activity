@@ -17,9 +17,6 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "您會收到郵件是因為在最近一天發生以下的事件 %s",
     "You are receiving this email because in the last week the following things happened at %s" : "您會收到郵件是因為在最近一星期發生以下的事件 %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "You will see a list of events here when you start to use your %s." : "當您開始使用您的 %s 時候，您將會在這看到事件列表。",
-    "No more events to load" : "沒有讀取到更多事件",
-    "Enable RSS feed" : "啟用 RSS feed",
     "Notifications" : "通知",
     "Mail" : "電子郵件",
     "Stream" : "串流",
@@ -32,6 +29,9 @@ OC.L10N.register(
     "Weekly" : "每週",
     "Activity feed" : "動態",
     "Personal activity feed for %s" : "個人動態 %s",
+    "Enable RSS feed" : "啟用 RSS feed",
+    "You will see a list of events here when you start to use your %s." : "當您開始使用您的 %s 時候，您將會在這看到事件列表。",
+    "No more events to load" : "沒有讀取到更多事件",
     "Files" : "檔案"
 },
 "nplurals=1; plural=0;");
