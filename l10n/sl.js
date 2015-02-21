@@ -7,7 +7,7 @@ OC.L10N.register(
     "All Activities" : "Vse dejavnosti",
     "Activities by you" : "Vaše dejavnosti",
     "Activities by others" : "Dejavnosti drugih",
-    "\"remote user\"" : "oddaljeni uporabnik",
+    "\"remote user\"" : "\"oddaljeni uporabnik\"",
     "in %s" : "v %s",
     "%s and %s" : "%s in %s",
     ", " : ",",
