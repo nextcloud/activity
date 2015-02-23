@@ -23,7 +23,8 @@
 
 namespace OCA\Activity;
 
-use \OCP\Activity\IManager;
+use OCP\Activity\IManager;
+use OCP\IL10N;
 
 class GroupHelper
 {
@@ -58,6 +59,20 @@ class GroupHelper
 
 		$this->activityManager = $activityManager;
 		$this->dataHelper = $dataHelper;
+	}
+
+	/**
+	 * @param string $user
+	 */
+	public function setUser($user) {
+		$this->dataHelper->setUser($user);
+	}
+
+	/**
+	 * @param IL10N $l
+	 */
+	public function setL10n(IL10N $l) {
+		$this->dataHelper->setL10n($l);
 	}
 
 	/**

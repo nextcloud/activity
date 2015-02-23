@@ -144,11 +144,14 @@ class Data {
 	 * @param int $start The start entry
 	 * @param int $count The number of statements to read
 	 * @param string $filter Filter the activities
+	 * @param string $user User for whome we display the stream
 	 * @return array
 	 */
-	public function read(GroupHelper $groupHelper, UserSettings $userSettings, $start, $count, $filter = 'all') {
+	public function read(GroupHelper $groupHelper, UserSettings $userSettings, $start, $count, $filter = 'all', $user = '') {
 		// get current user
-		$user = User::getUser();
+		$user = ($user !== '') ? $user : User::getUser();
+		$groupHelper->setUser($user);
+
 		$enabledNotifications = $userSettings->getNotificationTypes($user, 'stream');
 		$enabledNotifications = $this->activityManager->filterNotificationTypes($enabledNotifications, $filter);
 		$parameters = array_unique($enabledNotifications);

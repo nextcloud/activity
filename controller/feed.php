@@ -62,7 +62,12 @@ class Feed extends Controller {
 	 * @param IConfig $config
 	 * @param string $user
 	 */
-	public function __construct($appName, IRequest $request, Data $data, GroupHelper $helper, Navigation $navigation, UserSettings $settings,
+	public function __construct($appName,
+								IRequest $request,
+								Data $data,
+								GroupHelper $helper,
+								Navigation $navigation,
+								UserSettings $settings,
 								IUserSession $session,
 								IConfig $config,
 								$user) {

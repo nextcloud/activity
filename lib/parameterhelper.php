@@ -56,6 +56,20 @@ class ParameterHelper {
 	}
 
 	/**
+	 * @param string $user
+	 */
+	public function setUser($user) {
+		$this->user = (string) $user;
+	}
+
+	/**
+	 * @param IL10N $l
+	 */
+	public function setL10n(IL10N $l) {
+		$this->l = $l;
+	}
+
+	/**
 	 * Prepares the parameters before we use them in the subject or message
 	 * @param array $params
 	 * @param array $paramTypes Type of parameters, if they need special handling
