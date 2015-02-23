@@ -101,7 +101,7 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 			}
 
 			$language = (isset($userLanguages[$user])) ? $userLanguages[$user] : $default_lang;
-			$timezone = (isset($userTimezones[$user])) ? $userTimezones[$user] : '';
+			$timezone = (isset($userTimezones[$user])) ? $userTimezones[$user] : 'UTC';
 			$this->mqHandler->sendEmailToUser($user, $userEmails[$user], $language, $timezone, $data);
 		}
 
