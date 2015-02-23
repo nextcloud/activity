@@ -23,6 +23,8 @@
 
 namespace OCA\Activity\BackgroundJob;
 
+use OCA\Activity\AppInfo\Application;
+
 /**
  * Class EmailNotification
  *
@@ -44,9 +46,10 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 	public function __construct() {
 		// Run all 15 Minutes
 		$this->setInterval(15 * 60);
-		$this->mqHandler = new \OCA\Activity\MailQueueHandler(
-			\OC::$server->query('DateTimeFormatter')
-		);
+
+		$application = new Application();
+
+		$this->mqHandler = $application->getContainer()->query('MailQueueHandler');
 		$this->config = \OC::$server->getConfig();
 		$this->logger = \OC::$server->getLogger();
 	}

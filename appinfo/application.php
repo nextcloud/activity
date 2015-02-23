@@ -31,6 +31,7 @@ use OCA\Activity\Data;
 use OCA\Activity\DataHelper;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\FilesHooks;
+use OCA\Activity\MailQueueHandler;
 use OCA\Activity\Navigation;
 use OCA\Activity\ParameterHelper;
 use OCA\Activity\UserSettings;
@@ -90,6 +91,13 @@ class Application extends App {
 				$c->query('ActivityData'),
 				$c->query('UserSettings'),
 				$c->query('CurrentUID')
+			);
+		});
+
+		$container->registerService('MailQueueHandler', function(IContainer $c) {
+			return new MailQueueHandler(
+				$c->query('ServerContainer')->query('DateTimeFormatter'),
+				$c->query('DataHelper')
 			);
 		});
 
