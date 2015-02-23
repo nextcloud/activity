@@ -65,7 +65,10 @@ class MailQueueHandlerTest extends TestCase {
 	 */
 	public function testGetAffectedUsers($limit, $expected) {
 		$mq = new MailQueueHandler(
-			$this->getMock('\OCP\IDateTimeFormatter')
+			$this->getMock('\OCP\IDateTimeFormatter'),
+			$this->getMockBuilder('\OCA\Activity\DataHelper')
+				->disableOriginalConstructor()
+				->getMock()
 		);
 		$users = $mq->getAffectedUsers($limit, time());
 

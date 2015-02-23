@@ -99,7 +99,7 @@ class Feed extends Controller {
 
 		$response = new TemplateResponse('activity', 'rss', [
 			'rssLang'		=> $userLang,
-			'rssLink'		=> $this->urlGenerator->linkToRouteAbsolute('activity.rss'),
+			'rssLink'		=> $this->urlGenerator->linkToRouteAbsolute('activity.Feed.show'),
 			'rssPubDate'	=> date('r'),
 			'user'			=> $this->getUser(),
 			'activities'	=> $this->data->read($this->helper, $this->settings, 0, self::DEFAULT_PAGE_SIZE, 'all', $this->getUser())
