@@ -20,9 +20,6 @@ use OCP\Template;
 
 class ActivitiesTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
-	protected $config;
-
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $request;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
@@ -59,7 +56,6 @@ class ActivitiesTest extends TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->config = $this->getMock('OCP\IConfig');
 		$this->request = $this->getMock('OCP\IRequest');
 
 		$this->controller = new Activities(
