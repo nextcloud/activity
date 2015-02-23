@@ -182,8 +182,8 @@ class Application extends App {
 				$c->query('Request'),
 				$c->query('ActivityData'),
 				$c->query('GroupHelper'),
-				$c->query('Navigation'),
 				$c->query('UserSettings'),
+				$c->query('URLGenerator'),
 				$server->getUserSession(),
 				$server->getConfig(),
 				$c->query('CurrentUID')

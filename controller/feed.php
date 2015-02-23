@@ -14,13 +14,14 @@ namespace OCA\Activity\Controller;
 
 use OCA\Activity\Data;
 use OCA\Activity\GroupHelper;
-use OCA\Activity\Navigation;
 use OCA\Activity\UserSettings;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IRequest;
+use OCP\IURLGenerator;
 use OCP\IUserSession;
+use OCP\Util;
 
 class Feed extends Controller {
 	const DEFAULT_PAGE_SIZE = 30;
@@ -31,11 +32,11 @@ class Feed extends Controller {
 	/** @var \OCA\Activity\GroupHelper */
 	protected $helper;
 
-	/** @var \OCA\Activity\Navigation */
-	protected $navigation;
-
 	/** @var \OCA\Activity\UserSettings */
 	protected $settings;
+
+	/** @var IURLGenerator */
+	protected $urlGenerator;
 
 	/** @var IUserSession */
 	protected $session;
@@ -56,8 +57,8 @@ class Feed extends Controller {
 	 * @param IRequest $request
 	 * @param Data $data
 	 * @param GroupHelper $helper
-	 * @param Navigation $navigation
 	 * @param UserSettings $settings
+	 * @param IURLGenerator $urlGenerator
 	 * @param IUserSession $session
 	 * @param IConfig $config
 	 * @param string $user
@@ -66,16 +67,16 @@ class Feed extends Controller {
 								IRequest $request,
 								Data $data,
 								GroupHelper $helper,
-								Navigation $navigation,
 								UserSettings $settings,
+								IURLGenerator $urlGenerator,
 								IUserSession $session,
 								IConfig $config,
 								$user) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
 		$this->helper = $helper;
-		$this->navigation = $navigation;
 		$this->settings = $settings;
+		$this->urlGenerator = $urlGenerator;
 		$this->session = $session;
 		$this->config = $config;
 		$this->user = $user;
@@ -88,15 +89,20 @@ class Feed extends Controller {
 	 * @return TemplateResponse
 	 */
 	public function show() {
+		$userLang = $this->config->getUserValue($this->getUser(), 'core', 'lang');
+
+		// Overwrite user and language in the helper
+		$l = Util::getL10N('activity', $userLang);
+		$l->forceLanguage($userLang);
+		$this->helper->setL10n($l);
+		$this->helper->setUser($this->getUser());
+
 		$response = new TemplateResponse('activity', 'rss', [
-			'rssLang'		=> \OC::$server->getConfig()->getUserValue($this->getUser(), 'core', 'lang'),
-			'rssLink'		=> \OC::$server->getURLGenerator()->getAbsoluteURL(
-				\OC::$server->getURLGenerator()->linkToRoute('activity.rss')
-			),
+			'rssLang'		=> $userLang,
+			'rssLink'		=> $this->urlGenerator->linkToRouteAbsolute('activity.rss'),
 			'rssPubDate'	=> date('r'),
 			'user'			=> $this->getUser(),
-			// TODO we need to inject the user here :/
-			'activity'		=> $this->data->read($this->helper, $this->settings, 0, self::DEFAULT_PAGE_SIZE, 'all')
+			'activities'	=> $this->data->read($this->helper, $this->settings, 0, self::DEFAULT_PAGE_SIZE, 'all', $this->getUser())
 		], '');
 
 		if ($this->request->getHeader('accept') !== null && stristr($this->request->getHeader('accept'), 'application/rss+xml')) {
