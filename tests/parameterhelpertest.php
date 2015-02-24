@@ -150,17 +150,24 @@ class ParameterHelperTest extends TestCase {
 	}
 
 	public function prepareArrayParametersData() {
+		$en = \OCP\Util::getL10N('activity', 'en');
+		$de = \OCP\Util::getL10N('activity', 'de');
 		return array(
-			array(array(), 'file', true, true, ''),
-			array(array('A/B.txt', 'C/D.txt'), 'file', true, false, 'B.txt and D.txt'),
-			array(array('A/B.txt', 'C/D.txt'), '', true, false, 'A/B.txt and C/D.txt'),
+			array(array(), 'file', true, true, null, ''),
+			array(array('A/B.txt', 'C/D.txt'), 'file', true, false, null, (string) $en->t('%s and %s', ['B.txt', 'D.txt'])),
+			array(array('A/B.txt', 'C/D.txt'), 'file', true, false, $de, (string) $de->t('%s and %s', ['B.txt', 'D.txt'])),
+			array(array('A/B.txt', 'C/D.txt'), '', true, false, null, (string) $en->t('%s and %s', ['A/B.txt', 'C/D.txt'])),
+			array(array('A/B.txt', 'C/D.txt'), '', true, false, $de, (string) $de->t('%s and %s', ['A/B.txt', 'C/D.txt'])),
 		);
 	}
 
 	/**
 	 * @dataProvider prepareArrayParametersData
 	 */
-	public function testPrepareArrayParameters($params, $paramType, $stripPath, $highlightParams, $expected) {
+	public function testPrepareArrayParameters($params, $paramType, $stripPath, $highlightParams, $l, $expected) {
+		if ($l) {
+			$this->parameterHelper->setL10n($l);
+		}
 		$this->assertEquals(
 			$expected,
 			(string) $this->parameterHelper->prepareArrayParameter($params, $paramType, $stripPath, $highlightParams)

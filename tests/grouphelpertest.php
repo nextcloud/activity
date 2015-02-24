@@ -488,7 +488,7 @@ class GroupHelperTest extends TestCase {
 				$activityManager,
 				new ParameterHelper(
 					$activityManager,
-					new \OC\Files\View(''),
+					$this->getMockBuilder('OC\Files\View')->disableOriginalConstructor()->getMock(),
 					$activityLanguage,
 					'test'
 				),
@@ -510,5 +510,48 @@ class GroupHelperTest extends TestCase {
 			$clearedResult[] = $activity;
 		}
 		$this->assertEquals($expected, $clearedResult);
+	}
+
+	public function testSetUser() {
+		/** @var GroupHelper $helper */
+		/** @var \PHPUnit_Framework_MockObject_MockObject $dataHelperMock */
+		list($helper, $dataHelperMock) = $this->setUpHelpers();
+
+		$dataHelperMock->expects($this->once())
+			->method('setUser')
+			->with('foobar');
+
+		$helper->setUser('foobar');
+	}
+
+	public function testSetL10n() {
+		/** @var GroupHelper $helper */
+		/** @var \PHPUnit_Framework_MockObject_MockObject $dataHelperMock */
+		list($helper, $dataHelperMock) = $this->setUpHelpers();
+		$l = \OCP\Util::getL10N('activity', 'de');
+
+		$dataHelperMock->expects($this->once())
+			->method('setL10n')
+			->with($l);
+
+		$helper->setL10n($l);
+	}
+
+	/**
+	 * Sets up the GroupHelper with a mocked DataHelper
+	 * @return array
+	 */
+	protected function setUpHelpers() {
+		$dataHelperMock = $this->getMockBuilder('OCA\Activity\DataHelper')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$helper = new GroupHelper(
+			$this->getMockBuilder('OCP\Activity\IManager')->disableOriginalConstructor()->getMock(),
+			$dataHelperMock,
+			true
+		);
+
+		return [$helper, $dataHelperMock];
 	}
 }

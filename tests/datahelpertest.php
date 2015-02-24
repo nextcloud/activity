@@ -200,4 +200,48 @@ class DataHelperTest extends TestCase {
 			(string) $dataHelper->translation('activity', $text, $params, $stripPath, $highlightParams)
 		);
 	}
+
+	public function testSetUser() {
+		/** @var DataHelper $helper */
+		/** @var \PHPUnit_Framework_MockObject_MockObject $parameterHelperMock */
+		list($helper, $parameterHelperMock) = $this->setUpHelpers();
+
+		$parameterHelperMock->expects($this->once())
+			->method('setUser')
+			->with('foobar');
+
+		$helper->setUser('foobar');
+	}
+
+	public function testSetL10n() {
+		/** @var DataHelper $helper */
+		/** @var \PHPUnit_Framework_MockObject_MockObject $parameterHelperMock */
+		list($helper, $parameterHelperMock) = $this->setUpHelpers();
+		$l = \OCP\Util::getL10N('activity', 'de');
+
+		$parameterHelperMock->expects($this->once())
+			->method('setL10n')
+			->with($l);
+
+		$helper->setL10n($l);
+	}
+
+	/**
+	 * Sets up the DataHelper with a mocked ParameterHelper
+	 * @return array
+	 */
+	protected function setUpHelpers() {
+		$parameterHelperMock = $this->getMockBuilder('OCA\Activity\ParameterHelper')
+			->disableOriginalConstructor()
+			->getMock();
+		$l = \OCP\Util::getL10N('activity', 'en');
+
+		$helper = new DataHelper(
+			$this->getMockBuilder('OCP\Activity\IManager')->disableOriginalConstructor()->getMock(),
+			$parameterHelperMock,
+			$l
+		);
+
+		return [$helper, $parameterHelperMock];
+	}
 }
