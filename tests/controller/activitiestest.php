@@ -26,6 +26,9 @@ class ActivitiesTest extends TestCase {
 	protected $data;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $display;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $helper;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
@@ -46,6 +49,9 @@ class ActivitiesTest extends TestCase {
 		$this->data = $this->getMockBuilder('OCA\Activity\Data')
 			->disableOriginalConstructor()
 			->getMock();
+		$this->display = $this->getMockBuilder('OCA\Activity\Display')
+			->disableOriginalConstructor()
+			->getMock();
 		$this->helper = $this->getMockBuilder('OCA\Activity\GroupHelper')
 			->disableOriginalConstructor()
 			->getMock();
@@ -62,6 +68,7 @@ class ActivitiesTest extends TestCase {
 			'activity',
 			$this->request,
 			$this->data,
+			$this->display,
 			$this->helper,
 			$this->navigation,
 			$this->userSettings,

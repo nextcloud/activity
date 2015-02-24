@@ -24,6 +24,8 @@
 /** @var $l OC_L10N */
 /** @var $theme OC_Defaults */
 /** @var $_ array */
+/** @var $displayHelper \OCA\Activity\Display */
+$displayHelper = $_['displayHelper'];
 
 $lastDate = null;
 foreach ($_['activity'] as $event) {
@@ -52,7 +54,7 @@ foreach ($_['activity'] as $event) {
 	<div class="boxcontainer">
 <?php
 	}
-	echo \OCA\Activity\Display::show($event);
+	echo $displayHelper->show($event);
 }
 if (!empty($_['activity'])): ?>
 	</div>
