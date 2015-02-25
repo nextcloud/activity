@@ -16,6 +16,7 @@ namespace OCA\Activity\Tests\Controller;
 use OCA\Activity\Controller\Feed;
 use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\Util;
 
 class FeedTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
@@ -108,12 +109,44 @@ class FeedTest extends TestCase {
 		$templateResponse = $this->controller->show();
 		$this->assertTrue($templateResponse instanceof TemplateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
+		$headers = $templateResponse->getHeaders();
+		$this->assertArrayHasKey('Content-Type', $headers);
+		$this->assertEquals($expectedHeader, $headers['Content-Type']);
+
 		$renderedResponse = $templateResponse->render();
 		$this->assertNotEmpty($renderedResponse);
+
+		$l = Util::getL10N('activity');
+		$description = (string) $l->t('Your feed URL is invalid');
+		$this->assertNotContains($description, $renderedResponse);
+	}
+
+	/**
+	 * @dataProvider showData
+	 *
+	 * @param string $acceptHeader
+	 * @param string $expectedHeader
+	 */
+	public function testShowNoToken($acceptHeader, $expectedHeader) {
+		if ($acceptHeader !== null) {
+			$this->request->expects($this->any())
+				->method('getHeader')
+				->willReturn($acceptHeader);
+		}
+
+		$templateResponse = $this->controller->show();
+		$this->assertTrue($templateResponse instanceof TemplateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
 		$headers = $templateResponse->getHeaders();
 		$this->assertArrayHasKey('Content-Type', $headers);
 		$this->assertEquals($expectedHeader, $headers['Content-Type']);
+
+		$renderedResponse = $templateResponse->render();
+		$this->assertNotEmpty($renderedResponse);
+
+		$l = Util::getL10N('activity');
+		$description = (string) $l->t('Your feed URL is invalid');
+		$this->assertContains($description, $renderedResponse);
 	}
 
 	public function getUserFromTokenThrowInvalidTokenData() {

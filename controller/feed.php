@@ -87,23 +87,43 @@ class Feed extends Controller {
 	 * @NoCSRFRequired
 	 *
 	 * @return TemplateResponse
-	 * @throws \UnexpectedValueException If the token is invalid, does not exist or is not unique
 	 */
 	public function show() {
-		$userLang = $this->config->getUserValue($this->getUser(), 'core', 'lang');
+		try {
+			$user = $this->getUser();
 
-		// Overwrite user and language in the helper
-		$l = Util::getL10N('activity', $userLang);
-		$l->forceLanguage($userLang);
-		$this->helper->setL10n($l);
-		$this->helper->setUser($this->getUser());
+			$userLang = $this->config->getUserValue($user, 'core', 'lang');
+
+			// Overwrite user and language in the helper
+			$l = Util::getL10N('activity', $userLang);
+			$l->forceLanguage($userLang);
+			$this->helper->setL10n($l);
+			$this->helper->setUser($user);
+
+			$description = $l->t('Personal activity feed for %s', $user);
+			$activities = $this->data->read($this->helper, $this->settings, 0, self::DEFAULT_PAGE_SIZE, 'all', $user);
+		} catch (\UnexpectedValueException $e) {
+			$l = Util::getL10N('activity');
+			$description = (string) $l->t('Your feed URL is invalid');
+
+			$activities = [
+				[
+					'activity_id'	=> -1,
+					'timestamp'		=> time(),
+					'subject'		=> true,
+					'subjectformatted'	=> [
+						'full' => $description,
+					],
+				]
+			];
+		}
 
 		$response = new TemplateResponse('activity', 'rss', [
-			'rssLang'		=> $userLang,
+			'rssLang'		=> $l->getLanguageCode(),
 			'rssLink'		=> $this->urlGenerator->linkToRouteAbsolute('activity.Feed.show'),
 			'rssPubDate'	=> date('r'),
-			'user'			=> $this->getUser(),
-			'activities'	=> $this->data->read($this->helper, $this->settings, 0, self::DEFAULT_PAGE_SIZE, 'all', $this->getUser())
+			'description'	=> $description,
+			'activities'	=> $activities,
 		], '');
 
 		if ($this->request->getHeader('accept') !== null && stristr($this->request->getHeader('accept'), 'application/rss+xml')) {
@@ -138,23 +158,19 @@ class Feed extends Controller {
 	 * @throws \UnexpectedValueException If the token is invalid, does not exist or is not unique
 	 */
 	protected function getUserFromToken() {
-		if ($this->tokenUser === null) {
-			$token = (string) $this->request->getParam('token', '');
-			if (strlen($token) !== 30) {
-				throw new \UnexpectedValueException('The token is invalid');
-			}
-
-			$users = $this->config->getUsersForUserValue('activity', 'rsstoken', $token);
-
-			if (sizeof($users) !== 1) {
-				// No unique user found
-				throw new \UnexpectedValueException('The token is invalid');
-			}
-
-			// Token found login as that user
-			$this->tokenUser = array_shift($users);
+		$token = (string) $this->request->getParam('token', '');
+		if (strlen($token) !== 30) {
+			throw new \UnexpectedValueException('The token is invalid');
 		}
 
-		return $this->tokenUser;
+		$users = $this->config->getUsersForUserValue('activity', 'rsstoken', $token);
+
+		if (sizeof($users) !== 1) {
+			// No unique user found
+			throw new \UnexpectedValueException('The token is invalid');
+		}
+
+		// Token found login as that user
+		return array_shift($users);
 	}
 }
