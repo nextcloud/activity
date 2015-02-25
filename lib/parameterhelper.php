@@ -24,6 +24,7 @@
 namespace OCA\Activity;
 
 use OCP\Activity\IManager;
+use OCP\IL10N;
 use OCP\User;
 use OCP\Util;
 use OC\Files\View;
@@ -35,12 +36,36 @@ class ParameterHelper {
 	/** @var \OC\Files\View */
 	protected $rootView;
 
-	/** @var \OC_L10N */
+	/** @var \OCP\IL10N */
 	protected $l;
 
-	public function __construct(IManager $activityManager, View $rootView, \OC_L10N $l) {
+	/** @var string */
+	protected $user;
+
+	/**
+	 * @param IManager $activityManager
+	 * @param View $rootView
+	 * @param IL10N $l
+	 * @param string $user
+	 */
+	public function __construct(IManager $activityManager, View $rootView, IL10N $l, $user) {
 		$this->activityManager = $activityManager;
 		$this->rootView = $rootView;
+		$this->l = $l;
+		$this->user = $user;
+	}
+
+	/**
+	 * @param string $user
+	 */
+	public function setUser($user) {
+		$this->user = (string) $user;
+	}
+
+	/**
+	 * @param IL10N $l
+	 */
+	public function setL10n(IL10N $l) {
 		$this->l = $l;
 	}
 
@@ -164,7 +189,7 @@ class ParameterHelper {
 	 */
 	protected function prepareFileParam($param, $stripPath, $highlightParams) {
 		$param = $this->fixLegacyFilename($param);
-		$is_dir = $this->rootView->is_dir('/' . User::getUser() . '/files' . $param);
+		$is_dir = $this->rootView->is_dir('/' . $this->user . '/files' . $param);
 
 		if ($is_dir) {
 			$fileLink = Util::linkTo('files', 'index.php', array('dir' => $param));

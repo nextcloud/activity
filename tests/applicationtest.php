@@ -49,13 +49,16 @@ class ApplicationTest extends TestCase {
 			array('Consumer', 'OCA\Activity\Consumer'),
 			array('Consumer', 'OCP\Activity\IConsumer'),
 			array('DataHelper', 'OCA\Activity\DataHelper'),
+			array('DisplayHelper', 'OCA\Activity\Display'),
 			array('GroupHelper', 'OCA\Activity\GroupHelper'),
 			array('Hooks', 'OCA\Activity\FilesHooks'),
+			array('MailQueueHandler', 'OCA\Activity\MailQueueHandler'),
 			array('Navigation', 'OCA\Activity\Navigation'),
 			array('UserSettings', 'OCA\Activity\UserSettings'),
 			array('URLGenerator', 'OCP\IURLGenerator'),
 			array('SettingsController', 'OCP\AppFramework\Controller'),
 			array('ActivitiesController', 'OCP\AppFramework\Controller'),
+			array('FeedController', 'OCP\AppFramework\Controller'),
 		);
 	}
 

@@ -44,13 +44,18 @@ class MailQueueHandler {
 	/** @var IDateTimeFormatter */
 	protected $dateFormatter;
 
+	/** @var DataHelper */
+	protected $dataHelper;
+
 	/**
 	 * Constructor
 	 *
 	 * @param IDateTimeFormatter $dateFormatter
+	 * @param DataHelper $dataHelper
 	 */
-	public function __construct(IDateTimeFormatter $dateFormatter) {
+	public function __construct(IDateTimeFormatter $dateFormatter, DataHelper $dataHelper) {
 		$this->dateFormatter = $dateFormatter;
+		$this->dataHelper = $dataHelper;
 	}
 
 	/**
@@ -180,15 +185,8 @@ class MailQueueHandler {
 	 */
 	public function sendEmailToUser($user, $email, $lang, $timezone, $mailData) {
 		$l = $this->getLanguage($lang);
-		$dataHelper = new DataHelper(
-			\OC::$server->getActivityManager(),
-			new ParameterHelper(
-				\OC::$server->getActivityManager(),
-				new \OC\Files\View(''),
-				$l
-			),
-			$l
-		);
+		$this->dataHelper->setUser($user);
+		$this->dataHelper->setL10n($l);
 
 		$activityList = array();
 		foreach ($mailData as $activity) {
@@ -199,7 +197,7 @@ class MailQueueHandler {
 			);
 
 			$activityList[] = array(
-				$dataHelper->translation(
+				$this->dataHelper->translation(
 					$activity['amq_appid'], $activity['amq_subject'], json_decode($activity['amq_subjectparams'], true)
 				),
 				$relativeDateTime,

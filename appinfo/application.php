@@ -25,11 +25,14 @@ namespace OCA\Activity\AppInfo;
 use OC\Files\View;
 use OCA\Activity\Consumer;
 use OCA\Activity\Controller\Activities;
+use OCA\Activity\Controller\Feed;
 use OCA\Activity\Controller\Settings;
 use OCA\Activity\Data;
 use OCA\Activity\DataHelper;
+use OCA\Activity\Display;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\FilesHooks;
+use OCA\Activity\MailQueueHandler;
 use OCA\Activity\Navigation;
 use OCA\Activity\ParameterHelper;
 use OCA\Activity\UserSettings;
@@ -69,9 +72,22 @@ class Application extends App {
 				new ParameterHelper (
 					$server->getActivityManager(),
 					new View(''),
-					$c->query('ActivityL10N')
+					$c->query('ActivityL10N'),
+					$c->query('CurrentUID')
 				),
 				$c->query('ActivityL10N')
+			);
+		});
+
+		$container->registerService('DisplayHelper', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
+			return new Display(
+				$server->query('DateTimeFormatter'),
+				$server->getPreviewManager(),
+				$server->getURLGenerator(),
+				new View('')
 			);
 		});
 
@@ -88,6 +104,13 @@ class Application extends App {
 				$c->query('ActivityData'),
 				$c->query('UserSettings'),
 				$c->query('CurrentUID')
+			);
+		});
+
+		$container->registerService('MailQueueHandler', function(IContainer $c) {
+			return new MailQueueHandler(
+				$c->query('ServerContainer')->query('DateTimeFormatter'),
+				$c->query('DataHelper')
 			);
 		});
 
@@ -156,9 +179,27 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('ActivityData'),
+				$c->query('DisplayHelper'),
 				$c->query('GroupHelper'),
 				$c->query('Navigation'),
 				$c->query('UserSettings'),
+				$c->query('CurrentUID')
+			);
+		});
+
+		$container->registerService('FeedController', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
+			return new Feed(
+				$c->query('AppName'),
+				$c->query('Request'),
+				$c->query('ActivityData'),
+				$c->query('GroupHelper'),
+				$c->query('UserSettings'),
+				$c->query('URLGenerator'),
+				$server->getUserSession(),
+				$server->getConfig(),
 				$c->query('CurrentUID')
 			);
 		});

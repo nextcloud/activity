@@ -44,6 +44,21 @@ class DataHelper {
 	}
 
 	/**
+	 * @param string $user
+	 */
+	public function setUser($user) {
+		$this->parameterHelper->setUser($user);
+	}
+
+	/**
+	 * @param IL10N $l
+	 */
+	public function setL10n(IL10N $l) {
+		$this->parameterHelper->setL10n($l);
+		$this->l = $l;
+	}
+
+	/**
 	 * @brief Translate an event string with the translations from the app where it was send from
 	 * @param string $app The app where this event comes from
 	 * @param string $text The text including placeholders

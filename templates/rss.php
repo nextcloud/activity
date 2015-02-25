@@ -13,7 +13,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 		<title><?php p($l->t('Activity feed')); ?></title>
 		<language><?php p($_['rssLang']); ?></language>
 		<link><?php p($_['rssLink']); ?></link>
-		<description><?php p($l->t('Personal activity feed for %s', $_['user'])); ?></description>
+		<description><?php p($_['description']); ?></description>
 		<pubDate><?php p($_['rssPubDate']); ?></pubDate>
 		<lastBuildDate><?php p($_['rssPubDate']); ?></lastBuildDate>
 		<atom:link href="<?php p($_['rssLink']); ?>" rel="self" type="application/rss+xml" />
