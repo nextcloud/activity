@@ -23,6 +23,7 @@
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\MailQueueHandler;
+use OCA\Activity\UserSettings;
 
 class MailQueueHandlerTest extends TestCase {
 	/** @var MailQueueHandler */
@@ -119,7 +120,14 @@ class MailQueueHandlerTest extends TestCase {
 
 		$this->mailer->expects($this->any())
 			->method('sendMail')
-			->with($email, $user, $this->contains(''), $this->contains('Test'), $this->contains(''), $this->contains(''))
+			->with(
+				$email,
+				$user,
+				$this->anything(),
+				$this->stringContains($user),
+				$this->anything(),
+				$this->anything()
+			)
 			->willReturn(null);
 
 		$users = $this->mailQueueHandler->getAffectedUsers(1, $maxTime);
@@ -141,5 +149,26 @@ class MailQueueHandlerTest extends TestCase {
 				'Failed asserting that the remaining users still have mails in the queue ' . $explain
 			);
 		}
+	}
+
+	public function getLangForApproximatedTimeFrameData() {
+		return [
+			[time() - 3900, UserSettings::EMAIL_SEND_HOURLY],
+			[time() - 89900, UserSettings::EMAIL_SEND_DAILY],
+			[time() - 90100, UserSettings::EMAIL_SEND_WEEKLY],
+		];
+	}
+
+	/**
+	 * @dataProvider getLangForApproximatedTimeFrameData
+	 * @param int $time
+	 * @param int $expected
+	 */
+	public function testGetLangForApproximatedTimeFrame($time, $expected) {
+		$this->assertEquals(
+			$expected,
+			\Test_Helper::invokePrivate($this->mailQueueHandler, 'getLangForApproximatedTimeFrame', [$time]),
+			'Failed asserting to receive the right timeframe'
+		);
 	}
 }
