@@ -118,15 +118,15 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 		// Send Email
 		$default_lang = $this->config->getSystemValue('default_language', 'en');
 		foreach ($mailData as $user => $data) {
-			if (!isset($userEmails[$user])) {
+			if (empty($userEmails[$user])) {
 				// The user did not setup an email address
 				// So we will not send an email :(
 				$this->logger->debug("Couldn't send notification email to user '" . $user . "' (email address isn't set for that user)", ['app' => 'activity']);
 				continue;
 			}
 
-			$language = (isset($userLanguages[$user])) ? $userLanguages[$user] : $default_lang;
-			$timezone = (isset($userTimezones[$user])) ? $userTimezones[$user] : 'UTC';
+			$language = (!empty($userLanguages[$user])) ? $userLanguages[$user] : $default_lang;
+			$timezone = (!empty($userTimezones[$user])) ? $userTimezones[$user] : 'UTC';
 			$this->mqHandler->sendEmailToUser($user, $userEmails[$user], $language, $timezone, $data);
 		}
 
