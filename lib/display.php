@@ -54,7 +54,10 @@ class Display {
 	 * @param \OCP\IURLGenerator $urlGenerator
 	 * @param View $view
 	 */
-	public function __construct(\OCP\IDateTimeFormatter $dateTimeFormatter, \OCP\IPreview $preview, \OCP\IURLGenerator $urlGenerator, \OC\Files\View $view) {
+	public function __construct(\OCP\IDateTimeFormatter $dateTimeFormatter,
+								\OCP\IPreview $preview,
+								\OCP\IURLGenerator $urlGenerator,
+								\OC\Files\View $view) {
 		$this->view = $view;
 		$this->preview = $preview;
 		$this->dateTimeFormatter = $dateTimeFormatter;

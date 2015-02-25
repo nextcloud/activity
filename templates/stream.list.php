@@ -54,7 +54,7 @@ foreach ($_['activity'] as $event) {
 	<div class="boxcontainer">
 <?php
 	}
-	echo $displayHelper->show($event);
+	print_unescaped($displayHelper->show($event));
 }
 if (!empty($_['activity'])): ?>
 	</div>

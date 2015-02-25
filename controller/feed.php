@@ -87,6 +87,7 @@ class Feed extends Controller {
 	 * @NoCSRFRequired
 	 *
 	 * @return TemplateResponse
+	 * @throws \UnexpectedValueException If the token is invalid, does not exist or is not unique
 	 */
 	public function show() {
 		$userLang = $this->config->getUserValue($this->getUser(), 'core', 'lang');
@@ -114,6 +115,14 @@ class Feed extends Controller {
 		return $response;
 	}
 
+	/**
+	 * Get the user we need to use
+	 *
+	 * Either the user is logged in, or we try to get it from the token
+	 *
+	 * @return string
+	 * @throws \UnexpectedValueException If the token is invalid, does not exist or is not unique
+	 */
 	protected function getUser() {
 		if (!$this->session->isLoggedIn()) {
 			return $this->getUserFromToken();
@@ -122,6 +131,12 @@ class Feed extends Controller {
 		}
 	}
 
+	/**
+	 * Get the user for the token
+	 *
+	 * @return string
+	 * @throws \UnexpectedValueException If the token is invalid, does not exist or is not unique
+	 */
 	protected function getUserFromToken() {
 		if ($this->tokenUser === null) {
 			$token = (string) $this->request->getParam('token', '');
