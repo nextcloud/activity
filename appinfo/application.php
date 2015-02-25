@@ -33,6 +33,7 @@ use OCA\Activity\Display;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\FilesHooks;
 use OCA\Activity\MailQueueHandler;
+use OCA\Activity\MockUtilSendMail;
 use OCA\Activity\Navigation;
 use OCA\Activity\ParameterHelper;
 use OCA\Activity\UserSettings;
@@ -108,9 +109,14 @@ class Application extends App {
 		});
 
 		$container->registerService('MailQueueHandler', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
 			return new MailQueueHandler(
-				$c->query('ServerContainer')->query('DateTimeFormatter'),
-				$c->query('DataHelper')
+				$server->getDateTimeFormatter(),
+				$server->getDatabaseConnection(),
+				$c->query('DataHelper'),
+				new MockUtilSendMail()
 			);
 		});
 
