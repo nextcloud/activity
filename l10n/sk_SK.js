@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Aktivita",
+    "Personal activity feed for %s" : "Prehľad aktivít pre používateľa %s",
     "Your settings have been updated." : "Vaše nastavenia boli aktualizované.",
     "Activity notification" : "Upozornenia na aktivity",
     "All Activities" : "Všetky aktivity",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "Denne",
     "Weekly" : "Týždenne",
     "Activity feed" : "Prehľad aktivít",
-    "Personal activity feed for %s" : "Prehľad aktivít pre používateľa %s",
     "Enable RSS feed" : "Povoliť RSS kanál",
     "You will see a list of events here when you start to use your %s." : "Tu uvidíte zoznam udalostí hneď ako začnete používať svoj %s.",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",

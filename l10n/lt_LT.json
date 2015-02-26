@@ -1,5 +1,6 @@
 { "translations": {
     "Activity" : "Veikla",
+    "Personal activity feed for %s" : "Asmeninis veiklos srautas skirtas %s",
     "Your settings have been updated." : "Jūsų nustatymai buvo atnaujinti.",
     "Activity notification" : "Veiklos perspėjimai",
     "All Activities" : "Visa veikla",
@@ -27,7 +28,6 @@
     "Daily" : "Kasdien",
     "Weekly" : "Kiekvieną savaitę",
     "Activity feed" : "Veiklos srautas",
-    "Personal activity feed for %s" : "Asmeninis veiklos srautas skirtas %s",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "You will see a list of events here when you start to use your %s." : "Matysite įvykių sąrašą kai pradėsite naudoti savo %s.",
     "No more events to load" : "Nėra daugiau įkeltinų įvykių",

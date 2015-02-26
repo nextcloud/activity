@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "활동",
+    "Personal activity feed for %s" : "%s 님의 개인 활동 피드",
     "Your settings have been updated." : "설정이 업데이트 되었습니다.",
     "Activity notification" : "활동 알림",
     "All Activities" : "모든 활동",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "매일",
     "Weekly" : "매주",
     "Activity feed" : "활동 피드",
-    "Personal activity feed for %s" : "%s 님의 개인 활동 피드",
     "Enable RSS feed" : "RSS 피드 사용",
     "You will see a list of events here when you start to use your %s." : "%s 사용을 시작하면 여기에서 이벤트 목록을 볼 수 있습니다.",
     "No more events to load" : "더 이상 불러올 이벤트 없음",

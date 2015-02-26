@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Toimingud",
+    "Personal activity feed for %s" : "Isiklik toimingute voog %s",
     "Your settings have been updated." : "Seaded on uuendatud.",
     "Activity notification" : "Tegvuste teavitused",
     "All Activities" : "Kõik tegevused",
@@ -28,7 +29,6 @@ OC.L10N.register(
     "Daily" : "Iga päev",
     "Weekly" : "Iga nädal",
     "Activity feed" : "Toimingute voog",
-    "Personal activity feed for %s" : "Isiklik toimingute voog %s",
     "Enable RSS feed" : "Luba RSS voog",
     "You will see a list of events here when you start to use your %s." : "Siin näed sa sündmuste nimekirja kui sa hakkad %s kasutama.",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",

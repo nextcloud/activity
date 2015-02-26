@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Activity",
+    "Personal activity feed for %s" : "Personal activity feed for %s",
     "Your settings have been updated." : "Your settings have been updated.",
     "Activity notification" : "Activity notification",
     "All Activities" : "All Activities",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "Daily",
     "Weekly" : "Weekly",
     "Activity feed" : "Activity feed",
-    "Personal activity feed for %s" : "Personal activity feed for %s",
     "Enable RSS feed" : "Enable RSS feed",
     "You will see a list of events here when you start to use your %s." : "You will see a list of events here when you start to use your %s.",
     "No more events to load" : "No more events to load",

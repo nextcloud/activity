@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "நடவடிக்கை",
+    "Personal activity feed for %s" : "%s தனிப்பட்ட நடவடிக்கை ஃபீட்",
     "Your settings have been updated." : "உங்கள் அமைப்புகள் புதுப்பிக்கப்பட்டன.",
     "Activity notification" : "நடவடிக்கை அறிவிப்பு.",
     "All Activities" : "அனைத்து நடவடிக்கைகள்",
@@ -24,7 +25,6 @@ OC.L10N.register(
     "Daily" : "தினசரி",
     "Weekly" : "வாராந்திர",
     "Activity feed" : "நடவடிக்கைகள் ஃபீட்",
-    "Personal activity feed for %s" : "%s தனிப்பட்ட நடவடிக்கை ஃபீட்",
     "Enable RSS feed" : "RSS feed 'ஐ இயக்கவும்.",
     "You will see a list of events here when you start to use your %s." : "நீங்கள் உங்கள் %s பயன்படுத்த தொடங்கும் பொழுது நீங்கள் இங்கே நிகழ்வுகளின் பட்டியலை பார்ப்பீர்கள்.",
     "No more events to load" : "மேலும் வேறு நிகழ்வுகள் இல்லை.",

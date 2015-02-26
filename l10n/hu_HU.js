@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Aktivitás",
+    "Personal activity feed for %s" : "Személyes aktivitásom hírcsatornája a %s szolgáltatáson",
     "Your settings have been updated." : "Beállításait sikeresen frissítettük.",
     "Activity notification" : "Aktivitási értesítés",
     "All Activities" : "Minden tevékenység",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "naponta",
     "Weekly" : "hetente",
     "Activity feed" : "Aktivitási hírcsatorna",
-    "Personal activity feed for %s" : "Személyes aktivitásom hírcsatornája a %s szolgáltatáson",
     "Enable RSS feed" : "RSS-hírcsatorna engedélyezése",
     "You will see a list of events here when you start to use your %s." : "Az események itt lesznek láthatóak, miután elkezdte használni a %s szolgáltatást.",
     "No more events to load" : "Nincs több esemény",

@@ -1,5 +1,6 @@
 { "translations": {
     "Activity" : "សកម្មភាព",
+    "Personal activity feed for %s" : "សកម្មភាព feed ផ្ទាល់​ខ្លួន​សម្រាប់ %s",
     "Your settings have been updated." : "ការ​កំណត់​របស់​អ្នក​ត្រូវ​បាន​ធ្វើ​បច្ចុប្បន្នភាព។",
     "Activity notification" : "សេចក្ដីជូន​ដំណឺង​ស្ដីពីសកម្មភាព",
     "All Activities" : "សកម្មភាព​ទាំង​អស់",
@@ -22,7 +23,6 @@
     "Daily" : "រាល់ថ្ងៃ",
     "Weekly" : "រាល់​សប្ដាហ៍",
     "Activity feed" : "សកម្មភាព feed",
-    "Personal activity feed for %s" : "សកម្មភាព feed ផ្ទាល់​ខ្លួន​សម្រាប់ %s",
     "Enable RSS feed" : "បើក RSS feed",
     "You will see a list of events here when you start to use your %s." : "អ្នក​នឹង​ឃើញ​បញ្ជី​ព្រឹត្តិការណ៍​នានា នៅ​ពេល​អ្នក​ចាប់​ផ្ដើម​ប្រើ %s របស់​អ្នក។",
     "No more events to load" : "គ្មាន​ព្រឹត្តិការណ៍​ផ្សេងទៀត​បើក​ដំណើរការទេ",

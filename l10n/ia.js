@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Activitate",
+    "Personal activity feed for %s" : "Syndication de activitate personal pro %s",
     "Your settings have been updated." : "Tu preferentias ha essite actualisate.",
     "Activity notification" : "Notification de activitate",
     "All Activities" : "Omne activitates",
@@ -28,7 +29,6 @@ OC.L10N.register(
     "Daily" : "Quotidian",
     "Weekly" : "Septimanal",
     "Activity feed" : "Syndication de activitate",
-    "Personal activity feed for %s" : "Syndication de activitate personal pro %s",
     "Enable RSS feed" : "Habilita syndication RSS",
     "You will see a list of events here when you start to use your %s." : "Tu videra un lista de eventos ci quando tu initia usar tu %s.",
     "No more events to load" : "Necun altere eventos de cargar",

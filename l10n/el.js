@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Δραστηριότητα",
+    "Personal activity feed for %s" : "Προσωπική ροή δραστηριότητας για %s",
     "Your settings have been updated." : "Οι ρυθμίσεις σας έχουν ενημερωθεί.",
     "Activity notification" : "Ειδοποίηση δραστηριότητας",
     "All Activities" : "Όλες οι Δραστηριότητες",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "Καθημερινώς",
     "Weekly" : "Εβδομαδιαίως",
     "Activity feed" : "Ροή Δραστηριότητας",
-    "Personal activity feed for %s" : "Προσωπική ροή δραστηριότητας για %s",
     "Enable RSS feed" : "Ενεργοποίηση ροής RSS",
     "You will see a list of events here when you start to use your %s." : "Θα δείτε εδώ μια λίστα από συμβάντα όταν ξεκινήσετε να χρησιμοποιείτε το %s σας.",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",

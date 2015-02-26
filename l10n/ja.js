@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "アクティビティ",
+    "Personal activity feed for %s" : "\"%s\" の個人アクティビティフィード",
     "Your settings have been updated." : "設定を更新しました。",
     "Activity notification" : "アクティビティ通知",
     "All Activities" : "すべてのアクティビティ",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "毎日",
     "Weekly" : "毎週",
     "Activity feed" : "アクティビティフィード",
-    "Personal activity feed for %s" : "\"%s\" の個人アクティビティフィード",
     "Enable RSS feed" : "RSSフィードを有効にする",
     "You will see a list of events here when you start to use your %s." : "%s の使用を開始すると、ここでイベントリストを見ることができます。",
     "No more events to load" : "これ以上読み込むイベントはありません",

@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Jarduera",
+    "Personal activity feed for %s" : "%sen jarduera jario pertsonala",
     "Your settings have been updated." : "Zure ezarpenak eguneratu dira.",
     "Activity notification" : "Jarduera jakinarazpenak",
     "All Activities" : "Jarduera guztiak",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "Egunero",
     "Weekly" : "Astero",
     "Activity feed" : "Jarduera jarioa",
-    "Personal activity feed for %s" : "%sen jarduera jario pertsonala",
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "You will see a list of events here when you start to use your %s." : "Gertaeren zerrenda bat ikusiko duzu zure %s erabiltzen hasten zarenean.",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",

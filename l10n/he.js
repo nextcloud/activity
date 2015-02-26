@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "פעילות",
+    "Personal activity feed for %s" : "הזנת פעילות עצמית עבור %s",
     "Your settings have been updated." : "ההגדרות שלך עודכנו",
     "Activity notification" : "דיווח פעילות",
     "All Activities" : "כל הפעילויות",
@@ -24,7 +25,6 @@ OC.L10N.register(
     "Daily" : "יומי",
     "Weekly" : "שבועי",
     "Activity feed" : "דיווחי פעילות",
-    "Personal activity feed for %s" : "הזנת פעילות עצמית עבור %s",
     "Enable RSS feed" : "לאפשר הזנת RSS",
     "You will see a list of events here when you start to use your %s." : "תיראו פה רשימת אירועים כשתתחילו להשתמתש ב %s.",
     "No more events to load" : "אין אירועים נוספים לטעינה",

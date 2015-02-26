@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Aktivitas",
+    "Personal activity feed for %s" : "Feed aktivitas pribadi untuk %s",
     "Your settings have been updated." : "Pengaturan Anda telah diperbarui.",
     "Activity notification" : "Pemberitahuan aktivitas",
     "All Activities" : "Semua Aktivitas",
@@ -28,7 +29,6 @@ OC.L10N.register(
     "Daily" : "Setiap hari",
     "Weekly" : "Setiap minggu",
     "Activity feed" : "Feed aktivitas",
-    "Personal activity feed for %s" : "Feed aktivitas pribadi untuk %s",
     "Enable RSS feed" : "Aktifkan RSS feed",
     "You will see a list of events here when you start to use your %s." : "Anda akan melihat daftar peristiwa disini ketika mulai menggunakan %s Anda.",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",

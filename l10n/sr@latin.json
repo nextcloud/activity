@@ -1,5 +1,6 @@
 { "translations": {
     "Activity" : "Aktivnosti",
+    "Personal activity feed for %s" : "Lična lista aktivnosti za %s",
     "Your settings have been updated." : "Vaša podešavanja su osvežena.",
     "Activity notification" : "Obaveštenje o aktivnosti",
     "All Activities" : "Sve aktivnosti",
@@ -26,7 +27,6 @@
     "Daily" : "dnevno",
     "Weekly" : "nedeljno",
     "Activity feed" : "Lista aktivnosti",
-    "Personal activity feed for %s" : "Lična lista aktivnosti za %s",
     "Enable RSS feed" : "Omogući RSS ",
     "You will see a list of events here when you start to use your %s." : "Ovdje će vam se prikazati lista aktivnosti kada počnete da koristite %s.",
     "No more events to load" : "Nema više događaja za učitavanje",

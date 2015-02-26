@@ -1,5 +1,6 @@
 { "translations": {
     "Activity" : "Aktivität",
+    "Personal activity feed for %s" : "Persönlicher Feed der Aktivitäten für %s",
     "Your settings have been updated." : "Ihre Einstellungen wurden aktualisiert.",
     "Activity notification" : "Benachrichtigung über die Aktivitäten",
     "All Activities" : "Alle Aktivitäten",
@@ -27,7 +28,6 @@
     "Daily" : "täglich",
     "Weekly" : "wöchentlich",
     "Activity feed" : "Feed der Aktivitäten",
-    "Personal activity feed for %s" : "Persönlicher Feed der Aktivitäten für %s",
     "Enable RSS feed" : "RSS-Feed aktivieren",
     "You will see a list of events here when you start to use your %s." : "Sie werden hier eine Liste von Ereignissen sehen, sobald Sie Ihre %s nutzen.",
     "No more events to load" : "Keine weiteren Ereignisse zu Laden",

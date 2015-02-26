@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Aktivitet",
+    "Personal activity feed for %s" : "Personleg aktivitetsstraum for %s",
     "Your settings have been updated." : "Innstillingane dine har blitt oppdaterte",
     "All Activities" : "Alle aktivitetar",
     "Activities by you" : "Dine aktivitetar",
@@ -24,7 +25,6 @@ OC.L10N.register(
     "Daily" : "Kvar dag",
     "Weekly" : "Kvar veke",
     "Activity feed" : "Aktivitetsstraum",
-    "Personal activity feed for %s" : "Personleg aktivitetsstraum for %s",
     "Enable RSS feed" : "Skru på RSS-straum",
     "You will see a list of events here when you start to use your %s." : "Du får sjå ei liste med hendingar her når du byrjar å bruka %s.",
     "No more events to load" : "Inga fleire hendingar å lasta",

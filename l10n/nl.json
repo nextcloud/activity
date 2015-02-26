@@ -1,5 +1,6 @@
 { "translations": {
     "Activity" : "Activiteit",
+    "Personal activity feed for %s" : "Persoonlijk activiteitenkanaal voor %s",
     "Your settings have been updated." : "Uw instellingen zijn bijgewerkt",
     "Activity notification" : "Activiteitenmelding",
     "All Activities" : "Alle activiteiten",
@@ -27,7 +28,6 @@
     "Daily" : "Dagelijks",
     "Weekly" : "Wekelijks",
     "Activity feed" : "Activiteitenkanaal",
-    "Personal activity feed for %s" : "Persoonlijk activiteitenkanaal voor %s",
     "Enable RSS feed" : "Aanzetten RSS kanaal",
     "You will see a list of events here when you start to use your %s." : "U ziet hier een lijst met activiteiten als u gebruik gaat maken van uw %s.",
     "No more events to load" : "Geen activiteiten meer om te laden ",

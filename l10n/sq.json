@@ -1,5 +1,6 @@
 { "translations": {
     "Activity" : "Aktiviteti",
+    "Personal activity feed for %s" : "Lista personale e veprimeve për %s",
     "Your settings have been updated." : "Të dhënat tuaja janë azhornuar",
     "Activity notification" : "Njoftim për aktivitetin",
     "All Activities" : "I gjithë aktiviteti",
@@ -26,7 +27,6 @@
     "Daily" : "Përditë",
     "Weekly" : "Javore",
     "Activity feed" : "Lista e aktiviteteve",
-    "Personal activity feed for %s" : "Lista personale e veprimeve për %s",
     "Enable RSS feed" : "Aktivizo burimin e RSS",
     "You will see a list of events here when you start to use your %s." : "Ju do të shikoni një list ngjarjesh kur të filloni të përdorni %s.",
     "No more events to load" : "Nuk ka me aktivitete për t'u ngarkuar.",

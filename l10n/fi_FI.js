@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Toimet",
+    "Personal activity feed for %s" : "Käyttäjän %s henkilökohtainen toimintasyöte",
     "Your settings have been updated." : "Asetuksesi on päivitetty.",
     "Activity notification" : "Ilmoitus toiminnasta",
     "All Activities" : "Kaikki toimet",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "Päivittäin",
     "Weekly" : "Viikottain",
     "Activity feed" : "Toiminnan syöte",
-    "Personal activity feed for %s" : "Käyttäjän %s henkilökohtainen toimintasyöte",
     "Enable RSS feed" : "Käytä RSS-syötettä",
     "You will see a list of events here when you start to use your %s." : "Näet tapahtumaluettelon täällä, kun aloitat %sin käytön.",
     "No more events to load" : "Ei enempää tapahtumia ladattavaksi",

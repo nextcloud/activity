@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Activitate",
+    "Personal activity feed for %s" : "Activitate recenta personala pentru %s",
     "Your settings have been updated." : "Setările au fost actualizate",
     "Activity notification" : "Notificări de activitate",
     "All Activities" : "Toate acțiunile",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "Zilnic",
     "Weekly" : "Săptămânal",
     "Activity feed" : "Flux de activitate",
-    "Personal activity feed for %s" : "Activitate recenta personala pentru %s",
     "Enable RSS feed" : "Activați RSS feed",
     "You will see a list of events here when you start to use your %s." : "Vei vedea o listă de evenimente când vei începe să folosești %s tale.",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",

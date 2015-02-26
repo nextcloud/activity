@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Fəallıq",
+    "Personal activity feed for %s" : "%s üçün şəxsi fəaliyyətin ötürülməsi",
     "Your settings have been updated." : "Sizin configləriniz yenilendi.",
     "Activity notification" : "Fəaliyyət bildirişi",
     "All Activities" : "Bütün fəalliqlar",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "Günlük",
     "Weekly" : "Həftəlik",
     "Activity feed" : "Fəaliyyətin ötürülməsi",
-    "Personal activity feed for %s" : "%s üçün şəxsi fəaliyyətin ötürülməsi",
     "Enable RSS feed" : "RSS ötürməsinin işə salinmaslı",
     "You will see a list of events here when you start to use your %s." : "Siz %s istifadəyə başladıqda, baş verən hadısələrin siyahısını burda görəcəksiniz.",
     "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur",

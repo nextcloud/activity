@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "События",
+    "Personal activity feed for %s" : "Персональная лента событий для %s",
     "Your settings have been updated." : "Настройки обновлены.",
     "Activity notification" : "Уведомление о событиях",
     "All Activities" : "Все действия",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "Ежедневно",
     "Weekly" : "Еженедельно",
     "Activity feed" : "Лента событий",
-    "Personal activity feed for %s" : "Персональная лента событий для %s",
     "Enable RSS feed" : "Включить RSS ленту",
     "You will see a list of events here when you start to use your %s." : "Здесь будет виден список событий, когда вы начнете использовать %s.",
     "No more events to load" : "Больше нет событий для загрузки",

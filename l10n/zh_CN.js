@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "动态",
+    "Personal activity feed for %s" : "%s 的个人动态 Feed",
     "Your settings have been updated." : "您的设置已更新。",
     "Activity notification" : "动态通知",
     "All Activities" : "所有动态",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "每天",
     "Weekly" : "每周",
     "Activity feed" : "动态 Feed",
-    "Personal activity feed for %s" : "%s 的个人动态 Feed",
     "Enable RSS feed" : "启用 RSS 源",
     "You will see a list of events here when you start to use your %s." : "当您开始使用%s，您会在此看到一系列事件。",
     "No more events to load" : "已无更多事件",

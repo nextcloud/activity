@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Активність",
+    "Personal activity feed for %s" : "Персональна стрічка оновлень для %s",
     "Your settings have been updated." : "Ваші налаштування було оновлено.",
     "Activity notification" : "Повідомлення активності",
     "All Activities" : "Вся Активність",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Daily" : "Щоденно",
     "Weekly" : "Щотижня",
     "Activity feed" : "Стрічка оновлень",
-    "Personal activity feed for %s" : "Персональна стрічка оновлень для %s",
     "Enable RSS feed" : "Активувати RSS стрічку",
     "You will see a list of events here when you start to use your %s." : "Ви тут побачите список подій, коли починаєте використовувати свій %s.",
     "No more events to load" : "Немає більше подій для відображення",

@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "فعالیت",
+    "Personal activity feed for %s" : "فعالیت شخصی فید برای %s",
     "Your settings have been updated." : "تنظیمات شما به روز رسانی شد",
     "Activity notification" : "هشدارهای فعالیت",
     "All Activities" : "تمام فعالیت ها",
@@ -28,7 +29,6 @@ OC.L10N.register(
     "Daily" : "روزانه",
     "Weekly" : "هفتهگی",
     "Activity feed" : "فید فعالیت",
-    "Personal activity feed for %s" : "فعالیت شخصی فید برای %s",
     "Enable RSS feed" : "فعالسازی فید RSS",
     "You will see a list of events here when you start to use your %s." : "وقتی که از%s خود استفاده کنید لیستی از وقایع را اینجا مشاهده خواهید کرد.",
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
