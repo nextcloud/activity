@@ -1,21 +1,18 @@
-$(document).ready(function(){
-	$('#activity_notifications input[type=checkbox]').change(function(){
+$(document).ready(function() {
+	function saveSettings() {
 		OC.msg.startSaving('#activity_notifications_msg');
-		var post = $( '#activity_notifications' ).serialize();
-		$.post(OC.generateUrl('/apps/activity/settings'), post, function(data) {
-			OC.msg.finishedSaving('#activity_notifications_msg', data);
-		});
-	});
+		var post = $('#activity_notifications').serialize();
 
-	$('#activity_notifications select').change(function(){
-		OC.msg.startSaving('#activity_notifications_msg');
-		var post = $( '#activity_notifications' ).serialize();
-		$.post(OC.generateUrl('/apps/activity/settings'), post, function(data) {
-			OC.msg.finishedSaving('#activity_notifications_msg', data);
+		$.post(OC.generateUrl('/apps/activity/settings'), post, function(response) {
+			OC.msg.finishedSuccess('#activity_notifications_msg', response.data.message);
 		});
-	});
+	}
 
-	$('#activity_notifications .activity_select_group').click(function(){
+	$('#activity_notifications input[type=checkbox]').change(saveSettings);
+
+	$('#activity_notifications select').change(saveSettings);
+
+	$('#activity_notifications .activity_select_group').click(function() {
 		var selectGroup = '#activity_notifications .' + $(this).attr('data-select-group');
 		var checkedBoxes = $(selectGroup + ':checked').length;
 		$(selectGroup).attr('checked', true);
@@ -24,10 +21,6 @@ $(document).ready(function(){
 			$(selectGroup).attr('checked', false);
 		}
 
-		OC.msg.startSaving('#activity_notifications_msg');
-		var post = $( '#activity_notifications' ).serialize();
-		$.post(OC.generateUrl('/apps/activity/settings'), post, function(data) {
-			OC.msg.finishedSaving('#activity_notifications_msg', data);
-		});
+		saveSettings();
 	});
 });
