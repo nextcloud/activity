@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "Fəallıq",
     "Personal activity feed for %s" : "%s üçün şəxsi fəaliyyətin ötürülməsi",
+    "Your feed URL is invalid" : "Sizin URL ötürməniz yalnışdır",
     "Your settings have been updated." : "Sizin configləriniz yenilendi.",
     "Activity notification" : "Fəaliyyət bildirişi",
     "All Activities" : "Bütün fəalliqlar",

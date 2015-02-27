@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "Aktivita",
     "Personal activity feed for %s" : "Přehled aktivit uživatele %s",
+    "Your feed URL is invalid" : "URL adresa kanálu není platná",
     "Your settings have been updated." : "Vaše nastavení bylo aktualizováno.",
     "Activity notification" : "Upozornění na aktivity",
     "All Activities" : "Všechny aktivity",

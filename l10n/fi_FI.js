@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "Toimet",
     "Personal activity feed for %s" : "Käyttäjän %s henkilökohtainen toimintasyöte",
+    "Your feed URL is invalid" : "Syöteosoitteesi on virheellinen",
     "Your settings have been updated." : "Asetuksesi on päivitetty.",
     "Activity notification" : "Ilmoitus toiminnasta",
     "All Activities" : "Kaikki toimet",

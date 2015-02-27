@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "Actividade",
     "Personal activity feed for %s" : "Fonte da actividade persoal para %s",
+    "Your feed URL is invalid" : "O URL da fonte é incorrecto",
     "Your settings have been updated." : "Actualizaronse os axustes.",
     "Activity notification" : "Notificación da actividade",
     "All Activities" : "Todas as actividades",
