@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "События",
     "Personal activity feed for %s" : "Персональная лента событий для %s",
+    "Your feed URL is invalid" : "Ваша ссылка новостной ленты неправильная",
     "Your settings have been updated." : "Настройки обновлены.",
     "Activity notification" : "Уведомление о событиях",
     "All Activities" : "Все действия",
