@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "アクティビティ",
     "Personal activity feed for %s" : "\"%s\" の個人アクティビティフィード",
+    "Your feed URL is invalid" : "フィードURLが無効です",
     "Your settings have been updated." : "設定を更新しました。",
     "Activity notification" : "アクティビティ通知",
     "All Activities" : "すべてのアクティビティ",
