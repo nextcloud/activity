@@ -117,6 +117,7 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 
 		// Send Email
 		$default_lang = $this->config->getSystemValue('default_language', 'en');
+		$defaultTimeZone = date_default_timezone_get();
 		foreach ($mailData as $user => $data) {
 			if (empty($userEmails[$user])) {
 				// The user did not setup an email address
@@ -126,7 +127,7 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 			}
 
 			$language = (!empty($userLanguages[$user])) ? $userLanguages[$user] : $default_lang;
-			$timezone = (!empty($userTimezones[$user])) ? $userTimezones[$user] : 'UTC';
+			$timezone = (!empty($userTimezones[$user])) ? $userTimezones[$user] : $defaultTimeZone;
 			$this->mqHandler->sendEmailToUser($user, $userEmails[$user], $language, $timezone, $data);
 		}
 
