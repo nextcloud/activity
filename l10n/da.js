@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "Aktivitet",
     "Personal activity feed for %s" : "Personlige aktiviteter for %s ",
+    "Your feed URL is invalid" : "Din feed-URL er ugyldg",
     "Your settings have been updated." : "Dine indstillinger er blevet opdateret.",
     "Activity notification" : "Notifikation om aktivitet",
     "All Activities" : "Alle aktiviteter",
