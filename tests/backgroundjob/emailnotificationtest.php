@@ -72,6 +72,9 @@ class EmailNotificationTest extends TestCase {
 				'test1' => [],
 				'test2' => [],
 			]);
+		$mailQueueHandler->expects($this->once())
+			->method('sendEmailToUser')
+			->with('test1', 'test1@localhost', 'de', date_default_timezone_get(), $this->anything());
 		$config->expects($this->any())
 			->method('getUserValueForUsers')
 			->willReturnMap([
@@ -81,6 +84,13 @@ class EmailNotificationTest extends TestCase {
 				], [
 					'test1' => 'test1@localhost',
 					'test2' => '',
+				]],
+				['core', 'lang', [
+					'test1',
+					'test2',
+				], [
+					'test1' => 'de',
+					'test2' => 'en',
 				]]
 			]);
 
