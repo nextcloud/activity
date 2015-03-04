@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "Dejavnosti",
     "Personal activity feed for %s" : "Osebne dejavnosti za %s",
+    "Your feed URL is invalid" : "Spletni naslov vira ni veljaven",
     "Your settings have been updated." : "Nastavitve so posodobljene.",
     "Activity notification" : "Obvestila o dejavnosti",
     "All Activities" : "Vse dejavnosti",
