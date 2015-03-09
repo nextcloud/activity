@@ -49,6 +49,12 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 	/** @var bool */
 	protected $isCLI;
 
+	/**
+	 * @param MailQueueHandler $mailQueueHandler
+	 * @param IConfig $config
+	 * @param ILogger $logger
+	 * @param bool|null $isCLI
+	 */
 	public function __construct(MailQueueHandler $mailQueueHandler = null,
 								IConfig $config = null,
 								ILogger $logger = null,

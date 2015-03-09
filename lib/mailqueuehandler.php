@@ -63,7 +63,10 @@ class MailQueueHandler {
 	 * @param DataHelper $dataHelper
 	 * @param MockUtilSendMail $mailer
 	 */
-	public function __construct(IDateTimeFormatter $dateFormatter, IDBConnection $connection, DataHelper $dataHelper, MockUtilSendMail $mailer) {
+	public function __construct(IDateTimeFormatter $dateFormatter,
+								IDBConnection $connection,
+								DataHelper $dataHelper,
+								MockUtilSendMail $mailer) {
 		$this->dateFormatter = $dateFormatter;
 		$this->connection = $connection;
 		$this->dataHelper = $dataHelper;
