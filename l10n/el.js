@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "Δραστηριότητα",
     "Personal activity feed for %s" : "Προσωπική ροή δραστηριότητας για %s",
+    "Your feed URL is invalid" : "Η διεύθυνση σας δεν είναι έγκυρη",
     "Your settings have been updated." : "Οι ρυθμίσεις σας έχουν ενημερωθεί.",
     "Activity notification" : "Ειδοποίηση δραστηριότητας",
     "All Activities" : "Όλες οι Δραστηριότητες",
