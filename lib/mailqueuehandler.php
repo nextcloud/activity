@@ -23,7 +23,9 @@
 
 namespace OCA\Activity;
 
-use \OCP\IDateTimeFormatter;
+use OCP\IDateTimeFormatter;
+use OCP\IDBConnection;
+use OCP\Util;
 
 /**
  * Class MailQueueHandler
@@ -47,15 +49,28 @@ class MailQueueHandler {
 	/** @var DataHelper */
 	protected $dataHelper;
 
+	/** @var IDBConnection */
+	protected $connection;
+
+	/** @var MockUtilSendMail */
+	protected $mailer;
+
 	/**
 	 * Constructor
 	 *
 	 * @param IDateTimeFormatter $dateFormatter
+	 * @param IDBConnection $connection
 	 * @param DataHelper $dataHelper
+	 * @param MockUtilSendMail $mailer
 	 */
-	public function __construct(IDateTimeFormatter $dateFormatter, DataHelper $dataHelper) {
+	public function __construct(IDateTimeFormatter $dateFormatter,
+								IDBConnection $connection,
+								DataHelper $dataHelper,
+								MockUtilSendMail $mailer) {
 		$this->dateFormatter = $dateFormatter;
+		$this->connection = $connection;
 		$this->dataHelper = $dataHelper;
+		$this->mailer = $mailer;
 	}
 
 	/**
@@ -68,22 +83,18 @@ class MailQueueHandler {
 	public function getAffectedUsers($limit, $latestSend) {
 		$limit = (!$limit) ? null : (int) $limit;
 
-		$query = \OCP\DB::prepare(
+		$query = $this->connection->prepare(
 			'SELECT `amq_affecteduser`, MIN(`amq_latest_send`) AS `amq_trigger_time` '
 			. ' FROM `*PREFIX*activity_mq` '
 			. ' WHERE `amq_latest_send` < ? '
 			. ' GROUP BY `amq_affecteduser` '
 			. ' ORDER BY `amq_trigger_time` ASC',
 			$limit);
-		$result = $query->execute(array($latestSend));
+		$query->execute(array($latestSend));
 
 		$affectedUsers = array();
-		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('OCA\Activity', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
-		} else {
-			while ($row = $result->fetchRow()) {
-				$affectedUsers[] = $row['amq_affecteduser'];
-			}
+		while ($row = $query->fetch()) {
+			$affectedUsers[] = $row['amq_affecteduser'];
 		}
 
 		return $affectedUsers;
@@ -101,22 +112,18 @@ class MailQueueHandler {
 		$queryParams = $affectedUsers;
 		array_unshift($queryParams, (int) $maxTime);
 
-		$query = \OCP\DB::prepare(
+		$query = $this->connection->prepare(
 			'SELECT * '
 			. ' FROM `*PREFIX*activity_mq` '
 			. ' WHERE `amq_timestamp` <= ? '
 			. ' AND `amq_affecteduser` IN (' . $placeholders . ')'
 			. ' ORDER BY `amq_timestamp` ASC'
 		);
-		$result = $query->execute($queryParams);
+		$query->execute($queryParams);
 
 		$userActivityMap = array();
-		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('Activity', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
-		} else {
-			while ($row = $result->fetchRow()) {
-				$userActivityMap[$row['amq_affecteduser']][] = $row;
-			}
+		while ($row = $query->fetch()) {
+			$userActivityMap[$row['amq_affecteduser']][] = $row;
 		}
 
 		return $userActivityMap;
@@ -126,11 +133,11 @@ class MailQueueHandler {
 	 * Get a language object for a specific language
 	 *
 	 * @param string $lang Language identifier
-	 * @return \OC_L10N Language object of $lang
+	 * @return \OCP\IL10N Language object of $lang
 	 */
 	protected function getLanguage($lang) {
 		if (!isset($this->languages[$lang])) {
-			$this->languages[$lang] = \OC_L10N::get('activity', $lang);
+			$this->languages[$lang] = Util::getL10N('activity', $lang);
 		}
 
 		return $this->languages[$lang];
@@ -143,7 +150,7 @@ class MailQueueHandler {
 	 */
 	protected function getSenderData($setting) {
 		if (empty($this->senderAddress)) {
-			$this->senderAddress = \OCP\Util::getDefaultEmailAddress('no-reply');
+			$this->senderAddress = Util::getDefaultEmailAddress('no-reply');
 		}
 		if (empty($this->senderName)) {
 			$defaults = new \OCP\Defaults();
@@ -212,15 +219,11 @@ class MailQueueHandler {
 		$alttext->assign('overwriteL10N', $l);
 		$emailText = $alttext->fetchPage();
 
-		try {
-			\OCP\Util::sendMail(
-				$email, $user,
-				$l->t('Activity notification'), $emailText,
-				$this->getSenderData('email'), $this->getSenderData('name')
-			);
-		} catch (\Exception $e) {
-			\OCP\Util::writeLog('Activity', 'A problem occurred while sending the e-mail. Please revisit your settings.', \OCP\Util::ERROR);
-		}
+		$this->mailer->sendMail(
+			$email, \OCP\User::getDisplayName($user),
+			(string) $l->t('Activity notification'), $emailText,
+			$this->getSenderData('email'), $this->getSenderData('name')
+		);
 	}
 
 	/**
@@ -234,14 +237,10 @@ class MailQueueHandler {
 		$queryParams = $affectedUsers;
 		array_unshift($queryParams, (int) $maxTime);
 
-		$query = \OCP\DB::prepare(
+		$query = $this->connection->prepare(
 			'DELETE FROM `*PREFIX*activity_mq` '
 			. ' WHERE `amq_timestamp` <= ? '
 			. ' AND `amq_affecteduser` IN (' . $placeholders . ')');
-		$result = $query->execute($queryParams);
-
-		if (\OCP\DB::isError($result)) {
-			\OCP\Util::writeLog('Activity', \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
-		}
+		$query->execute($queryParams);
 	}
 }

@@ -23,12 +23,27 @@
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\MailQueueHandler;
+use OCA\Activity\UserSettings;
 
 class MailQueueHandlerTest extends TestCase {
+	/** @var MailQueueHandler */
+	protected $mailQueueHandler;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $mailer;
+
+	/** @var \OCP\IUserManager */
+	protected $oldUserManager;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $userManager;
+
 	protected function setUp() {
 		parent::setUp();
 
 		$app = $this->getUniqueID('MailQueueHandlerTest');
+		$this->userManager = $this->getMock('OCP\IUserManager');
+		$this->registerUserManager($this->userManager);
 
 		$query = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
@@ -40,38 +55,153 @@ class MailQueueHandlerTest extends TestCase {
 		$query->execute(array($app, 'Test data', 'Param1', 'user2', 150, 'phpunit', 151));
 		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 154));
 		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 155));
+
+		$this->mailer = $this->getMock('\OCA\Activity\MockUtilSendMail');
+		$this->mailQueueHandler = new MailQueueHandler(
+			$this->getMock('\OCP\IDateTimeFormatter'),
+			\OC::$server->getDatabaseConnection(),
+			$this->getMockBuilder('\OCA\Activity\DataHelper')
+				->disableOriginalConstructor()
+				->getMock(),
+			$this->mailer
+		);
 	}
 
 	protected function tearDown() {
 		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity_mq` WHERE `amq_timestamp` < 200');
 		$query->execute();
 
+		$this->restoreUserManager();
 		parent::tearDown();
+	}
+
+	protected function registerUserManager($userManager) {
+		$this->oldUserManager = \OC::$server->getUserManager();
+		\OC::$server->registerService('UserManager', function () use ($userManager) {
+			return $userManager;
+		});
+	}
+
+	protected function restoreUserManager() {
+		$oldUserManager = $this->oldUserManager;
+		\OC::$server->registerService('UserManager', function () use ($oldUserManager) {
+			return $oldUserManager;
+		});
 	}
 
 	public function getAffectedUsersData()
 	{
-		return array(
-			array(null, array('user2', 'user1', 'user3')),
-			array(5, array('user2', 'user1', 'user3')),
-			array(3, array('user2', 'user1', 'user3')),
-			array(2, array('user2', 'user1')),
-			array(1, array('user2')),
-		);
+		return [
+			[null, ['user2', 'user1', 'user3'], []],
+			[5, ['user2', 'user1', 'user3'], []],
+			[3, ['user2', 'user1', 'user3'], []],
+			[2, ['user2', 'user1'], ['user3']],
+			[1, ['user2'], ['user1', 'user3']],
+		];
 	}
 
 	/**
 	 * @dataProvider getAffectedUsersData
+	 *
+	 * @param int $limit
+	 * @param array $affected
+	 * @param array $untouched
 	 */
-	public function testGetAffectedUsers($limit, $expected) {
-		$mq = new MailQueueHandler(
-			$this->getMock('\OCP\IDateTimeFormatter'),
-			$this->getMockBuilder('\OCA\Activity\DataHelper')
-				->disableOriginalConstructor()
-				->getMock()
-		);
-		$users = $mq->getAffectedUsers($limit, time());
+	public function testGetAffectedUsers($limit, $affected, $untouched) {
+		$maxTime = 200;
 
-		$this->assertEquals($expected, $users);
+		$this->assertRemainingMailEntries($untouched, $maxTime, 'before doing anything');
+		$users = $this->mailQueueHandler->getAffectedUsers($limit, $maxTime);
+		$this->assertRemainingMailEntries($untouched, $maxTime, 'after getting the affected users');
+
+		$this->assertEquals($affected, $users);
+
+		$items = $this->mailQueueHandler->getItemsForUsers($users, $maxTime);
+
+		$this->assertSameSize($users, $items, 'Failed asserting that each user has a mail entry');
+		foreach ($users as $user) {
+			$this->assertArrayHasKey($user, $items);
+		}
+		foreach ($untouched as $user) {
+			$this->assertArrayNotHasKey($user, $items);
+		}
+		$this->assertRemainingMailEntries($untouched, $maxTime, 'after getting the affected items');
+
+		$this->mailQueueHandler->deleteSentItems($users, $maxTime);
+
+		$this->assertEmpty(
+			$this->mailQueueHandler->getItemsForUsers($users, $maxTime),
+			'Failed to assert that all entries for the affected users have been deleted'
+		);
+		$this->assertRemainingMailEntries($untouched, $maxTime, 'after deleting the affected items');
+	}
+
+	public function testSendEmailToUser() {
+		$maxTime = 200;
+		$user = 'user2';
+		$userDisplayName = 'user two';
+		$email = $user . '@localhost';
+
+		$this->mailer->expects($this->any())
+			->method('sendMail')
+			->with(
+				$email,
+				$userDisplayName,
+				$this->anything(),
+				$this->stringContains($userDisplayName),
+				$this->anything(),
+				$this->anything()
+			)
+			->willReturn(null);
+
+		$userObject = $this->getMock('OCP\IUser');
+		$userObject->expects($this->any())
+			->method('getDisplayName')
+			->willReturn($userDisplayName);
+		$this->userManager->expects($this->any())
+			->method('get')
+			->with($user)
+			->willReturn($userObject);
+
+		$users = $this->mailQueueHandler->getAffectedUsers(1, $maxTime);
+		$this->assertEquals([$user], $users);
+		$items = $this->mailQueueHandler->getItemsForUsers($users, $maxTime);
+		$this->assertArrayHasKey($user, $items);
+		$this->mailQueueHandler->sendEmailToUser($user, $email, 'en', 'UTC', $items[$user]);
+	}
+
+	/**
+	 * @param array $users
+	 * @param int $maxTime
+	 * @param string $explain
+	 */
+	protected function assertRemainingMailEntries(array $users, $maxTime, $explain) {
+		if (!empty($untouched)) {
+			$this->assertNotEmpty(
+				$this->mailQueueHandler->getItemsForUsers($users, $maxTime),
+				'Failed asserting that the remaining users still have mails in the queue ' . $explain
+			);
+		}
+	}
+
+	public function getLangForApproximatedTimeFrameData() {
+		return [
+			[time() - 3900, UserSettings::EMAIL_SEND_HOURLY],
+			[time() - 89900, UserSettings::EMAIL_SEND_DAILY],
+			[time() - 90100, UserSettings::EMAIL_SEND_WEEKLY],
+		];
+	}
+
+	/**
+	 * @dataProvider getLangForApproximatedTimeFrameData
+	 * @param int $time
+	 * @param int $expected
+	 */
+	public function testGetLangForApproximatedTimeFrame($time, $expected) {
+		$this->assertEquals(
+			$expected,
+			\Test_Helper::invokePrivate($this->mailQueueHandler, 'getLangForApproximatedTimeFrame', [$time]),
+			'Failed asserting to receive the right timeframe'
+		);
 	}
 }

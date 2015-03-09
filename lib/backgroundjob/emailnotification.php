@@ -24,6 +24,9 @@
 namespace OCA\Activity\BackgroundJob;
 
 use OCA\Activity\AppInfo\Application;
+use OCA\Activity\MailQueueHandler;
+use OCP\IConfig;
+use OCP\ILogger;
 
 /**
  * Class EmailNotification
@@ -34,36 +37,65 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 	const CLI_EMAIL_BATCH_SIZE = 500;
 	const WEB_EMAIL_BATCH_SIZE = 25;
 
-	/** @var \OCA\Activity\MailQueueHandler */
+	/** @var MailQueueHandler */
 	protected $mqHandler;
 
-	/** @var \OCP\IConfig */
+	/** @var IConfig */
 	protected $config;
 
-	/** @var \OCP\ILogger */
+	/** @var ILogger */
 	protected $logger;
 
-	public function __construct() {
+	/** @var bool */
+	protected $isCLI;
+
+	/**
+	 * @param MailQueueHandler $mailQueueHandler
+	 * @param IConfig $config
+	 * @param ILogger $logger
+	 * @param bool|null $isCLI
+	 */
+	public function __construct(MailQueueHandler $mailQueueHandler = null,
+								IConfig $config = null,
+								ILogger $logger = null,
+								$isCLI = null) {
 		// Run all 15 Minutes
 		$this->setInterval(15 * 60);
 
+		if ($mailQueueHandler === null || $config === null || $logger === null || $isCLI === null) {
+			$this->fixDIForJobs();
+		} else {
+			$this->mqHandler = $mailQueueHandler;
+			$this->config = $config;
+			$this->logger = $logger;
+			$this->isCLI = $isCLI;
+		}
+	}
+
+	public function fixDIForJobs() {
 		$application = new Application();
 
 		$this->mqHandler = $application->getContainer()->query('MailQueueHandler');
 		$this->config = \OC::$server->getConfig();
 		$this->logger = \OC::$server->getLogger();
+		$this->isCLI = \OC::$CLI;
 	}
 
 	protected function run($argument) {
-		if (\OC::$CLI) {
+		// We don't use time() but "time() - 1" here, so we don't run into
+		// runtime issues later and delete emails, which were created in the
+		// same second, but were not collected for the emails.
+		$sendTime = time() - 1;
+
+		if ($this->isCLI) {
 			do {
 				// If we are in CLI mode, we keep sending emails
 				// until we are done.
-				$emails_sent = $this->runStep(self::CLI_EMAIL_BATCH_SIZE);
+				$emails_sent = $this->runStep(self::CLI_EMAIL_BATCH_SIZE, $sendTime);
 			} while ($emails_sent === self::CLI_EMAIL_BATCH_SIZE);
 		} else {
 			// Only send 25 Emails in one go for web cron
-			$this->runStep(self::WEB_EMAIL_BATCH_SIZE);
+			$this->runStep(self::WEB_EMAIL_BATCH_SIZE, $sendTime);
 		}
 	}
 
@@ -71,14 +103,10 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 	 * Send an email to {$limit} users
 	 *
 	 * @param int $limit Number of users we want to send an email to
+	 * @param int $sendTime The latest send time
 	 * @return int Number of users we sent an email to
 	 */
-	protected function runStep($limit) {
-		// We don't use time() but "time() - 1" here, so we don't run into
-		// runtime issues later and delete emails, which were created in the
-		// same second, but were not collected for the emails.
-		$sendTime = time() - 1;
-
+	protected function runStep($limit, $sendTime) {
 		// Get all users which should receive an email
 		$affectedUsers = $this->mqHandler->getAffectedUsers($limit, $sendTime);
 		if (empty($affectedUsers)) {
@@ -95,16 +123,17 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 
 		// Send Email
 		$default_lang = $this->config->getSystemValue('default_language', 'en');
+		$defaultTimeZone = date_default_timezone_get();
 		foreach ($mailData as $user => $data) {
-			if (!isset($userEmails[$user])) {
+			if (empty($userEmails[$user])) {
 				// The user did not setup an email address
 				// So we will not send an email :(
 				$this->logger->debug("Couldn't send notification email to user '" . $user . "' (email address isn't set for that user)", ['app' => 'activity']);
 				continue;
 			}
 
-			$language = (isset($userLanguages[$user])) ? $userLanguages[$user] : $default_lang;
-			$timezone = (isset($userTimezones[$user])) ? $userTimezones[$user] : 'UTC';
+			$language = (!empty($userLanguages[$user])) ? $userLanguages[$user] : $default_lang;
+			$timezone = (!empty($userTimezones[$user])) ? $userTimezones[$user] : $defaultTimeZone;
 			$this->mqHandler->sendEmailToUser($user, $userEmails[$user], $language, $timezone, $data);
 		}
 
