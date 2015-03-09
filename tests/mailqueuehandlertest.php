@@ -32,10 +32,18 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $mailer;
 
+	/** @var \OCP\IUserManager */
+	protected $oldUserManager;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $userManager;
+
 	protected function setUp() {
 		parent::setUp();
 
 		$app = $this->getUniqueID('MailQueueHandlerTest');
+		$this->userManager = $this->getMock('OCP\IUserManager');
+		$this->registerUserManager($this->userManager);
 
 		$query = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
@@ -63,7 +71,22 @@ class MailQueueHandlerTest extends TestCase {
 		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity_mq` WHERE `amq_timestamp` < 200');
 		$query->execute();
 
+		$this->restoreUserManager();
 		parent::tearDown();
+	}
+
+	protected function registerUserManager($userManager) {
+		$this->oldUserManager = \OC::$server->getUserManager();
+		\OC::$server->registerService('UserManager', function () use ($userManager) {
+			return $userManager;
+		});
+	}
+
+	protected function restoreUserManager() {
+		$oldUserManager = $this->oldUserManager;
+		\OC::$server->registerService('UserManager', function () use ($oldUserManager) {
+			return $oldUserManager;
+		});
 	}
 
 	public function getAffectedUsersData()
@@ -116,19 +139,29 @@ class MailQueueHandlerTest extends TestCase {
 	public function testSendEmailToUser() {
 		$maxTime = 200;
 		$user = 'user2';
+		$userDisplayName = 'user two';
 		$email = $user . '@localhost';
 
 		$this->mailer->expects($this->any())
 			->method('sendMail')
 			->with(
 				$email,
-				$user,
+				$userDisplayName,
 				$this->anything(),
-				$this->stringContains($user),
+				$this->stringContains($userDisplayName),
 				$this->anything(),
 				$this->anything()
 			)
 			->willReturn(null);
+
+		$userObject = $this->getMock('OCP\IUser');
+		$userObject->expects($this->any())
+			->method('getDisplayName')
+			->willReturn($userDisplayName);
+		$this->userManager->expects($this->any())
+			->method('get')
+			->with($user)
+			->willReturn($userObject);
 
 		$users = $this->mailQueueHandler->getAffectedUsers(1, $maxTime);
 		$this->assertEquals([$user], $users);

@@ -217,7 +217,7 @@ class MailQueueHandler {
 		$emailText = $alttext->fetchPage();
 
 		$this->mailer->sendMail(
-			$email, $user,
+			$email, \OCP\User::getDisplayName($user),
 			(string) $l->t('Activity notification'), $emailText,
 			$this->getSenderData('email'), $this->getSenderData('name')
 		);
