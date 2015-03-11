@@ -61,7 +61,8 @@ class Application extends App {
 
 		$container->registerService('Consumer', function(IContainer $c) {
 			return new Consumer(
-				$c->query('UserSettings')
+				$c->query('UserSettings'),
+				$c->query('CurrentUID')
 			);
 		});
 

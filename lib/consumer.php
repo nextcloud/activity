@@ -42,13 +42,18 @@ class Consumer implements IConsumer {
 	/** @var UserSettings */
 	protected $userSettings;
 
+	/** @var string */
+	protected $user;
+
 	/**
 	 * Constructor
 	 *
 	 * @param UserSettings $userSettings
+	 * @param string $user
 	 */
-	public function __construct(UserSettings $userSettings) {
+	public function __construct(UserSettings $userSettings, $user) {
 		$this->userSettings = $userSettings;
+		$this->user = $user;
 	}
 
 	/**
@@ -67,7 +72,7 @@ class Consumer implements IConsumer {
 	 * @return null
 	 */
 	public function receive($app, $subject, $subjectParams, $message, $messageParams, $file, $link, $affectedUser, $type, $priority) {
-		$selfAction = substr($subject, -5) === '_self';
+		$selfAction = $affectedUser === $this->user;
 		$streamSetting = $this->userSettings->getUserSetting($affectedUser, 'stream', $type);
 		$emailSetting = $this->userSettings->getUserSetting($affectedUser, 'email', $type);
 		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($affectedUser, 'setting', 'batchtime') : false;
