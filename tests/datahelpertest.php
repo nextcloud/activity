@@ -234,6 +234,28 @@ class DataHelperTest extends TestCase {
 		$helper->setL10n($l);
 	}
 
+	public function getParametersData() {
+		return [
+			[false, []],
+			['a', ['a']],
+			['"foo"bar"', ['"foo"bar"']],
+			[serialize('a'), ['a']],
+			[serialize(['a']), ['a']],
+			[json_encode(['a']), ['a']],
+		];
+	}
+
+	/**
+	 * @dataProvider getParametersData
+	 * @param string $stringInput
+	 * @param array $expected
+	 */
+	public function testGetParameters($stringInput, $expected) {
+		/** @var DataHelper $helper */
+		list($helper,) = $this->setUpHelpers();
+		$this->assertEquals($expected, $helper->getParameters($stringInput));
+	}
+
 	/**
 	 * Sets up the DataHelper with a mocked ParameterHelper
 	 * @return array
