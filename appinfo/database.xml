@@ -63,7 +63,7 @@
 				<name>subjectparams</name>
 				<type>text</type>
 				<notnull>true</notnull>
-				<length>255</length>
+				<length>4000</length>
 			</field>
 			<field>
 				<name>message</name>
@@ -75,19 +75,19 @@
 				<name>messageparams</name>
 				<type>text</type>
 				<notnull>false</notnull>
-				<length>255</length>
+				<length>4000</length>
 			</field>
 			<field>
 				<name>file</name>
 				<type>text</type>
 				<notnull>false</notnull>
-				<length>255</length>
+				<length>4000</length>
 			</field>
 			<field>
 				<name>link</name>
 				<type>text</type>
 				<notnull>false</notnull>
-				<length>255</length>
+				<length>4000</length>
 			</field>
 
 			<index>
@@ -183,7 +183,7 @@
 				<name>amq_subjectparams</name>
 				<type>text</type>
 				<notnull>true</notnull>
-				<length>255</length>
+				<length>4000</length>
 			</field>
 
 			<index>
