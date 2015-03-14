@@ -32,6 +32,8 @@ class ParameterHelperTest extends TestCase {
 	protected $parameterHelper;
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $view;
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $config;
 
 	protected function setUp() {
 		parent::setUp();
@@ -39,6 +41,9 @@ class ParameterHelperTest extends TestCase {
 		$this->originalWEBROOT =\OC::$WEBROOT;
 		\OC::$WEBROOT = '';
 		$this->view = $view = $this->getMockBuilder('\OC\Files\View')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->config = $this->getMockBuilder('\OCP\IConfig')
 			->disableOriginalConstructor()
 			->getMock();
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
@@ -50,6 +55,7 @@ class ParameterHelperTest extends TestCase {
 		$this->parameterHelper = new \OCA\Activity\ParameterHelper(
 			$activityManager,
 			$view,
+			$this->config,
 			$activityLanguage,
 			'test'
 		);
@@ -130,19 +136,30 @@ class ParameterHelperTest extends TestCase {
 				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
 				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ftmp%2Ftest" title="in tmp">test</a>',
 			), '/test/files/tmp/test'),
+
+			// Disabled avatars #256
+			array(array('NoAvatar'), array(0 => 'username'), true, true, array(
+				'<strong>NoAvatar</strong>',
+			), '', false),
 		);
 	}
 
 	/**
 	 * @dataProvider prepareParametersData
 	 */
-	public function testPrepareParameters($params, $filePosition, $stripPath, $highlightParams, $expected, $createFolder = '') {
+	public function testPrepareParameters($params, $filePosition, $stripPath, $highlightParams, $expected, $createFolder = '', $enableAvatars = true) {
 		if ($createFolder !== '') {
 			$this->view->expects($this->any())
 				->method('is_dir')
 				->with($createFolder)
 				->willReturn(true);
 		}
+
+		$this->config->expects($this->any())
+			->method('getSystemValue')
+			->with('enable_avatars', true)
+			->willReturn($enableAvatars);
+
 		$this->assertEquals(
 			$expected,
 			$this->parameterHelper->prepareParameters($params, $filePosition, $stripPath, $highlightParams)

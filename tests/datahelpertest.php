@@ -137,12 +137,18 @@ class DataHelperTest extends TestCase {
 		$activityManager->registerExtension(function() use ($activityLanguage) {
 			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
+		$config = $this->getMockBuilder('OCP\IConfig')->disableOriginalConstructor()->getMock();
+		$config->expects($this->any())
+			->method('getSystemValue')
+			->with('enable_avatars', true)
+			->willReturn(true);
 
 		$dataHelper = new DataHelper(
 			$activityManager,
 			new ParameterHelper(
 				$activityManager,
 				new View(''),
+				$config,
 				$activityLanguage,
 				'test'
 			),
@@ -189,6 +195,7 @@ class DataHelperTest extends TestCase {
 			new ParameterHelper(
 				$activityManager,
 				new View(''),
+				$this->getMockBuilder('OCP\IConfig')->disableOriginalConstructor()->getMock(),
 				$activityLanguage,
 				'test'
 			),
