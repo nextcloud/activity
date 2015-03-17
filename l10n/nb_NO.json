@@ -1,6 +1,7 @@
 { "translations": {
     "Activity" : "Aktivitet",
     "Personal activity feed for %s" : "Personlig aktivitetsstrøm for %s",
+    "Your feed URL is invalid" : "Kilde URL er ikke gyldig",
     "Your settings have been updated." : "Dine innstillinger har blit oppdatert",
     "Activity notification" : "Varsel om aktivitet",
     "All Activities" : "Alle aktiviteter",
