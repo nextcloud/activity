@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "Aktywność",
     "Personal activity feed for %s" : "Osobisty strumień aktywności dla %s",
+    "Your feed URL is invalid" : "Podany adres URL jest nieprawidłowy",
     "Your settings have been updated." : "Twoje ustawienia zostały zaktualizowane",
     "Activity notification" : "Powiadomienie o aktywności",
     "All Activities" : "Wszystkie aktywności",
