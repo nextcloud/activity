@@ -26,6 +26,7 @@ namespace OCA\Activity;
 use OCP\Activity\IManager;
 use OCP\IConfig;
 use OCP\IL10N;
+use OCP\IUserManager;
 use OCP\User;
 use OCP\Util;
 use OC\Files\View;
@@ -33,6 +34,9 @@ use OC\Files\View;
 class ParameterHelper {
 	/** @var \OCP\Activity\IManager */
 	protected $activityManager;
+
+	/** @var \OCP\IUserManager */
+	protected $userManager;
 
 	/** @var \OC\Files\View */
 	protected $rootView;
@@ -48,12 +52,15 @@ class ParameterHelper {
 
 	/**
 	 * @param IManager $activityManager
+	 * @param IUserManager $userManager
 	 * @param View $rootView
+	 * @param IConfig $config
 	 * @param IL10N $l
 	 * @param string $user
 	 */
-	public function __construct(IManager $activityManager, View $rootView, IConfig $config, IL10N $l, $user) {
+	public function __construct(IManager $activityManager, IUserManager $userManager, View $rootView, IConfig $config, IL10N $l, $user) {
 		$this->activityManager = $activityManager;
+		$this->userManager = $userManager;
 		$this->rootView = $rootView;
 		$this->config = $config;
 		$this->l = $l;
@@ -86,7 +93,7 @@ class ParameterHelper {
 		$preparedParams = array();
 		foreach ($params as $i => $param) {
 			if (is_array($param)) {
-				$preparedParams[] = $this->prepareArrayParameter($param, $paramTypes[$i], $stripPath, $highlightParams);
+				$preparedParams[] = $this->prepareArrayParameter($param, isset($paramTypes[$i]) ? $paramTypes[$i] : '', $stripPath, $highlightParams);
 			} else {
 				$preparedParams[] = $this->prepareStringParameter($param, isset($paramTypes[$i]) ? $paramTypes[$i] : '', $stripPath, $highlightParams);
 			}
@@ -170,7 +177,8 @@ class ParameterHelper {
 			}
 		}
 
-		$displayName = User::getDisplayName($param);
+		$user = $this->userManager->get($param);
+		$displayName = ($user) ? $user->getDisplayName() : $param;
 		$param = Util::sanitizeHTML($param);
 		$displayName = Util::sanitizeHTML($displayName);
 

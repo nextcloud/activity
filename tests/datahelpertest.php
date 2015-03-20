@@ -23,7 +23,6 @@
 namespace OCA\Activity\Tests;
 
 use OC\ActivityManager;
-use OC\Files\View;
 use OCA\Activity\DataHelper;
 use OCA\Activity\ParameterHelper;
 use OCA\Activity\Tests\Mock\Extension;
@@ -34,7 +33,7 @@ class DataHelperTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$this->originalWEBROOT =\OC::$WEBROOT;
+		$this->originalWEBROOT = \OC::$WEBROOT;
 		\OC::$WEBROOT = '';
 	}
 
@@ -147,7 +146,8 @@ class DataHelperTest extends TestCase {
 			$activityManager,
 			new ParameterHelper(
 				$activityManager,
-				new View(''),
+				$this->getMockBuilder('OCP\IUserManager')->disableOriginalConstructor()->getMock(),
+				$this->getMockBuilder('OC\Files\View')->disableOriginalConstructor()->getMock(),
 				$config,
 				$activityLanguage,
 				'test'
@@ -194,7 +194,8 @@ class DataHelperTest extends TestCase {
 			$activityManager,
 			new ParameterHelper(
 				$activityManager,
-				new View(''),
+				$this->getMockBuilder('OCP\IUserManager')->disableOriginalConstructor()->getMock(),
+				$this->getMockBuilder('OC\Files\View')->disableOriginalConstructor()->getMock(),
 				$this->getMockBuilder('OCP\IConfig')->disableOriginalConstructor()->getMock(),
 				$activityLanguage,
 				'test'

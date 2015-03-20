@@ -33,7 +33,12 @@ class ParameterHelperTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $view;
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $config;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $userManager;
 
 	protected function setUp() {
 		parent::setUp();
@@ -51,14 +56,34 @@ class ParameterHelperTest extends TestCase {
 		$activityManager->registerExtension(function() use ($activityLanguage) {
 			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
+		$this->userManager = $this->getMock('OCP\IUserManager');
+		$this->userManager->expects($this->any())
+			->method('get')
+			->willReturnMap([
+				['user1', $this->getUserMockDisplayName('user1', 'User One')],
+				['user2', $this->getUserMockDisplayName('user1', 'User Two')],
+			]);
+
 		/** @var \OC\Files\View $view */
 		$this->parameterHelper = new \OCA\Activity\ParameterHelper(
 			$activityManager,
+			$this->userManager,
 			$view,
 			$this->config,
 			$activityLanguage,
 			'test'
 		);
+	}
+
+	protected function getUserMockDisplayName($uid, $displayName) {
+		$mock = $this->getMock('OCP\IUser');
+		$mock->expects($this->any())
+			->method('getUID')
+			->willReturn($uid);
+		$mock->expects($this->any())
+			->method('getDisplayName')
+			->willReturn($displayName);
+		return $mock;
 	}
 
 	protected function tearDown() {
