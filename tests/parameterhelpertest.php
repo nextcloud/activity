@@ -62,6 +62,7 @@ class ParameterHelperTest extends TestCase {
 			->willReturnMap([
 				['user1', $this->getUserMockDisplayName('user1', 'User One')],
 				['user2', $this->getUserMockDisplayName('user1', 'User Two')],
+				['user<HTML>', $this->getUserMockDisplayName('user<HTML>', 'User <HTML>')],
 			]);
 
 		/** @var \OC\Files\View $view */
@@ -136,12 +137,13 @@ class ParameterHelperTest extends TestCase {
 				'<strong>UserA</strong>',
 				'<strong>/foo/bar.file</strong>',
 			)),
-			array(array('UserA', '/foo/bar.file'), array(0 => 'username'), true, true, array(
-				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
+			array(array('user1', '/foo/bar.file'), array(0 => 'username'), true, true, array(
+				'<div class="avatar" data-user="user1"></div><strong>User One</strong>',
 				'<strong>/foo/bar.file</strong>',
 			)),
-			array(array('U<ser>A', '/foo/bar.file'), array(0 => 'username'), true, true, array(
-				'<div class="avatar" data-user="U&lt;ser&gt;A"></div><strong>U&lt;ser&gt;A</strong>',
+			// Test HTML escape
+			array(array('user<HTML>', '/foo/bar.file'), array(0 => 'username'), true, true, array(
+				'<div class="avatar" data-user="user&lt;HTML&gt;"></div><strong>User &lt;HTML&gt;</strong>',
 				'<strong>/foo/bar.file</strong>',
 			)),
 			array(array('', '/foo/bar.file'), array(0 => 'username'), true, true, array(
@@ -153,12 +155,12 @@ class ParameterHelperTest extends TestCase {
 				'/foo/bar.file',
 			)),
 
-			array(array('UserA', '/foo/bar.file'), array(0 => 'username', 1 => 'file'), true, true, array(
-				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
+			array(array('user1', '/foo/bar.file'), array(0 => 'username', 1 => 'file'), true, true, array(
+				'<div class="avatar" data-user="user1"></div><strong>User One</strong>',
 				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
 			)),
-			array(array('UserA', '/tmp/test'), array(0 => 'username', 1 => 'file'), true, true, array(
-				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
+			array(array('user1', '/tmp/test'), array(0 => 'username', 1 => 'file'), true, true, array(
+				'<div class="avatar" data-user="user1"></div><strong>User One</strong>',
 				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ftmp%2Ftest" title="in tmp">test</a>',
 			), '/test/files/tmp/test'),
 
