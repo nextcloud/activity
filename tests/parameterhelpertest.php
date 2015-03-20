@@ -33,7 +33,12 @@ class ParameterHelperTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $view;
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $config;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $userManager;
 
 	protected function setUp() {
 		parent::setUp();
@@ -51,14 +56,35 @@ class ParameterHelperTest extends TestCase {
 		$activityManager->registerExtension(function() use ($activityLanguage) {
 			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
+		$this->userManager = $this->getMock('OCP\IUserManager');
+		$this->userManager->expects($this->any())
+			->method('get')
+			->willReturnMap([
+				['user1', $this->getUserMockDisplayName('user1', 'User One')],
+				['user2', $this->getUserMockDisplayName('user1', 'User Two')],
+				['user<HTML>', $this->getUserMockDisplayName('user<HTML>', 'User <HTML>')],
+			]);
+
 		/** @var \OC\Files\View $view */
 		$this->parameterHelper = new \OCA\Activity\ParameterHelper(
 			$activityManager,
+			$this->userManager,
 			$view,
 			$this->config,
 			$activityLanguage,
 			'test'
 		);
+	}
+
+	protected function getUserMockDisplayName($uid, $displayName) {
+		$mock = $this->getMock('OCP\IUser');
+		$mock->expects($this->any())
+			->method('getUID')
+			->willReturn($uid);
+		$mock->expects($this->any())
+			->method('getDisplayName')
+			->willReturn($displayName);
+		return $mock;
 	}
 
 	protected function tearDown() {
@@ -111,12 +137,13 @@ class ParameterHelperTest extends TestCase {
 				'<strong>UserA</strong>',
 				'<strong>/foo/bar.file</strong>',
 			)),
-			array(array('UserA', '/foo/bar.file'), array(0 => 'username'), true, true, array(
-				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
+			array(array('user1', '/foo/bar.file'), array(0 => 'username'), true, true, array(
+				'<div class="avatar" data-user="user1"></div><strong>User One</strong>',
 				'<strong>/foo/bar.file</strong>',
 			)),
-			array(array('U<ser>A', '/foo/bar.file'), array(0 => 'username'), true, true, array(
-				'<div class="avatar" data-user="U&lt;ser&gt;A"></div><strong>U&lt;ser&gt;A</strong>',
+			// Test HTML escape
+			array(array('user<HTML>', '/foo/bar.file'), array(0 => 'username'), true, true, array(
+				'<div class="avatar" data-user="user&lt;HTML&gt;"></div><strong>User &lt;HTML&gt;</strong>',
 				'<strong>/foo/bar.file</strong>',
 			)),
 			array(array('', '/foo/bar.file'), array(0 => 'username'), true, true, array(
@@ -128,12 +155,12 @@ class ParameterHelperTest extends TestCase {
 				'/foo/bar.file',
 			)),
 
-			array(array('UserA', '/foo/bar.file'), array(0 => 'username', 1 => 'file'), true, true, array(
-				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
+			array(array('user1', '/foo/bar.file'), array(0 => 'username', 1 => 'file'), true, true, array(
+				'<div class="avatar" data-user="user1"></div><strong>User One</strong>',
 				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
 			)),
-			array(array('UserA', '/tmp/test'), array(0 => 'username', 1 => 'file'), true, true, array(
-				'<div class="avatar" data-user="UserA"></div><strong>UserA</strong>',
+			array(array('user1', '/tmp/test'), array(0 => 'username', 1 => 'file'), true, true, array(
+				'<div class="avatar" data-user="user1"></div><strong>User One</strong>',
 				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ftmp%2Ftest" title="in tmp">test</a>',
 			), '/test/files/tmp/test'),
 
@@ -173,6 +200,8 @@ class ParameterHelperTest extends TestCase {
 			array(array(), 'file', true, true, null, ''),
 			array(array('A/B.txt', 'C/D.txt'), 'file', true, false, null, (string) $en->t('%s and %s', ['B.txt', 'D.txt'])),
 			array(array('A/B.txt', 'C/D.txt'), 'file', true, false, $de, (string) $de->t('%s and %s', ['B.txt', 'D.txt'])),
+			array(array('user1', 'user2'), 'username', true, false, null, (string) $en->t('%s and %s', ['User One', 'User Two'])),
+			array(array('user1', 'user2'), 'username', true, false, $de, (string) $de->t('%s and %s', ['User One', 'User Two'])),
 			array(array('A/B.txt', 'C/D.txt'), '', true, false, null, (string) $en->t('%s and %s', ['A/B.txt', 'C/D.txt'])),
 			array(array('A/B.txt', 'C/D.txt'), '', true, false, $de, (string) $de->t('%s and %s', ['A/B.txt', 'C/D.txt'])),
 		);
