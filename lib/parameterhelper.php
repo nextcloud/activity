@@ -131,13 +131,8 @@ class ParameterHelper {
 	public function prepareArrayParameter($params, $paramType, $stripPath, $highlightParams) {
 		$parameterList = $plainParameterList = array();
 		foreach ($params as $parameter) {
-			if ($paramType === 'file') {
-				$parameterList[] = $this->prepareFileParam($parameter, $stripPath, $highlightParams);
-				$plainParameterList[] = $this->prepareFileParam($parameter, false, false);
-			} else {
-				$parameterList[] = $this->prepareParam($parameter, $highlightParams);
-				$plainParameterList[] = $this->prepareParam($parameter, false);
-			}
+			$parameterList[] = $this->prepareStringParameter($parameter, $paramType, $stripPath, $highlightParams);
+			$plainParameterList[] = $this->prepareStringParameter($parameter, $paramType, false, false);
 		}
 		return $this->joinParameterList($parameterList, $plainParameterList, $highlightParams);
 	}
