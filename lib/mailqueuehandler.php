@@ -25,6 +25,8 @@ namespace OCA\Activity;
 
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
+use OCP\IUser;
+use OCP\IUserManager;
 use OCP\Mail\IMailer;
 use OCP\Util;
 
@@ -63,15 +65,18 @@ class MailQueueHandler {
 	 * @param IDBConnection $connection
 	 * @param DataHelper $dataHelper
 	 * @param IMailer $mailer
+	 * @param IUserManager $userManager
 	 */
 	public function __construct(IDateTimeFormatter $dateFormatter,
 								IDBConnection $connection,
 								DataHelper $dataHelper,
-								IMailer $mailer) {
+								IMailer $mailer,
+								IUserManager $userManager) {
 		$this->dateFormatter = $dateFormatter;
 		$this->connection = $connection;
 		$this->dataHelper = $dataHelper;
 		$this->mailer = $mailer;
+		$this->userManager = $userManager;
 	}
 
 	/**
@@ -185,15 +190,20 @@ class MailQueueHandler {
 	/**
 	 * Send a notification to one user
 	 *
-	 * @param string $user Username of the recipient
+	 * @param string $userName Username of the recipient
 	 * @param string $email Email address of the recipient
 	 * @param string $lang Selected language of the recipient
 	 * @param string $timezone Selected timezone of the recipient
 	 * @param array $mailData Notification data we send to the user
 	 */
-	public function sendEmailToUser($user, $email, $lang, $timezone, $mailData) {
+	public function sendEmailToUser($userName, $email, $lang, $timezone, $mailData) {
+		$user = $this->userManager->get($userName);
+		if (!$user instanceof IUser) {
+			return;
+		}
+
 		$l = $this->getLanguage($lang);
-		$this->dataHelper->setUser($user);
+		$this->dataHelper->setUser($userName);
 		$this->dataHelper->setL10n($l);
 
 		$activityList = array();
@@ -213,7 +223,7 @@ class MailQueueHandler {
 		}
 
 		$alttext = new \OCP\Template('activity', 'email.notification', '');
-		$alttext->assign('username', \OCP\User::getDisplayName($user));
+		$alttext->assign('username', $user->getDisplayName());
 		$alttext->assign('timeframe', $this->getLangForApproximatedTimeFrame($mailData[0]['amq_timestamp']));
 		$alttext->assign('activities', $activityList);
 		$alttext->assign('owncloud_installation', \OC_Helper::makeURLAbsolute('/'));
@@ -221,7 +231,7 @@ class MailQueueHandler {
 		$emailText = $alttext->fetchPage();
 
 		$message = $this->mailer->createMessage();
-		$message->setTo([$email => \OCP\User::getDisplayName($user)]);
+		$message->setTo([$email => $user->getDisplayName()]);
 		$message->setSubject((string) $l->t('Activity notification'));
 		$message->setPlainBody($emailText);
 		$message->setFrom([$this->getSenderData('email') => $this->getSenderData('name')]);

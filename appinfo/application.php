@@ -118,7 +118,8 @@ class Application extends App {
 				$server->getDateTimeFormatter(),
 				$server->getDatabaseConnection(),
 				$c->query('DataHelper'),
-				$server->getMailer()
+				$server->getMailer(),
+				$server->getUserManager()
 			);
 		});
 
