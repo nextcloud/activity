@@ -23,11 +23,13 @@
 
 namespace OCA\Activity;
 
+use OCP\Defaults;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
 use OCP\IUser;
 use OCP\IUserManager;
 use OCP\Mail\IMailer;
+use OCP\Template;
 use OCP\Util;
 
 /**
@@ -159,7 +161,7 @@ class MailQueueHandler {
 			$this->senderAddress = Util::getDefaultEmailAddress('no-reply');
 		}
 		if (empty($this->senderName)) {
-			$defaults = new \OCP\Defaults();
+			$defaults = new Defaults();
 			$this->senderName = $defaults->getName();
 		}
 
@@ -222,7 +224,7 @@ class MailQueueHandler {
 			);
 		}
 
-		$alttext = new \OCP\Template('activity', 'email.notification', '');
+		$alttext = new Template('activity', 'email.notification', '');
 		$alttext->assign('username', $user->getDisplayName());
 		$alttext->assign('timeframe', $this->getLangForApproximatedTimeFrame($mailData[0]['amq_timestamp']));
 		$alttext->assign('activities', $activityList);
