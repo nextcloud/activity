@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "Aktivitás",
     "Personal activity feed for %s" : "Személyes aktivitásom hírcsatornája a %s szolgáltatáson",
+    "Your feed URL is invalid" : "A hírcsatorna URL érvénytelen",
     "Your settings have been updated." : "Beállításait sikeresen frissítettük.",
     "Activity notification" : "Aktivitási értesítés",
     "All Activities" : "Minden tevékenység",
