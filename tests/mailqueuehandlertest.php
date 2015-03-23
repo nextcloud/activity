@@ -32,6 +32,9 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $mailer;
 
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $message;
+
 	/** @var \OCP\IUserManager */
 	protected $oldUserManager;
 
@@ -56,7 +59,13 @@ class MailQueueHandlerTest extends TestCase {
 		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 154));
 		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 155));
 
-		$this->mailer = $this->getMock('\OCA\Activity\MockUtilSendMail');
+		$this->message = $this->getMockBuilder('\OC\Mail\Message')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->mailer = $this->getMock('\OCP\Mail\IMailer');
+		$this->mailer->expects($this->any())
+			->method('createMessage')
+			->willReturn($this->message);
 		$this->mailQueueHandler = new MailQueueHandler(
 			$this->getMock('\OCP\IDateTimeFormatter'),
 			\OC::$server->getDatabaseConnection(),
@@ -142,17 +151,19 @@ class MailQueueHandlerTest extends TestCase {
 		$userDisplayName = 'user two';
 		$email = $user . '@localhost';
 
-		$this->mailer->expects($this->any())
-			->method('sendMail')
-			->with(
-				$email,
-				$userDisplayName,
-				$this->anything(),
-				$this->stringContains($userDisplayName),
-				$this->anything(),
-				$this->anything()
-			)
-			->willReturn(null);
+		$this->mailer->expects($this->once())
+			->method('send')
+			->with($this->message);
+
+		$this->message->expects($this->once())
+			->method('setTo')
+			->with([$email => $userDisplayName]);
+		$this->message->expects($this->once())
+			->method('setSubject');
+		$this->message->expects($this->once())
+			->method('setPlainBody');
+		$this->message->expects($this->once())
+			->method('setFrom');
 
 		$userObject = $this->getMock('OCP\IUser');
 		$userObject->expects($this->any())

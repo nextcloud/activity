@@ -25,6 +25,7 @@ namespace OCA\Activity;
 
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
+use OCP\Mail\IMailer;
 use OCP\Util;
 
 /**
@@ -52,7 +53,7 @@ class MailQueueHandler {
 	/** @var IDBConnection */
 	protected $connection;
 
-	/** @var MockUtilSendMail */
+	/** @var IMailer */
 	protected $mailer;
 
 	/**
@@ -61,12 +62,12 @@ class MailQueueHandler {
 	 * @param IDateTimeFormatter $dateFormatter
 	 * @param IDBConnection $connection
 	 * @param DataHelper $dataHelper
-	 * @param MockUtilSendMail $mailer
+	 * @param IMailer $mailer
 	 */
 	public function __construct(IDateTimeFormatter $dateFormatter,
 								IDBConnection $connection,
 								DataHelper $dataHelper,
-								MockUtilSendMail $mailer) {
+								IMailer $mailer) {
 		$this->dateFormatter = $dateFormatter;
 		$this->connection = $connection;
 		$this->dataHelper = $dataHelper;
@@ -219,11 +220,12 @@ class MailQueueHandler {
 		$alttext->assign('overwriteL10N', $l);
 		$emailText = $alttext->fetchPage();
 
-		$this->mailer->sendMail(
-			$email, \OCP\User::getDisplayName($user),
-			(string) $l->t('Activity notification'), $emailText,
-			$this->getSenderData('email'), $this->getSenderData('name')
-		);
+		$message = $this->mailer->createMessage();
+		$message->setTo([$email => \OCP\User::getDisplayName($user)]);
+		$message->setSubject((string) $l->t('Activity notification'));
+		$message->setPlainBody($emailText);
+		$message->setFrom([$this->getSenderData('email') => $this->getSenderData('name')]);
+		$this->mailer->send($message);
 	}
 
 	/**

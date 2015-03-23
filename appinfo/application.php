@@ -118,7 +118,7 @@ class Application extends App {
 				$server->getDateTimeFormatter(),
 				$server->getDatabaseConnection(),
 				$c->query('DataHelper'),
-				new MockUtilSendMail()
+				$server->getMailer()
 			);
 		});
 
