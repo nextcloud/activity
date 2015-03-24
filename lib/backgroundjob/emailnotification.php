@@ -118,13 +118,10 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 		$userTimezones = $this->config->getUserValueForUsers('core', 'timezone', $affectedUsers);
 		$userEmails = $this->config->getUserValueForUsers('settings', 'email', $affectedUsers);
 
-		// Get all items for these users
-		$mailData = $this->mqHandler->getItemsForUsers($affectedUsers, $sendTime);
-
 		// Send Email
 		$default_lang = $this->config->getSystemValue('default_language', 'en');
 		$defaultTimeZone = date_default_timezone_get();
-		foreach ($mailData as $user => $data) {
+		foreach ($affectedUsers as $user) {
 			if (empty($userEmails[$user])) {
 				// The user did not setup an email address
 				// So we will not send an email :(
@@ -134,7 +131,7 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 
 			$language = (!empty($userLanguages[$user])) ? $userLanguages[$user] : $default_lang;
 			$timezone = (!empty($userTimezones[$user])) ? $userTimezones[$user] : $defaultTimeZone;
-			$this->mqHandler->sendEmailToUser($user, $userEmails[$user], $language, $timezone, $data);
+			$this->mqHandler->sendEmailToUser($user, $userEmails[$user], $language, $timezone, $sendTime);
 		}
 
 		// Delete all entries we dealt with

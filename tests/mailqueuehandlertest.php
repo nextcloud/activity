@@ -47,7 +47,8 @@ class MailQueueHandlerTest extends TestCase {
 		$app = $this->getUniqueID('MailQueueHandlerTest');
 		$this->userManager = $this->getMock('OCP\IUserManager');
 
-		$query = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
+		$connection = \OC::$server->getDatabaseConnection();
+		$query = $connection->prepare('INSERT INTO `*PREFIX*activity_mq` '
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 
@@ -67,7 +68,7 @@ class MailQueueHandlerTest extends TestCase {
 			->willReturn($this->message);
 		$this->mailQueueHandler = new MailQueueHandler(
 			$this->getMock('\OCP\IDateTimeFormatter'),
-			\OC::$server->getDatabaseConnection(),
+			$connection,
 			$this->getMockBuilder('\OCA\Activity\DataHelper')
 				->disableOriginalConstructor()
 				->getMock(),
@@ -77,7 +78,7 @@ class MailQueueHandlerTest extends TestCase {
 	}
 
 	protected function tearDown() {
-		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity_mq` WHERE `amq_timestamp` < 200');
+		$query = \OC::$server->getDatabaseConnection()->prepare('DELETE FROM `*PREFIX*activity_mq` WHERE `amq_timestamp` < 500');
 		$query->execute();
 
 		parent::tearDown();
@@ -109,25 +110,41 @@ class MailQueueHandlerTest extends TestCase {
 		$this->assertRemainingMailEntries($untouched, $maxTime, 'after getting the affected users');
 
 		$this->assertEquals($affected, $users);
-
-		$items = $this->mailQueueHandler->getItemsForUsers($users, $maxTime);
-
-		$this->assertSameSize($users, $items, 'Failed asserting that each user has a mail entry');
 		foreach ($users as $user) {
-			$this->assertArrayHasKey($user, $items);
-		}
-		foreach ($untouched as $user) {
-			$this->assertArrayNotHasKey($user, $items);
+			list($data, $skipped) = \Test_Helper::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			$this->assertNotEmpty($data, 'Failed asserting that each user has a mail entry');
+			$this->assertSame(0, $skipped);
 		}
 		$this->assertRemainingMailEntries($untouched, $maxTime, 'after getting the affected items');
 
 		$this->mailQueueHandler->deleteSentItems($users, $maxTime);
 
-		$this->assertEmpty(
-			$this->mailQueueHandler->getItemsForUsers($users, $maxTime),
-			'Failed to assert that all entries for the affected users have been deleted'
-		);
+		foreach ($users as $user) {
+			list($data, $skipped) = \Test_Helper::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			$this->assertEmpty($data, 'Failed to assert that all entries for the affected users have been deleted');
+			$this->assertSame(0, $skipped);
+		}
 		$this->assertRemainingMailEntries($untouched, $maxTime, 'after deleting the affected items');
+	}
+
+	public function testGetItemsForUser() {
+		list($data, $skipped) = \Test_Helper::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200]);
+		$this->assertCount(2, $data, 'Failed to assert the user has 2 entries');
+		$this->assertSame(0, $skipped);
+
+		$connection = \OC::$server->getDatabaseConnection();
+		$query = $connection->prepare('INSERT INTO `*PREFIX*activity_mq` '
+			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
+			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
+
+		$app = $this->getUniqueID('MailQueueHandlerTest');
+		for ($i = 0; $i < 15; $i++) {
+			$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 160 + $i));
+		}
+
+		list($data, $skipped) = \Test_Helper::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200, 5]);
+		$this->assertCount(5, $data, 'Failed to assert the user has 2 entries');
+		$this->assertSame(12, $skipped);
 	}
 
 	public function testSendEmailToUser() {
@@ -163,12 +180,10 @@ class MailQueueHandlerTest extends TestCase {
 
 		$users = $this->mailQueueHandler->getAffectedUsers(1, $maxTime);
 		$this->assertEquals([$user], $users);
-		$items = $this->mailQueueHandler->getItemsForUsers($users, $maxTime);
-		$this->assertArrayHasKey($user, $items);
-		$this->mailQueueHandler->sendEmailToUser($user, $email, 'en', 'UTC', $items[$user]);
+		$this->mailQueueHandler->sendEmailToUser($user, $email, 'en', 'UTC', $maxTime);
 
 		// Invalid user, no object no email
-		$this->mailQueueHandler->sendEmailToUser($user . $user, $email, 'en', 'UTC', $items[$user]);
+		$this->mailQueueHandler->sendEmailToUser($user . $user, $email, 'en', 'UTC', $maxTime);
 	}
 
 	/**
@@ -178,10 +193,13 @@ class MailQueueHandlerTest extends TestCase {
 	 */
 	protected function assertRemainingMailEntries(array $users, $maxTime, $explain) {
 		if (!empty($untouched)) {
-			$this->assertNotEmpty(
-				$this->mailQueueHandler->getItemsForUsers($users, $maxTime),
-				'Failed asserting that the remaining users still have mails in the queue ' . $explain
-			);
+			foreach ($users as $user) {
+				list($data,) = \Test_Helper::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+				$this->assertNotEmpty(
+					$data,
+					'Failed asserting that the remaining user ' . $user. ' still has mails in the queue ' . $explain
+				);
+			}
 		}
 	}
 
