@@ -23,8 +23,13 @@
 
 namespace OCA\Activity;
 
+use OCP\Defaults;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
+use OCP\IUser;
+use OCP\IUserManager;
+use OCP\Mail\IMailer;
+use OCP\Template;
 use OCP\Util;
 
 /**
@@ -52,7 +57,7 @@ class MailQueueHandler {
 	/** @var IDBConnection */
 	protected $connection;
 
-	/** @var MockUtilSendMail */
+	/** @var IMailer */
 	protected $mailer;
 
 	/**
@@ -61,16 +66,19 @@ class MailQueueHandler {
 	 * @param IDateTimeFormatter $dateFormatter
 	 * @param IDBConnection $connection
 	 * @param DataHelper $dataHelper
-	 * @param MockUtilSendMail $mailer
+	 * @param IMailer $mailer
+	 * @param IUserManager $userManager
 	 */
 	public function __construct(IDateTimeFormatter $dateFormatter,
 								IDBConnection $connection,
 								DataHelper $dataHelper,
-								MockUtilSendMail $mailer) {
+								IMailer $mailer,
+								IUserManager $userManager) {
 		$this->dateFormatter = $dateFormatter;
 		$this->connection = $connection;
 		$this->dataHelper = $dataHelper;
 		$this->mailer = $mailer;
+		$this->userManager = $userManager;
 	}
 
 	/**
@@ -153,7 +161,7 @@ class MailQueueHandler {
 			$this->senderAddress = Util::getDefaultEmailAddress('no-reply');
 		}
 		if (empty($this->senderName)) {
-			$defaults = new \OCP\Defaults();
+			$defaults = new Defaults();
 			$this->senderName = $defaults->getName();
 		}
 
@@ -184,15 +192,20 @@ class MailQueueHandler {
 	/**
 	 * Send a notification to one user
 	 *
-	 * @param string $user Username of the recipient
+	 * @param string $userName Username of the recipient
 	 * @param string $email Email address of the recipient
 	 * @param string $lang Selected language of the recipient
 	 * @param string $timezone Selected timezone of the recipient
 	 * @param array $mailData Notification data we send to the user
 	 */
-	public function sendEmailToUser($user, $email, $lang, $timezone, $mailData) {
+	public function sendEmailToUser($userName, $email, $lang, $timezone, $mailData) {
+		$user = $this->userManager->get($userName);
+		if (!$user instanceof IUser) {
+			return;
+		}
+
 		$l = $this->getLanguage($lang);
-		$this->dataHelper->setUser($user);
+		$this->dataHelper->setUser($userName);
 		$this->dataHelper->setL10n($l);
 
 		$activityList = array();
@@ -211,19 +224,20 @@ class MailQueueHandler {
 			);
 		}
 
-		$alttext = new \OCP\Template('activity', 'email.notification', '');
-		$alttext->assign('username', \OCP\User::getDisplayName($user));
+		$alttext = new Template('activity', 'email.notification', '');
+		$alttext->assign('username', $user->getDisplayName());
 		$alttext->assign('timeframe', $this->getLangForApproximatedTimeFrame($mailData[0]['amq_timestamp']));
 		$alttext->assign('activities', $activityList);
 		$alttext->assign('owncloud_installation', \OC_Helper::makeURLAbsolute('/'));
 		$alttext->assign('overwriteL10N', $l);
 		$emailText = $alttext->fetchPage();
 
-		$this->mailer->sendMail(
-			$email, \OCP\User::getDisplayName($user),
-			(string) $l->t('Activity notification'), $emailText,
-			$this->getSenderData('email'), $this->getSenderData('name')
-		);
+		$message = $this->mailer->createMessage();
+		$message->setTo([$email => $user->getDisplayName()]);
+		$message->setSubject((string) $l->t('Activity notification'));
+		$message->setPlainBody($emailText);
+		$message->setFrom([$this->getSenderData('email') => $this->getSenderData('name')]);
+		$this->mailer->send($message);
 	}
 
 	/**

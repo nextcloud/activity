@@ -32,6 +32,9 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $mailer;
 
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $message;
+
 	/** @var \OCP\IUserManager */
 	protected $oldUserManager;
 
@@ -43,7 +46,6 @@ class MailQueueHandlerTest extends TestCase {
 
 		$app = $this->getUniqueID('MailQueueHandlerTest');
 		$this->userManager = $this->getMock('OCP\IUserManager');
-		$this->registerUserManager($this->userManager);
 
 		$query = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
@@ -56,14 +58,21 @@ class MailQueueHandlerTest extends TestCase {
 		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 154));
 		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 155));
 
-		$this->mailer = $this->getMock('\OCA\Activity\MockUtilSendMail');
+		$this->message = $this->getMockBuilder('\OC\Mail\Message')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->mailer = $this->getMock('\OCP\Mail\IMailer');
+		$this->mailer->expects($this->any())
+			->method('createMessage')
+			->willReturn($this->message);
 		$this->mailQueueHandler = new MailQueueHandler(
 			$this->getMock('\OCP\IDateTimeFormatter'),
 			\OC::$server->getDatabaseConnection(),
 			$this->getMockBuilder('\OCA\Activity\DataHelper')
 				->disableOriginalConstructor()
 				->getMock(),
-			$this->mailer
+			$this->mailer,
+			$this->userManager
 		);
 	}
 
@@ -71,22 +80,7 @@ class MailQueueHandlerTest extends TestCase {
 		$query = \OCP\DB::prepare('DELETE FROM `*PREFIX*activity_mq` WHERE `amq_timestamp` < 200');
 		$query->execute();
 
-		$this->restoreUserManager();
 		parent::tearDown();
-	}
-
-	protected function registerUserManager($userManager) {
-		$this->oldUserManager = \OC::$server->getUserManager();
-		\OC::$server->registerService('UserManager', function () use ($userManager) {
-			return $userManager;
-		});
-	}
-
-	protected function restoreUserManager() {
-		$oldUserManager = $this->oldUserManager;
-		\OC::$server->registerService('UserManager', function () use ($oldUserManager) {
-			return $oldUserManager;
-		});
 	}
 
 	public function getAffectedUsersData()
@@ -142,17 +136,19 @@ class MailQueueHandlerTest extends TestCase {
 		$userDisplayName = 'user two';
 		$email = $user . '@localhost';
 
-		$this->mailer->expects($this->any())
-			->method('sendMail')
-			->with(
-				$email,
-				$userDisplayName,
-				$this->anything(),
-				$this->stringContains($userDisplayName),
-				$this->anything(),
-				$this->anything()
-			)
-			->willReturn(null);
+		$this->mailer->expects($this->once())
+			->method('send')
+			->with($this->message);
+
+		$this->message->expects($this->once())
+			->method('setTo')
+			->with([$email => $userDisplayName]);
+		$this->message->expects($this->once())
+			->method('setSubject');
+		$this->message->expects($this->once())
+			->method('setPlainBody');
+		$this->message->expects($this->once())
+			->method('setFrom');
 
 		$userObject = $this->getMock('OCP\IUser');
 		$userObject->expects($this->any())
@@ -160,14 +156,19 @@ class MailQueueHandlerTest extends TestCase {
 			->willReturn($userDisplayName);
 		$this->userManager->expects($this->any())
 			->method('get')
-			->with($user)
-			->willReturn($userObject);
+			->willReturnMap([
+				[$user, $userObject],
+				[$user . $user, null],
+			]);
 
 		$users = $this->mailQueueHandler->getAffectedUsers(1, $maxTime);
 		$this->assertEquals([$user], $users);
 		$items = $this->mailQueueHandler->getItemsForUsers($users, $maxTime);
 		$this->assertArrayHasKey($user, $items);
 		$this->mailQueueHandler->sendEmailToUser($user, $email, 'en', 'UTC', $items[$user]);
+
+		// Invalid user, no object no email
+		$this->mailQueueHandler->sendEmailToUser($user . $user, $email, 'en', 'UTC', $items[$user]);
 	}
 
 	/**
