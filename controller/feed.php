@@ -100,7 +100,7 @@ class Feed extends Controller {
 			$this->helper->setL10n($l);
 			$this->helper->setUser($user);
 
-			$description = $l->t('Personal activity feed for %s', $user);
+			$description = (string) $l->t('Personal activity feed for %s', $user);
 			$activities = $this->data->read($this->helper, $this->settings, 0, self::DEFAULT_PAGE_SIZE, 'all', $user);
 		} catch (\UnexpectedValueException $e) {
 			$l = Util::getL10N('activity');

@@ -44,7 +44,15 @@ class NavigationTest extends TestCase {
 		$activityManager->registerExtension(function() use ($activityLanguage) {
 			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
-		$navigation = new Navigation($activityLanguage, $activityManager, \OC::$server->getURLGenerator(), $constructorActive);
+		$navigation = new Navigation(
+			$activityLanguage,
+			$activityManager,
+			\OC::$server->getURLGenerator(),
+			$this->getMockBuilder('OCA\Activity\UserSettings')->disableOriginalConstructor()->getMock(),
+			'test',
+			'',
+			$constructorActive
+		);
 		$output = $navigation->getTemplate($forceActive)->fetchPage();
 
 		// Get only the template part with the navigation links

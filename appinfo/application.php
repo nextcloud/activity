@@ -132,7 +132,9 @@ class Application extends App {
 			return new Navigation(
 				$c->query('ActivityL10N'),
 				$server->getActivityManager(),
-				$c->query('URLGenerator'),
+				$server->getURLGenerator(),
+				$c->query('UserSettings'),
+				$c->query('CurrentUID'),
 				$rssToken
 			);
 		});
