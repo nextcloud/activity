@@ -137,7 +137,11 @@ class ConsumerTest extends TestCase {
 	 * @param array|false $expected
 	 */
 	public function testRegister($type, $author, $affectedUser, $subject, $expected) {
-		$activityManager = new ActivityManager();
+		$activityManager = new ActivityManager(
+			$this->getMock('OCP\IRequest'),
+			$this->getMock('OCP\IUserSession'),
+			$this->getMock('OCP\IConfig')
+		);
 		$consumer = new Consumer($this->userSettings, $author);
 		$container = $this->getMock('\OCP\AppFramework\IAppContainer');
 		$container->expects($this->any())

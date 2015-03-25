@@ -148,7 +148,11 @@ class ApiTest extends TestCase {
 		\OC_User::setUserId($user);
 		$this->assertEquals($user, \OC_User::getUser());
 
-		$activityManager = new ActivityManager();
+		$activityManager = new ActivityManager(
+			$this->getMock('OCP\IRequest'),
+			$this->getMock('OCP\IUserSession'),
+			$this->getMock('OCP\IConfig')
+		);
 		$activityManager->registerExtension(function() {
 			return new Extension(\OCP\Util::getL10N('activity', 'en'), $this->getMock('\OCP\IURLGenerator'));
 		});

@@ -132,7 +132,11 @@ class DataHelperTest extends TestCase {
 	 */
 	public function testTranslation($text, $params, $stripPath, $highlightParams, $expected) {
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
-		$activityManager = new ActivityManager();
+		$activityManager = new ActivityManager(
+			$this->getMock('OCP\IRequest'),
+			$this->getMock('OCP\IUserSession'),
+			$this->getMock('OCP\IConfig')
+		);
 		$activityManager->registerExtension(function() use ($activityLanguage) {
 			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
@@ -188,7 +192,11 @@ class DataHelperTest extends TestCase {
 	 */
 	public function testTranslationNotActivityApp($text, $params, $stripPath, $highlightParams, $expected) {
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
-		$activityManager = new ActivityManager();
+		$activityManager = new ActivityManager(
+			$this->getMock('OCP\IRequest'),
+			$this->getMock('OCP\IUserSession'),
+			$this->getMock('OCP\IConfig')
+		);
 
 		$dataHelper = new DataHelper(
 			$activityManager,
