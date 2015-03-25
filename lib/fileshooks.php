@@ -291,19 +291,20 @@ class FilesHooks {
 		}
 
 		$selfAction = substr($subject, -5) !== '_self';
+		$app = $type === Files_Sharing::TYPE_SHARED ? 'files_sharing' : 'files';
 		$link = Util::linkToAbsolute('files', 'index.php', array(
 			'dir' => ($isFile) ? dirname($path) : $path,
 		));
 
 		// Add activity to stream
 		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser, 'setting', 'self'))) {
-			$this->activityData->send('files', $subject, $subjectParams, '', array(), $path, $link, $user, $type, $priority);
+			$this->activityData->send($app, $subject, $subjectParams, '', array(), $path, $link, $user, $type, $priority);
 		}
 
 		// Add activity to mail queue
 		if ($emailSetting && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser, 'setting', 'selfemail'))) {
 			$latestSend = time() + $emailSetting;
-			$this->activityData->storeMail('files', $subject, $subjectParams, $user, $type, $latestSend);
+			$this->activityData->storeMail($app, $subject, $subjectParams, $user, $type, $latestSend);
 		}
 	}
 
