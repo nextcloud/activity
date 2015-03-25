@@ -103,6 +103,14 @@ class Application extends App {
 			);
 		});
 
+		$container->registerService('GroupHelperSingleEntries', function(IContainer $c) {
+			return new GroupHelper(
+				$c->query('ServerContainer')->getActivityManager(),
+				$c->query('DataHelper'),
+				false
+			);
+		});
+
 		$container->registerService('Hooks', function(IContainer $c) {
 			return new FilesHooks(
 				$c->query('ActivityData'),
@@ -207,10 +215,10 @@ class Application extends App {
 				$c->query('AppName'),
 				$c->query('Request'),
 				$c->query('ActivityData'),
-				$c->query('GroupHelper'),
+				$c->query('GroupHelperSingleEntries'),
 				$c->query('UserSettings'),
 				$c->query('URLGenerator'),
-				$server->getUserSession(),
+				$server->getActivityManager(),
 				$server->getConfig(),
 				$c->query('CurrentUID')
 			);

@@ -15,12 +15,12 @@ namespace OCA\Activity\Controller;
 use OCA\Activity\Data;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\UserSettings;
+use OCP\Activity\IManager;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
-use OCP\IUserSession;
 use OCP\Util;
 
 class Feed extends Controller {
@@ -38,8 +38,8 @@ class Feed extends Controller {
 	/** @var IURLGenerator */
 	protected $urlGenerator;
 
-	/** @var IUserSession */
-	protected $session;
+	/** @var IManager */
+	protected $activityManager;
 
 	/** @var IConfig */
 	protected $config;
@@ -59,7 +59,7 @@ class Feed extends Controller {
 	 * @param GroupHelper $helper
 	 * @param UserSettings $settings
 	 * @param IURLGenerator $urlGenerator
-	 * @param IUserSession $session
+	 * @param IManager $activityManager
 	 * @param IConfig $config
 	 * @param string $user
 	 */
@@ -69,7 +69,7 @@ class Feed extends Controller {
 								GroupHelper $helper,
 								UserSettings $settings,
 								IURLGenerator $urlGenerator,
-								IUserSession $session,
+								IManager $activityManager,
 								IConfig $config,
 								$user) {
 		parent::__construct($appName, $request);
@@ -77,7 +77,7 @@ class Feed extends Controller {
 		$this->helper = $helper;
 		$this->settings = $settings;
 		$this->urlGenerator = $urlGenerator;
-		$this->session = $session;
+		$this->activityManager = $activityManager;
 		$this->config = $config;
 		$this->user = $user;
 	}
@@ -90,7 +90,7 @@ class Feed extends Controller {
 	 */
 	public function show() {
 		try {
-			$user = $this->getUser();
+			$user = $this->activityManager->getCurrentUserId();
 
 			$userLang = $this->config->getUserValue($user, 'core', 'lang');
 
@@ -133,44 +133,5 @@ class Feed extends Controller {
 		}
 
 		return $response;
-	}
-
-	/**
-	 * Get the user we need to use
-	 *
-	 * Either the user is logged in, or we try to get it from the token
-	 *
-	 * @return string
-	 * @throws \UnexpectedValueException If the token is invalid, does not exist or is not unique
-	 */
-	protected function getUser() {
-		if (!$this->session->isLoggedIn()) {
-			return $this->getUserFromToken();
-		} else {
-			return $this->session->getUser()->getUID();
-		}
-	}
-
-	/**
-	 * Get the user for the token
-	 *
-	 * @return string
-	 * @throws \UnexpectedValueException If the token is invalid, does not exist or is not unique
-	 */
-	protected function getUserFromToken() {
-		$token = (string) $this->request->getParam('token', '');
-		if (strlen($token) !== 30) {
-			throw new \UnexpectedValueException('The token is invalid');
-		}
-
-		$users = $this->config->getUsersForUserValue('activity', 'rsstoken', $token);
-
-		if (sizeof($users) !== 1) {
-			// No unique user found
-			throw new \UnexpectedValueException('The token is invalid');
-		}
-
-		// Token found login as that user
-		return array_shift($users);
 	}
 }
