@@ -31,8 +31,10 @@ style('activity', 'style');
 <?php $_['appNavigation']->printPage(); ?>
 
 <div id="app-content">
-	<div id="no_activities" class="hidden">
-		<div class="body"><?php p($l->t('You will see a list of events here when you start to use your %s.', $theme->getTitle())) ?></div>
+	<div id="emptycontent" class="hidden">
+		<div class="icon-activity"></div>
+		<h2><?php p($l->t('No activity yet')); ?></h2>
+		<p><?php p($l->t('This stream will show events like additions, changes & shares')); ?></p>
 	</div>
 
 	<div id="container" data-activity-filter="<?php p($_['filter']) ?>">
