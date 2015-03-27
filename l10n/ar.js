@@ -10,8 +10,6 @@ OC.L10N.register(
     "Activities by others" : "نشاطات الآخرين",
     "in %s" : "في %s",
     "%s and %s" : "%s و %s",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["","","","","",""],
-    "_%s and %n more_::_%s and %n more_" : ["","","","","",""],
     "Hello %s," : "مرحبا%so ,",
     "You are receiving this email because in the last hour the following things happened at %s" : "لقد تلقيت هذا البريد الإلكتروني لحدوث الأمور التالية في  الساعة الأخيرة  %s",
     "You are receiving this email because in the last day the following things happened at %s" : "لقد تلقيت هذا البريد الإلكتروني  لحدوث الأمور التالية في اليوم الأخير %s",
