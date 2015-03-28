@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "Activitat",
     "Personal activity feed for %s" : "Llista d'activitat personal per a %s",
+    "Your feed URL is invalid" : "La URL de la font no és vàlida",
     "Your settings have been updated." : "La configuració s'ha actualitzat.",
     "Activity notification" : "Notificació d'activitat",
     "All Activities" : "Totes les activitats",

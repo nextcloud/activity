@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "Активност",
     "Personal activity feed for %s" : "Личен поток за активност на %s.",
+    "Your feed URL is invalid" : "Потока е с невалиден адрес",
     "Your settings have been updated." : "Вашите настройки са актуализирани.",
     "Activity notification" : "Известия за активност",
     "All Activities" : "Активност на всички",
