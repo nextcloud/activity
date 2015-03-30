@@ -32,7 +32,6 @@ OC.L10N.register(
     "Weekly" : "hetente",
     "Activity feed" : "Aktivitási hírcsatorna",
     "Enable RSS feed" : "RSS-hírcsatorna engedélyezése",
-    "You will see a list of events here when you start to use your %s." : "Az események itt lesznek láthatóak, miután elkezdte használni a %s szolgáltatást.",
     "No more events to load" : "Nincs több esemény",
     "Files" : "Fájlok"
 },

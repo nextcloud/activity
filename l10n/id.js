@@ -30,7 +30,6 @@ OC.L10N.register(
     "Weekly" : "Setiap minggu",
     "Activity feed" : "Feed aktivitas",
     "Enable RSS feed" : "Aktifkan RSS feed",
-    "You will see a list of events here when you start to use your %s." : "Anda akan melihat daftar peristiwa disini ketika mulai menggunakan %s Anda.",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
     "Files" : "Berkas"
 },

@@ -30,7 +30,6 @@
     "Weekly" : "wöchentlich",
     "Activity feed" : "Feed der Aktivitäten",
     "Enable RSS feed" : "RSS-Feed aktivieren",
-    "You will see a list of events here when you start to use your %s." : "Sie werden hier eine Liste von Ereignissen sehen, sobald Sie Ihre %s nutzen.",
     "No more events to load" : "Keine weiteren Ereignisse zu Laden",
     "Files" : "Dateien"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

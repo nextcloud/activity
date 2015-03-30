@@ -31,7 +31,6 @@ OC.L10N.register(
     "Weekly" : "Katru nedēļu",
     "Activity feed" : "Izmaiņu plūsma",
     "Enable RSS feed" : "Ieslēgt RSS plūsmu",
-    "You will see a list of events here when you start to use your %s." : "Kad sāksi lietot %s, šeit redzēsi sarakstu ar dažādiem notikumiem.",
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "Files" : "Datnes"
 },

@@ -31,7 +31,6 @@ OC.L10N.register(
     "Weekly" : "Astero",
     "Activity feed" : "Jarduera jarioa",
     "Enable RSS feed" : "Gaitu RSS jarioa",
-    "You will see a list of events here when you start to use your %s." : "Gertaeren zerrenda bat ikusiko duzu zure %s erabiltzen hasten zarenean.",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
     "Files" : "Fitxategiak"
 },

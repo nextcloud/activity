@@ -28,7 +28,6 @@
     "Weekly" : "每週",
     "Activity feed" : "動態",
     "Enable RSS feed" : "啟用 RSS feed",
-    "You will see a list of events here when you start to use your %s." : "當您開始使用您的 %s 時候，您將會在這看到事件列表。",
     "No more events to load" : "沒有讀取到更多事件",
     "Files" : "檔案"
 },"pluralForm" :"nplurals=1; plural=0;"

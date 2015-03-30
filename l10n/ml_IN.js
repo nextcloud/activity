@@ -26,7 +26,6 @@ OC.L10N.register(
     "Weekly" : "ആഴ്ച ",
     "Activity feed" : "പ്രവൃത്തികളുടെ ഫീഡ്",
     "Enable RSS feed" : "ആർഎസ്‌എസ് ഫീഡ് പ്രവർത്തനസജ്ജമാക്കുക",
-    "You will see a list of events here when you start to use your %s." : "നിങ്ങൾ നിങ്ങളുടെ %s ഉപയോഗിക്കാൻ  തുടങ്ങി കഴിയുമ്പോൾ കാര്യങ്ങളുടെ ഒരു പട്ടിക കാണാം",
     "No more events to load" : "ലഭ്യമാക്കാൻ ഇനി ചടങ്ങുകളൊന്നുമില്ല",
     "Files" : "ഫയലുകൾ"
 },

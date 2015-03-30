@@ -30,7 +30,6 @@
     "Weekly" : "Tedensko",
     "Activity feed" : "Objava dejavnosti z viri RSS",
     "Enable RSS feed" : "Omogoči vire RSS",
-    "You will see a list of events here when you start to use your %s." : "Tu bo izpisan seznam dogodkov, ko bo %s v uporabi.",
     "No more events to load" : "Ni več dogodkov za nalaganje",
     "Files" : "Datoteke"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"

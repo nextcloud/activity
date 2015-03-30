@@ -26,7 +26,6 @@ OC.L10N.register(
     "Weekly" : "Kvar veke",
     "Activity feed" : "Aktivitetsstraum",
     "Enable RSS feed" : "Skru på RSS-straum",
-    "You will see a list of events here when you start to use your %s." : "Du får sjå ei liste med hendingar her når du byrjar å bruka %s.",
     "No more events to load" : "Inga fleire hendingar å lasta",
     "Files" : "Filer"
 },

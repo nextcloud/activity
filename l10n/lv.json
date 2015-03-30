@@ -29,7 +29,6 @@
     "Weekly" : "Katru nedēļu",
     "Activity feed" : "Izmaiņu plūsma",
     "Enable RSS feed" : "Ieslēgt RSS plūsmu",
-    "You will see a list of events here when you start to use your %s." : "Kad sāksi lietot %s, šeit redzēsi sarakstu ar dažādiem notikumiem.",
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "Files" : "Datnes"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"

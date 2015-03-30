@@ -28,7 +28,6 @@
     "Weekly" : "Iga nädal",
     "Activity feed" : "Toimingute voog",
     "Enable RSS feed" : "Luba RSS voog",
-    "You will see a list of events here when you start to use your %s." : "Siin näed sa sündmuste nimekirja kui sa hakkad %s kasutama.",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
     "Files" : "Failid"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

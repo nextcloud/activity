@@ -32,7 +32,6 @@ OC.L10N.register(
     "Weekly" : "Wöchentlich",
     "Activity feed" : "Feed der Aktivitäten",
     "Enable RSS feed" : "RSS-Feed aktivieren",
-    "You will see a list of events here when you start to use your %s." : "Du wirst hier eine Liste von Ereignissen sehen, sobald Du deine %s nutzt.",
     "No more events to load" : "Keine weiteren Ereignisse zum Laden",
     "Files" : "Dateien"
 },

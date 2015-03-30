@@ -32,7 +32,6 @@ OC.L10N.register(
     "Weekly" : "Еженедельно",
     "Activity feed" : "Лента событий",
     "Enable RSS feed" : "Включить RSS ленту",
-    "You will see a list of events here when you start to use your %s." : "Здесь будет виден список событий, когда вы начнете использовать %s.",
     "No more events to load" : "Больше нет событий для загрузки",
     "Files" : "Файлы"
 },

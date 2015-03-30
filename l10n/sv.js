@@ -30,7 +30,6 @@ OC.L10N.register(
     "Weekly" : "Varje vecka",
     "Activity feed" : "Aktivitetsflöde",
     "Enable RSS feed" : "Aktivera RSS-flöde",
-    "You will see a list of events here when you start to use your %s." : "Du kommer att se en lista utav evenemang här när du börjar använda din %s",
     "No more events to load" : "Inga fler aktiviteter att ladda.",
     "Files" : "Filer"
 },

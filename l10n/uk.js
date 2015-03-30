@@ -32,7 +32,6 @@ OC.L10N.register(
     "Weekly" : "Щотижня",
     "Activity feed" : "Стрічка оновлень",
     "Enable RSS feed" : "Активувати RSS стрічку",
-    "You will see a list of events here when you start to use your %s." : "Тут буде видно список подій, коли ви почнете використовувати %s.",
     "No more events to load" : "Більше немає подій для завантаження",
     "Files" : "Файли"
 },

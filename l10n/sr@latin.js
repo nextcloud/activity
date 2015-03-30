@@ -30,7 +30,6 @@ OC.L10N.register(
     "Weekly" : "nedeljno",
     "Activity feed" : "Lista aktivnosti",
     "Enable RSS feed" : "Omogući RSS ",
-    "You will see a list of events here when you start to use your %s." : "Ovdje će vam se prikazati lista aktivnosti kada počnete da koristite %s.",
     "No more events to load" : "Nema više događaja za učitavanje",
     "Files" : "Fajlovi"
 },

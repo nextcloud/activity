@@ -32,7 +32,6 @@ OC.L10N.register(
     "Weekly" : "Viikottain",
     "Activity feed" : "Toiminnan syöte",
     "Enable RSS feed" : "Käytä RSS-syötettä",
-    "You will see a list of events here when you start to use your %s." : "Näet tapahtumaluettelon täällä, kun aloitat %sin käytön.",
     "No more events to load" : "Ei enempää tapahtumia ladattavaksi",
     "Files" : "Tiedostot"
 },

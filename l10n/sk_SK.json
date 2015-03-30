@@ -30,7 +30,6 @@
     "Weekly" : "Týždenne",
     "Activity feed" : "Prehľad aktivít",
     "Enable RSS feed" : "Povoliť RSS kanál",
-    "You will see a list of events here when you start to use your %s." : "Tu uvidíte zoznam udalostí hneď ako začnete používať svoj %s.",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
     "Files" : "Súbory"
 },"pluralForm" :"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"

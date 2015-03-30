@@ -24,7 +24,6 @@
     "Weekly" : "வாராந்திர",
     "Activity feed" : "நடவடிக்கைகள் ஃபீட்",
     "Enable RSS feed" : "RSS feed 'ஐ இயக்கவும்.",
-    "You will see a list of events here when you start to use your %s." : "நீங்கள் உங்கள் %s பயன்படுத்த தொடங்கும் பொழுது நீங்கள் இங்கே நிகழ்வுகளின் பட்டியலை பார்ப்பீர்கள்.",
     "No more events to load" : "மேலும் வேறு நிகழ்வுகள் இல்லை.",
     "Files" : "கோப்புகள்"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

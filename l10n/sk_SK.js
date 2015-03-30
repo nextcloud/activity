@@ -32,7 +32,6 @@ OC.L10N.register(
     "Weekly" : "Týždenne",
     "Activity feed" : "Prehľad aktivít",
     "Enable RSS feed" : "Povoliť RSS kanál",
-    "You will see a list of events here when you start to use your %s." : "Tu uvidíte zoznam udalostí hneď ako začnete používať svoj %s.",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
     "Files" : "Súbory"
 },

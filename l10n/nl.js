@@ -32,7 +32,6 @@ OC.L10N.register(
     "Weekly" : "Wekelijks",
     "Activity feed" : "Activiteitenkanaal",
     "Enable RSS feed" : "Aanzetten RSS kanaal",
-    "You will see a list of events here when you start to use your %s." : "U ziet hier een lijst met activiteiten als u gebruik gaat maken van uw %s.",
     "No more events to load" : "Geen activiteiten meer om te laden ",
     "Files" : "Bestanden"
 },

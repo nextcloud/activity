@@ -32,7 +32,6 @@ OC.L10N.register(
     "Weekly" : "Setmanalment",
     "Activity feed" : "Llista d'activitat",
     "Enable RSS feed" : "Activa l'alimentació RSS",
-    "You will see a list of events here when you start to use your %s." : "Quan comenceu a usar %s veureu una llista de successos aquí.",
     "No more events to load" : "No hi ha més elements a carregar",
     "Files" : "Fitxers"
 },

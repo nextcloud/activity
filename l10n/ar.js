@@ -26,7 +26,6 @@ OC.L10N.register(
     "Weekly" : "أسبوعي",
     "Activity feed" : "تغذية الأنشطة",
     "Enable RSS feed" : "تمكين التزويد بمقتطفات الأخبار أر أس أس",
-    "You will see a list of events here when you start to use your %s." : "سترى هنا قائمة بالأحداث عندما تقوم بالبدء في استخدام  %s الخاص بك. ",
     "No more events to load" : "لا توجد أي أحداث للتحميل",
     "Files" : "الملفات"
 },

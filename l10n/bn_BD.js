@@ -27,7 +27,6 @@ OC.L10N.register(
     "Weekly" : "সাপ্তাহিক",
     "Activity feed" : "সক্রিয়তা বারতা",
     "Enable RSS feed" : "RSS feed উপযোগী ক኉ন",
-    "You will see a list of events here when you start to use your %s." : "আপনি %s চালু করলে একটি ইভেনট তালিকা দেখতে পাবেন৷",
     "No more events to load" : "লোড করার কোন ইভেন্ট খুঁজে পাওয়া গেল না।",
     "Files" : "ফাইল"
 },

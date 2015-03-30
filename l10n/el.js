@@ -32,7 +32,6 @@ OC.L10N.register(
     "Weekly" : "Εβδομαδιαίως",
     "Activity feed" : "Ροή Δραστηριότητας",
     "Enable RSS feed" : "Ενεργοποίηση ροής RSS",
-    "You will see a list of events here when you start to use your %s." : "Θα δείτε εδώ μια λίστα από συμβάντα όταν ξεκινήσετε να χρησιμοποιείτε το %s σας.",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "Files" : "Αρχεία"
 },

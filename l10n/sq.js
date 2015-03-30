@@ -30,7 +30,6 @@ OC.L10N.register(
     "Weekly" : "Javore",
     "Activity feed" : "Lista e aktiviteteve",
     "Enable RSS feed" : "Aktivizo burimin e RSS",
-    "You will see a list of events here when you start to use your %s." : "Ju do të shikoni një list ngjarjesh kur të filloni të përdorni %s.",
     "No more events to load" : "Nuk ka me aktivitete për t'u ngarkuar.",
     "Files" : "Skedarë"
 },

@@ -32,7 +32,6 @@ OC.L10N.register(
     "Weekly" : "Her hafta",
     "Activity feed" : "Etkinlik beslemesi",
     "Enable RSS feed" : "RSS beslemesini etkinleştir",
-    "You will see a list of events here when you start to use your %s." : "%s kullanmaya başladığınızda burada olayların bir listesini göreceksiniz.",
     "No more events to load" : "Yüklenecek başka olay yok",
     "Files" : "Dosyalar"
 },

@@ -30,7 +30,6 @@ OC.L10N.register(
     "Weekly" : "هفتهگی",
     "Activity feed" : "فید فعالیت",
     "Enable RSS feed" : "فعالسازی فید RSS",
-    "You will see a list of events here when you start to use your %s." : "وقتی که از%s خود استفاده کنید لیستی از وقایع را اینجا مشاهده خواهید کرد.",
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
     "Files" : "فایل ها"
 },

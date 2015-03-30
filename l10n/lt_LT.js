@@ -31,7 +31,6 @@ OC.L10N.register(
     "Weekly" : "Kiekvieną savaitę",
     "Activity feed" : "Veiklos srautas",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
-    "You will see a list of events here when you start to use your %s." : "Matysite įvykių sąrašą kai pradėsite naudoti savo %s.",
     "No more events to load" : "Nėra daugiau įkeltinų įvykių",
     "Files" : "Failai"
 },

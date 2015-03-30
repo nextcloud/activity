@@ -30,7 +30,6 @@
     "Weekly" : "Еженедельно",
     "Activity feed" : "Лента событий",
     "Enable RSS feed" : "Включить RSS ленту",
-    "You will see a list of events here when you start to use your %s." : "Здесь будет виден список событий, когда вы начнете использовать %s.",
     "No more events to load" : "Больше нет событий для загрузки",
     "Files" : "Файлы"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"

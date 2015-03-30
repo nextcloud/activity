@@ -30,7 +30,6 @@ OC.L10N.register(
     "Weekly" : "Septimanal",
     "Activity feed" : "Syndication de activitate",
     "Enable RSS feed" : "Habilita syndication RSS",
-    "You will see a list of events here when you start to use your %s." : "Tu videra un lista de eventos ci quando tu initia usar tu %s.",
     "No more events to load" : "Necun altere eventos de cargar",
     "Files" : "Files"
 },

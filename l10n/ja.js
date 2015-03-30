@@ -32,7 +32,6 @@ OC.L10N.register(
     "Weekly" : "毎週",
     "Activity feed" : "アクティビティフィード",
     "Enable RSS feed" : "RSSフィードを有効にする",
-    "You will see a list of events here when you start to use your %s." : "%s の使用を開始すると、ここでイベントリストを見ることができます。",
     "No more events to load" : "これ以上読み込むイベントはありません",
     "Files" : "ファイル"
 },
