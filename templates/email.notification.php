@@ -21,4 +21,8 @@ foreach ($_['activities'] as $activityData) {
 	print_unescaped($l->t('* %1$s - %2$s', $activityData));
 	p("\n");
 }
+if ($_['skippedCount']) {
+	p($l->n('* and %n more ', '* and %n more ', $_['skippedCount']));
+	p("\n");
+}
 p("\n");

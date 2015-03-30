@@ -39,6 +39,9 @@ use OCP\Util;
  * @package OCA\Activity
  */
 class MailQueueHandler {
+	/** Number of entries we want to list in the email */
+	const ENTRY_LIMIT = 200;
+
 	/** @var array */
 	protected $languages;
 
@@ -109,32 +112,44 @@ class MailQueueHandler {
 	}
 
 	/**
-	 * Get all items for the users we want to send an email to
+	 * Get all items for the user we want to send an email to
 	 *
-	 * @param array $affectedUsers
+	 * @param string $affectedUser
 	 * @param int $maxTime
-	 * @return array Notification data (user => array of rows from the table)
+	 * @param int $maxNumItems
+	 * @return array [data of the first max. 200 entries, total number of entries]
 	 */
-	public function getItemsForUsers($affectedUsers, $maxTime) {
-		$placeholders = implode(',', array_fill(0, sizeof($affectedUsers), '?'));
-		$queryParams = $affectedUsers;
-		array_unshift($queryParams, (int) $maxTime);
-
+	protected function getItemsForUser($affectedUser, $maxTime, $maxNumItems = self::ENTRY_LIMIT) {
 		$query = $this->connection->prepare(
 			'SELECT * '
 			. ' FROM `*PREFIX*activity_mq` '
 			. ' WHERE `amq_timestamp` <= ? '
-			. ' AND `amq_affecteduser` IN (' . $placeholders . ')'
-			. ' ORDER BY `amq_timestamp` ASC'
+			. ' AND `amq_affecteduser` = ? '
+			. ' ORDER BY `amq_timestamp` ASC',
+			$maxNumItems
 		);
-		$query->execute($queryParams);
+		$query->execute([(int) $maxTime, $affectedUser]);
 
-		$userActivityMap = array();
+		$activities = array();
 		while ($row = $query->fetch()) {
-			$userActivityMap[$row['amq_affecteduser']][] = $row;
+			$activities[] = $row;
 		}
 
-		return $userActivityMap;
+		if (isset($activities[$maxNumItems - 1])) {
+			// Reached the limit, run a query to get the actual count.
+			$query = $this->connection->prepare(
+				'SELECT COUNT(*) AS `actual_count`'
+				. ' FROM `*PREFIX*activity_mq` '
+				. ' WHERE `amq_timestamp` <= ? '
+				. ' AND `amq_affecteduser` = ?'
+			);
+			$query->execute([(int) $maxTime, $affectedUser]);
+
+			$row = $query->fetch();
+			return [$activities, $row['actual_count'] - $maxNumItems];
+		} else {
+			return [$activities, 0];
+		}
 	}
 
 	/**
@@ -196,13 +211,15 @@ class MailQueueHandler {
 	 * @param string $email Email address of the recipient
 	 * @param string $lang Selected language of the recipient
 	 * @param string $timezone Selected timezone of the recipient
-	 * @param array $mailData Notification data we send to the user
+	 * @param int $maxTime
 	 */
-	public function sendEmailToUser($userName, $email, $lang, $timezone, $mailData) {
+	public function sendEmailToUser($userName, $email, $lang, $timezone, $maxTime) {
 		$user = $this->userManager->get($userName);
 		if (!$user instanceof IUser) {
 			return;
 		}
+
+		list($mailData, $skippedCount) = $this->getItemsForUser($userName, $maxTime);
 
 		$l = $this->getLanguage($lang);
 		$this->dataHelper->setUser($userName);
@@ -228,6 +245,7 @@ class MailQueueHandler {
 		$alttext->assign('username', $user->getDisplayName());
 		$alttext->assign('timeframe', $this->getLangForApproximatedTimeFrame($mailData[0]['amq_timestamp']));
 		$alttext->assign('activities', $activityList);
+		$alttext->assign('skippedCount', $skippedCount);
 		$alttext->assign('owncloud_installation', \OC_Helper::makeURLAbsolute('/'));
 		$alttext->assign('overwriteL10N', $l);
 		$emailText = $alttext->fetchPage();
