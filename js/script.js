@@ -50,7 +50,13 @@ $(function(){
 							OCActivity.InfinitScrolling.prefill();
 						} else if (OCActivity.Filter.currentPage == 1) {
 							// First page is empty - No activities :(
-							$('#emptycontent').removeClass('hidden');
+							var $emptyContent = $('#emptycontent');
+							$emptyContent.removeClass('hidden');
+							if (OCActivity.Filter.filter == 'all') {
+								$emptyContent.find('p').text(t('activity', 'This stream will show events like additions, changes & shares'));
+							} else {
+								$emptyContent.find('p').text(t('activity', 'There are no events for this filter'));
+							}
 							$('#loading_activities').addClass('hidden');
 						} else {
 							// Page is empty - No more activities :(
