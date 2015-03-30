@@ -19,7 +19,7 @@ $(function(){
 
 			OCActivity.InfinitScrolling.container.animate({ scrollTop: 0 }, 'slow');
 			OCActivity.InfinitScrolling.container.children().remove();
-			$('#no_activities').addClass('hidden');
+			$('#emptycontent').addClass('hidden');
 			$('#no_more_activities').addClass('hidden');
 			$('#loading_activities').removeClass('hidden');
 			OCActivity.InfinitScrolling.ignoreScroll = false;
@@ -50,7 +50,7 @@ $(function(){
 							OCActivity.InfinitScrolling.prefill();
 						} else if (OCActivity.Filter.currentPage == 1) {
 							// First page is empty - No activities :(
-							$('#no_activities').removeClass('hidden');
+							$('#emptycontent').removeClass('hidden');
 							$('#loading_activities').addClass('hidden');
 						} else {
 							// Page is empty - No more activities :(
