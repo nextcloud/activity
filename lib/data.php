@@ -169,18 +169,17 @@ class Data {
 			$limitActivities .= ' AND `user` = ?';
 			$parameters[] = $user;
 		}
-		else if ($filter === 'by') {
+		else if ($filter === 'by' || $filter === 'all' && !$userSettings->getUserSetting($user, 'setting', 'self')) {
 			$limitActivities .= ' AND `user` <> ?';
 			$parameters[] = $user;
 		}
-		else if ($filter !== 'all') {
-			list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
-			if (!is_null($condition)) {
-				$limitActivities .= ' ';
-				$limitActivities .= $condition;
-				if (is_array($params)) {
-					$parameters = array_merge($parameters, $params);
-				}
+
+		list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
+		if (!is_null($condition)) {
+			$limitActivities .= ' ';
+			$limitActivities .= $condition;
+			if (is_array($params)) {
+				$parameters = array_merge($parameters, $params);
 			}
 		}
 

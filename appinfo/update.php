@@ -19,3 +19,10 @@ if (version_compare($installedVersion, '1.2.2', '<')) {
 		\OC::$server->getLogger()->debug('Deleting ' . $numEntries . ' activities with a broken ' . $column . ' value.', ['app' => 'acitivity']);
 	}
 }
+
+if (version_compare($installedVersion, '1.2.2', '<')) {
+	$update = \OCP\DB::prepare('UPDATE `*PREFIX*activity` SET `app` = ? WHERE `type` = ?');
+	$update->execute(array('files_sharing', 'shared'));
+	$update = \OCP\DB::prepare('UPDATE `*PREFIX*activity_mq` SET `amq_appid` = ? WHERE `amq_type` = ?');
+	$update->execute(array('files_sharing', 'shared'));
+}
