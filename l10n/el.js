@@ -3,8 +3,9 @@ OC.L10N.register(
     {
     "Activity" : "Δραστηριότητα",
     "Personal activity feed for %s" : "Προσωπική ροή δραστηριότητας για %s",
-    "Your feed URL is invalid" : "Η διεύθυνση σας δεν είναι έγκυρη",
+    "Your feed URL is invalid" : "Η διεύθυνση δεν είναι έγκυρη",
     "Your settings have been updated." : "Οι ρυθμίσεις σας έχουν ενημερωθεί.",
+    "This stream will show events like additions, changes & shares" : "Σε αυτή την ροή θα εμφανιστούν γενονότα όπως προσθήκες αλλαγές και διαμοιρασμοί",
     "Activity notification" : "Ειδοποίηση δραστηριότητας",
     "All Activities" : "Όλες οι Δραστηριότητες",
     "Activities by you" : "Δραστηριότητες από εσάς",
@@ -32,6 +33,7 @@ OC.L10N.register(
     "Weekly" : "Εβδομαδιαίως",
     "Activity feed" : "Ροή Δραστηριότητας",
     "Enable RSS feed" : "Ενεργοποίηση ροής RSS",
+    "No activity yet" : "Καμία δραστηριότητα μέχρι τώρα.",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "Files" : "Αρχεία"
 },

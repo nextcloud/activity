@@ -32,6 +32,7 @@ OC.L10N.register(
     "Weekly" : "Semanalmente",
     "Activity feed" : "Alimentador de actividad",
     "Enable RSS feed" : "Habilitar fuente RSS",
+    "No activity yet" : "Ninguna actividad aún.",
     "No more events to load" : "No hay más eventos por cargar.",
     "Files" : "Archivos"
 },

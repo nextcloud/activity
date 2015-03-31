@@ -5,6 +5,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Довод личних активности корисника %s",
     "Your feed URL is invalid" : "УРЛ вашег довода није исправан",
     "Your settings have been updated." : "Поставке су ажуриране.",
+    "This stream will show events like additions, changes & shares" : "Овај проток ће показати догађаје као што су додавања, промене или дељења",
     "Activity notification" : "Обавештења о активностима",
     "All Activities" : "Све активности",
     "Activities by you" : "Ваше активности",
@@ -32,6 +33,7 @@ OC.L10N.register(
     "Weekly" : "недељно",
     "Activity feed" : "Довод активности",
     "Enable RSS feed" : "Укључи РСС довод",
+    "No activity yet" : "Још увек нема активности",
     "No more events to load" : "Нема више догађаја за приказ",
     "Files" : "Фајлови"
 },

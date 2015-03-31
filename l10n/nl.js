@@ -5,6 +5,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Persoonlijk activiteitenkanaal voor %s",
     "Your feed URL is invalid" : "Uw feed URL is ongeldig",
     "Your settings have been updated." : "Uw instellingen zijn bijgewerkt",
+    "This stream will show events like additions, changes & shares" : "Deze stream laat gebeurtenissen als toevoegingen, veranderingen en gedeelde bestanden zien",
     "Activity notification" : "Activiteitenmelding",
     "All Activities" : "Alle activiteiten",
     "Activities by you" : "Activiteiten van uzelf",
@@ -32,6 +33,7 @@ OC.L10N.register(
     "Weekly" : "Wekelijks",
     "Activity feed" : "Activiteitenkanaal",
     "Enable RSS feed" : "Aanzetten RSS kanaal",
+    "No activity yet" : "Nog geen activiteit",
     "No more events to load" : "Geen activiteiten meer om te laden ",
     "Files" : "Bestanden"
 },

@@ -5,6 +5,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Personlige aktiviteter for %s ",
     "Your feed URL is invalid" : "Din feed-URL er ugyldg",
     "Your settings have been updated." : "Dine indstillinger er blevet opdateret.",
+    "This stream will show events like additions, changes & shares" : "Dette område vil vise begivenheder som tilføjelser, ændringer & delinger",
     "Activity notification" : "Notifikation om aktivitet",
     "All Activities" : "Alle aktiviteter",
     "Activities by you" : "Dine aktiviteter",
@@ -32,6 +33,7 @@ OC.L10N.register(
     "Weekly" : "Ugentligt",
     "Activity feed" : "Feed med aktiviteter",
     "Enable RSS feed" : "Aktiverer RSS feed",
+    "No activity yet" : "Ingen aktiviteter endnu",
     "No more events to load" : "Der er Ikke flere aktiviteter som kan indlæses",
     "Files" : "Filer"
 },

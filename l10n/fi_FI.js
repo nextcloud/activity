@@ -5,6 +5,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Käyttäjän %s henkilökohtainen toimintasyöte",
     "Your feed URL is invalid" : "Syöteosoitteesi on virheellinen",
     "Your settings have been updated." : "Asetuksesi on päivitetty.",
+    "This stream will show events like additions, changes & shares" : "Tähän luetteloon ilmestyy tapahtumakuvauksia, kuten lisäyksiä, muutoksia ja jakamisia",
     "Activity notification" : "Ilmoitus toiminnasta",
     "All Activities" : "Kaikki toimet",
     "Activities by you" : "Omat toimet",
@@ -32,6 +33,7 @@ OC.L10N.register(
     "Weekly" : "Viikottain",
     "Activity feed" : "Toiminnan syöte",
     "Enable RSS feed" : "Käytä RSS-syötettä",
+    "No activity yet" : "Ei toimia vielä",
     "No more events to load" : "Ei enempää tapahtumia ladattavaksi",
     "Files" : "Tiedostot"
 },

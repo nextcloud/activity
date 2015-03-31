@@ -5,6 +5,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Atividade pessoal de feed para %s",
     "Your feed URL is invalid" : "O seu URL de feed é inválido",
     "Your settings have been updated." : "As suas definições foram atualizadas.",
+    "This stream will show events like additions, changes & shares" : "Este stream irá mostrar eventos como adições, alterações e partilhas",
     "Activity notification" : "Notificação da Atividade",
     "All Activities" : "Todas as Atividades",
     "Activities by you" : "As suas atividades",
@@ -32,6 +33,7 @@ OC.L10N.register(
     "Weekly" : "Semanalmente",
     "Activity feed" : "Atividade de feed",
     "Enable RSS feed" : "Ativar feed RSS",
+    "No activity yet" : "Nenhuma actividade para já",
     "No more events to load" : "Sem mais eventos para carregar",
     "Files" : "Ficheiros"
 },
