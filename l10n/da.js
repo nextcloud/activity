@@ -6,6 +6,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Din feed-URL er ugyldg",
     "Your settings have been updated." : "Dine indstillinger er blevet opdateret.",
     "This stream will show events like additions, changes & shares" : "Dette område vil vise begivenheder som tilføjelser, ændringer & delinger",
+    "There are no events for this filter" : "Der ingen aktiviteter for dette filter",
     "Activity notification" : "Notifikation om aktivitet",
     "All Activities" : "Alle aktiviteter",
     "Activities by you" : "Dine aktiviteter",

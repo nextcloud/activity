@@ -5,6 +5,8 @@ OC.L10N.register(
     "Personal activity feed for %s" : "%s kişisel etkinlik beslemesi",
     "Your feed URL is invalid" : "Besleme adresiniz geçersiz",
     "Your settings have been updated." : "Ayarlarınız güncellendi.",
+    "This stream will show events like additions, changes & shares" : "Bu akım eklemeler, değişiklikler ve paylasimlar gibi etkinlikleri gösterecektir",
+    "There are no events for this filter" : "Bu filtre için herhangi bir etkinlik bulunmamaktadır",
     "Activity notification" : "Etkinlik bildirimi",
     "All Activities" : "Tüm Etkinlikler",
     "Activities by you" : "Sizin etkinlikleriniz",

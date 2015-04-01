@@ -6,6 +6,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Sua URL de alimentação é inválida",
     "Your settings have been updated." : "Suas configurações foram atualizadas.",
     "This stream will show events like additions, changes & shares" : "Este fluxo vai mostrar eventos como aditamentos, alterações e compartilhamentos",
+    "There are no events for this filter" : "Não há eventos para este filtro",
     "Activity notification" : "Notificação de atividade",
     "All Activities" : "Todas as Atividades",
     "Activities by you" : "Atividades por você",

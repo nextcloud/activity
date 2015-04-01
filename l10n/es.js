@@ -5,6 +5,8 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Alimentador de actividad personal para %s",
     "Your feed URL is invalid" : "Su URL de consumo es inválida",
     "Your settings have been updated." : "Sus ajustes han sido actualizados.",
+    "This stream will show events like additions, changes & shares" : "Esta corriente mostrará eventos agregados, modificados y compartidos.",
+    "There are no events for this filter" : "No hay eventos para este filtro",
     "Activity notification" : "Notificación de actividad",
     "All Activities" : "Todas las actividades",
     "Activities by you" : "Sus actividades",
