@@ -22,6 +22,7 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Você está recebendo este e-mail porque no último dia as seguintes coisas aconteceram em %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Você está recebendo este e-mail porque na última semana as seguintes coisas aconteceram em %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* e %n mais","* e %n mais "],
     "Notifications" : "Notificações",
     "Mail" : "EMail",
     "Stream" : "Fluxo",
