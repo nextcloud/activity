@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Activity" : "활동",
     "Personal activity feed for %s" : "%s 님의 개인 활동 피드",
+    "Your feed URL is invalid" : "당신의 피드 주소가 잘못되었습니다.",
     "Your settings have been updated." : "설정이 업데이트 되었습니다.",
     "Activity notification" : "활동 알림",
     "All Activities" : "모든 활동",
@@ -31,6 +32,7 @@ OC.L10N.register(
     "Weekly" : "매주",
     "Activity feed" : "활동 피드",
     "Enable RSS feed" : "RSS 피드 사용",
+    "No activity yet" : "아직 활동 없음",
     "No more events to load" : "더 이상 불러올 이벤트 없음",
     "Files" : "파일"
 },
