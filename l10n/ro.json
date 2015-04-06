@@ -1,7 +1,10 @@
 { "translations": {
     "Activity" : "Activitate",
     "Personal activity feed for %s" : "Activitate recenta personala pentru %s",
+    "Your feed URL is invalid" : "Adresa URL a fluxului e invalidă",
     "Your settings have been updated." : "Setările au fost actualizate",
+    "This stream will show events like additions, changes & shares" : "Acest flux va afișa evenimente ca adăugiri, modificări & partajări",
+    "There are no events for this filter" : "Nu sunt evenimente pentru acest filtru",
     "Activity notification" : "Notificări de activitate",
     "All Activities" : "Toate acțiunile",
     "Activities by you" : "Activitățile tale",
@@ -17,6 +20,7 @@
     "You are receiving this email because in the last day the following things happened at %s" : "Primești acest e-mail deoarece în ultima zi următoarele lucruri s-au întâmplat îla %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Primești acest e-mail deoarece în ultima săptămână următoarele lucruri s-au întâmplat la %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* și %n altele","* și %n altele","* și %n altele"],
     "Notifications" : "Notificări",
     "Mail" : "Mail",
     "Stream" : "Flux",
@@ -29,6 +33,7 @@
     "Weekly" : "Săptămânal",
     "Activity feed" : "Flux de activitate",
     "Enable RSS feed" : "Activați RSS feed",
+    "No activity yet" : "Nici o activitate încă.",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
     "Files" : "Fișiere"
 },"pluralForm" :"nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));"
