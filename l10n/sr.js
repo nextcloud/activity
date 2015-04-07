@@ -22,7 +22,7 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Ову поруку сте добили јер су се у последњих 24 сата следеће ствари десиле на %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Ову поруку сте добили јер су се у последњих недељу дана следеће ствари десиле на %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* и %n више ","* и %n више ","* и %n више "],
+    "_* and %n more _::_* and %n more _" : ["* и још %n","* и још %n","* и још %n"],
     "Notifications" : "Обавештења",
     "Mail" : "Поштом",
     "Stream" : "Записник",
