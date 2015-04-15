@@ -122,8 +122,7 @@ $(function(){
 			});
 
 			$(parentElement).find('.tooltip').tipsy({
-				gravity:	's',
-				fade:		true
+				gravity: 'n'
 			});
 		}
 	};
