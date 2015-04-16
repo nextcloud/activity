@@ -5,6 +5,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Osobisty strumień aktywności dla %s",
     "Your feed URL is invalid" : "Podany adres URL jest nieprawidłowy",
     "Your settings have been updated." : "Twoje ustawienia zostały zaktualizowane",
+    "There are no events for this filter" : "Nie ma zdarzeń dla tych filtrów",
     "Activity notification" : "Powiadomienie o aktywności",
     "All Activities" : "Wszystkie aktywności",
     "Activities by you" : "Twoje aktywności",
@@ -20,6 +21,7 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Otrzymujesz ten email, ponieważ ostatniego dnia zdarzyły się następujące rzeczy w %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Otrzymujesz ten email, ponieważ w ostatnim tygodniu zdarzyły się następujące rzeczy w %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* i %n więcej ","* i %n więcej ","* i %n więcej "],
     "Notifications" : "Powiadomienia",
     "Mail" : "Poczta",
     "Stream" : "Strumień",
@@ -32,6 +34,7 @@ OC.L10N.register(
     "Weekly" : "Cotygodniowo",
     "Activity feed" : "Strumień aktywności",
     "Enable RSS feed" : "Włącz strumień RSS",
+    "No activity yet" : "Brak aktywności.",
     "No more events to load" : "Nie ma już zdarzeń do załadowania",
     "Files" : "Pliki"
 },

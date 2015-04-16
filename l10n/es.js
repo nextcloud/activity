@@ -22,6 +22,7 @@ OC.L10N.register(
     "You are receiving this email because in the last day the following things happened at %s" : "Está recibiendo este mensaje porque durante el último día han pasado las siguientes cosas en %s",
     "You are receiving this email because in the last week the following things happened at %s" : "Está recibiendo este mensaje porque durante la última semana han pasado las siguientes cosas en %s ",
     "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* y %n más","* y %n más"],
     "Notifications" : "Notificaciones",
     "Mail" : "Correo electrónico",
     "Stream" : "Flujo",
@@ -34,7 +35,7 @@ OC.L10N.register(
     "Weekly" : "Semanalmente",
     "Activity feed" : "Alimentador de actividad",
     "Enable RSS feed" : "Habilitar fuente RSS",
-    "No activity yet" : "Ninguna actividad aún.",
+    "No activity yet" : "Ninguna actividad aún",
     "No more events to load" : "No hay más eventos por cargar.",
     "Files" : "Archivos"
 },
