@@ -73,6 +73,9 @@ class MailQueueHandlerTest extends TestCase {
 				->disableOriginalConstructor()
 				->getMock(),
 			$this->mailer,
+			$this->getMockBuilder('\OCP\IURLGenerator')
+				->disableOriginalConstructor()
+				->getMock(),
 			$this->userManager
 		);
 	}

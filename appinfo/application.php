@@ -128,6 +128,7 @@ class Application extends App {
 				$server->getDatabaseConnection(),
 				$c->query('DataHelper'),
 				$server->getMailer(),
+				$server->getURLGenerator(),
 				$server->getUserManager()
 			);
 		});
