@@ -3,11 +3,14 @@ OC.L10N.register(
     {
     "Activity" : "活動",
     "Personal activity feed for %s" : "個人動態 %s",
+    "Your feed URL is invalid" : "您的 Feed URL是無效的",
     "Your settings have been updated." : "您的設定已更新.",
+    "There are no events for this filter" : "在此篩選器下沒有活動",
     "Activity notification" : "活動通知",
     "All Activities" : "所有活動",
     "Activities by you" : "您的活動",
     "Activities by others" : "其他人的活動",
+    "\"remote user\"" : "\"遠端用戶\"",
     "in %s" : "在 %s",
     "%s and %s" : "%s 與 %s",
     ", " : ", ",
@@ -30,6 +33,7 @@ OC.L10N.register(
     "Weekly" : "每週",
     "Activity feed" : "動態",
     "Enable RSS feed" : "啟用 RSS feed",
+    "No activity yet" : "尚無活動",
     "No more events to load" : "沒有讀取到更多事件",
     "Files" : "檔案"
 },
