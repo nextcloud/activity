@@ -3,6 +3,8 @@
     "Personal activity feed for %s" : "\"%s\" の個人アクティビティフィード",
     "Your feed URL is invalid" : "フィードURLが無効です",
     "Your settings have been updated." : "設定を更新しました。",
+    "This stream will show events like additions, changes & shares" : "このタイムラインには、追加、変更、共有が表示されます。",
+    "There are no events for this filter" : "このフィルターで表示されるイベントはありません。",
     "Activity notification" : "アクティビティ通知",
     "All Activities" : "すべてのアクティビティ",
     "Activities by you" : "あなたのアクティビティ",
@@ -18,6 +20,7 @@
     "You are receiving this email because in the last day the following things happened at %s" : "このメールは、最近１日間に %s で以下の事象が発生したことをお知らせするものです。",
     "You are receiving this email because in the last week the following things happened at %s" : "このメールは、最近１週間に %s で以下の事象が発生したことをお知らせするものです。",
     "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* と %n 以上 "],
     "Notifications" : "通知",
     "Mail" : "メール",
     "Stream" : "ストリーム",
@@ -30,6 +33,7 @@
     "Weekly" : "毎週",
     "Activity feed" : "アクティビティフィード",
     "Enable RSS feed" : "RSSフィードを有効にする",
+    "No activity yet" : "活動状況無し。",
     "No more events to load" : "これ以上読み込むイベントはありません",
     "Files" : "ファイル"
 },"pluralForm" :"nplurals=1; plural=0;"
