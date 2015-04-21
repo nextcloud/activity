@@ -90,8 +90,8 @@ class Display {
 			$is_dir = $this->view->is_dir($activity['file']);
 
 			// show a preview image if the file still exists
-			$mimetype = \OC_Helper::getFileNameMimeType($activity['file']);
-			if (!$is_dir && $this->preview->isMimeSupported($mimetype) && $exist) {
+			$mimeType = \OCP\Files::getMimeType($activity['file']);
+			if ($mimeType && !$is_dir && $this->preview->isMimeSupported($mimeType) && $exist) {
 				$tmpl->assign('previewLink', $this->urlGenerator->linkTo('files', 'index.php', array('dir' => dirname($activity['file']))));
 				$tmpl->assign('previewImageLink',
 					$this->urlGenerator->linkToRoute('core_ajax_preview', array(
@@ -102,7 +102,7 @@ class Display {
 				);
 			} else {
 				$tmpl->assign('previewLink', Util::linkTo('files', 'index.php', array('dir' => $activity['file'])));
-				$tmpl->assign('previewImageLink', \OC_Helper::mimetypeIcon($is_dir ? 'dir' : $mimetype));
+				$tmpl->assign('previewImageLink', Template::mimetype_icon($is_dir ? 'dir' : $mimeType));
 				$tmpl->assign('previewLinkIsDir', true);
 			}
 		}

@@ -26,6 +26,7 @@ namespace OCA\Activity;
 use OCP\Defaults;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
+use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserManager;
 use OCP\Mail\IMailer;
@@ -63,6 +64,12 @@ class MailQueueHandler {
 	/** @var IMailer */
 	protected $mailer;
 
+	/** @var IURLGenerator */
+	protected $urlGenerator;
+
+	/** @var IUserManager */
+	protected $userManager;
+
 	/**
 	 * Constructor
 	 *
@@ -70,17 +77,20 @@ class MailQueueHandler {
 	 * @param IDBConnection $connection
 	 * @param DataHelper $dataHelper
 	 * @param IMailer $mailer
+	 * @param IURLGenerator $urlGenerator
 	 * @param IUserManager $userManager
 	 */
 	public function __construct(IDateTimeFormatter $dateFormatter,
 								IDBConnection $connection,
 								DataHelper $dataHelper,
 								IMailer $mailer,
+								IURLGenerator $urlGenerator,
 								IUserManager $userManager) {
 		$this->dateFormatter = $dateFormatter;
 		$this->connection = $connection;
 		$this->dataHelper = $dataHelper;
 		$this->mailer = $mailer;
+		$this->urlGenerator = $urlGenerator;
 		$this->userManager = $userManager;
 	}
 
@@ -246,7 +256,7 @@ class MailQueueHandler {
 		$alttext->assign('timeframe', $this->getLangForApproximatedTimeFrame($mailData[0]['amq_timestamp']));
 		$alttext->assign('activities', $activityList);
 		$alttext->assign('skippedCount', $skippedCount);
-		$alttext->assign('owncloud_installation', \OC_Helper::makeURLAbsolute('/'));
+		$alttext->assign('owncloud_installation', $this->urlGenerator->getAbsoluteURL('/'));
 		$alttext->assign('overwriteL10N', $l);
 		$emailText = $alttext->fetchPage();
 

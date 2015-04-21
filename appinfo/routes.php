@@ -23,8 +23,10 @@
 
 namespace OCA\Activity\AppInfo;
 
+use OCP\API;
+
 // Register an OCS API call
-\OC_API::register(
+API::register(
 	'get',
 	'/cloud/activity',
 	array('OCA\Activity\Api', 'get'),

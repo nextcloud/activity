@@ -35,8 +35,8 @@ class ApiTest extends TestCase {
 
 		$this->originalWEBROOT = \OC::$WEBROOT;
 		\OC::$WEBROOT = '';
-		\OC_User::createUser('activity-api-user1', 'activity-api-user1');
-		\OC_User::createUser('activity-api-user2', 'activity-api-user2');
+		\OC::$server->getUserManager()->createUser('activity-api-user1', 'activity-api-user1');
+		\OC::$server->getUserManager()->createUser('activity-api-user2', 'activity-api-user2');
 
 		$activities = array(
 			array(
@@ -79,20 +79,25 @@ class ApiTest extends TestCase {
 			$this->getMock('\OCP\Activity\IManager')
 		);
 
-		$data->deleteActivities(array(
-			'affecteduser' => 'activity-api-user1',
-		));
-		\OC_User::deleteUser('activity-api-user1');
-		$data->deleteActivities(array(
-			'affecteduser' => 'activity-api-user2',
-		));
-		\OC_User::deleteUser('activity-api-user2');
+		$this->deleteUser($data, 'activity-api-user1');
+		$this->deleteUser($data, 'activity-api-user2');
+
 		$data->deleteActivities(array(
 			'app' => 'app1',
 		));
 		\OC::$WEBROOT = $this->originalWEBROOT;
 
 		parent::tearDown();
+	}
+
+	protected function deleteUser(Data $data, $uid) {
+		$data->deleteActivities(array(
+			'affecteduser' => $uid,
+		));
+		$user = \OC::$server->getUserManager()->get($uid);
+		if ($user) {
+			$user->delete();
+		}
 	}
 
 	public function getData() {
@@ -146,7 +151,9 @@ class ApiTest extends TestCase {
 		$_GET['start'] = $start;
 		$_GET['count'] = $count;
 		\OC_User::setUserId($user);
-		$this->assertEquals($user, \OC_User::getUser());
+		$sessionUser = \OC::$server->getUserSession()->getUser();
+		$this->assertInstanceOf('OCP\IUser', $sessionUser);
+		$this->assertEquals($user, $sessionUser->getUID());
 
 		$activityManager = new ActivityManager(
 			$this->getMock('OCP\IRequest'),
