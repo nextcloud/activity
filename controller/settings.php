@@ -193,7 +193,7 @@ class Settings extends Controller {
 				$conflicts = $this->config->getUsersForUserValue('activity', 'rsstoken', $token);
 			}
 
-			$tokenUrl = $this->urlGenerator->linkToRouteAbsolute('activity.rss', array('token' => $token)); //FIXME
+			$tokenUrl = $this->urlGenerator->linkToRouteAbsolute('activity.Feed.show', ['token' => $token]);
 		}
 
 		$this->config->setUserValue($this->user, 'activity', 'rsstoken', $token);
