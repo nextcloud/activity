@@ -267,7 +267,7 @@ class SettingsTest extends TestCase {
 			->willReturn('012345678901234567890123456789');
 		$this->urlGenerator->expects($this->any())
 			->method('linkToRouteAbsolute')
-			->with('activity.rss', ['token' => '012345678901234567890123456789'])
+			->with('activity.Feed.show', ['token' => '012345678901234567890123456789'])
 			->willReturn('feedurl::012345678901234567890123456789');
 		$this->config->expects($this->once())
 			->method('setUserValue')
