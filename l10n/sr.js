@@ -35,7 +35,7 @@ OC.L10N.register(
     "Weekly" : "недељно",
     "Activity feed" : "Довод активности",
     "Enable RSS feed" : "Укључи РСС довод",
-    "No activity yet" : "Још увек нема активности",
+    "No activity yet" : "Још нема активности",
     "No more events to load" : "Нема више догађаја за приказ",
     "Files" : "Фајлови"
 },
