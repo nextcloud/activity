@@ -84,12 +84,12 @@ class UserSettings {
 	 * @return bool|int
 	 */
 	public function getDefaultSetting($method, $type) {
-		if ($method == 'setting') {
-			if ($type == 'batchtime') {
+		if ($method === 'setting') {
+			if ($type === 'batchtime') {
 				return 3600;
-			} else if ($type == 'self') {
+			} else if ($type === 'self') {
 				return true;
-			} else if ($type == 'selfemail') {
+			} else if ($type === 'selfemail') {
 				return false;
 			}
 		}
@@ -143,7 +143,7 @@ class UserSettings {
 		}
 
 		// Get the batch time setting from the database
-		if ($method == 'email') {
+		if ($method === 'email') {
 			$potentialUsers = $this->config->getUserValueForUsers('activity', 'notify_setting_batchtime', array_keys($filteredUsers));
 			foreach ($potentialUsers as $user => $value) {
 				$filteredUsers[$user] = $value;
@@ -158,7 +158,7 @@ class UserSettings {
 		// we add all users that didn't set the preference yet.
 		if ($this->getDefaultSetting($method, $type)) {
 			foreach ($users as $user) {
-				if ($method == 'stream') {
+				if ($method === 'stream') {
 					$filteredUsers[$user] = true;
 				} else {
 					$filteredUsers[$user] = $this->getDefaultSetting('setting', 'batchtime');

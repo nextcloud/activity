@@ -11,7 +11,7 @@
 		<?php if ($navigationGroup !== 'apps'): ?><ul><?php endif; ?>
 
 		<?php foreach ($navigationEntries as $navigation) { ?>
-		<li<?php if ($_['activeNavigation'] == $navigation['id']): ?> class="active"<?php endif; ?>>
+		<li<?php if ($_['activeNavigation'] === $navigation['id']): ?> class="active"<?php endif; ?>>
 			<a data-navigation="<?php p($navigation['id']) ?>" href="<?php p($navigation['url']) ?>">
 				<?php p($navigation['name']) ?>
 			</a>

@@ -205,7 +205,7 @@ class ParameterHelper {
 		if ($is_dir) {
 			$fileLink = Util::linkTo('files', 'index.php', array('dir' => $param));
 		} else {
-			$parentDir = (substr_count($param, '/') == 1) ? '/' : dirname($param);
+			$parentDir = (substr_count($param, '/') === 1) ? '/' : dirname($param);
 			$fileName = basename($param);
 			$fileLink = Util::linkTo('files', 'index.php', array(
 				'dir' => $parentDir,
@@ -281,11 +281,11 @@ class ParameterHelper {
 		$count = sizeof($parameterList);
 		$lastItem = array_pop($parameterList);
 
-		if ($count == 1)
+		if ($count === 1)
 		{
 			return $lastItem;
 		}
-		else if ($count == 2)
+		else if ($count === 2)
 		{
 			$firstItem = array_pop($parameterList);
 			return $this->l->t('%s and %s', array($firstItem, $lastItem));

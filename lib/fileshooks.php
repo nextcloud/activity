@@ -155,7 +155,7 @@ class FilesHooks {
 	protected function getSourcePathAndOwner($path) {
 		$uidOwner = Filesystem::getOwner($path);
 
-		if ($uidOwner != $this->currentUser) {
+		if ($uidOwner !== $this->currentUser) {
 			Filesystem::initMountPoints($uidOwner);
 			$info = Filesystem::getFileInfo($path);
 			$ownerView = new View('/'.$uidOwner.'/files');
@@ -172,9 +172,9 @@ class FilesHooks {
 	public function share($params) {
 		if ($params['itemType'] === 'file' || $params['itemType'] === 'folder') {
 			if ($params['shareWith']) {
-				if ($params['shareType'] == Share::SHARE_TYPE_USER) {
+				if ((int) $params['shareType'] === Share::SHARE_TYPE_USER) {
 					$this->shareFileOrFolderWithUser($params);
-				} else if ($params['shareType'] == Share::SHARE_TYPE_GROUP) {
+				} else if ((int) $params['shareType'] === Share::SHARE_TYPE_GROUP) {
 					$this->shareFileOrFolderWithGroup($params);
 				}
 			} else {
