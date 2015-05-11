@@ -11,7 +11,7 @@ $(function(){
 				return;
 			}
 
-			this.navigation.find('a[data-navigation=' + this.filter + ']').removeClass('active');
+			this.navigation.find('a[data-navigation=' + this.filter + ']').parent().removeClass('active');
 			this.currentPage = 0;
 
 			this.filter = filter;
@@ -24,7 +24,7 @@ $(function(){
 			$('#loading_activities').removeClass('hidden');
 			OCActivity.InfinitScrolling.ignoreScroll = false;
 
-			this.navigation.find('a[data-navigation=' + filter + ']').addClass('active');
+			this.navigation.find('a[data-navigation=' + filter + ']').parent().addClass('active');
 
 			OCActivity.InfinitScrolling.prefill();
 		}
