@@ -290,7 +290,7 @@ class FilesHooks {
 			return;
 		}
 
-		$selfAction = substr($subject, -5) !== '_self';
+		$selfAction = $user === $this->currentUser;
 		$app = $type === Files_Sharing::TYPE_SHARED ? 'files_sharing' : 'files';
 		$link = Util::linkToAbsolute('files', 'index.php', array(
 			'dir' => ($isFile) ? dirname($path) : $path,
