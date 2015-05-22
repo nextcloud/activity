@@ -15,30 +15,26 @@ style('activity', 'settings');
 	<table class="grid activitysettings">
 		<thead>
 			<tr>
-				<th class="small activity_select_group" data-select-group="email">
-					<?php p($l->t('Mail')); ?>
+				<?php foreach ($_['methods'] as $method => $methodName): ?>
+				<th class="small activity_select_group" data-select-group="<?php p($method) ?>">
+					<?php p($methodName); ?>
 				</th>
-				<th class="small activity_select_group" data-select-group="stream">
-					<?php p($l->t('Stream')); ?>
-				</th>
+				<?php endforeach; ?>
 				<th><span id="activity_notifications_msg" class="msg"></span></th>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach ($_['activities'] as $activity => $data): ?>
 			<tr>
+				<?php foreach ($_['methods'] as $method => $methodName): ?>
 				<td class="small">
-					<label for="<?php p($activity) ?>_email">
-						<input type="checkbox" id="<?php p($activity) ?>_email" name="<?php p($activity) ?>_email"
-							value="1" class="<?php p($activity) ?> email" <?php if ($data['email']): ?> checked="checked"<?php endif; ?> />
+					<label for="<?php p($activity) ?>_<?php p($method) ?>">
+						<input type="checkbox" id="<?php p($activity) ?>_<?php p($method) ?>" name="<?php p($activity) ?>_<?php p($method) ?>"
+							value="1" class="<?php p($activity) ?> <?php p($method) ?>"
+							<?php if ($data[$method]): ?> checked="checked"<?php endif; ?> />
 					</label>
 				</td>
-				<td class="small">
-					<label for="<?php p($activity) ?>_stream">
-						<input type="checkbox" id="<?php p($activity) ?>_stream" name="<?php p($activity) ?>_stream"
-							value="1" class="<?php p($activity) ?> stream" <?php if ($data['stream']): ?> checked="checked"<?php endif; ?> />
-					</label>
-				</td>
+				<?php endforeach; ?>
 				<td class="activity_select_group" data-select-group="<?php p($activity) ?>">
 					<?php echo $data['desc']; ?>
 				</td>

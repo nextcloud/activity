@@ -25,6 +25,7 @@ namespace OCA\Activity\Controller;
 
 use OCA\Activity\Data;
 use OCA\Activity\UserSettings;
+use OCP\Activity\IExtension;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\TemplateResponse;
@@ -159,8 +160,8 @@ class Settings extends Controller {
 		foreach ($types as $type => $desc) {
 			$activities[$type] = array(
 				'desc'		=> $desc,
-				'email'		=> $this->userSettings->getUserSetting($this->user, 'email', $type),
-				'stream'	=> $this->userSettings->getUserSetting($this->user, 'stream', $type),
+				IExtension::METHOD_MAIL		=> $this->userSettings->getUserSetting($this->user, 'email', $type),
+				IExtension::METHOD_STREAM	=> $this->userSettings->getUserSetting($this->user, 'stream', $type),
 			);
 		}
 
@@ -180,6 +181,11 @@ class Settings extends Controller {
 
 			'notify_self'		=> $this->userSettings->getUserSetting($this->user, 'setting', 'self'),
 			'notify_selfemail'	=> $this->userSettings->getUserSetting($this->user, 'setting', 'selfemail'),
+
+			'methods'			=> [
+				IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
+				IExtension::METHOD_STREAM => $this->l10n->t('Stream'),
+			],
 		], '');
 	}
 
