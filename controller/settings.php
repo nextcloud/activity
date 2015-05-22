@@ -158,10 +158,18 @@ class Settings extends Controller {
 
 		$activities = array();
 		foreach ($types as $type => $desc) {
+			if (is_array($desc)) {
+				$methods = isset($desc['methods']) ? $desc['methods'] : [IExtension::METHOD_STREAM, IExtension::METHOD_MAIL];
+				$desc = isset($desc['desc']) ? $desc['desc'] : '';
+			} else {
+				$methods = [IExtension::METHOD_STREAM, IExtension::METHOD_MAIL];
+			}
+
 			$activities[$type] = array(
 				'desc'		=> $desc,
 				IExtension::METHOD_MAIL		=> $this->userSettings->getUserSetting($this->user, 'email', $type),
 				IExtension::METHOD_STREAM	=> $this->userSettings->getUserSetting($this->user, 'stream', $type),
+				'methods'	=> $methods,
 			);
 		}
 

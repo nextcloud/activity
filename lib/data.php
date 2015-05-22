@@ -48,6 +48,10 @@ class Data {
 	/**
 	 * @param \OCP\IL10N $l
 	 * @return array Array "stringID of the type" => "translated string description for the setting"
+	 * 				or Array "stringID of the type" => [
+	 * 					'desc' => "translated string description for the setting"
+	 * 					'methods' => [\OCP\Activity\IExtension::METHOD_*],
+	 * 				]
 	 */
 	public function getNotificationTypes(\OCP\IL10N $l) {
 		if (isset($this->notificationTypes[$l->getLanguageCode()])) {
