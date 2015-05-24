@@ -4,7 +4,7 @@ OC.L10N.register(
     "Activity" : "Aktivitet",
     "Personal activity feed for %s" : "Personlig aktivitetsstrøm for %s",
     "Your feed URL is invalid" : "Kilde URL er ikke gyldig",
-    "Your settings have been updated." : "Dine innstillinger har blit oppdatert",
+    "Your settings have been updated." : "Innstillingene dine ble oppdatert.",
     "This stream will show events like additions, changes & shares" : "Denne strømmen vil vise hendelser som f.eks. innlegging, endring og deling",
     "There are no events for this filter" : "Der er ingen hendelser for dette filteret",
     "Activity notification" : "Varsel om aktivitet",
