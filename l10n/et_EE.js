@@ -30,6 +30,7 @@ OC.L10N.register(
     "Weekly" : "Iga nädal",
     "Activity feed" : "Toimingute voog",
     "Enable RSS feed" : "Luba RSS voog",
+    "No activity yet" : "Tegevusi veel pole.",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
     "Files" : "Failid"
 },

@@ -2,8 +2,8 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Activitat",
-    "Personal activity feed for %s" : "Llista d'activitat personal per a %s",
-    "Your feed URL is invalid" : "La URL de la font no és vàlida",
+    "Personal activity feed for %s" : "Canal d'activitat personal per a %s",
+    "Your feed URL is invalid" : "La URL del canal no és vàlida",
     "Your settings have been updated." : "La configuració s'ha actualitzat.",
     "This stream will show events like additions, changes & shares" : "Aquest corrent mostrarà esdeveniments afegits, modificats i compartits.",
     "There are no events for this filter" : "No hi ha esdeveniments en est filtre",
@@ -33,8 +33,8 @@ OC.L10N.register(
     "Hourly" : "Horàriament",
     "Daily" : "Diari",
     "Weekly" : "Setmanalment",
-    "Activity feed" : "Llista d'activitat",
-    "Enable RSS feed" : "Activa l'alimentació RSS",
+    "Activity feed" : "Canal d'activitat",
+    "Enable RSS feed" : "Activa el canal RSS",
     "No activity yet" : "Cap activitat encara",
     "No more events to load" : "No hi ha més elements a carregar",
     "Files" : "Fitxers"
