@@ -5,6 +5,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Osobisty strumień aktywności dla %s",
     "Your feed URL is invalid" : "Podany adres URL jest nieprawidłowy",
     "Your settings have been updated." : "Twoje ustawienia zostały zaktualizowane",
+    "This stream will show events like additions, changes & shares" : "Ta opcja pokazuje takie wydarzenia jak: dodatki, zmiany i udostępnienia",
     "There are no events for this filter" : "Nie ma zdarzeń dla tych filtrów",
     "Activity notification" : "Powiadomienie o aktywności",
     "All Activities" : "Wszystkie aktywności",
