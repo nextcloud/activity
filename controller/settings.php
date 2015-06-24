@@ -109,10 +109,9 @@ class Settings extends Controller {
 		}
 
 		$email_batch_time = 3600;
-		if ($notify_setting_batchtime == UserSettings::EMAIL_SEND_DAILY) {
+		if ($notify_setting_batchtime === UserSettings::EMAIL_SEND_DAILY) {
 			$email_batch_time = 3600 * 24;
-		}
-		if ($notify_setting_batchtime == UserSettings::EMAIL_SEND_WEEKLY) {
+		} else if ($notify_setting_batchtime === UserSettings::EMAIL_SEND_WEEKLY) {
 			$email_batch_time = 3600 * 24 * 7;
 		}
 
@@ -158,9 +157,10 @@ class Settings extends Controller {
 		}
 
 		$settingBatchTime = UserSettings::EMAIL_SEND_HOURLY;
-		if ($this->userSettings->getUserSetting($this->user, 'setting', 'batchtime') == 3600 * 24 * 7) {
+		$currentSetting = (int) $this->userSettings->getUserSetting($this->user, 'setting', 'batchtime');
+		if ($currentSetting === 3600 * 24 * 7) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_WEEKLY;
-		} else if ($this->userSettings->getUserSetting($this->user, 'setting', 'batchtime') == 3600 * 24) {
+		} else if ($currentSetting === 3600 * 24) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_DAILY;
 		}
 
