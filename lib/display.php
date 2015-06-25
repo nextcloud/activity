@@ -88,11 +88,11 @@ class Display {
 			$this->view->chroot('/' . $activity['affecteduser'] . '/files');
 			$exist = $this->view->file_exists($activity['file']);
 			$is_dir = $this->view->is_dir($activity['file']);
+			$tmpl->assign('previewLink', $this->getPreviewLink($activity['file'], $is_dir));
 
 			// show a preview image if the file still exists
 			$mimeType = \OCP\Files::getMimeType($activity['file']);
 			if ($mimeType && !$is_dir && $this->preview->isMimeSupported($mimeType) && $exist) {
-				$tmpl->assign('previewLink', $this->urlGenerator->linkTo('files', 'index.php', array('dir' => dirname($activity['file']))));
 				$tmpl->assign('previewImageLink',
 					$this->urlGenerator->linkToRoute('core_ajax_preview', array(
 						'file' => $activity['file'],
@@ -101,12 +101,30 @@ class Display {
 					))
 				);
 			} else {
-				$tmpl->assign('previewLink', Util::linkTo('files', 'index.php', array('dir' => $activity['file'])));
 				$tmpl->assign('previewImageLink', Template::mimetype_icon($is_dir ? 'dir' : $mimeType));
 				$tmpl->assign('previewLinkIsDir', true);
 			}
 		}
 
 		return $tmpl->fetchPage();
+	}
+
+	/**
+	 * @param string $path
+	 * @param bool $isDir
+	 * @return string
+	 */
+	protected function getPreviewLink($path, $isDir) {
+		if ($isDir) {
+			return $this->urlGenerator->linkTo('files', 'index.php', array('dir' => $path));
+		} else {
+			$parentDir = (substr_count($path, '/') === 1) ? '/' : dirname($path);
+			$fileName = basename($path);
+			return $this->urlGenerator->linkTo('files', 'index.php', array(
+				'dir' => $parentDir,
+				'scrollto' => $fileName,
+			));
+		}
+
 	}
 }
