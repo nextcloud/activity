@@ -305,7 +305,7 @@ class ParameterHelper {
 				'%s and <strong class="tooltip" title="%s">%n more</strong>',
 				'%s and <strong class="tooltip" title="%s">%n more</strong>',
 				$count - 3,
-				array($firstList, $trimmedList));
+				array($firstList, Util::sanitizeHTML($trimmedList)));
 		}
 		return $this->l->n('%s and %n more', '%s and %n more', $count - 3, array($firstList));
 	}
