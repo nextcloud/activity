@@ -23,7 +23,6 @@
 
 namespace OCA\Activity\Controller;
 
-use OC\Files\View;
 use OCA\Activity\Data;
 use OCA\Activity\Display;
 use OCA\Activity\GroupHelper;
