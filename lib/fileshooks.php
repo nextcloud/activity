@@ -27,7 +27,7 @@ use OC\Files\View;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IExtension;
-use OCP\DB;
+use OCP\IDBConnection;
 use OCP\Share;
 use OCP\Util;
 
@@ -50,11 +50,13 @@ class FilesHooks {
 	 *
 	 * @param Data $activityData
 	 * @param UserSettings $userSettings
+	 * @param IDBConnection $connection
 	 * @param string|false $currentUser
 	 */
-	public function __construct(Data $activityData, UserSettings $userSettings, $currentUser) {
+	public function __construct(Data $activityData, UserSettings $userSettings, IDBConnection $connection, $currentUser) {
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
+		$this->connection = $connection;
 		$this->currentUser = $currentUser;
 	}
 
@@ -158,8 +160,10 @@ class FilesHooks {
 		if ($uidOwner !== $this->currentUser) {
 			Filesystem::initMountPoints($uidOwner);
 			$info = Filesystem::getFileInfo($path);
-			$ownerView = new View('/'.$uidOwner.'/files');
-			$path = $ownerView->getPath($info['fileid']);
+			if ($info !== false) {
+				$ownerView = new View('/' . $uidOwner . '/files');
+				$path = $ownerView->getPath((int) $info['fileid']);
+			}
 		}
 
 		return array($path, $uidOwner);
@@ -228,14 +232,9 @@ class FilesHooks {
 
 		// Check when there was a naming conflict and the target is different
 		// for some of the users
-		$query = DB::prepare('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ');
-		$result = $query->execute(array($params['id']));
-		if (DB::isError($result)) {
-			Util::writeLog('OCA\Activity\Hooks::shareFileOrFolderWithGroup', DB::getErrorMessage($result), Util::ERROR);
-		} else {
-			while ($row = $result->fetchRow()) {
-				$affectedUsers[$row['share_with']] = $row['file_target'];
-			}
+		$query = $this->connection->executeQuery('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ', [(int) $params['id']]);
+		while ($row = $query->fetch()) {
+			$affectedUsers[$row['share_with']] = $row['file_target'];
 		}
 
 		foreach ($affectedUsers as $user => $path) {
