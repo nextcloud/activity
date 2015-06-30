@@ -26,7 +26,6 @@ namespace OCA\Activity;
 use \OCP\Activity\IManager;
 use \OCP\IURLGenerator;
 use \OCP\Template;
-use \OCP\Util;
 
 /**
  * Class Navigation
