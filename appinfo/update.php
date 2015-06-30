@@ -1,6 +1,7 @@
 <?php
 
-$installedVersion = \OCP\Config::getAppValue('activity', 'installed_version');
+$installedVersion = \OC::$server->getConfig()->getAppValue('activity', 'installed_version');
+$connection = \OC::$server->getDatabaseConnection();
 
 if (version_compare($installedVersion, '1.2.2', '<')) {
 	$mistakes = [
@@ -11,18 +12,16 @@ if (version_compare($installedVersion, '1.2.2', '<')) {
 
 	foreach ($mistakes as $entry) {
 		list($table, $column) = $entry;
-		$query = \OCP\DB::prepare(
+
+		$numEntries = $connection->executeUpdate(
 			'DELETE FROM `' . $table . '` WHERE `' . $column . "` NOT LIKE '%]' AND `" . $column . "` NOT LIKE '%}'"
 		);
-		$numEntries = $query->execute();
 
 		\OC::$server->getLogger()->debug('Deleting ' . $numEntries . ' activities with a broken ' . $column . ' value.', ['app' => 'acitivity']);
 	}
 }
 
 if (version_compare($installedVersion, '1.2.2', '<')) {
-	$update = \OCP\DB::prepare('UPDATE `*PREFIX*activity` SET `app` = ? WHERE `type` = ?');
-	$update->execute(array('files_sharing', 'shared'));
-	$update = \OCP\DB::prepare('UPDATE `*PREFIX*activity_mq` SET `amq_appid` = ? WHERE `amq_type` = ?');
-	$update->execute(array('files_sharing', 'shared'));
+	$connection->executeUpdate('UPDATE `*PREFIX*activity` SET `app` = ? WHERE `type` = ?', array('files_sharing', 'shared'));
+	$connection->executeUpdate('UPDATE `*PREFIX*activity_mq` SET `amq_appid` = ? WHERE `amq_type` = ?', array('files_sharing', 'shared'));
 }
