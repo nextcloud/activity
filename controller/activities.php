@@ -30,6 +30,7 @@ use OCA\Activity\Navigation;
 use OCA\Activity\UserSettings;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IDateTimeFormatter;
 use OCP\IRequest;
 
 class Activities extends Controller {
@@ -50,6 +51,9 @@ class Activities extends Controller {
 	/** @var \OCA\Activity\UserSettings */
 	protected $settings;
 
+	/** @var IDateTimeFormatter */
+	protected $dateTimeFormatter;
+
 	/** @var string */
 	protected $user;
 
@@ -63,15 +67,17 @@ class Activities extends Controller {
 	 * @param GroupHelper $helper
 	 * @param Navigation $navigation
 	 * @param UserSettings $settings
+	 * @param IDateTimeFormatter $dateTimeFormatter
 	 * @param string $user
 	 */
-	public function __construct($appName, IRequest $request, Data $data, Display $display, GroupHelper $helper, Navigation $navigation, UserSettings $settings, $user) {
+	public function __construct($appName, IRequest $request, Data $data, Display $display, GroupHelper $helper, Navigation $navigation, UserSettings $settings, IDateTimeFormatter $dateTimeFormatter, $user) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
 		$this->display = $display;
 		$this->helper = $helper;
 		$this->navigation = $navigation;
 		$this->settings = $settings;
+		$this->dateTimeFormatter = $dateTimeFormatter;
 		$this->user = $user;
 	}
 
@@ -105,6 +111,7 @@ class Activities extends Controller {
 		return new TemplateResponse('activity', 'stream.list', [
 			'activity'		=> $this->data->read($this->helper, $this->settings, $pageOffset * self::DEFAULT_PAGE_SIZE, self::DEFAULT_PAGE_SIZE, $filter),
 			'displayHelper'	=> $this->display,
+			'dateTimeFormatter'	=> $this->dateTimeFormatter,
 		], '');
 	}
 }

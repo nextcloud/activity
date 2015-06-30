@@ -25,13 +25,15 @@
 /** @var $theme OC_Defaults */
 /** @var $_ array */
 /** @var $displayHelper \OCA\Activity\Display */
+/** @var $dateTimeFormatter \OCP\IDateTimeFormatter */
 $displayHelper = $_['displayHelper'];
+$dateTimeFormatter = $_['dateTimeFormatter'];
 
 $lastDate = null;
 foreach ($_['activity'] as $event) {
 	// group by date
 	// TODO: use more efficient way to group by date (don't group by localized string...)
-	$currentDate = (string)(\OCP\relative_modified_date($event['timestamp'], true));
+	$currentDate = (string)(\OCP\Template::relative_modified_date($event['timestamp'], true));
 
 	// new date group
 	if ($currentDate !== $lastDate) {
@@ -47,7 +49,7 @@ foreach ($_['activity'] as $event) {
 ?>
 <div class="section activity-section group" data-date="<?php p($currentDate) ?>">
 	<h2>
-		<span class="tooltip" title="<?php p(\OCP\Util::formatDate(strip_time($event['timestamp']), true)) ?>">
+		<span class="tooltip" title="<?php p($dateTimeFormatter->formatDate($event['timestamp'])) ?>">
 			<?php p(ucfirst($currentDate)) ?>
 		</span>
 	</h2>

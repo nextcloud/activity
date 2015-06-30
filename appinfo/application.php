@@ -199,6 +199,9 @@ class Application extends App {
 		});
 
 		$container->registerService('ActivitiesController', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
 			return new Activities(
 				$c->query('AppName'),
 				$c->query('Request'),
@@ -207,6 +210,7 @@ class Application extends App {
 				$c->query('GroupHelper'),
 				$c->query('Navigation'),
 				$c->query('UserSettings'),
+				$server->getDateTimeFormatter(),
 				$c->query('CurrentUID')
 			);
 		});
