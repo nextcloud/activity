@@ -42,6 +42,9 @@ class FilesHooks {
 	/** @var \OCA\Activity\UserSettings */
 	protected $userSettings;
 
+	/** @var \OCP\IDBConnection */
+	protected $connection;
+
 	/** @var string|false */
 	protected $currentUser;
 
