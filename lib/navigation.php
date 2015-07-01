@@ -42,6 +42,9 @@ class Navigation {
 	/** @var \OCP\IURLGenerator */
 	protected $URLGenerator;
 
+	/** @var UserSettings */
+	protected $userSettings;
+
 	/** @var string */
 	protected $active;
 
