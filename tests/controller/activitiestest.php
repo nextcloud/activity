@@ -15,7 +15,6 @@ namespace OCA\Activity\Tests\Controller;
 
 use OCA\Activity\Controller\Activities;
 use OCA\Activity\Tests\TestCase;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\Template;
 
 class ActivitiesTest extends TestCase {
@@ -39,6 +38,15 @@ class ActivitiesTest extends TestCase {
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $dateTimeFormatter;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $preview;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $urlGenerator;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $view;
 
 	/** @var \OCP\IL10N */
 	protected $l10n;
@@ -67,6 +75,15 @@ class ActivitiesTest extends TestCase {
 		$this->dateTimeFormatter = $this->getMockBuilder('OCP\IDateTimeFormatter')
 			->disableOriginalConstructor()
 			->getMock();
+		$this->preview = $this->getMockBuilder('OCP\IPreview')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->urlGenerator = $this->getMockBuilder('OCP\IURLGenerator')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->view = $this->getMockBuilder('OC\Files\View')
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->request = $this->getMock('OCP\IRequest');
 
@@ -79,6 +96,9 @@ class ActivitiesTest extends TestCase {
 			$this->navigation,
 			$this->userSettings,
 			$this->dateTimeFormatter,
+			$this->preview,
+			$this->urlGenerator,
+			$this->view,
 			'test'
 		);
 	}
@@ -93,7 +113,7 @@ class ActivitiesTest extends TestCase {
 			->willReturn($template);
 
 		$templateResponse = $this->controller->showList();
-		$this->assertTrue($templateResponse instanceof TemplateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
+		$this->assertInstanceOf('\OCP\AppFramework\Http\TemplateResponse', $templateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
 		$renderedResponse = $templateResponse->render();
 		$this->assertNotEmpty($renderedResponse);
@@ -104,10 +124,10 @@ class ActivitiesTest extends TestCase {
 			->method('read')
 			->willReturn([]);
 
-		$templateResponse = $this->controller->fetch(1);
-		$this->assertTrue($templateResponse instanceof TemplateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
+		/** @var \OCP\AppFramework\Http\JSONResponse $response */
+		$response = $this->controller->fetch(1);
+		$this->assertInstanceOf('\OCP\AppFramework\Http\JSONResponse', $response, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
-		$renderedResponse = $templateResponse->render();
-		$this->assertEmpty($renderedResponse);
+		$this->assertSame([], $response->getData());
 	}
 }

@@ -189,10 +189,10 @@ class Application extends App {
 
 			return new Settings(
 				$c->query('AppName'),
-				$c->query('Request'),
+				$server->getRequest(),
 				$server->getConfig(),
 				$server->getSecureRandom()->getMediumStrengthGenerator(),
-				$c->query('URLGenerator'),
+				$server->getURLGenerator(),
 				$c->query('ActivityData'),
 				$c->query('UserSettings'),
 				$c->query('ActivityL10N'),
@@ -206,13 +206,16 @@ class Application extends App {
 
 			return new Activities(
 				$c->query('AppName'),
-				$c->query('Request'),
+				$server->getRequest(),
 				$c->query('ActivityData'),
 				$c->query('DisplayHelper'),
 				$c->query('GroupHelper'),
 				$c->query('Navigation'),
 				$c->query('UserSettings'),
 				$server->getDateTimeFormatter(),
+				$server->getPreviewManager(),
+				$server->getURLGenerator(),
+				new View(''),
 				$c->query('CurrentUID')
 			);
 		});
@@ -223,7 +226,7 @@ class Application extends App {
 
 			return new Feed(
 				$c->query('AppName'),
-				$c->query('Request'),
+				$server->getRequest(),
 				$c->query('ActivityData'),
 				$c->query('GroupHelperSingleEntries'),
 				$c->query('UserSettings'),

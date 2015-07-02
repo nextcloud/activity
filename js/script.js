@@ -33,6 +33,7 @@ $(function(){
 	OCActivity.InfinitScrolling = {
 		ignoreScroll: false,
 		container: $('#container'),
+		lastDateGroup: null,
 		content: $('#app-content'),
 
 		prefill: function () {
@@ -43,26 +44,7 @@ $(function(){
 					OC.generateUrl('/apps/activity/activities/fetch'),
 					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
 					function (data) {
-						if (data.trim().length) {
-							OCActivity.InfinitScrolling.appendContent(data);
-
-							// Continue prefill
-							OCActivity.InfinitScrolling.prefill();
-						} else if (OCActivity.Filter.currentPage == 1) {
-							// First page is empty - No activities :(
-							var $emptyContent = $('#emptycontent');
-							$emptyContent.removeClass('hidden');
-							if (OCActivity.Filter.filter == 'all') {
-								$emptyContent.find('p').text(t('activity', 'This stream will show events like additions, changes & shares'));
-							} else {
-								$emptyContent.find('p').text(t('activity', 'There are no events for this filter'));
-							}
-							$('#loading_activities').addClass('hidden');
-						} else {
-							// Page is empty - No more activities :(
-							$('#no_more_activities').removeClass('hidden');
-							$('#loading_activities').addClass('hidden');
-						}
+						OCActivity.InfinitScrolling.handleActivitiesCallback(data);
 					}
 				);
 			}
@@ -78,41 +60,101 @@ $(function(){
 					OC.generateUrl('/apps/activity/activities/fetch'),
 					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
 					function (data) {
-						OCActivity.InfinitScrolling.appendContent(data);
-						OCActivity.InfinitScrolling.ignoreScroll = false;
-
-						if (!data.trim().length) {
-							// Page is empty - No more activities :(
-							$('#no_more_activities').removeClass('hidden');
-							$('#loading_activities').addClass('hidden');
-							OCActivity.InfinitScrolling.ignoreScroll = true;
-						}
+						OCActivity.InfinitScrolling.handleActivitiesCallback(data);
 					}
 				);
 			}
 		},
 
-		appendContent: function (content) {
-			var firstNewGroup = $(content).first(),
-				lastGroup = this.container.children().last();
+		handleActivitiesCallback: function (data) {
+			var $numActivities = data.length;
 
-			// Is the first new container the same as the last one?
-			if (lastGroup && lastGroup.data('date') === firstNewGroup.data('date')) {
-				var appendedBoxes = firstNewGroup.find('.box'),
-					lastBoxContainer = lastGroup.find('.boxcontainer');
+			if ($numActivities > 0) {
+				for (var i = 0; i < data.length; i++) {
+					var $activity = data[i];
+					this.appendActivityToContainer($activity);
+				}
 
-				// Move content into the last box
-				OCActivity.InfinitScrolling.processElements(appendedBoxes);
-				lastBoxContainer.append(appendedBoxes);
+				// Continue prefill
+				this.prefill();
 
-				// Remove the first box, so it's not duplicated
-				content = $(content).slice(1);
+			} else if (OCActivity.Filter.currentPage == 1) {
+				// First page is empty - No activities :(
+				var $emptyContent = $('#emptycontent');
+				$emptyContent.removeClass('hidden');
+				if (OCActivity.Filter.filter == 'all') {
+					$emptyContent.find('p').text(t('activity', 'This stream will show events like additions, changes & shares'));
+				} else {
+					$emptyContent.find('p').text(t('activity', 'There are no events for this filter'));
+				}
+				$('#loading_activities').addClass('hidden');
+
 			} else {
-				content = $(content);
+				// Page is empty - No more activities :(
+				$('#no_more_activities').removeClass('hidden');
+				$('#loading_activities').addClass('hidden');
+			}
+		},
+
+		appendActivityToContainer: function ($activity) {
+			this.makeSureDateGroupExists($activity.relativeTimestamp, $activity.readableTimestamp);
+			this.addActivity($activity);
+		},
+
+		makeSureDateGroupExists: function($relativeTimestamp, $readableTimestamp) {
+			var $lastGroup = this.container.children().last();
+
+			if ($lastGroup.data('date') !== $relativeTimestamp) {
+				var $content = '<div class="section activity-section group" data-date="' + escapeHTML($relativeTimestamp) + '">' + "\n"
+					+'	<h2>'+"\n"
+					+'		<span class="tooltip" title="' + escapeHTML($readableTimestamp) + '">' + escapeHTML($relativeTimestamp) + '</span>' + "\n"
+					+'	</h2>' + "\n"
+					+'	<div class="boxcontainer">' + "\n"
+					+'	</div>' + "\n"
+					+'</div>';
+				$content = $($content);
+				OCActivity.InfinitScrolling.processElements($content);
+				this.container.append($content);
+				this.lastDateGroup = $content;
+			}
+		},
+
+		addActivity: function($activity) {
+			var $content = ''
+				+ '<div class="box">' + "\n"
+				+ '	<div class="messagecontainer">' + "\n"
+
+				+ '		<div class="activity-icon ' + (($activity.typeicon) ? escapeHTML($activity.typeicon) + ' svg' : '') + '"></div>' + "\n"
+
+				+ '		<div class="activitysubject">' + "\n"
+				+ (($activity.link) ? '			<a href="' + $activity.link + '">' + "\n" : '')
+				+ '			' + $activity.subjectformatted.markup.trimmed + "\n"
+				+ (($activity.link) ? '			</a>' + "\n" : '')
+				+ '		</div>' + "\n"
+
+				+'		<span class="activitytime tooltip" title="' + escapeHTML($activity.readableDateTimestamp) + '">' + "\n"
+				+ '			' + escapeHTML($activity.relativeDateTimestamp) + "\n"
+				+'		</span>' + "\n";
+
+			if ($activity.message) {
+				$content += '<div class="activitymessage">' + "\n"
+					+ $activity.messageformatted.markup.trimmed + "\n"
+					+'</div>' + "\n";
 			}
 
-			OCActivity.InfinitScrolling.processElements(content);
-			this.container.append(content);
+			if ($activity.preview) {
+				var $preview = $activity.preview;
+				$content += (($preview.link) ? '<a href="' + $preview.link + '">' + "\n" : '')
+					+ '<img class="preview' + (($preview.isMimeTypeIcon) ? ' preview-mimetype-icon' : '') + '" src="' + $preview.source + '" alt=""/>' + "\n"
+					+ (($preview.link) ? '</a>' + "\n" : '')
+			}
+
+			$content += '	</div>' + "\n"
+				+'</div>';
+
+			$content = $($content);
+			OCActivity.InfinitScrolling.processElements($content);
+			this.lastDateGroup.append($content);
 		},
 
 		processElements: function (parentElement) {

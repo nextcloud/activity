@@ -97,7 +97,8 @@
 	margin-left: 24px;
 }
 
-.box .preview-dir-icon{
+.box .preview-dir-icon,
+.box .preview-mimetype-icon {
 	width: 32px;
 	height: 32px;
 }
