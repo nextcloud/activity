@@ -33,6 +33,7 @@ class ParameterHelperTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $view;
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $contactsManager;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $config;
@@ -82,12 +83,16 @@ class ParameterHelperTest extends TestCase {
 				['user2', $this->getUserMockDisplayName('user1', 'User Two')],
 				['user<HTML>', $this->getUserMockDisplayName('user<HTML>', 'User <HTML>')],
 			]);
+		$this->contactsManager = $this->getMockBuilder('OCP\Contacts\IManager')
+			->disableOriginalConstructor()
+			->getMock();
 
 		/** @var \OC\Files\View $view */
 		$this->parameterHelper = new \OCA\Activity\ParameterHelper(
 			$activityManager,
 			$this->userManager,
 			$urlGenerator,
+			$this->contactsManager,
 			$view,
 			$this->config,
 			$activityLanguage,
@@ -115,12 +120,18 @@ class ParameterHelperTest extends TestCase {
 		return array(
 			array(array(), false, false, false, array()),
 
+			/**
+			 * No type
+			 */
 			// No file position: no path strip
 			array(array('/foo/bar.file'), array(), false, false, array('/foo/bar.file')),
 			array(array('/foo/bar.file'), array(), true, false, array('/foo/bar.file')),
 			array(array('/foo/bar.file'), array(), false, true, array('<strong>/foo/bar.file</strong>')),
 			array(array('/foo/bar.file'), array(), true, true, array('<strong>/foo/bar.file</strong>')),
 
+			/**
+			 * File
+			 */
 			// Valid file position
 			array(array('/foo/bar.file'), array(0 => 'file'), true, false, array('bar.file')),
 			array(array('/folder/trailingslash/fromsharing/'), array(0 => 'file'), true, false, array('fromsharing')),
@@ -156,6 +167,10 @@ class ParameterHelperTest extends TestCase {
 				'<strong>UserA</strong>',
 				'<strong>/foo/bar.file</strong>',
 			)),
+
+			/**
+			 * User
+			 */
 			array(array('user1', '/foo/bar.file'), array(0 => 'username'), true, true, array(
 				'<div class="avatar" data-user="user1"></div><strong>User One</strong>',
 				'<strong>/foo/bar.file</strong>',
@@ -187,18 +202,73 @@ class ParameterHelperTest extends TestCase {
 			array(array('NoAvatar'), array(0 => 'username'), true, true, array(
 				'<strong>NoAvatar</strong>',
 			), '', false),
+
+			/**
+			 * Federated Cloud ID
+			 */
+			array(array('username@localhost'), array(0 => 'federated_cloud_id'), false, true, array(
+				'<strong class="tooltip" title="username@localhost">username@localhost</strong>',
+			)),
+			array(array('username@localhost'), array(0 => 'federated_cloud_id'), false, false, array(
+				'username@localhost',
+			)),
+			array(array('username@localhost'), array(0 => 'federated_cloud_id'), true, true, array(
+				'<strong class="tooltip" title="username@localhost">username@…</strong>',
+			)),
+			array(array('username@localhost'), array(0 => 'federated_cloud_id'), true, false, array(
+				'username@…',
+			)),
+			array(array('username@localhost'), array(0 => 'federated_cloud_id'), false, true, array(
+				'<strong class="tooltip" title="username@localhost">User @ Localhost</strong>',
+			), '', true, true),
+			array(array('username@localhost'), array(0 => 'federated_cloud_id'), false, false, array(
+				'User @ Localhost',
+			), '', true, true),
+			array(array('username@localhost'), array(0 => 'federated_cloud_id'), true, true, array(
+				'<strong class="tooltip" title="username@localhost">User @ Localhost</strong>',
+			), '', true, true),
+			array(array('username@localhost'), array(0 => 'federated_cloud_id'), true, false, array(
+				'User @ Localhost',
+			), '', true, true),
 		);
 	}
 
 	/**
 	 * @dataProvider prepareParametersData
 	 */
-	public function testPrepareParameters($params, $filePosition, $stripPath, $highlightParams, $expected, $createFolder = '', $enableAvatars = true) {
+	public function testPrepareParameters($params, $filePosition, $stripPath, $highlightParams, $expected, $createFolder = '', $enableAvatars = true, $contactsResult = false) {
 		if ($createFolder !== '') {
 			$this->view->expects($this->any())
 				->method('is_dir')
 				->with($createFolder)
 				->willReturn(true);
+		}
+
+		if ($contactsResult) {
+			$this->contactsManager->expects($this->any())
+				->method('search')
+				->with($params[0], ['CLOUD'])
+				->willReturn([
+					[
+						'FN' => 'User3 @ Localhost',
+					],
+					[
+						'FN' => 'User2 @ Localhost',
+						'CLOUD' => [
+						],
+					],
+					[
+						'FN' => 'User @ Localhost',
+						'CLOUD' => [
+							'username@localhost',
+						],
+					],
+				]);
+		} else {
+			$this->contactsManager->expects($this->any())
+				->method('search')
+				->with($this->anything(), ['CLOUD'])
+				->willReturn([]);
 		}
 
 		$this->config->expects($this->any())

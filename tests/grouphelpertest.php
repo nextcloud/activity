@@ -584,6 +584,7 @@ class GroupHelperTest extends TestCase {
 					$activityManager,
 					$this->getMockBuilder('OCP\IUserManager')->disableOriginalConstructor()->getMock(),
 					$this->getMockBuilder('\OCP\IURLGenerator')->disableOriginalConstructor()->getMock(),
+					$this->getMockBuilder('OCP\Contacts\IManager')->disableOriginalConstructor()->getMock(),
 					$this->getMockBuilder('OC\Files\View')->disableOriginalConstructor()->getMock(),
 					$this->getMockBuilder('OCP\IConfig')->disableOriginalConstructor()->getMock(),
 					$activityLanguage,

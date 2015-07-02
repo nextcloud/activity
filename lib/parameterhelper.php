@@ -23,7 +23,9 @@
 
 namespace OCA\Activity;
 
+use OC\Share\Helper;
 use OCP\Activity\IManager;
+use OCP\Contacts\IManager as IContactsManager;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
@@ -37,6 +39,9 @@ class ParameterHelper {
 
 	/** @var \OCP\IUserManager */
 	protected $userManager;
+
+	/** @var \OCP\Contacts\IManager */
+	protected $contactsManager;
 
 	/** @var \OC\Files\View */
 	protected $rootView;
@@ -57,6 +62,7 @@ class ParameterHelper {
 	 * @param IManager $activityManager
 	 * @param IUserManager $userManager
 	 * @param IURLGenerator $urlGenerator
+	 * @param IContactsManager $contactsManager
 	 * @param View $rootView
 	 * @param IConfig $config
 	 * @param IL10N $l
@@ -65,6 +71,7 @@ class ParameterHelper {
 	public function __construct(IManager $activityManager,
 								IUserManager $userManager,
 								IURLGenerator $urlGenerator,
+								IContactsManager $contactsManager,
 								View $rootView,
 								IConfig $config,
 								IL10N $l,
@@ -72,6 +79,7 @@ class ParameterHelper {
 		$this->activityManager = $activityManager;
 		$this->userManager = $userManager;
 		$this->urlGenerator = $urlGenerator;
+		$this->contactsManager = $contactsManager;
 		$this->rootView = $rootView;
 		$this->config = $config;
 		$this->l = $l;
@@ -126,6 +134,8 @@ class ParameterHelper {
 			return $this->prepareFileParam($param, $stripPath, $highlightParams);
 		} else if ($paramType === 'username') {
 			return $this->prepareUserParam($param, $highlightParams);
+		} else if ($paramType === 'federated_cloud_id') {
+			return $this->prepareFederatedCloudIDParam($param, $stripPath, $highlightParams);
 		}
 		return $this->prepareParam($param, $highlightParams);
 	}
@@ -186,14 +196,56 @@ class ParameterHelper {
 		$user = $this->userManager->get($param);
 		$displayName = ($user) ? $user->getDisplayName() : $param;
 		$param = Util::sanitizeHTML($param);
-		$displayName = Util::sanitizeHTML($displayName);
 
 		if ($highlightParams) {
 			$avatarPlaceholder = '';
 			if ($this->config->getSystemValue('enable_avatars', true)) {
 				$avatarPlaceholder = '<div class="avatar" data-user="' . $param . '"></div>';
 			}
-			return $avatarPlaceholder . '<strong>' . $displayName . '</strong>';
+			return $avatarPlaceholder . '<strong>' . Util::sanitizeHTML($displayName) . '</strong>';
+		} else {
+			return $displayName;
+		}
+	}
+
+	/**
+	 * Prepares a federated cloud id parameter for usage
+	 *
+	 * Search in contacts and do not output the remote in html
+	 *
+	 * @param string $federatedCloudId
+	 * @param bool $stripRemote Shall we remove the remote
+	 * @param bool $highlightParams
+	 * @return string
+	 */
+	protected function prepareFederatedCloudIDParam($federatedCloudId, $stripRemote, $highlightParams) {
+		$displayName = $federatedCloudId;
+		if ($stripRemote) {
+			try {
+				list($user,) = Helper::splitUserRemote($federatedCloudId);
+				$displayName = $user . '@…';
+			} catch (\OC\HintException $e) {}
+		}
+
+		/**
+		 * Try to find the user in the contacts
+		 */
+		$addressBookEntries = $this->contactsManager->search(strtolower($federatedCloudId), ['CLOUD']);
+		foreach ($addressBookEntries as $entry) {
+			if (isset($entry['CLOUD'])) {
+				foreach ($entry['CLOUD'] as $cloudID) {
+					if ($cloudID === strtolower($federatedCloudId)) {
+						$displayName = $entry['FN'];
+						// We got a name, exit the loops
+						break 2;
+					}
+				}
+			}
+		}
+
+		if ($highlightParams) {
+			$title = ' title="' . Util::sanitizeHTML($federatedCloudId) . '"';
+			return '<strong class="tooltip"' . $title . '>' . Util::sanitizeHTML($displayName) . '</strong>';
 		} else {
 			return $displayName;
 		}
