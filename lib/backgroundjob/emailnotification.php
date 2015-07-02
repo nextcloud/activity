@@ -23,6 +23,7 @@
 
 namespace OCA\Activity\BackgroundJob;
 
+use OC\BackgroundJob\TimedJob;
 use OCA\Activity\AppInfo\Application;
 use OCA\Activity\MailQueueHandler;
 use OCP\IConfig;
@@ -33,7 +34,7 @@ use OCP\ILogger;
  *
  * @package OCA\Activity\BackgroundJob
  */
-class EmailNotification extends \OC\BackgroundJob\TimedJob {
+class EmailNotification extends TimedJob {
 	const CLI_EMAIL_BATCH_SIZE = 500;
 	const WEB_EMAIL_BATCH_SIZE = 25;
 
@@ -72,7 +73,7 @@ class EmailNotification extends \OC\BackgroundJob\TimedJob {
 		}
 	}
 
-	public function fixDIForJobs() {
+	protected function fixDIForJobs() {
 		$application = new Application();
 
 		$this->mqHandler = $application->getContainer()->query('MailQueueHandler');

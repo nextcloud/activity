@@ -69,7 +69,15 @@ class Settings extends Controller {
 	 * @param IL10N $l10n
 	 * @param string $user
 	 */
-	public function __construct($appName, IRequest $request, IConfig $config, ISecureRandom $random, IURLGenerator $urlGenerator, Data $data, UserSettings $userSettings, IL10N $l10n, $user) {
+	public function __construct($appName,
+								IRequest $request,
+								IConfig $config,
+								ISecureRandom $random,
+								IURLGenerator $urlGenerator,
+								Data $data,
+								UserSettings $userSettings,
+								IL10N $l10n,
+								$user) {
 		parent::__construct($appName, $request);
 		$this->config = $config;
 		$this->random = $random;

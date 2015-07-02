@@ -26,7 +26,6 @@ namespace OCA\Activity;
 use \OCP\Activity\IManager;
 use \OCP\IURLGenerator;
 use \OCP\Template;
-use \OCP\Util;
 
 /**
  * Class Navigation
@@ -42,6 +41,9 @@ class Navigation {
 
 	/** @var \OCP\IURLGenerator */
 	protected $URLGenerator;
+
+	/** @var UserSettings */
+	protected $userSettings;
 
 	/** @var string */
 	protected $active;
@@ -63,7 +65,13 @@ class Navigation {
 	 * @param string $rssToken
 	 * @param null|string $active Navigation entry that should be marked as active
 	 */
-	public function __construct(\OC_L10N $l, IManager $manager, IURLGenerator $URLGenerator, UserSettings $userSettings, $user, $rssToken, $active = 'all') {
+	public function __construct(\OC_L10N $l,
+								IManager $manager,
+								IURLGenerator $URLGenerator,
+								UserSettings $userSettings,
+								$user,
+								$rssToken,
+								$active = 'all') {
 		$this->l = $l;
 		$this->activityManager = $manager;
 		$this->URLGenerator = $URLGenerator;

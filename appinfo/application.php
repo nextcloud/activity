@@ -33,7 +33,6 @@ use OCA\Activity\Display;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\FilesHooks;
 use OCA\Activity\MailQueueHandler;
-use OCA\Activity\MockUtilSendMail;
 use OCA\Activity\Navigation;
 use OCA\Activity\ParameterHelper;
 use OCA\Activity\UserSettings;
@@ -112,9 +111,13 @@ class Application extends App {
 		});
 
 		$container->registerService('Hooks', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
 			return new FilesHooks(
 				$c->query('ActivityData'),
 				$c->query('UserSettings'),
+				$server->getDatabaseConnection(),
 				$c->query('CurrentUID')
 			);
 		});
@@ -196,6 +199,9 @@ class Application extends App {
 		});
 
 		$container->registerService('ActivitiesController', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
 			return new Activities(
 				$c->query('AppName'),
 				$c->query('Request'),
@@ -204,6 +210,7 @@ class Application extends App {
 				$c->query('GroupHelper'),
 				$c->query('Navigation'),
 				$c->query('UserSettings'),
+				$server->getDateTimeFormatter(),
 				$c->query('CurrentUID')
 			);
 		});

@@ -8,11 +8,12 @@ $(document).ready(function() {
 		});
 	}
 
-	$('#activity_notifications input[type=checkbox]').change(saveSettings);
+	var $activityNotifications = $('#activity_notifications');
+	$activityNotifications.find('input[type=checkbox]').change(saveSettings);
 
-	$('#activity_notifications select').change(saveSettings);
+	$activityNotifications.find('select').change(saveSettings);
 
-	$('#activity_notifications .activity_select_group').click(function() {
+	$activityNotifications.find('.activity_select_group').click(function() {
 		var selectGroup = '#activity_notifications .' + $(this).attr('data-select-group');
 		var checkedBoxes = $(selectGroup + ':checked').length;
 		$(selectGroup).attr('checked', true);

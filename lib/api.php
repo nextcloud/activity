@@ -32,7 +32,7 @@ class Api
 {
 	const DEFAULT_LIMIT = 30;
 
-	static public function get($param) {
+	static public function get() {
 		$app = new AppInfo\Application();
 		$data = $app->getContainer()->query('ActivityData');
 

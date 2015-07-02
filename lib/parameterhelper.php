@@ -27,7 +27,6 @@ use OCP\Activity\IManager;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IUserManager;
-use OCP\User;
 use OCP\Util;
 use OC\Files\View;
 
@@ -58,7 +57,12 @@ class ParameterHelper {
 	 * @param IL10N $l
 	 * @param string $user
 	 */
-	public function __construct(IManager $activityManager, IUserManager $userManager, View $rootView, IConfig $config, IL10N $l, $user) {
+	public function __construct(IManager $activityManager,
+								IUserManager $userManager,
+								View $rootView,
+								IConfig $config,
+								IL10N $l,
+								$user) {
 		$this->activityManager = $activityManager;
 		$this->userManager = $userManager;
 		$this->rootView = $rootView;

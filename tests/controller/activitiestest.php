@@ -37,6 +37,9 @@ class ActivitiesTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $userSettings;
 
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $dateTimeFormatter;
+
 	/** @var \OCP\IL10N */
 	protected $l10n;
 
@@ -61,6 +64,9 @@ class ActivitiesTest extends TestCase {
 		$this->userSettings = $this->getMockBuilder('OCA\Activity\UserSettings')
 			->disableOriginalConstructor()
 			->getMock();
+		$this->dateTimeFormatter = $this->getMockBuilder('OCP\IDateTimeFormatter')
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->request = $this->getMock('OCP\IRequest');
 
@@ -72,6 +78,7 @@ class ActivitiesTest extends TestCase {
 			$this->helper,
 			$this->navigation,
 			$this->userSettings,
+			$this->dateTimeFormatter,
 			'test'
 		);
 	}
