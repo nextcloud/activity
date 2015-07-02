@@ -70,7 +70,15 @@ class Activities extends Controller {
 	 * @param IDateTimeFormatter $dateTimeFormatter
 	 * @param string $user
 	 */
-	public function __construct($appName, IRequest $request, Data $data, Display $display, GroupHelper $helper, Navigation $navigation, UserSettings $settings, IDateTimeFormatter $dateTimeFormatter, $user) {
+	public function __construct($appName,
+								IRequest $request,
+								Data $data,
+								Display $display,
+								GroupHelper $helper,
+								Navigation $navigation,
+								UserSettings $settings,
+								IDateTimeFormatter $dateTimeFormatter,
+								$user) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
 		$this->display = $display;

@@ -57,7 +57,12 @@ class ParameterHelper {
 	 * @param IL10N $l
 	 * @param string $user
 	 */
-	public function __construct(IManager $activityManager, IUserManager $userManager, View $rootView, IConfig $config, IL10N $l, $user) {
+	public function __construct(IManager $activityManager,
+								IUserManager $userManager,
+								View $rootView,
+								IConfig $config,
+								IL10N $l,
+								$user) {
 		$this->activityManager = $activityManager;
 		$this->userManager = $userManager;
 		$this->rootView = $rootView;

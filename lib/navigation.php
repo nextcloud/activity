@@ -65,7 +65,13 @@ class Navigation {
 	 * @param string $rssToken
 	 * @param null|string $active Navigation entry that should be marked as active
 	 */
-	public function __construct(\OC_L10N $l, IManager $manager, IURLGenerator $URLGenerator, UserSettings $userSettings, $user, $rssToken, $active = 'all') {
+	public function __construct(\OC_L10N $l,
+								IManager $manager,
+								IURLGenerator $URLGenerator,
+								UserSettings $userSettings,
+								$user,
+								$rssToken,
+								$active = 'all') {
 		$this->l = $l;
 		$this->activityManager = $manager;
 		$this->URLGenerator = $URLGenerator;
