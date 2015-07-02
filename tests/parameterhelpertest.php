@@ -218,18 +218,26 @@ class ParameterHelperTest extends TestCase {
 			array(array('username@localhost'), array(0 => 'federated_cloud_id'), true, false, array(
 				'username@…',
 			)),
-			array(array('username@localhost'), array(0 => 'federated_cloud_id'), false, true, array(
+			array(array('username@localhost', 'username@localhost'), array(0 => 'federated_cloud_id', 1 => 'federated_cloud_id'), false, true, array(
+				'<strong class="tooltip" title="username@localhost">User @ Localhost</strong>',
 				'<strong class="tooltip" title="username@localhost">User @ Localhost</strong>',
 			), '', true, true),
-			array(array('username@localhost'), array(0 => 'federated_cloud_id'), false, false, array(
+			array(array('username@localhost', 'username@localhost'), array(0 => 'federated_cloud_id', 1 => 'federated_cloud_id'), false, false, array(
+				'User @ Localhost',
 				'User @ Localhost',
 			), '', true, true),
-			array(array('username@localhost'), array(0 => 'federated_cloud_id'), true, true, array(
+			array(array('username@localhost', 'username@localhost'), array(0 => 'federated_cloud_id', 1 => 'federated_cloud_id'), true, true, array(
+				'<strong class="tooltip" title="username@localhost">User @ Localhost</strong>',
 				'<strong class="tooltip" title="username@localhost">User @ Localhost</strong>',
 			), '', true, true),
-			array(array('username@localhost'), array(0 => 'federated_cloud_id'), true, false, array(
+			array(array('username@localhost', 'username@localhost'), array(0 => 'federated_cloud_id', 1 => 'federated_cloud_id'), true, false, array(
+				'User @ Localhost',
 				'User @ Localhost',
 			), '', true, true),
+			array(array('username2@localhost', 'username2@localhost'), array(0 => 'federated_cloud_id', 1 => 'federated_cloud_id'), false, false, array(
+				'username2@localhost',
+				'username2@localhost',
+			)),
 		);
 	}
 

@@ -58,6 +58,9 @@ class ParameterHelper {
 	/** @var \OCP\IURLGenerator */
 	protected $urlGenerator;
 
+	/** @var array */
+	protected $federatedContacts;
+
 	/**
 	 * @param IManager $activityManager
 	 * @param IUserManager $userManager
@@ -227,21 +230,10 @@ class ParameterHelper {
 			} catch (\OC\HintException $e) {}
 		}
 
-		/**
-		 * Try to find the user in the contacts
-		 */
-		$addressBookEntries = $this->contactsManager->search(strtolower($federatedCloudId), ['CLOUD']);
-		foreach ($addressBookEntries as $entry) {
-			if (isset($entry['CLOUD'])) {
-				foreach ($entry['CLOUD'] as $cloudID) {
-					if ($cloudID === strtolower($federatedCloudId)) {
-						$displayName = $entry['FN'];
-						// We got a name, exit the loops
-						break 2;
-					}
-				}
-			}
-		}
+		try {
+			$displayName = $this->getDisplayNameFromContact($federatedCloudId);
+		} catch (\OutOfBoundsException $e) {}
+
 
 		if ($highlightParams) {
 			$title = ' title="' . Util::sanitizeHTML($federatedCloudId) . '"';
@@ -249,6 +241,39 @@ class ParameterHelper {
 		} else {
 			return $displayName;
 		}
+	}
+
+	/**
+	 * Try to find the user in the contacts
+	 *
+	 * @param string $federatedCloudId
+	 * @return string
+	 * @throws \OutOfBoundsException when there is no contact for the id
+	 */
+	protected function getDisplayNameFromContact($federatedCloudId) {
+		$federatedCloudId = strtolower($federatedCloudId);
+		if (isset($this->federatedContacts[$federatedCloudId])) {
+			if ($this->federatedContacts[$federatedCloudId] !== '') {
+				return $this->federatedContacts[$federatedCloudId];
+			} else {
+				throw new \OutOfBoundsException('No contact found for federated cloud id');
+			}
+		}
+
+		$addressBookEntries = $this->contactsManager->search($federatedCloudId, ['CLOUD']);
+		foreach ($addressBookEntries as $entry) {
+			if (isset($entry['CLOUD'])) {
+				foreach ($entry['CLOUD'] as $cloudID) {
+					if ($cloudID === $federatedCloudId) {
+						$this->federatedContacts[$federatedCloudId] = $entry['FN'];
+						return $entry['FN'];
+					}
+				}
+			}
+		}
+
+		$this->federatedContacts[$federatedCloudId] = '';
+		throw new \OutOfBoundsException('No contact found for federated cloud id');
 	}
 
 	/**
