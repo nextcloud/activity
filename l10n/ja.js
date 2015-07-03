@@ -35,7 +35,7 @@ OC.L10N.register(
     "Weekly" : "毎週",
     "Activity feed" : "アクティビティフィード",
     "Enable RSS feed" : "RSSフィードを有効にする",
-    "No activity yet" : "活動状況無し。",
+    "No activity yet" : "アクティビティなし",
     "No more events to load" : "これ以上読み込むイベントはありません",
     "Files" : "ファイル"
 },
