@@ -107,7 +107,7 @@ $(function(){
 			if ($lastGroup.data('date') !== $relativeTimestamp) {
 				var $content = '<div class="section activity-section group" data-date="' + escapeHTML($relativeTimestamp) + '">' + "\n"
 					+'	<h2>'+"\n"
-					+'		<span class="tooltip" title="' + escapeHTML($readableTimestamp) + '">' + escapeHTML($relativeTimestamp) + '</span>' + "\n"
+					+'		<span class="has-tooltip" title="' + escapeHTML($readableTimestamp) + '">' + escapeHTML($relativeTimestamp) + '</span>' + "\n"
 					+'	</h2>' + "\n"
 					+'	<div class="boxcontainer">' + "\n"
 					+'	</div>' + "\n"
@@ -132,7 +132,7 @@ $(function(){
 				+ (($activity.link) ? '			</a>' + "\n" : '')
 				+ '		</div>' + "\n"
 
-				+'		<span class="activitytime tooltip" title="' + escapeHTML($activity.readableDateTimestamp) + '">' + "\n"
+				+'		<span class="activitytime has-tooltip" title="' + escapeHTML($activity.readableDateTimestamp) + '">' + "\n"
 				+ '			' + escapeHTML($activity.relativeDateTimestamp) + "\n"
 				+'		</span>' + "\n";
 

@@ -25,7 +25,6 @@ namespace OCA\Activity\Controller;
 
 use OC\Files\View;
 use OCA\Activity\Data;
-use OCA\Activity\Display;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Navigation;
 use OCA\Activity\UserSettings;
@@ -44,9 +43,6 @@ class Activities extends Controller {
 
 	/** @var \OCA\Activity\Data */
 	protected $data;
-
-	/** @var \OCA\Activity\Display */
-	protected $display;
 
 	/** @var \OCA\Activity\GroupHelper */
 	protected $helper;
@@ -78,7 +74,6 @@ class Activities extends Controller {
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param Data $data
-	 * @param Display $display
 	 * @param GroupHelper $helper
 	 * @param Navigation $navigation
 	 * @param UserSettings $settings
@@ -91,7 +86,6 @@ class Activities extends Controller {
 	public function __construct($appName,
 								IRequest $request,
 								Data $data,
-								Display $display,
 								GroupHelper $helper,
 								Navigation $navigation,
 								UserSettings $settings,
@@ -102,7 +96,6 @@ class Activities extends Controller {
 								$user) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
-		$this->display = $display;
 		$this->helper = $helper;
 		$this->navigation = $navigation;
 		$this->settings = $settings;
@@ -177,7 +170,11 @@ class Activities extends Controller {
 							'y' => 150,
 						]);
 					} else {
-						$activity['preview']['source'] = Template::mimetype_icon($mimeType);
+						$mimeTypeIcon = Template::mimetype_icon($mimeType);
+						if (substr($mimeTypeIcon, -4) === '.png') {
+							$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
+						}
+						$activity['preview']['source'] = $mimeTypeIcon;
 					}
 				}
 			}

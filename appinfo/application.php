@@ -29,7 +29,6 @@ use OCA\Activity\Controller\Feed;
 use OCA\Activity\Controller\Settings;
 use OCA\Activity\Data;
 use OCA\Activity\DataHelper;
-use OCA\Activity\Display;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\FilesHooks;
 use OCA\Activity\MailQueueHandler;
@@ -81,18 +80,6 @@ class Application extends App {
 					$c->query('CurrentUID')
 				),
 				$c->query('ActivityL10N')
-			);
-		});
-
-		$container->registerService('DisplayHelper', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			return new Display(
-				$server->query('DateTimeFormatter'),
-				$server->getPreviewManager(),
-				$server->getURLGenerator(),
-				new View('')
 			);
 		});
 
@@ -208,7 +195,6 @@ class Application extends App {
 				$c->query('AppName'),
 				$server->getRequest(),
 				$c->query('ActivityData'),
-				$c->query('DisplayHelper'),
 				$c->query('GroupHelper'),
 				$c->query('Navigation'),
 				$c->query('UserSettings'),
