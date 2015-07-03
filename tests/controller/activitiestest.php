@@ -119,15 +119,303 @@ class ActivitiesTest extends TestCase {
 		$this->assertNotEmpty($renderedResponse);
 	}
 
-	public function testFetch() {
+	public function dataFetch() {
+		$timestamp = time();
+		return [
+			[
+				[],
+				[],
+			],
+			[
+				[
+					[
+						'timestamp'		=> $timestamp,
+						'user'			=> 'test',
+						'affecteduser'	=> 'foobar',
+						'app'			=> 'files',
+						'link'			=> 'http://localhost',
+						'file'			=> '/file.txt',
+						'typeicon'		=> '',
+						'subject'		=> 'subject',
+						'subjectformatted'		=> [
+							'trimmed'	=> 'subject.trimmed',
+							'full'		=> 'subject.full',
+							'markup'	=>[
+								'trimmed'	=> 'subject.markup.trimmed',
+								'full'		=> 'subject.markup.full',
+							],
+						],
+						'message'		=> 'message',
+						'messageformatted'		=> [
+							'trimmed'	=> 'message.trimmed',
+							'full'		=> 'message.full',
+							'markup'	=>[
+								'trimmed'	=> 'message.markup.trimmed',
+								'full'		=> 'message.markup.full',
+							],
+						],
+					],
+				],
+				[
+					[
+						'timestamp'		=> $timestamp,
+						'user'			=> 'test',
+						'affecteduser'	=> 'foobar',
+						'app'			=> 'files',
+						'link'			=> 'http://localhost',
+						'file'			=> '/file.txt',
+						'typeicon'		=> '',
+						'subject'		=> 'subject',
+						'subjectformatted'		=> [
+							'trimmed'	=> 'subject.trimmed',
+							'full'		=> 'subject.full',
+							'markup'	=>[
+								'trimmed'	=> 'subject.markup.trimmed',
+								'full'		=> 'subject.markup.full',
+							],
+						],
+						'message'		=> 'message',
+						'messageformatted'		=> [
+							'trimmed'	=> 'message.trimmed',
+							'full'		=> 'message.full',
+							'markup'	=>[
+								'trimmed'	=> 'message.markup.trimmed',
+								'full'		=> 'message.markup.full',
+							],
+						],
+						'relativeTimestamp' => 'today',
+						'readableTimestamp' => (string) $timestamp,
+						'relativeDateTimestamp' => 'seconds ago',
+						'readableDateTimestamp' => (string) $timestamp,
+
+						'preview'			=> [
+							'link'				=> 'linkToStub',
+							'source'			=> 'linkToRouteStub',
+							'isMimeTypeIcon'	=> false,
+						]
+					],
+				],
+			],
+			[
+				[
+					[
+						'timestamp'		=> $timestamp,
+						'user'			=> 'test',
+						'affecteduser'	=> 'foobar',
+						'app'			=> 'files',
+						'link'			=> 'http://localhost',
+						'file'			=> '/file.mp3',
+						'typeicon'		=> '',
+						'subject'		=> 'subject',
+						'subjectformatted'		=> [
+							'trimmed'	=> 'subject.trimmed',
+							'full'		=> 'subject.full',
+							'markup'	=>[
+								'trimmed'	=> 'subject.markup.trimmed',
+								'full'		=> 'subject.markup.full',
+							],
+						],
+						'message'		=> 'message',
+						'messageformatted'		=> [
+							'trimmed'	=> 'message.trimmed',
+							'full'		=> 'message.full',
+							'markup'	=>[
+								'trimmed'	=> 'message.markup.trimmed',
+								'full'		=> 'message.markup.full',
+							],
+						],
+					],
+				],
+				[
+					[
+						'timestamp'		=> $timestamp,
+						'user'			=> 'test',
+						'affecteduser'	=> 'foobar',
+						'app'			=> 'files',
+						'link'			=> 'http://localhost',
+						'file'			=> '/file.mp3',
+						'typeicon'		=> '',
+						'subject'		=> 'subject',
+						'subjectformatted'		=> [
+							'trimmed'	=> 'subject.trimmed',
+							'full'		=> 'subject.full',
+							'markup'	=>[
+								'trimmed'	=> 'subject.markup.trimmed',
+								'full'		=> 'subject.markup.full',
+							],
+						],
+						'message'		=> 'message',
+						'messageformatted'		=> [
+							'trimmed'	=> 'message.trimmed',
+							'full'		=> 'message.full',
+							'markup'	=>[
+								'trimmed'	=> 'message.markup.trimmed',
+								'full'		=> 'message.markup.full',
+							],
+						],
+						'relativeTimestamp' => 'today',
+						'readableTimestamp' => (string) $timestamp,
+						'relativeDateTimestamp' => 'seconds ago',
+						'readableDateTimestamp' => (string) $timestamp,
+
+						'preview'			=> [
+							'link'				=> 'linkToStub',
+							'source'			=> '/core/img/filetypes/audio.png',
+							'isMimeTypeIcon'	=> true,
+						]
+					],
+				],
+			],
+			[
+				[
+					[
+						'timestamp'		=> $timestamp,
+						'user'			=> 'test',
+						'affecteduser'	=> 'foobar',
+						'app'			=> 'files',
+						'link'			=> 'http://localhost',
+						'file'			=> '/directory',
+						'typeicon'		=> '',
+						'subject'		=> 'subject',
+						'subjectformatted'		=> [
+							'trimmed'	=> 'subject.trimmed',
+							'full'		=> 'subject.full',
+							'markup'	=>[
+								'trimmed'	=> 'subject.<a href="http://localhost">markup</a>.trimmed',
+								'full'		=> 'subject.markup.full',
+							],
+						],
+						'message'		=> 'message',
+						'messageformatted'		=> [
+							'trimmed'	=> 'message.trimmed',
+							'full'		=> 'message.full',
+							'markup'	=>[
+								'trimmed'	=> 'message.markup.trimmed',
+								'full'		=> 'message.markup.full',
+							],
+						],
+					],
+				],
+				[
+					[
+						'timestamp'		=> $timestamp,
+						'user'			=> 'test',
+						'affecteduser'	=> 'foobar',
+						'app'			=> 'files',
+						'link'			=> '',
+						'file'			=> '/directory',
+						'typeicon'		=> '',
+						'subject'		=> 'subject',
+						'subjectformatted'		=> [
+							'trimmed'	=> 'subject.trimmed',
+							'full'		=> 'subject.full',
+							'markup'	=>[
+								'trimmed'	=> 'subject.<a href="http://localhost">markup</a>.trimmed',
+								'full'		=> 'subject.markup.full',
+							],
+						],
+						'message'		=> 'message',
+						'messageformatted'		=> [
+							'trimmed'	=> 'message.trimmed',
+							'full'		=> 'message.full',
+							'markup'	=>[
+								'trimmed'	=> 'message.markup.trimmed',
+								'full'		=> 'message.markup.full',
+							],
+						],
+						'relativeTimestamp' => 'today',
+						'readableTimestamp' => (string) $timestamp,
+						'relativeDateTimestamp' => 'seconds ago',
+						'readableDateTimestamp' => (string) $timestamp,
+
+						'preview'			=> [
+							'link'				=> 'linkToStub',
+							'source'			=> '/core/img/filetypes/folder.png',
+							'isMimeTypeIcon'	=> true,
+						]
+					],
+				],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider dataFetch
+	 *
+	 * @param array $readData
+	 * @param array $expected
+	 */
+	public function testFetch($readData, $expected) {
 		$this->data->expects($this->any())
 			->method('read')
-			->willReturn([]);
+			->willReturn($readData);
+
+		$this->dateTimeFormatter->expects($this->any())
+			->method('formatDate')
+			->will($this->returnArgument(0));
+		$this->dateTimeFormatter->expects($this->any())
+			->method('formatDateTime')
+			->will($this->returnArgument(0));
+
+		$this->urlGenerator->expects($this->any())
+			->method('linkTo')
+			->willReturn('linkToStub');
+		$this->urlGenerator->expects($this->any())
+			->method('linkToRoute')
+			->willReturn('linkToRouteStub');
+
+		$this->view->expects($this->any())
+			->method('is_dir')
+			->willReturnMap([
+				['/directory', true],
+				['/file.txt', false],
+				['/file.mp3', false],
+			]);
+		$this->view->expects($this->any())
+			->method('file_exists')
+			->willReturnMap([
+				['/directory', true],
+				['/file.txt', true],
+				['/file.mp3', false],
+			]);
+
+		$this->preview->expects($this->any())
+			->method('isMimeSupported')
+			->willReturnMap([
+				['text/plain', true],
+				['audio/mpeg', false],
+			]);
 
 		/** @var \OCP\AppFramework\Http\JSONResponse $response */
 		$response = $this->controller->fetch(1);
 		$this->assertInstanceOf('\OCP\AppFramework\Http\JSONResponse', $response, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
-		$this->assertSame([], $response->getData());
+		$this->assertEquals($expected, $response->getData());
+	}
+
+	public function dataGetPreviewLink() {
+		return [
+			['/folder', true, ['dir' => '/folder']],
+			['/folder/sub1', true, ['dir' => '/folder/sub1']],
+			['/folder/sub1/sub2', true, ['dir' => '/folder/sub1/sub2']],
+			['/file.txt', false, ['dir' => '/', 'scrollto' => 'file.txt']],
+			['/folder/file.txt', false, ['dir' => '/folder', 'scrollto' => 'file.txt']],
+			['/folder/sub1/file.txt', false, ['dir' => '/folder/sub1', 'scrollto' => 'file.txt']],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetPreviewLink
+	 *
+	 * @param string $path
+	 * @param bool $isDir
+	 * @param array $expected
+	 */
+	public function testGetPreviewLink($path, $isDir, $expected) {
+		$this->urlGenerator->expects($this->once())
+			->method('linkTo')
+			->with('files', 'index.php', $expected);
+
+		$this->invokePrivate($this->controller, 'getPreviewLink', [$path, $isDir]);
 	}
 }
