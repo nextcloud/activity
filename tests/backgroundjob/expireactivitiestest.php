@@ -14,11 +14,29 @@
 namespace OCA\Activity\Tests\BackgroundJob;
 
 use OCA\Activity\BackgroundJob\ExpireActivities;
+use OCA\Activity\Data;
 use OCA\Activity\Tests\TestCase;
+use OCP\IConfig;
 
 class ExpireActivitiesTest extends TestCase {
-	public function testExecute() {
-		$backgroundJob = new ExpireActivities();
+	public function dataExecute() {
+		return [
+			[],
+			[
+				$this->getMockBuilder('OCA\Activity\Data')->disableOriginalConstructor()->getMock(),
+				$this->getMockBuilder('OCP\IConfig')->disableOriginalConstructor()->getMock(),
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider dataExecute
+	 *
+	 * @param Data $data
+	 * @param IConfig $config
+	 */
+	public function testExecute(Data $data = null, IConfig $config = null) {
+		$backgroundJob = new ExpireActivities($data, $config);
 
 		$jobList = $this->getMock('\OCP\BackgroundJob\IJobList');
 

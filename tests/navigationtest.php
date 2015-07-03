@@ -29,16 +29,17 @@ use OCA\Activity\Tests\Mock\Extension;
 class NavigationTest extends TestCase {
 	public function getTemplateData() {
 		return array(
-			array('all', null),
+			array('all'),
 			array('all', 'self'),
-			array('random', null),
+			array('all', 'self', 'thisIsTheRSSToken'),
+			array('random'),
 		);
 	}
 
 	/**
 	 * @dataProvider getTemplateData
 	 */
-	public function testGetTemplate($constructorActive, $forceActive) {
+	public function testGetTemplate($constructorActive, $forceActive = null, $rssToken = '') {
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new ActivityManager(
 			$this->getMock('OCP\IRequest'),
@@ -61,7 +62,7 @@ class NavigationTest extends TestCase {
 			\OC::$server->getURLGenerator(),
 			$userSettings,
 			'test',
-			'',
+			$rssToken,
 			$constructorActive
 		);
 		$output = $navigation->getTemplate($forceActive)->fetchPage();
@@ -101,6 +102,14 @@ class NavigationTest extends TestCase {
 		// Check size of app links
 		$this->assertSame(1, sizeof($links['apps']));
 		$this->assertNotContains('data-navigation="files"', $navigationLinks, 'Files app should not be included when there are no other apps.');
+
+		if ($rssToken) {
+			$rssInputField = strpos($output, 'input id="rssurl"');
+			$this->assertGreaterThan(0, $rssInputField);
+			$endOfInputField = strpos($output, ' />', $rssInputField);
+
+			$this->assertNotSame(false, strpos(substr($output, $rssInputField, $endOfInputField - $rssInputField), $rssToken));
+		}
 	}
 
 }

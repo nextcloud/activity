@@ -64,7 +64,7 @@ class DisplayTest extends TestCase {
 					'user'			=> 'test',
 					'affecteduser'	=> 'foobar',
 					'app'			=> 'files',
-					'link'			=> 'localhost',
+					'link'			=> 'https://owncloud.org',
 					'file'			=> 'A.txt',
 					'typeicon'		=> '',
 					'subject'		=> 'subject',
@@ -85,25 +85,64 @@ class DisplayTest extends TestCase {
 							'full'		=> 'message.markup.full',
 						],
 					],
-				]
+				],
+				true,
+			],
+			[
+				[
+					'timestamp'		=> time(),
+					'user'			=> 'test',
+					'affecteduser'	=> 'foobar',
+					'app'			=> 'files',
+					'link'			=> 'https://owncloud.org',
+					'file'			=> 'A.txt',
+					'typeicon'		=> '',
+					'subject'		=> 'subject',
+					'subjectformatted'		=> [
+						'trimmed'	=> 'subject.trimmed',
+						'full'		=> 'subject.full',
+						'markup'	=>[
+							'trimmed'	=> '<a href="https://localhost">subject</a>.markup.trimmed',
+							'full'		=> 'subject.markup.full',
+						],
+					],
+					'message'		=> 'message',
+					'messageformatted'		=> [
+						'trimmed'	=> 'message.trimmed',
+						'full'		=> 'message.full',
+						'markup'	=>[
+							'trimmed'	=> 'message.markup.trimmed',
+							'full'		=> 'message.markup.full',
+						],
+					],
+				],
+				false,
 			],
 		];
 	}
 
 	/**
 	 * @param array $data
+	 * @param bool $linkIsInTemplate
 	 * @dataProvider showData
 	 */
-	public function testShow(array $data) {
+	public function testShow(array $data, $linkIsInTemplate) {
 		$output = $this->display->show($data);
 		$this->assertNotEmpty($output, 'Asserting that the template output is not empty');
+
+		if ($linkIsInTemplate) {
+			$this->assertNotFalse(strpos($output, $data['link']), 'Asserting that the link is in the template output');
+		} else {
+			$this->assertFalse(strpos($output, $data['link']), 'Asserting that the link is in the template output');
+		}
 	}
 
 	/**
 	 * @param array $data
+	 * @param bool $isDir
 	 * @dataProvider showData
 	 */
-	public function testShowExisting(array $data) {
+	public function testShowExisting(array $data, $isDir) {
 		$this->view->expects($this->any())
 			->method('file_exists')
 			->with('A.txt')
@@ -111,7 +150,7 @@ class DisplayTest extends TestCase {
 		$this->view->expects($this->any())
 			->method('is_dir')
 			->with('A.txt')
-			->willReturn(false);
+			->willReturn($isDir);
 
 		$this->preview->expects($this->any())
 			->method('isMimeSupported')
