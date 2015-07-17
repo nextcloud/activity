@@ -134,6 +134,15 @@ class GroupHelper
 		if ($this->getGroupParameter($activity) === false) {
 			return false;
 		}
+
+		// FIXME
+		// Non-local users are currently not distinguishable, so grouping them might
+		// remove the information how many different users performed the same action.
+		// So we do not group them anymore, until we found another solution.
+		if ($activity['user'] === '') {
+			return false;
+		}
+
 		return $activity['app'] . '|' . $activity['user'] . '|' . $activity['subject'];
 	}
 
