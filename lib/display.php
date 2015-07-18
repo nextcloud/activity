@@ -101,7 +101,9 @@ class Display {
 					))
 				);
 			} else {
-				$tmpl->assign('previewImageLink', Template::mimetype_icon($is_dir ? 'dir' : $mimeType));
+				$mimeTypeIcon = Template::mimetype_icon($is_dir ? 'dir' : $mimeType);
+				$mimeTypeIcon = (substr($mimeTypeIcon, -4) === '.png') ? substr($mimeTypeIcon, 0, -4) . '.svg' : $mimeTypeIcon;
+				$tmpl->assign('previewImageLink', $mimeTypeIcon);
 				$tmpl->assign('previewLinkIsDir', true);
 			}
 		}
