@@ -56,7 +56,7 @@ class ParameterHelper {
 	/**
 	 * @param IManager $activityManager
 	 * @param IUserManager $userManager
-	 * @param IURLGenerator $urlGenerator,
+	 * @param IURLGenerator $urlGenerator
 	 * @param View $rootView
 	 * @param IConfig $config
 	 * @param IL10N $l
