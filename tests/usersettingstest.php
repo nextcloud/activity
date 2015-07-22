@@ -78,7 +78,7 @@ class UserSettingsTest extends TestCase {
 
 	public function getNotificationTypesData() {
 		return array(
-			#array('test1', 'stream', array('type1')),
+			//array('test1', 'stream', array('type1')),
 			array('noPreferences', 'email', array('type2')),
 		);
 	}
