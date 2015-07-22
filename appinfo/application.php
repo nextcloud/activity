@@ -70,9 +70,10 @@ class Application extends App {
 			$server = $c->query('ServerContainer');
 			return new DataHelper(
 				$server->getActivityManager(),
-				new ParameterHelper (
+				new ParameterHelper(
 					$server->getActivityManager(),
 					$server->getUserManager(),
+					$server->getURLGenerator(),
 					new View(''),
 					$server->getConfig(),
 					$c->query('ActivityL10N'),

@@ -137,8 +137,23 @@ class DataHelperTest extends TestCase {
 			$this->getMock('OCP\IUserSession'),
 			$this->getMock('OCP\IConfig')
 		);
-		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+
+		$urlGenerator = $this->getMockBuilder('\OCP\IURLGenerator')
+			->disableOriginalConstructor()
+			->getMock();
+		$urlGenerator->expects($this->any())
+			->method('linkTo')
+			->willReturnCallback(function($app, $file, $params) {
+				$paramStrings = [];
+				foreach ($params as $name => $value) {
+					$paramStrings[] = $name . '=' . urlencode($value);
+				}
+
+				return '/index.php/apps/' . $app . '?' . implode('&', $paramStrings);
+			});
+
+		$activityManager->registerExtension(function() use ($activityLanguage, $urlGenerator) {
+			return new Extension($activityLanguage, $urlGenerator);
 		});
 		$config = $this->getMockBuilder('OCP\IConfig')->disableOriginalConstructor()->getMock();
 		$config->expects($this->any())
@@ -151,6 +166,7 @@ class DataHelperTest extends TestCase {
 			new ParameterHelper(
 				$activityManager,
 				$this->getMockBuilder('OCP\IUserManager')->disableOriginalConstructor()->getMock(),
+				$urlGenerator,
 				$this->getMockBuilder('OC\Files\View')->disableOriginalConstructor()->getMock(),
 				$config,
 				$activityLanguage,
@@ -203,6 +219,7 @@ class DataHelperTest extends TestCase {
 			new ParameterHelper(
 				$activityManager,
 				$this->getMockBuilder('OCP\IUserManager')->disableOriginalConstructor()->getMock(),
+				$this->getMockBuilder('\OCP\IURLGenerator')->disableOriginalConstructor()->getMock(),
 				$this->getMockBuilder('OC\Files\View')->disableOriginalConstructor()->getMock(),
 				$this->getMockBuilder('OCP\IConfig')->disableOriginalConstructor()->getMock(),
 				$activityLanguage,
