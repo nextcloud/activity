@@ -26,6 +26,7 @@ namespace OCA\Activity;
 use OCP\Activity\IManager;
 use OCP\IConfig;
 use OCP\IL10N;
+use OCP\IURLGenerator;
 use OCP\IUserManager;
 use OCP\Util;
 use OC\Files\View;
@@ -49,9 +50,13 @@ class ParameterHelper {
 	/** @var string */
 	protected $user;
 
+	/** @var \OCP\IURLGenerator */
+	protected $urlGenerator;
+
 	/**
 	 * @param IManager $activityManager
 	 * @param IUserManager $userManager
+	 * @param IURLGenerator $urlGenerator,
 	 * @param View $rootView
 	 * @param IConfig $config
 	 * @param IL10N $l
@@ -59,12 +64,14 @@ class ParameterHelper {
 	 */
 	public function __construct(IManager $activityManager,
 								IUserManager $userManager,
+								IURLGenerator $urlGenerator,
 								View $rootView,
 								IConfig $config,
 								IL10N $l,
 								$user) {
 		$this->activityManager = $activityManager;
 		$this->userManager = $userManager;
+		$this->urlGenerator = $urlGenerator;
 		$this->rootView = $rootView;
 		$this->config = $config;
 		$this->l = $l;
@@ -207,15 +214,16 @@ class ParameterHelper {
 		$is_dir = $this->rootView->is_dir('/' . $this->user . '/files' . $param);
 
 		if ($is_dir) {
-			$fileLink = Util::linkTo('files', 'index.php', array('dir' => $param));
+			$linkData = ['dir' => $param];
 		} else {
 			$parentDir = (substr_count($param, '/') === 1) ? '/' : dirname($param);
 			$fileName = basename($param);
-			$fileLink = Util::linkTo('files', 'index.php', array(
+			$linkData = [
 				'dir' => $parentDir,
 				'scrollto' => $fileName,
-			));
+			];
 		}
+		$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
 
 		$param = trim($param, '/');
 		list($path, $name) = $this->splitPathFromFilename($param);
