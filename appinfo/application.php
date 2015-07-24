@@ -74,6 +74,7 @@ class Application extends App {
 					$server->getActivityManager(),
 					$server->getUserManager(),
 					$server->getURLGenerator(),
+					$server->getContactsManager(),
 					new View(''),
 					$server->getConfig(),
 					$c->query('ActivityL10N'),
