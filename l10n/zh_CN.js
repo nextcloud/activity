@@ -3,7 +3,9 @@ OC.L10N.register(
     {
     "Activity" : "动态",
     "Personal activity feed for %s" : "%s 的个人动态 Feed",
+    "Your feed URL is invalid" : "您输入的Feed链接无效",
     "Your settings have been updated." : "您的设置已更新。",
+    "This stream will show events like additions, changes & shares" : "流中会显示诸如添加、更改和分享之类的事件",
     "Activity notification" : "动态通知",
     "All Activities" : "所有动态",
     "Activities by you" : "你的动态",
@@ -31,6 +33,7 @@ OC.L10N.register(
     "Weekly" : "每周",
     "Activity feed" : "动态 Feed",
     "Enable RSS feed" : "启用 RSS 源",
+    "No activity yet" : "暂无动态",
     "No more events to load" : "已无更多事件",
     "Files" : "文件"
 },
