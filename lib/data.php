@@ -25,6 +25,7 @@ namespace OCA\Activity;
 
 use OCP\Activity\IExtension;
 use OCP\DB;
+use OCP\IUser;
 use OCP\User;
 use OCP\Util;
 
@@ -77,9 +78,18 @@ class Data {
 	 */
 	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = '', $prio = IExtension::PRIORITY_MEDIUM) {
 		$timestamp = time();
-		$user = User::getUser();
-		
-		if ($affecteduser === '') {
+
+		$user = \OC::$server->getUserSession()->getUser();
+		if ($user instanceof IUser) {
+			$user = $user->getUID();
+		} else {
+			// Public page or incognito mode
+			$user = '';
+		}
+
+		if ($affecteduser === '' && $user === '') {
+			return false;
+		} elseif ($affecteduser === '') {
 			$auser = $user;
 		} else {
 			$auser = $affecteduser;
@@ -103,7 +113,7 @@ class Data {
 	 * @param array  $subjectParams Array of parameters that are filled in the placeholders
 	 * @param string $affectedUser Name of the user we are sending the activity to
 	 * @param string $type Type of notification
-	 * @param int $latestSendTime Activity time() + batch setting of $affecteduser
+	 * @param int $latestSendTime Activity time() + batch setting of $affectedUser
 	 * @return bool
 	 */
 	public static function storeMail($app, $subject, array $subjectParams, $affectedUser, $type, $latestSendTime) {

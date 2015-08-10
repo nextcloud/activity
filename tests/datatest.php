@@ -25,6 +25,7 @@ namespace OCA\Activity\Tests;
 use OC\ActivityManager;
 use OCA\Activity\Data;
 use OCA\Activity\Tests\Mock\Extension;
+use OCP\Activity\IExtension;
 
 class DataTest extends TestCase {
 	/** @var \OCA\Activity\Data */
@@ -88,5 +89,75 @@ class DataTest extends TestCase {
 	 */
 	public function testValidateFilter($filter, $expected) {
 		$this->assertEquals($expected, $this->data->validateFilter($filter));
+	}
+
+	public function dataSend() {
+		return [
+			// Default case
+			['author', 'affectedUser', 'author', 'affectedUser', true],
+			// Public page / Incognito mode
+			['', 'affectedUser', '', 'affectedUser', true],
+			// No affected user, falling back to author
+			['author', '', 'author', 'author', true],
+			// No affected user and no author => no activity
+			['', '', '', '', false],
+		];
+	}
+
+	/**
+	 * @dataProvider dataSend
+	 *
+	 * @param string $actionUser
+	 * @param string $affectedUser
+	 */
+	public function testSend($actionUser, $affectedUser, $expectedAuthor, $expectedAffected, $expectedActivity) {
+		$mockSession = $this->getMockBuilder('\OC\User\Session')
+			->disableOriginalConstructor()
+			->getMock();
+
+		if ($actionUser !== '') {
+			$mockUser = $this->getMockBuilder('\OCP\IUser')
+				->disableOriginalConstructor()
+				->getMock();
+			$mockUser->expects($this->any())
+				->method('getUID')
+				->willReturn($actionUser);
+
+			$mockSession->expects($this->any())
+				->method('getUser')
+				->willReturn($mockUser);
+		} else {
+			$mockSession->expects($this->any())
+				->method('getUser')
+				->willReturn(null);
+		}
+
+		$this->overwriteService('UserSession', $mockSession);
+		$this->deleteTestActivities();
+
+		$this->assertSame($expectedActivity, Data::send('test', 'subject', [], '', [], '', '', $affectedUser, 'type', IExtension::PRIORITY_MEDIUM));
+
+		$connection = \OC::$server->getDatabaseConnection();
+		$query = $connection->prepare('SELECT `user`, `affecteduser` FROM `*PREFIX*activity` WHERE `app` = ? ORDER BY `activity_id` DESC');
+		$query->execute(['test']);
+		$row = $query->fetch();
+
+		if ($expectedActivity) {
+			$this->assertEquals(['user' => $expectedAuthor, 'affecteduser' => $expectedAffected], $row);
+		} else {
+			$this->assertFalse($row);
+		}
+
+		$this->deleteTestActivities();
+		$this->restoreService('UserSession');
+	}
+
+	/**
+	 * Delete all testing activities
+	 */
+	public function deleteTestActivities() {
+		$connection = \OC::$server->getDatabaseConnection();
+		$query = $connection->prepare('DELETE FROM `*PREFIX*activity` WHERE `app` = ?');
+		$query->execute(['test']);
 	}
 }
