@@ -14,12 +14,14 @@ $(document).ready(function() {
 	$activityNotifications.find('select').change(saveSettings);
 
 	$activityNotifications.find('.activity_select_group').click(function() {
-		var selectGroup = '#activity_notifications .' + $(this).attr('data-select-group');
-		var checkedBoxes = $(selectGroup + ':checked').length;
-		$(selectGroup).attr('checked', true);
-		if (checkedBoxes === $(selectGroup + ':checked').length) {
+		var $selectGroup = '#activity_notifications .' + $(this).attr('data-select-group');
+		var $filteredBoxes = $($selectGroup).not(':disabled')
+		var $checkedBoxes = $filteredBoxes.filter(':checked').length;
+
+		$filteredBoxes.attr('checked', true);
+		if ($checkedBoxes === $filteredBoxes.filter(':checked').length) {
 			// All values were already selected, so invert it
-			$(selectGroup).attr('checked', false);
+			$filteredBoxes.attr('checked', false);
 		}
 
 		saveSettings();
