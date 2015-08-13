@@ -58,7 +58,7 @@ class DataHelperTest extends TestCase {
 			),
 			array(
 				'subject1', array('/SubFolder/A.txt'), true, true,
-				'Subject1 #<a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt" title="in SubFolder">A.txt</a>',
+				'Subject1 #<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt" title="in SubFolder">A.txt</a>',
 			),
 
 			array('subject2', array('/SubFolder/A.txt', 'UserB'), false, false, 'Subject2 @UserB #SubFolder/A.txt'),
@@ -71,7 +71,7 @@ class DataHelperTest extends TestCase {
 			array(
 				'subject2', array('/SubFolder/A.txt', 'UserB'), true, true,
 				'Subject2 @<div class="avatar" data-user="UserB"></div><strong>UserB</strong> #'
-				. '<a class="filename tooltip" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt" title="in SubFolder">A.txt</a>',
+				. '<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt" title="in SubFolder">A.txt</a>',
 			),
 			array(
 				'subject2', array('/A.txt', 'UserB'), true, true,
@@ -122,7 +122,7 @@ class DataHelperTest extends TestCase {
 				'Subject1 #<a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt">SubFolder/A.txt</a>,'
 				. ' <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=B.txt">SubFolder/B.txt</a>,'
 				. ' <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=C.txt">SubFolder/C.txt</a>'
-				. ' and <strong class="tooltip" title="SubFolder/D.txt, SubFolder/E.txt, SubFolder/F.txt">3 more</strong>',
+				. ' and <strong class="has-tooltip" title="SubFolder/D.txt, SubFolder/E.txt, SubFolder/F.txt">3 more</strong>',
 			),
 		);
 	}

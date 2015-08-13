@@ -138,10 +138,10 @@ class ParameterHelperTest extends TestCase {
 			array(array('/foo/bar.file'), array(0 => 'file'), false, false, array('foo/bar.file')),
 			array(array('/folder/trailingslash/fromsharing/'), array(0 => 'file'), false, false, array('folder/trailingslash/fromsharing')),
 			array(array('/foo/bar.file'), array(0 => 'file'), true, true, array(
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
+				'<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
 			)),
 			array(array('/0/bar.file'), array(0 => 'file'), true, true, array(
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2F0&scrollto=bar.file" title="in 0">bar.file</a>',
+				'<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2F0&scrollto=bar.file" title="in 0">bar.file</a>',
 			)),
 			array(array('/foo/bar.file'), array(1 => 'file'), true, false, array('/foo/bar.file')),
 			array(array('/foo/bar.file'), array(1 => 'file'), true, true, array('<strong>/foo/bar.file</strong>')),
@@ -153,14 +153,14 @@ class ParameterHelperTest extends TestCase {
 			)),
 			array(array('foo/bar.file'), array(0 => 'file'), true, false, array('bar.file')),
 			array(array('foo/bar.file'), array(0 => 'file'), true, true, array(
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
+				'<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
 			)),
 
 			// Valid file position
 			array(array('UserA', '/foo/bar.file'), array(1 => 'file'), true, false, array('UserA', 'bar.file')),
 			array(array('UserA', '/foo/bar.file'), array(1 => 'file'), true, true, array(
 				'<strong>UserA</strong>',
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
+				'<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
 			)),
 			array(array('UserA', '/foo/bar.file'), array(2 => 'file'), true, false, array('UserA', '/foo/bar.file')),
 			array(array('UserA', '/foo/bar.file'), array(2 => 'file'), true, true, array(
@@ -191,11 +191,11 @@ class ParameterHelperTest extends TestCase {
 
 			array(array('user1', '/foo/bar.file'), array(0 => 'username', 1 => 'file'), true, true, array(
 				'<div class="avatar" data-user="user1"></div><strong>User One</strong>',
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
+				'<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2Ffoo&scrollto=bar.file" title="in foo">bar.file</a>',
 			)),
 			array(array('user1', '/tmp/test'), array(0 => 'username', 1 => 'file'), true, true, array(
 				'<div class="avatar" data-user="user1"></div><strong>User One</strong>',
-				'<a class="filename tooltip" href="/index.php/apps/files?dir=%2Ftmp%2Ftest" title="in tmp">test</a>',
+				'<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2Ftmp%2Ftest" title="in tmp">test</a>',
 			), '/test/files/tmp/test'),
 
 			// Disabled avatars #256
@@ -207,28 +207,28 @@ class ParameterHelperTest extends TestCase {
 			 * Federated Cloud ID
 			 */
 			array(array('username@localhost'), array(0 => 'federated_cloud_id'), false, true, array(
-				'<strong class="tooltip" title="username@localhost">username@localhost</strong>',
+				'<strong class="has-tooltip" title="username@localhost">username@localhost</strong>',
 			)),
 			array(array('username@localhost'), array(0 => 'federated_cloud_id'), false, false, array(
 				'username@localhost',
 			)),
 			array(array('username@localhost'), array(0 => 'federated_cloud_id'), true, true, array(
-				'<strong class="tooltip" title="username@localhost">username@…</strong>',
+				'<strong class="has-tooltip" title="username@localhost">username@…</strong>',
 			)),
 			array(array('username@localhost'), array(0 => 'federated_cloud_id'), true, false, array(
 				'username@…',
 			)),
 			array(array('username@localhost', 'username@localhost'), array(0 => 'federated_cloud_id', 1 => 'federated_cloud_id'), false, true, array(
-				'<strong class="tooltip" title="username@localhost">User @ Localhost</strong>',
-				'<strong class="tooltip" title="username@localhost">User @ Localhost</strong>',
+				'<strong class="has-tooltip" title="username@localhost">User @ Localhost</strong>',
+				'<strong class="has-tooltip" title="username@localhost">User @ Localhost</strong>',
 			), '', true, true),
 			array(array('username@localhost', 'username@localhost'), array(0 => 'federated_cloud_id', 1 => 'federated_cloud_id'), false, false, array(
 				'User @ Localhost',
 				'User @ Localhost',
 			), '', true, true),
 			array(array('username@localhost', 'username@localhost'), array(0 => 'federated_cloud_id', 1 => 'federated_cloud_id'), true, true, array(
-				'<strong class="tooltip" title="username@localhost">User @ Localhost</strong>',
-				'<strong class="tooltip" title="username@localhost">User @ Localhost</strong>',
+				'<strong class="has-tooltip" title="username@localhost">User @ Localhost</strong>',
+				'<strong class="has-tooltip" title="username@localhost">User @ Localhost</strong>',
 			), '', true, true),
 			array(array('username@localhost', 'username@localhost'), array(0 => 'federated_cloud_id', 1 => 'federated_cloud_id'), true, false, array(
 				'User @ Localhost',
@@ -308,14 +308,14 @@ class ParameterHelperTest extends TestCase {
 			array(
 				array('A/B.txt', 'C/D.txt', 'E/F.txt', 'G/H.txt', 'I/J.txt', 'K/L.txt', 'M/N.txt'), 'file', true, true, null,
 				(string) $en->n(
-					'%s and <strong class="tooltip" title="%s">%n more</strong>',
-					'%s and <strong class="tooltip" title="%s">%n more</strong>',
+					'%s and <strong class="has-tooltip" title="%s">%n more</strong>',
+					'%s and <strong class="has-tooltip" title="%s">%n more</strong>',
 					4,
 					[
 						implode((string) $en->t(', '), [
-							'<a class="filename tooltip" href="/index.php/apps/files?dir=%2FA&scrollto=B.txt" title="in A">B.txt</a>',
-							'<a class="filename tooltip" href="/index.php/apps/files?dir=%2FC&scrollto=D.txt" title="in C">D.txt</a>',
-							'<a class="filename tooltip" href="/index.php/apps/files?dir=%2FE&scrollto=F.txt" title="in E">F.txt</a>',
+							'<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2FA&scrollto=B.txt" title="in A">B.txt</a>',
+							'<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2FC&scrollto=D.txt" title="in C">D.txt</a>',
+							'<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2FE&scrollto=F.txt" title="in E">F.txt</a>',
 						]),
 						'G/H.txt, I/J.txt, K/L.txt, M/N.txt',
 					])
@@ -323,14 +323,14 @@ class ParameterHelperTest extends TestCase {
 			array(
 				array('A"><h1>/B.txt"><h1>', 'C"><h1>/D.txt"><h1>', 'E"><h1>/F.txt"><h1>', 'G"><h1>/H.txt"><h1>', 'I"><h1>/J.txt"><h1>', 'K"><h1>/L.txt"><h1>', 'M"><h1>/N.txt"><h1>'), 'file', true, true, null,
 				(string) $en->n(
-					'%s and <strong class="tooltip" title="%s">%n more</strong>',
-					'%s and <strong class="tooltip" title="%s">%n more</strong>',
+					'%s and <strong class="has-tooltip" title="%s">%n more</strong>',
+					'%s and <strong class="has-tooltip" title="%s">%n more</strong>',
 					4,
 					[
 						implode((string) $en->t(', '), [
-							'<a class="filename tooltip" href="/index.php/apps/files?dir=%2FA%22%3E%3Ch1%3E&scrollto=B.txt%22%3E%3Ch1%3E" title="in A&quot;&gt;&lt;h1&gt;">B.txt&quot;&gt;&lt;h1&gt;</a>',
-							'<a class="filename tooltip" href="/index.php/apps/files?dir=%2FC%22%3E%3Ch1%3E&scrollto=D.txt%22%3E%3Ch1%3E" title="in C&quot;&gt;&lt;h1&gt;">D.txt&quot;&gt;&lt;h1&gt;</a>',
-							'<a class="filename tooltip" href="/index.php/apps/files?dir=%2FE%22%3E%3Ch1%3E&scrollto=F.txt%22%3E%3Ch1%3E" title="in E&quot;&gt;&lt;h1&gt;">F.txt&quot;&gt;&lt;h1&gt;</a>',
+							'<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2FA%22%3E%3Ch1%3E&scrollto=B.txt%22%3E%3Ch1%3E" title="in A&quot;&gt;&lt;h1&gt;">B.txt&quot;&gt;&lt;h1&gt;</a>',
+							'<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2FC%22%3E%3Ch1%3E&scrollto=D.txt%22%3E%3Ch1%3E" title="in C&quot;&gt;&lt;h1&gt;">D.txt&quot;&gt;&lt;h1&gt;</a>',
+							'<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2FE%22%3E%3Ch1%3E&scrollto=F.txt%22%3E%3Ch1%3E" title="in E&quot;&gt;&lt;h1&gt;">F.txt&quot;&gt;&lt;h1&gt;</a>',
 						]),
 						'G&quot;&gt;&lt;h1&gt;/H.txt&quot;&gt;&lt;h1&gt;, I&quot;&gt;&lt;h1&gt;/J.txt&quot;&gt;&lt;h1&gt;, K&quot;&gt;&lt;h1&gt;/L.txt&quot;&gt;&lt;h1&gt;, M&quot;&gt;&lt;h1&gt;/N.txt&quot;&gt;&lt;h1&gt;',
 					])

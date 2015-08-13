@@ -121,9 +121,9 @@ $(function(){
 				element.avatar(element.data('user'), 28);
 			});
 
-			$(parentElement).find('.tooltip').tipsy({
-				gravity: 'n'
-			});
+			$(parentElement).find('.has-tooltip').tooltip({
+				placement: 'bottom'
+			})
 		}
 	};
 

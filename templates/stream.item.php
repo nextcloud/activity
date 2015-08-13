@@ -17,7 +17,7 @@
 			<?php if ($_['event']['link']): ?></a><?php endif; ?>
 		</div>
 
-		<span class="activitytime tooltip" title="<?php p($_['formattedDate']) ?>">
+		<span class="activitytime has-tooltip" title="<?php p($_['formattedDate']) ?>">
 			<?php p($_['formattedTimestamp']) ?>
 		</span>
 

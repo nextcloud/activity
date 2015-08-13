@@ -49,7 +49,7 @@ foreach ($_['activity'] as $event) {
 ?>
 <div class="section activity-section group" data-date="<?php p($currentDate) ?>">
 	<h2>
-		<span class="tooltip" title="<?php p($dateTimeFormatter->formatDate($event['timestamp'])) ?>">
+		<span class="has-tooltip" title="<?php p($dateTimeFormatter->formatDate($event['timestamp'])) ?>">
 			<?php p(ucfirst($currentDate)) ?>
 		</span>
 	</h2>
