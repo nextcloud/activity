@@ -38,6 +38,9 @@ class FilesHooksStatic {
 		Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\FilesHooksStatic', 'fileDelete');
 		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Activity\FilesHooksStatic', 'fileRestore');
 		Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\FilesHooksStatic', 'share');
+
+		$eventDispatcher = \OC::$server->getEventDispatcher();
+		$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', ['OCA\Activity\FilesHooksStatic', 'onLoadFilesAppScripts']);
 	}
 
 	/**
@@ -86,5 +89,16 @@ class FilesHooksStatic {
 	 */
 	public static function share($params) {
 		self::getHooks()->share($params);
+	}
+
+	/**
+	 * Load additional scripts when the files app is visible
+	 */
+	public static function onLoadFilesAppScripts() {
+		\OCP\Util::addStyle('activity', 'style');
+		\OCP\Util::addScript('activity', 'activitymodel');
+		\OCP\Util::addScript('activity', 'activitycollection');
+		\OCP\Util::addScript('activity', 'activitytabview');
+		\OCP\Util::addScript('activity', 'filesplugin');
 	}
 }
