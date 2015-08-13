@@ -113,6 +113,12 @@ class ActivitiesTest extends TestCase {
 	}
 
 	public function dataFetch() {
+		$folderPreview = [
+			'link'				=> 'linkToStub',
+			'source'			=> '/core/img/filetypes/folder.svg',
+			'isMimeTypeIcon'	=> true,
+		];
+
 		$timestamp = time();
 		return [
 			[
@@ -181,11 +187,13 @@ class ActivitiesTest extends TestCase {
 						'relativeDateTimestamp' => 'seconds ago',
 						'readableDateTimestamp' => (string) $timestamp,
 
-						'preview'			=> [
-							'link'				=> 'linkToStub',
-							'source'			=> 'linkToRouteStub',
-							'isMimeTypeIcon'	=> false,
-						]
+						'previews'			=> [
+							[
+								'link'				=> 'linkToStub',
+								'source'			=> 'linkToRouteStub',
+								'isMimeTypeIcon'	=> false,
+							],
+						],
 					],
 				],
 			],
@@ -251,11 +259,13 @@ class ActivitiesTest extends TestCase {
 						'relativeDateTimestamp' => 'seconds ago',
 						'readableDateTimestamp' => (string) $timestamp,
 
-						'preview'			=> [
-							'link'				=> 'linkToStub',
-							'source'			=> '/core/img/filetypes/audio.png',
-							'isMimeTypeIcon'	=> true,
-						]
+						'previews'			=> [
+							[
+								'link'				=> 'linkToStub',
+								'source'			=> '/core/img/filetypes/audio.svg',
+								'isMimeTypeIcon'	=> true,
+							],
+						],
 					],
 				],
 			],
@@ -321,11 +331,83 @@ class ActivitiesTest extends TestCase {
 						'relativeDateTimestamp' => 'seconds ago',
 						'readableDateTimestamp' => (string) $timestamp,
 
-						'preview'			=> [
-							'link'				=> 'linkToStub',
-							'source'			=> '/core/img/filetypes/folder.png',
-							'isMimeTypeIcon'	=> true,
-						]
+						'previews'			=> [$folderPreview],
+					],
+				],
+			],
+			[
+				[
+					[
+						'timestamp'		=> $timestamp,
+						'user'			=> 'test',
+						'affecteduser'	=> 'foobar',
+						'app'			=> 'files',
+						'link'			=> 'http://localhost',
+						'file'			=> '/directory',
+						'files'			=> ['/directory', '', '/directory', '/directory', '/directory', '/directory', '/directory', '/directory', '/directory'],
+						'typeicon'		=> '',
+						'subject'		=> 'subject',
+						'subjectformatted'		=> [
+							'trimmed'	=> 'subject.trimmed',
+							'full'		=> 'subject.full',
+							'markup'	=>[
+								'trimmed'	=> 'subject.<a href="http://localhost">markup</a>.trimmed',
+								'full'		=> 'subject.markup.full',
+							],
+						],
+						'message'		=> 'message',
+						'messageformatted'		=> [
+							'trimmed'	=> 'message.trimmed',
+							'full'		=> 'message.full',
+							'markup'	=>[
+								'trimmed'	=> 'message.markup.trimmed',
+								'full'		=> 'message.markup.full',
+							],
+						],
+					],
+				],
+				[
+					[
+						'timestamp'		=> $timestamp,
+						'user'			=> 'test',
+						'affecteduser'	=> 'foobar',
+						'app'			=> 'files',
+						'link'			=> '',
+						'file'			=> '/directory',
+						'files'			=> ['/directory', '', '/directory', '/directory', '/directory', '/directory', '/directory', '/directory', '/directory'],
+						'typeicon'		=> '',
+						'subject'		=> 'subject',
+						'subjectformatted'		=> [
+							'trimmed'	=> 'subject.trimmed',
+							'full'		=> 'subject.full',
+							'markup'	=>[
+								'trimmed'	=> 'subject.<a href="http://localhost">markup</a>.trimmed',
+								'full'		=> 'subject.markup.full',
+							],
+						],
+						'message'		=> 'message',
+						'messageformatted'		=> [
+							'trimmed'	=> 'message.trimmed',
+							'full'		=> 'message.full',
+							'markup'	=>[
+								'trimmed'	=> 'message.markup.trimmed',
+								'full'		=> 'message.markup.full',
+							],
+						],
+						'relativeTimestamp' => 'today',
+						'readableTimestamp' => (string) $timestamp,
+						'relativeDateTimestamp' => 'seconds ago',
+						'readableDateTimestamp' => (string) $timestamp,
+
+						'previews'			=> [
+							$folderPreview,
+							$folderPreview,
+							$folderPreview,
+							$folderPreview,
+							$folderPreview,
+							$folderPreview,
+							$folderPreview,
+						],
 					],
 				],
 			],

@@ -142,11 +142,14 @@ $(function(){
 					+'</div>' + "\n";
 			}
 
-			if ($activity.preview) {
-				var $preview = $activity.preview;
-				$content += (($preview.link) ? '<a href="' + $preview.link + '">' + "\n" : '')
-					+ '<img class="preview' + (($preview.isMimeTypeIcon) ? ' preview-mimetype-icon' : '') + '" src="' + $preview.source + '" alt=""/>' + "\n"
-					+ (($preview.link) ? '</a>' + "\n" : '')
+			if ($activity.previews && $activity.previews.length) {
+				$content += '<br />';
+				for (var i = 0; i < $activity.previews.length; i++) {
+					var $preview = $activity.previews[i];
+					$content += (($preview.link) ? '<a href="' + $preview.link + '">' + "\n" : '')
+						+ '<img class="preview' + (($preview.isMimeTypeIcon) ? ' preview-mimetype-icon' : '') + '" src="' + $preview.source + '" alt=""/>' + "\n"
+						+ (($preview.link) ? '</a>' + "\n" : '')
+				}
 			}
 
 			$content += '	</div>' + "\n"

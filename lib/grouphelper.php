@@ -108,11 +108,13 @@ class GroupHelper
 				}
 				if (!isset($this->openGroup['activity_ids'])) {
 					$this->openGroup['activity_ids'] = array((int) $this->openGroup['activity_id']);
+					$this->openGroup['files'] = array((string) $this->openGroup['file']);
 				}
 
 				$this->openGroup['subjectparams_array'][$parameter][] = $activity['subjectparams_array'][$parameter];
 				$this->openGroup['subjectparams_array'][$parameter] = array_unique($this->openGroup['subjectparams_array'][$parameter]);
 				$this->openGroup['activity_ids'][] = (int) $activity['activity_id'];
+				$this->openGroup['files'][] = (string) $activity['file'];
 			}
 		} else {
 			$this->closeOpenGroup();

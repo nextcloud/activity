@@ -41,6 +41,8 @@ use OCP\Template;
 class Activities extends Controller {
 	const DEFAULT_PAGE_SIZE = 30;
 
+	const MAX_NUM_THUMBNAILS = 7;
+
 	/** @var \OCA\Activity\Data */
 	protected $data;
 
@@ -147,42 +149,73 @@ class Activities extends Controller {
 				$activity['link'] = '';
 			}
 
-			if ($activity['file']) {
-				$this->view->chroot('/' . $activity['affecteduser'] . '/files');
-				$exist = $this->view->file_exists($activity['file']);
-				$is_dir = $this->view->is_dir($activity['file']);
-				$activity['preview'] = [
-					'link'			=> $this->getPreviewLink($activity['file'], $is_dir),
-					'source'		=> '',
-					'isMimeTypeIcon' => true,
-				];
+			$activity['previews'] = [];
+			if (!empty($activity['files'])) {
+				foreach ($activity['files'] as $file) {
+					if ($file === '') {
+						// No file, no preview
+						continue;
+					}
 
-				// show a preview image if the file still exists
-				if ($is_dir) {
-					$activity['preview']['source'] = Template::mimetype_icon('dir');
-				} else {
-					$mimeType = Files::getMimeType($activity['file']);
-					if (!$is_dir && $mimeType && $this->preview->isMimeSupported($mimeType) && $exist) {
-						$activity['preview']['isMimeTypeIcon'] = false;
-						$activity['preview']['source'] = $this->urlGenerator->linkToRoute('core_ajax_preview', [
-							'file' => $activity['file'],
-							'x' => 150,
-							'y' => 150,
-						]);
-					} else {
-						$mimeTypeIcon = Template::mimetype_icon($mimeType);
-						if (substr($mimeTypeIcon, -4) === '.png') {
-							$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
-						}
-						$activity['preview']['source'] = $mimeTypeIcon;
+					$activity['previews'][] = $this->getPreview($activity, $file);
+
+					if (sizeof($activity['previews']) >= self::MAX_NUM_THUMBNAILS) {
+						// Don't want to clutter the page, so we stop after a few thumbnails
+						break;
 					}
 				}
+			} else if ($activity['file'] !== '') {
+				$activity['previews'][] = $this->getPreview($activity, $activity['file']);
 			}
 
 			$preparedActivities[] = $activity;
 		}
 
 		return new JSONResponse($preparedActivities);
+	}
+
+	/**
+	 * @param array $activity
+	 * @param string $file
+	 * @return array
+	 */
+	protected function getPreview(array $activity, $file) {
+		$this->view->chroot('/' . $activity['affecteduser'] . '/files');
+		$exist = $this->view->file_exists($file);
+		$is_dir = $this->view->is_dir($file);
+
+		$preview = [
+			'link'			=> $this->getPreviewLink($file, $is_dir),
+			'source'		=> '',
+			'isMimeTypeIcon' => true,
+		];
+
+		// show a preview image if the file still exists
+		if ($is_dir) {
+			$mimeTypeIcon = Template::mimetype_icon('dir');
+			if (substr($mimeTypeIcon, -4) === '.png') {
+				$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
+			}
+			$preview['source'] = $mimeTypeIcon;
+		} else {
+			$mimeType = Files::getMimeType($file);
+			if (!$is_dir && $mimeType && $this->preview->isMimeSupported($mimeType) && $exist) {
+				$preview['isMimeTypeIcon'] = false;
+				$preview['source'] = $this->urlGenerator->linkToRoute('core_ajax_preview', [
+					'file' => $file,
+					'x' => 150,
+					'y' => 150,
+				]);
+			} else {
+				$mimeTypeIcon = Template::mimetype_icon($mimeType);
+				if (substr($mimeTypeIcon, -4) === '.png') {
+					$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
+				}
+				$preview['source'] = $mimeTypeIcon;
+			}
+		}
+
+		return $preview;
 	}
 
 	/**
