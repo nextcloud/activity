@@ -237,7 +237,7 @@ class ParameterHelper {
 
 		if ($highlightParams) {
 			$title = ' title="' . Util::sanitizeHTML($federatedCloudId) . '"';
-			return '<strong class="tooltip"' . $title . '>' . Util::sanitizeHTML($displayName) . '</strong>';
+			return '<strong class="has-tooltip"' . $title . '>' . Util::sanitizeHTML($displayName) . '</strong>';
 		} else {
 			return $displayName;
 		}
@@ -316,7 +316,7 @@ class ParameterHelper {
 		}
 
 		$title = ' title="' . $this->l->t('in %s', array(Util::sanitizeHTML($path))) . '"';
-		return '<a class="filename tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($name) . '</a>';
+		return '<a class="filename has-tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($name) . '</a>';
 	}
 
 	/**
@@ -391,10 +391,10 @@ class ParameterHelper {
 		$trimmedList = implode($this->l->t(', '), $trimmedParams);
 		if ($highlightParams) {
 			return $this->l->n(
-				'%s and <strong class="tooltip" title="%s">%n more</strong>',
-				'%s and <strong class="tooltip" title="%s">%n more</strong>',
+				'%s and <strong %s>%n more</strong>',
+				'%s and <strong %s>%n more</strong>',
 				$count - 3,
-				array($firstList, Util::sanitizeHTML($trimmedList)));
+				array($firstList, 'class="has-tooltip" title="' . Util::sanitizeHTML($trimmedList) . '"'));
 		}
 		return $this->l->n('%s and %n more', '%s and %n more', $count - 3, array($firstList));
 	}
