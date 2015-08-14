@@ -129,13 +129,15 @@ class Activities extends Controller {
 	 *
 	 * @param int $page
 	 * @param string $filter
+	 * @param string $objecttype
+	 * @param int $objectid
 	 * @return JSONResponse
 	 */
-	public function fetch($page, $filter = 'all') {
+	public function fetch($page, $filter = 'all', $objecttype = '', $objectid = 0) {
 		$pageOffset = $page - 1;
 		$filter = $this->data->validateFilter($filter);
 
-		$activities = $this->data->read($this->helper, $this->settings, $pageOffset * self::DEFAULT_PAGE_SIZE, self::DEFAULT_PAGE_SIZE, $filter);
+		$activities = $this->data->read($this->helper, $this->settings, $pageOffset * self::DEFAULT_PAGE_SIZE, self::DEFAULT_PAGE_SIZE, $filter, '', $objecttype, $objectid);
 
 		$preparedActivities = [];
 		foreach ($activities as $activity) {

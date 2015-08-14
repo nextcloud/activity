@@ -190,9 +190,11 @@ class Data {
 	 * @param int $count The number of statements to read
 	 * @param string $filter Filter the activities
 	 * @param string $user User for whom we display the stream
+	 * @param string $objecttype
+	 * @param int $objectid
 	 * @return array
 	 */
-	public function read(GroupHelper $groupHelper, UserSettings $userSettings, $start, $count, $filter = 'all', $user = '') {
+	public function read(GroupHelper $groupHelper, UserSettings $userSettings, $start, $count, $filter = 'all', $user = '', $objecttype = '', $objectid = 0) {
 		// get current user
 		if ($user === '') {
 			$user = $this->userSession->getUser();
@@ -221,10 +223,18 @@ class Data {
 		if ($filter === 'self') {
 			$limitActivities .= ' AND `user` = ?';
 			$parameters[] = $user;
-		}
-		else if ($filter === 'by' || $filter === 'all' && !$userSettings->getUserSetting($user, 'setting', 'self')) {
+		} else if ($filter === 'by' || $filter === 'all' && !$userSettings->getUserSetting($user, 'setting', 'self')) {
 			$limitActivities .= ' AND `user` <> ?';
 			$parameters[] = $user;
+		} else if ($filter === 'filter') {
+			if (!$userSettings->getUserSetting($user, 'setting', 'self')) {
+				$limitActivities .= ' AND `user` <> ?';
+				$parameters[] = $user;
+			}
+			$limitActivities .= ' AND `object_type` = ?';
+			$parameters[] = $objecttype;
+			$limitActivities .= ' AND `object_id` = ?';
+			$parameters[] = $objectid;
 		}
 
 		list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
@@ -281,6 +291,7 @@ class Data {
 			case 'by':
 			case 'self':
 			case 'all':
+			case 'filter':
 				return $filterValue;
 			default:
 				if ($this->activityManager->isFilterValid($filterValue)) {
