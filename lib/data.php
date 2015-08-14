@@ -82,17 +82,19 @@ class Data {
 	 *
 	 * @param string $app The app where this event is associated with
 	 * @param string $subject A short description of the event
-	 * @param array  $subjectparams Array with parameters that are filled in the subject
+	 * @param array  $subjectParams Array with parameters that are filled in the subject
 	 * @param string $message A longer description of the event
-	 * @param array  $messageparams Array with parameters that are filled in the message
+	 * @param array  $messageParams Array with parameters that are filled in the message
 	 * @param string $file The file including path where this event is associated with. (optional)
 	 * @param string $link A link where this event is associated with (optional)
-	 * @param string $affecteduser If empty the current user will be used
+	 * @param string $affectedUser If empty the current user will be used
 	 * @param string $type Type of the notification
 	 * @param int    $prio Priority of the notification
+	 * @param string $objectType Object type can be used to filter the activities later
+	 * @param int    $objectId Object id can be used to filter the activities later
 	 * @return bool
 	 */
-	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = '', $prio = IExtension::PRIORITY_MEDIUM) {
+	public static function send($app, $subject, array $subjectParams, $message, array $messageParams, $file, $link, $affectedUser, $type, $prio, $objectType = '', $objectId = 0) {
 		$timestamp = time();
 
 		$user = \OC::$server->getUserSession()->getUser();
@@ -103,20 +105,48 @@ class Data {
 			$user = '';
 		}
 
-		if ($affecteduser === '' && $user === '') {
+		if ($affectedUser === '' && $user === '') {
 			return false;
-		} elseif ($affecteduser === '') {
-			$auser = $user;
-		} else {
-			$auser = $affecteduser;
+		} else if ($affectedUser === '') {
+			$affectedUser = $user;
 		}
 
 		// store in DB
-		$query = DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
-		$query->execute(array($app, $subject, json_encode($subjectparams), $message, json_encode($messageparams), $file, $link, $user, $auser, $timestamp, $prio, $type));
-
-		// fire a hook so that other apps like notification systems can connect
-		Util::emitHook('OC_Activity', 'post_event', array('app' => $app, 'subject' => $subject, 'user' => $user, 'affecteduser' => $affecteduser, 'message' => $message, 'file' => $file, 'link'=> $link, 'prio' => $prio, 'type' => $type));
+		$queryBuilder = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$queryBuilder->insert('activity')
+			->values([
+				'app' => $queryBuilder->createParameter('app'),
+				'subject' => $queryBuilder->createParameter('subject'),
+				'subjectparams' => $queryBuilder->createParameter('subjectparams'),
+				'message' => $queryBuilder->createParameter('message'),
+				'messageparams' => $queryBuilder->createParameter('messageparams'),
+				'file' => $queryBuilder->createParameter('file'),
+				'link' => $queryBuilder->createParameter('link'),
+				'user' => $queryBuilder->createParameter('user'),
+				'affecteduser' => $queryBuilder->createParameter('affecteduser'),
+				'timestamp' => $queryBuilder->createParameter('timestamp'),
+				'priority' => $queryBuilder->createParameter('priority'),
+				'type' => $queryBuilder->createParameter('type'),
+				'object_type' => $queryBuilder->createParameter('object_type'),
+				'object_id' => $queryBuilder->createParameter('object_id'),
+			])
+			->setParameters([
+				'app' => $app,
+				'subject' => $subject,
+				'subjectparams' => json_encode($subjectParams),
+				'message' => $message,
+				'messageparams' => json_encode($messageParams),
+				'file' => $file,
+				'link' => $link,
+				'user' => $user,
+				'affecteduser' => $affectedUser,
+				'timestamp' => (int) $timestamp,
+				'priority' => (int) $prio,
+				'type' => $type,
+				'object_type' => $objectType,
+				'object_id' => (int) $objectId,
+			])
+			->execute();
 
 		return true;
 	}
@@ -147,17 +177,6 @@ class Data {
 			$timestamp,
 			$type,
 			$latestSendTime,
-		));
-
-		// fire a hook so that other apps like notification systems can connect
-		Util::emitHook('OC_Activity', 'post_email', array(
-			'app'			=> $app,
-			'subject'		=> $subject,
-			'subjectparams'	=> $subjectParams,
-			'affecteduser'	=> $affectedUser,
-			'timestamp'		=> $timestamp,
-			'type'			=> $type,
-			'latest_send'	=> $latestSendTime,
 		));
 
 		return true;
