@@ -49,7 +49,7 @@ script:
 
   # Run Javascript unit tests
   - cd tests/js
-  - sh -c "if [ '$JSTESTS' != '1' ]; then npm install --deps; node_modules/karma/bin/karma start --single-run karma.config.js; fi"
+  - sh -c "if [ '$JSTESTS' = '1' ]; then npm install --deps; node_modules/karma/bin/karma start karma.config.js --single-run; fi"
   - cd ../
 
 matrix:
