@@ -32,13 +32,13 @@
 			<field>
 				<name>type</name>
 				<type>text</type>
-				<notnull>true</notnull>
+				<notnull>false</notnull>
 				<length>255</length>
 			</field>
 			<field>
 				<name>user</name>
 				<type>text</type>
-				<notnull>true</notnull>
+				<notnull>false</notnull>
 				<length>64</length>
 			</field>
 			<field>
