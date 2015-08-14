@@ -29,7 +29,6 @@ use OCA\Activity\Controller\Feed;
 use OCA\Activity\Controller\Settings;
 use OCA\Activity\Data;
 use OCA\Activity\DataHelper;
-use OCA\Activity\Display;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\FilesHooks;
 use OCA\Activity\MailQueueHandler;
@@ -81,18 +80,6 @@ class Application extends App {
 					$c->query('CurrentUID')
 				),
 				$c->query('ActivityL10N')
-			);
-		});
-
-		$container->registerService('DisplayHelper', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			return new Display(
-				$server->query('DateTimeFormatter'),
-				$server->getPreviewManager(),
-				$server->getURLGenerator(),
-				new View('')
 			);
 		});
 
@@ -189,10 +176,10 @@ class Application extends App {
 
 			return new Settings(
 				$c->query('AppName'),
-				$c->query('Request'),
+				$server->getRequest(),
 				$server->getConfig(),
 				$server->getSecureRandom()->getMediumStrengthGenerator(),
-				$c->query('URLGenerator'),
+				$server->getURLGenerator(),
 				$c->query('ActivityData'),
 				$c->query('UserSettings'),
 				$c->query('ActivityL10N'),
@@ -206,13 +193,15 @@ class Application extends App {
 
 			return new Activities(
 				$c->query('AppName'),
-				$c->query('Request'),
+				$server->getRequest(),
 				$c->query('ActivityData'),
-				$c->query('DisplayHelper'),
 				$c->query('GroupHelper'),
 				$c->query('Navigation'),
 				$c->query('UserSettings'),
 				$server->getDateTimeFormatter(),
+				$server->getPreviewManager(),
+				$server->getURLGenerator(),
+				new View(''),
 				$c->query('CurrentUID')
 			);
 		});
@@ -223,7 +212,7 @@ class Application extends App {
 
 			return new Feed(
 				$c->query('AppName'),
-				$c->query('Request'),
+				$server->getRequest(),
 				$c->query('ActivityData'),
 				$c->query('GroupHelperSingleEntries'),
 				$c->query('UserSettings'),

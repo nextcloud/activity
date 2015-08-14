@@ -49,7 +49,6 @@ class ApplicationTest extends TestCase {
 			array('Consumer', 'OCA\Activity\Consumer'),
 			array('Consumer', 'OCP\Activity\IConsumer'),
 			array('DataHelper', 'OCA\Activity\DataHelper'),
-			array('DisplayHelper', 'OCA\Activity\Display'),
 			array('GroupHelper', 'OCA\Activity\GroupHelper'),
 			array('Hooks', 'OCA\Activity\FilesHooks'),
 			array('MailQueueHandler', 'OCA\Activity\MailQueueHandler'),

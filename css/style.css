@@ -91,13 +91,13 @@
 }
 
 .box .preview{
-	display: block;
 	width: 50px;
 	height: 50px;
 	margin-left: 24px;
 }
 
-.box .preview-dir-icon{
+.box .preview-dir-icon,
+.box .preview-mimetype-icon {
 	width: 32px;
 	height: 32px;
 }

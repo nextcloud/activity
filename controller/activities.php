@@ -23,24 +23,28 @@
 
 namespace OCA\Activity\Controller;
 
+use OC\Files\View;
 use OCA\Activity\Data;
-use OCA\Activity\Display;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Navigation;
 use OCA\Activity\UserSettings;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\Files;
 use OCP\IDateTimeFormatter;
+use OCP\IPreview;
 use OCP\IRequest;
+use OCP\IURLGenerator;
+use OCP\Template;
 
 class Activities extends Controller {
 	const DEFAULT_PAGE_SIZE = 30;
 
+	const MAX_NUM_THUMBNAILS = 7;
+
 	/** @var \OCA\Activity\Data */
 	protected $data;
-
-	/** @var \OCA\Activity\Display */
-	protected $display;
 
 	/** @var \OCA\Activity\GroupHelper */
 	protected $helper;
@@ -54,6 +58,15 @@ class Activities extends Controller {
 	/** @var IDateTimeFormatter */
 	protected $dateTimeFormatter;
 
+	/** @var IPreview */
+	protected $preview;
+
+	/** @var IURLGenerator */
+	protected $urlGenerator;
+
+	/** @var View */
+	protected $view;
+
 	/** @var string */
 	protected $user;
 
@@ -63,29 +76,35 @@ class Activities extends Controller {
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param Data $data
-	 * @param Display $display
 	 * @param GroupHelper $helper
 	 * @param Navigation $navigation
 	 * @param UserSettings $settings
 	 * @param IDateTimeFormatter $dateTimeFormatter
+	 * @param IPreview $preview
+	 * @param IURLGenerator $urlGenerator
+	 * @param View $view
 	 * @param string $user
 	 */
 	public function __construct($appName,
 								IRequest $request,
 								Data $data,
-								Display $display,
 								GroupHelper $helper,
 								Navigation $navigation,
 								UserSettings $settings,
 								IDateTimeFormatter $dateTimeFormatter,
+								IPreview $preview,
+								IURLGenerator $urlGenerator,
+								View $view,
 								$user) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
-		$this->display = $display;
 		$this->helper = $helper;
 		$this->navigation = $navigation;
 		$this->settings = $settings;
 		$this->dateTimeFormatter = $dateTimeFormatter;
+		$this->preview = $preview;
+		$this->urlGenerator = $urlGenerator;
+		$this->view = $view;
 		$this->user = $user;
 	}
 
@@ -110,16 +129,110 @@ class Activities extends Controller {
 	 *
 	 * @param int $page
 	 * @param string $filter
-	 * @return TemplateResponse
+	 * @return JSONResponse
 	 */
 	public function fetch($page, $filter = 'all') {
 		$pageOffset = $page - 1;
 		$filter = $this->data->validateFilter($filter);
 
-		return new TemplateResponse('activity', 'stream.list', [
-			'activity'		=> $this->data->read($this->helper, $this->settings, $pageOffset * self::DEFAULT_PAGE_SIZE, self::DEFAULT_PAGE_SIZE, $filter),
-			'displayHelper'	=> $this->display,
-			'dateTimeFormatter'	=> $this->dateTimeFormatter,
-		], '');
+		$activities = $this->data->read($this->helper, $this->settings, $pageOffset * self::DEFAULT_PAGE_SIZE, self::DEFAULT_PAGE_SIZE, $filter);
+
+		$preparedActivities = [];
+		foreach ($activities as $activity) {
+			$activity['relativeTimestamp'] = (string) Template::relative_modified_date($activity['timestamp'], true);
+			$activity['readableTimestamp'] = (string) $this->dateTimeFormatter->formatDate($activity['timestamp']);
+			$activity['relativeDateTimestamp'] = (string) Template::relative_modified_date($activity['timestamp']);
+			$activity['readableDateTimestamp'] = (string) $this->dateTimeFormatter->formatDateTime($activity['timestamp']);
+
+			if (strpos($activity['subjectformatted']['markup']['trimmed'], '<a ') !== false) {
+				// We do not link the subject as we create links for the parameters instead
+				$activity['link'] = '';
+			}
+
+			$activity['previews'] = [];
+			if (!empty($activity['files'])) {
+				foreach ($activity['files'] as $file) {
+					if ($file === '') {
+						// No file, no preview
+						continue;
+					}
+
+					$activity['previews'][] = $this->getPreview($activity, $file);
+
+					if (sizeof($activity['previews']) >= self::MAX_NUM_THUMBNAILS) {
+						// Don't want to clutter the page, so we stop after a few thumbnails
+						break;
+					}
+				}
+			} else if ($activity['file'] !== '') {
+				$activity['previews'][] = $this->getPreview($activity, $activity['file']);
+			}
+
+			$preparedActivities[] = $activity;
+		}
+
+		return new JSONResponse($preparedActivities);
+	}
+
+	/**
+	 * @param array $activity
+	 * @param string $file
+	 * @return array
+	 */
+	protected function getPreview(array $activity, $file) {
+		$this->view->chroot('/' . $activity['affecteduser'] . '/files');
+		$exist = $this->view->file_exists($file);
+		$is_dir = $this->view->is_dir($file);
+
+		$preview = [
+			'link'			=> $this->getPreviewLink($file, $is_dir),
+			'source'		=> '',
+			'isMimeTypeIcon' => true,
+		];
+
+		// show a preview image if the file still exists
+		if ($is_dir) {
+			$mimeTypeIcon = Template::mimetype_icon('dir');
+			if (substr($mimeTypeIcon, -4) === '.png') {
+				$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
+			}
+			$preview['source'] = $mimeTypeIcon;
+		} else {
+			$mimeType = Files::getMimeType($file);
+			if (!$is_dir && $mimeType && $this->preview->isMimeSupported($mimeType) && $exist) {
+				$preview['isMimeTypeIcon'] = false;
+				$preview['source'] = $this->urlGenerator->linkToRoute('core_ajax_preview', [
+					'file' => $file,
+					'x' => 150,
+					'y' => 150,
+				]);
+			} else {
+				$mimeTypeIcon = Template::mimetype_icon($mimeType);
+				if (substr($mimeTypeIcon, -4) === '.png') {
+					$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
+				}
+				$preview['source'] = $mimeTypeIcon;
+			}
+		}
+
+		return $preview;
+	}
+
+	/**
+	 * @param string $path
+	 * @param bool $isDir
+	 * @return string
+	 */
+	protected function getPreviewLink($path, $isDir) {
+		if ($isDir) {
+			return $this->urlGenerator->linkTo('files', 'index.php', array('dir' => $path));
+		} else {
+			$parentDir = (substr_count($path, '/') === 1) ? '/' : dirname($path);
+			$fileName = basename($path);
+			return $this->urlGenerator->linkTo('files', 'index.php', array(
+				'dir' => $parentDir,
+				'scrollto' => $fileName,
+			));
+		}
 	}
 }

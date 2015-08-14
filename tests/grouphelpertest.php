@@ -153,6 +153,7 @@ class GroupHelperTest extends TestCase {
 						'message'		=> '',
 						'messageparams'	=> array(),
 						'file'			=> 'testing/file2.txt',
+						'files'			=> ['testing/file2.txt', 'testing/file1.txt'],
 						'typeicon'		=> 'icon-type1',
 					),
 				),
@@ -216,6 +217,7 @@ class GroupHelperTest extends TestCase {
 						'message'		=> '',
 						'messageparams'	=> array(),
 						'file'			=> 'testing/file3.txt',
+						'files'			=> ['testing/file3.txt', 'testing/file2.txt'],
 						'typeicon'		=> 'icon-type1',
 					),
 					array(

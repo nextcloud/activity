@@ -99,6 +99,7 @@ class GroupHelper
 		// and the time difference is not bigger than 3 days.
 		if ($this->getGroupKey($activity) === $this->groupKey &&
 			abs($activity['timestamp'] - $this->groupTime) < (3 * 24 * 60 * 60)
+			&& (!isset($this->openGroup['activity_ids']) || sizeof($this->openGroup['activity_ids']) <= 5)
 		) {
 			$parameter = $this->getGroupParameter($activity);
 			if ($parameter !== false) {
@@ -107,20 +108,29 @@ class GroupHelper
 				}
 				if (!isset($this->openGroup['activity_ids'])) {
 					$this->openGroup['activity_ids'] = array((int) $this->openGroup['activity_id']);
+					$this->openGroup['files'] = array((string) $this->openGroup['file']);
 				}
 
 				$this->openGroup['subjectparams_array'][$parameter][] = $activity['subjectparams_array'][$parameter];
 				$this->openGroup['subjectparams_array'][$parameter] = array_unique($this->openGroup['subjectparams_array'][$parameter]);
 				$this->openGroup['activity_ids'][] = (int) $activity['activity_id'];
+				$this->openGroup['files'][] = (string) $activity['file'];
 			}
 		} else {
-			if (!empty($this->openGroup)) {
-				$this->activities[] = $this->openGroup;
-			}
+			$this->closeOpenGroup();
 
 			$this->groupKey = $this->getGroupKey($activity);
 			$this->groupTime = $activity['timestamp'];
 			$this->openGroup = $activity;
+		}
+	}
+
+	/**
+	 * Closes the currently open group and adds it to the list of activities
+	 */
+	protected function closeOpenGroup() {
+		if (!empty($this->openGroup)) {
+			$this->activities[] = $this->openGroup;
 		}
 	}
 
@@ -146,6 +156,12 @@ class GroupHelper
 		return $activity['app'] . '|' . $activity['user'] . '|' . $activity['subject'];
 	}
 
+	/**
+	 * Get the parameter which is the varying part
+	 *
+	 * @param array $activity
+	 * @return bool|int False if the activity should not be grouped, parameter position otherwise
+	 */
 	protected function getGroupParameter($activity) {
 		if (!$this->allowGrouping) {
 			return false;
@@ -161,9 +177,7 @@ class GroupHelper
 	 * @return array translated activities ready for use
 	 */
 	public function getActivities() {
-		if (!empty($this->openGroup)) {
-			$this->activities[] = $this->openGroup;
-		}
+		$this->closeOpenGroup();
 
 		$return = array();
 		foreach ($this->activities as $activity) {
