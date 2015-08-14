@@ -17,7 +17,6 @@ OC.L10N.register(
     "in %s" : "en %s",
     "%s and %s" : "%s i %s",
     ", " : ", ",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["%s i <strong class=\"tooltip\" title=\"%s\">%n més</strong>","%s i <strong class=\"tooltip\" title=\"%s\">%n més</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s i %n més","%s i %n més"],
     "Hello %s," : "Hola %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Esteu rebent aquest correu perquè en l'última hora han succeït les següents coses a %s",

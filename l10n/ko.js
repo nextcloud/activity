@@ -17,7 +17,6 @@ OC.L10N.register(
     "in %s" : "%s",
     "%s and %s" : "%s, %s",
     ", " : ", ",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["%s, <strong class=\"tooltip\" title=\"%s\">%n개 더 있음</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s, %n개 더 있음"],
     "Hello %s," : "%s 님 안녕하세요,",
     "You are receiving this email because in the last hour the following things happened at %s" : "%s에서 지난 한 시간 동안 일어난 일에 대한 메일 알림입니다",

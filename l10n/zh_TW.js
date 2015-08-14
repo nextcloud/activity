@@ -16,7 +16,6 @@ OC.L10N.register(
     "in %s" : "在 %s",
     "%s and %s" : "%s 與 %s",
     ", " : ", ",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["%s 與 <strong class=\"tooltip\" title=\"%s\">%n 個</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s 與 %n 個"],
     "Hello %s," : "哈囉 %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "您會收到郵件是因為在最近一小時發生以下的事件 %s",

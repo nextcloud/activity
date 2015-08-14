@@ -15,7 +15,6 @@ OC.L10N.register(
     "in %s" : "içinə %s",
     "%s and %s" : "%s və %s",
     ", " : ",",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["%s və <strong class=\"tooltip\" title=\"%s\">%n daha da</strong>","%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s and %n more","%s və %n daha da"],
     "Hello %s," : "Salam %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Sız elektron məktubu ona görə aldınız ki, aşağıdakı hadısələr %s ünvanında son saatda baş vermişdir",

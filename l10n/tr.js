@@ -17,7 +17,6 @@ OC.L10N.register(
     "in %s" : "%s içinde",
     "%s and %s" : "%s ve %s",
     ", " : ", ",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["%s ve <strong class=\"tooltip\" title=\"%s\">%n daha fazla</strong>","%s ve <strong class=\"tooltip\" title=\"%s\">%n daha fazla</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s ve %n daha fazla","%s ve %n daha fazla"],
     "Hello %s," : "Merhaba %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Bu e-postayı alma sebebiniz son saatte %s üzerinde aşağıdaki şeylerin gerçekleşmesi:",

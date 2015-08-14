@@ -13,7 +13,6 @@ OC.L10N.register(
     "in %s" : "u %s",
     "%s and %s" : "%s i %s",
     ", " : ", ",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["%s i <strong class=\"tooltip\" title=\"%s\">%n više</strong>","%s i <strong class=\"tooltip\" title=\"%s\">%n više</strong>","%s i <strong class=\"tooltip\" title=\"%s\">%n više</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s i %n više","%s i %n više","%s i %n više"],
     "Hello %s," : "Pozdrav %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Ovu e-poštu primate zato jer su se tijekom proteglog sata sljedeće stvari dogodile na %s",

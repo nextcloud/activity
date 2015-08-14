@@ -14,7 +14,6 @@ OC.L10N.register(
     "in %s" : "%s-an",
     "%s and %s" : "%s eta %s",
     ", " : ", ",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["%s eta <strong class=\"tooltip\" title=\"%s\">%n gehiago</strong>","%s eta <strong class=\"tooltip\" title=\"%s\">%n gehiago</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s eta %n gehiago","%s eta %n gehiago"],
     "Hello %s," : "Kaixo %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Posta hau jaso duzu azkenengo orduan %sko hurrengo gertaerak direla eta",

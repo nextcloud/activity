@@ -13,7 +13,6 @@ OC.L10N.register(
     "in %s" : "in %s",
     "%s and %s" : "%s e %s",
     ", " : ", ",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["%s e <strong class=\"tooltip\" title=\"%s\">%n altere</strong>","%s e <strong class=\"tooltip\" title=\"%s\">%n altere</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s e %n altere","%s e %n altere"],
     "Hello %s," : "Salute %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Tu es recipente ite message de e-posta perque in le ultime hora le sequente cosas ha occurrite a %s",

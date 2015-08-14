@@ -17,7 +17,6 @@ OC.L10N.register(
     "in %s" : "%s で",
     "%s and %s" : "%s と %s",
     ", " : ", ",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["%s と <strong class=\"tooltip\" title=\"%s\">それ以外に %n 個</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s と それ以外に %n 個"],
     "Hello %s," : "%s さんこんにちは、",
     "You are receiving this email because in the last hour the following things happened at %s" : "このメールは、最近１時間に %s で以下の事象が発生したことをお知らせするものです。",

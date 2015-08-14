@@ -17,7 +17,6 @@ OC.L10N.register(
     "in %s" : "в %s",
     "%s and %s" : "%s і %s",
     ", " : ",",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["  %s і <strong class=\"tooltip\" title=\"%s\"> %n більше </strong> ","  %s і <strong class=\"tooltip\" title=\"%s\"> %n більше </strong> "," %s і <strong class=\"tooltip\" title=\"%s\"> %n більше </strong> "],
     "_%s and %n more_::_%s and %n more_" : [" %s і %n ще"," %s і %n ще","%s і %n ще"],
     "Hello %s," : "Привіт %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Ви отримали це електронне повідомлення, тому що за останню годину відбулися наступні зміни на %s",

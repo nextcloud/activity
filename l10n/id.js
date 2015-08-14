@@ -17,7 +17,6 @@ OC.L10N.register(
     "in %s" : "dalam %s",
     "%s and %s" : "%s dan %s",
     ", " : ", ",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["%s dan <strong class=\"tooltip\" title=\"%s\">%n lainnya</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s dan %n lainnya"],
     "Hello %s," : "Helo %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Anda menerima email ini karena dalam satu jam terakhir hal-hal berikut terjadi di %s",

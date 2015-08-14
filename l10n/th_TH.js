@@ -17,7 +17,6 @@ OC.L10N.register(
     "in %s" : "ใน %s",
     "%s and %s" : "%s และ %s",
     ", " : "หรือ",
-    "_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"tooltip\" title=\"%s\">%n more</strong>_" : ["%s และ <strong class=\"tooltip\" title=\"%s\">%n ฯลฯ</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s และ %n ฯลฯ"],
     "Hello %s," : "สวัสดี %s",
     "You are receiving this email because in the last hour the following things happened at %s" : "คุณได้รับอีเมลนี้เนื่องจากในชั่วโมงที่ผ่านมามีบางอย่างเกิดขึ้นที่ %s",
