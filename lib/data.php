@@ -24,8 +24,11 @@
 namespace OCA\Activity;
 
 use OCP\Activity\IExtension;
+use OCP\Activity\IManager;
 use OCP\DB;
+use OCP\IDBConnection;
 use OCP\IUser;
+use OCP\IUserSession;
 use OCP\User;
 use OCP\Util;
 
@@ -33,15 +36,24 @@ use OCP\Util;
  * @brief Class for managing the data in the activities
  */
 class Data {
-
-	/** @var \OCP\Activity\IManager */
+	/** @var IManager */
 	protected $activityManager;
 
+	/** @var IDBConnection */
+	protected $connection;
+
+	/** @var IUserSession */
+	protected $userSession;
+
 	/**
-	 * @param \OCP\Activity\IManager $activityManager
+	 * @param IManager $activityManager
+	 * @param IDBConnection $connection
+	 * @param IUserSession $userSession
 	 */
-	public function __construct(\OCP\Activity\IManager $activityManager) {
+	public function __construct(IManager $activityManager, IDBConnection $connection, IUserSession $userSession) {
 		$this->activityManager = $activityManager;
+		$this->connection = $connection;
+		$this->userSession = $userSession;
 	}
 
 	protected $notificationTypes = array();
@@ -163,7 +175,15 @@ class Data {
 	 */
 	public function read(GroupHelper $groupHelper, UserSettings $userSettings, $start, $count, $filter = 'all', $user = '') {
 		// get current user
-		$user = ($user !== '') ? $user : User::getUser();
+		if ($user === '') {
+			$user = $this->userSession->getUser();
+			if ($user instanceof IUser) {
+				$user = $user->getUID();
+			} else {
+				// No user given and not logged in => no activities
+				return [];
+			}
+		}
 		$groupHelper->setUser($user);
 
 		$enabledNotifications = $userSettings->getNotificationTypes($user, 'stream');
@@ -197,33 +217,32 @@ class Data {
 			}
 		}
 
-		// fetch from DB
-		$query = DB::prepare(
-			'SELECT * '
-			. ' FROM `*PREFIX*activity` '
-			. ' WHERE `affecteduser` = ? ' . $limitActivities
-			. ' ORDER BY `timestamp` DESC',
-			$count, $start);
-		$result = $query->execute($parameters);
-
-		return $this->getActivitiesFromQueryResult($result, $groupHelper);
+		return $this->getActivities($count, $start, $limitActivities, $parameters, $groupHelper);
 	}
 
 	/**
 	 * Process the result and return the activities
 	 *
-	 * @param \OC_DB_StatementWrapper|int $result
+	 * @param int $count
+	 * @param int $start
+	 * @param string $limitActivities
+	 * @param array $parameters
 	 * @param \OCA\Activity\GroupHelper $groupHelper
 	 * @return array
 	 */
-	public function getActivitiesFromQueryResult($result, GroupHelper $groupHelper) {
-		if (DB::isError($result)) {
-			Util::writeLog('Activity', DB::getErrorMessage($result), Util::ERROR);
-		} else {
-			while ($row = $result->fetchRow()) {
-				$groupHelper->addActivity($row);
-			}
+	protected function getActivities($count, $start, $limitActivities, $parameters, GroupHelper $groupHelper) {
+		$query = $this->connection->prepare(
+			'SELECT * '
+			. ' FROM `*PREFIX*activity` '
+			. ' WHERE `affecteduser` = ? ' . $limitActivities
+			. ' ORDER BY `timestamp` DESC',
+			$count, $start);
+		$query->execute($parameters);
+
+		while ($row = $query->fetch()) {
+			$groupHelper->addActivity($row);
 		}
+		$query->closeCursor();
 
 		return $groupHelper->getActivities();
 	}

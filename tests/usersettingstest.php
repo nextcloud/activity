@@ -47,7 +47,11 @@ class UserSettingsTest extends TestCase {
 			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
 		$this->config = $this->getMock('OCP\IConfig');
-		$this->userSettings = new UserSettings($activityManager, $this->config, new Data($activityManager));
+		$this->userSettings = new UserSettings($activityManager, $this->config, new Data(
+			$activityManager,
+			$this->getMock('\OCP\IDBConnection'),
+			$this->getMock('\OCP\IUserSession')
+		));
 	}
 
 	protected function tearDown() {

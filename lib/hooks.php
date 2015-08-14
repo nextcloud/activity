@@ -14,6 +14,7 @@ namespace OCA\Activity;
 
 use OCA\Activity\AppInfo\Application;
 use OCP\DB;
+use OCP\IDBConnection;
 
 /**
  * Handles the stream and mail queue of a user when he is being deleted
@@ -25,8 +26,9 @@ class Hooks {
 	 * @param array $params The hook params
 	 */
 	static public function deleteUser($params) {
+		$connection = \OC::$server->getDatabaseConnection();
 		self::deleteUserStream($params['uid']);
-		self::deleteUserMailQueue($params['uid']);
+		self::deleteUserMailQueue($connection, $params['uid']);
 	}
 
 	/**
@@ -45,13 +47,16 @@ class Hooks {
 	/**
 	 * Delete all mail queue entries
 	 *
+	 * @param IDBConnection $connection
 	 * @param string $user
 	 */
-	static protected function deleteUserMailQueue($user) {
+	static protected function deleteUserMailQueue(IDBConnection $connection, $user) {
 		// Delete entries from mail queue
-		$query = DB::prepare(
-			'DELETE FROM `*PREFIX*activity_mq` '
-			. ' WHERE `amq_affecteduser` = ?');
-		$query->execute(array($user));
+		$queryBuilder = $connection->getQueryBuilder();
+
+		$queryBuilder->delete('activity_mq')
+			->where($queryBuilder->expr()->eq('amq_affecteduser', $queryBuilder->createParameter('user')))
+			->setParameter('user', $user);
+		$queryBuilder->execute();
 	}
 }

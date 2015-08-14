@@ -76,7 +76,9 @@ class ApiTest extends TestCase {
 
 	protected function tearDown() {
 		$data = new Data(
-			$this->getMock('\OCP\Activity\IManager')
+			$this->getMock('\OCP\Activity\IManager'),
+			$this->getMock('\OCP\IDBConnection'),
+			$this->getMock('\OCP\IUserSession')
 		);
 
 		$this->deleteUser($data, 'activity-api-user1');

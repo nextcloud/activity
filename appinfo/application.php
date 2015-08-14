@@ -47,8 +47,12 @@ class Application extends App {
 		 * Activity Services
 		 */
 		$container->registerService('ActivityData', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
 			return new Data(
-				$c->query('ServerContainer')->query('ActivityManager')
+				$server->getActivityManager(),
+				$server->getDatabaseConnection(),
+				$server->getUserSession()
 			);
 		});
 
