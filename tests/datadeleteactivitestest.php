@@ -57,7 +57,9 @@ class DataDeleteActivitiesTest extends TestCase {
 			));
 		}
 		$this->data = new Data(
-			$this->getMock('\OCP\Activity\IManager')
+			$this->getMock('\OCP\Activity\IManager'),
+			$this->getMock('\OCP\IDBConnection'),
+			$this->getMock('\OCP\IUserSession')
 		);
 	}
 
