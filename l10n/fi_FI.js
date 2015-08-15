@@ -17,6 +17,7 @@ OC.L10N.register(
     "in %s" : "polussa %s",
     "%s and %s" : "%s ja %s",
     ", " : ", ",
+    "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s ja <strong %s>%n lisää</strong>","%s ja <strong %s>%n lisää</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s ja %n lisää","%s ja %n lisää"],
     "Hello %s," : "Hei %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Saat tämän sähköpostiviestin, koska seuraavat asiat tapahtuivat kohteessa %s viimeisimmän tunnin aikana.",
@@ -36,6 +37,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Käytä RSS-syötettä",
     "No activity yet" : "Ei toimia vielä",
     "No more events to load" : "Ei enempää tapahtumia ladattavaksi",
-    "Files" : "Tiedostot"
+    "Files" : "Tiedostot",
+    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s ja <strong class=\"has-tooltip\" title=\"%s\">%n lisää</strong>","%s ja <strong class=\"has-tooltip\" title=\"%s\">%n lisää</strong>"]
 },
 "nplurals=2; plural=(n != 1);");

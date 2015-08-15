@@ -17,6 +17,7 @@ OC.L10N.register(
     "in %s" : "dalam %s",
     "%s and %s" : "%s dan %s",
     ", " : ", ",
+    "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s dan <strong %s>%n lainnya</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s dan %n lainnya"],
     "Hello %s," : "Helo %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Anda menerima email ini karena dalam satu jam terakhir hal-hal berikut terjadi di %s",
@@ -36,6 +37,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktifkan RSS feed",
     "No activity yet" : "Masih tidak ada aktivitas",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
-    "Files" : "Berkas"
+    "Files" : "Berkas",
+    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s dan <strong class=\"has-tooltip\" title=\"%s\">%n lainnya</strong>"]
 },
 "nplurals=1; plural=0;");

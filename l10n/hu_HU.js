@@ -17,6 +17,7 @@ OC.L10N.register(
     "in %s" : "itt:  %s",
     "%s and %s" : "%s és %s",
     ", " : ", ",
+    "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s és <strong %s>még %n</strong>","%s és <strong %s>még %n</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s és még %n","%s és még %n"],
     "Hello %s," : "Üdv %s!",
     "You are receiving this email because in the last hour the following things happened at %s" : "E levél arról ad tájékoztatást,  hogy mi történt az elmúlt órában ezen a szolgáltatáson: %s",
@@ -36,6 +37,7 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS-hírcsatorna engedélyezése",
     "No activity yet" : "Nincs még tevékenység",
     "No more events to load" : "Nincs több esemény",
-    "Files" : "Fájlok"
+    "Files" : "Fájlok",
+    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s és <strong class=\"has-tooltip\" title=\"%s\">még %n</strong>","%s és <strong class=\"has-tooltip\" title=\"%s\">még %n</strong>"]
 },
 "nplurals=2; plural=(n != 1);");

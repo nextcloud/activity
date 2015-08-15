@@ -17,6 +17,7 @@ OC.L10N.register(
     "in %s" : "σε %s",
     "%s and %s" : "%s και %s",
     ", " : ", ",
+    "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s και <strong %s> %n περισσότερo</strong>","%s και <strong %s> %n περισσότερα</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s και %n περισσότερο","%s και %n περισσότερα"],
     "Hello %s," : "Καλωσήρθατε %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Λαμβάνετε αυτό το μήνυμα ηλ. ταχυδρομείου γιατί την τελευταία ώρα τα παρακάτω γεγονότα συνέβησαν στο %s",
@@ -36,6 +37,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Ενεργοποίηση ροής RSS",
     "No activity yet" : "Καμία δραστηριότητα μέχρι τώρα.",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
-    "Files" : "Αρχεία"
+    "Files" : "Αρχεία",
+    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s και <strong class=\"has-tooltip\" title=\"%s\"> %n περισσότερο</strong>","%s και <strong class=\"has-tooltip\" title=\"%s\"> %n περισσότερα</strong>"]
 },
 "nplurals=2; plural=(n != 1);");
