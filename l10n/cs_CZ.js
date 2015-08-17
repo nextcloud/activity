@@ -17,6 +17,7 @@ OC.L10N.register(
     "in %s" : "v %s",
     "%s and %s" : "%s a %s",
     ", " : ", ",
+    "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s a <strong %s>%n další</strong>","%s a <strong %s>%n další</strong>","%s a <strong %s>%n dalších</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s a %n další","%s a %n další","%s a %n dalších"],
     "Hello %s," : "Vítejte %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "dostali jste tento email, protože za poslední hodinu došlo v %s k následující aktivitě",
@@ -36,6 +37,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Povolit RSS kanál",
     "No activity yet" : "Zatím bez aktivity",
     "No more events to load" : "Žádné další události k načtení",
-    "Files" : "Soubory"
+    "Files" : "Soubory",
+    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s a <strong class=\"has-tooltip\" title=\"%s\">%n další</strong>","%s a <strong class=\"has-tooltip\" title=\"%s\">%n další</strong>","%s a <strong class=\"has-tooltip\" title=\"%s\">%n dalších</strong>"]
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");

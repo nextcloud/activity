@@ -17,6 +17,7 @@ OC.L10N.register(
     "in %s" : "в %s",
     "%s and %s" : "%s и %s",
     ", " : ",",
+    "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s и <strong %s>еще %n</strong>","%s и <strong %s>еще %n</strong>","%s и <strong %s>еще %n</strong>","%s и <strong %s>еще %n</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s и ещё %n","%s и ещё %n","%s и ещё %n","%s и ещё %n"],
     "Hello %s," : "Привет, %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Вы получили это электронное сообщение, потому что за последний час произошли следующие изменения на %s",
@@ -35,6 +36,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Включить RSS ленту",
     "No activity yet" : "Событий ещё нет",
     "No more events to load" : "Больше нет событий для загрузки",
-    "Files" : "Файлы"
+    "Files" : "Файлы",
+    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s и<strong class=\"has-tooltip\" title=\"%s\">еще %n</strong>","%s и<strong class=\"has-tooltip\" title=\"%s\">еще %n</strong>","%s и<strong class=\"has-tooltip\" title=\"%s\">еще %n</strong>","%s и<strong class=\"has-tooltip\" title=\"%s\">еще %n</strong>"]
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");
