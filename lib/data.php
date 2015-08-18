@@ -80,21 +80,20 @@ class Data {
 	/**
 	 * Send an event into the activity stream
 	 *
-	 * @param string $app The app where this event is associated with
-	 * @param string $subject A short description of the event
+	 * @param string $app           The app where this event is associated with
+	 * @param string $subject       A short description of the event
 	 * @param array  $subjectParams Array with parameters that are filled in the subject
-	 * @param string $message A longer description of the event
+	 * @param string $message       A longer description of the event
 	 * @param array  $messageParams Array with parameters that are filled in the message
-	 * @param string $file The file including path where this event is associated with. (optional)
-	 * @param string $link A link where this event is associated with (optional)
-	 * @param string $affectedUser If empty the current user will be used
-	 * @param string $type Type of the notification
-	 * @param int    $prio Priority of the notification
-	 * @param string $objectType Object type can be used to filter the activities later
-	 * @param int    $objectId Object id can be used to filter the activities later
+	 * @param string $file          The file including path where this event is associated with
+	 * @param string $link          A link where this event is associated with
+	 * @param string $affectedUser  Recipient of the activity
+	 * @param string $type          Type of the notification
+	 * @param string $objectType    Object type can be used to filter the activities later (e.g. files)
+	 * @param int    $objectId      Object id can be used to filter the activities later (e.g. the ID of the cache entry)
 	 * @return bool
 	 */
-	public static function send($app, $subject, array $subjectParams, $message, array $messageParams, $file, $link, $affectedUser, $type, $prio, $objectType = '', $objectId = 0) {
+	public static function send($app, $subject, array $subjectParams, $message, array $messageParams, $file, $link, $affectedUser, $type, $objectType = '', $objectId = 0) {
 		$timestamp = time();
 
 		$user = \OC::$server->getUserSession()->getUser();
@@ -141,7 +140,7 @@ class Data {
 				'user' => $user,
 				'affecteduser' => $affectedUser,
 				'timestamp' => (int) $timestamp,
-				'priority' => (int) $prio,
+				'priority' => IExtension::PRIORITY_MEDIUM,
 				'type' => $type,
 				'object_type' => $objectType,
 				'object_id' => (int) $objectId,
@@ -190,11 +189,11 @@ class Data {
 	 * @param int $count The number of statements to read
 	 * @param string $filter Filter the activities
 	 * @param string $user User for whom we display the stream
-	 * @param string $objecttype
-	 * @param int $objectid
+	 * @param string $objectType
+	 * @param int $objectId
 	 * @return array
 	 */
-	public function read(GroupHelper $groupHelper, UserSettings $userSettings, $start, $count, $filter = 'all', $user = '', $objecttype = '', $objectid = 0) {
+	public function read(GroupHelper $groupHelper, UserSettings $userSettings, $start, $count, $filter = 'all', $user = '', $objectType = '', $objectId = 0) {
 		// get current user
 		if ($user === '') {
 			$user = $this->userSession->getUser();
@@ -232,9 +231,9 @@ class Data {
 				$parameters[] = $user;
 			}
 			$limitActivities .= ' AND `object_type` = ?';
-			$parameters[] = $objecttype;
+			$parameters[] = $objectType;
 			$limitActivities .= ' AND `object_id` = ?';
-			$parameters[] = $objectid;
+			$parameters[] = $objectId;
 		}
 
 		list($condition, $params) = $this->activityManager->getQueryForFilter($filter);

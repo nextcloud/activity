@@ -57,29 +57,30 @@ class Consumer implements IConsumer {
 	}
 
 	/**
-	 * Send an event into the activity stream of a user
+	 * Send an event to the notifications of a user
 	 *
-	 * @param string $app The app where this event is associated with
-	 * @param string $subject A short description of the event
+	 * @param string $app           The app where this event is associated with
+	 * @param string $subject       A short description of the event
 	 * @param array  $subjectParams Array with parameters that are filled in the subject
-	 * @param string $message A longer description of the event
+	 * @param string $message       A longer description of the event
 	 * @param array  $messageParams Array with parameters that are filled in the message
-	 * @param string $file The file including path where this event is associated with. (optional)
-	 * @param string $link A link where this event is associated with (optional)
-	 * @param string $affectedUser If empty the current user will be used
-	 * @param string $type Type of the notification
-	 * @param int    $priority Priority of the notification
+	 * @param string $file          The file including path where this event is associated with
+	 * @param string $link          A link where this event is associated with
+	 * @param string $affectedUser  Recipient of the notification
+	 * @param string $type          Type of the notification
+	 * @param string $objectType    Object type can be used to filter the activities later (e.g. files)
+	 * @param int    $objectId      Object id can be used to filter the activities later (e.g. the ID of the cache entry)
 	 * @return null
 	 */
-	public function receive($app, $subject, $subjectParams, $message, $messageParams, $file, $link, $affectedUser, $type, $priority) {
-		$selfAction = $affectedUser === $this->user;
+	public function receive($app, $subject, $subjectParams, $message, $messageParams, $file, $link, $affectedUser, $type, $objectType, $objectId) {
+		$selfAction = $affectedUser === $this->user || $affectedUser === '';
 		$streamSetting = $this->userSettings->getUserSetting($affectedUser, 'stream', $type);
 		$emailSetting = $this->userSettings->getUserSetting($affectedUser, 'email', $type);
 		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($affectedUser, 'setting', 'batchtime') : false;
 
 		// Add activity to stream
 		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($affectedUser, 'setting', 'self'))) {
-			Data::send($app, $subject, $subjectParams, $message, $messageParams, $file, $link, $affectedUser, $type, $priority);
+			Data::send($app, $subject, $subjectParams, $message, $messageParams, $file, $link, $affectedUser, $type, $objectType, $objectId);
 		}
 
 		// Add activity to mail queue
