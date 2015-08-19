@@ -81,33 +81,24 @@ class Data {
 	 * Send an event into the activity stream
 	 *
 	 * @param string $app           The app where this event is associated with
+	 * @param string $type          Type of the notification
+	 * @param string $affectedUser  Recipient of the activity
+	 * @param string $author        Author of the activity
+	 * @param int    $timestamp     Timestamp of the activity
 	 * @param string $subject       A short description of the event
 	 * @param array  $subjectParams Array with parameters that are filled in the subject
 	 * @param string $message       A longer description of the event
 	 * @param array  $messageParams Array with parameters that are filled in the message
-	 * @param string $file          The file including path where this event is associated with
-	 * @param string $link          A link where this event is associated with
-	 * @param string $affectedUser  Recipient of the activity
-	 * @param string $type          Type of the notification
 	 * @param string $objectType    Object type can be used to filter the activities later (e.g. files)
 	 * @param int    $objectId      Object id can be used to filter the activities later (e.g. the ID of the cache entry)
+	 * @param string $objectName    Object name can be used to filter the activities later (e.g. the path of the file)
+	 * @param string $link          A link where this event is associated with
 	 * @return bool
 	 */
-	public static function send($app, $subject, array $subjectParams, $message, array $messageParams, $file, $link, $affectedUser, $type, $objectType = '', $objectId = 0) {
-		$timestamp = time();
+	public static function send($app, $type, $affectedUser, $author, $timestamp, $subject, array $subjectParams, $message, array $messageParams, $objectType, $objectId, $objectName, $link) {
 
-		$user = \OC::$server->getUserSession()->getUser();
-		if ($user instanceof IUser) {
-			$user = $user->getUID();
-		} else {
-			// Public page or incognito mode
-			$user = '';
-		}
-
-		if ($affectedUser === '' && $user === '') {
+		if ($affectedUser === '') {
 			return false;
-		} else if ($affectedUser === '') {
-			$affectedUser = $user;
 		}
 
 		// store in DB
@@ -119,7 +110,7 @@ class Data {
 				'subjectparams' => $queryBuilder->createParameter('subjectparams'),
 				'message' => $queryBuilder->createParameter('message'),
 				'messageparams' => $queryBuilder->createParameter('messageparams'),
-				'file' => $queryBuilder->createParameter('file'),
+				'file' => $queryBuilder->createParameter('object_name'),
 				'link' => $queryBuilder->createParameter('link'),
 				'user' => $queryBuilder->createParameter('user'),
 				'affecteduser' => $queryBuilder->createParameter('affecteduser'),
@@ -131,19 +122,19 @@ class Data {
 			])
 			->setParameters([
 				'app' => $app,
+				'type' => $type,
+				'affecteduser' => $affectedUser,
+				'user' => $author,
+				'timestamp' => (int) $timestamp,
 				'subject' => $subject,
 				'subjectparams' => json_encode($subjectParams),
 				'message' => $message,
 				'messageparams' => json_encode($messageParams),
-				'file' => $file,
-				'link' => $link,
-				'user' => $user,
-				'affecteduser' => $affectedUser,
-				'timestamp' => (int) $timestamp,
 				'priority' => IExtension::PRIORITY_MEDIUM,
-				'type' => $type,
 				'object_type' => $objectType,
 				'object_id' => (int) $objectId,
+				'object_name' => $objectName,
+				'link' => $link,
 			])
 			->execute();
 
@@ -151,19 +142,18 @@ class Data {
 	}
 
 	/**
-	 * @brief Send an event into the activity stream
+	 * Send an event as email
 	 *
-	 * @param string $app The app where this event is associated with
-	 * @param string $subject A short description of the event
-	 * @param array  $subjectParams Array of parameters that are filled in the placeholders
-	 * @param string $affectedUser Name of the user we are sending the activity to
-	 * @param string $type Type of notification
-	 * @param int $latestSendTime Activity time() + batch setting of $affectedUser
+	 * @param string $app            The app where this event is associated with
+	 * @param string $type           Type of notification
+	 * @param string $subject        A short description of the event
+	 * @param array  $subjectParams  Array of parameters that are filled in the placeholders
+	 * @param string $affectedUser   Name of the user we are sending the activity to
+	 * @param int    $timestamp      The time when the event was triggered
+	 * @param int    $latestSendTime Activity $timestamp + batch setting of $affectedUser
 	 * @return bool
 	 */
-	public static function storeMail($app, $subject, array $subjectParams, $affectedUser, $type, $latestSendTime) {
-		$timestamp = time();
-
+	public static function storeMail($app, $type, $subject, array $subjectParams, $affectedUser, $timestamp, $latestSendTime) {
 		// store in DB
 		$query = DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '

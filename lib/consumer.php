@@ -23,6 +23,7 @@
 namespace OCA\Activity;
 
 use OCP\Activity\IConsumer;
+use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\AppFramework\IAppContainer;
 
@@ -59,34 +60,38 @@ class Consumer implements IConsumer {
 	/**
 	 * Send an event to the notifications of a user
 	 *
-	 * @param string $app           The app where this event is associated with
-	 * @param string $subject       A short description of the event
-	 * @param array  $subjectParams Array with parameters that are filled in the subject
-	 * @param string $message       A longer description of the event
-	 * @param array  $messageParams Array with parameters that are filled in the message
-	 * @param string $file          The file including path where this event is associated with
-	 * @param string $link          A link where this event is associated with
-	 * @param string $affectedUser  Recipient of the notification
-	 * @param string $type          Type of the notification
-	 * @param string $objectType    Object type can be used to filter the activities later (e.g. files)
-	 * @param int    $objectId      Object id can be used to filter the activities later (e.g. the ID of the cache entry)
+	 * @param IEvent $event
 	 * @return null
 	 */
-	public function receive($app, $subject, $subjectParams, $message, $messageParams, $file, $link, $affectedUser, $type, $objectType, $objectId) {
-		$selfAction = $affectedUser === $this->user || $affectedUser === '';
-		$streamSetting = $this->userSettings->getUserSetting($affectedUser, 'stream', $type);
-		$emailSetting = $this->userSettings->getUserSetting($affectedUser, 'email', $type);
-		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($affectedUser, 'setting', 'batchtime') : false;
+	public function receive(IEvent $event) {
+		$selfAction = $event->getAffectedUser() === $event->getAuthor();
+		$streamSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'stream', $event->getType());
+		$emailSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'email', $event->getType());
+		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'batchtime') : false;
 
 		// Add activity to stream
-		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($affectedUser, 'setting', 'self'))) {
-			Data::send($app, $subject, $subjectParams, $message, $messageParams, $file, $link, $affectedUser, $type, $objectType, $objectId);
+		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'self'))) {
+			Data::send(
+				$event->getApp(),
+				$event->getType(),
+				$event->getAffectedUser(),
+				$event->getAuthor(),
+				$event->getTimestamp(),
+				$event->getSubject(),
+				$event->getSubjectParameters(),
+				$event->getMessage(),
+				$event->getMessageParameters(),
+				$event->getObjectName(),
+				$event->getObjectType(),
+				$event->getObjectId(),
+				$event->getLink()
+			);
 		}
 
 		// Add activity to mail queue
-		if ($emailSetting && (!$selfAction || $this->userSettings->getUserSetting($affectedUser, 'setting', 'selfemail'))) {
-			$latestSend = time() + $emailSetting;
-			Data::storeMail($app, $subject, $subjectParams, $affectedUser, $type, $latestSend);
+		if ($emailSetting && (!$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'selfemail'))) {
+			$latestSend = $event->getTimestamp() + $emailSetting;
+			Data::storeMail($event->getApp(), $event->getType(), $event->getSubject(), $event->getSubjectParameters(), $event->getAffectedUser(), $event->getTimestamp(), $latestSend);
 		}
 	}
 }
