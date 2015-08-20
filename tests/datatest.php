@@ -117,8 +117,8 @@ class DataTest extends TestCase {
 			['author', 'affectedUser', 'author', 'affectedUser', true],
 			// Public page / Incognito mode
 			['', 'affectedUser', '', 'affectedUser', true],
-			// No affected user, falling back to author
-			['author', '', 'author', 'author', true],
+			// No affected user => no activity
+			['author', '', 'author', '', false],
 			// No affected user and no author => no activity
 			['', '', '', '', false],
 		];
@@ -129,33 +129,28 @@ class DataTest extends TestCase {
 	 *
 	 * @param string $actionUser
 	 * @param string $affectedUser
+	 * @param string $expectedAuthor
+	 * @param string $expectedAffected
+	 * @param bool $expectedActivity
 	 */
 	public function testSend($actionUser, $affectedUser, $expectedAuthor, $expectedAffected, $expectedActivity) {
 		$mockSession = $this->getMockBuilder('\OC\User\Session')
 			->disableOriginalConstructor()
 			->getMock();
 
-		if ($actionUser !== '') {
-			$mockUser = $this->getMockBuilder('\OCP\IUser')
-				->disableOriginalConstructor()
-				->getMock();
-			$mockUser->expects($this->any())
-				->method('getUID')
-				->willReturn($actionUser);
-
-			$mockSession->expects($this->any())
-				->method('getUser')
-				->willReturn($mockUser);
-		} else {
-			$mockSession->expects($this->any())
-				->method('getUser')
-				->willReturn(null);
-		}
-
 		$this->overwriteService('UserSession', $mockSession);
 		$this->deleteTestActivities();
 
-		$this->assertSame($expectedActivity, Data::send('test', 'subject', [], '', [], '', '', $affectedUser, 'type', IExtension::PRIORITY_MEDIUM));
+		$event = \OC::$server->getActivityManager()->generateEvent();
+		$event->setApp('test')
+			->setType('type')
+			->setAffectedUser($affectedUser)
+			->setSubject('subject', []);
+		if ($actionUser !== '') {
+			$event->setAuthor($actionUser);
+		}
+
+		$this->assertSame($expectedActivity, $this->data->send($event));
 
 		$connection = \OC::$server->getDatabaseConnection();
 		$query = $connection->prepare('SELECT `user`, `affecteduser` FROM `*PREFIX*activity` WHERE `app` = ? ORDER BY `activity_id` DESC');
@@ -172,6 +167,49 @@ class DataTest extends TestCase {
 		$this->restoreService('UserSession');
 	}
 
+	/**
+	 * @dataProvider dataSend
+	 *
+	 * @param string $actionUser
+	 * @param string $affectedUser
+	 * @param string $expectedAuthor
+	 * @param string $expectedAffected
+	 * @param bool $expectedActivity
+	 */
+	public function testStoreMail($actionUser, $affectedUser, $expectedAuthor, $expectedAffected, $expectedActivity) {
+		$mockSession = $this->getMockBuilder('\OC\User\Session')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$this->overwriteService('UserSession', $mockSession);
+		$this->deleteTestMails();
+
+		$time = time();
+
+		$event = \OC::$server->getActivityManager()->generateEvent();
+		$event->setApp('test')
+			->setType('type')
+			->setAffectedUser($affectedUser)
+			->setSubject('subject', [])
+			->setTimestamp($time);
+
+		$this->assertSame($expectedActivity, $this->data->storeMail($event, $time + 10));
+
+		$connection = \OC::$server->getDatabaseConnection();
+		$query = $connection->prepare('SELECT `amq_latest_send`, `amq_affecteduser` FROM `*PREFIX*activity_mq` WHERE `amq_appid` = ? ORDER BY `mail_id` DESC');
+		$query->execute(['test']);
+		$row = $query->fetch();
+
+		if ($expectedActivity) {
+			$this->assertEquals(['amq_latest_send' => $time + 10, 'amq_affecteduser' => $expectedAffected], $row);
+		} else {
+			$this->assertFalse($row);
+		}
+
+		$this->deleteTestMails();
+		$this->restoreService('UserSession');
+	}
+
 	public function dataRead() {
 		$user = $this->getMockBuilder('\OCP\IUser')
 			->disableOriginalConstructor()
@@ -181,15 +219,17 @@ class DataTest extends TestCase {
 			->willReturn('username');
 
 		return [
-			[null, 0, 10, 'all', '', null, [], null, null, [], '', []],
-			[$user, 0, 10, 'all', '', 'username', [], null, null, [], '', []],
-			[$user, 0, 10, 'all', 'test', 'test', [], null, null, [], '', []],
-			[$user, 0, 10, 'all', '', 'username', ['file_created'], false, null, [], ' AND `type` IN (?) AND `user` <> ?', ['username', 'file_created', 'username']],
-			[$user, 0, 10, 'all', '', 'username', ['file_created'], true, null, [], ' AND `type` IN (?)', ['username', 'file_created']],
-			[$user, 0, 10, 'by', '', 'username', ['file_created'], null, null, [], ' AND `type` IN (?) AND `user` <> ?', ['username', 'file_created', 'username']],
-			[$user, 0, 10, 'self', '', 'username', ['file_created'], null, null, [], ' AND `type` IN (?) AND `user` = ?', ['username', 'file_created', 'username']],
-			[$user, 0, 10, 'all', '', 'username', ['file_created'], true, 'OR `cond` = 1', null, ' AND `type` IN (?) OR `cond` = 1', ['username', 'file_created']],
-			[$user, 0, 10, 'all', '', 'username', ['file_created'], true, 'OR `cond` = ?', ['con1'], ' AND `type` IN (?) OR `cond` = ?', ['username', 'file_created', 'con1']],
+			[null, 0, 10, 'all', '', null, [], '', 0, null, null, [], null, null],
+			[$user, 0, 10, 'all', '', 'username', [], '', 0, null, null, [], null, null],
+			[$user, 0, 10, 'all', 'test', 'test', [], '', 0, null, null, [], null, null],
+			[$user, 0, 10, 'all', '', 'username', ['file_created'], false, '', 0, null, [], ' AND `type` IN (?) AND `user` <> ?', ['username', 'file_created', 'username']],
+			[$user, 0, 10, 'all', '', 'username', ['file_created'], true, '', 0, null, [], ' AND `type` IN (?)', ['username', 'file_created']],
+			[$user, 0, 10, 'by', '', 'username', ['file_created'], null, '', 0, null, [], ' AND `type` IN (?) AND `user` <> ?', ['username', 'file_created', 'username']],
+			[$user, 0, 10, 'self', '', 'username', ['file_created'], null, '', 0, null, [], ' AND `type` IN (?) AND `user` = ?', ['username', 'file_created', 'username']],
+			[$user, 0, 10, 'all', '', 'username', ['file_created'], true, '', 0, 'OR `cond` = 1', null, ' AND `type` IN (?) OR `cond` = 1', ['username', 'file_created']],
+			[$user, 0, 10, 'all', '', 'username', ['file_created'], true, '', 0, 'OR `cond` = ?', ['con1'], ' AND `type` IN (?) OR `cond` = ?', ['username', 'file_created', 'con1']],
+			[$user, 0, 10, 'filter', '', 'username', ['file_created'], false, 'files', 42, null, [], ' AND `type` IN (?) AND `user` <> ? AND `object_type` = ? AND `object_id` = ?', ['username', 'file_created', 'username', 'files', 42]],
+			[$user, 0, 10, 'filter', '', 'username', ['file_created'], true, 'files', 42, null, [], ' AND `type` IN (?) AND `object_type` = ? AND `object_id` = ?', ['username', 'file_created', 'files', 42]],
 		];
 	}
 
@@ -204,12 +244,14 @@ class DataTest extends TestCase {
 	 * @param string $expectedUser
 	 * @param array $notificationTypes
 	 * @param bool $selfSetting
+	 * @param string $objectType
+	 * @param int $objectId
 	 * @param array $conditions
 	 * @param array $params
 	 * @param string $limitActivities
 	 * @param array $parameters
 	 */
-	public function testRead($sessionUser, $start, $count, $filter, $user, $expectedUser, $notificationTypes, $selfSetting, $conditions, $params, $limitActivities, $parameters) {
+	public function testRead($sessionUser, $start, $count, $filter, $user, $expectedUser, $notificationTypes, $selfSetting, $objectType, $objectId, $conditions, $params, $limitActivities, $parameters) {
 
 		/** @var \OCA\Activity\GroupHelper|\PHPUnit_Framework_MockObject_MockObject $groupHelper */
 		$groupHelper = $this->getMockBuilder('OCA\Activity\GroupHelper')
@@ -254,7 +296,7 @@ class DataTest extends TestCase {
 			])
 			->setMethods(['getActivities'])
 			->getMock();
-		$data->expects($this->any())
+		$data->expects(($parameters === null && $limitActivities === null) ? $this->never() : $this->once())
 			->method('getActivities')
 			->with($count, $start, $limitActivities, $parameters, $groupHelper)
 			->willReturn([]);
@@ -265,7 +307,8 @@ class DataTest extends TestCase {
 
 		$this->assertEquals([], $data->read(
 			$groupHelper, $settings,
-			$start, $count, $filter, $user
+			$start, $count, $filter, $user,
+			$objectType, $objectId
 		));
 	}
 
@@ -275,6 +318,15 @@ class DataTest extends TestCase {
 	public function deleteTestActivities() {
 		$connection = \OC::$server->getDatabaseConnection();
 		$query = $connection->prepare('DELETE FROM `*PREFIX*activity` WHERE `app` = ?');
+		$query->execute(['test']);
+	}
+
+	/**
+	 * Delete all testing mails
+	 */
+	public function deleteTestMails() {
+		$connection = \OC::$server->getDatabaseConnection();
+		$query = $connection->prepare('DELETE FROM `*PREFIX*activity_mq` WHERE `amq_appid` = ?');
 		$query->execute(['test']);
 	}
 }

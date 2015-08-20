@@ -27,6 +27,7 @@ use OC\Files\View;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IExtension;
+use OCP\Activity\IManager;
 use OCP\IDBConnection;
 use OCP\Share;
 use OCP\Util;
@@ -35,6 +36,9 @@ use OCP\Util;
  * The class to handle the filesystem hooks
  */
 class FilesHooks {
+
+	/** @var \OCP\Activity\IManager */
+	protected $manager;
 
 	/** @var \OCA\Activity\Data */
 	protected $activityData;
@@ -51,12 +55,14 @@ class FilesHooks {
 	/**
 	 * Constructor
 	 *
+	 * @param IManager $manager
 	 * @param Data $activityData
 	 * @param UserSettings $userSettings
 	 * @param IDBConnection $connection
 	 * @param string|false $currentUser
 	 */
-	public function __construct(Data $activityData, UserSettings $userSettings, IDBConnection $connection, $currentUser) {
+	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IDBConnection $connection, $currentUser) {
+		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
 		$this->connection = $connection;
@@ -136,7 +142,7 @@ class FilesHooks {
 				$fileId, $path, true,
 				!empty($filteredStreamUsers[$user]),
 				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
-				$activityType, IExtension::PRIORITY_HIGH
+				$activityType
 			);
 		}
 	}
@@ -289,9 +295,8 @@ class FilesHooks {
 	 * @param bool $streamSetting
 	 * @param int $emailSetting
 	 * @param string $type
-	 * @param int $priority
 	 */
-	protected function addNotificationsForUser($user, $subject, $subjectParams, $fileId, $path, $isFile, $streamSetting, $emailSetting, $type = Files_Sharing::TYPE_SHARED, $priority = IExtension::PRIORITY_MEDIUM) {
+	protected function addNotificationsForUser($user, $subject, $subjectParams, $fileId, $path, $isFile, $streamSetting, $emailSetting, $type = Files_Sharing::TYPE_SHARED) {
 		if (!$streamSetting && !$emailSetting) {
 			return;
 		}
@@ -304,15 +309,25 @@ class FilesHooks {
 
 		$objectType = ($fileId) ? 'files' : '';
 
+		$event = $this->manager->generateEvent();
+		$event->setApp($app)
+			->setType($type)
+			->setAffectedUser($user)
+			->setAuthor($this->currentUser)
+			->setTimestamp(time())
+			->setSubject($subject, $subjectParams)
+			->setObject($objectType, $fileId, $path)
+			->setLink($link);
+
 		// Add activity to stream
 		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser, 'setting', 'self'))) {
-			$this->activityData->send($app, $subject, $subjectParams, '', array(), $path, $link, $user, $type, $priority, $objectType, $fileId);
+			$this->activityData->send($event);
 		}
 
 		// Add activity to mail queue
 		if ($emailSetting && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser, 'setting', 'selfemail'))) {
 			$latestSend = time() + $emailSetting;
-			$this->activityData->storeMail($app, $subject, $subjectParams, $user, $type, $latestSend);
+			$this->activityData->storeMail($event, $latestSend);
 		}
 	}
 

@@ -4,6 +4,7 @@
  * ownCloud - Activity App
  *
  * @author Frank Karlitschek
+ * @author Joas Schilling
  * @copyright 2013 Frank Karlitschek frank@owncloud.org
  *
  * This library is free software; you can redistribute it and/or
@@ -23,6 +24,7 @@
 
 namespace OCA\Activity;
 
+use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\DB;
@@ -80,24 +82,11 @@ class Data {
 	/**
 	 * Send an event into the activity stream
 	 *
-	 * @param string $app           The app where this event is associated with
-	 * @param string $type          Type of the notification
-	 * @param string $affectedUser  Recipient of the activity
-	 * @param string $author        Author of the activity
-	 * @param int    $timestamp     Timestamp of the activity
-	 * @param string $subject       A short description of the event
-	 * @param array  $subjectParams Array with parameters that are filled in the subject
-	 * @param string $message       A longer description of the event
-	 * @param array  $messageParams Array with parameters that are filled in the message
-	 * @param string $objectType    Object type can be used to filter the activities later (e.g. files)
-	 * @param int    $objectId      Object id can be used to filter the activities later (e.g. the ID of the cache entry)
-	 * @param string $objectName    Object name can be used to filter the activities later (e.g. the path of the file)
-	 * @param string $link          A link where this event is associated with
+	 * @param IEvent $event
 	 * @return bool
 	 */
-	public static function send($app, $type, $affectedUser, $author, $timestamp, $subject, array $subjectParams, $message, array $messageParams, $objectType, $objectId, $objectName, $link) {
-
-		if ($affectedUser === '') {
+	public function send(IEvent $event) {
+		if ($event->getAffectedUser() === '' || $event->getAffectedUser() === null) {
 			return false;
 		}
 
@@ -121,20 +110,20 @@ class Data {
 				'object_id' => $queryBuilder->createParameter('object_id'),
 			])
 			->setParameters([
-				'app' => $app,
-				'type' => $type,
-				'affecteduser' => $affectedUser,
-				'user' => $author,
-				'timestamp' => (int) $timestamp,
-				'subject' => $subject,
-				'subjectparams' => json_encode($subjectParams),
-				'message' => $message,
-				'messageparams' => json_encode($messageParams),
+				'app' => $event->getApp(),
+				'type' => $event->getType(),
+				'affecteduser' => $event->getAffectedUser(),
+				'user' => $event->getAuthor(),
+				'timestamp' => (int) $event->getTimestamp(),
+				'subject' => $event->getSubject(),
+				'subjectparams' => json_encode($event->getSubjectParameters()),
+				'message' => $event->getMessage(),
+				'messageparams' => json_encode($event->getMessageParameters()),
 				'priority' => IExtension::PRIORITY_MEDIUM,
-				'object_type' => $objectType,
-				'object_id' => (int) $objectId,
-				'object_name' => $objectName,
-				'link' => $link,
+				'object_type' => $event->getObjectType(),
+				'object_id' => (int) $event->getObjectId(),
+				'object_name' => $event->getObjectName(),
+				'link' => $event->getLink(),
 			])
 			->execute();
 
@@ -144,27 +133,26 @@ class Data {
 	/**
 	 * Send an event as email
 	 *
-	 * @param string $app            The app where this event is associated with
-	 * @param string $type           Type of notification
-	 * @param string $subject        A short description of the event
-	 * @param array  $subjectParams  Array of parameters that are filled in the placeholders
-	 * @param string $affectedUser   Name of the user we are sending the activity to
-	 * @param int    $timestamp      The time when the event was triggered
+	 * @param IEvent $event
 	 * @param int    $latestSendTime Activity $timestamp + batch setting of $affectedUser
 	 * @return bool
 	 */
-	public static function storeMail($app, $type, $subject, array $subjectParams, $affectedUser, $timestamp, $latestSendTime) {
+	public function storeMail(IEvent $event, $latestSendTime) {
+		if ($event->getAffectedUser() === '' || $event->getAffectedUser() === null) {
+			return false;
+		}
+
 		// store in DB
 		$query = DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
-			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
+			. ' (`amq_appid`, `amq_type`, `amq_affecteduser`, `amq_timestamp`, `amq_subject`, `amq_subjectparams`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 		$query->execute(array(
-			$app,
-			$subject,
-			json_encode($subjectParams),
-			$affectedUser,
-			$timestamp,
-			$type,
+			$event->getApp(),
+			$event->getType(),
+			$event->getAffectedUser(),
+			$event->getTimestamp(),
+			$event->getSubject(),
+			json_encode($event->getSubjectParameters()),
 			$latestSendTime,
 		));
 

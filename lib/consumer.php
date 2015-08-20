@@ -40,21 +40,21 @@ class Consumer implements IConsumer {
 		});
 	}
 
+	/** @var Data */
+	protected $data;
+
 	/** @var UserSettings */
 	protected $userSettings;
-
-	/** @var string */
-	protected $user;
 
 	/**
 	 * Constructor
 	 *
+	 * @param Data $data
 	 * @param UserSettings $userSettings
-	 * @param string $user
 	 */
-	public function __construct(UserSettings $userSettings, $user) {
+	public function __construct(Data $data, UserSettings $userSettings) {
+		$this->data = $data;
 		$this->userSettings = $userSettings;
-		$this->user = $user;
 	}
 
 	/**
@@ -71,27 +71,13 @@ class Consumer implements IConsumer {
 
 		// Add activity to stream
 		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'self'))) {
-			Data::send(
-				$event->getApp(),
-				$event->getType(),
-				$event->getAffectedUser(),
-				$event->getAuthor(),
-				$event->getTimestamp(),
-				$event->getSubject(),
-				$event->getSubjectParameters(),
-				$event->getMessage(),
-				$event->getMessageParameters(),
-				$event->getObjectName(),
-				$event->getObjectType(),
-				$event->getObjectId(),
-				$event->getLink()
-			);
+			$this->data->send($event);
 		}
 
 		// Add activity to mail queue
 		if ($emailSetting && (!$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'selfemail'))) {
 			$latestSend = $event->getTimestamp() + $emailSetting;
-			Data::storeMail($event->getApp(), $event->getType(), $event->getSubject(), $event->getSubjectParameters(), $event->getAffectedUser(), $event->getTimestamp(), $latestSend);
+			$this->data->storeMail($event, $latestSend);
 		}
 	}
 }
