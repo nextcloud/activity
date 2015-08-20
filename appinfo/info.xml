@@ -20,6 +20,6 @@
 		<filesystem/>
 	</types>
 	<dependencies>
-		<owncloud min-version="8.1" />
+		<owncloud min-version="8.2" />
 	</dependencies>
 </info>
