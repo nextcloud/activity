@@ -21,7 +21,7 @@
 		'        <div class="activity-icon {{typeIconClass}}"></div>' +
 		'        <div class="activitysubject">{{{subject}}}</div>' +
 		'        <span class="activitytime has-tooltip" title="{{formattedDateTooltip}}">{{formattedDate}}</span>' +
-		'        <div class="activitymessage">{{message}}</div>' +
+		'        <div class="activitymessage">{{{message}}}</div>' +
 		'        {{#if previews}}' +
 		'        <div class="previews">' +
 		'        {{#each previews}}' +
@@ -79,16 +79,13 @@
 
 		_loading: false,
 
-		/**
-		 * @type {OCA.Activity.ActivityCollection}
-		 */
-		_activities: null,
-
 		initialize: function() {
-			this._activities = new OCA.Activity.ActivityCollection();
-			this._activities.setObjectType('files');
-			this._activities.on('request', this._onRequest, this);
-			this._activities.on('sync', this._onChange, this);
+			this.collection = new OCA.Activity.ActivityCollection();
+			this.collection.setObjectType('files');
+			this.collection.on('request', this._onRequest, this);
+			this.collection.on('sync', this._onEndRequest, this);
+			this.collection.on('update', this._onChange, this);
+			this.collection.on('error', this._onError, this);
 		},
 
 		template: function(data) {
@@ -109,16 +106,29 @@
 		setFileInfo: function(fileInfo) {
 			this._fileInfo = fileInfo;
 			if (this._fileInfo) {
-				this._activities.setObjectId(this._fileInfo.get('id'));
-				this._activities.fetch();
+				this.collection.setObjectId(this._fileInfo.get('id'));
+				this.collection.fetch();
 			} else {
-				this._activities.reset();
+				this.collection.reset();
 			}
+		},
+
+		_onError: function() {
+			OC.Notification.showTemporary(t('activity', 'Error loading activities'));
 		},
 
 		_onRequest: function() {
 			this._loading = true;
 			this.render();
+		},
+
+		_onEndRequest: function() {
+			this._loading = false;
+			// empty result ?
+			if (!this.collection.length) {
+				// render now as there will be no update event
+				this.render();
+			}
 		},
 
 		_onChange: function() {
@@ -133,7 +143,7 @@
 			if (this._fileInfo) {
 				this.$el.html(this.template({
 					loading: this._loading,
-					activities: this._activities.map(formatActivity),
+					activities: this.collection.map(formatActivity),
 					emptyMessage: t('activity', 'No activities')
 				}));
 				this.$el.find('.has-tooltip').tooltip({

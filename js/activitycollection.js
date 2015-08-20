@@ -9,6 +9,9 @@
  */
 
 (function() {
+
+	OCA.Activity = OCA.Activity || {};
+
 	/**
 	 * @class OCA.Activity.ActivityCollection
 	 * @classdesc
@@ -34,12 +37,6 @@
 		_objectType: null,
 
 		model: OCA.Activity.ActivityModel,
-
-		initialize: function(options) {
-			if (options && options.fileId) {
-				this._fileId = options.fileId;
-			}
-		},
 
 		/**
 		 * Sets the object id to filter by or null for all.
@@ -78,7 +75,6 @@
 		}
 	});
 
-	OCA.Activity = OCA.Activity || {};
 	OCA.Activity.ActivityCollection = ActivityCollection;
 })();
 
