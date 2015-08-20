@@ -17,6 +17,7 @@ OC.L10N.register(
     "in %s" : "en %s",
     "%s and %s" : "%s i %s",
     ", " : ", ",
+    "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s i <strong %s>%n més</strong>","%s i <strong %s>%n més</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s i %n més","%s i %n més"],
     "Hello %s," : "Hola %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Esteu rebent aquest correu perquè en l'última hora han succeït les següents coses a %s",
@@ -36,6 +37,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Activa el canal RSS",
     "No activity yet" : "Cap activitat encara",
     "No more events to load" : "No hi ha més elements a carregar",
-    "Files" : "Fitxers"
+    "Files" : "Fitxers",
+    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s i <strong class=\"has-tooltip\" title=\"%s\">%n més</strong>","%s i <strong class=\"has-tooltip\" title=\"%s\">%n més</strong>"]
 },
 "nplurals=2; plural=(n != 1);");
