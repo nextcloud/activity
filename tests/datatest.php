@@ -64,6 +64,11 @@ class DataTest extends TestCase {
 		);
 	}
 
+	protected function tearDown() {
+		$this->restoreService('UserSession');
+		parent::tearDown();
+	}
+
 	public function dataGetNotificationTypes() {
 		return [
 			['type1'],
