@@ -63,8 +63,8 @@ class Application extends App {
 
 		$container->registerService('Consumer', function(IContainer $c) {
 			return new Consumer(
-				$c->query('UserSettings'),
-				$c->query('CurrentUID')
+				$c->query('ActivityData'),
+				$c->query('UserSettings')
 			);
 		});
 
@@ -108,6 +108,7 @@ class Application extends App {
 			$server = $c->query('ServerContainer');
 
 			return new FilesHooks(
+				$server->getActivityManager(),
 				$c->query('ActivityData'),
 				$c->query('UserSettings'),
 				$server->getDatabaseConnection(),

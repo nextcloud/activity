@@ -27,6 +27,7 @@ use OC\Files\View;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IExtension;
+use OCP\Activity\IManager;
 use OCP\IDBConnection;
 use OCP\Share;
 use OCP\Util;
@@ -35,6 +36,9 @@ use OCP\Util;
  * The class to handle the filesystem hooks
  */
 class FilesHooks {
+
+	/** @var \OCP\Activity\IManager */
+	protected $manager;
 
 	/** @var \OCA\Activity\Data */
 	protected $activityData;
@@ -51,12 +55,14 @@ class FilesHooks {
 	/**
 	 * Constructor
 	 *
+	 * @param IManager $manager
 	 * @param Data $activityData
 	 * @param UserSettings $userSettings
 	 * @param IDBConnection $connection
 	 * @param string|false $currentUser
 	 */
-	public function __construct(Data $activityData, UserSettings $userSettings, IDBConnection $connection, $currentUser) {
+	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IDBConnection $connection, $currentUser) {
+		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
 		$this->connection = $connection;
@@ -113,7 +119,8 @@ class FilesHooks {
 			return;
 		}
 
-		$affectedUsers = $this->getUserPathsFromPath($filePath);
+		list($filePath, $uidOwner, $fileId) = $this->getSourcePathAndOwner($filePath);
+		$affectedUsers = $this->getUserPathsFromPath($filePath, $uidOwner);
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
 
@@ -132,10 +139,10 @@ class FilesHooks {
 
 			$this->addNotificationsForUser(
 				$user, $userSubject, $userParams,
-				$path, true,
+				$fileId, $path, true,
 				!empty($filteredStreamUsers[$user]),
 				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
-				$activityType, IExtension::PRIORITY_HIGH
+				$activityType
 			);
 		}
 	}
@@ -144,11 +151,11 @@ class FilesHooks {
 	 * Returns a "username => path" map for all affected users
 	 *
 	 * @param string $path
+	 * @param string $uidOwner
 	 * @return array
 	 */
-	protected function getUserPathsFromPath($path) {
-		list($file_path, $uidOwner) = $this->getSourcePathAndOwner($path);
-		return Share::getUsersSharingFile($file_path, $uidOwner, true, true);
+	protected function getUserPathsFromPath($path, $uidOwner) {
+		return Share::getUsersSharingFile($path, $uidOwner, true, true);
 	}
 
 	/**
@@ -159,17 +166,19 @@ class FilesHooks {
 	 */
 	protected function getSourcePathAndOwner($path) {
 		$uidOwner = Filesystem::getOwner($path);
+		$fileId = 0;
 
 		if ($uidOwner !== $this->currentUser) {
 			Filesystem::initMountPoints($uidOwner);
-			$info = Filesystem::getFileInfo($path);
-			if ($info !== false) {
-				$ownerView = new View('/' . $uidOwner . '/files');
-				$path = $ownerView->getPath((int) $info['fileid']);
-			}
+		}
+		$info = Filesystem::getFileInfo($path);
+		if ($info !== false) {
+			$ownerView = new View('/' . $uidOwner . '/files');
+			$fileId = (int) $info['fileid'];
+			$path = $ownerView->getPath($fileId);
 		}
 
-		return array($path, $uidOwner);
+		return array($path, $uidOwner, $fileId);
 	}
 
 	/**
@@ -196,13 +205,13 @@ class FilesHooks {
 	 */
 	protected function shareFileOrFolderWithUser($params) {
 		// User performing the share
-		$this->shareNotificationForSharer('shared_user_self', $params['shareWith'], $params['fileSource'], $params['itemType']);
+		$this->shareNotificationForSharer('shared_user_self', $params['shareWith'], (int) $params['fileSource'], $params['itemType']);
 
 		// New shared user
 		$path = $params['fileTarget'];
 		$this->addNotificationsForUser(
 			$params['shareWith'], 'shared_with_by', array($path, $this->currentUser),
-			$path, ($params['itemType'] === 'file'),
+			(int) $params['fileSource'], $path, ($params['itemType'] === 'file'),
 			$this->userSettings->getUserSetting($params['shareWith'], 'stream', Files_Sharing::TYPE_SHARED),
 			$this->userSettings->getUserSetting($params['shareWith'], 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($params['shareWith'], 'setting', 'batchtime') : 0
 		);
@@ -214,7 +223,7 @@ class FilesHooks {
 	 */
 	protected function shareFileOrFolderWithGroup($params) {
 		// User performing the share
-		$this->shareNotificationForSharer('shared_group_self', $params['shareWith'], $params['fileSource'], $params['itemType']);
+		$this->shareNotificationForSharer('shared_group_self', $params['shareWith'], (int) $params['fileSource'], $params['itemType']);
 
 		// Members of the new group
 		$affectedUsers = array();
@@ -247,7 +256,7 @@ class FilesHooks {
 
 			$this->addNotificationsForUser(
 				$user, 'shared_with_by', array($path, $this->currentUser),
-				$path, ($params['itemType'] === 'file'),
+				(int) $params['fileSource'], $path, ($params['itemType'] === 'file'),
 				!empty($filteredStreamUsersInGroup[$user]),
 				!empty($filteredEmailUsersInGroup[$user]) ? $filteredEmailUsersInGroup[$user] : 0
 			);
@@ -264,11 +273,11 @@ class FilesHooks {
 	 */
 	protected function shareNotificationForSharer($subject, $shareWith, $fileSource, $itemType) {
 		// User performing the share
-		$file_path = Filesystem::getPath($fileSource);
+		$filePath = Filesystem::getPath($fileSource);
 
 		$this->addNotificationsForUser(
-			$this->currentUser, $subject, array($file_path, $shareWith),
-			$file_path, ($itemType === 'file'),
+			$this->currentUser, $subject, array($filePath, $shareWith),
+			$fileSource, $filePath, ($itemType === 'file'),
 			$this->userSettings->getUserSetting($this->currentUser, 'stream', Files_Sharing::TYPE_SHARED),
 			$this->userSettings->getUserSetting($this->currentUser, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
 		);
@@ -280,14 +289,14 @@ class FilesHooks {
 	 * @param string $user
 	 * @param string $subject
 	 * @param array $subjectParams
+	 * @param int $fileId
 	 * @param string $path
 	 * @param bool $isFile If the item is a file, we link to the parent directory
 	 * @param bool $streamSetting
 	 * @param int $emailSetting
 	 * @param string $type
-	 * @param int $priority
 	 */
-	protected function addNotificationsForUser($user, $subject, $subjectParams, $path, $isFile, $streamSetting, $emailSetting, $type = Files_Sharing::TYPE_SHARED, $priority = IExtension::PRIORITY_MEDIUM) {
+	protected function addNotificationsForUser($user, $subject, $subjectParams, $fileId, $path, $isFile, $streamSetting, $emailSetting, $type = Files_Sharing::TYPE_SHARED) {
 		if (!$streamSetting && !$emailSetting) {
 			return;
 		}
@@ -298,15 +307,27 @@ class FilesHooks {
 			'dir' => ($isFile) ? dirname($path) : $path,
 		));
 
+		$objectType = ($fileId) ? 'files' : '';
+
+		$event = $this->manager->generateEvent();
+		$event->setApp($app)
+			->setType($type)
+			->setAffectedUser($user)
+			->setAuthor($this->currentUser)
+			->setTimestamp(time())
+			->setSubject($subject, $subjectParams)
+			->setObject($objectType, $fileId, $path)
+			->setLink($link);
+
 		// Add activity to stream
 		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser, 'setting', 'self'))) {
-			$this->activityData->send($app, $subject, $subjectParams, '', array(), $path, $link, $user, $type, $priority);
+			$this->activityData->send($event);
 		}
 
 		// Add activity to mail queue
 		if ($emailSetting && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser, 'setting', 'selfemail'))) {
 			$latestSend = time() + $emailSetting;
-			$this->activityData->storeMail($app, $subject, $subjectParams, $user, $type, $latestSend);
+			$this->activityData->storeMail($event, $latestSend);
 		}
 	}
 
@@ -319,7 +340,7 @@ class FilesHooks {
 
 		$this->addNotificationsForUser(
 			$this->currentUser, 'shared_link_self', array($path),
-			$path, ($params['itemType'] === 'file'),
+			(int) $params['fileSource'], $path, ($params['itemType'] === 'file'),
 			$this->userSettings->getUserSetting($this->currentUser, 'stream', Files_Sharing::TYPE_SHARED),
 			$this->userSettings->getUserSetting($this->currentUser, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
 		);

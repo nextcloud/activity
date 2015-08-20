@@ -4,6 +4,7 @@
  * ownCloud - Activity App
  *
  * @author Frank Karlitschek
+ * @author Joas Schilling
  * @copyright 2013 Frank Karlitschek frank@owncloud.org
  *
  * This library is free software; you can redistribute it and/or
@@ -23,6 +24,7 @@
 
 namespace OCA\Activity;
 
+use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\DB;
@@ -80,84 +82,78 @@ class Data {
 	/**
 	 * Send an event into the activity stream
 	 *
-	 * @param string $app The app where this event is associated with
-	 * @param string $subject A short description of the event
-	 * @param array  $subjectparams Array with parameters that are filled in the subject
-	 * @param string $message A longer description of the event
-	 * @param array  $messageparams Array with parameters that are filled in the message
-	 * @param string $file The file including path where this event is associated with. (optional)
-	 * @param string $link A link where this event is associated with (optional)
-	 * @param string $affecteduser If empty the current user will be used
-	 * @param string $type Type of the notification
-	 * @param int    $prio Priority of the notification
+	 * @param IEvent $event
 	 * @return bool
 	 */
-	public static function send($app, $subject, $subjectparams = array(), $message = '', $messageparams = array(), $file = '', $link = '', $affecteduser = '', $type = '', $prio = IExtension::PRIORITY_MEDIUM) {
-		$timestamp = time();
-
-		$user = \OC::$server->getUserSession()->getUser();
-		if ($user instanceof IUser) {
-			$user = $user->getUID();
-		} else {
-			// Public page or incognito mode
-			$user = '';
-		}
-
-		if ($affecteduser === '' && $user === '') {
+	public function send(IEvent $event) {
+		if ($event->getAffectedUser() === '' || $event->getAffectedUser() === null) {
 			return false;
-		} elseif ($affecteduser === '') {
-			$auser = $user;
-		} else {
-			$auser = $affecteduser;
 		}
 
 		// store in DB
-		$query = DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
-		$query->execute(array($app, $subject, json_encode($subjectparams), $message, json_encode($messageparams), $file, $link, $user, $auser, $timestamp, $prio, $type));
-
-		// fire a hook so that other apps like notification systems can connect
-		Util::emitHook('OC_Activity', 'post_event', array('app' => $app, 'subject' => $subject, 'user' => $user, 'affecteduser' => $affecteduser, 'message' => $message, 'file' => $file, 'link'=> $link, 'prio' => $prio, 'type' => $type));
+		$queryBuilder = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$queryBuilder->insert('activity')
+			->values([
+				'app' => $queryBuilder->createParameter('app'),
+				'subject' => $queryBuilder->createParameter('subject'),
+				'subjectparams' => $queryBuilder->createParameter('subjectparams'),
+				'message' => $queryBuilder->createParameter('message'),
+				'messageparams' => $queryBuilder->createParameter('messageparams'),
+				'file' => $queryBuilder->createParameter('object_name'),
+				'link' => $queryBuilder->createParameter('link'),
+				'user' => $queryBuilder->createParameter('user'),
+				'affecteduser' => $queryBuilder->createParameter('affecteduser'),
+				'timestamp' => $queryBuilder->createParameter('timestamp'),
+				'priority' => $queryBuilder->createParameter('priority'),
+				'type' => $queryBuilder->createParameter('type'),
+				'object_type' => $queryBuilder->createParameter('object_type'),
+				'object_id' => $queryBuilder->createParameter('object_id'),
+			])
+			->setParameters([
+				'app' => $event->getApp(),
+				'type' => $event->getType(),
+				'affecteduser' => $event->getAffectedUser(),
+				'user' => $event->getAuthor(),
+				'timestamp' => (int) $event->getTimestamp(),
+				'subject' => $event->getSubject(),
+				'subjectparams' => json_encode($event->getSubjectParameters()),
+				'message' => $event->getMessage(),
+				'messageparams' => json_encode($event->getMessageParameters()),
+				'priority' => IExtension::PRIORITY_MEDIUM,
+				'object_type' => $event->getObjectType(),
+				'object_id' => (int) $event->getObjectId(),
+				'object_name' => $event->getObjectName(),
+				'link' => $event->getLink(),
+			])
+			->execute();
 
 		return true;
 	}
 
 	/**
-	 * @brief Send an event into the activity stream
+	 * Send an event as email
 	 *
-	 * @param string $app The app where this event is associated with
-	 * @param string $subject A short description of the event
-	 * @param array  $subjectParams Array of parameters that are filled in the placeholders
-	 * @param string $affectedUser Name of the user we are sending the activity to
-	 * @param string $type Type of notification
-	 * @param int $latestSendTime Activity time() + batch setting of $affectedUser
+	 * @param IEvent $event
+	 * @param int    $latestSendTime Activity $timestamp + batch setting of $affectedUser
 	 * @return bool
 	 */
-	public static function storeMail($app, $subject, array $subjectParams, $affectedUser, $type, $latestSendTime) {
-		$timestamp = time();
+	public function storeMail(IEvent $event, $latestSendTime) {
+		if ($event->getAffectedUser() === '' || $event->getAffectedUser() === null) {
+			return false;
+		}
 
 		// store in DB
 		$query = DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
-			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
+			. ' (`amq_appid`, `amq_type`, `amq_affecteduser`, `amq_timestamp`, `amq_subject`, `amq_subjectparams`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 		$query->execute(array(
-			$app,
-			$subject,
-			json_encode($subjectParams),
-			$affectedUser,
-			$timestamp,
-			$type,
+			$event->getApp(),
+			$event->getType(),
+			$event->getAffectedUser(),
+			$event->getTimestamp(),
+			$event->getSubject(),
+			json_encode($event->getSubjectParameters()),
 			$latestSendTime,
-		));
-
-		// fire a hook so that other apps like notification systems can connect
-		Util::emitHook('OC_Activity', 'post_email', array(
-			'app'			=> $app,
-			'subject'		=> $subject,
-			'subjectparams'	=> $subjectParams,
-			'affecteduser'	=> $affectedUser,
-			'timestamp'		=> $timestamp,
-			'type'			=> $type,
-			'latest_send'	=> $latestSendTime,
 		));
 
 		return true;
@@ -171,9 +167,11 @@ class Data {
 	 * @param int $count The number of statements to read
 	 * @param string $filter Filter the activities
 	 * @param string $user User for whom we display the stream
+	 * @param string $objectType
+	 * @param int $objectId
 	 * @return array
 	 */
-	public function read(GroupHelper $groupHelper, UserSettings $userSettings, $start, $count, $filter = 'all', $user = '') {
+	public function read(GroupHelper $groupHelper, UserSettings $userSettings, $start, $count, $filter = 'all', $user = '', $objectType = '', $objectId = 0) {
 		// get current user
 		if ($user === '') {
 			$user = $this->userSession->getUser();
@@ -202,10 +200,18 @@ class Data {
 		if ($filter === 'self') {
 			$limitActivities .= ' AND `user` = ?';
 			$parameters[] = $user;
-		}
-		else if ($filter === 'by' || $filter === 'all' && !$userSettings->getUserSetting($user, 'setting', 'self')) {
+		} else if ($filter === 'by' || $filter === 'all' && !$userSettings->getUserSetting($user, 'setting', 'self')) {
 			$limitActivities .= ' AND `user` <> ?';
 			$parameters[] = $user;
+		} else if ($filter === 'filter') {
+			if (!$userSettings->getUserSetting($user, 'setting', 'self')) {
+				$limitActivities .= ' AND `user` <> ?';
+				$parameters[] = $user;
+			}
+			$limitActivities .= ' AND `object_type` = ?';
+			$parameters[] = $objectType;
+			$limitActivities .= ' AND `object_id` = ?';
+			$parameters[] = $objectId;
 		}
 
 		list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
@@ -262,6 +268,7 @@ class Data {
 			case 'by':
 			case 'self':
 			case 'all':
+			case 'filter':
 				return $filterValue;
 			default:
 				if ($this->activityManager->isFilterValid($filterValue)) {

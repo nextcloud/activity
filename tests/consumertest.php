@@ -31,12 +31,19 @@ class ConsumerTest extends TestCase {
 	/** @var \OCA\Activity\Consumer */
 	protected $consumer;
 
+	/** @var \OCA\Activity\Data|\PHPUnit_Framework_MockObject_MockObject */
+	protected $data;
+
 	/** @var \OCA\Activity\UserSettings */
 	protected $userSettings;
 
 	protected function setUp() {
 		parent::setUp();
 		$this->deleteTestActivities();
+
+		$this->data = $this->getMockBuilder('OCA\Activity\Data')
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->userSettings = $this->getMockBuilder('OCA\Activity\UserSettings')
 			->setMethods(array('getUserSetting'))
@@ -99,13 +106,28 @@ class ConsumerTest extends TestCase {
 	 * @param array|false $expected
 	 */
 	public function testReceiveStream($type, $author, $affectedUser, $subject, $expected) {
-		$consumer = new Consumer($this->userSettings, $author);
-		$consumer->receive('test', $subject, ['subjectParam1', 'subjectParam2'], 'message', ['messageParam1', 'messageParam2'], 'file', 'link', $affectedUser, $type, \OCP\Activity\IExtension::PRIORITY_HIGH);
+		$consumer = new Consumer($this->data, $this->userSettings);
+		$event = \OC::$server->getActivityManager()->generateEvent();
+		$event->setApp('test')
+			->setType($type)
+			->setAffectedUser($affectedUser)
+			->setAuthor($author)
+			->setTimestamp(time())
+			->setSubject($subject, ['subjectParam1', 'subjectParam2'])
+			->setMessage('message', ['messageParam1', 'messageParam2'])
+			->setObject('', 0 , 'file')
+			->setLink('link');
+		$this->deleteTestActivities();
 
-		$query = DB::prepare("SELECT `affecteduser` FROM `*PREFIX*activity` WHERE `app` = 'test'");
-		$result = $query->execute();
-		$this->assertEquals($expected, $result->fetchOne(0));
-		$this->assertEquals(false, $result->fetchRow());
+		if ($expected === false) {
+			$this->data->expects($this->never())
+				->method('send');
+		} else {
+			$this->data->expects($this->once())
+				->method('send');
+		}
+
+		$consumer->receive($event);
 	}
 
 	/**
@@ -118,31 +140,38 @@ class ConsumerTest extends TestCase {
 	 * @param array|false $expected
 	 */
 	public function testReceiveEmail($type, $author, $affectedUser, $subject, $expected) {
-		$consumer = new Consumer($this->userSettings, $author);
-		$consumer->receive('test', $subject, ['subjectParam1', 'subjectParam2'], 'message', ['messageParam1', 'messageParam2'], 'file', 'link', $affectedUser, $type, \OCP\Activity\IExtension::PRIORITY_HIGH);
+		$time = time();
+		$consumer = new Consumer($this->data, $this->userSettings);
+		$event = \OC::$server->getActivityManager()->generateEvent();
+		$event->setApp('test')
+			->setType($type)
+			->setAffectedUser($affectedUser)
+			->setAuthor($author)
+			->setTimestamp($time)
+			->setSubject($subject, ['subjectParam1', 'subjectParam2'])
+			->setMessage('message', ['messageParam1', 'messageParam2'])
+			->setObject('', 0 , 'file')
+			->setLink('link');
 
-		$query = DB::prepare("SELECT `amq_affecteduser` FROM `*PREFIX*activity_mq` WHERE `amq_appid` = 'test'");
-		$result = $query->execute();
-		$this->assertEquals($expected, $result->fetchOne(0));
-		$this->assertEquals(false, $result->fetchRow());
+		if ($expected === false) {
+			$this->data->expects($this->never())
+				->method('storeMail');
+		} else {
+			$this->data->expects($this->once())
+				->method('storeMail')
+				->with($event, $time + 10);
+		}
+
+		$consumer->receive($event);
 	}
 
-	/**
-	 * @dataProvider receiveData
-	 *
-	 * @param string $type
-	 * @param string $author
-	 * @param string $affectedUser
-	 * @param string $subject
-	 * @param array|false $expected
-	 */
-	public function testRegister($type, $author, $affectedUser, $subject, $expected) {
+	public function testRegister() {
 		$activityManager = new ActivityManager(
 			$this->getMock('OCP\IRequest'),
 			$this->getMock('OCP\IUserSession'),
 			$this->getMock('OCP\IConfig')
 		);
-		$consumer = new Consumer($this->userSettings, $author);
+		$consumer = new Consumer($this->data, $this->userSettings);
 		$container = $this->getMock('\OCP\AppFramework\IAppContainer');
 		$container->expects($this->any())
 			->method('query')
@@ -152,11 +181,10 @@ class ConsumerTest extends TestCase {
 			)));
 
 		Consumer::register($activityManager, $container);
-		$activityManager->publishActivity('test', $subject, ['subjectParam1', 'subjectParam2'], 'message', ['messageParam1', 'messageParam2'], 'file', 'link', $affectedUser, $type, \OCP\Activity\IExtension::PRIORITY_HIGH);
 
-		$query = DB::prepare("SELECT `affecteduser` FROM `*PREFIX*activity` WHERE `app` = 'test'");
-		$result = $query->execute();
-		$this->assertEquals($expected, $result->fetchOne(0));
-		$this->assertEquals(false, $result->fetchRow());
+		$consumers = $this->invokePrivate($activityManager, 'getConsumers');
+		$this->assertCount(1, $consumers);
+		$this->assertInstanceOf('OCA\Activity\Consumer', $consumers[0]);
+
 	}
 }

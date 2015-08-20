@@ -49,7 +49,7 @@ abstract class TestCase extends \Test\TestCase {
 	 * @return bool
 	 */
 	public function restoreService($name) {
-		if ($this->services[$name]) {
+		if (isset($this->services[$name])) {
 			$oldService = $this->services[$name];
 			\OC::$server->registerService($name, function () use ($oldService) {
 				return $oldService;
