@@ -84,7 +84,8 @@ class GroupHelper
 		$activity['subjectparams_array'] = $this->dataHelper->getParameters($activity['subjectparams']);
 		$activity['messageparams_array'] = $this->dataHelper->getParameters($activity['messageparams']);
 
-		if (!$this->getGroupKey($activity)) {
+		$groupKey = $this->getGroupKey($activity);
+		if ($groupKey === false) {
 			if (!empty($this->openGroup)) {
 				$this->activities[] = $this->openGroup;
 				$this->openGroup = array();
@@ -97,7 +98,7 @@ class GroupHelper
 
 		// Only group when the event has the same group key
 		// and the time difference is not bigger than 3 days.
-		if ($this->getGroupKey($activity) === $this->groupKey &&
+		if ($groupKey === $this->groupKey &&
 			abs($activity['timestamp'] - $this->groupTime) < (3 * 24 * 60 * 60)
 			&& (!isset($this->openGroup['activity_ids']) || sizeof($this->openGroup['activity_ids']) <= 5)
 		) {
@@ -109,17 +110,23 @@ class GroupHelper
 				if (!isset($this->openGroup['activity_ids'])) {
 					$this->openGroup['activity_ids'] = array((int) $this->openGroup['activity_id']);
 					$this->openGroup['files'] = array((string) $this->openGroup['file']);
+					$this->openGroup['object_ids'] = array((int) $this->openGroup['object_id']);
 				}
 
 				$this->openGroup['subjectparams_array'][$parameter][] = $activity['subjectparams_array'][$parameter];
 				$this->openGroup['subjectparams_array'][$parameter] = array_unique($this->openGroup['subjectparams_array'][$parameter]);
 				$this->openGroup['activity_ids'][] = (int) $activity['activity_id'];
-				$this->openGroup['files'][] = (string) $activity['file'];
+
+				$objectId = (int) $activity['object_id'];
+				if (!in_array($objectId, $this->openGroup['object_ids'])) {
+					$this->openGroup['files'][] = (string) $activity['file'];
+					$this->openGroup['object_ids'][] = $objectId;
+				}
 			}
 		} else {
 			$this->closeOpenGroup();
 
-			$this->groupKey = $this->getGroupKey($activity);
+			$this->groupKey = $groupKey;
 			$this->groupTime = $activity['timestamp'];
 			$this->openGroup = $activity;
 		}
@@ -153,7 +160,7 @@ class GroupHelper
 			return false;
 		}
 
-		return $activity['app'] . '|' . $activity['user'] . '|' . $activity['subject'];
+		return $activity['app'] . '|' . $activity['user'] . '|' . $activity['subject'] . '|' . $activity['object_type'];
 	}
 
 	/**
