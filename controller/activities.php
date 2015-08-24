@@ -152,22 +152,22 @@ class Activities extends Controller {
 			}
 
 			$activity['previews'] = [];
-			if (!empty($activity['files'])) {
-				foreach ($activity['files'] as $file) {
-					if ($file === '') {
+			if ($activity['object_type'] === 'files' && !empty($activity['object_ids'])) {
+				foreach ($activity['files'] as $objectId => $objectName) {
+					if (((int) $objectId) === 0 || $objectName === '') {
 						// No file, no preview
 						continue;
 					}
 
-					$activity['previews'][] = $this->getPreview($activity, $file);
+					$activity['previews'][] = $this->getPreview($activity, (int) $objectId, $objectName);
 
 					if (sizeof($activity['previews']) >= self::MAX_NUM_THUMBNAILS) {
 						// Don't want to clutter the page, so we stop after a few thumbnails
 						break;
 					}
 				}
-			} else if ($activity['file'] !== '') {
-				$activity['previews'][] = $this->getPreview($activity, $activity['file']);
+			} else if ($activity['object_type'] === 'files' && $activity['object_id']) {
+				$activity['previews'][] = $this->getPreview($activity, (int) $activity['object_id'], $activity['file']);
 			}
 
 			$preparedActivities[] = $activity;
@@ -178,46 +178,79 @@ class Activities extends Controller {
 
 	/**
 	 * @param array $activity
-	 * @param string $file
+	 * @param int $fileId
+	 * @param string $filePath
 	 * @return array
 	 */
-	protected function getPreview(array $activity, $file) {
+	protected function getPreview(array $activity, $fileId, $filePath) {
 		$this->view->chroot('/' . $activity['affecteduser'] . '/files');
-		$exist = $this->view->file_exists($file);
-		$is_dir = $this->view->is_dir($file);
+		$path = $this->view->getPath($fileId);
+
+		if ($path === null || $path === '' || !$this->view->file_exists($path)) {
+			return $this->getPreviewFromPath($filePath);
+		}
+
+		$is_dir = $this->view->is_dir($path);
 
 		$preview = [
-			'link'			=> $this->getPreviewLink($file, $is_dir),
+			'link'			=> $this->getPreviewLink($path, $is_dir),
 			'source'		=> '',
 			'isMimeTypeIcon' => true,
 		];
 
 		// show a preview image if the file still exists
 		if ($is_dir) {
-			$mimeTypeIcon = Template::mimetype_icon('dir');
-			if (substr($mimeTypeIcon, -4) === '.png') {
-				$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
-			}
-			$preview['source'] = $mimeTypeIcon;
+			$preview['source'] = $this->getPreviewPathFromMimeType('dir');
 		} else {
-			$mimeType = Files::getMimeType($file);
-			if (!$is_dir && $mimeType && $this->preview->isMimeSupported($mimeType) && $exist) {
+			$fileInfo = $this->view->getFileInfo($path);
+			$mimeType = $fileInfo->getMimetype();
+			if (!$is_dir && $mimeType && $this->preview->isMimeSupported($mimeType)) {
 				$preview['isMimeTypeIcon'] = false;
 				$preview['source'] = $this->urlGenerator->linkToRoute('core_ajax_preview', [
-					'file' => $file,
+					'file' => $path,
+					'c' => $this->view->getETag($path),
 					'x' => 150,
 					'y' => 150,
 				]);
 			} else {
-				$mimeTypeIcon = Template::mimetype_icon($mimeType);
-				if (substr($mimeTypeIcon, -4) === '.png') {
-					$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
-				}
-				$preview['source'] = $mimeTypeIcon;
+				$preview['source'] = $this->getPreviewPathFromMimeType($mimeType);
 			}
 		}
 
 		return $preview;
+	}
+
+	/**
+	 * @param string $filePath
+	 * @return array
+	 */
+	protected function getPreviewFromPath($filePath) {
+		$mimeType = Files::getMimeType($filePath);
+		$mimeTypeIcon = Template::mimetype_icon($mimeType);
+		if (substr($mimeTypeIcon, -4) === '.png') {
+			$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
+		}
+
+		$preview = [
+			'link'			=> $this->getPreviewLink($filePath, false),
+			'source'		=> $mimeTypeIcon,
+			'isMimeTypeIcon' => true,
+		];
+
+		return $preview;
+	}
+
+	/**
+	 * @param string $mimeType
+	 * @return string
+	 */
+	protected function getPreviewPathFromMimeType($mimeType) {
+		$mimeTypeIcon = Template::mimetype_icon($mimeType);
+		if (substr($mimeTypeIcon, -4) === '.png') {
+			$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
+		}
+
+		return $mimeTypeIcon;
 	}
 
 	/**
