@@ -70,39 +70,46 @@ class FilesHooks {
 	}
 
 	/**
-	 * Store the create hook events
-	 * @param array $params The hook params
+	 * @return string|false Current UserID if logged in, false otherwise
 	 */
-	public function fileCreate($params) {
-		if ($this->currentUser !== false) {
-			$this->addNotificationsForFileAction($params['path'], Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
+	protected function getCurrentUser() {
+		return $this->currentUser;
+	}
+
+	/**
+	 * Store the create hook events
+	 * @param string $path Path of the file that has been created
+	 */
+	public function fileCreate($path) {
+		if ($this->getCurrentUser() !== false) {
+			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
 		} else {
-			$this->addNotificationsForFileAction($params['path'], Files::TYPE_SHARE_CREATED, '', 'created_public');
+			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, '', 'created_public');
 		}
 	}
 
 	/**
 	 * Store the update hook events
-	 * @param array $params The hook params
+	 * @param string $path Path of the file that has been modified
 	 */
-	public function fileUpdate($params) {
-		$this->addNotificationsForFileAction($params['path'], Files::TYPE_SHARE_CHANGED, 'changed_self', 'changed_by');
+	public function fileUpdate($path) {
+		$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CHANGED, 'changed_self', 'changed_by');
 	}
 
 	/**
 	 * Store the delete hook events
-	 * @param array $params The hook params
+	 * @param string $path Path of the file that has been deleted
 	 */
-	public function fileDelete($params) {
-		$this->addNotificationsForFileAction($params['path'], Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
+	public function fileDelete($path) {
+		$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
 	}
 
 	/**
 	 * Store the restore hook events
-	 * @param array $params The hook params
+	 * @param string $path Path of the file that has been restored
 	 */
-	public function fileRestore($params) {
-		$this->addNotificationsForFileAction($params['filePath'], Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
+	public function fileRestore($path) {
+		$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
 	}
 
 	/**
@@ -189,47 +196,55 @@ class FilesHooks {
 		if ($params['itemType'] === 'file' || $params['itemType'] === 'folder') {
 			if ($params['shareWith']) {
 				if ((int) $params['shareType'] === Share::SHARE_TYPE_USER) {
-					$this->shareFileOrFolderWithUser($params);
+					$this->shareFileOrFolderWithUser($params['shareWith'], (int) $params['fileSource'], $params['itemType'], $params['fileTarget']);
 				} else if ((int) $params['shareType'] === Share::SHARE_TYPE_GROUP) {
-					$this->shareFileOrFolderWithGroup($params);
+					$this->shareFileOrFolderWithGroup($params['shareWith'], (int) $params['fileSource'], $params['itemType'], $params['fileTarget'], (int) $params['id']);
 				}
 			} else {
-				$this->shareFileOrFolder($params);
+				$this->shareFileOrFolder((int) $params['fileSource'], $params['itemType']);
 			}
 		}
 	}
 
 	/**
 	 * Sharing a file or folder with a user
-	 * @param array $params The hook params
+	 *
+	 * @param string $shareWith
+	 * @param int $fileSource File ID that is being shared
+	 * @param string $itemType File type that is being shared (file or folder)
+	 * @param string $fileTarget File path
 	 */
-	protected function shareFileOrFolderWithUser($params) {
+	protected function shareFileOrFolderWithUser($shareWith, $fileSource, $itemType, $fileTarget) {
 		// User performing the share
-		$this->shareNotificationForSharer('shared_user_self', $params['shareWith'], (int) $params['fileSource'], $params['itemType']);
+		$this->shareNotificationForSharer('shared_user_self', $shareWith, $fileSource, $itemType);
 
 		// New shared user
-		$path = $params['fileTarget'];
 		$this->addNotificationsForUser(
-			$params['shareWith'], 'shared_with_by', array($path, $this->currentUser),
-			(int) $params['fileSource'], $path, ($params['itemType'] === 'file'),
-			$this->userSettings->getUserSetting($params['shareWith'], 'stream', Files_Sharing::TYPE_SHARED),
-			$this->userSettings->getUserSetting($params['shareWith'], 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($params['shareWith'], 'setting', 'batchtime') : 0
+			$shareWith, 'shared_with_by', array($fileTarget, $this->currentUser),
+			(int) $fileSource, $fileTarget, ($itemType === 'file'),
+			$this->userSettings->getUserSetting($shareWith, 'stream', Files_Sharing::TYPE_SHARED),
+			$this->userSettings->getUserSetting($shareWith, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($shareWith, 'setting', 'batchtime') : 0
 		);
 	}
 
 	/**
 	 * Sharing a file or folder with a group
-	 * @param array $params The hook params
+	 *
+	 * @param string $shareWith
+	 * @param int $fileSource File ID that is being shared
+	 * @param string $itemType File type that is being shared (file or folder)
+	 * @param string $fileTarget File path
+	 * @param int $shareId The Share ID of this share
 	 */
-	protected function shareFileOrFolderWithGroup($params) {
+	protected function shareFileOrFolderWithGroup($shareWith, $fileSource, $itemType, $fileTarget, $shareId) {
 		// User performing the share
-		$this->shareNotificationForSharer('shared_group_self', $params['shareWith'], (int) $params['fileSource'], $params['itemType']);
+		$this->shareNotificationForSharer('shared_group_self', $shareWith, $fileSource, $itemType);
 
 		// Members of the new group
 		$affectedUsers = array();
-		$usersInGroup = \OC_Group::usersInGroup($params['shareWith']);
+		$usersInGroup = \OC_Group::usersInGroup($shareWith);
 		foreach ($usersInGroup as $user) {
-			$affectedUsers[$user] = $params['fileTarget'];
+			$affectedUsers[$user] = $fileTarget;
 		}
 
 		// Remove the triggering user, we already managed his notifications
@@ -244,7 +259,7 @@ class FilesHooks {
 
 		// Check when there was a naming conflict and the target is different
 		// for some of the users
-		$query = $this->connection->executeQuery('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ', [(int) $params['id']]);
+		$query = $this->connection->executeQuery('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ', [$shareId]);
 		while ($row = $query->fetch()) {
 			$affectedUsers[$row['share_with']] = $row['file_target'];
 		}
@@ -256,11 +271,28 @@ class FilesHooks {
 
 			$this->addNotificationsForUser(
 				$user, 'shared_with_by', array($path, $this->currentUser),
-				(int) $params['fileSource'], $path, ($params['itemType'] === 'file'),
+				$fileSource, $path, ($itemType === 'file'),
 				!empty($filteredStreamUsersInGroup[$user]),
 				!empty($filteredEmailUsersInGroup[$user]) ? $filteredEmailUsersInGroup[$user] : 0
 			);
 		}
+	}
+
+	/**
+	 * Sharing a file or folder via link/public
+	 *
+	 * @param int $fileSource File ID that is being shared
+	 * @param string $itemType File type that is being shared (file or folder)
+	 */
+	protected function shareFileOrFolder($fileSource, $itemType) {
+		$path = Filesystem::getPath($fileSource);
+
+		$this->addNotificationsForUser(
+			$this->currentUser, 'shared_link_self', array($path),
+			(int) $fileSource, $path, ($itemType === 'file'),
+			$this->userSettings->getUserSetting($this->currentUser, 'stream', Files_Sharing::TYPE_SHARED),
+			$this->userSettings->getUserSetting($this->currentUser, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
+		);
 	}
 
 	/**
@@ -329,20 +361,5 @@ class FilesHooks {
 			$latestSend = time() + $emailSetting;
 			$this->activityData->storeMail($event, $latestSend);
 		}
-	}
-
-	/**
-	 * Sharing a file or folder via link/public
-	 * @param array $params The hook params
-	 */
-	protected function shareFileOrFolder($params) {
-		$path = Filesystem::getPath($params['fileSource']);
-
-		$this->addNotificationsForUser(
-			$this->currentUser, 'shared_link_self', array($path),
-			(int) $params['fileSource'], $path, ($params['itemType'] === 'file'),
-			$this->userSettings->getUserSetting($this->currentUser, 'stream', Files_Sharing::TYPE_SHARED),
-			$this->userSettings->getUserSetting($this->currentUser, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
-		);
 	}
 }

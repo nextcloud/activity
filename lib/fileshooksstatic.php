@@ -56,7 +56,7 @@ class FilesHooksStatic {
 	 * @param array $params The hook params
 	 */
 	public static function fileCreate($params) {
-		self::getHooks()->fileCreate($params);
+		self::getHooks()->fileCreate($params['path']);
 	}
 
 	/**
@@ -64,7 +64,7 @@ class FilesHooksStatic {
 	 * @param array $params The hook params
 	 */
 	public static function fileUpdate($params) {
-		self::getHooks()->fileUpdate($params);
+		self::getHooks()->fileUpdate($params['path']);
 	}
 
 	/**
@@ -72,7 +72,7 @@ class FilesHooksStatic {
 	 * @param array $params The hook params
 	 */
 	public static function fileDelete($params) {
-		self::getHooks()->fileDelete($params);
+		self::getHooks()->fileDelete($params['path']);
 	}
 
 	/**
@@ -80,7 +80,7 @@ class FilesHooksStatic {
 	 * @param array $params The hook params
 	 */
 	public static function fileRestore($params) {
-		self::getHooks()->fileRestore($params);
+		self::getHooks()->fileRestore($params['filePath']);
 	}
 
 	/**
