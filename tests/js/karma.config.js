@@ -26,26 +26,43 @@
 /* jshint node: true */
 module.exports = function(config) {
 
+	// can't use wildcard due to loading order
 	var srcFiles = [
-		'js/script.js'
+		'js/script.js',
+		'js/activitymodel.js',
+		'js/activitycollection.js',
+		'js/activitytabview.js'
 	];
 
 	var testFiles = [
-		'tests/js/scriptSpec.js'
+		'tests/js/*.js'
 	];
 
+	var basePath = '../../';
+	var ownCloudPath = '../../';
+
+	var coreModules = require(ownCloudPath + '../../core/js/core.json');
 	var coreLibs = [
-		'core/vendor/jquery/jquery.js'
+		ownCloudPath + 'core/js/tests/lib/sinon-1.15.4.js',
+		ownCloudPath + 'core/js/tests/specHelper.js'
 	];
 
-	var basePath = '../..';
-	var ownCloudPath = '../..';
+	coreLibs = coreLibs.concat(coreModules.vendor.map(function prependPath(path) {
+		return ownCloudPath + 'core/vendor/' + path;
+	}));
 
-	coreLibs = coreLibs.map(function prepentPath(path) {
-		return ownCloudPath + '/' + path;
+	coreLibs = coreLibs.concat(coreModules.modules.map(function prependPath(path) {
+		return ownCloudPath + 'core/js/' + path;
+	}));
+
+	var filesAppFiles = [
+		'fileinfomodel.js',
+		'detailtabview.js'
+	].map(function prependPath(path) {
+		return ownCloudPath + 'apps/files/js/' + path;
 	});
 
-	var files = [].concat(coreLibs, srcFiles, testFiles);
+	var files = [].concat(coreLibs, filesAppFiles, srcFiles, testFiles);
 
 	config.set({
 

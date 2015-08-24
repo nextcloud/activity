@@ -10,7 +10,6 @@
 describe('Filter', function() {
 	it('tests something', function() {
 		// TODO: implement proper tests
-		expect(true).toEqual(true);
 	});
 });
 
