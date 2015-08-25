@@ -22,16 +22,10 @@
 
 namespace OCA\Activity;
 
-use OC\Files\Filesystem;
-use OC\Files\View;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\Tests\TestCase;
-use OCP\Activity\IExtension;
-use OCP\Activity\IManager;
-use OCP\IDBConnection;
 use OCP\Share;
-use OCP\Util;
 
 /**
  * Testing the public methods with internals being mocked out
@@ -70,6 +64,11 @@ class FilesHooksTest extends TestCase {
 		$this->filesHooks = $this->getFilesHooks();
 	}
 
+	/**
+	 * @param array $mockedMethods
+	 * @param string $user
+	 * @return FilesHooks|\PHPUnit_Framework_MockObject_MockObject
+	 */
 	protected function getFilesHooks(array $mockedMethods = [], $user = 'user') {
 		if (!empty($mockedMethods)) {
 			return $this->getMockBuilder('OCA\Activity\FilesHooks')
@@ -84,7 +83,7 @@ class FilesHooksTest extends TestCase {
 				->setMethods($mockedMethods)
 				->getMock();
 		} else {
-			return new \OCA\Activity\FilesHooks(
+			return new FilesHooks(
 				$this->activityManager,
 				$this->data,
 				$this->settings,
@@ -236,6 +235,9 @@ class FilesHooksTest extends TestCase {
 
 	/**
 	 * @dataProvider dataAddNotificationsForFileAction
+	 *
+	 * @param array $filterUsers
+	 * @param array $addNotifications
 	 */
 	public function testAddNotificationsForFileAction($filterUsers, $addNotifications) {
 		$filesHooks = $this->getFilesHooks([
@@ -552,6 +554,11 @@ class FilesHooksTest extends TestCase {
 	 * @param bool $stream
 	 * @param bool $email
 	 * @param int $type
+	 * @param bool $selfSetting
+	 * @param bool $selfEmailSetting
+	 * @param string $app
+	 * @param bool $sentStream
+	 * @param bool $sentEmail
 	 */
 	public function testAddNotificationsForUser($user, $subject, $parameter, $fileId, $path, $isFile, $stream, $email, $type, $selfSetting, $selfEmailSetting, $app, $sentStream, $sentEmail) {
 		$this->settings->expects($this->any())
