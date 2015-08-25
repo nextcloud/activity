@@ -111,6 +111,7 @@ class Application extends App {
 				$server->getActivityManager(),
 				$c->query('ActivityData'),
 				$c->query('UserSettings'),
+				$server->getGroupManager(),
 				$server->getDatabaseConnection(),
 				$c->query('CurrentUID')
 			);

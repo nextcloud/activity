@@ -29,6 +29,7 @@ use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\IDBConnection;
+use OCP\IGroupManager;
 use OCP\Share;
 use OCP\Util;
 
@@ -46,6 +47,9 @@ class FilesHooks {
 	/** @var \OCA\Activity\UserSettings */
 	protected $userSettings;
 
+	/** @var \OCP\IGroupManager */
+	protected $groupManager;
+
 	/** @var \OCP\IDBConnection */
 	protected $connection;
 
@@ -58,13 +62,15 @@ class FilesHooks {
 	 * @param IManager $manager
 	 * @param Data $activityData
 	 * @param UserSettings $userSettings
+	 * @param IGroupManager $groupManager
 	 * @param IDBConnection $connection
 	 * @param string|false $currentUser
 	 */
-	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IDBConnection $connection, $currentUser) {
+	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IGroupManager $groupManager, IDBConnection $connection, $currentUser) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
+		$this->groupManager = $groupManager;
 		$this->connection = $connection;
 		$this->currentUser = $currentUser;
 	}
@@ -237,14 +243,20 @@ class FilesHooks {
 	 * @param int $shareId The Share ID of this share
 	 */
 	protected function shareFileOrFolderWithGroup($shareWith, $fileSource, $itemType, $fileTarget, $shareId) {
+		// Members of the new group
+		$affectedUsers = array();
+		$group = $this->groupManager->get($shareWith);
+		if (!($group instanceof \OCP\IGroup)) {
+			return;
+		}
+
 		// User performing the share
 		$this->shareNotificationForSharer('shared_group_self', $shareWith, $fileSource, $itemType);
 
-		// Members of the new group
-		$affectedUsers = array();
-		$usersInGroup = \OC_Group::usersInGroup($shareWith);
+
+		$usersInGroup = $group->searchUsers('');
 		foreach ($usersInGroup as $user) {
-			$affectedUsers[$user] = $fileTarget;
+			$affectedUsers[$user->getUID()] = $fileTarget;
 		}
 
 		// Remove the triggering user, we already managed his notifications
@@ -254,16 +266,10 @@ class FilesHooks {
 			return;
 		}
 
-		$filteredStreamUsersInGroup = $this->userSettings->filterUsersBySetting($usersInGroup, 'stream', Files_Sharing::TYPE_SHARED);
-		$filteredEmailUsersInGroup = $this->userSettings->filterUsersBySetting($usersInGroup, 'email', Files_Sharing::TYPE_SHARED);
+		$filteredStreamUsersInGroup = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', Files_Sharing::TYPE_SHARED);
+		$filteredEmailUsersInGroup = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', Files_Sharing::TYPE_SHARED);
 
-		// Check when there was a naming conflict and the target is different
-		// for some of the users
-		$query = $this->connection->executeQuery('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ', [$shareId]);
-		while ($row = $query->fetch()) {
-			$affectedUsers[$row['share_with']] = $row['file_target'];
-		}
-
+		$affectedUsers = $this->fixPathsForShareExceptions($affectedUsers, $shareId);
 		foreach ($affectedUsers as $user => $path) {
 			if (empty($filteredStreamUsersInGroup[$user]) && empty($filteredEmailUsersInGroup[$user])) {
 				continue;
@@ -276,6 +282,17 @@ class FilesHooks {
 				!empty($filteredEmailUsersInGroup[$user]) ? $filteredEmailUsersInGroup[$user] : 0
 			);
 		}
+	}
+
+	protected function fixPathsForShareExceptions($affectedUsers, $shareId) {
+		// Check when there was a naming conflict and the target is different
+		// for some of the users
+		$query = $this->connection->executeQuery('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ', [$shareId]);
+		while ($row = $query->fetch()) {
+			$affectedUsers[$row['share_with']] = $row['file_target'];
+		}
+
+		return $affectedUsers;
 	}
 
 	/**

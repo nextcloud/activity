@@ -45,6 +45,8 @@ class FilesHooksTest extends TestCase {
 	protected $data;
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCA\Activity\UserSettings */
 	protected $settings;
+	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\IGroupManager */
+	protected $groupManager;
 
 	protected function setUp() {
 		parent::setUp();
@@ -61,14 +63,24 @@ class FilesHooksTest extends TestCase {
 		$this->data = $this->getMockBuilder('OCA\Activity\Data')
 			->disableOriginalConstructor()
 			->getMock();
+		$this->groupManager = $this->getMockBuilder('OCP\IGroupManager')
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->filesHooks = $this->getFilesHooks();
 	}
 
-	protected function getFilesHooks(array $mockedMethods = []) {
+	protected function getFilesHooks(array $mockedMethods = [], $user = 'user') {
 		if (!empty($mockedMethods)) {
 			return $this->getMockBuilder('OCA\Activity\FilesHooks')
-				->disableOriginalConstructor()
+				->setConstructorArgs([
+					$this->activityManager,
+					$this->data,
+					$this->settings,
+					$this->groupManager,
+					\OC::$server->getDatabaseConnection(),
+					$user,
+				])
 				->setMethods($mockedMethods)
 				->getMock();
 		} else {
@@ -76,10 +88,21 @@ class FilesHooksTest extends TestCase {
 				$this->activityManager,
 				$this->data,
 				$this->settings,
+				$this->groupManager,
 				\OC::$server->getDatabaseConnection(),
-				'user'
+				$user
 			);
 		}
+	}
+
+	protected function getUserMock($uid) {
+		$user = $this->getMockBuilder('OCP\IUser')
+			->disableOriginalConstructor()
+			->getMock();
+		$user->expects($this->any())
+			->method('getUID')
+			->willReturn($uid);
+		return $user;
 	}
 
 	public function dataGetCurrentUser() {
@@ -95,14 +118,7 @@ class FilesHooksTest extends TestCase {
 	 * @param mixed $user
 	 */
 	public function testGetCurrentUser($user) {
-		$filesHooks = new \OCA\Activity\FilesHooks(
-			$this->activityManager,
-			$this->data,
-			$this->settings,
-			\OC::$server->getDatabaseConnection(),
-			$user
-		);
-
+		$filesHooks = $this->getFilesHooks([], $user);
 		$this->assertSame($user, $this->invokePrivate($filesHooks, 'getCurrentUser'));
 	}
 
@@ -172,6 +188,100 @@ class FilesHooksTest extends TestCase {
 		$filesHooks->fileRestore('path');
 	}
 
+	public function testAddNotificationsForFileActionPartFile() {
+		$filesHooks = $this->getFilesHooks([
+			'getSourcePathAndOwner',
+		]);
+
+		$filesHooks->expects($this->never())
+			->method('getSourcePathAndOwner');
+
+		$this->invokePrivate($filesHooks, 'addNotificationsForFileAction', ['/test.txt.part', '', '', '']);
+	}
+
+	public function dataAddNotificationsForFileAction() {
+		return [
+			[
+				[
+					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user' => true]],
+					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, ['user' => 42]],
+				],
+				[
+					'user' => [
+						'subject' => 'restored_self',
+						'subject_params' => ['/user/path'],
+						'path' => '/user/path',
+						'stream' => true,
+						'email' => 42,
+					],
+				],
+			],
+			[
+				[
+					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user1' => true]],
+					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, []],
+				],
+				[
+					'user1' => [
+						'subject' => 'restored_by',
+						'subject_params' => ['/user1/path', 'user'],
+						'path' => '/user1/path',
+						'stream' => true,
+						'email' => 0,
+					],
+				],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider dataAddNotificationsForFileAction
+	 */
+	public function testAddNotificationsForFileAction($filterUsers, $addNotifications) {
+		$filesHooks = $this->getFilesHooks([
+			'getSourcePathAndOwner',
+			'getUserPathsFromPath',
+			'addNotificationsForUser',
+		]);
+
+		$filesHooks->expects($this->once())
+			->method('getSourcePathAndOwner')
+			->with('path')
+			->willReturn(['/owner/path', 'owner', 1337]);
+		$filesHooks->expects($this->once())
+			->method('getUserPathsFromPath')
+			->with('/owner/path', 'owner')
+			->willReturn([
+				'user' => '/user/path',
+				'user1' => '/user1/path',
+				'user2' => '/user2/path',
+			]);
+
+		$this->settings->expects($this->exactly(2))
+			->method('filterUsersBySetting')
+			->willReturnMap($filterUsers);
+
+		$i = 2;
+		foreach ($addNotifications as $user => $arguments) {
+			$filesHooks->expects($this->at($i))
+				->method('addNotificationsForUser')
+				->with(
+					$user,
+					$arguments['subject'],
+					$arguments['subject_params'],
+					1337,
+					$arguments['path'],
+					true,
+					$arguments['stream'],
+					$arguments['email'],
+					Files::TYPE_SHARE_RESTORED
+				);
+			$i++;
+		}
+
+		$this->invokePrivate($filesHooks, 'addNotificationsForFileAction', ['path', Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by']);
+	}
+
 	public function testShareWithUser() {
 		$filesHooks = $this->getFilesHooks([
 			'shareFileOrFolderWithUser',
@@ -223,5 +333,287 @@ class FilesHooksTest extends TestCase {
 			'shareWith' => '',
 			'itemType' => 'file',
 		]);
+	}
+
+	public function dataShareFileOrFolderWithUser() {
+		return [
+			['file', '/path.txt', true],
+			['folder', '/path.txt', false],
+		];
+	}
+
+	/**
+	 * @dataProvider dataShareFileOrFolderWithUser
+	 *
+	 * @param string $itemType
+	 * @param string $fileTarget
+	 * @param bool $isFile
+	 */
+	public function testShareFileOrFolderWithUser($itemType, $fileTarget, $isFile) {
+		$filesHooks = $this->getFilesHooks([
+			'shareNotificationForSharer',
+			'addNotificationsForUser',
+		]);
+
+		$this->settings->expects($this->exactly(3))
+			->method('getUserSetting')
+			->willReturnMap(
+				[
+					['recipient', 'stream', Files_Sharing::TYPE_SHARED, true],
+					['recipient', 'email', Files_Sharing::TYPE_SHARED, true],
+					['recipient', 'setting', 'batchtime', 42],
+				]
+			);
+
+		$filesHooks->expects($this->once())
+			->method('shareNotificationForSharer')
+			->with('shared_user_self', 'recipient', 1337, $itemType);
+		$filesHooks->expects($this->once())
+			->method('addNotificationsForUser')
+			->with(
+				'recipient',
+				'shared_with_by',
+				[$fileTarget, 'user'],
+				1337,
+				$fileTarget,
+				$isFile,
+				true,
+				42
+			);
+
+		$this->invokePrivate($filesHooks, 'shareFileOrFolderWithUser', [
+			'recipient', 1337, $itemType, $fileTarget
+		]);
+	}
+
+	public function testShareFileOrFolderWithGroupNonExisting() {
+		$filesHooks = $this->getFilesHooks([
+			'shareNotificationForSharer'
+		]);
+
+		$this->groupManager->expects($this->once())
+			->method('get')
+			->with('no-group')
+			->willReturn(null);
+
+		$filesHooks->expects($this->never())
+			->method('shareNotificationForSharer');
+
+		$this->invokePrivate($filesHooks, 'shareFileOrFolderWithGroup', [
+			'no-group', 0, '', '', 0
+		]);
+	}
+
+	public function dataShareFileOrFolderWithGroup() {
+		return [
+			[[], [], [], []],
+			[[$this->getUserMock('user')], [], [], []],
+			[
+				[$this->getUserMock('user1')],
+				['user1'],
+				[
+					[['user1'], 'stream', Files_Sharing::TYPE_SHARED, ['user1' => true]],
+					[['user1'], 'email', Files_Sharing::TYPE_SHARED, []],
+				],
+				[
+					'user1' => [
+						'subject' => 'shared_with_by',
+						'subject_params' => ['/file', 'user'],
+						'path' => '/file',
+						'stream' => true,
+						'email' => 0,
+					],
+				],
+			],
+			[
+				[$this->getUserMock('user1')],
+				['user1'],
+				[
+					[['user1'], 'stream', Files_Sharing::TYPE_SHARED, ['user1' => false]],
+					[['user1'], 'email', Files_Sharing::TYPE_SHARED, ['user1' => false]],
+				],
+				[],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider dataShareFileOrFolderWithGroup
+	 * @param array $usersInGroup
+	 * @param array $settingUsers
+	 * @param array $settingsReturn
+	 * @param array $addNotifications
+	 */
+	public function testShareFileOrFolderWithGroup($usersInGroup, $settingUsers, $settingsReturn, $addNotifications) {
+		$filesHooks = $this->getFilesHooks([
+			'shareNotificationForSharer',
+			'addNotificationsForUser',
+			'fixPathsForShareExceptions',
+		]);
+
+		$group = $this->getMockBuilder('OCP\IGroup')
+			->disableOriginalConstructor()
+			->getMock();
+		$group->expects($this->once())
+			->method('searchUsers')
+			->with('')
+			->willReturn($usersInGroup);
+
+		$this->groupManager->expects($this->once())
+			->method('get')
+			->with('group1')
+			->willReturn($group);
+
+		$this->settings->expects(empty($settingUsers) ? $this->never() : $this->exactly(2))
+			->method('filterUsersBySetting')
+			#->with($settingUsers, $this->anything(), Files_Sharing::TYPE_SHARED)
+			->willReturnMap($settingsReturn);
+
+		$filesHooks->expects($this->once())
+			->method('shareNotificationForSharer')
+			->with('shared_group_self', 'group1', 42, 'file');
+		$filesHooks->expects(empty($settingUsers) ? $this->never() : $this->once())
+			->method('fixPathsForShareExceptions')
+			->with($this->anything(), 1337)
+			->willReturnArgument(0);
+
+		$i = 2;
+		foreach ($addNotifications as $user => $arguments) {
+			$filesHooks->expects($this->at($i))
+				->method('addNotificationsForUser')
+				->with(
+					$user,
+					$arguments['subject'],
+					$arguments['subject_params'],
+					42,
+					$arguments['path'],
+					true,
+					$arguments['stream'],
+					$arguments['email'],
+					Files_Sharing::TYPE_SHARED
+				);
+			$i++;
+		}
+
+		$this->invokePrivate($filesHooks, 'shareFileOrFolderWithGroup', [
+			'group1', 42, 'file', '/file', 1337
+		]);
+	}
+
+	public function dataAddNotificationsForUserWithoutSettings() {
+		return [
+			['user', 'subject', ['parameter'], 42, 'path', true, false, false, Files::TYPE_SHARE_CREATED]
+		];
+	}
+
+	/**
+	 * @dataProvider dataAddNotificationsForUserWithoutSettings
+	 *
+	 * @param string $user
+	 * @param string $subject
+	 * @param array $parameter
+	 * @param int $fileId
+	 * @param string $path
+	 * @param bool $isFile
+	 * @param bool $stream
+	 * @param bool $email
+	 * @param int $type
+	 */
+	public function testAddNotificationsForUserWithoutSettings($user, $subject, $parameter, $fileId, $path, $isFile, $stream, $email, $type) {
+		$this->activityManager->expects($this->never())
+			->method('generateEvent');
+
+		$this->invokePrivate($this->filesHooks, 'addNotificationsForUser', [$user, $subject, $parameter, $fileId, $path, $isFile, $stream, $email, $type]);
+	}
+
+	public function dataAddNotificationsForUser() {
+		return [
+			['user', 'subject', ['parameter'], 42, 'path', true, true, false, Files_Sharing::TYPE_SHARED, false, false, 'files_sharing', false, false],
+			['user', 'subject', ['parameter'], 42, 'path', true, true, false, Files_Sharing::TYPE_SHARED, true, false, 'files_sharing', true, false],
+			['notAuthor', 'subject', ['parameter'], 42, 'path', true, true, false, Files::TYPE_SHARE_CREATED, false, false, 'files', true, false],
+			['notAuthor', 'subject', ['parameter'], 0, 'path', true, true, false, Files::TYPE_SHARE_CREATED, false, false, 'files', true, false],
+
+			['user', 'subject', ['parameter'], 42, 'path', true, false, true, Files_Sharing::TYPE_SHARED, false, false, 'files_sharing', false, false],
+			['user', 'subject', ['parameter'], 42, 'path', true, false, true, Files_Sharing::TYPE_SHARED, false, true, 'files_sharing', false, true],
+			['notAuthor', 'subject', ['parameter'], 42, 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
+			['notAuthor', 'subject', ['parameter'], 0, 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
+		];
+	}
+
+	/**
+	 * @dataProvider dataAddNotificationsForUser
+	 *
+	 * @param string $user
+	 * @param string $subject
+	 * @param array $parameter
+	 * @param int $fileId
+	 * @param string $path
+	 * @param bool $isFile
+	 * @param bool $stream
+	 * @param bool $email
+	 * @param int $type
+	 */
+	public function testAddNotificationsForUser($user, $subject, $parameter, $fileId, $path, $isFile, $stream, $email, $type, $selfSetting, $selfEmailSetting, $app, $sentStream, $sentEmail) {
+		$this->settings->expects($this->any())
+			->method('getUserSetting')
+			->willReturnMap([
+				[$user, 'setting', 'self', $selfSetting],
+				[$user, 'setting', 'selfemail', $selfEmailSetting],
+			]);
+
+		$event = $this->getMockBuilder('OCP\Activity\IEvent')
+			->disableOriginalConstructor()
+			->getMock();
+		$event->expects($this->once())
+			->method('setApp')
+			->with($app)
+			->willReturnSelf();
+		$event->expects($this->once())
+			->method('setType')
+			->with($type)
+			->willReturnSelf();
+		$event->expects($this->once())
+			->method('setAffectedUser')
+			->with($user)
+			->willReturnSelf();
+		$event->expects($this->once())
+			->method('setAuthor')
+			->with('user')
+			->willReturnSelf();
+		$event->expects($this->once())
+			->method('setTimestamp')
+			->willReturnSelf();
+		$event->expects($this->once())
+			->method('setSubject')
+			->with($subject, $parameter)
+			->willReturnSelf();
+		$event->expects($this->once())
+			->method('setLink')
+			->willReturnSelf();
+
+		if ($fileId) {
+			$event->expects($this->once())
+				->method('setObject')
+				->with('files', $fileId, $path)
+				->willReturnSelf();
+		} else {
+			$event->expects($this->once())
+				->method('setObject')
+				->with('', $fileId, $path)
+				->willReturnSelf();
+		}
+
+		$this->activityManager->expects($this->once())
+			->method('generateEvent')
+			->willReturn($event);
+
+		$this->data->expects($sentStream ? $this->once() : $this->never())
+			->method('send')
+			->with($event);
+		$this->data->expects($sentEmail ? $this->once() : $this->never())
+			->method('storeMail')
+			->with($event, $this->anything());
+
+		$this->invokePrivate($this->filesHooks, 'addNotificationsForUser', [$user, $subject, $parameter, $fileId, $path, $isFile, $stream, $email, $type]);
 	}
 }
