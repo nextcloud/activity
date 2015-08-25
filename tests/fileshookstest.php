@@ -41,6 +41,8 @@ class FilesHooksTest extends TestCase {
 	protected $settings;
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\IGroupManager */
 	protected $groupManager;
+	/** @var \PHPUnit_Framework_MockObject_MockObject|\OC\Files\View */
+	protected $view;
 
 	protected function setUp() {
 		parent::setUp();
@@ -60,6 +62,9 @@ class FilesHooksTest extends TestCase {
 		$this->groupManager = $this->getMockBuilder('OCP\IGroupManager')
 			->disableOriginalConstructor()
 			->getMock();
+		$this->view = $this->getMockBuilder('OC\Files\View')
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->filesHooks = $this->getFilesHooks();
 	}
@@ -77,6 +82,7 @@ class FilesHooksTest extends TestCase {
 					$this->data,
 					$this->settings,
 					$this->groupManager,
+					$this->view,
 					\OC::$server->getDatabaseConnection(),
 					$user,
 				])
@@ -88,6 +94,7 @@ class FilesHooksTest extends TestCase {
 				$this->data,
 				$this->settings,
 				$this->groupManager,
+				$this->view,
 				\OC::$server->getDatabaseConnection(),
 				$user
 			);
@@ -526,6 +533,83 @@ class FilesHooksTest extends TestCase {
 			->method('generateEvent');
 
 		$this->invokePrivate($this->filesHooks, 'addNotificationsForUser', [$user, $subject, $parameter, $fileId, $path, $isFile, $stream, $email, $type]);
+	}
+
+	public function dataShareNotificationForSharer() {
+		return [
+			[null],
+			['/path'],
+		];
+	}
+
+	/**
+	 * @dataProvider dataShareNotificationForSharer
+	 * @param string $path
+	 */
+	public function testShareFileOrFolder($path) {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser']);
+
+		$this->view->expects($this->once())
+			->method('getPath')
+			->willReturn($path);
+
+		$this->settings->expects(($path !== null) ? $this->exactly(3) : $this->never())
+			->method('getUserSetting')
+			->willReturnMap([
+				['user', 'stream', Files_Sharing::TYPE_SHARED, true],
+				['user', 'email', Files_Sharing::TYPE_SHARED, true],
+				['user', 'setting', 'batchtime', 21],
+			]);
+
+		$filesHooks->expects(($path !== null) ? $this->once() : $this->never())
+			->method('addNotificationsForUser')
+			->with(
+				'user',
+				'shared_link_self',
+				['/path'],
+				42,
+				'/path',
+				true,
+				true,
+				21
+			);
+
+		$this->invokePrivate($filesHooks, 'shareFileOrFolder', [42, 'file']);
+	}
+
+	/**
+	 * @dataProvider dataShareNotificationForSharer
+	 * @param string $path
+	 */
+	public function testShareNotificationForSharer($path) {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser']);
+
+		$this->view->expects($this->once())
+			->method('getPath')
+			->willReturn($path);
+
+		$this->settings->expects(($path !== null) ? $this->exactly(3) : $this->never())
+			->method('getUserSetting')
+			->willReturnMap([
+				['user', 'stream', Files_Sharing::TYPE_SHARED, true],
+				['user', 'email', Files_Sharing::TYPE_SHARED, true],
+				['user', 'setting', 'batchtime', 21],
+			]);
+
+		$filesHooks->expects(($path !== null) ? $this->once() : $this->never())
+			->method('addNotificationsForUser')
+			->with(
+				'user',
+				'subject',
+				['/path', 'target'],
+				42,
+				'/path',
+				true,
+				true,
+				21
+			);
+
+		$this->invokePrivate($filesHooks, 'shareNotificationForSharer', ['subject', 'target', 42, 'file']);
 	}
 
 	public function dataAddNotificationsForUser() {

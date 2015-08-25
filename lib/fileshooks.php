@@ -26,7 +26,6 @@ use OC\Files\Filesystem;
 use OC\Files\View;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
-use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\IDBConnection;
 use OCP\IGroupManager;
@@ -53,6 +52,9 @@ class FilesHooks {
 	/** @var \OCP\IDBConnection */
 	protected $connection;
 
+	/** @var \OC\Files\View */
+	protected $view;
+
 	/** @var string|false */
 	protected $currentUser;
 
@@ -63,14 +65,16 @@ class FilesHooks {
 	 * @param Data $activityData
 	 * @param UserSettings $userSettings
 	 * @param IGroupManager $groupManager
+	 * @param View $view
 	 * @param IDBConnection $connection
 	 * @param string|false $currentUser
 	 */
-	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IGroupManager $groupManager, IDBConnection $connection, $currentUser) {
+	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IGroupManager $groupManager, View $view, IDBConnection $connection, $currentUser) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
 		$this->groupManager = $groupManager;
+		$this->view = $view;
 		$this->connection = $connection;
 		$this->currentUser = $currentUser;
 	}
@@ -284,10 +288,22 @@ class FilesHooks {
 		}
 	}
 
-	protected function fixPathsForShareExceptions($affectedUsers, $shareId) {
-		// Check when there was a naming conflict and the target is different
-		// for some of the users
-		$query = $this->connection->executeQuery('SELECT `share_with`, `file_target` FROM `*PREFIX*share` WHERE `parent` = ? ', [$shareId]);
+	/**
+	 * Check when there was a naming conflict and the target is different
+	 * for some of the users
+	 *
+	 * @param array $affectedUsers
+	 * @param int $shareId
+	 * @return mixed
+	 */
+	protected function fixPathsForShareExceptions(array $affectedUsers, $shareId) {
+		$queryBuilder = $this->connection->getQueryBuilder();
+		$queryBuilder->select(['share_with', 'file_target'])
+			->from('share')
+			->where($queryBuilder->expr()->eq('parent', $queryBuilder->createParameter('parent')))
+			->setParameter('parameter', (int) $shareId);
+		$query = $queryBuilder->execute();
+
 		while ($row = $query->fetch()) {
 			$affectedUsers[$row['share_with']] = $row['file_target'];
 		}
@@ -302,7 +318,12 @@ class FilesHooks {
 	 * @param string $itemType File type that is being shared (file or folder)
 	 */
 	protected function shareFileOrFolder($fileSource, $itemType) {
-		$path = Filesystem::getPath($fileSource);
+		$this->view->chroot('/' . $this->currentUser . '/files');
+		$path = $this->view->getPath($fileSource);
+
+		if ($path === null) {
+			return;
+		}
 
 		$this->addNotificationsForUser(
 			$this->currentUser, 'shared_link_self', array($path),
@@ -321,12 +342,16 @@ class FilesHooks {
 	 * @param string $itemType
 	 */
 	protected function shareNotificationForSharer($subject, $shareWith, $fileSource, $itemType) {
-		// User performing the share
-		$filePath = Filesystem::getPath($fileSource);
+		$this->view->chroot('/' . $this->currentUser . '/files');
+		$path = $this->view->getPath($fileSource);
+
+		if ($path === null) {
+			return;
+		}
 
 		$this->addNotificationsForUser(
-			$this->currentUser, $subject, array($filePath, $shareWith),
-			$fileSource, $filePath, ($itemType === 'file'),
+			$this->currentUser, $subject, array($path, $shareWith),
+			$fileSource, $path, ($itemType === 'file'),
 			$this->userSettings->getUserSetting($this->currentUser, 'stream', Files_Sharing::TYPE_SHARED),
 			$this->userSettings->getUserSetting($this->currentUser, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
 		);
