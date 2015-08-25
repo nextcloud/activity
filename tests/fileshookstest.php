@@ -1,10 +1,10 @@
 <?php
 
 /**
- * ownCloud - Activities App
+ * ownCloud - Activity App
  *
- * @author Frank Karlitschek, Joas Schilling
- * @copyright 2013 Frank Karlitschek frank@owncloud.org
+ * @author Joas Schilling
+ * @copyright 2015 Joas Schilling nickvergessen@owncloud.com
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
