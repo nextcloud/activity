@@ -30,7 +30,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 			<pubDate><?php p(date('r', $activity['timestamp'])); ?></pubDate>
 <?php endif; ?>
 <?php if (!empty($activity['message'])): ?>
-			<description><![CDATA[<?php print_unescaped(str_replace("\n", '<br />', OC_Util::sanitizeHTML($activity['messageformatted']['full']))); ?>]]></description>
+			<description><![CDATA[<?php print_unescaped(str_replace("\n", '<br />', \OCP\Util::sanitizeHTML($activity['messageformatted']['full']))); ?>]]></description>
 <?php endif; ?>
 		</item>
 <?php } ?>
