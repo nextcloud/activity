@@ -10,7 +10,7 @@
 
 (function() {
 	var TEMPLATE =
-		'<div>' +
+		'<div class="activity-section">' +
 		'{{#if loading}}' +
 		'<div class="loading" style="height: 50px"></div>' +
 		'{{end}}' +
@@ -146,6 +146,10 @@
 					activities: this.collection.map(formatActivity),
 					emptyMessage: t('activity', 'No activities')
 				}));
+				this.$el.find('.avatar').each(function() {
+					var element = $(this);
+					element.avatar(element.data('user'), 28);
+				});
 				this.$el.find('.has-tooltip').tooltip({
 					placement: 'bottom'
 				});
