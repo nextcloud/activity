@@ -152,7 +152,7 @@ class Activities extends Controller {
 			}
 
 			$activity['previews'] = [];
-			if ($activity['object_type'] === 'files' && !empty($activity['object_ids'])) {
+			if ($activity['object_type'] === 'files' && !empty($activity['files'])) {
 				foreach ($activity['files'] as $objectId => $objectName) {
 					if (((int) $objectId) === 0 || $objectName === '') {
 						// No file, no preview

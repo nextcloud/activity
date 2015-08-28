@@ -81,19 +81,42 @@ class ActivitiesTest extends TestCase {
 
 		$this->request = $this->getMock('OCP\IRequest');
 
-		$this->controller = new Activities(
-			'activity',
-			$this->request,
-			$this->data,
-			$this->helper,
-			$this->navigation,
-			$this->userSettings,
-			$this->dateTimeFormatter,
-			$this->preview,
-			$this->urlGenerator,
-			$this->view,
-			'test'
-		);
+		$this->controller = $this->getController();
+	}
+
+	protected function getController(array $methods = []) {
+		if (empty($methods)) {
+			return new Activities(
+				'activity',
+				$this->request,
+				$this->data,
+				$this->helper,
+				$this->navigation,
+				$this->userSettings,
+				$this->dateTimeFormatter,
+				$this->preview,
+				$this->urlGenerator,
+				$this->view,
+				'test'
+			);
+		} else {
+			return $this->getMockBuilder('OCA\Activity\Controller\Activities')
+				->setConstructorArgs([
+					'activity',
+					$this->request,
+					$this->data,
+					$this->helper,
+					$this->navigation,
+					$this->userSettings,
+					$this->dateTimeFormatter,
+					$this->preview,
+					$this->urlGenerator,
+					$this->view,
+					'test',
+				])
+				->setMethods($methods)
+				->getMock();
+		}
 	}
 
 	public function testShowList() {
@@ -113,12 +136,6 @@ class ActivitiesTest extends TestCase {
 	}
 
 	public function dataFetch() {
-		$folderPreview = [
-			'link'				=> 'linkToStub',
-			'source'			=> '/core/img/filetypes/folder.svg',
-			'isMimeTypeIcon'	=> true,
-		];
-
 		$timestamp = time();
 		return [
 			[
@@ -153,6 +170,8 @@ class ActivitiesTest extends TestCase {
 								'full'		=> 'message.markup.full',
 							],
 						],
+						'object_type' => 'files',
+						'object_id' => 21,
 					],
 				],
 				[
@@ -187,12 +206,10 @@ class ActivitiesTest extends TestCase {
 						'relativeDateTimestamp' => 'seconds ago',
 						'readableDateTimestamp' => (string) $timestamp,
 
+						'object_type' => 'files',
+						'object_id' => 21,
 						'previews'			=> [
-							[
-								'link'				=> 'linkToStub',
-								'source'			=> 'linkToRouteStub',
-								'isMimeTypeIcon'	=> false,
-							],
+							['preview'],
 						],
 					],
 				],
@@ -225,6 +242,8 @@ class ActivitiesTest extends TestCase {
 								'full'		=> 'message.markup.full',
 							],
 						],
+						'object_type' => 'files',
+						'object_id' => 21,
 					],
 				],
 				[
@@ -259,12 +278,10 @@ class ActivitiesTest extends TestCase {
 						'relativeDateTimestamp' => 'seconds ago',
 						'readableDateTimestamp' => (string) $timestamp,
 
+						'object_type' => 'files',
+						'object_id' => 21,
 						'previews'			=> [
-							[
-								'link'				=> 'linkToStub',
-								'source'			=> '/core/img/filetypes/audio.svg',
-								'isMimeTypeIcon'	=> true,
-							],
+							['preview'],
 						],
 					],
 				],
@@ -297,6 +314,8 @@ class ActivitiesTest extends TestCase {
 								'full'		=> 'message.markup.full',
 							],
 						],
+						'object_type' => 'files',
+						'object_id' => 21,
 					],
 				],
 				[
@@ -331,7 +350,11 @@ class ActivitiesTest extends TestCase {
 						'relativeDateTimestamp' => 'seconds ago',
 						'readableDateTimestamp' => (string) $timestamp,
 
-						'previews'			=> [$folderPreview],
+						'object_type' => 'files',
+						'object_id' => 21,
+						'previews'			=> [
+							['preview']
+						],
 					],
 				],
 			],
@@ -344,7 +367,17 @@ class ActivitiesTest extends TestCase {
 						'app'			=> 'files',
 						'link'			=> 'http://localhost',
 						'file'			=> '/directory',
-						'files'			=> ['/directory', '', '/directory', '/directory', '/directory', '/directory', '/directory', '/directory', '/directory'],
+						'files'			=> [
+							21 => '/directory',
+							20 => '',
+							19 => '/directory',
+							18 => '/directory',
+							17 => '/directory',
+							16 => '/directory',
+							15 => '/directory',
+							14 => '/directory',
+							13 => '/directory',
+						],
 						'typeicon'		=> '',
 						'subject'		=> 'subject',
 						'subjectformatted'		=> [
@@ -364,6 +397,8 @@ class ActivitiesTest extends TestCase {
 								'full'		=> 'message.markup.full',
 							],
 						],
+						'object_type' => 'files',
+						'object_id' => 21,
 					],
 				],
 				[
@@ -374,7 +409,17 @@ class ActivitiesTest extends TestCase {
 						'app'			=> 'files',
 						'link'			=> '',
 						'file'			=> '/directory',
-						'files'			=> ['/directory', '', '/directory', '/directory', '/directory', '/directory', '/directory', '/directory', '/directory'],
+						'files'			=> [
+							21 => '/directory',
+							20 => '',
+							19 => '/directory',
+							18 => '/directory',
+							17 => '/directory',
+							16 => '/directory',
+							15 => '/directory',
+							14 => '/directory',
+							13 => '/directory',
+						],
 						'typeicon'		=> '',
 						'subject'		=> 'subject',
 						'subjectformatted'		=> [
@@ -399,14 +444,16 @@ class ActivitiesTest extends TestCase {
 						'relativeDateTimestamp' => 'seconds ago',
 						'readableDateTimestamp' => (string) $timestamp,
 
+						'object_type' => 'files',
+						'object_id' => 21,
 						'previews'			=> [
-							$folderPreview,
-							$folderPreview,
-							$folderPreview,
-							$folderPreview,
-							$folderPreview,
-							$folderPreview,
-							$folderPreview,
+							['preview'],
+							['preview'],
+							['preview'],
+							['preview'],
+							['preview'],
+							['preview'],
+							['preview'],
 						],
 					],
 				],
@@ -440,6 +487,12 @@ class ActivitiesTest extends TestCase {
 			->willReturn('linkToRouteStub');
 
 		$this->view->expects($this->any())
+			->method('getPath')
+			->willReturnMap([
+				[21, '/file.txt'],
+				[42, null],
+			]);
+		$this->view->expects($this->any())
 			->method('is_dir')
 			->willReturnMap([
 				['/directory', true],
@@ -461,8 +514,15 @@ class ActivitiesTest extends TestCase {
 				['audio/mpeg', false],
 			]);
 
+		$controller = $this->getController([
+			'getPreview'
+		]);
+		$controller->expects($this->any())
+			->method('getPreview')
+			->willReturn(['preview']);
+
 		/** @var \OCP\AppFramework\Http\JSONResponse $response */
-		$response = $this->controller->fetch(1);
+		$response = $controller->fetch(1);
 		$this->assertInstanceOf('\OCP\AppFramework\Http\JSONResponse', $response, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
 		$this->assertEquals($expected, $response->getData());
