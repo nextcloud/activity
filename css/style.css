@@ -149,6 +149,10 @@
 	margin-right: 5px;
 }
 
+.activityTabView .activitysubject {
+	width: 75%;
+}
+
 .icon-activity {
 	background-image: url('../img/activity-dark.svg');
 }
