@@ -139,7 +139,7 @@
 }
 
 /* Style for in event parameters */
-.activity-section a.filename {
+.activity-section a.filename, .activity-section strong {
 	font-weight: bold;
 }
 
@@ -147,6 +147,10 @@
 	vertical-align: middle;
 	display: inline-block;
 	margin-right: 5px;
+}
+
+.activityTabView .activitysubject {
+	width: 75%;
 }
 
 .icon-activity {

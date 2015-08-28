@@ -78,10 +78,13 @@ describe('ActivityTabView', function() {
 			expect($a1.find('.activitytime').text()).toEqual('seconds ago');
 			expect($a1.find('.activitytime').attr('data-original-title')).toEqual('readable date');
 
+			/*
 			expect($a1.find('.previews img').length).toEqual(2);
 			expect($a1.find('.previews img').eq(0).hasClass('preview-mimetype-icon')).toEqual(true);
 			expect($a1.find('.previews img').eq(1).hasClass('preview-mimetype-icon')).toEqual(false);
 			expect($a1.find('.previews img').eq(0).attr('src')).toEqual(OC.imagePath('core', 'filetypes/text.svg'));
+			*/
+			expect($a1.find('.previews').length).toEqual(0);
 
 			var $a2 = $activities.eq(1);
 			expect($a2.find('.previews').length).toEqual(0);

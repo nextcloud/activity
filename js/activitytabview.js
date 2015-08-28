@@ -10,7 +10,7 @@
 
 (function() {
 	var TEMPLATE =
-		'<div>' +
+		'<div class="activity-section">' +
 		'{{#if loading}}' +
 		'<div class="loading" style="height: 50px"></div>' +
 		'{{end}}' +
@@ -54,6 +54,9 @@
 		if (activity.has('typeicon')) {
 			output.typeIconClass = activity.get('typeicon') + ' svg';
 		}
+		/**
+		 * Disable previews in the rightside bar,
+		 * it's always the same image anyway.
 		if (activity.has('previews')) {
 			output.previews = _.map(activity.get('previews'), function(data) {
 				return {
@@ -62,6 +65,7 @@
 				};
 			});
 		}
+		*/
 		return output;
 	}
 
@@ -146,6 +150,10 @@
 					activities: this.collection.map(formatActivity),
 					emptyMessage: t('activity', 'No activities')
 				}));
+				this.$el.find('.avatar').each(function() {
+					var element = $(this);
+					element.avatar(element.data('user'), 28);
+				});
 				this.$el.find('.has-tooltip').tooltip({
 					placement: 'bottom'
 				});
