@@ -32,6 +32,7 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\Files;
+use OCP\Files\IMimeTypeDetector;
 use OCP\IDateTimeFormatter;
 use OCP\IPreview;
 use OCP\IRequest;
@@ -64,6 +65,9 @@ class Activities extends Controller {
 	/** @var IURLGenerator */
 	protected $urlGenerator;
 
+	/** @var mimeTypeDetector */
+	protected $mimeTypeDetector;
+
 	/** @var View */
 	protected $view;
 
@@ -82,6 +86,7 @@ class Activities extends Controller {
 	 * @param IDateTimeFormatter $dateTimeFormatter
 	 * @param IPreview $preview
 	 * @param IURLGenerator $urlGenerator
+	 * @param IMimeTypeDetector $mimeTypeDetector
 	 * @param View $view
 	 * @param string $user
 	 */
@@ -94,6 +99,7 @@ class Activities extends Controller {
 								IDateTimeFormatter $dateTimeFormatter,
 								IPreview $preview,
 								IURLGenerator $urlGenerator,
+								IMimeTypeDetector $mimeTypeDetector,
 								View $view,
 								$user) {
 		parent::__construct($appName, $request);
@@ -104,6 +110,7 @@ class Activities extends Controller {
 		$this->dateTimeFormatter = $dateTimeFormatter;
 		$this->preview = $preview;
 		$this->urlGenerator = $urlGenerator;
+		$this->mimeTypeDetector = $mimeTypeDetector;
 		$this->view = $view;
 		$this->user = $user;
 	}
@@ -159,7 +166,7 @@ class Activities extends Controller {
 						continue;
 					}
 
-					$activity['previews'][] = $this->getPreview($activity, (int) $objectId, $objectName);
+					$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $objectId, $objectName);
 
 					if (sizeof($activity['previews']) >= self::MAX_NUM_THUMBNAILS) {
 						// Don't want to clutter the page, so we stop after a few thumbnails
@@ -167,7 +174,7 @@ class Activities extends Controller {
 					}
 				}
 			} else if ($activity['object_type'] === 'files' && $activity['object_id']) {
-				$activity['previews'][] = $this->getPreview($activity, (int) $activity['object_id'], $activity['file']);
+				$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $activity['object_id'], $activity['file']);
 			}
 
 			$preparedActivities[] = $activity;
@@ -177,13 +184,13 @@ class Activities extends Controller {
 	}
 
 	/**
-	 * @param array $activity
+	 * @param string $owner
 	 * @param int $fileId
 	 * @param string $filePath
 	 * @return array
 	 */
-	protected function getPreview(array $activity, $fileId, $filePath) {
-		$this->view->chroot('/' . $activity['affecteduser'] . '/files');
+	protected function getPreview($owner, $fileId, $filePath) {
+		$this->view->chroot('/' . $owner . '/files');
 		$path = $this->view->getPath($fileId);
 
 		if ($path === null || $path === '' || !$this->view->file_exists($path)) {
@@ -225,15 +232,10 @@ class Activities extends Controller {
 	 * @return array
 	 */
 	protected function getPreviewFromPath($filePath) {
-		$mimeType = Files::getMimeType($filePath);
-		$mimeTypeIcon = Template::mimetype_icon($mimeType);
-		if (substr($mimeTypeIcon, -4) === '.png') {
-			$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
-		}
-
+		$mimeType = $this->mimeTypeDetector->detectPath($filePath);
 		$preview = [
 			'link'			=> $this->getPreviewLink($filePath, false),
-			'source'		=> $mimeTypeIcon,
+			'source'		=> $this->getPreviewPathFromMimeType($mimeType),
 			'isMimeTypeIcon' => true,
 		];
 
@@ -245,7 +247,7 @@ class Activities extends Controller {
 	 * @return string
 	 */
 	protected function getPreviewPathFromMimeType($mimeType) {
-		$mimeTypeIcon = Template::mimetype_icon($mimeType);
+		$mimeTypeIcon = $this->mimeTypeDetector->mimeTypeIcon($mimeType);
 		if (substr($mimeTypeIcon, -4) === '.png') {
 			$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
 		}

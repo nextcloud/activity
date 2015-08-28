@@ -43,6 +43,9 @@ class ActivitiesTest extends TestCase {
 	protected $urlGenerator;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $mimeTypeDetector;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $view;
 
 	/** @var \OCP\IL10N */
@@ -75,6 +78,9 @@ class ActivitiesTest extends TestCase {
 		$this->urlGenerator = $this->getMockBuilder('OCP\IURLGenerator')
 			->disableOriginalConstructor()
 			->getMock();
+		$this->mimeTypeDetector = $this->getMockBuilder('OCP\Files\IMimeTypeDetector')
+			->disableOriginalConstructor()
+			->getMock();
 		$this->view = $this->getMockBuilder('OC\Files\View')
 			->disableOriginalConstructor()
 			->getMock();
@@ -96,6 +102,7 @@ class ActivitiesTest extends TestCase {
 				$this->dateTimeFormatter,
 				$this->preview,
 				$this->urlGenerator,
+				$this->mimeTypeDetector,
 				$this->view,
 				'test'
 			);
@@ -111,6 +118,7 @@ class ActivitiesTest extends TestCase {
 					$this->dateTimeFormatter,
 					$this->preview,
 					$this->urlGenerator,
+					$this->mimeTypeDetector,
 					$this->view,
 					'test',
 				])
@@ -526,6 +534,73 @@ class ActivitiesTest extends TestCase {
 		$this->assertInstanceOf('\OCP\AppFramework\Http\JSONResponse', $response, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
 		$this->assertEquals($expected, $response->getData());
+	}
+
+	public function dataGetPreviewFromPath() {
+		return [
+			['dir', 'dir', '/core/img/filetypes/folder.svg'],
+			['test.txt', 'text/plain', '/core/img/filetypes/text.svg'],
+			['test.mp3', 'audio/mpeg', '/core/img/filetypes/audio.svg'],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetPreviewFromPath
+	 * @param string $filePath
+	 * @param string $mimeType
+	 * @param string $expected
+	 */
+	public function testGetPreviewFromPath($filePath, $mimeType) {
+		$controller = $this->getController([
+			'getPreviewPathFromMimeType',
+			'getPreviewLink',
+		]);
+
+		$controller->expects($this->once())
+			->method('getPreviewPathFromMimeType')
+			->with($mimeType)
+			->willReturn('mime-type-icon');
+		$controller->expects($this->once())
+			->method('getPreviewLink')
+			->with($filePath, false)
+			->willReturn('target-link');
+		$this->mimeTypeDetector->expects($this->once())
+			->method('detectPath')
+			->willReturn($mimeType);
+
+		$this->assertSame(
+			[
+				'link' => 'target-link',
+				'source' => 'mime-type-icon',
+				'isMimeTypeIcon' => true,
+			],
+			$this->invokePrivate($controller, 'getPreviewFromPath', [$filePath])
+		);
+	}
+
+	public function dataGetPreviewPathFromMimeType() {
+		return [
+			['dir', '/core/img/filetypes/folder.png', '/core/img/filetypes/folder.svg'],
+			['text/plain', '/core/img/filetypes/text.svg', '/core/img/filetypes/text.svg'],
+			['text/plain', '/core/img/filetypes/text.jpg', '/core/img/filetypes/text.jpg'],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetPreviewPathFromMimeType
+	 * @param string $mimeType
+	 * @param string $expected
+	 */
+	public function testGetPreviewPathFromMimeType($mimeType, $icon, $expected) {
+		$this->mimeTypeDetector->expects($this->once())
+			->method('mimeTypeIcon')
+			->with($mimeType)
+			->willReturn($icon);
+
+		$this->assertSame(
+			$expected,
+			$this->invokePrivate($this->controller, 'getPreviewPathFromMimeType', [$mimeType])
+		);
 	}
 
 	public function dataGetPreviewLink() {
