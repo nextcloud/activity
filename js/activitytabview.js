@@ -54,6 +54,9 @@
 		if (activity.has('typeicon')) {
 			output.typeIconClass = activity.get('typeicon') + ' svg';
 		}
+		/**
+		 * Disable previews in the rightside bar,
+		 * it's always the same image anyway.
 		if (activity.has('previews')) {
 			output.previews = _.map(activity.get('previews'), function(data) {
 				return {
@@ -62,6 +65,7 @@
 				};
 			});
 		}
+		*/
 		return output;
 	}
 
