@@ -206,6 +206,7 @@ class Application extends App {
 				$server->getDateTimeFormatter(),
 				$server->getPreviewManager(),
 				$server->getURLGenerator(),
+				$server->getMimeTypeDetector(),
 				new View(''),
 				$c->query('CurrentUID')
 			);

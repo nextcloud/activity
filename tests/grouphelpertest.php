@@ -165,8 +165,10 @@ class GroupHelperTest extends TestCase {
 						'message'		=> '',
 						'messageparams'	=> array(),
 						'file'			=> 'testing/file2.txt',
-						'files'			=> ['testing/file2.txt', 'testing/file1.txt'],
-						'object_ids'	=> [42, 21],
+						'files'			=> [
+							42 => 'testing/file2.txt',
+							21 => 'testing/file1.txt',
+						],
 						'typeicon'		=> 'icon-type1',
 						'object_type'	=> 'files',
 						'object_id'		=> 42,
@@ -222,8 +224,9 @@ class GroupHelperTest extends TestCase {
 						'message'		=> '',
 						'messageparams'	=> array(),
 						'file'			=> 'testing/file2.txt',
-						'files'			=> ['testing/file2.txt'],
-						'object_ids'	=> [42],
+						'files'			=> [
+							42 => 'testing/file2.txt'
+						],
 						'typeicon'		=> 'icon-type1',
 						'object_type'	=> 'files',
 						'object_id'		=> 42,
@@ -295,8 +298,10 @@ class GroupHelperTest extends TestCase {
 						'message'		=> '',
 						'messageparams'	=> array(),
 						'file'			=> 'testing/file3.txt',
-						'files'			=> ['testing/file3.txt', 'testing/file2.txt'],
-						'object_ids'	=> [1337, 42],
+						'files'			=> [
+							1337 => 'testing/file3.txt',
+							42 => 'testing/file2.txt',
+						],
 						'typeicon'		=> 'icon-type1',
 						'object_type'	=> 'files',
 						'object_id'		=> 1337,

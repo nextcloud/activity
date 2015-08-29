@@ -43,6 +43,9 @@ class ActivitiesTest extends TestCase {
 	protected $urlGenerator;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $mimeTypeDetector;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $view;
 
 	/** @var \OCP\IL10N */
@@ -75,25 +78,53 @@ class ActivitiesTest extends TestCase {
 		$this->urlGenerator = $this->getMockBuilder('OCP\IURLGenerator')
 			->disableOriginalConstructor()
 			->getMock();
+		$this->mimeTypeDetector = $this->getMockBuilder('OCP\Files\IMimeTypeDetector')
+			->disableOriginalConstructor()
+			->getMock();
 		$this->view = $this->getMockBuilder('OC\Files\View')
 			->disableOriginalConstructor()
 			->getMock();
 
 		$this->request = $this->getMock('OCP\IRequest');
 
-		$this->controller = new Activities(
-			'activity',
-			$this->request,
-			$this->data,
-			$this->helper,
-			$this->navigation,
-			$this->userSettings,
-			$this->dateTimeFormatter,
-			$this->preview,
-			$this->urlGenerator,
-			$this->view,
-			'test'
-		);
+		$this->controller = $this->getController();
+	}
+
+	protected function getController(array $methods = []) {
+		if (empty($methods)) {
+			return new Activities(
+				'activity',
+				$this->request,
+				$this->data,
+				$this->helper,
+				$this->navigation,
+				$this->userSettings,
+				$this->dateTimeFormatter,
+				$this->preview,
+				$this->urlGenerator,
+				$this->mimeTypeDetector,
+				$this->view,
+				'test'
+			);
+		} else {
+			return $this->getMockBuilder('OCA\Activity\Controller\Activities')
+				->setConstructorArgs([
+					'activity',
+					$this->request,
+					$this->data,
+					$this->helper,
+					$this->navigation,
+					$this->userSettings,
+					$this->dateTimeFormatter,
+					$this->preview,
+					$this->urlGenerator,
+					$this->mimeTypeDetector,
+					$this->view,
+					'test',
+				])
+				->setMethods($methods)
+				->getMock();
+		}
 	}
 
 	public function testShowList() {
@@ -113,12 +144,6 @@ class ActivitiesTest extends TestCase {
 	}
 
 	public function dataFetch() {
-		$folderPreview = [
-			'link'				=> 'linkToStub',
-			'source'			=> '/core/img/filetypes/folder.svg',
-			'isMimeTypeIcon'	=> true,
-		];
-
 		$timestamp = time();
 		return [
 			[
@@ -153,6 +178,8 @@ class ActivitiesTest extends TestCase {
 								'full'		=> 'message.markup.full',
 							],
 						],
+						'object_type' => 'files',
+						'object_id' => 21,
 					],
 				],
 				[
@@ -187,12 +214,10 @@ class ActivitiesTest extends TestCase {
 						'relativeDateTimestamp' => 'seconds ago',
 						'readableDateTimestamp' => (string) $timestamp,
 
+						'object_type' => 'files',
+						'object_id' => 21,
 						'previews'			=> [
-							[
-								'link'				=> 'linkToStub',
-								'source'			=> 'linkToRouteStub',
-								'isMimeTypeIcon'	=> false,
-							],
+							['preview'],
 						],
 					],
 				],
@@ -225,6 +250,8 @@ class ActivitiesTest extends TestCase {
 								'full'		=> 'message.markup.full',
 							],
 						],
+						'object_type' => 'files',
+						'object_id' => 21,
 					],
 				],
 				[
@@ -259,12 +286,10 @@ class ActivitiesTest extends TestCase {
 						'relativeDateTimestamp' => 'seconds ago',
 						'readableDateTimestamp' => (string) $timestamp,
 
+						'object_type' => 'files',
+						'object_id' => 21,
 						'previews'			=> [
-							[
-								'link'				=> 'linkToStub',
-								'source'			=> '/core/img/filetypes/audio.svg',
-								'isMimeTypeIcon'	=> true,
-							],
+							['preview'],
 						],
 					],
 				],
@@ -297,6 +322,8 @@ class ActivitiesTest extends TestCase {
 								'full'		=> 'message.markup.full',
 							],
 						],
+						'object_type' => 'files',
+						'object_id' => 21,
 					],
 				],
 				[
@@ -331,7 +358,11 @@ class ActivitiesTest extends TestCase {
 						'relativeDateTimestamp' => 'seconds ago',
 						'readableDateTimestamp' => (string) $timestamp,
 
-						'previews'			=> [$folderPreview],
+						'object_type' => 'files',
+						'object_id' => 21,
+						'previews'			=> [
+							['preview']
+						],
 					],
 				],
 			],
@@ -344,7 +375,17 @@ class ActivitiesTest extends TestCase {
 						'app'			=> 'files',
 						'link'			=> 'http://localhost',
 						'file'			=> '/directory',
-						'files'			=> ['/directory', '', '/directory', '/directory', '/directory', '/directory', '/directory', '/directory', '/directory'],
+						'files'			=> [
+							21 => '/directory',
+							20 => '',
+							19 => '/directory',
+							18 => '/directory',
+							17 => '/directory',
+							16 => '/directory',
+							15 => '/directory',
+							14 => '/directory',
+							13 => '/directory',
+						],
 						'typeicon'		=> '',
 						'subject'		=> 'subject',
 						'subjectformatted'		=> [
@@ -364,6 +405,8 @@ class ActivitiesTest extends TestCase {
 								'full'		=> 'message.markup.full',
 							],
 						],
+						'object_type' => 'files',
+						'object_id' => 21,
 					],
 				],
 				[
@@ -374,7 +417,17 @@ class ActivitiesTest extends TestCase {
 						'app'			=> 'files',
 						'link'			=> '',
 						'file'			=> '/directory',
-						'files'			=> ['/directory', '', '/directory', '/directory', '/directory', '/directory', '/directory', '/directory', '/directory'],
+						'files'			=> [
+							21 => '/directory',
+							20 => '',
+							19 => '/directory',
+							18 => '/directory',
+							17 => '/directory',
+							16 => '/directory',
+							15 => '/directory',
+							14 => '/directory',
+							13 => '/directory',
+						],
 						'typeicon'		=> '',
 						'subject'		=> 'subject',
 						'subjectformatted'		=> [
@@ -399,14 +452,16 @@ class ActivitiesTest extends TestCase {
 						'relativeDateTimestamp' => 'seconds ago',
 						'readableDateTimestamp' => (string) $timestamp,
 
+						'object_type' => 'files',
+						'object_id' => 21,
 						'previews'			=> [
-							$folderPreview,
-							$folderPreview,
-							$folderPreview,
-							$folderPreview,
-							$folderPreview,
-							$folderPreview,
-							$folderPreview,
+							['preview'],
+							['preview'],
+							['preview'],
+							['preview'],
+							['preview'],
+							['preview'],
+							['preview'],
 						],
 					],
 				],
@@ -440,6 +495,12 @@ class ActivitiesTest extends TestCase {
 			->willReturn('linkToRouteStub');
 
 		$this->view->expects($this->any())
+			->method('getPath')
+			->willReturnMap([
+				[21, '/file.txt'],
+				[42, null],
+			]);
+		$this->view->expects($this->any())
 			->method('is_dir')
 			->willReturnMap([
 				['/directory', true],
@@ -461,11 +522,226 @@ class ActivitiesTest extends TestCase {
 				['audio/mpeg', false],
 			]);
 
+		$controller = $this->getController([
+			'getPreview'
+		]);
+		$controller->expects($this->any())
+			->method('getPreview')
+			->willReturn(['preview']);
+
 		/** @var \OCP\AppFramework\Http\JSONResponse $response */
-		$response = $this->controller->fetch(1);
+		$response = $controller->fetch(1);
 		$this->assertInstanceOf('\OCP\AppFramework\Http\JSONResponse', $response, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
 		$this->assertEquals($expected, $response->getData());
+	}
+
+	public function dataGetPreviewInvalidPaths() {
+		return [
+			['author', 42, '/path', null, null],
+			['author', 42, '/path', '', null],
+			['author', 42, '/path', '/currentPath', false],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetPreviewInvalidPaths
+	 *
+	 * @param string $author
+	 * @param int $fileId
+	 * @param string $path
+	 * @param string $returnedPath
+	 * @param null|bool $exists
+	 */
+	public function testGetPreviewInvalidPaths($author, $fileId, $path, $returnedPath, $exists) {
+		$this->view->expects($this->once())
+			->method('chroot')
+			->with('/' . $author . '/files');
+		$this->view->expects($this->once())
+			->method('getPath')
+			->with($fileId)
+			->willReturn($returnedPath);
+		if ($exists === null) {
+			$this->view->expects($this->never())
+				->method('file_exists');
+		} else {
+			$this->view->expects($this->once())
+				->method('file_exists')
+				->willReturn($exists);
+		}
+
+		$controller = $this->getController([
+			'getPreviewFromPath'
+		]);
+		$controller->expects($this->any())
+			->method('getPreviewFromPath')
+			->with($path)
+			->willReturn(['getPreviewFromPath']);
+
+		$this->assertSame(['getPreviewFromPath'], $this->invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
+	}
+
+	public function dataGetPreview() {
+		return [
+			['author', 42, '/path', '/currentPath', true, false, '/preview/dir', true],
+			['author', 42, '/file.txt', '/currentFile.txt', false, false, '/preview/mpeg', true],
+			['author', 42, '/file.txt', '/currentFile.txt', false, true, '/preview/currentFile.txt', false],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetPreview
+	 *
+	 * @param string $author
+	 * @param int $fileId
+	 * @param string $path
+	 * @param string $returnedPath
+	 * @param bool $isDir
+	 * @param bool $isMimeSup
+	 * @param string $source
+	 * @param bool $isMimeTypeIcon
+	 */
+	public function testGetPreview($author, $fileId, $path, $returnedPath, $isDir, $isMimeSup, $source, $isMimeTypeIcon) {
+
+		$controller = $this->getController([
+			'getPreviewLink',
+			'getPreviewPathFromMimeType',
+		]);
+
+		$this->view->expects($this->once())
+			->method('chroot')
+			->with('/' . $author . '/files');
+		$this->view->expects($this->once())
+			->method('getPath')
+			->with($fileId)
+			->willReturn($returnedPath);
+		$this->view->expects($this->once())
+			->method('file_exists')
+			->with($returnedPath)
+			->willReturn(true);
+		$this->view->expects($this->once())
+			->method('is_dir')
+			->with($returnedPath)
+			->willReturn($isDir);
+
+		$controller->expects($this->once())
+			->method('getPreviewLink')
+			->with($returnedPath, $isDir)
+			->willReturnCallback(function($path) {
+				return '/preview' . $path;
+			});
+
+		if ($isDir) {
+			$controller->expects($this->once())
+				->method('getPreviewPathFromMimeType')
+				->with('dir')
+				->willReturn('/preview/dir');
+		} else {
+			$fileInfo = $this->getMockBuilder('OCP\Files\FileInfo')
+				->disableOriginalConstructor()
+				->getMock();
+
+			$this->view->expects($this->once())
+				->method('getFileInfo')
+				->with($returnedPath)
+				->willReturn($fileInfo);
+
+			$this->preview->expects($this->once())
+				->method('isAvailable')
+				->with($fileInfo)
+				->willReturn($isMimeSup);
+
+			if (!$isMimeSup) {
+				$fileInfo->expects($this->once())
+					->method('getMimetype')
+					->willReturn('audio/mp3');
+
+				$controller->expects($this->once())
+					->method('getPreviewPathFromMimeType')
+					->with('audio/mp3')
+					->willReturn('/preview/mpeg');
+			} else {
+				$this->urlGenerator->expects($this->once())
+					->method('linkToRoute')
+					->with('core_ajax_preview', $this->anything())
+					->willReturnCallback(function() use ($returnedPath) {
+						return '/preview' . $returnedPath;
+					});
+			}
+		}
+
+		$this->assertSame([
+			'link' => '/preview' . $returnedPath,
+			'source' => $source,
+			'isMimeTypeIcon' => $isMimeTypeIcon,
+		], $this->invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
+	}
+
+	public function dataGetPreviewFromPath() {
+		return [
+			['dir', 'dir', '/core/img/filetypes/folder.svg'],
+			['test.txt', 'text/plain', '/core/img/filetypes/text.svg'],
+			['test.mp3', 'audio/mpeg', '/core/img/filetypes/audio.svg'],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetPreviewFromPath
+	 * @param string $filePath
+	 * @param string $mimeType
+	 * @param string $expected
+	 */
+	public function testGetPreviewFromPath($filePath, $mimeType) {
+		$controller = $this->getController([
+			'getPreviewPathFromMimeType',
+			'getPreviewLink',
+		]);
+
+		$controller->expects($this->once())
+			->method('getPreviewPathFromMimeType')
+			->with($mimeType)
+			->willReturn('mime-type-icon');
+		$controller->expects($this->once())
+			->method('getPreviewLink')
+			->with($filePath, false)
+			->willReturn('target-link');
+		$this->mimeTypeDetector->expects($this->once())
+			->method('detectPath')
+			->willReturn($mimeType);
+
+		$this->assertSame(
+			[
+				'link' => 'target-link',
+				'source' => 'mime-type-icon',
+				'isMimeTypeIcon' => true,
+			],
+			$this->invokePrivate($controller, 'getPreviewFromPath', [$filePath])
+		);
+	}
+
+	public function dataGetPreviewPathFromMimeType() {
+		return [
+			['dir', '/core/img/filetypes/folder.png', '/core/img/filetypes/folder.svg'],
+			['text/plain', '/core/img/filetypes/text.svg', '/core/img/filetypes/text.svg'],
+			['text/plain', '/core/img/filetypes/text.jpg', '/core/img/filetypes/text.jpg'],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetPreviewPathFromMimeType
+	 * @param string $mimeType
+	 * @param string $expected
+	 */
+	public function testGetPreviewPathFromMimeType($mimeType, $icon, $expected) {
+		$this->mimeTypeDetector->expects($this->once())
+			->method('mimeTypeIcon')
+			->with($mimeType)
+			->willReturn($icon);
+
+		$this->assertSame(
+			$expected,
+			$this->invokePrivate($this->controller, 'getPreviewPathFromMimeType', [$mimeType])
+		);
 	}
 
 	public function dataGetPreviewLink() {
