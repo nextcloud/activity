@@ -640,9 +640,6 @@ class ActivitiesTest extends TestCase {
 			$fileInfo = $this->getMockBuilder('OCP\Files\FileInfo')
 				->disableOriginalConstructor()
 				->getMock();
-			$fileInfo->expects($this->once())
-				->method('getMimetype')
-				->willReturn('audio/mp3');
 
 			$this->view->expects($this->once())
 				->method('getFileInfo')
@@ -650,11 +647,15 @@ class ActivitiesTest extends TestCase {
 				->willReturn($fileInfo);
 
 			$this->preview->expects($this->once())
-				->method('isMimeSupported')
-				->with('audio/mp3')
+				->method('isAvailable')
+				->with($fileInfo)
 				->willReturn($isMimeSup);
 
 			if (!$isMimeSup) {
+				$fileInfo->expects($this->once())
+					->method('getMimetype')
+					->willReturn('audio/mp3');
+
 				$controller->expects($this->once())
 					->method('getPreviewPathFromMimeType')
 					->with('audio/mp3')
