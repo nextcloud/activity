@@ -211,7 +211,7 @@ class Activities extends Controller {
 		} else {
 			$fileInfo = $this->view->getFileInfo($path);
 			$mimeType = $fileInfo->getMimetype();
-			if (!$is_dir && $mimeType && $this->preview->isMimeSupported($mimeType)) {
+			if ($mimeType && $this->preview->isMimeSupported($mimeType)) {
 				$preview['isMimeTypeIcon'] = false;
 				$preview['source'] = $this->urlGenerator->linkToRoute('core_ajax_preview', [
 					'file' => $path,

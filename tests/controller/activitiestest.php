@@ -536,6 +536,146 @@ class ActivitiesTest extends TestCase {
 		$this->assertEquals($expected, $response->getData());
 	}
 
+	public function dataGetPreviewInvalidPaths() {
+		return [
+			['author', 42, '/path', null, null],
+			['author', 42, '/path', '', null],
+			['author', 42, '/path', '/currentPath', false],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetPreviewInvalidPaths
+	 *
+	 * @param string $author
+	 * @param int $fileId
+	 * @param string $path
+	 * @param string $returnedPath
+	 * @param null|bool $exists
+	 */
+	public function testGetPreviewInvalidPaths($author, $fileId, $path, $returnedPath, $exists) {
+		$this->view->expects($this->once())
+			->method('chroot')
+			->with('/' . $author . '/files');
+		$this->view->expects($this->once())
+			->method('getPath')
+			->with($fileId)
+			->willReturn($returnedPath);
+		if ($exists === null) {
+			$this->view->expects($this->never())
+				->method('file_exists');
+		} else {
+			$this->view->expects($this->once())
+				->method('file_exists')
+				->willReturn($exists);
+		}
+
+		$controller = $this->getController([
+			'getPreviewFromPath'
+		]);
+		$controller->expects($this->any())
+			->method('getPreviewFromPath')
+			->with($path)
+			->willReturn(['getPreviewFromPath']);
+
+		$this->assertSame(['getPreviewFromPath'], $this->invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
+	}
+
+	public function dataGetPreview() {
+		return [
+			['author', 42, '/path', '/currentPath', true, false, '/preview/dir', true],
+			['author', 42, '/file.txt', '/currentFile.txt', false, false, '/preview/mpeg', true],
+			['author', 42, '/file.txt', '/currentFile.txt', false, true, '/preview/currentFile.txt', false],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetPreview
+	 *
+	 * @param string $author
+	 * @param int $fileId
+	 * @param string $path
+	 * @param string $returnedPath
+	 * @param bool $isDir
+	 * @param bool $isMimeSup
+	 * @param string $source
+	 * @param bool $isMimeTypeIcon
+	 */
+	public function testGetPreview($author, $fileId, $path, $returnedPath, $isDir, $isMimeSup, $source, $isMimeTypeIcon) {
+
+		$controller = $this->getController([
+			'getPreviewLink',
+			'getPreviewPathFromMimeType',
+		]);
+
+		$this->view->expects($this->once())
+			->method('chroot')
+			->with('/' . $author . '/files');
+		$this->view->expects($this->once())
+			->method('getPath')
+			->with($fileId)
+			->willReturn($returnedPath);
+		$this->view->expects($this->once())
+			->method('file_exists')
+			->with($returnedPath)
+			->willReturn(true);
+		$this->view->expects($this->once())
+			->method('is_dir')
+			->with($returnedPath)
+			->willReturn($isDir);
+
+		$controller->expects($this->once())
+			->method('getPreviewLink')
+			->with($returnedPath, $isDir)
+			->willReturnCallback(function($path) {
+				return '/preview' . $path;
+			});
+
+		if ($isDir) {
+			$controller->expects($this->once())
+				->method('getPreviewPathFromMimeType')
+				->with('dir')
+				->willReturn('/preview/dir');
+		} else {
+			$fileInfo = $this->getMockBuilder('OCP\Files\FileInfo')
+				->disableOriginalConstructor()
+				->getMock();
+			$fileInfo->expects($this->once())
+				->method('getMimetype')
+				->willReturn('audio/mp3');
+
+			$this->view->expects($this->once())
+				->method('getFileInfo')
+				->with($returnedPath)
+				->willReturn($fileInfo);
+
+			$this->preview->expects($this->once())
+				->method('isMimeSupported')
+				->with('audio/mp3')
+				->willReturn($isMimeSup);
+
+			if (!$isMimeSup) {
+				$controller->expects($this->once())
+					->method('getPreviewPathFromMimeType')
+					->with('audio/mp3')
+					->willReturn('/preview/mpeg');
+			} else {
+				$this->urlGenerator->expects($this->once())
+					->method('linkToRoute')
+					->with('core_ajax_preview', $this->anything())
+					->willReturnCallback(function() use ($returnedPath) {
+						return '/preview' . $returnedPath;
+					});
+			}
+		}
+
+		$this->assertSame([
+			'link' => '/preview' . $returnedPath,
+			'source' => $source,
+			'isMimeTypeIcon' => $isMimeTypeIcon,
+		], $this->invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
+	}
+
 	public function dataGetPreviewFromPath() {
 		return [
 			['dir', 'dir', '/core/img/filetypes/folder.svg'],
