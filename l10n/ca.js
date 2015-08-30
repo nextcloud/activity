@@ -14,7 +14,7 @@ OC.L10N.register(
     "Activities by you" : "Les teves activitats",
     "Activities by others" : "Activitats dels altres",
     "\"remote user\"" : "\"usuari remot\"",
-    "in %s" : "en %s",
+    "in %s" : "a %s",
     "%s and %s" : "%s i %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s i <strong %s>%n més</strong>","%s i <strong %s>%n més</strong>"],
