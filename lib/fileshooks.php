@@ -27,6 +27,7 @@ use OC\Files\View;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IManager;
+use OCP\Files\Mount\IMountPoint;
 use OCP\IDBConnection;
 use OCP\IGroupManager;
 use OCP\Share;
@@ -227,6 +228,7 @@ class FilesHooks {
 	protected function shareFileOrFolderWithUser($shareWith, $fileSource, $itemType, $fileTarget) {
 		// User performing the share
 		$this->shareNotificationForSharer('shared_user_self', $shareWith, $fileSource, $itemType);
+		$this->shareNotificationForOriginalOwners($this->currentUser, 'reshared_user_by', $shareWith, $fileSource, $itemType);
 
 		// New shared user
 		$this->addNotificationsForUser(
@@ -256,6 +258,7 @@ class FilesHooks {
 
 		// User performing the share
 		$this->shareNotificationForSharer('shared_group_self', $shareWith, $fileSource, $itemType);
+		$this->shareNotificationForOriginalOwners($this->currentUser, 'reshared_group_by', $shareWith, $fileSource, $itemType);
 
 
 		$usersInGroup = $group->searchUsers('');
@@ -325,6 +328,8 @@ class FilesHooks {
 			return;
 		}
 
+		$this->shareNotificationForOriginalOwners($this->currentUser, 'reshared_link_by', '', $fileSource, $itemType);
+
 		$this->addNotificationsForUser(
 			$this->currentUser, 'shared_link_self', array($path),
 			(int) $fileSource, $path, ($itemType === 'file'),
@@ -355,6 +360,77 @@ class FilesHooks {
 			$this->userSettings->getUserSetting($this->currentUser, 'stream', Files_Sharing::TYPE_SHARED),
 			$this->userSettings->getUserSetting($this->currentUser, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($this->currentUser, 'setting', 'batchtime') : 0
 		);
+	}
+
+	/**
+	 * Add notifications for the user that shares a file/folder
+	 *
+	 * @param string $owner
+	 * @param string $subject
+	 * @param string $shareWith
+	 * @param int $fileSource
+	 * @param string $itemType
+	 */
+	protected function reshareNotificationForSharer($owner, $subject, $shareWith, $fileSource, $itemType) {
+		$this->view->chroot('/' . $owner . '/files');
+		$path = $this->view->getPath($fileSource);
+
+		if ($path === null) {
+			return;
+		}
+
+		$this->addNotificationsForUser(
+			$owner, $subject, array($path, $this->currentUser, $shareWith),
+			$fileSource, $path, ($itemType === 'file'),
+			$this->userSettings->getUserSetting($owner, 'stream', Files_Sharing::TYPE_SHARED),
+			$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : 0
+		);
+	}
+
+	/**
+	 * Add notifications for the owners whose files have been reshared
+	 *
+	 * @param string $currentOwner
+	 * @param string $subject
+	 * @param string $shareWith
+	 * @param int $fileSource
+	 * @param string $itemType
+	 */
+	protected function shareNotificationForOriginalOwners($currentOwner, $subject, $shareWith, $fileSource, $itemType) {
+		// Get the full path of the current user
+		$this->view->chroot('/' . $currentOwner . '/files');
+		$path = $this->view->getPath($fileSource);
+		if ($path === null) {
+			return;
+		}
+
+		/**
+		 * Get the original owner and his path
+		 */
+		$owner = $this->view->getOwner($path);
+		$this->reshareNotificationForSharer($owner, $subject, $shareWith, $fileSource, $itemType);
+
+		/**
+		 * Get the sharee who shared the item with the currentUser
+		 */
+		$this->view->chroot('/' . $currentOwner . '/files');
+		$mount = $this->view->getMount($path);
+		if (!($mount instanceof IMountPoint)) {
+			return;
+		}
+
+		$storage = $mount->getStorage();
+		if (!$storage->instanceOfStorage('OC\Files\Storage\Shared')) {
+			return;
+		}
+
+		/** @var \OC\Files\Storage\Shared $storage */
+		$shareOwner = $storage->getSharedFrom();
+		if ($shareOwner === '' || $shareOwner === null || $shareOwner === $owner) {
+			return;
+		}
+
+		$this->reshareNotificationForSharer($shareOwner, $subject, $shareWith, $fileSource, $itemType);
 	}
 
 	/**

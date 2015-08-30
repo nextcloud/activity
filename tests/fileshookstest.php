@@ -362,6 +362,7 @@ class FilesHooksTest extends TestCase {
 		$filesHooks = $this->getFilesHooks([
 			'shareNotificationForSharer',
 			'addNotificationsForUser',
+			'shareNotificationForOriginalOwners',
 		]);
 
 		$this->settings->expects($this->exactly(3))
@@ -458,6 +459,7 @@ class FilesHooksTest extends TestCase {
 			'shareNotificationForSharer',
 			'addNotificationsForUser',
 			'fixPathsForShareExceptions',
+			'shareNotificationForOriginalOwners',
 		]);
 
 		$group = $this->getMockBuilder('OCP\IGroup')
@@ -485,8 +487,12 @@ class FilesHooksTest extends TestCase {
 			->method('fixPathsForShareExceptions')
 			->with($this->anything(), 1337)
 			->willReturnArgument(0);
+		$filesHooks->expects($this->once())
+			->method('shareNotificationForOriginalOwners')
+			->with('user', 'reshared_group_by', 'group1', 42, 'file')
+			->willReturnArgument(0);
 
-		$i = 2;
+		$i = 3;
 		foreach ($addNotifications as $user => $arguments) {
 			$filesHooks->expects($this->at($i))
 				->method('addNotificationsForUser')
@@ -535,6 +541,53 @@ class FilesHooksTest extends TestCase {
 		$this->invokePrivate($this->filesHooks, 'addNotificationsForUser', [$user, $subject, $parameter, $fileId, $path, $isFile, $stream, $email, $type]);
 	}
 
+	public function dataReshareNotificationForSharer() {
+		return [
+			[null],
+			['/path'],
+		];
+	}
+
+	/**
+	 * @dataProvider dataReshareNotificationForSharer
+	 * @param string $path
+	 */
+	public function testReshareNotificationForSharer($path) {
+		$filesHooks = $this->getFilesHooks([
+			'addNotificationsForUser',
+		]);
+
+		$this->view->expects($this->once())
+			->method('chroot')
+			->with('/owner/files');
+		$this->view->expects($this->once())
+			->method('getPath')
+			->willReturn($path);
+
+		$this->settings->expects(($path !== null) ? $this->exactly(3) : $this->never())
+			->method('getUserSetting')
+			->willReturnMap([
+				['owner', 'stream', Files_Sharing::TYPE_SHARED, true],
+				['owner', 'email', Files_Sharing::TYPE_SHARED, true],
+				['owner', 'setting', 'batchtime', 21],
+			]);
+
+		$filesHooks->expects(($path !== null) ? $this->once() : $this->never())
+			->method('addNotificationsForUser')
+			->with(
+				'owner',
+				'reshared_link_by',
+				['/path', 'user', ''],
+				42,
+				'/path',
+				true,
+				true,
+				21
+			);
+
+		$this->invokePrivate($filesHooks, 'reshareNotificationForSharer', ['owner', 'reshared_link_by', '', 42, 'file']);
+	}
+
 	public function dataShareNotificationForSharer() {
 		return [
 			[null],
@@ -547,7 +600,10 @@ class FilesHooksTest extends TestCase {
 	 * @param string $path
 	 */
 	public function testShareFileOrFolder($path) {
-		$filesHooks = $this->getFilesHooks(['addNotificationsForUser']);
+		$filesHooks = $this->getFilesHooks([
+			'addNotificationsForUser',
+			'shareNotificationForOriginalOwners',
+		]);
 
 		$this->view->expects($this->once())
 			->method('getPath')
@@ -573,8 +629,101 @@ class FilesHooksTest extends TestCase {
 				true,
 				21
 			);
+		$filesHooks->expects(($path !== null) ? $this->once() : $this->never())
+			->method('shareNotificationForOriginalOwners')
+			->with('user', 'reshared_link_by', '', 42, 'file');
 
 		$this->invokePrivate($filesHooks, 'shareFileOrFolder', [42, 'file']);
+	}
+
+	public function testShareNotificationForOriginalOwnersNoPath() {
+		$filesHooks = $this->getFilesHooks([
+			'reshareNotificationForSharer',
+		]);
+
+		$this->view->expects($this->once())
+			->method('getPath')
+			->with(42)
+			->willReturn(null);
+
+		$filesHooks->expects($this->never())
+			->method('reshareNotificationForSharer');
+
+		$this->invokePrivate($filesHooks, 'shareNotificationForOriginalOwners', ['', '', '', 42, '', '']);
+	}
+
+	public function dataShareNotificationForOriginalOwners() {
+		return [
+			[false, false, '', false],
+			[true, false, '', false],
+			[true, true, null, false],
+			[true, true, '', false],
+			[true, true, 'owner', false],
+			[true, true, 'sharee', true],
+		];
+	}
+
+	/**
+	 * @dataProvider dataShareNotificationForOriginalOwners
+	 *
+	 * @param bool $validMountPoint
+	 * @param bool $validSharedStorage
+	 * @param string $shareeUser
+	 * @param bool $reshareNotificationForSharerTwice
+	 */
+	public function testShareNotificationForOriginalOwners($validMountPoint, $validSharedStorage, $shareeUser, $reshareNotificationForSharerTwice) {
+		$filesHooks = $this->getFilesHooks([
+			'reshareNotificationForSharer',
+		]);
+
+		$this->view->expects($this->atLeastOnce())
+			->method('getPath')
+			->willReturn('/path');
+
+		$this->view->expects($this->once())
+			->method('getOwner')
+			->with('/path')
+			->willReturn('owner');
+
+		$filesHooks->expects($reshareNotificationForSharerTwice ? $this->exactly(2) : $this->once())
+			->method('reshareNotificationForSharer')
+			->with($this->anything(), 'subject', 'with', 42, 'type');
+
+		if ($validMountPoint) {
+			$storage = $this->getMockBuilder('OC\Files\Storage\Shared')
+				->disableOriginalConstructor()
+				->setMethods([
+					'instanceOfStorage',
+					'getSharedFrom',
+				])
+				->getMock();
+			$storage->expects($this->once())
+				->method('instanceOfStorage')
+				->with('OC\Files\Storage\Shared')
+				->willReturn($validSharedStorage);
+			$storage->expects($validSharedStorage ? $this->once() : $this->never())
+				->method('getSharedFrom')
+				->willReturn($shareeUser);
+
+			$mount = $this->getMockBuilder('OCP\Files\Mount\IMountPoint')
+				->disableOriginalConstructor()
+				->getMock();
+			$mount->expects($this->once())
+				->method('getStorage')
+				->willReturn($storage);
+
+			$this->view->expects($this->once())
+				->method('getMount')
+				->with('/path')
+				->willReturn($mount);
+		} else {
+			$this->view->expects($this->once())
+				->method('getMount')
+				->with('/path')
+				->willReturn(null);
+		}
+
+		$this->invokePrivate($filesHooks, 'shareNotificationForOriginalOwners', ['current', 'subject', 'with', 42, 'type']);
 	}
 
 	/**
