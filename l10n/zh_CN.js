@@ -7,6 +7,9 @@ OC.L10N.register(
     "Your settings have been updated." : "您的设置已更新。",
     "Mail" : "邮件",
     "Stream" : "流",
+    "Activities" : "动态",
+    "Error loading activities" : "加载动态出错",
+    "No activities" : "暂无动态",
     "This stream will show events like additions, changes & shares" : "流中会显示诸如添加、更改和分享之类的事件",
     "There are no events for this filter" : "没有符合当前筛选条件的事件。",
     "Activity notification" : "动态通知",
@@ -17,6 +20,7 @@ OC.L10N.register(
     "in %s" : "位于 %s",
     "%s and %s" : "%s 和 %s",
     ", " : "，",
+    "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s 和 <strong %s>%n 更多</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s 和更多的 %n 项"],
     "Hello %s," : "%s 你好，",
     "You are receiving this email because in the last hour the following things happened at %s" : "你收到此邮件，是因为在上一个小时里 %s 发生了以下的活动",
@@ -36,6 +40,7 @@ OC.L10N.register(
     "Enable RSS feed" : "启用 RSS 源",
     "No activity yet" : "暂无动态",
     "No more events to load" : "已无更多事件",
-    "Files" : "文件"
+    "Files" : "文件",
+    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s 和 <strong class=\"has-tooltip\" title=\"%s\">%n 更多</strong>"]
 },
 "nplurals=1; plural=0;");
