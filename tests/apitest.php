@@ -165,9 +165,9 @@ class ApiTest extends TestCase {
 		$activityManager->registerExtension(function() {
 			return new Extension(\OCP\Util::getL10N('activity', 'en'), $this->getMock('\OCP\IURLGenerator'));
 		});
-		$this->registerActivityManager($activityManager);
+		$this->overwriteService('ActivityManager', $activityManager);
 		$result = \OCA\Activity\Api::get(array('_route' => 'get_cloud_activity'));
-		$this->registerActivityManager($this->oldManager);
+		$this->restoreService('ActivityManager');
 
 		$this->assertEquals(100, $result->getStatusCode());
 		$data = $result->getData();
@@ -183,19 +183,5 @@ class ApiTest extends TestCase {
 				}
 			}
 		}
-	}
-
-	/** @var \OCP\Activity\IManager */
-	protected $oldManager;
-
-	/**
-	 * Register an mock for testing purposes.
-	 * @param \OCP\Activity\IManager $manager
-	 */
-	protected function registerActivityManager(\OCP\Activity\IManager $manager) {
-		$this->oldManager = \OC::$server->query('ActivityManager');
-		\OC::$server->registerService('ActivityManager', function () use ($manager) {
-			return $manager;
-		});
 	}
 }
