@@ -7,6 +7,9 @@ OC.L10N.register(
     "Your settings have been updated." : "Innstillingene dine ble oppdatert.",
     "Mail" : "E-post",
     "Stream" : "Strøm",
+    "Activities" : "Aktiviteter",
+    "Error loading activities" : "Feil ved innlasting av aktiviteter",
+    "No activities" : "Ingen aktiviteter",
     "This stream will show events like additions, changes & shares" : "Denne strømmen vil vise hendelser som f.eks. innlegging, endring og deling",
     "There are no events for this filter" : "Der er ingen hendelser for dette filteret",
     "Activity notification" : "Varsel om aktivitet",
@@ -17,6 +20,7 @@ OC.L10N.register(
     "in %s" : "i %s",
     "%s and %s" : "%s og %s",
     ", " : ", ",
+    "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s og <strong %s>%n flere</strong>","%s og <strong %s>%n flere</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s og %n til","%s og %n til"],
     "Hello %s," : "Hei %s,",
     "You are receiving this email because in the last hour the following things happened at %s" : "Du mottar denne e-posten fordi følgende har skjedd på %s den siste timen",
@@ -36,6 +40,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktiver RSS-strøm",
     "No activity yet" : "Ingen aktivitet ennå",
     "No more events to load" : "Ingen flere hendelser å laste",
-    "Files" : "Filer"
+    "Files" : "Filer",
+    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s og <strong class=\"has-tooltip\" title=\"%s\">%n flere</strong>","%s og <strong class=\"has-tooltip\" title=\"%s\">%n flere</strong>"]
 },
 "nplurals=2; plural=(n != 1);");
