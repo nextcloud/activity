@@ -114,7 +114,7 @@ class MailQueueHandlerTest extends TestCase {
 
 		$this->assertEquals($affected, $users);
 		foreach ($users as $user) {
-			list($data, $skipped) = \Test_Helper::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			list($data, $skipped) = $this->invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
 			$this->assertNotEmpty($data, 'Failed asserting that each user has a mail entry');
 			$this->assertSame(0, $skipped);
 		}
@@ -123,7 +123,7 @@ class MailQueueHandlerTest extends TestCase {
 		$this->mailQueueHandler->deleteSentItems($users, $maxTime);
 
 		foreach ($users as $user) {
-			list($data, $skipped) = \Test_Helper::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			list($data, $skipped) = $this->invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
 			$this->assertEmpty($data, 'Failed to assert that all entries for the affected users have been deleted');
 			$this->assertSame(0, $skipped);
 		}
@@ -131,7 +131,7 @@ class MailQueueHandlerTest extends TestCase {
 	}
 
 	public function testGetItemsForUser() {
-		list($data, $skipped) = \Test_Helper::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200]);
+		list($data, $skipped) = $this->invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200]);
 		$this->assertCount(2, $data, 'Failed to assert the user has 2 entries');
 		$this->assertSame(0, $skipped);
 
@@ -145,7 +145,7 @@ class MailQueueHandlerTest extends TestCase {
 			$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 160 + $i));
 		}
 
-		list($data, $skipped) = \Test_Helper::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200, 5]);
+		list($data, $skipped) = $this->invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200, 5]);
 		$this->assertCount(5, $data, 'Failed to assert the user has 2 entries');
 		$this->assertSame(12, $skipped);
 	}
@@ -197,33 +197,12 @@ class MailQueueHandlerTest extends TestCase {
 	protected function assertRemainingMailEntries(array $users, $maxTime, $explain) {
 		if (!empty($untouched)) {
 			foreach ($users as $user) {
-				list($data,) = \Test_Helper::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+				list($data,) = $this->invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
 				$this->assertNotEmpty(
 					$data,
 					'Failed asserting that the remaining user ' . $user. ' still has mails in the queue ' . $explain
 				);
 			}
 		}
-	}
-
-	public function getLangForApproximatedTimeFrameData() {
-		return [
-			[time() - 3900, UserSettings::EMAIL_SEND_HOURLY],
-			[time() - 89900, UserSettings::EMAIL_SEND_DAILY],
-			[time() - 90100, UserSettings::EMAIL_SEND_WEEKLY],
-		];
-	}
-
-	/**
-	 * @dataProvider getLangForApproximatedTimeFrameData
-	 * @param int $time
-	 * @param int $expected
-	 */
-	public function testGetLangForApproximatedTimeFrame($time, $expected) {
-		$this->assertEquals(
-			$expected,
-			\Test_Helper::invokePrivate($this->mailQueueHandler, 'getLangForApproximatedTimeFrame', [$time]),
-			'Failed asserting to receive the right timeframe'
-		);
 	}
 }

@@ -94,6 +94,6 @@ class EmailNotificationTest extends TestCase {
 				]]
 			]);
 
-		$this->assertEquals(2, \Test_Helper::invokePrivate($backgroundJob, 'runStep', [2, 200]));
+		$this->assertEquals(2, $this->invokePrivate($backgroundJob, 'runStep', [2, 200]));
 	}
 }
