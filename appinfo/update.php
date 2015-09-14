@@ -25,3 +25,7 @@ if (version_compare($installedVersion, '1.2.2', '<')) {
 	$connection->executeUpdate('UPDATE `*PREFIX*activity` SET `app` = ? WHERE `type` = ?', array('files_sharing', 'shared'));
 	$connection->executeUpdate('UPDATE `*PREFIX*activity_mq` SET `amq_appid` = ? WHERE `amq_type` = ?', array('files_sharing', 'shared'));
 }
+
+// Cron job for sending emails and pruning the activity list
+\OC::$server->getJobList()->add('OCA\Activity\BackgroundJob\EmailNotification');
+\OC::$server->getJobList()->add('OCA\Activity\BackgroundJob\ExpireActivities');

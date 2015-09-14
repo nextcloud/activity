@@ -20,9 +20,10 @@
  * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace OCA\Activity\Tests;
+namespace OCA\Activity\Tests\AppInfo;
 
 use OCA\Activity\AppInfo\Application;
+use OCA\Activity\Tests\TestCase;
 
 class ApplicationTest extends TestCase {
 	/** @var \OCA\Activity\AppInfo\Application */
