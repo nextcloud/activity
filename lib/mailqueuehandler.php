@@ -197,24 +197,6 @@ class MailQueueHandler {
 	}
 
 	/**
-	 * Get the selected setting for a time frame
-	 * However we are not very accurate here, so we match the setting of the user
-	 * a bit better.
-	 *
-	 * @param int $timestamp
-	 * @return int Email send option that is used.
-	 */
-	protected function getLangForApproximatedTimeFrame($timestamp) {
-		if (time() - $timestamp < 4000) {
-			return UserSettings::EMAIL_SEND_HOURLY;
-		} else if (time() - $timestamp < 90000) {
-			return UserSettings::EMAIL_SEND_DAILY;
-		} else {
-			return UserSettings::EMAIL_SEND_WEEKLY;
-		}
-	}
-
-	/**
 	 * Send a notification to one user
 	 *
 	 * @param string $userName Username of the recipient
@@ -253,7 +235,6 @@ class MailQueueHandler {
 
 		$alttext = new Template('activity', 'email.notification', '');
 		$alttext->assign('username', $user->getDisplayName());
-		$alttext->assign('timeframe', $this->getLangForApproximatedTimeFrame($mailData[0]['amq_timestamp']));
 		$alttext->assign('activities', $activityList);
 		$alttext->assign('skippedCount', $skippedCount);
 		$alttext->assign('owncloud_installation', $this->urlGenerator->getAbsoluteURL('/'));
