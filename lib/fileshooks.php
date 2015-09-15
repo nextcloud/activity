@@ -304,7 +304,7 @@ class FilesHooks {
 		$queryBuilder->select(['share_with', 'file_target'])
 			->from('share')
 			->where($queryBuilder->expr()->eq('parent', $queryBuilder->createParameter('parent')))
-			->setParameter('parameter', (int) $shareId);
+			->setParameter('parent', (int) $shareId);
 		$query = $queryBuilder->execute();
 
 		while ($row = $query->fetch()) {
