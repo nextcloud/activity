@@ -13,7 +13,6 @@
 namespace OCA\Activity;
 
 use OCA\Activity\AppInfo\Application;
-use OCP\DB;
 use OCP\IDBConnection;
 
 /**
