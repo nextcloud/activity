@@ -21,6 +21,7 @@
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s og <strong %s>%n flere</strong>","%s og <strong %s>%n flere</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s og %n til","%s og %n til"],
     "Hello %s," : "Hei %s,",
+    "You are receiving this email because the following things happened at %s" : "Du mottar denne e-posten fordi følgende har hendt på %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* og %n til ","* og %n til "],
     "Notifications" : "Varsler",

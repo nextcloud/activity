@@ -23,6 +23,7 @@ OC.L10N.register(
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s ja <strong %s>%n lisää</strong>","%s ja <strong %s>%n lisää</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s ja %n lisää","%s ja %n lisää"],
     "Hello %s," : "Hei %s,",
+    "You are receiving this email because the following things happened at %s" : "Saat tämän viestin, koska kohteessa %s tapahtui seuraavaa",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* ja %n lisää","* ja %n lisää"],
     "Notifications" : "Ilmoitukset",
