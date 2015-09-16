@@ -53,7 +53,7 @@ class ApiTest extends TestCase {
 			),
 		);
 
-		$queryActivity = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
+		$queryActivity = \OC::$server->getDatabaseConnection()->prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
 		$loop = 0;
 		foreach ($activities as $activity) {
 			$queryActivity->execute(array(
@@ -77,7 +77,7 @@ class ApiTest extends TestCase {
 	protected function tearDown() {
 		$data = new Data(
 			$this->getMock('\OCP\Activity\IManager'),
-			$this->getMock('\OCP\IDBConnection'),
+			\OC::$server->getDatabaseConnection(),
 			$this->getMock('\OCP\IUserSession')
 		);
 

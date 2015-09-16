@@ -22,6 +22,7 @@
 
 namespace OCA\Activity\Tests;
 
+use Doctrine\DBAL\Driver\Statement;
 use OCA\Activity\Data;
 use OCA\Activity\Hooks;
 use OCP\Activity\IExtension;
@@ -37,8 +38,8 @@ class HooksDeleteUserTest extends TestCase {
 			array('affectedUser' => 'otherUser', 'subject' => 'subject2'),
 		);
 
-		$queryActivity = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
-		$queryMailQueue = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity_mq`(`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?)');
+		$queryActivity = \OC::$server->getDatabaseConnection()->prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
+		$queryMailQueue = \OC::$server->getDatabaseConnection()->prepare('INSERT INTO `*PREFIX*activity_mq`(`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 		foreach ($activities as $activity) {
 			$queryActivity->execute(array(
 				'app',
@@ -69,13 +70,13 @@ class HooksDeleteUserTest extends TestCase {
 	protected function tearDown() {
 		$data = new Data(
 			$this->getMock('\OCP\Activity\IManager'),
-			$this->getMock('\OCP\IDBConnection'),
+			\OC::$server->getDatabaseConnection(),
 			$this->getMock('\OCP\IUserSession')
 		);
 		$data->deleteActivities(array(
 			'type' => 'test',
 		));
-		$query = \OCP\DB::prepare("DELETE FROM `*PREFIX*activity_mq` WHERE `amq_type` = 'test'");
+		$query = \OC::$server->getDatabaseConnection()->prepare("DELETE FROM `*PREFIX*activity_mq` WHERE `amq_type` = 'test'");
 		$query->execute();
 
 		parent::tearDown();
@@ -91,22 +92,23 @@ class HooksDeleteUserTest extends TestCase {
 	}
 
 	protected function assertUserActivities($expected) {
-		$query = \OCP\DB::prepare("SELECT `affecteduser` FROM `*PREFIX*activity` WHERE `type` = 'test'");
+		$query = \OC::$server->getDatabaseConnection()->prepare("SELECT `affecteduser` FROM `*PREFIX*activity` WHERE `type` = 'test'");
 		$this->assertTableKeys($expected, $query, 'affecteduser');
 	}
 
 	protected function assertUserMailQueue($expected) {
-		$query = \OCP\DB::prepare("SELECT `amq_affecteduser` FROM `*PREFIX*activity_mq` WHERE `amq_type` = 'test'");
+		$query = \OC::$server->getDatabaseConnection()->prepare("SELECT `amq_affecteduser` FROM `*PREFIX*activity_mq` WHERE `amq_type` = 'test'");
 		$this->assertTableKeys($expected, $query, 'amq_affecteduser');
 	}
 
-	protected function assertTableKeys($expected, \OC_DB_StatementWrapper $query, $keyName) {
-		$result = $query->execute();
+	protected function assertTableKeys($expected, Statement $query, $keyName) {
+		$query->execute();
 
 		$users = array();
-		while ($row = $result->fetchRow()) {
+		while ($row = $query->fetch()) {
 			$users[] = $row[$keyName];
 		}
+		$query->closeCursor();
 		$users = array_unique($users);
 		sort($users);
 		sort($expected);
