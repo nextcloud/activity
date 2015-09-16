@@ -22,6 +22,7 @@
 
 namespace OCA\Activity\Tests;
 
+use Doctrine\DBAL\Driver\Statement;
 use OCA\Activity\Data;
 use OCP\Activity\IExtension;
 
@@ -39,7 +40,7 @@ class DataDeleteActivitiesTest extends TestCase {
 			array('affectedUser' => 'otherUser', 'subject' => 'subject2', 'time' => time()),
 		);
 
-		$queryActivity = \OCP\DB::prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
+		$queryActivity = \OC::$server->getDatabaseConnection()->prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
 		foreach ($activities as $activity) {
 			$queryActivity->execute(array(
 				'app',
@@ -58,7 +59,7 @@ class DataDeleteActivitiesTest extends TestCase {
 		}
 		$this->data = new Data(
 			$this->getMock('\OCP\Activity\IManager'),
-			$this->getMock('\OCP\IDBConnection'),
+			\OC::$server->getDatabaseConnection(),
 			$this->getMock('\OCP\IUserSession')
 		);
 	}
@@ -98,17 +99,18 @@ class DataDeleteActivitiesTest extends TestCase {
 	}
 
 	protected function assertUserActivities($expected) {
-		$query = \OCP\DB::prepare("SELECT `affecteduser` FROM `*PREFIX*activity` WHERE `type` = 'test'");
+		$query = \OC::$server->getDatabaseConnection()->prepare("SELECT `affecteduser` FROM `*PREFIX*activity` WHERE `type` = 'test'");
 		$this->assertTableKeys($expected, $query, 'affecteduser');
 	}
 
-	protected function assertTableKeys($expected, \OC_DB_StatementWrapper $query, $keyName) {
-		$result = $query->execute();
+	protected function assertTableKeys($expected, Statement $query, $keyName) {
+		$query->execute();
 
 		$users = array();
-		while ($row = $result->fetchRow()) {
+		while ($row = $query->fetch()) {
 			$users[] = $row[$keyName];
 		}
+		$query->closeCursor();
 		$users = array_unique($users);
 		sort($users);
 		sort($expected);

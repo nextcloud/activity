@@ -27,12 +27,10 @@ namespace OCA\Activity;
 use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
-use OCP\DB;
 use OCP\IDBConnection;
+use OCP\IL10N;
 use OCP\IUser;
 use OCP\IUserSession;
-use OCP\User;
-use OCP\Util;
 
 /**
  * @brief Class for managing the data in the activities
@@ -61,14 +59,14 @@ class Data {
 	protected $notificationTypes = array();
 
 	/**
-	 * @param \OCP\IL10N $l
+	 * @param IL10N $l
 	 * @return array Array "stringID of the type" => "translated string description for the setting"
 	 * 				or Array "stringID of the type" => [
 	 * 					'desc' => "translated string description for the setting"
 	 * 					'methods' => [\OCP\Activity\IExtension::METHOD_*],
 	 * 				]
 	 */
-	public function getNotificationTypes(\OCP\IL10N $l) {
+	public function getNotificationTypes(IL10N $l) {
 		if (isset($this->notificationTypes[$l->getLanguageCode()])) {
 			return $this->notificationTypes[$l->getLanguageCode()];
 		}
@@ -91,7 +89,7 @@ class Data {
 		}
 
 		// store in DB
-		$queryBuilder = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$queryBuilder = $this->connection->getQueryBuilder();
 		$queryBuilder->insert('activity')
 			->values([
 				'app' => $queryBuilder->createParameter('app'),
@@ -143,18 +141,27 @@ class Data {
 		}
 
 		// store in DB
-		$query = DB::prepare('INSERT INTO `*PREFIX*activity_mq` '
-			. ' (`amq_appid`, `amq_type`, `amq_affecteduser`, `amq_timestamp`, `amq_subject`, `amq_subjectparams`, `amq_latest_send`) '
-			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
-		$query->execute(array(
-			$event->getApp(),
-			$event->getType(),
-			$event->getAffectedUser(),
-			$event->getTimestamp(),
-			$event->getSubject(),
-			json_encode($event->getSubjectParameters()),
-			$latestSendTime,
-		));
+		$queryBuilder = $this->connection->getQueryBuilder();
+		$queryBuilder->insert('activity_mq')
+			->values([
+				'amq_appid' => $queryBuilder->createParameter('app'),
+				'amq_subject' => $queryBuilder->createParameter('subject'),
+				'amq_subjectparams' => $queryBuilder->createParameter('subjectparams'),
+				'amq_affecteduser' => $queryBuilder->createParameter('affecteduser'),
+				'amq_timestamp' => $queryBuilder->createParameter('timestamp'),
+				'amq_type' => $queryBuilder->createParameter('type'),
+				'amq_latest_send' => $queryBuilder->createParameter('latest_send'),
+			])
+			->setParameters([
+				'app' => $event->getApp(),
+				'subject' => $event->getSubject(),
+				'subjectparams' => json_encode($event->getSubjectParameters()),
+				'affecteduser' => $event->getAffectedUser(),
+				'timestamp' => (int) $event->getTimestamp(),
+				'type' => $event->getType(),
+				'latest_send' => $latestSendTime,
+			])
+			->execute();
 
 		return true;
 	}
@@ -313,7 +320,7 @@ class Data {
 			$sqlWhere = ' WHERE ' . implode(' AND ', $sqlWhereList);
 		}
 
-		$query = DB::prepare(
+		$query = $this->connection->prepare(
 			'DELETE FROM `*PREFIX*activity`' . $sqlWhere);
 		$query->execute($sqlParameters);
 	}
