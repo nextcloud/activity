@@ -149,8 +149,24 @@
 	margin-right: 5px;
 }
 
+.activityTabView .activity.box {
+	position: relative;
+}
+.activityTabView .activity-icon {
+	position: absolute;
+	margin-top: 3px;
+}
 .activityTabView .activitysubject {
-	width: 75%;
+	width: 90%;
+	margin-left: 24px;
+	display: block;
+	min-height: 28px;
+}
+.activityTabView .box .activitytime {
+	padding: 0;
+	margin: 0;
+	margin-right: 0;
+	margin-top: -15px;
 }
 
 .icon-activity {
