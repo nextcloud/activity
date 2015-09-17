@@ -23,6 +23,7 @@ OC.L10N.register(
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s e <strong %s>mais %n</strong>","%s e <strong %s>mais %n</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s e %n mais","%s e %n mais"],
     "Hello %s," : "Olá %s,",
+    "You are receiving this email because the following things happened at %s" : "Está a receber esta mensagem porque porque ocorreu o seguinte às %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* e %n mais","* e mais %n"],
     "Notifications" : "Notificações",

@@ -23,6 +23,7 @@ OC.L10N.register(
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s และ <strong %s>อื่นๆอีก %n</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s และ %n ฯลฯ"],
     "Hello %s," : "สวัสดี %s",
+    "You are receiving this email because the following things happened at %s" : "หากคุณได้รับอีเมลนี้เป็นเพราะว่ามีบางอย่างผิดปกติที่ %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* และ %n ฯลฯ"],
     "Notifications" : "การแจ้งเตือน",
