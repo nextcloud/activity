@@ -654,12 +654,15 @@ class FilesHooksTest extends TestCase {
 
 	public function dataShareNotificationForOriginalOwners() {
 		return [
-			[false, false, '', false],
-			[true, false, '', false],
-			[true, true, null, false],
-			[true, true, '', false],
-			[true, true, 'owner', false],
-			[true, true, 'sharee', true],
+			[false, false, 'owner', '', 1],
+			[true, false, 'owner', '', 1],
+			[true, true, 'owner', null, 1],
+			[true, true, 'owner', '', 1],
+			[true, true, 'owner', 'owner', 1],
+			[true, true, 'owner', 'sharee', 2],
+			[true, true, 'current', 'sharee', 1],
+			[true, true, 'owner', 'current', 1],
+			[true, true, 'current', 'current', 0],
 		];
 	}
 
@@ -671,7 +674,7 @@ class FilesHooksTest extends TestCase {
 	 * @param string $shareeUser
 	 * @param bool $reshareNotificationForSharerTwice
 	 */
-	public function testShareNotificationForOriginalOwners($validMountPoint, $validSharedStorage, $shareeUser, $reshareNotificationForSharerTwice) {
+	public function testShareNotificationForOriginalOwners($validMountPoint, $validSharedStorage, $pathOwner, $shareeUser, $numReshareNotification) {
 		$filesHooks = $this->getFilesHooks([
 			'reshareNotificationForSharer',
 		]);
@@ -683,9 +686,9 @@ class FilesHooksTest extends TestCase {
 		$this->view->expects($this->once())
 			->method('getOwner')
 			->with('/path')
-			->willReturn('owner');
+			->willReturn($pathOwner);
 
-		$filesHooks->expects($reshareNotificationForSharerTwice ? $this->exactly(2) : $this->once())
+		$filesHooks->expects($this->exactly($numReshareNotification))
 			->method('reshareNotificationForSharer')
 			->with($this->anything(), 'subject', 'with', 42, 'type');
 
