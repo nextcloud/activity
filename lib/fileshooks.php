@@ -408,7 +408,9 @@ class FilesHooks {
 		 * Get the original owner and his path
 		 */
 		$owner = $this->view->getOwner($path);
-		$this->reshareNotificationForSharer($owner, $subject, $shareWith, $fileSource, $itemType);
+		if ($owner !== $currentOwner) {
+			$this->reshareNotificationForSharer($owner, $subject, $shareWith, $fileSource, $itemType);
+		}
 
 		/**
 		 * Get the sharee who shared the item with the currentUser
@@ -426,7 +428,7 @@ class FilesHooks {
 
 		/** @var \OC\Files\Storage\Shared $storage */
 		$shareOwner = $storage->getSharedFrom();
-		if ($shareOwner === '' || $shareOwner === null || $shareOwner === $owner) {
+		if ($shareOwner === '' || $shareOwner === null || $shareOwner === $owner || $shareOwner === $currentOwner) {
 			return;
 		}
 
