@@ -65,7 +65,7 @@ class Activities extends Controller {
 	/** @var IURLGenerator */
 	protected $urlGenerator;
 
-	/** @var mimeTypeDetector */
+	/** @var IMimeTypeDetector */
 	protected $mimeTypeDetector;
 
 	/** @var View */

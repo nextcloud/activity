@@ -95,10 +95,10 @@ class FilesHooksStatic {
 	 * Load additional scripts when the files app is visible
 	 */
 	public static function onLoadFilesAppScripts() {
-		\OCP\Util::addStyle('activity', 'style');
-		\OCP\Util::addScript('activity', 'activitymodel');
-		\OCP\Util::addScript('activity', 'activitycollection');
-		\OCP\Util::addScript('activity', 'activitytabview');
-		\OCP\Util::addScript('activity', 'filesplugin');
+		Util::addStyle('activity', 'style');
+		Util::addScript('activity', 'activitymodel');
+		Util::addScript('activity', 'activitycollection');
+		Util::addScript('activity', 'activitytabview');
+		Util::addScript('activity', 'filesplugin');
 	}
 }
