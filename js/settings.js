@@ -15,7 +15,7 @@ $(document).ready(function() {
 
 	$activityNotifications.find('.activity_select_group').click(function() {
 		var $selectGroup = '#activity_notifications .' + $(this).attr('data-select-group');
-		var $filteredBoxes = $($selectGroup).not(':disabled')
+		var $filteredBoxes = $($selectGroup).not(':disabled');
 		var $checkedBoxes = $filteredBoxes.filter(':checked').length;
 
 		$filteredBoxes.attr('checked', true);
