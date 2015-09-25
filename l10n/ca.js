@@ -7,6 +7,7 @@ OC.L10N.register(
     "Your settings have been updated." : "La configuració s'ha actualitzat.",
     "Mail" : "Correu electrónic",
     "Stream" : "Cadena",
+    "No activities" : "sense activitats",
     "This stream will show events like additions, changes & shares" : "Aquest corrent mostrarà esdeveniments afegits, modificats i compartits.",
     "There are no events for this filter" : "No hi ha esdeveniments en est filtre",
     "Activity notification" : "Notificació d'activitat",
