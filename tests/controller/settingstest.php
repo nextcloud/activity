@@ -187,8 +187,8 @@ class SettingsTest extends TestCase {
 		while (strpos($cleanedResponse, '  ') !== false) {
 			$cleanedResponse = str_replace('  ', ' ', $cleanedResponse);
 		}
-		$this->assertContains('<input type="checkbox" id="NotificationTestTypeShared2_email" name="NotificationTestTypeShared2_email" value="1" class="NotificationTestTypeShared2 email" />', $cleanedResponse);
-		$this->assertContains('<input type="checkbox" id="NotificationTestTypeShared2_stream" name="NotificationTestTypeShared2_stream" value="1" class="NotificationTestTypeShared2 stream" disabled="disabled" />', $cleanedResponse);
+		$this->assertContains('<input type="checkbox" id="NotificationTestTypeShared2_email" name="NotificationTestTypeShared2_email" value="1" class="NotificationTestTypeShared2 email checkbox" />', $cleanedResponse);
+		$this->assertContains('<input type="checkbox" id="NotificationTestTypeShared2_stream" name="NotificationTestTypeShared2_stream" value="1" class="NotificationTestTypeShared2 stream checkbox" disabled="disabled" />', $cleanedResponse);
 
 		// Description of the type
 		$cleanedResponse = str_replace(["\n", "\t"], '', $renderedResponse);
