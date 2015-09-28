@@ -12,7 +12,7 @@
 
 var FilesPlugin = {
 	attach: function(fileList) {
-		fileList.registerTabView(new OCA.Activity.ActivityTabView());
+		fileList.registerTabView(new OCA.Activity.ActivityTabView({order: -50}));
 	}
 };
 
