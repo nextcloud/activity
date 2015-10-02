@@ -185,12 +185,14 @@ class GroupHelper
 
 		$return = array();
 		foreach ($this->activities as $activity) {
+			$this->activityManager->setFormattingObject($activity['object_type'], $activity['object_id']);
 			$activity = $this->dataHelper->formatStrings($activity, 'subject');
 			$activity = $this->dataHelper->formatStrings($activity, 'message');
 
 			$activity['typeicon'] = $this->activityManager->getTypeIcon($activity['type']);
 			$return[] = $activity;
 		}
+		$this->activityManager->setFormattingObject('', 0);
 
 		return $return;
 	}
