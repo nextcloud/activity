@@ -1,12 +1,13 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Події",
+    "Activity" : "Ваші дії",
     "Personal activity feed for %s" : "Персональна стрічка оновлень для %s",
     "Your feed URL is invalid" : "Ваше посилання новинної стрічки неправильна",
     "Your settings have been updated." : "Налаштування оновлені.",
     "Mail" : "Пошта",
     "Stream" : "Потік",
+    "Activities" : "Активність",
     "This stream will show events like additions, changes & shares" : "У цьому потоці будуть показані події, на кшталт доповнення, зміни та поширення",
     "There are no events for this filter" : "За цим фільтром події відсутні",
     "Activity notification" : "Повідомлення про події",
