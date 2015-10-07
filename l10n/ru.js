@@ -23,6 +23,7 @@ OC.L10N.register(
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s и <strong %s>еще %n</strong>","%s и <strong %s>еще %n</strong>","%s и <strong %s>еще %n</strong>","%s и <strong %s>еще %n</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s и ещё %n","%s и ещё %n","%s и ещё %n","%s и ещё %n"],
     "Hello %s," : "Привет, %s,",
+    "You are receiving this email because the following things happened at %s" : "Вы получили это электронное сообщение, потому что произошли следующие изменения %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "Notifications" : "Уведомления",
     "List your own actions in the stream" : "Показывать мои действия в потоке",
