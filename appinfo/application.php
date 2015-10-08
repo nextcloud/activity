@@ -226,6 +226,7 @@ class Application extends App {
 				$c->query('UserSettings'),
 				$c->query('URLGenerator'),
 				$server->getActivityManager(),
+				$server->getL10NFactory(),
 				$server->getConfig(),
 				$c->query('CurrentUID')
 			);

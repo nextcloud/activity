@@ -82,6 +82,7 @@ class FeedTest extends TestCase {
 			$this->userSettings,
 			$this->getMockBuilder('OCP\IURLGenerator')->disableOriginalConstructor()->getMock(),
 			$this->manager,
+			\OC::$server->getL10NFactory(),
 			$this->config,
 			'test'
 		);

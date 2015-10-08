@@ -210,26 +210,29 @@ class DataTest extends TestCase {
 		$this->restoreService('UserSession');
 	}
 
-	public function dataRead() {
+	protected function getUserMock() {
 		$user = $this->getMockBuilder('\OCP\IUser')
 			->disableOriginalConstructor()
 			->getMock();
 		$user->expects($this->any())
 			->method('getUID')
 			->willReturn('username');
+		return $user;
+	}
 
+	public function dataRead() {
 		return [
 			[null, 0, 10, 'all', '', null, [], '', 0, null, null, [], null, null],
-			[$user, 0, 10, 'all', '', 'username', [], '', 0, null, null, [], null, null],
-			[$user, 0, 10, 'all', 'test', 'test', [], '', 0, null, null, [], null, null],
-			[$user, 0, 10, 'all', '', 'username', ['file_created'], false, '', 0, null, [], ' AND `type` IN (?) AND `user` <> ?', ['username', 'file_created', 'username']],
-			[$user, 0, 10, 'all', '', 'username', ['file_created'], true, '', 0, null, [], ' AND `type` IN (?)', ['username', 'file_created']],
-			[$user, 0, 10, 'by', '', 'username', ['file_created'], null, '', 0, null, [], ' AND `type` IN (?) AND `user` <> ?', ['username', 'file_created', 'username']],
-			[$user, 0, 10, 'self', '', 'username', ['file_created'], null, '', 0, null, [], ' AND `type` IN (?) AND `user` = ?', ['username', 'file_created', 'username']],
-			[$user, 0, 10, 'all', '', 'username', ['file_created'], true, '', 0, 'OR `cond` = 1', null, ' AND `type` IN (?) OR `cond` = 1', ['username', 'file_created']],
-			[$user, 0, 10, 'all', '', 'username', ['file_created'], true, '', 0, 'OR `cond` = ?', ['con1'], ' AND `type` IN (?) OR `cond` = ?', ['username', 'file_created', 'con1']],
-			[$user, 0, 10, 'filter', '', 'username', ['file_created'], false, 'files', 42, null, [], ' AND `type` IN (?) AND `user` <> ? AND `object_type` = ? AND `object_id` = ?', ['username', 'file_created', 'username', 'files', 42]],
-			[$user, 0, 10, 'filter', '', 'username', ['file_created'], true, 'files', 42, null, [], ' AND `type` IN (?) AND `object_type` = ? AND `object_id` = ?', ['username', 'file_created', 'files', 42]],
+			[$this->getUserMock(), 0, 10, 'all', '', 'username', [], '', 0, null, null, [], null, null],
+			[$this->getUserMock(), 0, 10, 'all', 'test', 'test', [], '', 0, null, null, [], null, null],
+			[$this->getUserMock(), 0, 10, 'all', '', 'username', ['file_created'], false, '', 0, null, [], ' AND `type` IN (?) AND `user` <> ?', ['username', 'file_created', 'username']],
+			[$this->getUserMock(), 0, 10, 'all', '', 'username', ['file_created'], true, '', 0, null, [], ' AND `type` IN (?)', ['username', 'file_created']],
+			[$this->getUserMock(), 0, 10, 'by', '', 'username', ['file_created'], null, '', 0, null, [], ' AND `type` IN (?) AND `user` <> ?', ['username', 'file_created', 'username']],
+			[$this->getUserMock(), 0, 10, 'self', '', 'username', ['file_created'], null, '', 0, null, [], ' AND `type` IN (?) AND `user` = ?', ['username', 'file_created', 'username']],
+			[$this->getUserMock(), 0, 10, 'all', '', 'username', ['file_created'], true, '', 0, 'OR `cond` = 1', null, ' AND `type` IN (?) OR `cond` = 1', ['username', 'file_created']],
+			[$this->getUserMock(), 0, 10, 'all', '', 'username', ['file_created'], true, '', 0, 'OR `cond` = ?', ['con1'], ' AND `type` IN (?) OR `cond` = ?', ['username', 'file_created', 'con1']],
+			[$this->getUserMock(), 0, 10, 'filter', '', 'username', ['file_created'], false, 'files', 42, null, [], ' AND `type` IN (?) AND `user` <> ? AND `object_type` = ? AND `object_id` = ?', ['username', 'file_created', 'username', 'files', 42]],
+			[$this->getUserMock(), 0, 10, 'filter', '', 'username', ['file_created'], true, 'files', 42, null, [], ' AND `type` IN (?) AND `object_type` = ? AND `object_id` = ?', ['username', 'file_created', 'files', 42]],
 		];
 	}
 

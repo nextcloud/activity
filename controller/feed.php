@@ -21,6 +21,7 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
+use OCP\L10N\IFactory;
 use OCP\Util;
 
 class Feed extends Controller {
@@ -44,6 +45,9 @@ class Feed extends Controller {
 	/** @var IConfig */
 	protected $config;
 
+	/** @var IFactory */
+	protected $l10nFactory;
+
 	/** @var string */
 	protected $user;
 
@@ -60,6 +64,7 @@ class Feed extends Controller {
 	 * @param UserSettings $settings
 	 * @param IURLGenerator $urlGenerator
 	 * @param IManager $activityManager
+	 * @param IFactory $l10nFactory
 	 * @param IConfig $config
 	 * @param string $user
 	 */
@@ -70,6 +75,7 @@ class Feed extends Controller {
 								UserSettings $settings,
 								IURLGenerator $urlGenerator,
 								IManager $activityManager,
+								IFactory $l10nFactory,
 								IConfig $config,
 								$user) {
 		parent::__construct($appName, $request);
@@ -78,6 +84,7 @@ class Feed extends Controller {
 		$this->settings = $settings;
 		$this->urlGenerator = $urlGenerator;
 		$this->activityManager = $activityManager;
+		$this->l10nFactory = $l10nFactory;
 		$this->config = $config;
 		$this->user = $user;
 	}
@@ -95,15 +102,14 @@ class Feed extends Controller {
 			$userLang = $this->config->getUserValue($user, 'core', 'lang');
 
 			// Overwrite user and language in the helper
-			$l = Util::getL10N('activity', $userLang);
-			$l->forceLanguage($userLang);
+			$l = $this->l10nFactory->get('activity', $userLang);
 			$this->helper->setL10n($l);
 			$this->helper->setUser($user);
 
 			$description = (string) $l->t('Personal activity feed for %s', $user);
 			$activities = $this->data->read($this->helper, $this->settings, 0, self::DEFAULT_PAGE_SIZE, 'all', $user);
 		} catch (\UnexpectedValueException $e) {
-			$l = Util::getL10N('activity');
+			$l = $this->l10nFactory->get('activity');
 			$description = (string) $l->t('Your feed URL is invalid');
 
 			$activities = [
