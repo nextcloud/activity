@@ -21,6 +21,7 @@
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s 和 <strong %s>%n 更多</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s 和更多的 %n 项"],
     "Hello %s," : "%s 你好，",
+    "You are receiving this email because the following things happened at %s" : "你收到此邮件是因为在 %s 发生了以下事件:",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* 以及其他 %n 项"],
     "Notifications" : "提示",
