@@ -20,8 +20,10 @@ OC.L10N.register(
     "in %s" : "у %s",
     "%s and %s" : "%s и %s",
     ", " : ", ",
+    "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s и <strong %s>још %n</strong>","%s и <strong %s>још %n</strong>","%s и <strong %s>још %n</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s и још %n","%s и још %n","%s и још %n"],
     "Hello %s," : "Здраво %s,",
+    "You are receiving this email because the following things happened at %s" : "Ову поруку сте добили јер се следеће десило на %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* и још %n","* и још %n","* и још %n"],
     "Notifications" : "Обавештења",
@@ -36,6 +38,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Укључи РСС довод",
     "No activity yet" : "Још нема активности",
     "No more events to load" : "Нема више догађаја за приказ",
-    "Files" : "Фајлови"
+    "Files" : "Фајлови",
+    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s и <strong class=\"has-tooltip\" title=\"%s\">још %n</strong>","%s и <strong class=\"has-tooltip\" title=\"%s\">још %n</strong>","%s и <strong class=\"has-tooltip\" title=\"%s\">још %n</strong>"]
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
