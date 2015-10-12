@@ -23,7 +23,10 @@
 
 namespace OCA\Activity;
 
-use OC\Share\Helper;
+use OCA\Activity\Formatter\BaseFormatter;
+use OCA\Activity\Formatter\CloudIDFormatter;
+use OCA\Activity\Formatter\FileFormatter;
+use OCA\Activity\Formatter\UserFormatter;
 use OCP\Activity\IManager;
 use OCP\Contacts\IManager as IContactsManager;
 use OCP\IConfig;
@@ -57,9 +60,6 @@ class ParameterHelper {
 
 	/** @var \OCP\IURLGenerator */
 	protected $urlGenerator;
-
-	/** @var array */
-	protected $federatedContacts;
 
 	/**
 	 * @param IManager $activityManager
@@ -169,11 +169,8 @@ class ParameterHelper {
 	 * @return string
 	 */
 	protected function prepareParam($param, $highlightParams) {
-		if ($highlightParams) {
-			return '<strong>' . Util::sanitizeHTML($param) . '</strong>';
-		} else {
-			return $param;
-		}
+		$formatter = new BaseFormatter();
+		return $formatter->format($param, $highlightParams);
 	}
 
 	/**
@@ -186,29 +183,8 @@ class ParameterHelper {
 	 * @return string
 	 */
 	protected function prepareUserParam($param, $highlightParams) {
-		// If the username is empty, the action has been performed by a remote
-		// user, or via a public share. We don't know the username in that case
-		if ($param === '') {
-			if ($highlightParams) {
-				return '<strong>' . $this->l->t('"remote user"') . '</strong>';
-			} else {
-				return $this->l->t('"remote user"');
-			}
-		}
-
-		$user = $this->userManager->get($param);
-		$displayName = ($user) ? $user->getDisplayName() : $param;
-		$param = Util::sanitizeHTML($param);
-
-		if ($highlightParams) {
-			$avatarPlaceholder = '';
-			if ($this->config->getSystemValue('enable_avatars', true)) {
-				$avatarPlaceholder = '<div class="avatar" data-user="' . $param . '"></div>';
-			}
-			return $avatarPlaceholder . '<strong>' . Util::sanitizeHTML($displayName) . '</strong>';
-		} else {
-			return $displayName;
-		}
+		$formatter = new UserFormatter($this->userManager, $this->config, $this->l);
+		return $formatter->format($param, $highlightParams);
 	}
 
 	/**
@@ -222,58 +198,8 @@ class ParameterHelper {
 	 * @return string
 	 */
 	protected function prepareFederatedCloudIDParam($federatedCloudId, $stripRemote, $highlightParams) {
-		$displayName = $federatedCloudId;
-		if ($stripRemote) {
-			try {
-				list($user,) = Helper::splitUserRemote($federatedCloudId);
-				$displayName = $user . '@…';
-			} catch (\OC\HintException $e) {}
-		}
-
-		try {
-			$displayName = $this->getDisplayNameFromContact($federatedCloudId);
-		} catch (\OutOfBoundsException $e) {}
-
-
-		if ($highlightParams) {
-			$title = ' title="' . Util::sanitizeHTML($federatedCloudId) . '"';
-			return '<strong class="has-tooltip"' . $title . '>' . Util::sanitizeHTML($displayName) . '</strong>';
-		} else {
-			return $displayName;
-		}
-	}
-
-	/**
-	 * Try to find the user in the contacts
-	 *
-	 * @param string $federatedCloudId
-	 * @return string
-	 * @throws \OutOfBoundsException when there is no contact for the id
-	 */
-	protected function getDisplayNameFromContact($federatedCloudId) {
-		$federatedCloudId = strtolower($federatedCloudId);
-		if (isset($this->federatedContacts[$federatedCloudId])) {
-			if ($this->federatedContacts[$federatedCloudId] !== '') {
-				return $this->federatedContacts[$federatedCloudId];
-			} else {
-				throw new \OutOfBoundsException('No contact found for federated cloud id');
-			}
-		}
-
-		$addressBookEntries = $this->contactsManager->search($federatedCloudId, ['CLOUD']);
-		foreach ($addressBookEntries as $entry) {
-			if (isset($entry['CLOUD'])) {
-				foreach ($entry['CLOUD'] as $cloudID) {
-					if ($cloudID === $federatedCloudId) {
-						$this->federatedContacts[$federatedCloudId] = $entry['FN'];
-						return $entry['FN'];
-					}
-				}
-			}
-		}
-
-		$this->federatedContacts[$federatedCloudId] = '';
-		throw new \OutOfBoundsException('No contact found for federated cloud id');
+		$formatter = new CloudIDFormatter($this->contactsManager);
+		return $formatter->format($federatedCloudId, $highlightParams, !$stripRemote);
 	}
 
 	/**
@@ -287,64 +213,8 @@ class ParameterHelper {
 	 * @return string
 	 */
 	protected function prepareFileParam($param, $stripPath, $highlightParams) {
-		$param = $this->fixLegacyFilename($param);
-		$is_dir = $this->rootView->is_dir('/' . $this->user . '/files' . $param);
-
-		if ($is_dir) {
-			$linkData = ['dir' => $param];
-		} else {
-			$parentDir = (substr_count($param, '/') === 1) ? '/' : dirname($param);
-			$fileName = basename($param);
-			$linkData = [
-				'dir' => $parentDir,
-				'scrollto' => $fileName,
-			];
-		}
-		$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
-
-		$param = trim($param, '/');
-		list($path, $name) = $this->splitPathFromFilename($param);
-		if (!$stripPath || $path === '') {
-			if (!$highlightParams) {
-				return $param;
-			}
-			return '<a class="filename" href="' . $fileLink . '">' . Util::sanitizeHTML($param) . '</a>';
-		}
-
-		if (!$highlightParams) {
-			return $name;
-		}
-
-		$title = ' title="' . $this->l->t('in %s', array(Util::sanitizeHTML($path))) . '"';
-		return '<a class="filename has-tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($name) . '</a>';
-	}
-
-	/**
-	 * Prepend leading slash to filenames of legacy activities
-	 * @param string $filename
-	 * @return string
-	 */
-	protected function fixLegacyFilename($filename) {
-		if (strpos($filename, '/') !== 0) {
-			return '/' . $filename;
-		}
-		return $filename;
-	}
-
-	/**
-	 * Split the path from the filename string
-	 *
-	 * @param string $filename
-	 * @return array Array with path and filename
-	 */
-	protected function splitPathFromFilename($filename) {
-		if (strrpos($filename, '/') !== false) {
-			return array(
-				trim(substr($filename, 0, strrpos($filename, '/')), '/'),
-				substr($filename, strrpos($filename, '/') + 1),
-			);
-		}
-		return array('', $filename);
+		$formatter = new FileFormatter($this->rootView, $this->urlGenerator, $this->l, $this->user);
+		return $formatter->format($param, $highlightParams, !$stripPath);
 	}
 
 	/**
