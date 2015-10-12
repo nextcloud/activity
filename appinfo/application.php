@@ -33,6 +33,7 @@ use OCA\Activity\GroupHelper;
 use OCA\Activity\FilesHooks;
 use OCA\Activity\MailQueueHandler;
 use OCA\Activity\Navigation;
+use OCA\Activity\Parameter\Factory;
 use OCA\Activity\ParameterHelper;
 use OCA\Activity\UserSettings;
 use OCP\AppFramework\App;
@@ -73,7 +74,7 @@ class Application extends App {
 			$server = $c->query('ServerContainer');
 			return new DataHelper(
 				$server->getActivityManager(),
-				new ParameterHelper(
+				new Factory(
 					$server->getActivityManager(),
 					$server->getUserManager(),
 					$server->getURLGenerator(),
@@ -128,7 +129,8 @@ class Application extends App {
 				$c->query('DataHelper'),
 				$server->getMailer(),
 				$server->getURLGenerator(),
-				$server->getUserManager()
+				$server->getUserManager(),
+				$server->getActivityManager()
 			);
 		});
 

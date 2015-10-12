@@ -23,6 +23,7 @@ namespace OCA\Activity\Formatter;
 
 use OC\HintException;
 use OC\Share\Helper;
+use OCP\Activity\IEvent;
 use OCP\Contacts\IManager;
 use OCP\Util;
 
@@ -41,12 +42,13 @@ class CloudIDFormatter implements IFormatter {
 	}
 
 	/**
+	 * @param IEvent $event
 	 * @param string $parameter The parameter to be formatted
 	 * @param bool $allowHtml   Should HTML be used to format the parameter?
 	 * @param bool $verbose     Should paths, names, etc be shortened or full length
 	 * @return string The formatted parameter
 	 */
-	public function format($parameter, $allowHtml, $verbose = false) {
+	public function format(IEvent $event, $parameter, $allowHtml, $verbose = false) {
 		$displayName = $parameter;
 		if (!$verbose) {
 			try {

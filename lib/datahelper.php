@@ -23,6 +23,10 @@
 
 namespace OCA\Activity;
 
+use OCA\Activity\Parameter\Factory;
+use OCA\Activity\Parameter\IParameter;
+use OCA\Activity\Parameter\Collection;
+use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
 use OCP\Util;
@@ -31,15 +35,15 @@ class DataHelper {
 	/** @var \OCP\Activity\IManager */
 	protected $activityManager;
 
-	/** @var \OCA\Activity\ParameterHelper */
-	protected $parameterHelper;
+	/** @var \OCA\Activity\Parameter\Factory */
+	protected $parameterFactory;
 
 	/** @var IL10N */
 	protected $l;
 
-	public function __construct(IManager $activityManager, ParameterHelper $parameterHelper, IL10N $l) {
+	public function __construct(IManager $activityManager, Factory $parameterFactory, IL10N $l) {
 		$this->activityManager = $activityManager;
-		$this->parameterHelper = $parameterHelper;
+		$this->parameterFactory = $parameterFactory;
 		$this->l = $l;
 	}
 
@@ -47,14 +51,14 @@ class DataHelper {
 	 * @param string $user
 	 */
 	public function setUser($user) {
-		$this->parameterHelper->setUser($user);
+		$this->parameterFactory->setUser($user);
 	}
 
 	/**
 	 * @param IL10N $l
 	 */
 	public function setL10n(IL10N $l) {
-		$this->parameterHelper->setL10n($l);
+		$this->parameterFactory->setL10n($l);
 		$this->l = $l;
 	}
 
@@ -62,22 +66,22 @@ class DataHelper {
 	 * @brief Translate an event string with the translations from the app where it was send from
 	 * @param string $app The app where this event comes from
 	 * @param string $text The text including placeholders
-	 * @param array $params The parameter for the placeholder
+	 * @param IParameter[] $params The parameter for the placeholder
 	 * @param bool $stripPath Shall we strip the path from file names?
 	 * @param bool $highlightParams Shall we highlight the parameters in the string?
 	 *             They will be highlighted with `<strong>`, all data will be passed through
 	 *             \OCP\Util::sanitizeHTML() before, so no XSS is possible.
 	 * @return string translated
 	 */
-	public function translation($app, $text, $params, $stripPath = false, $highlightParams = false) {
+	public function translation($app, $text, array $params, $stripPath = false, $highlightParams = false) {
 		if (!$text) {
 			return '';
 		}
 
-		$preparedParams = $this->parameterHelper->prepareParameters(
-			$params, $this->parameterHelper->getSpecialParameterList($app, $text),
-			$stripPath, $highlightParams
-		);
+		$preparedParams = [];
+		foreach ($params as $parameter) {
+			$preparedParams[] = $parameter->format($highlightParams, !$stripPath);
+		}
 
 		// Allow apps to correctly translate their activities
 		$translation = $this->activityManager->translate(
@@ -89,6 +93,23 @@ class DataHelper {
 
 		$l = Util::getL10N($app, $this->l->getLanguageCode());
 		return $l->t($text, $preparedParams);
+	}
+
+	/**
+	 * List with special parameters for the message
+	 *
+	 * @param string $app
+	 * @param string $text
+	 * @return array
+	 */
+	protected function getSpecialParameterList($app, $text) {
+		$specialParameters = $this->activityManager->getSpecialParameterList($app, $text);
+
+		if ($specialParameters !== false) {
+			return $specialParameters;
+		}
+
+		return array();
 	}
 
 	/**
@@ -117,10 +138,43 @@ class DataHelper {
 	/**
 	 * Get the parameter array from the parameter string of the database table
 	 *
+	 * @param IEvent $event
+	 * @param string $parsing What are we parsing `message` or `subject`
 	 * @param string $parameterString can be a JSON string, serialize() or a simple string.
 	 * @return array List of Parameters
 	 */
-	public function getParameters($parameterString) {
+	public function getParameters(IEvent $event, $parsing, $parameterString) {
+		$parameters = $this->parseParameters($parameterString);
+		$parameterTypes = $this->getSpecialParameterList(
+			$event->getApp(),
+			($parsing === 'subject') ? $event->getSubject() : $event->getMessage()
+		);
+
+		foreach ($parameters as $i => $parameter) {
+			$parameters[$i] = $this->parameterFactory->get(
+				$parameter,
+				$event,
+				isset($parameterTypes[$i]) ? $parameterTypes[$i] : 'base'
+			);
+		}
+
+		return $parameters;
+	}
+
+	/**
+	 * @return Collection
+	 */
+	public function createCollection() {
+		return $this->parameterFactory->createCollection();
+	}
+
+	/**
+	 * Get the parameter array from the parameter string of the database table
+	 *
+	 * @param string $parameterString can be a JSON string, serialize() or a simple string.
+	 * @return array List of Parameters
+	 */
+	public function parseParameters($parameterString) {
 		if (!is_string($parameterString)) {
 			return [];
 		}

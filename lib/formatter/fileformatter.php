@@ -22,6 +22,7 @@
 namespace OCA\Activity\Formatter;
 
 use OC\Files\View;
+use OCP\Activity\IEvent;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\Util;
@@ -50,12 +51,13 @@ class FileFormatter implements IFormatter {
 	}
 
 	/**
+	 * @param IEvent $event
 	 * @param string $parameter The parameter to be formatted
 	 * @param bool $allowHtml   Should HTML be used to format the parameter?
 	 * @param bool $verbose     Should paths, names, etc be shortened or full length
 	 * @return string The formatted parameter
 	 */
-	public function format($parameter, $allowHtml, $verbose = false) {
+	public function format(IEvent $event, $parameter, $allowHtml, $verbose = false) {
 		$param = $this->fixLegacyFilename($parameter);
 		$is_dir = $this->view->is_dir('/' . $this->user . '/files' . $param);
 

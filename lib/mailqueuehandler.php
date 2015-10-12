@@ -23,6 +23,7 @@
 
 namespace OCA\Activity;
 
+use OCP\Activity\IManager;
 use OCP\Defaults;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
@@ -70,6 +71,9 @@ class MailQueueHandler {
 	/** @var IUserManager */
 	protected $userManager;
 
+	/** @var IManager */
+	protected $activityManager;
+
 	/**
 	 * Constructor
 	 *
@@ -79,19 +83,22 @@ class MailQueueHandler {
 	 * @param IMailer $mailer
 	 * @param IURLGenerator $urlGenerator
 	 * @param IUserManager $userManager
+	 * @param IManager $activityManager
 	 */
 	public function __construct(IDateTimeFormatter $dateFormatter,
 								IDBConnection $connection,
 								DataHelper $dataHelper,
 								IMailer $mailer,
 								IURLGenerator $urlGenerator,
-								IUserManager $userManager) {
+								IUserManager $userManager,
+								IManager $activityManager) {
 		$this->dateFormatter = $dateFormatter;
 		$this->connection = $connection;
 		$this->dataHelper = $dataHelper;
 		$this->mailer = $mailer;
 		$this->urlGenerator = $urlGenerator;
 		$this->userManager = $userManager;
+		$this->activityManager = $activityManager;
 	}
 
 	/**
@@ -219,6 +226,12 @@ class MailQueueHandler {
 
 		$activityList = array();
 		foreach ($mailData as $activity) {
+			$event = $this->activityManager->generateEvent();
+			$event->setApp($activity['amq_appid'])
+				->setType($activity['amq_type'])
+				->setTimestamp($activity['amq_timestamp'])
+				->setSubject($activity['amq_subject'], []);
+
 			$relativeDateTime = $this->dateFormatter->formatDateTimeRelativeDay(
 				$activity['amq_timestamp'],
 				'long', 'medium',
@@ -227,7 +240,7 @@ class MailQueueHandler {
 
 			$activityList[] = array(
 				$this->dataHelper->translation(
-					$activity['amq_appid'], $activity['amq_subject'], $this->dataHelper->getParameters($activity['amq_subjectparams'])
+					$activity['amq_appid'], $activity['amq_subject'], $this->dataHelper->getParameters($event, 'subject', $activity['amq_subjectparams'])
 				),
 				$relativeDateTime,
 			);

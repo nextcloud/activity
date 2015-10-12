@@ -21,6 +21,7 @@
 
 namespace OCA\Activity\Formatter;
 
+use OCP\Activity\IEvent;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IUserManager;
@@ -46,12 +47,13 @@ class UserFormatter implements IFormatter {
 	}
 
 	/**
+	 * @param IEvent $event
 	 * @param string $parameter The parameter to be formatted
 	 * @param bool $allowHtml   Should HTML be used to format the parameter?
 	 * @param bool $verbose     Should paths, names, etc be shortened or full length
 	 * @return string The formatted parameter
 	 */
-	public function format($parameter, $allowHtml, $verbose = false) {
+	public function format(IEvent $event, $parameter, $allowHtml, $verbose = false) {
 		// If the username is empty, the action has been performed by a remote
 		// user, or via a public share. We don't know the username in that case
 		if ($parameter === '') {
