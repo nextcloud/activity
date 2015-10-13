@@ -59,19 +59,36 @@ class FileFormatter implements IFormatter {
 	 */
 	public function format(IEvent $event, $parameter, $allowHtml, $verbose = false) {
 		$param = $this->fixLegacyFilename($parameter);
-		$is_dir = $this->view->is_dir('/' . $this->user . '/files' . $param);
+		$this->view->chroot('/' . $this->user . '/files');
 
-		if ($is_dir) {
-			$linkData = ['dir' => $param];
+		$info = [
+			'path'		=> $param,
+			'is_dir'	=> false,
+			'view'		=> '',
+		];
+
+		// If the activity is about the very same file, we use the current path
+		// for the link generation instead of the one that was saved.
+		if ($event->getObjectType() === 'files' && $event->getObjectName() === $param) {
+			$info = $this->findCurrentInfo($event->getObjectId(), $param);
 		} else {
-			$parentDir = (substr_count($param, '/') === 1) ? '/' : dirname($param);
-			$fileName = basename($param);
+			$info['is_dir'] = $this->view->is_dir($info['path']);
+		}
+
+		if ($info['is_dir']) {
+			$linkData = ['dir' => $info['path']];
+		} else {
+			$parentDir = (substr_count($info['path'], '/') === 1) ? '/' : dirname($info['path']);
+			$fileName = basename($info['path']);
 			$linkData = [
 				'dir' => $parentDir,
 				'scrollto' => $fileName,
 			];
 		}
-		$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
+
+		if ($info['view'] !== '') {
+			$linkData['view'] = $info['view'];
+		}
 
 		$param = trim($param, '/');
 		list($path, $name) = $this->splitPathFromFilename($param);
@@ -79,6 +96,7 @@ class FileFormatter implements IFormatter {
 			if (!$allowHtml) {
 				return $param;
 			}
+			$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
 			return '<a class="filename" href="' . $fileLink . '">' . Util::sanitizeHTML($param) . '</a>';
 		}
 
@@ -87,7 +105,47 @@ class FileFormatter implements IFormatter {
 		}
 
 		$title = ' title="' . $this->l->t('in %s', array(Util::sanitizeHTML($path))) . '"';
+		$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
 		return '<a class="filename has-tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($name) . '</a>';
+	}
+
+	/**
+	 * Find the current path and view of the file
+	 *
+	 * @param int $fileId
+	 * @param string $filePath
+	 * @return array
+	 */
+	protected function findCurrentInfo($fileId, $filePath) {
+		$path = $this->view->getPath($fileId);
+
+		$return = [
+			'path'		=> $filePath,
+			'is_dir'	=> false,
+			'view'		=> '',
+		];
+
+		if ($path !== null) {
+			$return['path'] = $path;
+			$return['is_dir'] = $this->view->is_dir($path);
+		} else {
+			// The file was not found in the normal view, maybe it is in
+			// the trashbin?
+			$this->view->chroot('/' . $this->user . '/files_trashbin');
+			$path = $this->view->getPath($fileId);
+
+			if ($path !== null) {
+				$return = [
+					'path'		=> substr($path, strlen('/files')),
+					'is_dir'	=> $this->view->is_dir($path),
+					'view'		=> 'trashbin',
+				];
+			} else {
+				$return['is_dir'] = $this->view->is_dir($filePath);
+			}
+		}
+
+		return $return;
 	}
 
 	/**
