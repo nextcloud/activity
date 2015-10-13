@@ -42,6 +42,7 @@ class Collection implements IParameter {
 	 */
 	public function __construct(IL10N $l, $random) {
 		$this->l = $l;
+		$this->random = $random;
 		$this->parameters = [];
 	}
 
@@ -92,10 +93,10 @@ class Collection implements IParameter {
 	 *
 	 * @param array $parameterList
 	 * @param array $plainParameterList
-	 * @param bool $highlightParams
+	 * @param bool $allowHtml
 	 * @return string
 	 */
-	protected function joinParameterList($parameterList, $plainParameterList, $highlightParams) {
+	protected function joinParameterList($parameterList, $plainParameterList, $allowHtml) {
 		if (empty($parameterList)) {
 			return '';
 		}
@@ -103,32 +104,27 @@ class Collection implements IParameter {
 		$count = sizeof($parameterList);
 		$lastItem = array_pop($parameterList);
 
-		if ($count === 1)
-		{
+		if ($count === 1) {
 			return $lastItem;
-		}
-		else if ($count === 2)
-		{
+		} else if ($count === 2) {
 			$firstItem = array_pop($parameterList);
-			return $this->l->t('%s and %s', array($firstItem, $lastItem));
-		}
-		else if ($count <= 5)
-		{
+			return (string) $this->l->t('%s and %s', array($firstItem, $lastItem));
+		} else if ($count <= 5) {
 			$list = implode($this->l->t(', '), $parameterList);
-			return $this->l->t('%s and %s', array($list, $lastItem));
+			return (string) $this->l->t('%s and %s', array($list, $lastItem));
 		}
 
 		$firstParams = array_slice($parameterList, 0, 3);
 		$firstList = implode($this->l->t(', '), $firstParams);
 		$trimmedParams = array_slice($plainParameterList, 3);
 		$trimmedList = implode($this->l->t(', '), $trimmedParams);
-		if ($highlightParams) {
-			return $this->l->n(
+		if ($allowHtml) {
+			return (string) $this->l->n(
 				'%s and <strong %s>%n more</strong>',
 				'%s and <strong %s>%n more</strong>',
 				$count - 3,
 				array($firstList, 'class="has-tooltip" title="' . Util::sanitizeHTML($trimmedList) . '"'));
 		}
-		return $this->l->n('%s and %n more', '%s and %n more', $count - 3, array($firstList));
+		return (string) $this->l->n('%s and %n more', '%s and %n more', $count - 3, array($firstList));
 	}
 }

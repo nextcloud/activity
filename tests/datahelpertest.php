@@ -254,7 +254,8 @@ class DataHelperTest extends TestCase {
 		/** @var DataHelper $helper */
 		/** @var \PHPUnit_Framework_MockObject_MockObject $parameterFactoryMock */
 		list($helper, $parameterFactoryMock) = $this->setUpHelpers();
-		$l = \OCP\Util::getL10N('activity', 'de');
+
+		$l = \OC::$server->getL10NFactory()->get('activity', 'de');
 
 		$parameterFactoryMock->expects($this->once())
 			->method('setL10n')
@@ -285,20 +286,44 @@ class DataHelperTest extends TestCase {
 		$this->assertEquals($expected, $this->invokePrivate($helper, 'parseParameters', [$stringInput]));
 	}
 
+	public function testCreateCollection() {
+		/** @var DataHelper $helper */
+		/** @var \PHPUnit_Framework_MockObject_MockObject|\OCA\Activity\Parameter\Factory $parameterFactory */
+		list($helper, $parameterFactory) = $this->setUpHelpers();
+
+		$collection = $this->getMockBuilder('OCA\Activity\Parameter\Collection')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$parameterFactory->expects($this->once())
+			->method('createCollection')
+			->willReturn($collection);
+
+		$return = $this->invokePrivate($helper, 'createCollection');
+		$this->assertEquals($collection, $return);
+		$this->assertInstanceOf('OCA\Activity\Parameter\Collection', $return);
+		$this->assertInstanceOf('OCA\Activity\Parameter\IParameter', $return);
+	}
+
 	/**
 	 * Sets up the DataHelper with a mocked ParameterHelper
 	 * @return array
 	 */
 	protected function setUpHelpers() {
+		/** @var \PHPUnit_Framework_MockObject_MockObject|\OCA\Activity\Parameter\Factory $parameterFactory */
 		$parameterFactory = $this->getMockBuilder('OCA\Activity\Parameter\Factory')
 			->disableOriginalConstructor()
 			->getMock();
-		$l = \OCP\Util::getL10N('activity', 'en');
+
+		/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\Activity\IManager $manager */
+		$manager = $this->getMockBuilder('OCP\Activity\IManager')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$l = \OC::$server->getL10NFactory()->get('activity', 'en');
 
 		$helper = new DataHelper(
-			$this->getMockBuilder('OCP\Activity\IManager')
-				->disableOriginalConstructor()
-				->getMock(),
+			$manager,
 			$parameterFactory,
 			$l
 		);
