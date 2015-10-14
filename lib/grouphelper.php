@@ -117,10 +117,6 @@ class GroupHelper {
 
 				/** @var Collection $parameterInstance */
 				$parameterInstance->addParameter($activity['subjectparams_array'][$parameter]);
-
-				//$this->openGroup['subjectparams_array'][$parameter][] = $activity['subjectparams_array'][$parameter];
-				// FIXME, missing $this->openGroup['subjectparams_array'][$parameter] = array_unique($this->openGroup['subjectparams_array'][$parameter]);
-
 				$this->openGroup['subjectparams_array'][$parameter] = $parameterInstance;
 
 				if (!isset($this->openGroup['activity_ids'])) {
@@ -150,7 +146,7 @@ class GroupHelper {
 			$this->activities[] = $this->openGroup;
 		}
 
-		$this->openGroup = array();
+		$this->openGroup = [];
 		$this->groupKey = '';
 		$this->groupTime = 0;
 	}
@@ -210,6 +206,7 @@ class GroupHelper {
 			$return[] = $activity;
 		}
 		$this->activityManager->setFormattingObject('', 0);
+		$this->activities = [];
 
 		return $return;
 	}
