@@ -24,19 +24,41 @@ namespace OCA\Activity\Tests;
 
 use OC\ActivityManager;
 use OCA\Activity\DataHelper;
-use OCA\Activity\Formatter\BaseFormatter;
 use OCA\Activity\Parameter\Factory;
-use OCA\Activity\ParameterHelper;
 use OCA\Activity\Tests\Mock\Extension;
 
 class DataHelperTest extends TestCase {
 	protected $originalWEBROOT;
+	/** @var \OCP\Activity\IManager|\PHPUnit_Framework_MockObject_MockObject */
+	protected $activityManager;
+	/** @var \OCA\Activity\Parameter\Factory|\PHPUnit_Framework_MockObject_MockObject */
+	protected $parameterFactory;
+	/** @var \OCP\L10N\IFactory|\PHPUnit_Framework_MockObject_MockObject */
+	protected $l10Nfactory;
+	/** @var \OCP\IL10N|\PHPUnit_Framework_MockObject_MockObject */
+	protected $l;
 
 	protected function setUp() {
 		parent::setUp();
 
 		$this->originalWEBROOT = \OC::$WEBROOT;
 		\OC::$WEBROOT = '';
+
+		$this->activityManager = $this->getMockBuilder('OCP\Activity\IManager')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$this->parameterFactory = $this->getMockBuilder('OCA\Activity\Parameter\Factory')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$this->l10Nfactory = $this->getMockBuilder('OCP\L10N\IFactory')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$this->l = $this->getMockBuilder('OCP\IL10N')
+			->disableOriginalConstructor()
+			->getMock();
 	}
 
 	protected function tearDown() {
@@ -44,206 +66,308 @@ class DataHelperTest extends TestCase {
 		parent::tearDown();
 	}
 
-	public function translationData() {
-		return array(
-			array(
-				'subject1', array('/SubFolder/A.txt'), false, false,
-				'Subject1 #SubFolder/A.txt',
-			),
-			array(
-				'subject1', array('/SubFolder/A.txt'), true, false,
-				'Subject1 #A.txt',
-			),
-			array(
-				'subject1', array('/SubFolder/A.txt'), false, true,
-				'Subject1 #<a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt">SubFolder/A.txt</a>',
-			),
-			array(
-				'subject1', array('/SubFolder/A.txt'), true, true,
-				'Subject1 #<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt" title="in SubFolder">A.txt</a>',
-			),
+	/**
+	 * @param array $methods
+	 * @return DataHelper|\PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected function getHelper(array $methods = []) {
+		if (empty($methods)) {
+			return new DataHelper(
+				$this->activityManager,
+				$this->parameterFactory,
+				$this->l10Nfactory,
+				$this->l
+			);
+		} else {
+			return $this->getMockBuilder('OCA\Activity\DataHelper')
+				->setConstructorArgs([
+					$this->activityManager,
+					$this->parameterFactory,
+					$this->l10Nfactory,
+					$this->l,
+				])
+				->setMethods($methods)
+				->getMock();
+		}
+	}
 
-			array('subject2', array('/SubFolder/A.txt', 'UserB'), false, false, 'Subject2 @UserB #SubFolder/A.txt'),
-			array('subject2', array('/SubFolder/A.txt', 'UserB'), true, false, 'Subject2 @UserB #A.txt'),
-			array(
-				'subject2', array('/SubFolder/A.txt', 'UserB'), false, true,
-				'Subject2 @<div class="avatar" data-user="UserB"></div><strong>UserB</strong> #'
-				. '<a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt">SubFolder/A.txt</a>',
-			),
-			array(
-				'subject2', array('/SubFolder/A.txt', 'UserB'), true, true,
-				'Subject2 @<div class="avatar" data-user="UserB"></div><strong>UserB</strong> #'
-				. '<a class="filename has-tooltip" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt" title="in SubFolder">A.txt</a>',
-			),
-			array(
-				'subject2', array('/A.txt', 'UserB'), true, true,
-				'Subject2 @<div class="avatar" data-user="UserB"></div><strong>UserB</strong> #'
-				. '<a class="filename" href="/index.php/apps/files?dir=%2F&scrollto=A.txt">A.txt</a>',
-			),
-
-			array(
-				'subject1',
-				array(array('/SubFolder/A.txt')),
-				false,
-				false,
-				'Subject1 #SubFolder/A.txt',
-			),
-			array(
-				'subject1',
-				array(array('/SubFolder/A.txt', '/SubFolder/B.txt')),
-				false,
-				false,
-				'Subject1 #SubFolder/A.txt and SubFolder/B.txt',
-			),
-			array(
-				'subject1',
-				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt')),
-				false,
-				false,
-				'Subject1 #SubFolder/A.txt, SubFolder/B.txt, SubFolder/C.txt, SubFolder/D.txt and SubFolder/E.txt',
-			),
-			array(
-				'subject1',
-				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
-				false,
-				false,
-				'Subject1 #SubFolder/A.txt, SubFolder/B.txt, SubFolder/C.txt and 3 more',
-			),
-			array(
-				'subject1',
-				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
-				true,
-				false,
-				'Subject1 #A.txt, B.txt, C.txt and 3 more',
-			),
-			array(
-				'subject1',
-				array(array('/SubFolder/A.txt', '/SubFolder/B.txt', '/SubFolder/C.txt', '/SubFolder/D.txt', '/SubFolder/E.txt', '/SubFolder/F.txt')),
-				false,
-				true,
-				'Subject1 #<a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=A.txt">SubFolder/A.txt</a>,'
-				. ' <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=B.txt">SubFolder/B.txt</a>,'
-				. ' <a class="filename" href="/index.php/apps/files?dir=%2FSubFolder&scrollto=C.txt">SubFolder/C.txt</a>'
-				. ' and <strong class="has-tooltip" title="SubFolder/D.txt, SubFolder/E.txt, SubFolder/F.txt">3 more</strong>',
-			),
-		);
+	public function dataTranslation() {
+		return [
+			['app1', 'text1', [], true, true, false, 'lang'],
+			['app2', 'text2', [], true, false, false, 'lang'],
+			['app2', 'text2', [], false, true, false, 'lang'],
+			['app2', 'text2', [], false, false, false, 'lang'],
+			['app2', 'text2', [], false, false, 'manager', 'manager'],
+		];
 	}
 
 	/**
-	 * @dataProvider translationData
+	 * @dataProvider dataTranslation
+	 *
+	 * @param string $app
+	 * @param string $text
+	 * @param array $params
+	 * @param bool $stripPath
+	 * @param bool $highlightParams
+	 * @param bool|string $managerReturn
+	 * @param string $expected
 	 */
-	public function te1stTranslation($text, $params, $stripPath, $highlightParams, $expected) { // FIXME
-		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
-		$activityManager = new ActivityManager(
-			$this->getMock('OCP\IRequest'),
-			$this->getMock('OCP\IUserSession'),
-			$this->getMock('OCP\IConfig')
+	public function testTranslation($app, $text, array $params, $stripPath, $highlightParams, $managerReturn, $expected) {
+
+		$this->activityManager->expects($this->once())
+			->method('translate')
+			->with($app, $text, $this->anything(), $stripPath, $highlightParams)
+			->willReturn($managerReturn);
+		if ($managerReturn === false) {
+			$l = $this->getMockBuilder('OCP\IL10N')
+				->disableOriginalConstructor()
+				->getMock();
+			$l->expects($this->once())
+				->method('t')
+				->with($text, $this->anything())
+				->willReturn('lang');
+			$this->l10Nfactory->expects($this->once())
+				->method('get')
+				->with($app, $this->anything())
+				->willReturn($l);
+		}
+
+		$helper = $this->getHelper();
+		$this->assertSame(
+			$expected,
+			(string) $helper->translation($app, $text, $params, $stripPath, $highlightParams)
 		);
+	}
 
-		$urlGenerator = $this->getMockBuilder('\OCP\IURLGenerator')
-			->disableOriginalConstructor()
-			->getMock();
-		$urlGenerator->expects($this->any())
-			->method('linkTo')
-			->willReturnCallback(function($app, $file, $params) {
-				$paramStrings = [];
-				foreach ($params as $name => $value) {
-					$paramStrings[] = $name . '=' . urlencode($value);
-				}
+	public function dataTranslationNoText() {
+		return [
+			[true, true],
+			[true, false],
+			[false, true],
+			[false, false],
+		];
+	}
 
-				return '/index.php/apps/' . $app . '?' . implode('&', $paramStrings);
+	/**
+	 * @dataProvider dataTranslationNoText
+	 *
+	 * @param bool $stripPath
+	 * @param bool $highlightParams
+	 */
+	public function testTranslationNoText($stripPath, $highlightParams) {
+		$this->activityManager->expects($this->never())
+			->method('translate');
+
+		$helper = $this->getHelper();
+		$this->assertSame('', $helper->translation('', '', [], $stripPath, $highlightParams));
+	}
+
+	public function dataGetSpecialParameterList() {
+		return [
+			['app1', 'text1', false, []],
+			['app2', 'text2', [], []],
+			['app3', 'text3', [0 => 'username'], [0 => 'username']],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetSpecialParameterList
+	 *
+	 * @param string $app
+	 * @param string $text
+	 * @param array|bool $managerReturn
+	 * @param array $expected
+	 */
+	public function testGetSpecialParameterList($app, $text, $managerReturn, array $expected) {
+		$this->activityManager->expects($this->once())
+			->method('getSpecialParameterList')
+			->with($app, $text)
+			->willReturn($managerReturn);
+
+		$instance = $this->getHelper();
+		$this->assertSame($expected, $this->invokePrivate($instance, 'getSpecialParameterList', [$app, $text]));
+	}
+
+	public function dataFormatString() {
+		return [
+			[
+				[
+					'app' => 'app1',
+					'subject' => 'subject1',
+					'subjectparams_array' => [],
+					'message' => 'message1',
+					'messageparams_array' => [],
+				],
+				'subject',
+				[
+					'app' => 'app1',
+					'subject' => 'subject1',
+					'message' => 'message1',
+					'messageparams_array' => [],
+					'subjectparams' => [],
+					'subjectformatted' => [
+						'trimmed' => 'translation1',
+						'full' => 'translation2',
+						'markup' => [
+							'trimmed' => 'translation3',
+							'full' => 'translation4',
+						],
+					],
+				],
+			],
+			[
+				[
+					'app' => 'app1',
+					'subject' => 'subject1',
+					'subjectparams_array' => [],
+					'message' => 'message1',
+					'messageparams_array' => [],
+				],
+				'message',
+				[
+					'app' => 'app1',
+					'subject' => 'subject1',
+					'subjectparams_array' => [],
+					'message' => 'message1',
+					'messageparams' => [],
+					'messageformatted' => [
+						'trimmed' => 'translation1',
+						'full' => 'translation2',
+						'markup' => [
+							'trimmed' => 'translation3',
+							'full' => 'translation4',
+						],
+					],
+				],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider dataFormatString
+	 *
+	 * @param array $activity
+	 * @param string $message
+	 * @param array $expected
+	 */
+	public function testFormatString(array $activity, $message, array $expected) {
+		$instance = $this->getHelper(['translation']);
+
+		global $call;
+		$call = 0;
+		$instance->expects($this->exactly(4))
+			->method('translation')
+			->withConsecutive(
+				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], true, false],
+				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], false, false],
+				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], true, true],
+				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], false, true]
+			)
+			->willReturnCallback(function() {
+				global $call;
+				$call++;
+				return 'translation' . $call;
 			});
 
-		$activityManager->registerExtension(function() use ($activityLanguage, $urlGenerator) {
-			return new Extension($activityLanguage, $urlGenerator);
-		});
-		$config = $this->getMockBuilder('OCP\IConfig')->disableOriginalConstructor()->getMock();
-		$config->expects($this->any())
-			->method('getSystemValue')
-			->with('enable_avatars', true)
-			->willReturn(true);
-
-		$dataHelper = new DataHelper(
-			$activityManager,
-			new Factory(
-				$activityManager,
-				$this->getMockBuilder('OCP\IUserManager')->disableOriginalConstructor()->getMock(),
-				$urlGenerator,
-				$this->getMockBuilder('OCP\Contacts\IManager')->disableOriginalConstructor()->getMock(),
-				$this->getMockBuilder('OC\Files\View')->disableOriginalConstructor()->getMock(),
-				$config,
-				$activityLanguage,
-				'test'
-			),
-			$activityLanguage
-		);
-
-		$this->assertEquals(
-			$expected,
-			(string) $dataHelper->translation('app1', $text, $params, $stripPath, $highlightParams)
-		);
+		$this->assertSame($expected, $instance->formatStrings($activity, $message));
 	}
 
-	public function translationNotActivityAppData() {
-		return array(
-			array(
-				'You created %1$s', array('/SubFolder/A.txt'), false, false,
-				'You created /SubFolder/A.txt',
-			),
-			array(
-				'You created %1$s', array('/SubFolder/A.txt'), true, false,
-				'You created /SubFolder/A.txt',
-			),
-			array(
-				'You created %1$s', array('/SubFolder/A.txt'), false, true,
-				'You created <strong>/SubFolder/A.txt</strong>',
-			),
-			array(
-				'You created %1$s', array('/SubFolder/A.txt'), true, true,
-				'You created <strong>/SubFolder/A.txt</strong>',
-			),
-		);
+	public function dataGetParameters() {
+		return [
+			['subject', 'params1', [], [], [], []],
+			[
+				'subject',
+				'params1',
+				['one', 'two'],
+				[],
+				[['one', 'base'], ['two', 'base']],
+				['param1', 'param2'],
+			],
+			[
+				'subject',
+				'params1',
+				['one', 'two'],
+				['user'],
+				[['one', 'user'], ['two', 'base']],
+				['param1', 'param2'],
+			],
+			[
+				'message',
+				'params1',
+				['one', 'two'],
+				[1 => 'user'],
+				[['one', 'base'], ['two', 'user']],
+				['param1', 'param2'],
+			],
+		];
 	}
-
 
 	/**
-	 * @dataProvider translationNotActivityAppData
+	 * @dataProvider dataGetParameters
+	 *
+	 * @param string $parsing
+	 * @param string $parameterString
+	 * @param array $parameters
+	 * @param array $parameterTypes
+	 * @param array $factoryCalls
+	 * @param array $expected
 	 */
-	public function te1stTranslationNotActivityApp($text, $params, $stripPath, $highlightParams, $expected) { // FIXME
-		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
-		$activityManager = new ActivityManager(
-			$this->getMock('OCP\IRequest'),
-			$this->getMock('OCP\IUserSession'),
-			$this->getMock('OCP\IConfig')
-		);
+	public function testGetParameters($parsing, $parameterString, array $parameters, array $parameterTypes, array $factoryCalls, array $expected) {
+		/** @var \OCP\Activity\IEvent|\PHPUnit_Framework_MockObject_MockObject $event */
+		$event = $this->getMockBuilder('OCP\Activity\IEvent')
+			->disableOriginalConstructor()
+			->getMock();
+		$event->expects($this->once())
+			->method('getApp')
+			->willReturn('app');
 
-		$dataHelper = new DataHelper(
-			$activityManager,
-			new Factory(
-				$activityManager,
-				$this->getMockBuilder('OCP\IUserManager')->disableOriginalConstructor()->getMock(),
-				$this->getMockBuilder('OCP\IURLGenerator')->disableOriginalConstructor()->getMock(),
-				$this->getMockBuilder('OCP\Contacts\IManager')->disableOriginalConstructor()->getMock(),
-				$this->getMockBuilder('OC\Files\View')->disableOriginalConstructor()->getMock(),
-				$this->getMockBuilder('OCP\IConfig')->disableOriginalConstructor()->getMock(),
-				$activityLanguage,
-				'test'
-			),
-			$activityLanguage
-		);
+		if ($parsing === 'subject') {
+			$event->expects($this->once())
+				->method('getSubject')
+				->willReturn('text');
+			$event->expects($this->never())
+				->method('getMessage');
+		} else {
+			$event->expects($this->never())
+				->method('getSubject');
+			$event->expects($this->once())
+				->method('getMessage')
+				->willReturn('text');
+		}
 
-		$this->assertEquals(
-			$expected,
-			(string) $dataHelper->translation('activity', $text, $params, $stripPath, $highlightParams)
-		);
+		global $call;
+		$call = 0;
+		foreach ($factoryCalls as $i => $factoryCall) {
+			$this->parameterFactory->expects($this->at($i))
+				->method('get')
+				->with($factoryCall[0], $event, $factoryCall[1])
+				->willReturnCallback(function() {
+					global $call;
+					$call++;
+					return 'param' . $call;
+				});
+		}
+
+		$instance = $this->getHelper([
+			'parseParameters',
+			'getSpecialParameterList',
+		]);
+
+		$instance->expects($this->once())
+			->method('parseParameters')
+			->with($parameterString)
+			->willReturn($parameters);
+		$instance->expects($this->once())
+			->method('getSpecialParameterList')
+			->with('app', 'text')
+			->willReturn($parameterTypes);
+
+		$this->assertSame($expected, $instance->getParameters($event, $parsing, $parameterString));
 	}
 
 	public function testSetUser() {
-		/** @var DataHelper $helper */
-		/** @var \PHPUnit_Framework_MockObject_MockObject $parameterFactoryMock */
-		list($helper, $parameterFactoryMock) = $this->setUpHelpers();
-
-		$parameterFactoryMock->expects($this->once())
+		$helper = $this->getHelper();
+		$this->parameterFactory->expects($this->once())
 			->method('setUser')
 			->with('foobar');
 
@@ -251,13 +375,10 @@ class DataHelperTest extends TestCase {
 	}
 
 	public function testSetL10n() {
-		/** @var DataHelper $helper */
-		/** @var \PHPUnit_Framework_MockObject_MockObject $parameterFactoryMock */
-		list($helper, $parameterFactoryMock) = $this->setUpHelpers();
-
 		$l = \OC::$server->getL10NFactory()->get('activity', 'de');
 
-		$parameterFactoryMock->expects($this->once())
+		$helper = $this->getHelper();
+		$this->parameterFactory->expects($this->once())
 			->method('setL10n')
 			->with($l);
 
@@ -281,21 +402,18 @@ class DataHelperTest extends TestCase {
 	 * @param array $expected
 	 */
 	public function testParseParameters($stringInput, $expected) {
-		/** @var DataHelper $helper */
-		list($helper,) = $this->setUpHelpers();
+		$helper = $this->getHelper();
 		$this->assertEquals($expected, $this->invokePrivate($helper, 'parseParameters', [$stringInput]));
 	}
 
 	public function testCreateCollection() {
-		/** @var DataHelper $helper */
-		/** @var \PHPUnit_Framework_MockObject_MockObject|\OCA\Activity\Parameter\Factory $parameterFactory */
-		list($helper, $parameterFactory) = $this->setUpHelpers();
+		$helper = $this->getHelper();
 
 		$collection = $this->getMockBuilder('OCA\Activity\Parameter\Collection')
 			->disableOriginalConstructor()
 			->getMock();
 
-		$parameterFactory->expects($this->once())
+		$this->parameterFactory->expects($this->once())
 			->method('createCollection')
 			->willReturn($collection);
 
@@ -303,31 +421,5 @@ class DataHelperTest extends TestCase {
 		$this->assertEquals($collection, $return);
 		$this->assertInstanceOf('OCA\Activity\Parameter\Collection', $return);
 		$this->assertInstanceOf('OCA\Activity\Parameter\IParameter', $return);
-	}
-
-	/**
-	 * Sets up the DataHelper with a mocked ParameterHelper
-	 * @return array
-	 */
-	protected function setUpHelpers() {
-		/** @var \PHPUnit_Framework_MockObject_MockObject|\OCA\Activity\Parameter\Factory $parameterFactory */
-		$parameterFactory = $this->getMockBuilder('OCA\Activity\Parameter\Factory')
-			->disableOriginalConstructor()
-			->getMock();
-
-		/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\Activity\IManager $manager */
-		$manager = $this->getMockBuilder('OCP\Activity\IManager')
-			->disableOriginalConstructor()
-			->getMock();
-
-		$l = \OC::$server->getL10NFactory()->get('activity', 'en');
-
-		$helper = new DataHelper(
-			$manager,
-			$parameterFactory,
-			$l
-		);
-
-		return [$helper, $parameterFactory];
 	}
 }

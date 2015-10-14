@@ -84,6 +84,7 @@ class Application extends App {
 					$c->query('ActivityL10N'),
 					$c->query('CurrentUID')
 				),
+				$server->getL10NFactory(),
 				$c->query('ActivityL10N')
 			);
 		});

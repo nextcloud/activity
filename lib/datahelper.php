@@ -29,6 +29,7 @@ use OCA\Activity\Parameter\Collection;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
+use OCP\L10N\IFactory;
 use OCP\Util;
 
 class DataHelper {
@@ -38,12 +39,22 @@ class DataHelper {
 	/** @var \OCA\Activity\Parameter\Factory */
 	protected $parameterFactory;
 
+	/** @var IFactory */
+	protected $l10Nfactory;
+
 	/** @var IL10N */
 	protected $l;
 
-	public function __construct(IManager $activityManager, Factory $parameterFactory, IL10N $l) {
+	/**
+	 * @param IManager $activityManager
+	 * @param Factory $parameterFactory
+	 * @param IFactory $l10Nfactory
+	 * @param IL10N $l
+	 */
+	public function __construct(IManager $activityManager, Factory $parameterFactory, IFactory $l10Nfactory, IL10N $l) {
 		$this->activityManager = $activityManager;
 		$this->parameterFactory = $parameterFactory;
+		$this->l10Nfactory = $l10Nfactory;
 		$this->l = $l;
 	}
 
@@ -91,7 +102,7 @@ class DataHelper {
 			return $translation;
 		}
 
-		$l = Util::getL10N($app, $this->l->getLanguageCode());
+		$l = $this->l10Nfactory->get($app, $this->l->getLanguageCode());
 		return $l->t($text, $preparedParams);
 	}
 
