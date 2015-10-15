@@ -91,13 +91,33 @@ class DataHelperTest extends TestCase {
 		}
 	}
 
+	protected function getParameter($allowHtml, $verbose, $return) {
+		$parameter = $this->getMockBuilder('OCA\Activity\Parameter\IParameter')
+			->disableOriginalConstructor()
+			->getMock();
+		$parameter->expects($this->once())
+			->method('format')
+			->with($allowHtml, $verbose)
+			->willReturn($return);
+		return $parameter;
+	}
+
 	public function dataTranslation() {
 		return [
-			['app1', 'text1', [], true, true, false, 'lang'],
-			['app2', 'text2', [], true, false, false, 'lang'],
-			['app2', 'text2', [], false, true, false, 'lang'],
-			['app2', 'text2', [], false, false, false, 'lang'],
-			['app2', 'text2', [], false, false, 'manager', 'manager'],
+			['app1', 'text1', [], [], true, true, false, 'lang'],
+			['app2', 'text2', [], [], true, false, false, 'lang'],
+			['app2', 'text2', [], [], false, true, false, 'lang'],
+			['app2', 'text2', [], [], false, false, false, 'lang'],
+			['app2', 'text2', [], [], false, false, 'manager', 'manager'],
+
+			['app2', 'text2', [$this->getParameter(true, false, 'return1')], ['return1'], true, true, 'manager', 'manager'],
+			['app2', 'text2', [$this->getParameter(true, true, 'return1')], ['return1'], false, true, 'manager', 'manager'],
+			['app2', 'text2', [$this->getParameter(false, false, 'return1')], ['return1'], true, false, 'manager', 'manager'],
+			['app2', 'text2', [$this->getParameter(false, true, 'return1')], ['return1'], false, false, 'manager', 'manager'],
+			['app2', 'text2', [$this->getParameter(true, false, 'return2')], ['return2'], true, true, false, 'lang'],
+			['app2', 'text2', [$this->getParameter(true, true, 'return2')], ['return2'], false, true, false, 'lang'],
+			['app2', 'text2', [$this->getParameter(false, false, 'return2')], ['return2'], true, false, false, 'lang'],
+			['app2', 'text2', [$this->getParameter(false, true, 'return2')], ['return2'], false, false, false, 'lang'],
 		];
 	}
 
@@ -107,16 +127,17 @@ class DataHelperTest extends TestCase {
 	 * @param string $app
 	 * @param string $text
 	 * @param array $params
+	 * @param array $prepared
 	 * @param bool $stripPath
 	 * @param bool $highlightParams
 	 * @param bool|string $managerReturn
 	 * @param string $expected
 	 */
-	public function testTranslation($app, $text, array $params, $stripPath, $highlightParams, $managerReturn, $expected) {
+	public function testTranslation($app, $text, array $params, array $prepared, $stripPath, $highlightParams, $managerReturn, $expected) {
 
 		$this->activityManager->expects($this->once())
 			->method('translate')
-			->with($app, $text, $this->anything(), $stripPath, $highlightParams)
+			->with($app, $text, $prepared, $stripPath, $highlightParams)
 			->willReturn($managerReturn);
 		if ($managerReturn === false) {
 			$l = $this->getMockBuilder('OCP\IL10N')
@@ -124,7 +145,7 @@ class DataHelperTest extends TestCase {
 				->getMock();
 			$l->expects($this->once())
 				->method('t')
-				->with($text, $this->anything())
+				->with($text, $prepared)
 				->willReturn('lang');
 			$this->l10Nfactory->expects($this->once())
 				->method('get')
