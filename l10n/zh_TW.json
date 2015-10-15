@@ -5,6 +5,8 @@
     "Your settings have been updated." : "您的設定已更新.",
     "Mail" : "電子郵件",
     "Stream" : "串流",
+    "Error loading activities" : "載入活動時發生錯誤",
+    "No activities" : "沒有活動",
     "There are no events for this filter" : "在此篩選器下沒有活動",
     "Activity notification" : "活動通知",
     "All Activities" : "所有活動",
