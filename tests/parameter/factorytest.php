@@ -38,8 +38,8 @@ class FactoryTest extends TestCase {
 	/** @var \OCP\Contacts\IManager|\PHPUnit_Framework_MockObject_MockObject */
 	protected $contactsManager;
 
-	/** @var \OC\Files\View|\PHPUnit_Framework_MockObject_MockObject */
-	protected $rootView;
+	/** @var \OCA\Activity\ViewInfoCache|\PHPUnit_Framework_MockObject_MockObject */
+	protected $infoCache;
 
 	/** @var \OCP\IConfig|\PHPUnit_Framework_MockObject_MockObject */
 	protected $config;
@@ -66,7 +66,7 @@ class FactoryTest extends TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->rootView = $this->getMockBuilder('OC\Files\View')
+		$this->infoCache = $this->getMockBuilder('OCA\Activity\ViewInfoCache')
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -91,8 +91,8 @@ class FactoryTest extends TestCase {
 				$this->userManager,
 				$this->urlGenerator,
 				$this->contactsManager,
-				$this->rootView,
 				$this->config,
+				$this->infoCache,
 				$this->l,
 				$user
 			);
@@ -103,8 +103,8 @@ class FactoryTest extends TestCase {
 					$this->userManager,
 					$this->urlGenerator,
 					$this->contactsManager,
-					$this->rootView,
 					$this->config,
+					$this->infoCache,
 					$this->l,
 					$user,
 				])

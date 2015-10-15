@@ -21,15 +21,15 @@
 
 namespace OCA\Activity\Formatter;
 
-use OC\Files\View;
+use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IEvent;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\Util;
 
 class FileFormatter implements IFormatter {
-	/** @var View */
-	protected $view;
+	/** @var ViewInfoCache */
+	protected $infoCache;
 	/** @var IURLGenerator */
 	protected $urlGenerator;
 	/** @var IL10N */
@@ -38,13 +38,13 @@ class FileFormatter implements IFormatter {
 	protected $user;
 
 	/**
-	 * @param View $rootView
+	 * @param ViewInfoCache $infoCache
 	 * @param IURLGenerator $urlGenerator
 	 * @param IL10N $l
 	 * @param string $user
 	 */
-	public function __construct(View $rootView, IURLGenerator $urlGenerator, IL10N $l, $user) {
-		$this->view = $rootView;
+	public function __construct(ViewInfoCache $infoCache, IURLGenerator $urlGenerator, IL10N $l, $user) {
+		$this->infoCache = $infoCache;
 		$this->urlGenerator = $urlGenerator;
 		$this->l = $l;
 		$this->user = $user;
@@ -59,20 +59,13 @@ class FileFormatter implements IFormatter {
 	 */
 	public function format(IEvent $event, $parameter, $allowHtml, $verbose = false) {
 		$param = $this->fixLegacyFilename($parameter);
-		$this->view->chroot('/' . $this->user . '/files');
-
-		$info = [
-			'path'		=> $param,
-			'is_dir'	=> false,
-			'view'		=> '',
-		];
 
 		// If the activity is about the very same file, we use the current path
 		// for the link generation instead of the one that was saved.
 		if ($event->getObjectType() === 'files' && $event->getObjectName() === $param) {
-			$info = $this->findCurrentInfo($event->getObjectId(), $param);
+			$info = $this->infoCache->getInfoById($this->user, $event->getObjectId(), $param);
 		} else {
-			$info['is_dir'] = $this->view->is_dir($info['path']);
+			$info = $this->infoCache->getInfoByPath($this->user, $param);
 		}
 
 		if ($info['is_dir']) {
@@ -107,45 +100,6 @@ class FileFormatter implements IFormatter {
 		$title = ' title="' . $this->l->t('in %s', array(Util::sanitizeHTML($path))) . '"';
 		$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
 		return '<a class="filename has-tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($name) . '</a>';
-	}
-
-	/**
-	 * Find the current path and view of the file
-	 *
-	 * @param int $fileId
-	 * @param string $filePath
-	 * @return array
-	 */
-	protected function findCurrentInfo($fileId, $filePath) {
-		$path = $this->view->getPath($fileId);
-
-		$return = [
-			'path'		=> $filePath,
-			'is_dir'	=> false,
-			'view'		=> '',
-		];
-
-		if ($path !== null) {
-			$return['path'] = $path;
-			$return['is_dir'] = $this->view->is_dir($path);
-		} else {
-			// The file was not found in the normal view, maybe it is in
-			// the trashbin?
-			$this->view->chroot('/' . $this->user . '/files_trashbin');
-			$path = $this->view->getPath($fileId);
-
-			if ($path !== null) {
-				$return = [
-					'path'		=> substr($path, strlen('/files')),
-					'is_dir'	=> $this->view->is_dir($path),
-					'view'		=> 'trashbin',
-				];
-			} else {
-				$return['is_dir'] = $this->view->is_dir($filePath);
-			}
-		}
-
-		return $return;
 	}
 
 	/**

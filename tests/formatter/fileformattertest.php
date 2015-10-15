@@ -30,8 +30,8 @@ class FileFormatterTest extends TestCase {
 	/** @var \OCP\IURLGenerator|\PHPUnit_Framework_MockObject_MockObject */
 	protected $urlGenerator;
 
-	/** @var \OC\Files\View|\PHPUnit_Framework_MockObject_MockObject */
-	protected $rootView;
+	/** @var \OCA\Activity\ViewInfoCache|\PHPUnit_Framework_MockObject_MockObject */
+	protected $infoCache;
 
 	/** @var \OCP\IL10N|\PHPUnit_Framework_MockObject_MockObject */
 	protected $l;
@@ -43,7 +43,7 @@ class FileFormatterTest extends TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->rootView = $this->getMockBuilder('OC\Files\View')
+		$this->infoCache = $this->getMockBuilder('OCA\Activity\ViewInfoCache')
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -65,7 +65,7 @@ class FileFormatterTest extends TestCase {
 	public function getFormatter(array $methods = [], $user = 'user') {
 		if (empty($methods)) {
 			return new FileFormatter(
-				$this->rootView,
+				$this->infoCache,
 				$this->urlGenerator,
 				$this->l,
 				$user
@@ -73,7 +73,7 @@ class FileFormatterTest extends TestCase {
 		} else {
 			return $this->getMockBuilder('OCA\Activity\Formatter\FileFormatter')
 				->setConstructorArgs([
-					$this->rootView,
+					$this->infoCache,
 					$this->urlGenerator,
 					$this->l,
 					$user,
@@ -87,11 +87,13 @@ class FileFormatterTest extends TestCase {
 		$trash0 = [
 			'path'		=> '/test2',
 			'is_dir'	=> false,
+			'exists'	=> true,
 			'view'		=> 'trashbin',
 		];
 		$trash1 = [
 			'path'		=> '/test2',
 			'is_dir'	=> true,
+			'exists'	=> true,
 			'view'		=> 'trashbin',
 		];
 
@@ -165,25 +167,27 @@ class FileFormatterTest extends TestCase {
 				return $app . '/' . $file . '?' . implode('&', $paramList);
 			});
 
-		$this->rootView->expects($this->once())
-			->method('chroot')
-			->with('/' . $user . '/files');
-		$this->rootView->expects(empty($info) ? $this->once() : $this->never())
-			->method('is_dir')
-			->willReturn($isDir);
-
 		$formatter = $this->getFormatter([
 			'fixLegacyFilename',
-			'findCurrentInfo',
 		], $user);
 		$formatter->expects($this->once())
 			->method('fixLegacyFilename')
 			->willReturnArgument(0);
 		if (!empty($info)) {
-			$formatter->expects($this->once())
-				->method('findCurrentInfo')
-				->with(42, $parameter)
+			$this->infoCache->expects($this->once())
+				->method('getInfoById')
+				->with($user, 42, $parameter)
 				->willReturn($info);
+		} else {
+			$this->infoCache->expects($this->once())
+				->method('getInfoByPath')
+				->with($user, $parameter)
+				->willReturn([
+					'path'		=> $parameter,
+					'is_dir'	=> $isDir,
+					'exists'	=> true,
+					'view'		=> '',
+				]);
 		}
 
 		$this->assertSame($expected, $formatter->format($event, $parameter, $allowHtml, $verbose));
@@ -235,7 +239,7 @@ class FileFormatterTest extends TestCase {
 	 * @param bool $isDir
 	 * @param string $expected
 	 */
-	public function testFindCurrentInfo($fileId, $filename, $path, $pathTrash, $isDirPath, $isDir, $expected) {
+	public function te1stFindCurrentInfo($fileId, $filename, $path, $pathTrash, $isDirPath, $isDir, $expected) {
 		$this->rootView->expects($this->at(0))
 			->method('getPath')
 			->with($fileId)

@@ -36,6 +36,7 @@ use OCA\Activity\Navigation;
 use OCA\Activity\Parameter\Factory;
 use OCA\Activity\ParameterHelper;
 use OCA\Activity\UserSettings;
+use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\App;
 use OCP\IContainer;
 
@@ -79,8 +80,8 @@ class Application extends App {
 					$server->getUserManager(),
 					$server->getURLGenerator(),
 					$server->getContactsManager(),
-					new View(''),
 					$server->getConfig(),
+					$c->query('OCA\Activity\ViewInfoCache'),
 					$c->query('ActivityL10N'),
 					$c->query('CurrentUID')
 				),
@@ -160,15 +161,15 @@ class Application extends App {
 			);
 		});
 
+		$container->registerService('OCA\Activity\ViewInfoCache', function() {
+			return new ViewInfoCache(
+				new View('')
+			);
+		});
+
 		/**
 		 * Core Services
 		 */
-		$container->registerService('URLGenerator', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-			return $server->getURLGenerator();
-		});
-
 		$container->registerService('CurrentUID', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
@@ -213,6 +214,7 @@ class Application extends App {
 				$server->getURLGenerator(),
 				$server->getMimeTypeDetector(),
 				new View(''),
+				$c->query('OCA\Activity\ViewInfoCache'),
 				$c->query('CurrentUID')
 			);
 		});
@@ -227,7 +229,7 @@ class Application extends App {
 				$c->query('ActivityData'),
 				$c->query('GroupHelperSingleEntries'),
 				$c->query('UserSettings'),
-				$c->query('URLGenerator'),
+				$server->getURLGenerator(),
 				$server->getActivityManager(),
 				$server->getL10NFactory(),
 				$server->getConfig(),

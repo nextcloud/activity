@@ -22,12 +22,12 @@
 namespace OCA\Activity\Parameter;
 
 
-use OC\Files\View;
 use OCA\Activity\Formatter\IFormatter;
 use OCA\Activity\Formatter\BaseFormatter;
 use OCA\Activity\Formatter\CloudIDFormatter;
 use OCA\Activity\Formatter\FileFormatter;
 use OCA\Activity\Formatter\UserFormatter;
+use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\Contacts\IManager as IContactsManager;
@@ -46,14 +46,14 @@ class Factory {
 	/** @var IContactsManager */
 	protected $contactsManager;
 
-	/** @var View */
-	protected $rootView;
-
 	/** @var IL10N */
 	protected $l;
 
 	/** @var IConfig */
 	protected $config;
+
+	/** @var ViewInfoCache */
+	protected $infoCache;
 
 	/** @var string */
 	protected $user;
@@ -66,8 +66,8 @@ class Factory {
 	 * @param IUserManager $userManager
 	 * @param IURLGenerator $urlGenerator
 	 * @param IContactsManager $contactsManager
-	 * @param View $rootView
 	 * @param IConfig $config
+	 * @param ViewInfoCache $infoCache,
 	 * @param IL10N $l
 	 * @param string $user
 	 */
@@ -75,16 +75,16 @@ class Factory {
 								IUserManager $userManager,
 								IURLGenerator $urlGenerator,
 								IContactsManager $contactsManager,
-								View $rootView,
 								IConfig $config,
+								ViewInfoCache $infoCache,
 								IL10N $l,
 								$user) {
 		$this->activityManager = $activityManager;
 		$this->userManager = $userManager;
 		$this->urlGenerator = $urlGenerator;
 		$this->contactsManager = $contactsManager;
-		$this->rootView = $rootView;
 		$this->config = $config;
+		$this->infoCache = $infoCache;
 		$this->l = $l;
 		$this->user = $user;
 	}
@@ -130,7 +130,7 @@ class Factory {
 	 */
 	protected function getFormatter($formatter) {
 		if ($formatter === 'file') {
-			return new FileFormatter($this->rootView, $this->urlGenerator, $this->l, $this->user);
+			return new FileFormatter($this->infoCache, $this->urlGenerator, $this->l, $this->user);
 		} else if ($formatter === 'username') {
 			return new UserFormatter($this->userManager, $this->config, $this->l);
 		} else if ($formatter === 'federated_cloud_id') {

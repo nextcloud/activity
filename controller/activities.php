@@ -28,6 +28,7 @@ use OCA\Activity\Data;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Navigation;
 use OCA\Activity\UserSettings;
+use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
@@ -71,6 +72,9 @@ class Activities extends Controller {
 	/** @var View */
 	protected $view;
 
+	/** @var ViewInfoCache */
+	protected $infoCache;
+
 	/** @var string */
 	protected $user;
 
@@ -88,6 +92,7 @@ class Activities extends Controller {
 	 * @param IURLGenerator $urlGenerator
 	 * @param IMimeTypeDetector $mimeTypeDetector
 	 * @param View $view
+	 * @param ViewInfoCache $infoCache
 	 * @param string $user
 	 */
 	public function __construct($appName,
@@ -101,6 +106,7 @@ class Activities extends Controller {
 								IURLGenerator $urlGenerator,
 								IMimeTypeDetector $mimeTypeDetector,
 								View $view,
+								ViewInfoCache $infoCache,
 								$user) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
@@ -112,6 +118,7 @@ class Activities extends Controller {
 		$this->urlGenerator = $urlGenerator;
 		$this->mimeTypeDetector = $mimeTypeDetector;
 		$this->view = $view;
+		$this->infoCache = $infoCache;
 		$this->user = $user;
 	}
 
@@ -190,31 +197,29 @@ class Activities extends Controller {
 	 * @return array
 	 */
 	protected function getPreview($owner, $fileId, $filePath) {
-		$this->view->chroot('/' . $owner . '/files');
-		$path = $this->view->getPath($fileId);
+		$info = $this->infoCache->getInfoById($owner, $fileId, $filePath);
 
-		if ($path === null || $path === '' || !$this->view->file_exists($path)) {
+		if (!$info['exists'] || $info['view'] !== '') {
 			return $this->getPreviewFromPath($filePath);
 		}
 
-		$is_dir = $this->view->is_dir($path);
-
 		$preview = [
-			'link'			=> $this->getPreviewLink($path, $is_dir),
+			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir']),
 			'source'		=> '',
 			'isMimeTypeIcon' => true,
 		];
 
 		// show a preview image if the file still exists
-		if ($is_dir) {
+		if ($info['is_dir']) {
 			$preview['source'] = $this->getPreviewPathFromMimeType('dir');
 		} else {
-			$fileInfo = $this->view->getFileInfo($path);
+			$this->view->chroot('/' . $owner . '/files');
+			$fileInfo = $this->view->getFileInfo($info['path']);
 			if ($this->preview->isAvailable($fileInfo)) {
 				$preview['isMimeTypeIcon'] = false;
 				$preview['source'] = $this->urlGenerator->linkToRoute('core_ajax_preview', [
-					'file' => $path,
-					'c' => $this->view->getETag($path),
+					'file' => $info['path'],
+					'c' => $this->view->getETag($info['path']),
 					'x' => 150,
 					'y' => 150,
 				]);
