@@ -80,10 +80,12 @@ class ViewInfoCache {
 	protected function findInfoByPath($user, $path) {
 		$this->view->chroot('/' . $user . '/files');
 
+		$exists = $this->view->file_exists($path);
+
 		$this->cachePath[$user][$path] = [
 			'path'		=> $path,
-			'exists'	=> $this->view->file_exists($path),
-			'is_dir'	=> $this->view->is_dir($path),
+			'exists'	=> $exists,
+			'is_dir'	=> $exists ? $this->view->is_dir($path) : false,
 			'view'		=> '',
 		];
 
