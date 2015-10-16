@@ -130,7 +130,7 @@ class ViewInfoCache {
 		}
 
 		$this->cacheId[$user][$fileId] = $cache;
-		if ($path !== null) {
+		if ($path === null) {
 			$this->cacheId[$user][$fileId]['path'] = null;
 		}
 

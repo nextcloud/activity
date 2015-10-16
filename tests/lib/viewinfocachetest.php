@@ -265,36 +265,101 @@ class ViewInfoCacheTest extends TestCase {
 
 	public function dataFindInfoById() {
 		return [
-			['user1', 23, '/test1', null, null, '/test1', false,[
-				'path'		=> '/test1',
-				'exists'	=> false,
-				'is_dir'	=> false,
-				'view'		=> '',
-			]],
-			['user2', 23, '/test1', null, '/files/test3', '/files/test3', false,[
-				'path'		=> '/test3',
-				'exists'	=> true,
-				'is_dir'	=> false,
-				'view'		=> 'trashbin',
-			]],
-			['user3', 23, '/test1', null, '/files/test3', '/files/test3', true,[
-				'path'		=> '/test3',
-				'exists'	=> true,
-				'is_dir'	=> true,
-				'view'		=> 'trashbin',
-			]],
-			['user4', 23, '/test1', '/test3', null, '/test3', false,[
-				'path'		=> '/test3',
-				'exists'	=> true,
-				'is_dir'	=> false,
-				'view'		=> '',
-			]],
-			['user5', 23, '/test1', '/test3', null, '/test3', true,[
-				'path'		=> '/test3',
-				'exists'	=> true,
-				'is_dir'	=> true,
-				'view'		=> '',
-			]],
+			[
+				'user1', 23, '/test1', null, null, '/test1', false,
+				[
+					'path'		=> '/test1',
+					'exists'	=> false,
+					'is_dir'	=> false,
+					'view'		=> '',
+				],
+				[
+					'user1' => [
+						23 => [
+							'path'		=> null,
+							'exists'	=> false,
+							'is_dir'	=> false,
+							'view'		=> '',
+						],
+					],
+				],
+			],
+			[
+				'user2', 23, '/test1', null, '/files/test3', '/files/test3', false,
+				[
+					'path'		=> '/test3',
+					'exists'	=> true,
+					'is_dir'	=> false,
+					'view'		=> 'trashbin',
+				],
+				[
+					'user2' => [
+						23 => [
+							'path'		=> '/test3',
+							'exists'	=> true,
+							'is_dir'	=> false,
+							'view'		=> 'trashbin',
+						],
+					],
+				],
+			],
+			[
+				'user3', 23, '/test1', null, '/files/test3', '/files/test3', true,
+				[
+					'path'		=> '/test3',
+					'exists'	=> true,
+					'is_dir'	=> true,
+					'view'		=> 'trashbin',
+				],
+				[
+					'user3' => [
+						23 => [
+							'path'		=> '/test3',
+							'exists'	=> true,
+							'is_dir'	=> true,
+							'view'		=> 'trashbin',
+						],
+					],
+				],
+			],
+			[
+				'user4', 23, '/test1', '/test3', null, '/test3', false,
+				[
+					'path'		=> '/test3',
+					'exists'	=> true,
+					'is_dir'	=> false,
+					'view'		=> '',
+				],
+				[
+					'user4' => [
+						23 => [
+							'path'		=> '/test3',
+							'exists'	=> true,
+							'is_dir'	=> false,
+							'view'		=> '',
+						],
+					],
+				],
+			],
+			[
+				'user5', 23, '/test1', '/test3', null, '/test3', true,
+				[
+					'path'		=> '/test3',
+					'exists'	=> true,
+					'is_dir'	=> true,
+					'view'		=> '',
+				],
+				[
+					'user5' => [
+						23 => [
+							'path'		=> '/test3',
+							'exists'	=> true,
+							'is_dir'	=> true,
+							'view'		=> '',
+						],
+					],
+				],
+			],
 		];
 	}
 
@@ -309,8 +374,9 @@ class ViewInfoCacheTest extends TestCase {
 	 * @param string $isDirPath
 	 * @param bool $isDir
 	 * @param string $expected
+	 * @param array $expectedCache
 	 */
-	public function testFindInfoById($user, $fileId, $filename, $path, $pathTrash, $isDirPath, $isDir, $expected) {
+	public function testFindInfoById($user, $fileId, $filename, $path, $pathTrash, $isDirPath, $isDir, $expected, array $expectedCache) {
 		$this->view->expects($this->at(0))
 			->method('chroot')
 			->with('/' . $user . '/files');
@@ -335,5 +401,6 @@ class ViewInfoCacheTest extends TestCase {
 
 		$infoCache = $this->getCache();
 		$this->assertSame($expected, $this->invokePrivate($infoCache, 'findInfoById', [$user, $fileId, $filename]));
+		$this->assertSame($expectedCache, $this->invokePrivate($infoCache, 'cacheId'));
 	}
 }
