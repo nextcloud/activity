@@ -8,6 +8,8 @@ OC.L10N.register(
     "Mail" : "Пошта",
     "Stream" : "Потік",
     "Activities" : "Активність",
+    "Error loading activities" : "Помилка завантаження подій",
+    "No activities" : "Активність відсутня",
     "This stream will show events like additions, changes & shares" : "У цьому потоці будуть показані події, на кшталт доповнення, зміни та поширення",
     "There are no events for this filter" : "За цим фільтром події відсутні",
     "Activity notification" : "Повідомлення про події",
@@ -18,8 +20,10 @@ OC.L10N.register(
     "in %s" : "в %s",
     "%s and %s" : "%s і %s",
     ", " : ",",
+    "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s і <strong %s>%n більше</strong>","%s і <strong %s>%n більше</strong>","%s і <strong %s>%n більше</strong>"],
     "_%s and %n more_::_%s and %n more_" : [" %s і %n ще"," %s і %n ще","%s і %n ще"],
     "Hello %s," : "Привіт %s,",
+    "You are receiving this email because the following things happened at %s" : "Ви отримали це повідомлення, оскільки на %s відбувається наступне",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["1","кілька","* та ще %n"],
     "Notifications" : "Сповіщення",
@@ -34,6 +38,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Активувати RSS стрічку",
     "No activity yet" : "Поки що активність відсутня",
     "No more events to load" : "Більше немає подій для завантаження",
-    "Files" : "Файли"
+    "Files" : "Файли",
+    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s і <strong class=\"has-tooltip\" title=\"%s\">%n більше</strong>","%s і <strong class=\"has-tooltip\" title=\"%s\">%n більше</strong>","%s і <strong class=\"has-tooltip\" title=\"%s\">%n більше</strong> "]
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
