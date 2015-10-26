@@ -26,6 +26,7 @@ use OCA\Activity\Formatter\FileFormatter;
 use OCA\Activity\Formatter\IFormatter;
 use OCA\Activity\Tests\TestCase;
 use OCA\Activity\ViewInfoCache;
+use OCP\Files\NotFoundException;
 
 class ViewInfoCacheTest extends TestCase {
 	/** @var \OC\Files\View|\PHPUnit_Framework_MockObject_MockObject */
@@ -380,18 +381,31 @@ class ViewInfoCacheTest extends TestCase {
 		$this->view->expects($this->at(0))
 			->method('chroot')
 			->with('/' . $user . '/files');
-		$this->view->expects($this->at(1))
-			->method('getPath')
-			->with($fileId)
-			->willReturn($path);
 		if ($path === null) {
+			$this->view->expects($this->at(1))
+				->method('getPath')
+				->with($fileId)
+				->willThrowException(new NotFoundException());
+
 			$this->view->expects($this->at(2))
 				->method('chroot')
 				->with('/' . $user . '/files_trashbin');
-			$this->view->expects($this->at(3))
+			if ($pathTrash === null) {
+				$this->view->expects($this->at(3))
+					->method('getPath')
+					->with($fileId)
+					->willThrowException(new NotFoundException());
+			} else {
+				$this->view->expects($this->at(3))
+					->method('getPath')
+					->with($fileId)
+					->willReturn($pathTrash);
+			}
+		} else {
+			$this->view->expects($this->at(1))
 				->method('getPath')
 				->with($fileId)
-				->willReturn($pathTrash);
+				->willReturn($path);
 		}
 
 		$this->view->expects(($path === null && $pathTrash === null) ? $this->never() : $this->once())

@@ -25,6 +25,7 @@ namespace OCA\Activity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\Tests\TestCase;
+use OCP\Files\NotFoundException;
 use OCP\Share;
 
 /**
@@ -560,9 +561,15 @@ class FilesHooksTest extends TestCase {
 		$this->view->expects($this->once())
 			->method('chroot')
 			->with('/owner/files');
-		$this->view->expects($this->once())
-			->method('getPath')
-			->willReturn($path);
+		if ($path === null) {
+			$this->view->expects($this->once())
+				->method('getPath')
+				->willThrowException(new NotFoundException());
+		} else {
+			$this->view->expects($this->once())
+				->method('getPath')
+				->willReturn($path);
+		}
 
 		$this->settings->expects(($path !== null) ? $this->exactly(3) : $this->never())
 			->method('getUserSetting')
@@ -605,9 +612,15 @@ class FilesHooksTest extends TestCase {
 			'shareNotificationForOriginalOwners',
 		]);
 
-		$this->view->expects($this->once())
-			->method('getPath')
-			->willReturn($path);
+		if ($path === null) {
+			$this->view->expects($this->once())
+				->method('getPath')
+				->willThrowException(new NotFoundException());
+		} else {
+			$this->view->expects($this->once())
+				->method('getPath')
+				->willReturn($path);
+		}
 
 		$this->settings->expects(($path !== null) ? $this->exactly(3) : $this->never())
 			->method('getUserSetting')
@@ -644,7 +657,7 @@ class FilesHooksTest extends TestCase {
 		$this->view->expects($this->once())
 			->method('getPath')
 			->with(42)
-			->willReturn(null);
+			->willThrowException(new NotFoundException());
 
 		$filesHooks->expects($this->never())
 			->method('reshareNotificationForSharer');
@@ -736,9 +749,15 @@ class FilesHooksTest extends TestCase {
 	public function testShareNotificationForSharer($path) {
 		$filesHooks = $this->getFilesHooks(['addNotificationsForUser']);
 
-		$this->view->expects($this->once())
-			->method('getPath')
-			->willReturn($path);
+		if ($path === null) {
+			$this->view->expects($this->once())
+				->method('getPath')
+				->willThrowException(new NotFoundException());
+		} else {
+			$this->view->expects($this->once())
+				->method('getPath')
+				->willReturn($path);
+		}
 
 		$this->settings->expects(($path !== null) ? $this->exactly(3) : $this->never())
 			->method('getUserSetting')

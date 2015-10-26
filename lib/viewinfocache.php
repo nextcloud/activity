@@ -23,6 +23,7 @@ namespace OCA\Activity;
 
 
 use OC\Files\View;
+use OCP\Files\NotFoundException;
 
 class ViewInfoCache {
 
@@ -100,7 +101,6 @@ class ViewInfoCache {
 	 */
 	protected function findInfoById($user, $fileId, $filePath) {
 		$this->view->chroot('/' . $user . '/files');
-		$path = $this->view->getPath($fileId);
 
 		$cache = [
 			'path'		=> $filePath,
@@ -109,28 +109,34 @@ class ViewInfoCache {
 			'view'		=> '',
 		];
 
-		if ($path !== null) {
+		$notFound = false;
+		try {
+			$path = $this->view->getPath($fileId);
+
 			$cache['path'] = $path;
 			$cache['is_dir'] = $this->view->is_dir($path);
 			$cache['exists'] = true;
-		} else {
+		} catch (NotFoundException $e) {
 			// The file was not found in the normal view, maybe it is in
 			// the trashbin?
 			$this->view->chroot('/' . $user . '/files_trashbin');
-			$path = $this->view->getPath($fileId);
 
-			if ($path !== null) {
+			try {
+				$path = $this->view->getPath($fileId);
+
 				$cache = [
 					'path'		=> substr($path, strlen('/files')),
 					'exists'	=> true,
 					'is_dir'	=> $this->view->is_dir($path),
 					'view'		=> 'trashbin',
 				];
+			} catch (NotFoundException $e) {
+				$notFound = true;
 			}
 		}
 
 		$this->cacheId[$user][$fileId] = $cache;
-		if ($path === null) {
+		if ($notFound) {
 			$this->cacheId[$user][$fileId]['path'] = null;
 		}
 
