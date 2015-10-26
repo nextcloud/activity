@@ -502,27 +502,6 @@ class ActivitiesTest extends TestCase {
 			->method('linkToRoute')
 			->willReturn('linkToRouteStub');
 
-		$this->view->expects($this->any())
-			->method('getPath')
-			->willReturnMap([
-				[21, '/file.txt'],
-				[42, null],
-			]);
-		$this->view->expects($this->any())
-			->method('is_dir')
-			->willReturnMap([
-				['/directory', true],
-				['/file.txt', false],
-				['/file.mp3', false],
-			]);
-		$this->view->expects($this->any())
-			->method('file_exists')
-			->willReturnMap([
-				['/directory', true],
-				['/file.txt', true],
-				['/file.mp3', false],
-			]);
-
 		$this->preview->expects($this->any())
 			->method('isMimeSupported')
 			->willReturnMap([

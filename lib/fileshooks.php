@@ -28,6 +28,7 @@ use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IManager;
 use OCP\Files\Mount\IMountPoint;
+use OCP\Files\NotFoundException;
 use OCP\IDBConnection;
 use OCP\IGroupManager;
 use OCP\Share;
@@ -322,9 +323,10 @@ class FilesHooks {
 	 */
 	protected function shareFileOrFolder($fileSource, $itemType) {
 		$this->view->chroot('/' . $this->currentUser . '/files');
-		$path = $this->view->getPath($fileSource);
 
-		if ($path === null) {
+		try {
+			$path = $this->view->getPath($fileSource);
+		} catch (NotFoundException $e) {
 			return;
 		}
 
@@ -348,9 +350,10 @@ class FilesHooks {
 	 */
 	protected function shareNotificationForSharer($subject, $shareWith, $fileSource, $itemType) {
 		$this->view->chroot('/' . $this->currentUser . '/files');
-		$path = $this->view->getPath($fileSource);
 
-		if ($path === null) {
+		try {
+			$path = $this->view->getPath($fileSource);
+		} catch (NotFoundException $e) {
 			return;
 		}
 
@@ -373,9 +376,10 @@ class FilesHooks {
 	 */
 	protected function reshareNotificationForSharer($owner, $subject, $shareWith, $fileSource, $itemType) {
 		$this->view->chroot('/' . $owner . '/files');
-		$path = $this->view->getPath($fileSource);
 
-		if ($path === null) {
+		try {
+			$path = $this->view->getPath($fileSource);
+		} catch (NotFoundException $e) {
 			return;
 		}
 
@@ -399,8 +403,10 @@ class FilesHooks {
 	protected function shareNotificationForOriginalOwners($currentOwner, $subject, $shareWith, $fileSource, $itemType) {
 		// Get the full path of the current user
 		$this->view->chroot('/' . $currentOwner . '/files');
-		$path = $this->view->getPath($fileSource);
-		if ($path === null) {
+
+		try {
+			$path = $this->view->getPath($fileSource);
+		} catch (NotFoundException $e) {
 			return;
 		}
 
