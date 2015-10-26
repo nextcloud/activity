@@ -104,6 +104,14 @@
 			</field>
 
 			<index>
+				<name>activity_time</name>
+				<field>
+					<name>timestamp</name>
+					<sorting>descending</sorting>
+				</field>
+			</index>
+
+			<index>
 				<name>activity_user_time</name>
 				<field>
 					<name>affecteduser</name>
