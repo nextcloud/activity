@@ -32,8 +32,8 @@ $navigationEntry = function () use ($c) {
 		'id' => $c->getAppName(),
 		'order' => 1,
 		'name' => $c->query('ActivityL10N')->t('Activity'),
-		'href' => $c->query('URLGenerator')->linkToRoute('activity.Activities.showList'),
-		'icon' => $c->query('URLGenerator')->imagePath('activity', 'activity.svg'),
+		'href' => $c->getServer()->getURLGenerator()->linkToRoute('activity.Activities.showList'),
+		'icon' => $c->getServer()->getURLGenerator()->imagePath('activity', 'activity.svg'),
 	];
 };
 $c->getServer()->getNavigationManager()->add($navigationEntry);

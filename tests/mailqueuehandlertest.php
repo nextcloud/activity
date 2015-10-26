@@ -29,7 +29,7 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var MailQueueHandler */
 	protected $mailQueueHandler;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\Mail\IMailer */
 	protected $mailer;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
@@ -38,8 +38,14 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var \OCP\IUserManager */
 	protected $oldUserManager;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\IUserManager */
 	protected $userManager;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\Activity\IManager */
+	protected $activityManager;
+
+	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCA\Activity\DataHelper */
+	protected $dataHelper;
 
 	protected function setUp() {
 		parent::setUp();
@@ -59,24 +65,56 @@ class MailQueueHandlerTest extends TestCase {
 		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 154));
 		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 155));
 
-		$this->message = $this->getMockBuilder('\OC\Mail\Message')
+		$event = $this->getMockBuilder('OCP\Activity\IEvent')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->mailer = $this->getMock('\OCP\Mail\IMailer');
+		$event->expects($this->any())
+			->method('setApp')
+			->willReturnSelf();
+		$event->expects($this->any())
+			->method('setType')
+			->willReturnSelf();
+		$event->expects($this->any())
+			->method('setAffectedUser')
+			->willReturnSelf();
+		$event->expects($this->any())
+			->method('setTimestamp')
+			->willReturnSelf();
+		$event->expects($this->any())
+			->method('setSubject')
+			->willReturnSelf();
+
+		$this->activityManager = $this->getMockBuilder('OCP\Activity\IManager')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->activityManager->expects($this->any())
+			->method('generateEvent')
+			->willReturn($event);
+
+		$this->dataHelper = $this->getMockBuilder('OCA\Activity\DataHelper')
+				->disableOriginalConstructor()
+				->getMock();
+		$this->dataHelper->expects($this->any())
+			->method('getParameters')
+			->willReturn([]);
+
+		$this->message = $this->getMockBuilder('OC\Mail\Message')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->mailer = $this->getMock('OCP\Mail\IMailer');
 		$this->mailer->expects($this->any())
 			->method('createMessage')
 			->willReturn($this->message);
 		$this->mailQueueHandler = new MailQueueHandler(
 			$this->getMock('\OCP\IDateTimeFormatter'),
 			$connection,
-			$this->getMockBuilder('\OCA\Activity\DataHelper')
-				->disableOriginalConstructor()
-				->getMock(),
+			$this->dataHelper,
 			$this->mailer,
 			$this->getMockBuilder('\OCP\IURLGenerator')
 				->disableOriginalConstructor()
 				->getMock(),
-			$this->userManager
+			$this->userManager,
+			$this->activityManager
 		);
 	}
 

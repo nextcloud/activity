@@ -23,11 +23,13 @@
 
 namespace OCA\Activity;
 
+use OCA\Activity\Parameter\Collection;
+use OCA\Activity\Parameter\IParameter;
+use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
 
-class GroupHelper
-{
+class GroupHelper {
 	/** @var array */
 	protected $activities = array();
 
@@ -81,17 +83,17 @@ class GroupHelper
 	 * @param array $activity
 	 */
 	public function addActivity($activity) {
-		$activity['subjectparams_array'] = $this->dataHelper->getParameters($activity['subjectparams']);
-		$activity['messageparams_array'] = $this->dataHelper->getParameters($activity['messageparams']);
+		$event = $this->getEventFromArray(array_merge($activity, [
+			'subjectparams' => [],
+			'messageparams' => [],
+		]));
+
+		$activity['subjectparams_array'] = $this->dataHelper->getParameters($event, 'subject', $activity['subjectparams']);
+		$activity['messageparams_array'] = $this->dataHelper->getParameters($event, 'message', $activity['messageparams']);
 
 		$groupKey = $this->getGroupKey($activity);
 		if ($groupKey === false) {
-			if (!empty($this->openGroup)) {
-				$this->activities[] = $this->openGroup;
-				$this->openGroup = array();
-				$this->groupKey = '';
-				$this->groupTime = 0;
-			}
+			$this->closeOpenGroup();
 			$this->activities[] = $activity;
 			return;
 		}
@@ -104,18 +106,25 @@ class GroupHelper
 		) {
 			$parameter = $this->getGroupParameter($activity);
 			if ($parameter !== false) {
-				if (!is_array($this->openGroup['subjectparams_array'][$parameter])) {
-					$this->openGroup['subjectparams_array'][$parameter] = array($this->openGroup['subjectparams_array'][$parameter]);
+				/** @var IParameter $parameterInstance */
+				$parameterInstance = $this->openGroup['subjectparams_array'][$parameter];
+
+				if (!($parameterInstance instanceof Collection)) {
+					$collection = $this->dataHelper->createCollection();
+					$collection->addParameter($parameterInstance);
+					$parameterInstance = $collection;
 				}
+
+				/** @var Collection $parameterInstance */
+				$parameterInstance->addParameter($activity['subjectparams_array'][$parameter]);
+				$this->openGroup['subjectparams_array'][$parameter] = $parameterInstance;
+
 				if (!isset($this->openGroup['activity_ids'])) {
 					$this->openGroup['activity_ids'] = [(int) $this->openGroup['activity_id']];
 					$this->openGroup['files'] = [
 						(int) $this->openGroup['object_id'] => (string) $this->openGroup['file']
 					];
 				}
-
-				$this->openGroup['subjectparams_array'][$parameter][] = $activity['subjectparams_array'][$parameter];
-				$this->openGroup['subjectparams_array'][$parameter] = array_unique($this->openGroup['subjectparams_array'][$parameter]);
 				$this->openGroup['activity_ids'][] = (int) $activity['activity_id'];
 
 				$this->openGroup['files'][(int) $activity['object_id']] = (string) $activity['file'];
@@ -136,6 +145,10 @@ class GroupHelper
 		if (!empty($this->openGroup)) {
 			$this->activities[] = $this->openGroup;
 		}
+
+		$this->openGroup = [];
+		$this->groupKey = '';
+		$this->groupTime = 0;
 	}
 
 	/**
@@ -193,7 +206,27 @@ class GroupHelper
 			$return[] = $activity;
 		}
 		$this->activityManager->setFormattingObject('', 0);
+		$this->activities = [];
 
 		return $return;
+	}
+
+	/**
+	 * @param array $activity
+	 * @return IEvent
+	 */
+	public function getEventFromArray(array $activity) {
+		$event = $this->activityManager->generateEvent();
+		$event->setApp($activity['app'])
+			->setType($activity['type'])
+			->setAffectedUser($activity['affecteduser'])
+			->setAuthor($activity['user'])
+			->setTimestamp($activity['timestamp'])
+			->setSubject($activity['subject'], $activity['subjectparams'])
+			->setMessage($activity['message'], $activity['messageparams'])
+			->setObject($activity['object_type'], $activity['object_id'], $activity['file'])
+			->setLink($activity['link']);
+
+		return $event;
 	}
 }

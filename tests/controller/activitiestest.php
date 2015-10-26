@@ -48,6 +48,9 @@ class ActivitiesTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $view;
 
+	/** @var \OCA\Activity\ViewInfoCache|\PHPUnit_Framework_MockObject_MockObject */
+	protected $infoCache;
+
 	/** @var \OCP\IL10N */
 	protected $l10n;
 
@@ -84,6 +87,9 @@ class ActivitiesTest extends TestCase {
 		$this->view = $this->getMockBuilder('OC\Files\View')
 			->disableOriginalConstructor()
 			->getMock();
+		$this->infoCache = $this->getMockBuilder('OCA\Activity\ViewInfoCache')
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->request = $this->getMock('OCP\IRequest');
 
@@ -104,6 +110,7 @@ class ActivitiesTest extends TestCase {
 				$this->urlGenerator,
 				$this->mimeTypeDetector,
 				$this->view,
+				$this->infoCache,
 				'test'
 			);
 		} else {
@@ -120,6 +127,7 @@ class ActivitiesTest extends TestCase {
 					$this->urlGenerator,
 					$this->mimeTypeDetector,
 					$this->view,
+					$this->infoCache,
 					'test',
 				])
 				->setMethods($methods)
@@ -554,21 +562,15 @@ class ActivitiesTest extends TestCase {
 	 * @param null|bool $exists
 	 */
 	public function testGetPreviewInvalidPaths($author, $fileId, $path, $returnedPath, $exists) {
-		$this->view->expects($this->once())
-			->method('chroot')
-			->with('/' . $author . '/files');
-		$this->view->expects($this->once())
-			->method('getPath')
-			->with($fileId)
-			->willReturn($returnedPath);
-		if ($exists === null) {
-			$this->view->expects($this->never())
-				->method('file_exists');
-		} else {
-			$this->view->expects($this->once())
-				->method('file_exists')
-				->willReturn($exists);
-		}
+		$this->infoCache->expects($this->once())
+			->method('getInfoById')
+			->with($author, $fileId, $path)
+			->willReturn([
+				'path'		=> $returnedPath,
+				'exists'	=> $exists,
+				'is_dir'	=> false,
+				'view'		=> '',
+			]);
 
 		$controller = $this->getController([
 			'getPreviewFromPath'
@@ -608,21 +610,15 @@ class ActivitiesTest extends TestCase {
 			'getPreviewPathFromMimeType',
 		]);
 
-		$this->view->expects($this->once())
-			->method('chroot')
-			->with('/' . $author . '/files');
-		$this->view->expects($this->once())
-			->method('getPath')
-			->with($fileId)
-			->willReturn($returnedPath);
-		$this->view->expects($this->once())
-			->method('file_exists')
-			->with($returnedPath)
-			->willReturn(true);
-		$this->view->expects($this->once())
-			->method('is_dir')
-			->with($returnedPath)
-			->willReturn($isDir);
+		$this->infoCache->expects($this->once())
+			->method('getInfoById')
+			->with($author, $fileId, $path)
+			->willReturn([
+				'path'		=> $returnedPath,
+				'exists'	=> true,
+				'is_dir'	=> $isDir,
+				'view'		=> '',
+			]);
 
 		$controller->expects($this->once())
 			->method('getPreviewLink')
@@ -641,6 +637,9 @@ class ActivitiesTest extends TestCase {
 				->disableOriginalConstructor()
 				->getMock();
 
+			$this->view->expects($this->once())
+				->method('chroot')
+				->with('/' . $author . '/files');
 			$this->view->expects($this->once())
 				->method('getFileInfo')
 				->with($returnedPath)
