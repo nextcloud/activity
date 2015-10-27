@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "ไม่มีกิจกรรม",
     "This stream will show events like additions, changes & shares" : "สตรีมนี้จะแสดงเหตุการณ์เพิ่มเติม เช่นการเปลี่ยนแปลงและการแชร์",
     "There are no events for this filter" : "ไม่มีกิจกรรมสำหรับตัวกรองนี้",
+    "in %s" : "ใน %s",
+    "\"remote user\"" : "\"ผู้ใช้ระยะไกล\"",
     "Activity notification" : "การแจ้งเตือนกิจกรรม",
     "All Activities" : "กิจกรรมทั้งหมด",
     "Activities by you" : "กิจกรรมของคุณ",
     "Activities by others" : "กิจกรรมของคนอื่นๆ",
-    "\"remote user\"" : "\"ผู้ใช้ระยะไกล\"",
-    "in %s" : "ใน %s",
     "%s and %s" : "%s และ %s",
     ", " : "หรือ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s และ <strong %s>อื่นๆอีก %n</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "เปิดใช้งานฟีด RSS",
     "No activity yet" : "ยังไม่มีกิจกรรม",
     "No more events to load" : "ไม่มีการโหลดกิจกรรมเพิ่มเติม",
-    "Files" : "ไฟล์",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s และ <strong class=\"has-tooltip\" title=\"%s\">อื่นๆอีก %n</strong>"]
+    "Files" : "ไฟล์"
 },
 "nplurals=1; plural=0;");

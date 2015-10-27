@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "Nėra veiklų",
     "This stream will show events like additions, changes & shares" : "Pridėjimų, pakeitimų ir dalinimosi įvykių srautas.",
     "There are no events for this filter" : "Nėra įvykių pasirinktam filtrui",
+    "in %s" : "per %s",
+    "\"remote user\"" : "\"Nuotolinis vartotojas\"",
     "Activity notification" : "Veiklos perspėjimai",
     "All Activities" : "Visa veikla",
     "Activities by you" : "Jūsų veikla",
     "Activities by others" : "Kitų veikla",
-    "\"remote user\"" : "\"Nuotolinis vartotojas\"",
-    "in %s" : "per %s",
     "%s and %s" : "%s ir %s",
     ", " : ",",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s ir<strong %s>%n vienas</strong>","%s ir<strong %s>%n keli</strong>","%s ir <strong %s>%n kiti</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "No activity yet" : "Be veiklų",
     "No more events to load" : "Nėra daugiau įkeltinų įvykių",
-    "Files" : "Failai",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s ir <strong class=\"has-tooltip\" title=\"%s\">%n vienas</strong>","%s ir <strong class=\"has-tooltip\" title=\"%s\">%n keli</strong>","%s ir <strong class=\"has-tooltip\" title=\"%s\">%n kiti</strong>"]
+    "Files" : "Failai"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);");

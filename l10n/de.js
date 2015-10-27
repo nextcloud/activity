@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "Keine Aktivitäten",
     "This stream will show events like additions, changes & shares" : "Dieser Stream zeigt Ereignisse wie Hinzugekommenes, Änderungen und Freigaben an",
     "There are no events for this filter" : "Keine Ereignisse für diesen Filter vorhanden",
+    "in %s" : "unter %s",
+    "\"remote user\"" : "„Entfernter Benutzer“",
     "Activity notification" : "Benachrichtigung über die Aktivitäten",
     "All Activities" : "Alle Aktivitäten",
     "Activities by you" : "Aktivitäten von Dir",
     "Activities by others" : "Aktivitäten von Anderen",
-    "\"remote user\"" : "„Entfernter Benutzer“",
-    "in %s" : "unter %s",
     "%s and %s" : "%s und %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s und <strong %s>%n weitere</strong>","%s und <strong %s>%n weitere</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS-Feed aktivieren",
     "No activity yet" : "Bislang keine Aktivitäten",
     "No more events to load" : "Keine weiteren Ereignisse zum Laden",
-    "Files" : "Dateien",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s und <strong class=\"has-tooltip\" title=\"%s\">%n weitere</strong>","%s und <strong class=\"has-tooltip\" title=\"%s\">%n weitere</strong>"]
+    "Files" : "Dateien"
 },
 "nplurals=2; plural=(n != 1);");

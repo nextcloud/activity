@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "Tidak ada aktivitas",
     "This stream will show events like additions, changes & shares" : "Stream ini akan menampilkan agenda seperti penambahan, perubahan & berbagi",
     "There are no events for this filter" : "Tidak ada agenda untuk penyaring ini",
+    "in %s" : "dalam %s",
+    "\"remote user\"" : "\"remote user\"",
     "Activity notification" : "Pemberitahuan aktivitas",
     "All Activities" : "Semua Aktivitas",
     "Activities by you" : "Aktivitas oleh Anda",
     "Activities by others" : "Aktivitas oleh orang lain",
-    "\"remote user\"" : "\"remote user\"",
-    "in %s" : "dalam %s",
     "%s and %s" : "%s dan %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s dan <strong %s>%n lainnya</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktifkan RSS feed",
     "No activity yet" : "Masih tidak ada aktivitas",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
-    "Files" : "Berkas",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s dan <strong class=\"has-tooltip\" title=\"%s\">%n lainnya</strong>"]
+    "Files" : "Berkas"
 },
 "nplurals=1; plural=0;");

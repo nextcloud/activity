@@ -10,12 +10,12 @@
     "No activities" : "Tegevusi pole",
     "This stream will show events like additions, changes & shares" : "See voog näitab sündmusi nagu lisamised, muudatused ja jagamised",
     "There are no events for this filter" : "Selle filtri jaoks pole ühtegi sündmust",
+    "in %s" : "kaustas %s",
+    "\"remote user\"" : "\"eemal olev kasutaja\"",
     "Activity notification" : "Tegvuste teavitused",
     "All Activities" : "Kõik tegevused",
     "Activities by you" : "Sinu toimingud",
     "Activities by others" : "Teiste toimingud",
-    "\"remote user\"" : "\"eemal olev kasutaja\"",
-    "in %s" : "kaustas %s",
     "%s and %s" : "%s ja %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s ja <strong %s>veel %n</strong>","%s ja <strong %s>veel %n</strong>"],
@@ -35,7 +35,6 @@
     "Enable RSS feed" : "Luba RSS voog",
     "No activity yet" : "Tegevusi veel pole.",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
-    "Files" : "Failid",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s ja <strong class=\"has-tooltip\" title=\"%s\">veel %n</strong>","%s ja <strong class=\"has-tooltip\" title=\"%s\">veel %n</strong>"]
+    "Files" : "Failid"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

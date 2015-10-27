@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "Καμία δραστηριότητα",
     "This stream will show events like additions, changes & shares" : "Σε αυτή την ροή θα εμφανιστούν γενονότα όπως προσθήκες αλλαγές και διαμοιρασμοί",
     "There are no events for this filter" : "Δεν υπάρχουν γεγονότα για αυτό το φίλτρο",
+    "in %s" : "σε %s",
+    "\"remote user\"" : "\"απομακρυσμένος χρήστης\"",
     "Activity notification" : "Ειδοποίηση δραστηριότητας",
     "All Activities" : "Όλες οι Δραστηριότητες",
     "Activities by you" : "Δραστηριότητες από εσάς",
     "Activities by others" : "Δραστηριότητες από άλλους",
-    "\"remote user\"" : "\"απομακρυσμένος χρήστης\"",
-    "in %s" : "σε %s",
     "%s and %s" : "%s και %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s και <strong %s> %n περισσότερo</strong>","%s και <strong %s> %n περισσότερα</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Ενεργοποίηση ροής RSS",
     "No activity yet" : "Καμία δραστηριότητα μέχρι τώρα.",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
-    "Files" : "Αρχεία",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s και <strong class=\"has-tooltip\" title=\"%s\"> %n περισσότερο</strong>","%s και <strong class=\"has-tooltip\" title=\"%s\"> %n περισσότερα</strong>"]
+    "Files" : "Αρχεία"
 },
 "nplurals=2; plural=(n != 1);");

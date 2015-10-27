@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "Nulle activitates",
     "This stream will show events like additions, changes & shares" : "Iste fluxo monstra eventos como additiones, cambiamentos e condivisiones",
     "There are no events for this filter" : "Il non ha eventos pro iste filtro",
+    "in %s" : "in %s",
+    "\"remote user\"" : "\"usator remote\"",
     "Activity notification" : "Notification de activitate",
     "All Activities" : "Omne activitates",
     "Activities by you" : "Activitates per te",
     "Activities by others" : "Activitates per alteres",
-    "\"remote user\"" : "\"usator remote\"",
-    "in %s" : "in %s",
     "%s and %s" : "%s e %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s e <strong %s>%n altere</strong>","%s e <strong %s>%n alteres</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Habilita syndication RSS",
     "No activity yet" : "Nulle activitate ancora",
     "No more events to load" : "Necun altere eventos de cargar",
-    "Files" : "Files",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s e <strong class=\"has-tooltip\" title=\"%s\">%n altere</strong>","%s e <strong class=\"has-tooltip\" title=\"%s\">%n alteres</strong>"]
+    "Files" : "Files"
 },
 "nplurals=2; plural=(n != 1);");

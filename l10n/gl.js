@@ -9,12 +9,12 @@ OC.L10N.register(
     "Stream" : "Fluxo",
     "This stream will show events like additions, changes & shares" : "Este fluxo amosará accións como adicións, cambios e elementos compartidos",
     "There are no events for this filter" : "Non hai actividades neste filtro",
+    "in %s" : "en %s",
+    "\"remote user\"" : "«usuario remoto»",
     "Activity notification" : "Notificación da actividade",
     "All Activities" : "Todas as actividades",
     "Activities by you" : "Actividades súas",
     "Activities by others" : "Actividades doutros",
-    "\"remote user\"" : "«usuario remoto»",
-    "in %s" : "en %s",
     "%s and %s" : "%s e %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s e <strong %s>%n máis</strong>","%s e <strong %s>%n máis</strong>"],
@@ -34,7 +34,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Activar as fontes RSS",
     "No activity yet" : "Aínda non houbo actividade",
     "No more events to load" : "Non hai máis actividades para cargar",
-    "Files" : "Ficheiros",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s e <strong class=\"has-tooltip\" title=\"%s\">%n máis</strong>","%s e <strong class=\"has-tooltip\" title=\"%s\">%n máis</strong>"]
+    "Files" : "Ficheiros"
 },
 "nplurals=2; plural=(n != 1);");

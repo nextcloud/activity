@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "აქტივობები არაა",
     "This stream will show events like additions, changes & shares" : "ამ ნაკადში ნაჩვენები იქნება შეტყობინებები ისეთი მოვლენების შესახებ, როგორებიცაა დამატება, ცვლილებები და გაზიარება",
     "There are no events for this filter" : "ამ ფილტრთან შესაბამისი მოვლენები არაა",
+    "in %s" : "%s -ში",
+    "\"remote user\"" : "\"მოშორებული მომხმარებელი\"",
     "Activity notification" : "შეტყობინება აქტივობის შესახებ",
     "All Activities" : "ყველა აქტივობა",
     "Activities by you" : "თქვენი აქტივობები",
     "Activities by others" : "სხვათა აქტივობები",
-    "\"remote user\"" : "\"მოშორებული მომხმარებელი\"",
-    "in %s" : "%s -ში",
     "%s and %s" : "%s და %s",
     ", " : ",",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s და <strong %s>%n მეტი</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS ლენტის გააქტიურება",
     "No activity yet" : "ჯერ-ჯერობით აქტივობები არაა",
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
-    "Files" : "ფაილები",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s და <strong class=\"has-tooltip\" title=\"%s\">%n მეტი</strong>"]
+    "Files" : "ფაილები"
 },
 "nplurals=1; plural=0;");

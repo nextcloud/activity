@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "Pa veprimtari",
     "This stream will show events like additions, changes & shares" : "Kjo rrjedhë do të shfaqë veprimtari të tilla si shtime, ndryshime & ndarje me të tjerë",
     "There are no events for this filter" : "S’ka veprimtari për këtë filtër",
+    "in %s" : "në %s",
+    "\"remote user\"" : "\"përdorues i largët\"",
     "Activity notification" : "Njoftim veprimtarie",
     "All Activities" : "Krejt Veprimtaritë",
     "Activities by you" : "Veprimtari tuajat",
     "Activities by others" : "Veprimtari nga të tjerë",
-    "\"remote user\"" : "\"përdorues i largët\"",
-    "in %s" : "në %s",
     "%s and %s" : "%s dhe %s",
     ", " : ",",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s dhe <strong %s>%n më tepër</strong>","%s dhe <strong %s>%n më tepër</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktivizoni Prurje RSS",
     "No activity yet" : "Ende pa veprimtari",
     "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
-    "Files" : "Kartela",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s dhe <strong class=\"has-tooltip\" title=\"%s\">%n më tepër</strong>","%s dhe <strong class=\"has-tooltip\" title=\"%s\">%n më tepër</strong>"]
+    "Files" : "Kartela"
 },
 "nplurals=2; plural=(n != 1);");

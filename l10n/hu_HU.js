@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "Nincs aktivitás",
     "This stream will show events like additions, changes & shares" : "Ez a folyam olyan események mutat mint bővítménxek, változások és megosztások",
     "There are no events for this filter" : "Ehhez a szűrőhöz nem található esemény",
+    "in %s" : "itt:  %s",
+    "\"remote user\"" : "\"távoli felhasználó\"",
     "Activity notification" : "Aktivitási értesítés",
     "All Activities" : "Minden tevékenység",
     "Activities by you" : "Saját tevékenységem",
     "Activities by others" : "Mások tevékenysége",
-    "\"remote user\"" : "\"távoli felhasználó\"",
-    "in %s" : "itt:  %s",
     "%s and %s" : "%s és %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s és <strong %s>még %n</strong>","%s és <strong %s>még %n</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS-hírcsatorna engedélyezése",
     "No activity yet" : "Nincs még tevékenység",
     "No more events to load" : "Nincs több esemény",
-    "Files" : "Fájlok",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s és <strong class=\"has-tooltip\" title=\"%s\">még %n</strong>","%s és <strong class=\"has-tooltip\" title=\"%s\">még %n</strong>"]
+    "Files" : "Fájlok"
 },
 "nplurals=2; plural=(n != 1);");

@@ -10,12 +10,12 @@
     "No activities" : "No hay actividades",
     "This stream will show events like additions, changes & shares" : "Este fujo mostrará eventos agregados, modificados y compartidos.",
     "There are no events for this filter" : "No hay eventos para este filtro",
+    "in %s" : "en %s",
+    "\"remote user\"" : "\"usuario remoto\"",
     "Activity notification" : "Notificación de actividad",
     "All Activities" : "Todas las actividades",
     "Activities by you" : "Sus actividades",
     "Activities by others" : "Actividades de otros",
-    "\"remote user\"" : "\"usuario remoto\"",
-    "in %s" : "en %s",
     "%s and %s" : "%s y %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s y <strong %s>%n más</strong>","%s y <strong %s>%n más</strong>"],
@@ -36,7 +36,6 @@
     "Enable RSS feed" : "Habilitar fuente RSS",
     "No activity yet" : "Ninguna actividad aún",
     "No more events to load" : "No hay más eventos por cargar.",
-    "Files" : "Archivos",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s y <strong class=\"has-tooltip\" title=\"%s\">%n más</strong>","%s y <strong class=\"has-tooltip\" title=\"%s\">%n más</strong>"]
+    "Files" : "Archivos"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "Нема активности",
     "This stream will show events like additions, changes & shares" : "Овде ће се приказати догађаји попут додавања, измена или дељења",
     "There are no events for this filter" : "Нема догађаја за овај филтер",
+    "in %s" : "у %s",
+    "\"remote user\"" : "\"удаљени корисник\"",
     "Activity notification" : "Обавештења о активностима",
     "All Activities" : "Све активности",
     "Activities by you" : "Ваше активности",
     "Activities by others" : "Активности других",
-    "\"remote user\"" : "\"удаљени корисник\"",
-    "in %s" : "у %s",
     "%s and %s" : "%s и %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s и <strong %s>још %n</strong>","%s и <strong %s>још %n</strong>","%s и <strong %s>још %n</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Укључи РСС довод",
     "No activity yet" : "Још нема активности",
     "No more events to load" : "Нема више догађаја за приказ",
-    "Files" : "Фајлови",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s и <strong class=\"has-tooltip\" title=\"%s\">још %n</strong>","%s и <strong class=\"has-tooltip\" title=\"%s\">још %n</strong>","%s и <strong class=\"has-tooltip\" title=\"%s\">још %n</strong>"]
+    "Files" : "Фајлови"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

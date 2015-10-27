@@ -11,12 +11,12 @@ OC.L10N.register(
     "Error loading activities" : "خطا در بارگزاری فعالیت‌ها",
     "No activities" : "هیچ فعالیتی",
     "There are no events for this filter" : "هیچ رخدادی برای این فیلتر وجود ندارد",
+    "in %s" : "در %s",
+    "\"remote user\"" : "\"کاربران از راه‌ دور\"",
     "Activity notification" : "هشدارهای فعالیت",
     "All Activities" : "تمام فعالیت ها",
     "Activities by you" : "فعالیت های مربوط به شما",
     "Activities by others" : "فعالیت های انجام شده توسط دیگران",
-    "\"remote user\"" : "\"کاربران از راه‌ دور\"",
-    "in %s" : "در %s",
     "%s and %s" : "%s و %s",
     ", " : "رشته های ترجمه نشده",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s و <strong %s>%n بیشتر </strong>"],
@@ -37,7 +37,6 @@ OC.L10N.register(
     "Enable RSS feed" : "فعالسازی فید RSS",
     "No activity yet" : "هنوز فعالیتی انجام نشده",
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
-    "Files" : "فایل ها",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s و  <strong class=\"has-tooltip\" title=\"%s\">%n بیشتر </strong>"]
+    "Files" : "فایل ها"
 },
 "nplurals=1; plural=0;");

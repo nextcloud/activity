@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "활동 없음",
     "This stream will show events like additions, changes & shares" : "스트림에는 추가, 변경, 공유와 같은 이벤트가 표시됩니다",
     "There are no events for this filter" : "이 필터를 만족하는 이벤트 없음",
+    "in %s" : "%s",
+    "\"remote user\"" : "\"원격 사용자\"",
     "Activity notification" : "활동 알림",
     "All Activities" : "모든 활동",
     "Activities by you" : "내 활동",
     "Activities by others" : "다른 사람의 활동",
-    "\"remote user\"" : "\"원격 사용자\"",
-    "in %s" : "%s",
     "%s and %s" : "%s, %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s 및 <strong %s>%n개 더</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS 피드 사용",
     "No activity yet" : "아직 활동 없음",
     "No more events to load" : "더 이상 불러올 이벤트 없음",
-    "Files" : "파일",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s 및 <strong class=\"has-tooltip\" title=\"%s\">%n개 더</strong>"]
+    "Files" : "파일"
 },
 "nplurals=1; plural=0;");

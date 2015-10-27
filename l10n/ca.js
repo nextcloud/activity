@@ -10,12 +10,12 @@ OC.L10N.register(
     "No activities" : "sense activitats",
     "This stream will show events like additions, changes & shares" : "Aquest corrent mostrarà esdeveniments afegits, modificats i compartits.",
     "There are no events for this filter" : "No hi ha esdeveniments en est filtre",
+    "in %s" : "a %s",
+    "\"remote user\"" : "\"usuari remot\"",
     "Activity notification" : "Notificació d'activitat",
     "All Activities" : "Totes les activitats",
     "Activities by you" : "Les teves activitats",
     "Activities by others" : "Activitats dels altres",
-    "\"remote user\"" : "\"usuari remot\"",
-    "in %s" : "a %s",
     "%s and %s" : "%s i %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s i <strong %s>%n més</strong>","%s i <strong %s>%n més</strong>"],
@@ -35,7 +35,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Activa el canal RSS",
     "No activity yet" : "Cap activitat encara",
     "No more events to load" : "No hi ha més elements a carregar",
-    "Files" : "Fitxers",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s i <strong class=\"has-tooltip\" title=\"%s\">%n més</strong>","%s i <strong class=\"has-tooltip\" title=\"%s\">%n més</strong>"]
+    "Files" : "Fitxers"
 },
 "nplurals=2; plural=(n != 1);");

@@ -10,12 +10,12 @@
     "No activities" : "Žádné aktivity",
     "This stream will show events like additions, changes & shares" : "Datový proud bude zobrazovat události jako přidání, změny a sdílení",
     "There are no events for this filter" : "Pro tato kritéria nejsou žádné události",
+    "in %s" : "v %s",
+    "\"remote user\"" : "\"vzdálený uživatel\"",
     "Activity notification" : "Upozornění na aktivity",
     "All Activities" : "Všechny aktivity",
     "Activities by you" : "Vlastní aktivity",
     "Activities by others" : "Aktivity ostatních",
-    "\"remote user\"" : "\"vzdálený uživatel\"",
-    "in %s" : "v %s",
     "%s and %s" : "%s a %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s a <strong %s>%n další</strong>","%s a <strong %s>%n další</strong>","%s a <strong %s>%n dalších</strong>"],
@@ -36,7 +36,6 @@
     "Enable RSS feed" : "Povolit RSS kanál",
     "No activity yet" : "Zatím bez aktivity",
     "No more events to load" : "Žádné další události k načtení",
-    "Files" : "Soubory",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s a <strong class=\"has-tooltip\" title=\"%s\">%n další</strong>","%s a <strong class=\"has-tooltip\" title=\"%s\">%n další</strong>","%s a <strong class=\"has-tooltip\" title=\"%s\">%n dalších</strong>"]
+    "Files" : "Soubory"
 },"pluralForm" :"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
 }

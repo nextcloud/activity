@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "Ingen aktiviteter",
     "This stream will show events like additions, changes & shares" : "Denne strømmen vil vise hendelser som f.eks. innlegging, endring og deling",
     "There are no events for this filter" : "Der er ingen hendelser for dette filteret",
+    "in %s" : "i %s",
+    "\"remote user\"" : "\"ekstern bruker\"",
     "Activity notification" : "Varsel om aktivitet",
     "All Activities" : "All aktivitet",
     "Activities by you" : "Din aktivitet",
     "Activities by others" : "Andres aktivitet",
-    "\"remote user\"" : "\"ekstern bruker\"",
-    "in %s" : "i %s",
     "%s and %s" : "%s og %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s og <strong %s>%n flere</strong>","%s og <strong %s>%n flere</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktiver RSS-strøm",
     "No activity yet" : "Ingen aktivitet ennå",
     "No more events to load" : "Ingen flere hendelser å laste",
-    "Files" : "Filer",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s og <strong class=\"has-tooltip\" title=\"%s\">%n flere</strong>","%s og <strong class=\"has-tooltip\" title=\"%s\">%n flere</strong>"]
+    "Files" : "Filer"
 },
 "nplurals=2; plural=(n != 1);");

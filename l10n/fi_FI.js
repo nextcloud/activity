@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "Ei toimia",
     "This stream will show events like additions, changes & shares" : "Tähän luetteloon ilmestyy tapahtumakuvauksia, kuten lisäyksiä, muutoksia ja jakamisia",
     "There are no events for this filter" : "Tällä suodattimella ei ole näytettäviä tapahtumia",
+    "in %s" : "polussa %s",
+    "\"remote user\"" : "\"etäkäyttäjä\"",
     "Activity notification" : "Ilmoitus toiminnasta",
     "All Activities" : "Kaikki toimet",
     "Activities by you" : "Omat toimet",
     "Activities by others" : "Muiden toimet",
-    "\"remote user\"" : "\"etäkäyttäjä\"",
-    "in %s" : "polussa %s",
     "%s and %s" : "%s ja %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s ja <strong %s>%n lisää</strong>","%s ja <strong %s>%n lisää</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Käytä RSS-syötettä",
     "No activity yet" : "Ei toimia vielä",
     "No more events to load" : "Ei enempää tapahtumia ladattavaksi",
-    "Files" : "Tiedostot",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s ja <strong class=\"has-tooltip\" title=\"%s\">%n lisää</strong>","%s ja <strong class=\"has-tooltip\" title=\"%s\">%n lisää</strong>"]
+    "Files" : "Tiedostot"
 },
 "nplurals=2; plural=(n != 1);");

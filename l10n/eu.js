@@ -11,12 +11,12 @@ OC.L10N.register(
     "Error loading activities" : "Errorea jarduerak kargatzen",
     "No activities" : "Ez dago jarduerarik",
     "There are no events for this filter" : "Ez dago ekitaldirik iragazki honetarako",
+    "in %s" : "%s-an",
+    "\"remote user\"" : "\"urruneko erabiltzailea\"",
     "Activity notification" : "Jarduera jakinarazpenak",
     "All Activities" : "Jarduera guztiak",
     "Activities by you" : "Zure jarduerak",
     "Activities by others" : "Besteen jarduerak",
-    "\"remote user\"" : "\"urruneko erabiltzailea\"",
-    "in %s" : "%s-an",
     "%s and %s" : "%s eta %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s eta <strong %s>%n gehiago</strong>","%s eta <strong %s>%n gehiago</strong>"],
@@ -36,7 +36,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "No activity yet" : "Oraindik ez dago jarduerarik",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
-    "Files" : "Fitxategiak",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s eta <strong class=\"has-tooltip\" title=\"%s\">%n gehiago</strong>","%s eta <strong class=\"has-tooltip\" title=\"%s\">%n gehiago</strong>"]
+    "Files" : "Fitxategiak"
 },
 "nplurals=2; plural=(n != 1);");

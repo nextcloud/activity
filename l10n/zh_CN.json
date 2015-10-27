@@ -10,12 +10,12 @@
     "No activities" : "暂无动态",
     "This stream will show events like additions, changes & shares" : "流中会显示诸如添加、更改和分享之类的事件",
     "There are no events for this filter" : "没有符合当前筛选条件的事件。",
+    "in %s" : "位于 %s",
+    "\"remote user\"" : "远程用户",
     "Activity notification" : "动态通知",
     "All Activities" : "所有动态",
     "Activities by you" : "你的动态",
     "Activities by others" : "别人的动态",
-    "\"remote user\"" : "远程用户",
-    "in %s" : "位于 %s",
     "%s and %s" : "%s 和 %s",
     ", " : "，",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s 和 <strong %s>%n 更多</strong>"],
@@ -36,7 +36,6 @@
     "Enable RSS feed" : "启用 RSS 源",
     "No activity yet" : "暂无动态",
     "No more events to load" : "已无更多事件",
-    "Files" : "文件",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s 和 <strong class=\"has-tooltip\" title=\"%s\">%n 更多</strong>"]
+    "Files" : "文件"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

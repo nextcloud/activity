@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "Pas cap d'activitat",
     "This stream will show events like additions, changes & shares" : "Aqueste flux fa veire los eveniments tal coma las addicions, las modificacions e los partiments",
     "There are no events for this filter" : "I a pas cap d'eveniment per aqueste filtre",
+    "in %s" : "dins %s",
+    "\"remote user\"" : "\"utilizaire distant\"",
     "Activity notification" : "Notificacion d'activitat",
     "All Activities" : "Totas activitats",
     "Activities by you" : "Vòstras activitats",
     "Activities by others" : "L'activitat dels autres",
-    "\"remote user\"" : "\"utilizaire distant\"",
-    "in %s" : "dins %s",
     "%s and %s" : "%s e %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s e <strong %s>%n mai</strong>","%s e <strong %s>%n mai</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Activar los fluxes RSS",
     "No activity yet" : "Pas d'activitat pel moment",
     "No more events to load" : "Pas cap d'eveniment mai a cargar",
-    "Files" : "Fichièrs",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s e <strong class=\"has-tooltip\" title=\"%s\">%n mai</strong>","%s e <strong class=\"has-tooltip\" title=\"%s\">%n mai</strong>"]
+    "Files" : "Fichièrs"
 },
 "nplurals=2; plural=(n > 1);");

@@ -12,12 +12,12 @@ OC.L10N.register(
     "No activities" : "Etkinlik yok",
     "This stream will show events like additions, changes & shares" : "Bu akış ekleme, değişiklikler ve paylaşımlar gibi etkinlikleri gösterecektir",
     "There are no events for this filter" : "Bu filtre için herhangi bir etkinlik bulunmuyor",
+    "in %s" : "%s içinde",
+    "\"remote user\"" : "\"uzak kullanıcı\"",
     "Activity notification" : "Etkinlik bildirimi",
     "All Activities" : "Tüm Etkinlikler",
     "Activities by you" : "Sizin etkinlikleriniz",
     "Activities by others" : "Başkalarının etkinlikleri",
-    "\"remote user\"" : "\"uzak kullanıcı\"",
-    "in %s" : "%s içinde",
     "%s and %s" : "%s ve %s",
     ", " : ", ",
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s ve <strong %s>%n daha</strong>","%s ve <strong %s>%n daha</strong>"],
@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS beslemesini etkinleştir",
     "No activity yet" : "Henüz bir etkinlik yok",
     "No more events to load" : "Yüklenecek başka olay yok",
-    "Files" : "Dosyalar",
-    "_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_::_%s and <strong class=\"has-tooltip\" title=\"%s\">%n more</strong>_" : ["%s ve <strong class=\"has-tooltip\" title=\"%s\">%n daha</strong>","%s ve <strong class=\"has-tooltip\" title=\"%s\">%n daha</strong>"]
+    "Files" : "Dosyalar"
 },
 "nplurals=2; plural=(n > 1);");
