@@ -15,6 +15,15 @@ $(function(){
 		currentPage: 0,
 		navigation: $('#app-navigation'),
 
+
+		_onPopState: function(params) {
+			params = _.extend({
+				filter: 'all'
+			}, params);
+
+			this.setFilter(params.filter);
+		},
+
 		setFilter: function (filter) {
 			if (filter === this.filter) {
 				return;
@@ -24,7 +33,6 @@ $(function(){
 			this.currentPage = 0;
 
 			this.filter = filter;
-			OC.Util.History.pushState('filter=' + filter);
 
 			OCActivity.InfinitScrolling.container.animate({ scrollTop: 0 }, 'slow');
 			OCActivity.InfinitScrolling.container.children().remove();
@@ -181,11 +189,18 @@ $(function(){
 		}
 	};
 
+	OC.Util.History.addOnPopStateHandler(_.bind(OCActivity.Filter._onPopState, OCActivity.Filter));
 	OCActivity.Filter.setFilter(OCActivity.InfinitScrolling.container.attr('data-activity-filter'));
 	OCActivity.InfinitScrolling.content.on('scroll', OCActivity.InfinitScrolling.onScroll);
 
 	OCActivity.Filter.navigation.find('a[data-navigation]').on('click', function (event) {
-		OCActivity.Filter.setFilter($(this).attr('data-navigation'));
+		var filter = $(this).attr('data-navigation');
+		if (filter !== OCActivity.Filter.filter) {
+			OC.Util.History.pushState({
+				filter: filter
+			});
+		}
+		OCActivity.Filter.setFilter(filter);
 		event.preventDefault();
 	});
 
