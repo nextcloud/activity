@@ -20,6 +20,7 @@
     ", " : ", ",
     "_%s and %n more_::_%s and %n more_" : ["%s と それ以外に %n 個"],
     "Hello %s," : "%s さんこんにちは、",
+    "You are receiving this email because the following things happened at %s" : "このメールは%sで次のことがあったために送信されました。",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* と %n 以上 "],
     "Notifications" : "通知",
