@@ -34,20 +34,26 @@ class Parameter implements IParameter {
 	/** @var mixed */
 	protected $parameter;
 
-	/** @var array */
-	protected $object;
+	/** @var IEvent */
+	protected $event;
+
+	/** @var string */
+	protected $type;
 
 	/**
 	 * @param mixed $parameter
 	 * @param IEvent $event
 	 * @param IFormatter $formatter
+	 * @param string $type
 	 */
 	public function __construct($parameter,
 								IEvent $event,
-								IFormatter $formatter) {
+								IFormatter $formatter,
+								$type) {
 		$this->parameter = $parameter;
 		$this->event = $event;
 		$this->formatter = $formatter;
+		$this->type = $type;
 	}
 
 	/**
@@ -59,6 +65,16 @@ class Parameter implements IParameter {
 		}
 
 		return $this->parameter;
+	}
+
+	/**
+	 * @return array With two entries: value and type
+	 */
+	public function getParameterInfo() {
+		return [
+			'value' => $this->parameter,
+			'type' => $this->type,
+		];
 	}
 
 	/**

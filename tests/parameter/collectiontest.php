@@ -75,6 +75,62 @@ class CollectionTest extends TestCase {
 		$this->assertSame($random, $collection->getParameter());
 	}
 
+	public function dataGetParameterInfo() {
+		return [
+			[
+				[],
+				[],
+			],
+			[
+				[
+					[
+						'value' => 'value1',
+						'type' => 'type1',
+					],
+					[
+						'value' => 'value2',
+						'type' => 'type2',
+					],
+				],
+				[
+					[
+						'value' => 'value1',
+						'type' => 'type1',
+					],
+					[
+						'value' => 'value2',
+						'type' => 'type2',
+					],
+				],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetParameterInfo
+	 * @param array $parameters
+	 * @param array $expected
+	 */
+	public function testGetParameterInfo(array $parameters, array $expected) {
+		$instance = $this->getCollection();
+		$setParams = [];
+		foreach ($parameters as $parameter) {
+			$param = $this->getMockBuilder('OCA\Activity\Parameter\IParameter')
+				->disableOriginalConstructor()
+				->getMock();
+			$param->expects($this->once())
+				->method('getParameterInfo')
+				->willReturn($parameter);
+			$setParams[] = $param;
+		}
+		$this->invokePrivate($instance, 'parameters', [$setParams]);
+
+		$this->assertSame([
+			'value' => $expected,
+			'type' => 'collection',
+		], $instance->getParameterInfo());
+	}
+
 	public function testAddParameter() {
 		$collection = $this->getCollection();
 

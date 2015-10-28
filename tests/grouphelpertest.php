@@ -22,12 +22,8 @@
 
 namespace OCA\Activity\Tests;
 
-use OC\ActivityManager;
-use OCA\Activity\DataHelper;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Parameter\Collection;
-use OCA\Activity\ParameterHelper;
-use OCA\Activity\Tests\Mock\Extension;
 
 class GroupHelperTest extends TestCase {
 	/** @var \OCP\Activity\IManager|\PHPUnit_Framework_MockObject_MockObject */
@@ -49,6 +45,7 @@ class GroupHelperTest extends TestCase {
 
 	/**
 	 * @param array $methods
+	 * @param bool $grouping
 	 * @return GroupHelper|\PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function getHelper(array $methods = [], $grouping = false) {
@@ -121,6 +118,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 2,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 42,
+					'file' => '',
 					'timestamp' => 1444895509,
 				],
 				[],
@@ -132,6 +131,8 @@ class GroupHelperTest extends TestCase {
 						'activity_id' => 2,
 						'subjectparams' => ['param'],
 						'messageparams' => ['messageparams'],
+						'object_id' => 42,
+						'object_name' => '',
 						'timestamp' => 1444895509,
 						'subjectparams_array' => [],
 						'messageparams_array' => [],
@@ -145,6 +146,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 2,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 42,
+					'file' => '',
 					'timestamp' => 1444895509,
 				],
 				[],
@@ -156,6 +159,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 2,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 42,
+					'object_name' => '',
 					'timestamp' => 1444895509,
 					'subjectparams_array' => [],
 					'messageparams_array' => [],
@@ -167,6 +172,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 2,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 42,
+					'file' => '42.txt',
 					'timestamp' => 1444895509,
 				],
 				[],
@@ -174,6 +181,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 3,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 21,
+					'object_name' => '21.txt',
 					'timestamp' => 1444895510,
 					'subjectparams_array' => [],
 					'messageparams_array' => [],
@@ -185,6 +194,8 @@ class GroupHelperTest extends TestCase {
 						'activity_id' => 3,
 						'subjectparams' => ['param'],
 						'messageparams' => ['messageparams'],
+						'object_id' => 21,
+						'object_name' => '21.txt',
 						'timestamp' => 1444895510,
 						'subjectparams_array' => [],
 						'messageparams_array' => [],
@@ -193,6 +204,8 @@ class GroupHelperTest extends TestCase {
 						'activity_id' => 2,
 						'subjectparams' => ['param'],
 						'messageparams' => ['messageparams'],
+						'object_id' => 42,
+						'object_name' => '42.txt',
 						'timestamp' => 1444895509,
 						'subjectparams_array' => [],
 						'messageparams_array' => [],
@@ -206,6 +219,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 2,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 42,
+					'file' => '42.txt',
 					'timestamp' => 1444895509,
 				],
 				[],
@@ -213,6 +228,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 3,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 21,
+					'object_name' => '21.txt',
 					'timestamp' => 1444895510,
 					'subjectparams_array' => [],
 					'messageparams_array' => [],
@@ -224,6 +241,8 @@ class GroupHelperTest extends TestCase {
 						'activity_id' => 3,
 						'subjectparams' => ['param'],
 						'messageparams' => ['messageparams'],
+						'object_id' => 21,
+						'object_name' => '21.txt',
 						'timestamp' => 1444895510,
 						'subjectparams_array' => [],
 						'messageparams_array' => [],
@@ -233,6 +252,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 2,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 42,
+					'object_name' => '42.txt',
 					'timestamp' => 1444895509,
 					'subjectparams_array' => [],
 					'messageparams_array' => [],
@@ -244,6 +265,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 2,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 42,
+					'file' => '42.txt',
 					'timestamp' => 1440895509,
 				],
 				[],
@@ -251,6 +274,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 3,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 21,
+					'object_name' => '21.txt',
 					'timestamp' => 1444895509,
 					'subjectparams_array' => [],
 					'messageparams_array' => [],
@@ -262,6 +287,8 @@ class GroupHelperTest extends TestCase {
 						'activity_id' => 3,
 						'subjectparams' => ['param'],
 						'messageparams' => ['messageparams'],
+						'object_id' => 21,
+						'object_name' => '21.txt',
 						'timestamp' => 1444895509,
 						'subjectparams_array' => [],
 						'messageparams_array' => [],
@@ -271,6 +298,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 2,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 42,
+					'object_name' => '42.txt',
 					'timestamp' => 1440895509,
 					'subjectparams_array' => [],
 					'messageparams_array' => [],
@@ -282,6 +311,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 2,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 42,
+					'file' => '42.txt',
 					'timestamp' => 1444895509,
 				],
 				[],
@@ -289,6 +320,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 3,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 21,
+					'object_name' => '21.txt',
 					'timestamp' => 1444895510,
 					'subjectparams_array' => [],
 					'messageparams_array' => [],
@@ -301,6 +334,8 @@ class GroupHelperTest extends TestCase {
 						'activity_id' => 3,
 						'subjectparams' => ['param'],
 						'messageparams' => ['messageparams'],
+						'object_id' => 21,
+						'object_name' => '21.txt',
 						'timestamp' => 1444895510,
 						'subjectparams_array' => [],
 						'messageparams_array' => [],
@@ -311,6 +346,8 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 2,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 42,
+					'object_name' => '42.txt',
 					'timestamp' => 1444895509,
 					'subjectparams_array' => [],
 					'messageparams_array' => [],
@@ -337,6 +374,7 @@ class GroupHelperTest extends TestCase {
 					],
 					'messageparams_array' => [],
 					'activity_ids' => [5, 4, 3],
+					'object_id' => 42,
 					'files' => [
 						42 => 'file5',
 						23 => 'file4',
@@ -354,6 +392,7 @@ class GroupHelperTest extends TestCase {
 					'subjectparams_array' => [$coll1],
 					'messageparams_array' => [],
 					'activity_ids' => [5, 4, 3, 2],
+					'object_id' => 42,
 					'files' => [
 						42 => 'file5',
 						23 => 'file4',
@@ -377,13 +416,13 @@ class GroupHelperTest extends TestCase {
 					'activity_id' => 5,
 					'subjectparams' => ['param'],
 					'messageparams' => ['messageparams'],
+					'object_id' => 42,
+					'object_name' => 'file5',
 					'timestamp' => 1444895510,
 					'subjectparams_array' => [
 						$param3
 					],
 					'messageparams_array' => [],
-					'object_id' => 42,
-					'file' => 'file5',
 				],
 				'same',
 				'same',
@@ -396,7 +435,7 @@ class GroupHelperTest extends TestCase {
 					'subjectparams_array' => [$coll1],
 					'messageparams_array' => [],
 					'object_id' => 42,
-					'file' => 'file5',
+					'object_name' => 'file5',
 					'activity_ids' => [5, 2],
 					'files' => [
 						42 => 'file5',
@@ -573,20 +612,20 @@ class GroupHelperTest extends TestCase {
 			[[], []],
 			[
 				[
-					['object_type' => 'otype', 'object_id' => 42, 'type' => 'atype'],
+					['object_type' => 'otype', 'object_id' => 42, 'type' => 'atype', 'subjectparams' => [], 'messageparams' => []],
 				],
 				[
-					['object_type' => 'otype', 'object_id' => 42, 'type' => 'atype', 'typeicon' => 'atype-icon'],
+					['object_type' => 'otype', 'object_id' => 42, 'type' => 'atype', 'subjectparams' => [], 'messageparams' => [], 'typeicon' => 'atype-icon'],
 				],
 			],
 			[
 				[
-					['object_type' => 'otype', 'object_id' => 42, 'type' => 'atype'],
-					['object_type' => 'object_type', 'object_id' => 23, 'type' => 'activity_type'],
+					['object_type' => 'otype', 'object_id' => 42, 'type' => 'atype', 'subjectparams' => [], 'messageparams' => []],
+					['object_type' => 'object_type', 'object_id' => 23, 'type' => 'activity_type', 'subjectparams' => [], 'messageparams' => []],
 				],
 				[
-					['object_type' => 'otype', 'object_id' => 42, 'type' => 'atype', 'typeicon' => 'atype-icon'],
-					['object_type' => 'object_type', 'object_id' => 23, 'type' => 'activity_type', 'typeicon' => 'activity_type-icon'],
+					['object_type' => 'otype', 'object_id' => 42, 'type' => 'atype', 'subjectparams' => [], 'messageparams' => [], 'typeicon' => 'atype-icon'],
+					['object_type' => 'object_type', 'object_id' => 23, 'type' => 'activity_type', 'subjectparams' => [], 'messageparams' => [], 'typeicon' => 'activity_type-icon'],
 				],
 			],
 		];
@@ -636,7 +675,7 @@ class GroupHelperTest extends TestCase {
 					'messageparams' => ['par2'],
 					'object_type' => 'object_type1',
 					'object_id' => 123,
-					'file' => 'file1',
+					'object_name' => 'file1',
 					'link' => 'link1',
 				],
 			],
@@ -653,7 +692,7 @@ class GroupHelperTest extends TestCase {
 					'messageparams' => ['par3'],
 					'object_type' => 'object_type2',
 					'object_id' => 456,
-					'file' => 'file2',
+					'object_name' => 'file2',
 					'link' => 'link2',
 				],
 			],
@@ -698,7 +737,7 @@ class GroupHelperTest extends TestCase {
 			->willReturnSelf();
 		$event->expects($this->once())
 			->method('setObject')
-			->with($activity['object_type'], $activity['object_id'], $activity['file'])
+			->with($activity['object_type'], $activity['object_id'], $activity['object_name'])
 			->willReturnSelf();
 		$event->expects($this->once())
 			->method('setLink')

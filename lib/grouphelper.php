@@ -83,6 +83,13 @@ class GroupHelper {
 	 * @param array $activity
 	 */
 	public function addActivity($activity) {
+		$activity['activity_id'] = (int) $activity['activity_id'];
+		$activity['timestamp'] = (int) $activity['timestamp'];
+		$activity['object_id'] = (int) $activity['object_id'];
+		$activity['object_name'] = (string) $activity['file'];
+		unset($activity['priority']);
+		unset($activity['file']);
+
 		$event = $this->getEventFromArray(array_merge($activity, [
 			'subjectparams' => [],
 			'messageparams' => [],
@@ -122,12 +129,12 @@ class GroupHelper {
 				if (!isset($this->openGroup['activity_ids'])) {
 					$this->openGroup['activity_ids'] = [(int) $this->openGroup['activity_id']];
 					$this->openGroup['files'] = [
-						(int) $this->openGroup['object_id'] => (string) $this->openGroup['file']
+						$this->openGroup['object_id'] => $this->openGroup['object_name']
 					];
 				}
 				$this->openGroup['activity_ids'][] = (int) $activity['activity_id'];
 
-				$this->openGroup['files'][(int) $activity['object_id']] = (string) $activity['file'];
+				$this->openGroup['files'][$activity['object_id']] = $activity['object_name'];
 			}
 		} else {
 			$this->closeOpenGroup();
@@ -202,6 +209,15 @@ class GroupHelper {
 			$activity = $this->dataHelper->formatStrings($activity, 'subject');
 			$activity = $this->dataHelper->formatStrings($activity, 'message');
 
+			foreach ($activity['subjectparams'] as $i => $param) {
+				/** @var IParameter $param */
+				$activity['subjectparams'][$i] = $param->getParameterInfo();
+			}
+			foreach ($activity['messageparams'] as $i => $param) {
+				/** @var IParameter $param */
+				$activity['messageparams'][$i] = $param->getParameterInfo();
+			}
+
 			$activity['typeicon'] = $this->activityManager->getTypeIcon($activity['type']);
 			$return[] = $activity;
 		}
@@ -224,7 +240,7 @@ class GroupHelper {
 			->setTimestamp($activity['timestamp'])
 			->setSubject($activity['subject'], $activity['subjectparams'])
 			->setMessage($activity['message'], $activity['messageparams'])
-			->setObject($activity['object_type'], $activity['object_id'], $activity['file'])
+			->setObject($activity['object_type'], $activity['object_id'], $activity['object_name'])
 			->setLink($activity['link']);
 
 		return $event;

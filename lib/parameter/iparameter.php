@@ -33,6 +33,11 @@ interface IParameter {
 	public function getParameter();
 
 	/**
+	 * @return array With two entries: value and type
+	 */
+	public function getParameterInfo();
+
+	/**
 	 * @param bool $allowHtml   Should HTML be used to format the parameter?
 	 * @param bool $verbose     Should paths, names, etc be shortened or full length
 	 * @return string The formatted parameter

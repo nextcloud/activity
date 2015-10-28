@@ -113,7 +113,8 @@ class Factory {
 		return new Parameter(
 			$parameter,
 			$event,
-			$this->getFormatter($formatter)
+			$this->getFormatter($formatter),
+			$formatter
 		);
 	}
 

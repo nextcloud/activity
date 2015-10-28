@@ -114,17 +114,32 @@ $(function(){
 		},
 
 		appendActivityToContainer: function ($activity) {
-			this.makeSureDateGroupExists($activity.relativeTimestamp, $activity.readableTimestamp);
+			this.makeSureDateGroupExists($activity.timestamp * 1000);
 			this.addActivity($activity);
 		},
 
-		makeSureDateGroupExists: function($relativeTimestamp, $readableTimestamp) {
+		makeSureDateGroupExists: function(timestamp) {
+			var dayOfYear = OC.Util.formatDate(timestamp, 'YYYY-DDD');
 			var $lastGroup = this.container.children().last();
 
-			if ($lastGroup.data('date') !== $relativeTimestamp) {
-				var $content = '<div class="section activity-section group" data-date="' + escapeHTML($relativeTimestamp) + '">' + "\n"
+			if ($lastGroup.data('date') !== dayOfYear) {
+				var dateOfDay = OC.Util.formatDate(timestamp, 'LL'),
+					displayDate = dateOfDay;
+
+				var today = OC.Util.formatDate(moment(), 'YYYY-DDD');
+				if (dayOfYear === today) {
+					displayDate = t('activity', 'Today');
+				} else {
+					var yesterday = OC.Util.formatDate(moment().subtract(1, 'd'), 'YYYY-DDD');
+
+					if (dayOfYear === yesterday) {
+						displayDate = t('activity', 'Yesterday');
+					}
+				}
+
+				var $content = '<div class="section activity-section group" data-date="' + escapeHTML(dayOfYear) + '">' + "\n"
 					+'	<h2>'+"\n"
-					+'		<span class="has-tooltip" title="' + escapeHTML($readableTimestamp) + '">' + escapeHTML($relativeTimestamp) + '</span>' + "\n"
+					+'		<span class="has-tooltip" title="' + escapeHTML(dateOfDay) + '">' + escapeHTML(displayDate) + '</span>' + "\n"
 					+'	</h2>' + "\n"
 					+'	<div class="boxcontainer">' + "\n"
 					+'	</div>' + "\n"
@@ -149,8 +164,8 @@ $(function(){
 				+ (($activity.link) ? '			</a>' + "\n" : '')
 				+ '		</div>' + "\n"
 
-				+'		<span class="activitytime has-tooltip" title="' + escapeHTML($activity.readableDateTimestamp) + '">' + "\n"
-				+ '			' + escapeHTML($activity.relativeDateTimestamp) + "\n"
+				+'		<span class="activitytime has-tooltip" title="' + escapeHTML(OC.Util.formatDate($activity.timestamp * 1000)) + '">' + "\n"
+				+ '			' + escapeHTML(OC.Util.relativeModifiedDate($activity.timestamp * 1000)) + "\n"
 				+'		</span>' + "\n";
 
 			if ($activity.message) {
