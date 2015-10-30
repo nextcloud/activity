@@ -26,7 +26,7 @@ OC.L10N.register(
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* と %n 以上 "],
     "Notifications" : "通知",
-    "List your own actions in the stream" : "ストリーム上にあなたの活動を表示",
+    "List your own actions in the stream" : "ストリーム上にあなたの活動を表示する",
     "Notify about your own actions via email" : "メールで自分のアクションを通知する",
     "You need to set up your email address before you can receive notification emails." : "通知メールを受け取る前にメールアドレスを設定してください。",
     "Send emails:" : "メールを送信:",
