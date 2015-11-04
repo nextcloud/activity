@@ -24,9 +24,11 @@
 
 namespace OCA\Activity;
 
+use OCA\Activity\Exception\InvalidFilterException;
 use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
+use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\IUser;
@@ -231,6 +233,165 @@ class Data {
 		}
 
 		return $this->getActivities($count, $start, $limitActivities, $parameters, $groupHelper);
+	}
+
+	/**
+	 * Read a list of events from the activity stream
+	 *
+	 * @param GroupHelper $groupHelper Allows activities to be grouped
+	 * @param UserSettings $userSettings Gets the settings of the user
+	 * @param string $user User for whom we display the stream
+	 *
+	 * @param int $since The integer ID of the last activity that has been seen.
+	 * @param int $limit How many activities should be returned
+	 * @param string $sort Should activities be given ascending or descending
+	 *
+	 * @param string $filter Filter the activities
+	 * @param string $objectType Allows to filter the activities to a given object. May only appear together with $objectId
+	 * @param int $objectId Allows to filter the activities to a given object. May only appear together with $objectType
+	 *
+	 * @return array
+	 *
+	 * @throws \OutOfBoundsException if the user (Code: 1) or the since (Code: 2) is invalid
+	 */
+	public function get(GroupHelper $groupHelper, UserSettings $userSettings, $user, $since, $limit, $sort, $filter, $objectType = '', $objectId = 0) {
+		// get current user
+		if ($user === '') {
+			throw new \OutOfBoundsException('Invalid user', 1);
+		}
+		$groupHelper->setUser($user);
+
+		$enabledNotifications = $userSettings->getNotificationTypes($user, 'stream');
+		$enabledNotifications = $this->activityManager->filterNotificationTypes($enabledNotifications, $filter);
+		$enabledNotifications = array_unique($enabledNotifications);
+
+		// We don't want to display any activities
+		if (empty($enabledNotifications)) {
+			return array();
+		}
+
+		$query = $this->connection->getQueryBuilder();
+		$query->select('*')
+			->from('activity');
+
+		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)))
+			->andWhere($query->expr()->in('type', $query->createNamedParameter($enabledNotifications, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY)));
+		if ($filter === 'self') {
+			$query->andWhere($query->expr()->eq('user', $query->createNamedParameter($user)));
+
+		} else if ($filter === 'by' || $filter === 'all' && !$userSettings->getUserSetting($user, 'setting', 'self')) {
+			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+
+		} else if ($filter === 'filter') {
+			if (!$userSettings->getUserSetting($user, 'setting', 'self')) {
+				$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+			}
+
+			$query->andWhere($query->expr()->eq('object_type', $query->createNamedParameter($objectType)));
+			$query->andWhere($query->expr()->eq('object_id', $query->createNamedParameter($objectId)));
+		}
+
+		list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
+		if (!is_null($condition)) {
+			// Strip away ' and '
+			$condition = substr($condition, 5);
+
+			if (is_array($params)) {
+				// Replace ? placeholders with named parameters
+				foreach ($params as $param) {
+					$pos = strpos($condition, '?');
+					if ($pos !== false) {
+						$condition = substr($condition, 0, $pos) . $query->createNamedParameter($param) . substr($condition, $pos + 1);
+					}
+				}
+			}
+
+			$query->andWhere($query->createFunction($condition));
+		}
+
+		/**
+		 * Order and specify the offset
+		 */
+		$sqlSort = ($sort === 'asc') ? 'ASC' : 'DESC';
+		$headers = $this->setOffsetFromSince($query, $user, $since, $sqlSort);
+		$query->orderBy('timestamp', $sqlSort)
+			->addOrderBy('activity_id', $sqlSort);
+
+		$query->setMaxResults($limit + 1);
+
+		$result = $query->execute();
+		$hasMore = false;
+		while ($row = $result->fetch()) {
+			if ($limit === 0) {
+				$hasMore = true;
+				break;
+			}
+			$headers['X-Activity-Last-Given'] = (int) $row['activity_id'];
+			$groupHelper->addActivity($row);
+			$limit--;
+		}
+		$result->closeCursor();
+
+		return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
+	}
+
+	/**
+	 * @param IQueryBuilder $query
+	 * @param string $user
+	 * @param int $since
+	 * @param string $sort
+	 *
+	 * @return array Headers that should be set on the response
+	 *
+	 * @throws \OutOfBoundsException If $since is not owned by $user
+	 */
+	protected function setOffsetFromSince(IQueryBuilder $query, $user, $since, $sort) {
+		if ($since) {
+			$queryBuilder = $this->connection->getQueryBuilder();
+			$queryBuilder->select('*')
+				->from('activity')
+				->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter((int) $since)));
+			$result = $queryBuilder->execute();
+			$activity = $result->fetch();
+			$result->closeCursor();
+
+			if ($activity) {
+				if ($activity['affecteduser'] !== $user) {
+					throw new \OutOfBoundsException('Invalid since', 2);
+				}
+				$timestamp = (int) $activity['timestamp'];
+
+				if ($sort === 'DESC') {
+					$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($timestamp)));
+					$query->andWhere($query->expr()->lt('activity_id', $query->createNamedParameter($since)));
+				} else {
+					$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($timestamp)));
+					$query->andWhere($query->expr()->gt('activity_id', $query->createNamedParameter($since)));
+				}
+				return [];
+			}
+		}
+
+		/**
+		 * Couldn't find the since, so find the oldest one and set the header
+		 */
+		$query = $this->connection->getQueryBuilder();
+		$query->select('activity_id')
+			->from('activity')
+			->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)))
+			->orderBy('timestamp', $sort)
+			->setMaxResults(1);
+		$result = $query->execute();
+		$activity = $result->fetch();
+		$result->closeCursor();
+
+		if ($activity !== false) {
+			return [
+				'X-Activity-First-Known' => (int) $activity['activity_id'],
+			];
+		}
+
+		return [];
 	}
 
 	/**

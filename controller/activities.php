@@ -25,6 +25,7 @@ namespace OCA\Activity\Controller;
 
 use OC\Files\View;
 use OCA\Activity\Data;
+use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Navigation;
 use OCA\Activity\UserSettings;
@@ -149,7 +150,11 @@ class Activities extends Controller {
 	 */
 	public function fetch($page, $filter = 'all', $objecttype = '', $objectid = 0) {
 		$pageOffset = $page - 1;
-		$filter = $this->data->validateFilter($filter);
+		try {
+			$this->data->validateFilter($filter);
+		} catch (InvalidFilterException $e) {
+			$filter = 'all';
+		}
 
 		$activities = $this->data->read($this->helper, $this->settings, $pageOffset * self::DEFAULT_PAGE_SIZE, self::DEFAULT_PAGE_SIZE, $filter, '', $objecttype, $objectid);
 
