@@ -30,7 +30,9 @@ use OCP\Activity\IManager;
 use OCP\Files\Mount\IMountPoint;
 use OCP\Files\NotFoundException;
 use OCP\IDBConnection;
+use OCP\IGroup;
 use OCP\IGroupManager;
+use OCP\IUser;
 use OCP\Share;
 use OCP\Util;
 
@@ -38,6 +40,7 @@ use OCP\Util;
  * The class to handle the filesystem hooks
  */
 class FilesHooks {
+	const USER_BATCH_SIZE = 50;
 
 	/** @var \OCP\Activity\IManager */
 	protected $manager;
@@ -251,9 +254,8 @@ class FilesHooks {
 	 */
 	protected function shareFileOrFolderWithGroup($shareWith, $fileSource, $itemType, $fileTarget, $shareId) {
 		// Members of the new group
-		$affectedUsers = array();
 		$group = $this->groupManager->get($shareWith);
-		if (!($group instanceof \OCP\IGroup)) {
+		if (!($group instanceof IGroup)) {
 			return;
 		}
 
@@ -261,8 +263,25 @@ class FilesHooks {
 		$this->shareNotificationForSharer('shared_group_self', $shareWith, $fileSource, $itemType);
 		$this->shareNotificationForOriginalOwners($this->currentUser, 'reshared_group_by', $shareWith, $fileSource, $itemType);
 
+		$offset = 0;
+		$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
+		while (!empty($users)) {
+			$this->addNotificationsForGroupUsers($users, $fileSource, $itemType, $fileTarget, $shareId);
+			$offset += self::USER_BATCH_SIZE;
+			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
+		}
+	}
 
-		$usersInGroup = $group->searchUsers('');
+	/**
+	 * @param IUser[] $usersInGroup
+	 * @param int $fileSource File ID that is being shared
+	 * @param string $itemType File type that is being shared (file or folder)
+	 * @param string $fileTarget File path
+	 * @param int $shareId The Share ID of this share
+	 */
+	protected function addNotificationsForGroupUsers(array $usersInGroup, $fileSource, $itemType, $fileTarget, $shareId) {
+		$affectedUsers = [];
+
 		foreach ($usersInGroup as $user) {
 			$affectedUsers[$user->getUID()] = $fileTarget;
 		}
@@ -274,8 +293,9 @@ class FilesHooks {
 			return;
 		}
 
-		$filteredStreamUsersInGroup = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', Files_Sharing::TYPE_SHARED);
-		$filteredEmailUsersInGroup = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', Files_Sharing::TYPE_SHARED);
+		$userIds = array_keys($affectedUsers);
+		$filteredStreamUsersInGroup = $this->userSettings->filterUsersBySetting($userIds, 'stream', Files_Sharing::TYPE_SHARED);
+		$filteredEmailUsersInGroup = $this->userSettings->filterUsersBySetting($userIds, 'email', Files_Sharing::TYPE_SHARED);
 
 		$affectedUsers = $this->fixPathsForShareExceptions($affectedUsers, $shareId);
 		foreach ($affectedUsers as $user => $path) {

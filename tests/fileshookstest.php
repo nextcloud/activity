@@ -417,10 +417,23 @@ class FilesHooksTest extends TestCase {
 
 	public function dataShareFileOrFolderWithGroup() {
 		return [
-			[[], [], [], []],
-			[[$this->getUserMock('user')], [], [], []],
 			[
-				[$this->getUserMock('user1')],
+				[
+					[],
+				], 0, 0, [], [], []
+			],
+			[
+				[
+					[$this->getUserMock('user1')],
+					[],
+				], 2, 1, [], [], []
+			],
+			[
+				[
+					[$this->getUserMock('user1')],
+					[],
+				],
+				2, 1,
 				['user1'],
 				[
 					[['user1'], 'stream', Files_Sharing::TYPE_SHARED, ['user1' => true]],
@@ -437,12 +450,26 @@ class FilesHooksTest extends TestCase {
 				],
 			],
 			[
-				[$this->getUserMock('user1')],
+				[
+					[$this->getUserMock('user1')],
+					[],
+				],
+				2, 1,
 				['user1'],
 				[
 					[['user1'], 'stream', Files_Sharing::TYPE_SHARED, ['user1' => false]],
 					[['user1'], 'email', Files_Sharing::TYPE_SHARED, ['user1' => false]],
 				],
+				[],
+			],
+			[
+				[
+					[$this->getUserMock('user')],
+					[],
+				],
+				0, 0,
+				['user1'],
+				[],
 				[],
 			],
 		];
@@ -451,11 +478,13 @@ class FilesHooksTest extends TestCase {
 	/**
 	 * @dataProvider dataShareFileOrFolderWithGroup
 	 * @param array $usersInGroup
+	 * @param int $settingCalls
+	 * @param int $fixCalls
 	 * @param array $settingUsers
 	 * @param array $settingsReturn
 	 * @param array $addNotifications
 	 */
-	public function testShareFileOrFolderWithGroup($usersInGroup, $settingUsers, $settingsReturn, $addNotifications) {
+	public function testShareFileOrFolderWithGroup($usersInGroup, $settingCalls, $fixCalls, $settingUsers, $settingsReturn, $addNotifications) {
 		$filesHooks = $this->getFilesHooks([
 			'shareNotificationForSharer',
 			'addNotificationsForUser',
@@ -466,17 +495,19 @@ class FilesHooksTest extends TestCase {
 		$group = $this->getMockBuilder('OCP\IGroup')
 			->disableOriginalConstructor()
 			->getMock();
-		$group->expects($this->once())
-			->method('searchUsers')
-			->with('')
-			->willReturn($usersInGroup);
+		for ($i = 0; $i < sizeof($usersInGroup); $i++) {
+			$group->expects($this->at($i))
+				->method('searchUsers')
+				->with('')
+				->willReturn($usersInGroup[$i]);
+		}
 
 		$this->groupManager->expects($this->once())
 			->method('get')
 			->with('group1')
 			->willReturn($group);
 
-		$this->settings->expects(empty($settingUsers) ? $this->never() : $this->exactly(2))
+		$this->settings->expects($this->exactly($settingCalls))
 			->method('filterUsersBySetting')
 			#->with($settingUsers, $this->anything(), Files_Sharing::TYPE_SHARED)
 			->willReturnMap($settingsReturn);
@@ -484,7 +515,7 @@ class FilesHooksTest extends TestCase {
 		$filesHooks->expects($this->once())
 			->method('shareNotificationForSharer')
 			->with('shared_group_self', 'group1', 42, 'file');
-		$filesHooks->expects(empty($settingUsers) ? $this->never() : $this->once())
+		$filesHooks->expects($this->exactly($fixCalls))
 			->method('fixPathsForShareExceptions')
 			->with($this->anything(), 1337)
 			->willReturnArgument(0);
