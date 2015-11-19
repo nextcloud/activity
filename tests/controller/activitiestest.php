@@ -217,10 +217,6 @@ class ActivitiesTest extends TestCase {
 								'full'		=> 'message.markup.full',
 							],
 						],
-						'relativeTimestamp' => 'today',
-						'readableTimestamp' => (string) $timestamp,
-						'relativeDateTimestamp' => 'seconds ago',
-						'readableDateTimestamp' => (string) $timestamp,
 
 						'object_type' => 'files',
 						'object_id' => 21,
@@ -289,10 +285,6 @@ class ActivitiesTest extends TestCase {
 								'full'		=> 'message.markup.full',
 							],
 						],
-						'relativeTimestamp' => 'today',
-						'readableTimestamp' => (string) $timestamp,
-						'relativeDateTimestamp' => 'seconds ago',
-						'readableDateTimestamp' => (string) $timestamp,
 
 						'object_type' => 'files',
 						'object_id' => 21,
@@ -361,10 +353,6 @@ class ActivitiesTest extends TestCase {
 								'full'		=> 'message.markup.full',
 							],
 						],
-						'relativeTimestamp' => 'today',
-						'readableTimestamp' => (string) $timestamp,
-						'relativeDateTimestamp' => 'seconds ago',
-						'readableDateTimestamp' => (string) $timestamp,
 
 						'object_type' => 'files',
 						'object_id' => 21,
@@ -455,10 +443,6 @@ class ActivitiesTest extends TestCase {
 								'full'		=> 'message.markup.full',
 							],
 						],
-						'relativeTimestamp' => 'today',
-						'readableTimestamp' => (string) $timestamp,
-						'relativeDateTimestamp' => 'seconds ago',
-						'readableDateTimestamp' => (string) $timestamp,
 
 						'object_type' => 'files',
 						'object_id' => 21,

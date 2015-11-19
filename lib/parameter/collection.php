@@ -66,6 +66,21 @@ class Collection implements IParameter {
 	}
 
 	/**
+	 * @return array With two entries: value and type
+	 */
+	public function getParameterInfo() {
+		$parameters = [];
+		foreach ($this->parameters as $parameter) {
+			$parameters[] = $parameter->getParameterInfo();
+		}
+
+		return [
+			'value' => $parameters,
+			'type' => 'collection',
+		];
+	}
+
+	/**
 	 * @param bool $allowHtml   Should HTML be used to format the parameter?
 	 * @param bool $verbose     Should paths, names, etc be shortened or full length
 	 * @return string The formatted parameter

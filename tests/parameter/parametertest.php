@@ -45,13 +45,15 @@ class ParameterTest extends TestCase {
 
 	/**
 	 * @param string $parameter
+	 * @param string $type
 	 * @return Parameter
 	 */
-	public function getParameter($parameter = 'parameter') {
+	public function getParameter($parameter = 'parameter', $type = 'type') {
 		return new Parameter(
 			$parameter,
 			$this->event,
-			$this->formatter
+			$this->formatter,
+			$type
 		);
 	}
 
@@ -82,6 +84,27 @@ class ParameterTest extends TestCase {
 			->willReturn($objectId);
 
 		$this->assertSame($expected, $instance->getParameter());
+	}
+
+	public function dataGetParameterInfo() {
+		return [
+			['parameter1', 'files'],
+			['parameter2', 'item'],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetParameterInfo
+	 * @param string $parameter
+	 * @param string $type
+	 */
+	public function testGetParameterInfo($parameter, $type) {
+		$instance = $this->getParameter($parameter, $type);
+
+		$this->assertSame([
+			'value' => $parameter,
+			'type' => $type,
+		], $instance->getParameterInfo());
 	}
 
 	public function dataFormat() {

@@ -51,7 +51,7 @@ class Api
 				'id' => $entry['activity_id'],
 				'subject' => (string) $entry['subjectformatted']['full'],
 				'message' => (string) $entry['messageformatted']['full'],
-				'file' => $entry['file'],
+				'file' => $entry['object_name'],
 				'link' => $entry['link'],
 				'date' => date('c', $entry['timestamp']),
 			);

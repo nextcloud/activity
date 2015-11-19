@@ -155,11 +155,6 @@ class Activities extends Controller {
 
 		$preparedActivities = [];
 		foreach ($activities as $activity) {
-			$activity['relativeTimestamp'] = (string) Template::relative_modified_date($activity['timestamp'], true);
-			$activity['readableTimestamp'] = (string) $this->dateTimeFormatter->formatDate($activity['timestamp']);
-			$activity['relativeDateTimestamp'] = (string) Template::relative_modified_date($activity['timestamp']);
-			$activity['readableDateTimestamp'] = (string) $this->dateTimeFormatter->formatDateTime($activity['timestamp']);
-
 			if (strpos($activity['subjectformatted']['markup']['trimmed'], '<a ') !== false) {
 				// We do not link the subject as we create links for the parameters instead
 				$activity['link'] = '';
