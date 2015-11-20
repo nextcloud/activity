@@ -12,7 +12,6 @@ $(function(){
 
 	OCActivity.Filter = {
 		filter: undefined,
-		currentPage: 0,
 		navigation: $('#app-navigation'),
 
 
@@ -30,7 +29,8 @@ $(function(){
 			}
 
 			this.navigation.find('a[data-navigation=' + this.filter + ']').parent().removeClass('active');
-			this.currentPage = 0;
+			OCActivity.InfinitScrolling.firstKnownId = 0;
+			OCActivity.InfinitScrolling.lastGivenId = 0;
 
 			this.filter = filter;
 
@@ -52,37 +52,67 @@ $(function(){
 		container: $('#container'),
 		lastDateGroup: null,
 		content: $('#app-content'),
+		firstKnownId: 0,
+		lastGivenId: 0,
 
 		prefill: function () {
 			if (this.content.scrollTop() + this.content.height() > this.container.height() - 100) {
-				OCActivity.Filter.currentPage++;
-
-				$.get(
-					OC.generateUrl('/apps/activity/activities/fetch'),
-					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
-					function (data) {
-						OCActivity.InfinitScrolling.handleActivitiesCallback(data);
-					}
-				);
+				this.loadMoreActivities();
 			}
 		},
 
 		onScroll: function () {
-			if (!OCActivity.InfinitScrolling.ignoreScroll && OCActivity.InfinitScrolling.content.scrollTop() +
-			 OCActivity.InfinitScrolling.content.height() > OCActivity.InfinitScrolling.container.height() - 100) {
-				OCActivity.Filter.currentPage++;
+			if (!this.ignoreScroll && this.content.scrollTop() +
+				this.content.height() > this.container.height() - 100) {
+				this.ignoreScroll = true;
 
-				OCActivity.InfinitScrolling.ignoreScroll = true;
-				$.get(
-					OC.generateUrl('/apps/activity/activities/fetch'),
-					'filter=' + OCActivity.Filter.filter + '&page=' + OCActivity.Filter.currentPage,
-					function (data) {
-						OCActivity.InfinitScrolling.handleActivitiesCallback(data);
-					}
-				);
+				this.loadMoreActivities();
 			}
 		},
 
+		/**
+		 * Request a new bunch of activities from the server
+		 */
+		loadMoreActivities: function () {
+			$.get(
+				OC.linkToOCS('apps/activity/api/v2/activity', 2) + OCActivity.Filter.filter,
+				'format=json&since=' + OCActivity.InfinitScrolling.lastGivenId,
+				function (response, status, xhr) {
+					OCActivity.InfinitScrolling.ignoreScroll = false;
+					if (status === 'notmodified') {
+						OCActivity.InfinitScrolling.handleActivitiesCallback([]);
+						OCActivity.InfinitScrolling.saveHeaders(xhr.getAllResponseHeaders());
+						return;
+					}
+
+					OCActivity.InfinitScrolling.saveHeaders(xhr.getAllResponseHeaders());
+					if (typeof response != 'undefined') {
+						OCActivity.InfinitScrolling.handleActivitiesCallback(response.ocs.data);
+					}
+				}
+			);
+		},
+
+		/**
+		 * Read the X-Activity-First-Known and X-Activity-Last-Given headers
+		 * @param headers
+		 */
+		saveHeaders: function(headers) {
+			headers = headers.split("\n");
+			_.each(headers, function (header) {
+				[head, value] = header.split(': ');
+				if (head === 'X-Activity-First-Known') {
+					OCActivity.InfinitScrolling.firstKnownId = parseInt(value, 10);
+				} else if (head === 'X-Activity-Last-Given') {
+					OCActivity.InfinitScrolling.lastGivenId = parseInt(value, 10);
+				}
+			});
+		},
+
+		/**
+		 * Append activities to the view or display end/no content
+		 * @param data
+		 */
 		handleActivitiesCallback: function (data) {
 			var $numActivities = data.length;
 
@@ -95,7 +125,7 @@ $(function(){
 				// Continue prefill
 				this.prefill();
 
-			} else if (OCActivity.Filter.currentPage == 1) {
+			} else if (this.container.children().length === 0) {
 				// First page is empty - No activities :(
 				var $emptyContent = $('#emptycontent');
 				$emptyContent.removeClass('hidden');
@@ -105,11 +135,13 @@ $(function(){
 					$emptyContent.find('p').text(t('activity', 'There are no events for this filter'));
 				}
 				$('#loading_activities').addClass('hidden');
+				OCActivity.InfinitScrolling.ignoreScroll = true;
 
 			} else {
 				// Page is empty - No more activities :(
 				$('#no_more_activities').removeClass('hidden');
 				$('#loading_activities').addClass('hidden');
+				OCActivity.InfinitScrolling.ignoreScroll = true;
 			}
 		},
 
@@ -206,7 +238,7 @@ $(function(){
 
 	OC.Util.History.addOnPopStateHandler(_.bind(OCActivity.Filter._onPopState, OCActivity.Filter));
 	OCActivity.Filter.setFilter(OCActivity.InfinitScrolling.container.attr('data-activity-filter'));
-	OCActivity.InfinitScrolling.content.on('scroll', OCActivity.InfinitScrolling.onScroll);
+	OCActivity.InfinitScrolling.content.on('scroll', _.bind(OCActivity.InfinitScrolling.onScroll, OCActivity.InfinitScrolling));
 
 	OCActivity.Filter.navigation.find('a[data-navigation]').on('click', function (event) {
 		var filter = $(this).attr('data-navigation');
