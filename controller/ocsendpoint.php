@@ -174,8 +174,21 @@ class OCSEndPoint {
 			return new \OC_OCS_Result(null, Http::STATUS_FORBIDDEN);
 		}
 
-		$headers = $response['headers'];
-		if ($response['has_more']) {
+		$headers = $this->generateHeaders($response['headers'], $response['has_more']);
+		if (empty($response['data'])) {
+			return new \OC_OCS_Result($response['data'], Http::STATUS_NOT_MODIFIED, null, $headers);
+		}
+
+		return new \OC_OCS_Result($response['data'], 100, null, $headers);
+	}
+
+	/**
+	 * @param array $headers
+	 * @param bool $hasMoreActivities
+	 * @return array
+	 */
+	protected function generateHeaders(array $headers, $hasMoreActivities) {
+		if ($hasMoreActivities) {
 			// Set the "Link" header for the next page
 			$nextPageParameters = [
 				'since' => $headers['X-Activity-Last-Given'],
@@ -198,10 +211,6 @@ class OCSEndPoint {
 			$headers['Link'] = '<' . $nextPage . '>; rel="next"';
 		}
 
-		if (empty($response['data'])) {
-			return new \OC_OCS_Result($response['data'], Http::STATUS_NOT_MODIFIED, null, $headers);
-		}
-
-		return new \OC_OCS_Result($response['data'], 100, null, $headers);
+		return $headers;
 	}
 }
