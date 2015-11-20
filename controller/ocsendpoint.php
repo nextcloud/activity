@@ -26,6 +26,7 @@ use OCA\Activity\Data;
 use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\UserSettings;
+use OCP\AppFramework\Http;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUser;
@@ -150,9 +151,9 @@ class OCSEndPoint {
 		try {
 			$this->readParameters($parameters);
 		} catch (InvalidFilterException $e) {
-			return new \OC_OCS_Result(null, 404);
+			return new \OC_OCS_Result(null, Http::STATUS_NOT_FOUND);
 		} catch (\OutOfBoundsException $e) {
-			return new \OC_OCS_Result(null, 403);
+			return new \OC_OCS_Result(null, Http::STATUS_FORBIDDEN);
 		}
 
 		try {
@@ -170,7 +171,7 @@ class OCSEndPoint {
 				$this->objectId
 			);
 		} catch (\OutOfBoundsException $e) {
-			return new \OC_OCS_Result(null, 403);
+			return new \OC_OCS_Result(null, Http::STATUS_FORBIDDEN);
 		}
 
 		$headers = $response['headers'];
@@ -195,6 +196,10 @@ class OCSEndPoint {
 			$nextPage .= $this->request->getPathInfo(); # /apps/activity/api/v2/activity
 			$nextPage .= '?' . http_build_query($nextPageParameters);
 			$headers['Link'] = '<' . $nextPage . '>; rel="next"';
+		}
+
+		if (empty($response['data'])) {
+			return new \OC_OCS_Result($response['data'], Http::STATUS_NOT_MODIFIED, null, $headers);
 		}
 
 		return new \OC_OCS_Result($response['data'], 100, null, $headers);
