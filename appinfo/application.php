@@ -209,7 +209,11 @@ class Application extends App {
 				$c->query('UserSettings'),
 				$server->getRequest(),
 				$server->getURLGenerator(),
-				$server->getUserSession()
+				$server->getUserSession(),
+				$server->getPreviewManager(),
+				$server->getMimeTypeDetector(),
+				new View(''),
+				$c->query('OCA\Activity\ViewInfoCache')
 			);
 		});
 

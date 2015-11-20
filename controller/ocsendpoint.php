@@ -22,11 +22,15 @@
 namespace OCA\Activity\Controller;
 
 
+use OC\Files\View;
 use OCA\Activity\Data;
 use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\UserSettings;
+use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\Http;
+use OCP\Files\IMimeTypeDetector;
+use OCP\IPreview;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUser;
@@ -55,6 +59,9 @@ class OCSEndPoint {
 	/** @var string */
 	protected $user;
 
+	/** @var bool */
+	protected $loadPreviews;
+
 
 	/** @var Data */
 	protected $data;
@@ -74,6 +81,18 @@ class OCSEndPoint {
 	/** @var IUserSession */
 	protected $userSession;
 
+	/** @var IPreview */
+	protected $preview;
+
+	/** @var IMimeTypeDetector */
+	protected $mimeTypeDetector;
+
+	/** @var View */
+	protected $view;
+
+	/** @var ViewInfoCache */
+	protected $infoCache;
+
 	/**
 	 * OCSEndPoint constructor.
 	 *
@@ -83,14 +102,31 @@ class OCSEndPoint {
 	 * @param IRequest $request
 	 * @param IURLGenerator $urlGenerator
 	 * @param IUserSession $userSession
+	 * @param IPreview $preview
+	 * @param IMimeTypeDetector $mimeTypeDetector
+	 * @param View $view
+	 * @param ViewInfoCache $infoCache
 	 */
-	public function __construct(Data $data, GroupHelper $helper, UserSettings $settings, IRequest $request, IURLGenerator $urlGenerator, IUserSession $userSession) {
+	public function __construct(Data $data,
+								GroupHelper $helper,
+								UserSettings $settings,
+								IRequest $request,
+								IURLGenerator $urlGenerator,
+								IUserSession $userSession,
+								IPreview $preview,
+								IMimeTypeDetector $mimeTypeDetector,
+								View $view,
+								ViewInfoCache $infoCache) {
 		$this->data = $data;
 		$this->helper = $helper;
 		$this->settings = $settings;
 		$this->request = $request;
 		$this->urlGenerator = $urlGenerator;
 		$this->userSession = $userSession;
+		$this->preview = $preview;
+		$this->mimeTypeDetector = $mimeTypeDetector;
+		$this->view = $view;
+		$this->infoCache = $infoCache;
 	}
 
 	/**
@@ -105,6 +141,7 @@ class OCSEndPoint {
 		}
 		$this->since = (int) $this->request->getParam('since', 0);
 		$this->limit = (int) $this->request->getParam('limit', 50);
+		$this->loadPreviews = $this->request->getParam('previews', 'false') === 'true';
 		$this->objectType = (string) $this->request->getParam('object_type', '');
 		$this->objectId = (int) $this->request->getParam('object_id', 0);
 		$this->sort = (string) $this->request->getParam('sort', '');
@@ -176,10 +213,32 @@ class OCSEndPoint {
 
 		$headers = $this->generateHeaders($response['headers'], $response['has_more']);
 		if (empty($response['data'])) {
-			return new \OC_OCS_Result($response['data'], Http::STATUS_NOT_MODIFIED, null, $headers);
+			return new \OC_OCS_Result([], Http::STATUS_NOT_MODIFIED, null, $headers);
 		}
 
-		return new \OC_OCS_Result($response['data'], 100, null, $headers);
+		$preparedActivities = $response['data'];
+		if ($this->loadPreviews) {
+			$preparedActivities = [];
+			foreach ($response['data'] as $activity) {
+				$activity['previews'] = [];
+				if ($activity['object_type'] === 'files' && !empty($activity['files'])) {
+					foreach ($activity['files'] as $objectId => $objectName) {
+						if (((int) $objectId) === 0 || $objectName === '') {
+							// No file, no preview
+							continue;
+						}
+
+						$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $objectId, $objectName);
+					}
+				} else if ($activity['object_type'] === 'files' && $activity['object_id']) {
+					$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $activity['object_id'], $activity['file']);
+				}
+
+				$preparedActivities[] = $activity;
+			}
+		}
+
+		return new \OC_OCS_Result($preparedActivities, 100, null, $headers);
 	}
 
 	/**
@@ -212,5 +271,92 @@ class OCSEndPoint {
 		}
 
 		return $headers;
+	}
+
+	/**
+	 * @param string $owner
+	 * @param int $fileId
+	 * @param string $filePath
+	 * @return array
+	 */
+	protected function getPreview($owner, $fileId, $filePath) {
+		$info = $this->infoCache->getInfoById($owner, $fileId, $filePath);
+
+		if (!$info['exists'] || $info['view'] !== '') {
+			return $this->getPreviewFromPath($filePath);
+		}
+
+		$preview = [
+			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir']),
+			'source'		=> '',
+			'isMimeTypeIcon' => true,
+		];
+
+		// show a preview image if the file still exists
+		if ($info['is_dir']) {
+			$preview['source'] = $this->getPreviewPathFromMimeType('dir');
+		} else {
+			$this->view->chroot('/' . $owner . '/files');
+			$fileInfo = $this->view->getFileInfo($info['path']);
+			if ($this->preview->isAvailable($fileInfo)) {
+				$preview['isMimeTypeIcon'] = false;
+				$preview['source'] = $this->urlGenerator->linkToRoute('core_ajax_preview', [
+					'file' => $info['path'],
+					'c' => $this->view->getETag($info['path']),
+					'x' => 150,
+					'y' => 150,
+				]);
+			} else {
+				$preview['source'] = $this->getPreviewPathFromMimeType($fileInfo->getMimetype());
+			}
+		}
+
+		return $preview;
+	}
+
+	/**
+	 * @param string $filePath
+	 * @return array
+	 */
+	protected function getPreviewFromPath($filePath) {
+		$mimeType = $this->mimeTypeDetector->detectPath($filePath);
+		$preview = [
+			'link'			=> $this->getPreviewLink($filePath, false),
+			'source'		=> $this->getPreviewPathFromMimeType($mimeType),
+			'isMimeTypeIcon' => true,
+		];
+
+		return $preview;
+	}
+
+	/**
+	 * @param string $mimeType
+	 * @return string
+	 */
+	protected function getPreviewPathFromMimeType($mimeType) {
+		$mimeTypeIcon = $this->mimeTypeDetector->mimeTypeIcon($mimeType);
+		if (substr($mimeTypeIcon, -4) === '.png') {
+			$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
+		}
+
+		return $mimeTypeIcon;
+	}
+
+	/**
+	 * @param string $path
+	 * @param bool $isDir
+	 * @return string
+	 */
+	protected function getPreviewLink($path, $isDir) {
+		if ($isDir) {
+			return $this->urlGenerator->linkTo('files', 'index.php', array('dir' => $path));
+		} else {
+			$parentDir = (substr_count($path, '/') === 1) ? '/' : dirname($path);
+			$fileName = basename($path);
+			return $this->urlGenerator->linkTo('files', 'index.php', array(
+				'dir' => $parentDir,
+				'scrollto' => $fileName,
+			));
+		}
 	}
 }

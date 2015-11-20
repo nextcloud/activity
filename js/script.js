@@ -76,7 +76,7 @@ $(function(){
 		loadMoreActivities: function () {
 			$.get(
 				OC.linkToOCS('apps/activity/api/v2/activity', 2) + OCActivity.Filter.filter,
-				'format=json&since=' + OCActivity.InfinitScrolling.lastGivenId,
+				'format=json&previews=true&since=' + OCActivity.InfinitScrolling.lastGivenId,
 				function (response, status, xhr) {
 					OCActivity.InfinitScrolling.ignoreScroll = false;
 					if (status === 'notmodified') {
