@@ -51,6 +51,5 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'Settings#personal', 'url' => '/settings', 'verb' => 'POST'],
 	['name' => 'Settings#feed', 'url' => '/settings/feed', 'verb' => 'POST'],
 	['name' => 'Activities#showList', 'url' => '/', 'verb' => 'GET'],
-	['name' => 'Activities#fetch', 'url' => '/activities/fetch', 'verb' => 'GET'],
 	['name' => 'Feed#show', 'url' => '/rss.php', 'verb' => 'GET'],
 ]]);

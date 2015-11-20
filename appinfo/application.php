@@ -225,16 +225,7 @@ class Application extends App {
 				$c->query('AppName'),
 				$server->getRequest(),
 				$c->query('ActivityData'),
-				$c->query('GroupHelper'),
-				$c->query('Navigation'),
-				$c->query('UserSettings'),
-				$server->getDateTimeFormatter(),
-				$server->getPreviewManager(),
-				$server->getURLGenerator(),
-				$server->getMimeTypeDetector(),
-				new View(''),
-				$c->query('OCA\Activity\ViewInfoCache'),
-				$c->query('CurrentUID')
+				$c->query('Navigation')
 			);
 		});
 

@@ -169,73 +169,6 @@ class Data {
 	}
 
 	/**
-	 * @brief Read a list of events from the activity stream
-	 * @param GroupHelper $groupHelper Allows activities to be grouped
-	 * @param UserSettings $userSettings Gets the settings of the user
-	 * @param int $start The start entry
-	 * @param int $count The number of statements to read
-	 * @param string $filter Filter the activities
-	 * @param string $user User for whom we display the stream
-	 * @param string $objectType
-	 * @param int $objectId
-	 * @return array
-	 */
-	public function read(GroupHelper $groupHelper, UserSettings $userSettings, $start, $count, $filter = 'all', $user = '', $objectType = '', $objectId = 0) {
-		// get current user
-		if ($user === '') {
-			$user = $this->userSession->getUser();
-			if ($user instanceof IUser) {
-				$user = $user->getUID();
-			} else {
-				// No user given and not logged in => no activities
-				return [];
-			}
-		}
-		$groupHelper->setUser($user);
-
-		$enabledNotifications = $userSettings->getNotificationTypes($user, 'stream');
-		$enabledNotifications = $this->activityManager->filterNotificationTypes($enabledNotifications, $filter);
-		$parameters = array_unique($enabledNotifications);
-
-		// We don't want to display any activities
-		if (empty($parameters)) {
-			return array();
-		}
-
-		$placeholders = implode(',', array_fill(0, sizeof($parameters), '?'));
-		$limitActivities = " AND `type` IN (" . $placeholders . ")";
-		array_unshift($parameters, $user);
-
-		if ($filter === 'self') {
-			$limitActivities .= ' AND `user` = ?';
-			$parameters[] = $user;
-		} else if ($filter === 'by' || $filter === 'all' && !$userSettings->getUserSetting($user, 'setting', 'self')) {
-			$limitActivities .= ' AND `user` <> ?';
-			$parameters[] = $user;
-		} else if ($filter === 'filter') {
-			if (!$userSettings->getUserSetting($user, 'setting', 'self')) {
-				$limitActivities .= ' AND `user` <> ?';
-				$parameters[] = $user;
-			}
-			$limitActivities .= ' AND `object_type` = ?';
-			$parameters[] = $objectType;
-			$limitActivities .= ' AND `object_id` = ?';
-			$parameters[] = $objectId;
-		}
-
-		list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
-		if (!is_null($condition)) {
-			$limitActivities .= ' ';
-			$limitActivities .= $condition;
-			if (is_array($params)) {
-				$parameters = array_merge($parameters, $params);
-			}
-		}
-
-		return $this->getActivities($count, $start, $limitActivities, $parameters, $groupHelper);
-	}
-
-	/**
 	 * Read a list of events from the activity stream
 	 *
 	 * @param GroupHelper $groupHelper Allows activities to be grouped
@@ -392,33 +325,6 @@ class Data {
 		}
 
 		return [];
-	}
-
-	/**
-	 * Process the result and return the activities
-	 *
-	 * @param int $count
-	 * @param int $start
-	 * @param string $limitActivities
-	 * @param array $parameters
-	 * @param \OCA\Activity\GroupHelper $groupHelper
-	 * @return array
-	 */
-	protected function getActivities($count, $start, $limitActivities, $parameters, GroupHelper $groupHelper) {
-		$query = $this->connection->prepare(
-			'SELECT * '
-			. ' FROM `*PREFIX*activity` '
-			. ' WHERE `affecteduser` = ? ' . $limitActivities
-			. ' ORDER BY `timestamp` DESC',
-			$count, $start);
-		$query->execute($parameters);
-
-		while ($row = $query->fetch()) {
-			$groupHelper->addActivity($row);
-		}
-		$query->closeCursor();
-
-		return $groupHelper->getActivities();
 	}
 
 	/**
