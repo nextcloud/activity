@@ -9,6 +9,8 @@ OC.L10N.register(
     "Stream" : "بث",
     "This stream will show events like additions, changes & shares" : "هذا التدفق سيظهر لك الاحداث، مثل الإضافة والتغيير والمشاركة",
     "There are no events for this filter" : "لا توجد هناك فعاليات وفق ما خصصته",
+    "Today" : "اليوم",
+    "Yesterday" : "أمس",
     "in %s" : "في %s",
     "\"remote user\"" : "\"عضوية التحكم\"",
     "Activity notification" : "تنبيه النشاط",

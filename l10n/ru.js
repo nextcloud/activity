@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "Событий нет",
     "This stream will show events like additions, changes & shares" : "Этот поток будет отображать события вроде добавления, изменения файлов или открытия к ним доступа",
     "There are no events for this filter" : "Нет событий соответствующих фильтру",
+    "Today" : "Сегодня",
+    "Yesterday" : "Вчера",
     "in %s" : "в %s",
     "\"remote user\"" : "\"удалённый пользователь\"",
     "Activity notification" : "Уведомление о событиях",

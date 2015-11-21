@@ -9,6 +9,8 @@ OC.L10N.register(
     "Stream" : "Datu straume",
     "This stream will show events like additions, changes & shares" : "Šajā straumē tiks parādītas koplietošanas, dalīšanās un citi notikumi.",
     "There are no events for this filter" : "Šim filtram nav notikumu",
+    "Today" : "Šodien",
+    "Yesterday" : "Vakar",
     "in %s" : "%s",
     "\"remote user\"" : "\"attālināts lietotājs\"",
     "Activity notification" : "Brīdinājumi par izmaiņām",

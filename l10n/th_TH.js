@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "ไม่มีกิจกรรม",
     "This stream will show events like additions, changes & shares" : "สตรีมนี้จะแสดงเหตุการณ์เพิ่มเติม เช่นการเปลี่ยนแปลงและการแชร์",
     "There are no events for this filter" : "ไม่มีกิจกรรมสำหรับตัวกรองนี้",
+    "Today" : "วันนี้",
+    "Yesterday" : "เมื่อวานนี้",
     "in %s" : "ใน %s",
     "\"remote user\"" : "\"ผู้ใช้ระยะไกล\"",
     "Activity notification" : "การแจ้งเตือนกิจกรรม",

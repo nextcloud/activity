@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "Ni dejavnosti",
     "This stream will show events like additions, changes & shares" : "V tem pretoku bodo pokazani dogodki, kot so dodajanja, spremembe in spreminjanje souporabe.",
     "There are no events for this filter" : "Ta filter ne pokaže nobenih dogodkov",
+    "Today" : "Danes",
+    "Yesterday" : "Včeraj",
     "in %s" : "v %s",
     "\"remote user\"" : "\"oddaljeni uporabnik\"",
     "Activity notification" : "Obvestila o dejavnosti",

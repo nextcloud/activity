@@ -9,6 +9,8 @@ OC.L10N.register(
     "Stream" : "Secuencia",
     "This stream will show events like additions, changes & shares" : "Esta secuencia mostrará eventos como adiciones, cambios & recursos compartidos",
     "There are no events for this filter" : "No hay eventos para este filtro",
+    "Today" : "Hoy",
+    "Yesterday" : "Ayer",
     "in %s" : "en %s",
     "\"remote user\"" : "\"Usuario remoto\"",
     "Activity notification" : "Notificación de actividad",

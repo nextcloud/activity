@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "Ei toimia",
     "This stream will show events like additions, changes & shares" : "Tähän luetteloon ilmestyy tapahtumakuvauksia, kuten lisäyksiä, muutoksia ja jakamisia",
     "There are no events for this filter" : "Tällä suodattimella ei ole näytettäviä tapahtumia",
+    "Today" : "Tänään",
+    "Yesterday" : "Eilen",
     "in %s" : "polussa %s",
     "\"remote user\"" : "\"etäkäyttäjä\"",
     "Activity notification" : "Ilmoitus toiminnasta",

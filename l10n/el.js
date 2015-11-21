@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "Καμία δραστηριότητα",
     "This stream will show events like additions, changes & shares" : "Σε αυτήν τη ροή θα εμφανιστούν γενονότα όπως προσθήκες, αλλαγές και διαμοιρασμοί",
     "There are no events for this filter" : "Δεν υπάρχουν γεγονότα για αυτό το φίλτρο",
+    "Today" : "Σήμερα",
+    "Yesterday" : "Χθες",
     "in %s" : "σε %s",
     "\"remote user\"" : "\"απομακρυσμένος χρήστης\"",
     "Activity notification" : "Ειδοποίηση δραστηριότητας",

@@ -10,6 +10,8 @@
     "No activities" : "Ingen aktiviteter",
     "This stream will show events like additions, changes & shares" : "Dette område vil vise begivenheder som tilføjelser, ændringer & delinger",
     "There are no events for this filter" : "Der ingen aktiviteter for dette filter",
+    "Today" : "I dag",
+    "Yesterday" : "I går",
     "in %s" : "i %s",
     "\"remote user\"" : "\"ekstern bruger\"",
     "Activity notification" : "Notifikation om aktivitet",

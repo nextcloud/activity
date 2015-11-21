@@ -9,6 +9,7 @@ OC.L10N.register(
     "Stream" : "Flux",
     "This stream will show events like additions, changes & shares" : "Acest flux va afișa evenimente ca adăugiri, modificări & partajări",
     "There are no events for this filter" : "Nu sunt evenimente pentru acest filtru",
+    "Today" : "Astăzi",
     "in %s" : "în %s",
     "\"remote user\"" : "\"utilizator la distanță\"",
     "Activity notification" : "Notificări de activitate",

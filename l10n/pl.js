@@ -9,6 +9,8 @@ OC.L10N.register(
     "Stream" : "Strumień",
     "This stream will show events like additions, changes & shares" : "Ta opcja pokazuje takie wydarzenia jak: dodatki, zmiany i udostępnienia",
     "There are no events for this filter" : "Nie ma zdarzeń dla tych filtrów",
+    "Today" : "Dziś",
+    "Yesterday" : "Wczoraj",
     "in %s" : "w %s",
     "\"remote user\"" : "\"użytkownik zdalny\"",
     "Activity notification" : "Powiadomienie o aktywności",

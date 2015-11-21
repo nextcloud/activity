@@ -11,6 +11,8 @@ OC.L10N.register(
     "Error loading activities" : "خطا در بارگزاری فعالیت‌ها",
     "No activities" : "هیچ فعالیتی",
     "There are no events for this filter" : "هیچ رخدادی برای این فیلتر وجود ندارد",
+    "Today" : "امروز",
+    "Yesterday" : "دیروز",
     "in %s" : "در %s",
     "\"remote user\"" : "\"کاربران از راه‌ دور\"",
     "Activity notification" : "هشدارهای فعالیت",

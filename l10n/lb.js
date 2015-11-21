@@ -9,6 +9,7 @@ OC.L10N.register(
     "Stream" : "Floss",
     "This stream will show events like additions, changes & shares" : "Dëse Floss weist Evenementer wéi dobäigesaten, geännert a gedeelte Fichieren un",
     "There are no events for this filter" : "Et gi keng Evenenementer fir dëse Filter",
+    "Today" : "Haut",
     "in %s" : "an %s",
     "\"remote user\"" : "\"Remote-Benotzer\"",
     "Activity notification" : "Aktivitéits-Notifikatiounen",

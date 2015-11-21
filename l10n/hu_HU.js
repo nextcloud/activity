@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "Nincs aktivitás",
     "This stream will show events like additions, changes & shares" : "Ez a folyam olyan események mutat mint bővítménxek, változások és megosztások",
     "There are no events for this filter" : "Ehhez a szűrőhöz nem található esemény",
+    "Today" : "Ma",
+    "Yesterday" : "Tegnap",
     "in %s" : "itt:  %s",
     "\"remote user\"" : "\"távoli felhasználó\"",
     "Activity notification" : "Aktivitási értesítés",

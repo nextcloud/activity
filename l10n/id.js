@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "Tidak ada aktivitas",
     "This stream will show events like additions, changes & shares" : "Stream ini akan menampilkan agenda seperti penambahan, perubahan & berbagi",
     "There are no events for this filter" : "Tidak ada agenda untuk penyaring ini",
+    "Today" : "Hari Ini",
+    "Yesterday" : "Kemarin",
     "in %s" : "dalam %s",
     "\"remote user\"" : "\"remote user\"",
     "Activity notification" : "Pemberitahuan aktivitas",

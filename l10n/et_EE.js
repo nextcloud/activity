@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "Tegevusi pole",
     "This stream will show events like additions, changes & shares" : "See voog näitab sündmusi nagu lisamised, muudatused ja jagamised",
     "There are no events for this filter" : "Selle filtri jaoks pole ühtegi sündmust",
+    "Today" : "Täna",
+    "Yesterday" : "Eile",
     "in %s" : "kaustas %s",
     "\"remote user\"" : "\"eemal olev kasutaja\"",
     "Activity notification" : "Tegvuste teavitused",

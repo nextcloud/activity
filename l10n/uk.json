@@ -10,6 +10,8 @@
     "No activities" : "Активність відсутня",
     "This stream will show events like additions, changes & shares" : "У цьому потоці будуть показані події, на кшталт доповнення, зміни та поширення",
     "There are no events for this filter" : "За цим фільтром події відсутні",
+    "Today" : "Сьогодні",
+    "Yesterday" : "Вчора",
     "in %s" : "в %s",
     "\"remote user\"" : "\"віддалений користувач\"",
     "Activity notification" : "Повідомлення про події",

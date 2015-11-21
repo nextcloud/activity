@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "Pas cap d'activitat",
     "This stream will show events like additions, changes & shares" : "Aqueste flux fa veire los eveniments tal coma las addicions, las modificacions e los partiments",
     "There are no events for this filter" : "I a pas cap d'eveniment per aqueste filtre",
+    "Today" : "Uèi",
+    "Yesterday" : "Ièr",
     "in %s" : "dins %s",
     "\"remote user\"" : "\"utilizaire distant\"",
     "Activity notification" : "Notificacion d'activitat",

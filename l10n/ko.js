@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "활동 없음",
     "This stream will show events like additions, changes & shares" : "스트림에는 추가, 변경, 공유와 같은 이벤트가 표시됩니다",
     "There are no events for this filter" : "이 필터를 만족하는 이벤트 없음",
+    "Today" : "오늘",
+    "Yesterday" : "어제",
     "in %s" : "%s",
     "\"remote user\"" : "\"원격 사용자\"",
     "Activity notification" : "활동 알림",

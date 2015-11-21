@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "Nėra veiklų",
     "This stream will show events like additions, changes & shares" : "Pridėjimų, pakeitimų ir dalinimosi įvykių srautas.",
     "There are no events for this filter" : "Nėra įvykių pasirinktam filtrui",
+    "Today" : "Šiandien",
+    "Yesterday" : "Vakar",
     "in %s" : "per %s",
     "\"remote user\"" : "\"Nuotolinis vartotojas\"",
     "Activity notification" : "Veiklos perspėjimai",

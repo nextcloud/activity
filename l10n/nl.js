@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "Geen activiteiten",
     "This stream will show events like additions, changes & shares" : "Deze stream laat gebeurtenissen als toevoegingen, veranderingen en gedeelde bestanden zien",
     "There are no events for this filter" : "Er zijn geen afspraken voor dit filter",
+    "Today" : "Vandaag",
+    "Yesterday" : "Gisteren",
     "in %s" : "in %s",
     "\"remote user\"" : "\"externe gebruiker\"",
     "Activity notification" : "Activiteitenmelding",

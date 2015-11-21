@@ -7,6 +7,8 @@ OC.L10N.register(
     "Your settings have been updated." : "Sizin configləriniz yenilendi.",
     "Mail" : "Məktub",
     "Stream" : "Axın",
+    "Today" : "Bu gün",
+    "Yesterday" : "Dünən",
     "in %s" : "içinə %s",
     "\"remote user\"" : "\"uzaq istifadəçi\"",
     "Activity notification" : "Fəaliyyət bildirişi",

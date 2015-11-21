@@ -11,6 +11,8 @@ OC.L10N.register(
     "Error loading activities" : "Errorea jarduerak kargatzen",
     "No activities" : "Ez dago jarduerarik",
     "There are no events for this filter" : "Ez dago ekitaldirik iragazki honetarako",
+    "Today" : "Gaur",
+    "Yesterday" : "Atzo",
     "in %s" : "%s-an",
     "\"remote user\"" : "\"urruneko erabiltzailea\"",
     "Activity notification" : "Jarduera jakinarazpenak",

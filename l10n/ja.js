@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "アクティビティなし",
     "This stream will show events like additions, changes & shares" : "このタイムラインには、追加、変更、共有が表示されます。",
     "There are no events for this filter" : "このフィルターで表示されるイベントはありません。",
+    "Today" : "今日",
+    "Yesterday" : "昨日",
     "in %s" : "%s で",
     "\"remote user\"" : "\"リモートユーザー\"",
     "Activity notification" : "アクティビティ通知",

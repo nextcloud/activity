@@ -9,6 +9,8 @@ OC.L10N.register(
     "Stream" : "Fluxo",
     "This stream will show events like additions, changes & shares" : "Este fluxo amosará accións como adicións, cambios e elementos compartidos",
     "There are no events for this filter" : "Non hai actividades neste filtro",
+    "Today" : "Hoxe",
+    "Yesterday" : "Onte",
     "in %s" : "en %s",
     "\"remote user\"" : "«usuario remoto»",
     "Activity notification" : "Notificación da actividade",

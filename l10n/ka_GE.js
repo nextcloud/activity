@@ -12,6 +12,7 @@ OC.L10N.register(
     "No activities" : "აქტივობები არაა",
     "This stream will show events like additions, changes & shares" : "ამ ნაკადში ნაჩვენები იქნება შეტყობინებები ისეთი მოვლენების შესახებ, როგორებიცაა დამატება, ცვლილებები და გაზიარება",
     "There are no events for this filter" : "ამ ფილტრთან შესაბამისი მოვლენები არაა",
+    "Today" : "დღეს",
     "in %s" : "%s -ში",
     "\"remote user\"" : "\"მოშორებული მომხმარებელი\"",
     "Activity notification" : "შეტყობინება აქტივობის შესახებ",

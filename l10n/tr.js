@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "Etkinlik yok",
     "This stream will show events like additions, changes & shares" : "Bu akış ekleme, değişiklikler ve paylaşımlar gibi etkinlikleri gösterecektir",
     "There are no events for this filter" : "Bu filtre için herhangi bir etkinlik bulunmuyor",
+    "Today" : "Bugün",
+    "Yesterday" : "Dün",
     "in %s" : "%s içinde",
     "\"remote user\"" : "\"uzak kullanıcı\"",
     "Activity notification" : "Etkinlik bildirimi",

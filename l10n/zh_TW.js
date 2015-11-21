@@ -12,6 +12,8 @@ OC.L10N.register(
     "No activities" : "沒有活動",
     "This stream will show events like additions, changes & shares" : "這邊會顯示檔案的增加、更動、分享等動態",
     "There are no events for this filter" : "在此篩選器下沒有活動",
+    "Today" : "今天",
+    "Yesterday" : "昨天",
     "in %s" : "在 %s",
     "\"remote user\"" : "\"遠端用戶\"",
     "Activity notification" : "活動通知",
