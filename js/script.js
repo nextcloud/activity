@@ -39,7 +39,7 @@ $(function(){
 			$('#emptycontent').addClass('hidden');
 			$('#no_more_activities').addClass('hidden');
 			$('#loading_activities').removeClass('hidden');
-			OCActivity.InfinitScrolling.ignoreScroll = false;
+			OCActivity.InfinitScrolling.ignoreScroll = 0;
 
 			this.navigation.find('a[data-navigation=' + filter + ']').parent().addClass('active');
 
@@ -48,7 +48,7 @@ $(function(){
 	};
 
 	OCActivity.InfinitScrolling = {
-		ignoreScroll: false,
+		ignoreScroll: 0,
 		container: $('#container'),
 		lastDateGroup: null,
 		content: $('#app-content'),
@@ -56,16 +56,18 @@ $(function(){
 		lastGivenId: 0,
 
 		prefill: function () {
+			this.ignoreScroll += 1;
 			if (this.content.scrollTop() + this.content.height() > this.container.height() - 100) {
+				this.ignoreScroll += 1;
 				this.loadMoreActivities();
 			}
+			this.ignoreScroll -= 1;
 		},
 
 		onScroll: function () {
-			if (!this.ignoreScroll && this.content.scrollTop() +
+			if (this.ignoreScroll <= 0 && this.content.scrollTop() +
 				this.content.height() > this.container.height() - 100) {
-				this.ignoreScroll = true;
-
+				this.ignoreScroll = 1;
 				this.loadMoreActivities();
 			}
 		},
@@ -74,20 +76,22 @@ $(function(){
 		 * Request a new bunch of activities from the server
 		 */
 		loadMoreActivities: function () {
+			var self = this;
+
 			$.get(
 				OC.linkToOCS('apps/activity/api/v2/activity', 2) + OCActivity.Filter.filter,
-				'format=json&previews=true&since=' + OCActivity.InfinitScrolling.lastGivenId,
+				'format=json&previews=true&since=' + self.lastGivenId,
 				function (response, status, xhr) {
-					OCActivity.InfinitScrolling.ignoreScroll = false;
 					if (status === 'notmodified') {
-						OCActivity.InfinitScrolling.handleActivitiesCallback([]);
-						OCActivity.InfinitScrolling.saveHeaders(xhr.getAllResponseHeaders());
+						self.handleActivitiesCallback([]);
+						self.saveHeaders(xhr.getAllResponseHeaders());
 						return;
 					}
 
-					OCActivity.InfinitScrolling.saveHeaders(xhr.getAllResponseHeaders());
+					self.saveHeaders(xhr.getAllResponseHeaders());
 					if (typeof response != 'undefined') {
-						OCActivity.InfinitScrolling.handleActivitiesCallback(response.ocs.data);
+						self.handleActivitiesCallback(response.ocs.data);
+						self.ignoreScroll -= 1;
 					}
 				}
 			);
@@ -98,13 +102,15 @@ $(function(){
 		 * @param headers
 		 */
 		saveHeaders: function(headers) {
+			var self = this;
+
 			headers = headers.split("\n");
 			_.each(headers, function (header) {
 				[head, value] = header.split(': ');
 				if (head === 'X-Activity-First-Known') {
-					OCActivity.InfinitScrolling.firstKnownId = parseInt(value, 10);
+					self.firstKnownId = parseInt(value, 10);
 				} else if (head === 'X-Activity-Last-Given') {
-					OCActivity.InfinitScrolling.lastGivenId = parseInt(value, 10);
+					self.lastGivenId = parseInt(value, 10);
 				}
 			});
 		},
@@ -135,13 +141,13 @@ $(function(){
 					$emptyContent.find('p').text(t('activity', 'There are no events for this filter'));
 				}
 				$('#loading_activities').addClass('hidden');
-				OCActivity.InfinitScrolling.ignoreScroll = true;
+				this.ignoreScroll = 1;
 
 			} else {
 				// Page is empty - No more activities :(
 				$('#no_more_activities').removeClass('hidden');
 				$('#loading_activities').addClass('hidden');
-				OCActivity.InfinitScrolling.ignoreScroll = true;
+				this.ignoreScroll = 1;
 			}
 		},
 
@@ -177,7 +183,7 @@ $(function(){
 					+'	</div>' + "\n"
 					+'</div>';
 				$content = $($content);
-				OCActivity.InfinitScrolling.processElements($content);
+				this.processElements($content);
 				this.container.append($content);
 				this.lastDateGroup = $content;
 			}
@@ -220,7 +226,7 @@ $(function(){
 				+'</div>';
 
 			$content = $($content);
-			OCActivity.InfinitScrolling.processElements($content);
+			this.processElements($content);
 			this.lastDateGroup.append($content);
 		},
 
