@@ -78,10 +78,13 @@ $(function(){
 		loadMoreActivities: function () {
 			var self = this;
 
-			$.get(
-				OC.linkToOCS('apps/activity/api/v2/activity', 2) + OCActivity.Filter.filter,
-				'format=json&previews=true&since=' + self.lastGivenId,
-				function (response, status, xhr) {
+			$.ajax({
+				url: OC.linkToOCS('apps/activity/api/v2/activity', 2) + OCActivity.Filter.filter + '?format=json&previews=true&since=' + self.lastGivenId,
+				type: 'GET',
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("Accept-Language", OC.getLocale());
+				},
+				success: function(response, status, xhr) {
 					if (status === 'notmodified') {
 						self.handleActivitiesCallback([]);
 						self.saveHeaders(xhr.getAllResponseHeaders());
@@ -94,7 +97,7 @@ $(function(){
 						self.ignoreScroll -= 1;
 					}
 				}
-			);
+			});
 		},
 
 		/**
