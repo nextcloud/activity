@@ -62,8 +62,10 @@ class FileFormatter implements IFormatter {
 
 		// If the activity is about the very same file, we use the current path
 		// for the link generation instead of the one that was saved.
+		$fileId = '';
 		if ($event->getObjectType() === 'files' && $event->getObjectName() === $param) {
-			$info = $this->infoCache->getInfoById($this->user, $event->getObjectId(), $param);
+			$fileId = $event->getObjectId();
+			$info = $this->infoCache->getInfoById($this->user, $fileId, $param);
 		} else {
 			$info = $this->infoCache->getInfoByPath($this->user, $param);
 		}
@@ -88,7 +90,7 @@ class FileFormatter implements IFormatter {
 		$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
 
 		if ($allowHtml === null) {
-			return '<file link="' . $fileLink . '">' . Util::sanitizeHTML($param) . '</file>';
+			return '<file link="' . $fileLink . '" id="' . Util::sanitizeHTML($fileId) . '">' . Util::sanitizeHTML($param) . '</file>';
 		}
 
 		if ($verbose || $path === '') {
