@@ -216,10 +216,12 @@ class OCSEndPoint {
 			return new \OC_OCS_Result([], Http::STATUS_NOT_MODIFIED, null, $headers);
 		}
 
-		$preparedActivities = $response['data'];
-		if ($this->loadPreviews) {
-			$preparedActivities = [];
-			foreach ($response['data'] as $activity) {
+		$preparedActivities = [];
+		foreach ($response['data'] as $activity) {
+			$activity['datetime'] = date('c', $activity['timestamp']);
+			unset($activity['timestamp']);
+
+			if ($this->loadPreviews) {
 				$activity['previews'] = [];
 				if ($activity['object_type'] === 'files' && !empty($activity['files'])) {
 					foreach ($activity['files'] as $objectId => $objectName) {
@@ -233,9 +235,9 @@ class OCSEndPoint {
 				} else if ($activity['object_type'] === 'files' && $activity['object_id']) {
 					$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $activity['object_id'], $activity['file']);
 				}
-
-				$preparedActivities[] = $activity;
 			}
+
+			$preparedActivities[] = $activity;
 		}
 
 		return new \OC_OCS_Result($preparedActivities, 100, null, $headers);

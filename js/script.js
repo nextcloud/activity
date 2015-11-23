@@ -151,9 +151,10 @@ $(function(){
 			}
 		},
 
-		appendActivityToContainer: function ($activity) {
-			this.makeSureDateGroupExists($activity.timestamp * 1000);
-			this.addActivity($activity);
+		appendActivityToContainer: function (activity) {
+			activity.timestamp = moment(activity.datetime).valueOf();
+			this.makeSureDateGroupExists();
+			this.addActivity(activity);
 		},
 
 		makeSureDateGroupExists: function(timestamp) {
@@ -202,8 +203,8 @@ $(function(){
 				+ (($activity.link) ? '			</a>' + "\n" : '')
 				+ '		</div>' + "\n"
 
-				+'		<span class="activitytime has-tooltip" title="' + escapeHTML(OC.Util.formatDate($activity.timestamp * 1000)) + '">' + "\n"
-				+ '			' + escapeHTML(OC.Util.relativeModifiedDate($activity.timestamp * 1000)) + "\n"
+				+'		<span class="activitytime has-tooltip" title="' + escapeHTML(OC.Util.formatDate($activity.timestamp)) + '">' + "\n"
+				+ '			' + escapeHTML(OC.Util.relativeModifiedDate($activity.timestamp)) + "\n"
 				+'		</span>' + "\n";
 
 			if ($activity.message) {
