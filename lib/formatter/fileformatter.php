@@ -85,11 +85,16 @@ class FileFormatter implements IFormatter {
 
 		$param = trim($param, '/');
 		list($path, $name) = $this->splitPathFromFilename($param);
+		$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
+
+		if ($allowHtml === null) {
+			return '<file link="' . $fileLink . '">' . Util::sanitizeHTML($param) . '</file>';
+		}
+
 		if ($verbose || $path === '') {
 			if (!$allowHtml) {
 				return $param;
 			}
-			$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
 			return '<a class="filename" href="' . $fileLink . '">' . Util::sanitizeHTML($param) . '</a>';
 		}
 
@@ -98,7 +103,6 @@ class FileFormatter implements IFormatter {
 		}
 
 		$title = ' title="' . $this->l->t('in %s', array(Util::sanitizeHTML($path))) . '"';
-		$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
 		return '<a class="filename has-tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($name) . '</a>';
 	}
 

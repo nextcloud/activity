@@ -57,6 +57,9 @@ class UserFormatter implements IFormatter {
 		// If the username is empty, the action has been performed by a remote
 		// user, or via a public share. We don't know the username in that case
 		if ($parameter === '') {
+			if ($allowHtml === null) {
+				return '<user display-name="' . Util::sanitizeHTML($this->l->t('"remote user"')) . '">' . Util::sanitizeHTML('') . '</user>';
+			}
 			if ($allowHtml) {
 				return '<strong>' . $this->l->t('"remote user"') . '</strong>';
 			} else {
@@ -67,6 +70,10 @@ class UserFormatter implements IFormatter {
 		$user = $this->manager->get($parameter);
 		$displayName = ($user) ? $user->getDisplayName() : $parameter;
 		$parameter = Util::sanitizeHTML($parameter);
+
+		if ($allowHtml === null) {
+			return '<user display-name="' . Util::sanitizeHTML($displayName) . '">' . Util::sanitizeHTML($parameter) . '</user>';
+		}
 
 		if ($allowHtml) {
 			$avatarPlaceholder = '';

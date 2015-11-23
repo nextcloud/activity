@@ -33,6 +33,10 @@ class BaseFormatter implements IFormatter {
 	 * @return string The formatted parameter
 	 */
 	public function format(IEvent $event, $parameter, $allowHtml, $verbose = false) {
+		if ($allowHtml === null) {
+			return '<parameter>' . Util::sanitizeHTML($parameter) . '</parameter>';
+		}
+
 		if ($allowHtml) {
 			return '<strong>' . Util::sanitizeHTML($parameter) . '</strong>';
 		} else {

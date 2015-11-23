@@ -62,6 +62,10 @@ class CloudIDFormatter implements IFormatter {
 		} catch (\OutOfBoundsException $e) {}
 
 
+		if ($allowHtml === null) {
+			return '<federated-cloud-id display-name="' . Util::sanitizeHTML($displayName) . '">' . Util::sanitizeHTML($parameter) . '</federated-cloud-id>';
+		}
+
 		if ($allowHtml) {
 			$title = ' title="' . Util::sanitizeHTML($parameter) . '"';
 			return '<strong class="has-tooltip"' . $title . '>' . Util::sanitizeHTML($displayName) . '</strong>';

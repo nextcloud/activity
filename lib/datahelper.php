@@ -134,6 +134,8 @@ class DataHelper {
 		$activity[$message . 'params'] = $activity[$message . 'params_array'];
 		unset($activity[$message . 'params_array']);
 
+		$activity[$message . '_prepared'] = $this->translation($activity['app'], $activity[$message], $activity[$message . 'params'], null, null);
+
 		$activity[$message . 'formatted'] = array(
 			'trimmed'	=> $this->translation($activity['app'], $activity[$message], $activity[$message . 'params'], true),
 			'full'		=> $this->translation($activity['app'], $activity[$message], $activity[$message . 'params']),
