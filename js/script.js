@@ -12,7 +12,7 @@ $(function(){
 
 	OCActivity.Filter = {
 		filter: undefined,
-		navigation: $('#app-navigation'),
+		$navigation: $('#app-navigation'),
 
 
 		_onPopState: function(params) {
@@ -28,20 +28,20 @@ $(function(){
 				return;
 			}
 
-			this.navigation.find('a[data-navigation=' + this.filter + ']').parent().removeClass('active');
+			this.$navigation.find('a[data-navigation=' + this.filter + ']').parent().removeClass('active');
 			OCActivity.InfinitScrolling.firstKnownId = 0;
 			OCActivity.InfinitScrolling.lastGivenId = 0;
 
 			this.filter = filter;
 
-			OCActivity.InfinitScrolling.container.animate({ scrollTop: 0 }, 'slow');
-			OCActivity.InfinitScrolling.container.children().remove();
+			OCActivity.InfinitScrolling.$container.animate({ scrollTop: 0 }, 'slow');
+			OCActivity.InfinitScrolling.$container.children().remove();
 			$('#emptycontent').addClass('hidden');
 			$('#no_more_activities').addClass('hidden');
 			$('#loading_activities').removeClass('hidden');
 			OCActivity.InfinitScrolling.ignoreScroll = 0;
 
-			this.navigation.find('a[data-navigation=' + filter + ']').parent().addClass('active');
+			this.$navigation.find('a[data-navigation=' + filter + ']').parent().addClass('active');
 
 			OCActivity.InfinitScrolling.prefill();
 		}
@@ -49,15 +49,15 @@ $(function(){
 
 	OCActivity.InfinitScrolling = {
 		ignoreScroll: 0,
-		container: $('#container'),
+		$container: $('#container'),
 		lastDateGroup: null,
-		content: $('#app-content'),
+		$content: $('#app-content'),
 		firstKnownId: 0,
 		lastGivenId: 0,
 
 		prefill: function () {
 			this.ignoreScroll += 1;
-			if (this.content.scrollTop() + this.content.height() > this.container.height() - 100) {
+			if (this.$content.scrollTop() + this.$content.height() > this.$container.height() - 100) {
 				this.ignoreScroll += 1;
 				this.loadMoreActivities();
 			}
@@ -65,8 +65,8 @@ $(function(){
 		},
 
 		onScroll: function () {
-			if (this.ignoreScroll <= 0 && this.content.scrollTop() +
-				this.content.height() > this.container.height() - 100) {
+			if (this.ignoreScroll <= 0 && this.$content.scrollTop() +
+				this.$content.height() > this.$container.height() - 100) {
 				this.ignoreScroll = 1;
 				this.loadMoreActivities();
 			}
@@ -120,18 +120,18 @@ $(function(){
 		 * @param data
 		 */
 		handleActivitiesCallback: function (data) {
-			var $numActivities = data.length;
+			var numActivities = data.length;
 
-			if ($numActivities > 0) {
+			if (numActivities > 0) {
 				for (var i = 0; i < data.length; i++) {
-					var $activity = data[i];
-					this.appendActivityToContainer($activity);
+					var activity = data[i];
+					this.appendActivityToContainer(activity);
 				}
 
 				// Continue prefill
 				this.prefill();
 
-			} else if (this.container.children().length === 0) {
+			} else if (this.$container.children().length === 0) {
 				// First page is empty - No activities :(
 				var $emptyContent = $('#emptycontent');
 				$emptyContent.removeClass('hidden');
@@ -159,7 +159,7 @@ $(function(){
 
 		makeSureDateGroupExists: function(timestamp) {
 			var dayOfYear = OC.Util.formatDate(timestamp, 'YYYY-DDD');
-			var $lastGroup = this.container.children().last();
+			var $lastGroup = this.$container.children().last();
 
 			if ($lastGroup.data('date') !== dayOfYear) {
 				var dateOfDay = OC.Util.formatDate(timestamp, 'LL'),
@@ -176,78 +176,78 @@ $(function(){
 					}
 				}
 
-				var $content = '<div class="section activity-section group" data-date="' + escapeHTML(dayOfYear) + '">' + "\n"
+				var content = '<div class="section activity-section group" data-date="' + escapeHTML(dayOfYear) + '">' + "\n"
 					+'	<h2>'+"\n"
 					+'		<span class="has-tooltip" title="' + escapeHTML(dateOfDay) + '">' + escapeHTML(displayDate) + '</span>' + "\n"
 					+'	</h2>' + "\n"
 					+'	<div class="boxcontainer">' + "\n"
 					+'	</div>' + "\n"
 					+'</div>';
-				$content = $($content);
+				var $content = $(content);
 				this.processElements($content);
-				this.container.append($content);
+				this.$container.append($content);
 				this.lastDateGroup = $content;
 			}
 		},
 
-		addActivity: function($activity) {
-			var $content = ''
+		addActivity: function(activity) {
+			var content = ''
 				+ '<div class="box">' + "\n"
 				+ '	<div class="messagecontainer">' + "\n"
 
-				+ '		<div class="activity-icon ' + (($activity.typeicon) ? escapeHTML($activity.typeicon) + ' svg' : '') + '"></div>' + "\n"
+				+ '		<div class="activity-icon ' + ((activity.typeicon) ? escapeHTML(activity.typeicon) + ' svg' : '') + '"></div>' + "\n"
 
 				+ '		<div class="activitysubject">' + "\n"
-				+ (($activity.link) ? '			<a href="' + $activity.link + '">' + "\n" : '')
-				+ '			' + $activity.subjectformatted.markup.trimmed + "\n"
-				+ (($activity.link) ? '			</a>' + "\n" : '')
+				+ ((activity.link) ? '			<a href="' + activity.link + '">' + "\n" : '')
+				+ '			' + activity.subjectformatted.markup.trimmed + "\n"
+				+ ((activity.link) ? '			</a>' + "\n" : '')
 				+ '		</div>' + "\n"
 
-				+'		<span class="activitytime has-tooltip" title="' + escapeHTML(OC.Util.formatDate($activity.timestamp)) + '">' + "\n"
-				+ '			' + escapeHTML(OC.Util.relativeModifiedDate($activity.timestamp)) + "\n"
+				+'		<span class="activitytime has-tooltip" title="' + escapeHTML(OC.Util.formatDate(activity.timestamp)) + '">' + "\n"
+				+ '			' + escapeHTML(OC.Util.relativeModifiedDate(activity.timestamp)) + "\n"
 				+'		</span>' + "\n";
 
-			if ($activity.message) {
-				$content += '<div class="activitymessage">' + "\n"
-					+ $activity.messageformatted.markup.trimmed + "\n"
+			if (activity.message) {
+				content += '<div class="activitymessage">' + "\n"
+					+ activity.messageformatted.markup.trimmed + "\n"
 					+'</div>' + "\n";
 			}
 
-			if ($activity.previews && $activity.previews.length) {
-				$content += '<br />';
-				for (var i = 0; i < $activity.previews.length; i++) {
-					var $preview = $activity.previews[i];
-					$content += (($preview.link) ? '<a href="' + $preview.link + '">' + "\n" : '')
-						+ '<img class="preview' + (($preview.isMimeTypeIcon) ? ' preview-mimetype-icon' : '') + '" src="' + $preview.source + '" alt=""/>' + "\n"
-						+ (($preview.link) ? '</a>' + "\n" : '')
+			if (activity.previews && activity.previews.length) {
+				content += '<br />';
+				for (var i = 0; i < activity.previews.length; i++) {
+					var preview = activity.previews[i];
+					content += ((preview.link) ? '<a href="' + preview.link + '">' + "\n" : '')
+						+ '<img class="preview' + ((preview.isMimeTypeIcon) ? ' preview-mimetype-icon' : '') + '" src="' + preview.source + '" alt=""/>' + "\n"
+						+ ((preview.link) ? '</a>' + "\n" : '')
 				}
 			}
 
-			$content += '	</div>' + "\n"
+			content += '	</div>' + "\n"
 				+'</div>';
 
-			$content = $($content);
+			var $content = $(content);
 			this.processElements($content);
 			this.lastDateGroup.append($content);
 		},
 
-		processElements: function (parentElement) {
-			$(parentElement).find('.avatar').each(function() {
+		processElements: function ($element) {
+			$element.find('.avatar').each(function() {
 				var element = $(this);
 				element.avatar(element.data('user'), 28);
 			});
 
-			$(parentElement).find('.has-tooltip').tooltip({
+			$element.find('.has-tooltip').tooltip({
 				placement: 'bottom'
 			})
 		}
 	};
 
 	OC.Util.History.addOnPopStateHandler(_.bind(OCActivity.Filter._onPopState, OCActivity.Filter));
-	OCActivity.Filter.setFilter(OCActivity.InfinitScrolling.container.attr('data-activity-filter'));
-	OCActivity.InfinitScrolling.content.on('scroll', _.bind(OCActivity.InfinitScrolling.onScroll, OCActivity.InfinitScrolling));
+	OCActivity.Filter.setFilter(OCActivity.InfinitScrolling.$container.attr('data-activity-filter'));
+	OCActivity.InfinitScrolling.$content.on('scroll', _.bind(OCActivity.InfinitScrolling.onScroll, OCActivity.InfinitScrolling));
 
-	OCActivity.Filter.navigation.find('a[data-navigation]').on('click', function (event) {
+	OCActivity.Filter.$navigation.find('a[data-navigation]').on('click', function (event) {
 		var filter = $(this).attr('data-navigation');
 		if (filter !== OCActivity.Filter.filter) {
 			OC.Util.History.pushState({
