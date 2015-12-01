@@ -22,6 +22,7 @@
     ", " : ",",
     "_%s and %n more_::_%s and %n more_" : ["%s in %n več","%s in %n več","%s in %n več","%s in %n več"],
     "Hello %s," : "Pozdravljeni, %s,",
+    "You are receiving this email because the following things happened at %s" : "To sporočilo ste dobili, ker so se zgodile sledeči dogodki na %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* in %n dodaten","* in %n dodatna","* in %n dodatni","* in %n dodatnih"],
     "Notifications" : "Obvestila",
