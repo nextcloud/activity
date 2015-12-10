@@ -17,6 +17,12 @@ use OCA\Activity\Controller\Activities;
 use OCA\Activity\Tests\TestCase;
 use OCP\Template;
 
+/**
+ * Class ActivitiesTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests\Controller
+ */
 class ActivitiesTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $request;

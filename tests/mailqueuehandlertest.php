@@ -25,6 +25,12 @@ namespace OCA\Activity\Tests;
 use OCA\Activity\MailQueueHandler;
 use OCA\Activity\UserSettings;
 
+/**
+ * Class MailQueueHandlerTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests
+ */
 class MailQueueHandlerTest extends TestCase {
 	/** @var MailQueueHandler */
 	protected $mailQueueHandler;

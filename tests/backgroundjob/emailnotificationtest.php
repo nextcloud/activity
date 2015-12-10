@@ -16,6 +16,12 @@ namespace OCA\Activity\Tests\BackgroundJob;
 use OCA\Activity\BackgroundJob\EmailNotification;
 use OCA\Activity\Tests\TestCase;
 
+/**
+ * Class EmailNotificationTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests\BackgroundJob
+ */
 class EmailNotificationTest extends TestCase {
 	public function constructAndRunData() {
 		return [

@@ -27,6 +27,12 @@ use OCA\Activity\Data;
 use OCA\Activity\Hooks;
 use OCP\Activity\IExtension;
 
+/**
+ * Class HooksDeleteUserTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests
+ */
 class HooksDeleteUserTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();

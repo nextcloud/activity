@@ -13,6 +13,12 @@
 
 namespace OCA\Activity\Tests;
 
+/**
+ * Class PersonalTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests
+ */
 class PersonalTest extends TestCase {
 	public function testInclude() {
 		$settingsPage = include '../personal.php';
