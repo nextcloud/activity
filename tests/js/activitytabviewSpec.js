@@ -31,8 +31,8 @@ describe('ActivityTabView', function() {
 			tabView.setFileInfo(fileInfo);
 			expect(fetchStub.calledOnce).toEqual(true);
 			var url = OC.parseQueryString(tabView.collection.url());
-			expect(url.objectid).toEqual('123');
-			expect(url.objecttype).toEqual('files');
+			expect(url.object_id).toEqual('123');
+			expect(url.object_type).toEqual('files');
 		});
 
 		it('renders loading icon while fetching activities', function() {
