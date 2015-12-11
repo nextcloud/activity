@@ -50,6 +50,7 @@ class BaseFormatterTest extends TestCase {
 			['para<m>eter1', false, true, 'para<m>eter1'],
 			['para<m>eter1', true, false, '<strong>para&lt;m&gt;eter1</strong>'],
 			['para<m>eter1', false, false, 'para<m>eter1'],
+			['para<m>eter1', null, null, '<parameter>para&lt;m&gt;eter1</parameter>'],
 		];
 	}
 

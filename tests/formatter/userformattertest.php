@@ -82,6 +82,7 @@ class UserFormatterTest extends TestCase {
 			[false, true, '"remote user"'],
 			[true, false, '<strong>"remote user"</strong>'],
 			[false, false, '"remote user"'],
+			[null, null, '<user display-name="&quot;remote user&quot;"></user>'],
 		];
 	}
 
@@ -141,6 +142,8 @@ class UserFormatterTest extends TestCase {
 			['user2', $this->getUser('Display'), true, false, true, 'Display'],
 			['user3', $this->getUser('Display'), true, true, false, '<div class="avatar" data-user="user3"></div><strong>Display</strong>'],
 			['user4', $this->getUser('Display'), true, false, false, 'Display'],
+			['user5', $this->getUser('Display5'), true, null, null, '<user display-name="Display5">user5</user>'],
+			['user5', $this->getUser('Display5'), false, null, null, '<user display-name="Display5">user5</user>'],
 		];
 	}
 
