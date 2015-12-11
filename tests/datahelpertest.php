@@ -226,12 +226,13 @@ class DataHelperTest extends TestCase {
 					'message' => 'message1',
 					'messageparams_array' => [],
 					'subjectparams' => [],
+					'subject_prepared' => 'translation1',
 					'subjectformatted' => [
-						'trimmed' => 'translation1',
-						'full' => 'translation2',
+						'trimmed' => 'translation2',
+						'full' => 'translation3',
 						'markup' => [
-							'trimmed' => 'translation3',
-							'full' => 'translation4',
+							'trimmed' => 'translation4',
+							'full' => 'translation5',
 						],
 					],
 				],
@@ -251,12 +252,13 @@ class DataHelperTest extends TestCase {
 					'subjectparams_array' => [],
 					'message' => 'message1',
 					'messageparams' => [],
+					'message_prepared' => 'translation1',
 					'messageformatted' => [
-						'trimmed' => 'translation1',
-						'full' => 'translation2',
+						'trimmed' => 'translation2',
+						'full' => 'translation3',
 						'markup' => [
-							'trimmed' => 'translation3',
-							'full' => 'translation4',
+							'trimmed' => 'translation4',
+							'full' => 'translation5',
 						],
 					],
 				],
@@ -276,9 +278,10 @@ class DataHelperTest extends TestCase {
 
 		global $call;
 		$call = 0;
-		$instance->expects($this->exactly(4))
+		$instance->expects($this->exactly(5))
 			->method('translation')
 			->withConsecutive(
+				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], null, null],
 				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], true, false],
 				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], false, false],
 				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], true, true],

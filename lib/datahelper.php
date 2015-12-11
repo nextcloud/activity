@@ -30,7 +30,6 @@ use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
-use OCP\Util;
 
 class DataHelper {
 	/** @var \OCP\Activity\IManager */

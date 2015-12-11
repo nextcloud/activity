@@ -19,28 +19,25 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\Util;
 
 class FeedTest extends TestCase {
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \OCP\IConfig|\PHPUnit_Framework_MockObject_MockObject */
 	protected $config;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \OCP\IRequest|\PHPUnit_Framework_MockObject_MockObject */
 	protected $request;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \OCA\Activity\Data|\PHPUnit_Framework_MockObject_MockObject */
 	protected $data;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \OCA\Activity\GroupHelper|\PHPUnit_Framework_MockObject_MockObject */
 	protected $helper;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
-	protected $navigation;
-
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \OCA\Activity\UserSettings|\PHPUnit_Framework_MockObject_MockObject */
 	protected $userSettings;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \OCP\Activity\IManager|\PHPUnit_Framework_MockObject_MockObject */
 	protected $manager;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var \OCP\IUserSession|\PHPUnit_Framework_MockObject_MockObject */
 	protected $session;
 
 	/** @var \OCP\IL10N */
@@ -58,9 +55,6 @@ class FeedTest extends TestCase {
 		$this->helper = $this->getMockBuilder('OCA\Activity\GroupHelper')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->navigation = $this->getMockBuilder('OCA\Activity\Navigation')
-			->disableOriginalConstructor()
-			->getMock();
 		$this->userSettings = $this->getMockBuilder('OCA\Activity\UserSettings')
 			->disableOriginalConstructor()
 			->getMock();
@@ -74,13 +68,18 @@ class FeedTest extends TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
+		/** @var $urlGenerator \OCP\IURLGenerator|\PHPUnit_Framework_MockObject_MockObject */
+		$urlGenerator = $this->getMockBuilder('OCP\IURLGenerator')
+			->disableOriginalConstructor()
+			->getMock();
+
 		$this->controller = new Feed(
 			'activity',
 			$this->request,
 			$this->data,
 			$this->helper,
 			$this->userSettings,
-			$this->getMockBuilder('OCP\IURLGenerator')->disableOriginalConstructor()->getMock(),
+			$urlGenerator,
 			$this->manager,
 			\OC::$server->getL10NFactory(),
 			$this->config,
@@ -105,8 +104,8 @@ class FeedTest extends TestCase {
 	public function testShow($acceptHeader, $expectedHeader) {
 		$this->mockUserSession('test');
 		$this->data->expects($this->any())
-			->method('read')
-			->willReturn([]);
+			->method('get')
+			->willReturn(['data' => []]);
 		if ($acceptHeader !== null) {
 			$this->request->expects($this->any())
 				->method('getHeader')

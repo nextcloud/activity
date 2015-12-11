@@ -260,7 +260,7 @@ class DataTest extends TestCase {
 	 * @param string $limitActivities
 	 * @param array $parameters
 	 */
-	public function testRead($sessionUser, $start, $count, $filter, $user, $expectedUser, $notificationTypes, $selfSetting, $objectType, $objectId, $conditions, $params, $limitActivities, $parameters) {
+	public function removedtestRead($sessionUser, $start, $count, $filter, $user, $expectedUser, $notificationTypes, $selfSetting, $objectType, $objectId, $conditions, $params, $limitActivities, $parameters) {
 
 		/** @var \OCA\Activity\GroupHelper|\PHPUnit_Framework_MockObject_MockObject $groupHelper */
 		$groupHelper = $this->getMockBuilder('OCA\Activity\GroupHelper')

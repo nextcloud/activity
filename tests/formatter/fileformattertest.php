@@ -156,7 +156,7 @@ class FileFormatterTest extends TestCase {
 				->willReturn(42);
 		}
 
-		$this->urlGenerator->expects($allowHtml ? $this->once() : $this->never())
+		$this->urlGenerator->expects($this->once())
 			->method('linkTo')
 			->with('files', 'index.php', $this->anything())
 			->willReturnCallback(function($app, $file, $parameters) {
