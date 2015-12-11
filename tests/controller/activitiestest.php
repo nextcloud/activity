@@ -17,6 +17,12 @@ use OCA\Activity\Controller\Activities;
 use OCA\Activity\Tests\TestCase;
 use OCP\Template;
 
+/**
+ * Class ActivitiesTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests\Controller
+ */
 class ActivitiesTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $request;
@@ -50,6 +56,9 @@ class ActivitiesTest extends TestCase {
 
 	/** @var \OCA\Activity\ViewInfoCache|\PHPUnit_Framework_MockObject_MockObject */
 	protected $infoCache;
+
+	/** @var \OCP\IAvatarManager|\PHPUnit_Framework_MockObject_MockObject */
+	protected $avatarManager;
 
 	/** @var \OCP\IL10N */
 	protected $l10n;
@@ -90,10 +99,21 @@ class ActivitiesTest extends TestCase {
 		$this->infoCache = $this->getMockBuilder('OCA\Activity\ViewInfoCache')
 			->disableOriginalConstructor()
 			->getMock();
+		$this->avatarManager = $this->getMockBuilder('OCP\IAvatarManager')
+			->disableOriginalConstructor()
+			->getMock();
 
 		$this->request = $this->getMock('OCP\IRequest');
 
 		$this->controller = $this->getController();
+
+		$this->overwriteService('AvatarManager', $this->avatarManager);
+	}
+
+	public function tearDown() {
+
+		$this->restoreService('AvatarManager');
+		parent::tearDown();
 	}
 
 	protected function getController(array $methods = []) {
@@ -143,6 +163,16 @@ class ActivitiesTest extends TestCase {
 		$this->navigation->expects($this->any())
 			->method('getTemplate')
 			->willReturn($template);
+
+		$avatar = $this->getMockBuilder('OCP\IAvatar')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->avatarManager->expects($this->once())
+			->method('getAvatar')
+			->willReturn($avatar);
+		$avatar->expects($this->once())
+			->method('exists')
+			->willReturn(false);
 
 		$templateResponse = $this->controller->showList();
 		$this->assertInstanceOf('\OCP\AppFramework\Http\TemplateResponse', $templateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');

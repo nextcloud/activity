@@ -26,6 +26,12 @@ use Doctrine\DBAL\Driver\Statement;
 use OCA\Activity\Data;
 use OCP\Activity\IExtension;
 
+/**
+ * Class DataDeleteActivitiesTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests
+ */
 class DataDeleteActivitiesTest extends TestCase {
 	/** @var \OCA\Activity\Data */
 	protected $data;

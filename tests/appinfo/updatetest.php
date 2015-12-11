@@ -24,6 +24,12 @@ namespace OCA\Activity\Tests\AppInfo;
 
 use OCA\Activity\Tests\TestCase;
 
+/**
+ * Class UpdateTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests\AppInfo
+ */
 class UpdateTest extends TestCase {
 	public function testJobList() {
 		/** @var \OCP\BackgroundJob\IJobList|\PHPUnit_Framework_MockObject_MockObject $jobList */

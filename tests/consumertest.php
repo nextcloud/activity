@@ -27,6 +27,12 @@ use OCA\Activity\Consumer;
 use OCP\Activity\IConsumer;
 use OCP\DB;
 
+/**
+ * Class ConsumerTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests
+ */
 class ConsumerTest extends TestCase {
 	/** @var \OCA\Activity\Consumer */
 	protected $consumer;

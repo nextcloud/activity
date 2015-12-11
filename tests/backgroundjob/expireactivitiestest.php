@@ -18,6 +18,12 @@ use OCA\Activity\Data;
 use OCA\Activity\Tests\TestCase;
 use OCP\IConfig;
 
+/**
+ * Class ExpireActivitiesTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests\BackgroundJob
+ */
 class ExpireActivitiesTest extends TestCase {
 	public function dataExecute() {
 		return [

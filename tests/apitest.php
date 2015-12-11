@@ -27,6 +27,12 @@ use OCA\Activity\Data;
 use OCA\Activity\Tests\Mock\Extension;
 use OCP\Activity\IExtension;
 
+/**
+ * Class ApiTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests
+ */
 class ApiTest extends TestCase {
 	protected $originalWEBROOT;
 

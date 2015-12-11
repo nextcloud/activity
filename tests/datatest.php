@@ -28,6 +28,12 @@ use OCA\Activity\Tests\Mock\Extension;
 use OCP\Activity\IExtension;
 use OCP\IUser;
 
+/**
+ * Class DataTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests
+ */
 class DataTest extends TestCase {
 	/** @var \OCA\Activity\Data */
 	protected $data;

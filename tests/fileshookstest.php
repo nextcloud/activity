@@ -29,7 +29,11 @@ use OCP\Files\NotFoundException;
 use OCP\Share;
 
 /**
+ * Class FilesHooksTest
  * Testing the public methods with internals being mocked out
+ *
+ * @group DB
+ * @package OCA\Activity
  */
 class FilesHooksTest extends TestCase {
 	/** @var \OCA\Activity\FilesHooks */
