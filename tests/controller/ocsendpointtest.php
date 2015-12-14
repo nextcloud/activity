@@ -142,6 +142,51 @@ class OCSEndPointTest extends TestCase {
 		}
 	}
 
+	public function dataParameters() {
+		return [
+			[['limit' => 25], ['limit' => 25]],
+			[['filter' => 'anything'], []],
+			[['filter' => 'two'], []],
+		];
+	}
+
+	/**
+	 * @dataProvider dataParameters
+	 *
+	 * @param array $parameters
+	 * @param array $expected
+	 */
+	public function testGetDefault(array $parameters, array $expected) {
+		$controller = $this->getController([
+			'get'
+		]);
+
+		$expected['filter'] = 'all';
+
+		$controller->expects($this->once())
+			->method('get')
+			->with($expected);
+
+		$controller->getDefault($parameters);
+	}
+
+	/**
+	 * @dataProvider dataParameters
+	 *
+	 * @param array $parameters
+	 */
+	public function testGetFilter(array $parameters) {
+		$controller = $this->getController([
+			'get'
+		]);
+
+		$controller->expects($this->once())
+			->method('get')
+			->with($parameters);
+
+		$controller->getFilter($parameters);
+	}
+
 	public function dataGetPreviewInvalidPaths() {
 		return [
 			['author', 42, '/path', null, null],
