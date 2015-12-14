@@ -321,6 +321,69 @@ class DataTest extends TestCase {
 		));
 	}
 
+	/**
+	 * @expectedException \BadMethodCallException
+	 * @expectedExceptionMessage No settings enabled
+	 * @expectedExceptionCode 3
+	 */
+	public function testGetNoSettings() {
+		/** @var \OCA\Activity\GroupHelper|\PHPUnit_Framework_MockObject_MockObject $groupHelper */
+		$groupHelper = $this->getMockBuilder('OCA\Activity\GroupHelper')
+			->disableOriginalConstructor()
+			->getMock();
+		$groupHelper->expects($this->once())
+			->method('setUser')
+			->with('user1');
+
+		/** @var \OCA\Activity\UserSettings|\PHPUnit_Framework_MockObject_MockObject $settings */
+		$settings = $this->getMockBuilder('OCA\Activity\UserSettings')
+			->disableOriginalConstructor()
+			->getMock();
+		$settings->expects($this->once())
+			->method('getNotificationTypes')
+			->with('user1', 'stream')
+			->willReturn(['settings']);
+
+		/** @var ActivityManager|\PHPUnit_Framework_MockObject_MockObject $activityManager */
+		$activityManager = $this->getMockBuilder('OCP\Activity\IManager')
+			->disableOriginalConstructor()
+			->getMock();
+		$activityManager->expects($this->any())
+			->method('filterNotificationTypes')
+			->with(['settings'], 'filter1')
+			->willReturn([]);
+		$activityManager->expects($this->never())
+			->method('getQueryForFilter');
+
+		/** @var \OCA\Activity\Data|\PHPUnit_Framework_MockObject_MockObject $data */
+		$data = new \OCA\Activity\Data(
+			$activityManager,
+			\OC::$server->getDatabaseConnection(),
+			$this->session
+		);
+
+		$data->get($groupHelper, $settings, 'user1', 0, 0, 'asc', 'filter1');
+	}
+
+	/**
+	 * @expectedException \OutOfBoundsException
+	 * @expectedExceptionMessage Invalid user
+	 * @expectedExceptionCode 1
+	 */
+	public function testGetNoUser() {
+		/** @var \OCA\Activity\GroupHelper|\PHPUnit_Framework_MockObject_MockObject $groupHelper */
+		$groupHelper = $this->getMockBuilder('OCA\Activity\GroupHelper')
+			->disableOriginalConstructor()
+			->getMock();
+
+		/** @var \OCA\Activity\UserSettings|\PHPUnit_Framework_MockObject_MockObject $settings */
+		$settings = $this->getMockBuilder('OCA\Activity\UserSettings')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$this->data->get($groupHelper, $settings, '', 0, 0, 'asc', '');
+	}
+
 	public function dataSetOffsetFromSince() {
 		return [
 			['ASC', '`timestamp` >= \'123465789\'', '`activity_id` > \'{id}\'', null, null, null],

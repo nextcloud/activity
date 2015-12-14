@@ -27,6 +27,7 @@ Name | Type | Description
 Status Code | Description
 ----------- | -----------
 `200 OK` |  Activities
+`204 No Content` |  The user has selected no activities to be listed in the stream
 `304 Not Modified` | No new activities
 `403 Forbidden` | The offset activity belongs to a different user
 `403 Forbidden` | The user is not logged in

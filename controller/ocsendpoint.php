@@ -208,7 +208,11 @@ class OCSEndPoint {
 				$this->objectId
 			);
 		} catch (\OutOfBoundsException $e) {
+			// Invalid since argument
 			return new \OC_OCS_Result(null, Http::STATUS_FORBIDDEN);
+		} catch (\BadMethodCallException $e) {
+			// No activity settings enabled
+			return new \OC_OCS_Result(null, Http::STATUS_NO_CONTENT);
 		}
 
 		$headers = $this->generateHeaders($response['headers'], $response['has_more']);

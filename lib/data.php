@@ -186,6 +186,7 @@ class Data {
 	 * @return array
 	 *
 	 * @throws \OutOfBoundsException if the user (Code: 1) or the since (Code: 2) is invalid
+	 * @throws \BadMethodCallException if the user has selected to display no types for this filter (Code: 3)
 	 */
 	public function get(GroupHelper $groupHelper, UserSettings $userSettings, $user, $since, $limit, $sort, $filter, $objectType = '', $objectId = 0) {
 		// get current user
@@ -200,7 +201,7 @@ class Data {
 
 		// We don't want to display any activities
 		if (empty($enabledNotifications)) {
-			return array();
+			throw new \BadMethodCallException('No settings enabled', 3);
 		}
 
 		$query = $this->connection->getQueryBuilder();
