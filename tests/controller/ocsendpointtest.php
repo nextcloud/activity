@@ -14,7 +14,9 @@
 namespace OCA\Activity\Tests\Controller;
 
 use OCA\Activity\Controller\OCSEndPoint;
+use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\Tests\TestCase;
+use OCP\AppFramework\Http;
 
 /**
  * Class OCSEndPointTest
@@ -358,6 +360,56 @@ class OCSEndPointTest extends TestCase {
 			->with($parameters);
 
 		$controller->getFilter($parameters);
+	}
+
+	public function dataGetInvalid() {
+		return [
+			[new InvalidFilterException(), null, Http::STATUS_NOT_FOUND],
+			[new \OutOfBoundsException(), null, Http::STATUS_FORBIDDEN],
+			[null, new \OutOfBoundsException(), Http::STATUS_FORBIDDEN],
+			[null, new \BadMethodCallException(), Http::STATUS_NO_CONTENT],
+			[null, false, Http::STATUS_NOT_MODIFIED],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetInvalid
+	 * @param \Exception $readParamsThrows
+	 * @param bool|\Exception $dataGetThrows
+	 * @param int $expected
+	 */
+	public function testGetInvalid($readParamsThrows, $dataGetThrows, $expected) {
+		$controller = $this->getController(['readParameters', 'generateHeaders']);
+		$controller->expects($this->any())
+			->method('generateHeaders')
+			->willReturnArgument(0);
+
+		if ($readParamsThrows instanceof \Exception) {
+			$controller->expects($this->once())
+				->method('readParameters')
+				->willThrowException($readParamsThrows);
+		}
+		if ($dataGetThrows instanceof \Exception) {
+			$this->data->expects($this->once())
+				->method('get')
+				->willThrowException($dataGetThrows);
+		} else if ($dataGetThrows === false) {
+			$this->data->expects($this->once())
+				->method('get')
+				->willReturn([
+					'data' => [],
+					'headers' => ['X-Activity-First-Known' => 23],
+					'has_more' => false,
+				]);
+		} else {
+			$controller->expects($this->never())
+				->method('generateHeaders');
+		}
+
+		/** @var \OC_OCS_Result $result */
+		$result = $this->invokePrivate($controller, 'get', [[]]);
+
+		$this->assertSame($expected, $result->getStatusCode());
 	}
 
 	public function dataGenerateHeaders() {
