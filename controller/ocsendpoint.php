@@ -253,7 +253,7 @@ class OCSEndPoint {
 	 * @return array
 	 */
 	protected function generateHeaders(array $headers, $hasMoreActivities) {
-		if ($hasMoreActivities) {
+		if ($hasMoreActivities && isset($headers['X-Activity-Last-Given'])) {
 			// Set the "Link" header for the next page
 			$nextPageParameters = [
 				'since' => $headers['X-Activity-Last-Given'],
