@@ -308,13 +308,13 @@ class Data {
 		/**
 		 * Couldn't find the since, so find the oldest one and set the header
 		 */
-		$query = $this->connection->getQueryBuilder();
-		$query->select('activity_id')
+		$fetchQuery = $this->connection->getQueryBuilder();
+		$fetchQuery->select('activity_id')
 			->from('activity')
-			->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)))
+			->where($fetchQuery->expr()->eq('affecteduser', $fetchQuery->createNamedParameter($user)))
 			->orderBy('timestamp', $sort)
 			->setMaxResults(1);
-		$result = $query->execute();
+		$result = $fetchQuery->execute();
 		$activity = $result->fetch();
 		$result->closeCursor();
 

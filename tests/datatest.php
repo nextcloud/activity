@@ -321,6 +321,89 @@ class DataTest extends TestCase {
 		));
 	}
 
+	public function dataSetOffsetFromSince() {
+		return [
+			['ASC', '`timestamp` >= \'123465789\'', '`activity_id` > \'{id}\'', null, null, null],
+			['DESC', '`timestamp` <= \'123465789\'', '`activity_id` < \'{id}\'', null, null, null],
+			['DESC', null, null, 'invalid-user', null, null],
+			['DESC', null, null, null, 1, 'X-Activity-First-Known'],
+			['DESC', null, null, 'user', false, null],
+		];
+	}
+
+	/**
+	 * @dataProvider dataSetOffsetFromSince
+	 *
+	 * @param string $sort
+	 * @param string $timestampWhere
+	 * @param string $idWhere
+	 * @param string $offsetUser
+	 * @param int $offsetId
+	 * @param string $expectedHeader
+	 */
+	public function testSetOffsetFromSince($sort, $timestampWhere, $idWhere, $offsetUser, $offsetId, $expectedHeader) {
+		$this->deleteTestActivities();
+		$user = $this->getUniqueID('testing');
+		if ($offsetUser === null) {
+			$offsetUser = $user;
+		} else if ($offsetUser === 'invalid-user') {
+			$this->setExpectedException('OutOfBoundsException', 'Invalid since', 2);
+		}
+
+		$connection = \OC::$server->getDatabaseConnection();
+		$query = $connection->getQueryBuilder();
+		$query->insert('activity')
+			->values([
+				'app' => $query->createNamedParameter('test'),
+				'affecteduser' => $query->createNamedParameter($user),
+				'timestamp' => 123465789,
+			])
+			->execute();
+		$id = $query->getLastInsertId();
+
+		$mock = $this->getMockBuilder('OCP\DB\QueryBuilder\IQueryBuilder')
+			->disableOriginalConstructor()
+			->getMock();
+		$mock->expects($this->any())
+			->method('expr')
+			->willReturn($query->expr());
+		$mock->expects($this->any())
+			->method('createNamedParameter')
+			->willReturnCallback(function ($arg) use ($query) {
+				return $query->expr()->literal($arg);
+			});
+		if ($timestampWhere !== null && $idWhere !== null) {
+			$mock->expects($this->exactly(2))
+				->method('andWhere')
+				->withConsecutive(
+					[$timestampWhere],
+					[str_replace('{id}', $id, $idWhere)]
+				);
+		} else {
+			$mock->expects($this->never())
+				->method('andWhere');
+		}
+
+		if ($offsetId === null) {
+			$offsetId = $id;
+		} else if ($offsetId === false) {
+			$offsetId = 0;
+		} else {
+			$offsetId += $id;
+		}
+
+		$headers = $this->invokePrivate($this->data, 'setOffsetFromSince', [$mock, $offsetUser, $offsetId, $sort]);
+
+		if ($expectedHeader) {
+			$this->assertArrayHasKey($expectedHeader, $headers);
+			$this->assertEquals($id, $headers[$expectedHeader]);
+		} else {
+			$this->assertCount(0, $headers);
+		}
+
+		$this->deleteTestActivities();
+	}
+
 	/**
 	 * Delete all testing activities
 	 */
