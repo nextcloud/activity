@@ -470,18 +470,20 @@ class DataTest extends TestCase {
 	/**
 	 * Delete all testing activities
 	 */
-	public function deleteTestActivities() {
-		$connection = \OC::$server->getDatabaseConnection();
-		$query = $connection->prepare('DELETE FROM `*PREFIX*activity` WHERE `app` = ?');
-		$query->execute(['test']);
+	protected function deleteTestActivities() {
+		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$query->delete('activity')
+			->where($query->expr()->eq('app', $query->createNamedParameter('test')));
+		$query->execute();
 	}
 
 	/**
 	 * Delete all testing mails
 	 */
-	public function deleteTestMails() {
-		$connection = \OC::$server->getDatabaseConnection();
-		$query = $connection->prepare('DELETE FROM `*PREFIX*activity_mq` WHERE `amq_appid` = ?');
-		$query->execute(['test']);
+	protected function deleteTestMails() {
+		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$query->delete('activity_mq')
+			->where($query->expr()->eq('amq_appid', $query->createNamedParameter('test')));
+		$query->execute();
 	}
 }
