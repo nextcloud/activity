@@ -397,6 +397,9 @@ class DataTest extends TestCase {
 				'app' => $query->createNamedParameter('test'),
 				'affecteduser' => $query->createNamedParameter($user),
 				'timestamp' => 123465789,
+				'subject' => $query->createNamedParameter('subject'),
+				'subjectparams' => $query->createNamedParameter('subjectparams'),
+				'priority' => 1,
 			])
 			->execute();
 		$id = $query->getLastInsertId();
@@ -465,6 +468,9 @@ class DataTest extends TestCase {
 				'type' => $query->createNamedParameter($type),
 				'object_type' => $query->createNamedParameter($objectType),
 				'object_id' => $query->createNamedParameter($objectId),
+				'subject' => $query->createNamedParameter('subject'),
+				'subjectparams' => $query->createNamedParameter('subjectparams'),
+				'priority' => 1,
 			])
 			->execute();
 
