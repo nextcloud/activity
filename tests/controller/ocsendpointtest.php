@@ -388,6 +388,9 @@ class OCSEndPointTest extends TestCase {
 			$controller->expects($this->once())
 				->method('readParameters')
 				->willThrowException($readParamsThrows);
+		} else {
+			$controller->expects($this->once())
+				->method('readParameters');
 		}
 		if ($dataGetThrows instanceof \Exception) {
 			$this->data->expects($this->once())
@@ -409,7 +412,70 @@ class OCSEndPointTest extends TestCase {
 		/** @var \OC_OCS_Result $result */
 		$result = $this->invokePrivate($controller, 'get', [[]]);
 
+		$this->assertInstanceOf('\OC_OCS_Result', $result);
 		$this->assertSame($expected, $result->getStatusCode());
+	}
+
+	public function dataGet() {
+		return [
+			[123456789, 'files', 42, [], false, 0, ['object_type' => 'files', 'object_id' => 42, 'datetime' => date('c', 123456789)]],
+			[12345678, 'calendar', 23, [], true, 0, ['object_type' => 'calendar', 'object_id' => 23, 'datetime' => date('c', 12345678), 'previews' => []]],
+			[
+				12345678, 'files', 23, ['files' => [], 'affecteduser' => 'user1', 'file' => 'file.txt'],
+				true, 1,
+				['object_type' => 'files', 'object_id' => 23, 'files' => [], 'affecteduser' => 'user1', 'file' => 'file.txt', 'datetime' => date('c', 12345678), 'previews' => [['preview']]]
+			],
+			[
+				12345678, 'files', 23, ['files' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'affecteduser' => 'user1'],
+				true, 2,
+				['object_type' => 'files', 'object_id' => 23, 'files' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'affecteduser' => 'user1', 'datetime' => date('c', 12345678), 'previews' => [['preview'], ['preview']]]
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGet
+	 * @param int $time
+	 * @param string $objectType
+	 * @param int $objectId
+	 * @param array $additionalArgs
+	 * @param bool $loadPreviews
+	 * @param int $numGetPreviewCalls
+	 * @param array $expected
+	 */
+	public function testGet($time, $objectType, $objectId, array $additionalArgs, $loadPreviews, $numGetPreviewCalls, array $expected) {
+		$controller = $this->getController(['readParameters', 'generateHeaders', 'getPreview']);
+		$controller->expects($this->any())
+			->method('generateHeaders')
+			->willReturnArgument(0);
+
+		$controller->expects($this->once())
+			->method('readParameters');
+
+		$controller->expects($this->exactly($numGetPreviewCalls))
+			->method('getPreview')
+			->willReturn(['preview']);
+
+		$this->invokePrivate($controller, 'loadPreviews', [$loadPreviews]);
+
+		$this->data->expects($this->once())
+			->method('get')
+			->willReturn([
+				'data' => [
+					array_merge(['timestamp' => $time, 'object_type' => $objectType, 'object_id' => $objectId], $additionalArgs),
+				],
+				'headers' => ['X-Activity-First-Known' => 23],
+				'has_more' => false,
+			]);
+
+		/** @var \OC_OCS_Result $result */
+		$result = $this->invokePrivate($controller, 'get', [[]]);
+
+		$this->assertInstanceOf('\OC_OCS_Result', $result);
+		$this->assertSame(100, $result->getStatusCode());
+		$this->assertSame([
+			$expected,
+		], $result->getData());
 	}
 
 	public function dataGenerateHeaders() {
