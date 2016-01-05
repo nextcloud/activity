@@ -10,6 +10,7 @@ OC.L10N.register(
     "This stream will show events like additions, changes & shares" : "Овој стрим ќе прикажува настани како додатоци, промени и споделувања",
     "There are no events for this filter" : "Нема настани за овој филтер",
     "Today" : "Денеска",
+    "Yesterday" : "Вчера",
     "in %s" : "во %s",
     "\"remote user\"" : "\"далечен корисник\"",
     "Activity notification" : "Известување за Активности",
