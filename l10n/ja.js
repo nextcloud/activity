@@ -25,7 +25,7 @@ OC.L10N.register(
     "_%s and <strong %s>%n more</strong>_::_%s and <strong %s>%n more</strong>_" : ["%s と <strong %s>その他 %n 個</strong>"],
     "_%s and %n more_::_%s and %n more_" : ["%s とその他 %n 個"],
     "Hello %s," : "%s さんこんにちは、",
-    "You are receiving this email because the following things happened at %s" : "このメールは%sで次のことがあったために送信されました。",
+    "You are receiving this email because the following things happened at %s" : "%s で以下のような更新がありました。このメールはその内容をお知らせします。",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* と その他 %n 個"],
     "Notifications" : "通知",
