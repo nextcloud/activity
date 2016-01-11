@@ -156,7 +156,7 @@ $(function(){
 
 		appendActivityToContainer: function (activity) {
 			activity.timestamp = moment(activity.datetime).valueOf();
-			this.makeSureDateGroupExists();
+			this.makeSureDateGroupExists(activity.timestamp);
 			this.addActivity(activity);
 		},
 
