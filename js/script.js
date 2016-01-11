@@ -194,6 +194,10 @@ $(function(){
 		},
 
 		addActivity: function(activity) {
+			if (activity.subject_prepared.toString().indexOf('<file') >= 0) {
+				activity.link = '';
+			}
+
 			var content = ''
 				+ '<div class="box">' + "\n"
 				+ '	<div class="messagecontainer">' + "\n"
