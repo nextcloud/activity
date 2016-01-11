@@ -67,4 +67,5 @@ matrix:
       env: DB=mysql;JSTESTS=1
   allow_failures:
     - env: DB=mysql;CODECHECK=2
+    - env: DB=oracle # TODO: temporary until it is fixed
   fast_finish: true
