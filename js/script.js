@@ -355,12 +355,14 @@ $(function(){
 		 * @returns {String}
 		 */
 		parseUserParameters: function(message, useHtml) {
+			var self = this;
+
 			return message.replace(/<user\ display\-name=\"(.*?)\">(.*?)<\/user>/g, function (match, displayName, userId) {
 				if (useHtml) {
 					var userString = '<strong>' + displayName +  '</strong>';
-					// TODO if (avatars are disabled) {
-					userString = '<div class="avatar" data-user="' + userId + '" data-user-display-name="' + displayName + '"></div>' + userString;
-					// TODO }
+					if (self.$container.data('avatars-enabled') === 'yes') {
+						userString = '<div class="avatar" data-user="' + userId + '" data-user-display-name="' + displayName + '"></div>' + userString;
+					}
 
 					return userString;
 				} else {

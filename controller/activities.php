@@ -35,6 +35,7 @@ use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\Files;
 use OCP\Files\IMimeTypeDetector;
+use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IPreview;
 use OCP\IRequest;
@@ -49,20 +50,26 @@ class Activities extends Controller {
 	/** @var \OCA\Activity\Navigation */
 	protected $navigation;
 
+	/** @var \OCP\IConfig */
+	protected $config;
+
 	/**
 	 * constructor of the controller
 	 *
 	 * @param string $appName
 	 * @param IRequest $request
+	 * @param IConfig $config
 	 * @param Data $data
 	 * @param Navigation $navigation
 	 */
 	public function __construct($appName,
 								IRequest $request,
+								IConfig $config,
 								Data $data,
 								Navigation $navigation) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
+		$this->config = $config;
 		$this->navigation = $navigation;
 	}
 
@@ -78,6 +85,7 @@ class Activities extends Controller {
 
 		return new TemplateResponse('activity', 'stream.body', [
 			'appNavigation'	=> $this->navigation->getTemplate($filter),
+			'avatars'		=> $this->config->getSystemValue('enable_avatars', true) ? 'yes' : 'no',
 			'filter'		=> $filter,
 		]);
 	}

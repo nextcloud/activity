@@ -37,7 +37,7 @@ style('activity', 'style');
 		<p><?php p($l->t('This stream will show events like additions, changes & shares')); ?></p>
 	</div>
 
-	<div id="container" data-activity-filter="<?php p($_['filter']) ?>">
+	<div id="container" data-activity-filter="<?php p($_['filter']) ?>" data-avatars-enabled="<?php p($_['avatars']) ?>">
 	</div>
 
 	<div id="loading_activities" class="icon-loading"></div>

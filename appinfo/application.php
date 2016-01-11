@@ -224,6 +224,7 @@ class Application extends App {
 			return new Activities(
 				$c->query('AppName'),
 				$server->getRequest(),
+				$server->getConfig(),
 				$c->query('ActivityData'),
 				$c->query('Navigation')
 			);
