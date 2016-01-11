@@ -54,6 +54,7 @@ $(function(){
 		$content: $('#app-content'),
 		firstKnownId: 0,
 		lastGivenId: 0,
+		activities: {},
 
 		prefill: function () {
 			this.ignoreScroll += 1;
@@ -157,6 +158,8 @@ $(function(){
 		appendActivityToContainer: function (activity) {
 			activity.timestamp = moment(activity.datetime).valueOf();
 			this.makeSureDateGroupExists(activity.timestamp);
+
+			this.activities[activity.activity_id] = activity;
 			this.addActivity(activity);
 		},
 
@@ -194,14 +197,15 @@ $(function(){
 		},
 
 		addActivity: function(activity) {
-			var parsedSubject = this.parseMessage(activity.subject_prepared);
+			subject = activity.subject_prepared;
+			var parsedSubject = this.parseMessage(subject);
 
 			if (parsedSubject.indexOf('<a') >= 0) {
 				activity.link = '';
 			}
 
 			var content = ''
-				+ '<div class="box">' + "\n"
+				+ '<div class="box" data-activity-id="' + activity.activity_id + '">' + "\n"
 				+ '	<div class="messagecontainer">' + "\n"
 
 				+ '		<div class="activity-icon ' + ((activity.typeicon) ? escapeHTML(activity.typeicon) + ' svg' : '') + '"></div>' + "\n"
@@ -244,10 +248,11 @@ $(function(){
 		 * Parses a message
 		 *
 		 * @param {String} message
+		 * @param {boolean} forceFullMessage
 		 * @returns {String}
 		 */
-		parseMessage: function (message) {
-			var parsedMessage = this.parseCollection(message);
+		parseMessage: function (message, forceFullMessage) {
+			var parsedMessage = this.parseCollection(message, forceFullMessage || false);
 			parsedMessage = this.parseParameters(parsedMessage, true);
 			return parsedMessage;
 		},
@@ -256,12 +261,13 @@ $(function(){
 		 * Parses a collection tag
 		 *
 		 * @param {String} message
+		 * @param {boolean} forceFullMessage
 		 * @returns {String}
 		 */
-		parseCollection: function(message) {
+		parseCollection: function(message, forceFullMessage) {
 			var self = this;
 
-			return message.replace(/<collection>(.*?)<\/collection>/g, function (match, parameterString, a, b, c, d, e, f) {
+			return message.replace(/<collection>(.*?)<\/collection>/g, function (match, parameterString) {
 				var parameterList = parameterString.split('><'),
 					parameterListLength = parameterList.length,
 					parameters = [];
@@ -275,7 +281,7 @@ $(function(){
 						parameter = parameter + '>';
 					}
 
-					if (parameterListLength > 5 && i > 2) {
+					if (parameterListLength > 5 && i > 2 && !forceFullMessage) {
 						parameters.push(self.parseParameters(parameter, false));
 					} else {
 						parameters.push(self.parseParameters(parameter, true));
@@ -284,7 +290,7 @@ $(function(){
 
 				if (parameters.length === 1) {
 					return parameters.pop();
-				} else if (parameters.length <= 5) {
+				} else if (parameters.length <= 5 || forceFullMessage) {
 					var lastParameter = parameters.pop();
 					return t('activity', '{parameterList} and {lastParameter}', {
 						parameterList: parameters.join(t('activity', ', ')),
@@ -303,8 +309,8 @@ $(function(){
 						listLength - 3,
 						{
 							parameterList: firstParameters,
-							linkStart: '<strong class="has-tooltip" title="' + otherParameters + '">',
-							linkEnd: '</strong>'
+							linkStart: '<a class="activity-more-link" href="#"><strong class="has-tooltip" title="' + otherParameters + '">',
+							linkEnd: '</strong></a>'
 						},
 						{
 							escape: false
@@ -426,6 +432,8 @@ $(function(){
 		},
 
 		processElements: function ($element) {
+			var self = this;
+
 			$element.find('.avatar').each(function() {
 				var element = $(this);
 				if (element.data('user-display-name')) {
@@ -435,9 +443,19 @@ $(function(){
 				}
 			});
 
+			$element.find('.activity-more-link').click(function() {
+				var $moreElement = $(this),
+					activityId = $moreElement.closest('.box').data('activity-id'),
+					$subject = $moreElement.closest('.activitysubject');
+
+				var activity = self.activities[activityId];
+				$subject.html(self.parseMessage(activity.subject_prepared, true));
+				self.processElements($subject);
+			});
+
 			$element.find('.has-tooltip').tooltip({
 				placement: 'bottom'
-			})
+			});
 		}
 	};
 
