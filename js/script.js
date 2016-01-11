@@ -8,9 +8,9 @@
  *
  */
 $(function(){
-	var OCActivity={};
+	OCA.Activity = OCA.Activity || {};
 
-	OCActivity.Filter = {
+	OCA.Activity.Filter = {
 		filter: undefined,
 		$navigation: $('#app-navigation'),
 
@@ -29,25 +29,25 @@ $(function(){
 			}
 
 			this.$navigation.find('a[data-navigation=' + this.filter + ']').parent().removeClass('active');
-			OCActivity.InfinitScrolling.firstKnownId = 0;
-			OCActivity.InfinitScrolling.lastGivenId = 0;
+			OCA.Activity.InfinitScrolling.firstKnownId = 0;
+			OCA.Activity.InfinitScrolling.lastGivenId = 0;
 
 			this.filter = filter;
 
-			OCActivity.InfinitScrolling.$container.animate({ scrollTop: 0 }, 'slow');
-			OCActivity.InfinitScrolling.$container.children().remove();
+			OCA.Activity.InfinitScrolling.$container.animate({ scrollTop: 0 }, 'slow');
+			OCA.Activity.InfinitScrolling.$container.children().remove();
 			$('#emptycontent').addClass('hidden');
 			$('#no_more_activities').addClass('hidden');
 			$('#loading_activities').removeClass('hidden');
-			OCActivity.InfinitScrolling.ignoreScroll = 0;
+			OCA.Activity.InfinitScrolling.ignoreScroll = 0;
 
 			this.$navigation.find('a[data-navigation=' + filter + ']').parent().addClass('active');
 
-			OCActivity.InfinitScrolling.prefill();
+			OCA.Activity.InfinitScrolling.prefill();
 		}
 	};
 
-	OCActivity.InfinitScrolling = {
+	OCA.Activity.InfinitScrolling = {
 		ignoreScroll: 0,
 		$container: $('#container'),
 		lastDateGroup: null,
@@ -79,7 +79,7 @@ $(function(){
 			var self = this;
 
 			$.ajax({
-				url: OC.linkToOCS('apps/activity/api/v2/activity', 2) + OCActivity.Filter.filter + '?format=json&previews=true&since=' + self.lastGivenId,
+				url: OC.linkToOCS('apps/activity/api/v2/activity', 2) + OCA.Activity.Filter.filter + '?format=json&previews=true&since=' + self.lastGivenId,
 				type: 'GET',
 				beforeSend: function(xhr) {
 					xhr.setRequestHeader("Accept-Language", OC.getLocale());
@@ -138,7 +138,7 @@ $(function(){
 				// First page is empty - No activities :(
 				var $emptyContent = $('#emptycontent');
 				$emptyContent.removeClass('hidden');
-				if (OCActivity.Filter.filter == 'all') {
+				if (OCA.Activity.Filter.filter == 'all') {
 					$emptyContent.find('p').text(t('activity', 'This stream will show events like additions, changes & shares'));
 				} else {
 					$emptyContent.find('p').text(t('activity', 'There are no events for this filter'));
@@ -246,18 +246,18 @@ $(function(){
 		}
 	};
 
-	OC.Util.History.addOnPopStateHandler(_.bind(OCActivity.Filter._onPopState, OCActivity.Filter));
-	OCActivity.Filter.setFilter(OCActivity.InfinitScrolling.$container.attr('data-activity-filter'));
-	OCActivity.InfinitScrolling.$content.on('scroll', _.bind(OCActivity.InfinitScrolling.onScroll, OCActivity.InfinitScrolling));
+	OC.Util.History.addOnPopStateHandler(_.bind(OCA.Activity.Filter._onPopState, OCA.Activity.Filter));
+	OCA.Activity.Filter.setFilter(OCA.Activity.InfinitScrolling.$container.attr('data-activity-filter'));
+	OCA.Activity.InfinitScrolling.$content.on('scroll', _.bind(OCA.Activity.InfinitScrolling.onScroll, OCA.Activity.InfinitScrolling));
 
-	OCActivity.Filter.$navigation.find('a[data-navigation]').on('click', function (event) {
+	OCA.Activity.Filter.$navigation.find('a[data-navigation]').on('click', function (event) {
 		var filter = $(this).attr('data-navigation');
-		if (filter !== OCActivity.Filter.filter) {
+		if (filter !== OCA.Activity.Filter.filter) {
 			OC.Util.History.pushState({
 				filter: filter
 			});
 		}
-		OCActivity.Filter.setFilter(filter);
+		OCA.Activity.Filter.setFilter(filter);
 		event.preventDefault();
 	});
 
