@@ -68,11 +68,13 @@ class CloudIDFormatterTest extends TestCase {
 			['test@localhost', false, true, 'test@localhost'],
 			['test@localhost', true, false, '<strong class="has-tooltip" title="test@localhost">test@…</strong>'],
 			['test@localhost', false, false, 'test@…'],
+			['test@localhost', null, null, '<federated-cloud-id display-name="test@…" user="test" server="localhost">test@localhost</federated-cloud-id>'],
 
 			['t<e>st@l<o>calhost', true, true, '<strong class="has-tooltip" title="t&lt;e&gt;st@l&lt;o&gt;calhost">t&lt;e&gt;st@l&lt;o&gt;calhost</strong>'],
 			['t<e>st@l<o>calhost', false, true, 't<e>st@l<o>calhost'],
 			['t<e>st@l<o>calhost', true, false, '<strong class="has-tooltip" title="t&lt;e&gt;st@l&lt;o&gt;calhost">t&lt;e&gt;st@…</strong>'],
 			['t<e>st@l<o>calhost', false, false, 't<e>st@…'],
+
 		];
 	}
 

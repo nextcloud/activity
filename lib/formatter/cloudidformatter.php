@@ -50,17 +50,25 @@ class CloudIDFormatter implements IFormatter {
 	 */
 	public function format(IEvent $event, $parameter, $allowHtml, $verbose = false) {
 		$displayName = $parameter;
-		if (!$verbose) {
-			try {
-				list($user,) = Helper::splitUserRemote($parameter);
-				$displayName = $user . '@…';
-			} catch (HintException $e) {}
+		try {
+			list($user, $server) = Helper::splitUserRemote($parameter);
+		} catch (HintException $e) {
+			$user = $parameter;
+			$server = '';
+		}
+
+		if (!$verbose && $server !== '') {
+			$displayName = $user . '@…';
 		}
 
 		try {
 			$displayName = $this->getDisplayNameFromContact($parameter);
 		} catch (\OutOfBoundsException $e) {}
 
+
+		if ($allowHtml === null) {
+			return '<federated-cloud-id display-name="' . Util::sanitizeHTML($displayName) . '" user="' . $user . '" server="' . $server . '">' . Util::sanitizeHTML($parameter) . '</federated-cloud-id>';
+		}
 
 		if ($allowHtml) {
 			$title = ' title="' . Util::sanitizeHTML($parameter) . '"';

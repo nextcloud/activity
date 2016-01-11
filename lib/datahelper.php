@@ -30,7 +30,6 @@ use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
-use OCP\Util;
 
 class DataHelper {
 	/** @var \OCP\Activity\IManager */
@@ -133,6 +132,8 @@ class DataHelper {
 	public function formatStrings($activity, $message) {
 		$activity[$message . 'params'] = $activity[$message . 'params_array'];
 		unset($activity[$message . 'params_array']);
+
+		$activity[$message . '_prepared'] = $this->translation($activity['app'], $activity[$message], $activity[$message . 'params'], null, null);
 
 		$activity[$message . 'formatted'] = array(
 			'trimmed'	=> $this->translation($activity['app'], $activity[$message], $activity[$message . 'params'], true),

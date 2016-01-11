@@ -24,6 +24,12 @@ namespace OCA\Activity\Tests\AppInfo;
 
 use OCA\Activity\Tests\TestCase;
 
+/**
+ * Class AppTest
+ *
+ * @group DB
+ * @package OCA\Activity\Tests\AppInfo
+ */
 class AppTest extends TestCase {
 	public function testNavigationEntry() {
 		$navigationManager = \OC::$server->getNavigationManager();

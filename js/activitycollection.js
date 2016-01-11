@@ -56,19 +56,29 @@
 			this._objectType = objectType;
 		},
 
+		/**
+		 *
+		 * @param ocsResponse
+		 * @param response
+		 * @returns {Array}
+		 */
+		parse: function(ocsResponse, response) {
+			if (response.xhr.status === 304) {
+				// No activities found
+				return [];
+			}
+
+			return ocsResponse.ocs.data;
+		},
+
 		url: function() {
 			var query = {
-				page: 1,
-				filter: 'all'
+				format: 'json'
 			};
-			var url = OC.generateUrl('apps/activity/activities/fetch');
-			if (this._objectId) {
-				query.objectid = this._objectId;
-				query.filter = 'filter';
-			}
-			if (this._objectType) {
-				query.objecttype = this._objectType;
-				query.filter = 'filter';
+			var url = OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter';
+			if (this._objectId && this._objectType) {
+				query.object_type = this._objectType;
+				query.object_id = this._objectId;
 			}
 			url += '?' + OC.buildQueryString(query);
 			return url;

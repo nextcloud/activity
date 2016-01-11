@@ -149,6 +149,16 @@ class ApiTest extends TestCase {
 					'subject' => 'Subject1 #A/B.txt',
 				),
 			)),
+			array('activity-api-user1', 5, 1, array(
+				array(
+					'link' => 'link',
+					'file' => 'file',
+					'date' => null,
+					'id' => null,
+					'message' => '',
+					'subject' => 'Subject2 @User #A/B.txt',
+				),
+			)),
 		);
 	}
 

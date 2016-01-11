@@ -62,8 +62,10 @@ class FileFormatter implements IFormatter {
 
 		// If the activity is about the very same file, we use the current path
 		// for the link generation instead of the one that was saved.
+		$fileId = '';
 		if ($event->getObjectType() === 'files' && $event->getObjectName() === $param) {
-			$info = $this->infoCache->getInfoById($this->user, $event->getObjectId(), $param);
+			$fileId = $event->getObjectId();
+			$info = $this->infoCache->getInfoById($this->user, $fileId, $param);
 		} else {
 			$info = $this->infoCache->getInfoByPath($this->user, $param);
 		}
@@ -85,11 +87,16 @@ class FileFormatter implements IFormatter {
 
 		$param = trim($param, '/');
 		list($path, $name) = $this->splitPathFromFilename($param);
+		$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
+
+		if ($allowHtml === null) {
+			return '<file link="' . $fileLink . '" id="' . Util::sanitizeHTML($fileId) . '">' . Util::sanitizeHTML($param) . '</file>';
+		}
+
 		if ($verbose || $path === '') {
 			if (!$allowHtml) {
 				return $param;
 			}
-			$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
 			return '<a class="filename" href="' . $fileLink . '">' . Util::sanitizeHTML($param) . '</a>';
 		}
 
@@ -98,7 +105,6 @@ class FileFormatter implements IFormatter {
 		}
 
 		$title = ' title="' . $this->l->t('in %s', array(Util::sanitizeHTML($path))) . '"';
-		$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
 		return '<a class="filename has-tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($name) . '</a>';
 	}
 

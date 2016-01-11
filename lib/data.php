@@ -24,9 +24,11 @@
 
 namespace OCA\Activity;
 
+use OCA\Activity\Exception\InvalidFilterException;
 use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
+use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\IUser;
@@ -167,97 +169,163 @@ class Data {
 	}
 
 	/**
-	 * @brief Read a list of events from the activity stream
+	 * Read a list of events from the activity stream
+	 *
 	 * @param GroupHelper $groupHelper Allows activities to be grouped
 	 * @param UserSettings $userSettings Gets the settings of the user
-	 * @param int $start The start entry
-	 * @param int $count The number of statements to read
-	 * @param string $filter Filter the activities
 	 * @param string $user User for whom we display the stream
-	 * @param string $objectType
-	 * @param int $objectId
+	 *
+	 * @param int $since The integer ID of the last activity that has been seen.
+	 * @param int $limit How many activities should be returned
+	 * @param string $sort Should activities be given ascending or descending
+	 *
+	 * @param string $filter Filter the activities
+	 * @param string $objectType Allows to filter the activities to a given object. May only appear together with $objectId
+	 * @param int $objectId Allows to filter the activities to a given object. May only appear together with $objectType
+	 *
 	 * @return array
+	 *
+	 * @throws \OutOfBoundsException if the user (Code: 1) or the since (Code: 2) is invalid
+	 * @throws \BadMethodCallException if the user has selected to display no types for this filter (Code: 3)
 	 */
-	public function read(GroupHelper $groupHelper, UserSettings $userSettings, $start, $count, $filter = 'all', $user = '', $objectType = '', $objectId = 0) {
+	public function get(GroupHelper $groupHelper, UserSettings $userSettings, $user, $since, $limit, $sort, $filter, $objectType = '', $objectId = 0) {
 		// get current user
 		if ($user === '') {
-			$user = $this->userSession->getUser();
-			if ($user instanceof IUser) {
-				$user = $user->getUID();
-			} else {
-				// No user given and not logged in => no activities
-				return [];
-			}
+			throw new \OutOfBoundsException('Invalid user', 1);
 		}
 		$groupHelper->setUser($user);
 
 		$enabledNotifications = $userSettings->getNotificationTypes($user, 'stream');
 		$enabledNotifications = $this->activityManager->filterNotificationTypes($enabledNotifications, $filter);
-		$parameters = array_unique($enabledNotifications);
+		$enabledNotifications = array_unique($enabledNotifications);
 
 		// We don't want to display any activities
-		if (empty($parameters)) {
-			return array();
+		if (empty($enabledNotifications)) {
+			throw new \BadMethodCallException('No settings enabled', 3);
 		}
 
-		$placeholders = implode(',', array_fill(0, sizeof($parameters), '?'));
-		$limitActivities = " AND `type` IN (" . $placeholders . ")";
-		array_unshift($parameters, $user);
+		$query = $this->connection->getQueryBuilder();
+		$query->select('*')
+			->from('activity');
 
+		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)))
+			->andWhere($query->expr()->in('type', $query->createNamedParameter($enabledNotifications, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY)));
 		if ($filter === 'self') {
-			$limitActivities .= ' AND `user` = ?';
-			$parameters[] = $user;
+			$query->andWhere($query->expr()->eq('user', $query->createNamedParameter($user)));
+
 		} else if ($filter === 'by' || $filter === 'all' && !$userSettings->getUserSetting($user, 'setting', 'self')) {
-			$limitActivities .= ' AND `user` <> ?';
-			$parameters[] = $user;
+			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+
 		} else if ($filter === 'filter') {
 			if (!$userSettings->getUserSetting($user, 'setting', 'self')) {
-				$limitActivities .= ' AND `user` <> ?';
-				$parameters[] = $user;
+				$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
 			}
-			$limitActivities .= ' AND `object_type` = ?';
-			$parameters[] = $objectType;
-			$limitActivities .= ' AND `object_id` = ?';
-			$parameters[] = $objectId;
+
+			$query->andWhere($query->expr()->eq('object_type', $query->createNamedParameter($objectType)));
+			$query->andWhere($query->expr()->eq('object_id', $query->createNamedParameter($objectId)));
 		}
 
 		list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
 		if (!is_null($condition)) {
-			$limitActivities .= ' ';
-			$limitActivities .= $condition;
+			// Strip away ' and '
+			$condition = substr($condition, 5);
+
 			if (is_array($params)) {
-				$parameters = array_merge($parameters, $params);
+				// Replace ? placeholders with named parameters
+				foreach ($params as $param) {
+					$pos = strpos($condition, '?');
+					if ($pos !== false) {
+						$condition = substr($condition, 0, $pos) . $query->createNamedParameter($param) . substr($condition, $pos + 1);
+					}
+				}
 			}
+
+			$query->andWhere($query->createFunction($condition));
 		}
 
-		return $this->getActivities($count, $start, $limitActivities, $parameters, $groupHelper);
+		/**
+		 * Order and specify the offset
+		 */
+		$sqlSort = ($sort === 'asc') ? 'ASC' : 'DESC';
+		$headers = $this->setOffsetFromSince($query, $user, $since, $sqlSort);
+		$query->orderBy('timestamp', $sqlSort)
+			->addOrderBy('activity_id', $sqlSort);
+
+		$query->setMaxResults($limit + 1);
+
+		$result = $query->execute();
+		$hasMore = false;
+		while ($row = $result->fetch()) {
+			if ($limit === 0) {
+				$hasMore = true;
+				break;
+			}
+			$headers['X-Activity-Last-Given'] = (int) $row['activity_id'];
+			$groupHelper->addActivity($row);
+			$limit--;
+		}
+		$result->closeCursor();
+
+		return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
 	}
 
 	/**
-	 * Process the result and return the activities
+	 * @param IQueryBuilder $query
+	 * @param string $user
+	 * @param int $since
+	 * @param string $sort
 	 *
-	 * @param int $count
-	 * @param int $start
-	 * @param string $limitActivities
-	 * @param array $parameters
-	 * @param \OCA\Activity\GroupHelper $groupHelper
-	 * @return array
+	 * @return array Headers that should be set on the response
+	 *
+	 * @throws \OutOfBoundsException If $since is not owned by $user
 	 */
-	protected function getActivities($count, $start, $limitActivities, $parameters, GroupHelper $groupHelper) {
-		$query = $this->connection->prepare(
-			'SELECT * '
-			. ' FROM `*PREFIX*activity` '
-			. ' WHERE `affecteduser` = ? ' . $limitActivities
-			. ' ORDER BY `timestamp` DESC',
-			$count, $start);
-		$query->execute($parameters);
+	protected function setOffsetFromSince(IQueryBuilder $query, $user, $since, $sort) {
+		if ($since) {
+			$queryBuilder = $this->connection->getQueryBuilder();
+			$queryBuilder->select('*')
+				->from('activity')
+				->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter((int) $since)));
+			$result = $queryBuilder->execute();
+			$activity = $result->fetch();
+			$result->closeCursor();
 
-		while ($row = $query->fetch()) {
-			$groupHelper->addActivity($row);
+			if ($activity) {
+				if ($activity['affecteduser'] !== $user) {
+					throw new \OutOfBoundsException('Invalid since', 2);
+				}
+				$timestamp = (int) $activity['timestamp'];
+
+				if ($sort === 'DESC') {
+					$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($timestamp)));
+					$query->andWhere($query->expr()->lt('activity_id', $query->createNamedParameter($since)));
+				} else {
+					$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($timestamp)));
+					$query->andWhere($query->expr()->gt('activity_id', $query->createNamedParameter($since)));
+				}
+				return [];
+			}
 		}
-		$query->closeCursor();
 
-		return $groupHelper->getActivities();
+		/**
+		 * Couldn't find the since, so find the oldest one and set the header
+		 */
+		$fetchQuery = $this->connection->getQueryBuilder();
+		$fetchQuery->select('activity_id')
+			->from('activity')
+			->where($fetchQuery->expr()->eq('affecteduser', $fetchQuery->createNamedParameter($user)))
+			->orderBy('timestamp', $sort)
+			->setMaxResults(1);
+		$result = $fetchQuery->execute();
+		$activity = $result->fetch();
+		$result->closeCursor();
+
+		if ($activity !== false) {
+			return [
+				'X-Activity-First-Known' => (int) $activity['activity_id'],
+			];
+		}
+
+		return [];
 	}
 
 	/**

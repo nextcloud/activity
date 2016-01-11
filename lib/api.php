@@ -34,19 +34,25 @@ class Api
 
 	static public function get() {
 		$app = new AppInfo\Application();
+		/** @var Data $data */
 		$data = $app->getContainer()->query('ActivityData');
 
-		$start = isset($_GET['start']) ? $_GET['start'] : 0;
-		$count = isset($_GET['count']) ? $_GET['count'] : self::DEFAULT_LIMIT;
+		$start = isset($_GET['start']) ? (int) $_GET['start'] : 0;
+		$count = isset($_GET['count']) ? (int) $_GET['count'] : self::DEFAULT_LIMIT;
+		$user = $app->getContainer()->getServer()->getUserSession()->getUser()->getUID();
 
-		$activities = $data->read(
+		if ($start !== 0) {
+			$start = self::getSinceFromOffset($user, $start);
+		}
+
+		$activities = $data->get(
 			$app->getContainer()->query('GroupHelper'),
 			$app->getContainer()->query('UserSettings'),
-			$start, $count, 'all'
+			$user, $start, $count, 'desc', 'all'
 		);
 
 		$entries = array();
-		foreach($activities as $entry) {
+		foreach($activities['data'] as $entry) {
 			$entries[] = array(
 				'id' => $entry['activity_id'],
 				'subject' => (string) $entry['subjectformatted']['full'],
@@ -58,5 +64,30 @@ class Api
 		}
 
 		return new \OC_OCS_Result($entries);
+	}
+
+	/**
+	 * @param string $user
+	 * @param int $offset
+	 * @return int
+	 */
+	protected static function getSinceFromOffset($user, $offset) {
+		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$query->select('activity_id')
+			->from('activity')
+			->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)))
+			->orderBy('activity_id', 'desc')
+			->setFirstResult($offset - 1)
+			->setMaxResults(1);
+
+		$result = $query->execute();
+		$row = $result->fetch();
+		$result->closeCursor();
+
+		if ($row) {
+			return (int) $row['activity_id'];
+		}
+
+		return 0;
 	}
 }

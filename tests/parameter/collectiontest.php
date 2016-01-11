@@ -165,6 +165,7 @@ class CollectionTest extends TestCase {
 			[true, false, ['One', 'Two'], ['OneFalse', 'TwoFalse']],
 			[false, true, ['One', 'Two'], ['OneFalse', 'TwoFalse']],
 			[false, false, ['OneFalse', 'TwoFalse'], ['OneFalse', 'TwoFalse']],
+			[null, null, ['OneNull', 'TwoNull'], ['OneFalse', 'TwoFalse'], '<collection>return(joinParameterList)</collection>'],
 		];
 	}
 
@@ -175,8 +176,9 @@ class CollectionTest extends TestCase {
 	 * @param bool $verbose
 	 * @param array $parameterList
 	 * @param array $plainParameterList
+	 * @param string $expected
 	 */
-	public function testFormat($allowHtml, $verbose, array $parameterList, array $plainParameterList) {
+	public function testFormat($allowHtml, $verbose, array $parameterList, array $plainParameterList, $expected = 'return(joinParameterList)') {
 		$collection = $this->getCollection(['joinParameterList']);
 
 		/** @var \OCA\Activity\Parameter\IParameter|\PHPUnit_Framework_MockObject_MockObject $parameter1 */
@@ -187,6 +189,7 @@ class CollectionTest extends TestCase {
 			->method('format')
 			->willReturnMap([
 				[false, false, 'OneFalse'],
+				[null, null, 'OneNull'],
 				[$allowHtml, $verbose, 'One'],
 			]);
 
@@ -198,6 +201,7 @@ class CollectionTest extends TestCase {
 			->method('format')
 			->willReturnMap([
 				[false, false, 'TwoFalse'],
+				[null, null, 'TwoNull'],
 				[$allowHtml, $verbose, 'Two'],
 			]);
 
@@ -210,7 +214,7 @@ class CollectionTest extends TestCase {
 			->with($parameterList, $plainParameterList, $allowHtml)
 			->willReturn('return(joinParameterList)');
 
-		$this->assertSame('return(joinParameterList)', $collection->format($allowHtml, $verbose));
+		$this->assertSame($expected, $collection->format($allowHtml, $verbose));
 	}
 
 	public function dataJoinParameterList() {
@@ -226,6 +230,7 @@ class CollectionTest extends TestCase {
 
 			[3, true, '<strong>item1</strong>, <strong>item2</strong> and <strong>item3</strong>'],
 			[3, false, 'item1, item2 and item3'],
+			[3, null, 'item1item2item3'],
 			[
 				6, true,
 				'<strong>item1</strong>, <strong>item2</strong>, <strong>item3</strong> and <strong class="has-tooltip" title="item4, item5, item6">3 more</strong>',

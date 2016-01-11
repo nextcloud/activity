@@ -107,7 +107,8 @@ class Feed extends Controller {
 			$this->helper->setUser($user);
 
 			$description = (string) $l->t('Personal activity feed for %s', $user);
-			$activities = $this->data->read($this->helper, $this->settings, 0, self::DEFAULT_PAGE_SIZE, 'all', $user);
+			$response = $this->data->get($this->helper, $this->settings, $user, 0, self::DEFAULT_PAGE_SIZE, 'desc', 'all');
+			$activities = $response['data'];
 		} catch (\UnexpectedValueException $e) {
 			$l = $this->l10nFactory->get('activity');
 			$description = (string) $l->t('Your feed URL is invalid');

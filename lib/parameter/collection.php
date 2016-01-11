@@ -93,6 +93,9 @@ class Collection implements IParameter {
 			$plainParameterList[] = $parameter->format(false, false);
 		}
 
+		if ($allowHtml === null) {
+			return '<collection>' . $this->joinParameterList($parameterList, $plainParameterList, $allowHtml) . '</collection>';
+		}
 		return $this->joinParameterList($parameterList, $plainParameterList, $allowHtml);
 	}
 
@@ -115,6 +118,9 @@ class Collection implements IParameter {
 		if (empty($parameterList)) {
 			return '';
 		}
+		if ($allowHtml === null) {
+			return implode('', $parameterList);
+		}
 
 		$count = sizeof($parameterList);
 		$lastItem = array_pop($parameterList);
@@ -133,6 +139,7 @@ class Collection implements IParameter {
 		$firstList = implode($this->l->t(', '), $firstParams);
 		$trimmedParams = array_slice($plainParameterList, 3);
 		$trimmedList = implode($this->l->t(', '), $trimmedParams);
+
 		if ($allowHtml) {
 			return (string) $this->l->n(
 				'%s and <strong %s>%n more</strong>',

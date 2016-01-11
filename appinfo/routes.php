@@ -25,7 +25,21 @@ namespace OCA\Activity\AppInfo;
 
 use OCP\API;
 
+$application = new Application();
+
 // Register an OCS API call
+API::register(
+	'get',
+	'/apps/activity/api/v2/activity',
+	array($application->getContainer()->query('OCA\Activity\Controller\OCSEndPoint'), 'getDefault'),
+	'activity'
+);
+API::register(
+	'get',
+	'/apps/activity/api/v2/activity/{filter}',
+	array($application->getContainer()->query('OCA\Activity\Controller\OCSEndPoint'), 'getFilter'),
+	'activity'
+);
 API::register(
 	'get',
 	'/cloud/activity',
@@ -33,11 +47,9 @@ API::register(
 	'activity'
 );
 
-$application = new Application();
 $application->registerRoutes($this, ['routes' => [
 	['name' => 'Settings#personal', 'url' => '/settings', 'verb' => 'POST'],
 	['name' => 'Settings#feed', 'url' => '/settings/feed', 'verb' => 'POST'],
 	['name' => 'Activities#showList', 'url' => '/', 'verb' => 'GET'],
-	['name' => 'Activities#fetch', 'url' => '/activities/fetch', 'verb' => 'GET'],
 	['name' => 'Feed#show', 'url' => '/rss.php', 'verb' => 'GET'],
 ]]);
