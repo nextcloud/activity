@@ -426,7 +426,11 @@ $(function(){
 		processElements: function ($element) {
 			$element.find('.avatar').each(function() {
 				var element = $(this);
-				element.avatar(element.data('user'), 28);
+				if (element.data('user-display-name')) {
+					element.avatar(element.data('user'), 28, undefined, false, undefined, element.data('user-display-name'));
+				} else {
+					element.avatar(element.data('user'), 28);
+				}
 			});
 
 			$element.find('.has-tooltip').tooltip({
