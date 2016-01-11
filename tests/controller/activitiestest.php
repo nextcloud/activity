@@ -27,6 +27,9 @@ class ActivitiesTest extends TestCase {
 	/** @var \OCP\IRequest|\PHPUnit_Framework_MockObject_MockObject */
 	protected $request;
 
+	/** @var \OCP\IConfig|\PHPUnit_Framework_MockObject_MockObject */
+	protected $config;
+
 	/** @var \OCA\Activity\Data|\PHPUnit_Framework_MockObject_MockObject */
 	protected $data;
 
@@ -42,6 +45,9 @@ class ActivitiesTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
+		$this->config = $this->getMockBuilder('OCP\IConfig')
+			->disableOriginalConstructor()
+			->getMock();
 		$this->data = $this->getMockBuilder('OCA\Activity\Data')
 			->disableOriginalConstructor()
 			->getMock();
@@ -69,6 +75,7 @@ class ActivitiesTest extends TestCase {
 			return new Activities(
 				'activity',
 				$this->request,
+				$this->config,
 				$this->data,
 				$this->navigation
 			);
@@ -77,6 +84,7 @@ class ActivitiesTest extends TestCase {
 				->setConstructorArgs([
 					'activity',
 					$this->request,
+					$this->config,
 					$this->data,
 					$this->navigation
 				])
