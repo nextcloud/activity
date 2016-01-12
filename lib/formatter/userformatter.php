@@ -30,59 +30,34 @@ use OCP\Util;
 class UserFormatter implements IFormatter {
 	/** @var IUserManager */
 	protected $manager;
-	/** @var IConfig */
-	protected $config;
 	/** @var IL10N */
 	protected $l;
 
 	/**
 	 * @param IUserManager $userManager
-	 * @param IConfig $config
 	 * @param IL10N $l
 	 */
-	public function __construct(IUserManager $userManager, IConfig $config, IL10N $l) {
+	public function __construct(IUserManager $userManager, IL10N $l) {
 		$this->manager = $userManager;
-		$this->config = $config;
 		$this->l = $l;
 	}
 
 	/**
 	 * @param IEvent $event
 	 * @param string $parameter The parameter to be formatted
-	 * @param bool $allowHtml   Should HTML be used to format the parameter?
-	 * @param bool $verbose     Should paths, names, etc be shortened or full length
 	 * @return string The formatted parameter
 	 */
-	public function format(IEvent $event, $parameter, $allowHtml, $verbose = false) {
+	public function format(IEvent $event, $parameter) {
 		// If the username is empty, the action has been performed by a remote
 		// user, or via a public share. We don't know the username in that case
 		if ($parameter === '') {
-			if ($allowHtml === null) {
-				return '<user display-name="' . Util::sanitizeHTML($this->l->t('"remote user"')) . '">' . Util::sanitizeHTML('') . '</user>';
-			}
-			if ($allowHtml) {
-				return '<strong>' . $this->l->t('"remote user"') . '</strong>';
-			} else {
-				return $this->l->t('"remote user"');
-			}
+			return '<user display-name="' . Util::sanitizeHTML($this->l->t('"remote user"')) . '">' . Util::sanitizeHTML('') . '</user>';
 		}
 
 		$user = $this->manager->get($parameter);
 		$displayName = ($user) ? $user->getDisplayName() : $parameter;
 		$parameter = Util::sanitizeHTML($parameter);
 
-		if ($allowHtml === null) {
-			return '<user display-name="' . Util::sanitizeHTML($displayName) . '">' . Util::sanitizeHTML($parameter) . '</user>';
-		}
-
-		if ($allowHtml) {
-			$avatarPlaceholder = '';
-			if ($this->config->getSystemValue('enable_avatars', true)) {
-				$avatarPlaceholder = '<div class="avatar" data-user="' . $parameter . '"></div>';
-			}
-			return $avatarPlaceholder . '<strong>' . Util::sanitizeHTML($displayName) . '</strong>';
-		} else {
-			return $displayName;
-		}
+		return '<user display-name="' . Util::sanitizeHTML($displayName) . '">' . Util::sanitizeHTML($parameter) . '</user>';
 	}
 }

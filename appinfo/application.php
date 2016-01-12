@@ -35,7 +35,6 @@ use OCA\Activity\FilesHooks;
 use OCA\Activity\MailQueueHandler;
 use OCA\Activity\Navigation;
 use OCA\Activity\Parameter\Factory;
-use OCA\Activity\ParameterHelper;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\App;
@@ -81,7 +80,6 @@ class Application extends App {
 					$server->getUserManager(),
 					$server->getURLGenerator(),
 					$server->getContactsManager(),
-					$server->getConfig(),
 					$c->query('OCA\Activity\ViewInfoCache'),
 					$c->query('ActivityL10N'),
 					$c->query('CurrentUID')

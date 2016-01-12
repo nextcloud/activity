@@ -46,11 +46,8 @@ class BaseFormatterTest extends TestCase {
 
 	public function dataFormat() {
 		return [
-			['para<m>eter1', true, true, '<strong>para&lt;m&gt;eter1</strong>'],
-			['para<m>eter1', false, true, 'para<m>eter1'],
-			['para<m>eter1', true, false, '<strong>para&lt;m&gt;eter1</strong>'],
-			['para<m>eter1', false, false, 'para<m>eter1'],
-			['para<m>eter1', null, null, '<parameter>para&lt;m&gt;eter1</parameter>'],
+			['para<m>eter1', '<parameter>para&lt;m&gt;eter1</parameter>'],
+			['para<m>eter2', '<parameter>para&lt;m&gt;eter2</parameter>'],
 		];
 	}
 
@@ -58,17 +55,15 @@ class BaseFormatterTest extends TestCase {
 	 * @dataProvider dataFormat
 	 *
 	 * @param string $parameter
-	 * @param bool $allowHtml
-	 * @param bool $verbose
 	 * @param string $expected
 	 */
-	public function testFormat($parameter, $allowHtml, $verbose, $expected) {
+	public function testFormat($parameter, $expected) {
 		/** @var \OCP\Activity\IEvent|\PHPUnit_Framework_MockObject_MockObject $event */
 		$event = $this->getMockBuilder('OCP\Activity\IEvent')
 			->disableOriginalConstructor()
 			->getMock();
 
 		$formatter = $this->getFormatter();
-		$this->assertSame($expected, $formatter->format($event, $parameter, $allowHtml, $verbose));
+		$this->assertSame($expected, $formatter->format($event, $parameter));
 	}
 }

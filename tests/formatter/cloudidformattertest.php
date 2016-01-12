@@ -59,21 +59,10 @@ class CloudIDFormatterTest extends TestCase {
 
 	public function dataFormat() {
 		return [
-			['test', true, true, '<strong class="has-tooltip" title="test">test</strong>'],
-			['test', false, true, 'test'],
-			['test', true, false, '<strong class="has-tooltip" title="test">test</strong>'],
-			['test', false, false, 'test'],
-
-			['test@localhost', true, true, '<strong class="has-tooltip" title="test@localhost">test@localhost</strong>'],
-			['test@localhost', false, true, 'test@localhost'],
-			['test@localhost', true, false, '<strong class="has-tooltip" title="test@localhost">test@…</strong>'],
-			['test@localhost', false, false, 'test@…'],
-			['test@localhost', null, null, '<federated-cloud-id display-name="test@…" user="test" server="localhost">test@localhost</federated-cloud-id>'],
-
-			['t<e>st@l<o>calhost', true, true, '<strong class="has-tooltip" title="t&lt;e&gt;st@l&lt;o&gt;calhost">t&lt;e&gt;st@l&lt;o&gt;calhost</strong>'],
-			['t<e>st@l<o>calhost', false, true, 't<e>st@l<o>calhost'],
-			['t<e>st@l<o>calhost', true, false, '<strong class="has-tooltip" title="t&lt;e&gt;st@l&lt;o&gt;calhost">t&lt;e&gt;st@…</strong>'],
-			['t<e>st@l<o>calhost', false, false, 't<e>st@…'],
+			['test1', '<federated-cloud-id display-name="test1" user="test1" server="">test1</federated-cloud-id>'],
+			['test1@localhost1', '<federated-cloud-id display-name="test1@…" user="test1" server="localhost1">test1@localhost1</federated-cloud-id>'],
+			['test2@localhost2', '<federated-cloud-id display-name="test2@…" user="test2" server="localhost2">test2@localhost2</federated-cloud-id>'],
+			['t<e>st@l<o>calhost', '<federated-cloud-id display-name="t&lt;e&gt;st@…" user="t&lt;e&gt;st" server="l&lt;o&gt;calhost">t&lt;e&gt;st@l&lt;o&gt;calhost</federated-cloud-id>'],
 
 		];
 	}
@@ -82,11 +71,9 @@ class CloudIDFormatterTest extends TestCase {
 	 * @dataProvider dataFormat
 	 *
 	 * @param string $parameter
-	 * @param bool $allowHtml
-	 * @param bool $verbose
 	 * @param string $expected
 	 */
-	public function testFormat($parameter, $allowHtml, $verbose, $expected) {
+	public function testFormat($parameter, $expected) {
 		/** @var \OCP\Activity\IEvent|\PHPUnit_Framework_MockObject_MockObject $event */
 		$event = $this->getMockBuilder('OCP\Activity\IEvent')
 			->disableOriginalConstructor()
@@ -97,7 +84,7 @@ class CloudIDFormatterTest extends TestCase {
 			->method('getDisplayNameFromContact')
 			->willThrowException(new \OutOfBoundsException());
 
-		$this->assertSame($expected, $formatter->format($event, $parameter, $allowHtml, $verbose));
+		$this->assertSame($expected, $formatter->format($event, $parameter));
 	}
 
 	public function dataGetDisplayNameFromContact() {

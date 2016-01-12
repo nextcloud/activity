@@ -98,33 +98,15 @@ class FileFormatterTest extends TestCase {
 		];
 
 		return [
-			['user1', '/test1', false, [], true, true, '<a class="filename" href="files/index.php?dir=%2F&scrollto=test1">test1</a>'],
-			['user1', '/test1', true, [], true, true, '<a class="filename" href="files/index.php?dir=%2Ftest1">test1</a>'],
-			['user1', '/test1', false, [], false, true, 'test1'],
-			['user1', '/test1', true, [], false, true, 'test1'],
-			['user1', '/test1', false, [], true, false, '<a class="filename" href="files/index.php?dir=%2F&scrollto=test1">test1</a>'],
-			['user1', '/test1', true, [], true, false, '<a class="filename" href="files/index.php?dir=%2Ftest1">test1</a>'],
-			['user1', '/test1', false, [], false, false, 'test1'],
-			['user1', '/test1', true, [], false, false, 'test1'],
-			['user1', '/test1/test2', false, [], true, true, '<a class="filename" href="files/index.php?dir=%2Ftest1&scrollto=test2">test1/test2</a>'],
-			['user1', '/test1/test2', true, [], true, true, '<a class="filename" href="files/index.php?dir=%2Ftest1%2Ftest2">test1/test2</a>'],
-			['user1', '/test1/test2', false, [], false, true, 'test1/test2'],
-			['user1', '/test1/test2', true, [], false, true, 'test1/test2'],
-			['user1', '/test1/test2', false, [], true, false, '<a class="filename has-tooltip" href="files/index.php?dir=%2Ftest1&scrollto=test2" title="in test1">test2</a>'],
-			['user1', '/test1/test2', true, [], true, false, '<a class="filename has-tooltip" href="files/index.php?dir=%2Ftest1%2Ftest2" title="in test1">test2</a>'],
-			['user1', '/test1/test2', false, [], false, false, 'test2'],
-			['user1', '/test1/test2', true, [], false, false, 'test2'],
+			['user1', '/test1', false, [], '<file link="files/index.php?dir=%2F&scrollto=test1" id="">test1</file>'],
+			['user1', '/test1', true, [], '<file link="files/index.php?dir=%2Ftest1" id="">test1</file>'],
+			['user1', '/test1/test2', false, [], '<file link="files/index.php?dir=%2Ftest1&scrollto=test2" id="">test1/test2</file>'],
+			['user1', '/test1/test2', true, [], '<file link="files/index.php?dir=%2Ftest1%2Ftest2" id="">test1/test2</file>'],
 
-			['user1', '/test1/test2', false, $trash0, true, true, '<a class="filename" href="files/index.php?dir=%2F&scrollto=test2&view=trashbin">test1/test2</a>'],
-			['user1', '/test1/test2', true, $trash1, true, true, '<a class="filename" href="files/index.php?dir=%2Ftest2&view=trashbin">test1/test2</a>'],
-			['user1', '/test1/test2', false, $trash0, false, true, 'test1/test2'],
-			['user1', '/test1/test2', true, $trash1, false, true, 'test1/test2'],
-			['user1', '/test1/test2', false, $trash0, true, false, '<a class="filename has-tooltip" href="files/index.php?dir=%2F&scrollto=test2&view=trashbin" title="in test1">test2</a>'],
-			['user1', '/test1/test2', true, $trash1, true, false, '<a class="filename has-tooltip" href="files/index.php?dir=%2Ftest2&view=trashbin" title="in test1">test2</a>'],
-			['user1', '/test1/test2', false, $trash0, false, false, 'test2'],
-			['user1', '/test1/test2', true, $trash1, false, false, 'test2'],
+			['user1', '/test1/test2', false, $trash0, '<file link="files/index.php?dir=%2F&scrollto=test2&view=trashbin" id="42">test1/test2</file>'],
+			['user1', '/test1/test2', true, $trash1, '<file link="files/index.php?dir=%2Ftest2&view=trashbin" id="42">test1/test2</file>'],
 
-			['user2', '/test1', false, [], true, true, '<a class="filename" href="files/index.php?dir=%2F&scrollto=test1">test1</a>'],
+			['user2', '/test1', false, [], '<file link="files/index.php?dir=%2F&scrollto=test1" id="">test1</file>'],
 		];
 	}
 
@@ -135,11 +117,9 @@ class FileFormatterTest extends TestCase {
 	 * @param string $parameter
 	 * @param bool $isDir
 	 * @param array $info
-	 * @param bool $allowHtml
-	 * @param bool $verbose
 	 * @param string $expected
 	 */
-	public function testFormat($user, $parameter, $isDir, array $info, $allowHtml, $verbose, $expected) {
+	public function testFormat($user, $parameter, $isDir, array $info, $expected) {
 		/** @var \OCP\Activity\IEvent|\PHPUnit_Framework_MockObject_MockObject $event */
 		$event = $this->getMockBuilder('OCP\Activity\IEvent')
 			->disableOriginalConstructor()
@@ -190,7 +170,7 @@ class FileFormatterTest extends TestCase {
 				]);
 		}
 
-		$this->assertSame($expected, $formatter->format($event, $parameter, $allowHtml, $verbose));
+		$this->assertSame($expected, $formatter->format($event, $parameter));
 	}
 
 	public function dataFixLegacyFilename() {

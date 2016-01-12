@@ -22,10 +22,7 @@
 
 namespace OCA\Activity\Tests;
 
-use OC\ActivityManager;
 use OCA\Activity\DataHelper;
-use OCA\Activity\Parameter\Factory;
-use OCA\Activity\Tests\Mock\Extension;
 
 class DataHelperTest extends TestCase {
 	protected $originalWEBROOT;
@@ -91,33 +88,24 @@ class DataHelperTest extends TestCase {
 		}
 	}
 
-	protected function getParameter($allowHtml, $verbose, $return) {
+	protected function getParameter($return) {
 		$parameter = $this->getMockBuilder('OCA\Activity\Parameter\IParameter')
 			->disableOriginalConstructor()
 			->getMock();
 		$parameter->expects($this->once())
 			->method('format')
-			->with($allowHtml, $verbose)
 			->willReturn($return);
 		return $parameter;
 	}
 
 	public function dataTranslation() {
 		return [
-			['app1', 'text1', [], [], true, true, false, 'lang'],
-			['app2', 'text2', [], [], true, false, false, 'lang'],
-			['app2', 'text2', [], [], false, true, false, 'lang'],
-			['app2', 'text2', [], [], false, false, false, 'lang'],
-			['app2', 'text2', [], [], false, false, 'manager', 'manager'],
+			['app1', 'text1', [], [], false, 'lang'],
+			['app2', 'text2', [], [], false, 'lang'],
+			['app2', 'text2', [], [], 'manager', 'manager'],
 
-			['app2', 'text2', [$this->getParameter(true, false, 'return1')], ['return1'], true, true, 'manager', 'manager'],
-			['app2', 'text2', [$this->getParameter(true, true, 'return1')], ['return1'], false, true, 'manager', 'manager'],
-			['app2', 'text2', [$this->getParameter(false, false, 'return1')], ['return1'], true, false, 'manager', 'manager'],
-			['app2', 'text2', [$this->getParameter(false, true, 'return1')], ['return1'], false, false, 'manager', 'manager'],
-			['app2', 'text2', [$this->getParameter(true, false, 'return2')], ['return2'], true, true, false, 'lang'],
-			['app2', 'text2', [$this->getParameter(true, true, 'return2')], ['return2'], false, true, false, 'lang'],
-			['app2', 'text2', [$this->getParameter(false, false, 'return2')], ['return2'], true, false, false, 'lang'],
-			['app2', 'text2', [$this->getParameter(false, true, 'return2')], ['return2'], false, false, false, 'lang'],
+			['app2', 'text2', [$this->getParameter('return1')], ['return1'], 'manager', 'manager'],
+			['app2', 'text2', [$this->getParameter('return2')], ['return2'], false, 'lang'],
 		];
 	}
 
@@ -128,16 +116,14 @@ class DataHelperTest extends TestCase {
 	 * @param string $text
 	 * @param array $params
 	 * @param array $prepared
-	 * @param bool $stripPath
-	 * @param bool $highlightParams
 	 * @param bool|string $managerReturn
 	 * @param string $expected
 	 */
-	public function testTranslation($app, $text, array $params, array $prepared, $stripPath, $highlightParams, $managerReturn, $expected) {
+	public function testTranslation($app, $text, array $params, array $prepared, $managerReturn, $expected) {
 
 		$this->activityManager->expects($this->once())
 			->method('translate')
-			->with($app, $text, $prepared, $stripPath, $highlightParams)
+			->with($app, $text, $prepared, false, false)
 			->willReturn($managerReturn);
 		if ($managerReturn === false) {
 			$l = $this->getMockBuilder('OCP\IL10N')
@@ -156,31 +142,16 @@ class DataHelperTest extends TestCase {
 		$helper = $this->getHelper();
 		$this->assertSame(
 			$expected,
-			(string) $helper->translation($app, $text, $params, $stripPath, $highlightParams)
+			(string) $helper->translation($app, $text, $params)
 		);
 	}
 
-	public function dataTranslationNoText() {
-		return [
-			[true, true],
-			[true, false],
-			[false, true],
-			[false, false],
-		];
-	}
-
-	/**
-	 * @dataProvider dataTranslationNoText
-	 *
-	 * @param bool $stripPath
-	 * @param bool $highlightParams
-	 */
-	public function testTranslationNoText($stripPath, $highlightParams) {
+	public function testTranslationNoText() {
 		$this->activityManager->expects($this->never())
 			->method('translate');
 
 		$helper = $this->getHelper();
-		$this->assertSame('', $helper->translation('', '', [], $stripPath, $highlightParams));
+		$this->assertSame('', $helper->translation('', '', []));
 	}
 
 	public function dataGetSpecialParameterList() {
@@ -226,15 +197,7 @@ class DataHelperTest extends TestCase {
 					'message' => 'message1',
 					'messageparams_array' => [],
 					'subjectparams' => [],
-					'subject_prepared' => 'translation1',
-					'subjectformatted' => [
-						'trimmed' => 'translation2',
-						'full' => 'translation3',
-						'markup' => [
-							'trimmed' => 'translation4',
-							'full' => 'translation5',
-						],
-					],
+					'subject_prepared' => 'translation',
 				],
 			],
 			[
@@ -252,15 +215,7 @@ class DataHelperTest extends TestCase {
 					'subjectparams_array' => [],
 					'message' => 'message1',
 					'messageparams' => [],
-					'message_prepared' => 'translation1',
-					'messageformatted' => [
-						'trimmed' => 'translation2',
-						'full' => 'translation3',
-						'markup' => [
-							'trimmed' => 'translation4',
-							'full' => 'translation5',
-						],
-					],
+					'message_prepared' => 'translation',
 				],
 			],
 		];
@@ -276,21 +231,11 @@ class DataHelperTest extends TestCase {
 	public function testFormatString(array $activity, $message, array $expected) {
 		$instance = $this->getHelper(['translation']);
 
-		global $call;
-		$call = 0;
-		$instance->expects($this->exactly(5))
+		$instance->expects($this->once())
 			->method('translation')
-			->withConsecutive(
-				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], null, null],
-				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], true, false],
-				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], false, false],
-				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], true, true],
-				[$activity['app'], $activity[$message], $activity[$message . 'params_array'], false, true]
-			)
+			->with($activity['app'], $activity[$message], $activity[$message . 'params_array'])
 			->willReturnCallback(function() {
-				global $call;
-				$call++;
-				return 'translation' . $call;
+				return 'translation';
 			});
 
 		$this->assertSame($expected, $instance->formatStrings($activity, $message));
