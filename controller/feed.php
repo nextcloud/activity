@@ -19,6 +19,7 @@ use OCP\Activity\IManager;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
+use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\L10N\IFactory;
@@ -47,6 +48,9 @@ class Feed extends Controller {
 
 	/** @var IFactory */
 	protected $l10nFactory;
+
+	/** @var IL10N */
+	protected $l;
 
 	/** @var string */
 	protected $user;
@@ -102,11 +106,11 @@ class Feed extends Controller {
 			$userLang = $this->config->getUserValue($user, 'core', 'lang');
 
 			// Overwrite user and language in the helper
-			$l = $this->l10nFactory->get('activity', $userLang);
-			$this->helper->setL10n($l);
+			$this->l = $this->l10nFactory->get('activity', $userLang);
+			$this->helper->setL10n($this->l);
 			$this->helper->setUser($user);
 
-			$description = (string) $l->t('Personal activity feed for %s', $user);
+			$description = (string) $this->l->t('Personal activity feed for %s', $user);
 			$response = $this->data->get($this->helper, $this->settings, $user, 0, self::DEFAULT_PAGE_SIZE, 'desc', 'all');
 			$data = $response['data'];
 
@@ -118,8 +122,8 @@ class Feed extends Controller {
 			}
 
 		} catch (\UnexpectedValueException $e) {
-			$l = $this->l10nFactory->get('activity');
-			$description = (string) $l->t('Your feed URL is invalid');
+			$this->l = $this->l10nFactory->get('activity');
+			$description = (string) $this->l->t('Your feed URL is invalid');
 
 			$activities = [
 				[
@@ -132,7 +136,7 @@ class Feed extends Controller {
 		}
 
 		$response = new TemplateResponse('activity', 'rss', [
-			'rssLang'		=> $l->getLanguageCode(),
+			'rssLang'		=> $this->l->getLanguageCode(),
 			'rssLink'		=> $this->urlGenerator->linkToRouteAbsolute('activity.Feed.show'),
 			'rssPubDate'	=> date('r'),
 			'description'	=> $description,
@@ -155,6 +159,53 @@ class Feed extends Controller {
 	 * @return string
 	 */
 	protected function parseMessage($message) {
+		$message = $this->parseCollections($message);
+		$message = $this->parseParameters($message);
+		return $message;
+	}
+
+	/**
+	 * Parse collections
+	 *
+	 * @param string $message
+	 * @return string
+	 */
+	protected function parseCollections($message) {
+		return preg_replace_callback('/<collection>(.*?)<\/collection>/', function($match) {
+			$parameterList = explode('><', $match[1]);
+			$parameterListLength = sizeof($parameterList);
+
+			$parameters = [];
+			for ($i = 0; $i < $parameterListLength; $i++) {
+				$parameter = $parameterList[$i];
+				if ($i > 0) {
+					$parameter = '<' . $parameter;
+				}
+				if ($i + 1 < $parameterListLength) {
+					$parameter = $parameter . '>';
+				}
+
+				$parameters[] = $this->parseParameters($parameter);
+			}
+			if ($parameterListLength === 1) {
+				return array_pop($parameters);
+			} else {
+				$lastParameter = array_pop($parameters);
+				return $this->l->t('%s and %s', [
+					implode($this->l->t(', '), $parameters),
+					$lastParameter,
+				]);
+			}
+		}, $message);
+	}
+
+	/**
+	 * Parse the parameters in the subject and message
+	 *
+	 * @param string $message
+	 * @return string
+	 */
+	protected function parseParameters($message) {
 		$message = $this->parseUntypedParameters($message);
 		$message = $this->parseUserParameters($message);
 		$message = $this->parseFederatedCloudIDParameters($message);
