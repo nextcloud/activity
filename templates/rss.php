@@ -21,7 +21,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 		<item>
 			<guid isPermaLink="false"><?php p($activity['activity_id']); ?></guid>
 <?php if (!empty($activity['subject'])): ?>
-			<title><?php p(str_replace("\n", ' ', $activity['subjectformatted']['full'])); ?></title>
+			<title><?php p(str_replace("\n", ' ', $activity['subject_prepared'])); ?></title>
 <?php endif; ?>
 <?php if (!empty($activity['link'])): ?>
 			<link><?php p($activity['link']); ?></link>

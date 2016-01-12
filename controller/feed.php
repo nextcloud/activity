@@ -108,7 +108,14 @@ class Feed extends Controller {
 
 			$description = (string) $l->t('Personal activity feed for %s', $user);
 			$response = $this->data->get($this->helper, $this->settings, $user, 0, self::DEFAULT_PAGE_SIZE, 'desc', 'all');
-			$activities = $response['data'];
+			$data = $response['data'];
+
+			$activities = [];
+			foreach ($data as $activity) {
+				$activity['subject_prepared'] = $this->parseSubject($activity['subject_prepared']);
+				$activities[] = $activity;
+			}
+
 		} catch (\UnexpectedValueException $e) {
 			$l = $this->l10nFactory->get('activity');
 			$description = (string) $l->t('Your feed URL is invalid');
@@ -118,9 +125,7 @@ class Feed extends Controller {
 					'activity_id'	=> -1,
 					'timestamp'		=> time(),
 					'subject'		=> true,
-					'subjectformatted'	=> [
-						'full' => $description,
-					],
+					'subject_prepared'	=> $description,
 				]
 			];
 		}
@@ -140,5 +145,67 @@ class Feed extends Controller {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Parse the parameters in the subject
+	 *
+	 * @param string $message
+	 * @return string
+	 */
+	protected function parseSubject($message) {
+		$message = $this->parseUntypedParameters($message);
+		$message = $this->parseUserParameters($message);
+		$message = $this->parseFederatedCloudIDParameters($message);
+		$message = $this->parseFileParameters($message);
+		return $message;
+	}
+
+	/**
+	 * Display the parameter value
+	 *
+	 * @param string $message
+	 * @return string
+	 */
+	protected function parseUntypedParameters($message) {
+		return preg_replace_callback('/<parameter>(.*?)<\/parameter>/', function($match) {
+			return $match[1];
+		}, $message);
+	}
+
+	/**
+	 * Display the users display name
+	 *
+	 * @param string $message
+	 * @return string
+	 */
+	protected function parseUserParameters($message) {
+		return preg_replace_callback('/<user\ display\-name=\"(.*?)\">(.*?)<\/user>/', function($match) {
+			return $match[1];
+		}, $message);
+	}
+
+	/**
+	 * Display the full cloud id
+	 *
+	 * @param string $message
+	 * @return string
+	 */
+	protected function parseFederatedCloudIDParameters($message) {
+		return preg_replace_callback('/<federated-cloud-id\ display\-name=\"(.*?)\"\ user=\"(.*?)\"\ server=\"(.*?)\">(.*?)<\/federated-cloud-id>/', function($match) {
+			return $match[1];
+		}, $message);
+	}
+
+	/**
+	 * Display the path for files
+	 *
+	 * @param string $message
+	 * @return string
+	 */
+	protected function parseFileParameters($message) {
+		return preg_replace_callback('/<file\ link=\"(.*?)\"\ id=\"(.*?)\">(.*?)<\/file>/', function($match) {
+			return $match[3];
+		}, $message);
 	}
 }
