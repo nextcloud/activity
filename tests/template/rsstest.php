@@ -85,7 +85,7 @@ class RssTest extends TestCase{
 			],
 			[
 				[
-					['activity_id' => 42, 'subject' => 'text', 'subjectformatted' => ['full' => '<no>html</no>'], 'link' => 'http://doc.owncloud.org', 'timestamp' => 21, 'message' => 'text2', 'messageformatted' => ['full' => '<no2>html</no2>']],
+					['activity_id' => 42, 'subject' => 'text', 'subject_prepared' => '<no>html</no>', 'link' => 'http://doc.owncloud.org', 'timestamp' => 21, 'message' => 'text2', 'message_prepared' => '<no2>html</no2>'],
 				],
 				'		<item>'
 				. "\n" . '			<guid isPermaLink="false">42</guid>'
@@ -97,7 +97,7 @@ class RssTest extends TestCase{
 			],
 			[
 				[
-					['activity_id' => 42, 'subject' => 'text', 'subjectformatted' => ['full' => "line\nbreak"], 'link' => 'http://doc.owncloud.org', 'timestamp' => 21, 'message' => 'text2', 'messageformatted' => ['full' => "line2\nbreak2"]],
+					['activity_id' => 42, 'subject' => 'text', 'subject_prepared' => "line\nbreak", 'link' => 'http://doc.owncloud.org', 'timestamp' => 21, 'message' => 'text2', 'message_prepared' => "line2\nbreak2"],
 				],
 				'		<item>'
 				. "\n" . '			<guid isPermaLink="false">42</guid>'

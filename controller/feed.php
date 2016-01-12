@@ -112,7 +112,8 @@ class Feed extends Controller {
 
 			$activities = [];
 			foreach ($data as $activity) {
-				$activity['subject_prepared'] = $this->parseSubject($activity['subject_prepared']);
+				$activity['subject_prepared'] = $this->parseMessage($activity['subject_prepared']);
+				$activity['message_prepared'] = $this->parseMessage($activity['message_prepared']);
 				$activities[] = $activity;
 			}
 
@@ -148,12 +149,12 @@ class Feed extends Controller {
 	}
 
 	/**
-	 * Parse the parameters in the subject
+	 * Parse the parameters in the subject and message
 	 *
 	 * @param string $message
 	 * @return string
 	 */
-	protected function parseSubject($message) {
+	protected function parseMessage($message) {
 		$message = $this->parseUntypedParameters($message);
 		$message = $this->parseUserParameters($message);
 		$message = $this->parseFederatedCloudIDParameters($message);
