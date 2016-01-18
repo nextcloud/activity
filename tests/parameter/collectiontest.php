@@ -159,127 +159,29 @@ class CollectionTest extends TestCase {
 		$this->assertCount(2, $this->invokePrivate($collection, 'parameters'));
 	}
 
-	public function dataFormat() {
-		return [
-			[true, true, ['One', 'Two'], ['OneFalse', 'TwoFalse']],
-			[true, false, ['One', 'Two'], ['OneFalse', 'TwoFalse']],
-			[false, true, ['One', 'Two'], ['OneFalse', 'TwoFalse']],
-			[false, false, ['OneFalse', 'TwoFalse'], ['OneFalse', 'TwoFalse']],
-			[null, null, ['OneNull', 'TwoNull'], ['OneFalse', 'TwoFalse'], '<collection>return(joinParameterList)</collection>'],
-		];
-	}
-
-	/**
-	 * @dataProvider dataFormat
-	 *
-	 * @param bool $allowHtml
-	 * @param bool $verbose
-	 * @param array $parameterList
-	 * @param array $plainParameterList
-	 * @param string $expected
-	 */
-	public function testFormat($allowHtml, $verbose, array $parameterList, array $plainParameterList, $expected = 'return(joinParameterList)') {
-		$collection = $this->getCollection(['joinParameterList']);
+	public function testFormat() {
+		$collection = $this->getCollection();
 
 		/** @var \OCA\Activity\Parameter\IParameter|\PHPUnit_Framework_MockObject_MockObject $parameter1 */
 		$parameter1 = $this->getMockBuilder('OCA\Activity\Parameter\IParameter')
 			->disableOriginalConstructor()
 			->getMock();
-		$parameter1->expects($this->exactly(2))
+		$parameter1->expects($this->once())
 			->method('format')
-			->willReturnMap([
-				[false, false, 'OneFalse'],
-				[null, null, 'OneNull'],
-				[$allowHtml, $verbose, 'One'],
-			]);
+			->willReturn('OneNull');
 
 		/** @var \OCA\Activity\Parameter\IParameter|\PHPUnit_Framework_MockObject_MockObject $parameter2 */
 		$parameter2 = $this->getMockBuilder('OCA\Activity\Parameter\IParameter')
 			->disableOriginalConstructor()
 			->getMock();
-		$parameter2->expects($this->exactly(2))
+		$parameter2->expects($this->once())
 			->method('format')
-			->willReturnMap([
-				[false, false, 'TwoFalse'],
-				[null, null, 'TwoNull'],
-				[$allowHtml, $verbose, 'Two'],
-			]);
+			->willReturn('TwoNull');
 
 		$this->invokePrivate($collection, 'parameters', [
 			[$parameter1, $parameter2]
 		]);
 
-		$collection->expects($this->once())
-			->method('joinParameterList')
-			->with($parameterList, $plainParameterList, $allowHtml)
-			->willReturn('return(joinParameterList)');
-
-		$this->assertSame($expected, $collection->format($allowHtml, $verbose));
-	}
-
-	public function dataJoinParameterList() {
-		return [
-			[0, true, ''],
-			[0, false, ''],
-
-			[1, true, '<strong>item1</strong>'],
-			[1, false, 'item1'],
-
-			[2, true, '<strong>item1</strong> and <strong>item2</strong>'],
-			[2, false, 'item1 and item2'],
-
-			[3, true, '<strong>item1</strong>, <strong>item2</strong> and <strong>item3</strong>'],
-			[3, false, 'item1, item2 and item3'],
-			[3, null, 'item1item2item3'],
-			[
-				6, true,
-				'<strong>item1</strong>, <strong>item2</strong>, <strong>item3</strong> and <strong class="has-tooltip" title="item4, item5, item6">3 more</strong>',
-			],
-			[
-				6, false,
-				'item1, item2, item3 and 3 more',
-			],
-		];
-	}
-
-	/**
-	 * @dataProvider dataJoinParameterList
-	 *
-	 * @param int $numParameters
-	 * @param bool $allowHtml
-	 * @param string $expected
-	 */
-	public function testJoinParameterList($numParameters, $allowHtml, $expected) {
-		$parameterList = $plainParameterList = [];
-		for ($i = 1; $i <= $numParameters; $i++) {
-			if ($allowHtml) {
-				$parameterList[] = '<strong>item' . $i . '</strong>';
-			} else {
-				$parameterList[] = 'item' . $i;
-			}
-			$plainParameterList[] = 'item' . $i;
-		}
-
-		$collection = $this->getCollection();
-
-		$this->l->expects($this->any())
-			->method('t')
-			->willReturnCallback(function ($string, $parameters) {
-				return vsprintf($string, $parameters);
-			});
-		$this->l->expects($this->any())
-			->method('n')
-			->willReturnCallback(function ($singular, $plural, $count, $parameters) {
-				if ($count === 1) {
-					$string = str_replace('%n', $count, $singular);
-				} else {
-					$string = str_replace('%n', $count, $plural);
-				}
-				return vsprintf($string, $parameters);
-			});
-
-		$this->assertSame($expected, $this->invokePrivate($collection, 'joinParameterList', [
-			$parameterList, $plainParameterList, $allowHtml
-		]));
+		$this->assertSame('<collection>OneNullTwoNull</collection>', $collection->format());
 	}
 }

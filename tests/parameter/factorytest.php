@@ -91,7 +91,6 @@ class FactoryTest extends TestCase {
 				$this->userManager,
 				$this->urlGenerator,
 				$this->contactsManager,
-				$this->config,
 				$this->infoCache,
 				$this->l,
 				$user
@@ -103,7 +102,6 @@ class FactoryTest extends TestCase {
 					$this->userManager,
 					$this->urlGenerator,
 					$this->contactsManager,
-					$this->config,
 					$this->infoCache,
 					$this->l,
 					$user,

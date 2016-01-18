@@ -31,9 +31,6 @@ class UserFormatterTest extends TestCase {
 	/** @var \OCP\IUserManager|\PHPUnit_Framework_MockObject_MockObject */
 	protected $userManager;
 
-	/** @var \OCP\IConfig|\PHPUnit_Framework_MockObject_MockObject */
-	protected $config;
-
 	/** @var \OCP\IL10N|\PHPUnit_Framework_MockObject_MockObject */
 	protected $l;
 
@@ -41,10 +38,6 @@ class UserFormatterTest extends TestCase {
 		parent::setUp();
 
 		$this->userManager = $this->getMockBuilder('OCP\IUserManager')
-			->disableOriginalConstructor()
-			->getMock();
-
-		$this->config = $this->getMockBuilder('OCP\IConfig')
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -61,14 +54,12 @@ class UserFormatterTest extends TestCase {
 		if (empty($methods)) {
 			return new UserFormatter(
 				$this->userManager,
-				$this->config,
 				$this->l
 			);
 		} else {
 			return $this->getMockBuilder('OCA\Activity\Formatter\UserFormatter')
 				->setConstructorArgs([
 					$this->userManager,
-					$this->config,
 					$this->l,
 				])
 				->setMethods($methods)
@@ -78,22 +69,16 @@ class UserFormatterTest extends TestCase {
 
 	public function dataFormatRemoteUser() {
 		return [
-			[true, true, '<strong>"remote user"</strong>'],
-			[false, true, '"remote user"'],
-			[true, false, '<strong>"remote user"</strong>'],
-			[false, false, '"remote user"'],
-			[null, null, '<user display-name="&quot;remote user&quot;"></user>'],
+			['<user display-name="&quot;remote user&quot;"></user>'],
 		];
 	}
 
 	/**
 	 * @dataProvider dataFormatRemoteUser
 	 *
-	 * @param bool $allowHtml
-	 * @param bool $verbose
 	 * @param string $expected
 	 */
-	public function testFormatRemoteUser($allowHtml, $verbose, $expected) {
+	public function testFormatRemoteUser($expected) {
 		/** @var \OCP\Activity\IEvent|\PHPUnit_Framework_MockObject_MockObject $event */
 		$event = $this->getMockBuilder('OCP\Activity\IEvent')
 			->disableOriginalConstructor()
@@ -108,7 +93,7 @@ class UserFormatterTest extends TestCase {
 			->method('get');
 
 		$formatter = $this->getFormatter();
-		$this->assertSame($expected, $formatter->format($event, '', $allowHtml, $verbose));
+		$this->assertSame($expected, $formatter->format($event, ''));
 	}
 
 	protected function getUser($displayName) {
@@ -123,27 +108,9 @@ class UserFormatterTest extends TestCase {
 
 	public function dataFormat() {
 		return [
-			['nouser', null, false, true, true, '<strong>nouser</strong>'],
-			['nouser', null, false, false, true, 'nouser'],
-			['nouser', null, false, true, false, '<strong>nouser</strong>'],
-			['nouser', null, false, false, false, 'nouser'],
-
-			['user', $this->getUser('Display'), false, true, true, '<strong>Display</strong>'],
-			['user', $this->getUser('Display'), false, false, true, 'Display'],
-			['user', $this->getUser('Display'), false, true, false, '<strong>Display</strong>'],
-			['user', $this->getUser('Display'), false, false, false, 'Display'],
-
-			['nouser1', null, true, true, true, '<div class="avatar" data-user="nouser1"></div><strong>nouser1</strong>'],
-			['nouser2', null, true, false, true, 'nouser2'],
-			['nouser3', null, true, true, false, '<div class="avatar" data-user="nouser3"></div><strong>nouser3</strong>'],
-			['nouser4', null, true, false, false, 'nouser4'],
-
-			['user1', $this->getUser('Display'), true, true, true, '<div class="avatar" data-user="user1"></div><strong>Display</strong>'],
-			['user2', $this->getUser('Display'), true, false, true, 'Display'],
-			['user3', $this->getUser('Display'), true, true, false, '<div class="avatar" data-user="user3"></div><strong>Display</strong>'],
-			['user4', $this->getUser('Display'), true, false, false, 'Display'],
-			['user5', $this->getUser('Display5'), true, null, null, '<user display-name="Display5">user5</user>'],
-			['user5', $this->getUser('Display5'), false, null, null, '<user display-name="Display5">user5</user>'],
+			['nouser', null, '<user display-name="nouser">nouser</user>'],
+			['user1', $this->getUser('Display1'), '<user display-name="Display1">user1</user>'],
+			['user5', $this->getUser('Display5'), '<user display-name="Display5">user5</user>'],
 		];
 	}
 
@@ -152,12 +119,9 @@ class UserFormatterTest extends TestCase {
 	 *
 	 * @param string $parameter
 	 * @param null|\OCP\IUser $user
-	 * @param bool $avatarsEnabled
-	 * @param bool $allowHtml
-	 * @param bool $verbose
 	 * @param string $expected
 	 */
-	public function testFormat($parameter, $user, $avatarsEnabled, $allowHtml, $verbose, $expected) {
+	public function testFormat($parameter, $user, $expected) {
 		/** @var \OCP\Activity\IEvent|\PHPUnit_Framework_MockObject_MockObject $event */
 		$event = $this->getMockBuilder('OCP\Activity\IEvent')
 			->disableOriginalConstructor()
@@ -169,12 +133,8 @@ class UserFormatterTest extends TestCase {
 			->method('get')
 			->with($parameter)
 			->willReturn($user);
-		$this->config->expects($this->any())
-			->method('getSystemValue')
-			->with('enable_avatars', true)
-			->willReturn($avatarsEnabled);
 
 		$formatter = $this->getFormatter();
-		$this->assertSame($expected, $formatter->format($event, $parameter, $allowHtml, $verbose));
+		$this->assertSame($expected, $formatter->format($event, $parameter));
 	}
 }

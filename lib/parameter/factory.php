@@ -49,9 +49,6 @@ class Factory {
 	/** @var IL10N */
 	protected $l;
 
-	/** @var IConfig */
-	protected $config;
-
 	/** @var ViewInfoCache */
 	protected $infoCache;
 
@@ -66,7 +63,6 @@ class Factory {
 	 * @param IUserManager $userManager
 	 * @param IURLGenerator $urlGenerator
 	 * @param IContactsManager $contactsManager
-	 * @param IConfig $config
 	 * @param ViewInfoCache $infoCache,
 	 * @param IL10N $l
 	 * @param string $user
@@ -75,7 +71,6 @@ class Factory {
 								IUserManager $userManager,
 								IURLGenerator $urlGenerator,
 								IContactsManager $contactsManager,
-								IConfig $config,
 								ViewInfoCache $infoCache,
 								IL10N $l,
 								$user) {
@@ -83,7 +78,6 @@ class Factory {
 		$this->userManager = $userManager;
 		$this->urlGenerator = $urlGenerator;
 		$this->contactsManager = $contactsManager;
-		$this->config = $config;
 		$this->infoCache = $infoCache;
 		$this->l = $l;
 		$this->user = $user;
@@ -133,7 +127,7 @@ class Factory {
 		if ($formatter === 'file') {
 			return new FileFormatter($this->infoCache, $this->urlGenerator, $this->l, $this->user);
 		} else if ($formatter === 'username') {
-			return new UserFormatter($this->userManager, $this->config, $this->l);
+			return new UserFormatter($this->userManager, $this->l);
 		} else if ($formatter === 'federated_cloud_id') {
 			return new CloudIDFormatter($this->contactsManager);
 		} else {

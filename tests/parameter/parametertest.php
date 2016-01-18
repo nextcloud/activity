@@ -109,10 +109,8 @@ class ParameterTest extends TestCase {
 
 	public function dataFormat() {
 		return [
-			['parameter1', true, true],
-			['parameter2', true, false],
-			['parameter3', false, true],
-			['parameter4', false, false],
+			['parameter1'],
+			['parameter2'],
 		];
 	}
 
@@ -120,17 +118,15 @@ class ParameterTest extends TestCase {
 	 * @dataProvider dataFormat
 	 *
 	 * @param string $parameter
-	 * @param bool $allowHtml
-	 * @param bool $verbose
 	 */
-	public function testFormat($parameter, $allowHtml, $verbose) {
+	public function testFormat($parameter) {
 		$instance = $this->getParameter($parameter);
 
 		$this->formatter->expects($this->once())
 			->method('format')
-			->with($this->event, $parameter, $allowHtml, $verbose)
+			->with($this->event, $parameter)
 			->willReturn('formatted()');
 
-		$this->assertSame('formatted()', $instance->format($allowHtml, $verbose));
+		$this->assertSame('formatted()', $instance->format());
 	}
 }

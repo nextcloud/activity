@@ -53,11 +53,9 @@ class FileFormatter implements IFormatter {
 	/**
 	 * @param IEvent $event
 	 * @param string $parameter The parameter to be formatted
-	 * @param bool $allowHtml   Should HTML be used to format the parameter?
-	 * @param bool $verbose     Should paths, names, etc be shortened or full length
 	 * @return string The formatted parameter
 	 */
-	public function format(IEvent $event, $parameter, $allowHtml, $verbose = false) {
+	public function format(IEvent $event, $parameter) {
 		$param = $this->fixLegacyFilename($parameter);
 
 		// If the activity is about the very same file, we use the current path
@@ -86,26 +84,9 @@ class FileFormatter implements IFormatter {
 		}
 
 		$param = trim($param, '/');
-		list($path, $name) = $this->splitPathFromFilename($param);
-		$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
+		$fileLink = $this->urlGenerator->linkToRouteAbsolute('files.view.index', $linkData);
 
-		if ($allowHtml === null) {
-			return '<file link="' . $fileLink . '" id="' . Util::sanitizeHTML($fileId) . '">' . Util::sanitizeHTML($param) . '</file>';
-		}
-
-		if ($verbose || $path === '') {
-			if (!$allowHtml) {
-				return $param;
-			}
-			return '<a class="filename" href="' . $fileLink . '">' . Util::sanitizeHTML($param) . '</a>';
-		}
-
-		if (!$allowHtml) {
-			return $name;
-		}
-
-		$title = ' title="' . $this->l->t('in %s', array(Util::sanitizeHTML($path))) . '"';
-		return '<a class="filename has-tooltip" href="' . $fileLink . '"' . $title . '>' . Util::sanitizeHTML($name) . '</a>';
+		return '<file link="' . $fileLink . '" id="' . Util::sanitizeHTML($fileId) . '">' . Util::sanitizeHTML($param) . '</file>';
 	}
 
 	/**

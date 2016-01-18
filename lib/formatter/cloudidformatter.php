@@ -44,11 +44,9 @@ class CloudIDFormatter implements IFormatter {
 	/**
 	 * @param IEvent $event
 	 * @param string $parameter The parameter to be formatted
-	 * @param bool $allowHtml   Should HTML be used to format the parameter?
-	 * @param bool $verbose     Should paths, names, etc be shortened or full length
 	 * @return string The formatted parameter
 	 */
-	public function format(IEvent $event, $parameter, $allowHtml, $verbose = false) {
+	public function format(IEvent $event, $parameter) {
 		$displayName = $parameter;
 		try {
 			list($user, $server) = Helper::splitUserRemote($parameter);
@@ -57,7 +55,7 @@ class CloudIDFormatter implements IFormatter {
 			$server = '';
 		}
 
-		if (!$verbose && $server !== '') {
+		if ($server !== '') {
 			$displayName = $user . '@…';
 		}
 
@@ -65,17 +63,7 @@ class CloudIDFormatter implements IFormatter {
 			$displayName = $this->getDisplayNameFromContact($parameter);
 		} catch (\OutOfBoundsException $e) {}
 
-
-		if ($allowHtml === null) {
-			return '<federated-cloud-id display-name="' . Util::sanitizeHTML($displayName) . '" user="' . $user . '" server="' . $server . '">' . Util::sanitizeHTML($parameter) . '</federated-cloud-id>';
-		}
-
-		if ($allowHtml) {
-			$title = ' title="' . Util::sanitizeHTML($parameter) . '"';
-			return '<strong class="has-tooltip"' . $title . '>' . Util::sanitizeHTML($displayName) . '</strong>';
-		} else {
-			return $displayName;
-		}
+		return '<federated-cloud-id display-name="' . Util::sanitizeHTML($displayName) . '" user="' . Util::sanitizeHTML($user) . '" server="' . Util::sanitizeHTML($server) . '">' . Util::sanitizeHTML($parameter) . '</federated-cloud-id>';
 	}
 
 	/**

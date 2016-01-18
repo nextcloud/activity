@@ -77,25 +77,21 @@ class DataHelper {
 	 * @param string $app The app where this event comes from
 	 * @param string $text The text including placeholders
 	 * @param IParameter[] $params The parameter for the placeholder
-	 * @param bool $stripPath Shall we strip the path from file names?
-	 * @param bool $highlightParams Shall we highlight the parameters in the string?
-	 *             They will be highlighted with `<strong>`, all data will be passed through
-	 *             \OCP\Util::sanitizeHTML() before, so no XSS is possible.
 	 * @return string translated
 	 */
-	public function translation($app, $text, array $params, $stripPath = false, $highlightParams = false) {
+	public function translation($app, $text, array $params) {
 		if (!$text) {
 			return '';
 		}
 
 		$preparedParams = [];
 		foreach ($params as $parameter) {
-			$preparedParams[] = $parameter->format($highlightParams, !$stripPath);
+			$preparedParams[] = $parameter->format();
 		}
 
 		// Allow apps to correctly translate their activities
 		$translation = $this->activityManager->translate(
-			$app, $text, $preparedParams, $stripPath, $highlightParams, $this->l->getLanguageCode());
+			$app, $text, $preparedParams, false, false, $this->l->getLanguageCode());
 
 		if ($translation !== false) {
 			return $translation;
@@ -132,17 +128,7 @@ class DataHelper {
 	public function formatStrings($activity, $message) {
 		$activity[$message . 'params'] = $activity[$message . 'params_array'];
 		unset($activity[$message . 'params_array']);
-
-		$activity[$message . '_prepared'] = $this->translation($activity['app'], $activity[$message], $activity[$message . 'params'], null, null);
-
-		$activity[$message . 'formatted'] = array(
-			'trimmed'	=> $this->translation($activity['app'], $activity[$message], $activity[$message . 'params'], true),
-			'full'		=> $this->translation($activity['app'], $activity[$message], $activity[$message . 'params']),
-			'markup'	=> array(
-				'trimmed'	=> $this->translation($activity['app'], $activity[$message], $activity[$message . 'params'], true, true),
-				'full'		=> $this->translation($activity['app'], $activity[$message], $activity[$message . 'params'], false, true),
-			),
-		);
+		$activity[$message . '_prepared'] = $this->translation($activity['app'], $activity[$message], $activity[$message . 'params']);
 
 		return $activity;
 	}
