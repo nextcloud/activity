@@ -98,15 +98,15 @@ class FileFormatterTest extends TestCase {
 		];
 
 		return [
-			['user1', '/test1', false, [], '<file link="files/index.php?dir=%2F&scrollto=test1" id="">test1</file>'],
-			['user1', '/test1', true, [], '<file link="files/index.php?dir=%2Ftest1" id="">test1</file>'],
-			['user1', '/test1/test2', false, [], '<file link="files/index.php?dir=%2Ftest1&scrollto=test2" id="">test1/test2</file>'],
-			['user1', '/test1/test2', true, [], '<file link="files/index.php?dir=%2Ftest1%2Ftest2" id="">test1/test2</file>'],
+			['user1', '/test1', false, [], '<file link="apps/files/?dir=%2F&scrollto=test1" id="">test1</file>'],
+			['user1', '/test1', true, [], '<file link="apps/files/?dir=%2Ftest1" id="">test1</file>'],
+			['user1', '/test1/test2', false, [], '<file link="apps/files/?dir=%2Ftest1&scrollto=test2" id="">test1/test2</file>'],
+			['user1', '/test1/test2', true, [], '<file link="apps/files/?dir=%2Ftest1%2Ftest2" id="">test1/test2</file>'],
 
-			['user1', '/test1/test2', false, $trash0, '<file link="files/index.php?dir=%2F&scrollto=test2&view=trashbin" id="42">test1/test2</file>'],
-			['user1', '/test1/test2', true, $trash1, '<file link="files/index.php?dir=%2Ftest2&view=trashbin" id="42">test1/test2</file>'],
+			['user1', '/test1/test2', false, $trash0, '<file link="apps/files/?dir=%2F&scrollto=test2&view=trashbin" id="42">test1/test2</file>'],
+			['user1', '/test1/test2', true, $trash1, '<file link="apps/files/?dir=%2Ftest2&view=trashbin" id="42">test1/test2</file>'],
 
-			['user2', '/test1', false, [], '<file link="files/index.php?dir=%2F&scrollto=test1" id="">test1</file>'],
+			['user2', '/test1', false, [], '<file link="apps/files/?dir=%2F&scrollto=test1" id="">test1</file>'],
 		];
 	}
 
@@ -137,14 +137,14 @@ class FileFormatterTest extends TestCase {
 		}
 
 		$this->urlGenerator->expects($this->once())
-			->method('linkTo')
-			->with('files', 'index.php', $this->anything())
-			->willReturnCallback(function($app, $file, $parameters) {
+			->method('linkToRouteAbsolute')
+			->with('files.view.index', $this->anything())
+			->willReturnCallback(function($route, $parameters) {
 				$paramList = [];
 				foreach ($parameters as $key => $value) {
 					$paramList[] = $key . '=' . urlencode($value);
 				}
-				return $app . '/' . $file . '?' . implode('&', $paramList);
+				return 'apps/files/' . '?' . implode('&', $paramList);
 			});
 
 		$formatter = $this->getFormatter([

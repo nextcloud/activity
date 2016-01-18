@@ -84,7 +84,7 @@ class FileFormatter implements IFormatter {
 		}
 
 		$param = trim($param, '/');
-		$fileLink = $this->urlGenerator->linkTo('files', 'index.php', $linkData);
+		$fileLink = $this->urlGenerator->linkToRouteAbsolute('files.view.index', $linkData);
 
 		return '<file link="' . $fileLink . '" id="' . Util::sanitizeHTML($fileId) . '">' . Util::sanitizeHTML($param) . '</file>';
 	}
