@@ -220,7 +220,7 @@ class FilesHooksTest extends TestCase {
 				[
 					'user' => [
 						'subject' => 'restored_self',
-						'subject_params' => ['/user/path'],
+						'subject_params' => [[1337 => '/user/path']],
 						'path' => '/user/path',
 						'stream' => true,
 						'email' => 42,
@@ -235,7 +235,7 @@ class FilesHooksTest extends TestCase {
 				[
 					'user1' => [
 						'subject' => 'restored_by',
-						'subject_params' => ['/user1/path', 'user'],
+						'subject_params' => [[1337 => '/user1/path'], 'user'],
 						'path' => '/user1/path',
 						'stream' => true,
 						'email' => 0,
@@ -388,7 +388,7 @@ class FilesHooksTest extends TestCase {
 			->with(
 				'recipient',
 				'shared_with_by',
-				[$fileTarget, 'user'],
+				[[1337 => $fileTarget], 'user'],
 				1337,
 				$fileTarget,
 				$isFile,
@@ -446,7 +446,7 @@ class FilesHooksTest extends TestCase {
 				[
 					'user1' => [
 						'subject' => 'shared_with_by',
-						'subject_params' => ['/file', 'user'],
+						'subject_params' => [[42 => '/file'], 'user'],
 						'path' => '/file',
 						'stream' => true,
 						'email' => 0,
@@ -619,7 +619,7 @@ class FilesHooksTest extends TestCase {
 			->with(
 				'owner',
 				'reshared_link_by',
-				['/path', 'user', ''],
+				[[42 => '/path'], 'user', ''],
 				42,
 				'/path',
 				true,
@@ -670,7 +670,7 @@ class FilesHooksTest extends TestCase {
 			->with(
 				'user',
 				'shared_link_self',
-				['/path'],
+				[[42 => '/path']],
 				42,
 				'/path',
 				true,
@@ -807,7 +807,7 @@ class FilesHooksTest extends TestCase {
 			->with(
 				'user',
 				'subject',
-				['/path', 'target'],
+				[[42 => '/path'], 'target'],
 				42,
 				'/path',
 				true,
