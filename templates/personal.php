@@ -11,7 +11,7 @@ style('activity', 'settings');
 ?>
 
 <form id="activity_notifications" class="section">
-	<h2><?php p($l->t('Notifications')); ?></h2>
+	<h2><?php p($l->t('Activity')); ?></h2>
 	<table class="grid activitysettings">
 		<thead>
 			<tr>
