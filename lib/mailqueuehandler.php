@@ -221,6 +221,7 @@ class MailQueueHandler {
 		list($mailData, $skippedCount) = $this->getItemsForUser($userName, $maxTime);
 
 		$l = $this->getLanguage($lang);
+		$parser = new PlainTextParser($l);
 		$this->dataHelper->setUser($userName);
 		$this->dataHelper->setL10n($l);
 
@@ -239,8 +240,10 @@ class MailQueueHandler {
 			);
 
 			$activityList[] = array(
-				$this->dataHelper->translation(
-					$activity['amq_appid'], $activity['amq_subject'], $this->dataHelper->getParameters($event, 'subject', $activity['amq_subjectparams'])
+				$parser->parseMessage(
+					$this->dataHelper->translation(
+						$activity['amq_appid'], $activity['amq_subject'], $this->dataHelper->getParameters($event, 'subject', $activity['amq_subjectparams'])
+					)
 				),
 				$relativeDateTime,
 			);
