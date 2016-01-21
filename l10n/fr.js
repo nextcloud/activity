@@ -16,6 +16,8 @@ OC.L10N.register(
     "There are no events for this filter" : "Il n'y a pas d'événement pour ce filtre",
     "Today" : "Auj.",
     "Yesterday" : "Hier",
+    "{parameterList} and {lastParameter}" : "{parameterList} et {lastParameter}",
+    "in {directory}" : "dans {directory}",
     "\"remote user\"" : "\"utilisateur distant\"",
     "Activity notification" : "Notification d'activité",
     "All Activities" : "Toutes activités",

@@ -16,6 +16,8 @@ OC.L10N.register(
     "There are no events for this filter" : "Нет событий соответствующих фильтру",
     "Today" : "Сегодня",
     "Yesterday" : "Вчера",
+    "{parameterList} and {lastParameter}" : "{parameterList} и {lastParameter}",
+    "in {directory}" : "в {directory}",
     "\"remote user\"" : "\"удалённый пользователь\"",
     "Activity notification" : "Уведомление о событиях",
     "All Activities" : "Все действия",
