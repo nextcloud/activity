@@ -50,13 +50,14 @@ class Api
 			$app->getContainer()->query('UserSettings'),
 			$user, $start, $count, 'desc', 'all'
 		);
+		$parser = new PlainTextParser(\OC::$server->getL10NFactory()->get('activity'));
 
 		$entries = array();
 		foreach($activities['data'] as $entry) {
 			$entries[] = array(
 				'id' => $entry['activity_id'],
-				'subject' => self::parseMessage($entry['subject_prepared']),
-				'message' => self::parseMessage($entry['message_prepared']),
+				'subject' => $parser->parseMessage($entry['subject_prepared']),
+				'message' => $parser->parseMessage($entry['message_prepared']),
 				'file' => $entry['object_name'],
 				'link' => $entry['link'],
 				'date' => date('c', $entry['timestamp']),
@@ -89,115 +90,5 @@ class Api
 		}
 
 		return 0;
-	}
-
-	/**
-	 * Parse the parameters in the subject and message
-	 *
-	 * @param string $message
-	 * @return string
-	 */
-	protected static function parseMessage($message) {
-		$message = self::parseCollections($message);
-		$message = self::parseParameters($message);
-		return $message;
-	}
-
-	/**
-	 * Parse collections
-	 *
-	 * @param string $message
-	 * @return string
-	 */
-	protected static function parseCollections($message) {
-		return preg_replace_callback('/<collection>(.*?)<\/collection>/', function($match) {
-			$parameterList = explode('><', $match[1]);
-			$parameterListLength = sizeof($parameterList);
-
-			$parameters = [];
-			for ($i = 0; $i < $parameterListLength; $i++) {
-				$parameter = $parameterList[$i];
-				if ($i > 0) {
-					$parameter = '<' . $parameter;
-				}
-				if ($i + 1 < $parameterListLength) {
-					$parameter = $parameter . '>';
-				}
-
-				$parameters[] = self::parseParameters($parameter);
-			}
-			if ($parameterListLength === 1) {
-				return array_pop($parameters);
-			} else {
-				$l = \OC::$server->getL10NFactory()->get('activity');
-				$lastParameter = array_pop($parameters);
-				return $l->t('%s and %s', [
-					implode($l->t(', '), $parameters),
-					$lastParameter,
-				]);
-			}
-		}, $message);
-	}
-
-	/**
-	 * Parse the parameters in the subject and message
-	 *
-	 * @param string $message
-	 * @return string
-	 */
-	protected static function parseParameters($message) {
-		$message = self::parseUntypedParameters($message);
-		$message = self::parseUserParameters($message);
-		$message = self::parseFederatedCloudIDParameters($message);
-		$message = self::parseFileParameters($message);
-		return $message;
-	}
-
-	/**
-	 * Display the parameter value
-	 *
-	 * @param string $message
-	 * @return string
-	 */
-	protected static function parseUntypedParameters($message) {
-		return preg_replace_callback('/<parameter>(.*?)<\/parameter>/', function($match) {
-			return $match[1];
-		}, $message);
-	}
-
-	/**
-	 * Display the users display name
-	 *
-	 * @param string $message
-	 * @return string
-	 */
-	protected static function parseUserParameters($message) {
-		return preg_replace_callback('/<user\ display\-name=\"(.*?)\">(.*?)<\/user>/', function($match) {
-			return $match[1];
-		}, $message);
-	}
-
-	/**
-	 * Display the full cloud id
-	 *
-	 * @param string $message
-	 * @return string
-	 */
-	protected static function parseFederatedCloudIDParameters($message) {
-		return preg_replace_callback('/<federated-cloud-id\ display\-name=\"(.*?)\"\ user=\"(.*?)\"\ server=\"(.*?)\">(.*?)<\/federated-cloud-id>/', function($match) {
-			return $match[1];
-		}, $message);
-	}
-
-	/**
-	 * Display the path for files
-	 *
-	 * @param string $message
-	 * @return string
-	 */
-	protected static function parseFileParameters($message) {
-		return preg_replace_callback('/<file\ link=\"(.*?)\"\ id=\"(.*?)\">(.*?)<\/file>/', function($match) {
-			return $match[3];
-		}, $message);
 	}
 }
