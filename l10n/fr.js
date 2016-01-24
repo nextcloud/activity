@@ -16,6 +16,7 @@ OC.L10N.register(
     "Yesterday" : "Hier",
     ", " : ", ",
     "{parameterList} and {lastParameter}" : "{parameterList} et {lastParameter}",
+    "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} et {linkStart}%n autre{linkEnd}","{parameterList} et {linkStart}%n autres{linkEnd}"],
     "in {directory}" : "dans {directory}",
     "\"remote user\"" : "\"utilisateur distant\"",
     "Activity notification" : "Notification d'activité",
