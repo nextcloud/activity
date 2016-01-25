@@ -237,7 +237,7 @@ class OCSEndPoint {
 						$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $objectId, $objectName);
 					}
 				} else if ($activity['object_type'] === 'files' && $activity['object_id']) {
-					$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $activity['object_id'], $activity['file']);
+					$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $activity['object_id'], $activity['object_name']);
 				}
 			}
 

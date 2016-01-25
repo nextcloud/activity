@@ -421,9 +421,9 @@ class OCSEndPointTest extends TestCase {
 			[123456789, 'files', 42, [], false, 0, ['object_type' => 'files', 'object_id' => 42, 'datetime' => date('c', 123456789)]],
 			[12345678, 'calendar', 23, [], true, 0, ['object_type' => 'calendar', 'object_id' => 23, 'datetime' => date('c', 12345678), 'previews' => []]],
 			[
-				12345678, 'files', 23, ['files' => [], 'affecteduser' => 'user1', 'file' => 'file.txt'],
+				12345678, 'files', 23, ['files' => [], 'affecteduser' => 'user1', 'object_name' => 'file.txt'],
 				true, 1,
-				['object_type' => 'files', 'object_id' => 23, 'files' => [], 'affecteduser' => 'user1', 'file' => 'file.txt', 'datetime' => date('c', 12345678), 'previews' => [['preview']]]
+				['object_type' => 'files', 'object_id' => 23, 'files' => [], 'affecteduser' => 'user1', 'object_name' => 'file.txt', 'datetime' => date('c', 12345678), 'previews' => [['preview']]]
 			],
 			[
 				12345678, 'files', 23, ['files' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'affecteduser' => 'user1'],

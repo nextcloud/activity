@@ -96,6 +96,7 @@ class FilesHooksStatic {
 	 */
 	public static function onLoadFilesAppScripts() {
 		Util::addStyle('activity', 'style');
+		Util::addScript('activity', 'formatter');
 		Util::addScript('activity', 'activitymodel');
 		Util::addScript('activity', 'activitycollection');
 		Util::addScript('activity', 'activitytabview');
