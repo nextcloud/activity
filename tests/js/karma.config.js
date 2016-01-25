@@ -28,6 +28,7 @@ module.exports = function(config) {
 
 	// can't use wildcard due to loading order
 	var srcFiles = [
+		'js/formatter.js',
 		'js/script.js',
 		'js/activitymodel.js',
 		'js/activitycollection.js',

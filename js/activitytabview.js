@@ -45,10 +45,10 @@
 	 */
 	function formatActivity(activity) {
 		var output = {
-			subject: activity.get('subjectformatted').markup.trimmed,
+			subject: OCA.Activity.Formatter.parseMessage(activity.get('subject_prepared'), false),
 			formattedDate: activity.get('relativeDateTimestamp'),
 			formattedDateTooltip: activity.get('readableDateTimestamp'),
-			message: activity.get('messageformatted').markup.trimmed
+			message: OCA.Activity.Formatter.parseMessage(activity.get('message_prepared'), false)
 		};
 
 		if (activity.has('typeicon')) {

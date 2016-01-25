@@ -45,10 +45,10 @@ describe('ActivityTabView', function() {
 
 		it('renders activities', function() {
 			var activity1 = {
-				subjectformatted: {markup: {trimmed: 'The <span class="markup">Subject</span>'}},
+				subject_prepared: 'The <parameter class="markup">Subject</parameter>',
 				relativeDateTimestamp: 'seconds ago',
 				readableDateTimestamp: 'readable date',
-				messageformatted: {markup: {trimmed: 'Some <span class="markup">message</span>!'}},
+				message_prepared: 'Some <parameter class="markup">message</parameter>!',
 				typeicon: 'icon-add-color',
 				previews: [{
 					isMimeTypeIcon: true,
@@ -59,10 +59,10 @@ describe('ActivityTabView', function() {
 				}]
 			};
 			var activity2 = {
-				subjectformatted: {markup: {trimmed: 'The Subject Two'}},
+				subject_prepared: 'The Subject Two',
 				relativeDateTimestamp: 'years ago',
 				readableDateTimestamp: 'once upon a time',
-				messageformatted: {markup: {trimmed: 'Activity Two'}}
+				message_prepared: 'Activity Two'
 			};
 			tabView.setFileInfo(fileInfo);
 			tabView.collection.set([activity1, activity2]);
