@@ -26,6 +26,7 @@ namespace OCA\Activity;
 use \OCP\Activity\IManager;
 use \OCP\IURLGenerator;
 use \OCP\Template;
+use \OCP\IL10N;
 
 /**
  * Class Navigation
@@ -33,7 +34,7 @@ use \OCP\Template;
  * @package OCA\Activity
  */
 class Navigation {
-	/** @var \OC_L10N */
+	/** @var IL10N */
 	protected $l;
 
 	/** @var \OCP\Activity\IManager */
@@ -57,7 +58,7 @@ class Navigation {
 	/**
 	 * Construct
 	 *
-	 * @param \OC_L10N $l
+	 * @param IL10N $l
 	 * @param \OCP\Activity\IManager $manager
 	 * @param \OCP\IURLGenerator $URLGenerator
 	 * @param UserSettings $userSettings
@@ -65,7 +66,7 @@ class Navigation {
 	 * @param string $rssToken
 	 * @param null|string $active Navigation entry that should be marked as active
 	 */
-	public function __construct(\OC_L10N $l,
+	public function __construct(IL10N $l,
 								IManager $manager,
 								IURLGenerator $URLGenerator,
 								UserSettings $userSettings,
