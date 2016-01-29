@@ -23,10 +23,11 @@
 
 namespace OCA\Activity;
 
-use \OCP\Activity\IManager;
-use \OCP\IURLGenerator;
-use \OCP\Template;
-use \OCP\IL10N;
+
+use OCP\Activity\IManager;
+use OCP\IL10N;
+use OCP\IURLGenerator;
+use OCP\Template;
 
 /**
  * Class Navigation
@@ -37,10 +38,10 @@ class Navigation {
 	/** @var IL10N */
 	protected $l;
 
-	/** @var \OCP\Activity\IManager */
+	/** @var IManager */
 	protected $activityManager;
 
-	/** @var \OCP\IURLGenerator */
+	/** @var IURLGenerator */
 	protected $URLGenerator;
 
 	/** @var UserSettings */
@@ -59,8 +60,8 @@ class Navigation {
 	 * Construct
 	 *
 	 * @param IL10N $l
-	 * @param \OCP\Activity\IManager $manager
-	 * @param \OCP\IURLGenerator $URLGenerator
+	 * @param IManager $manager
+	 * @param IURLGenerator $URLGenerator
 	 * @param UserSettings $userSettings
 	 * @param string $user
 	 * @param string $rssToken
