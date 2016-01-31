@@ -9,6 +9,8 @@
     "Error loading activities" : "アクティビティ読み込みエラー",
     "No activities" : "アクティビティなし",
     ", " : ", ",
+    "{parameterList} and {lastParameter}" : "{parameterList} と {lastParameter}",
+    "in {directory}" : "{directory}の中",
     "This stream will show events like additions, changes & shares" : "このタイムラインには、追加、変更、共有が表示されます。",
     "There are no events for this filter" : "このフィルターで表示されるイベントはありません。",
     "Today" : "今日",
