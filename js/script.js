@@ -110,11 +110,11 @@ $(function(){
 
 			headers = headers.split("\n");
 			_.each(headers, function (header) {
-				[head, value] = header.split(': ');
-				if (head === 'X-Activity-First-Known') {
-					self.firstKnownId = parseInt(value, 10);
-				} else if (head === 'X-Activity-Last-Given') {
-					self.lastGivenId = parseInt(value, 10);
+				var parts = header.split(': ');
+				if (parts[0] === 'X-Activity-First-Known') {
+					self.firstKnownId = parseInt(parts[1], 10);
+				} else if (parts[0] === 'X-Activity-Last-Given') {
+					self.lastGivenId = parseInt(parts[1], 10);
 				}
 			});
 		},
