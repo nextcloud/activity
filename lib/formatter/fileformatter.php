@@ -61,7 +61,11 @@ class FileFormatter implements IFormatter {
 		// If the activity is about the very same file, we use the current path
 		// for the link generation instead of the one that was saved.
 		$fileId = '';
-		if ($event->getObjectType() === 'files' && $event->getObjectName() === $param) {
+		if (is_array($param)) {
+			$fileId = key($param);
+			$param = $param[$fileId];
+			$info = $this->infoCache->getInfoById($this->user, $fileId, $param);
+		} elseif ($event->getObjectType() === 'files' && $event->getObjectName() === $param) {
 			$fileId = $event->getObjectId();
 			$info = $this->infoCache->getInfoById($this->user, $fileId, $param);
 		} else {
@@ -91,10 +95,14 @@ class FileFormatter implements IFormatter {
 
 	/**
 	 * Prepend leading slash to filenames of legacy activities
-	 * @param string $filename
-	 * @return string
+	 * @param string|array $filename
+	 * @return string|array
 	 */
 	protected function fixLegacyFilename($filename) {
+		if (is_array($filename)) {
+			// 9.0: [fileId => path]
+			return $filename;
+		}
 		if (strpos($filename, '/') !== 0) {
 			return '/' . $filename;
 		}

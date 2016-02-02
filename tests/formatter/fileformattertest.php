@@ -179,6 +179,8 @@ class FileFormatterTest extends TestCase {
 			['/test1', '/test1'],
 			['test1/test2', '/test1/test2'],
 			['/test1/test2', '/test1/test2'],
+			[[42 => 'fourtytwo'], [42 => 'fourtytwo']],
+			[[23 => '/twentythree'], [23 => '/twentythree']],
 		];
 	}
 
