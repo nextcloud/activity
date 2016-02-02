@@ -12,6 +12,7 @@ OC.L10N.register(
     "No activities" : "Событий нет",
     ", " : ",",
     "{parameterList} and {lastParameter}" : "{parameterList} и {lastParameter}",
+    "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} и {linkStart}еще %n{linkEnd}","{parameterList} и {linkStart}еще %n{linkEnd}","{parameterList} и {linkStart}еще %n{linkEnd}","{parameterList} и {linkStart}еще %n{linkEnd}"],
     "in {directory}" : "в {directory}",
     "This stream will show events like additions, changes & shares" : "Этот поток будет отображать события вроде добавления, изменения файлов или открытия к ним доступа",
     "There are no events for this filter" : "Нет событий соответствующих фильтру",
