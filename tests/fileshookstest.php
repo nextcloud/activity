@@ -335,17 +335,18 @@ class FilesHooksTest extends TestCase {
 
 	public function testShareViaPublicLink() {
 		$filesHooks = $this->getFilesHooks([
-			'shareFileOrFolder',
+			'shareFileOrFolderByLink',
 		]);
 
 		$filesHooks->expects($this->once())
-			->method('shareFileOrFolder')
-			->with(1337, 'file');
+			->method('shareFileOrFolderByLink')
+			->with(1337, 'file', 'admin', true);
 
 		$filesHooks->share([
 			'fileSource' => 1337,
-			'shareWith' => '',
+			'shareType' => Share::SHARE_TYPE_LINK,
 			'itemType' => 'file',
+			'uidOwner' => 'admin',
 		]);
 	}
 
@@ -397,7 +398,7 @@ class FilesHooksTest extends TestCase {
 			);
 
 		$this->invokePrivate($filesHooks, 'shareFileOrFolderWithUser', [
-			'recipient', 1337, $itemType, $fileTarget
+			'recipient', 1337, $itemType, $fileTarget, true
 		]);
 	}
 
@@ -415,7 +416,7 @@ class FilesHooksTest extends TestCase {
 			->method('shareNotificationForSharer');
 
 		$this->invokePrivate($filesHooks, 'shareFileOrFolderWithGroup', [
-			'no-group', 0, '', '', 0
+			'no-group', 0, '', '', 0, true
 		]);
 	}
 
@@ -547,7 +548,7 @@ class FilesHooksTest extends TestCase {
 		}
 
 		$this->invokePrivate($filesHooks, 'shareFileOrFolderWithGroup', [
-			'group1', 42, 'file', '/file', 1337
+			'group1', 42, 'file', '/file', 1337, true
 		]);
 	}
 
@@ -681,7 +682,7 @@ class FilesHooksTest extends TestCase {
 			->method('shareNotificationForOriginalOwners')
 			->with('user', 'reshared_link_by', '', 42, 'file');
 
-		$this->invokePrivate($filesHooks, 'shareFileOrFolder', [42, 'file']);
+		$this->invokePrivate($filesHooks, 'shareFileOrFolderByLink', [42, 'file', 'admin', true]);
 	}
 
 	public function testShareNotificationForOriginalOwnersNoPath() {
@@ -719,8 +720,9 @@ class FilesHooksTest extends TestCase {
 	 *
 	 * @param bool $validMountPoint
 	 * @param bool $validSharedStorage
+	 * @param string $pathOwner
 	 * @param string $shareeUser
-	 * @param bool $reshareNotificationForSharerTwice
+	 * @param int $numReshareNotification
 	 */
 	public function testShareNotificationForOriginalOwners($validMountPoint, $validSharedStorage, $pathOwner, $shareeUser, $numReshareNotification) {
 		$filesHooks = $this->getFilesHooks([
