@@ -12,6 +12,7 @@ OC.L10N.register(
     "No activities" : "アクティビティなし",
     ", " : ", ",
     "{parameterList} and {lastParameter}" : "{parameterList} と {lastParameter}",
+    "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} と {linkStart} それ以外 %n{linkEnd}"],
     "in {directory}" : "{directory}の中",
     "This stream will show events like additions, changes & shares" : "このタイムラインには、追加、変更、共有が表示されます。",
     "There are no events for this filter" : "このフィルターで表示されるイベントはありません。",
