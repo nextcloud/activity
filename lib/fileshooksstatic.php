@@ -38,6 +38,7 @@ class FilesHooksStatic {
 		Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\FilesHooksStatic', 'fileDelete');
 		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Activity\FilesHooksStatic', 'fileRestore');
 		Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\FilesHooksStatic', 'share');
+		Util::connectHook('OCP\Share', 'pre_unshare', 'OCA\Activity\FilesHooksStatic', 'unShare');
 
 		$eventDispatcher = \OC::$server->getEventDispatcher();
 		$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', ['OCA\Activity\FilesHooksStatic', 'onLoadFilesAppScripts']);
@@ -89,6 +90,14 @@ class FilesHooksStatic {
 	 */
 	public static function share($params) {
 		self::getHooks()->share($params);
+	}
+
+	/**
+	 * Manage sharing events
+	 * @param array $params The hook params
+	 */
+	public static function unShare($params) {
+		self::getHooks()->unShare($params);
 	}
 
 	/**
