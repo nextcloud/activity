@@ -15,7 +15,8 @@ describe('ActivityCollection', function() {
 			var col = new ActivityCollection();
 			expect(col.url())
 				.toEqual(
-					OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter?format=json'
+					//OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter?format=json'
+					OC.generateUrl('/apps/activity/api/v2/activity') + '/filter?format=json'
 				);
 		});
 		it('filters by id and type when specified', function() {
@@ -24,7 +25,8 @@ describe('ActivityCollection', function() {
 			col.setObjectId(512);
 			expect(col.url())
 				.toEqual(
-					OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter' +
+					//OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter' +
+					OC.generateUrl('/apps/activity/api/v2/activity') + '/filter' +
 					'?format=json&object_type=files&object_id=512'
 				);
 		});

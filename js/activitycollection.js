@@ -75,7 +75,8 @@
 			var query = {
 				format: 'json'
 			};
-			var url = OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter';
+			//var url = OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter';
+			var url = OC.generateUrl('/apps/activity/api/v2/activity') + '/filter';
 			if (this._objectId && this._objectType) {
 				query.object_type = this._objectType;
 				query.object_id = this._objectId;
