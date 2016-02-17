@@ -24,6 +24,7 @@ namespace OCA\Activity\AppInfo;
 use OC\Files\View;
 use OCA\Activity\Consumer;
 use OCA\Activity\Controller\Activities;
+use OCA\Activity\Controller\EndPoint;
 use OCA\Activity\Controller\Feed;
 use OCA\Activity\Controller\OCSEndPoint;
 use OCA\Activity\Controller\Settings;
@@ -211,6 +212,17 @@ class Application extends App {
 				$server->getMimeTypeDetector(),
 				new View(''),
 				$c->query('OCA\Activity\ViewInfoCache')
+			);
+		});
+
+		$container->registerService('EndPointController', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
+			return new EndPoint(
+				$c->query('AppName'),
+				$server->getRequest(),
+				$c->query('OCA\Activity\Controller\OCSEndPoint')
 			);
 		});
 

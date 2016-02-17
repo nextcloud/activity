@@ -28,18 +28,18 @@ use OCP\API;
 $application = new Application();
 
 // Register an OCS API call
-API::register(
-	'get',
-	'/apps/activity/api/v2/activity',
-	array($application->getContainer()->query('OCA\Activity\Controller\OCSEndPoint'), 'getDefault'),
-	'activity'
-);
-API::register(
-	'get',
-	'/apps/activity/api/v2/activity/{filter}',
-	array($application->getContainer()->query('OCA\Activity\Controller\OCSEndPoint'), 'getFilter'),
-	'activity'
-);
+//API::register(
+//	'get',
+//	'/apps/activity/api/v2/activity',
+//	array($application->getContainer()->query('OCA\Activity\Controller\OCSEndPoint'), 'getDefault'),
+//	'activity'
+//);
+//API::register(
+//	'get',
+//	'/apps/activity/api/v2/activity/{filter}',
+//	array($application->getContainer()->query('OCA\Activity\Controller\OCSEndPoint'), 'getFilter'),
+//	'activity'
+//);
 API::register(
 	'get',
 	'/cloud/activity',
@@ -52,4 +52,6 @@ $application->registerRoutes($this, ['routes' => [
 	['name' => 'Settings#feed', 'url' => '/settings/feed', 'verb' => 'POST'],
 	['name' => 'Activities#showList', 'url' => '/', 'verb' => 'GET'],
 	['name' => 'Feed#show', 'url' => '/rss.php', 'verb' => 'GET'],
+	['name' => 'EndPoint#getDefault', 'url' => '/api/v2/activity', 'verb' => 'GET'],
+	['name' => 'EndPoint#getFilter', 'url' => '/api/v2/activity/{filter}', 'verb' => 'GET'],
 ]]);

@@ -1,15 +1,15 @@
-# OCS Endpoint documentation
+# Endpoint documentation
 
 ## Request URL
 
 ```
-GET /ocs/v2.php/apps/activity/api/v2/activity
+GET /index.php/apps/activity/api/v2/activity
 ```
 
 With type filter
 
 ```
-GET /ocs/v2.php/apps/activity/api/v2/activity/:filter
+GET /index.php/apps/activity/api/v2/activity/:filter
 ```
 
 ## Parameters
@@ -39,7 +39,7 @@ Status Code | Description
 
 Already includes all parameters
 ```
-Link: <http(s)://localhost/ocs/v1.php/cloud/activity?since=364>; rel="next"
+Link: <http(s)://localhost/index.php/apps/activity/api/v2/activity/all?since=364>; rel="next"
 ```
 
 ### First known activity
