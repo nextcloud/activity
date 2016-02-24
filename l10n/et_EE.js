@@ -11,6 +11,7 @@ OC.L10N.register(
     "Error loading activities" : "Viga tegevuste laadimisel",
     "No activities" : "Tegevusi pole",
     ", " : ", ",
+    "in {directory}" : "kaustas {directory}",
     "This stream will show events like additions, changes & shares" : "See voog näitab sündmusi nagu lisamised, muudatused ja jagamised",
     "There are no events for this filter" : "Selle filtri jaoks pole ühtegi sündmust",
     "Today" : "Täna",
