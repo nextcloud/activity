@@ -14,7 +14,7 @@ OC.L10N.register(
     "{parameterList} and {lastParameter}" : "{parameterList} et {lastParameter}",
     "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} et {linkStart}%n autre{linkEnd}","{parameterList} et {linkStart}%n autres{linkEnd}"],
     "in {directory}" : "dans {directory}",
-    "This stream will show events like additions, changes & shares" : "Ce flux montre les événements tels que les ajouts, les modifications et les partages",
+    "This stream will show events like additions, changes & shares" : "Ce flux liste les événements tels que les ajouts, les modifications et les partages",
     "There are no events for this filter" : "Il n'y a pas d'événement pour ce filtre",
     "Today" : "Auj.",
     "Yesterday" : "Hier",
