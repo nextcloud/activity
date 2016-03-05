@@ -23,7 +23,7 @@
     "Activities by others" : "Activiteiten van anderen",
     "%s and %s" : "%s en %s",
     "Hello %s," : "Hallo %s,",
-    "You are receiving this email because the following things happened at %s" : "U ontvangt deze e-mail omdat het volgende plaatsvond op %s.",
+    "You are receiving this email because the following things happened at %s" : "U ontvangt deze e-mail, omdat het volgende plaatsvond op %s.",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* en %n meer","* en %n meer"],
     "List your own actions in the stream" : "Toon uw eigen acties in het overzicht",
