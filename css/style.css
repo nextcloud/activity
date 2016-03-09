@@ -13,7 +13,7 @@
 	overflow: hidden;
 }
 .activitymessage {
-	font-size:0.8em;
+	margin-left: 25px;
 	color:#666;
 	text-overflow: ellipsis;
 	overflow: hidden;
