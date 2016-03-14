@@ -247,7 +247,7 @@ class MailQueueHandler {
 			);
 		}
 
-		$alttext = new Template('activity', 'email.notification', '');
+		$alttext = new Template('activity', 'email.notification', '', false);
 		$alttext->assign('username', $user->getDisplayName());
 		$alttext->assign('activities', $activityList);
 		$alttext->assign('skippedCount', $skippedCount);
