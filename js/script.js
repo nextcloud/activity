@@ -112,9 +112,9 @@ $(function(){
 			headers = headers.split("\n");
 			_.each(headers, function (header) {
 				var parts = header.split(': ');
-				if (parts[0] === 'X-Activity-First-Known') {
+				if (parts[0].toLowerCase() === 'x-activity-first-known') {
 					self.firstKnownId = parseInt(parts[1], 10);
-				} else if (parts[0] === 'X-Activity-Last-Given') {
+				} else if (parts[0].toLowerCase() === 'x-activity-last-given') {
 					self.lastGivenId = parseInt(parts[1], 10);
 				}
 			});
