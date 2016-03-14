@@ -655,9 +655,9 @@ class OCSEndPointTest extends TestCase {
 
 	public function dataGetPreviewFromPath() {
 		return [
-			['dir', 'dir', '/core/img/filetypes/folder.svg'],
-			['test.txt', 'text/plain', '/core/img/filetypes/text.svg'],
-			['test.mp3', 'audio/mpeg', '/core/img/filetypes/audio.svg'],
+			['dir', 'dir', true, ''],
+			['test.txt', 'text/plain', false, 'trashbin'],
+			['test.mp3', 'audio/mpeg', false, ''],
 		];
 	}
 
@@ -665,8 +665,10 @@ class OCSEndPointTest extends TestCase {
 	 * @dataProvider dataGetPreviewFromPath
 	 * @param string $filePath
 	 * @param string $mimeType
+	 * @param bool $isDir
+	 * @param string $view
 	 */
-	public function testGetPreviewFromPath($filePath, $mimeType) {
+	public function testGetPreviewFromPath($filePath, $mimeType, $isDir, $view) {
 		$controller = $this->getController([
 			'getPreviewPathFromMimeType',
 			'getPreviewLink',
@@ -678,7 +680,7 @@ class OCSEndPointTest extends TestCase {
 			->willReturn('mime-type-icon');
 		$controller->expects($this->once())
 			->method('getPreviewLink')
-			->with($filePath, false)
+			->with($filePath, $isDir, $view)
 			->willReturn('target-link');
 		$this->mimeTypeDetector->expects($this->once())
 			->method('detectPath')
@@ -690,7 +692,7 @@ class OCSEndPointTest extends TestCase {
 				'source' => 'mime-type-icon',
 				'isMimeTypeIcon' => true,
 			],
-			$this->invokePrivate($controller, 'getPreviewFromPath', [$filePath])
+			$this->invokePrivate($controller, 'getPreviewFromPath', [$filePath, ['path' => $filePath, 'is_dir' => $isDir, 'view' => $view]])
 		);
 	}
 
@@ -722,12 +724,12 @@ class OCSEndPointTest extends TestCase {
 
 	public function dataGetPreviewLink() {
 		return [
-			['/folder', true, ['dir' => '/folder']],
-			['/folder/sub1', true, ['dir' => '/folder/sub1']],
-			['/folder/sub1/sub2', true, ['dir' => '/folder/sub1/sub2']],
-			['/file.txt', false, ['dir' => '/', 'scrollto' => 'file.txt']],
-			['/folder/file.txt', false, ['dir' => '/folder', 'scrollto' => 'file.txt']],
-			['/folder/sub1/file.txt', false, ['dir' => '/folder/sub1', 'scrollto' => 'file.txt']],
+			['/folder', true, '', ['dir' => '/folder']],
+			['/folder/sub1', true, 'trashbin', ['dir' => '/folder/sub1', 'view' => 'trashbin']],
+			['/folder/sub1/sub2', true, '', ['dir' => '/folder/sub1/sub2']],
+			['/file.txt', false, '', ['dir' => '/', 'scrollto' => 'file.txt']],
+			['/folder/file.txt', false, 'trashbin', ['dir' => '/folder', 'scrollto' => 'file.txt', 'view' => 'trashbin']],
+			['/folder/sub1/file.txt', false, '', ['dir' => '/folder/sub1', 'scrollto' => 'file.txt']],
 		];
 	}
 
@@ -736,13 +738,14 @@ class OCSEndPointTest extends TestCase {
 	 *
 	 * @param string $path
 	 * @param bool $isDir
+	 * @param string $view
 	 * @param array $expected
 	 */
-	public function testGetPreviewLink($path, $isDir, $expected) {
+	public function testGetPreviewLink($path, $isDir, $view, $expected) {
 		$this->urlGenerator->expects($this->once())
-			->method('linkTo')
-			->with('files', 'index.php', $expected);
+			->method('linkToRoute')
+			->with('files.view.index', $expected);
 
-		$this->invokePrivate($this->controller, 'getPreviewLink', [$path, $isDir]);
+		$this->invokePrivate($this->controller, 'getPreviewLink', [$path, $isDir, $view]);
 	}
 }

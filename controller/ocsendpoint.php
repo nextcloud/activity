@@ -289,11 +289,11 @@ class OCSEndPoint {
 		$info = $this->infoCache->getInfoById($owner, $fileId, $filePath);
 
 		if (!$info['exists'] || $info['view'] !== '') {
-			return $this->getPreviewFromPath($filePath);
+			return $this->getPreviewFromPath($filePath, $info);
 		}
 
 		$preview = [
-			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir']),
+			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
 			'source'		=> '',
 			'isMimeTypeIcon' => true,
 		];
@@ -322,12 +322,13 @@ class OCSEndPoint {
 
 	/**
 	 * @param string $filePath
+	 * @param array $info
 	 * @return array
 	 */
-	protected function getPreviewFromPath($filePath) {
+	protected function getPreviewFromPath($filePath, $info) {
 		$mimeType = $this->mimeTypeDetector->detectPath($filePath);
 		$preview = [
-			'link'			=> $this->getPreviewLink($filePath, false),
+			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
 			'source'		=> $this->getPreviewPathFromMimeType($mimeType),
 			'isMimeTypeIcon' => true,
 		];
@@ -351,18 +352,20 @@ class OCSEndPoint {
 	/**
 	 * @param string $path
 	 * @param bool $isDir
+	 * @param string $view
 	 * @return string
 	 */
-	protected function getPreviewLink($path, $isDir) {
-		if ($isDir) {
-			return $this->urlGenerator->linkTo('files', 'index.php', array('dir' => $path));
-		} else {
-			$parentDir = (substr_count($path, '/') === 1) ? '/' : dirname($path);
-			$fileName = basename($path);
-			return $this->urlGenerator->linkTo('files', 'index.php', array(
-				'dir' => $parentDir,
-				'scrollto' => $fileName,
-			));
+	protected function getPreviewLink($path, $isDir, $view) {
+		$params = [
+			'dir' => $path,
+		];
+		if (!$isDir) {
+			$params['dir'] = (substr_count($path, '/') === 1) ? '/' : dirname($path);
+			$params['scrollto'] = basename($path);
 		}
+		if ($view !== '') {
+			$params['view'] = $view;
+		}
+		return $this->urlGenerator->linkToRoute('files.view.index', $params);
 	}
 }
