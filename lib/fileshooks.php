@@ -142,7 +142,21 @@ class FilesHooks {
 			return;
 		}
 
-		list($filePath, $uidOwner, $fileId) = $this->getSourcePathAndOwner($filePath);
+		if (Files::TYPE_SHARE_CREATED) {
+			try {
+				list($filePath, $uidOwner, $fileId) = $this->getSourcePathAndOwner($filePath);
+			} catch (\OCP\Files\NotFoundException $e) {
+				// File not found? Sounds weird, but this happens before 9.1:
+				// https://github.com/owncloud/core/issues/23212
+				// Chunk assembling triggered the exact same hooks twice.
+				// The first call however is before the file is in the database.
+				// So when trying to get the owner, the file can not be found.
+				// But since the second hook will come along, we simply ignore this.
+				return;
+			}
+		} else {
+			list($filePath, $uidOwner, $fileId) = $this->getSourcePathAndOwner($filePath);
+		}
 		$affectedUsers = $this->getUserPathsFromPath($filePath, $uidOwner);
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
