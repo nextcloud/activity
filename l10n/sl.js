@@ -30,7 +30,7 @@ OC.L10N.register(
     "_* and %n more _::_* and %n more _" : ["* in %n dodaten","* in %n dodatna","* in %n dodatni","* in %n dodatnih"],
     "List your own actions in the stream" : "Izpiši seznam dejanj v pretoku",
     "Notify about your own actions via email" : "O mojih dejanjih me obvesti preko elektronske pošte",
-    "You need to set up your email address before you can receive notification emails." : "Za prejemanje obvestil z elektronsko pošto, je treba najprej nastaviti elektronski poštni naslov.",
+    "You need to set up your email address before you can receive notification emails." : "Za prejemanje obvestil prek elektronske pošte je treba najprej nastaviti elektronski poštni naslov.",
     "Send emails:" : "Pošlji elektronsko sporočilo:",
     "Hourly" : "Vsako uro",
     "Daily" : "Dnevno",
