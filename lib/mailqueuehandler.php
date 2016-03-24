@@ -222,6 +222,7 @@ class MailQueueHandler {
 		$parser = new PlainTextParser($l);
 		$this->dataHelper->setUser($userName);
 		$this->dataHelper->setL10n($l);
+		$this->activityManager->setCurrentUserId($userName);
 
 		$activityList = array();
 		foreach ($mailData as $activity) {
@@ -261,6 +262,8 @@ class MailQueueHandler {
 		$message->setPlainBody($emailText);
 		$message->setFrom([$this->getSenderData('email') => $this->getSenderData('name')]);
 		$this->mailer->send($message);
+
+		$this->activityManager->setCurrentUserId(null);
 	}
 
 	/**
