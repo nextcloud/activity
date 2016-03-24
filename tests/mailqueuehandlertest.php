@@ -225,6 +225,13 @@ class MailQueueHandlerTest extends TestCase {
 				[$user . $user, null],
 			]);
 
+		$this->activityManager->expects($this->exactly(2))
+			->method('setCurrentUserId')
+			->withConsecutive(
+				[$user],
+				[null]
+			);
+
 		$users = $this->mailQueueHandler->getAffectedUsers(1, $maxTime);
 		$this->assertEquals([$user], $users);
 		$this->mailQueueHandler->sendEmailToUser($user, $email, 'en', 'UTC', $maxTime);
