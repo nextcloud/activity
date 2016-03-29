@@ -11,6 +11,8 @@ OC.L10N.register(
     "Error loading activities" : "Error al cargar actividades",
     "No activities" : "No hay actividades",
     ", " : ", ",
+    "{parameterList} and {lastParameter}" : "{parameterList} y {lastParameter}",
+    "in {directory}" : "en el {directory}",
     "This stream will show events like additions, changes & shares" : "Este fujo mostrará eventos agregados, modificados y compartidos.",
     "There are no events for this filter" : "No hay eventos para este filtro",
     "Today" : "Hoy",
