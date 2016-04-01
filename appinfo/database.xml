@@ -149,6 +149,16 @@
 					<sorting>descending</sorting>
 				</field>
 			</index>
+
+			<index>
+				<name>activity_object</name>
+				<field>
+					<name>object_type</name>
+				</field>
+				<field>
+					<name>object_id</name>
+				</field>
+			</index>
 		</declaration>
 	</table>
 	<table>
