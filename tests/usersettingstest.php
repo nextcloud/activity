@@ -98,10 +98,10 @@ class UserSettingsTest extends TestCase {
 			->method('getUserValue')
 			->with($this->anything(), 'activity', $this->stringStartsWith('notify_'), $this->anything())
 			->willReturnMap([
-				['test1', 'activity', 'notify_stream_type1', true, true],
-				['test1', 'activity', 'notify_stream_type2', true, false],
-				['noPreferences', 'activity', 'notify_email_type1', false, false],
-				['noPreferences', 'activity', 'notify_email_type2', true, true],
+				['test1', 'activity', 'notify_stream_type1', true, 1],
+				['test1', 'activity', 'notify_stream_type2', true, 0],
+				['noPreferences', 'activity', 'notify_email_type1', false, 0],
+				['noPreferences', 'activity', 'notify_email_type2', true, 1],
 			]);
 
 		$this->assertEquals($expected, $this->userSettings->getNotificationTypes($user, $method));
@@ -110,10 +110,10 @@ class UserSettingsTest extends TestCase {
 	public function filterUsersBySettingData() {
 		return array(
 			array(array(), 'stream', 'type1', array()),
-			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'stream', 'type3', array('test1' => true, 'test4' => true)),
-			array(array('test', 'test1', 'test2', 'test3', 'test4', 'test5'), 'email', 'type3', array('test1' => '1', 'test4' => '4', 'test5' => true)),
-			array(array('test', 'test6'), 'stream', 'type1', array('test' => true, 'test6' => true)),
-			array(array('test', 'test6'), 'stream', 'type4', array('test6' => true)),
+			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'stream', 'type3', array('test1' => 1, 'test4' => 1)),
+			array(array('test', 'test1', 'test2', 'test3', 'test4', 'test5'), 'email', 'type3', array('test1' => '1', 'test4' => '4', 'test5' => 1)),
+			array(array('test', 'test6'), 'stream', 'type1', array('test' => 1, 'test6' => 1)),
+			array(array('test', 'test6'), 'stream', 'type4', array('test6' => 1)),
 			array(array('test6'), 'email', 'type2', array('test6' => '2700')),
 			array(array('test', 'test6'), 'email', 'type2', array('test' => '3600', 'test6' => '2700')),
 			array(array('test', 'test6'), 'email', 'type1', array('test6' => '2700')),

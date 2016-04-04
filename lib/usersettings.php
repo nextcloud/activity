@@ -63,15 +63,25 @@ class UserSettings {
 	 * @param string $user
 	 * @param string $method Should be one of 'stream', 'email' or 'setting'
 	 * @param string $type One of the activity types, 'batchtime' or 'self'
-	 * @return mixed
+	 * @return bool|int
 	 */
 	public function getUserSetting($user, $method, $type) {
-		return $this->config->getUserValue(
-			$user,
-			'activity',
-			'notify_' . $method . '_' . $type,
-			$this->getDefaultSetting($method, $type)
-		);
+		$defaultSetting = $this->getDefaultSetting($method, $type);
+		if (is_bool($defaultSetting)) {
+			return (bool) $this->config->getUserValue(
+				$user,
+				'activity',
+				'notify_' . $method . '_' . $type,
+				$defaultSetting
+			);
+		} else {
+			return (int) $this->config->getUserValue(
+				$user,
+				'activity',
+				'notify_' . $method . '_' . $type,
+				$defaultSetting
+			);
+		}
 	}
 
 	/**
