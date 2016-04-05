@@ -106,13 +106,13 @@ class Settings extends Controller {
 			$this->config->setUserValue(
 				$this->user, 'activity',
 				'notify_email_' . $type,
-				$this->request->getParam($type . '_email', false)
+				(int) $this->request->getParam($type . '_email', false)
 			);
 
 			$this->config->setUserValue(
 				$this->user, 'activity',
 				'notify_stream_' . $type,
-				$this->request->getParam($type . '_stream', false)
+				(int) $this->request->getParam($type . '_stream', false)
 			);
 		}
 
@@ -131,12 +131,12 @@ class Settings extends Controller {
 		$this->config->setUserValue(
 			$this->user, 'activity',
 			'notify_setting_self',
-			$notify_setting_self
+			(int) $notify_setting_self
 		);
 		$this->config->setUserValue(
 			$this->user, 'activity',
 			'notify_setting_selfemail',
-			$notify_setting_selfemail
+			(int) $notify_setting_selfemail
 		);
 
 		return new DataResponse(array(
