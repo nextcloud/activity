@@ -562,9 +562,10 @@ class OCSEndPointTest extends TestCase {
 
 	public function dataGetPreview() {
 		return [
-			['author', 42, '/path', '/currentPath', true, false, '/preview/dir', true],
-			['author', 42, '/file.txt', '/currentFile.txt', false, false, '/preview/mpeg', true],
-			['author', 42, '/file.txt', '/currentFile.txt', false, true, '/preview/currentFile.txt', false],
+			['author', 42, '/path', '/currentPath', true, true, false, '/preview/dir', true],
+			['author', 42, '/file.txt', '/currentFile.txt', false, true, false, '/preview/mpeg', true],
+			['author', 42, '/file.txt', '/currentFile.txt', false, true, true, '/preview/currentFile.txt', false],
+			['author', 42, '/file.txt', '/currentFile.txt', false, false, true, 'source::getPreviewFromPath', true],
 		];
 	}
 
@@ -576,14 +577,16 @@ class OCSEndPointTest extends TestCase {
 	 * @param string $path
 	 * @param string $returnedPath
 	 * @param bool $isDir
+	 * @param bool $validFileInfo
 	 * @param bool $isMimeSup
 	 * @param string $source
 	 * @param bool $isMimeTypeIcon
 	 */
-	public function testGetPreview($author, $fileId, $path, $returnedPath, $isDir, $isMimeSup, $source, $isMimeTypeIcon) {
+	public function testGetPreview($author, $fileId, $path, $returnedPath, $isDir, $validFileInfo, $isMimeSup, $source, $isMimeTypeIcon) {
 
 		$controller = $this->getController([
 			'getPreviewLink',
+			'getPreviewFromPath',
 			'getPreviewPathFromMimeType',
 		]);
 
@@ -609,7 +612,7 @@ class OCSEndPointTest extends TestCase {
 				->method('getPreviewPathFromMimeType')
 				->with('dir')
 				->willReturn('/preview/dir');
-		} else {
+		} else if ($validFileInfo) {
 			$fileInfo = $this->getMockBuilder('OCP\Files\FileInfo')
 				->disableOriginalConstructor()
 				->getMock();
@@ -644,6 +647,19 @@ class OCSEndPointTest extends TestCase {
 						return '/preview' . $returnedPath;
 					});
 			}
+		} else {
+			$this->view->expects($this->once())
+				->method('chroot')
+				->with('/' . $author . '/files');
+			$this->view->expects($this->once())
+				->method('getFileInfo')
+				->with($returnedPath)
+				->willReturn(false);
+
+			$controller->expects($this->once())
+				->method('getPreviewFromPath')
+				->with($path, $this->anything())
+				->willReturn(['source' => 'source::getPreviewFromPath']);
 		}
 
 		$this->assertSame([
