@@ -47,7 +47,7 @@ style('activity', 'settings');
 	<br />
 	<input id="notify_setting_self" name="notify_setting_self" type="checkbox" class="checkbox"
 		value="1" <?php if ($_['notify_self']): ?> checked="checked"<?php endif; ?> />
-	<label for="notify_setting_self"><?php p($l->t('List your own actions in the stream')); ?></label>
+	<label for="notify_setting_self"><?php p($l->t('List your own file actions in the stream')); ?></label>
 	<br />
 	<input id="notify_setting_selfemail" name="notify_setting_selfemail" type="checkbox" class="checkbox"
 		value="1" <?php if ($_['notify_selfemail']): ?> checked="checked"<?php endif; ?> />

@@ -25,6 +25,12 @@ use OC\ActivityManager;
 use OCA\Activity\Navigation;
 use OCA\Activity\Tests\Mock\Extension;
 
+/**
+ * Class NavigationTest
+ *
+ * @package OCA\Activity\Tests
+ * @group DB
+ */
 class NavigationTest extends TestCase {
 	public function getTemplateData() {
 		return array(
@@ -48,18 +54,10 @@ class NavigationTest extends TestCase {
 		$activityManager->registerExtension(function() use ($activityLanguage) {
 			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
 		});
-		$userSettings = $this->getMockBuilder('OCA\Activity\UserSettings')
-			->disableOriginalConstructor()
-			->getMock();
-		$userSettings->expects($this->exactly(2))
-			->method('getUserSetting')
-			->with('test', 'setting', 'self')
-			->willReturn(true);
 		$navigation = new Navigation(
 			$activityLanguage,
 			$activityManager,
 			\OC::$server->getURLGenerator(),
-			$userSettings,
 			'test',
 			$rssToken,
 			$constructorActive

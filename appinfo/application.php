@@ -148,7 +148,6 @@ class Application extends App {
 				$c->query('ActivityL10N'),
 				$server->getActivityManager(),
 				$server->getURLGenerator(),
-				$c->query('UserSettings'),
 				$c->query('CurrentUID'),
 				$rssToken
 			);
