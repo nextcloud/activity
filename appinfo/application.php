@@ -64,9 +64,13 @@ class Application extends App {
 
 
 		$container->registerService('Consumer', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
 			return new Consumer(
 				$c->query('ActivityData'),
-				$c->query('UserSettings')
+				$c->query('UserSettings'),
+				$server->getL10NFactory()
 			);
 		});
 

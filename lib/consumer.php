@@ -24,8 +24,10 @@ namespace OCA\Activity;
 
 use OCP\Activity\IConsumer;
 use OCP\Activity\IEvent;
+use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\AppFramework\IAppContainer;
+use OCP\L10N\IFactory;
 
 class Consumer implements IConsumer {
 	/**
@@ -35,7 +37,7 @@ class Consumer implements IConsumer {
 	 * @param IAppContainer $container
 	 */
 	public static function register(IManager $am, IAppContainer $container) {
-		$am->registerConsumer(function() use ($am, $container) {
+		$am->registerConsumer(function() use ($container) {
 			return $container->query('Consumer');
 		});
 	}
@@ -46,15 +48,20 @@ class Consumer implements IConsumer {
 	/** @var UserSettings */
 	protected $userSettings;
 
+	/** @var IFactory */
+	protected $l10nFactory;
+
 	/**
 	 * Constructor
 	 *
 	 * @param Data $data
 	 * @param UserSettings $userSettings
+	 * @param IFactory $l10nFactory
 	 */
-	public function __construct(Data $data, UserSettings $userSettings) {
+	public function __construct(Data $data, UserSettings $userSettings, IFactory $l10nFactory) {
 		$this->data = $data;
 		$this->userSettings = $userSettings;
+		$this->l10nFactory = $l10nFactory;
 	}
 
 	/**
@@ -69,13 +76,26 @@ class Consumer implements IConsumer {
 		$emailSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'email', $event->getType());
 		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'batchtime') : false;
 
+		$types = $this->data->getNotificationTypes($this->l10nFactory->get('activity'));
+		$typeData = $types[$event->getType()];
+
+		// User is not the author or wants to see their own actions
+		$createStream = !$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'self');
+		// User can not control the setting
+		$createStream = $createStream || is_array($typeData) && isset($typeData['methods']) && !in_array(IExtension::METHOD_STREAM, $typeData['methods']);
+
 		// Add activity to stream
-		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'self'))) {
+		if ($streamSetting && $createStream) {
 			$this->data->send($event);
 		}
 
+		// User is not the author or wants to see their own actions
+		$createEmail = !$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'selfemail');
+		// User can not control the setting
+		$createEmail = $createEmail || is_array($typeData) && isset($typeData['methods']) && !in_array(IExtension::METHOD_MAIL, $typeData['methods']);
+
 		// Add activity to mail queue
-		if ($emailSetting && (!$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'selfemail'))) {
+		if ($emailSetting && $createEmail) {
 			$latestSend = $event->getTimestamp() + $emailSetting;
 			$this->data->storeMail($event, $latestSend);
 		}

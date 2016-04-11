@@ -23,7 +23,6 @@ namespace OCA\Activity\Tests;
 
 use OC\ActivityManager;
 use OCA\Activity\Consumer;
-use OCP\Activity\IConsumer;
 use OCP\DB;
 
 /**
@@ -38,6 +37,9 @@ class ConsumerTest extends TestCase {
 
 	/** @var \OCA\Activity\Data|\PHPUnit_Framework_MockObject_MockObject */
 	protected $data;
+
+	/** @var \OCP\L10N\IFactory|\PHPUnit_Framework_MockObject_MockObject */
+	protected $l10nFactory;
 
 	/** @var \OCA\Activity\UserSettings */
 	protected $userSettings;
@@ -54,6 +56,18 @@ class ConsumerTest extends TestCase {
 			->setMethods(array('getUserSetting'))
 			->disableOriginalConstructor()
 			->getMock();
+
+		$l10n = $this->getMockBuilder('OCP\IL10N')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$this->l10nFactory = $this->getMockBuilder('OCP\L10N\IFactory')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->l10nFactory->expects($this->any())
+			->method('get')
+			->with('activity')
+			->willReturn($l10n);
 
 		$this->userSettings->expects($this->any())
 			->method('getUserSetting')
@@ -111,7 +125,7 @@ class ConsumerTest extends TestCase {
 	 * @param array|false $expected
 	 */
 	public function testReceiveStream($type, $author, $affectedUser, $subject, $expected) {
-		$consumer = new Consumer($this->data, $this->userSettings);
+		$consumer = new Consumer($this->data, $this->userSettings, $this->l10nFactory);
 		$event = \OC::$server->getActivityManager()->generateEvent();
 		$event->setApp('test')
 			->setType($type)
@@ -146,7 +160,7 @@ class ConsumerTest extends TestCase {
 	 */
 	public function testReceiveEmail($type, $author, $affectedUser, $subject, $expected) {
 		$time = time();
-		$consumer = new Consumer($this->data, $this->userSettings);
+		$consumer = new Consumer($this->data, $this->userSettings, $this->l10nFactory);
 		$event = \OC::$server->getActivityManager()->generateEvent();
 		$event->setApp('test')
 			->setType($type)
@@ -176,7 +190,7 @@ class ConsumerTest extends TestCase {
 			$this->getMock('OCP\IUserSession'),
 			$this->getMock('OCP\IConfig')
 		);
-		$consumer = new Consumer($this->data, $this->userSettings);
+		$consumer = new Consumer($this->data, $this->userSettings, $this->l10nFactory);
 		$container = $this->getMock('\OCP\AppFramework\IAppContainer');
 		$container->expects($this->any())
 			->method('query')
