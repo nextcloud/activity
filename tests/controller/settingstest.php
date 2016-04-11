@@ -102,16 +102,28 @@ class SettingsTest extends TestCase {
 	public function testPersonalNonTypeSettings($expectedBatchTime, $notifyEmail, $notifyStream, $notifySettingBatchTime, $notifySettingSelf, $notifySettingSelfEmail) {
 		$this->data->expects($this->any())
 			->method('getNotificationTypes')
-			->willReturn(['NotificationTestTypeShared' => 'Share description']);
+			->willReturn([
+				'NotificationTestTypeShared' => 'Share description',
+				'NotificationTestNoStream' => [
+					'desc' => 'Email description',
+					'methods' => [IExtension::METHOD_MAIL],
+				],
+				'NotificationTestNoEmail' => [
+					'desc' => 'Stream description',
+					'methods' => [IExtension::METHOD_STREAM],
+				],
+			]);
 
 		$this->request->expects($this->any())
 			->method('getParam')
 			->willReturnMap([
 				['NotificationTestTypeShared_email', false, $notifyEmail],
 				['NotificationTestTypeShared_stream', false, $notifyStream],
+				['NotificationTestNoStream_email', false, $notifyEmail],
+				['NotificationTestNoEmail_stream', false, $notifyStream],
 			]);
 
-		$this->config->expects($this->exactly(5))
+		$this->config->expects($this->exactly(7))
 			->method('setUserValue');
 		$this->config->expects($this->at(0))
 			->method('setUserValue')
@@ -134,10 +146,26 @@ class SettingsTest extends TestCase {
 			->with(
 				'test',
 				'activity',
+				'notify_email_NotificationTestNoStream',
+				$notifyEmail
+			);
+		$this->config->expects($this->at(3))
+			->method('setUserValue')
+			->with(
+				'test',
+				'activity',
+				'notify_stream_NotificationTestNoEmail',
+				$notifyStream
+			);
+		$this->config->expects($this->at(4))
+			->method('setUserValue')
+			->with(
+				'test',
+				'activity',
 				'notify_setting_batchtime',
 				$expectedBatchTime
 			);
-		$this->config->expects($this->at(3))
+		$this->config->expects($this->at(5))
 			->method('setUserValue')
 			->with(
 				'test',
@@ -145,7 +173,7 @@ class SettingsTest extends TestCase {
 				'notify_setting_self',
 				$notifySettingSelf
 			);
-		$this->config->expects($this->at(4))
+		$this->config->expects($this->at(6))
 			->method('setUserValue')
 			->with(
 				'test',
