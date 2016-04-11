@@ -29,6 +29,7 @@ use OCA\Activity\GroupHelper;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\Http;
+use OCP\Files\FileInfo;
 use OCP\Files\IMimeTypeDetector;
 use OCP\IPreview;
 use OCP\IRequest;
@@ -304,7 +305,10 @@ class OCSEndPoint {
 		} else {
 			$this->view->chroot('/' . $owner . '/files');
 			$fileInfo = $this->view->getFileInfo($info['path']);
-			if ($this->preview->isAvailable($fileInfo)) {
+			if (!($fileInfo instanceof FileInfo)) {
+				$pathPreview = $this->getPreviewFromPath($filePath, $info);
+				$preview['source'] = $pathPreview['source'];
+			} else if ($this->preview->isAvailable($fileInfo)) {
 				$preview['isMimeTypeIcon'] = false;
 				$preview['source'] = $this->urlGenerator->linkToRoute('core_ajax_preview', [
 					'file' => $info['path'],
