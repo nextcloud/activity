@@ -81,9 +81,7 @@ class Navigation {
 		$this->active = $active;
 
 		if ($rssToken) {
-			$this->rssLink = $this->URLGenerator->getAbsoluteURL(
-				$this->URLGenerator->linkToRoute('activity.Feed.show', array('token' => $rssToken))
-			);
+			$this->rssLink = $this->URLGenerator->linkToRouteAbsolute('activity.Feed.show', array('token' => $rssToken));
 		} else {
 			$this->rssLink = '';
 		}

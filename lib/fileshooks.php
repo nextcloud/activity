@@ -535,7 +535,7 @@ class FilesHooks {
 
 		$selfAction = $user === $this->currentUser;
 		$app = $type === Files_Sharing::TYPE_SHARED ? 'files_sharing' : 'files';
-		$link = Util::linkToAbsolute('files', 'index.php', array(
+		$link = \OC::$server->getURLGenerator()->linkToRouteAbsolute('files.view.index', array(
 			'dir' => ($isFile) ? dirname($path) : $path,
 		));
 
