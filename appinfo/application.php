@@ -116,6 +116,7 @@ class Application extends App {
 				$server->getGroupManager(),
 				new View(''),
 				$server->getDatabaseConnection(),
+				$server->getURLGenerator(),
 				$c->query('CurrentUID')
 			);
 		});

@@ -33,9 +33,9 @@ use OCP\Files\NotFoundException;
 use OCP\IDBConnection;
 use OCP\IGroup;
 use OCP\IGroupManager;
+use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share;
-use OCP\Util;
 
 /**
  * The class to handle the filesystem hooks
@@ -61,6 +61,9 @@ class FilesHooks {
 	/** @var \OC\Files\View */
 	protected $view;
 
+	/** @var IURLGenerator */
+	protected $urlGenerator;
+
 	/** @var string|false */
 	protected $currentUser;
 
@@ -73,15 +76,17 @@ class FilesHooks {
 	 * @param IGroupManager $groupManager
 	 * @param View $view
 	 * @param IDBConnection $connection
+	 * @param IURLGenerator $urlGenerator
 	 * @param string|false $currentUser
 	 */
-	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IGroupManager $groupManager, View $view, IDBConnection $connection, $currentUser) {
+	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IGroupManager $groupManager, View $view, IDBConnection $connection, IURLGenerator $urlGenerator, $currentUser) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
 		$this->groupManager = $groupManager;
 		$this->view = $view;
 		$this->connection = $connection;
+		$this->urlGenerator = $urlGenerator;
 		$this->currentUser = $currentUser;
 	}
 
@@ -549,7 +554,7 @@ class FilesHooks {
 
 		$selfAction = $user === $this->currentUser;
 		$app = $type === Files_Sharing::TYPE_SHARED ? 'files_sharing' : 'files';
-		$link = Util::linkToAbsolute('files', 'index.php', array(
+		$link = $this->urlGenerator->linkToRouteAbsolute('files.view.index', array(
 			'dir' => ($isFile) ? dirname($path) : $path,
 		));
 
