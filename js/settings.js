@@ -18,10 +18,10 @@ $(document).ready(function() {
 		var $filteredBoxes = $($selectGroup).not(':disabled');
 		var $checkedBoxes = $filteredBoxes.filter(':checked').length;
 
-		$filteredBoxes.attr('checked', true);
+		$filteredBoxes.prop('checked', true);
 		if ($checkedBoxes === $filteredBoxes.filter(':checked').length) {
 			// All values were already selected, so invert it
-			$filteredBoxes.attr('checked', false);
+			$filteredBoxes.prop('checked', false);
 		}
 
 		saveSettings();
