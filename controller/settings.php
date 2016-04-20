@@ -102,18 +102,22 @@ class Settings extends Controller {
 			$notify_setting_selfemail = false) {
 		$types = $this->data->getNotificationTypes($this->l10n);
 
-		foreach ($types as $type => $desc) {
-			$this->config->setUserValue(
-				$this->user, 'activity',
-				'notify_email_' . $type,
-				(int) $this->request->getParam($type . '_email', false)
-			);
+		foreach ($types as $type => $data) {
+			if (!is_array($data) || (isset($data['methods']) && in_array(IExtension::METHOD_MAIL, $data['methods']))) {
+				$this->config->setUserValue(
+					$this->user, 'activity',
+					'notify_email_' . $type,
+					(int) $this->request->getParam($type . '_email', false)
+				);
+			}
 
-			$this->config->setUserValue(
-				$this->user, 'activity',
-				'notify_stream_' . $type,
-				(int) $this->request->getParam($type . '_stream', false)
-			);
+			if (!is_array($data) || (isset($data['methods']) && in_array(IExtension::METHOD_STREAM, $data['methods']))) {
+				$this->config->setUserValue(
+					$this->user, 'activity',
+					'notify_stream_' . $type,
+					(int) $this->request->getParam($type . '_stream', false)
+				);
+			}
 		}
 
 		$email_batch_time = 3600;

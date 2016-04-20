@@ -64,9 +64,13 @@ class Application extends App {
 
 
 		$container->registerService('Consumer', function(IContainer $c) {
+			/** @var \OC\Server $server */
+			$server = $c->query('ServerContainer');
+
 			return new Consumer(
 				$c->query('ActivityData'),
-				$c->query('UserSettings')
+				$c->query('UserSettings'),
+				$server->getL10NFactory()
 			);
 		});
 
@@ -145,7 +149,6 @@ class Application extends App {
 				$c->query('ActivityL10N'),
 				$server->getActivityManager(),
 				$server->getURLGenerator(),
-				$c->query('UserSettings'),
 				$c->query('CurrentUID'),
 				$rssToken
 			);

@@ -43,9 +43,6 @@ class Navigation {
 	/** @var IURLGenerator */
 	protected $URLGenerator;
 
-	/** @var UserSettings */
-	protected $userSettings;
-
 	/** @var string */
 	protected $active;
 
@@ -61,7 +58,6 @@ class Navigation {
 	 * @param IL10N $l
 	 * @param IManager $manager
 	 * @param IURLGenerator $URLGenerator
-	 * @param UserSettings $userSettings
 	 * @param string $user
 	 * @param string $rssToken
 	 * @param null|string $active Navigation entry that should be marked as active
@@ -69,14 +65,12 @@ class Navigation {
 	public function __construct(IL10N $l,
 								IManager $manager,
 								IURLGenerator $URLGenerator,
-								UserSettings $userSettings,
 								$user,
 								$rssToken,
 								$active = 'all') {
 		$this->l = $l;
 		$this->activityManager = $manager;
 		$this->URLGenerator = $URLGenerator;
-		$this->userSettings = $userSettings;
 		$this->user = $user;
 		$this->active = $active;
 
@@ -126,18 +120,16 @@ class Navigation {
 			],
 		];
 
-		if ($this->user && $this->userSettings->getUserSetting($this->user, 'setting', 'self')) {
-			$topEntries[] = [
-				'id' => 'self',
-				'name' => (string) $this->l->t('Activities by you'),
-				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'self')),
-			];
-			$topEntries[] = [
-				'id' => 'by',
-				'name' => (string) $this->l->t('Activities by others'),
-				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'by')),
-			];
-		}
+		$topEntries[] = [
+			'id' => 'self',
+			'name' => (string) $this->l->t('Activities by you'),
+			'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'self')),
+		];
+		$topEntries[] = [
+			'id' => 'by',
+			'name' => (string) $this->l->t('Activities by others'),
+			'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'by')),
+		];
 
 		$additionalEntries = $this->activityManager->getNavigation();
 		$topEntries = array_merge($topEntries, $additionalEntries['top']);

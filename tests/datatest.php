@@ -223,7 +223,7 @@ class DataTest extends TestCase {
 			['desc', 'self', 2],
 			['asc', 'by', 3],
 			['desc', 'by', 4],
-			['asc', 'filter', 3, 'object1', 23],
+			['asc', 'filter', 1, 'object1', 23],
 			['desc', 'filter', 4, 'object2', 42],
 		];
 	}
