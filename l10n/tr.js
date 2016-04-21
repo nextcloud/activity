@@ -28,7 +28,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "Bu e-postayı alma sebebiniz %s üzerinde aşağıdaki şeylerin gerçekleşmesi:",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* ve %n daha fazla","* ve %n daha fazla"],
-    "List your own actions in the stream" : "Akışta kendi eylemlerinizi listeleyin",
     "Notify about your own actions via email" : "Kendi eylemlerinizi e-posta ile alın",
     "You need to set up your email address before you can receive notification emails." : "Bildirim e-postalarını almadan önce e-posta adresinizi ayarlamanız gerekiyor.",
     "Send emails:" : "E-postaları gönder:",

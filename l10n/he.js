@@ -28,7 +28,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "הודעת דואר אלקטרוני זו נשלחת כיוון שאירעו הדברים הבאים ב- %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* וכן %n נוסף ","* וכן %n נוספים "],
-    "List your own actions in the stream" : "עריכת רשימה לאירועים שלך בהזרמת המידע",
     "Notify about your own actions via email" : "דיווח על האירועים שלך על בסיס דואר אלקטרוני",
     "You need to set up your email address before you can receive notification emails." : "יש להגדיר כתובת דואר אלקטרוני לפני שניתן יהיה לקבל דיווחים.",
     "Send emails:" : "שליחת הודעות דואר אלקטרוני:",

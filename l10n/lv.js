@@ -21,7 +21,6 @@ OC.L10N.register(
     "Hello %s," : "Sveicināti %s,",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["*","* un vēl %n","* un vēl %n"],
-    "List your own actions in the stream" : "Parādīt sarakstā savas veiktās darbības",
     "Notify about your own actions via email" : "Paziņot par savām darbībām, izmantojot e-pastu",
     "You need to set up your email address before you can receive notification emails." : "Vispirms profilam ir nepieciešams uzstādīt e-pasta adresi, lai pa to saņemtu paziņojumus.",
     "Send emails:" : "E-pastus sūtīt:",

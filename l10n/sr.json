@@ -26,7 +26,6 @@
     "You are receiving this email because the following things happened at %s" : "Ову поруку сте добили јер се следеће десило на %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* и још %n","* и још %n","* и још %n"],
-    "List your own actions in the stream" : "Приказ сопствених активности у записнику",
     "Notify about your own actions via email" : "Обавештење е-поштом о сопственим активностима",
     "You need to set up your email address before you can receive notification emails." : "Морате поставити адресу е-поште пре почетка пријема обавештења.",
     "Send emails:" : "Шаљи е-пошту:",

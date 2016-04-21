@@ -28,7 +28,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "%s で以下のような更新がありました。このメールはその内容をお知らせします。",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* と その他 %n 個"],
-    "List your own actions in the stream" : "ストリーム上にあなたの活動を表示する",
     "Notify about your own actions via email" : "メールで自分のアクションを通知する",
     "You need to set up your email address before you can receive notification emails." : "通知メールを受け取る前にメールアドレスを設定してください。",
     "Send emails:" : "メールを送信:",

@@ -20,7 +20,6 @@ OC.L10N.register(
     "%s and %s" : "%s و %s",
     "Hello %s," : "مرحبا%so ,",
     "_* and %n more _::_* and %n more _" : ["* و %n بعد","* و %n بعد","* و %n بعد","* و %n بعد","* و %n بعد","* و %n بعد"],
-    "List your own actions in the stream" : "عدد أنشطتك",
     "Notify about your own actions via email" : "التنبيه عن أنشطتي عبر البريد الإلكتروني",
     "You need to set up your email address before you can receive notification emails." : "عليك إعداد عنوان البريد الإلكتروني الخاص بك قبل البدأ باستقبال رسائل إلكترونية تنبيهيه ",
     "Send emails:" : "إرسال رسائل إلكترونية ",

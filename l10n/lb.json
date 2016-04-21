@@ -18,7 +18,6 @@
     "Hello %s," : "Hallo %s,",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* an %n méi","* an %n méi"],
-    "List your own actions in the stream" : "Eegen Aktiounen am Floss oplëschten",
     "Notify about your own actions via email" : "Iwwer eegene Aktiounen iwwer E-Mail informéieren",
     "You need to set up your email address before you can receive notification emails." : "Du muss deng E-Mail-Adress konfiguréieren ier s de Notifikatiouns-Maile kanns emfänken.",
     "Send emails:" : "Emaile schécken:",

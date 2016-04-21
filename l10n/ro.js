@@ -20,7 +20,6 @@ OC.L10N.register(
     "Hello %s," : "Salut %s,",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* și %n altele","* și %n altele","* și %n altele"],
-    "List your own actions in the stream" : "Listează acțiunile tale în flux",
     "Notify about your own actions via email" : "Notificări pentru activitățile tale prin email",
     "You need to set up your email address before you can receive notification emails." : "Trebuie să-ți configurezi adresa de email înainte de a putea primi emailurile de notificare.",
     "Send emails:" : "Trimite email-uri:",

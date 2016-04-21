@@ -25,7 +25,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "Recebretz aqueste corrièl perque los eveniments seguents se son debanats a %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* e %n mai","* e %n mai"],
-    "List your own actions in the stream" : "Far la lista de mas propres actions dins lo flux",
     "Notify about your own actions via email" : "M'informar de mes pròprias accions per corrièl",
     "You need to set up your email address before you can receive notification emails." : "Es necessari de configurar una adreça corrièl abans de poder recebre las notificacions per corrièl.",
     "Send emails:" : "Mandar de corrièls :",

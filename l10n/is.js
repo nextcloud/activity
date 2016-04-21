@@ -28,7 +28,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "Þú færð þennan tölvupóst vegna þess að eftirfarandi hlutir gerðust á %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* og %n meira","* og %n meira"],
-    "List your own actions in the stream" : "Telja upp þínar eigin aðgerðir í streyminu",
     "Notify about your own actions via email" : "Tilkynna um þína eigin virkni með tölvupósti",
     "You need to set up your email address before you can receive notification emails." : "Þú verður að gefa upp netfangið þitt svo að þú farir að fá tilkynningapósta.",
     "Send emails:" : "Senda tölvupóst:",

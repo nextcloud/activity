@@ -21,7 +21,6 @@ OC.L10N.register(
     "Hello %s," : "Ahoj %s,",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* a %n ďalší ","* a %n ďalšie ","* a %n ďalších "],
-    "List your own actions in the stream" : "Zobrazovať vlastné činnosti v zozname",
     "Notify about your own actions via email" : "Poslať oznámenie o vlastnej činnosti emailom",
     "You need to set up your email address before you can receive notification emails." : "Ak chcete dostávať oznámenia emailom, musíte najskôr vyplniť vašu emailovú adresu.",
     "Send emails:" : "Odoslať emaily:",

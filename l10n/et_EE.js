@@ -25,7 +25,6 @@ OC.L10N.register(
     "Hello %s," : "Tere %s,",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* ja veel %n","* ja veel %n "],
-    "List your own actions in the stream" : "Lisa enda tegevused voogu",
     "Notify about your own actions via email" : "Teavite omaenda tegevustest e-postiga",
     "You need to set up your email address before you can receive notification emails." : "Enne teavituskirjade saamist pead sa lisama oma e-posti aadressi.",
     "Send emails:" : "Saada kirjad:",

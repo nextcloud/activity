@@ -22,7 +22,6 @@
     "You are receiving this email because the following things happened at %s" : "شما به علت رویداد موارد زیر این ایمیل را دریافت کرده‌اید %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* و %n بیشتر"],
-    "List your own actions in the stream" : "اعمال شخصی تان در پخش را لیست کنید",
     "Notify about your own actions via email" : "اطلاع رسانی درباره اعمال شخصی تان با ایمیل",
     "You need to set up your email address before you can receive notification emails." : "قبل از دریافت ایمیل های هشدار می بایست ادرس ایمیل خود را تنظیم کنید",
     "Send emails:" : "ارسال ایمیل ها:",

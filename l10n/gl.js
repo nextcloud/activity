@@ -21,7 +21,6 @@ OC.L10N.register(
     "Hello %s," : "Ola %s,",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* e %n máis ","* e %n máis "],
-    "List your own actions in the stream" : "Listar as súas propias accións no fluxo",
     "Notify about your own actions via email" : "Notificar as súas propias accións mediante o correo",
     "You need to set up your email address before you can receive notification emails." : "É necesario estabelecer o enderezo correo para poder recibir correos de notificación.",
     "Send emails:" : "Enviar os correos:",

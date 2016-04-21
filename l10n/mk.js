@@ -20,7 +20,6 @@ OC.L10N.register(
     "%s and %s" : "%s и %s",
     "Hello %s," : "Здраво %s,",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "List your own actions in the stream" : "Ги листа вашите активности во стримот",
     "Notify about your own actions via email" : "Извести за своите активности преку порака",
     "You need to set up your email address before you can receive notification emails." : "Ќе треба да ја внесете Вашата електронска адреса за да можете да примате известувања по електронска пошта.",
     "Send emails:" : "Пратени пораки:",

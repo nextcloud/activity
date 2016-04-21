@@ -28,7 +28,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "Dostali jste tento email, protože došlo k následujícím událostem na %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* a %n další ","* a %n další ","* a %n dalších "],
-    "List your own actions in the stream" : "Zobrazovat vlastní činnosti v seznamu",
     "Notify about your own actions via email" : "Posílat oznámení o vlastních činnostech emailem",
     "You need to set up your email address before you can receive notification emails." : "Pokud chcete dostávat upozornění emailem, musíte nejprve nastavit svou emailovou adresu.",
     "Send emails:" : "Posílat emaily:",

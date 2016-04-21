@@ -28,7 +28,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "Ви отримали це повідомлення, оскільки на %s відбувається наступне",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["1","кілька","* та ще %n"],
-    "List your own actions in the stream" : "Показувати мої дії в потоці",
     "Notify about your own actions via email" : "Повідомляти про мої дії по email",
     "You need to set up your email address before you can receive notification emails." : "Для отримання повідомлень вкажіть свій e-mail в особистих налаштуваннях.",
     "Send emails:" : "Відправляти електронні повідомлення:",

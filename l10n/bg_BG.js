@@ -21,7 +21,6 @@ OC.L10N.register(
     "Hello %s," : "Здравей %s,",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* и %n още","* и %n още "],
-    "List your own actions in the stream" : "Показване на собствените действия в потока",
     "Notify about your own actions via email" : "Уведомяване за собствени действия чрез електронна поща",
     "You need to set up your email address before you can receive notification emails." : "Първо трябва да настроите вашия имейл адрес, преди да започнете да получавате известия.",
     "Send emails:" : "Изпращане на имейли:",

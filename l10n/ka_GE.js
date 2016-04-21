@@ -24,7 +24,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "გაცნობებთ, რომ %s -ზე",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* და %n მეტი"],
-    "List your own actions in the stream" : "ნაკადზე თქვენი მოქმედებების ჩვენება",
     "Notify about your own actions via email" : "თქვენი მოქმედებების შესახებ ელ.ფოსტით შეტყობინება",
     "You need to set up your email address before you can receive notification emails." : "ელ.ფოსტაზე შეტყობინების მისაღებად საჭიროა მისამართის მითითება",
     "Send emails:" : "წერილების გაგზავნა:",
