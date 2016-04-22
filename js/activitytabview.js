@@ -11,7 +11,7 @@
 (function() {
 	var TEMPLATE =
 		'<div class="activity-section">' +
-		'<div class="loading" style="height: 50px"></div>' +
+		'<div class="loading hidden" style="height: 50px"></div>' +
 		'<ul class="activities hidden">' +
 		'    <li class="empty">{{emptyMessage}}</li>' +
 		'</ul>' +
@@ -94,6 +94,7 @@
 			if (this.collection.lastGivenId === 0) {
 				this.render();
 			}
+			this.$el.find('.showMore').addClass('hidden');
 		},
 
 		_onEndRequest: function() {
@@ -101,6 +102,9 @@
 			this.$el.find('.loading').addClass('hidden');
 			if (this.collection.length) {
 				this.$container.find('li.empty').addClass('hidden');
+			}
+			if (this.collection.hasMore) {
+				this.$el.find('.showMore').removeClass('hidden');
 			}
 		},
 
@@ -200,7 +204,8 @@
 		render: function() {
 			if (this._fileInfo) {
 				this.$el.html(this.template({
-					emptyMessage: t('activity', 'No activities')
+					emptyMessage: t('activity', 'No activities'),
+					moreLabel: t('activity', 'Load more activities')
 				}));
 				this.$container = this.$el.find('ul.activities');
 			} else {

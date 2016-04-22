@@ -24,6 +24,7 @@
 
 		firstKnownId: 0,
 		lastGivenId: 0,
+		hasMore: false,
 
 		/**
 		 * Id of the file for which to filter activities by
@@ -50,6 +51,7 @@
 			this._objectId = objectId;
 			this.firstKnownId = 0;
 			this.lastGivenId = 0;
+			this.hasMore = false;
 		},
 
 		/**
@@ -61,6 +63,7 @@
 			this._objectType = objectType;
 			this.firstKnownId = 0;
 			this.lastGivenId = 0;
+			this.hasMore = false;
 		},
 
 		/**
@@ -86,6 +89,7 @@
 		 */
 		saveHeaders: function(headers) {
 			var self = this;
+			this.hasMore = false;
 
 			headers = headers.split("\n");
 			_.each(headers, function (header) {
@@ -94,6 +98,8 @@
 					self.firstKnownId = parseInt(parts[1].trim(), 10);
 				} else if (parts[0].toLowerCase() === 'x-activity-last-given') {
 					self.lastGivenId = parseInt(parts[1].trim(), 10);
+				} else if (parts[0].toLowerCase() === 'link') {
+					self.hasMore = true;
 				}
 			});
 		},
@@ -101,7 +107,6 @@
 		url: function() {
 			var query = {
 				format: 'json',
-				limit: 5,//FIXME
 				since: this.lastGivenId
 			};
 			//var url = OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter';
