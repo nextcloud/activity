@@ -54,7 +54,6 @@
 			this.collection.setObjectType('files');
 			this.collection.on('request', this._onRequest, this);
 			this.collection.on('sync', this._onEndRequest, this);
-			// this.collection.on('update', this._onChange, this);
 			this.collection.on('error', this._onError, this);
 			this.collection.on('add', this._onAddModel, this);
 		},
