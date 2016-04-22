@@ -39,8 +39,7 @@
 	 * Displays activity information for a given file
 	 *
 	 */
-	var ActivityTabView = OCA.Files.DetailTabView.extend(
-		/** @lends OCA.Activity.ActivityTabView.prototype */ {
+	var ActivityTabView = OCA.Files.DetailTabView.extend(/** @lends OCA.Activity.ActivityTabView.prototype */ {
 		id: 'activityTabView',
 		className: 'activityTabView tab',
 
@@ -108,40 +107,33 @@
 			}
 		},
 
-		// _onChange: function() {
-		// 	this._loading = false;
-		// 	this.render();
-		// },
-
 		_onClickShowMore: function() {
-			console.log('click');
-
 			this.collection.fetch({
 				reset: false
 			});
 		},
 
-			/**
-			 * Format an activity model for display
-			 *
-			 * @param {OCA.Activity.ActivityModel} activity
-			 * @return {Object}
-			 */
-			_formatItem: function(activity) {
-				var output = {
-					subject: OCA.Activity.Formatter.parseMessage(activity.get('subject_prepared'), false),
-					formattedDate: activity.get('relativeDateTimestamp'),
-					formattedDateTooltip: activity.get('readableDateTimestamp'),
-					message: OCA.Activity.Formatter.parseMessage(activity.get('message_prepared'), false)
-				};
+		/**
+		 * Format an activity model for display
+		 *
+		 * @param {OCA.Activity.ActivityModel} activity
+		 * @return {Object}
+		 */
+		_formatItem: function(activity) {
+			var output = {
+				subject: OCA.Activity.Formatter.parseMessage(activity.get('subject_prepared'), false),
+				formattedDate: activity.get('relativeDateTimestamp'),
+				formattedDateTooltip: activity.get('readableDateTimestamp'),
+				message: OCA.Activity.Formatter.parseMessage(activity.get('message_prepared'), false)
+			};
 
-				if (activity.has('typeicon')) {
-					output.typeIconClass = activity.get('typeicon') + ' svg';
-				}
-				/**
-				 * Disable previews in the rightside bar,
-				 * it's always the same image anyway.
-				 if (activity.has('previews')) {
+			if (activity.has('typeicon')) {
+				output.typeIconClass = activity.get('typeicon') + ' svg';
+			}
+			/**
+			 * Disable previews in the rightside bar,
+			 * it's always the same image anyway.
+			 if (activity.has('previews')) {
 					output.previews = _.map(activity.get('previews'), function(data) {
 						return {
 							previewClass: data.isMimeTypeIcon ? 'preview-mimetype-icon': '',
@@ -149,53 +141,38 @@
 						};
 					});
 				}
-				 */
-				return output;
-			},
+			 */
+			return output;
+		},
 
-			activityTemplate: function(params) {
-				if (!this._activityTemplate) {
-					this._activityTemplate = Handlebars.compile(ACTIVITY_TEMPLATE);
-				}
+		activityTemplate: function(params) {
+			if (!this._activityTemplate) {
+				this._activityTemplate = Handlebars.compile(ACTIVITY_TEMPLATE);
+			}
 
-				// params = _.extend({
-				// 	avatarEnabled: this._avatarsEnabled,
-				// 	editTooltip: t('comments', 'Edit comment'),
-				// 	isUserAuthor: OC.getCurrentUser().uid === params.actorId,
-				// 	isLong: this._isLong(params.message)
-				// }, params);
-				//
-				// if (params.actorType === 'deleted_users') {
-				// 	// makes the avatar a X
-				// 	params.actorId = null;
-				// 	params.actorDisplayName = t('comments', '[Deleted user]');
-				// }
+			return this._activityTemplate(params);
+		},
 
-				return this._activityTemplate(params);
-			},
+		_onAddModel: function(model, collection, options) {
+			var $el = $(this.activityTemplate(this._formatItem(model)));
+			if (!_.isUndefined(options.at) && collection.length > 1) {
+				this.$container.find('li').eq(options.at).before($el);
+			} else {
+				this.$container.append($el);
+			}
 
-			_onAddModel: function(model, collection, options) {
-				var $el = $(this.activityTemplate(this._formatItem(model)));
-				console.log($el);
-				if (!_.isUndefined(options.at) && collection.length > 1) {
-					this.$container.find('li').eq(options.at).before($el);
-				} else {
-					console.log('append');
-					this.$container.append($el);
-				}
+			this._postRenderItem($el);
+		},
 
-				this._postRenderItem($el);
-			},
-
-			_postRenderItem: function($el) {
-				$el.find('.avatar').each(function() {
-					var element = $(this);
-					element.avatar(element.data('user'), 28);
-				});
-				$el.find('.has-tooltip').tooltip({
-					placement: 'bottom'
-				});
-			},
+		_postRenderItem: function($el) {
+			$el.find('.avatar').each(function() {
+				var element = $(this);
+				element.avatar(element.data('user'), 28);
+			});
+			$el.find('.has-tooltip').tooltip({
+				placement: 'bottom'
+			});
+		},
 
 
 		/**
@@ -208,8 +185,6 @@
 					moreLabel: t('activity', 'Load more activities')
 				}));
 				this.$container = this.$el.find('ul.activities');
-			} else {
-				// TODO: render placeholder text?
 			}
 		}
 	});
