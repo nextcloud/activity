@@ -73,7 +73,7 @@
 		 * @returns {Array}
 		 */
 		parse: function(ocsResponse, response) {
-			this.saveHeaders(response.xhr.getAllResponseHeaders());
+			this._saveHeaders(response.xhr.getAllResponseHeaders());
 
 			if (response.xhr.status === 304) {
 				// No activities found
@@ -87,7 +87,7 @@
 		 * Read the X-Activity-First-Known and X-Activity-Last-Given headers
 		 * @param headers
 		 */
-		saveHeaders: function(headers) {
+		_saveHeaders: function(headers) {
 			var self = this;
 			this.hasMore = false;
 
@@ -106,11 +106,13 @@
 
 		url: function() {
 			var query = {
-				format: 'json',
-				since: this.lastGivenId
+				format: 'json'
 			};
 			//var url = OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter';
 			var url = OC.generateUrl('/apps/activity/api/v2/activity') + '/filter';
+			if (this.lastGivenId) {
+				query.since = this.lastGivenId;
+			}
 			if (this._objectId && this._objectType) {
 				query.object_type = this._objectType;
 				query.object_id = this._objectId;
