@@ -48,6 +48,8 @@
 		 */
 		setObjectId: function(objectId) {
 			this._objectId = objectId;
+			this.firstKnownId = 0;
+			this.lastGivenId = 0;
 		},
 
 		/**
@@ -57,6 +59,8 @@
 		 */
 		setObjectType: function(objectType) {
 			this._objectType = objectType;
+			this.firstKnownId = 0;
+			this.lastGivenId = 0;
 		},
 
 		/**
