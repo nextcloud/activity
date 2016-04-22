@@ -12,7 +12,7 @@
 	var TEMPLATE =
 		'<div class="activity-section">' +
 		'<div class="loading" style="height: 50px"></div>' +
-		'<ul class="activities">' +
+		'<ul class="activities hidden">' +
 		'    <li class="empty">{{emptyMessage}}</li>' +
 		'</ul>' +
 		'<input type="button" class="showMore" value="{{moreLabel}}"' +
@@ -54,7 +54,7 @@
 			this.collection = new OCA.Activity.ActivityCollection();
 			this.collection.setObjectType('files');
 			this.collection.on('request', this._onRequest, this);
-			// this.collection.on('sync', this._onEndRequest, this);
+			this.collection.on('sync', this._onEndRequest, this);
 			// this.collection.on('update', this._onChange, this);
 			this.collection.on('error', this._onError, this);
 			this.collection.on('add', this._onAddModel, this);
@@ -79,6 +79,7 @@
 			this._fileInfo = fileInfo;
 			if (this._fileInfo) {
 				this.collection.setObjectId(this._fileInfo.get('id'));
+				this.collection.reset();
 				this.collection.fetch();
 			} else {
 				this.collection.reset();
@@ -90,21 +91,18 @@
 		},
 
 		_onRequest: function() {
-			this._loading = true;
 			if (this.collection.lastGivenId === 0) {
 				this.render();
 			}
 		},
 
-		// _onEndRequest: function() {
-		// 	console.log(arguments);
-		// 	this._loading = false;
-		// 	// empty result ?
-		// 	if (!this.collection.length) {
-		// 		// render now as there will be no update event
-		// 		this.render();
-		// 	}
-		// },
+		_onEndRequest: function() {
+			this.$container.removeClass('hidden');
+			this.$el.find('.loading').addClass('hidden');
+			if (this.collection.length) {
+				this.$container.find('li.empty').addClass('hidden');
+			}
+		},
 
 		// _onChange: function() {
 		// 	this._loading = false;
@@ -202,7 +200,6 @@
 		render: function() {
 			if (this._fileInfo) {
 				this.$el.html(this.template({
-					loading: this._loading,
 					emptyMessage: t('activity', 'No activities')
 				}));
 				this.$container = this.$el.find('ul.activities');
