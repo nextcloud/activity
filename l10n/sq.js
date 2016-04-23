@@ -28,6 +28,7 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "Këtë email po e merrni ngaqë ndodhën gjërat vijuese te %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* dhe %n më tepër","* dhe %n më tepër"],
+    "List your own file actions in the stream" : "Paraqitni në rrjedhën tuaj veprimet tuaja mbi kartela",
     "Notify about your own actions via email" : "Njoftoni me email mbi veprimet tuaja",
     "You need to set up your email address before you can receive notification emails." : "Lypset të caktoni adresën tuaj email, përpara se të mund të merrni email-e njoftimesh.",
     "Send emails:" : "Dërgo email-e:",

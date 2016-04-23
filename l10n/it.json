@@ -26,6 +26,7 @@
     "You are receiving this email because the following things happened at %s" : "Hai ricevuto questa email perché si sono verificati i seguenti eventi su %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* e %n altra","* e %n altre"],
+    "List your own file actions in the stream" : "Elenca le tue azioni sui file nel flusso",
     "Notify about your own actions via email" : "Notificami le tue azioni tramite email",
     "You need to set up your email address before you can receive notification emails." : "Devi impostare l'indirizzo del tuo utente prima di poter ricevere le email di notifica.",
     "Send emails:" : "Invio email:",
