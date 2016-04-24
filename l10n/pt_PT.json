@@ -26,6 +26,7 @@
     "You are receiving this email because the following things happened at %s" : "Está a receber esta mensagem porque ocorreram as seguintes acções às %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* e %n mais","* e mais %n"],
+    "List your own file actions in the stream" : "Liste as suas próprias acções sobre ficheiros na transmissão",
     "Notify about your own actions via email" : "Notificar sobre as suas próprias acções via correio electrónico ",
     "You need to set up your email address before you can receive notification emails." : "Precisa de configurar o seu endereço de correio electrónico antes de poder receber notificações na sua caixa de correio.",
     "Send emails:" : "Enviar mensagens de correio electrónico:",
