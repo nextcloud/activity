@@ -48,6 +48,7 @@
 		},
 
 		_loading: false,
+		_plugins: [],
 
 		initialize: function() {
 			this.collection = new OCA.Activity.ActivityCollection();
@@ -56,6 +57,13 @@
 			this.collection.on('sync', this._onEndRequest, this);
 			this.collection.on('error', this._onError, this);
 			this.collection.on('add', this._onAddModel, this);
+
+			this._plugins = OC.Plugins.getPlugins('OCA.Activity.RenderingPlugins');
+			_.each(this._plugins, function(plugin) {
+				if (_.isFunction(plugin.initialize)) {
+					plugin.initialize();
+				}
+			});
 		},
 
 		template: function(data) {
@@ -79,8 +87,20 @@
 				this.collection.setObjectId(this._fileInfo.get('id'));
 				this.collection.reset();
 				this.collection.fetch();
+
+				_.each(this._plugins, function(plugin) {
+					if (_.isFunction(plugin.setFileInfo)) {
+						plugin.setFileInfo('files', fileInfo.get('id'));
+					}
+				});
 			} else {
 				this.collection.reset();
+
+				_.each(this._plugins, function(plugin) {
+					if (_.isFunction(plugin.resetFileInfo)) {
+						plugin.resetFileInfo();
+					}
+				});
 			}
 		},
 
@@ -155,6 +175,13 @@
 
 		_onAddModel: function(model, collection, options) {
 			var $el = $(this.activityTemplate(this._formatItem(model)));
+
+			_.each(this._plugins, function(plugin) {
+				if (_.isFunction(plugin.prepareModelForDisplay)) {
+					plugin.prepareModelForDisplay(model, $el, 'ActivityTabView');
+				}
+			});
+
 			if (!_.isUndefined(options.at) && collection.length > 1) {
 				this.$container.find('li').eq(options.at).before($el);
 			} else {
