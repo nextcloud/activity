@@ -44,12 +44,13 @@
 	 * @return {Object}
 	 */
 	function formatActivity(activity) {
-		var output = {
-			subject: OCA.Activity.Formatter.parseMessage(activity.get('subject_prepared'), false),
-			formattedDate: activity.get('relativeDateTimestamp'),
-			formattedDateTooltip: activity.get('readableDateTimestamp'),
-			message: OCA.Activity.Formatter.parseMessage(activity.get('message_prepared'), false)
-		};
+		var timestamp = moment(activity.get('datetime')).valueOf(),
+			output = {
+				subject: OCA.Activity.Formatter.parseMessage(activity.get('subject_prepared'), false),
+				formattedDate: OC.Util.relativeModifiedDate(timestamp),
+				formattedDateTooltip: OC.Util.formatDate(timestamp),
+				message: OCA.Activity.Formatter.parseMessage(activity.get('message_prepared'), false)
+			};
 
 		if (activity.has('typeicon')) {
 			output.typeIconClass = activity.get('typeicon') + ' svg';
