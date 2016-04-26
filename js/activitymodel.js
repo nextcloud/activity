@@ -16,8 +16,31 @@
 	 * Displays activity information for a given file
 	 *
 	 */
-	var ActivityModel = OC.Backbone.Model.extend(
-		/** @lends OCA.Activity.ActivityModel.prototype */ {
+	var ActivityModel = OC.Backbone.Model.extend(/** @lends OCA.Activity.ActivityModel.prototype */{
+		/**
+		 *
+		 * @returns int UNIX milliseconds timestamp
+		 */
+		getUnixMilliseconds: function() {
+			if (_.isUndefined(this.unixMilliseconds)) {
+				this.unixMilliseconds = moment(this.get('datetime')).valueOf();
+			}
+			return this.unixMilliseconds;
+		},
+
+		/**
+		 * @returns string E.g. "seconds ago"
+		 */
+		getRelativeDate: function () {
+			return OC.Util.relativeModifiedDate(this.getUnixMilliseconds());
+		},
+
+		/**
+		 * @returns string E.g. "April 26, 2016 10:53 AM"
+		 */
+		getFullDate: function () {
+			return OC.Util.formatDate(this.getUnixMilliseconds());
+		}
 	});
 
 	OCA.Activity = OCA.Activity || {};

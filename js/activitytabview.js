@@ -119,11 +119,10 @@
 		 * @return {Object}
 		 */
 		_formatItem: function(activity) {
-			var timestamp = moment(activity.get('datetime')).valueOf(),
-				output = {
+			var output = {
 				subject: OCA.Activity.Formatter.parseMessage(activity.get('subject_prepared'), false),
-				formattedDate: OC.Util.relativeModifiedDate(timestamp),
-				formattedDateTooltip: OC.Util.formatDate(timestamp),
+				formattedDate: activity.getRelativeDate(),
+				formattedDateTooltip: activity.getFullDate(),
 				message: OCA.Activity.Formatter.parseMessage(activity.get('message_prepared'), false)
 			};
 
