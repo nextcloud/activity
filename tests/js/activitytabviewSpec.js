@@ -21,6 +21,7 @@ describe('ActivityTabView', function() {
 				name: 'test.txt'
 			});
 			tabView = new ActivityTabView();
+			tabView.$container = tabView.$el.find('ul.activities');
 		});
 		afterEach(function() {
 			fetchStub.restore();
@@ -65,9 +66,10 @@ describe('ActivityTabView', function() {
 				message_prepared: 'Activity Two'
 			};
 			tabView.setFileInfo(fileInfo);
+			tabView.collection.trigger('request');
 			tabView.collection.set([activity1, activity2]);
 
-			var $activities = tabView.$el.find('.activity');
+			var $activities = tabView.$container.find('.activity');
 			expect($activities.length).toEqual(2);
 			var $a1 = $activities.eq(0);
 			expect($a1.find('.activitysubject').text()).toEqual('The Subject');
