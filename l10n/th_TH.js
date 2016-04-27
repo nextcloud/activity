@@ -18,7 +18,7 @@ OC.L10N.register(
     "There are no events for this filter" : "ไม่มีกิจกรรมสำหรับตัวกรองนี้",
     "Today" : "วันนี้",
     "Yesterday" : "เมื่อวานนี้",
-    "\"remote user\"" : "\"ผู้ใช้ระยะไกล\"",
+    "\"remote user\"" : "\"ผู้ใช้โดยการรีโมท\"",
     "Activity notification" : "การแจ้งเตือนกิจกรรม",
     "All Activities" : "กิจกรรมทั้งหมด",
     "Activities by you" : "กิจกรรมของคุณ",
