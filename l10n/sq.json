@@ -8,6 +8,7 @@
     "Activities" : "Veprimtari",
     "Error loading activities" : "Gabim në ngarkimin e veprimtarisë",
     "No activities" : "Pa veprimtari",
+    "Load more activities" : "Ngarko më tepër veprimtari",
     ", " : ",",
     "{parameterList} and {lastParameter}" : "{parameterList} dhe {lastParameter}",
     "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} dhe {linkStart}%n tjetër{linkEnd}","{parameterList} dhe {linkStart}%n të tjera{linkEnd}"],

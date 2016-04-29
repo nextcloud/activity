@@ -8,6 +8,7 @@
     "Activities" : "Atividades",
     "Error loading activities" : "Erro carregando atividades",
     "No activities" : "Nenhuma atividade",
+    "Load more activities" : "Carregar mais actividades",
     ", " : ",",
     "{parameterList} and {lastParameter}" : "{parameterList} e {lastParameter}",
     "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} e {linkStart}%n mais{linkEnd}","{parameterList} e {linkStart}%n mais{linkEnd}"],

@@ -10,6 +10,7 @@ OC.L10N.register(
     "Activities" : "Aktivity",
     "Error loading activities" : "Chyba načtení aktivit",
     "No activities" : "Žádné aktivity",
+    "Load more activities" : "Načíst více aktivit",
     ", " : ", ",
     "{parameterList} and {lastParameter}" : "{parameterList} a {lastParameter}",
     "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} a {linkStart}%n další{linkEnd}","{parameterList} a {linkStart}%n další{linkEnd}","{parameterList} a {linkStart}%n dalších{linkEnd}"],

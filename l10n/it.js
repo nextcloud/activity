@@ -10,6 +10,7 @@ OC.L10N.register(
     "Activities" : "Attività",
     "Error loading activities" : "Errore durante il caricamento delle attività",
     "No activities" : "Nessuna attività",
+    "Load more activities" : "Carica altre attività",
     ", " : ", ",
     "{parameterList} and {lastParameter}" : "{parameterList} e {lastParameter}",
     "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} e {linkStart}%n altro{linkEnd}","{parameterList} e {linkStart}%n altri{linkEnd}"],

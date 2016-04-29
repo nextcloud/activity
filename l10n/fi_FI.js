@@ -10,6 +10,7 @@ OC.L10N.register(
     "Activities" : "Toimet",
     "Error loading activities" : "Virhe ladatessa toimia",
     "No activities" : "Ei toimia",
+    "Load more activities" : "Lataa lisää toimia",
     ", " : ", ",
     "{parameterList} and {lastParameter}" : "{parameterList} ja {lastParameter}",
     "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} ja {linkStart}%n lisää{linkEnd}","{parameterList} ja {linkStart}%n lisää{linkEnd}"],
