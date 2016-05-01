@@ -10,6 +10,7 @@ OC.L10N.register(
     "Activities" : "Dejavnosti",
     "Error loading activities" : "Napaka nalaganja dejavnosti",
     "No activities" : "Ni dejavnosti",
+    "Load more activities" : "Naloži več dejavnosti",
     ", " : ",",
     "{parameterList} and {lastParameter}" : "{parameterList} in {lastParameter}",
     "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} in {linkStart}%n dodatna {linkEnd}","{parameterList} in {linkStart}%n dodatni {linkEnd}","{parameterList} in {linkStart}%n dodatne {linkEnd}","{parameterList} in {linkStart}%n dodatnih {linkEnd}"],
