@@ -21,7 +21,6 @@
 
 namespace OCA\Activity\Tests;
 
-use OC\ActivityManager;
 use OCA\Activity\Data;
 use OCA\Activity\Tests\Mock\Extension;
 use OCP\Activity\IExtension;
@@ -81,9 +80,9 @@ class ApiTest extends TestCase {
 
 	protected function tearDown() {
 		$data = new Data(
-			$this->getMock('\OCP\Activity\IManager'),
+			$this->getMock('OCP\Activity\IManager'),
 			\OC::$server->getDatabaseConnection(),
-			$this->getMock('\OCP\IUserSession')
+			$this->getMock('OCP\IUserSession')
 		);
 
 		$this->deleteUser($data, 'activity-api-user1');
@@ -172,7 +171,7 @@ class ApiTest extends TestCase {
 		$this->assertInstanceOf('OCP\IUser', $sessionUser);
 		$this->assertEquals($user, $sessionUser->getUID());
 
-		$activityManager = new ActivityManager(
+		$activityManager = new \OC\Activity\Manager(
 			$this->getMock('OCP\IRequest'),
 			$this->getMock('OCP\IUserSession'),
 			$this->getMock('OCP\IConfig')
