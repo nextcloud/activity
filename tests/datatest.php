@@ -21,7 +21,6 @@
 
 namespace OCA\Activity\Tests;
 
-use OC\ActivityManager;
 use OCA\Activity\Data;
 use OCA\Activity\Tests\Mock\Extension;
 use OCP\Activity\IExtension;
@@ -40,7 +39,7 @@ class DataTest extends TestCase {
 	/** @var \OCP\IL10N */
 	protected $activityLanguage;
 
-	/** @var ActivityManager|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var \OC\Activity\Manager|\PHPUnit_Framework_MockObject_MockObject */
 	protected $activityManager;
 
 	/** @var \OCP\IUserSession|\PHPUnit_Framework_MockObject_MockObject */
@@ -50,7 +49,7 @@ class DataTest extends TestCase {
 		parent::setUp();
 
 		$this->activityLanguage = $activityLanguage = \OCP\Util::getL10N('activity', 'en');
-		$this->activityManager = new ActivityManager(
+		$this->activityManager = new \OC\Activity\Manager(
 			$this->getMock('OCP\IRequest'),
 			$this->getMock('OCP\IUserSession'),
 			$this->getMock('OCP\IConfig')
@@ -264,7 +263,7 @@ class DataTest extends TestCase {
 			->with('user1', 'stream')
 			->willReturn(['type1', 'type2']);
 
-		/** @var ActivityManager|\PHPUnit_Framework_MockObject_MockObject $activityManager */
+		/** @var \OC\Activity\Manager|\PHPUnit_Framework_MockObject_MockObject $activityManager */
 		$activityManager = $this->getMockBuilder('OCP\Activity\IManager')
 			->disableOriginalConstructor()
 			->getMock();
@@ -320,7 +319,7 @@ class DataTest extends TestCase {
 			->with('user1', 'stream')
 			->willReturn(['settings']);
 
-		/** @var ActivityManager|\PHPUnit_Framework_MockObject_MockObject $activityManager */
+		/** @var \OC\Activity\Manager|\PHPUnit_Framework_MockObject_MockObject $activityManager */
 		$activityManager = $this->getMockBuilder('OCP\Activity\IManager')
 			->disableOriginalConstructor()
 			->getMock();

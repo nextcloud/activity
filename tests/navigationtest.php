@@ -21,7 +21,6 @@
 
 namespace OCA\Activity\Tests;
 
-use OC\ActivityManager;
 use OCA\Activity\Navigation;
 use OCA\Activity\Tests\Mock\Extension;
 
@@ -46,7 +45,7 @@ class NavigationTest extends TestCase {
 	 */
 	public function testGetTemplate($constructorActive, $forceActive = null, $rssToken = '') {
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
-		$activityManager = new ActivityManager(
+		$activityManager = new \OC\Activity\Manager(
 			$this->getMock('OCP\IRequest'),
 			$this->getMock('OCP\IUserSession'),
 			$this->getMock('OCP\IConfig')

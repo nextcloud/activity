@@ -21,7 +21,6 @@
 
 namespace OCA\Activity\Tests;
 
-use OC\ActivityManager;
 use OCA\Activity\Data;
 use OCA\Activity\Tests\Mock\Extension;
 use OCA\Activity\UserSettings;
@@ -37,7 +36,7 @@ class UserSettingsTest extends TestCase {
 		parent::setUp();
 
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
-		$activityManager = new ActivityManager(
+		$activityManager = new \OC\Activity\Manager(
 			$this->getMock('OCP\IRequest'),
 			$this->getMock('OCP\IUserSession'),
 			$this->getMock('OCP\IConfig')

@@ -21,7 +21,6 @@
 
 namespace OCA\Activity\Tests;
 
-use OC\ActivityManager;
 use OCA\Activity\Consumer;
 use OCP\DB;
 
@@ -185,7 +184,7 @@ class ConsumerTest extends TestCase {
 	}
 
 	public function testRegister() {
-		$activityManager = new ActivityManager(
+		$activityManager = new \OC\Activity\Manager(
 			$this->getMock('OCP\IRequest'),
 			$this->getMock('OCP\IUserSession'),
 			$this->getMock('OCP\IConfig')
