@@ -19,7 +19,7 @@
  *
  */
 
-namespace OCA\Activity\Tests\Formatter;
+namespace OCA\Activity\Tests;
 
 use OCA\Activity\Formatter\FileFormatter;
 use OCA\Activity\Formatter\IFormatter;

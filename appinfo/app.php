@@ -20,9 +20,7 @@
  *
  */
 
-namespace OCA\Activity\AppInfo;
-
-$app = new Application();
+$app = new \OCA\Activity\AppInfo\Application();
 $c = $app->getContainer();
 
 // add an navigation entry

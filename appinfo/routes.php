@@ -21,11 +21,9 @@
  *
  */
 
-namespace OCA\Activity\AppInfo;
-
 use OCP\API;
 
-$application = new Application();
+$app = new \OCA\Activity\AppInfo\Application();
 
 // Register an OCS API call
 //API::register(
@@ -47,7 +45,7 @@ API::register(
 	'activity'
 );
 
-$application->registerRoutes($this, ['routes' => [
+$app->registerRoutes($this, ['routes' => [
 	['name' => 'Settings#personal', 'url' => '/settings', 'verb' => 'POST'],
 	['name' => 'Settings#feed', 'url' => '/settings/feed', 'verb' => 'POST'],
 	['name' => 'Activities#showList', 'url' => '/', 'verb' => 'GET'],
