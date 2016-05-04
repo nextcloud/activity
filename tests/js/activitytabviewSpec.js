@@ -46,8 +46,7 @@ describe('ActivityTabView', function() {
 		it('renders activities', function() {
 			var activity1 = {
 				subject_prepared: 'The <parameter class="markup">Subject</parameter>',
-				relativeDateTimestamp: 'seconds ago',
-				readableDateTimestamp: 'readable date',
+				datetime: moment().format(),
 				message_prepared: 'Some <parameter class="markup">message</parameter>!',
 				typeicon: 'icon-add-color',
 				previews: [{
@@ -60,8 +59,7 @@ describe('ActivityTabView', function() {
 			};
 			var activity2 = {
 				subject_prepared: 'The Subject Two',
-				relativeDateTimestamp: 'years ago',
-				readableDateTimestamp: 'once upon a time',
+				datetime: moment().subtract(1, 'y').format(),
 				message_prepared: 'Activity Two'
 			};
 			tabView.setFileInfo(fileInfo);
@@ -76,7 +74,8 @@ describe('ActivityTabView', function() {
 			expect($a1.find('.activitymessage .markup').length).toEqual(1);
 			expect($a1.find('.activity-icon').hasClass('icon-add-color')).toEqual(true);
 			expect($a1.find('.activitytime').text()).toEqual('seconds ago');
-			expect($a1.find('.activitytime').attr('data-original-title')).toEqual('readable date');
+			expect($a1.find('.activitytime').attr('data-original-title')).toContain(moment().format('MMMM'));
+			expect($a1.find('.activitytime').attr('data-original-title')).toContain(moment().format('YYYY'));
 
 			/*
 			expect($a1.find('.previews img').length).toEqual(2);
@@ -88,6 +87,8 @@ describe('ActivityTabView', function() {
 
 			var $a2 = $activities.eq(1);
 			expect($a2.find('.previews').length).toEqual(0);
+			expect($a2.find('.activitytime').attr('data-original-title')).toContain(moment().format('MMMM'));
+			expect($a2.find('.activitytime').attr('data-original-title')).toContain(moment().format('YYYY') - 1);
 		});
 	});
 });
