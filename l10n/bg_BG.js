@@ -5,6 +5,7 @@ OC.L10N.register(
     "Activities" : "Актнивности",
     "Error loading activities" : "Грешка при зареждане на активностите",
     "No activities" : "Няма активност",
+    "Load more activities" : "Зареди повече активности",
     ", " : ", ",
     "{parameterList} and {lastParameter}" : "{parameterList} и {lastParameter}",
     "in {directory}" : "в {directory}",
