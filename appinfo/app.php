@@ -21,11 +21,7 @@
  */
 
 $app = new \OCA\Activity\AppInfo\Application();
-$c = $app->getContainer();
 $app->registerNavigationEntry();
 $app->registerActivityConsumer();
+$app->registerHooksAndEvents();
 $app->registerPersonalPage();
-
-// register the hooks for filesystem operations. All other events from other apps has to be send via the public api
-\OCA\Activity\FilesHooksStatic::register();
-\OCP\Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\Hooks', 'deleteUser');

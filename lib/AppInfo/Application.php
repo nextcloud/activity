@@ -40,6 +40,7 @@ use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\App;
 use OCP\AppFramework\IAppContainer;
 use OCP\IContainer;
+use OCP\Util;
 
 class Application extends App {
 	public function __construct (array $urlParams = array()) {
@@ -289,6 +290,31 @@ class Application extends App {
 		$server->getActivityManager()->registerConsumer(function() use ($c) {
 			return $c->query('Consumer');
 		});
+	}
+
+	/**
+	 * Register the hooks and events
+	 */
+	public function registerHooksAndEvents() {
+		$eventDispatcher = $this->getContainer()->getServer()->getEventDispatcher();
+		$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', ['OCA\Activity\FilesHooksStatic', 'onLoadFilesAppScripts']);
+
+		Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\Hooks', 'deleteUser');
+
+		$this->registerFilesActivity();
+	}
+
+	/**
+	 * Register the hooks for filesystem operations
+	 */
+	public function registerFilesActivity() {
+		// All other events from other apps have to be send via the Consumer
+		Util::connectHook('OC_Filesystem', 'post_create', 'OCA\Activity\FilesHooksStatic', 'fileCreate');
+		Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Activity\FilesHooksStatic', 'fileUpdate');
+		Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\FilesHooksStatic', 'fileDelete');
+		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Activity\FilesHooksStatic', 'fileRestore');
+		Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\FilesHooksStatic', 'share');
+		Util::connectHook('OCP\Share', 'pre_unshare', 'OCA\Activity\FilesHooksStatic', 'unShare');
 	}
 
 	/**
