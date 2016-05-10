@@ -28,7 +28,7 @@ $navigationEntry = function () use ($c) {
 	return [
 		'id' => $c->getAppName(),
 		'order' => 1,
-		'name' => $c->query('ActivityL10N')->t('Activity'),
+		'name' => $c->query('OCP\IL10N')->t('Activity'),
 		'href' => $c->getServer()->getURLGenerator()->linkToRoute('activity.Activities.showList'),
 		'icon' => $c->getServer()->getURLGenerator()->imagePath('activity', 'activity.svg'),
 	];

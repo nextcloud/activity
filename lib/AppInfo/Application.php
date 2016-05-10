@@ -58,11 +58,6 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('ActivityL10N', function(IContainer $c) {
-			return $c->query('ServerContainer')->getL10N('activity');
-		});
-
-
 		$container->registerService('Consumer', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
@@ -85,11 +80,11 @@ class Application extends App {
 					$server->getURLGenerator(),
 					$server->getContactsManager(),
 					$c->query('OCA\Activity\ViewInfoCache'),
-					$c->query('ActivityL10N'),
+					$c->query('OCP\IL10N'),
 					$c->query('CurrentUID')
 				),
 				$server->getL10NFactory(),
-				$c->query('ActivityL10N')
+				$c->query('OCP\IL10N')
 			);
 		});
 
@@ -146,7 +141,7 @@ class Application extends App {
 			$rssToken = ($c->query('CurrentUID') !== '') ? $server->getConfig()->getUserValue($c->query('CurrentUID'), 'activity', 'rsstoken') : '';
 
 			return new Navigation(
-				$c->query('ActivityL10N'),
+				$c->query('OCP\IL10N'),
 				$server->getActivityManager(),
 				$server->getURLGenerator(),
 				$c->query('CurrentUID'),
@@ -196,7 +191,7 @@ class Application extends App {
 				$server->getURLGenerator(),
 				$c->query('ActivityData'),
 				$c->query('UserSettings'),
-				$c->query('ActivityL10N'),
+				$c->query('OCP\IL10N'),
 				$c->query('CurrentUID')
 			);
 		});
