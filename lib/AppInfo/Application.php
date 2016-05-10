@@ -38,6 +38,7 @@ use OCA\Activity\Parameter\Factory;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\App;
+use OCP\AppFramework\IAppContainer;
 use OCP\IContainer;
 
 class Application extends App {
@@ -179,12 +180,12 @@ class Application extends App {
 		/**
 		 * Controller
 		 */
-		$container->registerService('SettingsController', function(IContainer $c) {
+		$container->registerService('SettingsController', function(IAppContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 
 			return new Settings(
-				$c->query('AppName'),
+				$c->getAppName(),
 				$server->getRequest(),
 				$server->getConfig(),
 				$server->getSecureRandom()->getMediumStrengthGenerator(),
@@ -196,7 +197,7 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('OCA\Activity\Controller\OCSEndPoint', function(IContainer $c) {
+		$container->registerService('OCA\Activity\Controller\OCSEndPoint', function(IAppContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 
@@ -214,23 +215,23 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('EndPointController', function(IContainer $c) {
+		$container->registerService('EndPointController', function(IAppContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 
 			return new EndPoint(
-				$c->query('AppName'),
+				$c->getAppName(),
 				$server->getRequest(),
 				$c->query('OCA\Activity\Controller\OCSEndPoint')
 			);
 		});
 
-		$container->registerService('ActivitiesController', function(IContainer $c) {
+		$container->registerService('ActivitiesController', function(IAppContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 
 			return new Activities(
-				$c->query('AppName'),
+				$c->getAppName(),
 				$server->getRequest(),
 				$server->getConfig(),
 				$c->query('ActivityData'),
@@ -238,12 +239,12 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('FeedController', function(IContainer $c) {
+		$container->registerService('FeedController', function(IAppContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 
 			return new Feed(
-				$c->query('AppName'),
+				$c->getAppName(),
 				$server->getRequest(),
 				$c->query('ActivityData'),
 				$c->query('GroupHelperSingleEntries'),
@@ -271,7 +272,7 @@ class Application extends App {
 				'order' => 1,
 				'name' => $c->query('OCP\IL10N')->t('Activity'),
 				'href' => $server->getURLGenerator()->linkToRoute('activity.Activities.showList'),
-				'icon' => $server->getURLGenerator()->imagePath('activity', 'activity.svg'),
+				'icon' => $server->getURLGenerator()->imagePath($c->getAppName(), 'activity.svg'),
 			];
 		};
 		$server->getNavigationManager()->add($navigationEntry);
@@ -288,5 +289,12 @@ class Application extends App {
 		$server->getActivityManager()->registerConsumer(function() use ($c) {
 			return $c->query('Consumer');
 		});
+	}
+
+	/**
+	 * Register personal settings for notifications and emails
+	 */
+	public function registerPersonalPage() {
+		\OCP\App::registerPersonal($this->getContainer()->getAppName(), 'personal');
 	}
 }
