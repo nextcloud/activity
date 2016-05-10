@@ -182,27 +182,4 @@ class ConsumerTest extends TestCase {
 
 		$consumer->receive($event);
 	}
-
-	public function testRegister() {
-		$activityManager = new \OC\Activity\Manager(
-			$this->getMock('OCP\IRequest'),
-			$this->getMock('OCP\IUserSession'),
-			$this->getMock('OCP\IConfig')
-		);
-		$consumer = new Consumer($this->data, $this->userSettings, $this->l10nFactory);
-		$container = $this->getMock('\OCP\AppFramework\IAppContainer');
-		$container->expects($this->any())
-			->method('query')
-			->with($this->stringContains('Consumer'))
-			->will($this->returnValueMap(array(
-				array('Consumer', $consumer),
-			)));
-
-		Consumer::register($activityManager, $container);
-
-		$consumers = $this->invokePrivate($activityManager, 'getConsumers');
-		$this->assertCount(1, $consumers);
-		$this->assertInstanceOf('OCA\Activity\Consumer', $consumers[0]);
-
-	}
 }

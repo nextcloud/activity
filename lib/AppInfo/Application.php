@@ -276,4 +276,17 @@ class Application extends App {
 		};
 		$server->getNavigationManager()->add($navigationEntry);
 	}
+
+	/**
+	 * Registers the consumer to the Activity Manager
+	 */
+	public function registerActivityConsumer() {
+		$c = $this->getContainer();
+		/** @var \OCP\IServerContainer $server */
+		$server = $c->getServer();
+
+		$server->getActivityManager()->registerConsumer(function() use ($c) {
+			return $c->query('Consumer');
+		});
+	}
 }
