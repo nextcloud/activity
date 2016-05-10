@@ -22,18 +22,7 @@
 
 $app = new \OCA\Activity\AppInfo\Application();
 $c = $app->getContainer();
-
-// add an navigation entry
-$navigationEntry = function () use ($c) {
-	return [
-		'id' => $c->getAppName(),
-		'order' => 1,
-		'name' => $c->query('OCP\IL10N')->t('Activity'),
-		'href' => $c->getServer()->getURLGenerator()->linkToRoute('activity.Activities.showList'),
-		'icon' => $c->getServer()->getURLGenerator()->imagePath('activity', 'activity.svg'),
-	];
-};
-$c->getServer()->getNavigationManager()->add($navigationEntry);
+$app->registerNavigationEntry();
 
 // register the hooks for filesystem operations. All other events from other apps has to be send via the public api
 \OCA\Activity\FilesHooksStatic::register();
