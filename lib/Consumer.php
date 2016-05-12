@@ -30,17 +30,6 @@ use OCP\AppFramework\IAppContainer;
 use OCP\L10N\IFactory;
 
 class Consumer implements IConsumer {
-	/**
-	 * Registers the consumer to the Activity Manager
-	 *
-	 * @param IManager $am
-	 * @param IAppContainer $container
-	 */
-	public static function register(IManager $am, IAppContainer $container) {
-		$am->registerConsumer(function() use ($container) {
-			return $container->query('Consumer');
-		});
-	}
 
 	/** @var Data */
 	protected $data;

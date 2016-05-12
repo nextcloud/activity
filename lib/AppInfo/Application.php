@@ -38,7 +38,9 @@ use OCA\Activity\Parameter\Factory;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\App;
+use OCP\AppFramework\IAppContainer;
 use OCP\IContainer;
+use OCP\Util;
 
 class Application extends App {
 	public function __construct (array $urlParams = array()) {
@@ -57,11 +59,6 @@ class Application extends App {
 				$server->getUserSession()
 			);
 		});
-
-		$container->registerService('ActivityL10N', function(IContainer $c) {
-			return $c->query('ServerContainer')->getL10N('activity');
-		});
-
 
 		$container->registerService('Consumer', function(IContainer $c) {
 			/** @var \OC\Server $server */
@@ -85,11 +82,11 @@ class Application extends App {
 					$server->getURLGenerator(),
 					$server->getContactsManager(),
 					$c->query('OCA\Activity\ViewInfoCache'),
-					$c->query('ActivityL10N'),
+					$c->query('OCP\IL10N'),
 					$c->query('CurrentUID')
 				),
 				$server->getL10NFactory(),
-				$c->query('ActivityL10N')
+				$c->query('OCP\IL10N')
 			);
 		});
 
@@ -146,7 +143,7 @@ class Application extends App {
 			$rssToken = ($c->query('CurrentUID') !== '') ? $server->getConfig()->getUserValue($c->query('CurrentUID'), 'activity', 'rsstoken') : '';
 
 			return new Navigation(
-				$c->query('ActivityL10N'),
+				$c->query('OCP\IL10N'),
 				$server->getActivityManager(),
 				$server->getURLGenerator(),
 				$c->query('CurrentUID'),
@@ -184,24 +181,24 @@ class Application extends App {
 		/**
 		 * Controller
 		 */
-		$container->registerService('SettingsController', function(IContainer $c) {
+		$container->registerService('SettingsController', function(IAppContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 
 			return new Settings(
-				$c->query('AppName'),
+				$c->getAppName(),
 				$server->getRequest(),
 				$server->getConfig(),
 				$server->getSecureRandom()->getMediumStrengthGenerator(),
 				$server->getURLGenerator(),
 				$c->query('ActivityData'),
 				$c->query('UserSettings'),
-				$c->query('ActivityL10N'),
+				$c->query('OCP\IL10N'),
 				$c->query('CurrentUID')
 			);
 		});
 
-		$container->registerService('OCA\Activity\Controller\OCSEndPoint', function(IContainer $c) {
+		$container->registerService('OCA\Activity\Controller\OCSEndPoint', function(IAppContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 
@@ -219,23 +216,23 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('EndPointController', function(IContainer $c) {
+		$container->registerService('EndPointController', function(IAppContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 
 			return new EndPoint(
-				$c->query('AppName'),
+				$c->getAppName(),
 				$server->getRequest(),
 				$c->query('OCA\Activity\Controller\OCSEndPoint')
 			);
 		});
 
-		$container->registerService('ActivitiesController', function(IContainer $c) {
+		$container->registerService('ActivitiesController', function(IAppContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 
 			return new Activities(
-				$c->query('AppName'),
+				$c->getAppName(),
 				$server->getRequest(),
 				$server->getConfig(),
 				$c->query('ActivityData'),
@@ -243,12 +240,12 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('FeedController', function(IContainer $c) {
+		$container->registerService('FeedController', function(IAppContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 
 			return new Feed(
-				$c->query('AppName'),
+				$c->getAppName(),
 				$server->getRequest(),
 				$c->query('ActivityData'),
 				$c->query('GroupHelperSingleEntries'),
@@ -260,5 +257,70 @@ class Application extends App {
 				$c->query('CurrentUID')
 			);
 		});
+	}
+
+	/**
+	 * Register the navigation entry
+	 */
+	public function registerNavigationEntry() {
+		$c = $this->getContainer();
+		/** @var \OCP\IServerContainer $server */
+		$server = $c->getServer();
+
+		$navigationEntry = function () use ($c, $server) {
+			return [
+				'id' => $c->getAppName(),
+				'order' => 1,
+				'name' => $c->query('OCP\IL10N')->t('Activity'),
+				'href' => $server->getURLGenerator()->linkToRoute('activity.Activities.showList'),
+				'icon' => $server->getURLGenerator()->imagePath($c->getAppName(), 'activity.svg'),
+			];
+		};
+		$server->getNavigationManager()->add($navigationEntry);
+	}
+
+	/**
+	 * Registers the consumer to the Activity Manager
+	 */
+	public function registerActivityConsumer() {
+		$c = $this->getContainer();
+		/** @var \OCP\IServerContainer $server */
+		$server = $c->getServer();
+
+		$server->getActivityManager()->registerConsumer(function() use ($c) {
+			return $c->query('Consumer');
+		});
+	}
+
+	/**
+	 * Register the hooks and events
+	 */
+	public function registerHooksAndEvents() {
+		$eventDispatcher = $this->getContainer()->getServer()->getEventDispatcher();
+		$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', ['OCA\Activity\FilesHooksStatic', 'onLoadFilesAppScripts']);
+
+		Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\Hooks', 'deleteUser');
+
+		$this->registerFilesActivity();
+	}
+
+	/**
+	 * Register the hooks for filesystem operations
+	 */
+	public function registerFilesActivity() {
+		// All other events from other apps have to be send via the Consumer
+		Util::connectHook('OC_Filesystem', 'post_create', 'OCA\Activity\FilesHooksStatic', 'fileCreate');
+		Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Activity\FilesHooksStatic', 'fileUpdate');
+		Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\FilesHooksStatic', 'fileDelete');
+		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Activity\FilesHooksStatic', 'fileRestore');
+		Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\FilesHooksStatic', 'share');
+		Util::connectHook('OCP\Share', 'pre_unshare', 'OCA\Activity\FilesHooksStatic', 'unShare');
+	}
+
+	/**
+	 * Register personal settings for notifications and emails
+	 */
+	public function registerPersonalPage() {
+		\OCP\App::registerPersonal($this->getContainer()->getAppName(), 'personal');
 	}
 }
