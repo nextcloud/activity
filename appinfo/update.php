@@ -47,10 +47,6 @@ if (version_compare($installedVersion, '1.2.2', '<')) {
 	$connection->executeUpdate('UPDATE `*PREFIX*activity_mq` SET `amq_appid` = ? WHERE `amq_type` = ?', array('files_sharing', 'shared'));
 }
 
-// Cron job for sending emails and pruning the activity list
-\OC::$server->getJobList()->add('OCA\Activity\BackgroundJob\EmailNotification');
-\OC::$server->getJobList()->add('OCA\Activity\BackgroundJob\ExpireActivities');
-
 // Delete notification settings that can not be changed, so we correctly fall
 // back to the default value.
 $deleteNotificationTypes = [];
