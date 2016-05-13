@@ -23,4 +23,9 @@
 	<dependencies>
 		<owncloud min-version="9.1" max-version="9.1" />
 	</dependencies>
+
+	<background-jobs>
+		<job>OCA\Activity\BackgroundJob\EmailNotification</job>
+		<job>OCA\Activity\BackgroundJob\ExpireActivities</job>
+	</background-jobs>
 </info>
