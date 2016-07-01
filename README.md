@@ -11,12 +11,6 @@ going on in your Nextcloud.
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/activity/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/nextcloud/activity/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=master)
 
-## QA metrics on stable9 branch:
-
-[![Build Status](https://travis-ci.org/nextcloud/activity.svg?branch=stable9)](https://travis-ci.org/nextcloud/activity/branches)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/activity/badges/quality-score.png?b=stable9)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=stable9)
-[![Code Coverage](https://scrutinizer-ci.com/g/nextcloud/activity/badges/coverage.png?b=stable9)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=stable9)
-
 # Add new activities / types for other apps
 
 With the activity manager extensions can be registered which allow any app to extend the activity behavior.
