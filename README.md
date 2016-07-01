@@ -1,27 +1,21 @@
-# ownCloud Activity App
+# Nextcloud Activity App
 
-The activity app for ownCloud
+The activity app for Nextcloud
 
 Provides an activity feed showing your file changes and other interesting things
-going on in your ownCloud.
+going on in your Nextcloud.
 
 ## QA metrics on master branch:
 
-[![Build Status](https://travis-ci.org/owncloud/activity.svg?branch=master)](https://travis-ci.org/owncloud/activity/branches)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/owncloud/activity/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/owncloud/activity/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/owncloud/activity/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/owncloud/activity/?branch=master)
+[![Build Status](https://travis-ci.org/nextcloud/activity.svg?branch=master)](https://travis-ci.org/nextcloud/activity/branches)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/activity/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/nextcloud/activity/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=master)
 
-## QA metrics on stable8 branch:
+## QA metrics on stable9 branch:
 
-[![Build Status](https://travis-ci.org/owncloud/activity.svg?branch=stable8)](https://travis-ci.org/owncloud/activity/branches)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/owncloud/activity/badges/quality-score.png?b=stable8)](https://scrutinizer-ci.com/g/owncloud/activity/?branch=stable8)
-[![Code Coverage](https://scrutinizer-ci.com/g/owncloud/activity/badges/coverage.png?b=stable8)](https://scrutinizer-ci.com/g/owncloud/activity/?branch=stable8)
-
-## QA metrics on stable7 branch:
-
-[![Build Status](https://travis-ci.org/owncloud/activity.svg?branch=stable7)](https://travis-ci.org/owncloud/activity/branches)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/owncloud/activity/badges/quality-score.png?b=stable7)](https://scrutinizer-ci.com/g/owncloud/activity/?branch=stable7)
-[![Code Coverage](https://scrutinizer-ci.com/g/owncloud/activity/badges/coverage.png?b=stable7)](https://scrutinizer-ci.com/g/owncloud/activity/?branch=stable7)
+[![Build Status](https://travis-ci.org/nextcloud/activity.svg?branch=stable9)](https://travis-ci.org/nextcloud/activity/branches)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/activity/badges/quality-score.png?b=stable9)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=stable9)
+[![Code Coverage](https://scrutinizer-ci.com/g/nextcloud/activity/badges/coverage.png?b=stable9)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=stable9)
 
 # Add new activities / types for other apps
 
