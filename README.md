@@ -5,12 +5,6 @@ The activity app for Nextcloud
 Provides an activity feed showing your file changes and other interesting things
 going on in your Nextcloud.
 
-## QA metrics on master branch:
-
-[![Build Status](https://travis-ci.org/nextcloud/activity.svg?branch=master)](https://travis-ci.org/nextcloud/activity/branches)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/activity/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/nextcloud/activity/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=master)
-
 ## QA metrics on stable9 branch:
 
 [![Build Status](https://travis-ci.org/nextcloud/activity.svg?branch=stable9)](https://travis-ci.org/nextcloud/activity/branches)
