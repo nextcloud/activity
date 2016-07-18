@@ -99,6 +99,7 @@ class FileFormatterTest extends TestCase {
 		return [
 			['user1', '/test1', false, [], '<file link="apps/files/?dir=%2F&scrollto=test1" id="">test1</file>'],
 			['user1', '/test1', true, [], '<file link="apps/files/?dir=%2Ftest1" id="">test1</file>'],
+			['user1', '/', true, [], '<file link="apps/files/?dir=%2F" id="">/</file>'],
 			['user1', '/test1/test2', false, [], '<file link="apps/files/?dir=%2Ftest1&scrollto=test2" id="">test1/test2</file>'],
 			['user1', '/test1/test2', true, [], '<file link="apps/files/?dir=%2Ftest1%2Ftest2" id="">test1/test2</file>'],
 
