@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "กิจกรรม",
     "Activities" : "กิจกรรม",
     "Error loading activities" : "เกิดข้อผิดพลาดขณะโหลดกิจกรรม",
     "No activities" : "ยังไม่มีกิจกรรม",
@@ -14,6 +13,7 @@ OC.L10N.register(
     "There are no events for this filter" : "ไม่มีกิจกรรมสำหรับตัวกรองนี้",
     "Today" : "วันนี้",
     "Yesterday" : "เมื่อวานนี้",
+    "Activity" : "กิจกรรม",
     "Personal activity feed for %s" : "ฟีดกิจกรรมส่วนตัวสำหรับ %s",
     "Your feed URL is invalid" : "ฟีด URL ของคุณไม่ถูกต้อง",
     "Your settings have been updated." : "อัพเดทการตั้งค่าเรียบร้อยแล้ว",

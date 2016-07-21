@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Активност",
     "Activities" : "Активности",
     "Error loading activities" : "Грешка при учитавању активности",
     "No activities" : "Нема активности",
@@ -13,6 +12,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Нема догађаја за овај филтер",
     "Today" : "Данас",
     "Yesterday" : "јуче",
+    "Activity" : "Активност",
     "Personal activity feed for %s" : "Довод личних активности корисника %s",
     "Your feed URL is invalid" : "УРЛ вашег довода није исправан",
     "Your settings have been updated." : "Поставке су ажуриране.",

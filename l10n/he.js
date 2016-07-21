@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "פעילות",
     "Activities" : "פעילויות",
     "Error loading activities" : "שגיאה בטעינת פעילויות",
     "No activities" : "אין פעילויות",
@@ -13,6 +12,7 @@ OC.L10N.register(
     "There are no events for this filter" : "אין אירועים לסינון זה",
     "Today" : "היום",
     "Yesterday" : "אתמול",
+    "Activity" : "פעילות",
     "Personal activity feed for %s" : "הזנת פעילות עצמית עבור %s",
     "Your feed URL is invalid" : "נתיב ההזנה feed אינו חוקי",
     "Your settings have been updated." : "ההגדרות שלך עודכנו",

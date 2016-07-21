@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "动态",
     "Activities" : "动态",
     "Error loading activities" : "加载动态出错",
     "No activities" : "暂无动态",
@@ -13,6 +12,7 @@ OC.L10N.register(
     "There are no events for this filter" : "没有符合当前筛选条件的事件。",
     "Today" : "今天",
     "Yesterday" : "昨天",
+    "Activity" : "动态",
     "Personal activity feed for %s" : "%s 的个人动态 Feed",
     "Your feed URL is invalid" : "您输入的Feed链接无效",
     "Your settings have been updated." : "您的设置已更新。",

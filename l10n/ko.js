@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "활동",
     "Activities" : "활동",
     "Error loading activities" : "활동 불러오기 오류",
     "No activities" : "활동 없음",
@@ -13,6 +12,7 @@ OC.L10N.register(
     "There are no events for this filter" : "이 필터를 만족하는 이벤트 없음",
     "Today" : "오늘",
     "Yesterday" : "어제",
+    "Activity" : "활동",
     "Personal activity feed for %s" : "%s 님의 개인 활동 피드",
     "Your feed URL is invalid" : "피드 주소가 잘못되었습니다",
     "Your settings have been updated." : "설정이 업데이트 되었습니다.",

@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "События",
     "Activities" : "События",
     "Error loading activities" : "Ошибка загрузки событий",
     "No activities" : "Событий нет",
@@ -14,6 +13,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Нет событий соответствующих фильтру",
     "Today" : "Сегодня",
     "Yesterday" : "Вчера",
+    "Activity" : "События",
     "Personal activity feed for %s" : "Персональная лента событий для %s",
     "Your feed URL is invalid" : "Ваша ссылка новостной ленты неправильная",
     "Your settings have been updated." : "Настройки обновлены.",

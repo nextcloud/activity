@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Virkni",
     "Activities" : "Aðgerðir",
     "Error loading activities" : "Villa við hleðslu virkniupplýsinga",
     "No activities" : "Engin virkni",
@@ -13,6 +12,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Það eru engir atburðir fyrir þessa síu",
     "Today" : "Í dag",
     "Yesterday" : "Í gær",
+    "Activity" : "Virkni",
     "Personal activity feed for %s" : "Persónuleg virkniveita fyrir %s",
     "Your feed URL is invalid" : "Slóðin á virkniveituna þína ógild",
     "Your settings have been updated." : "Stillingarnar þínar voru uppfærðar.",

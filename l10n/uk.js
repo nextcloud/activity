@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Ваші дії",
     "Activities" : "Активність",
     "Error loading activities" : "Помилка завантаження подій",
     "No activities" : "Активність відсутня",
@@ -13,6 +12,7 @@ OC.L10N.register(
     "There are no events for this filter" : "За цим фільтром події відсутні",
     "Today" : "Сьогодні",
     "Yesterday" : "Вчора",
+    "Activity" : "Ваші дії",
     "Personal activity feed for %s" : "Персональна стрічка оновлень для %s",
     "Your feed URL is invalid" : "Ваше посилання новинної стрічки неправильна",
     "Your settings have been updated." : "Налаштування оновлені.",

@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Activitat",
     "Activities" : "Activitats",
     "Error loading activities" : "Error en carregar les activitats",
     "No activities" : "sense activitats",
@@ -13,6 +12,7 @@ OC.L10N.register(
     "There are no events for this filter" : "No hi ha esdeveniments en est filtre",
     "Today" : "Avui",
     "Yesterday" : "Ahir",
+    "Activity" : "Activitat",
     "Personal activity feed for %s" : "Canal d'activitat personal per a %s",
     "Your feed URL is invalid" : "La URL del canal no és vàlida",
     "Your settings have been updated." : "La configuració s'ha actualitzat.",

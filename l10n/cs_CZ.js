@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Aktivita",
     "Activities" : "Aktivity",
     "Error loading activities" : "Chyba načtení aktivit",
     "No activities" : "Žádné aktivity",
@@ -14,6 +13,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Pro tato kritéria nejsou žádné události",
     "Today" : "Dnes",
     "Yesterday" : "Včera",
+    "Activity" : "Aktivita",
     "Personal activity feed for %s" : "Přehled aktivit uživatele %s",
     "Your feed URL is invalid" : "URL adresa kanálu není platná",
     "Your settings have been updated." : "Vaše nastavení bylo aktualizováno.",

@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Atividade",
     "Activities" : "Atividades",
     "Error loading activities" : "Erro carregando atividades",
     "No activities" : "Nenhuma atividade",
@@ -14,6 +13,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Não há eventos para este filtro",
     "Today" : "Hoje",
     "Yesterday" : "Ontem",
+    "Activity" : "Atividade",
     "Personal activity feed for %s" : "Alimentação de atividade pessoal para %s",
     "Your feed URL is invalid" : "Sua URL de alimentação é inválida",
     "Your settings have been updated." : "Suas configurações foram atualizadas.",

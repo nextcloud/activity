@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Δραστηριότητα",
     "Activities" : "Δραστηριότητες",
     "Error loading activities" : "Σφάλμα φόρτωσης δραστηριοτήτων",
     "No activities" : "Καμία δραστηριότητα",
@@ -10,6 +9,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Δεν υπάρχουν γεγονότα για αυτό το φίλτρο",
     "Today" : "Σήμερα",
     "Yesterday" : "Χθες",
+    "Activity" : "Δραστηριότητα",
     "Personal activity feed for %s" : "Προσωπική ροή δραστηριότητας για %s",
     "Your feed URL is invalid" : "Η διεύθυνση URL δεν είναι έγκυρη",
     "Your settings have been updated." : "Οι ρυθμίσεις σας έχουν ενημερωθεί.",

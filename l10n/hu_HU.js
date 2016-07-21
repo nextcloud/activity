@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Aktivitás",
     "Activities" : "Aktivitások",
     "Error loading activities" : "Hiba történt az aktivitások betöltése közben",
     "No activities" : "Nincs aktivitás",
@@ -13,6 +12,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Ehhez a szűrőhöz nem található esemény",
     "Today" : "Ma",
     "Yesterday" : "Tegnap",
+    "Activity" : "Aktivitás",
     "Personal activity feed for %s" : "Személyes aktivitásaim hírcsatornája a %s szolgáltatáson",
     "Your feed URL is invalid" : "A hírcsatorna URL érvénytelen",
     "Your settings have been updated." : "Beállításait sikeresen frissítettük.",

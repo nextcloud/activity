@@ -1,12 +1,12 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Izmaiņas",
     ", " : ",",
     "This stream will show events like additions, changes & shares" : "Šajā straumē tiks parādītas koplietošanas, dalīšanās un citi notikumi.",
     "There are no events for this filter" : "Šim filtram nav notikumu",
     "Today" : "Šodien",
     "Yesterday" : "Vakar",
+    "Activity" : "Izmaiņas",
     "Personal activity feed for %s" : "%s personīgā izmaiņu plūsma ",
     "Your feed URL is invalid" : "Jūsu plūsmas URL nav derīgs.",
     "Your settings have been updated." : "Jūsu uzstādījumi ir atjaunoti.",

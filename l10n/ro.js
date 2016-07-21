@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Activitate",
     "Activities" : "Activități",
     "Error loading activities" : "Eroare la încărcarea activităților",
     "No activities" : "Fără activități",
@@ -14,6 +13,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Nu sunt evenimente pentru acest filtru",
     "Today" : "Astăzi",
     "Yesterday" : "Ieri",
+    "Activity" : "Activitate",
     "Personal activity feed for %s" : "Activitate recentă personală pentru %s",
     "Your feed URL is invalid" : "Adresa URL a fluxului e invalidă",
     "Your settings have been updated." : "Setările au fost actualizate.",

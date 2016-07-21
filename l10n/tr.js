@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Etkinlik",
     "Activities" : "Etkinlikler",
     "Error loading activities" : "Etkinlikler yüklenirken hata oluştu",
     "No activities" : "Etkinlik yok",
@@ -13,6 +12,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Bu filtre için herhangi bir etkinlik bulunmuyor",
     "Today" : "Bugün",
     "Yesterday" : "Dün",
+    "Activity" : "Etkinlik",
     "Personal activity feed for %s" : "%s kişisel etkinlik beslemesi",
     "Your feed URL is invalid" : "Besleme adresiniz geçersiz",
     "Your settings have been updated." : "Ayarlarınız güncellendi.",

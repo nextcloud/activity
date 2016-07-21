@@ -1,12 +1,12 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "نشاط",
     ", " : "،",
     "This stream will show events like additions, changes & shares" : "هذا التدفق سيظهر لك الاحداث، مثل الإضافة والتغيير والمشاركة",
     "There are no events for this filter" : "لا توجد هناك فعاليات وفق ما خصصته",
     "Today" : "اليوم",
     "Yesterday" : "أمس",
+    "Activity" : "نشاط",
     "Personal activity feed for %s" : "تغذية الأنشطة الشخصية ل %s",
     "Your feed URL is invalid" : "رابط التغدية الخاص بك غير شغال",
     "Your settings have been updated." : "تم تحديث الإعدادات الخاصة بك.",

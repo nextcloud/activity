@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "აქტივობა",
     "Activities" : "აქტივობები",
     "Error loading activities" : "აქტივობათა ჩამოტვირთვის დროს მოხდა შეცდომა",
     "No activities" : "აქტივობები არაა",
@@ -9,6 +8,7 @@ OC.L10N.register(
     "This stream will show events like additions, changes & shares" : "ამ ნაკადში ნაჩვენები იქნება შეტყობინებები ისეთი მოვლენების შესახებ, როგორებიცაა დამატება, ცვლილებები და გაზიარება",
     "There are no events for this filter" : "ამ ფილტრთან შესაბამისი მოვლენები არაა",
     "Today" : "დღეს",
+    "Activity" : "აქტივობა",
     "Personal activity feed for %s" : "პერსონალურ აქტივობათა ლენტი %s -თვის",
     "Your feed URL is invalid" : "სიახლეთა ლენტის URL არასწორია",
     "Your settings have been updated." : "პარამეტრები განახლებულია",

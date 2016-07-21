@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Toimet",
     "Activities" : "Toimet",
     "Error loading activities" : "Virhe ladatessa toimia",
     "No activities" : "Ei toimia",
@@ -14,6 +13,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Tällä suodattimella ei ole näytettäviä tapahtumia",
     "Today" : "Tänään",
     "Yesterday" : "Eilen",
+    "Activity" : "Toimet",
     "Personal activity feed for %s" : "Käyttäjän %s henkilökohtainen toimintasyöte",
     "Your feed URL is invalid" : "Syöteosoitteesi on virheellinen",
     "Your settings have been updated." : "Asetuksesi on päivitetty.",

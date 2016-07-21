@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Veikla",
     "Activities" : "Veiklos",
     "Error loading activities" : "Klaida įkeliant veiklas",
     "No activities" : "Nėra veiklų",
@@ -10,6 +9,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Nėra įvykių pasirinktam filtrui",
     "Today" : "Šiandien",
     "Yesterday" : "Vakar",
+    "Activity" : "Veikla",
     "Personal activity feed for %s" : "Asmeninis veiklos srautas skirtas %s",
     "Your feed URL is invalid" : "Atsiliepimo nuoroda neteisinga",
     "Your settings have been updated." : "Jūsų nustatymai buvo atnaujinti.",

@@ -1,12 +1,12 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Aktivita",
     ", " : ", ",
     "This stream will show events like additions, changes & shares" : "Tento dátový prúd bude zobrazovať udalosti ako pridanie, zmeny a zdieľanie",
     "There are no events for this filter" : "Pre tieto kritériá nie sú žiadne udalosti",
     "Today" : "Dnes",
     "Yesterday" : "Včera",
+    "Activity" : "Aktivita",
     "Personal activity feed for %s" : "Prehľad aktivít pre používateľa %s",
     "Your feed URL is invalid" : "Váš kanál URL je neplatný",
     "Your settings have been updated." : "Vaše nastavenia boli aktualizované.",

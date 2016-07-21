@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Activiteit",
     "Activities" : "Activiteiten",
     "Error loading activities" : "Fout bij laden activiteiten",
     "No activities" : "Geen activiteiten",
@@ -14,6 +13,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Er zijn geen afspraken voor dit filter",
     "Today" : "Vandaag",
     "Yesterday" : "Gisteren",
+    "Activity" : "Activiteit",
     "Personal activity feed for %s" : "Persoonlijk activiteitenkanaal voor %s",
     "Your feed URL is invalid" : "Uw feed URL is ongeldig",
     "Your settings have been updated." : "Uw instellingen zijn bijgewerkt",

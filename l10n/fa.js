@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "فعالیت",
     "Activities" : "فعالیت‌ها",
     "Error loading activities" : "خطا در بارگزاری فعالیت‌ها",
     "No activities" : "هیچ فعالیتی",
@@ -9,6 +8,7 @@ OC.L10N.register(
     "There are no events for this filter" : "هیچ رخدادی برای این فیلتر وجود ندارد",
     "Today" : "امروز",
     "Yesterday" : "دیروز",
+    "Activity" : "فعالیت",
     "Personal activity feed for %s" : "فعالیت شخصی فید برای %s",
     "Your feed URL is invalid" : "URL شما نامعتبر است",
     "Your settings have been updated." : "تنظیمات شما به روز رسانی شد",

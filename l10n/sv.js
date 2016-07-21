@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Aktivitet",
     "Activities" : "Aktiviteter",
     "Error loading activities" : "Fel vid inläsning av aktiviteter",
     "No activities" : "Inga aktiviteter",
@@ -13,6 +12,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Det finns inga händelser för detta filter",
     "Today" : "Idag",
     "Yesterday" : "Igår",
+    "Activity" : "Aktivitet",
     "Personal activity feed for %s" : "Personligt aktivitetsflöde för %s",
     "Your feed URL is invalid" : "URL:en för flödet är felaktig.",
     "Your settings have been updated." : "Dina inställningar har uppdaterats.",

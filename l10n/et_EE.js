@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Tegevused",
     "Activities" : "Tegevused",
     "Error loading activities" : "Viga tegevuste laadimisel",
     "No activities" : "Tegevusi pole",
@@ -11,6 +10,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Selle filtri jaoks pole ühtegi sündmust",
     "Today" : "Täna",
     "Yesterday" : "Eile",
+    "Activity" : "Tegevused",
     "Personal activity feed for %s" : "Isiklik toimingute voog %s",
     "Your feed URL is invalid" : "Sinu uudisvoo URL on vigane",
     "Your settings have been updated." : "Seaded on uuendatud.",

@@ -1,11 +1,11 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Aktivitéit",
     ", " : ", ",
     "This stream will show events like additions, changes & shares" : "Dëse Floss weist Evenementer wéi dobäigesaten, geännert a gedeelte Fichieren un",
     "There are no events for this filter" : "Et gi keng Evenenementer fir dëse Filter",
     "Today" : "Haut",
+    "Activity" : "Aktivitéit",
     "Personal activity feed for %s" : "Perséinlechen Aktivitéite-Feed fir %s",
     "Your feed URL is invalid" : "D'Feed-Adress ass ongëlteg",
     "Your settings have been updated." : "Deng Astellunge goufen aktualiséiert.",

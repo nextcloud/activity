@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Jarduera",
     "Activities" : "Jarduerak",
     "Error loading activities" : "Errorea jarduerak kargatzen",
     "No activities" : "Ez dago jarduerarik",
@@ -10,6 +9,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Ez dago ekitaldirik iragazki honetarako",
     "Today" : "Gaur",
     "Yesterday" : "Atzo",
+    "Activity" : "Jarduera",
     "Personal activity feed for %s" : "%sen jarduera jario pertsonala",
     "Your feed URL is invalid" : "Zure jarioaren URL-a ez da zuzena",
     "Your settings have been updated." : "Zure ezarpenak eguneratu dira.",

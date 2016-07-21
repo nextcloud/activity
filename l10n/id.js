@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Aktivitas",
     "Activities" : "Aktivitas",
     "Error loading activities" : "Kesalahan memuat aktivitas",
     "No activities" : "Tidak ada aktivitas",
@@ -10,6 +9,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Tidak ada agenda untuk penyaring ini",
     "Today" : "Hari Ini",
     "Yesterday" : "Kemarin",
+    "Activity" : "Aktivitas",
     "Personal activity feed for %s" : "Feed aktivitas pribadi untuk %s",
     "Your feed URL is invalid" : "URL feed Anda tidak sah",
     "Your settings have been updated." : "Pengaturan Anda telah diperbarui.",
