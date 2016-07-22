@@ -33,7 +33,7 @@ class RssTest extends TestCase{
 	public function dataEmpty() {
 		return [
 			['de', 'http://localhost', 'description', 'Fri, 28 Aug 2015 11:47:14 +0000'],
-			['en', 'http://owncloud.org', 'Desc', 'Fri, 28 Aug 2015 11:47:15 +0000'],
+			['en', 'http://nextcloud.org', 'Desc', 'Fri, 28 Aug 2015 11:47:15 +0000'],
 		];
 	}
 
@@ -43,7 +43,6 @@ class RssTest extends TestCase{
 	 * @param string $language
 	 * @param string $link
 	 * @param string $description
-	 * @param int $timeStamp
 	 * @param string $timeDate
 	 */
 	public function testEmpty($language, $link, $description, $timeDate) {
@@ -85,24 +84,24 @@ class RssTest extends TestCase{
 			],
 			[
 				[
-					['activity_id' => 42, 'subject' => 'text', 'subject_prepared' => '<no>html</no>', 'link' => 'http://doc.owncloud.org', 'timestamp' => 21, 'message' => 'text2', 'message_prepared' => '<no2>html</no2>'],
+					['activity_id' => 42, 'subject' => 'text', 'subject_prepared' => '<no>html</no>', 'link' => 'http://docs.nextcloud.org', 'timestamp' => 21, 'message' => 'text2', 'message_prepared' => '<no2>html</no2>'],
 				],
 				'		<item>'
 				. "\n" . '			<guid isPermaLink="false">42</guid>'
 				. "\n" . '			<title>&lt;no&gt;html&lt;/no&gt;</title>'
-				. "\n" . '			<link>http://doc.owncloud.org</link>'
+				. "\n" . '			<link>http://docs.nextcloud.org</link>'
 				. "\n" . '			<pubDate>Thu, 01 Jan 1970 00:00:21 +0000</pubDate>'
 				. "\n" . '			<description><![CDATA[&lt;no2&gt;html&lt;/no2&gt;]]></description>'
 				. "\n" . '		</item>',
 			],
 			[
 				[
-					['activity_id' => 42, 'subject' => 'text', 'subject_prepared' => "line\nbreak", 'link' => 'http://doc.owncloud.org', 'timestamp' => 21, 'message' => 'text2', 'message_prepared' => "line2\nbreak2"],
+					['activity_id' => 42, 'subject' => 'text', 'subject_prepared' => "line\nbreak", 'link' => 'http://docs.nextcloud.org', 'timestamp' => 21, 'message' => 'text2', 'message_prepared' => "line2\nbreak2"],
 				],
 				'		<item>'
 				. "\n" . '			<guid isPermaLink="false">42</guid>'
 				. "\n" . '			<title>line break</title>'
-				. "\n" . '			<link>http://doc.owncloud.org</link>'
+				. "\n" . '			<link>http://docs.nextcloud.org</link>'
 				. "\n" . '			<pubDate>Thu, 01 Jan 1970 00:00:21 +0000</pubDate>'
 				. "\n" . '			<description><![CDATA[line2<br />break2]]></description>'
 				. "\n" . '		</item>',
@@ -119,7 +118,7 @@ class RssTest extends TestCase{
 	public function testContent(array $activities, $expected) {
 		$template = new TemplateResponse('activity', 'rss', [
 			'rssLang'		=> 'en',
-			'rssLink'		=> 'http://owncloud.org',
+			'rssLink'		=> 'http://nextcloud.org',
 			'rssPubDate'	=> 'Fri, 28 Aug 2015 11:47:15 +0000',
 			'description'	=> 'Desc',
 			'activities'	=> $activities,
@@ -131,11 +130,11 @@ class RssTest extends TestCase{
 			. "\n" . '	<channel>'
 			. "\n" . '		<title>Activity feed</title>'
 			. "\n" . '		<language>en</language>'
-			. "\n" . '		<link>http://owncloud.org</link>'
+			. "\n" . '		<link>http://nextcloud.org</link>'
 			. "\n" . '		<description>Desc</description>'
 			. "\n" . '		<pubDate>Fri, 28 Aug 2015 11:47:15 +0000</pubDate>'
 			. "\n" . '		<lastBuildDate>Fri, 28 Aug 2015 11:47:15 +0000</lastBuildDate>'
-			. "\n" . '		<atom:link href="http://owncloud.org" rel="self" type="application/rss+xml" />'
+			. "\n" . '		<atom:link href="http://nextcloud.org" rel="self" type="application/rss+xml" />'
 			. "\n";
 		$suffixStub = "\n" . '	</channel>'
 			. "\n" . '</rss>' . "\n";

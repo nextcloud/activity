@@ -7,7 +7,7 @@ print_unescaped($l->t('Hello %s,', array($_['username'])));
 p("\n");
 p("\n");
 
-print_unescaped($l->t('You are receiving this email because the following things happened at %s', array($_['owncloud_installation'])));
+print_unescaped($l->t('You are receiving this email because the following things happened at %s', array($_['installation'])));
 p("\n");
 p("\n");
 
