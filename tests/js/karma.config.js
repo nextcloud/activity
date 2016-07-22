@@ -40,27 +40,27 @@ module.exports = function(config) {
 	];
 
 	var basePath = '../../';
-	var ownCloudPath = '../../';
+	var instancePath = '../../';
 
-	var coreModules = require(ownCloudPath + '../../core/js/core.json');
+	var coreModules = require(instancePath + '../../core/js/core.json');
 	var coreLibs = [
-		ownCloudPath + 'core/js/tests/lib/sinon-1.15.4.js',
-		ownCloudPath + 'core/js/tests/specHelper.js'
+		instancePath + 'core/js/tests/lib/sinon-1.15.4.js',
+		instancePath + 'core/js/tests/specHelper.js'
 	];
 
 	coreLibs = coreLibs.concat(coreModules.vendor.map(function prependPath(path) {
-		return ownCloudPath + 'core/vendor/' + path;
+		return instancePath + 'core/vendor/' + path;
 	}));
 
 	coreLibs = coreLibs.concat(coreModules.modules.map(function prependPath(path) {
-		return ownCloudPath + 'core/js/' + path;
+		return instancePath + 'core/js/' + path;
 	}));
 
 	var filesAppFiles = [
 		'fileinfomodel.js',
 		'detailtabview.js'
 	].map(function prependPath(path) {
-		return ownCloudPath + 'apps/files/js/' + path;
+		return instancePath + 'apps/files/js/' + path;
 	});
 
 	var files = [].concat(coreLibs, filesAppFiles, srcFiles, testFiles);
