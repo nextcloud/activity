@@ -73,7 +73,7 @@ Field name | Type | Value description
 `message` | string (Optional) | Untranslated arbitrary message (unused by core apps)
 `messageparams` | array | See `subjectparams`
 `message_prepared` | string | Translated version of the message with parameters included (See section `MarkUp`)
-`link` | string (Optional) | A full URL pointing to a suitable location (e.g. `'http://localhost/ownCloud/master/core/index.php/apps/files/?dir=%2Ffolder'` in case the folder got created)
+`link` | string (Optional) | A full URL pointing to a suitable location (e.g. `'http://localhost/cloud/master/core/index.php/apps/files/?dir=%2Ffolder'` in case the folder got created)
 `object_type` | string (Optional) | Type of the object this activity is about (e.g. `'files'` is used for files and folders)
 `object_id` | int (Optional) | ID of the object this activity is about (e.g. ID in the file cache is used for files and folders)
 `object_name` | string (Optional) | Name of the object this activity is about (e.g. for files it's the relative path to the user's root: `'/folder/.travis.yml'`)
