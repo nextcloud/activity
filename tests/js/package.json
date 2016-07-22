@@ -1,14 +1,14 @@
 {
-	"name": "owncloud-activity",
-	"description": "ownCloud Activity App",
+	"name": "nextcloud-activity",
+	"description": "Nextcloud Activity App",
 	"version": "0.0.1",
 	"private": true,
-	"homepage": "https://github.com/owncloud/activity",
+	"homepage": "https://github.com/nextcloud/activity",
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:owncloud/activity.git"
+		"url": "git@github.com:nextcloud/activity.git"
 	},
-	"bugs": "https://github.com/owncloud/activity/issues",
+	"bugs": "https://github.com/nextcloud/activity/issues",
 	"contributors": [],
 	"dependencies": {},
 	"devDependencies": {
