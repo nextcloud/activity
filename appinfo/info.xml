@@ -15,7 +15,7 @@
 	<licence>AGPL</licence>
 	<author>Frank Karlitschek, Joas Schilling</author>
 	<shipped>true</shipped>
-	<version>2.3.2</version>
+	<version>2.4.0</version>
 	<default_enable/>
 	<types>
 		<filesystem/>
@@ -29,7 +29,7 @@
     	<repository type="git">https://github.com/owncloud/activity.git</repository>
 
 	<dependencies>
-		<owncloud min-version="9.1" max-version="9.1" />
+		<owncloud min-version="9.2" max-version="9.2" />
 	</dependencies>
 
 	<background-jobs>
