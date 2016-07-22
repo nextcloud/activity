@@ -252,7 +252,7 @@ class MailQueueHandler {
 		$alttext->assign('username', $user->getDisplayName());
 		$alttext->assign('activities', $activityList);
 		$alttext->assign('skippedCount', $skippedCount);
-		$alttext->assign('owncloud_installation', $this->urlGenerator->getAbsoluteURL('/'));
+		$alttext->assign('installation', $this->urlGenerator->getAbsoluteURL('/'));
 		$alttext->assign('overwriteL10N', $l);
 		$emailText = $alttext->fetchPage();
 
