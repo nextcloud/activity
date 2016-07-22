@@ -1,7 +1,7 @@
 <!--
-Thanks for reporting issues back to ownCloud! This is the issue tracker of ownCloud, if you have any support question please check out https://owncloud.org/support
+Thanks for reporting issues back to Nextcloud! This is the issue tracker of the Nextcloud Activity App, if you have any support question please check out https://help.nextcloud.com/
 
-This is the bug tracker for the Activity App. Find other components at https://github.com/owncloud/core/blob/master/CONTRIBUTING.md#guidelines
+This is the bug tracker for the Activity App. Find other components at https://github.com/nextcloud/core/blob/master/CONTRIBUTING.md#guidelines
 
 To make it possible for us to help you please fill out below information carefully.
 --> 
@@ -25,14 +25,14 @@ Tell us what happens instead
 
 **PHP version:**
 
-**ownCloud version:** (see ownCloud admin page)
+**Nextcloud version:** (see Nextcloud admin page)
 
-**Where did you install ownCloud from:**
+**Where did you install Nextcloud from:**
 
-**Signing status (ownCloud 9.0 and above):**
+**Signing status:**
 
 ```
-Login as admin user into your ownCloud and access 
+Login as admin user into your Nextcloud and access
 http://example.com/index.php/settings/integrity/failed 
 paste the results here.
 ```
@@ -42,7 +42,7 @@ paste the results here.
 ```
 If you have access to your command line run e.g.:
 sudo -u www-data php occ app:list
-from within your ownCloud installation folder
+from within your Nextcloud installation folder
 ```
 
 **The content of config/config.php:**
@@ -50,17 +50,13 @@ from within your ownCloud installation folder
 ```
 If you have access to your command line run e.g.:
 sudo -u www-data php occ config:list system
-from within your ownCloud installation folder
+from within your Nextcloud installation folder
 
 or 
 
 Insert your config.php content here
 (Without the database password, passwordsalt and secret)
 ```
-
-**Are you using external storage, if yes which one:** local/smb/sftp/...
-
-**Are you using encryption:** yes/no
 
 **Are you using an external user-backend, if yes which one:** LDAP/ActiveDirectory/Webdav/...
 
@@ -71,9 +67,9 @@ Insert your config.php content here
 
 ### Logs
 
-#### ownCloud log (data/owncloud.log)
+#### Nextcloud log (data/nextcloud.log)
 ```
-Insert your ownCloud log here
+Insert your Nextcloud log here
 ```
 
 #### Browser log
