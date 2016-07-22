@@ -1,29 +1,27 @@
 <?php
-
 /**
- * ownCloud - Activity App
+ * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
- * @author Frank Karlitschek
- * @copyright 2013 Frank Karlitschek frank@owncloud.org
+ * @author Jan-Christoph Borchardt <hey@jancborchardt.net>
+ * @author Joas Schilling <coding@schilljs.com>
+ * @author Thomas Müller <thomas.mueller@tmit.eu>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or any later version.
+ * @license GNU AGPL version 3 or any later version
  *
- * This library is distributed in the hope that it will be useful,
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU AFFERO GENERAL PUBLIC LICENSE for more details.
+ * GNU Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public
- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-/** @var $l OC_L10N */
-/** @var $theme OC_Defaults */
-/** @var $_ array */
 script('activity', [
 	'formatter',
 	'script'
