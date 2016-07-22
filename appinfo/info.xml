@@ -3,7 +3,7 @@
 	<id>activity</id>
 	<name>Activity</name>
 	<description>
-		This application enables users to view actions related to their files in ownCloud.
+		This application enables users to view actions related to their files in Nextcloud.
 		Once enabled, users will see a new icon “Activity” in their apps menu.
 		When clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.
 		The user can configure their individual activity settings in their personal menu.
@@ -22,11 +22,11 @@
 	</types>
 
 	<documentation>
-		<admin>https://doc.owncloud.org/server/9.1/admin_manual/configuration_server/activity_configuration.html</admin>
-    	</documentation>
-	<website>https://github.com/owncloud/activity/</website>
-    	<bugs>https://github.com/owncloud/activity/issues</bugs>
-    	<repository type="git">https://github.com/owncloud/activity.git</repository>
+		<admin>https://docs.nextcloud.org/server/10/admin_manual/configuration_server/activity_configuration.html</admin>
+	</documentation>
+	<website>https://github.com/nextcloud/activity/</website>
+	<bugs>https://github.com/nextcloud/activity/issues</bugs>
+	<repository type="git">https://github.com/nextcloud/activity.git</repository>
 
 	<dependencies>
 		<owncloud min-version="9.1" max-version="9.1" />

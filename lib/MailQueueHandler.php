@@ -1,8 +1,10 @@
 <?php
 /**
- * @author Joas Schilling <nickvergessen@owncloud.com>
- *
  * @copyright Copyright (c) 2016, ownCloud, Inc.
+ *
+ * @author Joas Schilling <coding@schilljs.com>
+ * @author Lukas Reschke <lukas@statuscode.ch>
+ *
  * @license AGPL-3.0
  *
  * This code is free software: you can redistribute it and/or modify
@@ -252,7 +254,7 @@ class MailQueueHandler {
 		$alttext->assign('username', $user->getDisplayName());
 		$alttext->assign('activities', $activityList);
 		$alttext->assign('skippedCount', $skippedCount);
-		$alttext->assign('owncloud_installation', $this->urlGenerator->getAbsoluteURL('/'));
+		$alttext->assign('installation', $this->urlGenerator->getAbsoluteURL('/'));
 		$alttext->assign('overwriteL10N', $l);
 		$emailText = $alttext->fetchPage();
 
