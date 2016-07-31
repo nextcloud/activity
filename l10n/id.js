@@ -7,6 +7,7 @@ OC.L10N.register(
     "Load more activities" : "Muat aktivitas lainnya",
     ", " : ", ",
     "{parameterList} and {lastParameter}" : "{parameterList} dan {lastParameter}",
+    "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} dan {linkStart}%n lagi{linkEnd}"],
     "in {directory}" : "di {directory}",
     "This stream will show events like additions, changes & shares" : "Stream ini akan menampilkan agenda seperti penambahan, perubahan & berbagi",
     "There are no events for this filter" : "Tidak ada agenda untuk penyaring ini",
