@@ -26,6 +26,7 @@
     "Hello %s," : "Привет, %s,",
     "You are receiving this email because the following things happened at %s" : "Вы получили это электронное сообщение, потому что произошли следующие события %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* и на %n больше","* и на %n больше","* и на %n больше","* и на %n больше"],
     "List your own file actions in the stream" : "Список ваших собственных действий файлов в потоке",
     "Notify about your own actions via email" : "Уведомлять о моих действиях по email",
     "You need to set up your email address before you can receive notification emails." : "Для получения уведомлений укажите свой e-mail в настройках.",
