@@ -166,7 +166,11 @@
 		_postRenderItem: function($el) {
 			$el.find('.avatar').each(function() {
 				var element = $(this);
-				element.avatar(element.data('user'), 28);
+				if (element.data('user-display-name')) {
+					element.avatar(element.data('user'), 28, undefined, false, undefined, element.data('user-display-name'));
+				} else {
+					element.avatar(element.data('user'), 28);
+				}
 			});
 			$el.find('.has-tooltip').tooltip({
 				placement: 'bottom'
