@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Activité",
-    "Error loading activities" : "Erreur au chargement de l'activité",
+    "Activities" : "Activités",
+    "Error loading activities" : "Erreur au chargement des activités",
     "No activities" : "Aucune activité",
     "Load more activities" : "Charger plus d'activités",
     ", " : ", ",
@@ -11,7 +11,7 @@ OC.L10N.register(
     "in {directory}" : "dans {directory}",
     "This stream will show events like additions, changes & shares" : "Ce flux liste les événements tels que les ajouts, les modifications et les partages",
     "There are no events for this filter" : "Il n'y a pas d'événement pour ce filtre",
-    "Today" : "Auj.",
+    "Today" : "Aujourd'hui",
     "Yesterday" : "Hier",
     "Activity" : "Activité",
     "Personal activity feed for %s" : "Flux d'activité personnel de %s",
@@ -23,7 +23,7 @@ OC.L10N.register(
     "Activity notification" : "Notification d'activité",
     "All Activities" : "Toutes activités",
     "Activities by you" : "Vos activités",
-    "Activities by others" : "L'activité des autres",
+    "Activities by others" : "Activités des autres",
     "%s and %s" : "%s et %s",
     "Hello %s," : "Bonjour %s,",
     "You are receiving this email because the following things happened at %s" : "Vous recevez ce message car l'activité suivante a eu lieu sur %s",
