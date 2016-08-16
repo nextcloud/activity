@@ -87,6 +87,14 @@ class FilesHooksStatic {
 	}
 
 	/**
+	 * Manage share download events
+	 * @param array $params The hook params
+	 */
+	public static function downloadedShare($params) {
+		self::getHooks()->downloadedShare($params);
+	}
+
+	/**
 	 * Load additional scripts when the files app is visible
 	 */
 	public static function onLoadFilesAppScripts() {

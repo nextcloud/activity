@@ -112,6 +112,8 @@ class Application extends App {
 		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', FilesHooksStatic::class, 'fileRestore');
 		Util::connectHook('OCP\Share', 'post_shared', FilesHooksStatic::class, 'share');
 		Util::connectHook('OCP\Share', 'pre_unshare', FilesHooksStatic::class, 'unShare');
+		Util::connectHook('\OC\Files\Storage\Shared', 'fopen', FilesHooksStatic::class, 'downloadedShare');
+		Util::connectHook('\OC\Files\Storage\Shared', 'file_get_contents', FilesHooksStatic::class, 'downloadedShare');
 	}
 
 	/**

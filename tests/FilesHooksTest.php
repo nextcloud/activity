@@ -50,6 +50,8 @@ class FilesHooksTest extends TestCase {
 	protected $view;
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\IURLGenerator */
 	protected $urlGenerator;
+	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\IRequest */
+	protected $request;
 
 	protected function setUp() {
 		parent::setUp();
@@ -73,6 +75,9 @@ class FilesHooksTest extends TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 		$this->urlGenerator = $this->getMockBuilder('OCP\IURLGenerator')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->request = $this->getMockBuilder('OCP\IRequest')
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -106,6 +111,7 @@ class FilesHooksTest extends TestCase {
 					\OC::$server->getDatabaseConnection(),
 					$this->urlGenerator,
 					$currentUser,
+					$this->request,
 				])
 				->setMethods($mockedMethods)
 				->getMock();
@@ -118,7 +124,8 @@ class FilesHooksTest extends TestCase {
 				$this->view,
 				\OC::$server->getDatabaseConnection(),
 				$this->urlGenerator,
-				$currentUser
+				$currentUser,
+				$this->request
 			);
 		}
 	}
@@ -344,6 +351,57 @@ class FilesHooksTest extends TestCase {
 			'itemType' => 'file',
 			'uidOwner' => 'admin',
 		]);
+	}
+
+
+	public function dataDownloadedShare() {
+		return [
+			[['target' => '/path.txt']],
+		];
+	}
+
+	/**
+	 * @dataProvider dataDownloadedShare
+	 *
+	 * @param array $params The hook params
+	 * @param string $ownerPath translated path to the owner
+	 */
+	public function testDownloadedShare($params) {
+		$fileId = 303909;
+		$filePath = $params['target'];
+		$uidOwner = 'owner';
+		$ownerPath = $uidOwner . $filePath;
+		$filesHooks = $this->getFilesHooks(['getSourcePathAndOwner', 'addNotificationsForUser',]);
+
+		$filesHooks->expects($this->once())
+				   ->method('getSourcePathAndOwner')
+				   ->with($filePath)
+				   ->willReturn([$ownerPath, $uidOwner, $fileId]);
+
+		$this->settings->expects($this->exactly(3))
+					   ->method('getUserSetting')
+					   ->willReturnMap(
+						   [
+							   [$uidOwner, 'stream', Files_Sharing::TYPE_SHARED, true],
+							   [$uidOwner, 'email', Files_Sharing::TYPE_SHARED, true],
+							   [$uidOwner, 'setting', 'batchtime', 42],
+						   ]
+					   );
+
+		$filesHooks->expects($this->once())
+				   ->method('addNotificationsForUser')
+				   ->with(
+					   $uidOwner,
+					   'shared_file_downloaded',
+					   [[$fileId => $ownerPath], 'user'],
+					   $fileId,
+					   $ownerPath,
+					   true,
+					   true,
+					   42
+				   );
+
+		$this->invokePrivate($filesHooks, 'downloadedShare', [$params]);
 	}
 
 	public function dataShareFileOrFolderWithUser() {
@@ -818,17 +876,17 @@ class FilesHooksTest extends TestCase {
 
 	public function dataAddNotificationsForUser() {
 		return [
-			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files_Sharing::TYPE_SHARED, false, false, 'files_sharing', false, false],
-			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files_Sharing::TYPE_SHARED, true, false, 'files_sharing', true, false],
-			['notAuthor', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files::TYPE_SHARE_CREATED, false, false, 'files', true, false],
-			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, true, false, Files::TYPE_SHARE_CREATED, false, false, 'files', true, false],
+			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files_Sharing::TYPE_SHARED, false, false, 'files_sharing', false, false, 'Web'],
+			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files_Sharing::TYPE_SHARED, true, false, 'files_sharing', true, false, 'Web'],
+			['notAuthor', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files::TYPE_SHARE_CREATED, false, false, 'files', true, false, 'Web'],
+			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, true, false, Files::TYPE_SHARE_CREATED, false, false, 'files', true, false, 'Web', 'Web'],
 
-			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files_Sharing::TYPE_SHARED, false, false, 'files_sharing', false, false],
-			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files_Sharing::TYPE_SHARED, false, true, 'files_sharing', false, true],
-			['notAuthor', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
-			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
-			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
-			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath','path/subpath', false, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
+			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files_Sharing::TYPE_SHARED, false, false, 'files_sharing', false, false, 'Web'],
+			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files_Sharing::TYPE_SHARED, false, true, 'files_sharing', false, true, 'Web'],
+			['notAuthor', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true, 'Web'],
+			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true, 'Web'],
+			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true, 'Web'],
+			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath','path/subpath', false, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true, 'Web'],
 		];
 	}
 
@@ -850,8 +908,9 @@ class FilesHooksTest extends TestCase {
 	 * @param string $app
 	 * @param bool $sentStream
 	 * @param bool $sentEmail
+	 * @param string $client
 	 */
-	public function testAddNotificationsForUser($user, $subject, $parameter, $fileId, $path, $urlPath, $isFile, $stream, $email, $type, $selfSetting, $selfEmailSetting, $app, $sentStream, $sentEmail) {
+	public function testAddNotificationsForUser($user, $subject, $parameter, $fileId, $path, $urlPath, $isFile, $stream, $email, $type, $selfSetting, $selfEmailSetting, $app, $sentStream, $sentEmail, $client) {
 		$this->settings->expects($this->any())
 			->method('getUserSetting')
 			->willReturnMap([
@@ -886,9 +945,11 @@ class FilesHooksTest extends TestCase {
 		$event->expects($this->once())
 			->method('setTimestamp')
 			->willReturnSelf();
+		$parameterWithClient = $parameter;
+		$parameterWithClient[] = $client;
 		$event->expects($this->once())
 			->method('setSubject')
-			->with($subject, $parameter)
+			->with($subject, $parameterWithClient)
 			->willReturnSelf();
 		$event->expects($this->once())
 			->method('setLink')
