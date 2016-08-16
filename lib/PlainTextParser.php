@@ -118,7 +118,8 @@ class PlainTextParser {
 	 */
 	protected function parseUserParameters($message) {
 		return preg_replace_callback('/<user\ display\-name=\"(.*?)\">(.*?)<\/user>/', function($match) {
-			return $match[1];
+			// We don't want HTML to work, but quote signs are okay.
+			return str_replace('&quot;', '"', $match[1]);
 		}, $message);
 	}
 
