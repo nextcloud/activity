@@ -149,6 +149,11 @@ class FilesHooks {
 		}
 
 		list($filePath, $uidOwner, $fileId) = $this->getSourcePathAndOwner($filePath);
+		if ($fileId === 0) {
+			// Could not find the file for the owner ...
+			return;
+		}
+
 		$affectedUsers = $this->getUserPathsFromPath($filePath, $uidOwner);
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
@@ -194,12 +199,22 @@ class FilesHooks {
 	 * @return array
 	 */
 	protected function getSourcePathAndOwner($path) {
-		$uidOwner = Filesystem::getOwner($path);
+		$view = Filesystem::getView();
+		$uidOwner = $view->getOwner($path);
 		$fileId = 0;
 
 		if ($uidOwner !== $this->currentUser) {
-			Filesystem::initMountPoints($uidOwner);
+			/** @var \OCP\Files\Storage\IStorage $storage */
+			list($storage,) = $view->resolvePath($path);
+			if (!$storage->instanceOfStorage('OCA\Files_Sharing\External\Storage')) {
+				Filesystem::initMountPoints($uidOwner);
+			} else {
+				// Probably a remote user, let's try to at least generate activities
+				// for the current user
+				$uidOwner = $this->currentUser;
+			}
 		}
+
 		$info = Filesystem::getFileInfo($path);
 		if ($info !== false) {
 			$ownerView = new View('/' . $uidOwner . '/files');
