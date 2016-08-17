@@ -128,7 +128,7 @@ class Factory {
 		if ($formatter === 'file') {
 			return new FileFormatter($this->infoCache, $this->urlGenerator, $this->l, $this->user);
 		} else if ($formatter === 'username') {
-			return new UserFormatter($this->userManager, $this->l);
+			return new UserFormatter($this->userManager, $this->l, new CloudIDFormatter($this->contactsManager));
 		} else if ($formatter === 'federated_cloud_id') {
 			return new CloudIDFormatter($this->contactsManager);
 		} else {
