@@ -66,7 +66,7 @@ foreach ($notificationTypes as $type => $data) {
 	}
 }
  */
-$deleteNotificationTypes[] = 'notify_stream_comments';
+// Disable due to https://github.com/nextcloud/server/pull/903: $deleteNotificationTypes[] = 'notify_stream_comments';
 $deleteNotificationTypes[] = 'notify_email_files_favorites';
 
 if (!empty($deleteNotificationTypes)) {
