@@ -139,7 +139,7 @@ class CollectionTest extends TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 		$parameter1->expects($this->atLeastOnce())
-			->method('getParameter')
+			->method('getParameterInfo')
 			->willReturn('One');
 
 		/** @var \OCA\Activity\Parameter\IParameter|\PHPUnit_Framework_MockObject_MockObject $parameter2 */
@@ -147,7 +147,7 @@ class CollectionTest extends TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 		$parameter2->expects($this->atLeastOnce())
-			->method('getParameter')
+			->method('getParameterInfo')
 			->willReturn('Two');
 
 		$this->assertCount(0, $this->invokePrivate($collection, 'parameters'));
