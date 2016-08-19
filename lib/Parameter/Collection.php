@@ -50,7 +50,7 @@ class Collection implements IParameter {
 	 */
 	public function addParameter(IParameter $parameter) {
 		foreach ($this->parameters as $existingParameter) {
-			if ($existingParameter->getParameter() === $parameter->getParameter()) {
+			if ($existingParameter->getParameterInfo() === $parameter->getParameterInfo()) {
 				return;
 			}
 		}

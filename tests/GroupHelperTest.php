@@ -544,6 +544,7 @@ class GroupHelperTest extends TestCase {
 					'user' => 'user1',
 					'subject' => 'subject1',
 					'object_type' => 'object_type1',
+					'subjectparams' => ['foo', 'bar'],
 				], false, false
 			],
 			[
@@ -552,6 +553,7 @@ class GroupHelperTest extends TestCase {
 					'user' => '',
 					'subject' => 'subject1',
 					'object_type' => 'object_type1',
+					'subjectparams' => ['foo', 'bar'],
 				], 0, false
 			],
 			[
@@ -560,7 +562,8 @@ class GroupHelperTest extends TestCase {
 					'user' => 'user1',
 					'subject' => 'subject1',
 					'object_type' => 'object_type1',
-				], 1, 'app1|user1|subject1|object_type1'
+					'subjectparams' => json_encode(['foo', 'bar']),
+				], 1, 'app1|user1|subject1|object_type1|' . md5(json_encode(['foo']))
 			],
 		];
 	}
