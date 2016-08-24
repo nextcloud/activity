@@ -41,9 +41,6 @@ use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\App;
 use OCP\AppFramework\IAppContainer;
 use OCP\IContainer;
-use OCP\IUser;
-use OCP\Share;
-use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Util;
 
 class Application extends App {
@@ -175,28 +172,9 @@ class Application extends App {
 		 * Core Services
 		 */
 		$container->registerService('CurrentUID', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			$user = $server->getUserSession()->getUser();
-			if ($user instanceof IUser) {
-				return (string) $user->getUID();
-			}
-
-			$request = $server->getRequest();
-			if (!empty($request->server['PHP_AUTH_USER'])) {
-				$token = $request->server['PHP_AUTH_USER'];
-				try {
-					$share = $server->getShareManager()->getShareByToken($token);
-					if ($share->getShareType() === Share::SHARE_TYPE_REMOTE) {
-						return $share->getSharedWith();
-					}
-				} catch (ShareNotFound $e) {
-					// No share, use the fallback
-				}
-			}
-
-			return '';
+			/** @var \OCA\Activity\CurrentUser $currentUser */
+			$currentUser = $c->query('OCA\Activity\CurrentUser');
+			return $currentUser->getUserIdentifier();
 		});
 
 		/**
