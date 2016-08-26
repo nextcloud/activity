@@ -46,7 +46,7 @@ class Api
 
 		$activities = $data->get(
 			$app->getContainer()->query('GroupHelper'),
-			$app->getContainer()->query('UserSettings'),
+			$app->getContainer()->query('OCA\Activity\UserSettings'),
 			$user, $start, $count, 'desc', 'all'
 		);
 		$parser = new PlainTextParser(\OC::$server->getL10NFactory()->get('activity'));

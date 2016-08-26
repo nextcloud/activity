@@ -57,7 +57,7 @@ class Application extends App {
 
 			return new Consumer(
 				$c->query('OCA\Activity\Data'),
-				$c->query('UserSettings'),
+				$c->query('OCA\Activity\UserSettings'),
 				$server->getL10NFactory()
 			);
 		});
@@ -104,7 +104,7 @@ class Application extends App {
 			return new FilesHooks(
 				$server->getActivityManager(),
 				$c->query('OCA\Activity\Data'),
-				$c->query('UserSettings'),
+				$c->query('OCA\Activity\UserSettings'),
 				$server->getGroupManager(),
 				new View(''),
 				$server->getDatabaseConnection(),
@@ -142,16 +142,6 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('UserSettings', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-			return new UserSettings(
-				$server->getActivityManager(),
-				$server->getConfig(),
-				$c->query('OCA\Activity\Data')
-			);
-		});
-
 		$container->registerService('OCA\Activity\ViewInfoCache', function() {
 			return new ViewInfoCache(
 				new View('')
@@ -181,7 +171,7 @@ class Application extends App {
 				$server->getSecureRandom()->getMediumStrengthGenerator(),
 				$server->getURLGenerator(),
 				$c->query('OCA\Activity\Data'),
-				$c->query('UserSettings'),
+				$c->query('OCA\Activity\UserSettings'),
 				$c->query('OCP\IL10N'),
 				$c->query('CurrentUID')
 			);
@@ -194,7 +184,7 @@ class Application extends App {
 			return new OCSEndPoint(
 				$c->query('OCA\Activity\Data'),
 				$c->query('GroupHelper'),
-				$c->query('UserSettings'),
+				$c->query('OCA\Activity\UserSettings'),
 				$server->getRequest(),
 				$server->getURLGenerator(),
 				$server->getUserSession(),
@@ -238,7 +228,7 @@ class Application extends App {
 				$server->getRequest(),
 				$c->query('OCA\Activity\Data'),
 				$c->query('GroupHelperSingleEntries'),
-				$c->query('UserSettings'),
+				$c->query('OCA\Activity\UserSettings'),
 				$server->getURLGenerator(),
 				$server->getActivityManager(),
 				$server->getL10NFactory(),

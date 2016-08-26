@@ -60,7 +60,7 @@ class ApplicationTest extends TestCase {
 			array('Hooks', 'OCA\Activity\FilesHooks'),
 			array('MailQueueHandler', 'OCA\Activity\MailQueueHandler'),
 			array('Navigation', 'OCA\Activity\Navigation'),
-			array('UserSettings', 'OCA\Activity\UserSettings'),
+			array('OCA\Activity\UserSettings', 'OCA\Activity\UserSettings'),
 			array('SettingsController', 'OCP\AppFramework\Controller'),
 			array('ActivitiesController', 'OCP\AppFramework\Controller'),
 			array('FeedController', 'OCP\AppFramework\Controller'),
