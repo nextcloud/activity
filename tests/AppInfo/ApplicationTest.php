@@ -52,6 +52,7 @@ class ApplicationTest extends TestCase {
 	public function queryData() {
 		return array(
 			array('OCP\IL10N', 'OCP\IL10N'),
+			array('OC\Files\View', 'OC\Files\View'),
 
 			array('OCA\Activity\Data', 'OCA\Activity\Data'),
 			array('OCA\Activity\Consumer', 'OCA\Activity\Consumer'),

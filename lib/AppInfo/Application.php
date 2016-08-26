@@ -89,15 +89,12 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('OCA\Activity\ViewInfoCache', function() {
-			return new ViewInfoCache(
-				new View('')
-			);
-		});
-
 		/**
 		 * Core Services
 		 */
+		$container->registerService('OC\Files\View', function() {
+			return new View('');
+		}, false);
 		$container->registerService('CurrentUID', function(IContainer $c) {
 			/** @var \OCA\Activity\CurrentUser $currentUser */
 			$currentUser = $c->query('OCA\Activity\CurrentUser');
