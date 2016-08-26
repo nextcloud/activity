@@ -24,8 +24,6 @@ namespace OCA\Activity\AppInfo;
 
 use OC\Files\View;
 use OCA\Activity\FilesHooks;
-use OCA\Activity\Navigation;
-use OCA\Activity\Parameter\Factory;
 use OCP\AppFramework\App;
 use OCP\IContainer;
 use OCP\Util;
@@ -51,20 +49,6 @@ class Application extends App {
 				$server->getDatabaseConnection(),
 				$server->getURLGenerator(),
 				$c->query('CurrentUID')
-			);
-		});
-
-		$container->registerService('OCA\Activity\Navigation', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-			$rssToken = ($c->query('CurrentUID') !== '') ? $server->getConfig()->getUserValue($c->query('CurrentUID'), 'activity', 'rsstoken') : '';
-
-			return new Navigation(
-				$c->query('OCP\IL10N'),
-				$server->getActivityManager(),
-				$server->getURLGenerator(),
-				$c->query('CurrentUID'),
-				$rssToken
 			);
 		});
 

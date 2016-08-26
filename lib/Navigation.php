@@ -25,6 +25,7 @@ namespace OCA\Activity;
 
 
 use OCP\Activity\IManager;
+use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\Template;
@@ -44,14 +45,11 @@ class Navigation {
 	/** @var IURLGenerator */
 	protected $URLGenerator;
 
-	/** @var string */
-	protected $active;
+	/** @var IConfig */
+	protected $config;
 
-	/** @var string */
-	protected $user;
-
-	/** @var string */
-	protected $rssLink;
+	/** @var CurrentUser */
+	protected $currentUser;
 
 	/**
 	 * Construct
@@ -59,27 +57,19 @@ class Navigation {
 	 * @param IL10N $l
 	 * @param IManager $manager
 	 * @param IURLGenerator $URLGenerator
-	 * @param string $user
-	 * @param string $rssToken
-	 * @param null|string $active Navigation entry that should be marked as active
+	 * @param IConfig $config
+	 * @param CurrentUser $currentUser
 	 */
 	public function __construct(IL10N $l,
 								IManager $manager,
 								IURLGenerator $URLGenerator,
-								$user,
-								$rssToken,
-								$active = 'all') {
+								IConfig $config,
+								CurrentUser $currentUser) {
 		$this->l = $l;
 		$this->activityManager = $manager;
 		$this->URLGenerator = $URLGenerator;
-		$this->user = $user;
-		$this->active = $active;
-
-		if ($rssToken) {
-			$this->rssLink = $this->URLGenerator->linkToRouteAbsolute('activity.Feed.show', array('token' => $rssToken));
-		} else {
-			$this->rssLink = '';
-		}
+		$this->config = $config;
+		$this->currentUser = $currentUser;
 	}
 
 	/**
@@ -88,8 +78,8 @@ class Navigation {
 	 * @param null|string $forceActive Navigation entry that should be marked as active
 	 * @return \OCP\Template
 	 */
-	public function getTemplate($forceActive = null) {
-		$active = $forceActive ?: $this->active;
+	public function getTemplate($forceActive = 'all') {
+		$active = $forceActive ?: 'all';
 
 		$template = new Template('activity', 'stream.app.navigation', '');
 		$entries = $this->getLinkList();
@@ -102,9 +92,21 @@ class Navigation {
 
 		$template->assign('activeNavigation', $active);
 		$template->assign('navigations', $entries);
-		$template->assign('rssLink', $this->rssLink);
+		$template->assign('rssLink', $this->getRSSLink());
 
 		return $template;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getRSSLink() {
+		$rssToken = $this->config->getUserValue($this->currentUser->getUID(), 'activity', 'rsstoken');
+		if ($rssToken) {
+			return $this->URLGenerator->linkToRouteAbsolute('activity.Feed.show', array('token' => $rssToken));
+		} else {
+			return '';
+		}
 	}
 
 	/**
