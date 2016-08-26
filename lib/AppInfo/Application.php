@@ -91,7 +91,7 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('Navigation', function(IContainer $c) {
+		$container->registerService('OCA\Activity\Navigation', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 			$rssToken = ($c->query('CurrentUID') !== '') ? $server->getConfig()->getUserValue($c->query('CurrentUID'), 'activity', 'rsstoken') : '';
@@ -169,7 +169,7 @@ class Application extends App {
 				$server->getRequest(),
 				$server->getConfig(),
 				$c->query('OCA\Activity\Data'),
-				$c->query('Navigation')
+				$c->query('OCA\Activity\Navigation')
 			);
 		});
 
