@@ -58,6 +58,7 @@ class ApplicationTest extends TestCase {
 			array('OCA\Activity\Consumer', 'OCP\Activity\IConsumer'),
 			array('OCA\Activity\CurrentUser', 'OCA\Activity\CurrentUser'),
 			array('OCA\Activity\DataHelper', 'OCA\Activity\DataHelper'),
+			array('OCA\Activity\FilesHooks', 'OCA\Activity\FilesHooks'),
 			array('OCA\Activity\Parameter\Factory', 'OCA\Activity\Parameter\Factory'),
 			array('OCA\Activity\MailQueueHandler', 'OCA\Activity\MailQueueHandler'),
 			array('OCA\Activity\Navigation', 'OCA\Activity\Navigation'),
@@ -75,7 +76,6 @@ class ApplicationTest extends TestCase {
 
 			// Legacy
 			array('GroupHelper', 'OCA\Activity\GroupHelper'),
-			array('Hooks', 'OCA\Activity\FilesHooks'),
 		);
 	}
 

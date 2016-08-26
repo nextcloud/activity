@@ -75,7 +75,7 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('Hooks', function(IContainer $c) {
+		$container->registerService('OCA\Activity\FilesHooks', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 
