@@ -53,8 +53,8 @@ class ApplicationTest extends TestCase {
 		return array(
 			array('OCA\Activity\Data', 'OCA\Activity\Data'),
 			array('OCP\IL10N', 'OCP\IL10N'),
-			array('Consumer', 'OCA\Activity\Consumer'),
-			array('Consumer', 'OCP\Activity\IConsumer'),
+			array('OCA\Activity\Consumer', 'OCA\Activity\Consumer'),
+			array('OCA\Activity\Consumer', 'OCP\Activity\IConsumer'),
 			array('DataHelper', 'OCA\Activity\DataHelper'),
 			array('GroupHelper', 'OCA\Activity\GroupHelper'),
 			array('Hooks', 'OCA\Activity\FilesHooks'),

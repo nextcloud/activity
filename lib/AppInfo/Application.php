@@ -51,17 +51,6 @@ class Application extends App {
 		/**
 		 * Activity Services
 		 */
-		$container->registerService('Consumer', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			return new Consumer(
-				$c->query('OCA\Activity\Data'),
-				$c->query('OCA\Activity\UserSettings'),
-				$server->getL10NFactory()
-			);
-		});
-
 		$container->registerService('DataHelper', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
@@ -267,7 +256,7 @@ class Application extends App {
 		$server = $c->getServer();
 
 		$server->getActivityManager()->registerConsumer(function() use ($c) {
-			return $c->query('Consumer');
+			return $c->query('OCA\Activity\Consumer');
 		});
 	}
 
