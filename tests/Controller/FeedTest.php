@@ -91,8 +91,7 @@ class FeedTest extends TestCase {
 			$urlGenerator,
 			$this->manager,
 			\OC::$server->getL10NFactory(),
-			$this->config,
-			'test'
+			$this->config
 		);
 	}
 

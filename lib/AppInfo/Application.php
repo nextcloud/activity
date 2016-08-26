@@ -124,24 +124,7 @@ class Application extends App {
 
 		$container->registerAlias('EndPointController', 'OCA\Activity\Controller\EndPoint');
 		$container->registerAlias('ActivitiesController', 'OCA\Activity\Controller\Activities');
-
-		$container->registerService('FeedController', function(IAppContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			return new Feed(
-				$c->getAppName(),
-				$server->getRequest(),
-				$c->query('OCA\Activity\Data'),
-				$c->query('OCA\Activity\GroupHelperDisabled'),
-				$c->query('OCA\Activity\UserSettings'),
-				$server->getURLGenerator(),
-				$server->getActivityManager(),
-				$server->getL10NFactory(),
-				$server->getConfig(),
-				$c->query('CurrentUID')
-			);
-		});
+		$container->registerAlias('FeedController', 'OCA\Activity\Controller\Feed');
 	}
 
 	/**
