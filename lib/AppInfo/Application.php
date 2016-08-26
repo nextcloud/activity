@@ -51,29 +51,24 @@ class Application extends App {
 		/**
 		 * Activity Services
 		 */
-		$container->registerService('DataHelper', function(IContainer $c) {
+		$container->registerService('OCA\Activity\Parameter\Factory', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
-			return new DataHelper(
+			return new Factory(
 				$server->getActivityManager(),
-				new Factory(
-					$server->getActivityManager(),
-					$server->getUserManager(),
-					$server->getURLGenerator(),
-					$server->getContactsManager(),
-					$c->query('OCA\Activity\ViewInfoCache'),
-					$c->query('OCP\IL10N'),
-					$c->query('CurrentUID')
-				),
-				$server->getL10NFactory(),
-				$c->query('OCP\IL10N')
+				$server->getUserManager(),
+				$server->getURLGenerator(),
+				$server->getContactsManager(),
+				$c->query('OCA\Activity\ViewInfoCache'),
+				$c->query('OCP\IL10N'),
+				$c->query('CurrentUID')
 			);
 		});
 
 		$container->registerService('GroupHelper', function(IContainer $c) {
 			return new GroupHelper(
 				$c->query('ServerContainer')->getActivityManager(),
-				$c->query('DataHelper'),
+				$c->query('OCA\Activity\DataHelper'),
 				true
 			);
 		});
@@ -81,7 +76,7 @@ class Application extends App {
 		$container->registerService('GroupHelperSingleEntries', function(IContainer $c) {
 			return new GroupHelper(
 				$c->query('ServerContainer')->getActivityManager(),
-				$c->query('DataHelper'),
+				$c->query('OCA\Activity\DataHelper'),
 				false
 			);
 		});
@@ -109,7 +104,7 @@ class Application extends App {
 			return new MailQueueHandler(
 				$server->getDateTimeFormatter(),
 				$server->getDatabaseConnection(),
-				$c->query('DataHelper'),
+				$c->query('OCA\Activity\DataHelper'),
 				$server->getMailer(),
 				$server->getURLGenerator(),
 				$server->getUserManager(),
