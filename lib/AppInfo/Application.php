@@ -23,17 +23,10 @@
 namespace OCA\Activity\AppInfo;
 
 use OC\Files\View;
-use OCA\Activity\Controller\Activities;
-use OCA\Activity\Controller\Feed;
-use OCA\Activity\Controller\OCSEndPoint;
-use OCA\Activity\Controller\Settings;
-use OCA\Activity\GroupHelper;
 use OCA\Activity\FilesHooks;
 use OCA\Activity\Navigation;
 use OCA\Activity\Parameter\Factory;
-use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\App;
-use OCP\AppFramework\IAppContainer;
 use OCP\IContainer;
 use OCP\Util;
 
@@ -102,29 +95,11 @@ class Application extends App {
 			return $currentUser->getUserIdentifier();
 		});
 
-		/**
-		 * Controller
-		 */
-		$container->registerService('SettingsController', function(IAppContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			return new Settings(
-				$c->getAppName(),
-				$server->getRequest(),
-				$server->getConfig(),
-				$server->getSecureRandom()->getMediumStrengthGenerator(),
-				$server->getURLGenerator(),
-				$c->query('OCA\Activity\Data'),
-				$c->query('OCA\Activity\UserSettings'),
-				$c->query('OCP\IL10N'),
-				$c->query('CurrentUID')
-			);
-		});
-
-		$container->registerAlias('EndPointController', 'OCA\Activity\Controller\EndPoint');
+		// Aliases for the controllers so we can use the automatic DI
 		$container->registerAlias('ActivitiesController', 'OCA\Activity\Controller\Activities');
+		$container->registerAlias('EndPointController', 'OCA\Activity\Controller\EndPoint');
 		$container->registerAlias('FeedController', 'OCA\Activity\Controller\Feed');
+		$container->registerAlias('SettingsController', 'OCA\Activity\Controller\Settings');
 	}
 
 	/**
