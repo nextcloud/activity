@@ -61,10 +61,12 @@ class ApplicationTest extends TestCase {
 			array('MailQueueHandler', 'OCA\Activity\MailQueueHandler'),
 			array('Navigation', 'OCA\Activity\Navigation'),
 			array('UserSettings', 'OCA\Activity\UserSettings'),
-			array('OCA\Activity\ViewInfoCache', 'OCA\Activity\ViewInfoCache'),
 			array('SettingsController', 'OCP\AppFramework\Controller'),
 			array('ActivitiesController', 'OCP\AppFramework\Controller'),
 			array('FeedController', 'OCP\AppFramework\Controller'),
+
+			array('OCA\Activity\CurrentUser', 'OCA\Activity\CurrentUser'),
+			array('OCA\Activity\ViewInfoCache', 'OCA\Activity\ViewInfoCache'),
 		);
 	}
 

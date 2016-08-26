@@ -23,24 +23,31 @@
 namespace OCA\Activity\Formatter;
 
 use OCP\Activity\IEvent;
-use OCP\IConfig;
 use OCP\IL10N;
+use OCP\IUser;
 use OCP\IUserManager;
 use OCP\Util;
 
 class UserFormatter implements IFormatter {
+
 	/** @var IUserManager */
 	protected $manager;
+
 	/** @var IL10N */
 	protected $l;
 
+	/** @var CloudIDFormatter */
+	protected $cloudIDFormatter;
+
 	/**
 	 * @param IUserManager $userManager
+	 * @param CloudIDFormatter $cloudIDFormatter
 	 * @param IL10N $l
 	 */
-	public function __construct(IUserManager $userManager, IL10N $l) {
+	public function __construct(IUserManager $userManager, CloudIDFormatter $cloudIDFormatter, IL10N $l) {
 		$this->manager = $userManager;
 		$this->l = $l;
+		$this->cloudIDFormatter = $cloudIDFormatter;
 	}
 
 	/**
@@ -56,9 +63,27 @@ class UserFormatter implements IFormatter {
 		}
 
 		$user = $this->manager->get($parameter);
-		$displayName = ($user) ? $user->getDisplayName() : $parameter;
+		if (!($user instanceof IUser)) {
+			if ($this->isRemoteUser($parameter)) {
+				// Remote user detected
+				return $this->cloudIDFormatter->format($event, $parameter);
+			}
+			$displayName = $parameter;
+		} else {
+			$displayName = $user->getDisplayName();
+		}
 		$parameter = Util::sanitizeHTML($parameter);
 
 		return '<user display-name="' . Util::sanitizeHTML($displayName) . '">' . Util::sanitizeHTML($parameter) . '</user>';
+	}
+
+	/**
+	 * Very simple "remote user" detection should be improved someday™
+	 *
+	 * @param string $parameter
+	 * @return bool
+	 */
+	protected function isRemoteUser($parameter) {
+		return strpos($parameter, '@') > 0;
 	}
 }

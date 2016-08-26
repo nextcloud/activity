@@ -42,13 +42,18 @@ class FileFormatter implements IFormatter {
 	 * @param ViewInfoCache $infoCache
 	 * @param IURLGenerator $urlGenerator
 	 * @param IL10N $l
-	 * @param string $user
 	 */
-	public function __construct(ViewInfoCache $infoCache, IURLGenerator $urlGenerator, IL10N $l, $user) {
+	public function __construct(ViewInfoCache $infoCache, IURLGenerator $urlGenerator, IL10N $l) {
 		$this->infoCache = $infoCache;
 		$this->urlGenerator = $urlGenerator;
 		$this->l = $l;
-		$this->user = $user;
+	}
+
+	/**
+	 * @param string $user
+	 */
+	public function setUser($user) {
+		$this->user = (string) $user;
 	}
 
 	/**

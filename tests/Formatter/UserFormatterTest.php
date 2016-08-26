@@ -30,7 +30,8 @@ class UserFormatterTest extends TestCase {
 
 	/** @var \OCP\IUserManager|\PHPUnit_Framework_MockObject_MockObject */
 	protected $userManager;
-
+	/** @var \OCA\Activity\Formatter\CloudIDFormatter|\PHPUnit_Framework_MockObject_MockObject */
+	protected $cloudIdFormatter;
 	/** @var \OCP\IL10N|\PHPUnit_Framework_MockObject_MockObject */
 	protected $l;
 
@@ -38,6 +39,10 @@ class UserFormatterTest extends TestCase {
 		parent::setUp();
 
 		$this->userManager = $this->getMockBuilder('OCP\IUserManager')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$this->cloudIdFormatter = $this->getMockBuilder('OCA\Activity\Formatter\CloudIDFormatter')
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -54,12 +59,14 @@ class UserFormatterTest extends TestCase {
 		if (empty($methods)) {
 			return new UserFormatter(
 				$this->userManager,
+				$this->cloudIdFormatter,
 				$this->l
 			);
 		} else {
 			return $this->getMockBuilder('OCA\Activity\Formatter\UserFormatter')
 				->setConstructorArgs([
 					$this->userManager,
+					$this->cloudIdFormatter,
 					$this->l,
 				])
 				->setMethods($methods)
@@ -133,6 +140,41 @@ class UserFormatterTest extends TestCase {
 			->method('get')
 			->with($parameter)
 			->willReturn($user);
+
+		$formatter = $this->getFormatter();
+		$this->assertSame($expected, $formatter->format($event, $parameter));
+	}
+
+	public function dataFormatCloudUser() {
+		return [
+			['user@localhost', true, '<cloud>user@localhost</cloud>'],
+			['user-no at-localhost', false, '<user display-name="user-no at-localhost">user-no at-localhost</user>'],
+		];
+	}
+
+	/**
+	 * @dataProvider dataFormatCloudUser
+	 *
+	 * @param string $parameter
+	 * @param bool $cloudFormatter
+	 * @param string $expected
+	 */
+	public function testFormatCloudUser($parameter, $cloudFormatter, $expected) {
+		/** @var \OCP\Activity\IEvent|\PHPUnit_Framework_MockObject_MockObject $event */
+		$event = $this->getMockBuilder('OCP\Activity\IEvent')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$this->l->expects($this->never())
+			->method('t');
+		$this->userManager->expects($this->once())
+			->method('get')
+			->with($parameter)
+			->willReturn(null);
+		$this->cloudIdFormatter->expects($cloudFormatter ? $this->once() : $this->never())
+			->method('format')
+			->with($event, $parameter)
+			->willReturn($expected);
 
 		$formatter = $this->getFormatter();
 		$this->assertSame($expected, $formatter->format($event, $parameter));

@@ -32,7 +32,6 @@ use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\Contacts\IManager as IContactsManager;
-use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUserManager;
@@ -125,14 +124,21 @@ class Factory {
 	 * @return IFormatter
 	 */
 	protected function getFormatter($formatter) {
-		if ($formatter === 'file') {
-			return new FileFormatter($this->infoCache, $this->urlGenerator, $this->l, $this->user);
-		} else if ($formatter === 'username') {
-			return new UserFormatter($this->userManager, $this->l);
-		} else if ($formatter === 'federated_cloud_id') {
-			return new CloudIDFormatter($this->contactsManager);
-		} else {
-			return new BaseFormatter();
+		switch ($formatter) {
+			case 'file':
+				/** @var \OCA\Activity\Formatter\FileFormatter $fileFormatter */
+				$fileFormatter = \OC::$server->query('OCA\Activity\Formatter\FileFormatter');
+				$fileFormatter->setUser($this->user);
+				return $fileFormatter;
+			case 'username':
+				/** @var \OCA\Activity\Formatter\UserFormatter */
+				return \OC::$server->query('OCA\Activity\Formatter\UserFormatter');
+			case 'federated_cloud_id':
+				/** @var \OCA\Activity\Formatter\CloudIDFormatter */
+				return \OC::$server->query('OCA\Activity\Formatter\CloudIDFormatter');
+			default:
+				/** @var \OCA\Activity\Formatter\BaseFormatter */
+				return \OC::$server->query('OCA\Activity\Formatter\BaseFormatter');
 		}
 	}
 }

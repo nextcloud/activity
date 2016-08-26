@@ -172,11 +172,9 @@ class Application extends App {
 		 * Core Services
 		 */
 		$container->registerService('CurrentUID', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			$user = $server->getUserSession()->getUser();
-			return ($user) ? $user->getUID() : '';
+			/** @var \OCA\Activity\CurrentUser $currentUser */
+			$currentUser = $c->query('OCA\Activity\CurrentUser');
+			return $currentUser->getUserIdentifier();
 		});
 
 		/**
