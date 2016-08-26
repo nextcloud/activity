@@ -68,7 +68,7 @@ class Application extends App {
 				$c->query('OCA\Activity\Data'),
 				$c->query('OCA\Activity\UserSettings'),
 				$server->getGroupManager(),
-				new View(''),
+				$c->query('OC\Files\View'),
 				$server->getDatabaseConnection(),
 				$server->getURLGenerator(),
 				$c->query('CurrentUID')
@@ -95,6 +95,7 @@ class Application extends App {
 		$container->registerService('OC\Files\View', function() {
 			return new View('');
 		}, false);
+
 		$container->registerService('CurrentUID', function(IContainer $c) {
 			/** @var \OCA\Activity\CurrentUser $currentUser */
 			$currentUser = $c->query('OCA\Activity\CurrentUser');
