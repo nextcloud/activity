@@ -45,7 +45,7 @@ class Api
 		}
 
 		$activities = $data->get(
-			$app->getContainer()->query('GroupHelper'),
+			$app->getContainer()->query('OCA\Activity\GroupHelper'),
 			$app->getContainer()->query('OCA\Activity\UserSettings'),
 			$user, $start, $count, 'desc', 'all'
 		);

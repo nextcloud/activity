@@ -59,7 +59,7 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('GroupHelper', function(IContainer $c) {
+		$container->registerService('OCA\Activity\GroupHelper', function(IContainer $c) {
 			return new GroupHelper(
 				$c->query('ServerContainer')->getActivityManager(),
 				$c->query('OCA\Activity\DataHelper'),
@@ -146,7 +146,7 @@ class Application extends App {
 
 			return new OCSEndPoint(
 				$c->query('OCA\Activity\Data'),
-				$c->query('GroupHelper'),
+				$c->query('OCA\Activity\GroupHelper'),
 				$c->query('OCA\Activity\UserSettings'),
 				$server->getRequest(),
 				$server->getURLGenerator(),
