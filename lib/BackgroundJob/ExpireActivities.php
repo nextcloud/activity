@@ -57,7 +57,7 @@ class ExpireActivities extends TimedJob {
 	protected function fixDIForJobs() {
 		$application = new Application();
 
-		$this->data = $application->getContainer()->query('ActivityData');
+		$this->data = $application->getContainer()->query('OCA\Activity\Data');
 		$this->config = \OC::$server->getConfig();
 	}
 

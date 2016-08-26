@@ -51,22 +51,12 @@ class Application extends App {
 		/**
 		 * Activity Services
 		 */
-		$container->registerService('ActivityData', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-			return new Data(
-				$server->getActivityManager(),
-				$server->getDatabaseConnection(),
-				$server->getUserSession()
-			);
-		});
-
 		$container->registerService('Consumer', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
 
 			return new Consumer(
-				$c->query('ActivityData'),
+				$c->query('OCA\Activity\Data'),
 				$c->query('UserSettings'),
 				$server->getL10NFactory()
 			);
@@ -113,7 +103,7 @@ class Application extends App {
 
 			return new FilesHooks(
 				$server->getActivityManager(),
-				$c->query('ActivityData'),
+				$c->query('OCA\Activity\Data'),
 				$c->query('UserSettings'),
 				$server->getGroupManager(),
 				new View(''),
@@ -158,7 +148,7 @@ class Application extends App {
 			return new UserSettings(
 				$server->getActivityManager(),
 				$server->getConfig(),
-				$c->query('ActivityData')
+				$c->query('OCA\Activity\Data')
 			);
 		});
 
@@ -190,7 +180,7 @@ class Application extends App {
 				$server->getConfig(),
 				$server->getSecureRandom()->getMediumStrengthGenerator(),
 				$server->getURLGenerator(),
-				$c->query('ActivityData'),
+				$c->query('OCA\Activity\Data'),
 				$c->query('UserSettings'),
 				$c->query('OCP\IL10N'),
 				$c->query('CurrentUID')
@@ -202,7 +192,7 @@ class Application extends App {
 			$server = $c->query('ServerContainer');
 
 			return new OCSEndPoint(
-				$c->query('ActivityData'),
+				$c->query('OCA\Activity\Data'),
 				$c->query('GroupHelper'),
 				$c->query('UserSettings'),
 				$server->getRequest(),
@@ -234,7 +224,7 @@ class Application extends App {
 				$c->getAppName(),
 				$server->getRequest(),
 				$server->getConfig(),
-				$c->query('ActivityData'),
+				$c->query('OCA\Activity\Data'),
 				$c->query('Navigation')
 			);
 		});
@@ -246,7 +236,7 @@ class Application extends App {
 			return new Feed(
 				$c->getAppName(),
 				$server->getRequest(),
-				$c->query('ActivityData'),
+				$c->query('OCA\Activity\Data'),
 				$c->query('GroupHelperSingleEntries'),
 				$c->query('UserSettings'),
 				$server->getURLGenerator(),
