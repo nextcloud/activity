@@ -59,7 +59,7 @@ class ApplicationTest extends TestCase {
 			array('OCA\Activity\Parameter\Factory', 'OCA\Activity\Parameter\Factory'),
 			array('GroupHelper', 'OCA\Activity\GroupHelper'),
 			array('Hooks', 'OCA\Activity\FilesHooks'),
-			array('MailQueueHandler', 'OCA\Activity\MailQueueHandler'),
+			array('OCA\Activity\MailQueueHandler', 'OCA\Activity\MailQueueHandler'),
 			array('Navigation', 'OCA\Activity\Navigation'),
 			array('OCA\Activity\UserSettings', 'OCA\Activity\UserSettings'),
 			array('SettingsController', 'OCP\AppFramework\Controller'),

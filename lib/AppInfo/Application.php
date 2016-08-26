@@ -97,21 +97,6 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('MailQueueHandler', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			return new MailQueueHandler(
-				$server->getDateTimeFormatter(),
-				$server->getDatabaseConnection(),
-				$c->query('OCA\Activity\DataHelper'),
-				$server->getMailer(),
-				$server->getURLGenerator(),
-				$server->getUserManager(),
-				$server->getActivityManager()
-			);
-		});
-
 		$container->registerService('Navigation', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
