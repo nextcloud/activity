@@ -23,6 +23,7 @@
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\GroupHelper;
+use OCA\Activity\GroupHelperDisabled;
 use OCA\Activity\Parameter\Collection;
 
 class GroupHelperTest extends TestCase {
@@ -50,17 +51,22 @@ class GroupHelperTest extends TestCase {
 	 */
 	protected function getHelper(array $methods = [], $grouping = false) {
 		if (empty($methods)) {
-			return new GroupHelper(
-				$this->activityManager,
-				$this->dataHelper,
-				$grouping
-			);
+			if ($grouping) {
+				return new GroupHelper(
+					$this->activityManager,
+					$this->dataHelper
+				);
+			} else {
+				return new GroupHelperDisabled(
+					$this->activityManager,
+					$this->dataHelper
+				);
+			}
 		} else {
-			return $this->getMockBuilder('OCA\Activity\GroupHelper')
+			return $this->getMockBuilder($grouping ? 'OCA\Activity\GroupHelper' : 'OCA\Activity\GroupHelperDisabled')
 				->setConstructorArgs([
 					$this->activityManager,
-					$this->dataHelper,
-					$grouping,
+					$this->dataHelper
 				])
 				->setMethods($methods)
 				->getMock();

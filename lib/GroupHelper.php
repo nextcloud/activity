@@ -53,10 +53,9 @@ class GroupHelper {
 	/**
 	 * @param \OCP\Activity\IManager $activityManager
 	 * @param \OCA\Activity\DataHelper $dataHelper
-	 * @param bool $allowGrouping
 	 */
-	public function __construct(IManager $activityManager, DataHelper $dataHelper, $allowGrouping) {
-		$this->allowGrouping = $allowGrouping;
+	public function __construct(IManager $activityManager, DataHelper $dataHelper) {
+		$this->allowGrouping = true;
 
 		$this->activityManager = $activityManager;
 		$this->dataHelper = $dataHelper;

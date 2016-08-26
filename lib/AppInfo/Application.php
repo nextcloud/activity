@@ -59,22 +59,6 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('OCA\Activity\GroupHelper', function(IContainer $c) {
-			return new GroupHelper(
-				$c->query('ServerContainer')->getActivityManager(),
-				$c->query('OCA\Activity\DataHelper'),
-				true
-			);
-		});
-
-		$container->registerService('GroupHelperSingleEntries', function(IContainer $c) {
-			return new GroupHelper(
-				$c->query('ServerContainer')->getActivityManager(),
-				$c->query('OCA\Activity\DataHelper'),
-				false
-			);
-		});
-
 		$container->registerService('OCA\Activity\FilesHooks', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');
@@ -181,7 +165,7 @@ class Application extends App {
 				$c->getAppName(),
 				$server->getRequest(),
 				$c->query('OCA\Activity\Data'),
-				$c->query('GroupHelperSingleEntries'),
+				$c->query('OCA\Activity\GroupHelperDisabled'),
 				$c->query('OCA\Activity\UserSettings'),
 				$server->getURLGenerator(),
 				$server->getActivityManager(),
