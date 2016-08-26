@@ -143,19 +143,7 @@ class Application extends App {
 		});
 
 		$container->registerAlias('EndPointController', 'OCA\Activity\Controller\EndPoint');
-
-		$container->registerService('ActivitiesController', function(IAppContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			return new Activities(
-				$c->getAppName(),
-				$server->getRequest(),
-				$server->getConfig(),
-				$c->query('OCA\Activity\Data'),
-				$c->query('OCA\Activity\Navigation')
-			);
-		});
+		$container->registerAlias('ActivitiesController', 'OCA\Activity\Controller\Activities');
 
 		$container->registerService('FeedController', function(IAppContainer $c) {
 			/** @var \OC\Server $server */
