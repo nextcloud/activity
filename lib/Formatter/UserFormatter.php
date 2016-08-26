@@ -23,7 +23,6 @@
 namespace OCA\Activity\Formatter;
 
 use OCP\Activity\IEvent;
-use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IUser;
 use OCP\IUserManager;
@@ -42,10 +41,10 @@ class UserFormatter implements IFormatter {
 
 	/**
 	 * @param IUserManager $userManager
-	 * @param IL10N $l
 	 * @param CloudIDFormatter $cloudIDFormatter
+	 * @param IL10N $l
 	 */
-	public function __construct(IUserManager $userManager, IL10N $l, CloudIDFormatter $cloudIDFormatter) {
+	public function __construct(IUserManager $userManager, CloudIDFormatter $cloudIDFormatter, IL10N $l) {
 		$this->manager = $userManager;
 		$this->l = $l;
 		$this->cloudIDFormatter = $cloudIDFormatter;

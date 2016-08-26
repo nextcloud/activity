@@ -64,14 +64,15 @@ class FileFormatterTest extends TestCase {
 	 */
 	public function getFormatter(array $methods = [], $user = 'user') {
 		if (empty($methods)) {
-			return new FileFormatter(
+			$formatter = new FileFormatter(
 				$this->infoCache,
 				$this->urlGenerator,
-				$this->l,
-				$user
+				$this->l
 			);
+			$formatter->setUser($user);
+			return $formatter;
 		} else {
-			return $this->getMockBuilder('OCA\Activity\Formatter\FileFormatter')
+			$formatter = $this->getMockBuilder('OCA\Activity\Formatter\FileFormatter')
 				->setConstructorArgs([
 					$this->infoCache,
 					$this->urlGenerator,
@@ -80,6 +81,8 @@ class FileFormatterTest extends TestCase {
 				])
 				->setMethods($methods)
 				->getMock();
+			$this->invokePrivate($formatter, 'user', [$user]);
+			return $formatter;
 		}
 	}
 
