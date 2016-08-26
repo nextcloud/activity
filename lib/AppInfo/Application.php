@@ -38,20 +38,6 @@ class Application extends App {
 		/**
 		 * Activity Services
 		 */
-		$container->registerService('OCA\Activity\Parameter\Factory', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-			return new Factory(
-				$server->getActivityManager(),
-				$server->getUserManager(),
-				$server->getURLGenerator(),
-				$server->getContactsManager(),
-				$c->query('OCA\Activity\ViewInfoCache'),
-				$c->query('OCP\IL10N'),
-				$c->query('CurrentUID')
-			);
-		});
-
 		$container->registerService('OCA\Activity\FilesHooks', function(IContainer $c) {
 			/** @var \OC\Server $server */
 			$server = $c->query('ServerContainer');

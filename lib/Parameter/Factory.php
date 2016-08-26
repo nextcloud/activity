@@ -23,6 +23,7 @@
 namespace OCA\Activity\Parameter;
 
 
+use OCA\Activity\CurrentUser;
 use OCA\Activity\Formatter\IFormatter;
 use OCA\Activity\Formatter\BaseFormatter;
 use OCA\Activity\Formatter\CloudIDFormatter;
@@ -65,7 +66,7 @@ class Factory {
 	 * @param IContactsManager $contactsManager
 	 * @param ViewInfoCache $infoCache,
 	 * @param IL10N $l
-	 * @param string $user
+	 * @param CurrentUser $currentUser
 	 */
 	public function __construct(IManager $activityManager,
 								IUserManager $userManager,
@@ -73,14 +74,14 @@ class Factory {
 								IContactsManager $contactsManager,
 								ViewInfoCache $infoCache,
 								IL10N $l,
-								$user) {
+								CurrentUser $currentUser) {
 		$this->activityManager = $activityManager;
 		$this->userManager = $userManager;
 		$this->urlGenerator = $urlGenerator;
 		$this->contactsManager = $contactsManager;
 		$this->infoCache = $infoCache;
 		$this->l = $l;
-		$this->user = $user;
+		$this->user = (string) $currentUser->getUID();
 	}
 
 	/**

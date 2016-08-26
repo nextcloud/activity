@@ -85,6 +85,13 @@ class FactoryTest extends TestCase {
 	 * @return Factory|\PHPUnit_Framework_MockObject_MockObject
 	 */
 	public function getFactory(array $methods = [], $user = 'user') {
+		$currentUser = $this->getMockBuilder('OCA\Activity\CurrentUser')
+			->disableOriginalConstructor()
+			->getMock();
+		$currentUser->expects($this->once())
+			->method('getUID')
+			->willReturn($user);
+
 		if (empty($methods)) {
 			return new Factory(
 				$this->activityManager,
@@ -93,7 +100,7 @@ class FactoryTest extends TestCase {
 				$this->contactsManager,
 				$this->infoCache,
 				$this->l,
-				$user
+				$currentUser
 			);
 		} else {
 			return $this->getMockBuilder('OCA\Activity\Parameter\Factory')
@@ -104,7 +111,7 @@ class FactoryTest extends TestCase {
 					$this->contactsManager,
 					$this->infoCache,
 					$this->l,
-					$user,
+					$currentUser,
 				])
 				->setMethods($methods)
 				->getMock();
