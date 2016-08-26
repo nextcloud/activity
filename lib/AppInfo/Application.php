@@ -23,20 +23,14 @@
 namespace OCA\Activity\AppInfo;
 
 use OC\Files\View;
-use OCA\Activity\Consumer;
 use OCA\Activity\Controller\Activities;
-use OCA\Activity\Controller\EndPoint;
 use OCA\Activity\Controller\Feed;
 use OCA\Activity\Controller\OCSEndPoint;
 use OCA\Activity\Controller\Settings;
-use OCA\Activity\Data;
-use OCA\Activity\DataHelper;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\FilesHooks;
-use OCA\Activity\MailQueueHandler;
 use OCA\Activity\Navigation;
 use OCA\Activity\Parameter\Factory;
-use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\App;
 use OCP\AppFramework\IAppContainer;
@@ -164,16 +158,7 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('EndPointController', function(IAppContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			return new EndPoint(
-				$c->getAppName(),
-				$server->getRequest(),
-				$c->query('OCA\Activity\Controller\OCSEndPoint')
-			);
-		});
+		$container->registerAlias('EndPointController', 'OCA\Activity\Controller\EndPoint');
 
 		$container->registerService('ActivitiesController', function(IAppContainer $c) {
 			/** @var \OC\Server $server */
