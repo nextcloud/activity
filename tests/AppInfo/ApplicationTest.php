@@ -57,6 +57,7 @@ class ApplicationTest extends TestCase {
 			array('OCA\Activity\Data', 'OCA\Activity\Data'),
 			array('OCA\Activity\Consumer', 'OCA\Activity\Consumer'),
 			array('OCA\Activity\Consumer', 'OCP\Activity\IConsumer'),
+			array('OCA\Activity\Controller\OCSEndPoint', 'OCA\Activity\Controller\OCSEndPoint'),
 			array('OCA\Activity\CurrentUser', 'OCA\Activity\CurrentUser'),
 			array('OCA\Activity\DataHelper', 'OCA\Activity\DataHelper'),
 			array('OCA\Activity\FilesHooks', 'OCA\Activity\FilesHooks'),

@@ -121,24 +121,6 @@ class Application extends App {
 			);
 		});
 
-		$container->registerService('OCA\Activity\Controller\OCSEndPoint', function(IAppContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			return new OCSEndPoint(
-				$c->query('OCA\Activity\Data'),
-				$c->query('OCA\Activity\GroupHelper'),
-				$c->query('OCA\Activity\UserSettings'),
-				$server->getRequest(),
-				$server->getURLGenerator(),
-				$server->getUserSession(),
-				$server->getPreviewManager(),
-				$server->getMimeTypeDetector(),
-				new View(''),
-				$c->query('OCA\Activity\ViewInfoCache')
-			);
-		});
-
 		$container->registerAlias('EndPointController', 'OCA\Activity\Controller\EndPoint');
 		$container->registerAlias('ActivitiesController', 'OCA\Activity\Controller\Activities');
 
