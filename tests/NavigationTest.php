@@ -34,33 +34,48 @@ use OCA\Activity\Tests\Mock\Extension;
 class NavigationTest extends TestCase {
 	public function getTemplateData() {
 		return array(
-			array('all'),
-			array('all', 'self'),
-			array('all', 'self', 'thisIsTheRSSToken'),
-			array('random'),
+			array(null, ''),
+			array('self', ''),
+			array('self', 'thisIsTheRSSToken'),
 		);
 	}
 
 	/**
 	 * @dataProvider getTemplateData
+	 *
+	 * @param string|null $forceActive
+	 * @param string $rssToken
 	 */
-	public function testGetTemplate($constructorActive, $forceActive = null, $rssToken = '') {
+	public function testGetTemplate($forceActive, $rssToken) {
+		$config = $this->getMockBuilder('OCP\IConfig')
+			->getMock();
+		$config->expects($this->once())
+			->method('getUserValue')
+			->with('test', 'activity', 'rsstoken')
+			->willReturn($rssToken);
+
+		$currentUser = $this->getMockBuilder('OCA\Activity\CurrentUser')
+			->disableOriginalConstructor()
+			->getMock();
+		$currentUser->expects($this->once())
+			->method('getUID')
+			->willReturn('test');
+
 		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
 		$activityManager = new \OC\Activity\Manager(
-			$this->getMock('OCP\IRequest'),
-			$this->getMock('OCP\IUserSession'),
-			$this->getMock('OCP\IConfig')
+			$this->getMockBuilder('OCP\IRequest')->getMock(),
+			$this->getMockBuilder('OCP\IUserSession')->getMock(),
+			$this->getMockBuilder('OCP\IConfig')->getMock()
 		);
 		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
+			return new Extension($activityLanguage, $this->getMockBuilder('\OCP\IURLGenerator')->getMock());
 		});
 		$navigation = new Navigation(
 			$activityLanguage,
 			$activityManager,
 			\OC::$server->getURLGenerator(),
-			'test',
-			$rssToken,
-			$constructorActive
+			$config,
+			$currentUser
 		);
 		$output = $navigation->getTemplate($forceActive)->fetchPage();
 
@@ -86,7 +101,7 @@ class NavigationTest extends TestCase {
 						'href="' . $link['url'] . '">' . $link['name']. '</a>',
 						$navigationEntry
 					);
-					if ($forceActive == $link['id'] || ($forceActive == null && $constructorActive == $link['id'])) {
+					if ($forceActive === $link['id'] || ($forceActive == null && 'all' === $link['id'])) {
 						$this->assertStringStartsWith('<li class="active">', $navigationEntry);
 					} else {
 						$this->assertStringStartsWith('<li>', $navigationEntry);

@@ -63,12 +63,6 @@ class Feed extends Controller {
 	/** @var IL10N */
 	protected $l;
 
-	/** @var string */
-	protected $user;
-
-	/** @var string */
-	protected $tokenUser;
-
 	/**
 	 * constructor of the controller
 	 *
@@ -81,7 +75,6 @@ class Feed extends Controller {
 	 * @param IManager $activityManager
 	 * @param IFactory $l10nFactory
 	 * @param IConfig $config
-	 * @param string $user
 	 */
 	public function __construct($appName,
 								IRequest $request,
@@ -91,8 +84,7 @@ class Feed extends Controller {
 								IURLGenerator $urlGenerator,
 								IManager $activityManager,
 								IFactory $l10nFactory,
-								IConfig $config,
-								$user) {
+								IConfig $config) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
 		$this->helper = $helper;
@@ -101,7 +93,6 @@ class Feed extends Controller {
 		$this->activityManager = $activityManager;
 		$this->l10nFactory = $l10nFactory;
 		$this->config = $config;
-		$this->user = $user;
 	}
 
 	/**

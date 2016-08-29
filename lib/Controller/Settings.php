@@ -23,6 +23,7 @@
 
 namespace OCA\Activity\Controller;
 
+use OCA\Activity\CurrentUser;
 use OCA\Activity\Data;
 use OCA\Activity\UserSettings;
 use OCP\Activity\IExtension;
@@ -68,7 +69,7 @@ class Settings extends Controller {
 	 * @param Data $data
 	 * @param UserSettings $userSettings
 	 * @param IL10N $l10n
-	 * @param string $user
+	 * @param CurrentUser $currentUser
 	 */
 	public function __construct($appName,
 								IRequest $request,
@@ -78,7 +79,7 @@ class Settings extends Controller {
 								Data $data,
 								UserSettings $userSettings,
 								IL10N $l10n,
-								$user) {
+								CurrentUser $currentUser) {
 		parent::__construct($appName, $request);
 		$this->config = $config;
 		$this->random = $random;
@@ -86,7 +87,7 @@ class Settings extends Controller {
 		$this->data = $data;
 		$this->userSettings = $userSettings;
 		$this->l10n = $l10n;
-		$this->user = $user;
+		$this->user = (string) $currentUser->getUID();
 	}
 
 	/**

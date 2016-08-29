@@ -76,7 +76,7 @@ class EmailNotification extends TimedJob {
 	protected function fixDIForJobs() {
 		$application = new Application();
 
-		$this->mqHandler = $application->getContainer()->query('MailQueueHandler');
+		$this->mqHandler = $application->getContainer()->query('OCA\Activity\MailQueueHandler');
 		$this->config = \OC::$server->getConfig();
 		$this->logger = \OC::$server->getLogger();
 		$this->isCLI = \OC::$CLI;

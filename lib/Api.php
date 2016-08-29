@@ -34,7 +34,7 @@ class Api
 	static public function get() {
 		$app = new AppInfo\Application();
 		/** @var Data $data */
-		$data = $app->getContainer()->query('ActivityData');
+		$data = $app->getContainer()->query('OCA\Activity\Data');
 
 		$start = isset($_GET['start']) ? (int) $_GET['start'] : 0;
 		$count = isset($_GET['count']) ? (int) $_GET['count'] : self::DEFAULT_LIMIT;
@@ -45,8 +45,8 @@ class Api
 		}
 
 		$activities = $data->get(
-			$app->getContainer()->query('GroupHelper'),
-			$app->getContainer()->query('UserSettings'),
+			$app->getContainer()->query('OCA\Activity\GroupHelper'),
+			$app->getContainer()->query('OCA\Activity\UserSettings'),
 			$user, $start, $count, 'desc', 'all'
 		);
 		$parser = new PlainTextParser(\OC::$server->getL10NFactory()->get('activity'));

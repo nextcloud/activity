@@ -51,22 +51,33 @@ class ApplicationTest extends TestCase {
 
 	public function queryData() {
 		return array(
-			array('ActivityData', 'OCA\Activity\Data'),
 			array('OCP\IL10N', 'OCP\IL10N'),
-			array('Consumer', 'OCA\Activity\Consumer'),
-			array('Consumer', 'OCP\Activity\IConsumer'),
-			array('DataHelper', 'OCA\Activity\DataHelper'),
-			array('GroupHelper', 'OCA\Activity\GroupHelper'),
-			array('Hooks', 'OCA\Activity\FilesHooks'),
-			array('MailQueueHandler', 'OCA\Activity\MailQueueHandler'),
-			array('Navigation', 'OCA\Activity\Navigation'),
-			array('UserSettings', 'OCA\Activity\UserSettings'),
-			array('SettingsController', 'OCP\AppFramework\Controller'),
-			array('ActivitiesController', 'OCP\AppFramework\Controller'),
-			array('FeedController', 'OCP\AppFramework\Controller'),
+			array('OC\Files\View', 'OC\Files\View'),
 
+			array('OCA\Activity\Data', 'OCA\Activity\Data'),
+			array('OCA\Activity\Consumer', 'OCA\Activity\Consumer'),
+			array('OCA\Activity\Consumer', 'OCP\Activity\IConsumer'),
+			array('OCA\Activity\Controller\OCSEndPoint', 'OCA\Activity\Controller\OCSEndPoint'),
 			array('OCA\Activity\CurrentUser', 'OCA\Activity\CurrentUser'),
+			array('OCA\Activity\DataHelper', 'OCA\Activity\DataHelper'),
+			array('OCA\Activity\FilesHooks', 'OCA\Activity\FilesHooks'),
+			array('OCA\Activity\GroupHelper', 'OCA\Activity\GroupHelper'),
+			array('OCA\Activity\GroupHelperDisabled', 'OCA\Activity\GroupHelper'),
+			array('OCA\Activity\GroupHelperDisabled', 'OCA\Activity\GroupHelperDisabled'),
+			array('OCA\Activity\Parameter\Factory', 'OCA\Activity\Parameter\Factory'),
+			array('OCA\Activity\MailQueueHandler', 'OCA\Activity\MailQueueHandler'),
+			array('OCA\Activity\Navigation', 'OCA\Activity\Navigation'),
+			array('OCA\Activity\UserSettings', 'OCA\Activity\UserSettings'),
 			array('OCA\Activity\ViewInfoCache', 'OCA\Activity\ViewInfoCache'),
+
+			array('ActivitiesController', 'OCP\AppFramework\Controller'),
+			array('ActivitiesController', 'OCA\Activity\Controller\Activities'),
+			array('EndPointController', 'OCP\AppFramework\Controller'),
+			array('EndPointController', 'OCA\Activity\Controller\EndPoint'),
+			array('FeedController', 'OCP\AppFramework\Controller'),
+			array('FeedController', 'OCA\Activity\Controller\Feed'),
+			array('SettingsController', 'OCP\AppFramework\Controller'),
+			array('SettingsController', 'OCA\Activity\Controller\Settings'),
 		);
 	}
 
