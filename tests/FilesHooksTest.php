@@ -85,6 +85,16 @@ class FilesHooksTest extends TestCase {
 	 * @return FilesHooks|\PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function getFilesHooks(array $mockedMethods = [], $user = 'user') {
+		$currentUser = $this->getMockBuilder('OCA\Activity\CurrentUser')
+			->disableOriginalConstructor()
+			->getMock();
+		$currentUser->expects($this->any())
+			->method('getUID')
+			->willReturn($user);
+		$currentUser->expects($this->any())
+			->method('getUserIdentifier')
+			->willReturn($user);
+
 		if (!empty($mockedMethods)) {
 			return $this->getMockBuilder('OCA\Activity\FilesHooks')
 				->setConstructorArgs([
@@ -95,7 +105,7 @@ class FilesHooksTest extends TestCase {
 					$this->view,
 					\OC::$server->getDatabaseConnection(),
 					$this->urlGenerator,
-					$user,
+					$currentUser,
 				])
 				->setMethods($mockedMethods)
 				->getMock();
@@ -108,7 +118,7 @@ class FilesHooksTest extends TestCase {
 				$this->view,
 				\OC::$server->getDatabaseConnection(),
 				$this->urlGenerator,
-				$user
+				$currentUser
 			);
 		}
 	}
@@ -123,27 +133,10 @@ class FilesHooksTest extends TestCase {
 		return $user;
 	}
 
-	public function dataGetCurrentUser() {
-		return [
-			['user'],
-			[false],
-		];
-	}
-
-	/**
-	 * @dataProvider dataGetCurrentUser
-	 *
-	 * @param mixed $user
-	 */
-	public function testGetCurrentUser($user) {
-		$filesHooks = $this->getFilesHooks([], $user);
-		$this->assertSame($user, $this->invokePrivate($filesHooks, 'getCurrentUser'));
-	}
-
 	public function dataFileCreate() {
 		return [
 			['user', 'created_self', 'created_by'],
-			[false, '', 'created_public'],
+			['', '', 'created_public'],
 		];
 	}
 
@@ -156,12 +149,8 @@ class FilesHooksTest extends TestCase {
 	 */
 	public function testFileCreate($currentUser, $selfSubject, $othersSubject) {
 		$filesHooks = $this->getFilesHooks([
-			'getCurrentUser',
 			'addNotificationsForFileAction',
-		]);
-		$filesHooks->expects($this->once())
-			->method('getCurrentUser')
-			->willReturn($currentUser);
+		], $currentUser);
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')

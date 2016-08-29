@@ -40,6 +40,8 @@ class CurrentUser {
 
 	/** @var string */
 	protected $identifier;
+	/** @var string|false|null */
+	protected $sessionUser;
 
 	/**
 	 * @param IUserSession $userSession
@@ -50,6 +52,7 @@ class CurrentUser {
 		$this->userSession = $userSession;
 		$this->request = $request;
 		$this->shareManager = $shareManager;
+		$this->sessionUser = false;
 	}
 
 	/**
@@ -78,12 +81,16 @@ class CurrentUser {
 	 * @return string|null
 	 */
 	public function getUID() {
-		$user = $this->userSession->getUser();
-		if ($user instanceof IUser) {
-			return (string) $user->getUID();
+		if ($this->sessionUser === false) {
+			$user = $this->userSession->getUser();
+			if ($user instanceof IUser) {
+				$this->sessionUser = (string) $user->getUID();
+			} else {
+				$this->sessionUser = null;
+			}
 		}
 
-		return null;
+		return $this->sessionUser;
 	}
 
 	/**

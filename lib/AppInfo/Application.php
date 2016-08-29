@@ -29,41 +29,14 @@ use OCP\IContainer;
 use OCP\Util;
 
 class Application extends App {
-	public function __construct (array $urlParams = array()) {
-		parent::__construct('activity', $urlParams);
+	public function __construct () {
+		parent::__construct('activity');
 		$container = $this->getContainer();
 
-		/**
-		 * Activity Services
-		 */
-		$container->registerService('OCA\Activity\FilesHooks', function(IContainer $c) {
-			/** @var \OC\Server $server */
-			$server = $c->query('ServerContainer');
-
-			return new FilesHooks(
-				$server->getActivityManager(),
-				$c->query('OCA\Activity\Data'),
-				$c->query('OCA\Activity\UserSettings'),
-				$server->getGroupManager(),
-				$c->query('OC\Files\View'),
-				$server->getDatabaseConnection(),
-				$server->getURLGenerator(),
-				$c->query('CurrentUID')
-			);
-		});
-
-		/**
-		 * Core Services
-		 */
+		// Allow automatic DI for the View, until we migrated to Nodes API
 		$container->registerService('OC\Files\View', function() {
 			return new View('');
 		}, false);
-
-		$container->registerService('CurrentUID', function(IContainer $c) {
-			/** @var \OCA\Activity\CurrentUser $currentUser */
-			$currentUser = $c->query('OCA\Activity\CurrentUser');
-			return $currentUser->getUserIdentifier();
-		});
 
 		// Aliases for the controllers so we can use the automatic DI
 		$container->registerAlias('ActivitiesController', 'OCA\Activity\Controller\Activities');
