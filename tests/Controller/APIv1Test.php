@@ -25,7 +25,9 @@ use OC\Activity\Manager;
 use OCA\Activity\Controller\APIv1;
 use OCA\Activity\CurrentUser;
 use OCA\Activity\Data;
+use OCA\Activity\DataHelper;
 use OCA\Activity\GroupHelper;
+use OCA\Activity\Parameter\Factory;
 use OCA\Activity\PlainTextParser;
 use OCA\Activity\Tests\Mock\Extension;
 use OCA\Activity\Tests\TestCase;
@@ -37,6 +39,7 @@ use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUserSession;
+use OCP\L10N\IFactory;
 
 /**
  * Class APIv1Test
@@ -182,11 +185,10 @@ class APIv1Test extends TestCase {
 	 * @param array $expected
 	 */
 	public function testGet($user, $start, $count, $expected) {
-		$activityManager = new Manager(
-			$this->getMockBuilder(IRequest::class)->getMock(),
-			$this->getMockBuilder(IUserSession::class)->getMock(),
-			$this->getMockBuilder(IConfig::class)->getMock()
-		);
+		$config = $this->getMockBuilder(IConfig::class)->getMock();
+		$config->expects($this->any())
+			->method('getUserValue')
+			->willReturnArgument(3);
 
 		$l = $this->getMockBuilder(IL10N::class)->getMock();
 		$l->expects($this->any())
@@ -195,7 +197,12 @@ class APIv1Test extends TestCase {
 				return vsprintf($text, $parameters);
 			}));
 
-		$activityManager->registerExtension(function() use($l) {
+		$activityManager = new Manager(
+			$this->getMockBuilder(IRequest::class)->getMock(),
+			$this->getMockBuilder(IUserSession::class)->getMock(),
+			$config
+		);
+		$activityManager->registerExtension(function() use ($l) {
 			return new Extension($l, $this->getMockBuilder(IURLGenerator::class)->getMock());
 		});
 
@@ -206,24 +213,27 @@ class APIv1Test extends TestCase {
 			->method('getUID')
 			->willReturn($user);
 
-		$this->overwriteService('ActivityManager', $activityManager);
+		$data = new Data($activityManager, \OC::$server->getDatabaseConnection());
 
 		/** @var APIv1 $controller */
 		$controller = new APIv1(
 			'activity',
 			$this->getMockBuilder(IRequest::class)->getMock(),
-			\OC::$server->query(Data::class),
-			\OC::$server->query(GroupHelper::class),
-			\OC::$server->query(UserSettings::class),
-			\OC::$server->query(PlainTextParser::class),
+			$data,
+			new GroupHelper($activityManager, new DataHelper(
+				$activityManager,
+				\OC::$server->query(Factory::class),
+				$this->getMockBuilder(IFactory::class)->getMock(),
+				$l
+			)),
+			new UserSettings($activityManager, $config, $data),
+			new PlainTextParser($l),
 			$currentUser
 		);
 		$response = $controller->get($start, $count);
 
-		$this->restoreService('ActivityManager');
-
 		$data = $response->getData();
-		$this->assertEquals(sizeof($expected), sizeof($data));
+		$this->assertEquals(sizeof($expected), sizeof($data), 'Number of expected activities does not match');
 
 		while (!empty($expected)) {
 			$assertExpected = array_shift($expected);
