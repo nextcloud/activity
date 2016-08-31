@@ -1,7 +1,5 @@
 language: php
 php:
-  - 5.4
-  - 5.5
   - 5.6
   - 7
 
@@ -53,19 +51,16 @@ script:
 
 matrix:
   include:
-    - php: 5.4
+    - php: 5.6
       env: DB=mysql
-    - php: 5.4
+    - php: 5.6
       env: DB=pgsql
-    - php: 5.4
-      env: DB=oracle
-    - php: 5.4
+    - php: 5.6
       env: DB=mysql;CODECHECK=1
-    - php: 5.4
+    - php: 5.6
       env: DB=mysql;CODECHECK=2
-    - php: 5.4
+    - php: 5.6
       env: DB=mysql;JSTESTS=1
   allow_failures:
     - env: DB=mysql;CODECHECK=2
-    - env: DB=oracle # TODO: temporary until it is fixed
   fast_finish: true
