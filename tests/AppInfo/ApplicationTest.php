@@ -72,6 +72,9 @@ class ApplicationTest extends TestCase {
 
 			array('ActivitiesController', 'OCP\AppFramework\Controller'),
 			array('ActivitiesController', 'OCA\Activity\Controller\Activities'),
+			array('APIv1Controller', 'OCP\AppFramework\Controller'),
+			array('APIv1Controller', 'OCP\AppFramework\OCSController'),
+			array('APIv1Controller', 'OCA\Activity\Controller\APIv1'),
 			array('EndPointController', 'OCP\AppFramework\Controller'),
 			array('EndPointController', 'OCA\Activity\Controller\EndPoint'),
 			array('FeedController', 'OCP\AppFramework\Controller'),
