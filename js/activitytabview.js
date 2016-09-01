@@ -21,7 +21,7 @@
 		'    <li class="activity box">' +
 		'        <div class="activity-icon {{typeIconClass}}"></div>' +
 		'        <div class="activitysubject">{{{subject}}}</div>' +
-		'        <span class="activitytime has-tooltip" title="{{formattedDateTooltip}}">{{formattedDate}}</span>' +
+		'        <span class="activitytime has-tooltip live-relative-timestamp" data-timestamp="{{timestamp}}" title="{{formattedDateTooltip}}">{{formattedDate}}</span>' +
 		'        <div class="activitymessage">{{{message}}}</div>' +
 		'        {{#if previews}}' +
 		'        <div class="previews">' +
@@ -123,6 +123,7 @@
 				subject: OCA.Activity.Formatter.parseMessage(activity.get('subject_prepared'), false),
 				formattedDate: activity.getRelativeDate(),
 				formattedDateTooltip: activity.getFullDate(),
+				timestamp: moment(activity.datetime).valueOf(),
 				message: OCA.Activity.Formatter.parseMessage(activity.get('message_prepared'), false)
 			};
 

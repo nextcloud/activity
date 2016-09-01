@@ -217,7 +217,7 @@ $(function(){
 				+ ((activity.link) ? '			</a>' + "\n" : '')
 				+ '		</div>' + "\n"
 
-				+'		<span class="activitytime has-tooltip" title="' + escapeHTML(OC.Util.formatDate(activity.timestamp)) + '">' + "\n"
+				+'		<span class="activitytime has-tooltip live-relative-timestamp" data-timestamp="' + activity.timestamp + '" title="' + escapeHTML(OC.Util.formatDate(activity.timestamp)) + '">' + "\n"
 				+ '			' + escapeHTML(OC.Util.relativeModifiedDate(activity.timestamp)) + "\n"
 				+'		</span>' + "\n";
 
