@@ -21,9 +21,9 @@
 
 return [
 	'ocs' => [
-		['root' => '/cloud', 'name' => 'APIv1#get', 'url' => '/activity', 'verb' => 'GET'],
-//		['root' => '/apps/activity', 'name' => 'APIv2#getDefault', 'url' => '/api/v2/activity', 'verb' => 'GET'],
-//		['root' => '/apps/activity', 'name' => 'APIv2#getFilter', 'url' => '/api/v2/activity/{filter}', 'verb' => 'GET'],
+		['name' => 'APIv1#get', 'url' => '/activity', 'verb' => 'GET', 'root' => '/cloud'],
+//		['name' => 'APIv2#getDefault', 'url' => '/api/v2/activity', 'verb' => 'GET'],
+//		['name' => 'APIv2#getFilter', 'url' => '/api/v2/activity/{filter}', 'verb' => 'GET'],
 	],
 	'routes' => [
 		['name' => 'Settings#personal', 'url' => '/settings', 'verb' => 'POST'],
