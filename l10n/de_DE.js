@@ -19,7 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Ihre Einstellungen wurden aktualisiert.",
     "Mail" : "E-Mail",
     "Stream" : "Stream",
-    "\"remote user\"" : "„Entfernter Benutzer“",
+    "\"remote user\"" : "„Externer Benutzer“",
     "Activity notification" : "Benachrichtigung über die Aktivitäten",
     "All Activities" : "Alle Aktivitäten",
     "Activities by you" : "Ihre Aktivitäten",
