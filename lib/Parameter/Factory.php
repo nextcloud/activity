@@ -128,18 +128,18 @@ class Factory {
 		switch ($formatter) {
 			case 'file':
 				/** @var \OCA\Activity\Formatter\FileFormatter $fileFormatter */
-				$fileFormatter = \OC::$server->query('OCA\Activity\Formatter\FileFormatter');
+				$fileFormatter = \OC::$server->query(FileFormatter::class);
 				$fileFormatter->setUser($this->user);
 				return $fileFormatter;
 			case 'username':
 				/** @var \OCA\Activity\Formatter\UserFormatter */
-				return \OC::$server->query('OCA\Activity\Formatter\UserFormatter');
+				return \OC::$server->query(UserFormatter::class);
 			case 'federated_cloud_id':
 				/** @var \OCA\Activity\Formatter\CloudIDFormatter */
-				return \OC::$server->query('OCA\Activity\Formatter\CloudIDFormatter');
+				return \OC::$server->query(CloudIDFormatter::class);
 			default:
 				/** @var \OCA\Activity\Formatter\BaseFormatter */
-				return \OC::$server->query('OCA\Activity\Formatter\BaseFormatter');
+				return \OC::$server->query(BaseFormatter::class);
 		}
 	}
 }

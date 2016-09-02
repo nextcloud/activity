@@ -36,7 +36,6 @@ class EmailNotificationTest extends TestCase {
 		return [
 			[true],
 			[false],
-			[null],
 		];
 	}
 

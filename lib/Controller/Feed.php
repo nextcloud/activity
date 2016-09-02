@@ -34,7 +34,6 @@ use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\L10N\IFactory;
-use OCP\Util;
 
 class Feed extends Controller {
 	const DEFAULT_PAGE_SIZE = 30;

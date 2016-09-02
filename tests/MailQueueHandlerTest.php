@@ -24,7 +24,8 @@
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\MailQueueHandler;
-use OCA\Activity\UserSettings;
+use OCP\IL10N;
+use OCP\L10N\IFactory;
 
 /**
  * Class MailQueueHandlerTest
@@ -48,6 +49,9 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\IUserManager */
 	protected $userManager;
 
+	/** @var \PHPUnit_Framework_MockObject_MockObject|IFactory */
+	protected $lFactory;
+
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\Activity\IManager */
 	protected $activityManager;
 
@@ -59,6 +63,7 @@ class MailQueueHandlerTest extends TestCase {
 
 		$app = $this->getUniqueID('MailQueueHandlerTest');
 		$this->userManager = $this->getMock('OCP\IUserManager');
+		$this->lFactory = $this->getMockBuilder(IFactory::class)->getMock();
 
 		$connection = \OC::$server->getDatabaseConnection();
 		$query = $connection->prepare('INSERT INTO `*PREFIX*activity_mq` '
@@ -121,6 +126,7 @@ class MailQueueHandlerTest extends TestCase {
 				->disableOriginalConstructor()
 				->getMock(),
 			$this->userManager,
+			$this->lFactory,
 			$this->activityManager
 		);
 	}
@@ -225,6 +231,10 @@ class MailQueueHandlerTest extends TestCase {
 				[$user, $userObject],
 				[$user . $user, null],
 			]);
+		$this->lFactory->expects($this->once())
+			->method('get')
+			->with('activity', 'en')
+			->willReturn($this->getMockBuilder(IL10N::class)->getMock());
 
 		$this->activityManager->expects($this->exactly(2))
 			->method('setCurrentUserId')

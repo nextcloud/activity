@@ -22,8 +22,41 @@
 
 namespace OCA\Activity\Tests\AppInfo;
 
+use OC\BackgroundJob\TimedJob;
+use OC\Files\View;
 use OCA\Activity\AppInfo\Application;
+use OCA\Activity\BackgroundJob\EmailNotification;
+use OCA\Activity\BackgroundJob\ExpireActivities;
+use OCA\Activity\Consumer;
+use OCA\Activity\Controller\Activities;
+use OCA\Activity\Controller\APIv1;
+use OCA\Activity\Controller\EndPoint;
+use OCA\Activity\Controller\Feed;
+use OCA\Activity\Controller\OCSEndPoint;
+use OCA\Activity\Controller\Settings;
+use OCA\Activity\CurrentUser;
+use OCA\Activity\Data;
+use OCA\Activity\DataHelper;
+use OCA\Activity\FilesHooks;
+use OCA\Activity\Formatter\BaseFormatter;
+use OCA\Activity\Formatter\CloudIDFormatter;
+use OCA\Activity\Formatter\FileFormatter;
+use OCA\Activity\Formatter\IFormatter;
+use OCA\Activity\Formatter\UserFormatter;
+use OCA\Activity\GroupHelper;
+use OCA\Activity\GroupHelperDisabled;
+use OCA\Activity\Hooks;
+use OCA\Activity\MailQueueHandler;
+use OCA\Activity\Navigation;
+use OCA\Activity\Parameter\Factory;
+use OCA\Activity\PlainTextParser;
 use OCA\Activity\Tests\TestCase;
+use OCA\Activity\UserSettings;
+use OCA\Activity\ViewInfoCache;
+use OCP\Activity\IConsumer;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\OCSController;
+use OCP\IL10N;
 
 /**
  * Class ApplicationTest
@@ -51,36 +84,62 @@ class ApplicationTest extends TestCase {
 
 	public function queryData() {
 		return array(
-			array('OCP\IL10N', 'OCP\IL10N'),
-			array('OC\Files\View', 'OC\Files\View'),
+			array(IL10N::class),
+			array(View::class),
 
-			array('OCA\Activity\Data', 'OCA\Activity\Data'),
-			array('OCA\Activity\Consumer', 'OCA\Activity\Consumer'),
-			array('OCA\Activity\Consumer', 'OCP\Activity\IConsumer'),
-			array('OCA\Activity\Controller\OCSEndPoint', 'OCA\Activity\Controller\OCSEndPoint'),
-			array('OCA\Activity\CurrentUser', 'OCA\Activity\CurrentUser'),
-			array('OCA\Activity\DataHelper', 'OCA\Activity\DataHelper'),
-			array('OCA\Activity\FilesHooks', 'OCA\Activity\FilesHooks'),
-			array('OCA\Activity\GroupHelper', 'OCA\Activity\GroupHelper'),
-			array('OCA\Activity\GroupHelperDisabled', 'OCA\Activity\GroupHelper'),
-			array('OCA\Activity\GroupHelperDisabled', 'OCA\Activity\GroupHelperDisabled'),
-			array('OCA\Activity\Parameter\Factory', 'OCA\Activity\Parameter\Factory'),
-			array('OCA\Activity\MailQueueHandler', 'OCA\Activity\MailQueueHandler'),
-			array('OCA\Activity\Navigation', 'OCA\Activity\Navigation'),
-			array('OCA\Activity\UserSettings', 'OCA\Activity\UserSettings'),
-			array('OCA\Activity\ViewInfoCache', 'OCA\Activity\ViewInfoCache'),
+			// lib/
+			array(Consumer::class),
+			array(Consumer::class, IConsumer::class),
+			array(CurrentUser::class),
+			array(Data::class),
+			array(DataHelper::class),
+			array(FilesHooks::class),
+			array(GroupHelper::class),
+			array(GroupHelperDisabled::class),
+			array(GroupHelperDisabled::class, GroupHelper::class),
+			array(Hooks::class),
+			array(MailQueueHandler::class),
+			array(Navigation::class),
+			array(PlainTextParser::class),
+			array(UserSettings::class),
+			array(ViewInfoCache::class),
 
-			array('ActivitiesController', 'OCP\AppFramework\Controller'),
-			array('ActivitiesController', 'OCA\Activity\Controller\Activities'),
-			array('APIv1Controller', 'OCP\AppFramework\Controller'),
-			array('APIv1Controller', 'OCP\AppFramework\OCSController'),
-			array('APIv1Controller', 'OCA\Activity\Controller\APIv1'),
-			array('EndPointController', 'OCP\AppFramework\Controller'),
-			array('EndPointController', 'OCA\Activity\Controller\EndPoint'),
-			array('FeedController', 'OCP\AppFramework\Controller'),
-			array('FeedController', 'OCA\Activity\Controller\Feed'),
-			array('SettingsController', 'OCP\AppFramework\Controller'),
-			array('SettingsController', 'OCA\Activity\Controller\Settings'),
+			// BackgroundJob
+			array(EmailNotification::class),
+			array(EmailNotification::class, TimedJob::class),
+			array(ExpireActivities::class,),
+			array(ExpireActivities::class, TimedJob::class),
+
+			// Controller
+			array('ActivitiesController', Activities::class),
+			array('ActivitiesController', Controller::class),
+			array('APIv1Controller', APIv1::class),
+			array('APIv1Controller', Controller::class),
+			array('APIv1Controller', OCSController::class),
+			array('EndPointController', EndPoint::class),
+			array('EndPointController', Controller::class),
+			array('FeedController', Feed::class),
+			array('FeedController', Controller::class),
+			array(OCSEndPoint::class),
+			array('SettingsController', Settings::class),
+			array('SettingsController', Controller::class),
+
+			// Formatter
+			array(BaseFormatter::class),
+			array(BaseFormatter::class, IFormatter::class),
+			array(CloudIDFormatter::class),
+			array(CloudIDFormatter::class, IFormatter::class),
+			array(FileFormatter::class),
+			array(FileFormatter::class, IFormatter::class),
+			array(UserFormatter::class),
+			array(UserFormatter::class, IFormatter::class),
+
+			// Parameter
+			array(Factory::class),
+			//array(Collection::class),
+			//array(Collection::class, IParameter::class),
+			//array(Parameter::class),
+			//array(Parameter::class, IParameter::class),
 		);
 	}
 
@@ -89,7 +148,10 @@ class ApplicationTest extends TestCase {
 	 * @param string $service
 	 * @param string $expected
 	 */
-	public function testContainerQuery($service, $expected) {
+	public function testContainerQuery($service, $expected = null) {
+		if ($expected === null) {
+			$expected = $service;
+		}
 		$this->assertTrue($this->container->query($service) instanceof $expected);
 	}
 }
