@@ -24,5 +24,5 @@ namespace OCA\Activity\Extension;
 
 class Files_Sharing {
 	const TYPE_SHARED = 'shared';
-	const TYPE_REMOTE_DOWNLOAD = 'remote_download';
+	const TYPE_PUBLIC_LINKS = 'public_links';
 }

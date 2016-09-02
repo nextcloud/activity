@@ -262,22 +262,26 @@ class FilesHooks {
 	 * @param array $params The hook params
 	 */
 	public function downloadedShare($params) {
-		$filePath = $params['target'];
-		$userSubject = 'shared_file_downloaded';
-		$activityType = 'remote_download';
+		list($ownerPath, $uidOwner, $fileId) = $this->getSourcePathAndOwner($params['target']);
 
-		list($ownerPath, $uidOwner, $fileId) = $this->getSourcePathAndOwner($filePath);
-		$userParams = [[$fileId => $ownerPath], $this->currentUser];
+		$client = 'web';
+		if ($this->request->isUserAgent([IRequest::USER_AGENT_CLIENT_DESKTOP])) {
+			$client = 'desktop';
+		} else if ($this->request->isUserAgent([IRequest::USER_AGENT_CLIENT_ANDROID, IRequest::USER_AGENT_CLIENT_IOS])) {
+			$client = 'mobile';
+		}
+		$subjectParams = [[$fileId => $ownerPath], $this->currentUser->getUserIdentifier(), $client];
+
 		$this->addNotificationsForUser(
-			$uidOwner, $userSubject, $userParams,
+			$uidOwner, 'shared_file_downloaded', $subjectParams,
 			$fileId, $ownerPath, true,
 			$this->userSettings->getUserSetting(
-				$uidOwner, 'stream', Files_Sharing::TYPE_SHARED
+				$uidOwner, 'stream', Files_Sharing::TYPE_PUBLIC_LINKS
 			),
 			$this->userSettings->getUserSetting(
-				$uidOwner, 'email', Files_Sharing::TYPE_SHARED
+				$uidOwner, 'email', Files_Sharing::TYPE_PUBLIC_LINKS
 			) ? $this->userSettings->getUserSetting($uidOwner, 'setting', 'batchtime') : 0,
-			$activityType
+			Files_Sharing::TYPE_PUBLIC_LINKS
 		);
 	}
 
@@ -589,22 +593,12 @@ class FilesHooks {
 		}
 
 		$selfAction = $user === $this->currentUser->getUID();
-		$app = ($type === Files_Sharing::TYPE_SHARED || $type === Files_Sharing::TYPE_REMOTE_DOWNLOAD) ? 'files_sharing' : 'files';
+		$app = ($type === Files_Sharing::TYPE_SHARED || $type === Files_Sharing::TYPE_PUBLIC_LINKS) ? 'files_sharing' : 'files';
 		$link = $this->urlGenerator->linkToRouteAbsolute('files.view.index', array(
 			'dir' => ($isFile) ? dirname($path) : $path,
 		));
 
 		$objectType = ($fileId) ? 'files' : '';
-
-		$client = 'web';
-		if ($this->request->isUserAgent([IRequest::USER_AGENT_CLIENT_DESKTOP])) {
-			$client = 'desktop';
-		}
-		if ($this->request->isUserAgent([IRequest::USER_AGENT_CLIENT_ANDROID, IRequest::USER_AGENT_CLIENT_IOS])) {
-			$client = 'mobile';
-		}
-
-		$subjectParams[] = $client;
 
 		$event = $this->manager->generateEvent();
 		$event->setApp($app)
