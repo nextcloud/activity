@@ -40,6 +40,7 @@ class Application extends App {
 
 		// Aliases for the controllers so we can use the automatic DI
 		$container->registerAlias('ActivitiesController', 'OCA\Activity\Controller\Activities');
+		$container->registerAlias('APIv1Controller', 'OCA\Activity\Controller\APIv1');
 		$container->registerAlias('EndPointController', 'OCA\Activity\Controller\EndPoint');
 		$container->registerAlias('FeedController', 'OCA\Activity\Controller\Feed');
 		$container->registerAlias('SettingsController', 'OCA\Activity\Controller\Settings');

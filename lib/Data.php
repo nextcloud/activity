@@ -24,15 +24,12 @@
 
 namespace OCA\Activity;
 
-use OCA\Activity\Exception\InvalidFilterException;
 use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 use OCP\IL10N;
-use OCP\IUser;
-use OCP\IUserSession;
 
 /**
  * @brief Class for managing the data in the activities
@@ -44,18 +41,13 @@ class Data {
 	/** @var IDBConnection */
 	protected $connection;
 
-	/** @var IUserSession */
-	protected $userSession;
-
 	/**
 	 * @param IManager $activityManager
 	 * @param IDBConnection $connection
-	 * @param IUserSession $userSession
 	 */
-	public function __construct(IManager $activityManager, IDBConnection $connection, IUserSession $userSession) {
+	public function __construct(IManager $activityManager, IDBConnection $connection) {
 		$this->activityManager = $activityManager;
 		$this->connection = $connection;
-		$this->userSession = $userSession;
 	}
 
 	protected $notificationTypes = array();
