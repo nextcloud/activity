@@ -49,7 +49,7 @@ class Hooks {
 		// Delete activity entries
 		$app = new Application();
 		/** @var Data $activityData */
-		$activityData = $app->getContainer()->query('OCA\Activity\Data');
+		$activityData = $app->getContainer()->query(Data::class);
 		$activityData->deleteActivities(array('affecteduser' => $user));
 	}
 

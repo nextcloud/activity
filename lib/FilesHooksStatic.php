@@ -35,7 +35,7 @@ class FilesHooksStatic {
 	 */
 	static protected function getHooks() {
 		$app = new AppInfo\Application();
-		return $app->getContainer()->query('OCA\Activity\FilesHooks');
+		return $app->getContainer()->query(FilesHooks::class);
 	}
 
 	/**

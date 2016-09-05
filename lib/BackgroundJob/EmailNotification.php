@@ -54,32 +54,19 @@ class EmailNotification extends TimedJob {
 	 * @param MailQueueHandler $mailQueueHandler
 	 * @param IConfig $config
 	 * @param ILogger $logger
-	 * @param bool|null $isCLI
+	 * @param bool $isCLI
 	 */
-	public function __construct(MailQueueHandler $mailQueueHandler = null,
-								IConfig $config = null,
-								ILogger $logger = null,
-								$isCLI = null) {
+	public function __construct(MailQueueHandler $mailQueueHandler,
+								IConfig $config,
+								ILogger $logger,
+								$isCLI) {
 		// Run all 15 Minutes
 		$this->setInterval(15 * 60);
 
-		if ($mailQueueHandler === null || $config === null || $logger === null || $isCLI === null) {
-			$this->fixDIForJobs();
-		} else {
-			$this->mqHandler = $mailQueueHandler;
-			$this->config = $config;
-			$this->logger = $logger;
-			$this->isCLI = $isCLI;
-		}
-	}
-
-	protected function fixDIForJobs() {
-		$application = new Application();
-
-		$this->mqHandler = $application->getContainer()->query('OCA\Activity\MailQueueHandler');
-		$this->config = \OC::$server->getConfig();
-		$this->logger = \OC::$server->getLogger();
-		$this->isCLI = \OC::$CLI;
+		$this->mqHandler = $mailQueueHandler;
+		$this->config = $config;
+		$this->logger = $logger;
+		$this->isCLI = $isCLI;
 	}
 
 	protected function run($argument) {

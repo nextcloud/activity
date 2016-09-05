@@ -30,6 +30,7 @@ use OCP\IDBConnection;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserManager;
+use OCP\L10N\IFactory;
 use OCP\Mail\IMailer;
 use OCP\Template;
 use OCP\Util;
@@ -71,6 +72,9 @@ class MailQueueHandler {
 	/** @var IUserManager */
 	protected $userManager;
 
+	/** @var IFactory */
+	protected $lFactory;
+
 	/** @var IManager */
 	protected $activityManager;
 
@@ -83,6 +87,7 @@ class MailQueueHandler {
 	 * @param IMailer $mailer
 	 * @param IURLGenerator $urlGenerator
 	 * @param IUserManager $userManager
+	 * @param IFactory $lFactory
 	 * @param IManager $activityManager
 	 */
 	public function __construct(IDateTimeFormatter $dateFormatter,
@@ -91,6 +96,7 @@ class MailQueueHandler {
 								IMailer $mailer,
 								IURLGenerator $urlGenerator,
 								IUserManager $userManager,
+								IFactory $lFactory,
 								IManager $activityManager) {
 		$this->dateFormatter = $dateFormatter;
 		$this->connection = $connection;
@@ -98,6 +104,7 @@ class MailQueueHandler {
 		$this->mailer = $mailer;
 		$this->urlGenerator = $urlGenerator;
 		$this->userManager = $userManager;
+		$this->lFactory = $lFactory;
 		$this->activityManager = $activityManager;
 	}
 
@@ -177,7 +184,7 @@ class MailQueueHandler {
 	 */
 	protected function getLanguage($lang) {
 		if (!isset($this->languages[$lang])) {
-			$this->languages[$lang] = Util::getL10N('activity', $lang);
+			$this->languages[$lang] = $this->lFactory->get('activity', $lang);
 		}
 
 		return $this->languages[$lang];

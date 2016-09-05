@@ -22,24 +22,12 @@
 
 namespace OCA\Activity\Controller;
 
-use OC\Files\View;
 use OCA\Activity\Data;
-use OCA\Activity\Exception\InvalidFilterException;
-use OCA\Activity\GroupHelper;
 use OCA\Activity\Navigation;
-use OCA\Activity\UserSettings;
-use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\Files;
-use OCP\Files\IMimeTypeDetector;
 use OCP\IConfig;
-use OCP\IDateTimeFormatter;
-use OCP\IPreview;
 use OCP\IRequest;
-use OCP\IURLGenerator;
-use OCP\Template;
 
 class Activities extends Controller {
 

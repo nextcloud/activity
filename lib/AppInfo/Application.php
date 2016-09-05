@@ -23,9 +23,16 @@
 namespace OCA\Activity\AppInfo;
 
 use OC\Files\View;
-use OCA\Activity\FilesHooks;
+use OCA\Activity\Consumer;
+use OCA\Activity\Controller\Activities;
+use OCA\Activity\Controller\APIv1;
+use OCA\Activity\Controller\EndPoint;
+use OCA\Activity\Controller\Feed;
+use OCA\Activity\Controller\Settings;
+use OCA\Activity\FilesHooksStatic;
+use OCA\Activity\Hooks;
 use OCP\AppFramework\App;
-use OCP\IContainer;
+use OCP\IL10N;
 use OCP\Util;
 
 class Application extends App {
@@ -34,16 +41,19 @@ class Application extends App {
 		$container = $this->getContainer();
 
 		// Allow automatic DI for the View, until we migrated to Nodes API
-		$container->registerService('OC\Files\View', function() {
+		$container->registerService(View::class, function() {
 			return new View('');
 		}, false);
+		$container->registerService('isCLI', function() {
+			return \OC::$CLI;
+		});
 
 		// Aliases for the controllers so we can use the automatic DI
-		$container->registerAlias('ActivitiesController', 'OCA\Activity\Controller\Activities');
-		$container->registerAlias('APIv1Controller', 'OCA\Activity\Controller\APIv1');
-		$container->registerAlias('EndPointController', 'OCA\Activity\Controller\EndPoint');
-		$container->registerAlias('FeedController', 'OCA\Activity\Controller\Feed');
-		$container->registerAlias('SettingsController', 'OCA\Activity\Controller\Settings');
+		$container->registerAlias('ActivitiesController', Activities::class);
+		$container->registerAlias('APIv1Controller', APIv1::class);
+		$container->registerAlias('EndPointController', EndPoint::class);
+		$container->registerAlias('FeedController', Feed::class);
+		$container->registerAlias('SettingsController', Settings::class);
 	}
 
 	/**
@@ -58,7 +68,7 @@ class Application extends App {
 			return [
 				'id' => $c->getAppName(),
 				'order' => 1,
-				'name' => $c->query('OCP\IL10N')->t('Activity'),
+				'name' => $c->query(IL10N::class)->t('Activity'),
 				'href' => $server->getURLGenerator()->linkToRoute('activity.Activities.showList'),
 				'icon' => $server->getURLGenerator()->imagePath($c->getAppName(), 'activity.svg'),
 			];
@@ -75,7 +85,7 @@ class Application extends App {
 		$server = $c->getServer();
 
 		$server->getActivityManager()->registerConsumer(function() use ($c) {
-			return $c->query('OCA\Activity\Consumer');
+			return $c->query(Consumer::class);
 		});
 	}
 
@@ -84,9 +94,9 @@ class Application extends App {
 	 */
 	public function registerHooksAndEvents() {
 		$eventDispatcher = $this->getContainer()->getServer()->getEventDispatcher();
-		$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', ['OCA\Activity\FilesHooksStatic', 'onLoadFilesAppScripts']);
+		$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', [FilesHooksStatic::class, 'onLoadFilesAppScripts']);
 
-		Util::connectHook('OC_User', 'post_deleteUser', 'OCA\Activity\Hooks', 'deleteUser');
+		Util::connectHook('OC_User', 'post_deleteUser', Hooks::class, 'deleteUser');
 
 		$this->registerFilesActivity();
 	}
@@ -96,12 +106,12 @@ class Application extends App {
 	 */
 	public function registerFilesActivity() {
 		// All other events from other apps have to be send via the Consumer
-		Util::connectHook('OC_Filesystem', 'post_create', 'OCA\Activity\FilesHooksStatic', 'fileCreate');
-		Util::connectHook('OC_Filesystem', 'post_update', 'OCA\Activity\FilesHooksStatic', 'fileUpdate');
-		Util::connectHook('OC_Filesystem', 'delete', 'OCA\Activity\FilesHooksStatic', 'fileDelete');
-		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', 'OCA\Activity\FilesHooksStatic', 'fileRestore');
-		Util::connectHook('OCP\Share', 'post_shared', 'OCA\Activity\FilesHooksStatic', 'share');
-		Util::connectHook('OCP\Share', 'pre_unshare', 'OCA\Activity\FilesHooksStatic', 'unShare');
+		Util::connectHook('OC_Filesystem', 'post_create', FilesHooksStatic::class, 'fileCreate');
+		Util::connectHook('OC_Filesystem', 'post_update', FilesHooksStatic::class, 'fileUpdate');
+		Util::connectHook('OC_Filesystem', 'delete', FilesHooksStatic::class, 'fileDelete');
+		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', FilesHooksStatic::class, 'fileRestore');
+		Util::connectHook('OCP\Share', 'post_shared', FilesHooksStatic::class, 'share');
+		Util::connectHook('OCP\Share', 'pre_unshare', FilesHooksStatic::class, 'unShare');
 	}
 
 	/**
