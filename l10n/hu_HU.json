@@ -2,6 +2,7 @@
     "Activities" : "Aktivitások",
     "Error loading activities" : "Hiba történt az aktivitások betöltése közben",
     "No activities" : "Nincs aktivitás",
+    "Load more activities" : "Több aktivitás betöltése",
     ", " : ", ",
     "{parameterList} and {lastParameter}" : "{parameterList} és {lastParameter}",
     "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} és {linkStart}%n{linkEnd}","{parameterList} és {linkStart}%n{linkEnd}"],
