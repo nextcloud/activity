@@ -15,7 +15,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Jūsų nustatymai buvo atnaujinti.",
     "Mail" : "Paštas",
     "Stream" : "Transliacija",
-    "\"remote user\"" : "\"Nuotolinis vartotojas\"",
+    "\"remote user\"" : "\"nuotolinis naudotojas\"",
     "Activity notification" : "Veiklos perspėjimai",
     "All Activities" : "Visa veikla",
     "Activities by you" : "Jūsų veikla",
