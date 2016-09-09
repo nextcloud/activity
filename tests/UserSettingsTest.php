@@ -53,10 +53,6 @@ class UserSettingsTest extends TestCase {
 		));
 	}
 
-	protected function tearDown() {
-		parent::tearDown();
-	}
-
 	public function getDefaultSettingData() {
 		return array(
 			array('stream', 'type1', true),
