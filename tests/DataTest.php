@@ -24,8 +24,6 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\Data;
 use OCA\Activity\Tests\Mock\Extension;
-use OCP\Activity\IExtension;
-use OCP\IUser;
 
 /**
  * Class DataTest

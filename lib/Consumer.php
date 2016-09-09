@@ -26,8 +26,6 @@ namespace OCA\Activity;
 use OCP\Activity\IConsumer;
 use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
-use OCP\Activity\IManager;
-use OCP\AppFramework\IAppContainer;
 use OCP\L10N\IFactory;
 
 class Consumer implements IConsumer {

@@ -23,7 +23,6 @@
 namespace OCA\Activity\BackgroundJob;
 
 use OC\BackgroundJob\TimedJob;
-use OCA\Activity\AppInfo\Application;
 use OCA\Activity\Data;
 use OCP\IConfig;
 
