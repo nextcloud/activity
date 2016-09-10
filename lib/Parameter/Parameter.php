@@ -24,7 +24,6 @@ namespace OCA\Activity\Parameter;
 
 use OCA\Activity\Formatter\IFormatter;
 use OCP\Activity\IEvent;
-use OCP\Util;
 
 class Parameter implements IParameter {
 	/** @var IFormatter */

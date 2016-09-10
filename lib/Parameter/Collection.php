@@ -23,7 +23,6 @@
 namespace OCA\Activity\Parameter;
 
 use OCP\IL10N;
-use OCP\Util;
 
 class Collection implements IParameter {
 	/** @var IL10N */

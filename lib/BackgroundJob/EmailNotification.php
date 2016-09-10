@@ -24,7 +24,6 @@
 namespace OCA\Activity\BackgroundJob;
 
 use OC\BackgroundJob\TimedJob;
-use OCA\Activity\AppInfo\Application;
 use OCA\Activity\MailQueueHandler;
 use OCP\IConfig;
 use OCP\ILogger;

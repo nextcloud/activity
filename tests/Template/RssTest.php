@@ -27,10 +27,6 @@ use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Http\TemplateResponse;
 
 class RssTest extends TestCase{
-	protected function setUp() {
-		parent::setUp();
-	}
-
 	public function dataEmpty() {
 		return [
 			['de', 'http://localhost', 'description', 'Fri, 28 Aug 2015 11:47:14 +0000'],

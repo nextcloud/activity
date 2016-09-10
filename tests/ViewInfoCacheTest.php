@@ -22,9 +22,6 @@
 
 namespace OCA\Activity\Tests;
 
-use OCA\Activity\Formatter\FileFormatter;
-use OCA\Activity\Formatter\IFormatter;
-use OCA\Activity\Tests\TestCase;
 use OCA\Activity\ViewInfoCache;
 use OCP\Files\NotFoundException;
 
