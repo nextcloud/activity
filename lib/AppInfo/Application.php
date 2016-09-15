@@ -109,6 +109,8 @@ class Application extends App {
 		Util::connectHook('OC_Filesystem', 'post_create', FilesHooksStatic::class, 'fileCreate');
 		Util::connectHook('OC_Filesystem', 'post_update', FilesHooksStatic::class, 'fileUpdate');
 		Util::connectHook('OC_Filesystem', 'delete', FilesHooksStatic::class, 'fileDelete');
+		Util::connectHook('OC_Filesystem', 'rename', FilesHooksStatic::class, 'fileMove');
+		Util::connectHook('OC_Filesystem', 'post_rename', FilesHooksStatic::class, 'fileMovePost');
 		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', FilesHooksStatic::class, 'fileRestore');
 		Util::connectHook('OCP\Share', 'post_shared', FilesHooksStatic::class, 'share');
 		Util::connectHook('OCP\Share', 'pre_unshare', FilesHooksStatic::class, 'unShare');

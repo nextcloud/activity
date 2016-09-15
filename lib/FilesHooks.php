@@ -68,6 +68,9 @@ class FilesHooks {
 	/** @var CurrentUser */
 	protected $currentUser;
 
+	/** @var string|bool */
+	protected $moveCase = false;
+
 	/**
 	 * Constructor
 	 *
@@ -170,6 +173,135 @@ class FilesHooks {
 				!empty($filteredStreamUsers[$user]),
 				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
 				$activityType
+			);
+		}
+	}
+
+	/**
+	 * Collect some information for move/renames
+	 *
+	 * @param string $oldPath Path of the file that has been moved
+	 * @param string $newPath Path of the file that has been moved
+	 */
+	public function fileMove($oldPath, $newPath) {
+		if (substr($oldPath, -5) === '.part' || substr($newPath, -5) === '.part') {
+			// Do not add activities for .part-files
+			$this->moveCase = false;
+		}
+
+		$oldDir = dirname($oldPath);
+		$newDir = dirname($newPath);
+
+		if ($oldDir === $newDir) {
+			/**
+			 * a/b moved to a/c
+			 *
+			 * Cases:
+			 * - a/b shared: no visible change
+			 * - a/ shared: rename
+			 */
+			$this->moveCase = 'rename';
+		} else if (strpos($oldDir, $newDir) === 0) {
+			/**
+			 * a/b/c moved to a/d
+			 *
+			 * Cases:
+			 * - a/b/c shared: no visible change
+			 * - a/b/ shared: delete
+			 * - a/ shared: move
+			 */
+			$this->moveCase = 'moveUp';
+		} else if (strpos($newDir, $oldDir) === 0) {
+			/**
+			 * a/b moved to a/c/d
+			 *
+			 * Cases:
+			 * - a/b shared: no visible change
+			 * - a/c/ shared: add
+			 * - a/ shared: move
+			 */
+			$this->moveCase = 'moveDown';
+		} else if (strpos($newDir, $oldDir) === 0) {
+			/**
+			 * a/b/c moved to a/d/e
+			 *
+			 * Cases:
+			 * - a/b/c shared: no visible change
+			 * - a/b/ shared: delete
+			 * - a/d/ shared: add
+			 * - a/ shared: move
+			 */
+			$this->moveCase = 'moveCross';
+		}
+	}
+
+	/**
+	 * Store the move hook events
+	 *
+	 * @param string $oldPath Path of the file that has been moved
+	 * @param string $newPath Path of the file that has been moved
+	 */
+	public function fileMovePost($oldPath, $newPath) {
+		// Do not add activities for .part-files
+		if ($this->moveCase === false) {
+			return;
+		}
+
+		switch ($this->moveCase) {
+			case 'rename':
+				$this->fileRename($oldPath, $newPath);
+				break;
+		}
+
+		$this->moveCase = false;
+	}
+
+
+	/**
+	 * Renaming a file inside the same folder
+	 *
+	 * @param string $oldPath
+	 * @param string $newPath
+	 */
+	protected function fileRename($oldPath, $newPath) {
+		$dirName = dirname($newPath);
+		$fileName = basename($newPath);
+		$oldFileName = basename($oldPath);
+
+		if (dirname($oldPath) !== $dirName) {
+			return;
+		}
+
+		list(, , $fileId) = $this->getSourcePathAndOwner($newPath);
+		list($parentPath, $parentOwner, $parentId) = $this->getSourcePathAndOwner($dirName);
+		if ($fileId === 0 || $parentId === 0) {
+			// Could not find the file for the owner ...
+			return;
+		}
+
+		$affectedUsers = $this->getUserPathsFromPath($parentPath, $parentOwner);
+		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', Files::TYPE_SHARE_CHANGED);
+		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', Files::TYPE_SHARE_CHANGED);
+
+		foreach ($affectedUsers as $user => $path) {
+			if (empty($filteredStreamUsers[$user]) && empty($filteredEmailUsers[$user])) {
+				continue;
+			}
+
+			if ($user === $this->currentUser->getUID()) {
+				$userSubject = 'renamed_self';
+				$userParams = [[$fileId => $path . '/' . $fileName], $oldFileName];
+			} else {
+				$userSubject = 'renamed_by';
+				$userParams = [[$fileId => $path . '/' . $fileName], $this->currentUser->getUserIdentifier(), $oldFileName];
+			}
+
+			$this->addNotificationsForUser(
+				$user, $userSubject, $userParams,
+				$fileId, $path . '/' . $fileName, true,
+				!empty($filteredStreamUsers[$user]),
+				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
+				Files::TYPE_SHARE_CHANGED
 			);
 		}
 	}
