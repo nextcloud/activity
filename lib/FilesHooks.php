@@ -70,6 +70,14 @@ class FilesHooks {
 
 	/** @var string|bool */
 	protected $moveCase = false;
+	/** @var string[] */
+	protected $oldParentUsers;
+	/** @var string */
+	protected $oldParentPath;
+	/** @var string */
+	protected $oldParentOwner;
+	/** @var string */
+	protected $oldParentId;
 
 	/**
 	 * Constructor
@@ -187,6 +195,7 @@ class FilesHooks {
 		if (substr($oldPath, -5) === '.part' || substr($newPath, -5) === '.part') {
 			// Do not add activities for .part-files
 			$this->moveCase = false;
+			return;
 		}
 
 		$oldDir = dirname($oldPath);
@@ -201,39 +210,51 @@ class FilesHooks {
 			 * - a/ shared: rename
 			 */
 			$this->moveCase = 'rename';
-		} else if (strpos($oldDir, $newDir) === 0) {
+			return;
+		}
+
+		if (strpos($oldDir, $newDir) === 0) {
 			/**
-			 * a/b/c moved to a/d
+			 * a/b/c moved to a/c
 			 *
 			 * Cases:
 			 * - a/b/c shared: no visible change
 			 * - a/b/ shared: delete
-			 * - a/ shared: move
+			 * - a/ shared: move/rename
 			 */
 			$this->moveCase = 'moveUp';
 		} else if (strpos($newDir, $oldDir) === 0) {
 			/**
-			 * a/b moved to a/c/d
+			 * a/b moved to a/c/b
 			 *
 			 * Cases:
 			 * - a/b shared: no visible change
 			 * - a/c/ shared: add
-			 * - a/ shared: move
+			 * - a/ shared: move/rename
 			 */
 			$this->moveCase = 'moveDown';
-		} else if (strpos($newDir, $oldDir) === 0) {
+		} else {
 			/**
-			 * a/b/c moved to a/d/e
+			 * a/b/c moved to a/d/c
 			 *
 			 * Cases:
 			 * - a/b/c shared: no visible change
 			 * - a/b/ shared: delete
 			 * - a/d/ shared: add
-			 * - a/ shared: move
+			 * - a/ shared: move/rename
 			 */
 			$this->moveCase = 'moveCross';
 		}
+
+		list($this->oldParentPath, $this->oldParentOwner, $this->oldParentId) = $this->getSourcePathAndOwner($oldDir);
+		if ($this->oldParentId === 0) {
+			// Could not find the file for the owner ...
+			$this->moveCase = false;
+			return;
+		}
+		$this->oldParentUsers = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
 	}
+
 
 	/**
 	 * Store the move hook events
@@ -249,7 +270,12 @@ class FilesHooks {
 
 		switch ($this->moveCase) {
 			case 'rename':
-				$this->fileRename($oldPath, $newPath);
+				$this->fileRenaming($oldPath, $newPath);
+				break;
+			case 'moveUp':
+			case 'moveDown':
+			case 'moveCross':
+				$this->fileMoving($oldPath, $newPath);
 				break;
 		}
 
@@ -258,19 +284,15 @@ class FilesHooks {
 
 
 	/**
-	 * Renaming a file inside the same folder
+	 * Renaming a file inside the same folder (a/b to a/c)
 	 *
 	 * @param string $oldPath
 	 * @param string $newPath
 	 */
-	protected function fileRename($oldPath, $newPath) {
+	protected function fileRenaming($oldPath, $newPath) {
 		$dirName = dirname($newPath);
 		$fileName = basename($newPath);
 		$oldFileName = basename($oldPath);
-
-		if (dirname($oldPath) !== $dirName) {
-			return;
-		}
 
 		list(, , $fileId) = $this->getSourcePathAndOwner($newPath);
 		list($parentPath, $parentOwner, $parentId) = $this->getSourcePathAndOwner($dirName);
@@ -278,8 +300,8 @@ class FilesHooks {
 			// Could not find the file for the owner ...
 			return;
 		}
-
 		$affectedUsers = $this->getUserPathsFromPath($parentPath, $parentOwner);
+
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', Files::TYPE_SHARE_CHANGED);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', Files::TYPE_SHARE_CHANGED);
 
@@ -290,15 +312,178 @@ class FilesHooks {
 
 			if ($user === $this->currentUser->getUID()) {
 				$userSubject = 'renamed_self';
-				$userParams = [[$fileId => $path . '/' . $fileName], $oldFileName];
+				$userParams = [
+					[$fileId => $path . '/' . $fileName],
+					[$fileId => $path . '/' . $oldFileName],
+				];
 			} else {
 				$userSubject = 'renamed_by';
-				$userParams = [[$fileId => $path . '/' . $fileName], $this->currentUser->getUserIdentifier(), $oldFileName];
+				$userParams = [
+					[$fileId => $path . '/' . $fileName],
+					$this->currentUser->getUserIdentifier(),
+					[$fileId => $path . '/' . $oldFileName],
+				];
 			}
 
 			$this->addNotificationsForUser(
 				$user, $userSubject, $userParams,
 				$fileId, $path . '/' . $fileName, true,
+				!empty($filteredStreamUsers[$user]),
+				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
+				Files::TYPE_SHARE_CHANGED
+			);
+		}
+	}
+
+	/**
+	 * Moving a file from one folder to another
+	 *
+	 * @param string $oldPath
+	 * @param string $newPath
+	 */
+	protected function fileMoving($oldPath, $newPath) {
+		$dirName = dirname($newPath);
+		$fileName = basename($newPath);
+		$oldFileName = basename($oldPath);
+
+		list(, , $fileId) = $this->getSourcePathAndOwner($newPath);
+		list($parentPath, $parentOwner, $parentId) = $this->getSourcePathAndOwner($dirName);
+		if ($fileId === 0 || $parentId === 0) {
+			// Could not find the file for the owner ...
+			return;
+		}
+		$affectedUsers = $this->getUserPathsFromPath($parentPath, $parentOwner);
+
+		$beforeUsers = array_keys($this->oldParentUsers);
+		$afterUsers = array_keys($affectedUsers);
+
+		$deleteUsers = array_diff($beforeUsers, $afterUsers);
+		$this->generateDeleteActivities($deleteUsers, $this->oldParentUsers, $fileId, $oldFileName);
+
+		$addUsers = array_diff($afterUsers, $beforeUsers);
+		$this->generateAddActivities($addUsers, $affectedUsers, $fileId, $fileName);
+
+		$moveUsers = array_intersect($beforeUsers, $afterUsers);
+		$this->generateMoveActivities($moveUsers, $this->oldParentUsers, $affectedUsers, $fileId, $oldFileName, $fileName);
+	}
+
+	/**
+	 * @param string[] $users
+	 * @param string[] $pathMap
+	 * @param int $fileId
+	 * @param string $oldFileName
+	 */
+	protected function generateDeleteActivities($users, $pathMap, $fileId, $oldFileName) {
+		if (empty($users)) {
+			return;
+		}
+
+		$filteredStreamUsers = $this->userSettings->filterUsersBySetting($users, 'stream', Files::TYPE_SHARE_DELETED);
+		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_SHARE_DELETED);
+
+		foreach ($users as $user) {
+			if (empty($filteredStreamUsers[$user]) && empty($filteredEmailUsers[$user])) {
+				continue;
+			}
+
+			$path = $pathMap[$user];
+
+			if ($user === $this->currentUser->getUID()) {
+				$userSubject = 'deleted_self';
+				$userParams = [[$fileId => $path . '/' . $oldFileName]];
+			} else {
+				$userSubject = 'deleted_by';
+				$userParams = [[$fileId => $path . '/' . $oldFileName], $this->currentUser->getUserIdentifier()];
+			}
+
+			$this->addNotificationsForUser(
+				$user, $userSubject, $userParams,
+				$fileId, $path . '/' . $oldFileName, true,
+				!empty($filteredStreamUsers[$user]),
+				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
+				Files::TYPE_SHARE_DELETED
+			);
+		}
+	}
+
+	/**
+	 * @param string[] $users
+	 * @param string[] $pathMap
+	 * @param int $fileId
+	 * @param string $fileName
+	 */
+	protected function generateAddActivities($users, $pathMap, $fileId, $fileName) {
+		if (empty($users)) {
+			return;
+		}
+
+		$filteredStreamUsers = $this->userSettings->filterUsersBySetting($users, 'stream', Files::TYPE_SHARE_CREATED);
+		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_SHARE_CREATED);
+
+		foreach ($users as $user) {
+			if (empty($filteredStreamUsers[$user]) && empty($filteredEmailUsers[$user])) {
+				continue;
+			}
+
+			$path = $pathMap[$user];
+
+			if ($user === $this->currentUser->getUID()) {
+				$userSubject = 'created_self';
+				$userParams = [[$fileId => $path . '/' . $fileName]];
+			} else {
+				$userSubject = 'created_by';
+				$userParams = [[$fileId => $path . '/' . $fileName], $this->currentUser->getUserIdentifier()];
+			}
+
+			$this->addNotificationsForUser(
+				$user, $userSubject, $userParams,
+				$fileId, $path . '/' . $fileName, true,
+				!empty($filteredStreamUsers[$user]),
+				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
+				Files::TYPE_SHARE_CREATED
+			);
+		}
+	}
+
+	/**
+	 * @param string[] $users
+	 * @param string[] $beforePathMap
+	 * @param string[] $afterPathMap
+	 * @param int $fileId
+	 * @param string $oldFileName
+	 * @param string $fileName
+	 */
+	protected function generateMoveActivities($users, $beforePathMap, $afterPathMap, $fileId, $oldFileName, $fileName) {
+		if (empty($users)) {
+			return;
+		}
+
+		$filteredStreamUsers = $this->userSettings->filterUsersBySetting($users, 'stream', Files::TYPE_SHARE_CHANGED);
+		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_SHARE_CHANGED);
+
+		foreach ($users as $user) {
+			if (empty($filteredStreamUsers[$user]) && empty($filteredEmailUsers[$user])) {
+				continue;
+			}
+
+			if ($user === $this->currentUser->getUID()) {
+				$userSubject = 'moved_self';
+				$userParams = [
+					[$fileId => $afterPathMap[$user] . '/' . $fileName],
+					[$fileId => $beforePathMap[$user] . '/' . $oldFileName],
+				];
+			} else {
+				$userSubject = 'moved_by';
+				$userParams = [
+					[$fileId => $afterPathMap[$user] . '/' . $fileName],
+					$this->currentUser->getUserIdentifier(),
+					[$fileId => $beforePathMap[$user] . '/' . $oldFileName],
+				];
+			}
+
+			$this->addNotificationsForUser(
+				$user, $userSubject, $userParams,
+				$fileId, $afterPathMap[$user] . '/' . $fileName, true,
 				!empty($filteredStreamUsers[$user]),
 				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
 				Files::TYPE_SHARE_CHANGED
