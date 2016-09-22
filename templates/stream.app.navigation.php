@@ -45,7 +45,11 @@
 		<div id="app-settings-content">
 			<input type="checkbox"<?php if ($_['rssLink']): ?> checked="checked"<?php endif; ?> id="enable_rss" class="checkbox" />
 			<label for="enable_rss"><?php p($l->t('Enable RSS feed'));?></label>
-			<input id="rssurl"<?php if (!$_['rssLink']): ?> class="hidden"<?php endif; ?> type="text" readonly="readonly" value="<?php p($_['rssLink']); ?>" />
+
+			<span id="rssurl"<?php if (!$_['rssLink']): ?> class="hidden"<?php endif; ?>>
+				<input class="feed-link" type="text" readonly="readonly" value="<?php p($_['rssLink']); ?>" />
+				<a class="clipboardButton icon icon-clippy" data-clipboard-target="#rssurl input"></a>
+			</span>
 		</div>
 	</div>
 </div>

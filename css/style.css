@@ -197,3 +197,15 @@
 	filter: alpha(opacity=50);
 	opacity: .5;
 }
+
+#rssurl > input.feed-link {
+	width: 80%;
+}
+
+#rssurl .clipboardButton {
+	background-size: 16px 16px;
+	display: inline-block;
+	position: relative;
+	top: 3px;
+	margin-left: 5px;
+}
