@@ -4,6 +4,7 @@ OC.L10N.register(
     "Activities" : "활동",
     "Error loading activities" : "활동 불러오기 오류",
     "No activities" : "활동 없음",
+    "Load more activities" : "더 많은 활동 불러오기",
     ", " : ", ",
     "{parameterList} and {lastParameter}" : "{parameterList} 및 {lastParameter}",
     "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} 및 {linkStart}%n개 더{linkEnd}"],
