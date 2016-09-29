@@ -48,7 +48,7 @@
 
 			<span id="rssurl"<?php if (!$_['rssLink']): ?> class="hidden"<?php endif; ?>>
 				<input class="feed-link" type="text" readonly="readonly" value="<?php p($_['rssLink']); ?>" />
-				<a class="clipboardButton icon icon-clippy" data-clipboard-target="#rssurl input"></a>
+				<a class="icon-clippy" data-clipboard-target="#rssurl input"></a>
 			</span>
 		</div>
 	</div>

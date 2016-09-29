@@ -28,8 +28,6 @@ $(function() {
 		init: function () {
 			this.urlInput = $('#rssurl');
 			this.enableCheckbox = $('#enable_rss');
-
-			console.log('init');
 			this.enableCheckbox.change(_.bind(this._toggle, this));
 		},
 
@@ -56,7 +54,7 @@ $(function() {
 	};
 
 	// Clipboard!
-	var clipboard = new Clipboard('.clipboardButton');
+	var clipboard = new Clipboard('#rssurl .icon-clippy');
 	clipboard.on('success', function(e) {
 		$input = $(e.trigger);
 		$input.tooltip({placement: 'top', trigger: 'manual', title: t('core', 'Copied!')});
