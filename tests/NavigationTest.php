@@ -80,7 +80,7 @@ class NavigationTest extends TestCase {
 		$output = $navigation->getTemplate($forceActive)->fetchPage();
 
 		// Get only the template part with the navigation links
-		$navigationLinks = substr($output, strpos($output, '<ul>') + 4);
+		$navigationLinks = substr($output, strpos($output, '<ul class="with-icon">') + strlen('<ul class="with-icon">'));
 		$navigationLinks = substr($navigationLinks, 0, strrpos($navigationLinks, '</li>'));
 
 		// Remove tabs and new lines

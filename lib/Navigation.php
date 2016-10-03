@@ -118,19 +118,22 @@ class Navigation {
 		$topEntries = [
 			[
 				'id' => 'all',
-				'name' => (string) $this->l->t('All Activities'),
+				'icon' => 'icon-activity',
+				'name' => (string) $this->l->t('All activities'),
 				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList'),
 			],
 		];
 
 		$topEntries[] = [
 			'id' => 'self',
-			'name' => (string) $this->l->t('Activities by you'),
+			'icon' => 'icon-user',
+			'name' => (string) $this->l->t('By you'),
 			'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'self')),
 		];
 		$topEntries[] = [
 			'id' => 'by',
-			'name' => (string) $this->l->t('Activities by others'),
+			'icon' => 'icon-contacts-dark',
+			'name' => (string) $this->l->t('By others'),
 			'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'by')),
 		];
 

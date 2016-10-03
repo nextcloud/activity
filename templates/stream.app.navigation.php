@@ -24,11 +24,13 @@
 ?>
 <div id="app-navigation">
 	<?php foreach ($_['navigations'] as $navigationGroup => $navigationEntries) { ?>
-		<?php if ($navigationGroup !== 'apps'): ?><ul><?php endif; ?>
+		<?php if ($navigationGroup !== 'apps'): ?><ul class="with-icon"><?php endif; ?>
 
 		<?php foreach ($navigationEntries as $navigation) { ?>
 		<li<?php if ($_['activeNavigation'] === $navigation['id']): ?> class="active"<?php endif; ?>>
-			<a data-navigation="<?php p($navigation['id']) ?>" href="<?php p($navigation['url']) ?>">
+			<a data-navigation="<?php p($navigation['id']) ?>"
+			   <?php if (isset($navigation['icon'])) { ?> class="<?php p($navigation['icon']); ?>"<?php } ?>
+			   href="<?php p($navigation['url']) ?>">
 				<?php p($navigation['name']) ?>
 			</a>
 		</li>
