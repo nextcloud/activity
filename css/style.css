@@ -46,13 +46,12 @@
 }
 
 #container {
-  background: #FFF;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  clear: both;
-  -webkit-border-radius: 5px;
-	 -moz-border-radius: 5px;
-		  border-radius: 5px;
+	background: #FFF;
+	margin-bottom: 20px;
+	clear: both;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .group{
@@ -64,19 +63,6 @@
 	width: 100%;
 	display: block;
 	margin-bottom: 10px;
-}
-
-.box.loaded{
-	transition: opacity 1s ease;
-	-ms-transition: opacity 1s ease;
-	-moz-transition: opacity 1s ease;
-	-o-transition: opacity 1s ease;
-	-webkit-transition: opacity 1s ease;
-	opacity: 1;
-}
-
-.box.loading{
-	opacity: 0;
 }
 
 .box .header{
@@ -109,9 +95,6 @@
 	float: left;
 	display: inline-block;
 	width: 180px;
-}
-
-.box .user{
 	font-weight: bold;
 }
 
@@ -164,9 +147,7 @@
 }
 .activityTabView .box .activitytime {
 	padding: 0;
-	margin: 0;
-	margin-right: 0;
-	margin-top: -15px;
+	margin: -15px 0 0;
 }
 
 .icon-activity {
@@ -196,4 +177,16 @@
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 	filter: alpha(opacity=50);
 	opacity: .5;
+}
+
+#rssurl > input.feed-link {
+	width: 80%;
+}
+
+#rssurl .icon-clippy {
+	background-size: 16px 16px;
+	display: inline-block;
+	position: relative;
+	top: 3px;
+	margin-left: 5px;
 }

@@ -288,20 +288,5 @@ $(function(){
 		OCA.Activity.Filter.setFilter(filter);
 		event.preventDefault();
 	});
-
-	$('#enable_rss').change(function () {
-		if (this.checked) {
-			$('#rssurl').removeClass('hidden');
-		} else {
-			$('#rssurl').addClass('hidden');
-		}
-		$.post(OC.generateUrl('/apps/activity/settings/feed'), 'enable=' + this.checked, function(response) {
-			$('#rssurl').val(response.data.rsslink);
-		});
-	});
-
-	$('#rssurl').on('click', function () {
-		$('#rssurl').select();
-	});
 });
 

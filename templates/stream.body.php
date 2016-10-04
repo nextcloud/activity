@@ -24,7 +24,8 @@
  */
 script('activity', [
 	'formatter',
-	'script'
+	'script',
+	'feedSettings',
 ]);
 style('activity', 'style');
 ?>
