@@ -116,7 +116,7 @@ class NavigationTest extends TestCase {
 		$this->assertNotContains('data-navigation="files"', $navigationLinks, 'Files app should not be included when there are no other apps.');
 
 		if ($rssToken) {
-			$rssInputField = strpos($output, 'input id="rssurl"');
+			$rssInputField = strpos($output, 'input class="feed-link"');
 			$this->assertGreaterThan(0, $rssInputField);
 			$endOfInputField = strpos($output, ' />', $rssInputField);
 
