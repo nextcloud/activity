@@ -172,6 +172,7 @@
 }
 /* grey the changed and shared icons so they are less intense */
 .icon-change,
+.icon-comment,
 .icon-share,
 .icon-public {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
