@@ -151,7 +151,7 @@
 }
 
 .icon-activity {
-	background-image: url('../img/activity-dark.svg');
+	background-image: url('../img/activity-dark.svg?v=1');
 }
 /* colored icons, in addition to core ones */
 .activity-icon {
