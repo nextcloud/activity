@@ -1,10 +1,12 @@
 <?php
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
+ * @copyright Copyright (c) 2016, Olivier Paroz
  *
  * @author Frank Karlitschek <frank@karlitschek.de>
  * @author Joas Schilling <coding@schilljs.com>
  * @author Thomas Müller <thomas.mueller@tmit.eu>
+ * @author Olivier Paroz <developer@oparoz.com>
  *
  * @license AGPL-3.0
  *
@@ -37,6 +39,7 @@ use OCP\IGroupManager;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share;
+use OCP\IRequest;
 
 /**
  * The class to handle the filesystem hooks
@@ -68,6 +71,9 @@ class FilesHooks {
 	/** @var CurrentUser */
 	protected $currentUser;
 
+	/** @var IRequest */
+	protected $request;
+
 	/**
 	 * Constructor
 	 *
@@ -79,8 +85,9 @@ class FilesHooks {
 	 * @param IDBConnection $connection
 	 * @param IURLGenerator $urlGenerator
 	 * @param CurrentUser $currentUser
+	 * @param IRequest $request
 	 */
-	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IGroupManager $groupManager, View $view, IDBConnection $connection, IURLGenerator $urlGenerator, CurrentUser $currentUser) {
+	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IGroupManager $groupManager, View $view, IDBConnection $connection, IURLGenerator $urlGenerator, CurrentUser $currentUser, IRequest $request) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
@@ -89,6 +96,7 @@ class FilesHooks {
 		$this->connection = $connection;
 		$this->urlGenerator = $urlGenerator;
 		$this->currentUser = $currentUser;
+		$this->request = $request;
 	}
 
 	/**
@@ -248,6 +256,35 @@ class FilesHooks {
 				$this->shareFileOrFolderByLink((int) $params['fileSource'], $params['itemType'], $params['uidOwner'], false);
 			}
 		}
+	}
+
+	/**
+	 * Manage share download events
+	 *
+	 * @param array $params The hook params
+	 */
+	public function downloadedShare($params) {
+		list($ownerPath, $uidOwner, $fileId) = $this->getSourcePathAndOwner($params['target']);
+
+		$client = 'web';
+		if ($this->request->isUserAgent([IRequest::USER_AGENT_CLIENT_DESKTOP])) {
+			$client = 'desktop';
+		} else if ($this->request->isUserAgent([IRequest::USER_AGENT_CLIENT_ANDROID, IRequest::USER_AGENT_CLIENT_IOS])) {
+			$client = 'mobile';
+		}
+		$subjectParams = [[$fileId => $ownerPath], $this->currentUser->getUserIdentifier(), $client];
+
+		$this->addNotificationsForUser(
+			$uidOwner, 'shared_file_downloaded', $subjectParams,
+			$fileId, $ownerPath, true,
+			$this->userSettings->getUserSetting(
+				$uidOwner, 'stream', Files_Sharing::TYPE_PUBLIC_LINKS
+			),
+			$this->userSettings->getUserSetting(
+				$uidOwner, 'email', Files_Sharing::TYPE_PUBLIC_LINKS
+			) ? $this->userSettings->getUserSetting($uidOwner, 'setting', 'batchtime') : 0,
+			Files_Sharing::TYPE_PUBLIC_LINKS
+		);
 	}
 
 	/**
@@ -558,7 +595,7 @@ class FilesHooks {
 		}
 
 		$selfAction = $user === $this->currentUser->getUID();
-		$app = $type === Files_Sharing::TYPE_SHARED ? 'files_sharing' : 'files';
+		$app = ($type === Files_Sharing::TYPE_SHARED || $type === Files_Sharing::TYPE_PUBLIC_LINKS) ? 'files_sharing' : 'files';
 		$link = $this->urlGenerator->linkToRouteAbsolute('files.view.index', array(
 			'dir' => ($isFile) ? dirname($path) : $path,
 		));

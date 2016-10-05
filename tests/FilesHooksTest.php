@@ -1,8 +1,10 @@
 <?php
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
+ * @copyright Copyright (c) 2016, Olivier Paroz
  *
  * @author Joas Schilling <coding@schilljs.com>
+ * @author Olivier Paroz <developer@oparoz.com>
  *
  * @license AGPL-3.0
  *
@@ -50,6 +52,8 @@ class FilesHooksTest extends TestCase {
 	protected $view;
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\IURLGenerator */
 	protected $urlGenerator;
+	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\IRequest */
+	protected $request;
 
 	protected function setUp() {
 		parent::setUp();
@@ -73,6 +77,9 @@ class FilesHooksTest extends TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 		$this->urlGenerator = $this->getMockBuilder('OCP\IURLGenerator')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->request = $this->getMockBuilder('OCP\IRequest')
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -106,6 +113,7 @@ class FilesHooksTest extends TestCase {
 					\OC::$server->getDatabaseConnection(),
 					$this->urlGenerator,
 					$currentUser,
+					$this->request,
 				])
 				->setMethods($mockedMethods)
 				->getMock();
@@ -118,7 +126,8 @@ class FilesHooksTest extends TestCase {
 				$this->view,
 				\OC::$server->getDatabaseConnection(),
 				$this->urlGenerator,
-				$currentUser
+				$currentUser,
+				$this->request
 			);
 		}
 	}
@@ -344,6 +353,64 @@ class FilesHooksTest extends TestCase {
 			'itemType' => 'file',
 			'uidOwner' => 'admin',
 		]);
+	}
+
+
+	public function dataDownloadedShare() {
+		return [
+			[['target' => '/path.txt'], 303909, 'owner', 'owner-path.txt', 'user@localhost', false, 'web'],
+			[['target' => '/path2.txt'], 23, 'admin', 'admin-path2.txt', 'user2@example', true, 'desktop'],
+		];
+	}
+
+	/**
+	 * @dataProvider dataDownloadedShare
+	 *
+	 * @param array $params The hook params
+	 * @param int $fileId
+	 * @param string $uidOwner
+	 * @param string $ownerPath
+	 * @param string $downloader
+	 * @param bool $isAgent
+	 * @param string $client
+	 */
+	public function testDownloadedShare($params, $fileId, $uidOwner, $ownerPath, $downloader, $isAgent, $client) {
+		$filesHooks = $this->getFilesHooks([
+			'getSourcePathAndOwner',
+			'addNotificationsForUser',
+		], $downloader);
+
+		$filesHooks->expects($this->once())
+			->method('getSourcePathAndOwner')
+			->with($params['target'])
+			->willReturn([$ownerPath, $uidOwner, $fileId]);
+
+		$this->settings->expects($this->exactly(3))
+			->method('getUserSetting')
+			->willReturnMap([
+				[$uidOwner, 'stream', Files_Sharing::TYPE_PUBLIC_LINKS, true],
+				[$uidOwner, 'email', Files_Sharing::TYPE_PUBLIC_LINKS, true],
+				[$uidOwner, 'setting', 'batchtime', 42],
+			]);
+
+		$this->request->expects($this->atLeastOnce())
+			->method('isUserAgent')
+			->willReturn($isAgent);
+
+		$filesHooks->expects($this->once())
+			->method('addNotificationsForUser')
+			->with(
+				$uidOwner,
+				'shared_file_downloaded',
+				[[$fileId => $ownerPath], $downloader, $client],
+				$fileId,
+				$ownerPath,
+				true,
+				true,
+				42
+			);
+
+		$this->invokePrivate($filesHooks, 'downloadedShare', [$params]);
 	}
 
 	public function dataShareFileOrFolderWithUser() {

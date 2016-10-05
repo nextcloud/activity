@@ -1,8 +1,10 @@
 <?php
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
+ * @copyright Copyright (c) 2016, Olivier Paroz
  *
  * @author Joas Schilling <coding@schilljs.com>
+ * @author Olivier Paroz <developer@oparoz.com>
  *
  * @license AGPL-3.0
  *
@@ -112,6 +114,8 @@ class Application extends App {
 		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', FilesHooksStatic::class, 'fileRestore');
 		Util::connectHook('OCP\Share', 'post_shared', FilesHooksStatic::class, 'share');
 		Util::connectHook('OCP\Share', 'pre_unshare', FilesHooksStatic::class, 'unShare');
+		Util::connectHook('\OC\Files\Storage\Shared', 'fopen', FilesHooksStatic::class, 'downloadedShare');
+		Util::connectHook('\OC\Files\Storage\Shared', 'file_get_contents', FilesHooksStatic::class, 'downloadedShare');
 	}
 
 	/**

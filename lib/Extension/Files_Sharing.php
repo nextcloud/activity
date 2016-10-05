@@ -1,8 +1,10 @@
 <?php
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
+ * @copyright Copyright (c) 2016, Olivier Paroz
  *
  * @author Joas Schilling <coding@schilljs.com>
+ * @author Olivier Paroz <developer@oparoz.com>
  *
  * @license AGPL-3.0
  *
@@ -24,4 +26,5 @@ namespace OCA\Activity\Extension;
 
 class Files_Sharing {
 	const TYPE_SHARED = 'shared';
+	const TYPE_PUBLIC_LINKS = 'public_links';
 }
