@@ -34,8 +34,7 @@ class FilesHooksStatic {
 	 * @return FilesHooks
 	 */
 	static protected function getHooks() {
-		$app = new AppInfo\Application();
-		return $app->getContainer()->query(FilesHooks::class);
+		return \OC::$server->query(FilesHooks::class);
 	}
 
 	/**
@@ -60,6 +59,22 @@ class FilesHooksStatic {
 	 */
 	public static function fileDelete($params) {
 		self::getHooks()->fileDelete($params['path']);
+	}
+
+	/**
+	 * Store the rename hook events
+	 * @param array $params The hook params
+	 */
+	public static function fileMove($params) {
+		self::getHooks()->fileMove($params['oldpath'], $params['newpath']);
+	}
+
+	/**
+	 * Store the rename hook events
+	 * @param array $params The hook params
+	 */
+	public static function fileMovePost($params) {
+		self::getHooks()->fileMovePost($params['oldpath'], $params['newpath']);
 	}
 
 	/**
