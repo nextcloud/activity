@@ -30,7 +30,7 @@ OC.L10N.register(
     "By others" : "Másoké",
     "%s and %s" : "%s és %s",
     "Hello %s," : "Üdv %s!",
-    "You are receiving this email because the following things happened at %s" : "Azért kapta ezt a levelet, mert ezek az események történtek itt: %s",
+    "You are receiving this email because the following things happened at %s" : "Azért kaptad ezt a levelet, mert ezek az események történtek itt: %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* és még %n","* és még %n"],
     "List your own file actions in the stream" : "Listázza a saját fájl tevékenységeimet a hírfolyamban",
