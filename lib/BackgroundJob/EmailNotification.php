@@ -122,6 +122,8 @@ class EmailNotification extends TimedJob {
 		// Send Email
 		$default_lang = $this->config->getSystemValue('default_language', 'en');
 		$defaultTimeZone = date_default_timezone_get();
+
+		$deleteItemsForUsers = [];
 		foreach ($affectedUsers as $user) {
 			if (empty($userEmails[$user])) {
 				// The user did not setup an email address
@@ -132,11 +134,15 @@ class EmailNotification extends TimedJob {
 
 			$language = (!empty($userLanguages[$user])) ? $userLanguages[$user] : $default_lang;
 			$timezone = (!empty($userTimezones[$user])) ? $userTimezones[$user] : $defaultTimeZone;
-			$this->mqHandler->sendEmailToUser($user, $userEmails[$user], $language, $timezone, $sendTime);
+			if ($this->mqHandler->sendEmailToUser($user, $userEmails[$user], $language, $timezone, $sendTime)) {
+				$deleteItemsForUsers[] = $user;
+			} else {
+				$this->logger->debug("Failed sending activity mail to user '" . $user . "'.", ['app' => 'activity']);
+			}
 		}
 
 		// Delete all entries we dealt with
-		$this->mqHandler->deleteSentItems($affectedUsers, $sendTime);
+		$this->mqHandler->deleteSentItems($deleteItemsForUsers, $sendTime);
 
 		return sizeof($affectedUsers);
 	}
