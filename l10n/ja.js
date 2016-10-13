@@ -21,6 +21,7 @@ OC.L10N.register(
     "Stream" : "ストリーム",
     "\"remote user\"" : "\"リモートユーザー\"",
     "Activity notification" : "アクティビティ通知",
+    "All activities" : "すべてのアクティビティ",
     "%s and %s" : "%s と %s",
     "Hello %s," : "%s さんこんにちは、",
     "You are receiving this email because the following things happened at %s" : "%s で以下のような更新がありました。このメールはその内容をお知らせします。",
