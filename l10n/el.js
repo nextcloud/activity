@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error loading activities" : "Σφάλμα φόρτωσης δραστηριοτήτων",
     "No activities" : "Καμία δραστηριότητα",
     "Load more activities" : "Φόρτωση περισσότερων δραστηριοτήτων",
+    "Not supported!" : "Δεν υποστηρίζεται!",
     ", " : ", ",
     "{parameterList} and {lastParameter}" : "{parameterList} και {lastParameter}",
     "in {directory}" : "στον {directory}",
