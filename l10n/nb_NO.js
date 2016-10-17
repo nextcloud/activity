@@ -14,7 +14,7 @@ OC.L10N.register(
     "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} og {linkStart}%n mer{linkEnd}","{parameterList} og {linkStart}%n mer{linkEnd}"],
     "in {directory}" : "i {directory}",
     "This stream will show events like additions, changes & shares" : "Denne strømmen vil vise hendelser som f.eks. innlegging, endring og deling",
-    "There are no events for this filter" : "Der er ingen hendelser for dette filteret",
+    "There are no events for this filter" : "Det er ingen hendelser for dette filteret",
     "Today" : "I dag",
     "Yesterday" : "I går",
     "Activity" : "Aktivitet",
