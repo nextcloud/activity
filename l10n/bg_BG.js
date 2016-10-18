@@ -10,6 +10,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "За копиране натиснете Ctrl-C",
     ", " : ", ",
     "{parameterList} and {lastParameter}" : "{parameterList} и {lastParameter}",
+    "_{parameterList} and {linkStart}%n more{linkEnd}_::_{parameterList} and {linkStart}%n more{linkEnd}_" : ["{parameterList} и {linkStart}%n още{linkEnd}","{parameterList} и {linkStart}%n още{linkEnd}"],
     "in {directory}" : "в {directory}",
     "This stream will show events like additions, changes & shares" : "Потокът ще покаже събития като допълнения, изменения и споделяния",
     "There are no events for this filter" : "Няма събития за този филтър",
