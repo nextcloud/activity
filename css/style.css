@@ -54,7 +54,7 @@
 	border-radius: 5px;
 }
 
-.group{
+.group {
 	clear: both;
 	padding-bottom: 10px;
 }
@@ -122,8 +122,17 @@
 }
 
 /* Style for in event parameters */
-.activity-section a.filename, .activity-section strong {
+.activity-section a.filename,
+.activity-section strong {
 	font-weight: bold;
+}
+
+.activity-section .icon-tag + .activitysubject strong {
+	display: inline-block;
+	padding: 2px 5px;
+	border-radius: 3px;
+	background-color: #f8f8f8;
+	font-weight: normal;
 }
 
 .activity-section .avatar {
