@@ -211,11 +211,12 @@ class MailQueueHandler {
 	 * @param string $lang Selected language of the recipient
 	 * @param string $timezone Selected timezone of the recipient
 	 * @param int $maxTime
+	 * @return bool True if the entries should be removed, false otherwise
 	 */
 	public function sendEmailToUser($userName, $email, $lang, $timezone, $maxTime) {
 		$user = $this->userManager->get($userName);
 		if (!$user instanceof IUser) {
-			return;
+			return true;
 		}
 
 		list($mailData, $skippedCount) = $this->getItemsForUser($userName, $maxTime);
@@ -263,9 +264,15 @@ class MailQueueHandler {
 		$message->setSubject((string) $l->t('Activity notification'));
 		$message->setPlainBody($emailText);
 		$message->setFrom([$this->getSenderData('email') => $this->getSenderData('name')]);
-		$this->mailer->send($message);
+
+		try {
+			$this->mailer->send($message);
+		} catch (\Exception $e) {
+			return false;
+		}
 
 		$this->activityManager->setCurrentUserId(null);
+		return true;
 	}
 
 	/**
