@@ -51,7 +51,7 @@
 				<name>app</name>
 				<type>text</type>
 				<notnull>true</notnull>
-				<length>255</length>
+				<length>32</length>
 			</field>
 			<field>
 				<name>subject</name>
@@ -61,9 +61,8 @@
 			</field>
 			<field>
 				<name>subjectparams</name>
-				<type>text</type>
+				<type>clob</type>
 				<notnull>true</notnull>
-				<length>4000</length>
 			</field>
 			<field>
 				<name>message</name>
@@ -73,9 +72,8 @@
 			</field>
 			<field>
 				<name>messageparams</name>
-				<type>text</type>
+				<type>clob</type>
 				<notnull>false</notnull>
-				<length>4000</length>
 			</field>
 			<field>
 				<name>file</name>
