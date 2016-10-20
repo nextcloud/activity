@@ -26,6 +26,7 @@ namespace OCA\Activity;
 
 use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
+use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
@@ -187,8 +188,17 @@ class Data {
 		}
 		$groupHelper->setUser($user);
 
+		$activeFilter = null;
+		try {
+			$activeFilter = $this->activityManager->getFilterById($filter);
+		} catch (\InvalidArgumentException $e) {
+			// Unknown filter => ignore and show all activities
+		}
+
 		$enabledNotifications = $userSettings->getNotificationTypes($user, 'stream');
-		$enabledNotifications = $this->activityManager->filterNotificationTypes($enabledNotifications, $filter);
+		if ($activeFilter instanceof IFilter) {
+			$enabledNotifications = $activeFilter->filterTypes($enabledNotifications);
+		}
 		$enabledNotifications = array_unique($enabledNotifications);
 
 		// We don't want to display any activities
@@ -201,7 +211,7 @@ class Data {
 			->from('activity');
 
 		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)))
-			->andWhere($query->expr()->in('type', $query->createNamedParameter($enabledNotifications, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY)));
+			->andWhere($query->expr()->in('type', $query->createNamedParameter($enabledNotifications, IQueryBuilder::PARAM_STR_ARRAY)));
 		if ($filter === 'self') {
 			$query->andWhere($query->expr()->eq('user', $query->createNamedParameter($user)));
 
@@ -236,22 +246,23 @@ class Data {
 			$query->andWhere($query->expr()->eq('object_id', $query->createNamedParameter($objectId)));
 		}
 
-		list($condition, $params) = $this->activityManager->getQueryForFilter($filter);
-		if (!is_null($condition)) {
-			// Strip away ' and '
-			$condition = substr($condition, 5);
-
-			if (is_array($params)) {
-				// Replace ? placeholders with named parameters
-				foreach ($params as $param) {
-					$pos = strpos($condition, '?');
-					if ($pos !== false) {
-						$condition = substr($condition, 0, $pos) . $query->createNamedParameter($param) . substr($condition, $pos + 1);
-					}
-				}
+		if ($activeFilter instanceof IFilter) {
+			$apps = $activeFilter->allowedApps();
+			if (!empty($apps)) {
+				$query->andWhere($query->expr()->in('app', $query->createNamedParameter($apps, IQueryBuilder::PARAM_STR_ARRAY)));
 			}
+		}
 
-			$query->andWhere($query->createFunction($condition));
+		if (
+			$filter === 'files_favorites' ||
+			(in_array($filter, ['all', 'by', 'self']) && $userSettings->getUserSetting($user, 'stream', 'files_favorites'))
+		) {
+			try {
+				$favoriteFilter = $this->activityManager->getFilterById('files_favorites');
+				/** @var \OCA\Files\Activity\Filter\Favorites $favoriteFilter */
+				$favoriteFilter->filterFavorites($query);
+			} catch (\InvalidArgumentException $e) {
+			}
 		}
 
 		/**
@@ -357,10 +368,12 @@ class Data {
 			case 'filter':
 				return $filterValue;
 			default:
-				if ($this->activityManager->isFilterValid($filterValue)) {
+				try {
+					$this->activityManager->getFilterById($filterValue);
 					return $filterValue;
+				} catch (\InvalidArgumentException $e) {
+					return 'all';
 				}
-				return 'all';
 		}
 	}
 

@@ -24,6 +24,7 @@
 namespace OCA\Activity;
 
 
+use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -87,7 +88,7 @@ class Navigation {
 		if (sizeof($entries['apps']) === 1) {
 			// If there is only the files app, we simply do not show it,
 			// as it is the same as the 'all' filter.
-			$entries['apps'] = array();
+			//$entries['apps'] = array();
 		}
 
 		$template->assign('activeNavigation', $active);
@@ -136,13 +137,22 @@ class Navigation {
 			'name' => (string) $this->l->t('By others'),
 			'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'by')),
 		];
+		$entries = [];
 
-		$additionalEntries = $this->activityManager->getNavigation();
-		$topEntries = array_merge($topEntries, $additionalEntries['top']);
+		/** @var IFilter[] $filters */
+		$filters = $this->activityManager->getFilters();
+		foreach ($filters as $filter) {
+			$entries[] = [
+				'id' => $filter->getIdentifier(),
+				'icon' => $filter->getIcon(),
+				'name' => $filter->getName(),
+				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => $filter->getIdentifier())),
+			];
+		}
 
 		return array(
 			'top'		=> $topEntries,
-			'apps'		=> $additionalEntries['apps'],
+			'apps'		=> $entries,
 		);
 	}
 }
