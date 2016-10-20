@@ -215,7 +215,7 @@ class Settings extends Controller {
 
 			// Check for collisions
 			while (!empty($conflicts)) {
-				$token = $this->random->generate(30);
+				$token = $this->random->generate(30, ISecureRandom::CHAR_UPPER . ISecureRandom::CHAR_LOWER . ISecureRandom::CHAR_DIGITS);
 				$conflicts = $this->config->getUsersForUserValue('activity', 'rsstoken', $token);
 			}
 
