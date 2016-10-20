@@ -843,11 +843,11 @@ class FilesHooks {
 		}
 
 		$storage = $mount->getStorage();
-		if (!$storage->instanceOfStorage('OC\Files\Storage\Shared')) {
+		if (!$storage->instanceOfStorage('OCA\Files_Sharing\SharedStorage')) {
 			return;
 		}
 
-		/** @var \OC\Files\Storage\Shared $storage */
+		/** @var \OCA\Files_Sharing\SharedStorage $storage */
 		$shareOwner = $storage->getSharedFrom();
 		if ($shareOwner === '' || $shareOwner === null || $shareOwner === $owner || $shareOwner === $currentOwner) {
 			return;

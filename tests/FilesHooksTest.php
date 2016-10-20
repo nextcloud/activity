@@ -739,7 +739,7 @@ class FilesHooksTest extends TestCase {
 			->with($this->anything(), 'subject', 'with', 42, 'type');
 
 		if ($validMountPoint) {
-			$storage = $this->getMockBuilder('OC\Files\Storage\Shared')
+			$storage = $this->getMockBuilder('OCA\Files_Sharing\SharedStorage')
 				->disableOriginalConstructor()
 				->setMethods([
 					'instanceOfStorage',
@@ -748,7 +748,7 @@ class FilesHooksTest extends TestCase {
 				->getMock();
 			$storage->expects($this->once())
 				->method('instanceOfStorage')
-				->with('OC\Files\Storage\Shared')
+				->with('OCA\Files_Sharing\SharedStorage')
 				->willReturn($validSharedStorage);
 			$storage->expects($validSharedStorage ? $this->once() : $this->never())
 				->method('getSharedFrom')
