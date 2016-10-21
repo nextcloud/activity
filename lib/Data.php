@@ -362,9 +362,6 @@ class Data {
 		}
 
 		switch ($filterValue) {
-			case 'by':
-			case 'self':
-			case 'all':
 			case 'filter':
 				return $filterValue;
 			default:
@@ -381,7 +378,6 @@ class Data {
 	 * Delete old events
 	 *
 	 * @param int $expireDays Minimum 1 day
-	 * @return null
 	 */
 	public function expire($expireDays = 365) {
 		$ttl = (60 * 60 * 24 * max(1, $expireDays));
@@ -398,7 +394,6 @@ class Data {
 	 * @param array $conditions Array with conditions that have to be met
 	 *                      'field' => 'value'  => `field` = 'value'
 	 *    'field' => array('value', 'operator') => `field` operator 'value'
-	 * @return null
 	 */
 	public function deleteActivities($conditions) {
 		$sqlWhere = '';
