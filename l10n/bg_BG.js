@@ -5,6 +5,7 @@ OC.L10N.register(
     "Error loading activities" : "Грешка при зареждане на активностите",
     "No activities" : "Няма активност",
     "Load more activities" : "Зареди повече активности",
+    "Copied!" : "Копирано!",
     "Not supported!" : "Не се поддържа!",
     "Press ⌘-C to copy." : "За копиране натиснете ⌘-C",
     "Press Ctrl-C to copy." : "За копиране натиснете Ctrl-C",
