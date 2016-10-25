@@ -24,7 +24,6 @@ namespace OCA\Activity;
 
 use OCP\Activity\IManager;
 use OCP\IConfig;
-use OCP\Util;
 
 /**
  * Class UserSettings
@@ -48,12 +47,10 @@ class UserSettings {
 	/**
 	 * @param IManager $manager
 	 * @param IConfig $config
-	 * @param Data $data
 	 */
-	public function __construct(IManager $manager, IConfig $config, Data $data) {
+	public function __construct(IManager $manager, IConfig $config) {
 		$this->manager = $manager;
 		$this->config = $config;
-		$this->data = $data;
 	}
 
 	/**
@@ -103,8 +100,12 @@ class UserSettings {
 			}
 		}
 
-		$settings = $this->manager->getDefaultTypes($method);
-		return in_array($type, $settings);
+		try {
+			$setting = $this->manager->getSettingById($type);
+			return ($method === 'stream') ? $setting->isDefaultEnabledStream() : $setting->isDefaultEnabledMail();
+		} catch (\InvalidArgumentException $e) {
+			return false;
+		}
 	}
 
 	/**
@@ -115,13 +116,12 @@ class UserSettings {
 	 * @return array
 	 */
 	public function getNotificationTypes($user, $method) {
-		$l = Util::getL10N('activity');
-		$types = $this->data->getNotificationTypes($l);
-
 		$notificationTypes = array();
-		foreach ($types as $type => $desc) {
-			if ($this->getUserSetting($user, $method, $type)) {
-				$notificationTypes[] = $type;
+
+		$settings = $this->manager->getSettings();
+		foreach ($settings as $setting) {
+			if ($this->getUserSetting($user, $method, $setting->getIdentifier())) {
+				$notificationTypes[] = $setting->getIdentifier();
 			}
 		}
 

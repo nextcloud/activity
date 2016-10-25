@@ -24,9 +24,10 @@
 namespace OCA\Activity\Controller;
 
 use OCA\Activity\CurrentUser;
-use OCA\Activity\Data;
 use OCA\Activity\UserSettings;
 use OCP\Activity\IExtension;
+use OCP\Activity\IManager;
+use OCP\Activity\ISetting;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\TemplateResponse;
@@ -46,8 +47,8 @@ class Settings extends Controller {
 	/** @var \OCP\IURLGenerator */
 	protected $urlGenerator;
 
-	/** @var \OCA\Activity\Data */
-	protected $data;
+	/** @var IManager */
+	protected $manager;
 
 	/** @var \OCA\Activity\UserSettings */
 	protected $userSettings;
@@ -66,7 +67,7 @@ class Settings extends Controller {
 	 * @param IConfig $config
 	 * @param ISecureRandom $random
 	 * @param IURLGenerator $urlGenerator
-	 * @param Data $data
+	 * @param IManager $manager
 	 * @param UserSettings $userSettings
 	 * @param IL10N $l10n
 	 * @param CurrentUser $currentUser
@@ -76,7 +77,7 @@ class Settings extends Controller {
 								IConfig $config,
 								ISecureRandom $random,
 								IURLGenerator $urlGenerator,
-								Data $data,
+								IManager $manager,
 								UserSettings $userSettings,
 								IL10N $l10n,
 								CurrentUser $currentUser) {
@@ -84,7 +85,7 @@ class Settings extends Controller {
 		$this->config = $config;
 		$this->random = $random;
 		$this->urlGenerator = $urlGenerator;
-		$this->data = $data;
+		$this->manager = $manager;
 		$this->userSettings = $userSettings;
 		$this->l10n = $l10n;
 		$this->user = (string) $currentUser->getUID();
@@ -102,22 +103,22 @@ class Settings extends Controller {
 			$notify_setting_batchtime = UserSettings::EMAIL_SEND_HOURLY,
 			$notify_setting_self = false,
 			$notify_setting_selfemail = false) {
-		$types = $this->data->getNotificationTypes($this->l10n);
 
-		foreach ($types as $type => $data) {
-			if (!is_array($data) || (isset($data['methods']) && in_array(IExtension::METHOD_MAIL, $data['methods']))) {
+		$settings = $this->manager->getSettings();
+		foreach ($settings as $setting) {
+			if ($setting->canChangeStream()) {
 				$this->config->setUserValue(
 					$this->user, 'activity',
-					'notify_email_' . $type,
-					(int) $this->request->getParam($type . '_email', false)
+					'notify_stream_' . $setting->getIdentifier(),
+					(int) $this->request->getParam($setting->getIdentifier() . '_stream', false)
 				);
 			}
 
-			if (!is_array($data) || (isset($data['methods']) && in_array(IExtension::METHOD_STREAM, $data['methods']))) {
+			if ($setting->canChangeMail()) {
 				$this->config->setUserValue(
 					$this->user, 'activity',
-					'notify_stream_' . $type,
-					(int) $this->request->getParam($type . '_stream', false)
+					'notify_email_' . $setting->getIdentifier(),
+					(int) $this->request->getParam($setting->getIdentifier() . '_email', false)
 				);
 			}
 		}
@@ -159,21 +160,34 @@ class Settings extends Controller {
 	 * @return TemplateResponse
 	 */
 	public function displayPanel() {
-		$types = $this->data->getNotificationTypes($this->l10n);
-
-		$activities = array();
-		foreach ($types as $type => $desc) {
-			if (is_array($desc)) {
-				$methods = isset($desc['methods']) ? $desc['methods'] : [IExtension::METHOD_STREAM, IExtension::METHOD_MAIL];
-				$desc = isset($desc['desc']) ? $desc['desc'] : '';
-			} else {
-				$methods = [IExtension::METHOD_STREAM, IExtension::METHOD_MAIL];
+		$settings = $this->manager->getSettings();
+		usort($settings, function(ISetting $a, ISetting $b) {
+			if ($a->getPriority() === $b->getPriority()) {
+				return $a->getIdentifier() > $b->getIdentifier();
 			}
 
-			$activities[$type] = array(
-				'desc'		=> $desc,
-				IExtension::METHOD_MAIL		=> $this->userSettings->getUserSetting($this->user, 'email', $type),
-				IExtension::METHOD_STREAM	=> $this->userSettings->getUserSetting($this->user, 'stream', $type),
+			return $a->getPriority() > $b->getPriority();
+		});
+
+		$activities = [];
+		foreach ($settings as $setting) {
+			if (!$setting->canChangeStream() && !$setting->canChangeMail()) {
+				// No setting can be changed => don't display
+				continue;
+			}
+
+			$methods = [];
+			if ($setting->canChangeStream()) {
+				$methods[] = IExtension::METHOD_STREAM;
+			}
+			if ($setting->canChangeMail()) {
+				$methods[] = IExtension::METHOD_MAIL;
+			}
+
+			$activities[$setting->getIdentifier()] = array(
+				'desc'		=> $setting->getName(),
+				IExtension::METHOD_MAIL		=> $this->userSettings->getUserSetting($this->user, 'email', $setting->getIdentifier()),
+				IExtension::METHOD_STREAM	=> $this->userSettings->getUserSetting($this->user, 'stream', $setting->getIdentifier()),
 				'methods'	=> $methods,
 			);
 		}
