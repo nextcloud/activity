@@ -28,6 +28,7 @@ use OCA\Activity\Formatter\IFormatter;
 use OCA\Activity\Formatter\BaseFormatter;
 use OCA\Activity\Formatter\CloudIDFormatter;
 use OCA\Activity\Formatter\FileFormatter;
+use OCA\Activity\Formatter\EmailFormatter;
 use OCA\Activity\Formatter\UserFormatter;
 use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IEvent;
@@ -131,6 +132,9 @@ class Factory {
 				$fileFormatter = \OC::$server->query(FileFormatter::class);
 				$fileFormatter->setUser($this->user);
 				return $fileFormatter;
+			case 'email':
+				/** @var \OCA\Activity\Formatter\EmailFormatter */
+				return \OC::$server->query(EmailFormatter::class);
 			case 'username':
 				/** @var \OCA\Activity\Formatter\UserFormatter */
 				return \OC::$server->query(UserFormatter::class);
