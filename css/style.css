@@ -170,6 +170,7 @@
 	display: inline-block;
 	vertical-align: top;
 	margin-top: 2px;
+	background-size: contain;
 
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 	filter: alpha(opacity=50);
