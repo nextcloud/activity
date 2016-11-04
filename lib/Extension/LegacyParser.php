@@ -23,32 +23,46 @@ namespace OCA\Activity\Extension;
 
 
 use OCA\Activity\DataHelper;
+use OCA\Activity\PlainTextParser;
 use OCP\Activity\IEvent;
+use OCP\Activity\IProvider;
 
-class LegacyParser {
+class LegacyParser implements IProvider {
 
 	/** @var DataHelper */
 	protected $dataHelper;
 
+	/** @var PlainTextParser */
+	protected $parser;
+
 	/**
 	 * @param DataHelper $dataHelper
+	 * @param PlainTextParser $parser
 	 */
-	public function __construct(DataHelper $dataHelper) {
+	public function __construct(DataHelper $dataHelper, PlainTextParser $parser) {
 		$this->dataHelper = $dataHelper;
+		$this->parser = $parser;
 	}
 
-	public function parse(IEvent $event) {
-
-		$event->setParsedSubject($this->dataHelper->translation(
+	/**
+	 * @param IEvent $event
+	 * @param IEvent|null $previousEvent
+	 * @return IEvent
+	 * @throws \InvalidArgumentException
+	 * @since 9.2.0
+	 */
+	public function parse(IEvent $event, IEvent $previousEvent = null) {
+		$event->setParsedSubject($this->parser->parseMessage($this->dataHelper->translation(
 			$event->getApp(),
 			$event->getSubject(),
 			$this->dataHelper->getParameters($event, 'subject', $event->getSubjectParameters())
-		));
-		$event->setParsedMessage($this->dataHelper->translation(
+		)));
+
+		$event->setParsedMessage($this->parser->parseMessage($this->dataHelper->translation(
 			$event->getApp(),
 			$event->getMessage(),
 			$this->dataHelper->getParameters($event, 'message', $event->getMessageParameters())
-		));
+		)));
 
 		return $event;
 	}

@@ -41,15 +41,20 @@ class GroupHelper {
 	/** @var \OCA\Activity\DataHelper */
 	protected $dataHelper;
 
+	/** @var LegacyParser */
+	protected $legacyParser;
+
 	/**
 	 * @param \OCP\Activity\IManager $activityManager
 	 * @param \OCA\Activity\DataHelper $dataHelper
+	 * @param LegacyParser $legacyParser
 	 */
-	public function __construct(IManager $activityManager, DataHelper $dataHelper) {
+	public function __construct(IManager $activityManager, DataHelper $dataHelper, LegacyParser $legacyParser) {
 		$this->allowGrouping = true;
 
 		$this->activityManager = $activityManager;
 		$this->dataHelper = $dataHelper;
+		$this->legacyParser = $legacyParser;
 	}
 
 	/**
@@ -72,14 +77,28 @@ class GroupHelper {
 	 * @param array $activity
 	 */
 	public function addActivity($activity) {
+		$id = (int) $activity['activity_id'];
 		$event = $this->arrayToEvent($activity);
 
-		$parser = new LegacyParser($this->dataHelper);
-		$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
-		$event = $parser->parse($event);
-		$this->activityManager->setFormattingObject('', 0);
+		foreach ($this->activityManager->getProviders() as $provider) {
+			try {
+				$event = $provider->parse($event);
+			} catch (\InvalidArgumentException $e) {
+			}
+		}
 
-		$this->event[] = $event;
+		if (!$event->getParsedSubject()) {
+			try {
+				$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
+				$event = $this->legacyParser->parse($event);
+				$this->activityManager->setFormattingObject('', 0);
+			} catch (\InvalidArgumentException $e) {
+				\OC::$server->getLogger()->debug('Failed to parse activity');
+				return;
+			}
+		}
+
+		$this->event[$id] = $event;
 	}
 
 	/**
@@ -103,15 +122,15 @@ class GroupHelper {
 	 */
 	protected function arrayToEvent(array $row) {
 		$event = $this->activityManager->generateEvent();
-		$event->setApp($row['app'])
-			->setType($row['type'])
-			->setAffectedUser($row['affecteduser'])
-			->setAuthor($row['user'])
+		$event->setApp((string) $row['app'])
+			->setType((string) $row['type'])
+			->setAffectedUser((string) $row['affecteduser'])
+			->setAuthor((string) $row['user'])
 			->setTimestamp((int) $row['timestamp'])
-			->setSubject($row['subject'], $row['subjectparams'])
-			->setMessage($row['message'], $row['messageparams'])
-			->setObject($row['object_type'], (int) $row['object_id'], $row['file'])
-			->setLink($row['link']);
+			->setSubject((string) $row['subject'], json_decode($row['subjectparams'], true))
+			->setMessage((string) $row['message'], json_decode($row['messageparams'], true))
+			->setObject((string) $row['object_type'], (int) $row['object_id'], (string) $row['file'])
+			->setLink((string) $row['link']);
 
 		return $event;
 	}
@@ -128,7 +147,15 @@ class GroupHelper {
 			'user' => $event->getAuthor(),
 			'timestamp' => $event->getTimestamp(),
 			'subject' => $event->getParsedSubject(),
+			'subject_rich' => [
+				(string) $event->getRichSubject(),
+				(array) $event->getRichSubjectParameters(),
+			],
 			'message' => $event->getParsedMessage(),
+			'message_rich' => [
+				(string) $event->getRichMessage(),
+				(array) $event->getRichMessageParameters(),
+			],
 			'object_type' => $event->getObjectType(),
 			'object_id' => $event->getObjectId(),
 			'object_name' => $event->getObjectName(),

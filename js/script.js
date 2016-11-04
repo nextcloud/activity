@@ -198,10 +198,11 @@ $(function(){
 		},
 
 		addActivity: function(activity) {
-			subject = activity.subject_prepared;
-			var parsedSubject = OCA.Activity.Formatter.parseMessage(subject);
-
-			if (parsedSubject.indexOf('<a') >= 0) {
+			var subject = activity.subject;
+			if (activity.subject_rich[0].length > 1) {
+				subject = OCA.Activity.RichObjectStringParser.parseMessage(activity.subject_rich[0], activity.subject_rich[1]);
+			}
+			if (subject.indexOf('<a') >= 0) {
 				activity.link = '';
 			}
 
@@ -209,11 +210,13 @@ $(function(){
 				+ '<div class="box" data-activity-id="' + activity.activity_id + '">' + "\n"
 				+ '	<div class="messagecontainer">' + "\n"
 
-				+ '		<div class="activity-icon ' + ((activity.typeicon) ? escapeHTML(activity.typeicon) + ' svg' : '') + '"></div>' + "\n"
+				+ '		<div class="activity-icon">'
+				+ ((activity.icon) ? '			<img src="' + activity.icon + '" />' : '')
+				+ '		</div>' + "\n"
 
 				+ '		<div class="activitysubject">' + "\n"
 				+ ((activity.link) ? '			<a href="' + activity.link + '">' + "\n" : '')
-				+ '			' + parsedSubject + "\n"
+				+ '			' + subject + "\n"
 				+ ((activity.link) ? '			</a>' + "\n" : '')
 				+ '		</div>' + "\n"
 
@@ -221,9 +224,9 @@ $(function(){
 				+ '			' + escapeHTML(OC.Util.relativeModifiedDate(activity.timestamp)) + "\n"
 				+'		</span>' + "\n";
 
-			if (activity.message_prepared) {
+			if (activity.message) {
 				content += '<div class="activitymessage">' + "\n"
-					+ OCA.Activity.Formatter.parseMessage(activity.message_prepared) + "\n"
+					+ activity.message + "\n"
 					+'</div>' + "\n";
 			}
 
