@@ -6,6 +6,8 @@ OC.L10N.register(
     "No activities" : "Καμία δραστηριότητα",
     "Load more activities" : "Φόρτωση περισσότερων δραστηριοτήτων",
     "Not supported!" : "Δεν υποστηρίζεται!",
+    "Press ⌘-C to copy." : "Για αντιγραφή πατήστε ⌘-C.",
+    "Press Ctrl-C to copy." : "Για αντιγραφή πατήστε Ctrl-C",
     ", " : ", ",
     "{parameterList} and {lastParameter}" : "{parameterList} και {lastParameter}",
     "in {directory}" : "στον {directory}",
