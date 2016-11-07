@@ -84,11 +84,13 @@ class GroupHelper {
 
 		foreach ($this->activityManager->getProviders() as $provider) {
 			try {
-				if ($this->lastEvent !== 0 && isset($this->event[$this->lastEvent])) {
+				$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
+				if ($this->allowGrouping && $this->lastEvent !== 0 && isset($this->event[$this->lastEvent])) {
 					$event = $provider->parse($event, $this->event[$this->lastEvent]);
 				} else {
 					$event = $provider->parse($event);
 				}
+				$this->activityManager->setFormattingObject('', 0);
 
 				$child = $event->getChildEvent();
 				if ($child instanceof IEvent) {
