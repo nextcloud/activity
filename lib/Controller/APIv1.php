@@ -94,8 +94,8 @@ class APIv1 extends OCSController {
 		foreach($activities['data'] as $entry) {
 			$entries[] = array(
 				'id' => $entry['activity_id'],
-				'subject' => $this->parser->parseMessage($entry['subject_prepared']),
-				'message' => $this->parser->parseMessage($entry['message_prepared']),
+				'subject' => $entry['subject'],
+				'message' => $entry['message'],
 				'file' => $entry['object_name'],
 				'link' => $entry['link'],
 				'date' => date('c', $entry['timestamp']),

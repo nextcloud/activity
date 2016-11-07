@@ -120,8 +120,8 @@ class GroupHelper {
 	 */
 	public function getActivities() {
 		$return = [];
-		foreach ($this->event as $event) {
-			$return[] = $this->eventToArray($event);
+		foreach ($this->event as $id => $event) {
+			$return[] = $this->eventToArray($event, $id);
 		}
 		$this->event = [];
 
@@ -151,8 +151,9 @@ class GroupHelper {
 	 * @param IEvent $event
 	 * @return array
 	 */
-	protected function eventToArray(IEvent $event) {
+	protected function eventToArray(IEvent $event, $id) {
 		return [
+			'activity_id' => $id,
 			'app' => $event->getApp(),
 			'type' => $event->getType(),
 			'affecteduser' => $event->getAffectedUser(),
