@@ -22,6 +22,7 @@
 
 namespace OCA\Activity\Tests\Controller;
 
+use OC\OCS\Result;
 use OCA\Activity\Controller\OCSEndPoint;
 use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\Tests\TestCase;
@@ -418,10 +419,10 @@ class OCSEndPointTest extends TestCase {
 				->method('generateHeaders');
 		}
 
-		/** @var \OC_OCS_Result $result */
+		/** @var Result $result */
 		$result = $this->invokePrivate($controller, 'get', [[]]);
 
-		$this->assertInstanceOf('\OC_OCS_Result', $result);
+		$this->assertInstanceOf(Result::class, $result);
 		$this->assertSame($expected, $result->getStatusCode());
 	}
 
@@ -477,10 +478,10 @@ class OCSEndPointTest extends TestCase {
 				'has_more' => false,
 			]);
 
-		/** @var \OC_OCS_Result $result */
+		/** @var Result $result */
 		$result = $this->invokePrivate($controller, 'get', [[]]);
 
-		$this->assertInstanceOf('\OC_OCS_Result', $result);
+		$this->assertInstanceOf(Result::class, $result);
 		$this->assertSame(100, $result->getStatusCode());
 		$this->assertSame([
 			$expected,

@@ -23,6 +23,7 @@
 namespace OCA\Activity\Controller;
 
 
+use OC\OCS\Result;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
@@ -71,10 +72,10 @@ class EndPoint extends Controller {
 	}
 
 	/**
-	 * @param \OC_OCS_Result $ocsResult
+	 * @param Result $ocsResult
 	 * @return JSONResponse
 	 */
-	protected function ocsToJsonResponse(\OC_OCS_Result $ocsResult) {
+	protected function ocsToJsonResponse(Result $ocsResult) {
 		$response = new JSONResponse(
 			[
 				'ocs' => [
