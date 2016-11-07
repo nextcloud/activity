@@ -138,8 +138,7 @@
 .activity-section .avatar {
 	vertical-align: middle;
 	display: inline-block;
-	margin-right: 5px;
-	margin-left: 3px;
+	margin: 0 5px 2px 3px;
 }
 
 .activityTabView .activity.box {
