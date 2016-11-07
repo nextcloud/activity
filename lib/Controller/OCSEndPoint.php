@@ -311,7 +311,7 @@ class OCSEndPoint {
 				$preview['source'] = $pathPreview['source'];
 			} else if ($this->preview->isAvailable($fileInfo)) {
 				$preview['isMimeTypeIcon'] = false;
-				$preview['source'] = $this->urlGenerator->linkToRoute('core_ajax_preview', [
+				$preview['source'] = $this->urlGenerator->linkToRoute('core.Preview.getPreview', [
 					'file' => $info['path'],
 					'c' => $this->view->getETag($info['path']),
 					'x' => 150,

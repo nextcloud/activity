@@ -643,7 +643,7 @@ class OCSEndPointTest extends TestCase {
 			} else {
 				$this->urlGenerator->expects($this->once())
 					->method('linkToRoute')
-					->with('core_ajax_preview', $this->anything())
+					->with('core.Preview.getPreview', $this->anything())
 					->willReturnCallback(function() use ($returnedPath) {
 						return '/preview' . $returnedPath;
 					});
