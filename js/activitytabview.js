@@ -195,9 +195,9 @@
 			$el.find('.avatar').each(function() {
 				var element = $(this);
 				if (element.data('user-display-name')) {
-					element.avatar(element.data('user'), 28, undefined, false, undefined, element.data('user-display-name'));
+					element.avatar(element.data('user'), 21, undefined, false, undefined, element.data('user-display-name'));
 				} else {
-					element.avatar(element.data('user'), 28);
+					element.avatar(element.data('user'), 21);
 				}
 			});
 			$el.find('.has-tooltip').tooltip({
