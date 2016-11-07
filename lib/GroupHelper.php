@@ -31,6 +31,8 @@ use OCP\IL10N;
 class GroupHelper {
 	/** @var IEvent[] */
 	protected $event = [];
+	/** @var int */
+	protected $lastEvent = 0;
 
 	/** @var bool */
 	protected $allowGrouping;
@@ -82,7 +84,16 @@ class GroupHelper {
 
 		foreach ($this->activityManager->getProviders() as $provider) {
 			try {
-				$event = $provider->parse($event);
+				if ($this->lastEvent !== 0 && isset($this->event[$this->lastEvent])) {
+					$event = $provider->parse($event, $this->event[$this->lastEvent]);
+				} else {
+					$event = $provider->parse($event);
+				}
+
+				$child = $event->getChildEvent();
+				if ($child instanceof IEvent) {
+					unset($this->event[$this->lastEvent]);
+				}
 			} catch (\InvalidArgumentException $e) {
 			}
 		}
@@ -99,6 +110,7 @@ class GroupHelper {
 		}
 
 		$this->event[$id] = $event;
+		$this->lastEvent = $id;
 	}
 
 	/**
