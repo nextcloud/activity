@@ -24,6 +24,7 @@ namespace OCA\Activity\Controller;
 
 
 use OC\Files\View;
+use OC\OCS\Result;
 use OCA\Activity\Data;
 use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\GroupHelper;
@@ -166,7 +167,7 @@ class OCSEndPoint {
 
 	/**
 	 * @param array $parameters
-	 * @return \OC_OCS_Result
+	 * @return Result
 	 */
 	public function getDefault(array $parameters) {
 		return $this->get(array_merge($parameters, [
@@ -176,7 +177,7 @@ class OCSEndPoint {
 
 	/**
 	 * @param array $parameters
-	 * @return \OC_OCS_Result
+	 * @return Result
 	 */
 	public function getFilter(array $parameters) {
 		return $this->get($parameters);
@@ -184,15 +185,15 @@ class OCSEndPoint {
 
 	/**
 	 * @param array $parameters
-	 * @return \OC_OCS_Result
+	 * @return Result
 	 */
 	protected function get(array $parameters) {
 		try {
 			$this->readParameters($parameters);
 		} catch (InvalidFilterException $e) {
-			return new \OC_OCS_Result(null, Http::STATUS_NOT_FOUND);
+			return new Result(null, Http::STATUS_NOT_FOUND);
 		} catch (\OutOfBoundsException $e) {
-			return new \OC_OCS_Result(null, Http::STATUS_FORBIDDEN);
+			return new Result(null, Http::STATUS_FORBIDDEN);
 		}
 
 		try {
@@ -211,15 +212,15 @@ class OCSEndPoint {
 			);
 		} catch (\OutOfBoundsException $e) {
 			// Invalid since argument
-			return new \OC_OCS_Result(null, Http::STATUS_FORBIDDEN);
+			return new Result(null, Http::STATUS_FORBIDDEN);
 		} catch (\BadMethodCallException $e) {
 			// No activity settings enabled
-			return new \OC_OCS_Result(null, Http::STATUS_NO_CONTENT);
+			return new Result(null, Http::STATUS_NO_CONTENT);
 		}
 
 		$headers = $this->generateHeaders($response['headers'], $response['has_more']);
 		if (empty($response['data'])) {
-			return new \OC_OCS_Result([], Http::STATUS_NOT_MODIFIED, null, $headers);
+			return new Result([], Http::STATUS_NOT_MODIFIED, null, $headers);
 		}
 
 		$preparedActivities = [];
@@ -246,7 +247,7 @@ class OCSEndPoint {
 			$preparedActivities[] = $activity;
 		}
 
-		return new \OC_OCS_Result($preparedActivities, 100, null, $headers);
+		return new Result($preparedActivities, 100, null, $headers);
 	}
 
 	/**
