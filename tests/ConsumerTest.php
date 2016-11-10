@@ -23,6 +23,7 @@
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\Consumer;
+use OCP\Activity\IManager;
 use OCP\DB;
 
 /**
@@ -40,6 +41,8 @@ class ConsumerTest extends TestCase {
 
 	/** @var \OCP\L10N\IFactory|\PHPUnit_Framework_MockObject_MockObject */
 	protected $l10nFactory;
+	/** @var IManager|\PHPUnit_Framework_MockObject_MockObject */
+	protected $activityManager;
 
 	/** @var \OCA\Activity\UserSettings */
 	protected $userSettings;
@@ -48,6 +51,7 @@ class ConsumerTest extends TestCase {
 		parent::setUp();
 		$this->deleteTestActivities();
 
+		$this->activityManager = $this->createMock(IManager::class);
 		$this->data = $this->getMockBuilder('OCA\Activity\Data')
 			->disableOriginalConstructor()
 			->getMock();
@@ -125,7 +129,7 @@ class ConsumerTest extends TestCase {
 	 * @param array|false $expected
 	 */
 	public function testReceiveStream($type, $author, $affectedUser, $subject, $expected) {
-		$consumer = new Consumer($this->data, $this->userSettings, $this->l10nFactory);
+		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->l10nFactory);
 		$event = \OC::$server->getActivityManager()->generateEvent();
 		$event->setApp('test')
 			->setType($type)
@@ -160,7 +164,7 @@ class ConsumerTest extends TestCase {
 	 */
 	public function testReceiveEmail($type, $author, $affectedUser, $subject, $expected) {
 		$time = time();
-		$consumer = new Consumer($this->data, $this->userSettings, $this->l10nFactory);
+		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->l10nFactory);
 		$event = \OC::$server->getActivityManager()->generateEvent();
 		$event->setApp('test')
 			->setType($type)

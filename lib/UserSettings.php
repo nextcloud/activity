@@ -98,6 +98,7 @@ class UserSettings {
 			} else if ($type === 'selfemail') {
 				return false;
 			}
+			return false;
 		}
 
 		try {

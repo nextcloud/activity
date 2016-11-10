@@ -22,46 +22,36 @@
 
 namespace OCA\Activity\Tests;
 
-use OCA\Activity\Data;
-use OCA\Activity\Tests\Mock\Extension;
 use OCA\Activity\UserSettings;
+use OCP\Activity\IManager;
+use OCP\Activity\ISetting;
+use OCP\IConfig;
 
 class UserSettingsTest extends TestCase {
 	/** @var UserSettings */
 	protected $userSettings;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var IManager|\PHPUnit_Framework_MockObject_MockObject */
+	protected $activityManager;
+	/** @var IConfig|\PHPUnit_Framework_MockObject_MockObject */
 	protected $config;
 
 	protected function setUp() {
 		parent::setUp();
-
-		$activityLanguage = \OCP\Util::getL10N('activity', 'en');
-		$activityManager = new \OC\Activity\Manager(
-			$this->getMock('OCP\IRequest'),
-			$this->getMock('OCP\IUserSession'),
-			$this->getMock('OCP\IConfig')
-		);
-		$activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
-		});
-		$this->config = $this->getMock('OCP\IConfig');
-		$this->userSettings = new UserSettings($activityManager, $this->config, new Data(
-			$activityManager,
-			$this->getMock('\OCP\IDBConnection'),
-			$this->getMock('\OCP\IUserSession')
-		));
+		$this->activityManager = $this->createMock(IManager::class);
+		$this->config = $this->createMock(IConfig::class);
+		$this->userSettings = new UserSettings($this->activityManager, $this->config);
 	}
 
 	public function getDefaultSettingData() {
-		return array(
-			array('stream', 'type1', true),
-			array('email', 'type1', false),
-			array('setting', 'self', true),
-			array('setting', 'selfemail', false),
-			array('setting', 'batchtime', 3600),
-			array('setting', 'not-exists', false),
-		);
+		return [
+			['stream', 'type1', true],
+			['email', 'type1', false],
+			['setting', 'self', true],
+			['setting', 'selfemail', false],
+			['setting', 'batchtime', 3600],
+			['setting', 'not-exists', false],
+		];
 	}
 
 	/**
@@ -72,77 +62,27 @@ class UserSettingsTest extends TestCase {
 	 * @param mixed $expected
 	 */
 	public function testGetDefaultSetting($method, $type, $expected) {
+		if ($method !== 'setting') {
+			if ($type === 'not-exists') {
+				$this->activityManager->expects($this->once())
+					->method('getSettingById')
+					->with($type)
+					->willThrowException(new \InvalidArgumentException());
+			} else {
+				$s = $this->createMock(ISetting::class);
+				$s->expects($method === 'stream' ? $this->once() : $this->never())
+					->method('isDefaultEnabledStream')
+					->willReturn($expected);
+				$s->expects($method === 'email' ? $this->once() : $this->never())
+					->method('isDefaultEnabledMail')
+					->willReturn($expected);
+				$this->activityManager->expects($this->once())
+					->method('getSettingById')
+					->with($type)
+					->willReturn($s);
+			}
+
+		}
 		$this->assertEquals($expected, $this->userSettings->getDefaultSetting($method, $type));
-	}
-
-	public function getNotificationTypesData() {
-		return array(
-			//array('test1', 'stream', array('type1')),
-			array('noPreferences', 'email', array('type2')),
-		);
-	}
-
-	/**
-	 * @dataProvider getNotificationTypesData
-	 *
-	 * @param string $user
-	 * @param string $method
-	 * @param array $expected
-	 */
-	public function testGetNotificationTypes($user, $method, $expected) {
-		$this->config->expects($this->any())
-			->method('getUserValue')
-			->with($this->anything(), 'activity', $this->stringStartsWith('notify_'), $this->anything())
-			->willReturnMap([
-				['test1', 'activity', 'notify_stream_type1', true, 1],
-				['test1', 'activity', 'notify_stream_type2', true, 0],
-				['noPreferences', 'activity', 'notify_email_type1', false, 0],
-				['noPreferences', 'activity', 'notify_email_type2', true, 1],
-			]);
-
-		$this->assertEquals($expected, $this->userSettings->getNotificationTypes($user, $method));
-	}
-
-	public function filterUsersBySettingData() {
-		return array(
-			array(array(), 'stream', 'type1', array()),
-			array(array('test', 'test1', 'test2', 'test3', 'test4'), 'stream', 'type3', array('test1' => 1, 'test4' => 1)),
-			array(array('test', 'test1', 'test2', 'test3', 'test4', 'test5'), 'email', 'type3', array('test1' => '1', 'test4' => '4', 'test5' => 1)),
-			array(array('test', 'test6'), 'stream', 'type1', array('test' => 1, 'test6' => 1)),
-			array(array('test', 'test6'), 'stream', 'type4', array('test6' => 1)),
-			array(array('test6'), 'email', 'type2', array('test6' => '2700')),
-			array(array('test', 'test6'), 'email', 'type2', array('test' => '3600', 'test6' => '2700')),
-			array(array('test', 'test6'), 'email', 'type1', array('test6' => '2700')),
-		);
-	}
-
-	/**
-	 * @dataProvider filterUsersBySettingData
-	 *
-	 * @param array $users
-	 * @param string $method
-	 * @param string $type
-	 * @param array $expected
-	 */
-	public function testFilterUsersBySetting($users, $method, $type, $expected) {
-		$this->config->expects($this->any())
-			->method('getUserValueForUsers')
-			->with($this->anything(), $this->anything(), $this->anything())
-			->willReturnMap([
-				['activity', 'notify_stream_type1', ['test', 'test6'], ['test6' => '1']],
-				['activity', 'notify_stream_type4', ['test', 'test6'], ['test6' => '1']],
-				['activity', 'notify_stream_type3', ['test', 'test1', 'test2', 'test3', 'test4'], ['test1' => '1', 'test2' => '0', 'test3' => '', 'test4' => '1']],
-
-				['activity', 'notify_email_type1', ['test', 'test6'], ['test6' => '1']],
-				['activity', 'notify_email_type2', ['test6'], ['test6' => '1']],
-				['activity', 'notify_email_type2', ['test', 'test6'], ['test6' => '1']],
-				['activity', 'notify_email_type3', ['test', 'test1', 'test2', 'test3', 'test4', 'test5'], ['test1' => '1', 'test2' => '0', 'test3' => '', 'test4' => '3', 'test5' => '1']],
-
-				['activity', 'notify_setting_batchtime', ['test6'], ['test6' => '2700']],
-				['activity', 'notify_setting_batchtime', ['test', 'test6'], ['test6' => '2700']],
-				['activity', 'notify_setting_batchtime', ['test1', 'test4', 'test5'], ['test1' => '1', 'test4' => '4']],
-			]);
-
-		$this->assertEquals($expected, $this->userSettings->filterUsersBySetting($users, $method, $type));
 	}
 }
