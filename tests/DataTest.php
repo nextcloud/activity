@@ -24,6 +24,9 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\Data;
 use OCA\Activity\Tests\Mock\Extension;
+use OCP\Activity\IManager;
+use OCP\IUserSession;
+use OCP\RichObjectStrings\IValidator;
 
 /**
  * Class DataTest
@@ -48,18 +51,9 @@ class DataTest extends TestCase {
 		parent::setUp();
 
 		$this->activityLanguage = $activityLanguage = \OCP\Util::getL10N('activity', 'en');
-		$this->activityManager = new \OC\Activity\Manager(
-			$this->getMock('OCP\IRequest'),
-			$this->getMock('OCP\IUserSession'),
-			$this->getMock('OCP\IConfig')
-		);
-		$this->session = $this->getMockBuilder('OCP\IUserSession')
-			->disableOriginalConstructor()
-			->getMock();
+		$this->activityManager = $this->createMock(IManager::class);
+		$this->session = $this->createMock(IUserSession::class);
 
-		$this->activityManager->registerExtension(function() use ($activityLanguage) {
-			return new Extension($activityLanguage, $this->getMock('\OCP\IURLGenerator'));
-		});
 		$this->data = new Data(
 			$this->activityManager,
 			\OC::$server->getDatabaseConnection(),
@@ -70,48 +64,6 @@ class DataTest extends TestCase {
 	protected function tearDown() {
 		$this->restoreService('UserSession');
 		parent::tearDown();
-	}
-
-	public function dataGetNotificationTypes() {
-		return [
-			['type1'],
-		];
-	}
-
-	/**
-	 * @dataProvider dataGetNotificationTypes
-	 * @param string $typeKey
-	 */
-	public function testGetNotificationTypes($typeKey) {
-		$this->assertArrayHasKey($typeKey, $this->data->getNotificationTypes($this->activityLanguage));
-		// Check cached version aswell
-		$this->assertArrayHasKey($typeKey, $this->data->getNotificationTypes($this->activityLanguage));
-	}
-
-	public function validateFilterData() {
-		return array(
-			// Default filters
-			array('all', 'all'),
-			array('by', 'by'),
-			array('self', 'self'),
-
-			// Filter from extension
-			array('filter1', 'filter1'),
-
-			// Inexistent or empty filter
-			array('test', 'all'),
-			array(null, 'all'),
-		);
-	}
-
-	/**
-	 * @dataProvider validateFilterData
-	 *
-	 * @param string $filter
-	 * @param string $expected
-	 */
-	public function testValidateFilter($filter, $expected) {
-		$this->assertEquals($expected, $this->data->validateFilter($filter));
 	}
 
 	public function dataSend() {
@@ -147,8 +99,12 @@ class DataTest extends TestCase {
 		$event = \OC::$server->getActivityManager()->generateEvent();
 		$event->setApp('test')
 			->setType('type')
-			->setAffectedUser($affectedUser)
 			->setSubject('subject', []);
+
+		if ($affectedUser !== '') {
+			$event->setAffectedUser($affectedUser);
+		}
+
 		if ($actionUser !== '') {
 			$event->setAuthor($actionUser);
 		}
@@ -192,9 +148,12 @@ class DataTest extends TestCase {
 		$event = \OC::$server->getActivityManager()->generateEvent();
 		$event->setApp('test')
 			->setType('type')
-			->setAffectedUser($affectedUser)
 			->setSubject('subject', [])
 			->setTimestamp($time);
+
+		if ($affectedUser !== '') {
+			$event->setAffectedUser($affectedUser);
+		}
 
 		$this->assertSame($expectedActivity, $this->data->storeMail($event, $time + 10));
 
@@ -211,151 +170,6 @@ class DataTest extends TestCase {
 
 		$this->deleteTestMails();
 		$this->restoreService('UserSession');
-	}
-
-	public function dataGet() {
-		return [
-			['asc', 'filter1', 1],
-			['desc', 'filter1', 4],
-			['asc', 'self', 1],
-			['desc', 'self', 2],
-			['asc', 'by', 3],
-			['desc', 'by', 4],
-			['asc', 'filter', 1, 'object1', 23],
-			['desc', 'filter', 4, 'object2', 42],
-		];
-	}
-
-	/**
-	 * @dataProvider dataGet
-	 *
-	 * @param string $sort
-	 * @param string $filter
-	 * @param int $lastGiven
-	 * @param string $objectType
-	 * @param int $objectId
-	 */
-	public function testGet($sort, $filter, $lastGiven, $objectType = '', $objectId = 0) {
-		$this->deleteTestActivities();
-
-		$activities = [];
-		$activities[1] = $this->populateActivity(1, 'user1', 'user1', 'type1', $objectType, $objectId);
-		$activities[2] = $this->populateActivity(2, 'user1', 'user1', 'type2', $objectType, $objectId);
-		$activities[3] = $this->populateActivity(3, 'user1', 'user2', 'type1', $objectType, $objectId);
-		$activities[4] = $this->populateActivity(4, 'user1', 'user2', 'type2', $objectType, $objectId);
-		$activities[5] = $this->populateActivity(5, 'user2', 'user1', 'type2', $objectType, $objectId);
-
-		/** @var \OCA\Activity\GroupHelper|\PHPUnit_Framework_MockObject_MockObject $groupHelper */
-		$groupHelper = $this->getMockBuilder('OCA\Activity\GroupHelper')
-			->disableOriginalConstructor()
-			->getMock();
-		$groupHelper->expects($this->once())
-			->method('setUser')
-			->with('user1');
-
-		/** @var \OCA\Activity\UserSettings|\PHPUnit_Framework_MockObject_MockObject $settings */
-		$settings = $this->getMockBuilder('OCA\Activity\UserSettings')
-			->disableOriginalConstructor()
-			->getMock();
-		$settings->expects($this->once())
-			->method('getNotificationTypes')
-			->with('user1', 'stream')
-			->willReturn(['type1', 'type2']);
-
-		/** @var \OC\Activity\Manager|\PHPUnit_Framework_MockObject_MockObject $activityManager */
-		$activityManager = $this->getMockBuilder('OCP\Activity\IManager')
-			->disableOriginalConstructor()
-			->getMock();
-		$activityManager->expects($this->any())
-			->method('filterNotificationTypes')
-			->with(['type1', 'type2'], $filter)
-			->willReturn(['type1', 'type2']);
-		$activityManager->expects($this->once())
-			->method('getQueryForFilter')
-			->with($filter)
-			->willReturn([null, null]);
-
-		/** @var \OCA\Activity\Data|\PHPUnit_Framework_MockObject_MockObject $data */
-		$data = new \OCA\Activity\Data(
-			$activityManager,
-			\OC::$server->getDatabaseConnection(),
-			$this->session
-		);
-
-		$result = $data->get($groupHelper, $settings, 'user1', 0, 1, $sort, $filter, $objectType, $objectId);
-
-		$this->assertArrayHasKey('data', $result);
-		$this->assertEquals(null, $result['data']);
-		$this->assertArrayHasKey('headers', $result);
-		$this->assertArrayHasKey('X-Activity-Last-Given', $result['headers']);
-		$this->assertEquals($activities[$lastGiven], $result['headers']['X-Activity-Last-Given']);
-		$this->assertArrayHasKey('has_more', $result);
-		$this->assertEquals(true, $result['has_more']);
-
-		$this->deleteTestActivities();
-	}
-
-	/**
-	 * @expectedException \BadMethodCallException
-	 * @expectedExceptionMessage No settings enabled
-	 * @expectedExceptionCode 3
-	 */
-	public function testGetNoSettings() {
-		/** @var \OCA\Activity\GroupHelper|\PHPUnit_Framework_MockObject_MockObject $groupHelper */
-		$groupHelper = $this->getMockBuilder('OCA\Activity\GroupHelper')
-			->disableOriginalConstructor()
-			->getMock();
-		$groupHelper->expects($this->once())
-			->method('setUser')
-			->with('user1');
-
-		/** @var \OCA\Activity\UserSettings|\PHPUnit_Framework_MockObject_MockObject $settings */
-		$settings = $this->getMockBuilder('OCA\Activity\UserSettings')
-			->disableOriginalConstructor()
-			->getMock();
-		$settings->expects($this->once())
-			->method('getNotificationTypes')
-			->with('user1', 'stream')
-			->willReturn(['settings']);
-
-		/** @var \OC\Activity\Manager|\PHPUnit_Framework_MockObject_MockObject $activityManager */
-		$activityManager = $this->getMockBuilder('OCP\Activity\IManager')
-			->disableOriginalConstructor()
-			->getMock();
-		$activityManager->expects($this->any())
-			->method('filterNotificationTypes')
-			->with(['settings'], 'filter1')
-			->willReturn([]);
-		$activityManager->expects($this->never())
-			->method('getQueryForFilter');
-
-		/** @var \OCA\Activity\Data|\PHPUnit_Framework_MockObject_MockObject $data */
-		$data = new \OCA\Activity\Data(
-			$activityManager,
-			\OC::$server->getDatabaseConnection(),
-			$this->session
-		);
-
-		$data->get($groupHelper, $settings, 'user1', 0, 0, 'asc', 'filter1');
-	}
-
-	/**
-	 * @expectedException \OutOfBoundsException
-	 * @expectedExceptionMessage Invalid user
-	 * @expectedExceptionCode 1
-	 */
-	public function testGetNoUser() {
-		/** @var \OCA\Activity\GroupHelper|\PHPUnit_Framework_MockObject_MockObject $groupHelper */
-		$groupHelper = $this->getMockBuilder('OCA\Activity\GroupHelper')
-			->disableOriginalConstructor()
-			->getMock();
-
-		/** @var \OCA\Activity\UserSettings|\PHPUnit_Framework_MockObject_MockObject $settings */
-		$settings = $this->getMockBuilder('OCA\Activity\UserSettings')
-			->disableOriginalConstructor()
-			->getMock();
-
-		$this->data->get($groupHelper, $settings, '', 0, 0, 'asc', '');
 	}
 
 	public function dataSetOffsetFromSince() {
@@ -442,36 +256,6 @@ class DataTest extends TestCase {
 		}
 
 		$this->deleteTestActivities();
-	}
-
-	/**
-	 * @param int $num
-	 * @param string $affected
-	 * @param string $user
-	 * @param string $type
-	 * @param string $objectType
-	 * @param int $objectId
-	 * @return int
-	 */
-	protected function populateActivity($num, $affected, $user, $type, $objectType, $objectId) {
-		$connection = \OC::$server->getDatabaseConnection();
-		$query = $connection->getQueryBuilder();
-		$query->insert('activity')
-			->values([
-				'app' => $query->createNamedParameter('test'),
-				'affecteduser' => $query->createNamedParameter($affected),
-				'user' => $query->createNamedParameter($user),
-				'timestamp' => 123465789 + $num,
-				'type' => $query->createNamedParameter($type),
-				'object_type' => $query->createNamedParameter($objectType),
-				'object_id' => $query->createNamedParameter($objectId),
-				'subject' => $query->createNamedParameter('subject'),
-				'subjectparams' => $query->createNamedParameter('subjectparams'),
-				'priority' => 1,
-			])
-			->execute();
-
-		return $query->getLastInsertId();
 	}
 
 	/**

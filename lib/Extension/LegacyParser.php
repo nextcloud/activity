@@ -55,13 +55,13 @@ class LegacyParser implements IProvider {
 		$event->setParsedSubject($this->parser->parseMessage($this->dataHelper->translation(
 			$event->getApp(),
 			$event->getSubject(),
-			$this->dataHelper->getParameters($event, 'subject', $event->getSubjectParameters())
+			$this->dataHelper->getParameters($event, 'subject', json_encode($event->getSubjectParameters()))
 		)));
 
 		$event->setParsedMessage($this->parser->parseMessage($this->dataHelper->translation(
 			$event->getApp(),
 			$event->getMessage(),
-			$this->dataHelper->getParameters($event, 'message', $event->getMessageParameters())
+			$this->dataHelper->getParameters($event, 'message', json_encode($event->getMessageParameters()))
 		)));
 
 		return $event;

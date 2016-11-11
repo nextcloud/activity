@@ -51,27 +51,6 @@ class Data {
 		$this->connection = $connection;
 	}
 
-	protected $notificationTypes = array();
-
-	/**
-	 * @param IL10N $l
-	 * @return array Array "stringID of the type" => "translated string description for the setting"
-	 * 				or Array "stringID of the type" => [
-	 * 					'desc' => "translated string description for the setting"
-	 * 					'methods' => [\OCP\Activity\IExtension::METHOD_*],
-	 * 				]
-	 */
-	public function getNotificationTypes(IL10N $l) {
-		if (isset($this->notificationTypes[$l->getLanguageCode()])) {
-			return $this->notificationTypes[$l->getLanguageCode()];
-		}
-
-		// Allow apps to add new notification types
-		$notificationTypes = $this->activityManager->getNotificationTypes($l->getLanguageCode());
-		$this->notificationTypes[$l->getLanguageCode()] = $notificationTypes;
-		return $notificationTypes;
-	}
-
 	/**
 	 * Send an event into the activity stream
 	 *
