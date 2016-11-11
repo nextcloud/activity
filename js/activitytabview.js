@@ -19,17 +19,14 @@
 		'</div>';
 	var ACTIVITY_TEMPLATE =
 		'    <li class="activity box">' +
-		'        <div class="activity-icon {{typeIconClass}}"></div>' +
+		'        <div class="activity-icon">' +
+		'        {{#if icon}}' +
+		'          <img src="{{icon}}">' +
+		'        {{/if}}' +
+		'        </div>' +
 		'        <div class="activitysubject">{{{subject}}}</div>' +
 		'        <span class="activitytime has-tooltip live-relative-timestamp" data-timestamp="{{timestamp}}" title="{{formattedDateTooltip}}">{{formattedDate}}</span>' +
 		'        <div class="activitymessage">{{{message}}}</div>' +
-		'        {{#if previews}}' +
-		'        <div class="previews">' +
-		'        {{#each previews}}' +
-		'            <img class="preview {{previewClass}}" src="{{source}}" alt="" />' +
-		'        {{/each}}' +
-		'        </div>' +
-		'        {{/if}}' +
 		'    </li>';
 
 	/**
@@ -139,17 +136,27 @@
 		 * @return {Object}
 		 */
 		_formatItem: function(activity) {
+
+			var subject = activity.get('subject'),
+				subject_rich = activity.get('subject_rich');
+			if (subject_rich[0].length > 1) {
+				subject = OCA.Activity.RichObjectStringParser.parseMessage(subject_rich[0], subject_rich[1]);
+			}
+			var message = activity.get('message'),
+				message_rich = activity.get('message_rich');
+			if (message_rich[0].length > 1) {
+				message = OCA.Activity.RichObjectStringParser.parseMessage(message_rich[0], message_rich[1]);
+			}
+
 			var output = {
-				subject: OCA.Activity.Formatter.parseMessage(activity.get('subject_prepared'), false),
+				subject: subject,
 				formattedDate: activity.getRelativeDate(),
 				formattedDateTooltip: activity.getFullDate(),
-				timestamp: moment(activity.datetime).valueOf(),
-				message: OCA.Activity.Formatter.parseMessage(activity.get('message_prepared'), false)
+				timestamp: moment(activity.get('datetime')).valueOf(),
+				message: message,
+				icon: activity.get('icon')
 			};
 
-			if (activity.has('typeicon')) {
-				output.typeIconClass = activity.get('typeicon') + ' svg';
-			}
 			/**
 			 * Disable previews in the rightside bar,
 			 * it's always the same image anyway.

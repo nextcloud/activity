@@ -8,6 +8,7 @@
  */
 
 (function() {
+	OCA.Activity = OCA.Activity || {};
 
 	OCA.Activity.RichObjectStringParser = {
 		avatarsEnabled: true,
