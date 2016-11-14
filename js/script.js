@@ -276,7 +276,7 @@ $(function(){
 		}
 	};
 
-	OCA.Activity.Formatter.setAvatarStatus(OCA.Activity.InfinitScrolling.$container.data('avatars-enabled') === 'yes');
+	//OCA.Activity.Formatter.setAvatarStatus(OCA.Activity.InfinitScrolling.$container.data('avatars-enabled') === 'yes');
 	OC.Util.History.addOnPopStateHandler(_.bind(OCA.Activity.Filter._onPopState, OCA.Activity.Filter));
 	OCA.Activity.Filter.setFilter(OCA.Activity.InfinitScrolling.$container.attr('data-activity-filter'));
 	OCA.Activity.InfinitScrolling.$content.on('scroll', _.bind(OCA.Activity.InfinitScrolling.onScroll, OCA.Activity.InfinitScrolling));
