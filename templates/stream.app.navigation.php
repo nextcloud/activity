@@ -23,21 +23,21 @@
  */
 ?>
 <div id="app-navigation">
-	<?php foreach ($_['navigations'] as $navigationGroup => $navigationEntries) { ?>
-		<?php if ($navigationGroup !== 'apps'): ?><ul class="with-icon"><?php endif; ?>
-
-		<?php foreach ($navigationEntries as $navigation) { ?>
+	<ul>
+	<?php foreach ($_['navigations'] as $navigation) { ?>
 		<li<?php if ($_['activeNavigation'] === $navigation['id']): ?> class="active"<?php endif; ?>>
 			<a data-navigation="<?php p($navigation['id']) ?>"
-			   <?php if (isset($navigation['icon'])) { ?> class="<?php p($navigation['icon']); ?>"<?php } ?>
 			   href="<?php p($navigation['url']) ?>">
-				<?php p($navigation['name']) ?>
+				<?php if (!empty($navigation['icon'])) { ?>
+					<img alt="" src="<?php print_unescaped($navigation['icon']); ?>">
+					<span><?php p($navigation['name']) ?></span>
+				<?php } else { ?>
+					<span class="no-icon"><?php p($navigation['name']) ?></span>
+				<?php } ?>
 			</a>
 		</li>
-		<?php } ?>
-
-		<?php if ($navigationGroup !== 'top'): ?></ul><?php endif; ?>
 	<?php } ?>
+	</ul>
 
 	<div id="app-settings">
 		<div id="app-settings-header">

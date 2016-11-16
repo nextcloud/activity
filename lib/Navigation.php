@@ -24,6 +24,7 @@
 namespace OCA\Activity;
 
 
+use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -82,16 +83,9 @@ class Navigation {
 		$active = $forceActive ?: 'all';
 
 		$template = new Template('activity', 'stream.app.navigation', '');
-		$entries = $this->getLinkList();
-
-		if (sizeof($entries['apps']) === 1) {
-			// If there is only the files app, we simply do not show it,
-			// as it is the same as the 'all' filter.
-			$entries['apps'] = array();
-		}
 
 		$template->assign('activeNavigation', $active);
-		$template->assign('navigations', $entries);
+		$template->assign('navigations', $this->getLinkList());
 		$template->assign('rssLink', $this->getRSSLink());
 
 		return $template;
@@ -115,34 +109,25 @@ class Navigation {
 	 * @return array Notification data (user => array of rows from the table)
 	 */
 	public function getLinkList() {
-		$topEntries = [
-			[
-				'id' => 'all',
-				'icon' => 'icon-activity',
-				'name' => (string) $this->l->t('All activities'),
-				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList'),
-			],
-		];
+		$filters = $this->activityManager->getFilters();
+		usort($filters, function(IFilter $a, IFilter $b) {
+			if ($a->getPriority() === $b->getPriority()) {
+				return $a->getIdentifier() > $b->getIdentifier();
+			}
 
-		$topEntries[] = [
-			'id' => 'self',
-			'icon' => 'icon-user',
-			'name' => (string) $this->l->t('By you'),
-			'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'self')),
-		];
-		$topEntries[] = [
-			'id' => 'by',
-			'icon' => 'icon-contacts-dark',
-			'name' => (string) $this->l->t('By others'),
-			'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => 'by')),
-		];
+			return $a->getPriority() > $b->getPriority();
+		});
 
-		$additionalEntries = $this->activityManager->getNavigation();
-		$topEntries = array_merge($topEntries, $additionalEntries['top']);
+		$entries = [];
+		foreach ($filters as $filter) {
+			$entries[] = [
+				'id' => $filter->getIdentifier(),
+				'icon' => $filter->getIcon(),
+				'name' => $filter->getName(),
+				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => $filter->getIdentifier())),
+			];
+		}
 
-		return array(
-			'top'		=> $topEntries,
-			'apps'		=> $additionalEntries['apps'],
-		);
+		return $entries;
 	}
 }

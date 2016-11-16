@@ -23,7 +23,7 @@
  *
  */
 script('activity', [
-	'formatter',
+	'richObjectStringParser',
 	'script',
 	'feedSettings',
 ]);

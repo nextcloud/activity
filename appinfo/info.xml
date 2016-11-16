@@ -32,6 +32,14 @@
 		<nextcloud min-version="11" max-version="11" />
 	</dependencies>
 
+	<activity>
+		<filters>
+			<filter>OCA\Activity\Filter\AllFilter</filter>
+			<filter>OCA\Activity\Filter\SelfFilter</filter>
+			<filter>OCA\Activity\Filter\ByFilter</filter>
+		</filters>
+	</activity>
+
 	<background-jobs>
 		<job>OCA\Activity\BackgroundJob\EmailNotification</job>
 		<job>OCA\Activity\BackgroundJob\ExpireActivities</job>

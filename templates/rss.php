@@ -36,7 +36,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 		<item>
 			<guid isPermaLink="false"><?php p($activity['activity_id']); ?></guid>
 <?php if (!empty($activity['subject'])): ?>
-			<title><?php p(str_replace("\n", ' ', $activity['subject_prepared'])); ?></title>
+			<title><?php p(str_replace("\n", ' ', $activity['subject'])); ?></title>
 <?php endif; ?>
 <?php if (!empty($activity['link'])): ?>
 			<link><?php p($activity['link']); ?></link>
@@ -45,7 +45,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 			<pubDate><?php p(date('r', $activity['timestamp'])); ?></pubDate>
 <?php endif; ?>
 <?php if (!empty($activity['message'])): ?>
-			<description><![CDATA[<?php print_unescaped(str_replace("\n", '<br />', \OCP\Util::sanitizeHTML($activity['message_prepared']))); ?>]]></description>
+			<description><![CDATA[<?php print_unescaped(str_replace("\n", '<br />', \OCP\Util::sanitizeHTML($activity['message']))); ?>]]></description>
 <?php endif; ?>
 		</item>
 <?php } ?>

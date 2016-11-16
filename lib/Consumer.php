@@ -25,13 +25,15 @@ namespace OCA\Activity;
 
 use OCP\Activity\IConsumer;
 use OCP\Activity\IEvent;
-use OCP\Activity\IExtension;
+use OCP\Activity\IManager;
 use OCP\L10N\IFactory;
 
 class Consumer implements IConsumer {
 
 	/** @var Data */
 	protected $data;
+	/** @var IManager */
+	protected $manager;
 
 	/** @var UserSettings */
 	protected $userSettings;
@@ -43,11 +45,13 @@ class Consumer implements IConsumer {
 	 * Constructor
 	 *
 	 * @param Data $data
+	 * @param IManager $manager
 	 * @param UserSettings $userSettings
 	 * @param IFactory $l10nFactory
 	 */
-	public function __construct(Data $data, UserSettings $userSettings, IFactory $l10nFactory) {
+	public function __construct(Data $data, IManager $manager, UserSettings $userSettings, IFactory $l10nFactory) {
 		$this->data = $data;
+		$this->manager = $manager;
 		$this->userSettings = $userSettings;
 		$this->l10nFactory = $l10nFactory;
 	}
@@ -64,13 +68,8 @@ class Consumer implements IConsumer {
 		$emailSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'email', $event->getType());
 		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'batchtime') : false;
 
-		$types = $this->data->getNotificationTypes($this->l10nFactory->get('activity'));
-		$typeData = $types[$event->getType()];
-
 		// User is not the author or wants to see their own actions
 		$createStream = !$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'self');
-		// User can not control the setting
-		$createStream = $createStream || is_array($typeData) && isset($typeData['methods']) && !in_array(IExtension::METHOD_STREAM, $typeData['methods']);
 
 		// Add activity to stream
 		if ($streamSetting && $createStream) {
@@ -79,8 +78,6 @@ class Consumer implements IConsumer {
 
 		// User is not the author or wants to see their own actions
 		$createEmail = !$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'selfemail');
-		// User can not control the setting
-		$createEmail = $createEmail || is_array($typeData) && isset($typeData['methods']) && !in_array(IExtension::METHOD_MAIL, $typeData['methods']);
 
 		// Add activity to mail queue
 		if ($emailSetting && $createEmail) {

@@ -26,6 +26,7 @@ use OCA\Activity\Controller\APIv1;
 use OCA\Activity\CurrentUser;
 use OCA\Activity\Data;
 use OCA\Activity\DataHelper;
+use OCA\Activity\Extension\LegacyParser;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Parameter\Factory;
 use OCA\Activity\PlainTextParser;
@@ -40,6 +41,7 @@ use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUserSession;
 use OCP\L10N\IFactory;
+use OCP\RichObjectStrings\IValidator;
 
 /**
  * Class APIv1Test
@@ -200,7 +202,8 @@ class APIv1Test extends TestCase {
 		$activityManager = new Manager(
 			$this->getMockBuilder(IRequest::class)->getMock(),
 			$this->getMockBuilder(IUserSession::class)->getMock(),
-			$config
+			$config,
+			\OC::$server->query(IValidator::class)
 		);
 		$activityManager->registerExtension(function() use ($l) {
 			return new Extension($l, $this->getMockBuilder(IURLGenerator::class)->getMock());
@@ -214,18 +217,20 @@ class APIv1Test extends TestCase {
 			->willReturn($user);
 
 		$data = new Data($activityManager, \OC::$server->getDatabaseConnection());
+		$dataHelper = new DataHelper(
+			$activityManager,
+			\OC::$server->query(Factory::class),
+			$this->getMockBuilder(IFactory::class)->getMock(),
+			$l
+		);
+		$parser = new PlainTextParser($l);
 
 		/** @var APIv1 $controller */
 		$controller = new APIv1(
 			'activity',
 			$this->getMockBuilder(IRequest::class)->getMock(),
 			$data,
-			new GroupHelper($activityManager, new DataHelper(
-				$activityManager,
-				\OC::$server->query(Factory::class),
-				$this->getMockBuilder(IFactory::class)->getMock(),
-				$l
-			)),
+			new GroupHelper($activityManager, $dataHelper, new LegacyParser($dataHelper, $parser)),
 			new UserSettings($activityManager, $config, $data),
 			new PlainTextParser($l),
 			$currentUser

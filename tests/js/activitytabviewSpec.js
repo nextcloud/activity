@@ -46,10 +46,25 @@ describe('ActivityTabView', function() {
 
 		it('renders activities', function() {
 			var activity1 = {
-				subject_prepared: 'The <parameter class="markup">Subject</parameter>',
+				subject: 'The Subject',
+				subject_rich: [
+					'The Subject {file1}',
+					{
+						file1: {
+							id: 42,
+							name: 'test.txt',
+							path: 'foo/bar/test.txt'
+						}
+					}
+				],
 				datetime: moment().format(),
+				message: 'Some message',
+				message_rich: [
+					'Some message',
+					[]
+				],
 				message_prepared: 'Some <parameter class="markup">message</parameter>!',
-				typeicon: 'icon-add-color',
+				icon: OC.imagePath('core', 'actions/add.svg'),
 				previews: [{
 					isMimeTypeIcon: true,
 					source: OC.imagePath('core', 'filetypes/text.svg')
@@ -59,9 +74,17 @@ describe('ActivityTabView', function() {
 				}]
 			};
 			var activity2 = {
-				subject_prepared: 'The Subject Two',
+				subject: 'The Subject Two',
+				subject_rich: [
+					'The Subject Two',
+					[]
+				],
 				datetime: moment().subtract(1, 'y').format(),
-				message_prepared: 'Activity Two'
+				message: 'Two message',
+				message_rich: [
+					'Two message',
+					[]
+				]
 			};
 			tabView.setFileInfo(fileInfo);
 			tabView.collection.trigger('request');
@@ -70,11 +93,11 @@ describe('ActivityTabView', function() {
 			var $activities = tabView.$container.find('.activity');
 			expect($activities.length).toEqual(2);
 			var $a1 = $activities.eq(0);
-			expect($a1.find('.activitysubject').text()).toEqual('The Subject');
-			expect($a1.find('.activitysubject .markup').length).toEqual(1);
-			expect($a1.find('.activitymessage').text()).toEqual('Some message!');
-			expect($a1.find('.activitymessage .markup').length).toEqual(1);
-			expect($a1.find('.activity-icon').hasClass('icon-add-color')).toEqual(true);
+			expect($a1.find('.activitysubject').text()).toEqual('The Subject test.txt');
+			expect($a1.find('.activitysubject strong').length).toEqual(1);
+			expect($a1.find('.activitymessage').text()).toEqual('Some message');
+			expect($a1.find('.activitymessage strong').length).toEqual(0);
+			expect($a1.find('.activity-icon img').attr('src')).toContain('img/actions/add.svg');
 			expect($a1.find('.activitytime').text()).toEqual('seconds ago');
 			expect($a1.find('.activitytime').attr('data-original-title')).toContain(moment().format('MMMM'));
 			expect($a1.find('.activitytime').attr('data-original-title')).toContain(moment().format('YYYY'));
