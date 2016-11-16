@@ -97,6 +97,10 @@
 				firstSlashPosition = parameter.path.indexOf('/');
 			parameter.path = parameter.path.substring(firstSlashPosition === 0 ? 1 : 0, lastSlashPosition);
 
+			if (!parameter.link) {
+				parameter.link = OC.generateUrl('/f/{fileId}', {fileId: parameter.id})
+			}
+
 			if (parameter.path === '' || parameter.path === '/') {
 				return this.fileNoPathTemplate(parameter);
 			}
