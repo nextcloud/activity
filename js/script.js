@@ -202,6 +202,10 @@ $(function(){
 			if (activity.subject_rich[0].length > 1) {
 				subject = OCA.Activity.RichObjectStringParser.parseMessage(activity.subject_rich[0], activity.subject_rich[1]);
 			}
+			var message = activity.message;
+			if (activity.message_rich[0].length > 1) {
+				message = OCA.Activity.RichObjectStringParser.parseMessage(activity.message_rich[0], activity.message_rich[1]);
+			}
 			if (subject.indexOf('<a') >= 0) {
 				activity.link = '';
 			}
@@ -224,9 +228,9 @@ $(function(){
 				+ '			' + escapeHTML(OC.Util.relativeModifiedDate(activity.timestamp)) + "\n"
 				+'		</span>' + "\n";
 
-			if (activity.message) {
+			if (message) {
 				content += '<div class="activitymessage">' + "\n"
-					+ activity.message + "\n"
+					+ message + "\n"
 					+'</div>' + "\n";
 			}
 
