@@ -137,7 +137,7 @@
 	font-weight: bold;
 }
 
-.activity-section .icon-tag + .activitysubject strong {
+.activitysubject strong.systemtag {
 	display: inline-block;
 	padding: 2px 5px;
 	border-radius: 3px;
