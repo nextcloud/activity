@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Niet ondersteund!",
     "Press ⌘-C to copy." : "Druk op ⌘-C om te kopiëren.",
     "Press Ctrl-C to copy." : "Druk op Ctrl-C om te kopiëren.",
+    "in {path}" : "in {path}",
     "This stream will show events like additions, changes & shares" : "Deze stream laat gebeurtenissen als toevoegingen, veranderingen en gedeelde bestanden zien",
     "There are no events for this filter" : "Er zijn geen afspraken voor dit filter",
     "Today" : "Vandaag",

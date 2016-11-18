@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Nepodporováno!",
     "Press ⌘-C to copy." : "Zmáčknout ⌘-C pro kopírování.",
     "Press Ctrl-C to copy." : "Zmáčknout Ctrl-C pro kopírování.",
+    "in {path}" : "v {path}",
     "This stream will show events like additions, changes & shares" : "Datový proud bude zobrazovat události jako přidání, změny a sdílení",
     "There are no events for this filter" : "Pro tato kritéria nejsou žádné události",
     "Today" : "Dnes",
