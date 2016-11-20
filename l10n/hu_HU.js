@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Nem támogatott!",
     "Press ⌘-C to copy." : "A másoláshoz nyomj ⌘-C-t.",
     "Press Ctrl-C to copy." : "A másoláshoz nyomj Ctrl-C-t.",
+    "in {path}" : "itt: {path}",
     "This stream will show events like additions, changes & shares" : "Ez a folyam olyan események mutat mint bővítmények, változások és megosztások",
     "There are no events for this filter" : "Ehhez a szűrőhöz nem található esemény",
     "Today" : "Ma",

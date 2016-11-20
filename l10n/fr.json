@@ -7,6 +7,7 @@
     "Not supported!" : "Non supporté!",
     "Press ⌘-C to copy." : "Appuyez sur ⌘-C pour copier.",
     "Press Ctrl-C to copy." : "Appuyez sur Ctrl-C pour copier.",
+    "in {path}" : "dans {path}",
     "This stream will show events like additions, changes & shares" : "Ce flux liste les événements tels que les ajouts, les modifications et les partages",
     "There are no events for this filter" : "Il n'y a pas d'événement pour ce filtre",
     "Today" : "Aujourd'hui",
