@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Non supportato!",
     "Press ⌘-C to copy." : "Premi ⌘-C per copiare.",
     "Press Ctrl-C to copy." : "Premi Ctrl-C per copiare.",
+    "in {path}" : "in {path}",
     "This stream will show events like additions, changes & shares" : "Questo flusso mostrerà gli eventi come aggiunte, cambiamenti e condivisioni",
     "There are no events for this filter" : "Non ci sono eventi per questo filtro",
     "Today" : "Oggi",
