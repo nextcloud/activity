@@ -16,6 +16,8 @@
 		_fileTemplate: '<a class="filename has-tooltip" href="{{link}}" title="{{title}}">{{name}}</a>',
 		_fileNoPathTemplate: '<a class="filename" href="{{link}}">{{name}}</a>',
 
+		_systemTagTemplate: '<strong class="systemtag">{{name}}</strong>',
+
 		_userTemplate: '<strong>{{name}}</strong>',
 		_userWithAvatarTemplate: '<div class="avatar" data-user="{{id}}" data-user-display-name="{{name}}"></div>',
 
@@ -53,6 +55,22 @@
 			switch (parameter.type) {
 				case 'file':
 					return this.parseFileParameter(parameter);
+
+				case 'systemtag':
+					if (!this.systemTagTemplate) {
+						this.systemTagTemplate = Handlebars.compile(this._systemTagTemplate);
+					}
+
+					var name = parameter.name;
+					if (parameter.visibility !== '1') {
+						name = t('activity', '{name} (invisible)', parameter);
+					} else if (parameter.assignable !== '1') {
+						name = t('activity', '{name} (restricted)', parameter);
+					}
+
+					return this.systemTagTemplate({
+						name: name
+					});
 
 				case 'user':
 					if (!this.userTemplate) {
