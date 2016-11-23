@@ -30,7 +30,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "Вы получили это сообщение, потому что произошли следующие события %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* и на %n больше","* и на %n больше","* и на %n больше","* и ещё %n"],
-    "List your own file actions in the stream" : "Показывать в потоке ваши действия с файлами",
     "Notify about your own actions via email" : "Уведомлять по почте о ваших действиях",
     "You need to set up your email address before you can receive notification emails." : "Для получения уведомлений укажите свой e-mail в настройках.",
     "Send emails:" : "Отправлять электронные сообщения:",

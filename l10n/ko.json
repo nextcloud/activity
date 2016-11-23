@@ -21,7 +21,6 @@
     "You are receiving this email because the following things happened at %s" : "%s에서 일어난 일의 알림을 받아 보기로 설정하였으므로 이 메일을 받았습니다",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* 그 외 %n개 더 있음"],
-    "List your own file actions in the stream" : "스트림에 자신의 파일 작업을 나열",
     "Notify about your own actions via email" : "내 작업도 이메일로 알림 받기",
     "You need to set up your email address before you can receive notification emails." : "알림 이메일을 받으려면 이메일 주소를 설정해야 합니다.",
     "Send emails:" : "이메일 보내는 간격:",

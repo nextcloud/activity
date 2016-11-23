@@ -23,7 +23,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "To sporočilo ste prejeli, ker so se zgodili naslednji dogodki na %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* in %n dodaten","* in %n dodatna","* in %n dodatni","* in %n dodatnih"],
-    "List your own file actions in the stream" : "Izpiši seznam datotečnih opravil v pretoku",
     "Notify about your own actions via email" : "O mojih dejanjih me obvesti preko elektronske pošte",
     "You need to set up your email address before you can receive notification emails." : "Za prejemanje obvestil prek elektronske pošte je treba najprej nastaviti elektronski poštni naslov.",
     "Send emails:" : "Pošlji elektronsko sporočilo:",

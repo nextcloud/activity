@@ -30,7 +30,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "您會收到郵件是因為 %s 發生此事件",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* 和其他 %n 個"],
-    "List your own file actions in the stream" : "列出屬於您的檔案活動",
     "Notify about your own actions via email" : "透過郵件來通知有關於您的活動狀態",
     "You need to set up your email address before you can receive notification emails." : "您必須先設定電子郵件，才能接收通知。",
     "Send emails:" : "寄送郵件：",

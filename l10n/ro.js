@@ -23,7 +23,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "Primești acest email deoarece următoarele evenimente s-au petrecut la %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* și %n altele","* și %n altele","* și %n altele"],
-    "List your own file actions in the stream" : "Listează propriile acțiuni pe fișiere în flux",
     "Notify about your own actions via email" : "Notificări pentru activitățile tale prin email",
     "You need to set up your email address before you can receive notification emails." : "Trebuie să-ți configurezi adresa de email înainte de a putea primi emailurile de notificare.",
     "Send emails:" : "Trimite email-uri:",

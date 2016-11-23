@@ -23,7 +23,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "Anda menerima email ini karena sesuatu telah terjadi pada %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* dan %n lagi "],
-    "List your own file actions in the stream" : "Cantumkan tindakan berkas Anda dalam stream",
     "Notify about your own actions via email" : "Beritahukan tetang aksi oleh Anda via email",
     "You need to set up your email address before you can receive notification emails." : "Anda perlu menyetal alamat email Anda sebelum Anda dapat menerima email pemberitahuan.",
     "Send emails:" : "Kirim email:",

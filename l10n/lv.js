@@ -23,7 +23,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "Jūs saņemat šo e-pastu, jo %s notika sekojošais",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["*","* un vēl %n","* un vēl %n"],
-    "List your own file actions in the stream" : "Attēlot strumē darbības ar jūsu datēm",
     "Notify about your own actions via email" : "Paziņot par savām darbībām, izmantojot e-pastu",
     "You need to set up your email address before you can receive notification emails." : "Vispirms profilam ir nepieciešams uzstādīt e-pasta adresi, lai pa to saņemtu paziņojumus.",
     "Send emails:" : "E-pastus sūtīt:",

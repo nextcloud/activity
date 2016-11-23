@@ -30,7 +30,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "Otrzymujesz ten mail, ponieważ zdarzyły się następujące rzeczy w %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* i %n więcej ","* i %n więcej ","* i %n więcej "],
-    "List your own file actions in the stream" : "Wyświetl swoje akcje na plikach",
     "Notify about your own actions via email" : "Powiadamiaj mnie o moich aktywnościach przez email",
     "You need to set up your email address before you can receive notification emails." : "Musisz najpierw ustawić adres email zanim będziesz mógł otrzymywać powiadomienia.",
     "Send emails:" : "Wyślij maile:",

@@ -28,7 +28,6 @@
     "You are receiving this email because the following things happened at %s" : "Bu e-posta %s üzerinde aşağıdaki işlemlerin yapıldığını bildirmek üzere gönderilmiştir:",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* ve %n diğer","* ve %n diğer"],
-    "List your own file actions in the stream" : "Kendi dosya işlemleriniz akışta görüntülensin",
     "Notify about your own actions via email" : "Kendi işlemleriniz e-posta ile bildirilsin",
     "You need to set up your email address before you can receive notification emails." : "Bildirim e-postalarını alabilmek için e-posta adresinizi belirtmelisiniz.",
     "Send emails:" : "E-posta gönderimi:",

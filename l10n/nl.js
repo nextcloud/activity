@@ -31,7 +31,6 @@ OC.L10N.register(
     "You are receiving this email because the following things happened at %s" : "Je ontvangt deze e-mail, omdat het volgende plaatsvond op %s.",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* en %n meer","* en %n meer"],
-    "List your own file actions in the stream" : "Toon je eigen bestandsacties in de stroom",
     "Notify about your own actions via email" : "Melding van je eigen acties via e-mail",
     "You need to set up your email address before you can receive notification emails." : "Je moet je e-mailadres instellen voordat u meldingen kunt ontvangen.",
     "Send emails:" : "Verstuur e-mails:",
