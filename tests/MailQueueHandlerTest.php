@@ -23,6 +23,7 @@
 
 namespace OCA\Activity\Tests;
 
+use OCA\Activity\Extension\LegacyParser;
 use OCA\Activity\MailQueueHandler;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
@@ -58,24 +59,28 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCA\Activity\DataHelper */
 	protected $dataHelper;
 
+	/** @var \PHPUnit_Framework_MockObject_MockObject|LegacyParser */
+	protected $legacyParser;
+
 	protected function setUp() {
 		parent::setUp();
 
 		$app = $this->getUniqueID('MailQueueHandlerTest');
 		$this->userManager = $this->getMock('OCP\IUserManager');
 		$this->lFactory = $this->getMockBuilder(IFactory::class)->getMock();
+		$this->legacyParser = $this->createMock(LegacyParser::class);
 
 		$connection = \OC::$server->getDatabaseConnection();
 		$query = $connection->prepare('INSERT INTO `*PREFIX*activity_mq` '
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 
-		$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 152));
-		$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 153));
-		$query->execute(array($app, 'Test data', 'Param1', 'user2', 150, 'phpunit', 150));
-		$query->execute(array($app, 'Test data', 'Param1', 'user2', 150, 'phpunit', 151));
-		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 154));
-		$query->execute(array($app, 'Test data', 'Param1', 'user3', 150, 'phpunit', 155));
+		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user1', 150, 'phpunit', 152));
+		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user1', 150, 'phpunit', 153));
+		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user2', 150, 'phpunit', 150));
+		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user2', 150, 'phpunit', 151));
+		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user3', 150, 'phpunit', 154));
+		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user3', 150, 'phpunit', 155));
 
 		$event = $this->getMockBuilder('OCP\Activity\IEvent')
 			->disableOriginalConstructor()
@@ -102,6 +107,13 @@ class MailQueueHandlerTest extends TestCase {
 		$this->activityManager->expects($this->any())
 			->method('generateEvent')
 			->willReturn($event);
+		$this->activityManager->expects($this->any())
+			->method('getProviders')
+			->willReturn([]);
+
+		$this->legacyParser->expects($this->any())
+			->method('parse')
+			->willReturnArgument(0);
 
 		$this->dataHelper = $this->getMockBuilder('OCA\Activity\DataHelper')
 				->disableOriginalConstructor()
@@ -127,7 +139,8 @@ class MailQueueHandlerTest extends TestCase {
 				->getMock(),
 			$this->userManager,
 			$this->lFactory,
-			$this->activityManager
+			$this->activityManager,
+			$this->legacyParser
 		);
 	}
 
