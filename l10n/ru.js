@@ -9,6 +9,8 @@ OC.L10N.register(
     "Not supported!" : "Не поддерживается!",
     "Press ⌘-C to copy." : "Нажмите ⌘-C для копирования. ",
     "Press Ctrl-C to copy." : "Нажмите Ctrl-C для копирования.",
+    "{name} (invisible)" : "{имя} (невидимый)",
+    "{name} (restricted)" : "{имя} (ограничено)",
     "This stream will show events like additions, changes & shares" : "Этот поток будет отображать события вроде добавления, изменения файлов или открытия доступа к ним",
     "There are no events for this filter" : "Нет событий, соответствующих фильтру",
     "Today" : "Сегодня",
