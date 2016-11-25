@@ -18,7 +18,7 @@
 
 		_systemTagTemplate: '<strong class="systemtag">{{name}}</strong>',
 
-		_emailTemplate: '<a href="mailto:{{id}}">{{name}}</a>',
+		_emailTemplate: '<a class="email" href="mailto:{{id}}">{{name}}</a>',
 
 		_userTemplate: '<strong>{{name}}</strong>',
 		_userWithAvatarTemplate: '<div class="avatar" data-user="{{id}}" data-user-display-name="{{name}}"></div>',

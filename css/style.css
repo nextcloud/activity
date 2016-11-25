@@ -133,6 +133,7 @@
 
 /* Style for in event parameters */
 .activity-section a.filename,
+.activity-section a.email,
 .activity-section strong {
 	font-weight: bold;
 }
