@@ -23,6 +23,8 @@
 
 namespace OCA\Activity;
 
+use OCA\Activity\Extension\LegacyParser;
+use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\Defaults;
 use OCP\IDateTimeFormatter;
@@ -78,6 +80,9 @@ class MailQueueHandler {
 	/** @var IManager */
 	protected $activityManager;
 
+	/** @var LegacyParser */
+	protected $legacyParser;
+
 	/**
 	 * Constructor
 	 *
@@ -89,6 +94,7 @@ class MailQueueHandler {
 	 * @param IUserManager $userManager
 	 * @param IFactory $lFactory
 	 * @param IManager $activityManager
+	 * @param LegacyParser $legacyParser
 	 */
 	public function __construct(IDateTimeFormatter $dateFormatter,
 								IDBConnection $connection,
@@ -97,7 +103,8 @@ class MailQueueHandler {
 								IURLGenerator $urlGenerator,
 								IUserManager $userManager,
 								IFactory $lFactory,
-								IManager $activityManager) {
+								IManager $activityManager,
+								LegacyParser $legacyParser) {
 		$this->dateFormatter = $dateFormatter;
 		$this->connection = $connection;
 		$this->dataHelper = $dataHelper;
@@ -106,6 +113,7 @@ class MailQueueHandler {
 		$this->userManager = $userManager;
 		$this->lFactory = $lFactory;
 		$this->activityManager = $activityManager;
+		$this->legacyParser = $legacyParser;
 	}
 
 	/**
@@ -229,7 +237,6 @@ class MailQueueHandler {
 		list($mailData, $skippedCount) = $this->getItemsForUser($userName, $maxTime);
 
 		$l = $this->getLanguage($lang);
-		$parser = new PlainTextParser($l);
 		$this->dataHelper->setUser($userName);
 		$this->dataHelper->setL10n($l);
 		$this->activityManager->setCurrentUserId($userName);
@@ -239,8 +246,8 @@ class MailQueueHandler {
 			$event = $this->activityManager->generateEvent();
 			$event->setApp($activity['amq_appid'])
 				->setType($activity['amq_type'])
-				->setTimestamp($activity['amq_timestamp'])
-				->setSubject($activity['amq_subject'], []);
+				->setTimestamp((int) $activity['amq_timestamp'])
+				->setSubject($activity['amq_subject'], json_decode($activity['amq_subjectparams'], true));
 
 			$relativeDateTime = $this->dateFormatter->formatDateTimeRelativeDay(
 				$activity['amq_timestamp'],
@@ -248,12 +255,14 @@ class MailQueueHandler {
 				new \DateTimeZone($timezone), $l
 			);
 
+			try {
+				$event = $this->parseEvent($event);
+			} catch (\InvalidArgumentException $e) {
+				continue;
+			}
+
 			$activityList[] = array(
-				$parser->parseMessage(
-					$this->dataHelper->translation(
-						$activity['amq_appid'], $activity['amq_subject'], $this->dataHelper->getParameters($event, 'subject', $activity['amq_subjectparams'])
-					)
-				),
+				$event->getParsedSubject(),
 				$relativeDateTime,
 			);
 		}
@@ -280,6 +289,30 @@ class MailQueueHandler {
 
 		$this->activityManager->setCurrentUserId(null);
 		return true;
+	}
+
+	/**
+	 * @param IEvent $event
+	 * @return IEvent
+	 * @throws \InvalidArgumentException when the event could not be parsed
+	 */
+	protected function parseEvent(IEvent $event) {
+		foreach ($this->activityManager->getProviders() as $provider) {
+			try {
+				$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
+				$event = $provider->parse($event);
+				$this->activityManager->setFormattingObject('', 0);
+			} catch (\InvalidArgumentException $e) {
+			}
+		}
+
+		if (!$event->getParsedSubject()) {
+			$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
+			$event = $this->legacyParser->parse($event);
+			$this->activityManager->setFormattingObject('', 0);
+		}
+
+		return $event;
 	}
 
 	/**
