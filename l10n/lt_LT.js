@@ -7,7 +7,7 @@ OC.L10N.register(
     "Load more activities" : "Įkelti daugiau veiklų",
     "Copied!" : "Nukopijuota!",
     "Not supported!" : "Nepalaikoma!",
-    "Press ⌘-C to copy." : "Paspauskite ⌘-C, kad nukopijuoti.",
+    "Press ⌘-C to copy." : "Paspauskite ⌘-C, kad nukopijuotumėte.",
     "Press Ctrl-C to copy." : "Paspauskite Ctrl-C, kad nukopijuoti.",
     "This stream will show events like additions, changes & shares" : "Pridėjimų, pakeitimų ir dalinimosi įvykių srautas.",
     "There are no events for this filter" : "Nėra įvykių pasirinktam filtrui",
