@@ -186,6 +186,10 @@
 	filter: alpha(opacity=50);
 	opacity: .5;
 }
+.activity-icon img {
+	max-width: 16px;
+	max-height: 16px;
+}
 
 .activity-icon.icon-add-color {
 	background-image: url('../img/add-color.svg');
