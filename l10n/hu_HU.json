@@ -31,6 +31,7 @@
     "You are receiving this email because the following things happened at %s" : "Azért kaptad ezt a levelet, mert ezek az események történtek itt: %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* és még %n","* és még %n"],
+    "List your own actions in the stream" : "Saját tevékenységek listázása a folyamban",
     "Notify about your own actions via email" : "Értesítsen a saját tevékenységeimről",
     "You need to set up your email address before you can receive notification emails." : "Értesítő üzenetek fogadásához adja meg az e-mail cimét!",
     "Send emails:" : "E-mail küldése: ",
