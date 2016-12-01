@@ -26,8 +26,12 @@ use OCA\Activity\DataHelper;
 use OCA\Activity\PlainTextParser;
 use OCP\Activity\IEvent;
 use OCP\Activity\IProvider;
+use OCP\L10N\IFactory;
 
 class LegacyParser implements IProvider {
+
+	/** @var IFactory */
+	protected $languageFactory;
 
 	/** @var DataHelper */
 	protected $dataHelper;
@@ -36,22 +40,28 @@ class LegacyParser implements IProvider {
 	protected $parser;
 
 	/**
+	 * @param IFactory $languageFactory
 	 * @param DataHelper $dataHelper
 	 * @param PlainTextParser $parser
 	 */
-	public function __construct(DataHelper $dataHelper, PlainTextParser $parser) {
+	public function __construct(IFactory $languageFactory, DataHelper $dataHelper, PlainTextParser $parser) {
+		$this->languageFactory = $languageFactory;
 		$this->dataHelper = $dataHelper;
 		$this->parser = $parser;
 	}
 
 	/**
+	 * @param string $language
 	 * @param IEvent $event
 	 * @param IEvent|null $previousEvent
 	 * @return IEvent
 	 * @throws \InvalidArgumentException
 	 * @since 9.2.0
 	 */
-	public function parse(IEvent $event, IEvent $previousEvent = null) {
+	public function parse($language, IEvent $event, IEvent $previousEvent = null) {
+		$l = $this->languageFactory->get('activity', $language);
+		$this->dataHelper->setL10n($l);
+
 		$event->setParsedSubject($this->parser->parseMessage($this->dataHelper->translation(
 			$event->getApp(),
 			$event->getSubject(),

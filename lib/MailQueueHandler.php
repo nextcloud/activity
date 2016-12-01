@@ -256,7 +256,7 @@ class MailQueueHandler {
 			);
 
 			try {
-				$event = $this->parseEvent($event);
+				$event = $this->parseEvent($lang, $event);
 			} catch (\InvalidArgumentException $e) {
 				continue;
 			}
@@ -292,15 +292,16 @@ class MailQueueHandler {
 	}
 
 	/**
+	 * @param string $lang
 	 * @param IEvent $event
 	 * @return IEvent
 	 * @throws \InvalidArgumentException when the event could not be parsed
 	 */
-	protected function parseEvent(IEvent $event) {
+	protected function parseEvent($lang, IEvent $event) {
 		foreach ($this->activityManager->getProviders() as $provider) {
 			try {
 				$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
-				$event = $provider->parse($event);
+				$event = $provider->parse($lang, $event);
 				$this->activityManager->setFormattingObject('', 0);
 			} catch (\InvalidArgumentException $e) {
 			}
@@ -308,7 +309,7 @@ class MailQueueHandler {
 
 		if (!$event->getParsedSubject()) {
 			$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
-			$event = $this->legacyParser->parse($event);
+			$event = $this->legacyParser->parse($lang, $event);
 			$this->activityManager->setFormattingObject('', 0);
 		}
 

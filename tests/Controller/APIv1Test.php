@@ -54,6 +54,7 @@ class APIv1Test extends TestCase {
 
 	protected function setUp() {
 		parent::setUp();
+		$this->cleanUp();
 
 		$this->originalWEBROOT = \OC::$WEBROOT;
 		\OC::$WEBROOT = '';
@@ -97,6 +98,13 @@ class APIv1Test extends TestCase {
 	}
 
 	protected function tearDown() {
+		$this->cleanUp();
+		\OC::$WEBROOT = $this->originalWEBROOT;
+
+		parent::tearDown();
+	}
+
+	protected function cleanUp() {
 		$data = new Data(
 			$this->getMockBuilder(IManager::class)->getMock(),
 			\OC::$server->getDatabaseConnection(),
@@ -109,9 +117,6 @@ class APIv1Test extends TestCase {
 		$data->deleteActivities(array(
 			'app' => 'app1',
 		));
-		\OC::$WEBROOT = $this->originalWEBROOT;
-
-		parent::tearDown();
 	}
 
 	protected function deleteUser(Data $data, $uid) {
@@ -198,6 +203,11 @@ class APIv1Test extends TestCase {
 			->will($this->returnCallback(function($text, $parameters = array()) {
 				return vsprintf($text, $parameters);
 			}));
+		$languageFactory = $this->createMock(IFactory::class);
+		$languageFactory->expects(empty($expected) ? $this->never() : $this->atLeastOnce())
+			->method('get')
+			->with('activity')
+			->willReturn($l);
 
 		$activityManager = new Manager(
 			$this->getMockBuilder(IRequest::class)->getMock(),
@@ -230,7 +240,7 @@ class APIv1Test extends TestCase {
 			'activity',
 			$this->getMockBuilder(IRequest::class)->getMock(),
 			$data,
-			new GroupHelper($activityManager, $dataHelper, new LegacyParser($dataHelper, $parser)),
+			new GroupHelper($l, $activityManager, $dataHelper, new LegacyParser($languageFactory, $dataHelper, $parser)),
 			new UserSettings($activityManager, $config, $data),
 			new PlainTextParser($l),
 			$currentUser

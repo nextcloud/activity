@@ -29,6 +29,7 @@ use OCA\Activity\GroupHelperDisabled;
 use OCA\Activity\Parameter\Collection;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
+use OCP\IL10N;
 
 class GroupHelperTest extends TestCase {
 	/** @var IManager|\PHPUnit_Framework_MockObject_MockObject */
@@ -37,10 +38,13 @@ class GroupHelperTest extends TestCase {
 	protected $dataHelper;
 	/** @var LegacyParser|\PHPUnit_Framework_MockObject_MockObject */
 	protected $legacyParser;
+	/** @var IL10N|\PHPUnit_Framework_MockObject_MockObject */
+	protected $l;
 
 	protected function setUp() {
 		parent::setUp();
 
+		$this->l = $this->createMock(IL10N::class);
 		$this->activityManager = $this->createMock(IManager::class);
 		$this->dataHelper = $this->createMock(DataHelper::class);
 		$this->legacyParser = $this->createMock(LegacyParser::class);
@@ -55,12 +59,14 @@ class GroupHelperTest extends TestCase {
 		if (empty($methods)) {
 			if ($grouping) {
 				return new GroupHelper(
+					$this->l,
 					$this->activityManager,
 					$this->dataHelper,
 					$this->legacyParser
 				);
 			} else {
 				return new GroupHelperDisabled(
+					$this->l,
 					$this->activityManager,
 					$this->dataHelper,
 					$this->legacyParser
