@@ -113,7 +113,7 @@ class MailQueueHandlerTest extends TestCase {
 
 		$this->legacyParser->expects($this->any())
 			->method('parse')
-			->willReturnArgument(0);
+			->willReturnArgument(1);
 
 		$this->dataHelper = $this->getMockBuilder('OCA\Activity\DataHelper')
 				->disableOriginalConstructor()

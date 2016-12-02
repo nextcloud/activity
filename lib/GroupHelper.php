@@ -37,6 +37,9 @@ class GroupHelper {
 	/** @var bool */
 	protected $allowGrouping;
 
+	/** @var IL10N */
+	protected $l;
+
 	/** @var \OCP\Activity\IManager */
 	protected $activityManager;
 
@@ -47,13 +50,15 @@ class GroupHelper {
 	protected $legacyParser;
 
 	/**
+	 * @param IL10N $l
 	 * @param \OCP\Activity\IManager $activityManager
 	 * @param \OCA\Activity\DataHelper $dataHelper
 	 * @param LegacyParser $legacyParser
 	 */
-	public function __construct(IManager $activityManager, DataHelper $dataHelper, LegacyParser $legacyParser) {
+	public function __construct(IL10N $l, IManager $activityManager, DataHelper $dataHelper, LegacyParser $legacyParser) {
 		$this->allowGrouping = true;
 
+		$this->l = $l;
 		$this->activityManager = $activityManager;
 		$this->dataHelper = $dataHelper;
 		$this->legacyParser = $legacyParser;
@@ -70,6 +75,7 @@ class GroupHelper {
 	 * @param IL10N $l
 	 */
 	public function setL10n(IL10N $l) {
+		$this->l = $l;
 		$this->dataHelper->setL10n($l);
 	}
 
@@ -81,14 +87,15 @@ class GroupHelper {
 	public function addActivity($activity) {
 		$id = (int) $activity['activity_id'];
 		$event = $this->arrayToEvent($activity);
+		$language = $this->l->getLanguageCode();
 
 		foreach ($this->activityManager->getProviders() as $provider) {
 			try {
 				$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
 				if ($this->allowGrouping && $this->lastEvent !== 0 && isset($this->event[$this->lastEvent])) {
-					$event = $provider->parse($event, $this->event[$this->lastEvent]);
+					$event = $provider->parse($language, $event, $this->event[$this->lastEvent]);
 				} else {
-					$event = $provider->parse($event);
+					$event = $provider->parse($language, $event);
 				}
 				$this->activityManager->setFormattingObject('', 0);
 
@@ -103,7 +110,7 @@ class GroupHelper {
 		if (!$event->getParsedSubject()) {
 			try {
 				$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
-				$event = $this->legacyParser->parse($event);
+				$event = $this->legacyParser->parse($language, $event);
 				$this->activityManager->setFormattingObject('', 0);
 			} catch (\InvalidArgumentException $e) {
 				\OC::$server->getLogger()->debug('Failed to parse activity');

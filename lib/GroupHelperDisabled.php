@@ -23,16 +23,18 @@ namespace OCA\Activity;
 
 use OCA\Activity\Extension\LegacyParser;
 use OCP\Activity\IManager;
+use OCP\IL10N;
 
 class GroupHelperDisabled extends GroupHelper {
 
 	/**
+	 * @param IL10N $l
 	 * @param IManager $activityManager
 	 * @param DataHelper $dataHelper
 	 * @param LegacyParser $legacyParser
 	 */
-	public function __construct(IManager $activityManager, DataHelper $dataHelper, LegacyParser $legacyParser) {
-		parent::__construct($activityManager, $dataHelper, $legacyParser);
+	public function __construct(IL10N $l, IManager $activityManager, DataHelper $dataHelper, LegacyParser $legacyParser) {
+		parent::__construct($l, $activityManager, $dataHelper, $legacyParser);
 		$this->allowGrouping = false;
 	}
 }
