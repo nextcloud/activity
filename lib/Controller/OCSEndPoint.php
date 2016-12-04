@@ -230,8 +230,8 @@ class OCSEndPoint {
 
 			if ($this->loadPreviews) {
 				$activity['previews'] = [];
-				if ($activity['object_type'] === 'files' && !empty($activity['files'])) {
-					foreach ($activity['files'] as $objectId => $objectName) {
+				if ($activity['object_type'] === 'files' && !empty($activity['objects'])) {
+					foreach ($activity['objects'] as $objectId => $objectName) {
 						if (((int) $objectId) === 0 || $objectName === '') {
 							// No file, no preview
 							continue;

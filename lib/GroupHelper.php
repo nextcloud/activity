@@ -181,8 +181,24 @@ class GroupHelper {
 			'object_type' => $event->getObjectType(),
 			'object_id' => $event->getObjectId(),
 			'object_name' => $event->getObjectName(),
+			'objects' => $this->getObjectsFromChildren($event),
 			'link' => $event->getLink(),
 			'icon' => $event->getIcon(),
 		];
+	}
+
+	/**
+	 * @param IEvent $event
+	 * @return array
+	 */
+	protected function getObjectsFromChildren(IEvent $event) {
+		$child = $event->getChildEvent();
+		if ($child instanceof IEvent) {
+			$objects = $this->getObjectsFromChildren($child);
+			$objects[$event->getObjectId()] = $event->getObjectName();
+			return $objects;
+		} else {
+			return [$event->getObjectId() => $event->getObjectName()];
+		}
 	}
 }
