@@ -20,7 +20,7 @@
     "All activities" : "Visos veiklos",
     "By you" : "Jūs",
     "\"remote user\"" : "\"nuotolinis naudotojas\"",
-    "Activity notification" : "Veiklos perspėjimai",
+    "Activity notification" : "Veiklos pranešimai",
     ", " : ",",
     "%s and %s" : "%s ir %s",
     "Hello %s," : "Sveiki %s,",
@@ -33,9 +33,9 @@
     "Hourly" : "Kas valandą",
     "Daily" : "Kasdien",
     "Weekly" : "Kas savaitę",
-    "Activity feed" : "Veiklos srautas",
+    "Activity feed" : "Veiklos kanalas",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
-    "No activity yet" : "Nebuvo veiklų",
+    "No activity yet" : "Kol kas nėra veiklos",
     "No more events to load" : "Nėra daugiau įkeltinų įvykių",
     "Files" : "Failai"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);"
