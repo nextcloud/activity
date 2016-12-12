@@ -11,10 +11,10 @@ going on in your Nextcloud.
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/activity/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/nextcloud/activity/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=master)
 
-# Add new activities / types for other apps
+## API for other apps to interact with activities
 
-With the activity manager extensions can be registered which allow any app to extend the activity behavior.
+In Nextcloud 11 the old extension API was replaced by 3 new interfaces, to better split the functionality up. Documentation for each of those can be found in the `docs/` folder:
 
-In order to implement an extension create a class which implements the interface `\OCP\Activity\IExtension`.
-
-The PHPDoc comments on each method should give enough information to the developer on how to implement them.
+* [Provider](docs/provider.md) - translate and render activities
+* [Setting](docs/setting.md) - allow users to control what they want to see in their stream or mail
+* [Filter](docs/filter.md) - allow to reduce the stream in the web UI by app or setting
