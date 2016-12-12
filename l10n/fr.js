@@ -6,7 +6,7 @@ OC.L10N.register(
     "No activities" : "Aucune activité",
     "Load more activities" : "Charger plus d'activités",
     "Copied!" : "Copié !",
-    "Not supported!" : "Non pris en charge!",
+    "Not supported!" : "Non pris en charge !",
     "Press ⌘-C to copy." : "Appuyez sur ⌘-C pour copier.",
     "Press Ctrl-C to copy." : "Appuyez sur Ctrl-C pour copier.",
     "{name} (invisible)" : "{name} (invisible)",
