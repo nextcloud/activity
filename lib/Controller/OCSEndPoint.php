@@ -150,7 +150,7 @@ class OCSEndPoint {
 		$this->sort = (string) $this->request->getParam('sort', '');
 		$this->sort = in_array($this->sort, ['asc', 'desc']) ? $this->sort : 'desc';
 
-		if ($this->objectType !== '' && $this->objectId === 0 || $this->objectType === '' && $this->objectId !== 0) {
+		if (($this->objectType !== '' && $this->objectId === 0) || ($this->objectType === '' && $this->objectId !== 0)) {
 			// Only allowed together
 			$this->objectType = '';
 			$this->objectId = 0;
@@ -312,7 +312,7 @@ class OCSEndPoint {
 				$preview['source'] = $pathPreview['source'];
 			} else if ($this->preview->isAvailable($fileInfo)) {
 				$preview['isMimeTypeIcon'] = false;
-				$preview['source'] = $this->urlGenerator->linkToRoute('core.Preview.getPreview', [
+				$preview['source'] = $this->urlGenerator->linkToRouteAbsolute('core.Preview.getPreview', [
 					'file' => $info['path'],
 					'c' => $this->view->getETag($info['path']),
 					'x' => 150,
@@ -352,7 +352,7 @@ class OCSEndPoint {
 			$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
 		}
 
-		return $mimeTypeIcon;
+		return $this->urlGenerator->getAbsoluteURL($mimeTypeIcon);
 	}
 
 	/**
@@ -372,6 +372,6 @@ class OCSEndPoint {
 		if ($view !== '') {
 			$params['view'] = $view;
 		}
-		return $this->urlGenerator->linkToRoute('files.view.index', $params);
+		return $this->urlGenerator->linkToRouteAbsolute('files.view.index', $params);
 	}
 }
