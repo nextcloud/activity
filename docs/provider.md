@@ -33,7 +33,7 @@ Additionally the following methods *should* be called, in order to beautify the 
 
 ### Check responsibility
 
-The first thing the provider should do, is to check whether the `IEvent` is on it cares about. A simple check for the app and maybe additionally the type, if the app has more then one provider, should be enough:
+The first thing the provider should do, is to check whether the `IEvent` is one it cares about. A simple check for the app and maybe additionally the type, if the app has more then one provider, should be enough:
 
 ```php
 		if ($event->getApp() !== 'files' || $event->getType() !== 'favorite') {
@@ -53,12 +53,12 @@ The favorite provider makes use of this and the activities don't have additional
 
 ### Long translations with "rich object" string
 
-In the long version for the normal activity stream contains the filename. Objects like users , files and more can be highlighted in the "rich subject", which allows the app to show an avatar next to the name, link the file name to the file list, and many more things.
+In the long version for the normal activity stream contains the filename. Objects like users, files and more can be highlighted in the "rich subject", which allows the app to show an avatar next to the name, link the file name to the file list and many more things.
 
 The `IEvent::setRichSubject()` method has two arguments:
 
 1. The already translated string with placeholders
-2. The list of placeholders, in the case of the favorite provider it's the file that was favorites
+2. The list of placeholders, in the case of the favorite provider it's the file that was marked as a favorite
 
 ```php
 $event->setRichSubject(

@@ -23,9 +23,11 @@ The `setting` value is the fully namespaced class name of the `ISetting` impleme
 
 The identifier is also used as a HTML ID, therefor only lowercase a-z and underscores are allowed.
 
+**Note:** This must also match the value that is used in the `IEvent::setType()` of the event, otherwise the event will not be visible.
+
 ## Name
 
-The name **must** already be translated and should bea short and descriptive sentence. One or two important words can also be highlighted using the `<strong>` HTML tag, to allow easier recognition of the setting.
+The name **must** already be translated and should be a short and descriptive sentence. One or two important words can also be highlighted using the `<strong>` HTML tag, to allow easier recognition of the setting.
 
 ## Icon
 
@@ -37,7 +39,7 @@ Priority should technically be a value between 0-100, where 0 means it's listed 
 
 ## Is default enabled stream / mail
 
-The two "is default enabled x" booleans specify whether the setting is enabled or disabled by default for the stream or mail. Once a user changed their setting, the default is not used for them anymore. Changing the default is therefor not "retro active".
+The two "is default enabled x" booleans specify whether the setting is enabled or disabled by default for the stream or mail. Once a user changed their setting, the default is not used for them anymore. Changing the default is therefore not "retro active".
 
 ## Can change stream / mail
 
