@@ -3,15 +3,20 @@
 To create and publish an event to the activity app, a new `IEvent` should be fetched from the activity manager and afterwards be passed to the `publish()` method:
 
 ```php
-$event = \OC::$server->getActivityManager()->createEvent();
+// The activity manager should be automatically injected
+// by the type hint OCP\Activity\IManager, when inside a class.
+// When you have a plain file without a class, you can use
+// \OC::$server->getActivityManager() instead.
+
+$event = $this->activityManager->createEvent();
 ...
-\OC::$server->getActivityManager()->publish($event);
+$this->activityManager->->publish($event);
 ```
 
-Tthe following values **must** be set, before publishing an event:
+The following values **must** be set before publishing an event:
 
 * `setApp()`
-* `setType()`
+* `setType()` - this must match an `ISetting::getIdentifier()`
 * `setAffectedUser()`
 * `setAuthor()`
 * `setTimestamp()`
