@@ -37,6 +37,8 @@ Priority should technically be a value between 0-100, where 0 means it's listed 
 
 With the `allowedApps()` method specify a list of apps. Only activities which belong to one of the given apps are then returned by the filter. E.g. the [comments app](https://github.com/nextcloud/server/blob/8105ba99297222b7db97b556a55f306c3f7cabc0/apps/comments/lib/Activity/Filter.php#L88-L88) only returns `return ['comments'];` here.
 
+To return events of all apps, an empty array should be returned.
+
 ## Filter types
 
 With the `filterTypes()` method the list of activities can be limited even more. This is used for example in the [dav app](https://github.com/nextcloud/server/blob/253a75e5aef409ca5ac412f3d8d3ccd06a9f4a86/apps/dav/lib/CalDAV/Activity/Filter/Todo.php#L82-L82) to have a filter where only the todo/task events are shown:
@@ -47,3 +49,8 @@ return array_intersect(['calendar_todo'], $types);
 
 Calendar/event related activities are also part of the dav app, but are handled in a second filter.
 The types this method deals with are the identifiers of the `OCP\Activity\ISetting` implementations.
+
+If no restriction is to be performed, the parameter should be returned directly:
+```php
+return $types;
+```
