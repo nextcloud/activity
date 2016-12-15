@@ -251,7 +251,7 @@ class MailQueueHandler {
 
 			$relativeDateTime = $this->dateFormatter->formatDateTimeRelativeDay(
 				$activity['amq_timestamp'],
-				'long', 'medium',
+				'long', 'short',
 				new \DateTimeZone($timezone), $l
 			);
 
