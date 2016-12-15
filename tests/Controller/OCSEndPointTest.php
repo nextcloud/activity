@@ -643,7 +643,7 @@ class OCSEndPointTest extends TestCase {
 					->willReturn('/preview/mpeg');
 			} else {
 				$this->urlGenerator->expects($this->once())
-					->method('linkToRoute')
+					->method('linkToRouteAbsolute')
 					->with('core.Preview.getPreview', $this->anything())
 					->willReturnCallback(function() use ($returnedPath) {
 						return '/preview' . $returnedPath;
@@ -716,9 +716,9 @@ class OCSEndPointTest extends TestCase {
 
 	public function dataGetPreviewPathFromMimeType() {
 		return [
-			['dir', '/core/img/filetypes/folder.png', '/core/img/filetypes/folder.svg'],
-			['text/plain', '/core/img/filetypes/text.svg', '/core/img/filetypes/text.svg'],
-			['text/plain', '/core/img/filetypes/text.jpg', '/core/img/filetypes/text.jpg'],
+			['dir', 'folder.png', 'absolute-folder.svg'],
+			['text/plain', 'text.svg', 'absolute-text.svg'],
+			['text/plain', 'text.jpg', 'absolute-text.jpg'],
 		];
 	}
 
@@ -733,6 +733,12 @@ class OCSEndPointTest extends TestCase {
 			->method('mimeTypeIcon')
 			->with($mimeType)
 			->willReturn($icon);
+
+		$this->urlGenerator->expects($this->once())
+			->method('getAbsoluteURL')
+			->willReturnCallback(function($url) {
+				return 'absolute-' . $url;
+			});
 
 		$this->assertSame(
 			$expected,
@@ -761,7 +767,7 @@ class OCSEndPointTest extends TestCase {
 	 */
 	public function testGetPreviewLink($path, $isDir, $view, $expected) {
 		$this->urlGenerator->expects($this->once())
-			->method('linkToRoute')
+			->method('linkToRouteAbsolute')
 			->with('files.view.index', $expected);
 
 		$this->invokePrivate($this->controller, 'getPreviewLink', [$path, $isDir, $view]);
