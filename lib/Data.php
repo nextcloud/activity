@@ -283,7 +283,7 @@ class Data {
 	protected function setOffsetFromSince(IQueryBuilder $query, $user, $since, $sort) {
 		if ($since) {
 			$queryBuilder = $this->connection->getQueryBuilder();
-			$queryBuilder->select('*')
+			$queryBuilder->select(['affecteduser', 'timestamp'])
 				->from('activity')
 				->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter((int) $since)));
 			$result = $queryBuilder->execute();
