@@ -26,6 +26,7 @@ namespace OCA\Activity;
 use OCA\Activity\Extension\LegacyParser;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
+use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\Defaults;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
@@ -322,15 +323,15 @@ class MailQueueHandler {
 	 * @param array $affectedUsers
 	 * @param int $maxTime
 	 */
-	public function deleteSentItems($affectedUsers, $maxTime) {
-		$placeholders = implode(',', array_fill(0, sizeof($affectedUsers), '?'));
-		$queryParams = $affectedUsers;
-		array_unshift($queryParams, (int) $maxTime);
+	public function deleteSentItems(array $affectedUsers, $maxTime) {
+		if (empty($affectedUsers)) {
+			return;
+		}
 
-		$query = $this->connection->prepare(
-			'DELETE FROM `*PREFIX*activity_mq` '
-			. ' WHERE `amq_timestamp` <= ? '
-			. ' AND `amq_affecteduser` IN (' . $placeholders . ')');
-		$query->execute($queryParams);
+		$query = $this->connection->getQueryBuilder();
+		$query->delete('activity_mq')
+			->where($query->expr()->lte('amq_timestamp', $query->createNamedParameter($maxTime, IQueryBuilder::PARAM_INT)))
+			->andWhere($query->expr()->in('amq_affecteduser', $query->createNamedParameter($affectedUsers, IQueryBuilder::PARAM_STR_ARRAY), IQueryBuilder::PARAM_STR));
+		$query->execute();
 	}
 }
