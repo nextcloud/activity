@@ -30,6 +30,8 @@ OC.L10N.register(
     ", " : ", ",
     "%s and %s" : "%s e %s",
     "Hello %s," : "Ciao %s,",
+    "- %1$s (%2$s)" : "- %1$s (%2$s)",
+    "_- and %n more _::_- and %n more _" : ["- e %n altra","-* e %n altre"],
     "List your own actions in the stream" : "Elenca le tue azioni nel flusso",
     "Notify about your own actions via email" : "Notificami le tue azioni tramite email",
     "You need to set up your email address before you can receive notification emails." : "Devi impostare l'indirizzo del tuo utente prima di poter ricevere le email di notifica.",
