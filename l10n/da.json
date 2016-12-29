@@ -29,6 +29,7 @@
     "%s and %s" : "%s og %s",
     "Hello %s," : "Hej %s,",
     "There was some activity at %s" : "Der var noget aktivitet omkring %s",
+    "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- og %n mere","- og %n mere"],
     "List your own actions in the stream" : "Vis dine egne handlinger i strømmen",
     "Notify about your own actions via email" : "Giv meddelelse om egne handlinger via e-mail",
