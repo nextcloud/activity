@@ -28,6 +28,7 @@
     ", " : ", ",
     "%s and %s" : "%s ve %s",
     "Hello %s," : "Merhaba %s,",
+    "There was some activity at %s" : "Burada yapılan bazı işlemler %s",
     "List your own actions in the stream" : "Akıştaki kendi işlemlerinizi görüntüleyin",
     "Notify about your own actions via email" : "Kendi işlemleriniz e-posta ile bildirilsin",
     "You need to set up your email address before you can receive notification emails." : "Bildirim e-postalarını alabilmek için e-posta adresinizi belirtmelisiniz.",
