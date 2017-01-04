@@ -30,6 +30,7 @@
     "Hello %s," : "Hola %s,",
     "There was some activity at %s" : "Hi va haver activitat a %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
+    "_- and %n more _::_- and %n more _" : ["- i %n més ","- i %n més "],
     "List your own actions in the stream" : "Llista les vostres propies accions al flux",
     "Notify about your own actions via email" : "Notifica sobre les teves noves accions via email",
     "You need to set up your email address before you can receive notification emails." : "Heu d'establir l'adreça de correu electrònic abans que pugueu rebre correus de notificació",
