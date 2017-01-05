@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Aktiviteter",
+    "Activities" : "Händelseflöde",
     "Error loading activities" : "Fel vid inläsning av aktiviteter",
     "No activities" : "Inga aktiviteter",
     "Load more activities" : "Ladda fler aktiviteter",
@@ -25,7 +25,7 @@ OC.L10N.register(
     "All activities" : "Alla aktiviteter",
     "By others" : "Av andra",
     "By you" : "Av dig",
-    "\"remote user\"" : "\"fjärranvändare\"",
+    "\"remote user\"" : "\"externanvändare\"",
     "Activity notification" : "Underrättelse om aktivitet",
     ", " : ",",
     "%s and %s" : "%s och %s",

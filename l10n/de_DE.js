@@ -43,7 +43,7 @@ OC.L10N.register(
     "Activity feed" : "Feed der Aktivitäten",
     "Enable RSS feed" : "RSS-Feed aktivieren",
     "No activity yet" : "Bislang keine Aktivitäten",
-    "No more events to load" : "Keine weiteren Ereignisse vorhanden",
+    "No more events to load" : "Keine weiteren Ereignisse zu laden",
     "Files" : "Dateien"
 },
 "nplurals=2; plural=(n != 1);");
