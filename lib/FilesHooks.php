@@ -26,10 +26,13 @@ namespace OCA\Activity;
 
 use OC\Files\Filesystem;
 use OC\Files\View;
+use OC\Share20\ShareHelper;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IManager;
+use OCP\Files\IRootFolder;
 use OCP\Files\Mount\IMountPoint;
+use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\IDBConnection;
 use OCP\IGroup;
@@ -39,6 +42,7 @@ use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share;
 use OCP\Share\IShare;
+use OCP\Share\IManager as IShareManager;
 
 /**
  * The class to handle the filesystem hooks
@@ -63,6 +67,12 @@ class FilesHooks {
 
 	/** @var \OC\Files\View */
 	protected $view;
+
+	/** @var IRootFolder */
+	protected $rootFolder;
+
+	/** @var IShareManager */
+	protected $shareManager;
 
 	/** @var IURLGenerator */
 	protected $urlGenerator;
@@ -92,17 +102,31 @@ class FilesHooks {
 	 * @param UserSettings $userSettings
 	 * @param IGroupManager $groupManager
 	 * @param View $view
+	 * @param IRootFolder $rootFolder
+	 * @param IShareManager $shareManager
 	 * @param IDBConnection $connection
 	 * @param IURLGenerator $urlGenerator
 	 * @param ILogger $logger
 	 * @param CurrentUser $currentUser
 	 */
-	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IGroupManager $groupManager, View $view, IDBConnection $connection, IURLGenerator $urlGenerator, ILogger $logger, CurrentUser $currentUser) {
+	public function __construct(IManager $manager,
+								Data $activityData,
+								UserSettings $userSettings,
+								IGroupManager $groupManager,
+								View $view,
+								IRootFolder $rootFolder,
+								IShareManager $shareManager,
+								IDBConnection $connection,
+								IURLGenerator $urlGenerator,
+								ILogger $logger,
+								CurrentUser $currentUser) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
 		$this->groupManager = $groupManager;
 		$this->view = $view;
+		$this->rootFolder = $rootFolder;
+		$this->shareManager = $shareManager;
 		$this->connection = $connection;
 		$this->urlGenerator = $urlGenerator;
 		$this->logger = $logger;
@@ -507,7 +531,19 @@ class FilesHooks {
 	 * @return array
 	 */
 	protected function getUserPathsFromPath($path, $uidOwner) {
-		return Share::getUsersSharingFile($path, $uidOwner, true, true);
+		try {
+			$node = $this->rootFolder->getUserFolder($uidOwner)->get($path);
+		} catch (NotFoundException $e) {
+			return [];
+		}
+
+		if (!$node instanceof Node) {
+			return [];
+		}
+
+		$helper = new ShareHelper($this->shareManager); // FIXME
+		$accessList = $helper->getPathsForAccessList($node);
+		return $accessList['users'];
 	}
 
 	/**
