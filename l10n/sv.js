@@ -43,7 +43,7 @@ OC.L10N.register(
     "Activity feed" : "Aktivitetsflöde",
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "No activity yet" : "Inga aktiviteter ännu",
-    "No more events to load" : "Inga fler aktiviteter att ladda.",
+    "No more events to load" : "Inga fler aktiviteter.",
     "Files" : "Filer"
 },
 "nplurals=2; plural=(n != 1);");
