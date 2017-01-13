@@ -364,7 +364,7 @@ class FilesHooks {
 		$this->generateAddActivities($addUsers, $affectedUsers, $fileId, $fileName);
 
 		$moveUsers = array_intersect($beforeUsers, $afterUsers);
-		$this->generateMoveActivities($moveUsers, $this->oldParentUsers, $affectedUsers, $fileId, $oldFileName, $fileName);
+		$this->generateMoveActivities($moveUsers, $this->oldParentUsers, $affectedUsers, $fileId, $oldFileName, $parentId, $fileName);
 	}
 
 	/**
@@ -451,9 +451,10 @@ class FilesHooks {
 	 * @param string[] $afterPathMap
 	 * @param int $fileId
 	 * @param string $oldFileName
+	 * @param int $newParentId
 	 * @param string $fileName
 	 */
-	protected function generateMoveActivities($users, $beforePathMap, $afterPathMap, $fileId, $oldFileName, $fileName) {
+	protected function generateMoveActivities($users, $beforePathMap, $afterPathMap, $fileId, $oldFileName, $newParentId, $fileName) {
 		if (empty($users)) {
 			return;
 		}
@@ -466,20 +467,19 @@ class FilesHooks {
 				continue;
 			}
 
+			if ($oldFileName === $fileName) {
+				$userParams = [[$newParentId => $afterPathMap[$user] . '/']];
+			} else {
+				$userParams = [[$fileId => $afterPathMap[$user] . '/' . $fileName]];
+			}
+
 			if ($user === $this->currentUser->getUID()) {
 				$userSubject = 'moved_self';
-				$userParams = [
-					[$fileId => $afterPathMap[$user] . '/' . $fileName],
-					[$fileId => $beforePathMap[$user] . '/' . $oldFileName],
-				];
 			} else {
 				$userSubject = 'moved_by';
-				$userParams = [
-					[$fileId => $afterPathMap[$user] . '/' . $fileName],
-					$this->currentUser->getUserIdentifier(),
-					[$fileId => $beforePathMap[$user] . '/' . $oldFileName],
-				];
+				$userParams[] = $this->currentUser->getUserIdentifier();
 			}
+			$userParams[] = [$fileId => $beforePathMap[$user] . '/' . $oldFileName];
 
 			$this->addNotificationsForUser(
 				$user, $userSubject, $userParams,
