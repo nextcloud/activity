@@ -163,6 +163,7 @@ class FilesHooks {
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
 
 		foreach ($affectedUsers as $user => $path) {
+			$user = (string) $user;
 			if (empty($filteredStreamUsers[$user]) && empty($filteredEmailUsers[$user])) {
 				continue;
 			}
