@@ -21,3 +21,7 @@ table.activitysettings td.small label {
 	height: 100%;
 	display: block;
 }
+
+.nav-icon-activity {
+	background-image: url('../img/activity-dark.svg?v=1');
+}
