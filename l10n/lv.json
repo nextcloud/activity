@@ -30,6 +30,7 @@
     "Hello %s," : "Sveicināti %s,",
     "There was some activity at %s" : "Tur bija kaut kādas aktivitātes %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
+    "_- and %n more _::_- and %n more _" : ["- un %n vairāk ","- and %n more ","- and %n more "],
     "List your own actions in the stream" : "Attēlot savu darbību plūsmā",
     "Notify about your own actions via email" : "Paziņot par savām darbībām, izmantojot e-pastu",
     "You need to set up your email address before you can receive notification emails." : "Vispirms profilam ir nepieciešams uzstādīt e-pasta adresi, lai pa to saņemtu paziņojumus.",
