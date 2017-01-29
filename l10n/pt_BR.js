@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Atividades",
+    "Activities" : "Alimentação de atividade",
     "Error loading activities" : "Erro carregando atividades",
     "No activities" : "Nenhuma atividade",
     "Load more activities" : "Carregar mais actividades",
@@ -30,7 +30,7 @@ OC.L10N.register(
     ", " : ",",
     "%s and %s" : "%s e %s",
     "Hello %s," : "Olá %s,",
-    "There was some activity at %s" : "Existiu alguma atividade em %s",
+    "There was some activity at %s" : "Houve alguma atividade em %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- e %n mais ","- e %n mais"],
     "List your own actions in the stream" : "Liste suas próprias ações no stream",
@@ -41,7 +41,7 @@ OC.L10N.register(
     "Daily" : "Diário",
     "Weekly" : "Semanal",
     "Activity feed" : "Alimentação de atividade",
-    "Enable RSS feed" : "Habilitar alimentação RRS",
+    "Enable RSS feed" : "Habilitar feed RRS",
     "No activity yet" : "Nenhuma atividade ainda",
     "No more events to load" : "Não ha mais eventos para carregar",
     "Files" : "Arquivos"
