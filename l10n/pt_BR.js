@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Alimentação de atividade",
+    "Activities" : "Atividades",
     "Error loading activities" : "Erro carregando atividades",
     "No activities" : "Nenhuma atividade",
     "Load more activities" : "Carregar mais actividades",
