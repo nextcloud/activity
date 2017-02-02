@@ -26,6 +26,7 @@ use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\Tests\TestCase;
 use OCP\Files\NotFoundException;
+use OCP\ILogger;
 use OCP\Share;
 
 /**
@@ -94,6 +95,8 @@ class FilesHooksTest extends TestCase {
 		$currentUser->expects($this->any())
 			->method('getUserIdentifier')
 			->willReturn($user);
+		/** @var ILogger $logger */
+		$logger = $this->createMock(ILogger::class);
 
 		if (!empty($mockedMethods)) {
 			return $this->getMockBuilder('OCA\Activity\FilesHooks')
@@ -105,6 +108,7 @@ class FilesHooksTest extends TestCase {
 					$this->view,
 					\OC::$server->getDatabaseConnection(),
 					$this->urlGenerator,
+					$logger,
 					$currentUser,
 				])
 				->setMethods($mockedMethods)
@@ -118,6 +122,7 @@ class FilesHooksTest extends TestCase {
 				$this->view,
 				\OC::$server->getDatabaseConnection(),
 				$this->urlGenerator,
+				$logger,
 				$currentUser
 			);
 		}

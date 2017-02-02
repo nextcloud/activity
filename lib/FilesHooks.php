@@ -34,6 +34,7 @@ use OCP\Files\NotFoundException;
 use OCP\IDBConnection;
 use OCP\IGroup;
 use OCP\IGroupManager;
+use OCP\ILogger;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share;
@@ -65,6 +66,9 @@ class FilesHooks {
 	/** @var IURLGenerator */
 	protected $urlGenerator;
 
+	/** @var ILogger */
+	protected $logger;
+
 	/** @var CurrentUser */
 	protected $currentUser;
 
@@ -89,9 +93,10 @@ class FilesHooks {
 	 * @param View $view
 	 * @param IDBConnection $connection
 	 * @param IURLGenerator $urlGenerator
+	 * @param ILogger $logger
 	 * @param CurrentUser $currentUser
 	 */
-	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IGroupManager $groupManager, View $view, IDBConnection $connection, IURLGenerator $urlGenerator, CurrentUser $currentUser) {
+	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IGroupManager $groupManager, View $view, IDBConnection $connection, IURLGenerator $urlGenerator, ILogger $logger, CurrentUser $currentUser) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
@@ -99,6 +104,7 @@ class FilesHooks {
 		$this->view = $view;
 		$this->connection = $connection;
 		$this->urlGenerator = $urlGenerator;
+		$this->logger = $logger;
 		$this->currentUser = $currentUser;
 	}
 
@@ -884,14 +890,22 @@ class FilesHooks {
 		$objectType = ($fileId) ? 'files' : '';
 
 		$event = $this->manager->generateEvent();
-		$event->setApp($app)
-			->setType($type)
-			->setAffectedUser($user)
-			->setAuthor($this->currentUser->getUID())
-			->setTimestamp(time())
-			->setSubject($subject, $subjectParams)
-			->setObject($objectType, $fileId, $path)
-			->setLink($link);
+		try {
+			$event->setApp($app)
+				->setType($type)
+				->setAffectedUser($user)
+				->setTimestamp(time())
+				->setSubject($subject, $subjectParams)
+				->setObject($objectType, $fileId, $path)
+				->setLink($link);
+
+			if ($this->currentUser->getUID() !== null) {
+				// Allow this to be empty for guests
+				$event->setAuthor($this->currentUser->getUID());
+			}
+		} catch (\InvalidArgumentException $e) {
+			$this->logger->logException($e);
+		}
 
 		// Add activity to stream
 		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser->getUID(), 'setting', 'self'))) {
