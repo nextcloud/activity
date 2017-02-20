@@ -517,29 +517,36 @@ class FilesHooks {
 	 */
 	protected function getSourcePathAndOwner($path) {
 		$view = Filesystem::getView();
-		$uidOwner = $view->getOwner($path);
+		$owner = $view->getOwner($path);
+		$owner = !is_string($owner) || $owner === '' ? null : $owner;
 		$fileId = 0;
+		$currentUser = $this->currentUser->getUID();
 
-		if ($uidOwner !== $this->currentUser->getUID()) {
+		if ($owner === null || $owner !== $currentUser) {
 			/** @var \OCP\Files\Storage\IStorage $storage */
 			list($storage,) = $view->resolvePath($path);
-			if (!$storage->instanceOfStorage('OCA\Files_Sharing\External\Storage')) {
-				Filesystem::initMountPoints($uidOwner);
+
+			if ($owner !== null && !$storage->instanceOfStorage('OCA\Files_Sharing\External\Storage')) {
+				Filesystem::initMountPoints($owner);
 			} else {
 				// Probably a remote user, let's try to at least generate activities
 				// for the current user
-				$uidOwner = $this->currentUser->getUID();
+				if ($currentUser === null) {
+					list(,$owner,) = explode('/', $view->getAbsolutePath($path), 3);
+				} else {
+					$owner = $currentUser;
+				}
 			}
 		}
 
 		$info = Filesystem::getFileInfo($path);
 		if ($info !== false) {
-			$ownerView = new View('/' . $uidOwner . '/files');
+			$ownerView = new View('/' . $owner . '/files');
 			$fileId = (int) $info['fileid'];
 			$path = $ownerView->getPath($fileId);
 		}
 
-		return array($path, $uidOwner, $fileId);
+		return array($path, $owner, $fileId);
 	}
 
 	/**
