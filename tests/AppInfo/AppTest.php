@@ -34,12 +34,12 @@ class AppTest extends TestCase {
 	public function testNavigationEntry() {
 		$navigationManager = \OC::$server->getNavigationManager();
 		$navigationManager->clear();
-		$this->assertEmpty($navigationManager->getAll());
+		$countBefore = count($navigationManager->getAll());
 
 		require '../appinfo/app.php';
 
 		// Test whether the navigation entry got added
-		$this->assertCount(1, $navigationManager->getAll());
+		$this->assertCount($countBefore + 1, $navigationManager->getAll());
 	}
 
 // FIXME: Uncomment once the OC_App stuff is not static anymore
