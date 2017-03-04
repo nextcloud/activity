@@ -28,7 +28,7 @@
     ", " : ", ",
     "%s and %s" : "%s und %s",
     "Hello %s," : "Hallo %s,",
-    "There was some activity at %s" : "Es gab einige Aktivitäten bei %s",
+    "There was some activity at %s" : "Es gab Aktivitäten bei %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- und %n weiterer","- und %n weitere"],
     "List your own actions in the stream" : "Ihre eigenen Aktivitäten im Stream auflisten",
