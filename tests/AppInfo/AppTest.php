@@ -36,7 +36,7 @@ class AppTest extends TestCase {
 		$navigationManager->clear();
 		$countBefore = count($navigationManager->getAll());
 
-		require '../appinfo/app.php';
+		require 'activity/appinfo/app.php';
 
 		// Test whether the navigation entry got added
 		$this->assertCount($countBefore + 1, $navigationManager->getAll());
