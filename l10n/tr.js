@@ -16,7 +16,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Bu süzgeçte herhangi bir işlem yok",
     "Today" : "Bugün",
     "Yesterday" : "Dün",
-    "Activity" : "Etkinlik",
+    "Activity" : "İşlem",
     "Personal activity feed for %s" : "%s kişisel etkinlik akışı",
     "Your feed URL is invalid" : "Akış adresiniz geçersiz",
     "Your settings have been updated." : "Ayarlarınız güncellendi.",
