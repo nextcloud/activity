@@ -30,7 +30,7 @@ OC.L10N.register(
     ", " : ", ",
     "%s and %s" : "%s ve %s",
     "Hello %s," : "Merhaba %s,",
-    "There was some activity at %s" : "%s üzerinde birkaç etkinlik yapıldı",
+    "There was some activity at %s" : "%s üzerinde bazı etkinlikler yapıldı",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- ve %n diğer","- ve %n diğer"],
     "List your own actions in the stream" : "Akıştaki kendi işlemlerinizi görüntüleyin",
