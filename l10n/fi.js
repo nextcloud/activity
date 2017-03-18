@@ -27,6 +27,7 @@ OC.L10N.register(
     ", " : ", ",
     "%s and %s" : "%s ja %s",
     "Hello %s," : "Hei %s,",
+    "List your own actions in the stream" : "Listaa omat toimet luettelossa",
     "Notify about your own actions via email" : "Ilmoita omista toimista sähköpostitse",
     "You need to set up your email address before you can receive notification emails." : "Aseta sähköpostiosoite, jotta voit vastaanottaa sähköposti-ilmoituksia.",
     "Send emails:" : "Lähetä sähköpostit:",
