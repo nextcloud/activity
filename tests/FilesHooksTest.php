@@ -297,13 +297,13 @@ class FilesHooksTest extends TestCase {
 		$this->invokePrivate($filesHooks, 'addNotificationsForFileAction', ['path', Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by']);
 	}
 
-	public function testShareWithUser() {
+	public function testHookShareWithUser() {
 		$filesHooks = $this->getFilesHooks([
-			'shareFileOrFolderWithUser',
+			'shareWithUser',
 		]);
 
 		$filesHooks->expects($this->once())
-			->method('shareFileOrFolderWithUser')
+			->method('shareWithUser')
 			->with('u1', 1337, 'file', 'path');
 
 		$filesHooks->share([
@@ -315,13 +315,13 @@ class FilesHooksTest extends TestCase {
 		]);
 	}
 
-	public function testShareWithGroup() {
+	public function testHookShareWithGroup() {
 		$filesHooks = $this->getFilesHooks([
-			'shareFileOrFolderWithGroup',
+			'shareWithGroup',
 		]);
 
 		$filesHooks->expects($this->once())
-			->method('shareFileOrFolderWithGroup')
+			->method('shareWithGroup')
 			->with('g1', 1337, 'file', 'path', 42);
 
 		$filesHooks->share([
@@ -336,12 +336,12 @@ class FilesHooksTest extends TestCase {
 
 	public function testShareViaPublicLink() {
 		$filesHooks = $this->getFilesHooks([
-			'shareFileOrFolderByLink',
+			'shareByLink',
 		]);
 
 		$filesHooks->expects($this->once())
-			->method('shareFileOrFolderByLink')
-			->with(1337, 'file', 'admin', true);
+			->method('shareByLink')
+			->with(1337, 'file', 'admin');
 
 		$filesHooks->share([
 			'fileSource' => 1337,
@@ -351,7 +351,7 @@ class FilesHooksTest extends TestCase {
 		]);
 	}
 
-	public function dataShareFileOrFolderWithUser() {
+	public function dataShareWithUser() {
 		return [
 			['file', '/path.txt', true],
 			['folder', '/path.txt', false],
@@ -359,13 +359,13 @@ class FilesHooksTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider dataShareFileOrFolderWithUser
+	 * @dataProvider dataShareWithUser
 	 *
 	 * @param string $itemType
 	 * @param string $fileTarget
 	 * @param bool $isFile
 	 */
-	public function testShareFileOrFolderWithUser($itemType, $fileTarget, $isFile) {
+	public function testShareWithUser($itemType, $fileTarget, $isFile) {
 		$filesHooks = $this->getFilesHooks([
 			'shareNotificationForSharer',
 			'addNotificationsForUser',
@@ -398,12 +398,12 @@ class FilesHooksTest extends TestCase {
 				42
 			);
 
-		$this->invokePrivate($filesHooks, 'shareFileOrFolderWithUser', [
+		$this->invokePrivate($filesHooks, 'shareWithUser', [
 			'recipient', 1337, $itemType, $fileTarget, true
 		]);
 	}
 
-	public function testShareFileOrFolderWithGroupNonExisting() {
+	public function testShareWithGroupNonExisting() {
 		$filesHooks = $this->getFilesHooks([
 			'shareNotificationForSharer'
 		]);
@@ -416,12 +416,12 @@ class FilesHooksTest extends TestCase {
 		$filesHooks->expects($this->never())
 			->method('shareNotificationForSharer');
 
-		$this->invokePrivate($filesHooks, 'shareFileOrFolderWithGroup', [
+		$this->invokePrivate($filesHooks, 'shareWithGroup', [
 			'no-group', 0, '', '', 0, true
 		]);
 	}
 
-	public function dataShareFileOrFolderWithGroup() {
+	public function dataShareWithGroup() {
 		return [
 			[
 				[
@@ -482,7 +482,7 @@ class FilesHooksTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider dataShareFileOrFolderWithGroup
+	 * @dataProvider dataShareWithGroup
 	 * @param array $usersInGroup
 	 * @param int $settingCalls
 	 * @param int $fixCalls
@@ -490,7 +490,7 @@ class FilesHooksTest extends TestCase {
 	 * @param array $settingsReturn
 	 * @param array $addNotifications
 	 */
-	public function testShareFileOrFolderWithGroup($usersInGroup, $settingCalls, $fixCalls, $settingUsers, $settingsReturn, $addNotifications) {
+	public function testShareWithGroup($usersInGroup, $settingCalls, $fixCalls, $settingUsers, $settingsReturn, $addNotifications) {
 		$filesHooks = $this->getFilesHooks([
 			'shareNotificationForSharer',
 			'addNotificationsForUser',
@@ -548,7 +548,7 @@ class FilesHooksTest extends TestCase {
 			$i++;
 		}
 
-		$this->invokePrivate($filesHooks, 'shareFileOrFolderWithGroup', [
+		$this->invokePrivate($filesHooks, 'shareWithGroup', [
 			'group1', 42, 'file', '/file', 1337, true
 		]);
 	}
@@ -643,7 +643,7 @@ class FilesHooksTest extends TestCase {
 	 * @dataProvider dataShareNotificationForSharer
 	 * @param string $path
 	 */
-	public function testShareFileOrFolder($path) {
+	public function testShare($path) {
 		$filesHooks = $this->getFilesHooks([
 			'addNotificationsForUser',
 			'shareNotificationForOriginalOwners',
@@ -683,7 +683,7 @@ class FilesHooksTest extends TestCase {
 			->method('shareNotificationForOriginalOwners')
 			->with('user', 'reshared_link_by', '', 42, 'file');
 
-		$this->invokePrivate($filesHooks, 'shareFileOrFolderByLink', [42, 'file', 'admin', true]);
+		$this->invokePrivate($filesHooks, 'shareByLink', [42, 'file', 'user']);
 	}
 
 	public function testShareNotificationForOriginalOwnersNoPath() {
