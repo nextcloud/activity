@@ -27,6 +27,19 @@ use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\IUser;
+use OCP\Files\FileInfo;
+use OCP\IRequest;
+use OCP\IAvatarManager;
+use OCA\Activity\ViewInfoCache;
+use OC\Files\View;
+use OCP\Files\IMimeTypeDetector;
+use OCP\IUserSession;
+use OCP\IURLGenerator;
+use OCP\IPreview;
+use OCA\Activity\UserSettings;
+use OCA\Activity\GroupHelper;
+use OCA\Activity\Data;
 
 /**
  * Class APIv2Test
@@ -77,38 +90,17 @@ class APIv2Test extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$this->data = $this->getMockBuilder('OCA\Activity\Data')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->helper = $this->getMockBuilder('OCA\Activity\GroupHelper')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->userSettings = $this->getMockBuilder('OCA\Activity\UserSettings')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->preview = $this->getMockBuilder('OCP\IPreview')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->urlGenerator = $this->getMockBuilder('OCP\IURLGenerator')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->userSession = $this->getMockBuilder('OCP\IUserSession')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->mimeTypeDetector = $this->getMockBuilder('OCP\Files\IMimeTypeDetector')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->view = $this->getMockBuilder('OC\Files\View')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->infoCache = $this->getMockBuilder('OCA\Activity\ViewInfoCache')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->avatarManager = $this->getMockBuilder('OCP\IAvatarManager')
-			->disableOriginalConstructor()
-			->getMock();
-
-		$this->request = $this->getMock('OCP\IRequest');
+		$this->data = $this->createMock(Data::class);
+		$this->helper = $this->createMock(GroupHelper::class);
+		$this->userSettings = $this->createMock(UserSettings::class);
+		$this->preview = $this->createMock(IPreview::class);
+		$this->urlGenerator = $this->createMock(IURLGenerator::class);
+		$this->userSession = $this->createMock(IUserSession::class);
+		$this->mimeTypeDetector = $this->createMock(IMimeTypeDetector::class);
+		$this->view = $this->createMock(View::class);
+		$this->infoCache = $this->createMock(ViewInfoCache::class);
+		$this->avatarManager = $this->createMock(IAvatarManager::class);
+		$this->request = $this->createMock(IRequest::class);
 
 		$this->controller = $this->getController();
 
@@ -137,7 +129,7 @@ class APIv2Test extends TestCase {
 				$this->infoCache
 			);
 		} else {
-			return $this->getMockBuilder('OCA\Activity\Controller\APIv2')
+			return $this->getMockBuilder(APIv2::class)
 				->setConstructorArgs([
 					'activity',
 					$this->request,
@@ -175,10 +167,10 @@ class APIv2Test extends TestCase {
 			->willReturn($filter);
 		$this->userSession->expects($this->once())
 			->method('getUser')
-			->willReturn($this->getMock('OCP\IUser'));
+			->willReturn($this->createMock(IUser::class));
 
-		$this->invokePrivate($this->controller, 'validateParameters', [$param, 0, 0, false, '', 0, 'desc']);
-		$this->assertSame($filter, $this->invokePrivate($this->controller, 'filter'));
+		self::invokePrivate($this->controller, 'validateParameters', [$param, 0, 0, false, '', 0, 'desc']);
+		$this->assertSame($filter, self::invokePrivate($this->controller, 'filter'));
 	}
 
 	public function dataValidateParametersFilterInvalid() {
@@ -202,8 +194,8 @@ class APIv2Test extends TestCase {
 		$this->userSession->expects($this->never())
 			->method('getUser');
 
-		$this->invokePrivate($this->controller, 'validateParameters', [$filter, 0, 0, false, '', 0, 'desc']);
-		$this->assertSame($filter, $this->invokePrivate($this->controller, 'filter'));
+		self::invokePrivate($this->controller, 'validateParameters', [$filter, 0, 0, false, '', 0, 'desc']);
+		$this->assertSame($filter, self::invokePrivate($this->controller, 'filter'));
 	}
 
 	public function dataValidateParametersObject() {
@@ -228,11 +220,11 @@ class APIv2Test extends TestCase {
 			->willReturnArgument(0);
 		$this->userSession->expects($this->once())
 			->method('getUser')
-			->willReturn($this->getMock('OCP\IUser'));
+			->willReturn($this->createMock(IUser::class));
 
-		$this->invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, $type, $id, 'desc']);
-		$this->assertSame($expectedType, $this->invokePrivate($this->controller, 'objectType'));
-		$this->assertSame($expectedId, $this->invokePrivate($this->controller, 'objectId'));
+		self::invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, $type, $id, 'desc']);
+		$this->assertSame($expectedType, self::invokePrivate($this->controller, 'objectType'));
+		$this->assertSame($expectedId, self::invokePrivate($this->controller, 'objectId'));
 	}
 
 	public function dataValidateParameters() {
@@ -280,10 +272,10 @@ class APIv2Test extends TestCase {
 			->willReturnArgument(0);
 		$this->userSession->expects($this->once())
 			->method('getUser')
-			->willReturn($this->getMock('OCP\IUser'));
+			->willReturn($this->createMock(IUser::class));
 
-		$this->invokePrivate($this->controller, 'validateParameters', $params);
-		$this->assertSame($expectedValue, $this->invokePrivate($this->controller, $memberName));
+		self::invokePrivate($this->controller, 'validateParameters', $params);
+		$this->assertSame($expectedValue, self::invokePrivate($this->controller, $memberName));
 	}
 
 	public function dataValidateParametersUser() {
@@ -298,7 +290,7 @@ class APIv2Test extends TestCase {
 	 * @param string $uid
 	 */
 	public function testValidateParametersUser($uid) {
-		$user = $this->getMock('OCP\IUser');
+		$user = $this->createMock(IUser::class);
 		$user->expects($this->once())
 			->method('getUID')
 			->willReturn($uid);
@@ -310,8 +302,8 @@ class APIv2Test extends TestCase {
 			->method('validateFilter')
 			->willReturnArgument(0);
 
-		$this->invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, '', 0, 'desc']);
-		$this->assertSame($uid, $this->invokePrivate($this->controller, 'user'));
+		self::invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, '', 0, 'desc']);
+		$this->assertSame($uid, self::invokePrivate($this->controller, 'user'));
 	}
 
 	/**
@@ -325,8 +317,8 @@ class APIv2Test extends TestCase {
 			->method('getUser')
 			->willReturn(null);
 
-		$this->invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, '', 0, 'desc']);
-		$this->assertSame(null, $this->invokePrivate($this->controller, 'user'));
+		self::invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, '', 0, 'desc']);
+		$this->assertNull(self::invokePrivate($this->controller, 'user'));
 	}
 
 	public function dataParameters() {
@@ -352,11 +344,9 @@ class APIv2Test extends TestCase {
 			'get'
 		]);
 
-		$filter = 'all';
-
 		$controller->expects($this->once())
 			->method('get')
-			->with($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
+			->with('all', $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 
 		$controller->getDefault($since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 	}
@@ -432,7 +422,7 @@ class APIv2Test extends TestCase {
 		}
 
 		/** @var DataResponse $result */
-		$result = $this->invokePrivate($controller, 'get', ['all', 0, 50, false, '', 0, 'desc']);
+		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, '', 0, 'desc']);
 
 		$this->assertInstanceOf(DataResponse::class, $result);
 		$this->assertSame($expected, $result->getStatus());
@@ -478,7 +468,7 @@ class APIv2Test extends TestCase {
 			->method('getPreview')
 			->willReturn(['preview']);
 
-		$this->invokePrivate($controller, 'loadPreviews', [$loadPreviews]);
+		self::invokePrivate($controller, 'loadPreviews', [$loadPreviews]);
 
 		$this->data->expects($this->once())
 			->method('get')
@@ -491,7 +481,7 @@ class APIv2Test extends TestCase {
 			]);
 
 		/** @var DataResponse $result */
-		$result = $this->invokePrivate($controller, 'get', ['all', 0, 50, false, $objectType, $objectId, 'desc']);
+		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, $objectType, $objectId, 'desc']);
 
 		$this->assertInstanceOf(DataResponse::class, $result);
 		$this->assertSame(Http::STATUS_OK, $result->getStatus());
@@ -522,16 +512,16 @@ class APIv2Test extends TestCase {
 	 * @param array $expected
 	 */
 	public function testGenerateHeaders($sort, $limit, $objectType, $objectId, $format, array $headersIn, $hasMoreActivities, array $expected) {
-		$this->invokePrivate($this->controller, 'sort', [$sort]);
-		$this->invokePrivate($this->controller, 'limit', [$limit]);
-		$this->invokePrivate($this->controller, 'objectType', [$objectType]);
-		$this->invokePrivate($this->controller, 'objectId', [$objectId]);
+		self::invokePrivate($this->controller, 'sort', [$sort]);
+		self::invokePrivate($this->controller, 'limit', [$limit]);
+		self::invokePrivate($this->controller, 'objectType', [$objectType]);
+		self::invokePrivate($this->controller, 'objectId', [$objectId]);
 		$this->request->expects($this->any())
 			->method('getParam')
 			->with('format')
 			->willReturn($format);
 
-		$headers = $this->invokePrivate($this->controller, 'generateHeaders', [$headersIn, $hasMoreActivities]);
+		$headers = self::invokePrivate($this->controller, 'generateHeaders', [$headersIn, $hasMoreActivities]);
 		$this->assertEquals($expected, $headers);
 	}
 
@@ -571,7 +561,7 @@ class APIv2Test extends TestCase {
 			->with($path)
 			->willReturn(['getPreviewFromPath']);
 
-		$this->assertSame(['getPreviewFromPath'], $this->invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
+		$this->assertSame(['getPreviewFromPath'], self::invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
 	}
 
 	public function dataGetPreview() {
@@ -627,9 +617,7 @@ class APIv2Test extends TestCase {
 				->with('dir')
 				->willReturn('/preview/dir');
 		} else if ($validFileInfo) {
-			$fileInfo = $this->getMockBuilder('OCP\Files\FileInfo')
-				->disableOriginalConstructor()
-				->getMock();
+			$fileInfo = $this->createMock(FileInfo::class);
 
 			$this->view->expects($this->once())
 				->method('chroot')
@@ -680,7 +668,7 @@ class APIv2Test extends TestCase {
 			'link' => '/preview' . $returnedPath,
 			'source' => $source,
 			'isMimeTypeIcon' => $isMimeTypeIcon,
-		], $this->invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
+		], self::invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
 	}
 
 	public function dataGetPreviewFromPath() {
@@ -722,7 +710,7 @@ class APIv2Test extends TestCase {
 				'source' => 'mime-type-icon',
 				'isMimeTypeIcon' => true,
 			],
-			$this->invokePrivate($controller, 'getPreviewFromPath', [$filePath, ['path' => $filePath, 'is_dir' => $isDir, 'view' => $view]])
+			self::invokePrivate($controller, 'getPreviewFromPath', [$filePath, ['path' => $filePath, 'is_dir' => $isDir, 'view' => $view]])
 		);
 	}
 
@@ -754,7 +742,7 @@ class APIv2Test extends TestCase {
 
 		$this->assertSame(
 			$expected,
-			$this->invokePrivate($this->controller, 'getPreviewPathFromMimeType', [$mimeType])
+			self::invokePrivate($this->controller, 'getPreviewPathFromMimeType', [$mimeType])
 		);
 	}
 
@@ -782,6 +770,6 @@ class APIv2Test extends TestCase {
 			->method('linkToRouteAbsolute')
 			->with('files.view.index', $expected);
 
-		$this->invokePrivate($this->controller, 'getPreviewLink', [$path, $isDir, $view]);
+		self::invokePrivate($this->controller, 'getPreviewLink', [$path, $isDir, $view]);
 	}
 }
