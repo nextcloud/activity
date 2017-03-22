@@ -430,17 +430,17 @@ class APIv2Test extends TestCase {
 
 	public function dataGet() {
 		return [
-			[123456789, 'files', 42, [], false, 0, ['object_type' => 'files', 'object_id' => 42, 'datetime' => date('c', 123456789)]],
-			[12345678, 'calendar', 23, [], true, 0, ['object_type' => 'calendar', 'object_id' => 23, 'datetime' => date('c', 12345678), 'previews' => []]],
+			[123456789, 'files', 42, [], false, 0, ['object_type' => 'files', 'object_id' => 42, 'datetime' => date(\DateTime::ATOM, 123456789)]],
+			[12345678, 'calendar', 23, [], true, 0, ['object_type' => 'calendar', 'object_id' => 23, 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => []]],
 			[
 				12345678, 'files', 23, ['objects' => [], 'affecteduser' => 'user1', 'object_name' => 'file.txt'],
 				true, 1,
-				['object_type' => 'files', 'object_id' => 23, 'objects' => [], 'affecteduser' => 'user1', 'object_name' => 'file.txt', 'datetime' => date('c', 12345678), 'previews' => [['preview']]]
+				['object_type' => 'files', 'object_id' => 23, 'objects' => [], 'affecteduser' => 'user1', 'object_name' => 'file.txt', 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => [['preview']]]
 			],
 			[
 				12345678, 'files', 23, ['objects' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'affecteduser' => 'user1'],
 				true, 2,
-				['object_type' => 'files', 'object_id' => 23, 'objects' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'affecteduser' => 'user1', 'datetime' => date('c', 12345678), 'previews' => [['preview'], ['preview']]]
+				['object_type' => 'files', 'object_id' => 23, 'objects' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'affecteduser' => 'user1', 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => [['preview'], ['preview']]]
 			],
 		];
 	}
