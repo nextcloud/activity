@@ -30,9 +30,8 @@ use OCA\Activity\BackgroundJob\ExpireActivities;
 use OCA\Activity\Consumer;
 use OCA\Activity\Controller\Activities;
 use OCA\Activity\Controller\APIv1;
-use OCA\Activity\Controller\EndPoint;
+use OCA\Activity\Controller\APIv2;
 use OCA\Activity\Controller\Feed;
-use OCA\Activity\Controller\OCSEndPoint;
 use OCA\Activity\Controller\Settings;
 use OCA\Activity\CurrentUser;
 use OCA\Activity\Data;
@@ -116,11 +115,11 @@ class ApplicationTest extends TestCase {
 			array('APIv1Controller', APIv1::class),
 			array('APIv1Controller', Controller::class),
 			array('APIv1Controller', OCSController::class),
-			array('EndPointController', EndPoint::class),
-			array('EndPointController', Controller::class),
+			array('APIv2Controller', APIv2::class),
+			array('APIv2Controller', Controller::class),
+			array('APIv2Controller', OCSController::class),
 			array('FeedController', Feed::class),
 			array('FeedController', Controller::class),
-			array(OCSEndPoint::class),
 			array('SettingsController', Settings::class),
 			array('SettingsController', Controller::class),
 

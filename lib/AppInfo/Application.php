@@ -26,7 +26,7 @@ use OC\Files\View;
 use OCA\Activity\Consumer;
 use OCA\Activity\Controller\Activities;
 use OCA\Activity\Controller\APIv1;
-use OCA\Activity\Controller\EndPoint;
+use OCA\Activity\Controller\APIv2;
 use OCA\Activity\Controller\Feed;
 use OCA\Activity\Controller\RemoteActivity;
 use OCA\Activity\Controller\Settings;
@@ -52,7 +52,7 @@ class Application extends App {
 		// Aliases for the controllers so we can use the automatic DI
 		$container->registerAlias('ActivitiesController', Activities::class);
 		$container->registerAlias('APIv1Controller', APIv1::class);
-		$container->registerAlias('EndPointController', EndPoint::class);
+		$container->registerAlias('APIv2Controller', APIv2::class);
 		$container->registerAlias('FeedController', Feed::class);
 		$container->registerAlias('RemoteActivityController', RemoteActivity::class);
 		$container->registerAlias('SettingsController', Settings::class);

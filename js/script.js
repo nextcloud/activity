@@ -80,8 +80,7 @@ $(function(){
 			var self = this;
 
 			$.ajax({
-				//url: OC.linkToOCS('apps/activity/api/v2/activity', 2) + OCA.Activity.Filter.filter + '?format=json&previews=true&since=' + self.lastGivenId,
-				url: OC.generateUrl('/apps/activity/api/v2/activity') + '/' + OCA.Activity.Filter.filter + '?format=json&previews=true&since=' + self.lastGivenId,
+				url: OC.linkToOCS('apps/activity/api/v2/activity', 2) + OCA.Activity.Filter.filter + '?format=json&previews=true&since=' + self.lastGivenId,
 				type: 'GET',
 				beforeSend: function(xhr) {
 					xhr.setRequestHeader("Accept-Language", OC.getLocale());

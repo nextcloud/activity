@@ -22,19 +22,19 @@
 
 namespace OCA\Activity\Tests\Controller;
 
-use OC\OCS\Result;
-use OCA\Activity\Controller\OCSEndPoint;
+use OCA\Activity\Controller\APIv2;
 use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\DataResponse;
 
 /**
- * Class OCSEndPointTest
+ * Class APIv2Test
  *
  * @group DB
  * @package OCA\Activity\Tests\Controller
  */
-class OCSEndPointTest extends TestCase {
+class APIv2Test extends TestCase {
 	/** @var \OCP\IRequest|\PHPUnit_Framework_MockObject_MockObject */
 	protected $request;
 
@@ -71,7 +71,7 @@ class OCSEndPointTest extends TestCase {
 	/** @var \OCP\IL10N */
 	protected $l10n;
 
-	/** @var OCSEndPoint */
+	/** @var APIv2 */
 	protected $controller;
 
 	protected function setUp() {
@@ -123,11 +123,12 @@ class OCSEndPointTest extends TestCase {
 
 	protected function getController(array $methods = []) {
 		if (empty($methods)) {
-			return new OCSEndPoint(
+			return new APIv2(
+				'activity',
+				$this->request,
 				$this->data,
 				$this->helper,
 				$this->userSettings,
-				$this->request,
 				$this->urlGenerator,
 				$this->userSession,
 				$this->preview,
@@ -136,12 +137,13 @@ class OCSEndPointTest extends TestCase {
 				$this->infoCache
 			);
 		} else {
-			return $this->getMockBuilder('OCA\Activity\Controller\OCSEndPoint')
+			return $this->getMockBuilder('OCA\Activity\Controller\APIv2')
 				->setConstructorArgs([
+					'activity',
+					$this->request,
 					$this->data,
 					$this->helper,
 					$this->userSettings,
-					$this->request,
 					$this->urlGenerator,
 					$this->userSession,
 					$this->preview,
@@ -154,47 +156,45 @@ class OCSEndPointTest extends TestCase {
 		}
 	}
 
-	public function dataReadParameterFilter() {
+	public function dataValidateParametersFilter() {
 		return [
-			[['filter' => 'valid1'], 'valid1'],
-			[['filter' => 'valid2'], 'valid2'],
-			[[], 'all'],
+			['valid1', 'valid1'],
+			['all', 'all'],
 		];
 	}
 
 	/**
-	 * @dataProvider dataReadParameterFilter
-	 * @param array $params
+	 * @dataProvider dataValidateParametersFilter
+	 * @param string $param
 	 * @param string $filter
 	 */
-	public function testReadParameterFilter(array $params, $filter) {
+	public function testValidateParametersFilter($param, $filter) {
 		$this->data->expects($this->once())
 			->method('validateFilter')
-			->with($filter)
-			->willReturnArgument(0);
+			->with($param)
+			->willReturn($filter);
 		$this->userSession->expects($this->once())
 			->method('getUser')
 			->willReturn($this->getMock('OCP\IUser'));
 
-		$this->invokePrivate($this->controller, 'readParameters', [$params]);
+		$this->invokePrivate($this->controller, 'validateParameters', [$param, 0, 0, false, '', 0, 'desc']);
 		$this->assertSame($filter, $this->invokePrivate($this->controller, 'filter'));
 	}
 
-	public function dataReadParameterFilterInvalid() {
+	public function dataValidateParametersFilterInvalid() {
 		return [
-			[['filter' => 'invalid1'], 'invalid1'],
-			[['filter' => 'invalid2'], 'invalid2'],
+			['invalid1'],
+			['invalid2'],
 		];
 	}
 
 	/**
-	 * @dataProvider dataReadParameterFilterInvalid
+	 * @dataProvider dataValidateParametersFilterInvalid
 	 *
-	 * @param array $params
 	 * @param string $filter
 	 * @expectedException \OCA\Activity\Exception\InvalidFilterException
 	 */
-	public function testReadParameterFilterInvalid(array $params, $filter) {
+	public function testValidateParametersFilterInvalid($filter) {
 		$this->data->expects($this->once())
 			->method('validateFilter')
 			->with($filter)
@@ -202,11 +202,11 @@ class OCSEndPointTest extends TestCase {
 		$this->userSession->expects($this->never())
 			->method('getUser');
 
-		$this->invokePrivate($this->controller, 'readParameters', [$params]);
+		$this->invokePrivate($this->controller, 'validateParameters', [$filter, 0, 0, false, '', 0, 'desc']);
 		$this->assertSame($filter, $this->invokePrivate($this->controller, 'filter'));
 	}
 
-	public function dataReadParameterObject() {
+	public function dataValidateParametersObject() {
 		return [
 			['type', 42, 'type', 42],
 			['type', '42', 'type', 42],
@@ -216,20 +216,13 @@ class OCSEndPointTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider dataReadParameterObject
+	 * @dataProvider dataValidateParametersObject
 	 * @param mixed $type
 	 * @param mixed $id
 	 * @param string $expectedType
 	 * @param int $expectedId
 	 */
-	public function testReadParameterObject($type, $id, $expectedType, $expectedId) {
-		$this->request->expects($this->any())
-			->method('getParam')
-			->willReturnMap([
-				['object_type', '', $type],
-				['object_id', 0, $id],
-			]);
-
+	public function testValidateParametersObject($type, $id, $expectedType, $expectedId) {
 		$this->data->expects($this->once())
 			->method('validateFilter')
 			->willReturnArgument(0);
@@ -237,41 +230,50 @@ class OCSEndPointTest extends TestCase {
 			->method('getUser')
 			->willReturn($this->getMock('OCP\IUser'));
 
-		$this->invokePrivate($this->controller, 'readParameters', [[]]);
+		$this->invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, $type, $id, 'desc']);
 		$this->assertSame($expectedType, $this->invokePrivate($this->controller, 'objectType'));
 		$this->assertSame($expectedId, $this->invokePrivate($this->controller, 'objectId'));
 	}
 
-	public function dataReadParameters() {
+	public function dataValidateParameters() {
 		return [
-			['since', 0, 0, 'since', 0],
-			['since', 0, 20, 'since', 20],
-			['since', 0, '25', 'since', 25],
-			['limit', 50, 0, 'limit', 0],
-			['limit', 50, 20, 'limit', 20],
-			['limit', 50, '25', 'limit', 25],
-			['sort', '', '', 'sort', 'desc'],
-			['sort', '', 'asc', 'sort', 'asc'],
-			['sort', '', 'desc', 'sort', 'desc'],
-			['previews', 'false', 'false', 'loadPreviews', false],
-			['previews', 'false', 'true', 'loadPreviews', true],
+			['since', 0, 'since', 0],
+			['since', 20, 'since', 20],
+			['since', '25', 'since', 25],
+			['limit', 0, 'limit', 0],
+			['limit', 20, 'limit', 20],
+			['limit', '25', 'limit', 25],
+			['sort', '', 'sort', 'desc'],
+			['sort', 'asc', 'sort', 'asc'],
+			['sort', 'desc', 'sort', 'desc'],
+			['previews', false, 'loadPreviews', false],
+			['previews', true, 'loadPreviews', true],
 		];
 	}
 
 	/**
-	 * @dataProvider dataReadParameters
+	 * @dataProvider dataValidateParameters
 	 * @param string $param
-	 * @param mixed $default
 	 * @param string $value
 	 * @param mixed $memberName
 	 * @param mixed $expectedValue
 	 */
-	public function testReadParameters($param, $default, $value, $memberName, $expectedValue) {
-		$this->request->expects($this->any())
-			->method('getParam')
-			->willReturnMap([
-				[$param, $default, $value],
-			]);
+	public function testValidateParameters($param, $value, $memberName, $expectedValue) {
+		$params = ['all', 0, 0, false, '', 0, 'desc'];
+		switch ($param) {
+			case 'since':
+				$params[1] = $value;
+				break;
+			case 'limit':
+				$params[2] = $value;
+				break;
+			case 'previews':
+				$params[3] = $value;
+				break;
+			case 'sort':
+				$params[6] = $value;
+				break;
+		}
 
 		$this->data->expects($this->once())
 			->method('validateFilter')
@@ -280,11 +282,11 @@ class OCSEndPointTest extends TestCase {
 			->method('getUser')
 			->willReturn($this->getMock('OCP\IUser'));
 
-		$this->invokePrivate($this->controller, 'readParameters', [[]]);
+		$this->invokePrivate($this->controller, 'validateParameters', $params);
 		$this->assertSame($expectedValue, $this->invokePrivate($this->controller, $memberName));
 	}
 
-	public function dataReadParameterUser() {
+	public function dataValidateParametersUser() {
 		return [
 			['uid1'],
 			['uid2'],
@@ -292,10 +294,10 @@ class OCSEndPointTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider dataReadParameterUser
+	 * @dataProvider dataValidateParametersUser
 	 * @param string $uid
 	 */
-	public function testReadParameterUser($uid) {
+	public function testValidateParametersUser($uid) {
 		$user = $this->getMock('OCP\IUser');
 		$user->expects($this->once())
 			->method('getUID')
@@ -308,14 +310,14 @@ class OCSEndPointTest extends TestCase {
 			->method('validateFilter')
 			->willReturnArgument(0);
 
-		$this->invokePrivate($this->controller, 'readParameters', [[]]);
+		$this->invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, '', 0, 'desc']);
 		$this->assertSame($uid, $this->invokePrivate($this->controller, 'user'));
 	}
 
 	/**
 	 * @expectedException \OutOfBoundsException
 	 */
-	public function testReadParameterUserInvalid() {
+	public function testValidateParametersUserInvalid() {
 		$this->data->expects($this->once())
 			->method('validateFilter')
 			->willReturnArgument(0);
@@ -323,53 +325,63 @@ class OCSEndPointTest extends TestCase {
 			->method('getUser')
 			->willReturn(null);
 
-		$this->invokePrivate($this->controller, 'readParameters', [[]]);
+		$this->invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, '', 0, 'desc']);
 		$this->assertSame(null, $this->invokePrivate($this->controller, 'user'));
 	}
 
 	public function dataParameters() {
 		return [
-			[['limit' => 25], ['limit' => 25]],
-			[['filter' => 'anything'], []],
-			[['filter' => 'two'], []],
+			['all', 0, 0, false, '', 0, 'desc'],
+			['filter', 1, 25, true, 'files', 42, 'asc'],
 		];
 	}
 
 	/**
 	 * @dataProvider dataParameters
 	 *
-	 * @param array $parameters
-	 * @param array $expected
+	 * @param string $filter
+	 * @param int $since
+	 * @param int $limit
+	 * @param bool $previews
+	 * @param string $filterObjectType
+	 * @param int $filterObjectId
+	 * @param string $sort
 	 */
-	public function testGetDefault(array $parameters, array $expected) {
+	public function testGetDefault($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort) {
 		$controller = $this->getController([
 			'get'
 		]);
 
-		$expected['filter'] = 'all';
+		$filter = 'all';
 
 		$controller->expects($this->once())
 			->method('get')
-			->with($expected);
+			->with($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 
-		$controller->getDefault($parameters);
+		$controller->getDefault($since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 	}
 
 	/**
 	 * @dataProvider dataParameters
 	 *
-	 * @param array $parameters
+	 * @param string $filter
+	 * @param int $since
+	 * @param int $limit
+	 * @param bool $previews
+	 * @param string $filterObjectType
+	 * @param int $filterObjectId
+	 * @param string $sort
 	 */
-	public function testGetFilter(array $parameters) {
+	public function testGetFilter($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort) {
 		$controller = $this->getController([
 			'get'
 		]);
 
 		$controller->expects($this->once())
 			->method('get')
-			->with($parameters);
+			->with($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 
-		$controller->getFilter($parameters);
+		$controller->getFilter($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 	}
 
 	public function dataGetInvalid() {
@@ -389,18 +401,18 @@ class OCSEndPointTest extends TestCase {
 	 * @param int $expected
 	 */
 	public function testGetInvalid($readParamsThrows, $dataGetThrows, $expected) {
-		$controller = $this->getController(['readParameters', 'generateHeaders']);
+		$controller = $this->getController(['validateParameters', 'generateHeaders']);
 		$controller->expects($this->any())
 			->method('generateHeaders')
 			->willReturnArgument(0);
 
 		if ($readParamsThrows instanceof \Exception) {
 			$controller->expects($this->once())
-				->method('readParameters')
+				->method('validateParameters')
 				->willThrowException($readParamsThrows);
 		} else {
 			$controller->expects($this->once())
-				->method('readParameters');
+				->method('validateParameters');
 		}
 		if ($dataGetThrows instanceof \Exception) {
 			$this->data->expects($this->once())
@@ -419,11 +431,11 @@ class OCSEndPointTest extends TestCase {
 				->method('generateHeaders');
 		}
 
-		/** @var Result $result */
-		$result = $this->invokePrivate($controller, 'get', [[]]);
+		/** @var DataResponse $result */
+		$result = $this->invokePrivate($controller, 'get', ['all', 0, 50, false, '', 0, 'desc']);
 
-		$this->assertInstanceOf(Result::class, $result);
-		$this->assertSame($expected, $result->getStatusCode());
+		$this->assertInstanceOf(DataResponse::class, $result);
+		$this->assertSame($expected, $result->getStatus());
 	}
 
 	public function dataGet() {
@@ -454,13 +466,13 @@ class OCSEndPointTest extends TestCase {
 	 * @param array $expected
 	 */
 	public function testGet($time, $objectType, $objectId, array $additionalArgs, $loadPreviews, $numGetPreviewCalls, array $expected) {
-		$controller = $this->getController(['readParameters', 'generateHeaders', 'getPreview']);
+		$controller = $this->getController(['validateParameters', 'generateHeaders', 'getPreview']);
 		$controller->expects($this->any())
 			->method('generateHeaders')
 			->willReturnArgument(0);
 
 		$controller->expects($this->once())
-			->method('readParameters');
+			->method('validateParameters');
 
 		$controller->expects($this->exactly($numGetPreviewCalls))
 			->method('getPreview')
@@ -478,11 +490,11 @@ class OCSEndPointTest extends TestCase {
 				'has_more' => false,
 			]);
 
-		/** @var Result $result */
-		$result = $this->invokePrivate($controller, 'get', [[]]);
+		/** @var DataResponse $result */
+		$result = $this->invokePrivate($controller, 'get', ['all', 0, 50, false, $objectType, $objectId, 'desc']);
 
-		$this->assertInstanceOf(Result::class, $result);
-		$this->assertSame(100, $result->getStatusCode());
+		$this->assertInstanceOf(DataResponse::class, $result);
+		$this->assertSame(Http::STATUS_OK, $result->getStatus());
 		$this->assertSame([
 			$expected,
 		], $result->getData());
