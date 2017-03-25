@@ -1,4 +1,6 @@
-{ "translations": {
+OC.L10N.register(
+    "activity",
+    {
     "Activities" : "กิจกรรม",
     "Error loading activities" : "เกิดข้อผิดพลาดขณะโหลดกิจกรรม",
     "No activities" : "ยังไม่มีกิจกรรม",
@@ -18,9 +20,6 @@
     ", " : "หรือ",
     "%s and %s" : "%s และ %s",
     "Hello %s," : "สวัสดี %s",
-    "You are receiving this email because the following things happened at %s" : "หากคุณได้รับอีเมลนี้เป็นเพราะว่ามีบางอย่างผิดปกติที่ %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* และ %n ฯลฯ"],
     "Notify about your own actions via email" : "แจ้งเตือนเกี่ยวกับสิ่งที่คุณทำผ่านทางอีเมล",
     "You need to set up your email address before you can receive notification emails." : "คุณจะได้รับอีเมลแจ้งเตือนหลังจากที่คุณตั้งค่าที่อยู่อีเมลของคุณ",
     "Send emails:" : "ส่งอีเมล:",
@@ -32,5 +31,5 @@
     "No activity yet" : "ยังไม่มีกิจกรรม",
     "No more events to load" : "ไม่มีการโหลดกิจกรรมเพิ่มเติม",
     "Files" : "ไฟล์"
-},"pluralForm" :"nplurals=1; plural=0;"
-}
+},
+"nplurals=1; plural=0;");
