@@ -27,6 +27,7 @@ namespace OCA\Activity;
 use OC\Files\Filesystem;
 use OC\Files\View;
 use OC\Share20\ShareHelper;
+use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IManager;
@@ -190,6 +191,10 @@ class FilesHooks {
 		}
 
 		$affectedUsers = $this->getUserPathsFromPath($filePath, $uidOwner);
+
+		$this->simpleFileActivity($affectedUsers['remotes'], $activityType, time(), $subject, $subjectBy, $this->currentUser->getCloudId());
+
+		$affectedUsers = $affectedUsers['users'];
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
 
@@ -213,6 +218,23 @@ class FilesHooks {
 				!empty($filteredStreamUsers[$user]),
 				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
 				$activityType
+			);
+		}
+	}
+
+	protected function simpleFileActivity($remoteUsers, $type, $time, $subject, $subjectBy, $actor) {
+		foreach ($remoteUsers as $remoteUser => $info) {
+			\OC::$server->getJobList()->add(
+				RemoteActivity::class,
+				[
+					$remoteUser,
+					$info['token'],
+					$info['node_path'],
+					$type,
+					$time,
+					$actor === $remoteUser ? $subject : $subjectBy,
+					$actor,
+				]
 			);
 		}
 	}
@@ -284,7 +306,8 @@ class FilesHooks {
 			$this->moveCase = false;
 			return;
 		}
-		$this->oldParentUsers = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
+		$affectedUsers = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
+		$this->oldParentUsers = $affectedUsers['users'];
 	}
 
 
@@ -333,6 +356,7 @@ class FilesHooks {
 			return;
 		}
 		$affectedUsers = $this->getUserPathsFromPath($parentPath, $parentOwner);
+		$affectedUsers = $affectedUsers['users'];
 
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', Files::TYPE_SHARE_CHANGED);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', Files::TYPE_SHARE_CHANGED);
@@ -385,6 +409,7 @@ class FilesHooks {
 			return;
 		}
 		$affectedUsers = $this->getUserPathsFromPath($parentPath, $parentOwner);
+		$affectedUsers = $affectedUsers['users'];
 
 		$beforeUsers = array_keys($this->oldParentUsers);
 		$afterUsers = array_keys($affectedUsers);
@@ -542,8 +567,7 @@ class FilesHooks {
 		}
 
 		$helper = new ShareHelper($this->shareManager); // FIXME
-		$accessList = $helper->getPathsForAccessList($node);
-		return $accessList['users'];
+		return $helper->getPathsForAccessList($node);
 	}
 
 	/**
