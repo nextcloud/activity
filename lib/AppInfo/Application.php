@@ -57,23 +57,12 @@ class Application extends App {
 	}
 
 	/**
-	 * Register the navigation entry
+	 * Register the different app parts
 	 */
-	public function registerNavigationEntry() {
-		$c = $this->getContainer();
-		/** @var \OCP\IServerContainer $server */
-		$server = $c->getServer();
-
-		$navigationEntry = function () use ($c, $server) {
-			return [
-				'id' => $c->getAppName(),
-				'order' => 1,
-				'name' => $c->query(IL10N::class)->t('Activity'),
-				'href' => $server->getURLGenerator()->linkToRoute('activity.Activities.showList'),
-				'icon' => $server->getURLGenerator()->imagePath($c->getAppName(), 'activity.svg'),
-			];
-		};
-		$server->getNavigationManager()->add($navigationEntry);
+	public function register() {
+		$this->registerActivityConsumer();
+		$this->registerHooksAndEvents();
+		$this->registerPersonalPage();
 	}
 
 	/**
