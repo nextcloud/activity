@@ -246,7 +246,7 @@ class APIv2 extends OCSController {
 		$preparedActivities = [];
 		foreach ($response['data'] as $activity) {
 			$activity['datetime'] = date(\DateTime::ATOM, $activity['timestamp']);
-			unset($activity['timestamp']);
+			unset($activity['timestamp'], $activity['affecteduser']);
 
 			if ($this->loadPreviews) {
 				$activity['previews'] = [];

@@ -66,7 +66,6 @@ Field name | Type | Value description
 `app` | string | App that created the activity (e.g. `'files'`, `'files_sharing'`, etc.)
 `type` | string | For most files related activities this is the action that was performed on the file/folder (e.g. `'file_changed'`, `'file_created'` (same is used for both, file and folder)), other apps use other strings (e.g. `'announcementcenter'`)
 `user` | string (Optional) | User ID of the user that triggered/created this activity (can also be empty in case of public link/remote share action)
-`affecteduser` | string | User ID of the user that received this activity (always the same)
 `subject` | string | Translated simple subject without markup, ready for use (e.g. `'You created hello.jpg'`)
 `subject_rich` | array (Optional) | `0` is the string subject including placeholders, `1` is an array with the placeholders. See [this issue](https://github.com/nextcloud/server/issues/1706) for more information
 `message` | string (Optional) | Translated simple message without markup, ready for use (longer text, unused by core apps)

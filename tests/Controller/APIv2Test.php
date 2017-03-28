@@ -435,12 +435,12 @@ class APIv2Test extends TestCase {
 			[
 				12345678, 'files', 23, ['objects' => [], 'affecteduser' => 'user1', 'object_name' => 'file.txt'],
 				true, 1,
-				['object_type' => 'files', 'object_id' => 23, 'objects' => [], 'affecteduser' => 'user1', 'object_name' => 'file.txt', 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => [['preview']]]
+				['object_type' => 'files', 'object_id' => 23, 'objects' => [], 'object_name' => 'file.txt', 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => [['preview']]]
 			],
 			[
 				12345678, 'files', 23, ['objects' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'affecteduser' => 'user1'],
 				true, 2,
-				['object_type' => 'files', 'object_id' => 23, 'objects' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'affecteduser' => 'user1', 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => [['preview'], ['preview']]]
+				['object_type' => 'files', 'object_id' => 23, 'objects' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => [['preview'], ['preview']]]
 			],
 		];
 	}
