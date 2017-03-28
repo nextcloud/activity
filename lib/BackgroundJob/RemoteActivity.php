@@ -44,7 +44,7 @@ class RemoteActivity extends QueuedJob {
 		call_user_func_array([$this, 'sendActivity'], $arguments);
 	}
 
-	protected function sendActivity($target, $token, $path, $type, $time, $subject, $actor) {
+	protected function sendActivity($target, $token, $path, $type, $time, $subject, $actor, $path2 = '') {
 		$client = $this->clientService->newClient();
 
 		$cloudId = $this->cloudIdManager->resolveCloudId($target);
@@ -59,8 +59,12 @@ class RemoteActivity extends QueuedJob {
 			'actor' => $actor,
 		];
 
+		if ($path2 !== '') {
+			$fields['path2'] = $path2;
+		}
+
 		try {
-			$response = $client->post(
+			$client->post(
 				$this->getServerURL($cloudId), [
 					'body' => $fields,
 					'timeout' => 10,
@@ -68,8 +72,6 @@ class RemoteActivity extends QueuedJob {
 				]
 			);
 		} catch (ClientException $e) {
-			\OC::$server->getLogger()->warning($e->getResponse()->getBody());
-			\OC::$server->getLogger()->logException($e);
 		}
 	}
 

@@ -77,12 +77,17 @@ class RemoteActivity extends OCSController {
 	 * @param int $time
 	 * @param string $subject
 	 * @param string $actor
+	 * @param string $path2
 	 * @return DataResponse
 	 */
-	public function receiveActivity($target, $token, $path, $type, $time, $subject, $actor) {
+	public function receiveActivity($target, $token, $path, $type, $time, $subject, $actor, $path2 = '') {
 		$user = $this->userManager->get($target);
 		if (!$user instanceof IUser) {
 			return new DataResponse(['user'], Http::STATUS_NOT_FOUND);
+		}
+
+		if ($user->getCloudId() === $actor) {
+			return new DataResponse(['activity'], Http::STATUS_BAD_REQUEST);
 		}
 
 		if (!$this->appManager->isInstalled('federatedfilesharing')) {
@@ -116,9 +121,19 @@ class RemoteActivity extends OCSController {
 			return new DataResponse(['path'], Http::STATUS_NOT_FOUND);
 		}
 
-		$subjectParams = [[$fileId => $path]];
-		if ($user->getCloudId() !== $actor) {
-			$subjectParams[] = $actor;
+		if ($path2 !== '') {
+			$secondPath = [$fileId => $share['mountpoint'] . $path2];
+			if (basename($path) === basename($path2)) {
+				try {
+					$parent = $node->getParent();
+					$secondPath = [$parent->getId() => $share['mountpoint'] . dirname($path2)];
+				} catch (NotFoundException $e) {
+				} catch (InvalidPathException $e) {
+				}
+			}
+			$subjectParams = [$secondPath, $actor, [$fileId => $path]];
+		} else {
+			$subjectParams = [[$fileId => $path], $actor];
 		}
 
 		$event = $this->activityManager->generateEvent();

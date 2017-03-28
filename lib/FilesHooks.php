@@ -86,8 +86,8 @@ class FilesHooks {
 
 	/** @var string|bool */
 	protected $moveCase = false;
-	/** @var string[] */
-	protected $oldParentUsers;
+	/** @var array */
+	protected $oldAccessList;
 	/** @var string */
 	protected $oldParentPath;
 	/** @var string */
@@ -190,11 +190,11 @@ class FilesHooks {
 			return;
 		}
 
-		$affectedUsers = $this->getUserPathsFromPath($filePath, $uidOwner);
+		$accessList = $this->getUserPathsFromPath($filePath, $uidOwner);
 
-		$this->simpleFileActivity($affectedUsers['remotes'], $activityType, time(), $subject, $subjectBy, $this->currentUser->getCloudId());
+		$this->simpleFileActivity($accessList['remotes'], $activityType, time(), $subjectBy, $this->currentUser->getCloudId(), $accessList['ownerPath']);
 
-		$affectedUsers = $affectedUsers['users'];
+		$affectedUsers = $accessList['users'];
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
 
@@ -222,20 +222,28 @@ class FilesHooks {
 		}
 	}
 
-	protected function simpleFileActivity($remoteUsers, $type, $time, $subject, $subjectBy, $actor) {
+	protected function simpleFileActivity($remoteUsers, $type, $time, $subject, $actor, $ownerPath = false) {
 		foreach ($remoteUsers as $remoteUser => $info) {
-			\OC::$server->getJobList()->add(
-				RemoteActivity::class,
-				[
-					$remoteUser,
-					$info['token'],
-					$info['node_path'],
-					$type,
-					$time,
-					$actor === $remoteUser ? $subject : $subjectBy,
-					$actor,
-				]
-			);
+			if ($actor === $remoteUser) {
+				// Current user receives the notification on their own instance already
+				continue;
+			}
+
+			$arguments = [
+				$remoteUser,
+				$info['token'],
+				$ownerPath !== false ? substr($ownerPath, strlen($info['node_path'])) : $info['node_path'],
+				$type,
+				$time,
+				$subject,
+				$actor,
+			];
+
+			if (isset($info['second_path'])) {
+				$arguments[] = $info['second_path'];
+			}
+
+			\OC::$server->getJobList()->add(RemoteActivity::class, $arguments	);
 		}
 	}
 
@@ -306,8 +314,7 @@ class FilesHooks {
 			$this->moveCase = false;
 			return;
 		}
-		$affectedUsers = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
-		$this->oldParentUsers = $affectedUsers['users'];
+		$this->oldAccessList = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
 	}
 
 
@@ -355,9 +362,19 @@ class FilesHooks {
 			// Could not find the file for the owner ...
 			return;
 		}
-		$affectedUsers = $this->getUserPathsFromPath($parentPath, $parentOwner);
-		$affectedUsers = $affectedUsers['users'];
+		$accessList = $this->getUserPathsFromPath($parentPath, $parentOwner);
 
+		$renameRemotes = [];
+		foreach ($accessList['remotes'] as $remote => $info) {
+			$renameRemotes[$remote] = [
+				'token'       => $info['token'],
+				'node_path'   => substr($newPath, strlen($info['node_path'])),
+				'second_path' => substr($oldPath, strlen($info['node_path'])),
+			];
+		}
+		$this->simpleFileActivity($renameRemotes, Files::TYPE_SHARE_CHANGED, time(), 'renamed_by', $this->currentUser->getCloudId());
+
+		$affectedUsers = $accessList['users'];
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', Files::TYPE_SHARE_CHANGED);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', Files::TYPE_SHARE_CHANGED);
 
@@ -408,20 +425,48 @@ class FilesHooks {
 			// Could not find the file for the owner ...
 			return;
 		}
-		$affectedUsers = $this->getUserPathsFromPath($parentPath, $parentOwner);
-		$affectedUsers = $affectedUsers['users'];
+		$accessList = $this->getUserPathsFromPath($parentPath, $parentOwner);
+		$affectedUsers = $accessList['users'];
+		$oldUsers = $this->oldAccessList['users'];
 
-		$beforeUsers = array_keys($this->oldParentUsers);
+		$beforeUsers = array_keys($oldUsers);
 		$afterUsers = array_keys($affectedUsers);
 
 		$deleteUsers = array_diff($beforeUsers, $afterUsers);
-		$this->generateDeleteActivities($deleteUsers, $this->oldParentUsers, $fileId, $oldFileName);
+		$this->generateDeleteActivities($deleteUsers, $oldUsers, $fileId, $oldFileName);
 
 		$addUsers = array_diff($afterUsers, $beforeUsers);
 		$this->generateAddActivities($addUsers, $affectedUsers, $fileId, $fileName);
 
 		$moveUsers = array_intersect($beforeUsers, $afterUsers);
-		$this->generateMoveActivities($moveUsers, $this->oldParentUsers, $affectedUsers, $fileId, $oldFileName, $parentId, $fileName);
+		$this->generateMoveActivities($moveUsers, $oldUsers, $affectedUsers, $fileId, $oldFileName, $parentId, $fileName);
+
+		$beforeRemotes = $this->oldAccessList['remotes'];
+		$afterRemotes = $accessList['remotes'];
+
+		$addRemotes = $deleteRemotes = $moveRemotes = [];
+		foreach ($afterRemotes as $remote => $info) {
+			if (isset($beforeRemotes[$remote])) {
+				// Move
+				$info['node_path'] = substr($newPath, strlen($info['node_path']));
+				$info['second_path'] = substr($oldPath, strlen($beforeRemotes[$remote]['node_path']));
+				$moveRemotes[$remote] = $info;
+			} else {
+				$info['node_path'] = substr($newPath, strlen($info['node_path']));
+				$addRemotes[$remote] = $info;
+			}
+		}
+
+		foreach ($beforeRemotes as $remote => $info) {
+			if (!isset($afterRemotes[$remote])) {
+				$info['node_path'] = substr($oldPath, strlen($info['node_path']));
+				$deleteRemotes[$remote] = $info;
+			}
+		}
+
+		$this->simpleFileActivity($deleteRemotes, Files::TYPE_SHARE_DELETED, time(), 'deleted_by', $this->currentUser->getCloudId());
+		$this->simpleFileActivity($addRemotes, Files::TYPE_SHARE_CREATED, time(), 'created_by', $this->currentUser->getCloudId());
+		$this->simpleFileActivity($moveRemotes, Files::TYPE_SHARE_CHANGED, time(), 'moved_by', $this->currentUser->getCloudId());
 	}
 
 	/**
@@ -567,7 +612,13 @@ class FilesHooks {
 		}
 
 		$helper = new ShareHelper($this->shareManager); // FIXME
-		return $helper->getPathsForAccessList($node);
+		$accessList = $helper->getPathsForAccessList($node);
+
+		$path = $node->getPath();
+		$sections = explode('/', $path, 4);
+		$accessList['ownerPath'] = '/' . $sections[3];
+
+		return $accessList;
 	}
 
 	/**
