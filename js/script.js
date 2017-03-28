@@ -235,13 +235,14 @@ $(function(){
 			}
 
 			if (activity.previews && activity.previews.length) {
-				content += '<br />';
+				content += '<div class="activity-previews">';
 				for (var i = 0; i < activity.previews.length; i++) {
 					var preview = activity.previews[i];
 					content += ((preview.link) ? '<a href="' + preview.link + '">' + "\n" : '')
 						+ '<img class="preview' + ((preview.isMimeTypeIcon) ? ' preview-mimetype-icon' : '') + '" src="' + preview.source + '" alt=""/>' + "\n"
 						+ ((preview.link) ? '</a>' + "\n" : '')
 				}
+				content += '</div>';
 			}
 
 			content += '	</div>' + "\n"
@@ -296,4 +297,3 @@ $(function(){
 		event.preventDefault();
 	});
 });
-
