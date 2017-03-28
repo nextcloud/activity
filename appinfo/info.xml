@@ -32,6 +32,15 @@
 		<nextcloud min-version="12" max-version="12" />
 	</dependencies>
 
+	<navigations>
+		<navigation>
+			<name>Activity</name>
+			<route>activity.Activities.showList</route>
+			<order>1</order>
+			<icon>activity.svg</icon>
+		</navigation>
+	</navigations>
+
 	<activity>
 		<filters>
 			<filter>OCA\Activity\Filter\AllFilter</filter>
