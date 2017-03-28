@@ -12,8 +12,11 @@
 	var TEMPLATE =
 		'<div class="activity-section">' +
 		'<div class="loading hidden" style="height: 50px"></div>' +
+		'<div class="emptycontent">' +
+		'    <div class="icon-activity"></div>' +
+		'    <p>{{emptyMessage}}</p>' +
+		'</div>' +
 		'<ul class="activities hidden">' +
-		'    <li class="empty">{{emptyMessage}}</li>' +
 		'</ul>' +
 		'<input type="button" class="showMore" value="{{moreLabel}}"' +
 		'</div>';
@@ -102,7 +105,9 @@
 		},
 
 		_onError: function() {
-			OC.Notification.showTemporary(t('activity', 'Error loading activities'));
+			var $emptyContent = this.$el.find('.emptycontent');
+			$emptyContent.removeClass('hidden');
+			$emptyContent.find('p').text(t('activity', 'An error occurred while loading activities'));
 		},
 
 		_onRequest: function() {
@@ -219,7 +224,7 @@
 		render: function() {
 			if (this._fileInfo) {
 				this.$el.html(this.template({
-					emptyMessage: t('activity', 'No activities'),
+					emptyMessage: t('activity', 'No activity yet'),
 					moreLabel: t('activity', 'Load more activities')
 				}));
 				this.$container = this.$el.find('ul.activities');
