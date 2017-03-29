@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Aktivitet",
     "Personal activity feed for %s" : "Personleg aktivitetsstraum for %s",
     "Your settings have been updated." : "Innstillingane dine har blitt oppdaterte",
     "Mail" : "Post",
@@ -9,6 +8,7 @@ OC.L10N.register(
     ", " : ",",
     "%s and %s" : "%s og %s",
     "Hello %s," : "Hei %s,",
+    "Activity" : "Aktivitet",
     "You need to set up your email address before you can receive notification emails." : "Du må skriva inn e-postadressa di før du kan få e-postvarsel.",
     "Send emails:" : "Send e-postar:",
     "Hourly" : "Kvar time",

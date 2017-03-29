@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Activities" : "Aktivnosti",
     "Today" : "Danas",
-    "Activity" : "Aktivnost",
     "Personal activity feed for %s" : "Sažetak osobnih aktivnosti za %s",
     "Your settings have been updated." : "Vaše su postavke ažurirane",
     "Mail" : "Pošta",
@@ -12,6 +11,7 @@ OC.L10N.register(
     ", " : ", ",
     "%s and %s" : "%s i %s",
     "Hello %s," : "Pozdrav %s,",
+    "Activity" : "Aktivnost",
     "Notify about your own actions via email" : "Pošalji emailom obavijest o Vašim radnjama",
     "You need to set up your email address before you can receive notification emails." : "Da biste mogli primiti notifikaciju, morate najprije navesti svoju adresu e-pošte.",
     "Send emails:" : "Šaljite poruke e-pošte:",

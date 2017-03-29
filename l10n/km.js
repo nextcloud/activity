@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "សកម្មភាព",
     "Personal activity feed for %s" : "សកម្មភាព feed ផ្ទាល់​ខ្លួន​សម្រាប់ %s",
     "Your settings have been updated." : "ការ​កំណត់​របស់​អ្នក​ត្រូវ​បាន​ធ្វើ​បច្ចុប្បន្នភាព។",
     "Mail" : "សំបុត្រ",
@@ -10,6 +9,7 @@ OC.L10N.register(
     ", " : ", ",
     "%s and %s" : "%s និង %s",
     "Hello %s," : "សួស្ដី %s,",
+    "Activity" : "សកម្មភាព",
     "You need to set up your email address before you can receive notification emails." : "អ្នក​ចាំបាច់​ត្រូវតែដំឡើង​អាសយដ្ឋាន​អ៊ីមែលរបស់អ្នកមុនពេល​ដែលអ្នកអាចទទួលបានការជូន​ដំណឹង​ទៅកាន់​អ៊ីមែល ។",
     "Send emails:" : "ផ្ញើ​អ៊ីមែល",
     "Hourly" : "រាល់​ម៉ោង",

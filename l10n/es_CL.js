@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Actividad",
     "Personal activity feed for %s" : "Avisos de actividad para %s",
     "Your settings have been updated." : "Sus preferencias han sido actualizadas.",
     "Mail" : "Correo",
@@ -10,6 +9,7 @@ OC.L10N.register(
     ", " : ",",
     "%s and %s" : "%s y %s",
     "Hello %s," : "Hola %s,",
+    "Activity" : "Actividad",
     "You need to set up your email address before you can receive notification emails." : "Necesita configurar su dirección de correo electrónico antes de poder recibir notificaciones correos electrónicos de notificación.",
     "Send emails:" : "Enviar correos electrónicos:",
     "Hourly" : "Horariamente",

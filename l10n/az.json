@@ -1,7 +1,6 @@
 { "translations": {
     "Today" : "Bu gün",
     "Yesterday" : "Dünən",
-    "Activity" : "Fəallıq",
     "Personal activity feed for %s" : "%s üçün şəxsi fəaliyyətin ötürülməsi",
     "Your feed URL is invalid" : "Sizin URL ötürməniz yalnışdır",
     "Your settings have been updated." : "Sizin configləriniz yenilendi.",
@@ -12,6 +11,7 @@
     ", " : ",",
     "%s and %s" : "%s və %s",
     "Hello %s," : "Salam %s,",
+    "Activity" : "Fəallıq",
     "Notify about your own actions via email" : "Öz gördüyünüz işlər haqqənda email-lə xəbərdar elə",
     "You need to set up your email address before you can receive notification emails." : "Xəbərdarlıq məktubları almazdan öncə, siz mail ünvanınızı təyin etməlisiniz.",
     "Send emails:" : "Məktubları yolla",
