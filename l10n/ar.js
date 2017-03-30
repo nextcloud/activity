@@ -41,6 +41,7 @@ OC.L10N.register(
     "Daily" : "يومي",
     "Weekly" : "أسبوعي",
     "Activity feed" : "تغذية الأنشطة",
+    "Settings" : "إعدادات",
     "Enable RSS feed" : "تفعيل خاصية الخلاصات",
     "No activity yet" : "لا يوجد أي أنشطة حتى الأن",
     "No more events to load" : "لا توجد أي أحداث للتحميل",

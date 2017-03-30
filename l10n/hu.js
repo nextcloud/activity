@@ -41,6 +41,7 @@ OC.L10N.register(
     "Daily" : "Naponta",
     "Weekly" : "Hetente",
     "Activity feed" : "Tevékenységi hírfolyam",
+    "Settings" : "Beállítások",
     "Enable RSS feed" : "RSS hírfolyam engedélyezése",
     "No activity yet" : "Nincs még tevékenység",
     "No more events to load" : "Nincs több esemény",

@@ -41,6 +41,7 @@ OC.L10N.register(
     "Daily" : "Dagligt",
     "Weekly" : "Ugentligt",
     "Activity feed" : "Feed med aktiviteter",
+    "Settings" : "Indstillinger",
     "Enable RSS feed" : "Aktiverer RSS feed",
     "No activity yet" : "Ingen aktiviteter endnu",
     "No more events to load" : "Der er Ikke flere aktiviteter som kan indlæses",

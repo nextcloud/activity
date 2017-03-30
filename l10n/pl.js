@@ -41,6 +41,7 @@ OC.L10N.register(
     "Daily" : "Codziennie",
     "Weekly" : "Co tydzień",
     "Activity feed" : "Kanał aktywności",
+    "Settings" : "Ustawienia",
     "Enable RSS feed" : "Włącz kanał RSS",
     "No activity yet" : "Brak aktywności",
     "No more events to load" : "Brak zdarzeń do załadowania",
