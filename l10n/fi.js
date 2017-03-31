@@ -41,6 +41,7 @@ OC.L10N.register(
     "Daily" : "Päivittäin",
     "Weekly" : "Viikottain",
     "Activity feed" : "Toiminnan syöte",
+    "Settings" : "Asetukset",
     "Enable RSS feed" : "Käytä RSS-syötettä",
     "No activity yet" : "Ei toimia vielä",
     "No more events to load" : "Ei enempää tapahtumia ladattavaksi",

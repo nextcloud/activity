@@ -41,6 +41,7 @@ OC.L10N.register(
     "Daily" : "Ежедневно",
     "Weekly" : "Еженедельно",
     "Activity feed" : "Лента событий",
+    "Settings" : "Настройки",
     "Enable RSS feed" : "Включить RSS ленту",
     "No activity yet" : "Событий ещё нет",
     "No more events to load" : "Больше нет событий для загрузки",
