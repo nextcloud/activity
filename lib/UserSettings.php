@@ -64,7 +64,7 @@ class UserSettings {
 	 * @return bool|int
 	 */
 	public function getUserSetting($user, $method, $type) {
-		$defaultSetting = $this->getDefaultSetting($method, $type);
+		$defaultSetting = $this->getDefaultFromSetting($method, $type);
 		if (is_bool($defaultSetting)) {
 			return (bool) $this->config->getUserValue(
 				$user,
@@ -83,13 +83,35 @@ class UserSettings {
 	}
 
 	/**
+	 * @param string $method
+	 * @param string $type
+	 * @return bool|int
+	 */
+	public function getConfigSetting($method, $type) {
+		$defaultSetting = $this->getDefaultFromSetting($method, $type);
+		if (is_bool($defaultSetting)) {
+			return (bool) $this->config->getAppValue(
+				'activity',
+				'notify_' . $method . '_' . $type,
+				$defaultSetting
+			);
+		} else {
+			return (int) $this->config->getAppValue(
+				'activity',
+				'notify_' . $method . '_' . $type,
+				$defaultSetting
+			);
+		}
+	}
+
+	/**
 	 * Get a good default setting for a preference
 	 *
 	 * @param string $method Should be one of 'stream', 'email' or 'setting'
 	 * @param string $type One of the activity types, 'batchtime', 'self' or 'selfemail'
 	 * @return bool|int
 	 */
-	public function getDefaultSetting($method, $type) {
+	protected function getDefaultFromSetting($method, $type) {
 		if ($method === 'setting') {
 			if ($type === 'batchtime') {
 				return 3600;
@@ -166,12 +188,12 @@ class UserSettings {
 
 		// If the setting is enabled by default,
 		// we add all users that didn't set the preference yet.
-		if ($this->getDefaultSetting($method, $type)) {
+		if ($this->getDefaultFromSetting($method, $type)) {
 			foreach ($users as $user) {
 				if ($method === 'stream') {
 					$filteredUsers[$user] = true;
 				} else {
-					$filteredUsers[$user] = $this->getDefaultSetting('setting', 'batchtime');
+					$filteredUsers[$user] = $this->getDefaultFromSetting('setting', 'batchtime');
 				}
 			}
 		}

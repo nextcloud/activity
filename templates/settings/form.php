@@ -22,12 +22,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-script('activity', 'settings');
-style('activity', 'settings');
 ?>
 
 <form id="activity_notifications" class="section">
-	<h2><?php p($l->t('Activity')); ?></h2>
+	<h2 class="icon-activity"><?php p($l->t('Activity')); ?></h2>
+
 	<table class="grid activitysettings">
 		<thead>
 			<tr>

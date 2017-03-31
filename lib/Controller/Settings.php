@@ -154,6 +154,66 @@ class Settings extends Controller {
 	}
 
 	/**
+	 * @param int $notify_setting_batchtime
+	 * @param bool $notify_setting_self
+	 * @param bool $notify_setting_selfemail
+	 * @return DataResponse
+	 */
+	public function admin(
+			$notify_setting_batchtime = UserSettings::EMAIL_SEND_HOURLY,
+			$notify_setting_self = false,
+			$notify_setting_selfemail = false) {
+
+		$settings = $this->manager->getSettings();
+		foreach ($settings as $setting) {
+			if ($setting->canChangeStream()) {
+				$this->config->setAppValue(
+					'activity',
+					'notify_stream_' . $setting->getIdentifier(),
+					(int) $this->request->getParam($setting->getIdentifier() . '_stream', false)
+				);
+			}
+
+			if ($setting->canChangeMail()) {
+				$this->config->setAppValue(
+					'activity',
+					'notify_email_' . $setting->getIdentifier(),
+					(int) $this->request->getParam($setting->getIdentifier() . '_email', false)
+				);
+			}
+		}
+
+		$email_batch_time = 3600;
+		if ($notify_setting_batchtime === UserSettings::EMAIL_SEND_DAILY) {
+			$email_batch_time = 3600 * 24;
+		} else if ($notify_setting_batchtime === UserSettings::EMAIL_SEND_WEEKLY) {
+			$email_batch_time = 3600 * 24 * 7;
+		}
+
+		$this->config->setAppValue(
+			'activity',
+			'notify_setting_batchtime',
+			$email_batch_time
+		);
+		$this->config->setAppValue(
+			'activity',
+			'notify_setting_self',
+			(int) $notify_setting_self
+		);
+		$this->config->setAppValue(
+			'activity',
+			'notify_setting_selfemail',
+			(int) $notify_setting_selfemail
+		);
+
+		return new DataResponse(array(
+			'data'		=> array(
+				'message'	=> (string) $this->l10n->t('Settings have been updated.'),
+			),
+		));
+	}
+
+	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 *
@@ -200,7 +260,7 @@ class Settings extends Controller {
 			$settingBatchTime = UserSettings::EMAIL_SEND_DAILY;
 		}
 
-		return new TemplateResponse('activity', 'personal', [
+		return new TemplateResponse('activity', 'settings/personal', [
 			'activities'		=> $activities,
 			'activity_email'	=> $this->config->getUserValue($this->user, 'settings', 'email', ''),
 
