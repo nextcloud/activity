@@ -171,6 +171,8 @@ class APIv2 extends OCSController {
 	}
 
 	/**
+	 * @NoAdminRequired
+	 *
 	 * @param int $since
 	 * @param int $limit
 	 * @param bool $previews
@@ -184,6 +186,8 @@ class APIv2 extends OCSController {
 	}
 
 	/**
+	 * @NoAdminRequired
+	 *
 	 * @param string $filter
 	 * @param int $since
 	 * @param int $limit
