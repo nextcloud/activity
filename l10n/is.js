@@ -41,6 +41,7 @@ OC.L10N.register(
     "Daily" : "Daglega",
     "Weekly" : "Vikulega",
     "Activity feed" : "Virkniveita",
+    "Settings" : "Stillingar",
     "Enable RSS feed" : "Virkja RSS-veitu",
     "No activity yet" : "Engin virkni ennþá",
     "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
