@@ -41,6 +41,7 @@ OC.L10N.register(
     "Daily" : "Dagelijks",
     "Weekly" : "Wekelijks",
     "Activity feed" : "Activiteitenkanaal",
+    "Settings" : "Instellingen",
     "Enable RSS feed" : "Zet RSS-kanaal aan",
     "No activity yet" : "Nog geen activiteit",
     "No more events to load" : "Geen activiteiten meer om te laden ",
