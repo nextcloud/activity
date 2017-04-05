@@ -41,6 +41,7 @@ OC.L10N.register(
     "Daily" : "дневно",
     "Weekly" : "недељно",
     "Activity feed" : "Довод активности",
+    "Settings" : "Поставке",
     "Enable RSS feed" : "Укључи РСС довод",
     "No activity yet" : "Још нема активности",
     "No more events to load" : "Нема више догађаја за приказ",
