@@ -86,6 +86,7 @@ class Application extends App {
 		$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', [FilesHooksStatic::class, 'onLoadFilesAppScripts']);
 
 		Util::connectHook('OC_User', 'post_deleteUser', Hooks::class, 'deleteUser');
+		Util::connectHook('OC_User', 'post_login', Hooks::class, 'setDefaultsForUser');
 
 		$this->registerFilesActivity();
 	}

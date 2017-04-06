@@ -15,7 +15,7 @@
 	<licence>AGPL</licence>
 	<author>Frank Karlitschek, Joas Schilling</author>
 	<shipped>true</shipped>
-	<version>2.5.0</version>
+	<version>2.5.1</version>
 	<default_enable/>
 	<types>
 		<filesystem/>
@@ -48,6 +48,11 @@
 			<filter>OCA\Activity\Filter\ByFilter</filter>
 		</filters>
 	</activity>
+
+	<settings>
+		<admin>OCA\Activity\Settings\Admin</admin>
+		<admin-section>OCA\Activity\Settings\Section</admin-section>
+	</settings>
 
 	<background-jobs>
 		<job>OCA\Activity\BackgroundJob\EmailNotification</job>

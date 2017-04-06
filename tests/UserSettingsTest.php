@@ -83,6 +83,6 @@ class UserSettingsTest extends TestCase {
 			}
 
 		}
-		$this->assertEquals($expected, $this->userSettings->getDefaultSetting($method, $type));
+		$this->assertEquals($expected, self::invokePrivate($this->userSettings, 'getDefaultFromSetting', [$method, $type]));
 	}
 }

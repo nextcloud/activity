@@ -64,7 +64,7 @@ class UserSettings {
 	 * @return bool|int
 	 */
 	public function getUserSetting($user, $method, $type) {
-		$defaultSetting = $this->getDefaultSetting($method, $type);
+		$defaultSetting = $this->getDefaultFromSetting($method, $type);
 		if (is_bool($defaultSetting)) {
 			return (bool) $this->config->getUserValue(
 				$user,
@@ -72,14 +72,36 @@ class UserSettings {
 				'notify_' . $method . '_' . $type,
 				$defaultSetting
 			);
-		} else {
-			return (int) $this->config->getUserValue(
-				$user,
+		}
+
+		return (int) $this->config->getUserValue(
+			$user,
+			'activity',
+			'notify_' . $method . '_' . $type,
+			$defaultSetting
+		);
+	}
+
+	/**
+	 * @param string $method
+	 * @param string $type
+	 * @return bool|int
+	 */
+	public function getConfigSetting($method, $type) {
+		$defaultSetting = $this->getDefaultFromSetting($method, $type);
+		if (is_bool($defaultSetting)) {
+			return (bool) $this->config->getAppValue(
 				'activity',
 				'notify_' . $method . '_' . $type,
 				$defaultSetting
 			);
 		}
+
+		return (int) $this->config->getAppValue(
+			'activity',
+			'notify_' . $method . '_' . $type,
+			$defaultSetting
+		);
 	}
 
 	/**
@@ -89,15 +111,20 @@ class UserSettings {
 	 * @param string $type One of the activity types, 'batchtime', 'self' or 'selfemail'
 	 * @return bool|int
 	 */
-	public function getDefaultSetting($method, $type) {
+	protected function getDefaultFromSetting($method, $type) {
 		if ($method === 'setting') {
 			if ($type === 'batchtime') {
 				return 3600;
-			} else if ($type === 'self') {
+			}
+
+			if ($type === 'self') {
 				return true;
-			} else if ($type === 'selfemail') {
+			}
+
+			if ($type === 'selfemail') {
 				return false;
 			}
+
 			return false;
 		}
 
@@ -149,7 +176,7 @@ class UserSettings {
 			if ($value) {
 				$filteredUsers[$user] = true;
 			}
-			unset($users[array_search($user, $users)]);
+			unset($users[array_search($user, $users, true)]);
 		}
 
 		// Get the batch time setting from the database
@@ -166,12 +193,12 @@ class UserSettings {
 
 		// If the setting is enabled by default,
 		// we add all users that didn't set the preference yet.
-		if ($this->getDefaultSetting($method, $type)) {
+		if ($this->getDefaultFromSetting($method, $type)) {
 			foreach ($users as $user) {
 				if ($method === 'stream') {
 					$filteredUsers[$user] = true;
 				} else {
-					$filteredUsers[$user] = $this->getDefaultSetting('setting', 'batchtime');
+					$filteredUsers[$user] = $this->getDefaultFromSetting('setting', 'batchtime');
 				}
 			}
 		}
