@@ -23,6 +23,7 @@ namespace OCA\Activity\BackgroundJob;
 
 use GuzzleHttp\Exception\ClientException;
 use OC\BackgroundJob\QueuedJob;
+use OCA\Activity\Extension\Files;
 use OCP\Federation\ICloudId;
 use OCP\Federation\ICloudIdManager;
 use OCP\Http\Client\IClientService;
@@ -44,28 +45,45 @@ class RemoteActivity extends QueuedJob {
 		call_user_func_array([$this, 'sendActivity'], $arguments);
 	}
 
-	protected function sendActivity($target, $token, $path, $type, $time, $subject, $actor, $path2 = '') {
+	protected function sendActivity($target, $token, $path, $internalType, $time, $actor, $secondPath = '') {
 		$client = $this->clientService->newClient();
 
 		$cloudId = $this->cloudIdManager->resolveCloudId($target);
+		$type = $this->translateType($internalType, $secondPath);
 
 		$fields = [
-			'target' => $cloudId->getUser(),
-			'token' => $token,
-			'path' => $path,
+			'@context' => 'https://www.w3.org/ns/activitystreams',
+			'to' => [
+				'type' => 'Person',
+				'name' => $cloudId->getUser(),
+			],
+			'actor' => [
+				'type' => 'Person',
+				'name' => $actor,
+			],
 			'type' => $type,
-			'time' => $time,
-			'subject' => $subject,
-			'actor' => $actor,
+			'updated' => date(\DateTime::W3C, $time),
 		];
 
-		if ($path2 !== '') {
-			$fields['path2'] = $path2;
+		if ($type === 'Move') {
+			$fields['target'] = [
+				'type' => 'Document',
+				'name' => $path,
+			];
+			$fields['origin'] = [
+				'type' => 'Document',
+				'name' => $secondPath,
+			];
+		} else {
+			$fields['object'] = [
+				'type' => 'Document',
+				'name' => $path,
+			];
 		}
 
 		try {
 			$client->post(
-				$this->getServerURL($cloudId), [
+				$this->getServerURL($cloudId, $token), [
 					'body' => $fields,
 					'timeout' => 10,
 					'connect_timeout' => 10,
@@ -75,12 +93,38 @@ class RemoteActivity extends QueuedJob {
 		}
 	}
 
-	protected function getServerURL(ICloudId $cloudId) {
+	/**
+	 * @param ICloudId $cloudId
+	 * @param string $token
+	 * @return string
+	 */
+	protected function getServerURL(ICloudId $cloudId, $token) {
 		$remote = $cloudId->getRemote();
 		if (strpos($remote, 'http') !== 0) {
 			$remote = 'https://' . $remote;
 		}
 
-		return rtrim($remote, '/') . '/ocs/v2.php/apps/activity/api/v2/remote';
+		return rtrim($remote, '/') . '/ocs/v2.php/apps/activity/api/v2/remote/' . $token;
+	}
+
+	/**
+	 * @param string $internalType
+	 * @param string $secondPath
+	 * @return string
+	 */
+	protected function translateType($internalType, $secondPath) {
+		switch ($internalType) {
+			case Files::TYPE_SHARE_CREATED:
+			case Files::TYPE_SHARE_RESTORED:
+				return 'Create';
+			case Files::TYPE_SHARE_CHANGED:
+				if ($secondPath !== '') {
+					return 'Move';
+				}
+				return 'Update';
+			case Files::TYPE_SHARE_DELETED:
+				return 'Delete';
+		}
+		return '';
 	}
 }

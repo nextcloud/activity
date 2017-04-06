@@ -192,7 +192,7 @@ class FilesHooks {
 
 		$accessList = $this->getUserPathsFromPath($filePath, $uidOwner);
 
-		$this->simpleFileActivity($accessList['remotes'], $activityType, time(), $subjectBy, $this->currentUser->getCloudId(), $accessList['ownerPath']);
+		$this->generateRemoteActivity($accessList['remotes'], $activityType, time(), $this->currentUser->getCloudId(), $accessList['ownerPath']);
 
 		$affectedUsers = $accessList['users'];
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
@@ -222,7 +222,7 @@ class FilesHooks {
 		}
 	}
 
-	protected function simpleFileActivity($remoteUsers, $type, $time, $subject, $actor, $ownerPath = false) {
+	protected function generateRemoteActivity(array $remoteUsers, $type, $time, $actor, $ownerPath = false) {
 		foreach ($remoteUsers as $remoteUser => $info) {
 			if ($actor === $remoteUser) {
 				// Current user receives the notification on their own instance already
@@ -235,7 +235,6 @@ class FilesHooks {
 				$ownerPath !== false ? substr($ownerPath, strlen($info['node_path'])) : $info['node_path'],
 				$type,
 				$time,
-				$subject,
 				$actor,
 			];
 
@@ -243,7 +242,7 @@ class FilesHooks {
 				$arguments[] = $info['second_path'];
 			}
 
-			\OC::$server->getJobList()->add(RemoteActivity::class, $arguments	);
+			\OC::$server->getJobList()->add(RemoteActivity::class, $arguments);
 		}
 	}
 
@@ -372,7 +371,7 @@ class FilesHooks {
 				'second_path' => substr($oldPath, strlen($info['node_path'])),
 			];
 		}
-		$this->simpleFileActivity($renameRemotes, Files::TYPE_SHARE_CHANGED, time(), 'renamed_by', $this->currentUser->getCloudId());
+		$this->generateRemoteActivity($renameRemotes, Files::TYPE_SHARE_CHANGED, time(), $this->currentUser->getCloudId());
 
 		$affectedUsers = $accessList['users'];
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', Files::TYPE_SHARE_CHANGED);
@@ -464,9 +463,9 @@ class FilesHooks {
 			}
 		}
 
-		$this->simpleFileActivity($deleteRemotes, Files::TYPE_SHARE_DELETED, time(), 'deleted_by', $this->currentUser->getCloudId());
-		$this->simpleFileActivity($addRemotes, Files::TYPE_SHARE_CREATED, time(), 'created_by', $this->currentUser->getCloudId());
-		$this->simpleFileActivity($moveRemotes, Files::TYPE_SHARE_CHANGED, time(), 'moved_by', $this->currentUser->getCloudId());
+		$this->generateRemoteActivity($deleteRemotes, Files::TYPE_SHARE_DELETED, time(), $this->currentUser->getCloudId());
+		$this->generateRemoteActivity($addRemotes, Files::TYPE_SHARE_CREATED, time(), $this->currentUser->getCloudId());
+		$this->generateRemoteActivity($moveRemotes, Files::TYPE_SHARE_CHANGED, time(), $this->currentUser->getCloudId());
 	}
 
 	/**

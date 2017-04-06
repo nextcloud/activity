@@ -21,6 +21,7 @@
 
 namespace OCA\Activity\Controller;
 
+use OCA\Activity\Extension\Files;
 use OCP\App\IAppManager;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
@@ -70,28 +71,44 @@ class RemoteActivity extends OCSController {
 	 * @PublicPage
 	 * @NoCSRFRequired
 	 *
-	 * @param string $target
 	 * @param string $token
-	 * @param string $path
+	 * @param string[] $to
+	 * @param string[] $actor
 	 * @param string $type
-	 * @param int $time
-	 * @param string $subject
-	 * @param string $actor
-	 * @param string $path2
+	 * @param string $updated
+	 * @param string[] $object
+	 * @param string[] $target
+	 * @param string[] $origin
 	 * @return DataResponse
 	 */
-	public function receiveActivity($target, $token, $path, $type, $time, $subject, $actor, $path2 = '') {
-		$user = $this->userManager->get($target);
-		if (!$user instanceof IUser) {
-			return new DataResponse(['user'], Http::STATUS_NOT_FOUND);
+	public function receiveActivity($token, array $to, array $actor, $type, $updated, array $object = [], array $target = [], array $origin = []) {
+
+		$date = \DateTime::createFromFormat(\DateTime::W3C, $updated);
+		if ($date === false) {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+		}
+		$time = $date->getTimestamp();
+
+		\OC::$server->getLogger()->warning(json_encode(func_get_args()));
+		if (!isset($to['type'], $to['name']) || $to['type'] !== 'Person') {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
 		}
 
-		if ($user->getCloudId() === $actor) {
-			return new DataResponse(['activity'], Http::STATUS_BAD_REQUEST);
+		$user = $this->userManager->get($to['name']);
+		if (!$user instanceof IUser) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		}
+
+		if (!isset($actor['type'], $actor['name']) || $actor['type'] !== 'Person') {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+		}
+
+		if ($user->getCloudId() === $actor['name']) {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
 		}
 
 		if (!$this->appManager->isInstalled('federatedfilesharing')) {
-			return new DataResponse(['app'], Http::STATUS_NOT_FOUND);
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
 		$query = $this->db->getQueryBuilder();
@@ -105,43 +122,70 @@ class RemoteActivity extends OCSController {
 		$result->closeCursor();
 
 		if (!is_array($share) || strpos($share['mountpoint'], '{{TemporaryMountPointName#') === 0) {
-			return new DataResponse(['share'], Http::STATUS_NOT_FOUND);
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
-		$path = $share['mountpoint'] . $path;
+		$internalType = $this->translateType($type);
+		if ($internalType === '') {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+		}
+
+		$path2 = null;
+		if ($type === 'Move') {
+			if (!isset($target['type'], $target['name']) || $target['type'] !== 'Document') {
+				return new DataResponse([], Http::STATUS_BAD_REQUEST);
+			}
+
+			if (!isset($origin['type'], $origin['name']) || $origin['type'] !== 'Document') {
+				return new DataResponse([], Http::STATUS_BAD_REQUEST);
+			}
+
+			$path = $share['mountpoint'] . $target['name'];
+			$path2 = $share['mountpoint'] . $origin['name'];
+		} else {
+			if (!isset($object['type'], $object['name']) || $object['type'] !== 'Document') {
+				return new DataResponse([], Http::STATUS_BAD_REQUEST);
+			}
+
+			$path = $share['mountpoint'] . $object['name'];
+		}
+
+		$subject = $this->getSubject($type, $path, $path2);
+		if ($subject === '') {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+		}
 
 		$userFolder = $this->rootFolder->getUserFolder($user->getUID());
 		try {
 			$node = $userFolder->get($path);
 			$fileId = $node->getId();
-
 		} catch (NotFoundException $e) {
-			return new DataResponse(['file'], Http::STATUS_NOT_FOUND);
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		} catch (InvalidPathException $e) {
-			return new DataResponse(['path'], Http::STATUS_NOT_FOUND);
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
-		if ($path2 !== '') {
-			$secondPath = [$fileId => $share['mountpoint'] . $path2];
-			if (basename($path) === basename($path2)) {
+		if ($path2 !== null) {
+			$secondPath = [$fileId => $path2];
+			if ($subject === 'moved_by') {
 				try {
 					$parent = $node->getParent();
-					$secondPath = [$parent->getId() => $share['mountpoint'] . dirname($path2)];
+					$secondPath = [$parent->getId() => dirname($path2)];
 				} catch (NotFoundException $e) {
 				} catch (InvalidPathException $e) {
 				}
 			}
-			$subjectParams = [$secondPath, $actor, [$fileId => $path]];
+			$subjectParams = [$secondPath, $actor['name'], [$fileId => $path]];
 		} else {
-			$subjectParams = [[$fileId => $path], $actor];
+			$subjectParams = [[$fileId => $path], $actor['name']];
 		}
 
 		$event = $this->activityManager->generateEvent();
 		try {
 			$event->setAffectedUser($user->getUID())
 				->setApp('files')
-				->setType($type)
-				->setAuthor($actor)
+				->setType($internalType)
+				->setAuthor($actor['name'])
 				->setObject('files', $fileId, $path)
 				->setSubject($subject, $subjectParams)
 				->setTimestamp($time);
@@ -153,5 +197,42 @@ class RemoteActivity extends OCSController {
 		}
 
 		return new DataResponse();
+	}
+
+	protected function getSubject($type, $path, $path2) {
+		switch ($type) {
+			case 'Create':
+				return 'created_by';
+			case 'Move':
+				if ($path2 === null) {
+					return '';
+				}
+				if (basename($path) === basename($path2)) {
+					return 'moved_by';
+				}
+				return 'renamed_by';
+			case 'Update':
+				return 'changed_by';
+			case 'Delete':
+				return 'deleted_by';
+		}
+		return '';
+	}
+
+	/**
+	 * @param string $type
+	 * @return string
+	 */
+	protected function translateType($type) {
+		switch ($type) {
+			case 'Create':
+				return Files::TYPE_SHARE_CREATED;
+			case 'Move':
+			case 'Update':
+				return Files::TYPE_SHARE_CHANGED;
+			case 'Delete':
+				return Files::TYPE_SHARE_DELETED;
+		}
+		return '';
 	}
 }
