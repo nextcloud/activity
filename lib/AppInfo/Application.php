@@ -83,7 +83,7 @@ class Application extends App {
 	 */
 	public function registerHooksAndEvents() {
 		$eventDispatcher = $this->getContainer()->getServer()->getEventDispatcher();
-		$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', [FilesHooksStatic::class, 'onLoadFilesAppScripts']);
+		$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', [Hooks::class, 'onLoadFilesAppScripts']);
 
 		Util::connectHook('OC_User', 'post_deleteUser', Hooks::class, 'deleteUser');
 		Util::connectHook('OC_User', 'post_login', Hooks::class, 'setDefaultsForUser');

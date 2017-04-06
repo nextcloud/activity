@@ -23,8 +23,6 @@
 
 namespace OCA\Activity;
 
-use OCP\Util;
-
 /**
  * The class to handle the filesystem hooks
  */
@@ -99,17 +97,5 @@ class FilesHooksStatic {
 	 */
 	public static function unShare($params) {
 		self::getHooks()->unShare($params);
-	}
-
-	/**
-	 * Load additional scripts when the files app is visible
-	 */
-	public static function onLoadFilesAppScripts() {
-		Util::addStyle('activity', 'style');
-		Util::addScript('activity', 'richObjectStringParser');
-		Util::addScript('activity', 'activitymodel');
-		Util::addScript('activity', 'activitycollection');
-		Util::addScript('activity', 'activitytabview');
-		Util::addScript('activity', 'filesplugin');
 	}
 }

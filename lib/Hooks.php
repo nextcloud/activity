@@ -24,6 +24,7 @@ namespace OCA\Activity;
 
 use OCA\Activity\AppInfo\Application;
 use OCP\IDBConnection;
+use OCP\Util;
 
 /**
  * Handles the stream and mail queue of a user when he is being deleted
@@ -88,5 +89,17 @@ class Hooks {
 				$config->getAppValue('activity', $key)
 			);
 		}
+	}
+
+	/**
+	 * Load additional scripts when the files app is visible
+	 */
+	public static function onLoadFilesAppScripts() {
+		Util::addStyle('activity', 'style');
+		Util::addScript('activity', 'richObjectStringParser');
+		Util::addScript('activity', 'activitymodel');
+		Util::addScript('activity', 'activitycollection');
+		Util::addScript('activity', 'activitytabview');
+		Util::addScript('activity', 'filesplugin');
 	}
 }

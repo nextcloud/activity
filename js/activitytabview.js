@@ -121,7 +121,7 @@
 			this.$container.removeClass('hidden');
 			this.$el.find('.loading').addClass('hidden');
 			if (this.collection.length) {
-				this.$container.find('li.empty').addClass('hidden');
+				this.$el.find('.emptycontent').addClass('hidden');
 			}
 			if (this.collection.hasMore) {
 				this.$el.find('.showMore').removeClass('hidden');
