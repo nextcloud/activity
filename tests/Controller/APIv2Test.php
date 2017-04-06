@@ -476,7 +476,7 @@ class APIv2Test extends TestCase {
 				'data' => [
 					array_merge(['timestamp' => $time, 'object_type' => $objectType, 'object_id' => $objectId], $additionalArgs),
 				],
-				'headers' => ['X-Activity-First-Known' => 23],
+				'headers' => ['X-Activity-First-Known' => 23, 'ETag' => md5('foobar')],
 				'has_more' => false,
 			]);
 
@@ -490,12 +490,55 @@ class APIv2Test extends TestCase {
 		], $result->getData());
 	}
 
+	public function dataGetNotModified() {
+		return [
+			[[], null],
+			[[[]], md5('foobar')],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetNotModified
+	 * @param array $data
+	 * @param string|null $etag
+	 */
+	public function testGetNotModified(array $data, $etag) {
+		$controller = $this->getController(['validateParameters', 'generateHeaders']);
+		$controller->expects($this->any())
+			->method('generateHeaders')
+			->willReturnArgument(0);
+
+		$controller->expects($this->once())
+			->method('validateParameters');
+
+		$this->request->expects($etag !== null ? $this->once() : $this->never())
+			->method('getHeader')
+			->willReturn($etag);
+
+		$this->data->expects($this->once())
+			->method('get')
+			->willReturn([
+				'data' => $data,
+				'headers' => ['X-Activity-First-Known' => 23, 'ETag' => md5('foobar')],
+				'has_more' => false,
+			]);
+
+		/** @var DataResponse $result */
+		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, '', 0, 'desc']);
+
+		$this->assertInstanceOf(DataResponse::class, $result);
+		$this->assertSame(Http::STATUS_NOT_MODIFIED, $result->getStatus());
+		$this->assertSame([], $result->getData());
+	}
+
 	public function dataGenerateHeaders() {
 		return [
-			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], false, ['X-Activity-Last-Given' => 23]],
-			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], true, ['X-Activity-Last-Given' => 23, 'Link' => '<://?since=23&limit=25&sort=asc>; rel="next"']],
-			['asc', 25, 'ob', 10, null, ['X-Activity-Last-Given' => 23], true, ['X-Activity-Last-Given' => 23, 'Link' => '<://?since=23&limit=25&sort=asc&object_type=ob&object_id=10>; rel="next"']],
-			['asc', 25, '', 0, 'json', ['X-Activity-Last-Given' => 23], true, ['X-Activity-Last-Given' => 23, 'Link' => '<://?since=23&limit=25&sort=asc&format=json>; rel="next"']],
+			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], false, [], ['X-Activity-Last-Given' => 23, 'ETag' => 'd751713988987e9331980363e24189ce']],
+			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], false, [['activity_id' => 23]], ['X-Activity-Last-Given' => 23, 'ETag' => 'b37e127599eef3cfeceac50e34cd5037']],
+			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], false, [['activity_id' => 23], ['activity_id' => 42]], ['X-Activity-Last-Given' => 23, 'ETag' => 'f39a1f6e9647bf7ac763f3728830d64b']],
+			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], true, [], ['X-Activity-Last-Given' => 23, 'Link' => '<://?since=23&limit=25&sort=asc>; rel="next"', 'ETag' => 'd751713988987e9331980363e24189ce']],
+			['asc', 25, 'ob', 10, null, ['X-Activity-Last-Given' => 23], true, [], ['X-Activity-Last-Given' => 23, 'Link' => '<://?since=23&limit=25&sort=asc&object_type=ob&object_id=10>; rel="next"', 'ETag' => 'd751713988987e9331980363e24189ce']],
+			['asc', 25, '', 0, 'json', ['X-Activity-Last-Given' => 23], true, [], ['X-Activity-Last-Given' => 23, 'Link' => '<://?since=23&limit=25&sort=asc&format=json>; rel="next"', 'ETag' => 'd751713988987e9331980363e24189ce']],
 		];
 	}
 
@@ -509,9 +552,10 @@ class APIv2Test extends TestCase {
 	 * @param string $format
 	 * @param array $headersIn
 	 * @param bool $hasMoreActivities
+	 * @param array $data
 	 * @param array $expected
 	 */
-	public function testGenerateHeaders($sort, $limit, $objectType, $objectId, $format, array $headersIn, $hasMoreActivities, array $expected) {
+	public function testGenerateHeaders($sort, $limit, $objectType, $objectId, $format, array $headersIn, $hasMoreActivities, array $data, array $expected) {
 		self::invokePrivate($this->controller, 'sort', [$sort]);
 		self::invokePrivate($this->controller, 'limit', [$limit]);
 		self::invokePrivate($this->controller, 'objectType', [$objectType]);
@@ -521,7 +565,7 @@ class APIv2Test extends TestCase {
 			->with('format')
 			->willReturn($format);
 
-		$headers = self::invokePrivate($this->controller, 'generateHeaders', [$headersIn, $hasMoreActivities]);
+		$headers = self::invokePrivate($this->controller, 'generateHeaders', [$headersIn, $hasMoreActivities, $data]);
 		$this->assertEquals($expected, $headers);
 	}
 

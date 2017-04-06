@@ -242,8 +242,8 @@ class APIv2 extends OCSController {
 			return new DataResponse(null, Http::STATUS_NO_CONTENT);
 		}
 
-		$headers = $this->generateHeaders($response['headers'], $response['has_more']);
-		if (empty($response['data'])) {
+		$headers = $this->generateHeaders($response['headers'], $response['has_more'], $response['data']);
+		if (empty($response['data']) || $this->request->getHeader('If-None-Match') === $headers['ETag']) {
 			return new DataResponse([], Http::STATUS_NOT_MODIFIED, $headers);
 		}
 
@@ -280,9 +280,10 @@ class APIv2 extends OCSController {
 	/**
 	 * @param array $headers
 	 * @param bool $hasMoreActivities
+	 * @param array $data
 	 * @return array
 	 */
-	protected function generateHeaders(array $headers, $hasMoreActivities) {
+	protected function generateHeaders(array $headers, $hasMoreActivities, array $data) {
 		if ($hasMoreActivities && isset($headers['X-Activity-Last-Given'])) {
 			// Set the "Link" header for the next page
 			$nextPageParameters = [
@@ -305,6 +306,12 @@ class APIv2 extends OCSController {
 			$nextPage .= '?' . http_build_query($nextPageParameters);
 			$headers['Link'] = '<' . $nextPage . '>; rel="next"';
 		}
+
+		$ids = [];
+		foreach ($data as $activity) {
+			$ids[] = $activity['activity_id'];
+		}
+		$headers['ETag'] = md5(json_encode($ids));
 
 		return $headers;
 	}
