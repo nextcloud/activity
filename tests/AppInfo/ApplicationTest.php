@@ -27,6 +27,7 @@ use OC\Files\View;
 use OCA\Activity\AppInfo\Application;
 use OCA\Activity\BackgroundJob\EmailNotification;
 use OCA\Activity\BackgroundJob\ExpireActivities;
+use OCA\Activity\Capabilities;
 use OCA\Activity\Consumer;
 use OCA\Activity\Controller\Activities;
 use OCA\Activity\Controller\APIv1;
@@ -55,6 +56,7 @@ use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IConsumer;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\OCSController;
+use OCP\Capabilities\ICapability;
 use OCP\IL10N;
 
 /**
@@ -87,6 +89,8 @@ class ApplicationTest extends TestCase {
 			array(View::class),
 
 			// lib/
+			array(Capabilities::class),
+			array(Capabilities::class, ICapability::class),
 			array(Consumer::class),
 			array(Consumer::class, IConsumer::class),
 			array(CurrentUser::class),

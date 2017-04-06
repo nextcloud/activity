@@ -23,6 +23,7 @@
 namespace OCA\Activity\AppInfo;
 
 use OC\Files\View;
+use OCA\Activity\Capabilities;
 use OCA\Activity\Consumer;
 use OCA\Activity\Controller\Activities;
 use OCA\Activity\Controller\APIv1;
@@ -56,6 +57,8 @@ class Application extends App {
 		$container->registerAlias('FeedController', Feed::class);
 		$container->registerAlias('RemoteActivityController', RemoteActivity::class);
 		$container->registerAlias('SettingsController', Settings::class);
+
+		$container->registerCapability(Capabilities::class);
 	}
 
 	/**
