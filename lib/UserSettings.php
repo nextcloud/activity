@@ -72,14 +72,14 @@ class UserSettings {
 				'notify_' . $method . '_' . $type,
 				$defaultSetting
 			);
-		} else {
-			return (int) $this->config->getUserValue(
-				$user,
-				'activity',
-				'notify_' . $method . '_' . $type,
-				$defaultSetting
-			);
 		}
+
+		return (int) $this->config->getUserValue(
+			$user,
+			'activity',
+			'notify_' . $method . '_' . $type,
+			$defaultSetting
+		);
 	}
 
 	/**
@@ -95,13 +95,13 @@ class UserSettings {
 				'notify_' . $method . '_' . $type,
 				$defaultSetting
 			);
-		} else {
-			return (int) $this->config->getAppValue(
-				'activity',
-				'notify_' . $method . '_' . $type,
-				$defaultSetting
-			);
 		}
+
+		return (int) $this->config->getAppValue(
+			'activity',
+			'notify_' . $method . '_' . $type,
+			$defaultSetting
+		);
 	}
 
 	/**
@@ -115,11 +115,16 @@ class UserSettings {
 		if ($method === 'setting') {
 			if ($type === 'batchtime') {
 				return 3600;
-			} else if ($type === 'self') {
+			}
+
+			if ($type === 'self') {
 				return true;
-			} else if ($type === 'selfemail') {
+			}
+
+			if ($type === 'selfemail') {
 				return false;
 			}
+
 			return false;
 		}
 
@@ -171,7 +176,7 @@ class UserSettings {
 			if ($value) {
 				$filteredUsers[$user] = true;
 			}
-			unset($users[array_search($user, $users)]);
+			unset($users[array_search($user, $users, true)]);
 		}
 
 		// Get the batch time setting from the database
