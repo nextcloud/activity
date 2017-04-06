@@ -29,6 +29,7 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IRequest;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Activities extends Controller {
 
@@ -75,7 +76,8 @@ class Activities extends Controller {
 	public function showList($filter = 'all') {
 		$filter = $this->data->validateFilter($filter);
 
-		$this->eventDispatcher->dispatch('OCA\Activity::loadAdditionalScripts');
+		$event = new GenericEvent($filter);
+		$this->eventDispatcher->dispatch('OCA\Activity::loadAdditionalScripts', $event);
 
 		return new TemplateResponse('activity', 'stream.body', [
 			'appNavigation'	=> $this->navigation->getTemplate($filter),

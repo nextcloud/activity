@@ -25,6 +25,12 @@ namespace OCA\Activity\Tests\Controller;
 use OCA\Activity\Controller\Activities;
 use OCA\Activity\Tests\TestCase;
 use OCP\Template;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OCP\IRequest;
+use OCA\Activity\Data;
+use OCP\IConfig;
+use OCA\Activity\Navigation;
+use OCP\AppFramework\Http\TemplateResponse;
 
 /**
  * Class ActivitiesTest
@@ -33,16 +39,15 @@ use OCP\Template;
  * @package OCA\Activity\Tests\Controller
  */
 class ActivitiesTest extends TestCase {
-	/** @var \OCP\IRequest|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IRequest|\PHPUnit_Framework_MockObject_MockObject */
 	protected $request;
-
-	/** @var \OCP\IConfig|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IConfig|\PHPUnit_Framework_MockObject_MockObject */
 	protected $config;
-
-	/** @var \OCA\Activity\Data|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var Data|\PHPUnit_Framework_MockObject_MockObject */
 	protected $data;
-
-	/** @var \OCA\Activity\Navigation|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var EventDispatcherInterface|\PHPUnit_Framework_MockObject_MockObject */
+	protected $eventDispatcher;
+	/** @var Navigation|\PHPUnit_Framework_MockObject_MockObject */
 	protected $navigation;
 
 	/** @var Activities */
@@ -51,17 +56,11 @@ class ActivitiesTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$this->config = $this->getMockBuilder('OCP\IConfig')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->data = $this->getMockBuilder('OCA\Activity\Data')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->navigation = $this->getMockBuilder('OCA\Activity\Navigation')
-			->disableOriginalConstructor()
-			->getMock();
-
-		$this->request = $this->getMock('OCP\IRequest');
+		$this->config = $this->createMock(IConfig::class);
+		$this->data = $this->createMock(Data::class);
+		$this->navigation = $this->createMock(Navigation::class);
+		$this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+		$this->request = $this->createMock(IRequest::class);
 
 		$this->controller = $this->getController();
 	}
@@ -73,20 +72,22 @@ class ActivitiesTest extends TestCase {
 				$this->request,
 				$this->config,
 				$this->data,
-				$this->navigation
+				$this->navigation,
+				$this->eventDispatcher
 			);
-		} else {
-			return $this->getMockBuilder('OCA\Activity\Controller\Activities')
-				->setConstructorArgs([
-					'activity',
-					$this->request,
-					$this->config,
-					$this->data,
-					$this->navigation
-				])
-				->setMethods($methods)
-				->getMock();
 		}
+
+		return $this->getMockBuilder('OCA\Activity\Controller\Activities')
+			->setConstructorArgs([
+				'activity',
+				$this->request,
+				$this->config,
+				$this->data,
+				$this->navigation,
+				$this->eventDispatcher,
+			])
+			->setMethods($methods)
+			->getMock();
 	}
 
 	public function testShowList() {
@@ -98,8 +99,12 @@ class ActivitiesTest extends TestCase {
 			->method('getTemplate')
 			->willReturn($template);
 
+		$this->eventDispatcher->expects($this->once())
+			->method('dispatch')
+			->with('OCA\Activity::loadAdditionalScripts', $this->anything());
+
 		$templateResponse = $this->controller->showList();
-		$this->assertInstanceOf('\OCP\AppFramework\Http\TemplateResponse', $templateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
+		$this->assertInstanceOf(TemplateResponse::class, $templateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
 		$renderedResponse = $templateResponse->render();
 		$this->assertNotEmpty($renderedResponse);
