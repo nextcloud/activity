@@ -41,10 +41,10 @@ module.exports = function(config) {
 
 	var basePath = '../../';
 	var instancePath = '../../';
+	var preprocessors = {};
 
 	var coreModules = require(instancePath + '../../core/js/core.json');
 	var coreLibs = [
-		instancePath + 'core/js/tests/lib/sinon-1.15.4.js',
 		instancePath + 'core/js/tests/specHelper.js'
 	];
 
@@ -53,6 +53,7 @@ module.exports = function(config) {
 	}));
 
 	coreLibs = coreLibs.concat(coreModules.modules.map(function prependPath(path) {
+		preprocessors[instancePath + 'core/js/' + path] = 'coverage';
 		return instancePath + 'core/js/' + path;
 	}));
 
@@ -71,7 +72,7 @@ module.exports = function(config) {
 		basePath: basePath,
 
 		// frameworks to use
-		frameworks: ['jasmine'],
+		frameworks: ['jasmine', 'jasmine-sinon'],
 
 		// list of files / patterns to load in the browser
 		files: files,
@@ -90,7 +91,7 @@ module.exports = function(config) {
 
 		// test results reporter to use
 		// possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-		reporters: ['progress'],
+		reporters: ['dots', 'junit', 'coverage'],
 
 		junitReporter: {
 			outputFile: 'tests/autotest-results-js.xml'
@@ -99,8 +100,20 @@ module.exports = function(config) {
 		// web server port
 		port: 9876,
 
+		preprocessors: preprocessors,
+
+		coverageReporter: {
+			dir:'tests/karma-coverage',
+			reporters: [
+				{ type: 'html' },
+				{ type: 'cobertura' },
+				{ type: 'lcovonly' }
+			]
+		},
+
 		// enable / disable colors in the output (reporters and logs)
 		colors: true,
+
 
 		// level of logging
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG

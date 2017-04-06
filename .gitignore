@@ -51,6 +51,9 @@ nbproject
 /.buildpath
 
 # Tests - auto-generated files
+/PhantomJS_*
 /tests/coverage*
 /tests/clover.xml
 /tests/js/node_modules
+/tests/js/run.sh
+/tests/karma-coverage
