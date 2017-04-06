@@ -28,36 +28,42 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IRequest;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Activities extends Controller {
 
-	/** @var \OCA\Activity\Data */
-	protected $data;
-
-	/** @var \OCA\Activity\Navigation */
-	protected $navigation;
-
-	/** @var \OCP\IConfig */
+	/** @var IConfig */
 	protected $config;
 
+	/** @var Data */
+	protected $data;
+
+	/** @var Navigation */
+	protected $navigation;
+
+	/** @var EventDispatcherInterface */
+	protected $eventDispatcher;
+
 	/**
-	 * constructor of the controller
-	 *
 	 * @param string $appName
 	 * @param IRequest $request
 	 * @param IConfig $config
 	 * @param Data $data
 	 * @param Navigation $navigation
+	 * @param EventDispatcherInterface $eventDispatcher
 	 */
 	public function __construct($appName,
 								IRequest $request,
 								IConfig $config,
 								Data $data,
-								Navigation $navigation) {
+								Navigation $navigation,
+								EventDispatcherInterface $eventDispatcher) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
 		$this->config = $config;
 		$this->navigation = $navigation;
+		$this->eventDispatcher = $eventDispatcher;
 	}
 
 	/**
@@ -69,6 +75,9 @@ class Activities extends Controller {
 	 */
 	public function showList($filter = 'all') {
 		$filter = $this->data->validateFilter($filter);
+
+		$event = new GenericEvent($filter);
+		$this->eventDispatcher->dispatch('OCA\Activity::loadAdditionalScripts', $event);
 
 		return new TemplateResponse('activity', 'stream.body', [
 			'appNavigation'	=> $this->navigation->getTemplate($filter),
