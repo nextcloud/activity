@@ -1,5 +1,20 @@
 # Endpoint documentation
 
+## Capabilities
+
+```xml
+GET /ocs/v2.php/cloud/capabilities
+
+...
+   <activity>
+    <apiv2>
+     <element>filters</element>
+     <element>previews</element>
+     <element>rich-strings</element>
+    </apiv2>
+   </activity>
+...
+```
 ## Request URL
 
 ```
@@ -28,7 +43,7 @@ Status Code | Description
 ----------- | -----------
 `200 OK` |  Activities
 `204 No Content` |  The user has selected no activities to be listed in the stream
-`304 Not Modified` | No new activities
+`304 Not Modified` | ETag/If-None-Match are the same or the end of the activity list was reached
 `403 Forbidden` | The offset activity belongs to a different user
 `403 Forbidden` | The user is not logged in
 `404 Not Found` | The filter is unknown
