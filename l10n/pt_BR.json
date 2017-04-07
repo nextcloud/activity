@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Atividades",
-    "Error loading activities" : "Erro carregando atividades",
-    "No activities" : "Nenhuma atividade",
+    "No activity yet" : "Nenhuma atividade ainda",
     "Load more activities" : "Carregar mais atividades",
     "Copied!" : "Copiado!",
     "Not supported!" : "Não suportado!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Notificação de atividade",
     ", " : ",",
     "%s and %s" : "%s e %s",
+    "Activity" : "Atividade",
     "Hello %s," : "Olá %s,",
     "There was some activity at %s" : "Houve alguma atividade em %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- e %n mais ","- e %n mais"],
-    "Activity" : "Atividade",
+    "Activity feed" : "Alimentação de atividade",
     "List your own actions in the stream" : "Liste suas próprias ações no stream",
     "Notify about your own actions via email" : "Notificar sobre suas próprias ações por e-mail",
     "You need to set up your email address before you can receive notification emails." : "Você precisa configurar o endereço de e-mail antes que você possa receber e-mails de notificação.",
@@ -38,10 +38,8 @@
     "Hourly" : "De hora em hora",
     "Daily" : "Diário",
     "Weekly" : "Semanal",
-    "Activity feed" : "Alimentação de atividade",
     "Settings" : "Configurações",
     "Enable RSS feed" : "Habilitar feed RRS",
-    "No activity yet" : "Nenhuma atividade ainda",
     "No more events to load" : "Não ha mais eventos para carregar",
     "Files" : "Arquivos"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"

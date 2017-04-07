@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Jarduerak",
-    "Error loading activities" : "Errorea jarduerak kargatzen",
-    "No activities" : "Ez dago jarduerarik",
+    "No activity yet" : "Oraindik ez dago jarduerarik",
     "Load more activities" : "Jarduera gehiago erakutsi",
     "Copied!" : "Kopiatuta!",
     "Not supported!" : "Ez da onartzen!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Jarduera jakinarazpenak",
     ", " : ", ",
     "%s and %s" : "%s eta %s",
+    "Activity" : "Jarduera",
     "Hello %s," : "Kaixo %s,",
     "There was some activity at %s" : "%s -en jarduera egon da",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- eta %n gehiago","- eta %n gehiago"],
-    "Activity" : "Jarduera",
+    "Activity feed" : "Jarduera jarioa",
     "List your own actions in the stream" : "Zure jarduerak zerrendatu",
     "Notify about your own actions via email" : "Jakinarazi zeure jarduerak posta bidez",
     "You need to set up your email address before you can receive notification emails." : "Zure epostaren  zehaztu behar duzu jakinarazpen epostak jaso aurretik.",
@@ -38,9 +38,7 @@
     "Hourly" : "Orduro",
     "Daily" : "Egunero",
     "Weekly" : "Astero",
-    "Activity feed" : "Jarduera jarioa",
     "Enable RSS feed" : "Gaitu RSS jarioa",
-    "No activity yet" : "Oraindik ez dago jarduerarik",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
     "Files" : "Fitxategiak"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

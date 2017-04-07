@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "События",
-    "Error loading activities" : "Ошибка загрузки событий",
-    "No activities" : "Событий нет",
+    "No activity yet" : "Событий ещё нет",
     "Load more activities" : "Загрузить ещё события",
     "Copied!" : "Скопировано!",
     "Not supported!" : "Не поддерживается!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Уведомление о событиях",
     ", " : ",",
     "%s and %s" : "%s и %s",
+    "Activity" : "Событие",
     "Hello %s," : "Привет, %s,",
     "There was some activity at %s" : "Что-то произошло в %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- и еще %n","- и ещё %n","- и ещё %n","- и ещё %n"],
-    "Activity" : "Событие",
+    "Activity feed" : "Лента событий",
     "List your own actions in the stream" : "Показывать ваши действия в потоке",
     "Notify about your own actions via email" : "Уведомлять по почте о ваших действиях",
     "You need to set up your email address before you can receive notification emails." : "Для получения уведомлений укажите свой адрес электронной почты в настройках.",
@@ -38,10 +38,8 @@
     "Hourly" : "Ежечасно",
     "Daily" : "Ежедневно",
     "Weekly" : "Еженедельно",
-    "Activity feed" : "Лента событий",
     "Settings" : "Настройки",
     "Enable RSS feed" : "Включить RSS ленту",
-    "No activity yet" : "Событий ещё нет",
     "No more events to load" : "Больше нет событий для загрузки",
     "Files" : "Файлы"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"

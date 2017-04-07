@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "活動",
-    "Error loading activities" : "載入活動時發生錯誤",
-    "No activities" : "沒有活動",
+    "No activity yet" : "尚無活動",
     "Load more activities" : "載入更多活動",
     "Copied!" : "已複製",
     "Not supported!" : "不支援！",
@@ -26,11 +25,12 @@
     "Activity notification" : "活動通知",
     ", " : ", ",
     "%s and %s" : "%s 與 %s",
+    "Activity" : "活動",
     "Hello %s," : "哈囉 %s ，",
     "There was some activity at %s" : "%s 的 activity",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- 和其他 %n 個"],
-    "Activity" : "活動",
+    "Activity feed" : "動態",
     "List your own actions in the stream" : "列出屬於您的活動。",
     "Notify about your own actions via email" : "透過郵件來通知有關於您的活動狀態",
     "You need to set up your email address before you can receive notification emails." : "您必須先設定電子郵件，才能接收通知。",
@@ -38,10 +38,8 @@
     "Hourly" : "每小時",
     "Daily" : "每日",
     "Weekly" : "每週",
-    "Activity feed" : "動態",
     "Settings" : "設定",
     "Enable RSS feed" : "啟用 RSS feed",
-    "No activity yet" : "尚無活動",
     "No more events to load" : "已載入所有事件",
     "Files" : "檔案"
 },"pluralForm" :"nplurals=1; plural=0;"

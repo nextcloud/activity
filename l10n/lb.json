@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Aktivitéiten",
-    "Error loading activities" : "Fehler beim Lueden vun den Aktivitéiten",
-    "No activities" : "Keng Aktivitéiten",
+    "No activity yet" : "Bis elo keng Aktivitéit",
     "Load more activities" : "Lued méi Aktivitéiten",
     "Copied!" : "Kopéiert!",
     "Not supported!" : "Nët ennerstëtzt!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Aktivitéits-Notifikatiounen",
     ", " : ", ",
     "%s and %s" : "%s an %s",
+    "Activity" : "Aktivitéit",
     "Hello %s," : "Hallo %s,",
     "There was some activity at %s" : "Et goufen Ännerungen bei ¦%s",
     "- %1$s (%2$s)" : "- ¦%1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["an 1 méi","- an e puer %n méi"],
-    "Activity" : "Aktivitéit",
+    "Activity feed" : "Aktivitéits-Feed",
     "List your own actions in the stream" : "Weis är aner Aktivitéiten am Floss",
     "Notify about your own actions via email" : "Iwwer eegene Aktiounen iwwer E-Mail informéieren",
     "You need to set up your email address before you can receive notification emails." : "Du muss deng E-Mail-Adress konfiguréieren ier s de Notifikatiouns-Maile kanns emfänken.",
@@ -38,10 +38,8 @@
     "Hourly" : "All Stonn",
     "Daily" : "All Dag",
     "Weekly" : "All Woch",
-    "Activity feed" : "Aktivitéits-Feed",
     "Settings" : "Astellungen",
     "Enable RSS feed" : "RSS-Feed aktivéieren",
-    "No activity yet" : "Bis elo keng Aktivitéit",
     "No more events to load" : "Keng weider Evenementer fir ze lueden",
     "Files" : "Fichieren"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

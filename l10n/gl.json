@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Actividades",
-    "Error loading activities" : "Erro ao cargar actividades",
-    "No activities" : "Non hai actividades",
+    "No activity yet" : "Aínda non houbo actividade",
     "Load more activities" : "Cargar máis actividades",
     "Copied!" : "Copiado!",
     "Not supported!" : "Non soportado!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Notificación da actividade",
     ", " : ", ",
     "%s and %s" : "%s e %s",
+    "Activity" : "Actividade",
     "Hello %s," : "Ola %s,",
     "There was some activity at %s" : "Houbo actividade en %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- e %n máis","- e %n máis"],
-    "Activity" : "Actividade",
+    "Activity feed" : "Fonte da actividade",
     "List your own actions in the stream" : "Amosa as túas propias accións no stream",
     "Notify about your own actions via email" : "Notificar as súas propias accións mediante o correo",
     "You need to set up your email address before you can receive notification emails." : "É necesario estabelecer o enderezo correo para poder recibir correos de notificación.",
@@ -38,9 +38,7 @@
     "Hourly" : "Cada hora",
     "Daily" : "A diario",
     "Weekly" : "Semanalmente",
-    "Activity feed" : "Fonte da actividade",
     "Enable RSS feed" : "Activar as fontes RSS",
-    "No activity yet" : "Aínda non houbo actividade",
     "No more events to load" : "Non hai máis actividades para cargar",
     "Files" : "Ficheiros"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

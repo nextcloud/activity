@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Aktivitas",
-    "Error loading activities" : "Kesalahan memuat aktivitas",
-    "No activities" : "Tidak ada aktivitas",
+    "No activity yet" : "Masih tidak ada aktivitas",
     "Load more activities" : "Muat aktivitas lainnya",
     "Copied!" : "Tersalin!",
     "Not supported!" : "Tidak didukung!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Pemberitahuan aktivitas",
     ", " : ", ",
     "%s and %s" : "%s dan %s",
+    "Activity" : "Aktivitas",
     "Hello %s," : "Helo %s,",
     "There was some activity at %s" : "Terdapat beberapa aktifitas di %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- dan %n lagi"],
-    "Activity" : "Aktivitas",
+    "Activity feed" : "Feed aktivitas",
     "List your own actions in the stream" : "Cantumkan tindakan anda dalam stream",
     "Notify about your own actions via email" : "Beritahukan tetang aksi oleh Anda via email",
     "You need to set up your email address before you can receive notification emails." : "Anda perlu menyetal alamat email Anda sebelum Anda dapat menerima email pemberitahuan.",
@@ -38,9 +38,7 @@
     "Hourly" : "Setiap jam",
     "Daily" : "Setiap hari",
     "Weekly" : "Setiap minggu",
-    "Activity feed" : "Feed aktivitas",
     "Enable RSS feed" : "Aktifkan RSS feed",
-    "No activity yet" : "Masih tidak ada aktivitas",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
     "Files" : "Berkas"
 },"pluralForm" :"nplurals=1; plural=0;"

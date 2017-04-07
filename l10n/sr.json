@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Активности",
-    "Error loading activities" : "Грешка при учитавању активности",
-    "No activities" : "Нема активности",
+    "No activity yet" : "Још нема активности",
     "Load more activities" : "Учитај још активности",
     "Copied!" : "Копирано",
     "Not supported!" : "Није подржано!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Обавештења о активностима",
     ", " : ", ",
     "%s and %s" : "%s и %s",
+    "Activity" : "Активност",
     "Hello %s," : "Здраво %s,",
     "There was some activity at %s" : "Било је промена у %s ",
     "- %1$s (%2$s)" : "- %1$s (%2$s) ",
     "_- and %n more _::_- and %n more _" : ["- и још %n","- и још %n","- и још %n"],
-    "Activity" : "Активност",
+    "Activity feed" : "Довод активности",
     "List your own actions in the stream" : "Приказује ваше активности у записнику",
     "Notify about your own actions via email" : "Обавештење е-поштом о сопственим активностима",
     "You need to set up your email address before you can receive notification emails." : "Морате поставити адресу е-поште пре почетка пријема обавештења.",
@@ -38,10 +38,8 @@
     "Hourly" : "сваки сат",
     "Daily" : "дневно",
     "Weekly" : "недељно",
-    "Activity feed" : "Довод активности",
     "Settings" : "Поставке",
     "Enable RSS feed" : "Укључи РСС довод",
-    "No activity yet" : "Још нема активности",
     "No more events to load" : "Нема више догађаја за приказ",
     "Files" : "Фајлови"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"

@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Activiteiten",
-    "Error loading activities" : "Fout bij laden het laden van activiteiten",
-    "No activities" : "Geen activiteiten",
+    "No activity yet" : "Nog geen activiteit",
     "Load more activities" : "Meer activiteiten laden",
     "Copied!" : "Gekopieerd!",
     "Not supported!" : "Niet ondersteund!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Activiteitenmelding",
     ", " : ", ",
     "%s and %s" : "%s en %s",
+    "Activity" : "Activiteit",
     "Hello %s," : "Hallo %s,",
     "There was some activity at %s" : "Er was een activiteit op %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- en %n meer ","- en %n meer "],
-    "Activity" : "Activiteit",
+    "Activity feed" : "Activiteitenkanaal",
     "List your own actions in the stream" : "Toon je eigen acties in het overzicht",
     "Notify about your own actions via email" : "Melding van je eigen acties via e-mail",
     "You need to set up your email address before you can receive notification emails." : "Je moet je e-mailadres instellen voordat je meldingen kan ontvangen.",
@@ -38,10 +38,8 @@
     "Hourly" : "Per uur",
     "Daily" : "Dagelijks",
     "Weekly" : "Wekelijks",
-    "Activity feed" : "Activiteitenkanaal",
     "Settings" : "Instellingen",
     "Enable RSS feed" : "Zet RSS-kanaal aan",
-    "No activity yet" : "Nog geen activiteit",
     "No more events to load" : "Geen activiteiten meer om te laden ",
     "Files" : "Bestanden"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

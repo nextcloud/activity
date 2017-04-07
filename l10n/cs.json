@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Aktivity",
-    "Error loading activities" : "Chyba načtení aktivit",
-    "No activities" : "Žádné aktivity",
+    "No activity yet" : "Zatím žádná aktivita",
     "Load more activities" : "Načíst více aktivit",
     "Copied!" : "Zkopírováno!",
     "Not supported!" : "Nepodporováno!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Upozornění na aktivity",
     ", " : ", ",
     "%s and %s" : "%s a %s",
+    "Activity" : "Aktivita",
     "Hello %s," : "Vítejte %s,",
     "There was some activity at %s" : "Na %s došlo k něaké aktivitě",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- a %n další","- a %n další","- a %n dalších"],
-    "Activity" : "Aktivita",
+    "Activity feed" : "Přehled aktivit",
     "List your own actions in the stream" : "Zobrazte vlastní akce v proudu",
     "Notify about your own actions via email" : "Posílat oznámení o vlastních činnostech emailem",
     "You need to set up your email address before you can receive notification emails." : "Pokud chcete dostávat upozornění emailem, musíte nejprve nastavit svou emailovou adresu.",
@@ -38,9 +38,7 @@
     "Hourly" : "Každou hodinu",
     "Daily" : "Denně",
     "Weekly" : "Týdně",
-    "Activity feed" : "Přehled aktivit",
     "Enable RSS feed" : "Povolit RSS kanál",
-    "No activity yet" : "Zatím žádná aktivita",
     "No more events to load" : "Žádné další události k načtení",
     "Files" : "Soubory"
 },"pluralForm" :"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"

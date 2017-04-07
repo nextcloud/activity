@@ -2,8 +2,6 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Дзеянні",
-    "Error loading activities" : "Памылка пры загрузцы дзеянняў",
-    "No activities" : "Няма дзеянняў",
     "Load more activities" : "Загрузіць больш дзеянняў",
     "Copied!" : "Скапіявана!",
     "Not supported!" : "Не падтрымліваецца",

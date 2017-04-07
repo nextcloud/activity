@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Veiklos",
-    "Error loading activities" : "Klaida įkeliant veiklas",
-    "No activities" : "Nėra veiklų",
+    "No activity yet" : "Kol kas nėra veiklos",
     "Load more activities" : "Įkelti daugiau veiklų",
     "Copied!" : "Nukopijuota!",
     "Not supported!" : "Nepalaikoma!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Veiklos pranešimai",
     ", " : ",",
     "%s and %s" : "%s ir %s",
+    "Activity" : "Veikla",
     "Hello %s," : "Sveiki %s,",
     "There was some activity at %s" : "%s buvo veiklos",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- ir %n daugiau","- ir %n daugiau","- ir %n daugiau"],
-    "Activity" : "Veikla",
+    "Activity feed" : "Veiklos kanalas",
     "List your own actions in the stream" : "Rodyti Jūsų pačių veiklą sraute",
     "Notify about your own actions via email" : "Informuoti apie mano paties veiksmus per el. paštą",
     "You need to set up your email address before you can receive notification emails." : "Jums reikia nurodyti el. pašto adresą, kad gauti pranešimų el. laiškus.",
@@ -38,9 +38,7 @@
     "Hourly" : "Kas valandą",
     "Daily" : "Kasdien",
     "Weekly" : "Kas savaitę",
-    "Activity feed" : "Veiklos kanalas",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
-    "No activity yet" : "Kol kas nėra veiklos",
     "No more events to load" : "Nėra daugiau įkeltinų įvykių",
     "Files" : "Failai"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);"

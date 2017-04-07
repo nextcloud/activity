@@ -2,8 +2,6 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Aktivaĵoj",
-    "Error loading activities" : "Eraro ŝarĝi aktivaĵoj",
-    "No activities" : "Neniu aktivaĵo",
     "Load more activities" : "Ŝarĝi pli aktivaĵoj",
     "Copied!" : "Kopiinta!",
     "Not supported!" : "Ne subtenite!",
@@ -23,8 +21,8 @@ OC.L10N.register(
     "Activity notification" : "Aktivaĵo-sciigo",
     ", " : ",",
     "%s and %s" : "%s kaj %s",
-    "Hello %s," : "Saluton %s,",
     "Activity" : "Aktivaĵo",
+    "Hello %s," : "Saluton %s,",
     "Send emails:" : "Sendi retmesaĝojn:",
     "Hourly" : "Ĉiuhore",
     "Daily" : "Ĉiutage",

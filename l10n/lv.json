@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Izmaiņas",
-    "Error loading activities" : "Kļūda ielādējot izmaiņas",
-    "No activities" : "Nav izmaiņu",
+    "No activity yet" : "Vēl nav aktivitāšu",
     "Load more activities" : "Ielādēt vairāk izmaiņas",
     "Copied!" : "Nokopēts!",
     "Not supported!" : "Nav atbalstīts!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Brīdinājumi par izmaiņām",
     ", " : ",",
     "%s and %s" : "%s un %s",
+    "Activity" : "Izmaiņas",
     "Hello %s," : "Sveicināti %s,",
     "There was some activity at %s" : "Tur bija kaut kādas aktivitātes %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- un %n vairāk ","- and %n more ","- and %n more "],
-    "Activity" : "Izmaiņas",
+    "Activity feed" : "Izmaiņu plūsma",
     "List your own actions in the stream" : "Attēlot savu darbību plūsmā",
     "Notify about your own actions via email" : "Paziņot par savām darbībām, izmantojot e-pastu",
     "You need to set up your email address before you can receive notification emails." : "Vispirms profilam ir nepieciešams uzstādīt e-pasta adresi, lai pa to saņemtu paziņojumus.",
@@ -38,9 +38,7 @@
     "Hourly" : "Ik stundu",
     "Daily" : "Katru dienu",
     "Weekly" : "Katru nedēļu",
-    "Activity feed" : "Izmaiņu plūsma",
     "Enable RSS feed" : "Ieslēgt RSS plūsmu",
-    "No activity yet" : "Vēl nav aktivitāšu",
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "Files" : "Datnes"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"

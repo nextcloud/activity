@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Aktywności",
-    "Error loading activities" : "Błąd ładowania aktywności",
-    "No activities" : "Brak aktywności",
+    "No activity yet" : "Brak aktywności",
     "Load more activities" : "Załaduj więcej aktywności",
     "Copied!" : "Skopiowano!",
     "Not supported!" : "Brak wsparcia!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Powiadomienie o aktywności",
     ", " : ", ",
     "%s and %s" : "%s oraz %s",
+    "Activity" : "Aktywność",
     "Hello %s," : "Witaj %s,",
     "There was some activity at %s" : "Zaistniała aktywność przy %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- i jeszcze %n","- i %n innych","- i %n innych","- i %n innych"],
-    "Activity" : "Aktywność",
+    "Activity feed" : "Kanał aktywności",
     "List your own actions in the stream" : "Umieść swoje własne aktywności w strumieniu",
     "Notify about your own actions via email" : "Powiadamiaj mnie o moich aktywnościach przez e-mail",
     "You need to set up your email address before you can receive notification emails." : "Musisz najpierw ustawić adres email zanim będziesz mógł otrzymywać powiadomienia.",
@@ -38,10 +38,8 @@
     "Hourly" : "Co godzinę",
     "Daily" : "Codziennie",
     "Weekly" : "Co tydzień",
-    "Activity feed" : "Kanał aktywności",
     "Settings" : "Ustawienia",
     "Enable RSS feed" : "Włącz kanał RSS",
-    "No activity yet" : "Brak aktywności",
     "No more events to load" : "Brak zdarzeń do załadowania",
     "Files" : "Pliki"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>=14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"

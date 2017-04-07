@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Aktivitetsflöde",
-    "Error loading activities" : "Fel vid inläsning av aktiviteter",
-    "No activities" : "Inga aktiviteter",
+    "No activity yet" : "Inga aktiviteter ännu",
     "Load more activities" : "Ladda fler aktiviteter",
     "Copied!" : "Kopierad!",
     "Not supported!" : "Stöds ej!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Notis om aktivitet",
     ", " : ",",
     "%s and %s" : "%s och %s",
+    "Activity" : "Aktivitetsflödet",
     "Hello %s," : "Hej %s,",
     "There was some activity at %s" : "Det var lite aktivitet på %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- och %n mer","- och %n mer"],
-    "Activity" : "Aktivitetsflödet",
+    "Activity feed" : "Aktivitetsflöde",
     "List your own actions in the stream" : "Visa dina egna aktiviteter i aktivitetsflödet",
     "Notify about your own actions via email" : "Skicka notifieringsmail gällande dina egna aktiviteter",
     "You need to set up your email address before you can receive notification emails." : "Du måste ställa in din e-postadress innan du kan ta emot e-postmeddelanden.",
@@ -38,9 +38,7 @@
     "Hourly" : "Timvis",
     "Daily" : "Dagligen",
     "Weekly" : "Varje vecka",
-    "Activity feed" : "Aktivitetsflöde",
     "Enable RSS feed" : "Aktivera RSS-flöde",
-    "No activity yet" : "Inga aktiviteter ännu",
     "No more events to load" : "Inga fler aktiviteter.",
     "Files" : "Filer"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

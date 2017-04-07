@@ -1,7 +1,6 @@
 { "translations": {
     "Activities" : "Активност",
-    "Error loading activities" : "Грешка при зареждане на активностите",
-    "No activities" : "Няма активност",
+    "No activity yet" : "Все още няма активност",
     "Load more activities" : "Зареди по-стари",
     "Copied!" : "Копирано!",
     "Not supported!" : "Не се поддържа!",
@@ -26,11 +25,12 @@
     "Activity notification" : "Известия за активност",
     ", " : ", ",
     "%s and %s" : "%s и %s",
+    "Activity" : "Активност",
     "Hello %s," : "Здравейте %s,",
     "There was some activity at %s" : "Активност на %s",
     "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "_- and %n more _::_- and %n more _" : ["- и още %n","- и още %n"],
-    "Activity" : "Активност",
+    "Activity feed" : "Емисия за активност",
     "List your own actions in the stream" : "Списък с вашите действия в потока",
     "Notify about your own actions via email" : "Уведомяване за собствени действия чрез електронна поща",
     "You need to set up your email address before you can receive notification emails." : "Първо трябва да настроите вашия имейл адрес, преди да започнете да получавате известия.",
@@ -38,9 +38,7 @@
     "Hourly" : "На всеки час",
     "Daily" : "Ежедневно",
     "Weekly" : "Седмично",
-    "Activity feed" : "Емисия за активност",
     "Enable RSS feed" : "Разрешаване на RSS емисии",
-    "No activity yet" : "Все още няма активност",
     "No more events to load" : "Няма повече известия за зареждане",
     "Files" : "Файлове"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

@@ -2,8 +2,6 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "ක්‍රියාකාරකම්",
-    "Error loading activities" : "ක්‍රියාකාරකම් පූරණය අසාර්ථකයි",
-    "No activities" : "ක්‍රියාකාරකම් කිසිවක් නැත",
     "Load more activities" : "තවත් ක්‍රියාකාරකම් පූරණය කරන්න",
     "Copied!" : "පිටපත් කරා",
     "{name} (invisible)" : "{නම} (නොපෙනෙන)",
