@@ -1,9 +1,10 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Virkni",
+    "Activities" : "Virkniaðgerðir",
+    "An error occurred while loading activities" : "Villa kom upp við að hlaða inn virkniaðgerðum",
     "No activity yet" : "Engin virkni ennþá",
-    "Load more activities" : "Hlaða inn fleiri aðgerðum",
+    "Load more activities" : "Hlaða inn fleiri virkniaðgerðum",
     "Copied!" : "Afritað!",
     "Not supported!" : "Ekki stutt!",
     "Press ⌘-C to copy." : "Ýttu á ⌘-C til að afrita.",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Persónuleg virkniveita fyrir %s",
     "Your feed URL is invalid" : "Slóðin á virkniveituna þína ógild",
     "Your settings have been updated." : "Stillingarnar þínar voru uppfærðar.",
+    "Settings have been updated." : "Stillingar voru uppfærðar.",
     "Mail" : "Póstur",
     "Stream" : "Streymi",
     "All activities" : "Öll virkni",

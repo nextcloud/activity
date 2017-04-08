@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Aktivitäten",
+    "An error occurred while loading activities" : "Es ist ein Fehler beim Laden der Aktivitäten aufgetreten",
     "No activity yet" : "Bislang keine Aktivitäten",
     "Load more activities" : "Weitere Aktivitäten laden",
     "Copied!" : "Kopiert!",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Persönlicher Feed der Aktivitäten für %s",
     "Your feed URL is invalid" : "Ihre Feed-URL ist ungültig",
     "Your settings have been updated." : "Ihre Einstellungen wurden aktualisiert.",
+    "Settings have been updated." : "Die Einstellungen wurden aktualisiert.",
     "Mail" : "E-Mail",
     "Stream" : "Stream",
     "All activities" : "Alle Aktivitäten",

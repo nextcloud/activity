@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "İşlemler",
+    "An error occurred while loading activities" : "İşlemler yüklenirken bir sorun çıktı",
     "No activity yet" : "Henüz bir işlem yapılmamış",
     "Load more activities" : "Diğer işlemleri yükle",
     "Copied!" : "Kopyalandı!",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "%s kişisel işlem akışı",
     "Your feed URL is invalid" : "Akış adresiniz geçersiz",
     "Your settings have been updated." : "Ayarlarınız güncellendi.",
+    "Settings have been updated." : "Ayarlar güncellendi",
     "Mail" : "Posta",
     "Stream" : "Akış",
     "All activities" : "Tüm işlemler",

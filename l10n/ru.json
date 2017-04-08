@@ -1,5 +1,6 @@
 { "translations": {
     "Activities" : "События",
+    "An error occurred while loading activities" : "Во время загрузки списка событий возникла ошибка",
     "No activity yet" : "Событий ещё нет",
     "Load more activities" : "Загрузить ещё события",
     "Copied!" : "Скопировано!",
@@ -16,6 +17,7 @@
     "Personal activity feed for %s" : "Персональная лента событий для %s",
     "Your feed URL is invalid" : "Ваша ссылка на ленту неправильная",
     "Your settings have been updated." : "Настройки обновлены.",
+    "Settings have been updated." : "Настройки обновлены.",
     "Mail" : "Почта",
     "Stream" : "Поток",
     "All activities" : "Все события",
