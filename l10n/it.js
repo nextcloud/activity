@@ -18,6 +18,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Fonte delle attività personali per %s",
     "Your feed URL is invalid" : "L'URL della fonte non è valido",
     "Your settings have been updated." : "Le tue impostazioni sono state aggiornate.",
+    "Settings have been updated." : "Le impostazioni sono state aggiornate.",
     "Mail" : "Posta",
     "Stream" : "Flusso",
     "All activities" : "Tutte le attività",
@@ -40,6 +41,7 @@ OC.L10N.register(
     "Hourly" : "Ogni ora",
     "Daily" : "Quotidiano",
     "Weekly" : "Settimanale",
+    "Settings" : "Impostazioni",
     "Enable RSS feed" : "Abilita fonte RSS",
     "No more events to load" : "Non ci sono altri eventi da caricare",
     "Files" : "File"

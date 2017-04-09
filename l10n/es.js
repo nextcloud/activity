@@ -40,6 +40,7 @@ OC.L10N.register(
     "Hourly" : "Cada hora",
     "Daily" : "Diariamente",
     "Weekly" : "Semanalmente",
+    "Settings" : "Configuración",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "No more events to load" : "No hay más eventos por cargar.",
     "Files" : "Archivos"

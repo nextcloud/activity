@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Activități",
+    "An error occurred while loading activities" : "A apărut o eroare la încărcarea activităților",
     "No activity yet" : "Nici o activitate încă.",
     "Load more activities" : "Încarcă mai multe activități",
     "Copied!" : "S-a copiat!",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Activitate recentă personală pentru %s",
     "Your feed URL is invalid" : "Adresa URL a fluxului e invalidă",
     "Your settings have been updated." : "Setările au fost actualizate.",
+    "Settings have been updated." : "Setările au fost actualizate.",
     "Mail" : "Mail",
     "Stream" : "Flux",
     "All activities" : "Toate activitățile",
@@ -40,6 +42,7 @@ OC.L10N.register(
     "Hourly" : "În fiecare oră",
     "Daily" : "Zilnic",
     "Weekly" : "Săptămânal",
+    "Settings" : "Setări",
     "Enable RSS feed" : "Activați feed RSS",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
     "Files" : "Fișiere"

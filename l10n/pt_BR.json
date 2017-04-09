@@ -1,5 +1,6 @@
 { "translations": {
     "Activities" : "Atividades",
+    "An error occurred while loading activities" : "Ocorreu um erro durante o carregamento de atividades",
     "No activity yet" : "Nenhuma atividade ainda",
     "Load more activities" : "Carregar mais atividades",
     "Copied!" : "Copiado!",
@@ -16,6 +17,7 @@
     "Personal activity feed for %s" : "Alimentação de atividade pessoal para %s",
     "Your feed URL is invalid" : "Sua URL do feed é inválida",
     "Your settings have been updated." : "Suas configurações foram atualizadas.",
+    "Settings have been updated." : "As configurações foram atualizadas.",
     "Mail" : "EMail",
     "Stream" : "Fluxo",
     "All activities" : "Todas as atividades",
