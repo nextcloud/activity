@@ -103,7 +103,9 @@ class Application extends App {
 		Util::connectHook('OC_Filesystem', 'post_rename', FilesHooksStatic::class, 'fileMovePost');
 		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', FilesHooksStatic::class, 'fileRestore');
 		Util::connectHook('OCP\Share', 'post_shared', FilesHooksStatic::class, 'share');
-		Util::connectHook('OCP\Share', 'pre_unshare', FilesHooksStatic::class, 'unShare');
+
+		$eventDispatcher = $this->getContainer()->getServer()->getEventDispatcher();
+		$eventDispatcher->addListener('OCP\Share::preUnshare', [FilesHooksStatic::class, 'unShare']);
 	}
 
 	/**

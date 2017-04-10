@@ -1,6 +1,7 @@
 <?php
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
+ * @copyright Copyright (c) 2017, Joas Schilling <coding@schilljs.com>
  *
  * @author Joas Schilling <coding@schilljs.com>
  * @author Vincent Petry <pvince81@owncloud.com>
@@ -22,6 +23,9 @@
  */
 
 namespace OCA\Activity;
+
+use OCP\Share\IShare;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 /**
  * The class to handle the filesystem hooks
@@ -92,10 +96,13 @@ class FilesHooksStatic {
 	}
 
 	/**
-	 * Manage sharing events
-	 * @param array $params The hook params
+	 * Unsharing event
+	 * @param GenericEvent $event
 	 */
-	public static function unShare($params) {
-		self::getHooks()->unShare($params);
+	public static function unShare(GenericEvent $event) {
+		$share = $event->getSubject();
+		if ($share instanceof IShare) {
+			self::getHooks()->unShare($share);
+		}
 	}
 }
