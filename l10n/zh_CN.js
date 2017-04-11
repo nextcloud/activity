@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "动态",
+    "An error occurred while loading activities" : "加载活动时出错。",
     "No activity yet" : "暂无动态",
     "Load more activities" : "加载更多动态",
     "Copied!" : "已复制！",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "%s 的个人动态 Feed",
     "Your feed URL is invalid" : "您输入的Feed链接无效",
     "Your settings have been updated." : "您的设置已更新。",
+    "Settings have been updated." : "设置已更新。",
     "Mail" : "邮件",
     "Stream" : "流",
     "All activities" : "所有动态",
