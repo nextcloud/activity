@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Toimet",
+    "An error occurred while loading activities" : "Toimia ladattaessa tapahtui virhe",
     "No activity yet" : "Ei toimia vielä",
     "Load more activities" : "Lataa lisää toimia",
     "Copied!" : "Kopioitu!",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Käyttäjän %s henkilökohtainen toimintasyöte",
     "Your feed URL is invalid" : "Syöteosoitteesi on virheellinen",
     "Your settings have been updated." : "Asetuksesi on päivitetty.",
+    "Settings have been updated." : "Asetukset on päivitetty.",
     "Mail" : "Sähköposti",
     "Stream" : "Luettelo",
     "All activities" : "Kaikkien toimet",

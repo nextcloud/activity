@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Tevékenységek",
+    "An error occurred while loading activities" : "Hiba történt a tevékenységek betöltéseg közben",
     "No activity yet" : "Nincs még tevékenység",
     "Load more activities" : "Több tevékenység betöltése",
     "Copied!" : "Másolva!",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Személyes tevékenységeim hírfolyama %s szolgáltatáson",
     "Your feed URL is invalid" : "A hírfolyam URL érvénytelen",
     "Your settings have been updated." : "Beállításait sikeresen frissítettük.",
+    "Settings have been updated." : "Beállítások frissítve.",
     "Mail" : "Levél",
     "Stream" : "Folyam",
     "All activities" : "Minden tevékenység",
