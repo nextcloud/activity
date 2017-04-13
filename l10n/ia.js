@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Activitates",
+    "An error occurred while loading activities" : "Un error durante le cargamento de activitates",
     "No activity yet" : "Nulle activitate ancora",
     "Load more activities" : "Incarga altere activitates",
     "Copied!" : "Copiate!",
@@ -17,7 +18,8 @@ OC.L10N.register(
     "Yesterday" : "Heri",
     "Personal activity feed for %s" : "Syndication de activitate personal pro %s",
     "Your feed URL is invalid" : "Le URL del syndication es invalide",
-    "Your settings have been updated." : "Tu preferentias ha essite actualisate.",
+    "Your settings have been updated." : "Tu configurationes ha essite actualisate.",
+    "Settings have been updated." : "Configurationes actualisate",
     "Mail" : "Posta",
     "Stream" : "Fluxo",
     "All activities" : "Omne activitates",
@@ -40,6 +42,7 @@ OC.L10N.register(
     "Hourly" : "Cata hora",
     "Daily" : "Cata die",
     "Weekly" : "Cata septimana",
+    "Settings" : "Configurationes",
     "Enable RSS feed" : "Habilita syndication RSS",
     "No more events to load" : "Nulle altere eventos a cargar",
     "Files" : "Files"
