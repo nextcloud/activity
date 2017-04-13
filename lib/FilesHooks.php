@@ -26,7 +26,6 @@ namespace OCA\Activity;
 
 use OC\Files\Filesystem;
 use OC\Files\View;
-use OC\Share20\ShareHelper;
 use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
@@ -43,7 +42,7 @@ use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share;
 use OCP\Share\IShare;
-use OCP\Share\IManager as IShareManager;
+use OCP\Share\IShareHelper;
 
 /**
  * The class to handle the filesystem hooks
@@ -72,8 +71,8 @@ class FilesHooks {
 	/** @var IRootFolder */
 	protected $rootFolder;
 
-	/** @var IShareManager */
-	protected $shareManager;
+	/** @var IShareHelper */
+	protected $shareHelper;
 
 	/** @var IURLGenerator */
 	protected $urlGenerator;
@@ -104,7 +103,7 @@ class FilesHooks {
 	 * @param IGroupManager $groupManager
 	 * @param View $view
 	 * @param IRootFolder $rootFolder
-	 * @param IShareManager $shareManager
+	 * @param IShareHelper $shareHelper
 	 * @param IDBConnection $connection
 	 * @param IURLGenerator $urlGenerator
 	 * @param ILogger $logger
@@ -116,7 +115,7 @@ class FilesHooks {
 								IGroupManager $groupManager,
 								View $view,
 								IRootFolder $rootFolder,
-								IShareManager $shareManager,
+								IShareHelper $shareHelper,
 								IDBConnection $connection,
 								IURLGenerator $urlGenerator,
 								ILogger $logger,
@@ -127,7 +126,7 @@ class FilesHooks {
 		$this->groupManager = $groupManager;
 		$this->view = $view;
 		$this->rootFolder = $rootFolder;
-		$this->shareManager = $shareManager;
+		$this->shareHelper = $shareHelper;
 		$this->connection = $connection;
 		$this->urlGenerator = $urlGenerator;
 		$this->logger = $logger;
@@ -610,8 +609,7 @@ class FilesHooks {
 			return [];
 		}
 
-		$helper = new ShareHelper($this->shareManager); // FIXME
-		$accessList = $helper->getPathsForAccessList($node);
+		$accessList = $this->shareHelper->getPathsForAccessList($node);
 
 		$path = $node->getPath();
 		$sections = explode('/', $path, 4);
