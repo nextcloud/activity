@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Izmaiņas",
+    "An error occurred while loading activities" : "Radās kļūda, ielādējot darbības",
     "No activity yet" : "Vēl nav aktivitāšu",
     "Load more activities" : "Ielādēt vairāk izmaiņas",
     "Copied!" : "Nokopēts!",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "%s personīgā izmaiņu plūsma ",
     "Your feed URL is invalid" : "Jūsu plūsmas URL nav derīgs.",
     "Your settings have been updated." : "Jūsu uzstādījumi ir atjaunoti.",
+    "Settings have been updated." : "Iestādījumi ir atjaunoti.",
     "Mail" : "E-pasts",
     "Stream" : "Datu straume",
     "All activities" : "Visas darbības",
@@ -40,6 +42,7 @@ OC.L10N.register(
     "Hourly" : "Ik stundu",
     "Daily" : "Katru dienu",
     "Weekly" : "Katru nedēļu",
+    "Settings" : "Iestatījumi",
     "Enable RSS feed" : "Ieslēgt RSS plūsmu",
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "Files" : "Datnes"

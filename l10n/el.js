@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Δραστηριότητες",
+    "An error occurred while loading activities" : "Παρουσιάστηκε σφάλμα κατά την φόρτωση των δραστηριοτήτων",
     "No activity yet" : "Καμία δραστηριότητα ακόμα",
     "Load more activities" : "Φόρτωση περισσότερων δραστηριοτήτων",
     "Copied!" : "Αντιγράφτηκε!",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Προσωπική ροή δραστηριότητας για %s",
     "Your feed URL is invalid" : "Η διεύθυνση URL δεν είναι έγκυρη",
     "Your settings have been updated." : "Οι ρυθμίσεις σας έχουν ενημερωθεί.",
+    "Settings have been updated." : "Οι ρυθμίσεις έχουν ενημερωθεί.",
     "Mail" : "Ταχυδρομείο",
     "Stream" : "Ροή",
     "All activities" : "Όλες οι δραστηριότητες",
@@ -40,6 +42,7 @@ OC.L10N.register(
     "Hourly" : "Ωραιαία",
     "Daily" : "Καθημερινά",
     "Weekly" : "Εβδομαδιαία",
+    "Settings" : "Ρυθμίσεις",
     "Enable RSS feed" : "Ενεργοποίηση ροής RSS",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "Files" : "Αρχεία"

@@ -16,7 +16,7 @@ OC.L10N.register(
     "Today" : "I dag",
     "Yesterday" : "I går",
     "Personal activity feed for %s" : "Personlig aktivitetsstrøm for %s",
-    "Your feed URL is invalid" : "Kilde URL er ikke gyldig",
+    "Your feed URL is invalid" : "Din kilde-URL er ikke gyldig",
     "Your settings have been updated." : "Innstillingene dine ble oppdatert.",
     "Mail" : "E-post",
     "Stream" : "Strøm",
@@ -42,7 +42,7 @@ OC.L10N.register(
     "Weekly" : "Ukentlig",
     "Settings" : "Innstillinger",
     "Enable RSS feed" : "Aktiver RSS-strøm",
-    "No more events to load" : "Ingen flere hendelser å laste",
+    "No more events to load" : "Ingen flere hendelser å laste inn",
     "Files" : "Filer"
 },
 "nplurals=2; plural=(n != 1);");
