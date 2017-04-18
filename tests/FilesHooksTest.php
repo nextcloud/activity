@@ -266,9 +266,13 @@ class FilesHooksTest extends TestCase {
 			->method('getUserPathsFromPath')
 			->with('/owner/path', 'owner')
 			->willReturn([
-				'user' => '/user/path',
-				'user1' => '/user1/path',
-				'user2' => '/user2/path',
+				'ownerPath' => '/owner/path',
+				'users' => [
+					'user' => '/user/path',
+					'user1' => '/user1/path',
+					'user2' => '/user2/path',
+				],
+				'remotes' => [],
 			]);
 
 		$this->settings->expects($this->exactly(2))
