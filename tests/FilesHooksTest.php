@@ -163,6 +163,22 @@ class FilesHooksTest extends TestCase {
 		$filesHooks->fileCreate('path');
 	}
 
+	/**
+	 * @dataProvider dataFileCreate
+	 *
+	 * @param mixed $currentUser
+	 */
+	public function testFileCreateRoot($currentUser) {
+		$filesHooks = $this->getFilesHooks([
+			'addNotificationsForFileAction',
+		], $currentUser);
+
+		$filesHooks->expects($this->never())
+			->method('addNotificationsForFileAction');
+
+		$filesHooks->fileCreate('/');
+	}
+
 	public function testFileUpdate() {
 		$filesHooks = $this->getFilesHooks([
 			'addNotificationsForFileAction',

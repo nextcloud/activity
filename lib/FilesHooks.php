@@ -138,6 +138,10 @@ class FilesHooks {
 	 * @param string $path Path of the file that has been created
 	 */
 	public function fileCreate($path) {
+		if ($path === '/') {
+			return;
+		}
+
 		if ($this->currentUser->getUserIdentifier() !== '') {
 			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
 		} else {
