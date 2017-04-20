@@ -25,9 +25,15 @@ namespace OCA\Activity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\Tests\TestCase;
+use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\ILogger;
 use OCP\Share;
+use OCP\Share\IShareHelper;
+use OCP\Activity\IManager;
+use OCP\IGroupManager;
+use OC\Files\View;
+use OCP\IURLGenerator;
 
 /**
  * Class FilesHooksTest
@@ -39,43 +45,34 @@ use OCP\Share;
 class FilesHooksTest extends TestCase {
 	/** @var \OCA\Activity\FilesHooks */
 	protected $filesHooks;
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\Activity\IManager */
+	/** @var IManager|\PHPUnit_Framework_MockObject_MockObject */
 	protected $activityManager;
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCA\Activity\Data */
+	/** @var Data|\PHPUnit_Framework_MockObject_MockObject */
 	protected $data;
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCA\Activity\UserSettings */
+	/** @var UserSettings|\PHPUnit_Framework_MockObject_MockObject */
 	protected $settings;
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\IGroupManager */
+	/** @var IGroupManager|\PHPUnit_Framework_MockObject_MockObject */
 	protected $groupManager;
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\OC\Files\View */
+	/** @var View|\PHPUnit_Framework_MockObject_MockObject */
 	protected $view;
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\IURLGenerator */
+	/** @var IRootFolder|\PHPUnit_Framework_MockObject_MockObject */
+	protected $rootFolder;
+	/** @var IShareHelper|\PHPUnit_Framework_MockObject_MockObject */
+	protected $shareHelper;
+	/** @var IURLGenerator|\PHPUnit_Framework_MockObject_MockObject */
 	protected $urlGenerator;
 
 	protected function setUp() {
 		parent::setUp();
 
-		$this->activityManager = $this->getMockBuilder('OCP\Activity\IManager')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->data = $this->getMockBuilder('OCA\Activity\Data')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->settings = $this->getMockBuilder('OCA\Activity\UserSettings')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->data = $this->getMockBuilder('OCA\Activity\Data')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->groupManager = $this->getMockBuilder('OCP\IGroupManager')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->view = $this->getMockBuilder('OC\Files\View')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->urlGenerator = $this->getMockBuilder('OCP\IURLGenerator')
-			->disableOriginalConstructor()
-			->getMock();
+		$this->activityManager = $this->createMock(IManager::class);
+		$this->data = $this->createMock(Data::class);
+		$this->settings = $this->createMock(UserSettings::class);
+		$this->groupManager = $this->createMock(IGroupManager::class);
+		$this->view = $this->createMock(View::class);
+		$this->rootFolder = $this->createMock(IRootFolder::class);
+		$this->shareHelper = $this->createMock(IShareHelper::class);
+		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 
 		$this->filesHooks = $this->getFilesHooks();
 	}
@@ -86,9 +83,7 @@ class FilesHooksTest extends TestCase {
 	 * @return FilesHooks|\PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function getFilesHooks(array $mockedMethods = [], $user = 'user') {
-		$currentUser = $this->getMockBuilder('OCA\Activity\CurrentUser')
-			->disableOriginalConstructor()
-			->getMock();
+		$currentUser = $this->createMock(CurrentUser::class);
 		$currentUser->expects($this->any())
 			->method('getUID')
 			->willReturn($user);
@@ -99,13 +94,15 @@ class FilesHooksTest extends TestCase {
 		$logger = $this->createMock(ILogger::class);
 
 		if (!empty($mockedMethods)) {
-			return $this->getMockBuilder('OCA\Activity\FilesHooks')
+			return $this->getMockBuilder(FilesHooks::class)
 				->setConstructorArgs([
 					$this->activityManager,
 					$this->data,
 					$this->settings,
 					$this->groupManager,
 					$this->view,
+					$this->rootFolder,
+					$this->shareHelper,
 					\OC::$server->getDatabaseConnection(),
 					$this->urlGenerator,
 					$logger,
@@ -113,19 +110,21 @@ class FilesHooksTest extends TestCase {
 				])
 				->setMethods($mockedMethods)
 				->getMock();
-		} else {
-			return new FilesHooks(
-				$this->activityManager,
-				$this->data,
-				$this->settings,
-				$this->groupManager,
-				$this->view,
-				\OC::$server->getDatabaseConnection(),
-				$this->urlGenerator,
-				$logger,
-				$currentUser
-			);
 		}
+
+		return new FilesHooks(
+			$this->activityManager,
+			$this->data,
+			$this->settings,
+			$this->groupManager,
+			$this->view,
+			$this->rootFolder,
+			$this->shareHelper,
+			\OC::$server->getDatabaseConnection(),
+			$this->urlGenerator,
+			$logger,
+			$currentUser
+		);
 	}
 
 	protected function getUserMock($uid) {
@@ -162,6 +161,22 @@ class FilesHooksTest extends TestCase {
 			->with('path', Files::TYPE_SHARE_CREATED, $selfSubject, $othersSubject);
 
 		$filesHooks->fileCreate('path');
+	}
+
+	/**
+	 * @dataProvider dataFileCreate
+	 *
+	 * @param mixed $currentUser
+	 */
+	public function testFileCreateRoot($currentUser) {
+		$filesHooks = $this->getFilesHooks([
+			'addNotificationsForFileAction',
+		], $currentUser);
+
+		$filesHooks->expects($this->never())
+			->method('addNotificationsForFileAction');
+
+		$filesHooks->fileCreate('/');
 	}
 
 	public function testFileUpdate() {
@@ -267,9 +282,13 @@ class FilesHooksTest extends TestCase {
 			->method('getUserPathsFromPath')
 			->with('/owner/path', 'owner')
 			->willReturn([
-				'user' => '/user/path',
-				'user1' => '/user1/path',
-				'user2' => '/user2/path',
+				'ownerPath' => '/owner/path',
+				'users' => [
+					'user' => '/user/path',
+					'user1' => '/user1/path',
+					'user2' => '/user2/path',
+				],
+				'remotes' => [],
 			]);
 
 		$this->settings->expects($this->exactly(2))

@@ -40,6 +40,8 @@ class CurrentUser {
 
 	/** @var string */
 	protected $identifier;
+	/** @var string|null */
+	protected $cloudId;
 	/** @var string|false|null */
 	protected $sessionUser;
 
@@ -52,6 +54,7 @@ class CurrentUser {
 		$this->userSession = $userSession;
 		$this->request = $request;
 		$this->shareManager = $shareManager;
+		$this->cloudId = false;
 		$this->sessionUser = false;
 	}
 
@@ -91,6 +94,23 @@ class CurrentUser {
 		}
 
 		return $this->sessionUser;
+	}
+
+	/**
+	 * Get the current user from the session
+	 * @return string|null
+	 */
+	public function getCloudId() {
+		if ($this->cloudId === false) {
+			$user = $this->userSession->getUser();
+			if ($user instanceof IUser) {
+				$this->cloudId = (string) $user->getCloudId();
+			} else {
+				$this->cloudId = $this->getCloudIDFromToken();
+			}
+		}
+
+		return $this->cloudId;
 	}
 
 	/**

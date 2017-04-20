@@ -26,10 +26,13 @@ namespace OCA\Activity;
 
 use OC\Files\Filesystem;
 use OC\Files\View;
+use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IManager;
+use OCP\Files\IRootFolder;
 use OCP\Files\Mount\IMountPoint;
+use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\IDBConnection;
 use OCP\IGroup;
@@ -39,6 +42,7 @@ use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share;
 use OCP\Share\IShare;
+use OCP\Share\IShareHelper;
 
 /**
  * The class to handle the filesystem hooks
@@ -64,6 +68,12 @@ class FilesHooks {
 	/** @var \OC\Files\View */
 	protected $view;
 
+	/** @var IRootFolder */
+	protected $rootFolder;
+
+	/** @var IShareHelper */
+	protected $shareHelper;
+
 	/** @var IURLGenerator */
 	protected $urlGenerator;
 
@@ -75,8 +85,8 @@ class FilesHooks {
 
 	/** @var string|bool */
 	protected $moveCase = false;
-	/** @var string[] */
-	protected $oldParentUsers;
+	/** @var array */
+	protected $oldAccessList;
 	/** @var string */
 	protected $oldParentPath;
 	/** @var string */
@@ -92,17 +102,31 @@ class FilesHooks {
 	 * @param UserSettings $userSettings
 	 * @param IGroupManager $groupManager
 	 * @param View $view
+	 * @param IRootFolder $rootFolder
+	 * @param IShareHelper $shareHelper
 	 * @param IDBConnection $connection
 	 * @param IURLGenerator $urlGenerator
 	 * @param ILogger $logger
 	 * @param CurrentUser $currentUser
 	 */
-	public function __construct(IManager $manager, Data $activityData, UserSettings $userSettings, IGroupManager $groupManager, View $view, IDBConnection $connection, IURLGenerator $urlGenerator, ILogger $logger, CurrentUser $currentUser) {
+	public function __construct(IManager $manager,
+								Data $activityData,
+								UserSettings $userSettings,
+								IGroupManager $groupManager,
+								View $view,
+								IRootFolder $rootFolder,
+								IShareHelper $shareHelper,
+								IDBConnection $connection,
+								IURLGenerator $urlGenerator,
+								ILogger $logger,
+								CurrentUser $currentUser) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
 		$this->groupManager = $groupManager;
 		$this->view = $view;
+		$this->rootFolder = $rootFolder;
+		$this->shareHelper = $shareHelper;
 		$this->connection = $connection;
 		$this->urlGenerator = $urlGenerator;
 		$this->logger = $logger;
@@ -114,6 +138,10 @@ class FilesHooks {
 	 * @param string $path Path of the file that has been created
 	 */
 	public function fileCreate($path) {
+		if ($path === '/') {
+			return;
+		}
+
 		if ($this->currentUser->getUserIdentifier() !== '') {
 			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
 		} else {
@@ -165,7 +193,11 @@ class FilesHooks {
 			return;
 		}
 
-		$affectedUsers = $this->getUserPathsFromPath($filePath, $uidOwner);
+		$accessList = $this->getUserPathsFromPath($filePath, $uidOwner);
+
+		$this->generateRemoteActivity($accessList['remotes'], $activityType, time(), $this->currentUser->getCloudId(), $accessList['ownerPath']);
+
+		$affectedUsers = $accessList['users'];
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
 
@@ -190,6 +222,30 @@ class FilesHooks {
 				!empty($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : 0,
 				$activityType
 			);
+		}
+	}
+
+	protected function generateRemoteActivity(array $remoteUsers, $type, $time, $actor, $ownerPath = false) {
+		foreach ($remoteUsers as $remoteUser => $info) {
+			if ($actor === $remoteUser) {
+				// Current user receives the notification on their own instance already
+				continue;
+			}
+
+			$arguments = [
+				$remoteUser,
+				$info['token'],
+				$ownerPath !== false ? substr($ownerPath, strlen($info['node_path'])) : $info['node_path'],
+				$type,
+				$time,
+				$actor,
+			];
+
+			if (isset($info['second_path'])) {
+				$arguments[] = $info['second_path'];
+			}
+
+			\OC::$server->getJobList()->add(RemoteActivity::class, $arguments);
 		}
 	}
 
@@ -260,7 +316,7 @@ class FilesHooks {
 			$this->moveCase = false;
 			return;
 		}
-		$this->oldParentUsers = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
+		$this->oldAccessList = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
 	}
 
 
@@ -308,8 +364,19 @@ class FilesHooks {
 			// Could not find the file for the owner ...
 			return;
 		}
-		$affectedUsers = $this->getUserPathsFromPath($parentPath, $parentOwner);
+		$accessList = $this->getUserPathsFromPath($parentPath, $parentOwner);
 
+		$renameRemotes = [];
+		foreach ($accessList['remotes'] as $remote => $info) {
+			$renameRemotes[$remote] = [
+				'token'       => $info['token'],
+				'node_path'   => substr($newPath, strlen($info['node_path'])),
+				'second_path' => substr($oldPath, strlen($info['node_path'])),
+			];
+		}
+		$this->generateRemoteActivity($renameRemotes, Files::TYPE_SHARE_CHANGED, time(), $this->currentUser->getCloudId());
+
+		$affectedUsers = $accessList['users'];
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', Files::TYPE_SHARE_CHANGED);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', Files::TYPE_SHARE_CHANGED);
 
@@ -360,19 +427,48 @@ class FilesHooks {
 			// Could not find the file for the owner ...
 			return;
 		}
-		$affectedUsers = $this->getUserPathsFromPath($parentPath, $parentOwner);
+		$accessList = $this->getUserPathsFromPath($parentPath, $parentOwner);
+		$affectedUsers = $accessList['users'];
+		$oldUsers = $this->oldAccessList['users'];
 
-		$beforeUsers = array_keys($this->oldParentUsers);
+		$beforeUsers = array_keys($oldUsers);
 		$afterUsers = array_keys($affectedUsers);
 
 		$deleteUsers = array_diff($beforeUsers, $afterUsers);
-		$this->generateDeleteActivities($deleteUsers, $this->oldParentUsers, $fileId, $oldFileName);
+		$this->generateDeleteActivities($deleteUsers, $oldUsers, $fileId, $oldFileName);
 
 		$addUsers = array_diff($afterUsers, $beforeUsers);
 		$this->generateAddActivities($addUsers, $affectedUsers, $fileId, $fileName);
 
 		$moveUsers = array_intersect($beforeUsers, $afterUsers);
-		$this->generateMoveActivities($moveUsers, $this->oldParentUsers, $affectedUsers, $fileId, $oldFileName, $parentId, $fileName);
+		$this->generateMoveActivities($moveUsers, $oldUsers, $affectedUsers, $fileId, $oldFileName, $parentId, $fileName);
+
+		$beforeRemotes = $this->oldAccessList['remotes'];
+		$afterRemotes = $accessList['remotes'];
+
+		$addRemotes = $deleteRemotes = $moveRemotes = [];
+		foreach ($afterRemotes as $remote => $info) {
+			if (isset($beforeRemotes[$remote])) {
+				// Move
+				$info['node_path'] = substr($newPath, strlen($info['node_path']));
+				$info['second_path'] = substr($oldPath, strlen($beforeRemotes[$remote]['node_path']));
+				$moveRemotes[$remote] = $info;
+			} else {
+				$info['node_path'] = substr($newPath, strlen($info['node_path']));
+				$addRemotes[$remote] = $info;
+			}
+		}
+
+		foreach ($beforeRemotes as $remote => $info) {
+			if (!isset($afterRemotes[$remote])) {
+				$info['node_path'] = substr($oldPath, strlen($info['node_path']));
+				$deleteRemotes[$remote] = $info;
+			}
+		}
+
+		$this->generateRemoteActivity($deleteRemotes, Files::TYPE_SHARE_DELETED, time(), $this->currentUser->getCloudId());
+		$this->generateRemoteActivity($addRemotes, Files::TYPE_SHARE_CREATED, time(), $this->currentUser->getCloudId());
+		$this->generateRemoteActivity($moveRemotes, Files::TYPE_SHARE_CHANGED, time(), $this->currentUser->getCloudId());
 	}
 
 	/**
@@ -507,7 +603,23 @@ class FilesHooks {
 	 * @return array
 	 */
 	protected function getUserPathsFromPath($path, $uidOwner) {
-		return Share::getUsersSharingFile($path, $uidOwner, true, true);
+		try {
+			$node = $this->rootFolder->getUserFolder($uidOwner)->get($path);
+		} catch (NotFoundException $e) {
+			return [];
+		}
+
+		if (!$node instanceof Node) {
+			return [];
+		}
+
+		$accessList = $this->shareHelper->getPathsForAccessList($node);
+
+		$path = $node->getPath();
+		$sections = explode('/', $path, 4);
+		$accessList['ownerPath'] = '/' . $sections[3];
+
+		return $accessList;
 	}
 
 	/**
