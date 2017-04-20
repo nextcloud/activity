@@ -27,6 +27,7 @@ OC.L10N.register(
     "Hourly" : "ساعتی",
     "Daily" : "روزانه",
     "Weekly" : "هفتهگی",
+    "Settings" : "تنظیمات",
     "Enable RSS feed" : "فعالسازی فید RSS",
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
     "Files" : "فایل ها"
