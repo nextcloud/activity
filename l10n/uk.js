@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Активність",
+    "An error occurred while loading activities" : "Під час заванатаження подій відбулася помилка",
     "No activity yet" : "Поки що активність відсутня",
     "Load more activities" : "Завантажити більше активності",
     "Copied!" : "Скопійовано!",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Персональна стрічка оновлень для %s",
     "Your feed URL is invalid" : "Ваше посилання новинної стрічки неправильна",
     "Your settings have been updated." : "Налаштування оновлені.",
+    "Settings have been updated." : "Налаштування було оновлено.",
     "Mail" : "Пошта",
     "Stream" : "Потік",
     "All activities" : "Всі дії",
@@ -29,6 +31,8 @@ OC.L10N.register(
     "%s and %s" : "%s і %s",
     "Activity" : "Ваші дії",
     "Hello %s," : "Привіт %s,",
+    "There was some activity at %s" : "Остання подія відбулася о %s",
+    "- %1$s (%2$s)" : "- %1$s (%2$s)",
     "Activity feed" : "Стрічка оновлень",
     "List your own actions in the stream" : "Перелічіть ваші власні дії в потоці",
     "Notify about your own actions via email" : "Повідомляти про мої дії по email",
@@ -37,6 +41,7 @@ OC.L10N.register(
     "Hourly" : "Щогодини",
     "Daily" : "Щоденно",
     "Weekly" : "Щотижня",
+    "Settings" : "Налаштування",
     "Enable RSS feed" : "Активувати RSS стрічку",
     "No more events to load" : "Більше немає подій для завантаження",
     "Files" : "Файли"
