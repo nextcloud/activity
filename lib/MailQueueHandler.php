@@ -242,7 +242,8 @@ class MailQueueHandler {
 		$this->dataHelper->setL10n($l);
 		$this->activityManager->setCurrentUserId($userName);
 
-		$activityList = array();
+		$plainText = '';
+		$html = '<ul>';
 		foreach ($mailData as $activity) {
 			$event = $this->activityManager->generateEvent();
 			$event->setApp($activity['amq_appid'])
@@ -262,24 +263,28 @@ class MailQueueHandler {
 				continue;
 			}
 
-			$activityList[] = array(
-				$event->getParsedSubject(),
-				$relativeDateTime,
-			);
+			$plainText .= sprintf('- %1$s (%2$s)', $event->getParsedSubject(), $relativeDateTime) . PHP_EOL;
+			$html .= sprintf('<li>%1$s (<em>%2$s</em>)</li>', $event->getParsedSubject(), $relativeDateTime) . PHP_EOL;
 		}
 
-		$alttext = new Template('activity', 'email.notification', '', false);
-		$alttext->assign('username', $user->getDisplayName());
-		$alttext->assign('activities', $activityList);
-		$alttext->assign('skippedCount', $skippedCount);
-		$alttext->assign('installation', $this->urlGenerator->getAbsoluteURL('/'));
-		$alttext->assign('overwriteL10N', $l);
-		$emailText = $alttext->fetchPage();
+		if ($skippedCount) {
+			$plainText .= $l->n('- and %n more ', '- and %n more ', $skippedCount);
+			$html .= $l->n('<li>and %n more</li>', '<li>and %n more</li>', $skippedCount);
+		}
+		$html .= '</ul>';
+
+		$template = $this->mailer->createEMailTemplate();
+		$template->addHeader();
+		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
+		$template->addBodyText($l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')]));
+		$template->addBodyText($html, $plainText);
+		$template->addFooter();
 
 		$message = $this->mailer->createMessage();
 		$message->setTo([$email => $user->getDisplayName()]);
 		$message->setSubject((string) $l->t('Activity notification'));
-		$message->setPlainBody($emailText);
+		$message->setHtmlBody($template->renderHtml());
+		$message->setPlainBody($template->renderText());
 		$message->setFrom([$this->getSenderData('email') => $this->getSenderData('name')]);
 
 		try {
