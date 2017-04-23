@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Активности",
+    "An error occurred while loading activities" : "Дошло је до грешке приликом учитавања активности",
     "No activity yet" : "Још нема активности",
     "Load more activities" : "Учитај још активности",
     "Copied!" : "Копирано",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Довод личних активности корисника %s",
     "Your feed URL is invalid" : "УРЛ вашег довода није исправан",
     "Your settings have been updated." : "Поставке су ажуриране.",
+    "Settings have been updated." : "Подешавања су сачувана.",
     "Mail" : "Поштом",
     "Stream" : "Записник",
     "All activities" : "Све активности",
@@ -43,6 +45,6 @@ OC.L10N.register(
     "Settings" : "Поставке",
     "Enable RSS feed" : "Укључи РСС довод",
     "No more events to load" : "Нема више догађаја за приказ",
-    "Files" : "Фајлови"
+    "Files" : "Датотеке"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
