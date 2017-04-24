@@ -242,8 +242,11 @@ class MailQueueHandler {
 		$this->dataHelper->setL10n($l);
 		$this->activityManager->setCurrentUserId($userName);
 
-		$plainText = '';
-		$html = '<ul>';
+		$template = $this->mailer->createEMailTemplate();
+		$template->addHeader();
+		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
+		$template->addBodyText($l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')]));
+
 		foreach ($mailData as $activity) {
 			$event = $this->activityManager->generateEvent();
 			$event->setApp($activity['amq_appid'])
@@ -263,21 +266,15 @@ class MailQueueHandler {
 				continue;
 			}
 
-			$plainText .= sprintf('- %1$s (%2$s)', $event->getParsedSubject(), $relativeDateTime) . PHP_EOL;
-			$html .= sprintf('<li>%1$s (<em>%2$s</em>)</li>', $event->getParsedSubject(), $relativeDateTime) . PHP_EOL;
+			$template->addBodyListItem(
+				sprintf('%1$s (%2$s)', $event->getParsedSubject(), $relativeDateTime)
+			);
 		}
 
 		if ($skippedCount) {
-			$plainText .= $l->n('- and %n more ', '- and %n more ', $skippedCount);
-			$html .= $l->n('<li>and %n more</li>', '<li>and %n more</li>', $skippedCount);
+			$template->addBodyListItem($l->n('and %n more ', 'and %n more ', $skippedCount));
 		}
-		$html .= '</ul>';
 
-		$template = $this->mailer->createEMailTemplate();
-		$template->addHeader();
-		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
-		$template->addBodyText($l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')]));
-		$template->addBodyText($html, $plainText);
 		$template->addFooter();
 
 		$message = $this->mailer->createMessage();
