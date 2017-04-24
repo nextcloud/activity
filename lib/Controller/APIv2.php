@@ -24,13 +24,14 @@ namespace OCA\Activity\Controller;
 
 
 use OC\Files\View;
-use OC\OCS\Result;
 use OCA\Activity\Data;
 use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\OCSController;
 use OCP\Files\FileInfo;
 use OCP\Files\IMimeTypeDetector;
 use OCP\IPreview;
@@ -39,7 +40,7 @@ use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserSession;
 
-class OCSEndPoint {
+class APIv2 extends OCSController {
 
 	/** @var string */
 	protected $filter;
@@ -75,9 +76,6 @@ class OCSEndPoint {
 	/** @var UserSettings */
 	protected $settings;
 
-	/** @var IRequest */
-	protected $request;
-
 	/** @var IURLGenerator */
 	protected $urlGenerator;
 
@@ -99,10 +97,11 @@ class OCSEndPoint {
 	/**
 	 * OCSEndPoint constructor.
 	 *
+	 * @param string $appName
+	 * @param IRequest $request
 	 * @param Data $data
 	 * @param GroupHelper $helper
 	 * @param UserSettings $settings
-	 * @param IRequest $request
 	 * @param IURLGenerator $urlGenerator
 	 * @param IUserSession $userSession
 	 * @param IPreview $preview
@@ -110,20 +109,21 @@ class OCSEndPoint {
 	 * @param View $view
 	 * @param ViewInfoCache $infoCache
 	 */
-	public function __construct(Data $data,
+	public function __construct($appName,
+								IRequest $request,
+								Data $data,
 								GroupHelper $helper,
 								UserSettings $settings,
-								IRequest $request,
 								IURLGenerator $urlGenerator,
 								IUserSession $userSession,
 								IPreview $preview,
 								IMimeTypeDetector $mimeTypeDetector,
 								View $view,
 								ViewInfoCache $infoCache) {
+		parent::__construct($appName, $request);
 		$this->data = $data;
 		$this->helper = $helper;
 		$this->settings = $settings;
-		$this->request = $request;
 		$this->urlGenerator = $urlGenerator;
 		$this->userSession = $userSession;
 		$this->preview = $preview;
@@ -133,22 +133,27 @@ class OCSEndPoint {
 	}
 
 	/**
-	 * @param array $parameters
+	 * @param string $filter
+	 * @param int $since
+	 * @param int $limit
+	 * @param bool $previews
+	 * @param string $objectType
+	 * @param int $objectId
+	 * @param string $sort
 	 * @throws InvalidFilterException when the filter is invalid
 	 * @throws \OutOfBoundsException when no user is given
 	 */
-	protected function readParameters(array $parameters) {
-		$this->filter = isset($parameters['filter']) && is_string($parameters['filter']) ? (string) $parameters['filter'] : 'all';
+	protected function validateParameters($filter, $since, $limit, $previews, $objectType, $objectId, $sort) {
+		$this->filter = is_string($filter) ? $filter : 'all';
 		if ($this->filter !== $this->data->validateFilter($this->filter)) {
 			throw new InvalidFilterException();
 		}
-		$this->since = (int) $this->request->getParam('since', 0);
-		$this->limit = (int) $this->request->getParam('limit', 50);
-		$this->loadPreviews = $this->request->getParam('previews', 'false') === 'true';
-		$this->objectType = (string) $this->request->getParam('object_type', '');
-		$this->objectId = (int) $this->request->getParam('object_id', 0);
-		$this->sort = (string) $this->request->getParam('sort', '');
-		$this->sort = in_array($this->sort, ['asc', 'desc']) ? $this->sort : 'desc';
+		$this->since = (int) $since;
+		$this->limit = (int) $limit;
+		$this->loadPreviews = (bool) $previews;
+		$this->objectType = (string) $objectType;
+		$this->objectId = (int) $objectId;
+		$this->sort = in_array($sort, ['asc', 'desc'], true) ? $sort : 'desc';
 
 		if (($this->objectType !== '' && $this->objectId === 0) || ($this->objectType === '' && $this->objectId !== 0)) {
 			// Only allowed together
@@ -166,34 +171,53 @@ class OCSEndPoint {
 	}
 
 	/**
-	 * @param array $parameters
-	 * @return Result
+	 * @NoAdminRequired
+	 *
+	 * @param int $since
+	 * @param int $limit
+	 * @param bool $previews
+	 * @param string $object_type
+	 * @param int $object_id
+	 * @param string $sort
+	 * @return DataResponse
 	 */
-	public function getDefault(array $parameters) {
-		return $this->get(array_merge($parameters, [
-			'filter' => 'all',
-		]));
+	public function getDefault($since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc') {
+		return $this->get('all', $since, $limit, $previews, $object_type, $object_id, $sort);
 	}
 
 	/**
-	 * @param array $parameters
-	 * @return Result
+	 * @NoAdminRequired
+	 *
+	 * @param string $filter
+	 * @param int $since
+	 * @param int $limit
+	 * @param bool $previews
+	 * @param string $object_type
+	 * @param int $object_id
+	 * @param string $sort
+	 * @return DataResponse
 	 */
-	public function getFilter(array $parameters) {
-		return $this->get($parameters);
+	public function getFilter($filter, $since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc') {
+		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort);
 	}
 
 	/**
-	 * @param array $parameters
-	 * @return Result
+	 * @param string $filter
+	 * @param int $since
+	 * @param int $limit
+	 * @param bool $previews
+	 * @param string $filterObjectType
+	 * @param int $filterObjectId
+	 * @param string $sort
+	 * @return DataResponse
 	 */
-	protected function get(array $parameters) {
+	protected function get($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort) {
 		try {
-			$this->readParameters($parameters);
+			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 		} catch (InvalidFilterException $e) {
-			return new Result(null, Http::STATUS_NOT_FOUND);
+			return new DataResponse(null, Http::STATUS_NOT_FOUND);
 		} catch (\OutOfBoundsException $e) {
-			return new Result(null, Http::STATUS_FORBIDDEN);
+			return new DataResponse(null, Http::STATUS_FORBIDDEN);
 		}
 
 		try {
@@ -212,50 +236,54 @@ class OCSEndPoint {
 			);
 		} catch (\OutOfBoundsException $e) {
 			// Invalid since argument
-			return new Result(null, Http::STATUS_FORBIDDEN);
+			return new DataResponse(null, Http::STATUS_FORBIDDEN);
 		} catch (\BadMethodCallException $e) {
 			// No activity settings enabled
-			return new Result(null, Http::STATUS_NO_CONTENT);
+			return new DataResponse(null, Http::STATUS_NO_CONTENT);
 		}
 
-		$headers = $this->generateHeaders($response['headers'], $response['has_more']);
-		if (empty($response['data'])) {
-			return new Result([], Http::STATUS_NOT_MODIFIED, null, $headers);
+		$headers = $this->generateHeaders($response['headers'], $response['has_more'], $response['data']);
+		if (empty($response['data']) || $this->request->getHeader('If-None-Match') === $headers['ETag']) {
+			return new DataResponse([], Http::STATUS_NOT_MODIFIED, $headers);
 		}
 
 		$preparedActivities = [];
 		foreach ($response['data'] as $activity) {
-			$activity['datetime'] = date('c', $activity['timestamp']);
+			$activity['datetime'] = date(\DateTime::ATOM, $activity['timestamp']);
 			unset($activity['timestamp']);
 
 			if ($this->loadPreviews) {
 				$activity['previews'] = [];
-				if ($activity['object_type'] === 'files' && !empty($activity['objects'])) {
-					foreach ($activity['objects'] as $objectId => $objectName) {
-						if (((int) $objectId) === 0 || $objectName === '') {
-							// No file, no preview
-							continue;
-						}
+				if ($activity['object_type'] === 'files') {
+					if (!empty($activity['objects']) && is_array($activity['objects'])) {
+						foreach ($activity['objects'] as $objectId => $objectName) {
+							if (((int) $objectId) === 0 || $objectName === '') {
+								// No file, no preview
+								continue;
+							}
 
-						$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $objectId, $objectName);
+							$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $objectId, $objectName);
+						}
+					} else if ($activity['object_id']) {
+						$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $activity['object_id'], $activity['object_name']);
 					}
-				} else if ($activity['object_type'] === 'files' && $activity['object_id']) {
-					$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $activity['object_id'], $activity['object_name']);
 				}
 			}
 
+			unset($activity['affecteduser']);
 			$preparedActivities[] = $activity;
 		}
 
-		return new Result($preparedActivities, 100, null, $headers);
+		return new DataResponse($preparedActivities, Http::STATUS_OK, $headers);
 	}
 
 	/**
 	 * @param array $headers
 	 * @param bool $hasMoreActivities
+	 * @param array $data
 	 * @return array
 	 */
-	protected function generateHeaders(array $headers, $hasMoreActivities) {
+	protected function generateHeaders(array $headers, $hasMoreActivities, array $data) {
 		if ($hasMoreActivities && isset($headers['X-Activity-Last-Given'])) {
 			// Set the "Link" header for the next page
 			$nextPageParameters = [
@@ -278,6 +306,12 @@ class OCSEndPoint {
 			$nextPage .= '?' . http_build_query($nextPageParameters);
 			$headers['Link'] = '<' . $nextPage . '>; rel="next"';
 		}
+
+		$ids = [];
+		foreach ($data as $activity) {
+			$ids[] = $activity['activity_id'];
+		}
+		$headers['ETag'] = md5(json_encode($ids));
 
 		return $headers;
 	}

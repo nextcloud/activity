@@ -15,8 +15,8 @@ describe('ActivityCollection', function() {
 			var col = new ActivityCollection();
 			expect(col.url())
 				.toEqual(
-					//OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter?format=json'
-					OC.generateUrl('/apps/activity/api/v2/activity') + '/filter?format=json'
+					OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter' +
+						'?format=json'
 				);
 		});
 		it('does not filter by default - page2', function() {
@@ -24,8 +24,8 @@ describe('ActivityCollection', function() {
 			col.lastGivenId = 23;
 			expect(col.url())
 				.toEqual(
-					//OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter?format=json'
-					OC.generateUrl('/apps/activity/api/v2/activity') + '/filter?format=json&since=23'
+					OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter' +
+						'?format=json&since=23'
 				);
 		});
 		it('filters by id and type when specified', function() {
@@ -34,9 +34,8 @@ describe('ActivityCollection', function() {
 			col.setObjectId(512);
 			expect(col.url())
 				.toEqual(
-					//OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter' +
-					OC.generateUrl('/apps/activity/api/v2/activity') + '/filter' +
-					'?format=json&object_type=files&object_id=512'
+					OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter' +
+						'?format=json&object_type=files&object_id=512'
 				);
 		});
 		it('filters by id and type when specified - page2', function() {
@@ -46,9 +45,8 @@ describe('ActivityCollection', function() {
 			col.lastGivenId = 42;
 			expect(col.url())
 				.toEqual(
-					//OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter' +
-					OC.generateUrl('/apps/activity/api/v2/activity') + '/filter' +
-					'?format=json&since=42&object_type=files&object_id=512'
+					OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filter' +
+						'?format=json&since=42&object_type=files&object_id=512'
 				);
 		});
 	});

@@ -22,19 +22,32 @@
 
 namespace OCA\Activity\Tests\Controller;
 
-use OC\OCS\Result;
-use OCA\Activity\Controller\OCSEndPoint;
+use OCA\Activity\Controller\APIv2;
 use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\DataResponse;
+use OCP\IUser;
+use OCP\Files\FileInfo;
+use OCP\IRequest;
+use OCP\IAvatarManager;
+use OCA\Activity\ViewInfoCache;
+use OC\Files\View;
+use OCP\Files\IMimeTypeDetector;
+use OCP\IUserSession;
+use OCP\IURLGenerator;
+use OCP\IPreview;
+use OCA\Activity\UserSettings;
+use OCA\Activity\GroupHelper;
+use OCA\Activity\Data;
 
 /**
- * Class OCSEndPointTest
+ * Class APIv2Test
  *
  * @group DB
  * @package OCA\Activity\Tests\Controller
  */
-class OCSEndPointTest extends TestCase {
+class APIv2Test extends TestCase {
 	/** @var \OCP\IRequest|\PHPUnit_Framework_MockObject_MockObject */
 	protected $request;
 
@@ -71,44 +84,23 @@ class OCSEndPointTest extends TestCase {
 	/** @var \OCP\IL10N */
 	protected $l10n;
 
-	/** @var OCSEndPoint */
+	/** @var APIv2 */
 	protected $controller;
 
 	protected function setUp() {
 		parent::setUp();
 
-		$this->data = $this->getMockBuilder('OCA\Activity\Data')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->helper = $this->getMockBuilder('OCA\Activity\GroupHelper')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->userSettings = $this->getMockBuilder('OCA\Activity\UserSettings')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->preview = $this->getMockBuilder('OCP\IPreview')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->urlGenerator = $this->getMockBuilder('OCP\IURLGenerator')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->userSession = $this->getMockBuilder('OCP\IUserSession')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->mimeTypeDetector = $this->getMockBuilder('OCP\Files\IMimeTypeDetector')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->view = $this->getMockBuilder('OC\Files\View')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->infoCache = $this->getMockBuilder('OCA\Activity\ViewInfoCache')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->avatarManager = $this->getMockBuilder('OCP\IAvatarManager')
-			->disableOriginalConstructor()
-			->getMock();
-
-		$this->request = $this->getMock('OCP\IRequest');
+		$this->data = $this->createMock(Data::class);
+		$this->helper = $this->createMock(GroupHelper::class);
+		$this->userSettings = $this->createMock(UserSettings::class);
+		$this->preview = $this->createMock(IPreview::class);
+		$this->urlGenerator = $this->createMock(IURLGenerator::class);
+		$this->userSession = $this->createMock(IUserSession::class);
+		$this->mimeTypeDetector = $this->createMock(IMimeTypeDetector::class);
+		$this->view = $this->createMock(View::class);
+		$this->infoCache = $this->createMock(ViewInfoCache::class);
+		$this->avatarManager = $this->createMock(IAvatarManager::class);
+		$this->request = $this->createMock(IRequest::class);
 
 		$this->controller = $this->getController();
 
@@ -123,11 +115,12 @@ class OCSEndPointTest extends TestCase {
 
 	protected function getController(array $methods = []) {
 		if (empty($methods)) {
-			return new OCSEndPoint(
+			return new APIv2(
+				'activity',
+				$this->request,
 				$this->data,
 				$this->helper,
 				$this->userSettings,
-				$this->request,
 				$this->urlGenerator,
 				$this->userSession,
 				$this->preview,
@@ -136,12 +129,13 @@ class OCSEndPointTest extends TestCase {
 				$this->infoCache
 			);
 		} else {
-			return $this->getMockBuilder('OCA\Activity\Controller\OCSEndPoint')
+			return $this->getMockBuilder(APIv2::class)
 				->setConstructorArgs([
+					'activity',
+					$this->request,
 					$this->data,
 					$this->helper,
 					$this->userSettings,
-					$this->request,
 					$this->urlGenerator,
 					$this->userSession,
 					$this->preview,
@@ -154,47 +148,45 @@ class OCSEndPointTest extends TestCase {
 		}
 	}
 
-	public function dataReadParameterFilter() {
+	public function dataValidateParametersFilter() {
 		return [
-			[['filter' => 'valid1'], 'valid1'],
-			[['filter' => 'valid2'], 'valid2'],
-			[[], 'all'],
+			['valid1', 'valid1'],
+			['all', 'all'],
 		];
 	}
 
 	/**
-	 * @dataProvider dataReadParameterFilter
-	 * @param array $params
+	 * @dataProvider dataValidateParametersFilter
+	 * @param string $param
 	 * @param string $filter
 	 */
-	public function testReadParameterFilter(array $params, $filter) {
+	public function testValidateParametersFilter($param, $filter) {
 		$this->data->expects($this->once())
 			->method('validateFilter')
-			->with($filter)
-			->willReturnArgument(0);
+			->with($param)
+			->willReturn($filter);
 		$this->userSession->expects($this->once())
 			->method('getUser')
-			->willReturn($this->getMock('OCP\IUser'));
+			->willReturn($this->createMock(IUser::class));
 
-		$this->invokePrivate($this->controller, 'readParameters', [$params]);
-		$this->assertSame($filter, $this->invokePrivate($this->controller, 'filter'));
+		self::invokePrivate($this->controller, 'validateParameters', [$param, 0, 0, false, '', 0, 'desc']);
+		$this->assertSame($filter, self::invokePrivate($this->controller, 'filter'));
 	}
 
-	public function dataReadParameterFilterInvalid() {
+	public function dataValidateParametersFilterInvalid() {
 		return [
-			[['filter' => 'invalid1'], 'invalid1'],
-			[['filter' => 'invalid2'], 'invalid2'],
+			['invalid1'],
+			['invalid2'],
 		];
 	}
 
 	/**
-	 * @dataProvider dataReadParameterFilterInvalid
+	 * @dataProvider dataValidateParametersFilterInvalid
 	 *
-	 * @param array $params
 	 * @param string $filter
 	 * @expectedException \OCA\Activity\Exception\InvalidFilterException
 	 */
-	public function testReadParameterFilterInvalid(array $params, $filter) {
+	public function testValidateParametersFilterInvalid($filter) {
 		$this->data->expects($this->once())
 			->method('validateFilter')
 			->with($filter)
@@ -202,11 +194,11 @@ class OCSEndPointTest extends TestCase {
 		$this->userSession->expects($this->never())
 			->method('getUser');
 
-		$this->invokePrivate($this->controller, 'readParameters', [$params]);
-		$this->assertSame($filter, $this->invokePrivate($this->controller, 'filter'));
+		self::invokePrivate($this->controller, 'validateParameters', [$filter, 0, 0, false, '', 0, 'desc']);
+		$this->assertSame($filter, self::invokePrivate($this->controller, 'filter'));
 	}
 
-	public function dataReadParameterObject() {
+	public function dataValidateParametersObject() {
 		return [
 			['type', 42, 'type', 42],
 			['type', '42', 'type', 42],
@@ -216,75 +208,77 @@ class OCSEndPointTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider dataReadParameterObject
+	 * @dataProvider dataValidateParametersObject
 	 * @param mixed $type
 	 * @param mixed $id
 	 * @param string $expectedType
 	 * @param int $expectedId
 	 */
-	public function testReadParameterObject($type, $id, $expectedType, $expectedId) {
-		$this->request->expects($this->any())
-			->method('getParam')
-			->willReturnMap([
-				['object_type', '', $type],
-				['object_id', 0, $id],
-			]);
-
+	public function testValidateParametersObject($type, $id, $expectedType, $expectedId) {
 		$this->data->expects($this->once())
 			->method('validateFilter')
 			->willReturnArgument(0);
 		$this->userSession->expects($this->once())
 			->method('getUser')
-			->willReturn($this->getMock('OCP\IUser'));
+			->willReturn($this->createMock(IUser::class));
 
-		$this->invokePrivate($this->controller, 'readParameters', [[]]);
-		$this->assertSame($expectedType, $this->invokePrivate($this->controller, 'objectType'));
-		$this->assertSame($expectedId, $this->invokePrivate($this->controller, 'objectId'));
+		self::invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, $type, $id, 'desc']);
+		$this->assertSame($expectedType, self::invokePrivate($this->controller, 'objectType'));
+		$this->assertSame($expectedId, self::invokePrivate($this->controller, 'objectId'));
 	}
 
-	public function dataReadParameters() {
+	public function dataValidateParameters() {
 		return [
-			['since', 0, 0, 'since', 0],
-			['since', 0, 20, 'since', 20],
-			['since', 0, '25', 'since', 25],
-			['limit', 50, 0, 'limit', 0],
-			['limit', 50, 20, 'limit', 20],
-			['limit', 50, '25', 'limit', 25],
-			['sort', '', '', 'sort', 'desc'],
-			['sort', '', 'asc', 'sort', 'asc'],
-			['sort', '', 'desc', 'sort', 'desc'],
-			['previews', 'false', 'false', 'loadPreviews', false],
-			['previews', 'false', 'true', 'loadPreviews', true],
+			['since', 0, 'since', 0],
+			['since', 20, 'since', 20],
+			['since', '25', 'since', 25],
+			['limit', 0, 'limit', 0],
+			['limit', 20, 'limit', 20],
+			['limit', '25', 'limit', 25],
+			['sort', '', 'sort', 'desc'],
+			['sort', 'asc', 'sort', 'asc'],
+			['sort', 'desc', 'sort', 'desc'],
+			['previews', false, 'loadPreviews', false],
+			['previews', true, 'loadPreviews', true],
 		];
 	}
 
 	/**
-	 * @dataProvider dataReadParameters
+	 * @dataProvider dataValidateParameters
 	 * @param string $param
-	 * @param mixed $default
 	 * @param string $value
 	 * @param mixed $memberName
 	 * @param mixed $expectedValue
 	 */
-	public function testReadParameters($param, $default, $value, $memberName, $expectedValue) {
-		$this->request->expects($this->any())
-			->method('getParam')
-			->willReturnMap([
-				[$param, $default, $value],
-			]);
+	public function testValidateParameters($param, $value, $memberName, $expectedValue) {
+		$params = ['all', 0, 0, false, '', 0, 'desc'];
+		switch ($param) {
+			case 'since':
+				$params[1] = $value;
+				break;
+			case 'limit':
+				$params[2] = $value;
+				break;
+			case 'previews':
+				$params[3] = $value;
+				break;
+			case 'sort':
+				$params[6] = $value;
+				break;
+		}
 
 		$this->data->expects($this->once())
 			->method('validateFilter')
 			->willReturnArgument(0);
 		$this->userSession->expects($this->once())
 			->method('getUser')
-			->willReturn($this->getMock('OCP\IUser'));
+			->willReturn($this->createMock(IUser::class));
 
-		$this->invokePrivate($this->controller, 'readParameters', [[]]);
-		$this->assertSame($expectedValue, $this->invokePrivate($this->controller, $memberName));
+		self::invokePrivate($this->controller, 'validateParameters', $params);
+		$this->assertSame($expectedValue, self::invokePrivate($this->controller, $memberName));
 	}
 
-	public function dataReadParameterUser() {
+	public function dataValidateParametersUser() {
 		return [
 			['uid1'],
 			['uid2'],
@@ -292,11 +286,11 @@ class OCSEndPointTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider dataReadParameterUser
+	 * @dataProvider dataValidateParametersUser
 	 * @param string $uid
 	 */
-	public function testReadParameterUser($uid) {
-		$user = $this->getMock('OCP\IUser');
+	public function testValidateParametersUser($uid) {
+		$user = $this->createMock(IUser::class);
 		$user->expects($this->once())
 			->method('getUID')
 			->willReturn($uid);
@@ -308,14 +302,14 @@ class OCSEndPointTest extends TestCase {
 			->method('validateFilter')
 			->willReturnArgument(0);
 
-		$this->invokePrivate($this->controller, 'readParameters', [[]]);
-		$this->assertSame($uid, $this->invokePrivate($this->controller, 'user'));
+		self::invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, '', 0, 'desc']);
+		$this->assertSame($uid, self::invokePrivate($this->controller, 'user'));
 	}
 
 	/**
 	 * @expectedException \OutOfBoundsException
 	 */
-	public function testReadParameterUserInvalid() {
+	public function testValidateParametersUserInvalid() {
 		$this->data->expects($this->once())
 			->method('validateFilter')
 			->willReturnArgument(0);
@@ -323,53 +317,61 @@ class OCSEndPointTest extends TestCase {
 			->method('getUser')
 			->willReturn(null);
 
-		$this->invokePrivate($this->controller, 'readParameters', [[]]);
-		$this->assertSame(null, $this->invokePrivate($this->controller, 'user'));
+		self::invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, '', 0, 'desc']);
+		$this->assertNull(self::invokePrivate($this->controller, 'user'));
 	}
 
 	public function dataParameters() {
 		return [
-			[['limit' => 25], ['limit' => 25]],
-			[['filter' => 'anything'], []],
-			[['filter' => 'two'], []],
+			['all', 0, 0, false, '', 0, 'desc'],
+			['filter', 1, 25, true, 'files', 42, 'asc'],
 		];
 	}
 
 	/**
 	 * @dataProvider dataParameters
 	 *
-	 * @param array $parameters
-	 * @param array $expected
+	 * @param string $filter
+	 * @param int $since
+	 * @param int $limit
+	 * @param bool $previews
+	 * @param string $filterObjectType
+	 * @param int $filterObjectId
+	 * @param string $sort
 	 */
-	public function testGetDefault(array $parameters, array $expected) {
+	public function testGetDefault($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort) {
 		$controller = $this->getController([
 			'get'
 		]);
 
-		$expected['filter'] = 'all';
-
 		$controller->expects($this->once())
 			->method('get')
-			->with($expected);
+			->with('all', $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 
-		$controller->getDefault($parameters);
+		$controller->getDefault($since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 	}
 
 	/**
 	 * @dataProvider dataParameters
 	 *
-	 * @param array $parameters
+	 * @param string $filter
+	 * @param int $since
+	 * @param int $limit
+	 * @param bool $previews
+	 * @param string $filterObjectType
+	 * @param int $filterObjectId
+	 * @param string $sort
 	 */
-	public function testGetFilter(array $parameters) {
+	public function testGetFilter($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort) {
 		$controller = $this->getController([
 			'get'
 		]);
 
 		$controller->expects($this->once())
 			->method('get')
-			->with($parameters);
+			->with($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 
-		$controller->getFilter($parameters);
+		$controller->getFilter($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 	}
 
 	public function dataGetInvalid() {
@@ -389,18 +391,18 @@ class OCSEndPointTest extends TestCase {
 	 * @param int $expected
 	 */
 	public function testGetInvalid($readParamsThrows, $dataGetThrows, $expected) {
-		$controller = $this->getController(['readParameters', 'generateHeaders']);
+		$controller = $this->getController(['validateParameters', 'generateHeaders']);
 		$controller->expects($this->any())
 			->method('generateHeaders')
 			->willReturnArgument(0);
 
 		if ($readParamsThrows instanceof \Exception) {
 			$controller->expects($this->once())
-				->method('readParameters')
+				->method('validateParameters')
 				->willThrowException($readParamsThrows);
 		} else {
 			$controller->expects($this->once())
-				->method('readParameters');
+				->method('validateParameters');
 		}
 		if ($dataGetThrows instanceof \Exception) {
 			$this->data->expects($this->once())
@@ -419,26 +421,26 @@ class OCSEndPointTest extends TestCase {
 				->method('generateHeaders');
 		}
 
-		/** @var Result $result */
-		$result = $this->invokePrivate($controller, 'get', [[]]);
+		/** @var DataResponse $result */
+		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, '', 0, 'desc']);
 
-		$this->assertInstanceOf(Result::class, $result);
-		$this->assertSame($expected, $result->getStatusCode());
+		$this->assertInstanceOf(DataResponse::class, $result);
+		$this->assertSame($expected, $result->getStatus());
 	}
 
 	public function dataGet() {
 		return [
-			[123456789, 'files', 42, [], false, 0, ['object_type' => 'files', 'object_id' => 42, 'datetime' => date('c', 123456789)]],
-			[12345678, 'calendar', 23, [], true, 0, ['object_type' => 'calendar', 'object_id' => 23, 'datetime' => date('c', 12345678), 'previews' => []]],
+			[123456789, 'files', 42, [], false, 0, ['object_type' => 'files', 'object_id' => 42, 'datetime' => date(\DateTime::ATOM, 123456789)]],
+			[12345678, 'calendar', 23, [], true, 0, ['object_type' => 'calendar', 'object_id' => 23, 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => []]],
 			[
 				12345678, 'files', 23, ['objects' => [], 'affecteduser' => 'user1', 'object_name' => 'file.txt'],
 				true, 1,
-				['object_type' => 'files', 'object_id' => 23, 'objects' => [], 'affecteduser' => 'user1', 'object_name' => 'file.txt', 'datetime' => date('c', 12345678), 'previews' => [['preview']]]
+				['object_type' => 'files', 'object_id' => 23, 'objects' => [], 'object_name' => 'file.txt', 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => [['preview']]]
 			],
 			[
 				12345678, 'files', 23, ['objects' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'affecteduser' => 'user1'],
 				true, 2,
-				['object_type' => 'files', 'object_id' => 23, 'objects' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'affecteduser' => 'user1', 'datetime' => date('c', 12345678), 'previews' => [['preview'], ['preview']]]
+				['object_type' => 'files', 'object_id' => 23, 'objects' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => [['preview'], ['preview']]]
 			],
 		];
 	}
@@ -454,19 +456,19 @@ class OCSEndPointTest extends TestCase {
 	 * @param array $expected
 	 */
 	public function testGet($time, $objectType, $objectId, array $additionalArgs, $loadPreviews, $numGetPreviewCalls, array $expected) {
-		$controller = $this->getController(['readParameters', 'generateHeaders', 'getPreview']);
+		$controller = $this->getController(['validateParameters', 'generateHeaders', 'getPreview']);
 		$controller->expects($this->any())
 			->method('generateHeaders')
 			->willReturnArgument(0);
 
 		$controller->expects($this->once())
-			->method('readParameters');
+			->method('validateParameters');
 
 		$controller->expects($this->exactly($numGetPreviewCalls))
 			->method('getPreview')
 			->willReturn(['preview']);
 
-		$this->invokePrivate($controller, 'loadPreviews', [$loadPreviews]);
+		self::invokePrivate($controller, 'loadPreviews', [$loadPreviews]);
 
 		$this->data->expects($this->once())
 			->method('get')
@@ -474,26 +476,69 @@ class OCSEndPointTest extends TestCase {
 				'data' => [
 					array_merge(['timestamp' => $time, 'object_type' => $objectType, 'object_id' => $objectId], $additionalArgs),
 				],
-				'headers' => ['X-Activity-First-Known' => 23],
+				'headers' => ['X-Activity-First-Known' => 23, 'ETag' => md5('foobar')],
 				'has_more' => false,
 			]);
 
-		/** @var Result $result */
-		$result = $this->invokePrivate($controller, 'get', [[]]);
+		/** @var DataResponse $result */
+		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, $objectType, $objectId, 'desc']);
 
-		$this->assertInstanceOf(Result::class, $result);
-		$this->assertSame(100, $result->getStatusCode());
+		$this->assertInstanceOf(DataResponse::class, $result);
+		$this->assertSame(Http::STATUS_OK, $result->getStatus());
 		$this->assertSame([
 			$expected,
 		], $result->getData());
 	}
 
+	public function dataGetNotModified() {
+		return [
+			[[], null],
+			[[[]], md5('foobar')],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetNotModified
+	 * @param array $data
+	 * @param string|null $etag
+	 */
+	public function testGetNotModified(array $data, $etag) {
+		$controller = $this->getController(['validateParameters', 'generateHeaders']);
+		$controller->expects($this->any())
+			->method('generateHeaders')
+			->willReturnArgument(0);
+
+		$controller->expects($this->once())
+			->method('validateParameters');
+
+		$this->request->expects($etag !== null ? $this->once() : $this->never())
+			->method('getHeader')
+			->willReturn($etag);
+
+		$this->data->expects($this->once())
+			->method('get')
+			->willReturn([
+				'data' => $data,
+				'headers' => ['X-Activity-First-Known' => 23, 'ETag' => md5('foobar')],
+				'has_more' => false,
+			]);
+
+		/** @var DataResponse $result */
+		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, '', 0, 'desc']);
+
+		$this->assertInstanceOf(DataResponse::class, $result);
+		$this->assertSame(Http::STATUS_NOT_MODIFIED, $result->getStatus());
+		$this->assertSame([], $result->getData());
+	}
+
 	public function dataGenerateHeaders() {
 		return [
-			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], false, ['X-Activity-Last-Given' => 23]],
-			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], true, ['X-Activity-Last-Given' => 23, 'Link' => '<://?since=23&limit=25&sort=asc>; rel="next"']],
-			['asc', 25, 'ob', 10, null, ['X-Activity-Last-Given' => 23], true, ['X-Activity-Last-Given' => 23, 'Link' => '<://?since=23&limit=25&sort=asc&object_type=ob&object_id=10>; rel="next"']],
-			['asc', 25, '', 0, 'json', ['X-Activity-Last-Given' => 23], true, ['X-Activity-Last-Given' => 23, 'Link' => '<://?since=23&limit=25&sort=asc&format=json>; rel="next"']],
+			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], false, [], ['X-Activity-Last-Given' => 23, 'ETag' => 'd751713988987e9331980363e24189ce']],
+			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], false, [['activity_id' => 23]], ['X-Activity-Last-Given' => 23, 'ETag' => 'b37e127599eef3cfeceac50e34cd5037']],
+			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], false, [['activity_id' => 23], ['activity_id' => 42]], ['X-Activity-Last-Given' => 23, 'ETag' => 'f39a1f6e9647bf7ac763f3728830d64b']],
+			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], true, [], ['X-Activity-Last-Given' => 23, 'Link' => '<://?since=23&limit=25&sort=asc>; rel="next"', 'ETag' => 'd751713988987e9331980363e24189ce']],
+			['asc', 25, 'ob', 10, null, ['X-Activity-Last-Given' => 23], true, [], ['X-Activity-Last-Given' => 23, 'Link' => '<://?since=23&limit=25&sort=asc&object_type=ob&object_id=10>; rel="next"', 'ETag' => 'd751713988987e9331980363e24189ce']],
+			['asc', 25, '', 0, 'json', ['X-Activity-Last-Given' => 23], true, [], ['X-Activity-Last-Given' => 23, 'Link' => '<://?since=23&limit=25&sort=asc&format=json>; rel="next"', 'ETag' => 'd751713988987e9331980363e24189ce']],
 		];
 	}
 
@@ -507,19 +552,20 @@ class OCSEndPointTest extends TestCase {
 	 * @param string $format
 	 * @param array $headersIn
 	 * @param bool $hasMoreActivities
+	 * @param array $data
 	 * @param array $expected
 	 */
-	public function testGenerateHeaders($sort, $limit, $objectType, $objectId, $format, array $headersIn, $hasMoreActivities, array $expected) {
-		$this->invokePrivate($this->controller, 'sort', [$sort]);
-		$this->invokePrivate($this->controller, 'limit', [$limit]);
-		$this->invokePrivate($this->controller, 'objectType', [$objectType]);
-		$this->invokePrivate($this->controller, 'objectId', [$objectId]);
+	public function testGenerateHeaders($sort, $limit, $objectType, $objectId, $format, array $headersIn, $hasMoreActivities, array $data, array $expected) {
+		self::invokePrivate($this->controller, 'sort', [$sort]);
+		self::invokePrivate($this->controller, 'limit', [$limit]);
+		self::invokePrivate($this->controller, 'objectType', [$objectType]);
+		self::invokePrivate($this->controller, 'objectId', [$objectId]);
 		$this->request->expects($this->any())
 			->method('getParam')
 			->with('format')
 			->willReturn($format);
 
-		$headers = $this->invokePrivate($this->controller, 'generateHeaders', [$headersIn, $hasMoreActivities]);
+		$headers = self::invokePrivate($this->controller, 'generateHeaders', [$headersIn, $hasMoreActivities, $data]);
 		$this->assertEquals($expected, $headers);
 	}
 
@@ -559,7 +605,7 @@ class OCSEndPointTest extends TestCase {
 			->with($path)
 			->willReturn(['getPreviewFromPath']);
 
-		$this->assertSame(['getPreviewFromPath'], $this->invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
+		$this->assertSame(['getPreviewFromPath'], self::invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
 	}
 
 	public function dataGetPreview() {
@@ -615,9 +661,7 @@ class OCSEndPointTest extends TestCase {
 				->with('dir')
 				->willReturn('/preview/dir');
 		} else if ($validFileInfo) {
-			$fileInfo = $this->getMockBuilder('OCP\Files\FileInfo')
-				->disableOriginalConstructor()
-				->getMock();
+			$fileInfo = $this->createMock(FileInfo::class);
 
 			$this->view->expects($this->once())
 				->method('chroot')
@@ -668,7 +712,7 @@ class OCSEndPointTest extends TestCase {
 			'link' => '/preview' . $returnedPath,
 			'source' => $source,
 			'isMimeTypeIcon' => $isMimeTypeIcon,
-		], $this->invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
+		], self::invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
 	}
 
 	public function dataGetPreviewFromPath() {
@@ -710,7 +754,7 @@ class OCSEndPointTest extends TestCase {
 				'source' => 'mime-type-icon',
 				'isMimeTypeIcon' => true,
 			],
-			$this->invokePrivate($controller, 'getPreviewFromPath', [$filePath, ['path' => $filePath, 'is_dir' => $isDir, 'view' => $view]])
+			self::invokePrivate($controller, 'getPreviewFromPath', [$filePath, ['path' => $filePath, 'is_dir' => $isDir, 'view' => $view]])
 		);
 	}
 
@@ -742,7 +786,7 @@ class OCSEndPointTest extends TestCase {
 
 		$this->assertSame(
 			$expected,
-			$this->invokePrivate($this->controller, 'getPreviewPathFromMimeType', [$mimeType])
+			self::invokePrivate($this->controller, 'getPreviewPathFromMimeType', [$mimeType])
 		);
 	}
 
@@ -770,6 +814,6 @@ class OCSEndPointTest extends TestCase {
 			->method('linkToRouteAbsolute')
 			->with('files.view.index', $expected);
 
-		$this->invokePrivate($this->controller, 'getPreviewLink', [$path, $isDir, $view]);
+		self::invokePrivate($this->controller, 'getPreviewLink', [$path, $isDir, $view]);
 	}
 }

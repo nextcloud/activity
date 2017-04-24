@@ -27,12 +27,12 @@ use OC\Files\View;
 use OCA\Activity\AppInfo\Application;
 use OCA\Activity\BackgroundJob\EmailNotification;
 use OCA\Activity\BackgroundJob\ExpireActivities;
+use OCA\Activity\Capabilities;
 use OCA\Activity\Consumer;
 use OCA\Activity\Controller\Activities;
 use OCA\Activity\Controller\APIv1;
-use OCA\Activity\Controller\EndPoint;
+use OCA\Activity\Controller\APIv2;
 use OCA\Activity\Controller\Feed;
-use OCA\Activity\Controller\OCSEndPoint;
 use OCA\Activity\Controller\Settings;
 use OCA\Activity\CurrentUser;
 use OCA\Activity\Data;
@@ -56,6 +56,7 @@ use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IConsumer;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\OCSController;
+use OCP\Capabilities\ICapability;
 use OCP\IL10N;
 
 /**
@@ -88,6 +89,8 @@ class ApplicationTest extends TestCase {
 			array(View::class),
 
 			// lib/
+			array(Capabilities::class),
+			array(Capabilities::class, ICapability::class),
 			array(Consumer::class),
 			array(Consumer::class, IConsumer::class),
 			array(CurrentUser::class),
@@ -116,11 +119,11 @@ class ApplicationTest extends TestCase {
 			array('APIv1Controller', APIv1::class),
 			array('APIv1Controller', Controller::class),
 			array('APIv1Controller', OCSController::class),
-			array('EndPointController', EndPoint::class),
-			array('EndPointController', Controller::class),
+			array('APIv2Controller', APIv2::class),
+			array('APIv2Controller', Controller::class),
+			array('APIv2Controller', OCSController::class),
 			array('FeedController', Feed::class),
 			array('FeedController', Controller::class),
-			array(OCSEndPoint::class),
 			array('SettingsController', Settings::class),
 			array('SettingsController', Controller::class),
 

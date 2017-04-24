@@ -1,15 +1,30 @@
 # Endpoint documentation
 
+## Capabilities
+
+```xml
+GET /ocs/v2.php/cloud/capabilities
+
+...
+   <activity>
+    <apiv2>
+     <element>filters</element>
+     <element>previews</element>
+     <element>rich-strings</element>
+    </apiv2>
+   </activity>
+...
+```
 ## Request URL
 
 ```
-GET /index.php/apps/activity/api/v2/activity
+GET /ocs/v2.php/apps/activity/api/v2/activity
 ```
 
 With type filter
 
 ```
-GET /index.php/apps/activity/api/v2/activity/:filter
+GET /ocs/v2.php/apps/activity/api/v2/activity/:filter
 ```
 
 ## Parameters
@@ -28,7 +43,7 @@ Status Code | Description
 ----------- | -----------
 `200 OK` |  Activities
 `204 No Content` |  The user has selected no activities to be listed in the stream
-`304 Not Modified` | No new activities
+`304 Not Modified` | ETag/If-None-Match are the same or the end of the activity list was reached
 `403 Forbidden` | The offset activity belongs to a different user
 `403 Forbidden` | The user is not logged in
 `404 Not Found` | The filter is unknown
@@ -39,7 +54,7 @@ Status Code | Description
 
 Already includes all parameters
 ```
-Link: <http(s)://localhost/index.php/apps/activity/api/v2/activity/all?since=364>; rel="next"
+Link: <http(s)://localhost/ocs/v2.php/apps/activity/api/v2/activity/all?since=364>; rel="next"
 ```
 
 ### First known activity
@@ -66,7 +81,6 @@ Field name | Type | Value description
 `app` | string | App that created the activity (e.g. `'files'`, `'files_sharing'`, etc.)
 `type` | string | For most files related activities this is the action that was performed on the file/folder (e.g. `'file_changed'`, `'file_created'` (same is used for both, file and folder)), other apps use other strings (e.g. `'announcementcenter'`)
 `user` | string (Optional) | User ID of the user that triggered/created this activity (can also be empty in case of public link/remote share action)
-`affecteduser` | string | User ID of the user that received this activity (always the same)
 `subject` | string | Translated simple subject without markup, ready for use (e.g. `'You created hello.jpg'`)
 `subject_rich` | array (Optional) | `0` is the string subject including placeholders, `1` is an array with the placeholders. See [this issue](https://github.com/nextcloud/server/issues/1706) for more information
 `message` | string (Optional) | Translated simple message without markup, ready for use (longer text, unused by core apps)
