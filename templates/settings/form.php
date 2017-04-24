@@ -26,6 +26,7 @@
 
 <form id="activity_notifications" class="section">
 	<h2 class="icon-activity"><?php p($l->t('Activity')); ?></h2>
+	<p class="settings-hint"><?php p($l->t('Here you can configure the default activity settings for users.')); ?></p>
 
 	<table class="grid activitysettings">
 		<thead>
