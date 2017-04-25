@@ -261,6 +261,7 @@ class Settings extends Controller {
 		}
 
 		return new TemplateResponse('activity', 'settings/personal', [
+			'setting'			=> 'personal',
 			'activities'		=> $activities,
 			'activity_email'	=> $this->config->getUserValue($this->user, 'settings', 'email', ''),
 
