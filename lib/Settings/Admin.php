@@ -104,6 +104,7 @@ class Admin implements ISettings {
 		}
 
 		return new TemplateResponse('activity', 'settings/admin', [
+			'setting'			=> 'admin',
 			'activities'		=> $activities,
 			'activity_email'	=> '!empty',
 

@@ -26,7 +26,13 @@
 
 <form id="activity_notifications" class="section">
 	<h2 class="icon-activity"><?php p($l->t('Activity')); ?></h2>
-	<p class="settings-hint"><?php p($l->t('Here you can configure the default activity settings for users.')); ?></p>
+	<p class="settings-hint">
+		<?php if ($_['setting'] === 'admin') {
+			p($l->t('Here you can configure the default activity settings for new users.'));
+		} else {
+			p($l->t('Here you can configure for which activities you want to receive emails and which should show up in your feed.'));
+		} ?>
+	</p>
 
 	<table class="grid activitysettings">
 		<thead>
