@@ -266,9 +266,7 @@ class MailQueueHandler {
 				continue;
 			}
 
-			$template->addBodyListItem(
-				sprintf('%1$s (%2$s)', $event->getParsedSubject(), $relativeDateTime)
-			);
+			$template->addBodyListItem($event->getParsedSubject(), $relativeDateTime, $event->getIcon());
 		}
 
 		if ($skippedCount) {
