@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Aktivitetsflöde",
+    "An error occurred while loading activities" : "Något gick snett vid inläsning av aktiviteter",
     "No activity yet" : "Inga aktiviteter ännu",
     "Load more activities" : "Ladda fler aktiviteter",
     "Copied!" : "Kopierad!",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Personligt aktivitetsflöde för %s",
     "Your feed URL is invalid" : "URL:en för flödet är felaktig.",
     "Your settings have been updated." : "Dina inställningar har uppdaterats.",
+    "Settings have been updated." : "Inställningarna har blivit uppdaterade.",
     "Mail" : "E-post",
     "Stream" : "Flödet",
     "All activities" : "Alla aktiviteter",
@@ -40,6 +42,7 @@ OC.L10N.register(
     "Hourly" : "Timvis",
     "Daily" : "Dagligen",
     "Weekly" : "Varje vecka",
+    "Settings" : "Inställningar",
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "No more events to load" : "Inga fler aktiviteter.",
     "Files" : "Filer"
