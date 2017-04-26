@@ -23,7 +23,11 @@
 namespace OCA\Activity\Tests\BackgroundJob;
 
 use OCA\Activity\BackgroundJob\EmailNotification;
+use OCA\Activity\MailQueueHandler;
 use OCA\Activity\Tests\TestCase;
+use OCP\ILogger;
+use OCP\IConfig;
+use OCP\BackgroundJob\IJobList;
 
 /**
  * Class EmailNotificationTest
@@ -46,13 +50,13 @@ class EmailNotificationTest extends TestCase {
 	 */
 	public function testConstructAndRun($isCLI) {
 		$backgroundJob = new EmailNotification(
-			$this->getMockBuilder('OCA\Activity\MailQueueHandler')->disableOriginalConstructor()->getMock(),
-			$this->getMock('OCP\IConfig'),
-			$this->getMock('OCP\ILogger'),
+			$this->createMock(MailQueueHandler::class),
+			$this->createMock(IConfig::class),
+			$this->createMock(ILogger::class),
 			$isCLI
 		);
 
-		$jobList = $this->getMock('\OCP\BackgroundJob\IJobList');
+		$jobList = $this->createMock(IJobList::class);
 
 		/** @var \OC\BackgroundJob\JobList $jobList */
 		$backgroundJob->execute($jobList);
@@ -60,16 +64,12 @@ class EmailNotificationTest extends TestCase {
 	}
 
 	public function testRunStep() {
-		$mailQueueHandler = $this->getMockBuilder('OCA\Activity\MailQueueHandler')
-			->disableOriginalConstructor()
-			->getMock();
-		$config = $this->getMockBuilder('OCP\IConfig')
-			->disableOriginalConstructor()
-			->getMock();
+		$mailQueueHandler = $this->createMock(MailQueueHandler::class);
+		$config = $this->createMock(IConfig::class);
 		$backgroundJob = new EmailNotification(
 			$mailQueueHandler,
 			$config,
-			$this->getMock('OCP\ILogger'),
+			$this->createMock(ILogger::class),
 			true
 		);
 
@@ -102,6 +102,6 @@ class EmailNotificationTest extends TestCase {
 				]]
 			]);
 
-		$this->assertEquals(2, $this->invokePrivate($backgroundJob, 'runStep', [2, 200]));
+		$this->assertEquals(2, self::invokePrivate($backgroundJob, 'runStep', [2, 200]));
 	}
 }

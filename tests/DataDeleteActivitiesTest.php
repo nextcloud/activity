@@ -26,6 +26,9 @@ use Doctrine\DBAL\Driver\Statement;
 use OCA\Activity\Data;
 use OCP\Activity\IExtension;
 use OCP\IConfig;
+use OCP\IUserSession;
+use OCP\Activity\IManager;
+use OCP\BackgroundJob\IJobList;
 
 /**
  * Class DataDeleteActivitiesTest
@@ -34,7 +37,7 @@ use OCP\IConfig;
  * @package OCA\Activity\Tests
  */
 class DataDeleteActivitiesTest extends TestCase {
-	/** @var \OCA\Activity\Data */
+	/** @var Data */
 	protected $data;
 
 	protected function setUp() {
@@ -65,9 +68,9 @@ class DataDeleteActivitiesTest extends TestCase {
 			));
 		}
 		$this->data = new Data(
-			$this->getMock('\OCP\Activity\IManager'),
+			$this->createMock(IManager::class),
 			\OC::$server->getDatabaseConnection(),
-			$this->getMock('\OCP\IUserSession')
+			$this->createMock(IUserSession::class)
 		);
 	}
 
@@ -98,13 +101,13 @@ class DataDeleteActivitiesTest extends TestCase {
 	}
 
 	public function testExpireActivities() {
-		$config = $this->getMockBuilder(IConfig::class)->getMock();
+		$config = $this->createMock(IConfig::class);
 		$backgroundjob = new \OCA\Activity\BackgroundJob\ExpireActivities(
 			$this->data,
 			$config
 		);
 		$this->assertUserActivities(array('delete', 'otherUser'));
-		$jobList = $this->getMock('\OCP\BackgroundJob\IJobList');
+		$jobList = $this->createMock(IJobList::class);
 		$backgroundjob->execute($jobList);
 		$this->assertUserActivities(array('otherUser'));
 	}

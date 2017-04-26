@@ -24,6 +24,7 @@ namespace OCA\Activity\Tests\Controller;
 
 use OCA\Activity\Controller\Activities;
 use OCA\Activity\Tests\TestCase;
+use OCP\ILogger;
 use OCP\Template;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use OCP\IRequest;
@@ -106,7 +107,9 @@ class ActivitiesTest extends TestCase {
 		$templateResponse = $this->controller->showList();
 		$this->assertInstanceOf(TemplateResponse::class, $templateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
+		$this->overwriteService('Logger', $this->createMock(ILogger::class));
 		$renderedResponse = $templateResponse->render();
+		$this->restoreService('Logger');
 		$this->assertNotEmpty($renderedResponse);
 	}
 }

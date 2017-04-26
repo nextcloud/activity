@@ -26,6 +26,7 @@ use OCA\Activity\BackgroundJob\ExpireActivities;
 use OCA\Activity\Data;
 use OCA\Activity\Tests\TestCase;
 use OCP\IConfig;
+use OCP\BackgroundJob\IJobList;
 
 /**
  * Class ExpireActivitiesTest
@@ -36,11 +37,11 @@ use OCP\IConfig;
 class ExpireActivitiesTest extends TestCase {
 	public function testExecute() {
 		$backgroundJob = new ExpireActivities(
-			$this->getMockBuilder(Data::class)->disableOriginalConstructor()->getMock(),
-			$this->getMockBuilder(IConfig::class)->getMock()
+			$this->createMock(Data::class),
+			$this->createMock(IConfig::class)
 		);
 
-		$jobList = $this->getMock('\OCP\BackgroundJob\IJobList');
+		$jobList = $this->createMock(IJobList::class);
 
 		/** @var \OC\BackgroundJob\JobList $jobList */
 		$backgroundJob->execute($jobList);
