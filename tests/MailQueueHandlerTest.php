@@ -27,6 +27,16 @@ use OCA\Activity\Extension\LegacyParser;
 use OCA\Activity\MailQueueHandler;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
+use OCP\Activity\IEvent;
+use OCP\IUserManager;
+use OCP\Activity\IManager;
+use OCP\Mail\IEMailTemplate;
+use OCP\Mail\IMailer;
+use OC\Mail\Message;
+use OCA\Activity\DataHelper;
+use OCP\IURLGenerator;
+use OCP\IDateTimeFormatter;
+use OCP\IUser;
 
 /**
  * Class MailQueueHandlerTest
@@ -38,25 +48,25 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var MailQueueHandler */
 	protected $mailQueueHandler;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\Mail\IMailer */
+	/** @var \PHPUnit_Framework_MockObject_MockObject|IMailer */
 	protected $mailer;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $message;
 
-	/** @var \OCP\IUserManager */
+	/** @var IUserManager */
 	protected $oldUserManager;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\IUserManager */
+	/** @var \PHPUnit_Framework_MockObject_MockObject|IUserManager */
 	protected $userManager;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject|IFactory */
 	protected $lFactory;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCP\Activity\IManager */
+	/** @var \PHPUnit_Framework_MockObject_MockObject|IManager */
 	protected $activityManager;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|\OCA\Activity\DataHelper */
+	/** @var \PHPUnit_Framework_MockObject_MockObject|DataHelper */
 	protected $dataHelper;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject|LegacyParser */
@@ -65,9 +75,9 @@ class MailQueueHandlerTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$app = $this->getUniqueID('MailQueueHandlerTest');
-		$this->userManager = $this->getMock('OCP\IUserManager');
-		$this->lFactory = $this->getMockBuilder(IFactory::class)->getMock();
+		$app = self::getUniqueID('MailQueueHandlerTest');
+		$this->userManager = $this->createMock(IUserManager::class);
+		$this->lFactory = $this->createMock(IFactory::class);
 		$this->legacyParser = $this->createMock(LegacyParser::class);
 
 		$connection = \OC::$server->getDatabaseConnection();
@@ -82,9 +92,7 @@ class MailQueueHandlerTest extends TestCase {
 		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user3', 150, 'phpunit', 154));
 		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user3', 150, 'phpunit', 155));
 
-		$event = $this->getMockBuilder('OCP\Activity\IEvent')
-			->disableOriginalConstructor()
-			->getMock();
+		$event = $this->createMock(IEvent::class);
 		$event->expects($this->any())
 			->method('setApp')
 			->willReturnSelf();
@@ -101,9 +109,7 @@ class MailQueueHandlerTest extends TestCase {
 			->method('setSubject')
 			->willReturnSelf();
 
-		$this->activityManager = $this->getMockBuilder('OCP\Activity\IManager')
-			->disableOriginalConstructor()
-			->getMock();
+		$this->activityManager = $this->createMock(IManager::class);
 		$this->activityManager->expects($this->any())
 			->method('generateEvent')
 			->willReturn($event);
@@ -115,28 +121,22 @@ class MailQueueHandlerTest extends TestCase {
 			->method('parse')
 			->willReturnArgument(1);
 
-		$this->dataHelper = $this->getMockBuilder('OCA\Activity\DataHelper')
-				->disableOriginalConstructor()
-				->getMock();
+		$this->dataHelper = $this->createMock(DataHelper::class);
 		$this->dataHelper->expects($this->any())
 			->method('getParameters')
 			->willReturn([]);
 
-		$this->message = $this->getMockBuilder('OC\Mail\Message')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->mailer = $this->getMock('OCP\Mail\IMailer');
+		$this->message = $this->createMock(Message::class);
+		$this->mailer = $this->createMock(IMailer::class);
 		$this->mailer->expects($this->any())
 			->method('createMessage')
 			->willReturn($this->message);
 		$this->mailQueueHandler = new MailQueueHandler(
-			$this->getMock('\OCP\IDateTimeFormatter'),
+			$this->createMock(IDateTimeFormatter::class),
 			$connection,
 			$this->dataHelper,
 			$this->mailer,
-			$this->getMockBuilder('\OCP\IURLGenerator')
-				->disableOriginalConstructor()
-				->getMock(),
+			$this->createMock(IURLGenerator::class),
 			$this->userManager,
 			$this->lFactory,
 			$this->activityManager,
@@ -178,7 +178,7 @@ class MailQueueHandlerTest extends TestCase {
 
 		$this->assertEquals($affected, $users);
 		foreach ($users as $user) {
-			list($data, $skipped) = $this->invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			list($data, $skipped) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
 			$this->assertNotEmpty($data, 'Failed asserting that each user has a mail entry');
 			$this->assertSame(0, $skipped);
 		}
@@ -187,7 +187,7 @@ class MailQueueHandlerTest extends TestCase {
 		$this->mailQueueHandler->deleteSentItems($users, $maxTime);
 
 		foreach ($users as $user) {
-			list($data, $skipped) = $this->invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			list($data, $skipped) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
 			$this->assertEmpty($data, 'Failed to assert that all entries for the affected users have been deleted');
 			$this->assertSame(0, $skipped);
 		}
@@ -195,7 +195,7 @@ class MailQueueHandlerTest extends TestCase {
 	}
 
 	public function testGetItemsForUser() {
-		list($data, $skipped) = $this->invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200]);
+		list($data, $skipped) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200]);
 		$this->assertCount(2, $data, 'Failed to assert the user has 2 entries');
 		$this->assertSame(0, $skipped);
 
@@ -209,7 +209,7 @@ class MailQueueHandlerTest extends TestCase {
 			$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 160 + $i));
 		}
 
-		list($data, $skipped) = $this->invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200, 5]);
+		list($data, $skipped) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200, 5]);
 		$this->assertCount(5, $data, 'Failed to assert the user has 2 entries');
 		$this->assertSame(12, $skipped);
 	}
@@ -220,9 +220,22 @@ class MailQueueHandlerTest extends TestCase {
 		$userDisplayName = 'user two';
 		$email = $user . '@localhost';
 
+		$template = $this->createMock(IEMailTemplate::class);
 		$this->mailer->expects($this->once())
 			->method('send')
 			->with($this->message);
+		$this->mailer->expects($this->once())
+			->method('createEMailTemplate')
+			->willReturn($template);
+
+		$template->expects($this->once())
+			->method('addHeader');
+		$template->expects($this->once())
+			->method('addHeading');
+		$template->expects($this->once())
+			->method('addBodyText');
+		$template->expects($this->once())
+			->method('addFooter');
 
 		$this->message->expects($this->once())
 			->method('setTo')
@@ -234,7 +247,7 @@ class MailQueueHandlerTest extends TestCase {
 		$this->message->expects($this->once())
 			->method('setFrom');
 
-		$userObject = $this->getMock('OCP\IUser');
+		$userObject = $this->createMock(IUser::class);
 		$userObject->expects($this->any())
 			->method('getDisplayName')
 			->willReturn($userDisplayName);
@@ -272,7 +285,7 @@ class MailQueueHandlerTest extends TestCase {
 	protected function assertRemainingMailEntries(array $users, $maxTime, $explain) {
 		if (!empty($untouched)) {
 			foreach ($users as $user) {
-				list($data,) = $this->invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+				list($data,) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
 				$this->assertNotEmpty(
 					$data,
 					'Failed asserting that the remaining user ' . $user. ' still has mails in the queue ' . $explain
