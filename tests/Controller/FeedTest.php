@@ -26,27 +26,36 @@ use OCA\Activity\Controller\Feed;
 use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\Util;
+use OCP\IURLGenerator;
+use OCP\Activity\IManager;
+use OCP\IUserSession;
+use OCP\IRequest;
+use OCP\IConfig;
+use OCA\Activity\UserSettings;
+use OCA\Activity\GroupHelper;
+use OCA\Activity\Data;
+use OCP\IUser;
 
 class FeedTest extends TestCase {
-	/** @var \OCP\IConfig|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IConfig|\PHPUnit_Framework_MockObject_MockObject */
 	protected $config;
 
-	/** @var \OCP\IRequest|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IRequest|\PHPUnit_Framework_MockObject_MockObject */
 	protected $request;
 
-	/** @var \OCA\Activity\Data|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var Data|\PHPUnit_Framework_MockObject_MockObject */
 	protected $data;
 
-	/** @var \OCA\Activity\GroupHelper|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var GroupHelper|\PHPUnit_Framework_MockObject_MockObject */
 	protected $helper;
 
-	/** @var \OCA\Activity\UserSettings|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var UserSettings|\PHPUnit_Framework_MockObject_MockObject */
 	protected $userSettings;
 
-	/** @var \OCP\Activity\IManager|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IManager|\PHPUnit_Framework_MockObject_MockObject */
 	protected $manager;
 
-	/** @var \OCP\IUserSession|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IUserSession|\PHPUnit_Framework_MockObject_MockObject */
 	protected $session;
 
 	/** @var \OCP\IL10N */
@@ -58,29 +67,17 @@ class FeedTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
-		$this->data = $this->getMockBuilder('OCA\Activity\Data')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->helper = $this->getMockBuilder('OCA\Activity\GroupHelper')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->userSettings = $this->getMockBuilder('OCA\Activity\UserSettings')
-			->disableOriginalConstructor()
-			->getMock();
+		$this->data = $this->createMock(Data::class);
+		$this->helper = $this->createMock(GroupHelper::class);
+		$this->userSettings = $this->createMock(UserSettings::class);
 
-		$this->config = $this->getMock('OCP\IConfig');
-		$this->request = $this->getMock('OCP\IRequest');
-		$this->session = $this->getMockBuilder('OCP\IUserSession')
-			->disableOriginalConstructor()
-			->getMock();
-		$this->manager = $this->getMockBuilder('OCP\Activity\IManager')
-			->disableOriginalConstructor()
-			->getMock();
+		$this->config = $this->createMock(IConfig::class);
+		$this->request = $this->createMock(IRequest::class);
+		$this->session = $this->createMock(IUserSession::class);
+		$this->manager = $this->createMock(IManager::class);
 
-		/** @var $urlGenerator \OCP\IURLGenerator|\PHPUnit_Framework_MockObject_MockObject */
-		$urlGenerator = $this->getMockBuilder('OCP\IURLGenerator')
-			->disableOriginalConstructor()
-			->getMock();
+		/** @var $urlGenerator IURLGenerator|\PHPUnit_Framework_MockObject_MockObject */
+		$urlGenerator = $this->createMock(IURLGenerator::class);
 
 		$this->controller = new Feed(
 			'activity',
@@ -121,7 +118,7 @@ class FeedTest extends TestCase {
 		}
 
 		$templateResponse = $this->controller->show();
-		$this->assertTrue($templateResponse instanceof TemplateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
+		$this->assertInstanceOf(TemplateResponse::class, $templateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
 		$headers = $templateResponse->getHeaders();
 		$this->assertArrayHasKey('Content-Type', $headers);
@@ -152,7 +149,7 @@ class FeedTest extends TestCase {
 		}
 
 		$templateResponse = $this->controller->show();
-		$this->assertTrue($templateResponse instanceof TemplateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
+		$this->assertInstanceOf(TemplateResponse::class, $templateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
 		$headers = $templateResponse->getHeaders();
 		$this->assertArrayHasKey('Content-Type', $headers);
@@ -167,9 +164,7 @@ class FeedTest extends TestCase {
 	}
 
 	protected function mockUserSession($user) {
-		$mockUser = $this->getMockBuilder('\OCP\IUser')
-			->disableOriginalConstructor()
-			->getMock();
+		$mockUser = $this->createMock(IUser::class);
 		$mockUser->expects($this->any())
 			->method('getUID')
 			->willReturn($user);
