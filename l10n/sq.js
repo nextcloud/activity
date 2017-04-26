@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Veprimtari",
+    "An error occurred while loading activities" : "Ndodhi një gabim gjatë ngarkimit të aktiviteteve",
     "No activity yet" : "Ende pa veprimtari",
     "Load more activities" : "Ngarko më tepër veprimtari",
     "Copied!" : "U kopjua!",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Prurje veprimtarie personale për  %s",
     "Your feed URL is invalid" : "URL-ja për prurjen tuaj është e pavlefshme",
     "Your settings have been updated." : "Rregullimet tuaja u përditësuan",
+    "Settings have been updated." : "Konfigurimet janë përditësuar.",
     "Mail" : "Posta",
     "Stream" : "Rrjedhë",
     "All activities" : "Të gjitha aktivitetet",
@@ -40,6 +42,7 @@ OC.L10N.register(
     "Hourly" : "Çdo orë",
     "Daily" : "Përditë",
     "Weekly" : "Çdo javë",
+    "Settings" : "Konfigurimet",
     "Enable RSS feed" : "Aktivizoni Prurje RSS",
     "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
     "Files" : "Skedar"
