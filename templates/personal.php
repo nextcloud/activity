@@ -28,6 +28,8 @@ style('activity', 'settings');
 
 <form id="activity_notifications" class="section">
 	<h2><?php p($l->t('Activity')); ?></h2>
+	<p class="settings-hint"><?php p($l->t('Choose which activities you want to get an email notification for, and which should show up in the activity app.')); ?></p>
+
 	<table class="grid activitysettings">
 		<thead>
 			<tr>
