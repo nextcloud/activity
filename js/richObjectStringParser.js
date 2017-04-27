@@ -20,8 +20,8 @@
 
 		_emailTemplate: '<a class="email" href="mailto:{{id}}">{{name}}</a>',
 
-		_userTemplate: '<strong>{{name}}</strong>',
-		_userWithAvatarTemplate: '<div class="avatar" data-user="{{id}}" data-user-display-name="{{name}}"></div>',
+		_userLocalTemplate: '<span class="avatar-name-wrapper" data-user="{{id}}"><div class="avatar" data-user="{{id}}" data-user-display-name="{{name}}"></div><strong>{{name}}</strong></span>',
+		_userRemoteTemplate: '<strong>{{name}}</strong>',
 
 		_unknownTemplate: '<strong>{{name}}</strong>',
 		_unknownLinkTemplate: '<a href="{{link}}">{{name}}</a>',
@@ -83,11 +83,11 @@
 
 				case 'user':
 					if (!this.userTemplate) {
-						var template = this._userTemplate;
-						if (this.avatarsEnabled && _.isUndefined(parameter.server)) {
-							template = this._userWithAvatarTemplate + template;
+						if (_.isUndefined(parameter.server)) {
+							this.userTemplate = Handlebars.compile(this._userLocalTemplate);
+						} else{
+							this.userTemplate = Handlebars.compile(this._userRemoteTemplate);
 						}
-						this.userTemplate = Handlebars.compile(template);
 					}
 
 					return this.userTemplate(parameter);

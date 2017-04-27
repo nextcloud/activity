@@ -264,6 +264,11 @@ $(function(){
 				}
 			});
 
+			$element.find('.avatar-name-wrapper').each(function() {
+				var element = $(this);
+				element.contactsMenu(element.data('user'), 0, element.parent());
+			});
+
 			$element.find('.activity-more-link').click(function() {
 				var $moreElement = $(this),
 					activityId = $moreElement.closest('.box').data('activity-id'),
