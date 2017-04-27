@@ -220,6 +220,8 @@
 	margin-left: 5px;
 }
 
-.avatar-name-wrapper {
+.activitymessage .avatar-name-wrapper,
+.activitysubject .avatar-name-wrapper {
 	position: relative;
+	cursor: pointer;
 }
