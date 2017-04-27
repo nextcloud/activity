@@ -82,15 +82,18 @@
 					return this.emailTemplate(parameter);
 
 				case 'user':
-					if (!this.userTemplate) {
-						if (_.isUndefined(parameter.server)) {
-							this.userTemplate = Handlebars.compile(this._userLocalTemplate);
-						} else{
-							this.userTemplate = Handlebars.compile(this._userRemoteTemplate);
+					if (_.isUndefined(parameter.server)) {
+						if (!this.userLocalTemplate) {
+							this.userLocalTemplate = Handlebars.compile(this._userLocalTemplate);
 						}
+						return this.userLocalTemplate(parameter);
 					}
 
-					return this.userTemplate(parameter);
+					if (!this.userRemoteTemplate) {
+						this.userRemoteTemplate = Handlebars.compile(this._userRemoteTemplate);
+					}
+
+					return this.userRemoteTemplate(parameter);
 
 				default:
 					if (!_.isUndefined(parameter.link)) {
