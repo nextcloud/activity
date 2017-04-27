@@ -10,13 +10,11 @@
 	margin-bottom: 5px;
 	margin-left: 5px;
 	text-overflow: ellipsis;
-	overflow: hidden;
 }
 .activitymessage {
 	margin-left: 25px;
 	color:#666;
 	text-overflow: ellipsis;
-	overflow: hidden;
 }
 .activity-previews {
 	margin-left: 24px;
@@ -220,4 +218,10 @@
 	position: relative;
 	top: 3px;
 	margin-left: 5px;
+}
+
+.activitymessage .avatar-name-wrapper,
+.activitysubject .avatar-name-wrapper {
+	position: relative;
+	cursor: pointer;
 }
