@@ -212,6 +212,13 @@
 					element.avatar(element.data('user'), 21);
 				}
 			});
+			$el.find('.avatar-name-wrapper').each(function() {
+				var element = $(this);
+				var avatar = element.find('.avatar');
+				var label = element.find('strong');
+
+				$.merge(avatar, label).contactsMenu(element.data('user'), 0, element);
+			});
 			$el.find('.has-tooltip').tooltip({
 				placement: 'bottom'
 			});
