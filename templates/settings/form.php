@@ -28,9 +28,9 @@
 	<h2 class="icon-activity"><?php p($l->t('Activity')); ?></h2>
 	<p class="settings-hint">
 		<?php if ($_['setting'] === 'admin') {
-			p($l->t('Here you can configure the default activity settings for new users.'));
+			p($l->t('Configure the default activity settings for new users.'));
 		} else {
-			p($l->t('Here you can configure for which activities you want to receive emails and which should show up in your feed.'));
+			p($l->t('Choose for which activities you want to get an email notification, and which should show up in the activity app stream.'));
 		} ?>
 	</p>
 
