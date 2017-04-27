@@ -25,7 +25,7 @@
 ?>
 
 <form id="activity_notifications" class="section">
-	<h2 class="icon-activity"><?php p($l->t('Activity')); ?></h2>
+	<h2 class="icon-activity" data-anchor-name="activity"><?php p($l->t('Activity')); ?></h2>
 	<p class="settings-hint">
 		<?php if ($_['setting'] === 'admin') {
 			p($l->t('Configure the default activity settings for new users.'));
