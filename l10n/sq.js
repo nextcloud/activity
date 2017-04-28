@@ -33,8 +33,6 @@ OC.L10N.register(
     "%s and %s" : "%s dhe %s",
     "Activity" : "Veprimtari",
     "Activity feed" : "Prurje veprimtarie",
-    "Here you can configure the default activity settings for new users." : "Këtu mund të konfiguroni cilësimet e aktivitetit të paracaktuar për përdoruesit e rinj.",
-    "Here you can configure for which activities you want to receive emails and which should show up in your feed." : "Këtu mund të konfiguroni aktivitetet që dëshironi të merrni email dhe të cilat duhet të shfaqen në faqen tuaj.",
     "List your own actions in the stream" : "Listo veprimet e tua në rrjedhë",
     "Notify about your own actions via email" : "Njoftoni me email mbi veprimet tuaja",
     "You need to set up your email address before you can receive notification emails." : "Kërkohet të caktoni adresën tuaj email, përpara se të mund të merrni email-e njoftimesh.",

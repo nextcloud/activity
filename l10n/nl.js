@@ -33,8 +33,6 @@ OC.L10N.register(
     "%s and %s" : "%s en %s",
     "Activity" : "Activiteit",
     "Activity feed" : "Activiteitenkanaal",
-    "Here you can configure the default activity settings for new users." : "Hier kun je de basis activiteiten van nieuwe gebruikers instellen.",
-    "Here you can configure for which activities you want to receive emails and which should show up in your feed." : "Hier kun je mail notificatie en activiteitenkanaal van je activiteiten instellen.",
     "List your own actions in the stream" : "Toon je eigen acties in het overzicht",
     "Notify about your own actions via email" : "Melding van je eigen acties via e-mail",
     "You need to set up your email address before you can receive notification emails." : "Je moet je e-mailadres instellen voordat je meldingen kan ontvangen.",

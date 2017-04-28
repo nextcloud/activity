@@ -33,8 +33,6 @@ OC.L10N.register(
     "%s and %s" : "%s ja %s",
     "Activity" : "Toimet",
     "Activity feed" : "Toiminnan syöte",
-    "Here you can configure the default activity settings for new users." : "Tässä voit määrittää uusien käyttäjien oletustoimien asetukset.",
-    "Here you can configure for which activities you want to receive emails and which should show up in your feed." : "Tässä voit valita, mitä toimia haluat vastaanottaa sähköpostitse ja minkä toimien tulisi näkyä syötteessä.",
     "List your own actions in the stream" : "Listaa omat toimet luettelossa",
     "Notify about your own actions via email" : "Ilmoita omista toimista sähköpostitse",
     "You need to set up your email address before you can receive notification emails." : "Aseta sähköpostiosoite, jotta voit vastaanottaa sähköposti-ilmoituksia.",

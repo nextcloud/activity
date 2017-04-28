@@ -31,8 +31,6 @@
     "%s and %s" : "%s и %s",
     "Activity" : "Событие",
     "Activity feed" : "Лента событий",
-    "Here you can configure the default activity settings for new users." : "Здесь можно задать настройки событий по умолчанию для новых пользователей.",
-    "Here you can configure for which activities you want to receive emails and which should show up in your feed." : "Здесь можно настроить параметры уведомлений для событий — какие отправлять по email и какие выводить в ленте.",
     "List your own actions in the stream" : "Показывать ваши действия в потоке",
     "Notify about your own actions via email" : "Уведомлять по почте о ваших действиях",
     "You need to set up your email address before you can receive notification emails." : "Для получения уведомлений укажите свой адрес электронной почты в настройках.",
