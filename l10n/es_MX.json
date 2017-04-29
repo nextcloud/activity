@@ -33,6 +33,8 @@
     "%s and %s" : "%s y %s",
     "Activity" : "Actividad",
     "Activity feed" : "Fuente de actividad",
+    "Configure the default activity settings for new users." : "Configurar los ajustes de las actividades predeterminadas para usuarios nuevos. ",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Seleccione las actividades para las cuales desea obtener una notificación por correo electrónico y cuales deben mostrarse en el flujo de la aplicación actividades.",
     "List your own actions in the stream" : "Enlistar sus propias acciones en el flujo",
     "Notify about your own actions via email" : "Notificar de sus propias acciones vía correo electrónico",
     "You need to set up your email address before you can receive notification emails." : "Necesita configurar su dirección de correo electrónico antes de que pueda recibir correos de notificación",

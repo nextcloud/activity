@@ -35,6 +35,8 @@ OC.L10N.register(
     "%s and %s" : "%s e %s",
     "Activity" : "Atividade",
     "Activity feed" : "Feed de atividade",
+    "Configure the default activity settings for new users." : "Definir as configurações de atividade padrões para novos usuários.",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Escolher para quais atividades você quer receber uma notificação por email e quais devem ser mostradas no fluxo de atividade do aplicativo.",
     "List your own actions in the stream" : "Liste suas próprias ações no fluxo de dados",
     "Notify about your own actions via email" : "Notificar suas próprias ações por email",
     "You need to set up your email address before you can receive notification emails." : "Você precisa configurar o endereço de email antes que você possa receber emails de notificação.",
