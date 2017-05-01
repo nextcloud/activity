@@ -33,6 +33,8 @@
     "%s and %s" : "%s ve %s",
     "Activity" : "İşlem",
     "Activity feed" : "İşlem akışı",
+    "Configure the default activity settings for new users." : "Yeni kullanıcılar için varsayılan işlem ayarlarını yapın.",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "E-posta bildirimlerinin gönderilmesini ve uygulama işlem akışında yer almasını istediğiniz işlemleri seçin.",
     "List your own actions in the stream" : "Akıştaki kendi işlemlerinizi görüntüleyin",
     "Notify about your own actions via email" : "Kendi işlemleriniz e-posta ile bildirilsin",
     "You need to set up your email address before you can receive notification emails." : "Bildirim e-postalarını alabilmek için e-posta adresinizi belirtmelisiniz.",
