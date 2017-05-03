@@ -1,5 +1,5 @@
 { "translations": {
-    "Activities" : "نشاطات",
+    "Activities" : "النشاطات",
     "No activity yet" : "لا يوجد أي أنشطة حتى الأن",
     "Load more activities" : "تحميل المزيد من النشاطات",
     "Copied!" : "تم النسخ",
@@ -36,7 +36,7 @@
     "Hourly" : "مرة كل ساعة",
     "Daily" : "يومي",
     "Weekly" : "أسبوعي",
-    "Settings" : "إعدادات",
+    "Settings" : "الإعدادات",
     "Enable RSS feed" : "تفعيل خاصية الخلاصات",
     "No more events to load" : "لا توجد أي أحداث للتحميل",
     "Files" : "الملفات"

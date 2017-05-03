@@ -33,6 +33,8 @@
     "%s and %s" : "%s og %s",
     "Activity" : "Aktivitet",
     "Activity feed" : "Aktivitetsstrøm",
+    "Configure the default activity settings for new users." : "Konfigurer standard aktivitetsinnstillinger for nye brukere.",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Velg hvilke aktiviteter du ha e-mailpåminnelse om, og hvilke som skal vises i aktivitetsapp- strømmen.",
     "List your own actions in the stream" : "List dine egne handlinger i strømmen",
     "Notify about your own actions via email" : "Varsle om dine egne handliger via e-post",
     "You need to set up your email address before you can receive notification emails." : "Du må sette opp e-postadressen din før du kan motta varslinger på e-post.",

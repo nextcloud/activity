@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "نشاطات",
+    "Activities" : "النشاطات",
     "No activity yet" : "لا يوجد أي أنشطة حتى الأن",
     "Load more activities" : "تحميل المزيد من النشاطات",
     "Copied!" : "تم النسخ",
@@ -38,7 +38,7 @@ OC.L10N.register(
     "Hourly" : "مرة كل ساعة",
     "Daily" : "يومي",
     "Weekly" : "أسبوعي",
-    "Settings" : "إعدادات",
+    "Settings" : "الإعدادات",
     "Enable RSS feed" : "تفعيل خاصية الخلاصات",
     "No more events to load" : "لا توجد أي أحداث للتحميل",
     "Files" : "الملفات"
