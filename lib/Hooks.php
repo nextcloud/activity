@@ -96,10 +96,6 @@ class Hooks {
 	 */
 	public static function onLoadFilesAppScripts() {
 		Util::addStyle('activity', 'style');
-		Util::addScript('activity', 'richObjectStringParser');
-		Util::addScript('activity', 'activitymodel');
-		Util::addScript('activity', 'activitycollection');
-		Util::addScript('activity', 'activitytabview');
-		Util::addScript('activity', 'filesplugin');
+		Util::addScript('activity', 'activity-sidebar');
 	}
 }
