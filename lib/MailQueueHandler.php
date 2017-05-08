@@ -140,11 +140,12 @@ class MailQueueHandler {
 	 *
 	 * @param int $limit Number of users we want to send an email to
 	 * @param int $sendTime The latest send time
+	 * @param bool $forceSending Ignores latest send and just sends all emails
 	 * @return int Number of users we sent an email to
 	 */
-	public function sendEmails($limit, $sendTime) {
+	public function sendEmails($limit, $sendTime, $forceSending = false) {
 		// Get all users which should receive an email
-		$affectedUsers = $this->getAffectedUsers($limit, $sendTime);
+		$affectedUsers = $this->getAffectedUsers($limit, $sendTime, $forceSending);
 		if (empty($affectedUsers)) {
 			// No users found to notify, mission abort
 			return 0;
@@ -191,24 +192,33 @@ class MailQueueHandler {
 	 *
 	 * @param int|null $limit
 	 * @param int $latestSend
+	 * @param bool $forceSending
 	 * @return array
 	 */
-	protected function getAffectedUsers($limit, $latestSend) {
+	protected function getAffectedUsers($limit, $latestSend, $forceSending) {
 		$limit = (!$limit) ? null : (int) $limit;
 
-		$query = $this->connection->prepare(
-			'SELECT `amq_affecteduser`, MIN(`amq_latest_send`) AS `amq_trigger_time` '
-			. ' FROM `*PREFIX*activity_mq` '
-			. ' WHERE `amq_latest_send` < ? '
-			. ' GROUP BY `amq_affecteduser` '
-			. ' ORDER BY `amq_trigger_time` ASC',
-			$limit);
-		$query->execute(array($latestSend));
+		$query = $this->connection->getQueryBuilder();
+		$query->select('amq_affecteduser')
+			->selectAlias($query->createFunction('MIN(' . $query->getColumnName('amq_latest_send') . ')'), 'amq_trigger_time')
+			->from('activity_mq')
+			->groupBy('amq_affecteduser')
+			->orderBy('amq_trigger_time', 'ASC')
+			->setMaxResults($limit);
+
+		if ($forceSending) {
+			$query->where($query->expr()->lt('amq_timestamp', $query->createNamedParameter($latestSend)));
+		} else {
+			$query->where($query->expr()->lt('amq_latest_send', $query->createNamedParameter($latestSend)));
+		}
+
+		$result = $query->execute();
 
 		$affectedUsers = array();
-		while ($row = $query->fetch()) {
+		while ($row = $result->fetch()) {
 			$affectedUsers[] = $row['amq_affecteduser'];
 		}
+		$result->closeCursor();
 
 		return $affectedUsers;
 	}
