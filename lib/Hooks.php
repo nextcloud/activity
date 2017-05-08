@@ -96,6 +96,6 @@ class Hooks {
 	 */
 	public static function onLoadFilesAppScripts() {
 		Util::addStyle('activity', 'style');
-		Util::addScript('activity', 'files-app-scripts');
+		Util::addScript('activity', 'activity-sidebar');
 	}
 }
