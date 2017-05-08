@@ -141,11 +141,12 @@ class MailQueueHandler {
 	 * @param int $limit Number of users we want to send an email to
 	 * @param int $sendTime The latest send time
 	 * @param bool $forceSending Ignores latest send and just sends all emails
+	 * @param null|int $restrictEmails null or one of UserSettings::EMAIL_SEND_*
 	 * @return int Number of users we sent an email to
 	 */
-	public function sendEmails($limit, $sendTime, $forceSending = false) {
+	public function sendEmails($limit, $sendTime, $forceSending = false, $restrictEmails = null) {
 		// Get all users which should receive an email
-		$affectedUsers = $this->getAffectedUsers($limit, $sendTime, $forceSending);
+		$affectedUsers = $this->getAffectedUsers($limit, $sendTime, $forceSending, $restrictEmails);
 		if (empty($affectedUsers)) {
 			// No users found to notify, mission abort
 			return 0;
@@ -193,23 +194,35 @@ class MailQueueHandler {
 	 * @param int|null $limit
 	 * @param int $latestSend
 	 * @param bool $forceSending
+	 * @param int|null $restrictEmails
 	 * @return array
 	 */
-	protected function getAffectedUsers($limit, $latestSend, $forceSending) {
-		$limit = (!$limit) ? null : (int) $limit;
-
+	protected function getAffectedUsers($limit, $latestSend, $forceSending, $restrictEmails) {
 		$query = $this->connection->getQueryBuilder();
 		$query->select('amq_affecteduser')
 			->selectAlias($query->createFunction('MIN(' . $query->getColumnName('amq_latest_send') . ')'), 'amq_trigger_time')
 			->from('activity_mq')
 			->groupBy('amq_affecteduser')
-			->orderBy('amq_trigger_time', 'ASC')
-			->setMaxResults($limit);
+			->orderBy('amq_trigger_time', 'ASC');
+
+		if ($limit > 0) {
+			$query->setMaxResults($limit);
+		}
 
 		if ($forceSending) {
 			$query->where($query->expr()->lt('amq_timestamp', $query->createNamedParameter($latestSend)));
 		} else {
 			$query->where($query->expr()->lt('amq_latest_send', $query->createNamedParameter($latestSend)));
+		}
+
+		if ($restrictEmails !== null) {
+			if ($restrictEmails === UserSettings::EMAIL_SEND_HOURLY) {
+				$query->where($query->expr()->lte('amq_timestamp', $query->createFunction($query->getColumnName('amq_latest_send') . ' + ' . 3600)));
+			} else if ($restrictEmails === UserSettings::EMAIL_SEND_DAILY) {
+				$query->where($query->expr()->eq('amq_timestamp', $query->createFunction($query->getColumnName('amq_latest_send') . ' + ' . 3600 * 24)));
+			} else if ($restrictEmails === UserSettings::EMAIL_SEND_WEEKLY) {
+				$query->where($query->expr()->eq('amq_timestamp', $query->createFunction($query->getColumnName('amq_latest_send') . ' + ' . 3600 * 24 * 7)));
+			}
 		}
 
 		$result = $query->execute();
