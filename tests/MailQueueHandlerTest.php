@@ -25,7 +25,9 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\Extension\LegacyParser;
 use OCA\Activity\MailQueueHandler;
+use OCP\IConfig;
 use OCP\IL10N;
+use OCP\ILogger;
 use OCP\L10N\IFactory;
 use OCP\Activity\IEvent;
 use OCP\IUserManager;
@@ -72,6 +74,12 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject|LegacyParser */
 	protected $legacyParser;
 
+	/** @var IConfig|\PHPUnit_Framework_MockObject_MockObject */
+	protected $config;
+
+	/** @var ILogger|\PHPUnit_Framework_MockObject_MockObject */
+	protected $logger;
+
 	protected function setUp() {
 		parent::setUp();
 
@@ -79,6 +87,8 @@ class MailQueueHandlerTest extends TestCase {
 		$this->userManager = $this->createMock(IUserManager::class);
 		$this->lFactory = $this->createMock(IFactory::class);
 		$this->legacyParser = $this->createMock(LegacyParser::class);
+		$this->config = $this->createMock(IConfig::class);
+		$this->logger = $this->createMock(ILogger::class);
 
 		$connection = \OC::$server->getDatabaseConnection();
 		$query = $connection->prepare('INSERT INTO `*PREFIX*activity_mq` '
@@ -140,7 +150,9 @@ class MailQueueHandlerTest extends TestCase {
 			$this->userManager,
 			$this->lFactory,
 			$this->activityManager,
-			$this->legacyParser
+			$this->legacyParser,
+			$this->config,
+			$this->logger
 		);
 	}
 
@@ -173,7 +185,7 @@ class MailQueueHandlerTest extends TestCase {
 		$maxTime = 200;
 
 		$this->assertRemainingMailEntries($untouched, $maxTime, 'before doing anything');
-		$users = $this->mailQueueHandler->getAffectedUsers($limit, $maxTime);
+		$users = self::invokePrivate($this->mailQueueHandler, 'getAffectedUsers', [$limit, $maxTime, false, null]);
 		$this->assertRemainingMailEntries($untouched, $maxTime, 'after getting the affected users');
 
 		$this->assertEquals($affected, $users);
@@ -184,7 +196,7 @@ class MailQueueHandlerTest extends TestCase {
 		}
 		$this->assertRemainingMailEntries($untouched, $maxTime, 'after getting the affected items');
 
-		$this->mailQueueHandler->deleteSentItems($users, $maxTime);
+		self::invokePrivate($this->mailQueueHandler, 'deleteSentItems', [$users, $maxTime]);
 
 		foreach ($users as $user) {
 			list($data, $skipped) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
@@ -204,7 +216,7 @@ class MailQueueHandlerTest extends TestCase {
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 
-		$app = $this->getUniqueID('MailQueueHandlerTest');
+		$app = self::getUniqueID('MailQueueHandlerTest');
 		for ($i = 0; $i < 15; $i++) {
 			$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 160 + $i));
 		}
@@ -269,12 +281,12 @@ class MailQueueHandlerTest extends TestCase {
 				[null]
 			);
 
-		$users = $this->mailQueueHandler->getAffectedUsers(1, $maxTime);
+		$users = self::invokePrivate($this->mailQueueHandler, 'getAffectedUsers', [1, $maxTime, false, null]);
 		$this->assertEquals([$user], $users);
-		$this->mailQueueHandler->sendEmailToUser($user, $email, 'en', 'UTC', $maxTime);
+		self::invokePrivate($this->mailQueueHandler, 'sendEmailToUser', [$user, $email, 'en', 'UTC', $maxTime]);
 
 		// Invalid user, no object no email
-		$this->mailQueueHandler->sendEmailToUser($user . $user, $email, 'en', 'UTC', $maxTime);
+		self::invokePrivate($this->mailQueueHandler, 'sendEmailToUser', [$user . $user, $email, 'en', 'UTC', $maxTime]);
 	}
 
 	/**

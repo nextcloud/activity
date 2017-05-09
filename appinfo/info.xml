@@ -58,4 +58,8 @@
 		<job>OCA\Activity\BackgroundJob\EmailNotification</job>
 		<job>OCA\Activity\BackgroundJob\ExpireActivities</job>
 	</background-jobs>
+
+	<commands>
+		<command>OCA\Activity\Command\SendEmails</command>
+	</commands>
 </info>

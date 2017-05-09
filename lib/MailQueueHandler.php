@@ -28,14 +28,15 @@ use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\Defaults;
+use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
+use OCP\ILogger;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserManager;
 use OCP\L10N\IFactory;
 use OCP\Mail\IMailer;
-use OCP\Template;
 use OCP\Util;
 
 /**
@@ -45,6 +46,11 @@ use OCP\Util;
  * @package OCA\Activity
  */
 class MailQueueHandler {
+
+	const CLI_EMAIL_BATCH_SIZE = 500;
+
+	const WEB_EMAIL_BATCH_SIZE = 25;
+
 	/** Number of entries we want to list in the email */
 	const ENTRY_LIMIT = 200;
 
@@ -84,6 +90,12 @@ class MailQueueHandler {
 	/** @var LegacyParser */
 	protected $legacyParser;
 
+	/** @var IConfig */
+	protected $config;
+
+	/** @var ILogger */
+	protected $logger;
+
 	/**
 	 * Constructor
 	 *
@@ -96,6 +108,8 @@ class MailQueueHandler {
 	 * @param IFactory $lFactory
 	 * @param IManager $activityManager
 	 * @param LegacyParser $legacyParser
+	 * @param IConfig $config
+	 * @param ILogger $logger
 	 */
 	public function __construct(IDateTimeFormatter $dateFormatter,
 								IDBConnection $connection,
@@ -105,7 +119,9 @@ class MailQueueHandler {
 								IUserManager $userManager,
 								IFactory $lFactory,
 								IManager $activityManager,
-								LegacyParser $legacyParser) {
+								LegacyParser $legacyParser,
+								IConfig $config,
+								ILogger $logger) {
 		$this->dateFormatter = $dateFormatter;
 		$this->connection = $connection;
 		$this->dataHelper = $dataHelper;
@@ -115,6 +131,61 @@ class MailQueueHandler {
 		$this->lFactory = $lFactory;
 		$this->activityManager = $activityManager;
 		$this->legacyParser = $legacyParser;
+		$this->config = $config;
+		$this->logger = $logger;
+	}
+
+	/**
+	 * Send an email to {$limit} users
+	 *
+	 * @param int $limit Number of users we want to send an email to
+	 * @param int $sendTime The latest send time
+	 * @param bool $forceSending Ignores latest send and just sends all emails
+	 * @param null|int $restrictEmails null or one of UserSettings::EMAIL_SEND_*
+	 * @return int Number of users we sent an email to
+	 */
+	public function sendEmails($limit, $sendTime, $forceSending = false, $restrictEmails = null) {
+		// Get all users which should receive an email
+		$affectedUsers = $this->getAffectedUsers($limit, $sendTime, $forceSending, $restrictEmails);
+		if (empty($affectedUsers)) {
+			// No users found to notify, mission abort
+			return 0;
+		}
+
+		$userLanguages = $this->config->getUserValueForUsers('core', 'lang', $affectedUsers);
+		$userTimezones = $this->config->getUserValueForUsers('core', 'timezone', $affectedUsers);
+		$userEmails = $this->config->getUserValueForUsers('settings', 'email', $affectedUsers);
+
+		// Send Email
+		$default_lang = $this->config->getSystemValue('default_language', 'en');
+		$defaultTimeZone = date_default_timezone_get();
+
+		$deleteItemsForUsers = [];
+		foreach ($affectedUsers as $user) {
+			if (empty($userEmails[$user])) {
+				// The user did not setup an email address
+				// So we will not send an email :(
+				$this->logger->debug("Couldn't send notification email to user '{user}' (email address isn't set for that user)", ['user' => $user, 'app' => 'activity']);
+				continue;
+			}
+
+			$language = (!empty($userLanguages[$user])) ? $userLanguages[$user] : $default_lang;
+			$timezone = (!empty($userTimezones[$user])) ? $userTimezones[$user] : $defaultTimeZone;
+			try {
+				if ($this->sendEmailToUser($user, $userEmails[$user], $language, $timezone, $sendTime)) {
+					$deleteItemsForUsers[] = $user;
+				} else {
+					$this->logger->debug("Failed sending activity email to user '{user}'.", ['user' => $user, 'app' => 'activity']);
+				}
+			} catch (\UnexpectedValueException $e) {
+				// continue;
+			}
+		}
+
+		// Delete all entries we dealt with
+		$this->deleteSentItems($deleteItemsForUsers, $sendTime);
+
+		return count($affectedUsers);
 	}
 
 	/**
@@ -122,24 +193,45 @@ class MailQueueHandler {
 	 *
 	 * @param int|null $limit
 	 * @param int $latestSend
+	 * @param bool $forceSending
+	 * @param int|null $restrictEmails
 	 * @return array
 	 */
-	public function getAffectedUsers($limit, $latestSend) {
-		$limit = (!$limit) ? null : (int) $limit;
+	protected function getAffectedUsers($limit, $latestSend, $forceSending, $restrictEmails) {
+		$query = $this->connection->getQueryBuilder();
+		$query->select('amq_affecteduser')
+			->selectAlias($query->createFunction('MIN(' . $query->getColumnName('amq_latest_send') . ')'), 'amq_trigger_time')
+			->from('activity_mq')
+			->groupBy('amq_affecteduser')
+			->orderBy('amq_trigger_time', 'ASC');
 
-		$query = $this->connection->prepare(
-			'SELECT `amq_affecteduser`, MIN(`amq_latest_send`) AS `amq_trigger_time` '
-			. ' FROM `*PREFIX*activity_mq` '
-			. ' WHERE `amq_latest_send` < ? '
-			. ' GROUP BY `amq_affecteduser` '
-			. ' ORDER BY `amq_trigger_time` ASC',
-			$limit);
-		$query->execute(array($latestSend));
+		if ($limit > 0) {
+			$query->setMaxResults($limit);
+		}
+
+		if ($forceSending) {
+			$query->where($query->expr()->lt('amq_timestamp', $query->createNamedParameter($latestSend)));
+		} else {
+			$query->where($query->expr()->lt('amq_latest_send', $query->createNamedParameter($latestSend)));
+		}
+
+		if ($restrictEmails !== null) {
+			if ($restrictEmails === UserSettings::EMAIL_SEND_HOURLY) {
+				$query->where($query->expr()->lte('amq_timestamp', $query->createFunction($query->getColumnName('amq_latest_send') . ' + ' . 3600)));
+			} else if ($restrictEmails === UserSettings::EMAIL_SEND_DAILY) {
+				$query->where($query->expr()->eq('amq_timestamp', $query->createFunction($query->getColumnName('amq_latest_send') . ' + ' . 3600 * 24)));
+			} else if ($restrictEmails === UserSettings::EMAIL_SEND_WEEKLY) {
+				$query->where($query->expr()->eq('amq_timestamp', $query->createFunction($query->getColumnName('amq_latest_send') . ' + ' . 3600 * 24 * 7)));
+			}
+		}
+
+		$result = $query->execute();
 
 		$affectedUsers = array();
-		while ($row = $query->fetch()) {
+		while ($row = $result->fetch()) {
 			$affectedUsers[] = $row['amq_affecteduser'];
 		}
+		$result->closeCursor();
 
 		return $affectedUsers;
 	}
@@ -228,8 +320,9 @@ class MailQueueHandler {
 	 * @param string $timezone Selected timezone of the recipient
 	 * @param int $maxTime
 	 * @return bool True if the entries should be removed, false otherwise
+	 * @throws \UnexpectedValueException
 	 */
-	public function sendEmailToUser($userName, $email, $lang, $timezone, $maxTime) {
+	protected function sendEmailToUser($userName, $email, $lang, $timezone, $maxTime) {
 		$user = $this->userManager->get($userName);
 		if (!$user instanceof IUser) {
 			return true;
@@ -249,10 +342,14 @@ class MailQueueHandler {
 
 		foreach ($mailData as $activity) {
 			$event = $this->activityManager->generateEvent();
-			$event->setApp($activity['amq_appid'])
-				->setType($activity['amq_type'])
-				->setTimestamp((int) $activity['amq_timestamp'])
-				->setSubject($activity['amq_subject'], json_decode($activity['amq_subjectparams'], true));
+			try {
+				$event->setApp($activity['amq_appid'])
+					->setType($activity['amq_type'])
+					->setTimestamp((int) $activity['amq_timestamp'])
+					->setSubject($activity['amq_subject'], json_decode($activity['amq_subjectparams'], true));
+			} catch (\InvalidArgumentException $e) {
+				continue;
+			}
 
 			$relativeDateTime = $this->dateFormatter->formatDateTimeRelativeDay(
 				$activity['amq_timestamp'],
@@ -323,7 +420,7 @@ class MailQueueHandler {
 	 * @param array $affectedUsers
 	 * @param int $maxTime
 	 */
-	public function deleteSentItems(array $affectedUsers, $maxTime) {
+	protected function deleteSentItems(array $affectedUsers, $maxTime) {
 		if (empty($affectedUsers)) {
 			return;
 		}

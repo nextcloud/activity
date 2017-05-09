@@ -51,57 +51,14 @@ class EmailNotificationTest extends TestCase {
 	public function testConstructAndRun($isCLI) {
 		$backgroundJob = new EmailNotification(
 			$this->createMock(MailQueueHandler::class),
-			$this->createMock(IConfig::class),
-			$this->createMock(ILogger::class),
 			$isCLI
 		);
 
 		$jobList = $this->createMock(IJobList::class);
+		$logger = $this->createMock(ILogger::class);
 
 		/** @var \OC\BackgroundJob\JobList $jobList */
-		$backgroundJob->execute($jobList);
+		$backgroundJob->execute($jobList, $logger);
 		$this->assertTrue(true);
-	}
-
-	public function testRunStep() {
-		$mailQueueHandler = $this->createMock(MailQueueHandler::class);
-		$config = $this->createMock(IConfig::class);
-		$backgroundJob = new EmailNotification(
-			$mailQueueHandler,
-			$config,
-			$this->createMock(ILogger::class),
-			true
-		);
-
-		$mailQueueHandler->expects($this->any())
-			->method('getAffectedUsers')
-			->with(2, 200)
-			->willReturn([
-				'test1',
-				'test2',
-			]);
-		$mailQueueHandler->expects($this->once())
-			->method('sendEmailToUser')
-			->with('test1', 'test1@localhost', 'de', date_default_timezone_get(), $this->anything());
-		$config->expects($this->any())
-			->method('getUserValueForUsers')
-			->willReturnMap([
-				['settings', 'email', [
-					'test1',
-					'test2',
-				], [
-					'test1' => 'test1@localhost',
-					'test2' => '',
-				]],
-				['core', 'lang', [
-					'test1',
-					'test2',
-				], [
-					'test1' => 'de',
-					'test2' => 'en',
-				]]
-			]);
-
-		$this->assertEquals(2, self::invokePrivate($backgroundJob, 'runStep', [2, 200]));
 	}
 }
