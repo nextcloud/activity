@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Attività",
+    "An error occurred while loading activities" : "E' avvenuto un errore durante il caricamento delle attività",
     "No activity yet" : "Ancora nessuna attività",
     "Load more activities" : "Carica altre attività",
     "Copied!" : "Copiato!",
@@ -33,6 +34,8 @@ OC.L10N.register(
     "%s and %s" : "%s e %s",
     "Activity" : "Attività",
     "Activity feed" : "Fonte delle attività",
+    "Configure the default activity settings for new users." : "Configura per i nuovi utenti le impostazioni di default delle attività",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Scegli per quali attività desideri ricevere un email di notifica, e quali devono essere mostrate nel flusso dell'app delle attività",
     "List your own actions in the stream" : "Elenca le tue azioni nel flusso",
     "Notify about your own actions via email" : "Notifica le tue azioni tramite email",
     "You need to set up your email address before you can receive notification emails." : "Devi impostare l'indirizzo del tuo utente prima di poter ricevere le email di notifica.",
