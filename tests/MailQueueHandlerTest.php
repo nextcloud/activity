@@ -185,7 +185,7 @@ class MailQueueHandlerTest extends TestCase {
 		$maxTime = 200;
 
 		$this->assertRemainingMailEntries($untouched, $maxTime, 'before doing anything');
-		$users = self::invokePrivate($this->mailQueueHandler, 'getAffectedUsers', [$limit, $maxTime]);
+		$users = self::invokePrivate($this->mailQueueHandler, 'getAffectedUsers', [$limit, $maxTime, false, null]);
 		$this->assertRemainingMailEntries($untouched, $maxTime, 'after getting the affected users');
 
 		$this->assertEquals($affected, $users);
@@ -281,7 +281,7 @@ class MailQueueHandlerTest extends TestCase {
 				[null]
 			);
 
-		$users = self::invokePrivate($this->mailQueueHandler, 'getAffectedUsers', [1, $maxTime]);
+		$users = self::invokePrivate($this->mailQueueHandler, 'getAffectedUsers', [1, $maxTime, false, null]);
 		$this->assertEquals([$user], $users);
 		self::invokePrivate($this->mailQueueHandler, 'sendEmailToUser', [$user, $email, 'en', 'UTC', $maxTime]);
 
