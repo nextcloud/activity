@@ -207,6 +207,7 @@ class FactoryTest extends TestCase {
 		return [
 			['base', 'OCA\Activity\Formatter\BaseFormatter'],
 			['file', 'OCA\Activity\Formatter\FileFormatter'],
+			['email', 'OCA\Activity\Formatter\EmailFormatter'],
 			['username', 'OCA\Activity\Formatter\UserFormatter'],
 			['federated_cloud_id', 'OCA\Activity\Formatter\CloudIDFormatter'],
 		];
