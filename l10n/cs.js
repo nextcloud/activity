@@ -29,6 +29,7 @@ OC.L10N.register(
     "Hello %s" : "Ahoj %s",
     "Hello %s," : "Vítejte %s,",
     "There was some activity at %s" : "Na %s došlo k něaké aktivitě",
+    "_and %n more _::_and %n more _" : ["a %n další","a %n další","a %n další"],
     "Activity notification" : "Upozornění na aktivity",
     ", " : ", ",
     "%s and %s" : "%s a %s",
