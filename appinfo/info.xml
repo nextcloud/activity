@@ -21,13 +21,13 @@
 		<filesystem/>
 	</types>
 
-	<documentation>
-		<admin>https://docs.nextcloud.org/server/11/admin_manual/configuration_server/activity_configuration.html</admin>
-	</documentation>
 	<website>https://github.com/nextcloud/activity/</website>
 	<bugs>https://github.com/nextcloud/activity/issues</bugs>
 	<repository type="git">https://github.com/nextcloud/activity.git</repository>
 
+	<documentation>
+		<admin>https://docs.nextcloud.org/server/12/admin_manual/configuration_server/activity_configuration.html</admin>
+	</documentation>
 	<dependencies>
 		<nextcloud min-version="12" max-version="12" />
 	</dependencies>
