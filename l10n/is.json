@@ -33,6 +33,8 @@
     "%s and %s" : "%s og %s",
     "Activity" : "Virkni",
     "Activity feed" : "Virkniveita",
+    "Configure the default activity settings for new users." : "Ákvarðaðu sjálfgefnar virknistillingar fyrir nýja notendur.",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Ákvarðaðu fyrir hvaða virkniaðgerðir þú munt fá tölvupóst sem ætti að birtast í fréttastreyminu þínu.",
     "List your own actions in the stream" : "Telja upp þínar eigin aðgerðir í streyminu",
     "Notify about your own actions via email" : "Tilkynna um þína eigin virkni með tölvupósti",
     "You need to set up your email address before you can receive notification emails." : "Þú verður að gefa upp netfangið þitt svo að þú farir að fá tilkynningapósta.",
