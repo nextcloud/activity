@@ -7,7 +7,7 @@ OC.L10N.register(
     "Load more activities" : "Įkelti daugiau veiklų",
     "Copied!" : "Nukopijuota!",
     "Not supported!" : "Nepalaikoma!",
-    "Press ⌘-C to copy." : "Paspauskite ⌘-C, kad nukopijuotumėte.",
+    "Press ⌘-C to copy." : "Norėdami nukopijuoti, paspauskite ⌘-C.",
     "Press Ctrl-C to copy." : "Paspauskite Ctrl-C, kad nukopijuotumėte.",
     "{name} (invisible)" : "{name} (nematomas)",
     "{name} (restricted)" : "{name} (apribotas)",
