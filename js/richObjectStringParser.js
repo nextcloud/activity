@@ -23,6 +23,12 @@
 		_userLocalTemplate: '<span class="avatar-name-wrapper" data-user="{{id}}"><div class="avatar" data-user="{{id}}" data-user-display-name="{{name}}"></div><strong>{{name}}</strong></span>',
 		_userRemoteTemplate: '<strong>{{name}}</strong>',
 
+		_openGraphTemplate: '{{#if link}}<a href="{{link}}">{{/if}}<div id="opengraph-{{id}}" class="opengraph">' +
+		'{{#if thumb}}<div class="opengraph-thumb" style="background-image: url(\'{{thumb}}\')"></div>{{/if}}' +
+		'<div class="opengraph-name {{#if thumb}}opengraph-with-thumb{{/if}}">{{name}}</div>' +
+		'<div class="opengraph-description {{#if thumb}}opengraph-with-thumb{{/if}}">{{description}}</div>' +
+		'<span class="opengraph-website">{{website}}</span></div>{{#if link}}</a>{{/if}}',
+
 		_unknownTemplate: '<strong>{{name}}</strong>',
 		_unknownLinkTemplate: '<a href="{{link}}">{{name}}</a>',
 
@@ -80,6 +86,13 @@
 					}
 
 					return this.emailTemplate(parameter);
+
+				case 'open-graph':
+					if (!this.openGraphTemplate) {
+						this.openGraphTemplate = Handlebars.compile(this._openGraphTemplate);
+					}
+
+					return this.openGraphTemplate(parameter);
 
 				case 'user':
 					if (_.isUndefined(parameter.server)) {
