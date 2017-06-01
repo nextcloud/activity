@@ -12,8 +12,8 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (invisíbel)",
     "{name} (restricted)" : "{name} (restrinxido)",
     "in {path}" : "en {path}",
-    "This stream will show events like additions, changes & shares" : "Este fluxo amosará accións como adicións, cambios e elementos compartidos",
-    "There are no events for this filter" : "Non hai actividades neste filtro",
+    "This stream will show events like additions, changes & shares" : "Este fluxo amosará eventos como adicións, cambios e elementos compartidos",
+    "There are no events for this filter" : "Non hai eventos neste filtro",
     "Today" : "Hoxe",
     "Yesterday" : "Onte",
     "Personal activity feed for %s" : "Fonte da actividade persoal para %s",
@@ -46,7 +46,7 @@ OC.L10N.register(
     "Weekly" : "Semanalmente",
     "Settings" : "Axustes",
     "Enable RSS feed" : "Activar as fontes RSS",
-    "No more events to load" : "Non hai máis actividades para cargar",
+    "No more events to load" : "Non hai máis eventos para cargar",
     "Files" : "Ficheiros"
 },
 "nplurals=2; plural=(n != 1);");
