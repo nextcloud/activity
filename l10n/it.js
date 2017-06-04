@@ -29,6 +29,7 @@ OC.L10N.register(
     "Hello %s" : "Ciao %s",
     "Hello %s," : "Ciao %s,",
     "There was some activity at %s" : "Attività registrata su %s",
+    "_and %n more _::_and %n more _" : ["e %n altro ","e %n altri "],
     "Activity notification" : "Notifica delle attività",
     ", " : ", ",
     "%s and %s" : "%s e %s",

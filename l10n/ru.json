@@ -31,7 +31,7 @@
     "Activity notification" : "Уведомление о событиях",
     ", " : ",",
     "%s and %s" : "%s и %s",
-    "Activity" : "Событие",
+    "Activity" : "События",
     "Activity feed" : "Лента событий",
     "Configure the default activity settings for new users." : "Задать настройки по умолчанию для событий для новых пользователей.",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Выберите, уведомления о каких событиях отправлять по email, а какие выводить в ленте.",
