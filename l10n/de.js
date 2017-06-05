@@ -47,6 +47,11 @@ OC.L10N.register(
     "Settings" : "Einstellungen",
     "Enable RSS feed" : "RSS-Feed aktivieren",
     "No more events to load" : "Keine weiteren Ereignisse zu laden",
-    "Files" : "Dateien"
+    "Files" : "Dateien",
+    "Error loading activities" : "Fehler beim Laden der Aktivitäten",
+    "No activities" : "Keine Aktivitäten",
+    "You are receiving this email because the following things happened at %s" : "Du erhältst diese E-Mail, da folgende Dinge auf %s geschehen sind",
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* und %n weitere","* und %n weitere"]
 },
 "nplurals=2; plural=(n != 1);");
