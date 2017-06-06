@@ -47,6 +47,11 @@ OC.L10N.register(
     "Settings" : "Настройки",
     "Enable RSS feed" : "Включить RSS ленту",
     "No more events to load" : "Больше нет событий для загрузки",
-    "Files" : "Файлы"
+    "Files" : "Файлы",
+    "Error loading activities" : "Ошибка загрузки событий",
+    "No activities" : "Событий нет",
+    "You are receiving this email because the following things happened at %s" : "Вы получили это сообщение потому что на %s произошли следующие события:",
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* и ещё %n","* и ещё %n","* и ещё %n","* и ещё %n"]
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

@@ -45,6 +45,11 @@
     "Settings" : "Configuració",
     "Enable RSS feed" : "Activa el canal RSS",
     "No more events to load" : "No hi ha més elements a carregar",
-    "Files" : "Fitxers"
+    "Files" : "Fitxers",
+    "Error loading activities" : "Error en carregar les activitats",
+    "No activities" : "Sense activitat",
+    "You are receiving this email because the following things happened at %s" : "Esteu rebent aquest correu perquè han succeït les següents coses a %s",
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* i %n més ","* i %n més "]
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
