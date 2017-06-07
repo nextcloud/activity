@@ -45,6 +45,11 @@
     "Settings" : "Ayarlar",
     "Enable RSS feed" : "RSS akışı kullanılsın",
     "No more events to load" : "Yüklenecek başka bir işlem yok",
-    "Files" : "Dosyalar"
+    "Files" : "Dosyalar",
+    "Error loading activities" : "İşlemler yüklenirken sorun çıktı",
+    "No activities" : "Henüz bir işlem yapılmamış",
+    "You are receiving this email because the following things happened at %s" : "Bu e-posta %s üzerinde aşağıdaki işlemlerin yapıldığını bildirmek üzere gönderilmiştir:",
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* ve %n diğer","* ve %n diğer"]
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }
