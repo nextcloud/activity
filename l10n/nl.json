@@ -45,6 +45,11 @@
     "Settings" : "Instellingen",
     "Enable RSS feed" : "Zet RSS-kanaal aan",
     "No more events to load" : "Geen activiteiten meer om te laden ",
-    "Files" : "Bestanden"
+    "Files" : "Bestanden",
+    "Error loading activities" : "Fout bij laden het laden van activiteiten",
+    "No activities" : "Geen activiteiten",
+    "You are receiving this email because the following things happened at %s" : "Je ontvangt deze e-mail, omdat het volgende plaatsvond op %s.",
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* en %n meer","* en %n meer"]
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
