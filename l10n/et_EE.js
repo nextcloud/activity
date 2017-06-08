@@ -17,6 +17,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Isiklik toimingute voog %s",
     "Your feed URL is invalid" : "Sinu uudisvoo URL on vigane",
     "Your settings have been updated." : "Seaded on uuendatud.",
+    "Settings have been updated." : "Seaded on uuendatud.",
     "Mail" : "Kirjad",
     "Stream" : "Voog",
     "All activities" : "Kõik tegevused",
@@ -35,6 +36,7 @@ OC.L10N.register(
     "Hourly" : "Iga tund",
     "Daily" : "Iga päev",
     "Weekly" : "Iga nädal",
+    "Settings" : "Seaded",
     "Enable RSS feed" : "Luba RSS voog",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
     "Files" : "Failid"

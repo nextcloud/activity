@@ -47,6 +47,8 @@ OC.L10N.register(
     "Settings" : "Innstillinger",
     "Enable RSS feed" : "Aktiver RSS-strøm",
     "No more events to load" : "Ingen flere hendelser å laste inn",
-    "Files" : "Filer"
+    "Files" : "Filer",
+    "No activities" : "Ingen aktiviteter",
+    "* %1$s - %2$s" : "* %1$s - %2$s"
 },
 "nplurals=2; plural=(n != 1);");
