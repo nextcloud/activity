@@ -45,6 +45,11 @@
     "Settings" : "Configuración",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "No more events to load" : "No hay más eventos por cargar.",
-    "Files" : "Archivos"
+    "Files" : "Archivos",
+    "Error loading activities" : "Error al cargar las actividades",
+    "No activities" : "No hay actividades",
+    "You are receiving this email because the following things happened at %s" : "Recibes este c orreo porque esto ha sucedido en %s",
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* %n más","* y %n más"]
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
