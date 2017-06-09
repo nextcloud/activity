@@ -31,6 +31,7 @@ OC.L10N.register(
     "Daily" : "Өдөр бүр",
     "Weekly" : "Долоо хоног бүр",
     "Settings" : "Тохиргоо",
-    "Files" : "Файлууд"
+    "Files" : "Файлууд",
+    "No activities" : "Үйлдэл алга"
 },
 "nplurals=2; plural=(n != 1);");
