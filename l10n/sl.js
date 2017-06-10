@@ -46,6 +46,8 @@ OC.L10N.register(
     "Settings" : "Nastavitve",
     "Enable RSS feed" : "Omogoči vire RSS",
     "No more events to load" : "Ni več dogodkov za nalaganje",
-    "Files" : "Datoteke"
+    "Files" : "Datoteke",
+    "Error loading activities" : "Napaka pri nalaganju dejavnosti",
+    "No activities" : "Ni dejavnosti"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");
