@@ -24,16 +24,17 @@
     "By others" : "туђе",
     "By you" : "ваше",
     "\"remote user\"" : "„удаљени корисник“",
-    "Hello %s" : "Здраво%s",
+    "Hello %s" : "Здраво %s",
     "Hello %s," : "Здраво %s,",
     "There was some activity at %s" : "Било је активности у %s ",
+    "_and %n more _::_and %n more _" : ["и још %n","и још %n","и још %n"],
     "Activity notification" : "Обавештења о активностима",
     ", " : ", ",
     "%s and %s" : "%s и %s",
     "Activity" : "Активност",
     "Activity feed" : "Довод активности",
-    "Configure the default activity settings for new users." : "Подеси подешавања уобичајених активноти за нове кориснике.",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Изабери за коју активност желиш да ти стижу обавештења на email, која би требала да се појављују у app stream активносима.",
+    "Configure the default activity settings for new users." : "Подеси подразумеване поставке активности за нове кориснике.",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Изаберите активности за које желите да добијате обавештења е-поштом а које би требале да се приказују у дневнику активности.",
     "List your own actions in the stream" : "Приказује ваше активности у записнику",
     "Notify about your own actions via email" : "Обавештење е-поштом о сопственим активностима",
     "You need to set up your email address before you can receive notification emails." : "Морате поставити адресу е-поште пре почетка пријема обавештења.",
@@ -44,6 +45,11 @@
     "Settings" : "Поставке",
     "Enable RSS feed" : "Укључи РСС довод",
     "No more events to load" : "Нема више догађаја за приказ",
-    "Files" : "Фајлови"
+    "Files" : "Фајлови",
+    "Error loading activities" : "Грешка при учитавању активности",
+    "No activities" : "Нема активности",
+    "You are receiving this email because the following things happened at %s" : "Добијате ову поруку јер су се на %s десиле следеће ствари",
+    "* %1$s - %2$s" : "* %1$s — %2$s",
+    "_* and %n more _::_* and %n more _" : ["* и још %n","* и још %n","* и још %n"]
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }
