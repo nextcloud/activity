@@ -18,13 +18,17 @@ OC.L10N.register(
     "Your settings have been updated." : "Таны тохиргоог шинэчлэв",
     "Settings have been updated." : "Тохиргоог шинэчлэв",
     "Mail" : "Шуудан",
-    "Stream" : "Урсгал",
     "All activities" : "Бүх үйлдэлүү",
     "\"remote user\"" : "\"алсын хэрэглэгч\"",
     "Hello %s" : "Сайн байна уу, %s",
     "Hello %s," : "Сайн байна уу, %s,",
     "%s and %s" : "%s ба %s",
     "Activity" : "Үйлдлүүд",
+    "Activity feed" : "Үйлдлүүдйн тэжээл",
+    "Configure the default activity settings for new users." : "Шинэ хэрэглэгчэд анхдагч үйл ажиллагааны тохиргоог тохируулах",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Та и-мэйлээр мэдэгдэл авах хүсэлт нь ямар үйл ажиллагааг сонгох, ямар үйл ажиллагаа апп-ны урсгалд гарч ирэх ёстой.",
+    "List your own actions in the stream" : "Таны үйл ажиллагааг жагсаах",
+    "Notify about your own actions via email" : "и-мэйлээр өөрийн үйл ажиллагааны тухай мэдэгдэх",
     "You need to set up your email address before you can receive notification emails." : "Та цахим шуудангаар мэдэгдэл хүлээн авахын тулд цахим шуудангаа тохируулна уу?",
     "Send emails:" : "Цахим шуудан илгээх:",
     "Hourly" : "Цаг бүр",
@@ -32,6 +36,7 @@ OC.L10N.register(
     "Weekly" : "Долоо хоног бүр",
     "Settings" : "Тохиргоо",
     "Files" : "Файлууд",
-    "No activities" : "Үйлдэл алга"
+    "No activities" : "Үйлдэл алга",
+    "* %1$s - %2$s" : "%1$s-%2$s"
 },
 "nplurals=2; plural=(n != 1);");
