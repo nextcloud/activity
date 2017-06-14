@@ -48,7 +48,10 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktiver RSS-strøm",
     "No more events to load" : "Ingen flere hendelser å laste inn",
     "Files" : "Filer",
+    "Error loading activities" : "Feil ved innlasting av aktiviteter",
     "No activities" : "Ingen aktiviteter",
-    "* %1$s - %2$s" : "* %1$s - %2$s"
+    "You are receiving this email because the following things happened at %s" : "Du mottar denne e-posten fordi følgende har hendt på %s",
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* og én til","* og %n til "]
 },
 "nplurals=2; plural=(n != 1);");
