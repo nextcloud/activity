@@ -45,6 +45,7 @@ OC.L10N.register(
     "Settings" : "Ρυθμίσεις",
     "Enable RSS feed" : "Ενεργοποίηση ροής RSS",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
-    "Files" : "Αρχεία"
+    "Files" : "Αρχεία",
+    "No activities" : "Καμία δραστηριότητα"
 },
 "nplurals=2; plural=(n != 1);");

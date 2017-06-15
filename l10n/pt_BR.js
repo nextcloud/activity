@@ -12,7 +12,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{nome} (invisível)",
     "{name} (restricted)" : "{name} (restrito)",
     "in {path}" : "em {path}",
-    "This stream will show events like additions, changes & shares" : "Este fluxo de dados vai mostrar eventos como aditamentos, alterações e compartilhamentos",
+    "This stream will show events like additions, changes & shares" : "Este stream vai mostrar eventos como aditamentos, alterações e compartilhamentos",
     "There are no events for this filter" : "Não há eventos para este filtro",
     "Today" : "Hoje",
     "Yesterday" : "Ontem",
