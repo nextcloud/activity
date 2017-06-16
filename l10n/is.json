@@ -45,6 +45,11 @@
     "Settings" : "Stillingar",
     "Enable RSS feed" : "Virkja RSS-veitu",
     "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
-    "Files" : "Skrár"
+    "Files" : "Skrár",
+    "Error loading activities" : "Villa við hleðslu virkniupplýsinga",
+    "No activities" : "Engin virkni",
+    "You are receiving this email because the following things happened at %s" : "Þú færð þennan tölvupóst vegna þess að eftirfarandi hlutir gerðust á %s",
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* og %n til viðbótar","* og %n til viðbótar"]
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }
