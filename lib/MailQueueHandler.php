@@ -161,6 +161,7 @@ class MailQueueHandler {
 		$defaultTimeZone = date_default_timezone_get();
 
 		$deleteItemsForUsers = [];
+		$this->activityManager->setRequirePNG(true);
 		foreach ($affectedUsers as $user) {
 			if (empty($userEmails[$user])) {
 				// The user did not setup an email address
@@ -181,6 +182,7 @@ class MailQueueHandler {
 				// continue;
 			}
 		}
+		$this->activityManager->setRequirePNG(false);
 
 		// Delete all entries we dealt with
 		$this->deleteSentItems($deleteItemsForUsers, $sendTime);
