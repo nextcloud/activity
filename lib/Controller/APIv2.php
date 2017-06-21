@@ -366,7 +366,7 @@ class APIv2 extends OCSController {
 	 * @return array
 	 */
 	protected function getPreviewFromPath($filePath, $info) {
-		$mimeType = $this->mimeTypeDetector->detectPath($filePath);
+		$mimeType = $info['is_dir'] ? 'dir' : $this->mimeTypeDetector->detectPath($filePath);
 		$preview = [
 			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
 			'source'		=> $this->getPreviewPathFromMimeType($mimeType),
