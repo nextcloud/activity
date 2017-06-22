@@ -34,6 +34,7 @@ class CapabilitiesTest extends TestCase {
 			'activity' => [
 				'apiv2' => [
 					'filters',
+					'filters-api',
 					'previews',
 					'rich-strings',
 				],
