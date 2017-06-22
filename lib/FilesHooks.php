@@ -138,7 +138,7 @@ class FilesHooks {
 	 * @param string $path Path of the file that has been created
 	 */
 	public function fileCreate($path) {
-		if ($path === '/') {
+		if ($path === '/' || $path === '' || $path === null) {
 			return;
 		}
 
