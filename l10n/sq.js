@@ -47,6 +47,8 @@ OC.L10N.register(
     "Settings" : "Konfigurimet",
     "Enable RSS feed" : "Aktivizoni Prurje RSS",
     "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
-    "Files" : "Skedar"
+    "Files" : "Skedar",
+    "Error loading activities" : "Gabim në ngarkimin e veprimtarive",
+    "No activities" : "Asnjë veprimtari"
 },
 "nplurals=2; plural=(n != 1);");
