@@ -38,8 +38,12 @@ OC.L10N.register(
     "Hourly" : "На всеки час",
     "Daily" : "Ежедневно",
     "Weekly" : "Седмично",
+    "Settings" : "Настройки",
     "Enable RSS feed" : "Разрешаване на RSS емисии",
     "No more events to load" : "Няма повече известия за зареждане",
-    "Files" : "Файлове"
+    "Files" : "Файлове",
+    "Error loading activities" : "Грешка при зареждане на активността",
+    "No activities" : "Няма активност",
+    "You are receiving this email because the following things happened at %s" : "Получавате този имейл, защото се случиха следните неща в %s"
 },
 "nplurals=2; plural=(n != 1);");
