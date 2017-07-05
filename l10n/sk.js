@@ -47,6 +47,9 @@ OC.L10N.register(
     "Settings" : "Nastavenia",
     "Enable RSS feed" : "Povoliť RSS kanál",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
-    "Files" : "Súbory"
+    "Files" : "Súbory",
+    "Error loading activities" : "Chyba pri načítaní aktivít",
+    "No activities" : "Žiadne aktivity",
+    "* %1$s - %2$s" : "%1$s - %2$s "
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
