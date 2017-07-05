@@ -29,6 +29,7 @@ OC.L10N.register(
     "Hello %s" : "Pozdravljeni, %s,",
     "Hello %s," : "Pozdravljeni, %s,",
     "There was some activity at %s" : "Bilo je nekaj dejavosti ob %s",
+    "_and %n more _::_and %n more _" : ["- in še %n","- in še %n","- in še %n","- in še %n"],
     "Activity notification" : "Obvestila o dejavnosti",
     ", " : ",",
     "%s and %s" : "%s in %s",
