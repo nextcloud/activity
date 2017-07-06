@@ -47,6 +47,8 @@ OC.L10N.register(
     "Settings" : "تنظیمات",
     "Enable RSS feed" : "فعالسازی فید RSS",
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
-    "Files" : "فایل ها"
+    "Files" : "فایل ها",
+    "Error loading activities" : "خطا در بارگزاری فعالیت‌ها",
+    "No activities" : "هیچ فعالیتی یافت نشد"
 },
 "nplurals=1; plural=0;");
