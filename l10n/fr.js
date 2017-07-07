@@ -50,7 +50,7 @@ OC.L10N.register(
     "Files" : "Fichiers",
     "Error loading activities" : "Erreur lors du chargement des activités",
     "No activities" : "Aucune activité",
-    "You are receiving this email because the following things happened at %s" : "Vous recevez ce message car l'activité suivante a eu lieu sur %s",
+    "You are receiving this email because the following things happened at %s" : "Vous recevez cet email car l'activité suivante a eu lieu sur %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* et %n autre","* et %n autres"]
 },
