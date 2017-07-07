@@ -29,6 +29,7 @@ use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
+use OCP\Activity\IManager;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
@@ -67,6 +68,9 @@ class APIv2 extends OCSController {
 	protected $loadPreviews;
 
 
+	/** @var IManager */
+	protected $activityManager;
+
 	/** @var Data */
 	protected $data;
 
@@ -99,6 +103,7 @@ class APIv2 extends OCSController {
 	 *
 	 * @param string $appName
 	 * @param IRequest $request
+	 * @param IManager $activityManager
 	 * @param Data $data
 	 * @param GroupHelper $helper
 	 * @param UserSettings $settings
@@ -111,6 +116,7 @@ class APIv2 extends OCSController {
 	 */
 	public function __construct($appName,
 								IRequest $request,
+								IManager $activityManager,
 								Data $data,
 								GroupHelper $helper,
 								UserSettings $settings,
@@ -121,6 +127,7 @@ class APIv2 extends OCSController {
 								View $view,
 								ViewInfoCache $infoCache) {
 		parent::__construct($appName, $request);
+		$this->activityManager = $activityManager;
 		$this->data = $data;
 		$this->helper = $helper;
 		$this->settings = $settings;
@@ -220,6 +227,7 @@ class APIv2 extends OCSController {
 			return new DataResponse(null, Http::STATUS_FORBIDDEN);
 		}
 
+		$this->activityManager->setRequirePNG($this->request->isUserAgent([IRequest::USER_AGENT_CLIENT_IOS]));
 		try {
 			$response = $this->data->get(
 				$this->helper,
@@ -241,6 +249,7 @@ class APIv2 extends OCSController {
 			// No activity settings enabled
 			return new DataResponse(null, Http::STATUS_NO_CONTENT);
 		}
+		$this->activityManager->setRequirePNG(false);
 
 		$headers = $this->generateHeaders($response['headers'], $response['has_more'], $response['data']);
 		if (empty($response['data']) || $this->request->getHeader('If-None-Match') === $headers['ETag']) {

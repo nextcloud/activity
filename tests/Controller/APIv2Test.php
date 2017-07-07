@@ -25,6 +25,7 @@ namespace OCA\Activity\Tests\Controller;
 use OCA\Activity\Controller\APIv2;
 use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\Tests\TestCase;
+use OCP\Activity\IManager;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IUser;
@@ -50,6 +51,9 @@ use OCA\Activity\Data;
 class APIv2Test extends TestCase {
 	/** @var \OCP\IRequest|\PHPUnit_Framework_MockObject_MockObject */
 	protected $request;
+
+	/** @var IManager|\PHPUnit_Framework_MockObject_MockObject */
+	protected $activityManager;
 
 	/** @var \OCA\Activity\Data|\PHPUnit_Framework_MockObject_MockObject */
 	protected $data;
@@ -90,6 +94,7 @@ class APIv2Test extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 
+		$this->activityManager = $this->createMock(IManager::class);
 		$this->data = $this->createMock(Data::class);
 		$this->helper = $this->createMock(GroupHelper::class);
 		$this->userSettings = $this->createMock(UserSettings::class);
@@ -118,6 +123,7 @@ class APIv2Test extends TestCase {
 			return new APIv2(
 				'activity',
 				$this->request,
+				$this->activityManager,
 				$this->data,
 				$this->helper,
 				$this->userSettings,
@@ -133,6 +139,7 @@ class APIv2Test extends TestCase {
 				->setConstructorArgs([
 					'activity',
 					$this->request,
+					$this->activityManager,
 					$this->data,
 					$this->helper,
 					$this->userSettings,
