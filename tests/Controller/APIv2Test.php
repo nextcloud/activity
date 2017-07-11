@@ -751,7 +751,7 @@ class APIv2Test extends TestCase {
 			->method('getPreviewLink')
 			->with($filePath, $isDir, $view)
 			->willReturn('target-link');
-		$this->mimeTypeDetector->expects($this->once())
+		$this->mimeTypeDetector->expects($isDir ? $this->never() : $this->once())
 			->method('detectPath')
 			->willReturn($mimeType);
 
