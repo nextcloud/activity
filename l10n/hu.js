@@ -36,6 +36,7 @@ OC.L10N.register(
     "Activity" : "Tevékenység",
     "Activity feed" : "Tevékenységi hírfolyam",
     "Configure the default activity settings for new users." : "Új felhasználók alapértelmezett tevékenység beállításai.",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Válaszd ki, hogy melyik tevékenységekről szeretnél e-mail értesítőt kapni, és melyik jelenjen meg a tevékenység alkalmazás folyamában.",
     "List your own actions in the stream" : "Saját tevékenységek listázása a folyamban",
     "Notify about your own actions via email" : "Értesítsen a saját tevékenységeimről",
     "You need to set up your email address before you can receive notification emails." : "Értesítő üzenetek fogadásához adja meg az e-mail cimét!",
