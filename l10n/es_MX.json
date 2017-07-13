@@ -34,10 +34,10 @@
     "Activity" : "Actividad",
     "Activity feed" : "Fuente de actividad",
     "Configure the default activity settings for new users." : "Ajustar las configuraciones de las actividades predeterminadas para usuarios nuevos. ",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Seleccione las actividades para las cuales desea obtener una notificación por correo electrónico y cuales deben mostrarse en el flujo de la aplicación actividades.",
-    "List your own actions in the stream" : "Enlistar sus propias acciones en el flujo",
-    "Notify about your own actions via email" : "Notificar de sus propias acciones vía correo electrónico",
-    "You need to set up your email address before you can receive notification emails." : "Necesita configurar su dirección de correo electrónico antes de que pueda recibir correos de notificación",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Selecciona las actividades para las cuales deseas obtener una notificación por correo electrónico y cuales deben mostrarse en el flujo de la aplicación actividades.",
+    "List your own actions in the stream" : "Enlista tus propias acciones en el flujo",
+    "Notify about your own actions via email" : "Notificar de tus propias acciones vía correo electrónico",
+    "You need to set up your email address before you can receive notification emails." : "Necesitas configurar tu dirección de correo electrónico antes de que puedas recibir correos de notificación",
     "Send emails:" : "Enviar correos electrónicos:",
     "Hourly" : "Cada hora",
     "Daily" : "Diariamente",
@@ -48,7 +48,7 @@
     "Files" : "Archivos",
     "Error loading activities" : "Se presentó un error al cargar las actividades",
     "No activities" : "No hay actividades",
-    "You are receiving this email because the following things happened at %s" : "Esta recibiendo este correo electrónico porque los siguientes eventos se presentaron en %s",
+    "You are receiving this email because the following things happened at %s" : "Estás recibiendo este correo electrónico porque los siguientes eventos se presentaron en %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* y %n más","* y %n más"]
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
