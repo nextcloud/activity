@@ -1,0 +1,26 @@
+OC.L10N.register(
+    "activity",
+    {
+    "Activities" : "Aktiwiteite",
+    "No activity yet" : "Nog geen aktiwiteit",
+    "Load more activities" : "Laai nog aktiwiteite",
+    "Copied!" : "Gekopieer!",
+    "Not supported!" : "Nie ondersteun nie!",
+    "Press ⌘-C to copy." : "Druk ⌘-C om te kopieer.",
+    "Press Ctrl-C to copy." : "Druk Ctrl-C om te kopieer.",
+    "Today" : "Vandag",
+    "Yesterday" : "Gister",
+    "Personal activity feed for %s" : "Persoonlike aktiwiteitsvoer vir %s",
+    "Mail" : "Pos",
+    "Stream" : "Stroom",
+    "All activities" : "Alle aktiwiteite",
+    "By others" : "Deur ander",
+    "By you" : "Deur u",
+    "Hello %s" : "Dag %s",
+    "Hello %s," : "Dag %s,",
+    "Activity notification" : "Aktiwiteitkennisgewing",
+    ", " : ", ",
+    "%s and %s" : "%s en %s",
+    "Activity" : "Aktiwiteit"
+},
+"nplurals=2; plural=(n != 1);");
