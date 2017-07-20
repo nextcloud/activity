@@ -31,11 +31,12 @@ OC.L10N.register(
     "There was some activity at %s" : "%s 的 activity",
     "_and %n more _::_and %n more _" : ["以及多%n個"],
     "Activity notification" : "活動通知",
-    ", " : ", ",
+    ", " : "，",
     "%s and %s" : "%s 與 %s",
     "Activity" : "活動",
     "Activity feed" : "動態",
     "Configure the default activity settings for new users." : "為新使用者設置預設活動設定。",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "選擇你希望接受到電郵通知或者在應用中顯示的活動。",
     "List your own actions in the stream" : "列出屬於您的活動。",
     "Notify about your own actions via email" : "透過郵件來通知有關於您的活動狀態",
     "You need to set up your email address before you can receive notification emails." : "您必須先設定電子郵件，才能接收通知。",
@@ -50,6 +51,7 @@ OC.L10N.register(
     "Error loading activities" : "載入活動錯誤",
     "No activities" : "沒有活動",
     "You are receiving this email because the following things happened at %s" : "您會收到郵件是因為 %s 發生此事件",
-    "* %1$s - %2$s" : "* %1$s - %2$s"
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* 和其他 %n 個"]
 },
 "nplurals=1; plural=0;");
