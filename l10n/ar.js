@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "النشاطات",
+    "An error occurred while loading activities" : "حدث خطأ اثناء تحيل النشاطات ",
     "No activity yet" : "لا يوجد أي أنشطة حتى الأن",
     "Load more activities" : "تحميل المزيد من النشاطات",
     "Copied!" : "تم النسخ",
@@ -18,12 +19,14 @@ OC.L10N.register(
     "Personal activity feed for %s" : "تغذية النشاطات الشخصية ل%s",
     "Your feed URL is invalid" : "رابط التغدية الخاص بك غير شغال",
     "Your settings have been updated." : "تم تحديث الإعدادات الخاصة بك.",
+    "Settings have been updated." : "تم تحديث الاعدادات ",
     "Mail" : "البريد",
     "Stream" : "التدفق",
     "All activities" : "جميع النشاطات",
     "By others" : "بواسطة أخرين",
     "By you" : "بواسطتك",
     "\"remote user\"" : "\"مستخدم عن بعد\"",
+    "Hello %s" : "اهلا %s",
     "Hello %s," : "مرحبا %s،",
     "There was some activity at %s" : "يوجد بعض الانشطة في %s",
     "Activity notification" : "تنبيه النشاط",
@@ -31,6 +34,8 @@ OC.L10N.register(
     "%s and %s" : "%s و %s",
     "Activity" : "نشاط",
     "Activity feed" : "تغذية الأنشطة",
+    "Configure the default activity settings for new users." : "عمل اعدادات النشاط الافتراضى للمستخدمين الجدد",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "اختر أى نشاط تريد ان تحصل منه على اشعار خلال البريد الالكترونى و أيهم يظهر على قائمه نشاط التطبيق ",
     "List your own actions in the stream" : "اعرض عملياتك في التدفق",
     "Notify about your own actions via email" : "التنبيه عن أنشطتي عبر البريد الإلكتروني",
     "You need to set up your email address before you can receive notification emails." : "عليك إعداد عنوان البريد الإلكتروني الخاص بك قبل البدأ باستقبال رسائل إلكترونية تنبيهيه ",
@@ -41,6 +46,10 @@ OC.L10N.register(
     "Settings" : "الإعدادات",
     "Enable RSS feed" : "تفعيل خاصية الخلاصات",
     "No more events to load" : "لا توجد أي أحداث للتحميل",
-    "Files" : "الملفات"
+    "Files" : "الملفات",
+    "Error loading activities" : "خطأ فى تحميل النشاطات ",
+    "No activities" : "لا نشاطات",
+    "You are receiving this email because the following things happened at %s" : "إنك تتلقى هذه الرسالة الإلكترونية بسبب حدوث الأمور التالية%s",
+    "* %1$s - %2$s" : "*%1$s-%2$s"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");
