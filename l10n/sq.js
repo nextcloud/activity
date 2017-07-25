@@ -52,6 +52,6 @@ OC.L10N.register(
     "No activities" : "Asnjë veprimtari",
     "You are receiving this email because the following things happened at %s" : "Ju po e merrni këtë email sepse gjërat në vijim ndodhën në %s",
     "* %1$s - %2$s" : "%1$s-%2$s",
-    "_* and %n more _::_* and %n more _" : ["*dhe %n më shumë","*dhe %n më shumë "]
+    "_* and %n more _::_* and %n more _" : ["*dhe %n më shumë","*dhe %n më shumë"]
 },
 "nplurals=2; plural=(n != 1);");
