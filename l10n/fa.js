@@ -49,6 +49,9 @@ OC.L10N.register(
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
     "Files" : "فایل ها",
     "Error loading activities" : "خطا در بارگزاری فعالیت‌ها",
-    "No activities" : "هیچ فعالیتی یافت نشد"
+    "No activities" : "هیچ فعالیتی یافت نشد",
+    "You are receiving this email because the following things happened at %s" : "شما این ایمیل را دریافت می کنید زیرا موارد زیر در%s رخ داده است",
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* و %n بیشتر"]
 },
 "nplurals=1; plural=0;");
