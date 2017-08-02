@@ -155,6 +155,7 @@ class MailQueueHandler {
 		$userLanguages = $this->config->getUserValueForUsers('core', 'lang', $affectedUsers);
 		$userTimezones = $this->config->getUserValueForUsers('core', 'timezone', $affectedUsers);
 		$userEmails = $this->config->getUserValueForUsers('settings', 'email', $affectedUsers);
+		$userEnabled = $this->config->getUserValueForUsers('core', 'enabled', $affectedUsers);
 
 		// Send Email
 		$default_lang = $this->config->getSystemValue('default_language', 'en');
@@ -163,6 +164,11 @@ class MailQueueHandler {
 		$deleteItemsForUsers = [];
 		$this->activityManager->setRequirePNG(true);
 		foreach ($affectedUsers as $user) {
+			if (isset($userEnabled[$user]) && $userEnabled[$user] === 'no') {
+				$deleteItemsForUsers[] = $user;
+				continue;
+			}
+
 			if (empty($userEmails[$user])) {
 				// The user did not setup an email address
 				// So we will not send an email :(
