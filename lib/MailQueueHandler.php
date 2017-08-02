@@ -173,6 +173,7 @@ class MailQueueHandler {
 				// The user did not setup an email address
 				// So we will not send an email :(
 				$this->logger->debug("Couldn't send notification email to user '{user}' (email address isn't set for that user)", ['user' => $user, 'app' => 'activity']);
+				$deleteItemsForUsers[] = $user;
 				continue;
 			}
 
