@@ -69,6 +69,13 @@ class SendEmails extends Command {
 				'Only sends the emails for users which have configured the mails: "hourly", "daily" or "weekly"',
 				'all'
 			)
+			->addOption(
+				'limit',
+				'l',
+				InputOption::VALUE_REQUIRED,
+				'Only sends this amount of emails to give the email server some time to relax',
+				'unlimited'
+			)
 		;
 	}
 
@@ -94,11 +101,15 @@ class SendEmails extends Command {
 			$restrictEmails = null;
 		}
 
-		do {
-			// If we are in CLI mode, we keep sending emails
-			// until we are done.
-			$emails_sent = $this->queueHandler->sendEmails(MailQueueHandler::CLI_EMAIL_BATCH_SIZE, $sendTime, true, $restrictEmails);
-		} while ($emails_sent === MailQueueHandler::CLI_EMAIL_BATCH_SIZE);
+		$limit = $input->getOption('limit');
+
+		if ($limit === 'unlimited') {
+			do {
+				$emails_sent = $this->queueHandler->sendEmails(MailQueueHandler::CLI_EMAIL_BATCH_SIZE, $sendTime, true, $restrictEmails);
+			} while ($emails_sent === MailQueueHandler::CLI_EMAIL_BATCH_SIZE);
+		} else {
+			$this->queueHandler->sendEmails($limit, $sendTime, true, $restrictEmails);
+		}
 
 		return 0;
 	}
