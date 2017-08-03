@@ -72,7 +72,7 @@ class ByFilter implements IFilter {
 	 * @since 9.2.0
 	 */
 	public function getIcon() {
-		return $this->url->getAbsoluteURL($this->url->imagePath('core', 'places/contacts-dark.svg'));
+		return $this->url->getAbsoluteURL($this->url->imagePath('core', 'places/contacts.svg'));
 	}
 
 	/**
