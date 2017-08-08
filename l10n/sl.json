@@ -47,6 +47,9 @@
     "No more events to load" : "Ni več dogodkov za nalaganje",
     "Files" : "Datoteke",
     "Error loading activities" : "Napaka pri nalaganju dejavnosti",
-    "No activities" : "Ni dejavnosti"
+    "No activities" : "Ni dejavnosti",
+    "You are receiving this email because the following things happened at %s" : "To sporočilo ste prejeli, ker so se zgodili naslednji dogodki na %s",
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* in %n dodaten","* in %n dodatna","* in %n dodatnih","* in %n dodatnih"]
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }
