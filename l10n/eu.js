@@ -46,6 +46,10 @@ OC.L10N.register(
     "Settings" : "Kontrolak",
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
-    "Files" : "Fitxategiak"
+    "Files" : "Fitxategiak",
+    "Error loading activities" : "Errorea jarduerak kargatzen",
+    "No activities" : "Ez dago jarduerarik",
+    "You are receiving this email because the following things happened at %s" : "Posta elektroniko hau jaso duzu %s-n hurrengo gertaerak egon direlako",
+    "* %1$s - %2$s" : "* %1$s - %2$s"
 },
 "nplurals=2; plural=(n != 1);");
