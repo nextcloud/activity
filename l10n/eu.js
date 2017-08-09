@@ -25,7 +25,7 @@ OC.L10N.register(
     "All activities" : "Jarduera guztiak",
     "By others" : "Besteena",
     "By you" : "Zurea",
-    "\"remote user\"" : "\"urruneko erabiltzailea\"",
+    "\"remote user\"" : "\"urrutiko erabiltzailea\"",
     "Hello %s" : "Kaixo %s",
     "Hello %s," : "Kaixo %s,",
     "There was some activity at %s" : "%s -en jarduera egon da",
