@@ -231,6 +231,8 @@ class MailQueueHandler {
 				$query->where($query->expr()->eq('amq_timestamp', $query->createFunction($query->getColumnName('amq_latest_send') . ' + ' . 3600 * 24)));
 			} else if ($restrictEmails === UserSettings::EMAIL_SEND_WEEKLY) {
 				$query->where($query->expr()->eq('amq_timestamp', $query->createFunction($query->getColumnName('amq_latest_send') . ' + ' . 3600 * 24 * 7)));
+			} else if ($restrictEmails === UserSettings::EMAIL_SEND_ASAP) {
+				$query->where($query->expr()->eq('amq_timestamp', 'amq_latest_send'));
 			}
 		}
 
