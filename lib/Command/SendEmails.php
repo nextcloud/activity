@@ -97,6 +97,8 @@ class SendEmails extends Command {
 			$restrictEmails = UserSettings::EMAIL_SEND_DAILY;
 		} else if ($restrictBatching === 'weekly') {
 			$restrictEmails = UserSettings::EMAIL_SEND_WEEKLY;
+		} else if ($restrictBatching === '10min') {
+			$restrictEmails = UserSettings::EMAIL_SEND_10MIN;
 		} else {
 			$restrictEmails = null;
 		}

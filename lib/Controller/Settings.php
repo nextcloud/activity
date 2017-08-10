@@ -128,6 +128,8 @@ class Settings extends Controller {
 			$email_batch_time = 3600 * 24;
 		} else if ($notify_setting_batchtime === UserSettings::EMAIL_SEND_WEEKLY) {
 			$email_batch_time = 3600 * 24 * 7;
+		} else if ($notify_setting_batchtime === UserSettings::EMAIL_SEND_10MIN) {
+			$email_batch_time = 600;
 		}
 
 		$this->config->setUserValue(

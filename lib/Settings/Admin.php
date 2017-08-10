@@ -101,6 +101,8 @@ class Admin implements ISettings {
 			$settingBatchTime = UserSettings::EMAIL_SEND_WEEKLY;
 		} else if ($currentSetting === 3600 * 24) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_DAILY;
+		} else if ($currentSetting === 600 ) {
+			$settingBatchTime = UserSettings::EMAIL_SEND_10MIN;
 		}
 
 		return new TemplateResponse('activity', 'settings/admin', [
