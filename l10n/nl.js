@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Melding van je eigen acties via e-mail",
     "You need to set up your email address before you can receive notification emails." : "Je moet je e-mailadres instellen voordat je meldingen kan ontvangen.",
     "Send emails:" : "Verstuur e-mails:",
+    "As soon as possible" : "zo snel mogelijk",
     "Hourly" : "Per uur",
     "Daily" : "Dagelijks",
     "Weekly" : "Wekelijks",

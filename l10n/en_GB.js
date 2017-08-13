@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Notify about your own actions via email",
     "You need to set up your email address before you can receive notification emails." : "You need to set up your email address before you can receive notification emails.",
     "Send emails:" : "Send emails:",
+    "As soon as possible" : "As soon as possible",
     "Hourly" : "Hourly",
     "Daily" : "Daily",
     "Weekly" : "Weekly",

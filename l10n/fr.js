@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "M'informer de mes propres actions par courriel",
     "You need to set up your email address before you can receive notification emails." : "Vous devez configurer une adresse de courriel pour pouvoir recevoir des notifications par courriel.",
     "Send emails:" : "Envoyer des courriels :",
+    "As soon as possible" : "Dès que possible",
     "Hourly" : "Toutes les heures",
     "Daily" : "Quotidiennement",
     "Weekly" : "Chaque semaine",
@@ -50,7 +51,7 @@ OC.L10N.register(
     "Files" : "Fichiers",
     "Error loading activities" : "Erreur lors du chargement des activités",
     "No activities" : "Aucune activité",
-    "You are receiving this email because the following things happened at %s" : "Vous recevez cet email car l'activité suivante a eu lieu sur %s",
+    "You are receiving this email because the following things happened at %s" : "Vous recevez cet email car les événements suivants ont eu lieu sur %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* et %n autre","* et %n autres"]
 },
