@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Kendi işlemleriniz e-posta ile bildirilsin",
     "You need to set up your email address before you can receive notification emails." : "Bildirim e-postalarını alabilmek için e-posta adresinizi belirtmelisiniz.",
     "Send emails:" : "E-posta gönderimi:",
+    "As soon as possible" : "Olabildiğince çabuk",
     "Hourly" : "Saatlik",
     "Daily" : "Günlük",
     "Weekly" : "Haftalık",
