@@ -2,7 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "События",
-    "An error occurred while loading activities" : "Во время загрузки списка событий возникла ошибка",
+    "An error occurred while loading activities" : "При загрузке списка событий возникла ошибка",
     "No activity yet" : "Событий ещё нет",
     "Load more activities" : "Загрузить ещё события",
     "Copied!" : "Скопировано!",
@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Уведомлять по почте о ваших действиях",
     "You need to set up your email address before you can receive notification emails." : "Для получения уведомлений укажите свой адрес электронной почты в настройках.",
     "Send emails:" : "Отправлять электронные сообщения:",
+    "As soon as possible" : "Как можно быстрее",
     "Hourly" : "Ежечасно",
     "Daily" : "Ежедневно",
     "Weekly" : "Еженедельно",
