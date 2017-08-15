@@ -40,6 +40,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Notifica as súas propias accións mediante o correo-e",
     "You need to set up your email address before you can receive notification emails." : "É necesario estabelecer o enderezo de correo-e para poder recibir correos de notificación.",
     "Send emails:" : "Enviar correos-e:",
+    "As soon as possible" : "Cando antes",
     "Hourly" : "Cada hora",
     "Daily" : "A diario",
     "Weekly" : "Semanalmente",
