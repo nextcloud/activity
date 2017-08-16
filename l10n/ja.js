@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "メールで自分のアクションを通知する",
     "You need to set up your email address before you can receive notification emails." : "通知メールを受け取る前にメールアドレスを設定してください。",
     "Send emails:" : "メールを送信:",
+    "As soon as possible" : "できるだけ早く",
     "Hourly" : "1時間ごと",
     "Daily" : "毎日",
     "Weekly" : "毎週",
