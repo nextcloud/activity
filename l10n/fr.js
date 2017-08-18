@@ -29,7 +29,7 @@ OC.L10N.register(
     "Hello %s" : "Bonjour %s,",
     "Hello %s," : "Bonjour %s,",
     "There was some activity at %s" : "Il y a eu quelques activités à %s",
-    "_and %n more _::_and %n more _" : ["et %n autre","- et %n autres"],
+    "_and %n more _::_and %n more _" : ["et %n autre","et %n autres"],
     "Activity notification" : "Notification d'activité",
     ", " : ", ",
     "%s and %s" : "%s et %s",
@@ -51,7 +51,7 @@ OC.L10N.register(
     "Files" : "Fichiers",
     "Error loading activities" : "Erreur lors du chargement des activités",
     "No activities" : "Aucune activité",
-    "You are receiving this email because the following things happened at %s" : "Vous recevez cet email car les événements suivants ont eu lieu sur %s",
+    "You are receiving this email because the following things happened at %s" : "Vous recevez ce courriel car les événements suivants ont eu lieu sur %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
     "_* and %n more _::_* and %n more _" : ["* et %n autre","* et %n autres"]
 },
