@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Teavite omaenda tegevustest e-postiga",
     "You need to set up your email address before you can receive notification emails." : "Enne teavituskirjade saamist pead sa lisama oma e-posti aadressi.",
     "Send emails:" : "Saada kirjad:",
+    "As soon as possible" : "Nii kiiresti kui võimalik",
     "Hourly" : "Iga tund",
     "Daily" : "Iga päev",
     "Weekly" : "Iga nädal",

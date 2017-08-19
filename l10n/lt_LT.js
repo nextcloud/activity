@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Informuoti apie mano veiksmus per el. paštą",
     "You need to set up your email address before you can receive notification emails." : "Jums turite nurodyti elektroninio pašto adresą norėdami gauti pranešimus.",
     "Send emails:" : "Siųsti el. laiškus:",
+    "As soon as possible" : "Kuo greičiau",
     "Hourly" : "Kas valandą",
     "Daily" : "Kasdien",
     "Weekly" : "Kas savaitę",
