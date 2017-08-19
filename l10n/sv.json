@@ -39,12 +39,17 @@
     "Notify about your own actions via email" : "Skicka notifieringsmail gällande dina egna aktiviteter",
     "You need to set up your email address before you can receive notification emails." : "Du måste ställa in din e-postadress innan du kan ta emot e-postmeddelanden.",
     "Send emails:" : "Skicka e-post:",
+    "As soon as possible" : "Så snart som möjligt",
     "Hourly" : "Timvis",
     "Daily" : "Dagligen",
     "Weekly" : "Varje vecka",
     "Settings" : "Inställningar",
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "No more events to load" : "Inga fler aktiviteter.",
-    "Files" : "Filer"
+    "Files" : "Filer",
+    "Error loading activities" : "Fel när aktiviteter laddades",
+    "No activities" : "Inga aktiviteter",
+    "You are receiving this email because the following things happened at %s" : "Du får detta mail eftersom följande saker inträffade på %s",
+    "* %1$s - %2$s" : "* %1$s - %2$s"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
