@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Tilkynna um þína eigin virkni með tölvupósti",
     "You need to set up your email address before you can receive notification emails." : "Þú verður að gefa upp netfangið þitt svo að þú farir að fá tilkynningapósta.",
     "Send emails:" : "Senda tölvupóst:",
+    "As soon as possible" : "Um leið og mögulegt er",
     "Hourly" : "Klukkutíma fresti",
     "Daily" : "Daglega",
     "Weekly" : "Vikulega",
