@@ -52,6 +52,7 @@ OC.L10N.register(
     "Error loading activities" : "Fel när aktiviteter laddades",
     "No activities" : "Inga aktiviteter",
     "You are receiving this email because the following things happened at %s" : "Du får detta mail eftersom följande saker inträffade på %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s"
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* och %n till","* and %n more "]
 },
 "nplurals=2; plural=(n != 1);");

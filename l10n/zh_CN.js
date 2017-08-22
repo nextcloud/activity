@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "通过邮件通知您自己的动态",
     "You need to set up your email address before you can receive notification emails." : "要接收通知邮件，需要先设置您的电子邮件地址。",
     "Send emails:" : "发送邮件：",
+    "As soon as possible" : "尽快",
     "Hourly" : "每小时",
     "Daily" : "每天",
     "Weekly" : "每周",
