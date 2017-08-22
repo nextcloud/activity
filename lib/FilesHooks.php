@@ -30,6 +30,9 @@ use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IManager;
+use OCP\Files\Config\ICachedMountFileInfo;
+use OCP\Files\Config\ICachedMountInfo;
+use OCP\Files\Config\IUserMountCache;
 use OCP\Files\IRootFolder;
 use OCP\Files\Mount\IMountPoint;
 use OCP\Files\Node;
@@ -93,6 +96,8 @@ class FilesHooks {
 	protected $oldParentOwner;
 	/** @var string */
 	protected $oldParentId;
+	/** @var IUserMountCache */
+	protected $userMountCache;
 
 	/**
 	 * Constructor
@@ -108,6 +113,7 @@ class FilesHooks {
 	 * @param IURLGenerator $urlGenerator
 	 * @param ILogger $logger
 	 * @param CurrentUser $currentUser
+	 * @param IUserMountCache $userMountCache
 	 */
 	public function __construct(IManager $manager,
 								Data $activityData,
@@ -119,7 +125,8 @@ class FilesHooks {
 								IDBConnection $connection,
 								IURLGenerator $urlGenerator,
 								ILogger $logger,
-								CurrentUser $currentUser) {
+								CurrentUser $currentUser,
+								IUserMountCache $userMountCache) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
@@ -131,6 +138,7 @@ class FilesHooks {
 		$this->urlGenerator = $urlGenerator;
 		$this->logger = $logger;
 		$this->currentUser = $currentUser;
+		$this->userMountCache = $userMountCache;
 	}
 
 	/**
@@ -197,7 +205,14 @@ class FilesHooks {
 
 		$this->generateRemoteActivity($accessList['remotes'], $activityType, time(), $this->currentUser->getCloudId(), $accessList['ownerPath']);
 
-		$affectedUsers = $accessList['users'];
+		$mountsForFile = $this->userMountCache->getMountsForFileId($fileId);
+		$affectedUserIds = array_map(function (ICachedMountInfo $mount) {
+			return $mount->getUser()->getUID();
+		}, $mountsForFile);
+		$affectedPaths = array_map(function (ICachedMountFileInfo $mount) {
+			return $mount->getPath();
+		}, $mountsForFile);
+		$affectedUsers = array_combine($affectedUserIds, $affectedPaths);
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
 
