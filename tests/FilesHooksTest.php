@@ -23,9 +23,11 @@ declare(strict_types=1);
 
 namespace OCA\Activity;
 
+use OC\Files\Config\CachedMountFileInfo;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\Tests\TestCase;
+use OCP\Files\Config\IUserMountCache;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\ILogger;
@@ -68,6 +70,8 @@ class FilesHooksTest extends TestCase {
 	protected $shareHelper;
 	/** @var IURLGenerator|MockObject */
 	protected $urlGenerator;
+	/** @var IUserMountCache|\PHPUnit_Framework_MockObject_MockObject */
+	protected $userMountCache;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -80,6 +84,7 @@ class FilesHooksTest extends TestCase {
 		$this->rootFolder = $this->createMock(IRootFolder::class);
 		$this->shareHelper = $this->createMock(IShareHelper::class);
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
+		$this->userMountCache = $this->createMock(IUserMountCache::class);
 
 		$this->filesHooks = $this->getFilesHooks();
 	}
@@ -114,6 +119,7 @@ class FilesHooksTest extends TestCase {
 					$this->urlGenerator,
 					$logger,
 					$currentUser,
+					$this->userMountCache
 				])
 				->onlyMethods($mockedMethods)
 				->getMock();
@@ -130,7 +136,8 @@ class FilesHooksTest extends TestCase {
 			\OC::$server->getDatabaseConnection(),
 			$this->urlGenerator,
 			$logger,
-			$currentUser
+			$currentUser,
+			$this->userMountCache
 		);
 	}
 
@@ -241,8 +248,8 @@ class FilesHooksTest extends TestCase {
 				[
 					'user' => [
 						'subject' => 'restored_self',
-						'subject_params' => [[1337 => '/user/path']],
-						'path' => '/user/path',
+						'subject_params' => [[1337 => '/user/files/path']],
+						'path' => '/user/files/path',
 						'stream' => true,
 						'email' => 42,
 					],
@@ -256,8 +263,8 @@ class FilesHooksTest extends TestCase {
 				[
 					'user1' => [
 						'subject' => 'restored_by',
-						'subject_params' => [[1337 => '/user1/path'], 'user'],
-						'path' => '/user1/path',
+						'subject_params' => [[1337 => '/user1/files/path'], 'user'],
+						'path' => '/user1/files/path',
 						'stream' => true,
 						'email' => 0,
 					],
@@ -289,11 +296,43 @@ class FilesHooksTest extends TestCase {
 			->willReturn([
 				'ownerPath' => '/owner/path',
 				'users' => [
-					'user' => '/user/path',
-					'user1' => '/user1/path',
-					'user2' => '/user2/path',
+					'user' => '/user/files/path',
+					'user1' => '/user1/files/path',
+					'user2' => '/user2/files/path',
 				],
 				'remotes' => [],
+			]);
+
+		$this->userMountCache->expects($this->once())
+			->method('getMountsForFileId')
+			->willReturn([
+				new CachedMountFileInfo(
+					$this->getUserMock('user'),
+					1,
+					1,
+					'/user/files/',
+					null,
+					'',
+					'path'
+				),
+				new CachedMountFileInfo(
+					$this->getUserMock('user1'),
+					1,
+					1,
+					'/user1/files/',
+					null,
+					'',
+					'path'
+				),
+				new CachedMountFileInfo(
+					$this->getUserMock('user2'),
+					1,
+					1,
+					'/user2/files/',
+					null,
+					'',
+					'path'
+				)
 			]);
 
 		$this->settings->expects($this->exactly(2))
@@ -853,7 +892,7 @@ class FilesHooksTest extends TestCase {
 			['notAuthor', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
 			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
 			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
-			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath','path/subpath', false, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
+			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path/subpath', false, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
 		];
 	}
 
