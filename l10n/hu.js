@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Értesítsen a saját tevékenységeimről",
     "You need to set up your email address before you can receive notification emails." : "Értesítő üzenetek fogadásához adja meg az e-mail cimét!",
     "Send emails:" : "E-mail küldése: ",
+    "As soon as possible" : "A lehető leghamarabb",
     "Hourly" : "Óránként",
     "Daily" : "Naponta",
     "Weekly" : "Hetente",
