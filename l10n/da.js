@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Giv meddelelse om egne handlinger via e-mail",
     "You need to set up your email address before you can receive notification emails." : "Du skal angive din e-mailadresse før du kan modtage notifikationer via e-mail.",
     "Send emails:" : "Send e-mails:",
+    "As soon as possible" : "Så hurtigt som muligt",
     "Hourly" : "Hver time",
     "Daily" : "Dagligt",
     "Weekly" : "Ugentligt",
