@@ -24,7 +24,7 @@ OC.L10N.register(
     "Stream" : "Strumień",
     "All activities" : "Wszystkie aktywności",
     "By others" : "Przez innych",
-    "By you" : "Przez ciebie",
+    "By you" : "Przez Ciebie",
     "\"remote user\"" : "\"użytkownik zdalny\"",
     "Hello %s" : "Witaj %s",
     "Hello %s," : "Witaj %s,",
