@@ -342,6 +342,7 @@ class MailQueueHandler {
 		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
 		$template->addBodyText($l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')]));
 
+		$activityEvents = [];
 		foreach ($mailData as $activity) {
 			$event = $this->activityManager->generateEvent();
 			try {
@@ -365,12 +366,24 @@ class MailQueueHandler {
 				continue;
 			}
 
+			$activityEvents[] = [
+				'event' => $event,
+				'relativeDateTime' => $relativeDateTime
+			];
+
 			$template->addBodyListItem($event->getParsedSubject(), $relativeDateTime, $event->getIcon());
 		}
 
 		if ($skippedCount) {
 			$template->addBodyListItem($l->n('and %n more ', 'and %n more ', $skippedCount));
 		}
+
+		$template->setMetaData('activity.Notification', [
+			'displayname' => $user->getDisplayName(),
+			'url' => $this->urlGenerator->getAbsoluteURL('/'),
+			'activityEvents' => $activityEvents,
+			'skippedCount' => $skippedCount,
+		]);
 
 		$template->addFooter();
 
