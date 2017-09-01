@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Poslať oznámenie o vlastnej činnosti emailom",
     "You need to set up your email address before you can receive notification emails." : "Ak chcete dostávať oznámenia emailom, musíte najskôr vyplniť vašu emailovú adresu.",
     "Send emails:" : "Odoslať emaily:",
+    "As soon as possible" : "Čo najskôr",
     "Hourly" : "Každú hodinu",
     "Daily" : "Denne",
     "Weekly" : "Týždenne",
