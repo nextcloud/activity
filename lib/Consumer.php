@@ -80,7 +80,7 @@ class Consumer implements IConsumer {
 		$createEmail = !$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'selfemail');
 
 		// Add activity to mail queue
-		if ($emailSetting && $createEmail) {
+		if ($emailSetting !== false && $createEmail) {
 			$latestSend = $event->getTimestamp() + $emailSetting;
 			$this->data->storeMail($event, $latestSend);
 		}
