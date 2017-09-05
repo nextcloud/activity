@@ -377,7 +377,6 @@ class MailQueueHandler {
 		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
 		$template->addBodyText($l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')]));
 
-		$activityEvents = [];
 		foreach ($activityEvents as $activity) {
 			/** @var IEvent $event */
 			$event = $activity['event'];
