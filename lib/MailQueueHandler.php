@@ -337,11 +337,6 @@ class MailQueueHandler {
 		$this->dataHelper->setL10n($l);
 		$this->activityManager->setCurrentUserId($userName);
 
-		$template = $this->mailer->createEMailTemplate();
-		$template->addHeader();
-		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
-		$template->addBodyText($l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')]));
-
 		$activityEvents = [];
 		foreach ($mailData as $activity) {
 			$event = $this->activityManager->generateEvent();
@@ -370,6 +365,22 @@ class MailQueueHandler {
 				'event' => $event,
 				'relativeDateTime' => $relativeDateTime
 			];
+		}
+
+		$template = $this->mailer->createEMailTemplate('activity.Notification', [
+			'displayname' => $user->getDisplayName(),
+			'url' => $this->urlGenerator->getAbsoluteURL('/'),
+			'activityEvents' => $activityEvents,
+			'skippedCount' => $skippedCount,
+		]);
+		$template->addHeader();
+		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
+		$template->addBodyText($l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')]));
+
+		foreach ($activityEvents as $activity) {
+			/** @var IEvent $event */
+			$event = $activity['event'];
+			$relativeDateTime = $activity['relativeDateTime'];
 
 			$template->addBodyListItem($event->getParsedSubject(), $relativeDateTime, $event->getIcon());
 		}
@@ -377,13 +388,6 @@ class MailQueueHandler {
 		if ($skippedCount) {
 			$template->addBodyListItem($l->n('and %n more ', 'and %n more ', $skippedCount));
 		}
-
-		$template->setMetaData('activity.Notification', [
-			'displayname' => $user->getDisplayName(),
-			'url' => $this->urlGenerator->getAbsoluteURL('/'),
-			'activityEvents' => $activityEvents,
-			'skippedCount' => $skippedCount,
-		]);
 
 		$template->addFooter();
 
