@@ -178,7 +178,12 @@ class MailQueueHandler {
 				} else {
 					$this->logger->debug("Failed sending activity email to user '{user}'.", ['user' => $user, 'app' => 'activity']);
 				}
-			} catch (\UnexpectedValueException $e) {
+			} catch (\Exception $e) {
+				$this->logger->logException($e, [
+					'message' => 'Failed sending activity email to user "{user}"',
+					'user' => $user,
+					'app' => 'activity',
+				]);
 				// continue;
 			}
 		}
