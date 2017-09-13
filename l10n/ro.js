@@ -11,7 +11,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Apasă Ctrl-C pentru a copia.",
     "{name} (invisible)" : "{name} (invizibil)",
     "{name} (restricted)" : "{name} (restricționat)",
-    "in {path}" : "în {path}",
+    "in {path}" : "în {cale}",
     "This stream will show events like additions, changes & shares" : "Acest flux va afișa evenimente ca adăugiri, modificări & partajări",
     "There are no events for this filter" : "Nu sunt evenimente pentru acest filtru",
     "Today" : "Astăzi",
@@ -40,6 +40,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Notificări pentru activitățile tale prin email",
     "You need to set up your email address before you can receive notification emails." : "Trebuie să-ți configurezi adresa de email înainte de a putea primi emailurile de notificare.",
     "Send emails:" : "Trimite email-uri:",
+    "As soon as possible" : "Cât mai curând posibil",
     "Hourly" : "În fiecare oră",
     "Daily" : "Zilnic",
     "Weekly" : "Săptămânal",
@@ -48,8 +49,9 @@ OC.L10N.register(
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
     "Files" : "Fișiere",
     "Error loading activities" : "Eroare la încărcarea activităților",
-    "No activities" : "Fără activități",
+    "No activities" : "Nici o activitate",
     "You are receiving this email because the following things happened at %s" : "Primiți acest email deoarece următoarele evenimente s-au petrecut la %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s"
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* și %n altele ","* și încă %n","* și %n altele"]
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");
