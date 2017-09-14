@@ -5,7 +5,7 @@ use Doctrine\DBAL\Schema\Schema;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
 
-class Version2006000Date20170808154933 extends SimpleMigrationStep {
+class Version2006Date20170808154933 extends SimpleMigrationStep {
 
 	/**
 	 * @param IOutput $output
