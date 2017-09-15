@@ -106,7 +106,8 @@ class Admin implements ISettings {
 		return new TemplateResponse('activity', 'settings/admin', [
 			'setting'			=> 'admin',
 			'activities'		=> $activities,
-			'activity_email'	=> '!empty',
+			'is_email_set'		=> true,
+			'email_enabled'		=> $this->config->getAppValue('activity', 'enable_email', 'yes') === 'yes',
 
 			'setting_batchtime'	=> $settingBatchTime,
 
