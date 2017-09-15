@@ -22,17 +22,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-?>
 
-<form id="activity_notifications" class="section">
-	<h2 class="icon-activity" data-anchor-name="activity"><?php p($l->t('Activity')); ?></h2>
-	<p class="settings-hint">
-		<?php if ($_['setting'] === 'admin') {
-			p($l->t('Configure the default activity settings for new users.'));
-		} else {
-			p($l->t('Choose for which activities you want to get an email notification, and which should show up in the activity app stream.'));
-		} ?>
-	</p>
+/** @var array $_ */
+/** @var \OCP\IL10N $l */
+?>
 
 	<table class="grid activitysettings">
 		<thead>
@@ -71,12 +64,14 @@
 		value="1" <?php if ($_['notify_self']): ?> checked="checked"<?php endif; ?> />
 	<label for="notify_setting_self"><?php p($l->t('List your own actions in the stream')); ?></label>
 	<br />
+
+<?php if ($_['email_enabled']) { ?>
 	<input id="notify_setting_selfemail" name="notify_setting_selfemail" type="checkbox" class="checkbox"
 		value="1" <?php if ($_['notify_selfemail']): ?> checked="checked"<?php endif; ?> />
 	<label for="notify_setting_selfemail"><?php p($l->t('Notify about your own actions via email')); ?></label>
 	<br />
 
-	<?php if (empty($_['activity_email'])): ?>
+	<?php if (!$_['is_email_set']): ?>
 		<br />
 		<strong><?php p($l->t('You need to set up your email address before you can receive notification emails.')); ?></strong>
 	<?php endif; ?>
@@ -88,4 +83,4 @@
 		<option value="1"<?php if ($_['setting_batchtime'] === \OCA\Activity\UserSettings::EMAIL_SEND_DAILY): ?> selected="selected"<?php endif; ?>><?php p($l->t('Daily')); ?></option>
 		<option value="2"<?php if ($_['setting_batchtime'] === \OCA\Activity\UserSettings::EMAIL_SEND_WEEKLY): ?> selected="selected"<?php endif; ?>><?php p($l->t('Weekly')); ?></option>
 	</select>
-</form>
+<?php }
