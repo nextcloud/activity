@@ -20,21 +20,4 @@
  */
 script('activity', 'settings');
 style('activity', 'settings');
-/** @var array $_ */
-/** @var \OCP\IL10N $l */
-?>
-
-<form id="activity_notifications" class="section">
-
-	<h2><?php p($l->t('Activity')); ?></h2>
-	<p class="settings-hint">
-		<?php if ($_['email_enabled']) { ?>
-			<?php p($l->t('Choose for which activities you want to get an email notification, and which should show up in the activity app stream.')); ?>
-		<?php } else { ?>
-			<?php p($l->t('Choose which activities you want to see in the your stream.')); ?>
-		<?php } ?>
-	</p>
-
-	<?php print_unescaped($this->inc('settings/form')); ?>
-
-</form>
+print_unescaped($this->inc('settings/form'));

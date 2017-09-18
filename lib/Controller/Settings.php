@@ -260,30 +260,20 @@ class Settings extends Controller {
 			$settingBatchTime = UserSettings::EMAIL_SEND_DAILY;
 		}
 
-		$emailEnabled = $this->config->getAppValue('activity', 'enable_email', 'yes') === 'yes';
-		if ($emailEnabled) {
-			$methods = [
-				IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
-				IExtension::METHOD_STREAM => $this->l10n->t('Stream'),
-			];
-		} else {
-			$methods = [
-				IExtension::METHOD_STREAM => $this->l10n->t('Stream'),
-			];
-		}
-
 		return new TemplateResponse('activity', 'settings/personal', [
 			'setting'			=> 'personal',
 			'activities'		=> $activities,
-			'is_email_set'		=> !empty($this->config->getUserValue($this->user, 'settings', 'email', '')),
-			'email_enabled'		=> $emailEnabled,
+			'activity_email'	=> $this->config->getUserValue($this->user, 'settings', 'email', ''),
 
 			'setting_batchtime'	=> $settingBatchTime,
 
 			'notify_self'		=> $this->userSettings->getUserSetting($this->user, 'setting', 'self'),
 			'notify_selfemail'	=> $this->userSettings->getUserSetting($this->user, 'setting', 'selfemail'),
 
-			'methods'			=> $methods,
+			'methods'			=> [
+				IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
+				IExtension::METHOD_STREAM => $this->l10n->t('Stream'),
+			],
 		], '');
 	}
 
