@@ -20,29 +20,4 @@
  */
 script('activity', 'admin');
 style('activity', 'settings');
-/** @var array $_ */
-/** @var \OCP\IL10N $l */
-?>
-
-<div class="section">
-
-	<h2><?php p($l->t('Activity')); ?></h2>
-
-	<input id="activity_email_enabled" name="activity_email_enabled" type="checkbox" class="checkbox"
-		   value="1" <?php if ($_['email_enabled']) { print_unescaped('checked="checked"'); } ?> />
-	<label for="activity_email_enabled"><?php p($l->t('Send activity emails')); ?></label>
-
-</div>
-
-<form class="section" id="activity_notifications">
-
-	<h2><?php p($l->t('Default settings')); ?></h2>
-
-	<p class="settings-hint">
-		<?php p($l->t('Configure the default activity settings for new users.')); ?>
-	</p>
-
-	<?php print_unescaped($this->inc('settings/form')); ?>
-
-</form>
-
+print_unescaped($this->inc('settings/form'));

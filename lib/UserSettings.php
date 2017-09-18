@@ -64,10 +64,6 @@ class UserSettings {
 	 * @return bool|int
 	 */
 	public function getUserSetting($user, $method, $type) {
-		if ($method === 'email' && $this->config->getAppValue('activity', 'enable_email', 'yes') === 'no') {
-			return false;
-		}
-
 		$defaultSetting = $this->getDefaultFromSetting($method, $type);
 		if (is_bool($defaultSetting)) {
 			return (bool) $this->config->getUserValue(
@@ -171,11 +167,7 @@ class UserSettings {
 	 */
 	public function filterUsersBySetting($users, $method, $type) {
 		if (empty($users) || !is_array($users)) {
-			return [];
-		}
-
-		if ($method === 'email' && $this->config->getAppValue('activity', 'enable_email', 'yes') === 'no') {
-			return [];
+			return array();
 		}
 
 		$filteredUsers = array();
