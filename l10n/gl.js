@@ -29,11 +29,14 @@ OC.L10N.register(
     "Hello %s" : "Ola %s",
     "Hello %s," : "Ola %s,",
     "There was some activity at %s" : "Houbo actividade en %s",
+    "_and %n more _::_and %n more _" : ["e %n máis","e %nmáis"],
     "Activity notification" : "Notificación de actividade",
     ", " : ", ",
     "%s and %s" : "%s e %s",
     "Activity" : "Actividade",
     "Activity feed" : "Fonte de novas actividades",
+    "Send activity emails" : "Enviar correos de actividade",
+    "Default settings" : "Axustes por defecto",
     "Configure the default activity settings for new users." : "Configure os axustes predeterminados de actividade pra novos usuarios.",
     "List your own actions in the stream" : "Amosa as súas propias accións na secuencia",
     "Notify about your own actions via email" : "Notifica as súas propias accións mediante o correo-e",
@@ -44,6 +47,7 @@ OC.L10N.register(
     "Daily" : "A diario",
     "Weekly" : "Semanalmente",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Escolla as actividades das que quere recibir unha notificación por correo-e e as que deben aparecer na secuencia de actividades da aplicación.",
+    "Choose which activities you want to see in the your stream." : "Escolla as actividades que desexa que estean visibles no seu fluxo.",
     "Settings" : "Axustes",
     "Enable RSS feed" : "Activar as fontes RSS",
     "No more events to load" : "Non hai máis eventos que cargar",
@@ -51,6 +55,7 @@ OC.L10N.register(
     "Error loading activities" : "Produciuse un erro ao cargar as actividades",
     "No activities" : "Non hai actividades",
     "You are receiving this email because the following things happened at %s" : "Recibiu este correo porque sucederon as seguintes cousas en %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s"
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["e %n máis","e %n máis"]
 },
 "nplurals=2; plural=(n != 1);");
