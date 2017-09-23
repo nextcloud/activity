@@ -46,7 +46,6 @@ OC.L10N.register(
     "Daily" : "Zilnic",
     "Weekly" : "Săptămânal",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Alegeți pentru care activități doriți să primiți o notificare pe email și care să apară în aplicația fluxului de activități.",
-    "Choose which activities you want to see in the your stream." : "Alege ce activități vrei sa vezi în flux.",
     "Settings" : "Setări",
     "Enable RSS feed" : "Activați feed RSS",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",

@@ -47,7 +47,6 @@ OC.L10N.register(
     "Daily" : "Günlük",
     "Weekly" : "Haftalık",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "E-posta bildirimlerinin gönderilmesini ve uygulama etkinlik akışında yer almasını istediğiniz etkinlikleri seçin.",
-    "Choose which activities you want to see in the your stream." : "Akışınızda yer almasını istediğiniz işlemleri seçin.",
     "Settings" : "Ayarlar",
     "Enable RSS feed" : "RSS akışı kullanılsın",
     "No more events to load" : "Yüklenecek başka bir olay yok",
