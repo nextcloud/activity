@@ -47,7 +47,6 @@ OC.L10N.register(
     "Daily" : "Iga päev",
     "Weekly" : "Iga nädal",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Valige, milliste tegevuste jaoks soovite saada meilisõnumit ja mis peaks ilmuma aktiivsuse rakenduste voos.",
-    "Choose which activities you want to see in the your stream." : "Vali, milliseid tegevusi tahad oma voos näha.",
     "Settings" : "Seaded",
     "Enable RSS feed" : "Luba RSS voog",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
