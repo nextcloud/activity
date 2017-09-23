@@ -47,7 +47,6 @@ OC.L10N.register(
     "Daily" : "每天",
     "Weekly" : "每周",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "选择哪些活动你想收到提示邮件，以及哪些活动在应用中显示。",
-    "Choose which activities you want to see in the your stream." : "选择哪些动态你想在流看到",
     "Settings" : "设置",
     "Enable RSS feed" : "启用 RSS 源",
     "No more events to load" : "已无更多事件",
