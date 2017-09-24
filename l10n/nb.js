@@ -47,6 +47,7 @@ OC.L10N.register(
     "Daily" : "Daglig",
     "Weekly" : "Ukentlig",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Velg hvilke aktiviteter du ha e-mailpåminnelse om, og hvilke som skal vises i aktivitetsapp- strømmen.",
+    "Choose which activities you want to see in your stream." : "Velg hvilke aktiviteter du vil se i din strøm.",
     "Settings" : "Innstillinger",
     "Enable RSS feed" : "Aktiver RSS-strøm",
     "No more events to load" : "Ingen flere hendelser å laste inn",
