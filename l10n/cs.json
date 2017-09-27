@@ -33,6 +33,7 @@
     "%s and %s" : "%s a %s",
     "Activity" : "Aktivita",
     "Activity feed" : "Přehled aktivit",
+    "Default settings" : "Výchozí nastavení",
     "Configure the default activity settings for new users." : "Nastavte výchozí nastavení aktivit pro nové uživatele.",
     "List your own actions in the stream" : "Zobrazte vlastní akce v proudu",
     "Notify about your own actions via email" : "Posílat oznámení o vlastních činnostech emailem",
