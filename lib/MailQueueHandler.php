@@ -164,7 +164,7 @@ class MailQueueHandler {
 		$deleteItemsForUsers = [];
 		$this->activityManager->setRequirePNG(true);
 		foreach ($affectedUsers as $user) {
-			if (isset($userEnabled[$user]) && $userEnabled[$user] === 'no') {
+			if (isset($userEnabled[$user]) && $userEnabled[$user] === 'false') {
 				$deleteItemsForUsers[] = $user;
 				continue;
 			}
