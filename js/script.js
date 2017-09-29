@@ -214,7 +214,7 @@ $(function(){
 				+ '	<div class="messagecontainer">' + "\n"
 
 				+ '		<div class="activity-icon">'
-				+ ((activity.icon) ? '			<img src="' + activity.icon + '" />' : '')
+				+ ((activity.icon) ? '			<img src="' + activity.icon + '" alt="" />' : '')
 				+ '		</div>' + "\n"
 
 				+ '		<div class="activitysubject">' + "\n"
@@ -238,7 +238,7 @@ $(function(){
 				for (var i = 0; i < activity.previews.length; i++) {
 					var preview = activity.previews[i];
 					content += ((preview.link) ? '<a href="' + preview.link + '">' + "\n" : '')
-						+ '<img class="preview' + ((preview.isMimeTypeIcon) ? ' preview-mimetype-icon' : '') + '" src="' + preview.source + '" alt=""/>' + "\n"
+						+ '<img class="preview' + ((preview.isMimeTypeIcon) ? ' preview-mimetype-icon' : '') + '" src="' + preview.source + '" alt="' + t('activity', 'Open file') + '" />' + "\n"
 						+ ((preview.link) ? '</a>' + "\n" : '')
 				}
 				content += '</div>';

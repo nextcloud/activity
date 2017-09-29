@@ -24,7 +24,7 @@
 		'    <li class="activity box">' +
 		'        <div class="activity-icon">' +
 		'        {{#if icon}}' +
-		'          <img src="{{icon}}">' +
+		'          <img src="{{icon}}" alt="">' +
 		'        {{/if}}' +
 		'        </div>' +
 		'        <div class="activitysubject">{{{subject}}}</div>' +
@@ -242,4 +242,3 @@
 	OCA.Activity = OCA.Activity || {};
 	OCA.Activity.ActivityTabView = ActivityTabView;
 })();
-
