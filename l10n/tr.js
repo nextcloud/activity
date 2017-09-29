@@ -35,7 +35,7 @@ OC.L10N.register(
     "%s and %s" : "%s ve %s",
     "Activity" : "Etkinlik",
     "Activity feed" : "Etkinlik akışı",
-    "Send activity emails" : "İşlem e-postalarını gönder",
+    "Send activity emails" : "Etkinlik e-postaları gönder",
     "Default settings" : "Varsayılan ayarlar",
     "Configure the default activity settings for new users." : "Yeni kullanıcılar için varsayılan etkinlik ayarlarını yapılandırın.",
     "List your own actions in the stream" : "Akışta kendi etkinliklerinizi görüntüleyin",
