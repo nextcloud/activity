@@ -35,6 +35,8 @@ OC.L10N.register(
     "%s and %s" : "%s και %s",
     "Activity" : "Δραστηριότητα",
     "Activity feed" : "Ροή Δραστηριότητας",
+    "Send activity emails" : "Αποστολή μηνυμάτων δραστηριοτήτων",
+    "Default settings" : "Προεπιλεγμένες ρυθμίσεις",
     "Configure the default activity settings for new users." : "Διαμορφώστε τις προεπιλεγμένες ρυθμίσεις δραστηριότητας για τους νέους χρήστες.",
     "List your own actions in the stream" : "Δημιουργία λίστας των δραστηριοτήτων σας στην ροή",
     "Notify about your own actions via email" : "Ενημερωθείτε για τις δράσεις σας μέσω email",
