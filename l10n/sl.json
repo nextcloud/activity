@@ -33,7 +33,7 @@
     "%s and %s" : "%s in %s",
     "Activity" : "Dejavnosti",
     "Activity feed" : "Objava dejavnosti z viri RSS",
-    "Configure the default activity settings for new users." : "Prevzete nastavitve aktivnosti za nove uporabnike.",
+    "Configure the default activity settings for new users." : "Prilagodi privzete nastavitve dejavnosti za nove uporabnike.",
     "List your own actions in the stream" : "Izpiši seznam opravil v pretoku",
     "Notify about your own actions via email" : "O mojih dejanjih me obvesti preko elektronske pošte",
     "You need to set up your email address before you can receive notification emails." : "Za prejemanje obvestil prek elektronske pošte je treba najprej nastaviti elektronski poštni naslov.",
