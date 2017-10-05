@@ -47,7 +47,7 @@ OC.L10N.register(
     "Daily" : "täglich",
     "Weekly" : "wöchentlich",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Wählen Sie für welche Aktivitäten E-Mails empfangen und welche Aktivitäten in Ihrem Feed angezeigt werden.",
-    "Choose which activities you want to see in your stream." : "Wählen Sie welche Aktivitäten in Ihrem Feed angezeigt werden.",
+    "Choose which activities you want to see in your stream." : "Wählen Sie aus, welche Aktivitäten in Ihrem Feed angezeigt werden.",
     "Settings" : "Einstellungen",
     "Enable RSS feed" : "RSS-Feed aktivieren",
     "No more events to load" : "Keine weiteren Ereignisse zu laden",
