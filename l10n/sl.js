@@ -35,6 +35,7 @@ OC.L10N.register(
     "%s and %s" : "%s in %s",
     "Activity" : "Dejavnosti",
     "Activity feed" : "Objava dejavnosti z viri RSS",
+    "Default settings" : "Prevzete nastavitve",
     "Configure the default activity settings for new users." : "Prilagodi privzete nastavitve dejavnosti za nove uporabnike.",
     "List your own actions in the stream" : "Izpiši seznam opravil v pretoku",
     "Notify about your own actions via email" : "O mojih dejanjih me obvesti preko elektronske pošte",
