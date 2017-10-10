@@ -146,6 +146,11 @@
 	font-weight: normal;
 }
 
+.activitysubject span.icon-home {
+	display: inline-block;
+	margin-bottom: -2px;
+}
+
 .activity-section .avatar {
 	vertical-align: middle;
 	display: inline-block;
