@@ -146,6 +146,11 @@
 	font-weight: normal;
 }
 
+.activitysubject span.icon-home {
+	display: inline-block;
+	margin-bottom: -2px;
+}
+
 .activity-section .avatar {
 	vertical-align: middle;
 	display: inline-block;
@@ -189,23 +194,6 @@
 .activity-icon img {
 	max-width: 16px;
 	max-height: 16px;
-}
-
-.activity-icon.icon-add-color {
-	background-image: url('../img/add-color.svg');
-}
-.activity-icon.icon-change {
-	background-image: url('../img/change.svg');
-}
-.activity-icon.icon-delete-color {
-	background-image: url('../img/delete-color.svg');
-}
-
-.activity-icon.icon-add-color,
-.activity-icon.icon-delete-color {
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-	filter: alpha(opacity=100);
-	opacity: 1;
 }
 
 #rssurl > input.feed-link {

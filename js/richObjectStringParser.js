@@ -15,6 +15,7 @@
 
 		_fileTemplate: '<a class="filename has-tooltip" href="{{link}}" title="{{title}}">{{name}}</a>',
 		_fileNoPathTemplate: '<a class="filename" href="{{link}}">{{name}}</a>',
+		_fileRootTemplate: '<a class="filename has-tooltip" href="{{link}}" title="' + t('activity', 'Home') + '"><span class="icon icon-home"></span></a>',
 
 		_systemTagTemplate: '<strong class="systemtag">{{name}}</strong>',
 
@@ -135,7 +136,13 @@
 			if (!this.fileTemplate) {
 				this.fileTemplate = Handlebars.compile(this._fileTemplate);
 				this.fileNoPathTemplate = Handlebars.compile(this._fileNoPathTemplate);
+				this.fileRootTemplate = Handlebars.compile(this._fileRootTemplate);
 			}
+
+			if (parameter.path === '') {
+				return this.fileRootTemplate(parameter);
+			}
+
 			var lastSlashPosition = parameter.path.lastIndexOf('/'),
 				firstSlashPosition = parameter.path.indexOf('/');
 			parameter.path = parameter.path.substring(firstSlashPosition === 0 ? 1 : 0, lastSlashPosition);
