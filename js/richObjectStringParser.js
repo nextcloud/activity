@@ -15,7 +15,7 @@
 
 		_fileTemplate: '<a class="filename has-tooltip" href="{{link}}" title="{{title}}">{{name}}</a>',
 		_fileNoPathTemplate: '<a class="filename" href="{{link}}">{{name}}</a>',
-		_fileRootTemplate: '<a class="filename" href="{{link}}"><span class="icon icon-home"></span></a>',
+		_fileRootTemplate: '<a class="filename has-tooltip" href="{{link}}" title="' + t('activity', 'Home') + '"><span class="icon icon-home"></span></a>',
 
 		_systemTagTemplate: '<strong class="systemtag">{{name}}</strong>',
 
