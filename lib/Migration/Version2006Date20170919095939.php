@@ -23,29 +23,21 @@
 
 namespace OCA\Activity\Migration;
 
-use Doctrine\DBAL\Schema\Schema;
-use OCP\Migration\SimpleMigrationStep;
-use OCP\Migration\IOutput;
+use OCP\Migration\BigIntMigration;
 
-class Version2006Date20170808155040 extends SimpleMigrationStep {
+
+class Version2006Date20170919095939 extends BigIntMigration {
 
 	/**
-	 * @param IOutput $output
-	 * @param \Closure $schemaClosure The `\Closure` returns a `Schema`
-	 * @param array $options
-	 * @return null|Schema
-	 * @throws \Doctrine\DBAL\Schema\SchemaException
+	 * @return array Returns an array with the following structure
+	 * ['table1' => ['column1', 'column2'], ...]
 	 * @since 13.0.0
 	 */
-	public function changeSchema(IOutput $output, \Closure $schemaClosure, array $options) {
-		/** @var Schema $schema */
-		$schema = $schemaClosure();
-
-		$table = $schema->getTable('activity');
-		$table->dropIndex('activity_filter_app');
-		$table->addIndex(['affecteduser', 'type', 'app', 'timestamp'], 'activity_filter');
-
-		return $schema;
+	protected function getColumnsByTable() {
+		return [
+			'activity' => ['activity_id', 'object_id'],
+			'activity_mq' => ['mail_id'],
+		];
 	}
 
 }
