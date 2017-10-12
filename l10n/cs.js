@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Nepodporováno!",
     "Press ⌘-C to copy." : "Zmáčknout ⌘-C pro kopírování.",
     "Press Ctrl-C to copy." : "Zmáčknout Ctrl-C pro kopírování.",
+    "Home" : "Domů",
     "{name} (invisible)" : "{name} (neviditelné)",
     "{name} (restricted)" : "{name} (omezeno)",
     "in {path}" : "v {path}",
