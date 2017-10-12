@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Non supportato!",
     "Press ⌘-C to copy." : "Premi ⌘-C per copiare.",
     "Press Ctrl-C to copy." : "Premi Ctrl-C per copiare.",
+    "Home" : "Home",
     "{name} (invisible)" : "{name} (invisibile)",
     "{name} (restricted)" : "{name} (limitato)",
     "in {path}" : "in {path}",

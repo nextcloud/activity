@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Stöds ej!",
     "Press ⌘-C to copy." : "Tryck ⌘-C för att kopiera.",
     "Press Ctrl-C to copy." : "Tryck Ctrl-C för att kopiera.",
+    "Home" : "Hem",
     "{name} (invisible)" : "{namn} (osynlig)",
     "{name} (restricted)" : "{namn} (begränsad)",
     "in {path}" : "i {path}",
