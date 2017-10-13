@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Not supported!",
     "Press ⌘-C to copy." : "Press ⌘-C to copy.",
     "Press Ctrl-C to copy." : "Press Ctrl-C to copy.",
+    "Home" : "Home",
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (restricted)",
     "in {path}" : "in {path}",
@@ -56,6 +57,7 @@ OC.L10N.register(
     "No activities" : "No activities",
     "You are receiving this email because the following things happened at %s" : "You are receiving this email because the following things happened at %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* and %n more ","* and %n more "]
+    "_* and %n more _::_* and %n more _" : ["* and %n more ","* and %n more "],
+    "Choose which activities you want to see in the your stream." : "Choose which activities you want to see in the your stream."
 },
 "nplurals=2; plural=(n != 1);");

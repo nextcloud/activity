@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Nem támogatott!",
     "Press ⌘-C to copy." : "A másoláshoz nyomj ⌘-C-t.",
     "Press Ctrl-C to copy." : "A másoláshoz nyomj Ctrl-C-t.",
+    "Home" : "Kezdőlap",
     "{name} (invisible)" : "{name} (láthatatlan)",
     "{name} (restricted)" : "{name} (korlátozott)",
     "in {path}" : "itt: {path}",
@@ -35,6 +36,8 @@ OC.L10N.register(
     "%s and %s" : "%s és %s",
     "Activity" : "Tevékenység",
     "Activity feed" : "Tevékenységi hírfolyam",
+    "Send activity emails" : "Aktivitási e-mailek küldése",
+    "Default settings" : "Alapértelmezett beállítások",
     "Configure the default activity settings for new users." : "Új felhasználók alapértelmezett tevékenység beállításai.",
     "List your own actions in the stream" : "Saját tevékenységek listázása a folyamban",
     "Notify about your own actions via email" : "Értesítsen a saját tevékenységeimről",
@@ -45,6 +48,7 @@ OC.L10N.register(
     "Daily" : "Naponta",
     "Weekly" : "Hetente",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Válaszd ki, hogy melyik tevékenységekről szeretnél e-mail értesítőt kapni, és melyik jelenjen meg a tevékenység alkalmazás folyamában.",
+    "Choose which activities you want to see in your stream." : "Válaszd ki, mely aktivitásokat szeretnéd a folyamodban látni.",
     "Settings" : "Beállítások",
     "Enable RSS feed" : "RSS hírfolyam engedélyezése",
     "No more events to load" : "Nincs több esemény",
@@ -53,6 +57,7 @@ OC.L10N.register(
     "No activities" : "Nincs tevékenység",
     "You are receiving this email because the following things happened at %s" : "Azért kaptad ezt a levelet, mert ezek az események történtek itt: %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* és még %n","* és még %n"]
+    "_* and %n more _::_* and %n more _" : ["* és még %n","* és még %n"],
+    "Choose which activities you want to see in the your stream." : "Válaszd ki, mely aktivitásokat szeretnéd a folyamodban látni."
 },
 "nplurals=2; plural=(n != 1);");
