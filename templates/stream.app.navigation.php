@@ -49,7 +49,8 @@
 			<label for="enable_rss"><?php p($l->t('Enable RSS feed'));?></label>
 
 			<span id="rssurl"<?php if (!$_['rssLink']): ?> class="hidden"<?php endif; ?>>
-				<input class="feed-link" type="text" readonly="readonly" value="<?php p($_['rssLink']); ?>" />
+				<label for="feed-link" class="hidden-visually"><?php p($l->t('RSS feed'));?></label>
+				<input id="feed-link" class="feed-link" type="text" readonly="readonly" value="<?php p($_['rssLink']); ?>" />
 				<a class="icon-clippy" data-clipboard-target="#rssurl input"></a>
 			</span>
 		</div>
