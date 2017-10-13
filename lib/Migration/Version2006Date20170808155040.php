@@ -39,6 +39,10 @@ class Version2006Date20170808155040 extends SimpleMigrationStep {
 	 */
 	public function changeSchema(IOutput $output, \Closure $schemaClosure, array $options) {
 		/** @var Schema $schema */
+		/**
+		 * FIXME To prevent slowness on update we don't change the index.
+		 * FIXME Anyone complaining can manually update it.
+
 		$schema = $schemaClosure();
 
 		$table = $schema->getTable('activity');
@@ -46,6 +50,8 @@ class Version2006Date20170808155040 extends SimpleMigrationStep {
 		$table->addIndex(['affecteduser', 'type', 'app', 'timestamp'], 'activity_filter');
 
 		return $schema;
+		 */
+		return null;
 	}
 
 }
