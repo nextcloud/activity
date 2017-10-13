@@ -24,6 +24,7 @@
 namespace OCA\Activity\Migration;
 
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Types\Type;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
 
@@ -42,10 +43,10 @@ class Version2006Date20170808154933 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('activity')) {
 			$table = $schema->createTable('activity');
-			$table->addColumn('activity_id', 'integer', [
+			$table->addColumn('activity_id', Type::BIGINT, [
 				'autoincrement' => true,
 				'notnull' => true,
-				'length' => 4,
+				'length' => 20,
 			]);
 			$table->addColumn('timestamp', 'integer', [
 				'notnull' => true,
@@ -99,25 +100,26 @@ class Version2006Date20170808154933 extends SimpleMigrationStep {
 				'notnull' => false,
 				'length' => 255,
 			]);
-			$table->addColumn('object_id', 'integer', [
+			$table->addColumn('object_id', Type::BIGINT, [
 				'notnull' => true,
-				'length' => 4,
+				'length' => 20,
 				'default' => 0,
 			]);
 			$table->setPrimaryKey(['activity_id']);
 			$table->addIndex(['timestamp'], 'activity_time');
 			$table->addIndex(['affecteduser', 'timestamp'], 'activity_user_time');
 			$table->addIndex(['affecteduser', 'user', 'timestamp'], 'activity_filter_by');
-			$table->addIndex(['affecteduser', 'app', 'timestamp'], 'activity_filter_app');
+			// FIXME Fixed install, see Version2006Date20170808155040: $table->addIndex(['affecteduser', 'app', 'timestamp'], 'activity_filter_app');
+			$table->addIndex(['affecteduser', 'type', 'app', 'timestamp'], 'activity_filter');
 			$table->addIndex(['object_type', 'object_id'], 'activity_object');
 		}
 
 		if (!$schema->hasTable('activity_mq')) {
 			$table = $schema->createTable('activity_mq');
-			$table->addColumn('mail_id', 'integer', [
+			$table->addColumn('mail_id', Type::BIGINT, [
 				'autoincrement' => true,
 				'notnull' => true,
-				'length' => 4,
+				'length' => 20,
 			]);
 			$table->addColumn('amq_timestamp', 'integer', [
 				'notnull' => true,
