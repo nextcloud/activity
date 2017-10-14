@@ -29,7 +29,7 @@ OC.L10N.register(
     "\"remote user\"" : "\"utilisateur distant\"",
     "Hello %s" : "Bonjour %s,",
     "Hello %s," : "Bonjour %s,",
-    "There was some activity at %s" : "Il y a eu quelques activités à %s",
+    "There was some activity at %s" : "Il y a eu de l'activité sur %s",
     "_and %n more _::_and %n more _" : ["et %n autre","et %n autres"],
     "Activity notification" : "Notification d'activité",
     ", " : ", ",
