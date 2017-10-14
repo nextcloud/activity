@@ -1,7 +1,7 @@
 { "translations": {
-    "Activities" : "Actividades",
-    "No activity yet" : "Ainda sem actividade",
-    "Load more activities" : "Adicionar mais actividades ",
+    "Activities" : "Atividades",
+    "No activity yet" : "Ainda sem atividade",
+    "Load more activities" : "Adicionar mais atividades ",
     "Copied!" : "Copiado!",
     "Not supported!" : "Não suportado!",
     "Press ⌘-C to copy." : "Pressione ⌘-C para copiar.",
@@ -18,16 +18,16 @@
     "Your settings have been updated." : "As suas definições foram actualizadas.",
     "Mail" : "Correio",
     "Stream" : "Transmissão",
-    "All activities" : "Todas as actividades",
+    "All activities" : "Todas as atividades",
     "By others" : "Por outros",
     "By you" : "Por si",
     "\"remote user\"" : "\"utilizador remoto\"",
     "Hello %s," : "Olá %s,",
-    "There was some activity at %s" : "Houve alguma actividade em %s",
-    "Activity notification" : "Notificação da Actividade",
+    "There was some activity at %s" : "Houve alguma atividade em %s",
+    "Activity notification" : "Notificação de Atividade",
     ", " : ", ",
     "%s and %s" : "%s e %s",
-    "Activity" : "Actividade",
+    "Activity" : "Atividade",
     "Activity feed" : "Actividade de feed",
     "List your own actions in the stream" : "Liste as suas próprias acções na transmissão",
     "Notify about your own actions via email" : "Notificar sobre as suas próprias acções via correio electrónico ",
@@ -36,8 +36,10 @@
     "Hourly" : "Hora a hora",
     "Daily" : "Diariamente",
     "Weekly" : "Semanalmente",
+    "Choose which activities you want to see in your stream." : "Escolha quais as atividades que quer ver no seu stream.",
     "Enable RSS feed" : "Activar feed RSS",
     "No more events to load" : "Sem mais eventos para carregar",
-    "Files" : "Ficheiros"
+    "Files" : "Ficheiros",
+    "Error loading activities" : "Erro ao carregar atividades"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
