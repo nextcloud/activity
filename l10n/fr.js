@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Il n'y a aucun événement pour ce filtre",
     "Today" : "Aujourd'hui",
     "Yesterday" : "Hier",
+    "Open file" : "Ouvrir le fichier",
     "Personal activity feed for %s" : "Flux d'activité personnel de %s",
     "Your feed URL is invalid" : "Votre URL de fil d’activité n'est pas valide",
     "Your settings have been updated." : "Vos paramètres ont été mis à jour.",
@@ -51,12 +52,14 @@ OC.L10N.register(
     "Choose which activities you want to see in your stream." : "Choisissez quelles activités vous voulez voir dans votre flux.",
     "Settings" : "Paramètres",
     "Enable RSS feed" : "Activer les flux RSS",
+    "RSS feed" : "Flux RSS",
     "No more events to load" : "Plus aucun événement à charger",
     "Files" : "Fichiers",
     "Error loading activities" : "Erreur lors du chargement des activités",
     "No activities" : "Aucune activité",
     "You are receiving this email because the following things happened at %s" : "Vous recevez ce courriel car les événements suivants ont eu lieu sur %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* et %n autre","* et %n autres"]
+    "_* and %n more _::_* and %n more _" : ["* et %n autre","* et %n autres"],
+    "Choose which activities you want to see in the your stream." : "Séléctionnez quelles activités vous voulez voir dans votre flux."
 },
 "nplurals=2; plural=(n > 1);");
