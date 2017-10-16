@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Der ingen aktiviteter for dette filter",
     "Today" : "I dag",
     "Yesterday" : "I går",
+    "Open file" : "Åben dokument",
     "Personal activity feed for %s" : "Personlige aktiviteter for %s ",
     "Your feed URL is invalid" : "Din feed-URL er ugyldg",
     "Your settings have been updated." : "Dine indstillinger er blevet opdateret.",
