@@ -16,6 +16,7 @@ OC.L10N.register(
     "There are no events for this filter" : "没有符合当前筛选条件的事件。",
     "Today" : "今天",
     "Yesterday" : "昨天",
+    "Open file" : "打开文件",
     "Personal activity feed for %s" : "%s 的个人动态 Feed",
     "Your feed URL is invalid" : "您输入的Feed链接无效",
     "Your settings have been updated." : "您的设置已更新。",
@@ -50,12 +51,14 @@ OC.L10N.register(
     "Choose which activities you want to see in your stream." : "选择您要在流中看到哪些活动。",
     "Settings" : "设置",
     "Enable RSS feed" : "启用 RSS 源",
+    "RSS feed" : "RSS 源",
     "No more events to load" : "已无更多事件",
     "Files" : "文件",
     "Error loading activities" : "加载动态时出错",
     "No activities" : "暂无动态",
     "You are receiving this email because the following things happened at %s" : "你收到此邮件是因为在 %s 发生了以下事件:",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* 以及其他 %n 项"]
+    "_* and %n more _::_* and %n more _" : ["* 以及其他 %n 项"],
+    "Choose which activities you want to see in the your stream." : "选择你要查看信息流中的哪些动态。"
 },
 "nplurals=1; plural=0;");
