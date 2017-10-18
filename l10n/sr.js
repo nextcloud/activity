@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Није подржано!",
     "Press ⌘-C to copy." : "Притисни ⌘-C за копирање.",
     "Press Ctrl-C to copy." : "Притисни Ctrl-C за копирање.",
+    "Home" : "Почетна",
     "{name} (invisible)" : "{name} (невидљиво) ",
     "{name} (restricted)" : "{name} (ограничено)",
     "in {path}" : "у {path}",
@@ -16,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Нема догађаја за овај филтер",
     "Today" : "данас",
     "Yesterday" : "јуче",
+    "Open file" : "Отвори фајл",
     "Personal activity feed for %s" : "Довод личних активности корисника %s",
     "Your feed URL is invalid" : "УРЛ вашег довода није исправан",
     "Your settings have been updated." : "Ваше поставке су ажуриране.",
@@ -50,12 +52,14 @@ OC.L10N.register(
     "Choose which activities you want to see in your stream." : "Одаберите које активности желите да видите у току активности.",
     "Settings" : "Поставке",
     "Enable RSS feed" : "Укључи РСС довод",
+    "RSS feed" : "РСС довод",
     "No more events to load" : "Нема више догађаја за приказ",
     "Files" : "Фајлови",
     "Error loading activities" : "Грешка при учитавању активности",
     "No activities" : "Нема активности",
     "You are receiving this email because the following things happened at %s" : "Добијате ову поруку јер су се на %s десиле следеће ствари",
     "* %1$s - %2$s" : "* %1$s — %2$s",
-    "_* and %n more _::_* and %n more _" : ["* и још %n","* и још %n","* и још %n"]
+    "_* and %n more _::_* and %n more _" : ["* и још %n","* и још %n","* и још %n"],
+    "Choose which activities you want to see in the your stream." : "Одаберите које активности желите да видите у току активности."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

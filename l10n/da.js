@@ -52,6 +52,7 @@ OC.L10N.register(
     "Choose which activities you want to see in your stream." : "Vælg hvilke aktiviteter der skal vises i din stream.",
     "Settings" : "Indstillinger",
     "Enable RSS feed" : "Aktiverer RSS feed",
+    "RSS feed" : "RSS feed",
     "No more events to load" : "Der er Ikke flere aktiviteter som kan indlæses",
     "Files" : "Filer",
     "Error loading activities" : "Fejl ved indlæsning af aktiviteter",
