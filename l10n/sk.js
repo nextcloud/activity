@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Nie je podporované!",
     "Press ⌘-C to copy." : "Stlač ⌘-C pre skopírovanie.",
     "Press Ctrl-C to copy." : "Stlač Ctrl-C pre skopírovanie.",
+    "Home" : "Domov",
     "{name} (invisible)" : "{name} (neviditeľné)",
     "{name} (restricted)" : "{name} (obmedzené)",
     "in {path}" : "v {path}",
@@ -16,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Pre tieto kritériá nie sú žiadne udalosti",
     "Today" : "Dnes",
     "Yesterday" : "Včera",
+    "Open file" : "Otvoriť súbor",
     "Personal activity feed for %s" : "Prehľad aktivít pre používateľa %s",
     "Your feed URL is invalid" : "Váš kanál URL je neplatný",
     "Your settings have been updated." : "Vaše nastavenia boli aktualizované.",
@@ -50,12 +52,14 @@ OC.L10N.register(
     "Choose which activities you want to see in your stream." : "Vyberte, ktoré aktivity chcete vidieť vo svojom prúde.",
     "Settings" : "Nastavenia",
     "Enable RSS feed" : "Povoliť RSS kanál",
+    "RSS feed" : "RSS kanál",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
     "Files" : "Súbory",
     "Error loading activities" : "Chyba pri načítaní aktivít",
     "No activities" : "Žiadne aktivity",
     "You are receiving this email because the following things happened at %s" : "Tento mail dostávate ako upozorenie na nasledujúce odalosti na %s",
     "* %1$s - %2$s" : "%1$s - %2$s ",
-    "_* and %n more _::_* and %n more _" : ["* a %n ďalšia","* a %n ďalšie","* a %n ďalších"]
+    "_* and %n more _::_* and %n more _" : ["* a %n ďalšia","* a %n ďalšie","* a %n ďalších"],
+    "Choose which activities you want to see in the your stream." : "Vyberte, ktoré aktivity chcete zobrazovať vo svojom prúde."
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
