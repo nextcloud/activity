@@ -45,6 +45,7 @@
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "メール通知を受け取るアクティビティと、アクティビティアプリストリームに表示するアクティビティを選択します。",
     "Settings" : "設定",
     "Enable RSS feed" : "RSSフィードを有効にする",
+    "RSS feed" : "RSS フィード",
     "No more events to load" : "これ以上読み込むイベントはありません",
     "Files" : "ファイル",
     "Error loading activities" : "アクティビティの読込エラー",
