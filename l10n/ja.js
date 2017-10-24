@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "サポートされていません！",
     "Press ⌘-C to copy." : "⌘+Cを押してコピーします。",
     "Press Ctrl-C to copy." : "Ctrl+Cを押してコピーします。",
+    "Home" : "ホーム",
     "{name} (invisible)" : "{name} (非表示)",
     "{name} (restricted)" : "{name} (制限)",
     "in {path}" : "{path}に",
@@ -16,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "このフィルターで表示されるイベントはありません。",
     "Today" : "今日",
     "Yesterday" : "昨日",
+    "Open file" : "ファイルを開く",
     "Personal activity feed for %s" : "\"%s\" の個人アクティビティフィード",
     "Your feed URL is invalid" : "フィードURLが無効です",
     "Your settings have been updated." : "設定を更新しました。",
@@ -35,6 +37,8 @@ OC.L10N.register(
     "%s and %s" : "%s と %s",
     "Activity" : "アクティビティ",
     "Activity feed" : "アクティビティフィード",
+    "Send activity emails" : "アクティビティメールの送信",
+    "Default settings" : "デフォルト設定",
     "Configure the default activity settings for new users." : "新しいユーザーのデフォルトのアクティビティ設定を構成します。",
     "List your own actions in the stream" : "ストリーム上にあなたの操作を表示する",
     "Notify about your own actions via email" : "メールで自分のアクションを通知する",
@@ -45,6 +49,7 @@ OC.L10N.register(
     "Daily" : "毎日",
     "Weekly" : "毎週",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "メール通知を受け取るアクティビティと、アクティビティアプリストリームに表示するアクティビティを選択します。",
+    "Choose which activities you want to see in your stream." : "ストリームに表示したいアクティビティを選択します",
     "Settings" : "設定",
     "Enable RSS feed" : "RSSフィードを有効にする",
     "RSS feed" : "RSS フィード",
@@ -54,6 +59,7 @@ OC.L10N.register(
     "No activities" : "アクティビティなし",
     "You are receiving this email because the following things happened at %s" : "%sにおいて以下が生じたためこのメールを受信しました",
     "* %1$s - %2$s" : "%1$s-%2$s",
-    "_* and %n more _::_* and %n more _" : ["更に%n"]
+    "_* and %n more _::_* and %n more _" : ["更に%n"],
+    "Choose which activities you want to see in the your stream." : "ストリームに表示したいアクティビティを選択します"
 },
 "nplurals=1; plural=0;");
