@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Pro tato kritéria nejsou žádné události",
     "Today" : "Dnes",
     "Yesterday" : "Včera",
+    "Open file" : "Otevřít soubor",
     "Personal activity feed for %s" : "Přehled aktivit uživatele %s",
     "Your feed URL is invalid" : "URL adresa kanálu není platná",
     "Your settings have been updated." : "Vaše nastavení bylo aktualizováno.",
@@ -51,12 +52,14 @@ OC.L10N.register(
     "Choose which activities you want to see in your stream." : "Zvolte, které aktivity chcete vidět ve vašem proudu.",
     "Settings" : "Nastavení",
     "Enable RSS feed" : "Povolit RSS kanál",
+    "RSS feed" : "RSS kanál",
     "No more events to load" : "Žádné další události k načtení",
     "Files" : "Soubory",
     "Error loading activities" : "Chyba načtení aktivit",
     "No activities" : "Žádné aktivity",
     "You are receiving this email because the following things happened at %s" : "Dostali jste tento email, protože došlo k následujícím událostem na %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* a %n další","* a %n dalších ","* a %n dalších "]
+    "_* and %n more _::_* and %n more _" : ["* a %n další","* a %n dalších ","* a %n dalších "],
+    "Choose which activities you want to see in the your stream." : "Zvolte aktivity, které si přejete vidět ve vašem proudu"
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
