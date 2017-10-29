@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "¡No soportado!",
     "Press ⌘-C to copy." : "Presiona ⌘-C para copiar",
     "Press Ctrl-C to copy." : "Presiona Ctrl-C para copiar.",
+    "Home" : "Inicio",
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (restringido)",
     "in {path}" : "en {path}",
@@ -16,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "No hay eventos para este filtro",
     "Today" : "Hoy",
     "Yesterday" : "Ayer",
+    "Open file" : "Abrir archivo",
     "Personal activity feed for %s" : "Fuente de actividad personal para %s",
     "Your feed URL is invalid" : "La URL de tu fuente es inválida",
     "Your settings have been updated." : "Tus ajustes han sido actualizados.",
@@ -50,12 +52,14 @@ OC.L10N.register(
     "Choose which activities you want to see in your stream." : "Escoge qué actividades quieres ver en tu lista.",
     "Settings" : "Configuración",
     "Enable RSS feed" : "Habilitar fuente RSS",
+    "RSS feed" : "Fuente RSS",
     "No more events to load" : "No hay más eventos por cargar.",
     "Files" : "Archivos",
     "Error loading activities" : "Error al cargar las actividades",
     "No activities" : "No hay actividades",
     "You are receiving this email because the following things happened at %s" : "Recibes este correo porque esto ha sucedido en %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* %n más","* y %n más"]
+    "_* and %n more _::_* and %n more _" : ["* %n más","* y %n más"],
+    "Choose which activities you want to see in the your stream." : "Escoge qué actividades quieres ver en tu lista."
 },
 "nplurals=2; plural=(n != 1);");
