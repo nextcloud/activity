@@ -47,14 +47,17 @@
     "Daily" : "Καθημερινά",
     "Weekly" : "Εβδομαδιαία",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Επιλέξτε για ποιες δραστηριότητες θέλετε να λαμβάνετε ειδοποιήσεις μέσω email, και ποιες θα εμφανίζονται στην εφαρμογή δραστηριοτήτων ροής.",
+    "Choose which activities you want to see in your stream." : "Διαλέξτε ποιες δραστηριότητες θέλετε να βλέπετε στη ροή σας.",
     "Settings" : "Ρυθμίσεις",
     "Enable RSS feed" : "Ενεργοποίηση ροής πληροφοριών RSS",
+    "RSS feed" : "Ροή RSS",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "Files" : "Αρχεία",
     "Error loading activities" : "Σφάλμα φόρτωσης δραστηριοτήτων",
     "No activities" : "Καμία δραστηριότητα",
     "You are receiving this email because the following things happened at %s" : "Λαμβάνετε αυτό το email διότι συνέβησαν τα ακόλουθα στο %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* και %n επιπλέον","* και %n επιπλέον"]
+    "_* and %n more _::_* and %n more _" : ["* και %n επιπλέον","* και %n επιπλέον"],
+    "Choose which activities you want to see in the your stream." : "Διαλέξτε ποιες δραστηριότητες θέλετε να βλέπετε στη ροή σας."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
