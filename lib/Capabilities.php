@@ -42,6 +42,7 @@ class Capabilities implements ICapability {
 			'activity' => [
 				'apiv2' => [
 					'filters',
+					'filters-api',
 					'previews',
 					'rich-strings',
 				],

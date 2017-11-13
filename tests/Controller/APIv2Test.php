@@ -25,6 +25,7 @@ namespace OCA\Activity\Tests\Controller;
 use OCA\Activity\Controller\APIv2;
 use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\Tests\TestCase;
+use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
@@ -134,25 +135,25 @@ class APIv2Test extends TestCase {
 				$this->view,
 				$this->infoCache
 			);
-		} else {
-			return $this->getMockBuilder(APIv2::class)
-				->setConstructorArgs([
-					'activity',
-					$this->request,
-					$this->activityManager,
-					$this->data,
-					$this->helper,
-					$this->userSettings,
-					$this->urlGenerator,
-					$this->userSession,
-					$this->preview,
-					$this->mimeTypeDetector,
-					$this->view,
-					$this->infoCache,
-				])
-				->setMethods($methods)
-				->getMock();
 		}
+
+		return $this->getMockBuilder(APIv2::class)
+			->setConstructorArgs([
+				'activity',
+				$this->request,
+				$this->activityManager,
+				$this->data,
+				$this->helper,
+				$this->userSettings,
+				$this->urlGenerator,
+				$this->userSession,
+				$this->preview,
+				$this->mimeTypeDetector,
+				$this->view,
+				$this->infoCache,
+			])
+			->setMethods($methods)
+			->getMock();
 	}
 
 	public function dataValidateParametersFilter() {
@@ -433,6 +434,47 @@ class APIv2Test extends TestCase {
 
 		$this->assertInstanceOf(DataResponse::class, $result);
 		$this->assertSame($expected, $result->getStatus());
+	}
+
+	public function testListFilters() {
+		$filters = [
+			$this->createFilterMock(10, 'id1', 'Filter 3'),
+			$this->createFilterMock(10, 'abc', 'Filter 2'),
+			$this->createFilterMock(5, 'id3', 'Filter 1'),
+		];
+
+		$this->activityManager->expects($this->once())
+			->method('getFilters')
+			->willReturn($filters);
+
+		$controller = $this->getController();
+		$response = $controller->listFilters();
+
+		$this->assertInstanceOf(DataResponse::class, $response);
+		$this->assertSame(Http::STATUS_OK, $response->getStatus());
+		$this->assertSame([
+			['id' => 'id3', 'name' => 'Filter 1', 'icon' => 'id35', 'priority' => 5],
+			['id' => 'abc', 'name' => 'Filter 2', 'icon' => 'abc10', 'priority' => 10],
+			['id' => 'id1', 'name' => 'Filter 3', 'icon' => 'id110', 'priority' => 10],
+		], $response->getData());
+	}
+
+	protected function createFilterMock($priority, $id, $name) {
+		$filter = $this->createMock(IFilter::class);
+		$filter->expects($this->any())
+			->method('getPriority')
+			->willReturn($priority);
+		$filter->expects($this->any())
+			->method('getIdentifier')
+			->willReturn($id);
+		$filter->expects($this->any())
+			->method('getName')
+			->willReturn($name);
+		$filter->expects($this->any())
+			->method('getIcon')
+			->willReturn($id . $priority);
+
+		return $filter;
 	}
 
 	public function dataGet() {

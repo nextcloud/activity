@@ -29,6 +29,7 @@ use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
+use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
@@ -66,7 +67,6 @@ class APIv2 extends OCSController {
 
 	/** @var bool */
 	protected $loadPreviews;
-
 
 	/** @var IManager */
 	protected $activityManager;
@@ -206,6 +206,35 @@ class APIv2 extends OCSController {
 	 */
 	public function getFilter($filter, $since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc') {
 		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort);
+	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+	 * @return DataResponse
+	 */
+	public function listFilters() {
+		$filters = $this->activityManager->getFilters();
+
+		$filters = array_map(function(IFilter $filter) {
+			return [
+				'id' => $filter->getIdentifier(),
+				'name' => $filter->getName(),
+				'icon' => $filter->getIcon(),
+				'priority' => $filter->getPriority(),
+			];
+		}, $filters);
+
+		// php 5.6 has problems with usort and objects
+		usort($filters, function(array $a, array $b) {
+			if ($a['priority'] === $b['priority']) {
+				return $a['id'] > $b['id'];
+			}
+
+			return $a['priority'] > $b['priority'];
+		});
+
+		return new DataResponse($filters);
 	}
 
 	/**
