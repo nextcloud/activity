@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Activities" : "Aktivitas",
     "An error occurred while loading activities" : "Terjadi kesalahan saat memuat aktivitas",
-    "No activity yet" : "Masih tidak ada aktivitas",
+    "No activity yet" : "Belum ada aktivitas",
     "Load more activities" : "Muat aktivitas lainnya",
     "Copied!" : "Tersalin!",
     "Not supported!" : "Tidak didukung!",
@@ -26,7 +26,7 @@ OC.L10N.register(
     "Stream" : "Stream",
     "All activities" : "Semua aktifitas",
     "By others" : "Oleh lainnya",
-    "By you" : "Oleh kamu",
+    "By you" : "Oleh Anda",
     "\"remote user\"" : "\"remote user\"",
     "Hello %s" : "Helo %s",
     "Hello %s," : "Helo %s,",
