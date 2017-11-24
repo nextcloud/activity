@@ -24,6 +24,7 @@ OC.L10N.register(
     "By others" : "Por outros",
     "By you" : "Por si",
     "\"remote user\"" : "\"utilizador remoto\"",
+    "Hello %s" : "Olá %s",
     "Hello %s," : "Olá %s,",
     "There was some activity at %s" : "Houve alguma atividade em %s",
     "Activity notification" : "Notificação de Atividade",
@@ -35,6 +36,7 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Notificar sobre as suas próprias acções via correio electrónico ",
     "You need to set up your email address before you can receive notification emails." : "Precisa de configurar o seu endereço de correio electrónico antes de poder receber notificações na sua caixa de correio.",
     "Send emails:" : "Enviar emails:",
+    "As soon as possible" : "Logo que possível",
     "Hourly" : "Hora a hora",
     "Daily" : "Diariamente",
     "Weekly" : "Semanalmente",
@@ -42,6 +44,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Activar feed RSS",
     "No more events to load" : "Sem mais eventos para carregar",
     "Files" : "Ficheiros",
-    "Error loading activities" : "Erro ao carregar atividades"
+    "Error loading activities" : "Erro ao carregar atividades",
+    "* %1$s - %2$s" : "* %1$s - %2$s"
 },
 "nplurals=2; plural=(n != 1);");

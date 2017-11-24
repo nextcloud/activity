@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "No suportat!",
     "Press ⌘-C to copy." : "Prem ⌘-C per copiar.",
     "Press Ctrl-C to copy." : "Prem Ctrl-C per copiar.",
+    "Home" : "Casa",
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (restringit)",
     "in {path}" : "a {path}",
@@ -16,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "No hi ha esdeveniments per aquest filtre",
     "Today" : "Avui",
     "Yesterday" : "Ahir",
+    "Open file" : "Fitxer obert",
     "Personal activity feed for %s" : "Canal d'activitat personal per a %s",
     "Your feed URL is invalid" : "La URL del canal no és vàlida",
     "Your settings have been updated." : "La configuració s'ha actualitzat.",
@@ -50,12 +52,14 @@ OC.L10N.register(
     "Choose which activities you want to see in your stream." : "Trieu per quines activitats voleu obtenir una notificació per correu electrònic i que ha d'aparèixer en el flux de treball de les apps.",
     "Settings" : "Configuració",
     "Enable RSS feed" : "Activa el canal RSS",
+    "RSS feed" : "Canal RSS",
     "No more events to load" : "No hi ha més elements a carregar",
     "Files" : "Fitxers",
     "Error loading activities" : "Error en carregar les activitats",
     "No activities" : "Sense activitat",
     "You are receiving this email because the following things happened at %s" : "Esteu rebent aquest correu perquè han succeït les següents coses a %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* i %n més ","* i %n més "]
+    "_* and %n more _::_* and %n more _" : ["* i %n més ","* i %n més "],
+    "Choose which activities you want to see in the your stream." : "Escull quines activitats vols veure al teu flux."
 },
 "nplurals=2; plural=(n != 1);");
