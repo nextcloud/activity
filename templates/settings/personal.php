@@ -31,7 +31,7 @@ style('activity', 'settings');
 		<?php if ($_['email_enabled']) { ?>
 			<?php p($l->t('Choose for which activities you want to get an email notification, and which should show up in the activity app stream.')); ?>
 		<?php } else { ?>
-			<?php p($l->t('Choose which activities you want to see in the your stream.')); ?>
+			<?php p($l->t('Choose which activities you want to see in your stream.')); ?>
 		<?php } ?>
 	</p>
 
