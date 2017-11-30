@@ -57,7 +57,6 @@
     "No activities" : "アクティビティなし",
     "You are receiving this email because the following things happened at %s" : "%sにおいて以下が生じたためこのメールを受信しました",
     "* %1$s - %2$s" : "%1$s-%2$s",
-    "_* and %n more _::_* and %n more _" : ["更に%n"],
-    "Choose which activities you want to see in the your stream." : "ストリームに表示したいアクティビティを選択します"
+    "_* and %n more _::_* and %n more _" : ["更に%n"]
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -57,7 +57,6 @@
     "No activities" : "Non hai actividades",
     "You are receiving this email because the following things happened at %s" : "Recibiu este correo porque sucederon as seguintes cousas en %s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["e %n máis","e %n máis"],
-    "Choose which activities you want to see in the your stream." : "Escolla as actividades que quere visualizar no seu fluxo."
+    "_* and %n more _::_* and %n more _" : ["e %n máis","e %n máis"]
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

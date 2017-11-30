@@ -59,7 +59,6 @@ OC.L10N.register(
     "No activities" : "沒有活動",
     "You are receiving this email because the following things happened at %s" : "您會收到郵件是因為 %s 發生此事件",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* 和其他 %n 個"],
-    "Choose which activities you want to see in the your stream." : "請選擇您想在您串流中看到的活動"
+    "_* and %n more _::_* and %n more _" : ["* 和其他 %n 個"]
 },
 "nplurals=1; plural=0;");
