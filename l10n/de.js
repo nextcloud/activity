@@ -59,7 +59,6 @@ OC.L10N.register(
     "No activities" : "Keine Aktivitäten",
     "You are receiving this email because the following things happened at %s" : "Du erhältst diese E-Mail, da folgende Dinge auf %s geschehen sind",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* und %n weitere","* und %n weitere"],
-    "Choose which activities you want to see in the your stream." : "Wähle, welche Aktivitäten in deinem Feed angezeigt werden."
+    "_* and %n more _::_* and %n more _" : ["* und %n weitere","* und %n weitere"]
 },
 "nplurals=2; plural=(n != 1);");

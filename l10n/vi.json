@@ -57,7 +57,6 @@
     "No activities" : "Không có hoạt động nào",
     "You are receiving this email because the following things happened at %s" : "Bạn đang nhận được thư này vì những điều sau đã xảy ra tại 1%s",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* và hơn %n  "],
-    "Choose which activities you want to see in the your stream." : "Chọn hoạt động bạn muốn xem trong luồng của bạn."
+    "_* and %n more _::_* and %n more _" : ["* và hơn %n  "]
 },"pluralForm" :"nplurals=1; plural=0;"
 }

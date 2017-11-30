@@ -59,7 +59,6 @@ OC.L10N.register(
     "No activities" : "Etkinlik yok",
     "You are receiving this email because the following things happened at %s" : "Bu e-posta %s üzerinde aşağıdaki etkinliklerin gerçekleştiğini bildirmek üzere gönderilmiştir:",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* ve %n diğer","* ve %n diğer"],
-    "Choose which activities you want to see in the your stream." : "Akışınızda yer almasını istediğiniz işlemleri seçin."
+    "_* and %n more _::_* and %n more _" : ["* ve %n diğer","* ve %n diğer"]
 },
 "nplurals=2; plural=(n > 1);");

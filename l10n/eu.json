@@ -57,7 +57,6 @@
     "No activities" : "Ez dago jarduerarik",
     "You are receiving this email because the following things happened at %s" : "Posta elektroniko hau jaso duzu %s-n hurrengo gertaerak egon direlako",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* eta %n gehiago","* eta %n gehiago"],
-    "Choose which activities you want to see in the your stream." : "Zure jarioan ze jarduera ikusi nahi duzun hauta ezazu"
+    "_* and %n more _::_* and %n more _" : ["* eta %n gehiago","* eta %n gehiago"]
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

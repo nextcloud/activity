@@ -58,7 +58,6 @@ OC.L10N.register(
     "No activities" : "暂无动态",
     "You are receiving this email because the following things happened at %s" : "你收到此邮件是因为在 %s 发生了以下事件:",
     "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* 以及其他 %n 项"],
-    "Choose which activities you want to see in the your stream." : "选择你要查看信息流中的哪些动态。"
+    "_* and %n more _::_* and %n more _" : ["* 以及其他 %n 项"]
 },
 "nplurals=1; plural=0;");
