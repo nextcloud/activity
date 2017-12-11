@@ -49,7 +49,7 @@ OC.L10N.register(
     "Daily" : "Dagelijks",
     "Weekly" : "Wekelijks",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Kies voor welke activiteiten je een e-mailnotificatie wenst en welke in de activiteiten app-stream moeten verschijnen.",
-    "Choose which activities you want to see in your stream." : "Kies welke activiteiten u in uw stream wilt zien.",
+    "Choose which activities you want to see in your stream." : "Kies welke activiteiten je in je stream wilt zien.",
     "Settings" : "Instellingen",
     "Enable RSS feed" : "Zet RSS-kanaal aan",
     "RSS feed" : "RSS kanaal",
