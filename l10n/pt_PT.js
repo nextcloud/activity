@@ -18,7 +18,7 @@ OC.L10N.register(
     "Yesterday" : "Ontem",
     "Open file" : "Abrir ficheiro",
     "Personal activity feed for %s" : "Actividade pessoal de feed para %s",
-    "Your feed URL is invalid" : "O URL do feed é inválido.",
+    "Your feed URL is invalid" : "O endereço do feed é inválido.",
     "Your settings have been updated." : "As suas definições foram actualizadas.",
     "Settings have been updated." : "Definições foram actualizadas",
     "Mail" : "Correio",
