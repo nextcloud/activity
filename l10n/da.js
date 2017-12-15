@@ -2,7 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Aktiviteter",
-    "An error occurred while loading activities" : "Der opstod en fejl under indlæsning af aktivitete",
+    "An error occurred while loading activities" : "Der opstod en fejl under indlæsning af aktiviteter",
     "No activity yet" : "Ingen aktiviteter endnu",
     "Load more activities" : "Indlæs flere aktiviteter",
     "Copied!" : "Kopieret!",
