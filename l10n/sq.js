@@ -16,6 +16,7 @@ OC.L10N.register(
     "There are no events for this filter" : "S’ka veprimtari për këtë filtër",
     "Today" : "Sot",
     "Yesterday" : "Dje",
+    "Open file" : "Hap skedarin",
     "Personal activity feed for %s" : "Prurje veprimtarie personale për  %s",
     "Your feed URL is invalid" : "URL-ja për prurjen tuaj është e pavlefshme",
     "Your settings have been updated." : "Rregullimet tuaja u përditësuan",
