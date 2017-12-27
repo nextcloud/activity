@@ -7,7 +7,7 @@ OC.L10N.register(
     "Load more activities" : "Cargar más actividades",
     "Copied!" : "¡Copiado!",
     "Not supported!" : "¡No soportado!",
-    "Press ⌘-C to copy." : "Presiona ⌘-C para copiar",
+    "Press ⌘-C to copy." : "Pulsa ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Presiona Ctrl-C para copiar.",
     "Home" : "Inicio",
     "{name} (invisible)" : "{name} (invisible)",
