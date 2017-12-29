@@ -617,7 +617,11 @@ class FilesHooks {
 
 		$path = $node->getPath();
 		$sections = explode('/', $path, 4);
-		$accessList['ownerPath'] = '/' . $sections[3];
+
+		$accessList['ownerPath'] = '/';
+		if (count($sections) === 4) {
+			$accessList['ownerPath'] .= $sections[3];
+		}
 
 		return $accessList;
 	}
