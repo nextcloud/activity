@@ -619,7 +619,8 @@ class FilesHooks {
 		$sections = explode('/', $path, 4);
 
 		$accessList['ownerPath'] = '/';
-		if (count($sections) === 4) {
+		if (isset($sections[3])) {
+			// Not the case when a file in root is renamed
 			$accessList['ownerPath'] .= $sections[3];
 		}
 
