@@ -23,7 +23,7 @@
 
 namespace OCA\Activity\Migration;
 
-use Doctrine\DBAL\Schema\Schema;
+use OCP\DB\ISchemaWrapper;
 use OCP\Migration\BigIntMigration;
 use OCP\Migration\IOutput;
 
@@ -44,9 +44,9 @@ class Version2006Date20170919095939 extends BigIntMigration {
 
 	/**
 	 * @param IOutput $output
-	 * @param \Closure $schemaClosure The `\Closure` returns a `Schema`
+	 * @param \Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
 	 * @param array $options
-	 * @return null|Schema
+	 * @return null|ISchemaWrapper
 	 * @since 13.0.0
 	 */
 	public function changeSchema(IOutput $output, \Closure $schemaClosure, array $options) {
