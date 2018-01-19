@@ -1,0 +1,24 @@
+{ "translations": {
+    "Activities" : "Oberiantizoù",
+    "An error occurred while loading activities" : "Emañ ur fazi evit kargañ oberiantizoù",
+    "No activity yet" : "Oberiantiz ebet",
+    "Load more activities" : "Kargañ muioc'h oberiantizoù",
+    "Copied!" : "Eilet eo !",
+    "Not supported!" : "Diembreget eo ! ",
+    "Press ⌘-C to copy." : "Pouezañ war ⌘-C evit eilañ. ",
+    "Press Ctrl-C to copy." : "Pouezañ war Ctrl-C evit eilañ. ",
+    "Home" : "Degemer",
+    "{name} (invisible)" : "{anv} (kuzhet)",
+    "{name} (restricted)" : "{anv} (bevennet)",
+    "in {path}" : "e {treug}",
+    "Today" : "Hiziv",
+    "Yesterday" : "Dec'h",
+    "Open file" : "Digeriñ ur restr",
+    "Mail" : "Postel",
+    "Hello %s" : "Degemer mat %s",
+    "Hello %s," : "Demeger mat %s, ",
+    "Activity" : "Oberantiz",
+    "Activity feed" : "Gwazh oberantizoù",
+    "Files" : "Restroù"
+},"pluralForm" :"nplurals=2; plural=(n > 1);"
+}
