@@ -45,6 +45,15 @@
     "As soon as possible" : "सकेसम्म चाँडै",
     "Hourly" : "घण्टा",
     "Daily" : "दैनिक",
-    "Weekly" : "साप्ताहिक"
+    "Weekly" : "साप्ताहिक",
+    "Settings" : "सेटिङ्हरू",
+    "Enable RSS feed" : "RSS फिड सक्षम गर्नुहोस्",
+    "RSS feed" : "RSS फिड",
+    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
+    "Files" : "फाइलहरू",
+    "Error loading activities" : "गतिविधिहरू लोड गर्दा त्रुटि भयो",
+    "No activities" : "कुनै गतिविधि छैन",
+    "You are receiving this email because the following things happened at %s" : "तपाईले यो इ-मेल प्राप्त गर्दै हुनुहुन्छ किनभने निम्न कुराहरू %sमा भयो",
+    "* %1$s - %2$s" : "* %1$s - %2$s"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
