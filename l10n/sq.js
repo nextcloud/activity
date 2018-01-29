@@ -38,6 +38,7 @@ OC.L10N.register(
     "Activity" : "Veprimtari",
     "Activity feed" : "Prurje veprimtarie",
     "Send activity emails" : "Dërgo emaile rreth aktivitetit",
+    "Default settings" : "Konfigurime të paracaktuara",
     "Configure the default activity settings for new users." : "Vendosni konfigurimet fillestare të aktiviteteve për përdoruesit e rinj",
     "List your own actions in the stream" : "Listo veprimet e tua në rrjedhë",
     "Notify about your own actions via email" : "Njoftoni me email mbi veprimet tuaja",
