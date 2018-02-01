@@ -2,7 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Активност",
-    "An error occurred while loading activities" : "Възникна грешка при зареждането на активността",
+    "An error occurred while loading activities" : "Възникна грешка при зареждането на активностите",
     "No activity yet" : "Все още няма активност",
     "Load more activities" : "Зареди по-стари",
     "Copied!" : "Копирано!",
@@ -31,6 +31,7 @@ OC.L10N.register(
     "Hello %s" : "Здравейте %s",
     "Hello %s," : "Здравейте %s,",
     "There was some activity at %s" : "Активност на %s",
+    "_and %n more _::_and %n more _" : ["* и %n още ","* и %n още "],
     "Activity notification" : "Известия за активност",
     ", " : ", ",
     "%s and %s" : "%s и %s",
@@ -57,6 +58,7 @@ OC.L10N.register(
     "Error loading activities" : "Грешка при зареждане на активността",
     "No activities" : "Няма активност",
     "You are receiving this email because the following things happened at %s" : "Получавате този имейл, защото се случиха следните неща в %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s"
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* и %n още ","* и %n още "]
 },
 "nplurals=2; plural=(n != 1);");
