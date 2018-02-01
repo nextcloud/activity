@@ -138,7 +138,7 @@ class Feed extends Controller {
 			'activities'	=> $activities,
 		], '');
 
-		if ($this->request->getHeader('accept') !== null && stristr($this->request->getHeader('accept'), 'application/rss+xml')) {
+		if (stristr($this->request->getHeader('accept'), 'application/rss+xml')) {
 			$response->addHeader('Content-Type', 'application/rss+xml');
 		} else {
 			$response->addHeader('Content-Type', 'text/xml; charset=UTF-8');
