@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Não suportado!",
     "Press ⌘-C to copy." : "Pressione ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Pressione Ctrl-C para copiar.",
+    "Home" : "Início",
     "{name} (invisible)" : "{name} (invisível)",
     "{name} (restricted)" : "{name} (limitado)",
     "in {path}" : "em {path}",
@@ -30,6 +31,7 @@ OC.L10N.register(
     "Hello %s" : "Olá %s",
     "Hello %s," : "Olá %s,",
     "There was some activity at %s" : "Houve alguma atividade em %s",
+    "_and %n more _::_and %n more _" : ["e %n mais ","e %n mais "],
     "Activity notification" : "Notificação de Atividade",
     ", " : ", ",
     "%s and %s" : "%s e %s",
@@ -56,6 +58,7 @@ OC.L10N.register(
     "Error loading activities" : "Erro ao carregar atividades",
     "No activities" : "Sem actividades",
     "You are receiving this email because the following things happened at %s" : "Recebeste este email devido às seguintes causas %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s"
+    "* %1$s - %2$s" : "* %1$s - %2$s",
+    "_* and %n more _::_* and %n more _" : ["* e %n mais ","* e %n mais "]
 },
 "nplurals=2; plural=(n != 1);");
