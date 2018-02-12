@@ -43,11 +43,6 @@
     "Settings" : "Axustes",
     "Enable RSS feed" : "Habilitar feed RSS",
     "No more events to load" : "Nun hai más eventos pa cargar",
-    "Files" : "Ficheros",
-    "Error loading activities" : "Fallu cargando les actividaes",
-    "No activities" : "Nun hai actividaes",
-    "You are receiving this email because the following things happened at %s" : "Tas recibiendo esti corréu porque asocedieron les coses de darréu en %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* y %n más","* y %n más "]
+    "Files" : "Ficheros"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

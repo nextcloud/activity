@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Activar as fontes RSS",
     "RSS feed" : "Fontes RSS",
     "No more events to load" : "Non hai máis eventos que cargar",
-    "Files" : "Ficheiros",
-    "Error loading activities" : "Produciuse un erro ao cargar as actividades",
-    "No activities" : "Non hai actividades",
-    "You are receiving this email because the following things happened at %s" : "Recibiu este correo porque sucederon as seguintes cousas en %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["e %n máis","e %n máis"]
+    "Files" : "Ficheiros"
 },
 "nplurals=2; plural=(n != 1);");

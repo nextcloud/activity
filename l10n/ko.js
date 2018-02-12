@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS 피드 사용",
     "RSS feed" : "RSS 피드",
     "No more events to load" : "더 이상 불러올 이벤트 없음",
-    "Files" : "파일",
-    "Error loading activities" : "활동을 불러오는 중 오류 발생",
-    "No activities" : "활동 없음",
-    "You are receiving this email because the following things happened at %s" : "%s에서 다음 활동이 있었기 때문에 이 이메일을 보냈습니다",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* 그 외 %n개 더 있음"]
+    "Files" : "파일"
 },
 "nplurals=1; plural=0;");

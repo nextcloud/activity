@@ -52,11 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "לאפשר הזנת RSS",
     "RSS feed" : "ערוץ RSS",
     "No more events to load" : "אין אירועים נוספים לטעינה",
-    "Files" : "קבצים",
-    "Error loading activities" : "טעינת הפעילויות נכשלה",
-    "No activities" : "אין פעילויות",
-    "You are receiving this email because the following things happened at %s" : "הודעת דוא״ל זו הגיעה אליך עקב האירועים הבאים שקרו תחת %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* ו־%n נוסף ","* ו־%n נוספים "]
+    "Files" : "קבצים"
 },
 "nplurals=2; plural=(n != 1);");

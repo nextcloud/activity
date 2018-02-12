@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktivizoni Prurje RSS",
     "RSS feed" : "Prurja RSS",
     "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
-    "Files" : "Skedar",
-    "Error loading activities" : "Gabim në ngarkimin e veprimtarive",
-    "No activities" : "Asnjë veprimtari",
-    "You are receiving this email because the following things happened at %s" : "Ju po e merrni këtë email sepse gjërat në vijim ndodhën në %s",
-    "* %1$s - %2$s" : "%1$s-%2$s",
-    "_* and %n more _::_* and %n more _" : ["*dhe %n më shumë","*dhe %n më shumë"]
+    "Files" : "Skedar"
 },
 "nplurals=2; plural=(n != 1);");

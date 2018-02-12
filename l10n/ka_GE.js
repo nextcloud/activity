@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS ლენტის გააქტიურება",
     "RSS feed" : "RSS ლენტა",
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
-    "Files" : "ფაილები",
-    "Error loading activities" : "შეცდომა აქტივობების ჩატვირთვისას",
-    "No activities" : "აქტივობები არაა",
-    "You are receiving this email because the following things happened at %s" : "ელ-შეტყობინება მიიღეთ, რადგანაც %s-ზე მოხდა შემდეგი მოვლენები",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* და კიდევ %n"]
+    "Files" : "ფაილები"
 },
 "nplurals=1; plural=0;");

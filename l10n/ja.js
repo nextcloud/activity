@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSSフィードを有効にする",
     "RSS feed" : "RSS フィード",
     "No more events to load" : "これ以上読み込むイベントはありません",
-    "Files" : "ファイル",
-    "Error loading activities" : "アクティビティの読込エラー",
-    "No activities" : "アクティビティなし",
-    "You are receiving this email because the following things happened at %s" : "%sにおいて以下が生じたためこのメールを受信しました",
-    "* %1$s - %2$s" : "%1$s-%2$s",
-    "_* and %n more _::_* and %n more _" : ["更に%n"]
+    "Files" : "ファイル"
 },
 "nplurals=1; plural=0;");

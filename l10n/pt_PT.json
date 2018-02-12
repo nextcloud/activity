@@ -52,11 +52,6 @@
     "Enable RSS feed" : "Activar feed RSS",
     "RSS feed" : "RSS feed",
     "No more events to load" : "Sem mais eventos para carregar",
-    "Files" : "Ficheiros",
-    "Error loading activities" : "Erro ao carregar atividades",
-    "No activities" : "Sem actividades",
-    "You are receiving this email because the following things happened at %s" : "Recebeste este email devido às seguintes causas %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* e %n mais ","* e %n mais "]
+    "Files" : "Ficheiros"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

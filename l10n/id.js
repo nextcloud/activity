@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktifkan RSS feed",
     "RSS feed" : "RSS feed",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
-    "Files" : "Berkas",
-    "Error loading activities" : "Terjadi kesalahan saat memuat aktivitas",
-    "No activities" : "Tidak ada aktivitas",
-    "You are receiving this email because the following things happened at %s" : "Anda menerima email ini karena hal berikut terjadi di %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* dan %n lagi"]
+    "Files" : "Berkas"
 },
 "nplurals=1; plural=0;");

@@ -45,11 +45,6 @@
     "Settings" : "Instellings",
     "Enable RSS feed" : "Aktiveer RSS-voer",
     "No more events to load" : "Geen meer gebeure om te laai",
-    "Files" : "Lêers",
-    "Error loading activities" : "Aktiwiteitlaaifout",
-    "No activities" : "Geen aktiwiteite",
-    "You are receiving this email because the following things happened at %s" : "U ontvang hierdie e-pos omdat die volgende by %s plaasgevind het",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* en nog %n","* en nog %n"]
+    "Files" : "Lêers"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

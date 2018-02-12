@@ -53,11 +53,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Активувати RSS стрічку",
     "RSS feed" : "Стрічка RSS",
     "No more events to load" : "Більше немає подій для завантаження",
-    "Files" : "Файли",
-    "Error loading activities" : "Помилка завантаження подій",
-    "No activities" : "Активність відсутня",
-    "You are receiving this email because the following things happened at %s" : "Ви отримали це повідомлення, тому що о %s відбулось наступне",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* та ще %n","* та ще %n","* та ще %n"]
+    "Files" : "Файли"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

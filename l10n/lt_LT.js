@@ -51,11 +51,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "RSS feed" : "RSS kanalas",
     "No more events to load" : "Nėra daugiau rodytinų įvykių",
-    "Files" : "Failai",
-    "Error loading activities" : "Klaida bandant parodyti veiklas",
-    "No activities" : "Nėra veiklų",
-    "You are receiving this email because the following things happened at %s" : "Jūs gavote pranešimą, nes įvyko šie dalykai: %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* ir %n kitas","* ir %n kiti","* ir %n kitų"]
+    "Files" : "Failai"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);");
