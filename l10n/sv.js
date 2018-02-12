@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "RSS feed" : "RSS-flöde",
     "No more events to load" : "Inga fler aktiviteter.",
-    "Files" : "Filer",
-    "Error loading activities" : "Fel när aktiviteter laddades",
-    "No activities" : "Inga aktiviteter",
-    "You are receiving this email because the following things happened at %s" : "Du får detta e-post eftersom följande saker inträffade på %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* och %n till","* och %n till"]
+    "Files" : "Filer"
 },
 "nplurals=2; plural=(n != 1);");

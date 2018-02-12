@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Povoliť RSS kanál",
     "RSS feed" : "RSS kanál",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
-    "Files" : "Súbory",
-    "Error loading activities" : "Chyba pri načítaní aktivít",
-    "No activities" : "Žiadne aktivity",
-    "You are receiving this email because the following things happened at %s" : "Tento mail dostávate ako upozorenie na nasledujúce odalosti na %s",
-    "* %1$s - %2$s" : "%1$s - %2$s ",
-    "_* and %n more _::_* and %n more _" : ["* a %n ďalšia","* a %n ďalšie","* a %n ďalších"]
+    "Files" : "Súbory"
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");

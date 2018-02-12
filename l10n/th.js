@@ -47,11 +47,6 @@ OC.L10N.register(
     "Settings" : "การตั้งค่า",
     "Enable RSS feed" : "เปิดใช้งานฟีด RSS",
     "No more events to load" : "ไม่มีการโหลดกิจกรรมเพิ่มเติม",
-    "Files" : "ไฟล์",
-    "Error loading activities" : "เกิดข้อผิดพลาดขณะโหลดกิจกรรม",
-    "No activities" : "ยังไม่มีกิจกรรม",
-    "You are receiving this email because the following things happened at %s" : "หากคุณได้รับอีเมลนี้เป็นเพราะว่ามีบางอย่างผิดปกติที่ %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* และอีก %n"]
+    "Files" : "ไฟล์"
 },
 "nplurals=1; plural=0;");

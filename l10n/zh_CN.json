@@ -52,11 +52,6 @@
     "Enable RSS feed" : "启用 RSS 源",
     "RSS feed" : "RSS 源",
     "No more events to load" : "已无更多事件",
-    "Files" : "文件",
-    "Error loading activities" : "加载动态时出错",
-    "No activities" : "暂无动态",
-    "You are receiving this email because the following things happened at %s" : "你收到此邮件是因为在 %s 发生了以下事件:",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* 以及其他 %n 项"]
+    "Files" : "文件"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

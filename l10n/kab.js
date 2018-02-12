@@ -31,10 +31,6 @@ OC.L10N.register(
     "Daily" : "S wass",
     "Weekly" : "S umalas",
     "Settings" : "Iɣewwaṛen",
-    "Files" : "Ifuyla",
-    "Error loading activities" : "Tuccḍa deg usali n irmuden",
-    "No activities" : "Ulac armud",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* akked %n nniḍen ","* akked %n nniḍen "]
+    "Files" : "Ifuyla"
 },
 "nplurals=2; plural=(n != 1);");

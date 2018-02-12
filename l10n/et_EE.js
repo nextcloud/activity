@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Luba RSS voog",
     "RSS feed" : "RRS voog",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
-    "Files" : "Failid",
-    "Error loading activities" : "Tegevuste laadimine ebaõnnestus",
-    "No activities" : "Tegevusi pole",
-    "You are receiving this email because the following things happened at %s" : "Saite selle e-kirja kuna järgmised tegevused toimusid lehel %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* ja %n veel ","* ja %n veel "]
+    "Files" : "Failid"
 },
 "nplurals=2; plural=(n != 1);");

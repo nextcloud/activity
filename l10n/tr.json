@@ -52,11 +52,6 @@
     "Enable RSS feed" : "RSS akışı kullanılsın",
     "RSS feed" : "RSS akışı",
     "No more events to load" : "Yüklenecek başka bir olay yok",
-    "Files" : "Dosyalar",
-    "Error loading activities" : "Etkinlikler yüklenirken hata",
-    "No activities" : "Etkinlik yok",
-    "You are receiving this email because the following things happened at %s" : "Bu e-posta %s üzerinde aşağıdaki etkinliklerin gerçekleştiğini bildirmek üzere gönderilmiştir:",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* ve %n diğer","* ve %n diğer"]
+    "Files" : "Dosyalar"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

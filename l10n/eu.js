@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "RSS feed" : "RSS jarioa",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
-    "Files" : "Fitxategiak",
-    "Error loading activities" : "Errorea jarduerak kargatzen",
-    "No activities" : "Ez dago jarduerarik",
-    "You are receiving this email because the following things happened at %s" : "Posta elektroniko hau jaso duzu %s-(e)n hurrengo gauzak gertatu direlako",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* eta %n gehiago","* eta %n gehiago"]
+    "Files" : "Fitxategiak"
 },
 "nplurals=2; plural=(n != 1);");

@@ -48,11 +48,6 @@ OC.L10N.register(
     "Settings" : "設定",
     "Enable RSS feed" : "啟用 RSS 源",
     "No more events to load" : "已無更多事件",
-    "Files" : "檔案",
-    "Error loading activities" : "載入動態時出錯",
-    "No activities" : "沒有動態",
-    "You are receiving this email because the following things happened at %s" : "你收到此郵件是因為在%s發生了以下事件:",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* 以及其他 %n项"]
+    "Files" : "檔案"
 },
 "nplurals=1; plural=0;");

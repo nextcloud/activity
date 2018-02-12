@@ -52,11 +52,6 @@
     "Enable RSS feed" : "Bật nguồn cấp dữ liệu RSS",
     "RSS feed" : "Nội dung RSS",
     "No more events to load" : "Không có sự kiện nào",
-    "Files" : "Tệp tin",
-    "Error loading activities" : "Lỗi khi nạp các hoạt động",
-    "No activities" : "Không có hoạt động nào",
-    "You are receiving this email because the following things happened at %s" : "Bạn đang nhận được thư này vì những điều sau đã xảy ra tại 1%s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* và hơn %n  "]
+    "Files" : "Tệp tin"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

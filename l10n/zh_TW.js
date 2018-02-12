@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "啟用 RSS feed",
     "RSS feed" : "RSS 摘要",
     "No more events to load" : "已載入所有事件",
-    "Files" : "檔案",
-    "Error loading activities" : "載入活動錯誤",
-    "No activities" : "沒有活動",
-    "You are receiving this email because the following things happened at %s" : "您會收到郵件是因為 %s 發生此事件",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* 和其他 %n 個"]
+    "Files" : "檔案"
 },
 "nplurals=1; plural=0;");
