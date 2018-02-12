@@ -52,11 +52,6 @@
     "Enable RSS feed" : "Abilita fonte RSS",
     "RSS feed" : "Fonte RSS",
     "No more events to load" : "Non ci sono altri eventi da caricare",
-    "Files" : "File",
-    "Error loading activities" : "Errore durante il caricamento delle attività",
-    "No activities" : "Nessuna attività",
-    "You are receiving this email because the following things happened at %s" : "Hai ricevuto questa email perché si sono verificati i seguenti eventi su %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* e %n altro","* e %n altri"]
+    "Files" : "File"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Käytä RSS-syötettä",
     "RSS feed" : "RSS-syöte",
     "No more events to load" : "Ei enempää tapahtumia ladattavaksi",
-    "Files" : "Tiedostot",
-    "Error loading activities" : "Virhe ladatessa toimia",
-    "No activities" : "Ei toimia",
-    "You are receiving this email because the following things happened at %s" : "Saat tämän viestin, koska kohteessa %s tapahtui seuraavaa",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* ja %n lisää","* ja %n lisää"]
+    "Files" : "Tiedostot"
 },
 "nplurals=2; plural=(n != 1);");

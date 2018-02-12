@@ -52,11 +52,6 @@
     "Enable RSS feed" : "Укључи РСС довод",
     "RSS feed" : "РСС довод",
     "No more events to load" : "Нема више догађаја за приказ",
-    "Files" : "Фајлови",
-    "Error loading activities" : "Грешка при учитавању активности",
-    "No activities" : "Нема активности",
-    "You are receiving this email because the following things happened at %s" : "Добијате ову поруку јер су се на %s десиле следеће ствари",
-    "* %1$s - %2$s" : "* %1$s — %2$s",
-    "_* and %n more _::_* and %n more _" : ["* и још %n","* и још %n","* и још %n"]
+    "Files" : "Фајлови"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }

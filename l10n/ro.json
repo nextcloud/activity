@@ -51,11 +51,6 @@
     "Enable RSS feed" : "Activați feed RSS",
     "RSS feed" : "Flux RSS",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
-    "Files" : "Fișiere",
-    "Error loading activities" : "Eroare la încărcarea activităților",
-    "No activities" : "Nici o activitate",
-    "You are receiving this email because the following things happened at %s" : "Primiți acest email deoarece următoarele evenimente s-au petrecut la %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* și %n altele ","* și încă %n","* și %n altele"]
+    "Files" : "Fișiere"
 },"pluralForm" :"nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));"
 }

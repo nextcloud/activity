@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS hírfolyam engedélyezése",
     "RSS feed" : "RSS folyam",
     "No more events to load" : "Nincs több esemény",
-    "Files" : "Fájlok",
-    "Error loading activities" : "Hiba történt a tevékenységek betöltése közben",
-    "No activities" : "Nincs tevékenység",
-    "You are receiving this email because the following things happened at %s" : "Azért kaptad ezt a levelet, mert ezek az események történtek itt: %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* és még %n","* és még %n"]
+    "Files" : "Fájlok"
 },
 "nplurals=2; plural=(n != 1);");

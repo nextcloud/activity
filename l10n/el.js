@@ -54,11 +54,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Ενεργοποίηση ροής πληροφοριών RSS",
     "RSS feed" : "Ροή RSS",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
-    "Files" : "Αρχεία",
-    "Error loading activities" : "Σφάλμα φόρτωσης δραστηριοτήτων",
-    "No activities" : "Καμία δραστηριότητα",
-    "You are receiving this email because the following things happened at %s" : "Λαμβάνετε αυτό το email διότι συνέβησαν τα ακόλουθα στο %s",
-    "* %1$s - %2$s" : "* %1$s - %2$s",
-    "_* and %n more _::_* and %n more _" : ["* και %n επιπλέον","* και %n επιπλέον"]
+    "Files" : "Αρχεία"
 },
 "nplurals=2; plural=(n != 1);");

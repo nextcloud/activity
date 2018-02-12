@@ -42,8 +42,6 @@ OC.L10N.register(
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Та цахим шуудангаар ямар үйлдлийн талаар мэдээлэл авахыг хүсэж байгаа болон \"Үйлдлүүд\" хэсэгт ямар үйлдэл харуулахыг хүсэж байгаагаа сонгоно уу.",
     "Settings" : "Тохиргоо",
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
-    "Files" : "Файлууд",
-    "No activities" : "Үйлдэл алга",
-    "* %1$s - %2$s" : "%1$s-%2$s"
+    "Files" : "Файлууд"
 },
 "nplurals=2; plural=(n != 1);");
