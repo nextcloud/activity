@@ -396,7 +396,7 @@ class MailQueueHandler {
 			$event = $activity['event'];
 			$relativeDateTime = $activity['relativeDateTime'];
 
-			$template->addBodyListItem($event->getParsedSubject(), $relativeDateTime, $event->getIcon());
+			$template->addBodyListItem($this->getHTMLSubject($event), $relativeDateTime, $event->getIcon(), $event->getParsedSubject());
 		}
 
 		if ($skippedCount) {
@@ -420,6 +420,25 @@ class MailQueueHandler {
 
 		$this->activityManager->setCurrentUserId(null);
 		return true;
+	}
+
+	/**
+	 * @param IEvent $event
+	 * @return string
+	 */
+	protected function getHTMLSubject(IEvent $event): string {
+		$placeholders = $replacements = [];
+		foreach ($event->getRichSubjectParameters() as $placeholder => $parameter) {
+			$placeholders[] = '{' . $placeholder . '}';
+
+			if (isset($parameter['link'])) {
+				$replacements[] = '<a href="' . $parameter['link'] . '">' . htmlspecialchars($parameter['name']) . '</a>';
+			} else {
+				$replacements[] = '<strong>' . htmlspecialchars($parameter['name']) . '</strong>';
+			}
+		}
+
+		return str_replace($placeholders, $replacements, $event->getRichSubject());
 	}
 
 	/**
