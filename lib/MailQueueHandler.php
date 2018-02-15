@@ -387,6 +387,7 @@ class MailQueueHandler {
 			'activityEvents' => $activityEvents,
 			'skippedCount' => $skippedCount,
 		]);
+		$template->setSubject($l->t('Activity notification'));
 		$template->addHeader();
 		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
 		$template->addBodyText($l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')]));
@@ -407,9 +408,7 @@ class MailQueueHandler {
 
 		$message = $this->mailer->createMessage();
 		$message->setTo([$email => $user->getDisplayName()]);
-		$message->setSubject((string) $l->t('Activity notification'));
-		$message->setHtmlBody($template->renderHtml());
-		$message->setPlainBody($template->renderText());
+		$message->useTemplate($template);
 		$message->setFrom([$this->getSenderData('email') => $this->getSenderData('name')]);
 
 		try {
