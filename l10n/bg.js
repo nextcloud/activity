@@ -2,7 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Активност",
-    "An error occurred while loading activities" : "Възникна грешка при зареждането на активностите",
+    "An error occurred while loading activities" : "Възникна грешка при зареждането на активности",
     "No activity yet" : "Все още няма активност",
     "Load more activities" : "Зареди по-стари",
     "Copied!" : "Копирано!",
@@ -48,7 +48,7 @@ OC.L10N.register(
     "Hourly" : "На всеки час",
     "Daily" : "Ежедневно",
     "Weekly" : "Седмично",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Изберете за кои дейности искате да получавате известия по имейл и кои да се показват в потока на приложението за активност.",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Изберете за кои активности искате да получавате известие по имейл и кои да се показват в \"Поток на приложение за активност\"",
     "Choose which activities you want to see in your stream." : "Изберете кои дейности искате да виждате в потока на активността.",
     "Settings" : "Настройки",
     "Enable RSS feed" : "Разрешаване на RSS емисии",
