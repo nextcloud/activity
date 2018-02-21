@@ -387,10 +387,15 @@ class MailQueueHandler {
 			'activityEvents' => $activityEvents,
 			'skippedCount' => $skippedCount,
 		]);
-		$template->setSubject($l->t('Activity notification'));
+		$template->setSubject($l->t('Activity notification for %s', $this->getSenderData('name')));
 		$template->addHeader();
 		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
-		$template->addBodyText($l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')]));
+
+		$homeLink = '<a href="' . $this->urlGenerator->getAbsoluteURL('/') . '">' . htmlspecialchars($this->getSenderData('name')) . '</a>';
+		$template->addBodyText(
+			$l->t('There was some activity at %s', [$homeLink]),
+			$l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')])
+		);
 
 		foreach ($activityEvents as $activity) {
 			/** @var IEvent $event */
