@@ -67,7 +67,6 @@ class Application extends App {
 	public function register() {
 		$this->registerActivityConsumer();
 		$this->registerHooksAndEvents();
-		$this->registerPersonalPage();
 	}
 
 	/**
@@ -111,12 +110,5 @@ class Application extends App {
 
 		$eventDispatcher = $this->getContainer()->getServer()->getEventDispatcher();
 		$eventDispatcher->addListener('OCP\Share::preUnshare', [FilesHooksStatic::class, 'unShare']);
-	}
-
-	/**
-	 * Register personal settings for notifications and emails
-	 */
-	public function registerPersonalPage() {
-		\OCP\App::registerPersonal($this->getContainer()->getAppName(), 'personal');
 	}
 }

@@ -50,7 +50,9 @@
 
 	<settings>
 		<admin>OCA\Activity\Settings\Admin</admin>
-		<admin-section>OCA\Activity\Settings\Section</admin-section>
+		<admin-section>OCA\Activity\Settings\AdminSection</admin-section>
+		<personal>OCA\Activity\Settings\Personal</personal>
+		<personal-section>OCA\Activity\Settings\PersonalSection</personal-section>
 	</settings>
 
 	<activity>
