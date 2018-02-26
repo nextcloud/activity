@@ -24,7 +24,7 @@
  */
 script('activity', [
 	'richObjectStringParser',
-	'script',
+	'compiled/activity-stream',
 	'feedSettings',
 ]);
 style('activity', 'style');
@@ -32,14 +32,14 @@ style('activity', 'style');
 
 <?php $_['appNavigation']->printPage(); ?>
 
-<div id="app-content">
+<div id="app-content" data-activity-filter="<?php p($_['filter']) ?>">
 	<div id="emptycontent" class="hidden">
 		<div class="icon-activity"></div>
 		<h2><?php p($l->t('No activity yet')); ?></h2>
 		<p><?php p($l->t('This stream will show events like additions, changes & shares')); ?></p>
 	</div>
 
-	<div id="container" data-activity-filter="<?php p($_['filter']) ?>" data-avatars-enabled="<?php p($_['avatars']) ?>">
+	<div id="container">
 	</div>
 
 	<div id="loading_activities" class="icon-loading"></div>

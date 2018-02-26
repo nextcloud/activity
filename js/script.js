@@ -186,8 +186,6 @@ $(function(){
 					+'	<h2>'+"\n"
 					+'		<span class="has-tooltip" title="' + escapeHTML(dateOfDay) + '">' + escapeHTML(displayDate) + '</span>' + "\n"
 					+'	</h2>' + "\n"
-					+'	<div class="boxcontainer">' + "\n"
-					+'	</div>' + "\n"
 					+'</div>';
 				var $content = $(content);
 				this.processElements($content);

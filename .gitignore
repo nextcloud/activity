@@ -50,6 +50,10 @@ nbproject
 .well-known
 /.buildpath
 
+# WebPack
+/node_modules
+/js/compiled
+
 # Tests - auto-generated files
 /PhantomJS_*
 /tests/coverage*
