@@ -198,7 +198,9 @@ class DataTest extends TestCase {
 		if ($offsetUser === null) {
 			$offsetUser = $user;
 		} else if ($offsetUser === 'invalid-user') {
-			$this->setExpectedException('OutOfBoundsException', 'Invalid since', 2);
+			$this->expectException('OutOfBoundsException');
+			$this->expectExceptionMessage('Invalid since');
+			$this->expectExceptionCode(2);
 		}
 
 		$connection = \OC::$server->getDatabaseConnection();

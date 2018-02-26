@@ -25,7 +25,7 @@ use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\Settings\IIconSection;
 
-class Section implements IIconSection {
+class PersonalSection implements IIconSection {
 
 	/** @var IL10N */
 	private $l;
@@ -84,6 +84,6 @@ class Section implements IIconSection {
 	 * @since 9.1
 	 */
 	public function getPriority() {
-		return 55;
+		return 10;
 	}
 }

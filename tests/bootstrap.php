@@ -38,7 +38,7 @@ require_once __DIR__.'/../../../lib/base.php';
 // Fix for "Autoload path not allowed: .../files_sharing/lib/activity.php"
 \OC_App::loadApp('files_sharing');
 
-if(!class_exists('PHPUnit_Framework_TestCase')) {
+if(!class_exists('\PHPUnit\Framework\TestCase')) {
 	require_once('PHPUnit/Autoload.php');
 }
 

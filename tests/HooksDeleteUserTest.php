@@ -26,6 +26,8 @@ use Doctrine\DBAL\Driver\Statement;
 use OCA\Activity\Data;
 use OCA\Activity\Hooks;
 use OCP\Activity\IExtension;
+use OCP\IUserSession;
+use OCP\Activity\IManager;
 
 /**
  * Class HooksDeleteUserTest
@@ -75,9 +77,9 @@ class HooksDeleteUserTest extends TestCase {
 
 	protected function tearDown() {
 		$data = new Data(
-			$this->getMock('\OCP\Activity\IManager'),
+			$this->createMock(IManager::class),
 			\OC::$server->getDatabaseConnection(),
-			$this->getMock('\OCP\IUserSession')
+			$this->createMock(IUserSession::class)
 		);
 		$data->deleteActivities(array(
 			'type' => 'test',
