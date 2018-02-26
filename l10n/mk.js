@@ -20,7 +20,7 @@ OC.L10N.register(
     "Activity" : "Активност",
     "Activity feed" : "Feed на активности",
     "Notify about your own actions via email" : "Извести за своите активности преку порака",
-    "You need to set up your email address before you can receive notification emails." : "Ќе треба да ја внесете Вашата електронска адреса за да можете да примате известувања по електронска пошта.",
+    "You need to set up your email address before you can receive notification emails." : "Треба да ја внесете Вашата електронска адреса за да можете да примате известувања по електронска пошта.",
     "Send emails:" : "Пратени пораки:",
     "Hourly" : "Часовно",
     "Daily" : "Дневно",
