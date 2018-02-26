@@ -118,6 +118,9 @@ class MailQueueHandlerTest extends TestCase {
 		$event->expects($this->any())
 			->method('setSubject')
 			->willReturnSelf();
+		$event->expects($this->any())
+			->method('getRichSubjectParameters')
+			->willReturn([]);
 
 		$this->activityManager = $this->createMock(IManager::class);
 		$this->activityManager->expects($this->any())
@@ -253,11 +256,8 @@ class MailQueueHandlerTest extends TestCase {
 			->method('setTo')
 			->with([$email => $userDisplayName]);
 		$this->message->expects($this->once())
-			->method('setSubject');
-		$this->message->expects($this->once())
-			->method('setPlainBody');
-		$this->message->expects($this->once())
-			->method('setFrom');
+			->method('useTemplate')
+			->with($template);
 
 		$userObject = $this->createMock(IUser::class);
 		$userObject->expects($this->any())

@@ -387,16 +387,22 @@ class MailQueueHandler {
 			'activityEvents' => $activityEvents,
 			'skippedCount' => $skippedCount,
 		]);
+		$template->setSubject($l->t('Activity notification for %s', $this->getSenderData('name')));
 		$template->addHeader();
 		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
-		$template->addBodyText($l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')]));
+
+		$homeLink = '<a href="' . $this->urlGenerator->getAbsoluteURL('/') . '">' . htmlspecialchars($this->getSenderData('name')) . '</a>';
+		$template->addBodyText(
+			$l->t('There was some activity at %s', [$homeLink]),
+			$l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')])
+		);
 
 		foreach ($activityEvents as $activity) {
 			/** @var IEvent $event */
 			$event = $activity['event'];
 			$relativeDateTime = $activity['relativeDateTime'];
 
-			$template->addBodyListItem($event->getParsedSubject(), $relativeDateTime, $event->getIcon());
+			$template->addBodyListItem($this->getHTMLSubject($event), $relativeDateTime, $event->getIcon(), $event->getParsedSubject());
 		}
 
 		if ($skippedCount) {
@@ -407,9 +413,7 @@ class MailQueueHandler {
 
 		$message = $this->mailer->createMessage();
 		$message->setTo([$email => $user->getDisplayName()]);
-		$message->setSubject((string) $l->t('Activity notification'));
-		$message->setHtmlBody($template->renderHtml());
-		$message->setPlainBody($template->renderText());
+		$message->useTemplate($template);
 		$message->setFrom([$this->getSenderData('email') => $this->getSenderData('name')]);
 
 		try {
@@ -420,6 +424,25 @@ class MailQueueHandler {
 
 		$this->activityManager->setCurrentUserId(null);
 		return true;
+	}
+
+	/**
+	 * @param IEvent $event
+	 * @return string
+	 */
+	protected function getHTMLSubject(IEvent $event): string {
+		$placeholders = $replacements = [];
+		foreach ($event->getRichSubjectParameters() as $placeholder => $parameter) {
+			$placeholders[] = '{' . $placeholder . '}';
+
+			if (isset($parameter['link'])) {
+				$replacements[] = '<a href="' . $parameter['link'] . '">' . htmlspecialchars($parameter['name']) . '</a>';
+			} else {
+				$replacements[] = '<strong>' . htmlspecialchars($parameter['name']) . '</strong>';
+			}
+		}
+
+		return str_replace($placeholders, $replacements, $event->getRichSubject());
 	}
 
 	/**
