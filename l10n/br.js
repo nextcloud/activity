@@ -16,9 +16,9 @@ OC.L10N.register(
     "Today" : "Hiziv",
     "Yesterday" : "Dec'h",
     "Open file" : "Digeriñ ur restr",
-    "Mail" : "Postel",
     "Hello %s" : "Degemer mat %s",
     "Hello %s," : "Demeger mat %s, ",
+    "Mail" : "Postel",
     "Activity" : "Oberantiz",
     "Activity feed" : "Gwazh oberantizoù",
     "Files" : "Restroù"

@@ -20,8 +20,6 @@
     "Your feed URL is invalid" : "Adres URL zasobu jest nieprawidłowy",
     "Your settings have been updated." : "Twoje ustawienia zostały zaktualizowane",
     "Settings have been updated." : "Ustawienia zostały zaktualizowane.",
-    "Mail" : "E-mail",
-    "Stream" : "Strumień",
     "All activities" : "Wszystkie aktywności",
     "By others" : "Przez innych",
     "By you" : "Przez Ciebie",
@@ -30,9 +28,10 @@
     "Hello %s," : "Witaj %s,",
     "There was some activity at %s" : "Zaistniała aktywność przy %s",
     "_and %n more _::_and %n more _" : ["i %n więcej","i %n więcej","i %n więcej","i %n więcej"],
-    "Activity notification" : "Powiadomienie o aktywności",
     ", " : ", ",
     "%s and %s" : "%s oraz %s",
+    "Mail" : "E-mail",
+    "Stream" : "Strumień",
     "Activity" : "Aktywność",
     "Activity feed" : "Zasób aktywności",
     "Send activity emails" : "Wyślij maile o aktywnościach",
@@ -52,6 +51,7 @@
     "Enable RSS feed" : "Włącz kanał RSS",
     "RSS feed" : "Kanał RSS",
     "No more events to load" : "Brak zdarzeń do załadowania",
-    "Files" : "Pliki"
+    "Files" : "Pliki",
+    "Activity notification" : "Powiadomienie o aktywności"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }

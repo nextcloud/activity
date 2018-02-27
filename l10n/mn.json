@@ -17,16 +17,15 @@
     "Your feed URL is invalid" : "Таны URL хүчин төгөлдөр бус байна",
     "Your settings have been updated." : "Таны тохиргоог шинэчлэв",
     "Settings have been updated." : "Тохиргоог шинэчлэв",
-    "Mail" : "Цахим шуудан",
-    "Stream" : "Урсгал",
     "All activities" : "Бүх үйлдэлүүд",
     "By others" : "Бусдын үйлдлүүд",
     "By you" : "Таны үйлдлүүд",
     "\"remote user\"" : "\"алсын хэрэглэгч\"",
     "Hello %s" : "Сайн байна уу, %s",
     "Hello %s," : "Сайн байна уу, %s,",
-    "Activity notification" : "Үйл ажиллагааны мэдэгдэл",
     "%s and %s" : "%s ба %s",
+    "Mail" : "Цахим шуудан",
+    "Stream" : "Урсгал",
     "Activity" : "Үйлдлүүд",
     "Activity feed" : "Үйлдлүүдйн тэжээл",
     "Configure the default activity settings for new users." : "Шинэ хэрэглэгчдийн \"Үйлдлүүд\" хэсгийн анхдагч тохиргоог тохируулах",
@@ -40,6 +39,7 @@
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Та цахим шуудангаар ямар үйлдлийн талаар мэдээлэл авахыг хүсэж байгаа болон \"Үйлдлүүд\" хэсэгт ямар үйлдэл харуулахыг хүсэж байгаагаа сонгоно уу.",
     "Settings" : "Тохиргоо",
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
-    "Files" : "Файлууд"
+    "Files" : "Файлууд",
+    "Activity notification" : "Үйл ажиллагааны мэдэгдэл"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

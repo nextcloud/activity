@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "La URL del canal no és vàlida",
     "Your settings have been updated." : "La configuració s'ha actualitzat.",
     "Settings have been updated." : "Els ajustos s'han actualitzat.",
-    "Mail" : "Correu electrònic",
-    "Stream" : "Flux",
     "All activities" : "Totes les activitats",
     "By others" : "Per altres",
     "By you" : "Per tu",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Hola %s,",
     "There was some activity at %s" : "Hi va haver activitat a %s",
     "_and %n more _::_and %n more _" : ["i %n més","i %n més"],
-    "Activity notification" : "Notificació d'activitat",
     ", " : ", ",
     "%s and %s" : "%s i %s",
+    "Mail" : "Correu electrònic",
+    "Stream" : "Flux",
     "Activity" : "Activitat",
     "Activity feed" : "Canal d'activitat",
     "Send activity emails" : "Envia correu",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Activa el canal RSS",
     "RSS feed" : "Canal RSS",
     "No more events to load" : "No hi ha més elements a carregar",
-    "Files" : "Fitxers"
+    "Files" : "Fitxers",
+    "Activity notification" : "Notificació d'activitat"
 },
 "nplurals=2; plural=(n != 1);");

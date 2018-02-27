@@ -20,8 +20,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "ฟีด URL ของคุณไม่ถูกต้อง",
     "Your settings have been updated." : "อัพเดทการตั้งค่าเรียบร้อยแล้ว",
     "Settings have been updated." : "อัพเดทการตั้งค่าแล้ว",
-    "Mail" : "จดหมาย",
-    "Stream" : "สตรีม",
     "All activities" : "กิจกรรมทั้งหมด",
     "By others" : "โดยผู้อื่น",
     "By you" : "โดยคุณ",
@@ -30,9 +28,10 @@ OC.L10N.register(
     "Hello %s," : "สวัสดี %s",
     "There was some activity at %s" : "มีกิจกรรมบางอย่าง ที่ %s",
     "_and %n more _::_and %n more _" : ["และอีก %n"],
-    "Activity notification" : "การแจ้งเตือนกิจกรรม",
     ", " : "หรือ",
     "%s and %s" : "%s และ %s",
+    "Mail" : "จดหมาย",
+    "Stream" : "สตรีม",
     "Activity" : "กิจกรรม",
     "Activity feed" : "ฟีดกิจกรรม",
     "Configure the default activity settings for new users." : "ตั้งค่ากิจกรรมเริ่มต้นให้ผู้ใช้ใหม่",
@@ -47,6 +46,7 @@ OC.L10N.register(
     "Settings" : "การตั้งค่า",
     "Enable RSS feed" : "เปิดใช้งานฟีด RSS",
     "No more events to load" : "ไม่มีการโหลดกิจกรรมเพิ่มเติม",
-    "Files" : "ไฟล์"
+    "Files" : "ไฟล์",
+    "Activity notification" : "การแจ้งเตือนกิจกรรม"
 },
 "nplurals=1; plural=0;");

@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "URL feed شما نامعتبر است",
     "Your settings have been updated." : "تنظیمات شما به روز رسانی شد",
     "Settings have been updated." : "تنظیمات به روز رسانی شد ",
-    "Mail" : "ایمیل",
-    "Stream" : "Stream",
     "All activities" : "تمامی فعالیت ها",
     "By others" : "توسط دیگران",
     "By you" : "توسط شما",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "سلام %s",
     "There was some activity at %s" : "تعدادی فعالیت در %s وجود دارد",
     "_and %n more _::_and %n more _" : ["و %n بیشتر"],
-    "Activity notification" : "هشدارهای فعالیت",
     ", " : ",",
     "%s and %s" : "%s و %s",
+    "Mail" : "ایمیل",
+    "Stream" : "Stream",
     "Activity" : "فعالیت",
     "Activity feed" : "feed فعالیت",
     "Send activity emails" : "ارسال ایمیل فعالیت",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "فعالسازی فید RSS",
     "RSS feed" : "فید RSS",
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
-    "Files" : "فایل ها"
+    "Files" : "فایل ها",
+    "Activity notification" : "هشدارهای فعالیت"
 },
 "nplurals=1; plural=0;");

@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Spletni naslov vira ni veljaven",
     "Your settings have been updated." : "Nastavitve so posodobljene.",
     "Settings have been updated." : "Nastavitve so bile posodobljene",
-    "Mail" : "Elektronska pošta",
-    "Stream" : "Pretok",
     "All activities" : "Vse dejavnosti",
     "By others" : "Od drugih",
     "By you" : "Tvoje",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Pozdravljeni, %s,",
     "There was some activity at %s" : "Bilo je nekaj dejavosti ob %s",
     "_and %n more _::_and %n more _" : ["- in še %n","- in še %n","- in še %n","- in še %n"],
-    "Activity notification" : "Obvestila o dejavnosti",
     ", " : ",",
     "%s and %s" : "%s in %s",
+    "Mail" : "Elektronska pošta",
+    "Stream" : "Pretok",
     "Activity" : "Dejavnosti",
     "Activity feed" : "Objava dejavnosti z viri RSS",
     "Default settings" : "Prevzete nastavitve",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Omogoči vire RSS",
     "RSS feed" : "Viri RSS",
     "No more events to load" : "Ni več dogodkov za nalaganje",
-    "Files" : "Datoteke"
+    "Files" : "Datoteke",
+    "Activity notification" : "Obvestila o dejavnosti"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

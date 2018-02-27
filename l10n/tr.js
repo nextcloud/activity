@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Akış adresiniz geçersiz",
     "Your settings have been updated." : "Ayarlarınız güncellendi.",
     "Settings have been updated." : "Ayarlar güncellendi",
-    "Mail" : "Posta",
-    "Stream" : "Akış",
     "All activities" : "Tüm etkinlikler",
     "By others" : "Diğerleri tarafından",
     "By you" : "Sizin tarafınızdan",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Merhaba %s,",
     "There was some activity at %s" : "%s üzerinde bazı etkinlik görüldü",
     "_and %n more _::_and %n more _" : ["ve %n diğer","ve %n diğer"],
-    "Activity notification" : "Etkinlik bildirimi",
     ", " : ", ",
     "%s and %s" : "%s ve %s",
+    "Mail" : "Posta",
+    "Stream" : "Akış",
     "Activity" : "Etkinlik",
     "Activity feed" : "Etkinlik akışı",
     "Send activity emails" : "Etkinlik e-postaları gönder",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS akışı kullanılsın",
     "RSS feed" : "RSS akışı",
     "No more events to load" : "Yüklenecek başka bir olay yok",
-    "Files" : "Dosyalar"
+    "Files" : "Dosyalar",
+    "Activity notification" : "Etkinlik bildirimi"
 },
 "nplurals=2; plural=(n > 1);");

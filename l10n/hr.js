@@ -18,14 +18,13 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Nevažeći URL sažetka",
     "Your settings have been updated." : "Vaše su postavke ažurirane",
     "Settings have been updated." : "Postavke ažurirane.",
-    "Mail" : "Pošta",
-    "Stream" : "Strujanje",
     "All activities" : "Sve aktivnosti",
     "Hello %s" : "Poydrav %s",
     "Hello %s," : "Pozdrav %s,",
-    "Activity notification" : "Notifikacija o aktivnosti",
     ", " : ", ",
     "%s and %s" : "%s i %s",
+    "Mail" : "Pošta",
+    "Stream" : "Strujanje",
     "Activity" : "Aktivnost",
     "Activity feed" : "Sažetak aktivnosti",
     "Configure the default activity settings for new users." : "Definiraj osnovne postavke aktivnosti za nove korisnike.",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Settings" : "Postavke",
     "Enable RSS feed" : "Omogućite RSS sažetak događaja",
     "No more events to load" : "Nema više događaja za učitavanje",
-    "Files" : "Datoteke"
+    "Files" : "Datoteke",
+    "Activity notification" : "Notifikacija o aktivnosti"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

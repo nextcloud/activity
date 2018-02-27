@@ -14,8 +14,6 @@ OC.L10N.register(
     "in {path}" : "deg {ubrid}",
     "Today" : "Ass-a",
     "Yesterday" : "Iḍelli",
-    "Mail" : "Tirawt",
-    "Stream" : "Asuddem",
     "All activities" : "Akk irmuden",
     "By others" : "Sɣur wiyaḍ",
     "By you" : "Sɣur-k",
@@ -24,13 +22,15 @@ OC.L10N.register(
     "Hello %s," : "Azul %s,",
     "There was some activity at %s" : "Yella yiwen n urmud deg %s",
     "_and %n more _::_and %n more _" : ["akked %n nniḍen","akked %n nniḍen "],
-    "Activity notification" : "Alɣu n urmud",
+    "Mail" : "Tirawt",
+    "Stream" : "Asuddem",
     "Activity" : "Armud",
     "Send emails:" : "Azen imaylen:",
     "Hourly" : "S usrag",
     "Daily" : "S wass",
     "Weekly" : "S umalas",
     "Settings" : "Iɣewwaṛen",
-    "Files" : "Ifuyla"
+    "Files" : "Ifuyla",
+    "Activity notification" : "Alɣu n urmud"
 },
 "nplurals=2; plural=(n != 1);");

@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Adresa URL a fluxului e invalidă",
     "Your settings have been updated." : "Setările au fost actualizate.",
     "Settings have been updated." : "Setările au fost actualizate.",
-    "Mail" : "Mail",
-    "Stream" : "Flux",
     "All activities" : "Toate activitățile",
     "By others" : "De către alții",
     "By you" : "De către tine",
@@ -31,9 +29,10 @@ OC.L10N.register(
     "Hello %s" : "Salut %s",
     "Hello %s," : "Salut %s,",
     "There was some activity at %s" : "A fost activitate la %s",
-    "Activity notification" : "Notificări de activitate",
     ", " : ",",
     "%s and %s" : "%s și %s",
+    "Mail" : "Mail",
+    "Stream" : "Flux",
     "Activity" : "Activitate",
     "Activity feed" : "Flux de activitate",
     "Send activity emails" : "Trimitere email-uri cu activitatea",
@@ -53,6 +52,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Activați feed RSS",
     "RSS feed" : "Flux RSS",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
-    "Files" : "Fișiere"
+    "Files" : "Fișiere",
+    "Activity notification" : "Notificări de activitate"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

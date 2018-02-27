@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "तपाईंको फिड URL अवैध छ",
     "Your settings have been updated." : "तपाईंको सेटिङहरू अद्यावधिक गरिएको छ।",
     "Settings have been updated." : "सेटिङहरू अद्यावधिक गरिएको छ।",
-    "Mail" : "पत्र",
-    "Stream" : "स्ट्रिम",
     "All activities" : "सबै गतिविधिहरू",
     "By others" : "अरूद्वारा",
     "By you" : "तपाईं द्वारा",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "नमस्ते %s,",
     "There was some activity at %s" : "%s मा केही गतिविधि थियो",
     "_and %n more _::_and %n more _" : ["र थप %n","र %n थप "],
-    "Activity notification" : "गतिविधि सूचना",
     ", " : ",",
     "%s and %s" : "%s र %s",
+    "Mail" : "पत्र",
+    "Stream" : "स्ट्रिम",
     "Activity" : "गतिविधि",
     "Activity feed" : "गतिविधि पाटि",
     "Send activity emails" : "गतिविधिको इमेलहरू पठाउनुहोस्",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS फिड सक्षम गर्नुहोस्",
     "RSS feed" : "RSS फिड",
     "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
-    "Files" : "फाइलहरू"
+    "Files" : "फाइलहरू",
+    "Activity notification" : "गतिविधि सूचना"
 },
 "nplurals=2; plural=(n != 1);");

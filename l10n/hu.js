@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "A hírfolyam URL érvénytelen",
     "Your settings have been updated." : "Beállításait sikeresen frissítettük.",
     "Settings have been updated." : "Beállítások frissítve.",
-    "Mail" : "Levél",
-    "Stream" : "Folyam",
     "All activities" : "Minden tevékenység",
     "By others" : "Másoké",
     "By you" : "A tiéd",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Üdv %s!",
     "There was some activity at %s" : "Itt volt némi tevényenység: %s",
     "_and %n more _::_and %n more _" : ["és %n további ","és %n további "],
-    "Activity notification" : "Tevékenység értesítés",
     ", " : ", ",
     "%s and %s" : "%s és %s",
+    "Mail" : "Levél",
+    "Stream" : "Folyam",
     "Activity" : "Tevékenység",
     "Activity feed" : "Tevékenységi hírfolyam",
     "Send activity emails" : "Aktivitási e-mailek küldése",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS hírfolyam engedélyezése",
     "RSS feed" : "RSS folyam",
     "No more events to load" : "Nincs több esemény",
-    "Files" : "Fájlok"
+    "Files" : "Fájlok",
+    "Activity notification" : "Tevékenység értesítés"
 },
 "nplurals=2; plural=(n != 1);");

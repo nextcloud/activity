@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Sinu uudisvoo URL on vigane",
     "Your settings have been updated." : "Seaded on uuendatud.",
     "Settings have been updated." : "Seaded on uuendatud.",
-    "Mail" : "Kirjad",
-    "Stream" : "Voog",
     "All activities" : "Kõik tegevused",
     "By others" : "Teiste poolt",
     "By you" : "Sinu poolt",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Tere %s,",
     "There was some activity at %s" : "Mõningane tegevus %s",
     "_and %n more _::_and %n more _" : ["ja %n veel","ja%n veel "],
-    "Activity notification" : "Tegevuste teavitused",
     ", " : ", ",
     "%s and %s" : "%s ja %s",
+    "Mail" : "Kirjad",
+    "Stream" : "Voog",
     "Activity" : "Tegevused",
     "Activity feed" : "Tegevuste voog",
     "Send activity emails" : "Saada tegevuste kohta e-kirju",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Luba RSS voog",
     "RSS feed" : "RRS voog",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
-    "Files" : "Failid"
+    "Files" : "Failid",
+    "Activity notification" : "Tegevuste teavitused"
 },
 "nplurals=2; plural=(n != 1);");

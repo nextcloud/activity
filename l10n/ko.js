@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "피드 주소가 잘못되었습니다",
     "Your settings have been updated." : "설정이 업데이트 되었습니다.",
     "Settings have been updated." : "설정이 업데이트 되었습니다.",
-    "Mail" : "메일",
-    "Stream" : "스트림",
     "All activities" : "모든 활동",
     "By others" : "다른 사람",
     "By you" : "나",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "%s 님 안녕하세요,",
     "There was some activity at %s" : "%s에 새로운 활동이 있었습니다",
     "_and %n more _::_and %n more _" : ["%n개 더"],
-    "Activity notification" : "활동 알림",
     ", " : ", ",
     "%s and %s" : "%s, %s",
+    "Mail" : "메일",
+    "Stream" : "스트림",
     "Activity" : "활동",
     "Activity feed" : "활동 피드",
     "Send activity emails" : "활동 이메일 보내기",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS 피드 사용",
     "RSS feed" : "RSS 피드",
     "No more events to load" : "더 이상 불러올 이벤트 없음",
-    "Files" : "파일"
+    "Files" : "파일",
+    "Activity notification" : "활동 알림"
 },
 "nplurals=1; plural=0;");

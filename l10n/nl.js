@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Je activiteitenkanaal link is ongeldig",
     "Your settings have been updated." : "Je instellingen zijn bijgewerkt",
     "Settings have been updated." : "Instellingen zijn bijgewerkt",
-    "Mail" : "E-mail",
-    "Stream" : "Doorlopend",
     "All activities" : "Alle activiteiten",
     "By others" : "Door anderen",
     "By you" : "Door jou",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Hallo %s,",
     "There was some activity at %s" : "Er was een activiteit op %s",
     "_and %n more _::_and %n more _" : ["en %n meer ","en %n meer "],
-    "Activity notification" : "Activiteitenmelding",
     ", " : ", ",
     "%s and %s" : "%s en %s",
+    "Mail" : "E-mail",
+    "Stream" : "Doorlopend",
     "Activity" : "Activiteit",
     "Activity feed" : "Activiteitenkanaal",
     "Send activity emails" : "Activiteiten per mail verzenden",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Zet RSS-kanaal aan",
     "RSS feed" : "RSS kanaal",
     "No more events to load" : "Geen meer activiteiten beschikbaar",
-    "Files" : "Bestanden"
+    "Files" : "Bestanden",
+    "Activity notification" : "Activiteitenmelding"
 },
 "nplurals=2; plural=(n != 1);");

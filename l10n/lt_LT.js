@@ -21,8 +21,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Jūsų kanalo nuoroda yra neteisinga",
     "Your settings have been updated." : "Jūsų nustatymai atnaujinti.",
     "Settings have been updated." : "Nustatymai atnaujinti.",
-    "Mail" : "Paštas",
-    "Stream" : "Srautas",
     "All activities" : "Visos veiklos",
     "By others" : "Kitų",
     "By you" : "Jūsų",
@@ -31,9 +29,10 @@ OC.L10N.register(
     "Hello %s," : "Sveiki, %s,",
     "There was some activity at %s" : "%s buvo veiklos",
     "_and %n more _::_and %n more _" : ["ir %n kitas","ir %n kiti","ir %n kitų"],
-    "Activity notification" : "Veiklos pranešimai",
     ", " : ",",
     "%s and %s" : "%s ir %s",
+    "Mail" : "Paštas",
+    "Stream" : "Srautas",
     "Activity" : "Veikla",
     "Activity feed" : "Veiklos kanalas",
     "Send activity emails" : "Siųsti el. laiškus apie veiklą",
@@ -53,6 +52,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "RSS feed" : "RSS kanalas",
     "No more events to load" : "Nėra daugiau rodytinų įvykių",
-    "Files" : "Failai"
+    "Files" : "Failai",
+    "Activity notification" : "Veiklos pranešimai"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);");

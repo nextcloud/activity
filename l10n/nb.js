@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Nettadressen for din nyhetskilde er ikke gyldig",
     "Your settings have been updated." : "Innstillingene dine ble oppdatert.",
     "Settings have been updated." : "Innstillinger oppdatert.",
-    "Mail" : "E-post",
-    "Stream" : "Strøm",
     "All activities" : "All aktivitet",
     "By others" : "Av andre",
     "By you" : "Av deg",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Hei %s,",
     "There was some activity at %s" : "Det har vært aktivitet ved %s",
     "_and %n more _::_and %n more _" : ["og %n til","og %n til"],
-    "Activity notification" : "Varsel om aktivitet",
     ", " : ", ",
     "%s and %s" : "%s og %s",
+    "Mail" : "E-post",
+    "Stream" : "Strøm",
     "Activity" : "Aktivitet",
     "Activity feed" : "Aktivitetsnyhetskilde",
     "Send activity emails" : "Send aktivitets-e-poster",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktiver RSS-nyhetskilde",
     "RSS feed" : "RSS-nyhetskilde",
     "No more events to load" : "Ingen flere hendelser å laste inn",
-    "Files" : "Filer"
+    "Files" : "Filer",
+    "Activity notification" : "Varsel om aktivitet"
 },
 "nplurals=2; plural=(n != 1);");

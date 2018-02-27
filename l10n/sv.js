@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "URL:en för flödet är felaktig.",
     "Your settings have been updated." : "Dina inställningar har uppdaterats.",
     "Settings have been updated." : "Inställningarna har blivit uppdaterade.",
-    "Mail" : "E-post",
-    "Stream" : "Flödet",
     "All activities" : "Alla aktiviteter",
     "By others" : "Andras aktivitet",
     "By you" : "Min aktivitet",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Hej %s,",
     "There was some activity at %s" : "Det var lite aktivitet på %s",
     "_and %n more _::_and %n more _" : ["och %n till","och %n till"],
-    "Activity notification" : "Notis om aktivitet",
     ", " : ",",
     "%s and %s" : "%s och %s",
+    "Mail" : "E-post",
+    "Stream" : "Flödet",
     "Activity" : "Aktivitetsflödet",
     "Activity feed" : "Aktivitetsflöde",
     "Send activity emails" : "Skicka aktivitets-epost",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "RSS feed" : "RSS-flöde",
     "No more events to load" : "Inga fler aktiviteter.",
-    "Files" : "Filer"
+    "Files" : "Filer",
+    "Activity notification" : "Notis om aktivitet"
 },
 "nplurals=2; plural=(n != 1);");

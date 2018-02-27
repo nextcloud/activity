@@ -20,8 +20,6 @@
     "Your feed URL is invalid" : "您的 Feed URL 是無效的",
     "Your settings have been updated." : "您的設定已更新",
     "Settings have been updated." : "設定已更新。",
-    "Mail" : "電子郵件",
-    "Stream" : "串流",
     "All activities" : "所有活動",
     "By others" : "由其他人",
     "By you" : "由您",
@@ -30,9 +28,10 @@
     "Hello %s," : "哈囉 %s ，",
     "There was some activity at %s" : "%s 的活動",
     "_and %n more _::_and %n more _" : ["以及多%n個"],
-    "Activity notification" : "活動通知",
     ", " : "，",
     "%s and %s" : "%s 與 %s",
+    "Mail" : "電子郵件",
+    "Stream" : "串流",
     "Activity" : "活動",
     "Activity feed" : "動態",
     "Send activity emails" : "寄送有關活動的郵件",
@@ -52,6 +51,7 @@
     "Enable RSS feed" : "啟用 RSS feed",
     "RSS feed" : "RSS 摘要",
     "No more events to load" : "已載入所有事件",
-    "Files" : "檔案"
+    "Files" : "檔案",
+    "Activity notification" : "活動通知"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
