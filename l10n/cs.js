@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "URL adresa kanálu není platná",
     "Your settings have been updated." : "Vaše nastavení bylo aktualizováno.",
     "Settings have been updated." : "Nastavení byla uložena.",
-    "Mail" : "Pošta",
-    "Stream" : "Stream",
     "All activities" : "Všechny aktivity",
     "By others" : "Ostatními",
     "By you" : "Vámi",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Vítejte %s,",
     "There was some activity at %s" : "Na %s došlo k následující aktivitě",
     "_and %n more _::_and %n more _" : ["a %n další","a %n další","a %n další"],
-    "Activity notification" : "Upozornění na aktivity",
     ", " : ", ",
     "%s and %s" : "%s a %s",
+    "Mail" : "Pošta",
+    "Stream" : "Stream",
     "Activity" : "Aktivita",
     "Activity feed" : "Přehled aktivit",
     "Send activity emails" : "Posílat e-maily o aktivitě",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Povolit RSS kanál",
     "RSS feed" : "RSS kanál",
     "No more events to load" : "Žádné další události k načtení",
-    "Files" : "Soubory"
+    "Files" : "Soubory",
+    "Activity notification" : "Upozornění na aktivity"
 },
 "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");

@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Din feed sin URl er ikkje gyldig",
     "Your settings have been updated." : "Innstillingane dine har blitt oppdaterte",
     "Settings have been updated." : "Instillingar er blitt oppdaterte",
-    "Mail" : "Post",
-    "Stream" : "Straum",
     "All activities" : "Alle aktvitetar",
     "By others" : "Av andre",
     "By you" : "Av deg",
@@ -31,9 +29,10 @@ OC.L10N.register(
     "Hello %s" : "Hei %s",
     "Hello %s," : "Hei %s,",
     "There was some activity at %s" : "Det var noko aktivitet hos %s",
-    "Activity notification" : "Aktivitets notifikasjonar",
     ", " : ",",
     "%s and %s" : "%s og %s",
+    "Mail" : "Post",
+    "Stream" : "Straum",
     "Activity" : "Aktivitet",
     "Activity feed" : "Aktivitetsstraum",
     "Send activity emails" : "Send aktivitets e-postar",
@@ -53,6 +52,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Skru på RSS-straum",
     "RSS feed" : "RSS-straum",
     "No more events to load" : "Inga fleire hendingar å lasta",
-    "Files" : "Filer"
+    "Files" : "Filer",
+    "Activity notification" : "Aktivitets notifikasjonar"
 },
 "nplurals=2; plural=(n != 1);");

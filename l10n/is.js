@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Slóðin á virkniveituna þína ógild",
     "Your settings have been updated." : "Stillingarnar þínar voru uppfærðar.",
     "Settings have been updated." : "Stillingar voru uppfærðar.",
-    "Mail" : "Póstur",
-    "Stream" : "Streymi",
     "All activities" : "Öll virkni",
     "By others" : "Virkni annarra",
     "By you" : "Virknin þín",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Halló %s,",
     "There was some activity at %s" : "Það var einhver virkni í %s",
     "_and %n more _::_and %n more _" : ["og %n til viðbótar","og %n til viðbótar"],
-    "Activity notification" : "Tilkynning um virkni",
     ", " : ",",
     "%s and %s" : "%s og %s",
+    "Mail" : "Póstur",
+    "Stream" : "Streymi",
     "Activity" : "Virkni",
     "Activity feed" : "Virkniveita",
     "Send activity emails" : "Senda virkni með tölvupósti",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Virkja RSS-veitu",
     "RSS feed" : "RSS-veita",
     "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
-    "Files" : "Skrár"
+    "Files" : "Skrár",
+    "Activity notification" : "Tilkynning um virkni"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

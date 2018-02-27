@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Zure jarioaren URLa baliogabea da",
     "Your settings have been updated." : "Zure ezarpenak eguneratu dira.",
     "Settings have been updated." : "Ezarpenak eguneratu dira.",
-    "Mail" : "Posta",
-    "Stream" : "Korrontea",
     "All activities" : "Jarduera guztiak",
     "By others" : "Besteena",
     "By you" : "Zurea",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Kaixo %s,",
     "There was some activity at %s" : "%s-(e)n jarduera egon da",
     "_and %n more _::_and %n more _" : ["eta %n gehiago","eta %n gehiago"],
-    "Activity notification" : "Jarduera jakinarazpena",
     ", " : ", ",
     "%s and %s" : "%s eta %s",
+    "Mail" : "Posta",
+    "Stream" : "Korrontea",
     "Activity" : "Jarduera",
     "Activity feed" : "Jardueren jarioa",
     "Send activity emails" : "Jardueraren mezu elektronikoak bidali",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "RSS feed" : "RSS jarioa",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
-    "Files" : "Fitxategiak"
+    "Files" : "Fitxategiak",
+    "Activity notification" : "Jarduera jakinarazpena"
 },
 "nplurals=2; plural=(n != 1);");

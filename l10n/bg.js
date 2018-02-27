@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Емисията е с невалиден адрес",
     "Your settings have been updated." : "Вашите настройки са актуализирани.",
     "Settings have been updated." : "Настройките бяха актуализирани.",
-    "Mail" : "Поща",
-    "Stream" : "Поток",
     "All activities" : "Всички активности",
     "By others" : "От други",
     "By you" : "От Вас",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Здравейте %s,",
     "There was some activity at %s" : "Активност на %s",
     "_and %n more _::_and %n more _" : ["* и %n още ","* и %n още "],
-    "Activity notification" : "Известия за активност",
     ", " : ", ",
     "%s and %s" : "%s и %s",
+    "Mail" : "Поща",
+    "Stream" : "Поток",
     "Activity" : "Активност",
     "Activity feed" : "Емисия за активност",
     "Send activity emails" : "Изпращане на имейли за активността",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Разрешаване на RSS емисии",
     "RSS feed" : "RSS емисия",
     "No more events to load" : "Няма повече известия за зареждане",
-    "Files" : "Файлове"
+    "Files" : "Файлове",
+    "Activity notification" : "Известия за активност"
 },
 "nplurals=2; plural=(n != 1);");

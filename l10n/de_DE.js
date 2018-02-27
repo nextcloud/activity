@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Ihre Feed-URL ist ungültig",
     "Your settings have been updated." : "Ihre Einstellungen wurden aktualisiert.",
     "Settings have been updated." : "Die Einstellungen wurden aktualisiert.",
-    "Mail" : "E-Mail",
-    "Stream" : "Stream",
     "All activities" : "Alle Aktivitäten",
     "By others" : "Von anderen",
     "By you" : "Von Ihnen",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Hallo %s,",
     "There was some activity at %s" : "Es gab Aktivitäten bei %s",
     "_and %n more _::_and %n more _" : ["und %n weiterer","und %n weitere"],
-    "Activity notification" : "Benachrichtigung über die Aktivitäten",
     ", " : ", ",
     "%s and %s" : "%s und %s",
+    "Mail" : "E-Mail",
+    "Stream" : "Stream",
     "Activity" : "Aktivität",
     "Activity feed" : "Feed der Aktivitäten",
     "Send activity emails" : "E-Mails zu Aktivitäten senden",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS-Feed aktivieren",
     "RSS feed" : "RSS-Feed",
     "No more events to load" : "Keine weiteren Ereignisse zu laden",
-    "Files" : "Dateien"
+    "Files" : "Dateien",
+    "Activity notification" : "Benachrichtigung über die Aktivitäten"
 },
 "nplurals=2; plural=(n != 1);");

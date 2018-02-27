@@ -20,8 +20,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "U voerbronadres is ongeldig",
     "Your settings have been updated." : "U instellings is bygewerk.",
     "Settings have been updated." : "Instellings is bygewerk.",
-    "Mail" : "Pos",
-    "Stream" : "Stroom",
     "All activities" : "Alle aktiwiteite",
     "By others" : "Deur ander",
     "By you" : "Deur u",
@@ -30,9 +28,10 @@ OC.L10N.register(
     "Hello %s," : "Dag %s,",
     "There was some activity at %s" : "Daar was aktiwiteit by %s",
     "_and %n more _::_and %n more _" : ["en nog %n","en nog %n"],
-    "Activity notification" : "Aktiwiteitkennisgewing",
     ", " : ", ",
     "%s and %s" : "%s en %s",
+    "Mail" : "Pos",
+    "Stream" : "Stroom",
     "Activity" : "Aktiwiteit",
     "Activity feed" : "Aktiwiteitsvoer",
     "Configure the default activity settings for new users." : "Verstel die verstekaktiwiteitinstellings vir nuwe gebruikers.",
@@ -47,6 +46,7 @@ OC.L10N.register(
     "Settings" : "Instellings",
     "Enable RSS feed" : "Aktiveer RSS-voer",
     "No more events to load" : "Geen meer gebeure om te laai",
-    "Files" : "Lêers"
+    "Files" : "Lêers",
+    "Activity notification" : "Aktiwiteitkennisgewing"
 },
 "nplurals=2; plural=(n != 1);");

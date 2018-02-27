@@ -20,8 +20,6 @@
     "Your feed URL is invalid" : "თქვენი ლენტის URL არასწორია",
     "Your settings have been updated." : "თქვენი პარამეტრები განახლდა.",
     "Settings have been updated." : "პარამეტრები განახლდა.",
-    "Mail" : "ფოსტა",
-    "Stream" : "ნაკადი",
     "All activities" : "ყველა აქტივობა",
     "By others" : "სხვების მიერ",
     "By you" : "თქვენს მიერ",
@@ -30,9 +28,10 @@
     "Hello %s," : "გამარჯობა, %s,",
     "There was some activity at %s" : "%s-ზე იყო გარკვეული აქტივობა",
     "_and %n more _::_and %n more _" : ["და კიდევ %n"],
-    "Activity notification" : "შეტყობინება აქტივობის შესახებ",
     ", " : ",",
     "%s and %s" : "%s და %s",
+    "Mail" : "ფოსტა",
+    "Stream" : "ნაკადი",
     "Activity" : "აქტივობა",
     "Activity feed" : "აქტივობათა ლენტი",
     "Send activity emails" : "აქტივობის ელ-წერილების გაგზავნა.",
@@ -52,6 +51,7 @@
     "Enable RSS feed" : "RSS ლენტის გააქტიურება",
     "RSS feed" : "RSS ლენტა",
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
-    "Files" : "ფაილები"
+    "Files" : "ფაილები",
+    "Activity notification" : "შეტყობინება აქტივობის შესახებ"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

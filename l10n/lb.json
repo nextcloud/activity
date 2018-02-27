@@ -16,17 +16,16 @@
     "Personal activity feed for %s" : "Perséinlechen Aktivitéite-Feed fir %s",
     "Your feed URL is invalid" : "D'Feed-Adress ass ongëlteg",
     "Your settings have been updated." : "Deng Astellunge goufen aktualiséiert.",
-    "Mail" : "Mail",
-    "Stream" : "Floss",
     "All activities" : "All Aktivitéiten",
     "By others" : "Vun aneren",
     "By you" : "Vun dir",
     "\"remote user\"" : "\"Remote-Benotzer\"",
     "Hello %s," : "Hallo %s,",
     "There was some activity at %s" : "Et goufen Ännerungen bei ¦%s",
-    "Activity notification" : "Aktivitéits-Notifikatiounen",
     ", " : ", ",
     "%s and %s" : "%s an %s",
+    "Mail" : "Mail",
+    "Stream" : "Floss",
     "Activity" : "Aktivitéit",
     "Activity feed" : "Aktivitéits-Feed",
     "List your own actions in the stream" : "Weis är aner Aktivitéiten am Floss",
@@ -39,6 +38,7 @@
     "Settings" : "Astellungen",
     "Enable RSS feed" : "RSS-Feed aktivéieren",
     "No more events to load" : "Keng weider Evenementer fir ze lueden",
-    "Files" : "Fichieren"
+    "Files" : "Fichieren",
+    "Activity notification" : "Aktivitéits-Notifikatiounen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

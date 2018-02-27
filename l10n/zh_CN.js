@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "您输入的Feed链接无效",
     "Your settings have been updated." : "您的设置已更新。",
     "Settings have been updated." : "设置已更新。",
-    "Mail" : "邮件",
-    "Stream" : "流",
     "All activities" : "所有动态",
     "By others" : "其他来源",
     "By you" : "本地来源",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "%s 您好，",
     "There was some activity at %s" : "在 %s 里有一些动态",
     "_and %n more _::_and %n more _" : ["和 %n 等"],
-    "Activity notification" : "动态通知",
     ", " : "，",
     "%s and %s" : "%s 和 %s",
+    "Mail" : "邮件",
+    "Stream" : "流",
     "Activity" : "动态",
     "Activity feed" : "动态 Feed",
     "Send activity emails" : "发送动态电子邮件",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "启用 RSS 源",
     "RSS feed" : "RSS 源",
     "No more events to load" : "已无更多事件",
-    "Files" : "文件"
+    "Files" : "文件",
+    "Activity notification" : "动态通知"
 },
 "nplurals=1; plural=0;");

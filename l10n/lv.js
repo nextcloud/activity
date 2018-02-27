@@ -21,8 +21,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Jūsu plūsmas URL nav derīgs.",
     "Your settings have been updated." : "Jūsu uzstādījumi ir atjaunoti.",
     "Settings have been updated." : "Iestādījumi ir atjaunoti.",
-    "Mail" : "E-pasts",
-    "Stream" : "Datu straume",
     "All activities" : "Visas darbības",
     "By others" : "Citi",
     "By you" : "Ar jums",
@@ -30,9 +28,10 @@ OC.L10N.register(
     "Hello %s" : "Sveicināti, 1%s",
     "Hello %s," : "Sveicināti %s,",
     "There was some activity at %s" : "Tur bija kaut kādas aktivitātes %s",
-    "Activity notification" : "Brīdinājumi par izmaiņām",
     ", " : ",",
     "%s and %s" : "%s un %s",
+    "Mail" : "E-pasts",
+    "Stream" : "Datu straume",
     "Activity" : "Izmaiņas",
     "Activity feed" : "Izmaiņu plūsma",
     "Configure the default activity settings for new users." : "Iestatīt noklusējuma iestatījumus jauniem lietotājiem.",
@@ -47,6 +46,7 @@ OC.L10N.register(
     "Settings" : "Iestatījumi",
     "Enable RSS feed" : "Ieslēgt RSS plūsmu",
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
-    "Files" : "Datnes"
+    "Files" : "Datnes",
+    "Activity notification" : "Brīdinājumi par izmaiņām"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

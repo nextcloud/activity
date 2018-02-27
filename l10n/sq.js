@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "URL-ja për prurjen tuaj është e pavlefshme",
     "Your settings have been updated." : "Rregullimet tuaja u përditësuan",
     "Settings have been updated." : "Konfigurimet u përditësuan.",
-    "Mail" : "Posta",
-    "Stream" : "Rrjedhë",
     "All activities" : "Të gjitha aktivitetet",
     "By others" : "Nga të tjerët",
     "By you" : "Nga ju",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Tungjatjeta %s,",
     "There was some activity at %s" : "Pati disa aktivitete te %s",
     "_and %n more _::_and %n more _" : ["dhe %n më tepër ","* dhe %n më tepër"],
-    "Activity notification" : "Njoftim veprimtarie",
     ", " : ",",
     "%s and %s" : "%s dhe %s",
+    "Mail" : "Posta",
+    "Stream" : "Rrjedhë",
     "Activity" : "Veprimtari",
     "Activity feed" : "Prurje veprimtarie",
     "Send activity emails" : "Dërgo emaile rreth aktivitetit",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktivizoni Prurje RSS",
     "RSS feed" : "Prurja RSS",
     "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
-    "Files" : "Skedar"
+    "Files" : "Skedar",
+    "Activity notification" : "Njoftim veprimtarie"
 },
 "nplurals=2; plural=(n != 1);");

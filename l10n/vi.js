@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Khay URL của bạn không hợp lệ",
     "Your settings have been updated." : "Các thiết lập của bạn vừa được cập nhật",
     "Settings have been updated." : "Các cài đặt đã được cập nhật.",
-    "Mail" : "Thư điện tử",
-    "Stream" : "Luồng",
     "All activities" : "Tất cả hoạt động",
     "By others" : "Bởi người khác",
     "By you" : "Bởi bạn",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Xin chào %s,",
     "There was some activity at %s" : "Có một số hoạt động tại %s",
     "_and %n more _::_and %n more _" : ["và %n thêm"],
-    "Activity notification" : "Thông báo hoạt động",
     ", " : ", ",
     "%s and %s" : "%s và %s",
+    "Mail" : "Thư điện tử",
+    "Stream" : "Luồng",
     "Activity" : "Hoạt động",
     "Activity feed" : "Nguồn cấp dữ liệu hoạt động",
     "Send activity emails" : "Gửi các thư báo tình hoạt hoạt động",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Bật nguồn cấp dữ liệu RSS",
     "RSS feed" : "Nội dung RSS",
     "No more events to load" : "Không có sự kiện nào",
-    "Files" : "Tệp tin"
+    "Files" : "Tệp tin",
+    "Activity notification" : "Thông báo hoạt động"
 },
 "nplurals=1; plural=0;");

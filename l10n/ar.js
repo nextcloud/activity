@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "رابط التغدية الخاص بك غير شغال",
     "Your settings have been updated." : "تم تحديث الإعدادات الخاصة بك.",
     "Settings have been updated." : "تم تحديث الاعدادات ",
-    "Mail" : "البريد",
-    "Stream" : "البث",
     "All activities" : "جميع النشاطات",
     "By others" : "بواسطة أخرين",
     "By you" : "بواسطتك",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "مرحبا %s،",
     "There was some activity at %s" : "يوجد بعض الانشطة في %s",
     "_and %n more _::_and %n more _" : ["و %n المزيد","و %n المزيد","و %n المزيد","و %n المزيد","و %n المزيد","و %n المزيد"],
-    "Activity notification" : "تنبيه النشاط",
     ", " : ",",
     "%s and %s" : "%s و %s",
+    "Mail" : "البريد",
+    "Stream" : "البث",
     "Activity" : "نشاط",
     "Activity feed" : "تغذية الأنشطة",
     "Send activity emails" : "ارسل ايميل عن النشاطات",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "تفعيل خاصية الخلاصات",
     "RSS feed" : "مزود ار أس أس ",
     "No more events to load" : "لا توجد أي أحداث للتحميل",
-    "Files" : "الملفات"
+    "Files" : "الملفات",
+    "Activity notification" : "تنبيه النشاط"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

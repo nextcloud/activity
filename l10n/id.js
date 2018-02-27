@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "URL feed Anda tidak sah",
     "Your settings have been updated." : "Pengaturan Anda telah diperbarui.",
     "Settings have been updated." : "Pengaturan telah diperbarui",
-    "Mail" : "Email",
-    "Stream" : "Stream",
     "All activities" : "Semua aktifitas",
     "By others" : "Oleh lainnya",
     "By you" : "Oleh Anda",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Helo %s,",
     "There was some activity at %s" : "Terdapat beberapa aktifitas di %s",
     "_and %n more _::_and %n more _" : ["* dan %n lagi"],
-    "Activity notification" : "Pemberitahuan aktivitas",
     ", " : ", ",
     "%s and %s" : "%s dan %s",
+    "Mail" : "Email",
+    "Stream" : "Stream",
     "Activity" : "Aktivitas",
     "Activity feed" : "Feed aktivitas",
     "Send activity emails" : "Kirim email aktivitas",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktifkan RSS feed",
     "RSS feed" : "RSS feed",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
-    "Files" : "Berkas"
+    "Files" : "Berkas",
+    "Activity notification" : "Pemberitahuan aktivitas"
 },
 "nplurals=1; plural=0;");

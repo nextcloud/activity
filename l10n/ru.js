@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Неверная ссылка на ленту",
     "Your settings have been updated." : "Настройки обновлены.",
     "Settings have been updated." : "Настройки обновлены.",
-    "Mail" : "Почта",
-    "Stream" : "Поток",
     "All activities" : "Все события",
     "By others" : "Других",
     "By you" : "Ваши",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Здравствуйте, %s,",
     "There was some activity at %s" : "На сервере %s произошли следующие события:",
     "_and %n more _::_and %n more _" : ["и ещё %n","и ещё %n","и ещё %n","и ещё %n"],
-    "Activity notification" : "Оповещение о произошедших событиях",
     ", " : ",",
     "%s and %s" : "%s и %s",
+    "Mail" : "Почта",
+    "Stream" : "Поток",
     "Activity" : "События",
     "Activity feed" : "Лента событий",
     "Send activity emails" : "Отправлять эл. письма о событиях",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Включить RSS ленту",
     "RSS feed" : "RSS лента",
     "No more events to load" : "Больше нет событий для загрузки",
-    "Files" : "Файлы"
+    "Files" : "Файлы",
+    "Activity notification" : "Оповещение о произошедших событиях"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

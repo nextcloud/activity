@@ -20,17 +20,16 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Le URL del syndication es invalide",
     "Your settings have been updated." : "Tu configurationes ha essite actualisate.",
     "Settings have been updated." : "Configurationes actualisate",
-    "Mail" : "Posta",
-    "Stream" : "Fluxo",
     "All activities" : "Omne activitates",
     "By others" : "Per alteres",
     "By you" : "Per vos",
     "\"remote user\"" : "\"usator remote\"",
     "Hello %s," : "Salute %s,",
     "There was some activity at %s" : "Il habeva alcun activitate in %s",
-    "Activity notification" : "Notification de activitate",
     ", " : ",",
     "%s and %s" : "%s e %s",
+    "Mail" : "Posta",
+    "Stream" : "Fluxo",
     "Activity" : "Activitate",
     "Activity feed" : "Syndication de activitate",
     "List your own actions in the stream" : "Lista tu proprie actiones de file in le fluxo",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "Settings" : "Configurationes",
     "Enable RSS feed" : "Habilita syndication RSS",
     "No more events to load" : "Nulle altere eventos a cargar",
-    "Files" : "Files"
+    "Files" : "Files",
+    "Activity notification" : "Notification de activitate"
 },
 "nplurals=2; plural=(n != 1);");
