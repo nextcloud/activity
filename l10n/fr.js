@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Votre URL de fil d’activité n'est pas valide",
     "Your settings have been updated." : "Vos paramètres ont été mis à jour.",
     "Settings have been updated." : "Les paramètres ont été mis à jour.",
-    "Mail" : "Courriel",
-    "Stream" : "Flux",
     "All activities" : "Toutes les activités",
     "By others" : "Des autres",
     "By you" : "De vous",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Bonjour %s,",
     "There was some activity at %s" : "Il y a eu de l'activité sur %s",
     "_and %n more _::_and %n more _" : ["et %n autre","et %n autres"],
-    "Activity notification" : "Notification d'activité",
     ", " : ", ",
     "%s and %s" : "%s et %s",
+    "Mail" : "Courriel",
+    "Stream" : "Flux",
     "Activity" : "Activité",
     "Activity feed" : "Fil d'activité",
     "Send activity emails" : "Envoyer les mails d'activité",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Activer les flux RSS",
     "RSS feed" : "Flux RSS",
     "No more events to load" : "Plus aucun événement à charger",
-    "Files" : "Fichiers"
+    "Files" : "Fichiers",
+    "Activity notification" : "Notification d'activité"
 },
 "nplurals=2; plural=(n > 1);");

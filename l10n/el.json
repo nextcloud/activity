@@ -20,8 +20,6 @@
     "Your feed URL is invalid" : "Η διεύθυνση ροής πληροφοριών URL δεν είναι έγκυρη",
     "Your settings have been updated." : "Οι ρυθμίσεις σας έχουν ενημερωθεί.",
     "Settings have been updated." : "Οι ρυθμίσεις έχουν ενημερωθεί.",
-    "Mail" : "Ταχυδρομείο",
-    "Stream" : "Ροή",
     "All activities" : "Όλες οι δραστηριότητες",
     "By others" : "Από άλλους",
     "By you" : "Από εσάς",
@@ -30,9 +28,10 @@
     "Hello %s," : "Γεια σας %s,",
     "There was some activity at %s" : "Υπήρξε δραστηριότητα στο %s",
     "_and %n more _::_and %n more _" : ["και %n επιπλέον","και %n επιπλέον"],
-    "Activity notification" : "Ειδοποίηση δραστηριότητας",
     ", " : ", ",
     "%s and %s" : "%s και %s",
+    "Mail" : "Ταχυδρομείο",
+    "Stream" : "Ροή",
     "Activity" : "Δραστηριότητα",
     "Activity feed" : "Ροή Δραστηριότητας",
     "Send activity emails" : "Αποστολή μηνυμάτων δραστηριοτήτων",
@@ -52,6 +51,7 @@
     "Enable RSS feed" : "Ενεργοποίηση ροής πληροφοριών RSS",
     "RSS feed" : "Ροή RSS",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
-    "Files" : "Αρχεία"
+    "Files" : "Αρχεία",
+    "Activity notification" : "Ειδοποίηση δραστηριότητας"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

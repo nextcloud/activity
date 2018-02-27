@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Syöteosoitteesi on virheellinen",
     "Your settings have been updated." : "Asetuksesi on päivitetty.",
     "Settings have been updated." : "Asetukset on päivitetty.",
-    "Mail" : "Sähköposti",
-    "Stream" : "Luettelo",
     "All activities" : "Kaikkien toimet",
     "By others" : "Muiden",
     "By you" : "Sinun",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Hei %s,",
     "There was some activity at %s" : "Toimintaa kohteessa %s",
     "_and %n more _::_and %n more _" : ["ja %n lisää","ja %n lisää"],
-    "Activity notification" : "Ilmoitus toiminnasta",
     ", " : ", ",
     "%s and %s" : "%s ja %s",
+    "Mail" : "Sähköposti",
+    "Stream" : "Luettelo",
     "Activity" : "Toimet",
     "Activity feed" : "Toiminnan syöte",
     "Send activity emails" : "Lähetä sähköpostiviestejä toimista",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Käytä RSS-syötettä",
     "RSS feed" : "RSS-syöte",
     "No more events to load" : "Ei enempää tapahtumia ladattavaksi",
-    "Files" : "Tiedostot"
+    "Files" : "Tiedostot",
+    "Activity notification" : "Ilmoitus toiminnasta"
 },
 "nplurals=2; plural=(n != 1);");

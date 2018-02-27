@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "כתובת ההזנה שגויה",
     "Your settings have been updated." : "ההגדרות שלך עודכנו",
     "Settings have been updated." : "ההגדרות עודכנו",
-    "Mail" : "דואר",
-    "Stream" : "הזרמת מידע",
     "All activities" : "כל הפעילויות",
     "By others" : "על ידי אחרים",
     "By you" : "על ידך",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "שלום %s,",
     "There was some activity at %s" : "הייתה פעילות ב%s",
     "_and %n more _::_and %n more _" : ["ו־%n נוסף","ו־%n נוספים"],
-    "Activity notification" : "דיווח פעילות",
     ", " : ",",
     "%s and %s" : "%s ו- %s",
+    "Mail" : "דואר",
+    "Stream" : "הזרמת מידע",
     "Activity" : "פעילות",
     "Activity feed" : "דיווחי פעילות",
     "Default settings" : "הגדרות ברירת מחדל",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "Enable RSS feed" : "לאפשר הזנת RSS",
     "RSS feed" : "ערוץ RSS",
     "No more events to load" : "אין אירועים נוספים לטעינה",
-    "Files" : "קבצים"
+    "Files" : "קבצים",
+    "Activity notification" : "דיווח פעילות"
 },
 "nplurals=2; plural=(n != 1);");

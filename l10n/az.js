@@ -6,13 +6,12 @@ OC.L10N.register(
     "Personal activity feed for %s" : "%s üçün şəxsi fəaliyyətin ötürülməsi",
     "Your feed URL is invalid" : "Sizin URL ötürməniz yalnışdır",
     "Your settings have been updated." : "Sizin configləriniz yenilendi.",
-    "Mail" : "Məktub",
-    "Stream" : "Axın",
     "\"remote user\"" : "\"uzaq istifadəçi\"",
     "Hello %s," : "Salam %s,",
-    "Activity notification" : "Fəaliyyət bildirişi",
     ", " : ",",
     "%s and %s" : "%s və %s",
+    "Mail" : "Məktub",
+    "Stream" : "Axın",
     "Activity" : "Fəallıq",
     "Activity feed" : "Fəaliyyətin ötürülməsi",
     "Notify about your own actions via email" : "Öz gördüyünüz işlər haqqənda email-lə xəbərdar elə",
@@ -23,6 +22,7 @@ OC.L10N.register(
     "Weekly" : "Həftəlik",
     "Enable RSS feed" : "RSS ötürməsinin işə salinmaslı",
     "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur",
-    "Files" : "Fayllar"
+    "Files" : "Fayllar",
+    "Activity notification" : "Fəaliyyət bildirişi"
 },
 "nplurals=2; plural=(n != 1);");

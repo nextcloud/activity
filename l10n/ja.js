@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "フィードURLが無効です",
     "Your settings have been updated." : "設定を更新しました。",
     "Settings have been updated." : "設定を更新しました。",
-    "Mail" : "メール",
-    "Stream" : "ストリーム",
     "All activities" : "すべてのアクティビティ",
     "By others" : "自分以外",
     "By you" : "自分",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "%s さんこんにちは、",
     "There was some activity at %s" : "%s　にアクティビティがありました。",
     "_and %n more _::_and %n more _" : ["および他 %n "],
-    "Activity notification" : "アクティビティ通知",
     ", " : ", ",
     "%s and %s" : "%s と %s",
+    "Mail" : "メール",
+    "Stream" : "ストリーム",
     "Activity" : "アクティビティ",
     "Activity feed" : "アクティビティフィード",
     "Send activity emails" : "アクティビティメールの送信",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "RSSフィードを有効にする",
     "RSS feed" : "RSS フィード",
     "No more events to load" : "これ以上読み込むイベントはありません",
-    "Files" : "ファイル"
+    "Files" : "ファイル",
+    "Activity notification" : "アクティビティ通知"
 },
 "nplurals=1; plural=0;");

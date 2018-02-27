@@ -22,8 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "УРЛ вашег довода није исправан",
     "Your settings have been updated." : "Ваше поставке су ажуриране.",
     "Settings have been updated." : "Поставке су ажуриране.",
-    "Mail" : "поштом",
-    "Stream" : "записник",
     "All activities" : "Све активности",
     "By others" : "туђе",
     "By you" : "ваше",
@@ -32,9 +30,10 @@ OC.L10N.register(
     "Hello %s," : "Здраво %s,",
     "There was some activity at %s" : "Било је активности у %s ",
     "_and %n more _::_and %n more _" : ["и још %n","и још %n","и још %n"],
-    "Activity notification" : "Обавештења о активностима",
     ", " : ", ",
     "%s and %s" : "%s и %s",
+    "Mail" : "поштом",
+    "Stream" : "записник",
     "Activity" : "Активност",
     "Activity feed" : "Довод активности",
     "Send activity emails" : "Шаљи е-пошту са активностима",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Укључи РСС довод",
     "RSS feed" : "РСС довод",
     "No more events to load" : "Нема више догађаја за приказ",
-    "Files" : "Фајлови"
+    "Files" : "Фајлови",
+    "Activity notification" : "Обавештења о активностима"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
