@@ -26,6 +26,7 @@ OC.L10N.register(
     "By others" : "By others",
     "By you" : "By you",
     "\"remote user\"" : "\"remote user\"",
+    "Activity notification for %s" : "Activity notification for %s",
     "Hello %s" : "Hello %s",
     "Hello %s," : "Hello %s,",
     "There was some activity at %s" : "There was some activity at %s",
