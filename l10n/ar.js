@@ -26,6 +26,7 @@ OC.L10N.register(
     "By others" : "بواسطة أخرين",
     "By you" : "بواسطتك",
     "\"remote user\"" : "\"مستخدم عن بعد\"",
+    "Activity notification for %s" : "تنبيه النشاط %s",
     "Hello %s" : "اهلا %s",
     "Hello %s," : "مرحبا %s،",
     "There was some activity at %s" : "يوجد بعض الانشطة في %s",
