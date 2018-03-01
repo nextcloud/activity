@@ -26,6 +26,7 @@ OC.L10N.register(
     "By others" : "Virkni annarra",
     "By you" : "Virknin þín",
     "\"remote user\"" : "\"fjartengdur notandi\"",
+    "Activity notification for %s" : "Tilkynning um virkni fyrir %s",
     "Hello %s" : "Halló %s",
     "Hello %s," : "Halló %s,",
     "There was some activity at %s" : "Það var einhver virkni í %s",
