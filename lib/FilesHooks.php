@@ -1056,6 +1056,7 @@ class FilesHooks {
 			return;
 		}
 
+		$user = (string)$user;
 		$selfAction = $user === $this->currentUser->getUID();
 		$app = $type === Files_Sharing::TYPE_SHARED ? 'files_sharing' : 'files';
 		$link = $this->urlGenerator->linkToRouteAbsolute('files.view.index', array(
