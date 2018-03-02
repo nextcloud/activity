@@ -26,6 +26,7 @@ OC.L10N.register(
     "By others" : "Diğerleri tarafından",
     "By you" : "Sizin tarafınızdan",
     "\"remote user\"" : "\"uzak kullanıcı\"",
+    "Activity notification for %s" : "%s için etkinlik bildirimi",
     "Hello %s" : "Merhaba %s",
     "Hello %s," : "Merhaba %s,",
     "There was some activity at %s" : "%s üzerinde bazı etkinlik görüldü",

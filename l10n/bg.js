@@ -26,6 +26,7 @@ OC.L10N.register(
     "By others" : "От други",
     "By you" : "От Вас",
     "\"remote user\"" : "\"отдалечен потребител\"",
+    "Activity notification for %s" : "Известия за активност %s",
     "Hello %s" : "Здравейте %s",
     "Hello %s," : "Здравейте %s,",
     "There was some activity at %s" : "Активност на %s",
