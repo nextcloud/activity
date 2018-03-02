@@ -219,7 +219,7 @@ class FilesHooks {
 				$user, $userSubject, $userParams,
 				$fileId, $path, true,
 				!empty($filteredStreamUsers[$user]),
-				$filteredEmailUsers[$user] ?? false,
+				isset($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : false,
 				$activityType
 			);
 		}
@@ -404,7 +404,7 @@ class FilesHooks {
 				$user, $userSubject, $userParams,
 				$fileId, $path . '/' . $fileName, true,
 				!empty($filteredStreamUsers[$user]),
-				$filteredEmailUsers[$user] ?? false,
+				isset($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : false,
 				Files::TYPE_SHARE_CHANGED
 			);
 		}
@@ -504,7 +504,7 @@ class FilesHooks {
 				$user, $userSubject, $userParams,
 				$fileId, $path . '/' . $oldFileName, true,
 				!empty($filteredStreamUsers[$user]),
-				$filteredEmailUsers[$user] ?? false,
+				isset($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : false,
 				Files::TYPE_SHARE_DELETED
 			);
 		}
@@ -543,7 +543,7 @@ class FilesHooks {
 				$user, $userSubject, $userParams,
 				$fileId, $path . '/' . $fileName, true,
 				!empty($filteredStreamUsers[$user]),
-				$filteredEmailUsers[$user] ?? false,
+				isset($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : false,
 				Files::TYPE_SHARE_CREATED
 			);
 		}
@@ -589,7 +589,7 @@ class FilesHooks {
 				$user, $userSubject, $userParams,
 				$fileId, $afterPathMap[$user] . '/' . $fileName, true,
 				!empty($filteredStreamUsers[$user]),
-				$filteredEmailUsers[$user] ?? false,
+				isset($filteredEmailUsers[$user]) ? $filteredEmailUsers[$user] : false,
 				Files::TYPE_SHARE_CHANGED
 			);
 		}
@@ -904,7 +904,7 @@ class FilesHooks {
 				$user, $actionUser, [[$fileSource => $path], $this->currentUser->getUserIdentifier()],
 				$fileSource, $path, ($itemType === 'file'),
 				!empty($filteredStreamUsersInGroup[$user]),
-				$filteredEmailUsersInGroup[$user] ?? false
+				isset($filteredEmailUsersInGroup[$user]) ? $filteredEmailUsersInGroup[$user] : false
 			);
 		}
 	}
