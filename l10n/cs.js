@@ -26,6 +26,7 @@ OC.L10N.register(
     "By others" : "Ostatními",
     "By you" : "Vámi",
     "\"remote user\"" : "\"vzdálený uživatel\"",
+    "Activity notification for %s" : "Oznámení aktivit pro %s",
     "Hello %s" : "Ahoj %s",
     "Hello %s," : "Vítejte %s,",
     "There was some activity at %s" : "Na %s došlo k následující aktivitě",
