@@ -26,6 +26,7 @@ OC.L10N.register(
     "By others" : "Másoké",
     "By you" : "A tiéd",
     "\"remote user\"" : "\"távoli felhasználó\"",
+    "Activity notification for %s" : "Aktivitási értesítés ehhez: %s",
     "Hello %s" : "Szia %s",
     "Hello %s," : "Üdv %s!",
     "There was some activity at %s" : "Itt volt némi tevényenység: %s",
