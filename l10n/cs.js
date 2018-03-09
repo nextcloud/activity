@@ -34,7 +34,7 @@ OC.L10N.register(
     ", " : ", ",
     "%s and %s" : "%s a %s",
     "Mail" : "Pošta",
-    "Stream" : "Stream",
+    "Stream" : "Proud",
     "Activity" : "Aktivita",
     "Activity feed" : "Přehled aktivit",
     "Send activity emails" : "Posílat e-maily o aktivitě",
