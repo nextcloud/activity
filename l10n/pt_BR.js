@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Activities" : "Atividades",
     "An error occurred while loading activities" : "Ocorreu um erro ao carregar atividades",
-    "No activity yet" : "Nenhuma atividade ainda",
+    "No activity yet" : "Nenhuma atividade",
     "Load more activities" : "Carregar mais atividades",
     "Copied!" : "Copiado!",
     "Not supported!" : "Não suportado!",
