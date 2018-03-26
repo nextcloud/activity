@@ -96,10 +96,19 @@ class ConsumerTest extends TestCase {
 	}
 
 	protected function deleteTestActivities() {
-		$query = DB::prepare('DELETE FROM `*PREFIX*activity` WHERE `app` = ?');
-		$query->execute(array('test'));
-		$query = DB::prepare('DELETE FROM `*PREFIX*activity_mq` WHERE `amq_appid` = ?');
-		$query->execute(array('test'));
+		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$query->delete('activity')
+			->where($query->expr()->eq(
+				'app', $query->createNamedParameter('test')
+			));
+		$query->execute();
+
+		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$query->delete('activity_mq')
+			->where($query->expr()->eq(
+				'amq_appid', $query->createNamedParameter('test')
+			));
+		$query->execute();
 	}
 
 	public function receiveData() {
