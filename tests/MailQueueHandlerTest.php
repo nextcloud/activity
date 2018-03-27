@@ -80,6 +80,9 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var ILogger|\PHPUnit_Framework_MockObject_MockObject */
 	protected $logger;
 
+	/** @var IDateTimeFormatter|\PHPUnit_Framework_MockObject_MockObject */
+	protected $dateTimeFormatter;
+
 	protected function setUp() {
 		parent::setUp();
 
@@ -89,6 +92,7 @@ class MailQueueHandlerTest extends TestCase {
 		$this->legacyParser = $this->createMock(LegacyParser::class);
 		$this->config = $this->createMock(IConfig::class);
 		$this->logger = $this->createMock(ILogger::class);
+		$this->dateTimeFormatter = $this->createMock(IDateTimeFormatter::class);
 
 		$connection = \OC::$server->getDatabaseConnection();
 		$query = $connection->prepare('INSERT INTO `*PREFIX*activity_mq` '
@@ -119,6 +123,15 @@ class MailQueueHandlerTest extends TestCase {
 			->method('setSubject')
 			->willReturnSelf();
 		$event->expects($this->any())
+			->method('getIcon')
+			->willReturn('');
+		$event->expects($this->any())
+			->method('getParsedSubject')
+			->willReturn('');
+		$event->expects($this->any())
+			->method('getRichSubject')
+			->willReturn('');
+		$event->expects($this->any())
 			->method('getRichSubjectParameters')
 			->willReturn([]);
 
@@ -145,7 +158,7 @@ class MailQueueHandlerTest extends TestCase {
 			->method('createMessage')
 			->willReturn($this->message);
 		$this->mailQueueHandler = new MailQueueHandler(
-			$this->createMock(IDateTimeFormatter::class),
+			$this->dateTimeFormatter,
 			$connection,
 			$this->dataHelper,
 			$this->mailer,
@@ -280,6 +293,10 @@ class MailQueueHandlerTest extends TestCase {
 				[$user],
 				[null]
 			);
+
+		$this->dateTimeFormatter->expects($this->any())
+			->method('formatDateTimeRelativeDay')
+			->willReturn('relative');
 
 		$users = self::invokePrivate($this->mailQueueHandler, 'getAffectedUsers', [1, $maxTime, false, null]);
 		$this->assertEquals([$user], $users);
