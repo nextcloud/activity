@@ -25,6 +25,7 @@ OC.L10N.register(
     "By others" : "Kitų",
     "By you" : "Jūsų",
     "\"remote user\"" : "\"naudotojas kitame serveryje\"",
+    "Activity notification for %s" : "Aktyvumo pranešimai %s",
     "Hello %s" : "Sveiki, %s",
     "Hello %s," : "Sveiki, %s,",
     "There was some activity at %s" : "%s buvo veiklos",
