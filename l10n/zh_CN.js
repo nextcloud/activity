@@ -2,7 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "动态",
-    "An error occurred while loading activities" : "加载动态时发生错误",
+    "An error occurred while loading activities" : "加载活动时发生错误",
     "No activity yet" : "暂无动态",
     "Load more activities" : "加载更多动态",
     "Copied!" : "已复制！",
