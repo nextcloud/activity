@@ -7,7 +7,7 @@
  * later. See the COPYING file.
  */
 
-(function() {
+(function(OC, OCA, Handlebars) {
 	OCA.Activity = OCA.Activity || {};
 
 	OCA.Activity.RichObjectStringParser = {
@@ -45,8 +45,13 @@
 
 			_.each(matches, function(parameter) {
 				parameter = parameter.substring(1, parameter.length - 1);
-				var parsed = self.parseParameter(parameters[parameter]);
+				if (!parameters.hasOwnProperty(parameter) || !parameters[parameter]) {
+					// Malformed translation?
+					console.error('Potential malformed ROS string: parameter {' + parameter + '} was found in the string but is missing from the parameter list');
+					return;
+				}
 
+				var parsed = self.parseParameter(parameters[parameter]);
 				subject = subject.replace('{' + parameter + '}', parsed);
 			});
 
@@ -148,7 +153,7 @@
 			parameter.path = parameter.path.substring(firstSlashPosition === 0 ? 1 : 0, lastSlashPosition);
 
 			if (!parameter.link) {
-				parameter.link = OC.generateUrl('/f/{fileId}', {fileId: parameter.id})
+				parameter.link = OC.generateUrl('/f/{fileId}', {fileId: parameter.id});
 			}
 
 			if (parameter.path === '' || parameter.path === '/') {
@@ -160,4 +165,4 @@
 		}
 	};
 
-})();
+})(OC, OCA, Handlebars);
