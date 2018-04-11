@@ -34,7 +34,7 @@ style('activity', 'settings');
 
 </div>
 
-<form class="section" id="activity_notifications">
+<form class="section default-settings" id="activity_notifications">
 
 	<h2><?php p($l->t('Default settings')); ?></h2>
 
