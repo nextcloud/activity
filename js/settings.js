@@ -8,7 +8,7 @@ $(document).ready(function() {
 		});
 	}
 
-	var $activityNotifications = $('#activity_notifications');
+	var $activityNotifications = $('#activity_notifications:not(.default-settings)');
 	$activityNotifications.find('input[type=checkbox]').change(saveSettings);
 
 	$activityNotifications.find('select').change(saveSettings);
