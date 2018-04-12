@@ -39,7 +39,7 @@
 
 			<div v-if="loading" id="loading_activities" class="icon-loading"></div>
 
-			<div v-if="reachedEnd" id="no_more_activities">{{ t('activity', 'No more events to load') }}</div>
+			<div v-if="reachedEnd && activities.length" id="no_more_activities">{{ t('activity', 'No more events to load') }}</div>
 		</div>
 	</div>
 </template>
