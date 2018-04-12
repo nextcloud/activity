@@ -52,9 +52,12 @@
 	border-radius: 5px;
 }
 
-.group {
-	clear: both;
-	padding-bottom: 10px;
+.activity-section {
+	padding-bottom: 0;
+	padding-top: 0;
+}
+.section:not(.followup-section) {
+	padding-top: 40px;
 }
 
 .box {

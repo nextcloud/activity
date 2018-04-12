@@ -1,9 +1,5 @@
-<?php
 /**
- * @copyright Copyright (c) 2016, ownCloud, Inc.
- *
- * @author Jan-Christoph Borchardt <hey@jancborchardt.net>
- * @author Joas Schilling <coding@schilljs.com>
+ * @copyright Copyright (c) 2018 Joas Schilling <coding@schilljs.com>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -21,3 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
+/* global define, $ */
+
+define(function(require) {
+	'use strict';
+
+	var App = require('./app');
+
+	$(function() {
+		App.initialise();
+	});
+});
