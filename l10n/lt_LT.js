@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Nepalaikoma!",
     "Press ⌘-C to copy." : "Norėdami nukopijuoti, paspauskite ⌘-C.",
     "Press Ctrl-C to copy." : "Paspauskite Ctrl-C, kad nukopijuotumėte.",
+    "Home" : "Pagrindinis",
     "{name} (invisible)" : "{name} (nematomas)",
     "{name} (restricted)" : "{name} (apribotas)",
     "in {path}" : "ties {path}",
