@@ -22,12 +22,13 @@
 
 namespace OCA\Activity\Controller;
 
+use OCA\Activity\CurrentUser;
 use OCA\Activity\Data;
-use OCA\Activity\Navigation;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IRequest;
+use OCP\IURLGenerator;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
@@ -39,8 +40,11 @@ class Activities extends Controller {
 	/** @var Data */
 	protected $data;
 
-	/** @var Navigation */
-	protected $navigation;
+	/** @var IURLGenerator */
+	protected $urlGenerator;
+
+	/** @var CurrentUser */
+	protected $currentUser;
 
 	/** @var EventDispatcherInterface */
 	protected $eventDispatcher;
@@ -50,19 +54,22 @@ class Activities extends Controller {
 	 * @param IRequest $request
 	 * @param IConfig $config
 	 * @param Data $data
-	 * @param Navigation $navigation
+	 * @param IURLGenerator $urlGenerator
+	 * @param CurrentUser $currentUser
 	 * @param EventDispatcherInterface $eventDispatcher
 	 */
 	public function __construct($appName,
 								IRequest $request,
 								IConfig $config,
 								Data $data,
-								Navigation $navigation,
+								IURLGenerator $urlGenerator,
+								CurrentUser $currentUser,
 								EventDispatcherInterface $eventDispatcher) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
 		$this->config = $config;
-		$this->navigation = $navigation;
+		$this->urlGenerator = $urlGenerator;
+		$this->currentUser = $currentUser;
 		$this->eventDispatcher = $eventDispatcher;
 	}
 
@@ -80,9 +87,16 @@ class Activities extends Controller {
 		$this->eventDispatcher->dispatch('OCA\Activity::loadAdditionalScripts', $event);
 
 		return new TemplateResponse('activity', 'stream.body', [
-			'appNavigation'	=> $this->navigation->getTemplate($filter),
-			'avatars'		=> $this->config->getSystemValue('enable_avatars', true) ? 'yes' : 'no',
 			'filter'		=> $filter,
+			'feed_link'		=> $this->getFeedLink(),
 		]);
+	}
+
+	protected function getFeedLink(): string {
+		$rssToken = $this->config->getUserValue($this->currentUser->getUID(), 'activity', 'rsstoken');
+		if (!$rssToken) {
+			return '';
+		}
+		return $this->urlGenerator->linkToRouteAbsolute('activity.Feed.show', array('token' => $rssToken));
 	}
 }

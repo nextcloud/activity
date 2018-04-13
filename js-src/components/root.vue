@@ -45,6 +45,8 @@
 </template>
 
 <script>
+	import api from '../store/api';
+
 	export default {
 		name: "root",
 
@@ -102,20 +104,14 @@
 			 * Enable/disable the RSS Feed
 			 */
 			toggleFeedSetting: function () {
-				$.ajax({
-					url: OC.generateUrl('/apps/activity/settings/feed'),
-					type: 'post',
-					data: {
+				api.post(OC.generateUrl('/apps/activity/settings/feed'), {
 						enable: !this.feedLink
-					},
-					success: function(response) {
-						this.feedLink = response.data.rsslink;
-					}.bind(this)
-				});
+					})
+					.then((response) => this.feedLink = response.data.data.rsslink);
 			},
 
 			onScroll: function () {
-				if (this.ignoreScroll <= 0
+				if (!this.reachedEnd && this.ignoreScroll <= 0
 				) { // TODO && this.$content.scrollTop() + this.$content.height() > this.$container.height() - 100) {
 					this.loadActivities(false, false);
 				}
@@ -125,18 +121,9 @@
 			 * Navigation data is only loaded once on mount
 			 */
 			loadFilters: function () {
-				$.ajax({
-					url: OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filters',
-					type: 'GET',
-					beforeSend: function(xhr) {
-						xhr.setRequestHeader('Accept', 'application/json');
-					},
-					success: function(response, status, xhr) {
-						if (typeof response !== 'undefined') {
-							this.filters = response.ocs.data;
-						}
-						this.loadingFilters = false;
-					}.bind(this)
+				api.get(OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filters').then((response) => {
+					this.filters = response.data.ocs.data;
+					this.loadingFilters = false;
 				});
 			},
 
@@ -172,46 +159,40 @@
 					url += '&since=' + this.lastGivenId;
 				}
 
-				$.ajax({
-					url: url,
-					type: 'GET',
-					beforeSend: function(xhr) {
-						xhr.setRequestHeader('Accept', 'application/json');
-					},
-					success: function(response, status, xhr) {
-						this._saveHeaders(xhr.getAllResponseHeaders(), isReset, lookAHead);
-						this.loading = false;
+				api.get(url).then((response) => {
+					this._saveHeaders(response.headers, isReset, lookAHead);
+					this.loading = false;
+					this.ignoreScroll--;
 
-						if (status === 'notmodified' && !lookAHead) {
-							this.reachedEnd = true;
-							return;
-						}
+					if (response.data.ocs.data) {
+						this.activities = this.activities.concat(response.data.ocs.data);
+					}
+				}).catch((error) => {
+					this._saveHeaders(error.response.headers, isReset, lookAHead);
+					this.loading = false;
+					this.ignoreScroll--;
 
-						if (typeof response !== 'undefined') {
-							this.activities = this.activities.concat(response.ocs.data);
-							this.ignoreScroll--;
-						}
-					}.bind(this)
+					if (error.response.status === 304 && !lookAHead) {
+						this.reachedEnd = true;
+					}
 				});
 			},
 
 			/**
 			 * Read the X-Activity-First-Known and X-Activity-Last-Given headers
-			 * @param {string} headers
+			 * @param {string[]} headers
 			 * @param {boolean} reset
 			 * @param {boolean} lookAHead
 			 */
 			_saveHeaders: function(headers, reset, lookAHead) {
-				headers = headers.split("\n");
-				_.each(headers, function (header) {
-					var parts = header.split(':');
-					if (reset && parts[0].toLowerCase() === 'x-activity-first-known') {
-						this.firstKnownId = parseInt(parts[1].trim(), 10);
-					} else if (parts[0].toLowerCase() === 'x-activity-last-given') {
+				_.each(headers, function (data, header) {
+					if (reset && header === 'x-activity-first-known') {
+						this.firstKnownId = parseInt(data.trim(), 10);
+					} else if (header === 'x-activity-last-given') {
 						if (lookAHead) {
-							this.firstKnownId = parseInt(parts[1].trim(), 10);
+							this.firstKnownId = parseInt(data.trim(), 10);
 						} else {
-							this.lastGivenId = parseInt(parts[1].trim(), 10);
+							this.lastGivenId = parseInt(data.trim(), 10);
 						}
 					}
 				}.bind(this));

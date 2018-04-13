@@ -30,5 +30,5 @@ script('activity', [
 style('activity', 'style');
 ?>
 
-<div id="app-content" data-activity-filter="<?php p($_['filter']) ?>" data-feed-link="<?php p($_['rssLink']); ?>">
+<div id="app-content" data-activity-filter="<?php p($_['filter']) ?>" data-feed-link="<?php p($_['feed_link']); ?>">
 </div>

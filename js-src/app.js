@@ -24,7 +24,7 @@ define(function (require) {
 		 */
 		initialise: function() {
 			var filter = $('#app-content').attr('data-activity-filter'),
-				feedLink= $('#app-content').attr('data-feed-link'); // FIXME this is not populated correctly from the controller to the template
+				feedLink= $('#app-content').attr('data-feed-link');
 
 			// Setup Vue
 			var Vue = require('vue');
