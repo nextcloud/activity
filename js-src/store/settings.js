@@ -1,16 +1,16 @@
 import api from './api';
 
 const state = {
-	serverData: {}
+	feedLink: ''
 };
 const mutations = {
-	setServerData(state, data) {
-		state.serverData = data;
+	setFeedLink(state, data) {
+		state.feedLink = data;
 	}
 };
 const getters = {
-	getServerData(state) {
-		return state.serverData;
+	getFeedLink(state) {
+		return state.feedLink;
 	}
 }
 const actions = {}

@@ -26,9 +26,6 @@ export default {
 
 	data: function () {
 		return {
-			/** @type {string} */
-			feedLink: '',
-
 			/** @type {Object} */
 			menu: {
 				id: 'filters',
@@ -36,6 +33,12 @@ export default {
 				items: []
 			}
 		};
+	},
+
+	computed: {
+			feedLink() {
+				return this.$store.getters.getFeedLink;
+			}
 	},
 
 	methods: {
@@ -50,9 +53,10 @@ export default {
 					menuItems.push({
 						id: filter.id,
 						text: filter.name,
-						iconUrl: filter.icon
-					})
-				})
+						iconUrl: filter.icon,
+						href: OC.generateUrl('apps/activity/' + filter.id)
+					});
+				});
 				this.menu.items = menuItems;
 				this.menu.loading = false;
 			});
@@ -65,7 +69,7 @@ export default {
 			api.post(OC.generateUrl('/apps/activity/settings/feed'), {
 					enable: !this.feedLink
 				})
-				.then((response) => { this.feedLink = response.data.data.rsslink; });
+				.then((response) => this.$store.commit('setFeedLink', response.data.data.rsslink));
 		}
 	},
 	components: {
@@ -77,8 +81,8 @@ export default {
 		const appContentElmt = document.getElementById('app-content');
 
 		if (appContentElmt !== null) {
-			// this.$store.commit('setActiveFilter', appContentElmt.dataset['activity-filter']);
-			// this.$store.commit('setFeedLink', appContentElmt.dataset['feed-link']);
+			// this.$store.commit('setActiveFilter', appContentElmt.dataset['activityFilter']);
+			this.$store.commit('setFeedLink', appContentElmt.dataset['feedLink']);
 		}
 	},
 
