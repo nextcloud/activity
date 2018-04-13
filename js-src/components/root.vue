@@ -107,7 +107,7 @@
 				api.post(OC.generateUrl('/apps/activity/settings/feed'), {
 						enable: !this.feedLink
 					})
-					.then((response) => this.feedLink = response.data.data.rsslink);
+					.then((response) => { this.feedLink = response.data.data.rsslink; });
 			},
 
 			onScroll: function () {
@@ -167,12 +167,12 @@
 					if (response.data.ocs.data) {
 						this.activities = this.activities.concat(response.data.ocs.data);
 					}
-				}).catch((error) => {
-					this._saveHeaders(error.response.headers, isReset, lookAHead);
+				}).catch((err) => {
+					this._saveHeaders(err.response.headers, isReset, lookAHead);
 					this.loading = false;
 					this.ignoreScroll--;
 
-					if (error.response.status === 304 && !lookAHead) {
+					if (err.response.status === 304 && !lookAHead) {
 						this.reachedEnd = true;
 					}
 				});
@@ -185,17 +185,17 @@
 			 * @param {boolean} lookAHead
 			 */
 			_saveHeaders: function(headers, reset, lookAHead) {
-				_.each(headers, function (data, header) {
+				Object.keys(headers).forEach((header) => {
 					if (reset && header === 'x-activity-first-known') {
-						this.firstKnownId = parseInt(data.trim(), 10);
+						this.firstKnownId = parseInt(headers[header].trim(), 10);
 					} else if (header === 'x-activity-last-given') {
 						if (lookAHead) {
-							this.firstKnownId = parseInt(data.trim(), 10);
+							this.firstKnownId = parseInt(headers[header].trim(), 10);
 						} else {
-							this.lastGivenId = parseInt(data.trim(), 10);
+							this.lastGivenId = parseInt(headers[header].trim(), 10);
 						}
 					}
-				}.bind(this));
+				});
 			}
 		},
 

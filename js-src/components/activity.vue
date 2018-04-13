@@ -7,16 +7,16 @@
 				<div class="activity-icon">
 					<img v-if="icon" :src="icon" alt="" />
 				</div>
-				<div class="activitysubject">
-					<a :href="link" v-if="link" v-html="getSubject"></a>
-					<template v-else v-html="getSubject"></template>
+				<div v-if="useLink" class="activitysubject">
+					<a :href="link" v-html="parsedSubject"></a>
 				</div>
+				<div v-else class="activitysubject" v-html="parsedSubject" />
 
 				<span class="activitytime has-tooltip live-relative-timestamp" :data-timestamp="timestamp" :title="formatDate">
 					{{relativeDate}}
 				</span>
 
-				<div class="activitymessage" v-if="getMessage" v-html="getMessage"></div>
+				<div class="activitymessage" v-if="parsedMessage" v-html="parsedMessage"></div>
 
 				<div class="activity-previews" v-if="previews.length">
 					<template  v-for="preview in previews">
@@ -81,44 +81,20 @@
 
 				return displayDate;
 			},
-			getSubject: function () {
+			parsedSubject: function () {
 				if (this.subject_rich[0].length > 1) {
 					return OCA.Activity.RichObjectStringParser.parseMessage(this.subject_rich[0], this.subject_rich[1]);
 				}
 				return this.subject;
 			},
-			getMessage: function () {
+			parsedMessage: function () {
 				if (this.message_rich[0].length > 1) {
 					return OCA.Activity.RichObjectStringParser.parseMessage(this.message_rich[0], this.message_rich[1]);
 				}
 				return this.message;
 			},
-			getLink: function () {
-				if (this.getSubject().indexOf('<a') !== -1)
-				return this.link;
-			}
-		},
-
-		methods: {
-			onClickActionButton: function () {
-				$.ajax({
-					url: this.link,
-					type: this.type || 'GET',
-					success: function () {
-						this.$parent._$el.fadeOut(OC.menuSpeed);
-						this.$parent.$emit('remove');
-						$('body').trigger(new $.Event('OCA.Notification.Action', {
-							notification: this.$parent,
-							action: {
-								url: this.link,
-								type: this.type || 'GET'
-							}
-						}));
-					}.bind(this),
-					error: function () {
-						OC.Notification.showTemporary(t('notifications', 'Failed to perform action'));
-					}
-				});
+			useLink: function () {
+				return this.parsedSubject.indexOf('<a') === -1 && this.link.length !== 0;
 			}
 		},
 
