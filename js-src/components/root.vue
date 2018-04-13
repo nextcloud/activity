@@ -141,6 +141,7 @@
 				this.lastGivenId = 0;
 				this.firstKnownId = 0;
 				this.ignoreScroll = 0;
+				this.reachedEnd = false;
 				this.loadActivities();
 			},
 
