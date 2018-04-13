@@ -186,17 +186,17 @@
 			 * @param {boolean} lookAHead
 			 */
 			_saveHeaders: function(headers, reset, lookAHead) {
-				Object.keys(headers).forEach((header) => {
-					if (reset && header === 'x-activity-first-known') {
-						this.firstKnownId = parseInt(headers[header].trim(), 10);
-					} else if (header === 'x-activity-last-given') {
-						if (lookAHead) {
-							this.firstKnownId = parseInt(headers[header].trim(), 10);
-						} else {
-							this.lastGivenId = parseInt(headers[header].trim(), 10);
-						}
+				if (reset && typeof headers['x-activity-first-known'] !== 'undefined') {
+					this.firstKnownId = parseInt(headers['x-activity-first-known'], 10);
+				}
+
+				if (typeof headers['x-activity-last-given'] !== 'undefined') {
+					if (lookAHead) {
+						this.firstKnownId = parseInt(headers['x-activity-last-given'], 10);
+					} else {
+						this.lastGivenId = parseInt(headers['x-activity-last-given'], 10);
 					}
-				});
+				}
 			}
 		},
 

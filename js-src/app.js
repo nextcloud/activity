@@ -23,7 +23,7 @@ define(function (require) {
 		 * Initialise the app
 		 */
 		initialise: function() {
-			var filter = $('#app-content').attr('data-activity-filter'),
+			let filter = $('#app-content').attr('data-activity-filter'),
 				feedLink= $('#app-content').attr('data-feed-link');
 
 			// Setup Vue
