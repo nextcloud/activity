@@ -54,7 +54,7 @@ export default {
 						id: filter.id,
 						text: filter.name,
 						iconUrl: filter.icon,
-						href: OC.generateUrl('apps/activity/' + filter.id)
+						router: OC.generateUrl('apps/activity/' + filter.id)
 					});
 				});
 				this.menu.items = menuItems;
@@ -70,7 +70,13 @@ export default {
 					enable: !this.feedLink
 				})
 				.then((response) => this.$store.commit('setFeedLink', response.data.data.rsslink));
-		}
+		},
+
+    goBack () {
+      window.history.length > 1
+        ? this.$router.go(-1)
+        : this.$router.push('/')
+    }
 	},
 	components: {
 		appNavigation
@@ -88,6 +94,10 @@ export default {
 
 	mounted: function () {
 		this.loadFilters();
+
+		if (!this.filter) {
+			this.filter = 'all';
+		}
 
 		// FIXME Clipboard is missing…
 

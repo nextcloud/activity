@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Users from './views/Users';
+import ActivityList from './views/ActivityList';
 
 Vue.use(Router);
 
@@ -17,7 +17,10 @@ export default new Router({
 	mode: 'history',
 	base: window.location.pathName,
 	routes: [{
-		path: '/apps/activity',
-		component: Users
+		path: '/index.php/apps/activity/',
+		component: ActivityList
+	},{
+		path: '/index.php/apps/activity/:filter',
+		component: ActivityList
 	}]
 });

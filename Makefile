@@ -14,7 +14,7 @@ npm-update:
 	npm update
 
 build-js:
-	npm run dev
+	npm run watch
 
 build-js-production:
 	npm run build
