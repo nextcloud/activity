@@ -17,7 +17,11 @@
 </template>
 
 <script>
-	import api from '../store/api';
+  import api from '../store/api';
+  import Vue from 'vue';
+  import activity from '../components/activity';
+  // import VueLocalStorage from 'vue-localstorage';
+  // Vue.use(VueLocalStorage);
 
   export default {
     name: 'ActivityList',
@@ -47,8 +51,20 @@
       }
     },
 
-    methods: {
+    watch: {
+      '$route' (to, from) {
+        this.loading = true;
+        this.activities = [];
+        this.lastGivenId = 0;
+        this.firstKnownId = 0;
+        this.ignoreScroll = 0;
+        this.reachedEnd = false;
+        this.loading = true;
+        this.loadActivities(false, true);
+      }
+    },
 
+    methods: {
       onScroll() {
         if (!this.reachedEnd && this.ignoreScroll <= 0
         ) { // TODO && this.$content.scrollTop() + this.$content.height() > this.$container.height() - 100) {
@@ -67,7 +83,7 @@
         if (lookAHead) {
           url += '&since=' + this.firstKnownId;
           url += '&sort=asc';
-        } else {
+        } else if (!isReset) {
           url += '&since=' + this.lastGivenId;
         }
 
@@ -112,7 +128,7 @@
     },
 
     components: {
-      'activity': require('../components/activity.vue')
+      activity
     },
 
     mounted() {

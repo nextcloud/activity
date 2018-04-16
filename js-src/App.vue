@@ -41,20 +41,34 @@ export default {
 			}
 	},
 
+
+	watch: {
+		'$route' (to, from) {
+			this.menu.items.forEach((filter, index) => {
+				if (to.params.filter === filter.id) {
+					filter.classes = 'active';
+				} else if (from.params.filter === filter.id) {
+					filter.classes = '';
+				}
+			});
+		}
+	},
+
 	methods: {
 
 		/**
 		 * Navigation data is only loaded once on mount
 		 */
-		loadFilters: function () {
+		loadFilters() {
 			api.get(OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filters').then((response) => {
 				let menuItems = [];
-				response.data.ocs.data.forEach((filter) => {
+				response.data.ocs.data.forEach((filter, index) => {
 					menuItems.push({
 						id: filter.id,
 						text: filter.name,
 						iconUrl: filter.icon,
-						router: OC.generateUrl('apps/activity/' + filter.id)
+						router: OC.generateUrl('apps/activity/' + filter.id),
+						classes: (this.$route.params.filter || 'all') === filter.id ? 'active' : ''
 					});
 				});
 				this.menu.items = menuItems;
@@ -65,14 +79,14 @@ export default {
 		/**
 		 * Enable/disable the RSS Feed
 		 */
-		toggleFeedSetting: function () {
+		toggleFeedSetting() {
 			api.post(OC.generateUrl('/apps/activity/settings/feed'), {
 					enable: !this.feedLink
 				})
 				.then((response) => this.$store.commit('setFeedLink', response.data.data.rsslink));
 		},
 
-    goBack () {
+    goBack() {
       window.history.length > 1
         ? this.$router.go(-1)
         : this.$router.push('/')
@@ -82,7 +96,7 @@ export default {
 		appNavigation
 	},
 
-	beforeMount: function () {
+	beforeMount() {
 		// importing server data into the store
 		const appContentElmt = document.getElementById('app-content');
 
@@ -92,7 +106,7 @@ export default {
 		}
 	},
 
-	mounted: function () {
+	mounted() {
 		this.loadFilters();
 
 		if (!this.filter) {
@@ -100,8 +114,6 @@ export default {
 		}
 
 		// FIXME Clipboard is missing…
-
-		// this.loadActivities();
 	}
 }
 </script>
