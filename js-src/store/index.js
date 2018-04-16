@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import users from './users';
 import settings from './settings';
 
 Vue.use(Vuex)
@@ -15,7 +14,6 @@ const mutations = {
 
 export default new Vuex.Store({
 	modules: {
-		users,
 		settings
 	},
 	strict: debug,

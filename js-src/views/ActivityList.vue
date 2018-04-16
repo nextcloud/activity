@@ -10,9 +10,12 @@
       <activity v-for="(a, index) in activities" v-bind="a" :index="index" :key="a.activity_id" :activities="activities"></activity>
     </div>
 
-    <div v-if="loading" id="loading_activities" class="icon-loading"></div>
+    <div v-if="loading && !activities.length" id="loading_activities" class="icon-loading"></div>
 
-    <div v-if="reachedEnd && activities.length" id="no_more_activities">{{ t('activity', 'No more events to load') }}</div>
+    <div v-if="activities.length" id="no_more_activities">
+      <template v-if="reachedEnd">{{ t('activity', 'No more events to load') }}</template>
+      <template v-else-if="loading"><div class="icon-loading"></div></template>
+    </div>
   </div>
 </template>
 
@@ -59,7 +62,6 @@
         this.firstKnownId = 0;
         this.ignoreScroll = 0;
         this.reachedEnd = false;
-        this.loading = true;
         this.loadActivities(false, true);
       }
     },
@@ -79,6 +81,7 @@
        */
       loadActivities(lookAHead, isReset) {
         this.ignoreScroll = 1;
+        this.loading = true;
         var url = OC.linkToOCS('apps/activity/api/v2/activity', 2) + this.filter + '?previews=true';
         if (lookAHead) {
           url += '&since=' + this.firstKnownId;
