@@ -679,6 +679,8 @@ class FilesHooks {
 				$this->shareWithGroup($params['shareWith'], (int) $params['fileSource'], $params['itemType'], $params['fileTarget'], (int) $params['id']);
 			} else if ((int) $params['shareType'] === Share::SHARE_TYPE_LINK) {
 				$this->shareByLink((int) $params['fileSource'], $params['itemType'], $params['uidOwner']);
+			} else if ((int) $params['shareType'] === Share::SHARE_TYPE_CIRCLE) {
+				$this->shareWithCircle($params['shareWith'], (int) $params['fileSource'], $params['itemType'], $params['fileTarget'], (int) $params['id']);
 			}
 		}
 	}
@@ -777,6 +779,8 @@ class FilesHooks {
 				$this->unshareFromGroup($share);
 			} else if ($share->getShareType() === Share::SHARE_TYPE_LINK) {
 				$this->unshareLink($share);
+			} else if ($share->getShareType() === Share::SHARE_TYPE_CIRCLE) {
+				$this->unshareFromCircle($share);
 			}
 		}
 	}
@@ -1092,6 +1096,39 @@ class FilesHooks {
 		if ($emailSetting !== false && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser->getUID(), 'setting', 'selfemail'))) {
 			$latestSend = time() + $emailSetting;
 			$this->activityData->storeMail($event, $latestSend);
+		}
+	}
+	
+
+	/**
+	 * Sharing a file or folder with a circle
+	 *
+	 * @param string $shareWith
+	 * @param int $fileSource File ID that is being shared
+	 * @param string $itemType File type that is being shared (file or folder)
+	 * @param string $fileTarget File path
+	 * @param int $shareId The Share ID of this share
+	 */
+	protected function shareWithCircle($shareWith, $fileSource, $itemType, $fileTarget, $shareId) {
+		// User performing the share
+		$this->shareNotificationForSharer('shared_circle_self', $shareWith, $fileSource, $itemType);
+		if ($this->currentUser->getUID() !== null) {
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'reshared_circle_by', $shareWith, $fileSource, $itemType);
+		}
+	}
+
+	/**
+	 * Unsharing a file or folder from a circle
+	 *
+	 * @param IShare $share
+	 * @throws \OCP\Files\NotFoundException
+	 */
+	protected function unshareFromCircle(IShare $share) {
+	
+		// User performing the share
+		$this->shareNotificationForSharer('unshared_circle_self', $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+		if ($this->currentUser->getUID() !== null) {
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'unshared_circle_by', $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
 		}
 	}
 }
