@@ -28,7 +28,7 @@
     "Hello %s" : "Ahoj %s",
     "Hello %s," : "Vítejte %s,",
     "There was some activity at %s" : "Na %s došlo k následující aktivitě",
-    "_and %n more _::_and %n more _" : ["a %n další","a %n další","a %n další"],
+    "_and %n more _::_and %n more _" : ["a %n další","a %n další","a %n další","a %n další"],
     ", " : ", ",
     "%s and %s" : "%s a %s",
     "Mail" : "Pošta",
@@ -54,5 +54,5 @@
     "No more events to load" : "Žádné další události k načtení",
     "Files" : "Soubory",
     "Activity notification" : "Upozornění na aktivity"
-},"pluralForm" :"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
+},"pluralForm" :"nplurals=4; plural=(n < 10 && n % 1 == 0) ? 1 : (n < 9999 && n >= 10 && n % 1 == 0) ? 3 : (n % 1 != 0) : 4;"
 }

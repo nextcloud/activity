@@ -30,7 +30,7 @@ OC.L10N.register(
     "Hello %s" : "Ahoj %s",
     "Hello %s," : "Ahoj %s,",
     "There was some activity at %s" : "Bola zaznamenaná aktivita u používateľa %s",
-    "_and %n more _::_and %n more _" : ["a %n ďalší","a %n ďalšie","a %n ďalších"],
+    "_and %n more _::_and %n more _" : ["a %n ďalší","a %n ďalšie","a %n ďalších","a %n ďalších"],
     ", " : ", ",
     "%s and %s" : "%s a %s",
     "Mail" : "Pošta",
@@ -57,4 +57,4 @@ OC.L10N.register(
     "Files" : "Súbory",
     "Activity notification" : "Upozornenia na aktivity"
 },
-"nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;");
+"nplurals=4; plural=(n % 1 == 0 ? 4: n==1 ? 1: n % 1 == 0 && n>=2 && n<=4 ? 3);");

@@ -29,7 +29,7 @@ OC.L10N.register(
     "Hello %s" : "سلام %s",
     "Hello %s," : "سلام %s",
     "There was some activity at %s" : "تعدادی فعالیت در %s وجود دارد",
-    "_and %n more _::_and %n more _" : ["و %n بیشتر"],
+    "_and %n more _::_and %n more _" : ["و %n بیشتر","و %n بیشتر"],
     ", " : ",",
     "%s and %s" : "%s و %s",
     "Mail" : "ایمیل",
@@ -56,4 +56,4 @@ OC.L10N.register(
     "Files" : "فایل ها",
     "Activity notification" : "هشدارهای فعالیت"
 },
-"nplurals=1; plural=0;");
+"nplurals=2; plural=((n<=1 && n>= 0) ? 1);");
