@@ -30,7 +30,7 @@ OC.L10N.register(
     "Hello %s" : "გამარჯობა, %s",
     "Hello %s," : "გამარჯობა, %s,",
     "There was some activity at %s" : "%s-ზე იყო გარკვეული აქტივობა",
-    "_and %n more _::_and %n more _" : ["და კიდევ %n"],
+    "_and %n more _::_and %n more _" : ["და კიდევ %n","და კიდევ %n"],
     ", " : ",",
     "%s and %s" : "%s და %s",
     "Mail" : "ფოსტა",
@@ -57,4 +57,4 @@ OC.L10N.register(
     "Files" : "ფაილები",
     "Activity notification" : "შეტყობინება აქტივობის შესახებ"
 },
-"nplurals=1; plural=0;");
+"nplurals=2; plural=(n==1);");
