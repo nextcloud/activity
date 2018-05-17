@@ -30,7 +30,7 @@ OC.L10N.register(
     "Hello %s" : "שלום %s",
     "Hello %s," : "שלום %s,",
     "There was some activity at %s" : "הייתה פעילות ב%s",
-    "_and %n more _::_and %n more _" : ["ו־%n נוסף","ו־%n נוספים"],
+    "_and %n more _::_and %n more _" : ["ו־%n נוסף","ו־%n נוספים","ו־%n נוספים"],
     ", " : ",",
     "%s and %s" : "%s ו- %s",
     "Mail" : "דואר",
@@ -57,4 +57,4 @@ OC.L10N.register(
     "Files" : "קבצים",
     "Activity notification" : "דיווח פעילות"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=4; plural=(n==1 ? 1: n == 2 ? 2 : (n % 10 == 0 and n > 10) ? 4);");

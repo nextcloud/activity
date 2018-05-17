@@ -30,7 +30,7 @@ OC.L10N.register(
     "Hello %s" : "Sveiki, %s",
     "Hello %s," : "Sveiki, %s,",
     "There was some activity at %s" : "%s buvo veiklos",
-    "_and %n more _::_and %n more _" : ["ir %n kitas","ir %n kiti","ir %n kitų"],
+    "_and %n more _::_and %n more _" : ["ir %n kitas","ir %n kiti","ir %n kitų","ir %n kitų"],
     ", " : ",",
     "%s and %s" : "%s ir %s",
     "Mail" : "Paštas",
@@ -57,4 +57,4 @@ OC.L10N.register(
     "Files" : "Failai",
     "Activity notification" : "Veiklos pranešimai"
 },
-"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);");
+"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 1 : (n%10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 3 : n % 1 != 0 ? 4);");
