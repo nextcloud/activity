@@ -54,5 +54,5 @@
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
     "Files" : "ფაილები",
     "Activity notification" : "შეტყობინება აქტივობის შესახებ"
-},"pluralForm" :"nplurals=2; plural=(n==1);"
+},"pluralForm" :"nplurals=2; plural=(n!=1);"
 }
