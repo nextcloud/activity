@@ -57,4 +57,4 @@ OC.L10N.register(
     "Files" : "ფაილები",
     "Activity notification" : "შეტყობინება აქტივობის შესახებ"
 },
-"nplurals=2; plural=(n==1);");
+"nplurals=2; plural=(n!=1);");
