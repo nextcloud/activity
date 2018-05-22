@@ -28,7 +28,7 @@
     "Hello %s" : "שלום %s",
     "Hello %s," : "שלום %s,",
     "There was some activity at %s" : "הייתה פעילות ב%s",
-    "_and %n more _::_and %n more _" : ["ו־%n נוסף","ו־%n נוספים","ו־%n נוספים"],
+    "_and %n more _::_and %n more _" : ["ו־%n נוסף","ו־%n נוספים","ו־%n נוספים","ו־%n נוספים"],
     ", " : ",",
     "%s and %s" : "%s ו- %s",
     "Mail" : "דואר",
