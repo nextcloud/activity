@@ -34,6 +34,7 @@
     "Mail" : "邮件",
     "Stream" : "流",
     "Activity" : "动态",
+    "This application enables users to view actions related to their files in Nextcloud." : "本程序让用户可以查看他们在Nextcloud上的文件活动。",
     "Activity feed" : "动态 Feed",
     "Send activity emails" : "发送动态电子邮件",
     "Default settings" : "默认设置",
