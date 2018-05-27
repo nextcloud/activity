@@ -36,6 +36,7 @@ OC.L10N.register(
     "Mail" : "Поща",
     "Stream" : "Поток",
     "Activity" : "Активност",
+    "This application enables users to view actions related to their files in Nextcloud." : "Това приложение позволява на потребителите да преглеждат тяхните действия с файловете си в NextCloud.",
     "Activity feed" : "Емисия за активност",
     "Send activity emails" : "Изпращане на имейли за активността",
     "Default settings" : "Настройки по подразбиране",
