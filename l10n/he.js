@@ -36,6 +36,7 @@ OC.L10N.register(
     "Mail" : "דואר",
     "Stream" : "הזרמת מידע",
     "Activity" : "פעילות",
+    "This application enables users to view actions related to their files in Nextcloud." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שקשורות לקבצים שלהם ב־Nextcloud.",
     "Activity feed" : "דיווחי פעילות",
     "Send activity emails" : "שליחת הודעות פעילות בדוא״ל",
     "Default settings" : "הגדרות ברירת מחדל",
