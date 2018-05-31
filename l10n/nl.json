@@ -34,6 +34,7 @@
     "Mail" : "E-mail",
     "Stream" : "Doorlopend",
     "Activity" : "Activiteit",
+    "This application enables users to view actions related to their files in Nextcloud." : "Deze applicatie laat gebruikers acties met betrekking tot hun bestanden op Nextcloud zien",
     "Activity feed" : "Activiteitenkanaal",
     "Send activity emails" : "Activiteiten per mail verzenden",
     "Default settings" : "Standaardinstellingen",
