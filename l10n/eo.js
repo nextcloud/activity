@@ -7,6 +7,7 @@ OC.L10N.register(
     "Not supported!" : "Ne subtenite!",
     "Press ⌘-C to copy." : "Premu ⌘-C pro kopii",
     "Press Ctrl-C to copy." : "Premi Ctrl-C pro kopii.",
+    "Home" : "Hejme",
     "{name} (invisible)" : "{name} (nevidebla)",
     "in {path}" : "en {path}",
     "Today" : "Hodiaŭ",
@@ -16,6 +17,7 @@ OC.L10N.register(
     "By others" : "De aliaj iuj",
     "By you" : "De vi",
     "\"remote user\"" : "\"fora uzanto\"",
+    "Hello %s" : "Saluton %s",
     "Hello %s," : "Saluton %s,",
     ", " : ",",
     "%s and %s" : "%s kaj %s",
@@ -27,6 +29,7 @@ OC.L10N.register(
     "Daily" : "Ĉiutage",
     "Weekly" : "Ĉiusemajne",
     "Enable RSS feed" : "Aktivigi RSS fluo",
+    "RSS feed" : "RSS-a kanalo",
     "Files" : "Dosieroj",
     "Activity notification" : "Aktivaĵo-sciigo"
 },
