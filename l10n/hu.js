@@ -36,6 +36,7 @@ OC.L10N.register(
     "Mail" : "Levél",
     "Stream" : "Folyam",
     "Activity" : "Tevékenység",
+    "This application enables users to view actions related to their files in Nextcloud." : "Ez az alkalmazás lehetővé teszi a felhasználók számára, hogy megtekinthessék a fájlokhoz kapcsolódó műveleteket a Nextcloud-ban.",
     "Activity feed" : "Tevékenységi hírfolyam",
     "Send activity emails" : "Aktivitási e-mailek küldése",
     "Default settings" : "Alapértelmezett beállítások",
