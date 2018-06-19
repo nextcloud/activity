@@ -38,7 +38,7 @@
     "Send activity emails" : "アクティビティメールの送信",
     "Default settings" : "デフォルト設定",
     "Configure the default activity settings for new users." : "新しいユーザーのデフォルトのアクティビティ設定を構成します。",
-    "List your own actions in the stream" : "タイムライン上にあなたの操作を表示する",
+    "List your own actions in the stream" : "タイムライン上に自分のアクションを表示する",
     "Notify about your own actions via email" : "メールで自分のアクションを通知する",
     "You need to set up your email address before you can receive notification emails." : "通知メールを受け取る前にメールアドレスを設定してください。",
     "Send emails:" : "メールを送信:",
