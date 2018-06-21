@@ -2,7 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "アクティビティ",
-    "An error occurred while loading activities" : "アクティビティを読み込む際にエラーが発生しました",
+    "An error occurred while loading activities" : "アクティビティの読み込み中にエラーが発生しました",
     "No activity yet" : "まだアクティビティはありません",
     "Load more activities" : "さらにアクティビティを読み込む",
     "Copied!" : "コピーされました！",
