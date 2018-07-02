@@ -29,6 +29,8 @@ use OC\Files\View;
 use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
+use OCA\Activity\Widgets\FilesActivityWidget;
+use OCA\Activity\Widgets\Service\DashboardService;
 use OCP\Activity\IManager;
 use OCP\Files\IRootFolder;
 use OCP\Files\Mount\IMountPoint;
@@ -80,6 +82,9 @@ class FilesHooks {
 	/** @var ILogger */
 	protected $logger;
 
+	/** @var DashboardService */
+	protected $dashboardService;
+
 	/** @var CurrentUser */
 	protected $currentUser;
 
@@ -107,6 +112,7 @@ class FilesHooks {
 	 * @param IDBConnection $connection
 	 * @param IURLGenerator $urlGenerator
 	 * @param ILogger $logger
+	 * @param DashboardService $dashboardService
 	 * @param CurrentUser $currentUser
 	 */
 	public function __construct(IManager $manager,
@@ -119,6 +125,7 @@ class FilesHooks {
 								IDBConnection $connection,
 								IURLGenerator $urlGenerator,
 								ILogger $logger,
+								DashboardService $dashboardService,
 								CurrentUser $currentUser) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
@@ -130,6 +137,7 @@ class FilesHooks {
 		$this->connection = $connection;
 		$this->urlGenerator = $urlGenerator;
 		$this->logger = $logger;
+		$this->dashboardService = $dashboardService;
 		$this->currentUser = $currentUser;
 	}
 
@@ -1086,6 +1094,7 @@ class FilesHooks {
 		// Add activity to stream
 		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser->getUID(), 'setting', 'self'))) {
 			$this->activityData->send($event);
+			$this->dashboardService->dispatchDashboardEvent($event);
 		}
 
 		// Add activity to mail queue
