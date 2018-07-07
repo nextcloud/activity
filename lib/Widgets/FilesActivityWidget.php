@@ -30,6 +30,7 @@ use OCA\Activity\AppInfo\Application;
 use OCA\Activity\Widgets\Service\FilesActivityService;
 use OCA\Dashboard\IDashboardWidget;
 use OCA\Dashboard\Model\WidgetRequest;
+use OCA\Dashboard\Model\WidgetSettings;
 use OCP\AppFramework\QueryException;
 
 class FilesActivityWidget implements IDashboardWidget {
@@ -40,6 +41,9 @@ class FilesActivityWidget implements IDashboardWidget {
 
 	/** @var FilesActivityService */
 	private $filesActivityService;
+
+	/** @var WidgetSettings */
+	private $settings;
 
 
 	/**
@@ -72,7 +76,7 @@ class FilesActivityWidget implements IDashboardWidget {
 	public function getTemplate() {
 		return [
 			'app'      => 'activity',
-			'icon'     => 'icon-activity',
+			'icon'     => 'icon-folder',
 			'css'      => 'widgets/filesActivity',
 			'js'       => 'widgets/filesActivity',
 			'content'  => 'widgets/filesActivity',
@@ -86,7 +90,7 @@ class FilesActivityWidget implements IDashboardWidget {
 	 */
 	public function widgetSetup() {
 		return [
-			'size' => [
+			'size'   => [
 				'min'     => [
 					'width'  => 5,
 					'height' => 2
@@ -96,17 +100,19 @@ class FilesActivityWidget implements IDashboardWidget {
 					'height' => 3
 				]
 			],
-			'push' => 'OCA.DashBoard.filesActivity.push'
+			'push'   => 'OCA.DashBoard.filesActivity.push',
+			'resize' => 'OCA.DashBoard.filesActivity.onResize'
 		];
 	}
 
 
 	/**
-	 * @param array $config
+	 * @param WidgetSettings $settings
 	 */
-	public function loadWidget($config) {
+	public function loadWidget($settings) {
 		$app = new Application();
 
+		$this->settings = $settings;
 		$container = $app->getContainer();
 		try {
 			$this->filesActivityService = $container->query(FilesActivityService::class);
@@ -120,12 +126,13 @@ class FilesActivityWidget implements IDashboardWidget {
 	 * @param WidgetRequest $request
 	 */
 	public function requestWidget(WidgetRequest $request) {
+
+		$limit = $this->filesActivityService->defineLimit($this->settings->getPosition()['height']);
 		if ($request->getRequest() === 'getFilesActivity') {
 			$request->addResult(
-				'filesActivity', $this->filesActivityService->getFilesActivities()
+				'filesActivity', $this->filesActivityService->getFilesActivities($limit)
 			);
 		}
 	}
-
 
 }
