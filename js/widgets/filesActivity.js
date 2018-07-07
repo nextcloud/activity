@@ -36,14 +36,17 @@
 		var filesActivity = {
 
 			divFilesActivity: null,
+			dim: {},
 
-			init: function () {
+			init: function (dim) {
+				filesActivity.currDim = dim;
+
 				filesActivity.divFilesActivity = $('#widget-activity-files');
 				filesActivity.divFilesActivityTable =
 					$('<table>', {class: 'widget-activity-files-table'});
 
 				var tHead = $('<thead>');
-				tHead.append($('<td>').text('File'));
+				tHead.append($('<td>', {style: 'padding: 20px 5px 10px 50px'}).text('Filename'));
 				tHead.append($('<td>', {style: 'width: 100px'}));
 				tHead.append($('<td>', {style: 'width: 150px'}).text('By'));
 				tHead.append($('<td>', {style: 'width: 150px'}).text('On'));
@@ -81,14 +84,28 @@
 				for (var i = 0; i < activities.length; i++) {
 					var activity = activities[i];
 
-					var tr = $('<tr>');
-
-					tr.append($('<td>').text(activity.filename));
+					var tr = $('<tr>', {'data-url': activity.url});
+					tr.append($('<td>', {style: 'padding-left: 30px'}).text(activity.file));
 					tr.append($('<td>').text(filesActivity.formatActivity(activity.fileActivity)));
 					tr.append($('<td>').text(activity.owner));
 					tr.append($('<td>').text(
 						OC.Util.relativeModifiedDate(parseInt(activity.timestamp, 10) * 1000)));
+
+					tr.on('click', function () {
+						window.open(OC.generateUrl($(this).attr('data-url')));
+					});
+
 					filesActivity.divFilesActivityTable.append(tr);
+				}
+			},
+
+
+			onResize: function (dim) {
+				var oldDim = filesActivity.currDim;
+				filesActivity.currDim = dim;
+
+				if (oldDim.height !== dim.height) {
+					filesActivity.getFilesActivity();
 				}
 			},
 
@@ -98,7 +115,8 @@
 					return;
 				}
 
-				filesActivity.displayFilesActivity(payload.filesActivity);
+				filesActivity.getFilesActivity();
+//				filesActivity.displayFilesActivity(payload.filesActivity);
 			},
 
 
