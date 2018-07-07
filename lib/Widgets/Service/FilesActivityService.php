@@ -63,12 +63,13 @@ class FilesActivityService {
 
 
 	/**
+	 * @param int $limit
+	 *
 	 * @return FilesActivity[]
 	 */
-	public function getFilesActivities() {
+	public function getFilesActivities($limit) {
 
 		try {
-			$limit = 5;
 			$files = $this->data->get(
 				$this->helper, $this->settings, $this->userId, '', $limit, 'desc', 'files'
 			);
@@ -92,6 +93,21 @@ class FilesActivityService {
 		}
 
 		return [];
+	}
+
+
+	public function defineLimit($height) {
+		if ($height > 7) {
+			return 20;
+		}
+		if ($height > 6) {
+			return 15;
+		}
+		if ($height > 4) {
+			return 10;
+		}
+
+		return 5;
 	}
 
 

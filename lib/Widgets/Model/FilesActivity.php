@@ -36,6 +36,12 @@ class FilesActivity implements \JsonSerializable {
 	private $owner;
 
 	/** @var string */
+	private $file;
+
+	/** @var string */
+	private $path;
+
+	/** @var string */
 	private $filename;
 
 	/** @var int */
@@ -88,6 +94,46 @@ class FilesActivity implements \JsonSerializable {
 	/**
 	 * @return string
 	 */
+	public function getFile() {
+		return $this->file;
+	}
+
+	/**
+	 * @param string $path
+	 *
+	 * @return $this
+	 */
+	public function setFile(string $path) {
+		$this->file = self::noStartSlash($path);
+
+		$this->setPath(dirname($path));
+		$this->setFilename(basename($path));
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPath() {
+		return $this->path;
+	}
+
+	/**
+	 * @param string $path
+	 *
+	 * @return $this
+	 */
+	public function setPath($path) {
+		$this->path = $path;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return string
+	 */
 	public function getFilename() {
 		return $this->filename;
 	}
@@ -97,10 +143,18 @@ class FilesActivity implements \JsonSerializable {
 	 *
 	 * @return $this
 	 */
-	public function setFilename(string $filename) {
+	public function setFilename($filename) {
 		$this->filename = $filename;
 
 		return $this;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getUrl() {
+		return '/apps/files/?dir=' . $this->getPath() . '&scrollto=' . $this->getFilename();
 	}
 
 
@@ -171,7 +225,7 @@ class FilesActivity implements \JsonSerializable {
 
 		$info->setOwner($data['user']);
 		$info->setFileActivity($data['type']);
-		$info->setFilename(self::noStartSlash($data['object_name']));
+		$info->setFile($data['object_name']);
 		$info->setFileId($data['object_id']);
 		$info->setTimestamp($data['timestamp']);
 
@@ -191,7 +245,10 @@ class FilesActivity implements \JsonSerializable {
 		return [
 			'id'           => $this->getActivityId(),
 			'owner'        => $this->getOwner(),
+			'file'         => $this->getFile(),
 			'filename'     => $this->getFilename(),
+			'path'         => $this->getPath(),
+			'url'          => $this->getUrl(),
 			'fileId'       => $this->getFileId(),
 			'fileActivity' => $this->getFileActivity(),
 			'timestamp'    => $this->getTimestamp()
