@@ -25,8 +25,8 @@
 
 namespace OCA\Activity\Widgets\Service;
 
+use OCA\Activity\Widgets\FilesActivityWidget;
 use OCA\Dashboard\Api\v1\Dashboard;
-use OCA\Dashboard\Service\MiscService;
 use OCP\Activity\IEvent;
 use OCP\App\IAppManager;
 use OCP\AppFramework\QueryException;
@@ -72,7 +72,6 @@ class DashboardService {
 
 			return;
 		}
-
 	}
 
 
@@ -80,9 +79,10 @@ class DashboardService {
 	 * @param string $userId
 	 */
 	private function createDashboardEventFromFiles($userId) {
-		$activities = $this->filesActivityService->getFilesActivities();
 		try {
-			Dashboard::createEvent($userId, 'activity_files', ['filesActivity' => $activities]);
+			Dashboard::createEvent(
+				FilesActivityWidget::WIDGET_ID, $userId, ['filesActivity' => 'refresh']
+			);
 		} catch (QueryException $e) {
 		}
 	}
