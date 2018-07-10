@@ -37,6 +37,7 @@ OC.L10N.register(
     "Stream" : "流",
     "Activity" : "动态",
     "This application enables users to view actions related to their files in Nextcloud." : "本程序让用户可以查看他们在Nextcloud上的文件活动。",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "本应用能够让用户查看与Nextcloud中的文件相关的动作。\n\t\t一旦启用，用户将看到应用菜单中出现一个名为”动态“的新图标.\n\t\t点击后会出现一个页面让用户跟踪文件的动态，包括新增文件、删除文件、移动、重命名、修改和分享。\n\t\t用户可以在个人的菜单中指定单独的动态设置。\n\t\t可以设置要记录的活动类型，以及是否用户看到自己的活动、\n\t\t是否只能在线查看、是否定期收到电子邮件摘要。\n\t\t 更多信息见动态文档.",
     "Activity feed" : "动态 Feed",
     "Send activity emails" : "发送动态电子邮件",
     "Default settings" : "默认设置",
