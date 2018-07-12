@@ -68,22 +68,10 @@ class DashboardService {
 		}
 
 		if ($event->getApp() === 'files' || $event->getApp() === 'files_sharing') {
-			$this->createDashboardEventFromFiles($event->getAffectedUser());
-
-			return;
-		}
-	}
-
-
-	/**
-	 * @param string $userId
-	 */
-	private function createDashboardEventFromFiles($userId) {
-		try {
-			Dashboard::createEvent(
-				FilesActivityWidget::WIDGET_ID, $userId, ['filesActivity' => 'refresh']
+			Dashboard::createUserEvent(
+				FilesActivityWidget::WIDGET_ID, $event->getAffectedUser(),
+				['filesActivity' => 'refresh']
 			);
-		} catch (QueryException $e) {
 		}
 	}
 
