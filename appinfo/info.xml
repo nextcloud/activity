@@ -71,4 +71,8 @@
 			<order>1</order>
 		</navigation>
 	</navigations>
+
+	<dashboard>
+		<widget>OCA\Activity\Widgets\FilesActivityWidget</widget>
+	</dashboard>
 </info>
