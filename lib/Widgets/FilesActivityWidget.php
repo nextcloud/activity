@@ -1,4 +1,6 @@
-<?php
+<?php declare(strict_types=1);
+
+
 /**
  * Nextcloud - Activity Widget for Dashboard
  *
@@ -6,6 +8,7 @@
  * later. See the COPYING file.
  *
  * @author Maxence Lange <maxence@artificial-owl.com>
+ * @copyright 2018, Maxence Lange <maxence@artificial-owl.com>
  * @license GNU AGPL version 3 or any later version
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,15 +26,18 @@
  *
  */
 
+
 namespace OCA\Activity\Widgets;
 
 
 use OCA\Activity\AppInfo\Application;
 use OCA\Activity\Widgets\Service\FilesActivityService;
-use OCA\Dashboard\IDashboardWidget;
-use OCA\Dashboard\Model\WidgetRequest;
-use OCA\Dashboard\Model\WidgetSettings;
+use OCP\Dashboard\IDashboardWidget;
+use OCP\Dashboard\Model\IWidgetRequest;
+use OCP\Dashboard\Model\IWidgetSettings;
 use OCP\AppFramework\QueryException;
+use OCP\IL10N;
+use OCP\L10N\IFactory;
 
 class FilesActivityWidget implements IDashboardWidget {
 
@@ -39,17 +45,24 @@ class FilesActivityWidget implements IDashboardWidget {
 	const WIDGET_ID = 'activity_files';
 
 
+	/** @var IL10N */
+	private $l10n;
+
 	/** @var FilesActivityService */
 	private $filesActivityService;
 
-	/** @var WidgetSettings */
+	/** @var IWidgetSettings */
 	private $settings;
 
+
+	public function __construct(IFactory $factory) {
+		$this->l10n = $factory->get('activity');
+	}
 
 	/**
 	 * @return string
 	 */
-	public function getId() {
+	public function getId(): string {
 		return self::WIDGET_ID;
 	}
 
@@ -57,23 +70,23 @@ class FilesActivityWidget implements IDashboardWidget {
 	/**
 	 * @return string
 	 */
-	public function getName() {
-		return 'Files Activity';
+	public function getName(): string {
+		return $this->l10n->t('Files');
 	}
 
 
 	/**
 	 * @return string
 	 */
-	public function getDescription() {
-		return 'Stay updated';
+	public function getDescription(): string {
+		return $this->l10n->t('Stay updated of your files activity');
 	}
 
 
 	/**
 	 * @return array
 	 */
-	public function getTemplate() {
+	public function getTemplate(): array {
 		return [
 			'app'      => 'activity',
 			'icon'     => 'icon-folder',
@@ -88,7 +101,7 @@ class FilesActivityWidget implements IDashboardWidget {
 	/**
 	 * @return array
 	 */
-	public function widgetSetup() {
+	public function widgetSetup(): array {
 		return [
 			'size'   => [
 				'min'     => [
@@ -107,9 +120,9 @@ class FilesActivityWidget implements IDashboardWidget {
 
 
 	/**
-	 * @param WidgetSettings $settings
+	 * @param IWidgetSettings $settings
 	 */
-	public function loadWidget($settings) {
+	public function loadWidget(IWidgetSettings $settings) {
 		$app = new Application();
 
 		$this->settings = $settings;
@@ -123,11 +136,14 @@ class FilesActivityWidget implements IDashboardWidget {
 
 
 	/**
-	 * @param WidgetRequest $request
+	 * @param IWidgetRequest $request
 	 */
-	public function requestWidget(WidgetRequest $request) {
+	public function requestWidget(IWidgetRequest $request) {
 
-		$limit = $this->filesActivityService->defineLimit($this->settings->getPosition()['height']);
+		$limit = $this->filesActivityService->defineLimit(
+			intval($this->settings->getPosition()['height'])
+		);
+
 		if ($request->getRequest() === 'getFilesActivity') {
 			$request->addResult(
 				'filesActivity', $this->filesActivityService->getFilesActivities($limit)

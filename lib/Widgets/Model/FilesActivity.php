@@ -1,4 +1,6 @@
-<?php
+<?php declare(strict_types=1);
+
+
 /**
  * Nextcloud - Activity Widget for Dashboard
  *
@@ -6,6 +8,7 @@
  * later. See the COPYING file.
  *
  * @author Maxence Lange <maxence@artificial-owl.com>
+ * @copyright 2018, Maxence Lange <maxence@artificial-owl.com>
  * @license GNU AGPL version 3 or any later version
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +25,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 
 namespace OCA\Activity\Widgets\Model;
 
@@ -67,7 +71,7 @@ class FilesActivity implements \JsonSerializable {
 	/**
 	 * @return int
 	 */
-	public function getActivityId() {
+	public function getActivityId(): int {
 		return $this->activityId;
 	}
 
@@ -75,7 +79,7 @@ class FilesActivity implements \JsonSerializable {
 	/**
 	 * @return string
 	 */
-	public function getOwner() {
+	public function getOwner(): string {
 		return $this->owner;
 	}
 
@@ -84,7 +88,7 @@ class FilesActivity implements \JsonSerializable {
 	 *
 	 * @return $this
 	 */
-	public function setOwner(string $owner) {
+	public function setOwner(string $owner): FilesActivity {
 		$this->owner = $owner;
 
 		return $this;
@@ -94,7 +98,7 @@ class FilesActivity implements \JsonSerializable {
 	/**
 	 * @return string
 	 */
-	public function getFile() {
+	public function getFile(): string {
 		return $this->file;
 	}
 
@@ -103,7 +107,7 @@ class FilesActivity implements \JsonSerializable {
 	 *
 	 * @return $this
 	 */
-	public function setFile(string $path) {
+	public function setFile(string $path): FilesActivity {
 		$this->file = self::noStartSlash($path);
 
 		$this->setPath(dirname($path));
@@ -115,7 +119,7 @@ class FilesActivity implements \JsonSerializable {
 	/**
 	 * @return string
 	 */
-	public function getPath() {
+	public function getPath(): string {
 		return $this->path;
 	}
 
@@ -124,7 +128,7 @@ class FilesActivity implements \JsonSerializable {
 	 *
 	 * @return $this
 	 */
-	public function setPath($path) {
+	public function setPath(string $path): FilesActivity {
 		$this->path = $path;
 
 		return $this;
@@ -134,7 +138,7 @@ class FilesActivity implements \JsonSerializable {
 	/**
 	 * @return string
 	 */
-	public function getFilename() {
+	public function getFilename(): string {
 		return $this->filename;
 	}
 
@@ -143,7 +147,7 @@ class FilesActivity implements \JsonSerializable {
 	 *
 	 * @return $this
 	 */
-	public function setFilename($filename) {
+	public function setFilename(string $filename): FilesActivity {
 		$this->filename = $filename;
 
 		return $this;
@@ -153,7 +157,7 @@ class FilesActivity implements \JsonSerializable {
 	/**
 	 * @return string
 	 */
-	public function getUrl() {
+	public function getUrl(): string {
 		return '/apps/files/?dir=' . $this->getPath() . '&scrollto=' . $this->getFilename();
 	}
 
@@ -161,7 +165,7 @@ class FilesActivity implements \JsonSerializable {
 	/**
 	 * @return int
 	 */
-	public function getFileId() {
+	public function getFileId(): int {
 		return $this->fileId;
 	}
 
@@ -170,7 +174,7 @@ class FilesActivity implements \JsonSerializable {
 	 *
 	 * @return $this
 	 */
-	public function setFileId(int $fileId) {
+	public function setFileId(int $fileId): FilesActivity {
 		$this->fileId = $fileId;
 
 		return $this;
@@ -179,7 +183,7 @@ class FilesActivity implements \JsonSerializable {
 	/**
 	 * @return string
 	 */
-	public function getFileActivity() {
+	public function getFileActivity(): string {
 		return $this->fileActivity;
 	}
 
@@ -188,7 +192,7 @@ class FilesActivity implements \JsonSerializable {
 	 *
 	 * @return $this
 	 */
-	public function setFileActivity($fileActivity) {
+	public function setFileActivity(string $fileActivity): FilesActivity {
 		$this->fileActivity = $fileActivity;
 
 		return $this;
@@ -198,7 +202,7 @@ class FilesActivity implements \JsonSerializable {
 	/**
 	 * @return int
 	 */
-	public function getTimestamp() {
+	public function getTimestamp(): int {
 		return $this->timestamp;
 	}
 
@@ -207,7 +211,7 @@ class FilesActivity implements \JsonSerializable {
 	 *
 	 * @return $this
 	 */
-	public function setTimestamp($timestamp) {
+	public function setTimestamp(int $timestamp): FilesActivity {
 		$this->timestamp = $timestamp;
 
 		return $this;
@@ -219,7 +223,7 @@ class FilesActivity implements \JsonSerializable {
 	 *
 	 * @return FilesActivity
 	 */
-	public static function fromData($data) {
+	public static function fromData(array $data): FilesActivity {
 
 		$info = new FilesActivity($data['activity_id']);
 
@@ -256,7 +260,12 @@ class FilesActivity implements \JsonSerializable {
 	}
 
 
-	public static function noStartSlash($path) {
+	/**
+	 * @param string $path
+	 *
+	 * @return string
+	 */
+	public static function noStartSlash(string $path): string {
 		if (substr($path, 0, 1) !== '/') {
 			return $path;
 		}

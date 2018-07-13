@@ -1,4 +1,6 @@
-<?php
+<?php declare(strict_types=1);
+
+
 /**
  * Nextcloud - Activity Widget for Dashboard
  *
@@ -6,6 +8,7 @@
  * later. See the COPYING file.
  *
  * @author Maxence Lange <maxence@artificial-owl.com>
+ * @copyright 2018, Maxence Lange <maxence@artificial-owl.com>
  * @license GNU AGPL version 3 or any later version
  *
  * This program is free software: you can redistribute it and/or modify

@@ -1,4 +1,6 @@
-<?php
+<?php declare(strict_types=1);
+
+
 /**
  * Nextcloud - Activity Widget for Dashboard
  *
@@ -6,6 +8,7 @@
  * later. See the COPYING file.
  *
  * @author Maxence Lange <maxence@artificial-owl.com>
+ * @copyright 2018, Maxence Lange <maxence@artificial-owl.com>
  * @license GNU AGPL version 3 or any later version
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,13 +26,12 @@
  *
  */
 
+
 namespace OCA\Activity\Widgets\Service;
 
 use OCA\Activity\Widgets\FilesActivityWidget;
-use OCA\Dashboard\Api\v1\Dashboard;
 use OCP\Activity\IEvent;
 use OCP\App\IAppManager;
-use OCP\AppFramework\QueryException;
 
 class DashboardService {
 
@@ -39,23 +41,16 @@ class DashboardService {
 	/** @var IAppManager */
 	private $appManager;
 
-	/** @var FilesActivityService */
-	private $filesActivityService;
-
 
 	/**
-	 * ProviderService constructor.
+	 * DashboardService constructor.
 	 *
 	 * @param string $userId
 	 * @param IAppManager $appManager
-	 * @param FilesActivityService $filesActivityService
 	 */
-	public function __construct(
-		$userId, IAppManager $appManager, FilesActivityService $filesActivityService
-	) {
+	public function __construct($userId, IAppManager $appManager) {
 		$this->userId = $userId;
 		$this->appManager = $appManager;
-		$this->filesActivityService = $filesActivityService;
 	}
 
 
@@ -63,12 +58,13 @@ class DashboardService {
 	 * @param IEvent $event
 	 */
 	public function dispatchDashboardEvent(IEvent $event) {
-		if (!$this->appManager->isInstalled('dashboard')) {
+		if (!$this->appManager->isInstalled('dashboard')
+			|| !class_exists('OCA\Dashboard\Api\v1\Dashboard')) {
 			return;
 		}
 
 		if ($event->getApp() === 'files' || $event->getApp() === 'files_sharing') {
-			Dashboard::createUserEvent(
+			OCA\Dashboard\Api\v1\Dashboard::createUserEvent(
 				FilesActivityWidget::WIDGET_ID, $event->getAffectedUser(),
 				['filesActivity' => 'refresh']
 			);

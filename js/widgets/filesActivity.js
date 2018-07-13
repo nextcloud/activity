@@ -116,7 +116,6 @@
 				}
 
 				filesActivity.getFilesActivity();
-//				filesActivity.displayFilesActivity(payload.filesActivity);
 			},
 
 

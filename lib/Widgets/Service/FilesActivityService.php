@@ -1,4 +1,6 @@
-<?php
+<?php declare(strict_types=1);
+
+
 /**
  * Nextcloud - Activity Widget for Dashboard
  *
@@ -6,6 +8,7 @@
  * later. See the COPYING file.
  *
  * @author Maxence Lange <maxence@artificial-owl.com>
+ * @copyright 2018, Maxence Lange <maxence@artificial-owl.com>
  * @license GNU AGPL version 3 or any later version
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +25,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 
 namespace OCA\Activity\Widgets\Service;
 
@@ -54,7 +58,9 @@ class FilesActivityService {
 	 * @param GroupHelper $helper
 	 * @param UserSettings $settings
 	 */
-	public function __construct($userId, Data $data, GroupHelper $helper, UserSettings $settings) {
+	public function __construct(
+		string $userId, Data $data, GroupHelper $helper, UserSettings $settings
+	) {
 		$this->userId = $userId;
 		$this->data = $data;
 		$this->helper = $helper;
@@ -67,7 +73,7 @@ class FilesActivityService {
 	 *
 	 * @return FilesActivity[]
 	 */
-	public function getFilesActivities($limit) {
+	public function getFilesActivities(int $limit): array {
 
 		try {
 			$files = $this->data->get(
@@ -96,7 +102,12 @@ class FilesActivityService {
 	}
 
 
-	public function defineLimit($height) {
+	/**
+	 * @param int $height
+	 *
+	 * @return int
+	 */
+	public function defineLimit(int $height): int {
 		if ($height > 7) {
 			return 20;
 		}
@@ -116,7 +127,7 @@ class FilesActivityService {
 	 *
 	 * @return FilesActivity[]
 	 */
-	private function parseActivities($activities) {
+	private function parseActivities(array $activities): array {
 		$parsed = [];
 		foreach ($activities as $activity) {
 			$parsed[] = $this->parseActivity($activity);
@@ -127,11 +138,11 @@ class FilesActivityService {
 
 
 	/**
-	 * @param $activity
+	 * @param array $activity
 	 *
 	 * @return FilesActivity
 	 */
-	private function parseActivity($activity) {
+	private function parseActivity(array $activity): FilesActivity {
 		$info = FilesActivity::fromData($activity);
 
 		return $info;
@@ -142,7 +153,7 @@ class FilesActivityService {
 	 * @param array $activities
 	 * @param int $limit
 	 */
-	private function limitActivities(&$activities, $limit) {
+	private function limitActivities(array &$activities, int $limit) {
 		usort($activities, [$this, 'sortActivitiesByTimestamp']);
 
 		$activities = array_slice($activities, 0, $limit);
@@ -155,7 +166,7 @@ class FilesActivityService {
 	 *
 	 * @return int
 	 */
-	private function sortActivitiesByTimestamp(FilesActivity $a, FilesActivity $b) {
+	private function sortActivitiesByTimestamp(FilesActivity $a, FilesActivity $b): int {
 		return ($b->getTimestamp() - $a->getTimestamp());
 	}
 
