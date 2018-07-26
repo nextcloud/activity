@@ -35,6 +35,7 @@ OC.L10N.register(
     "Mail" : "Posta",
     "Stream" : "Korrontea",
     "Activity" : "Jarduera",
+    "This application enables users to view actions related to their files in Nextcloud." : "Aplikazio honek aukera ematen die erabiltzaileei Nextcloud-eko euren fitxategiekin lotutako ekintzak ikusteko.",
     "Activity feed" : "Jardueren jarioa",
     "Send activity emails" : "Jardueraren mezu elektronikoak bidali",
     "Default settings" : "Lehenetsitako ezarpenak",
