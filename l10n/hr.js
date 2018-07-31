@@ -9,6 +9,7 @@ OC.L10N.register(
     "Not supported!" : "Nije podržano!",
     "Press ⌘-C to copy." : "Pritisnite ⌘-C za kopiranje.",
     "Press Ctrl-C to copy." : "Pritisnite Ctrl-C za kopiranje.",
+    "Home" : "Početna",
     "in {path}" : "u {path}",
     "This stream will show events like additions, changes & shares" : "Ova lista će prikazati događaje poput dodavanja, promjena i dijeljenja",
     "There are no events for this filter" : "Nema događaja koji odgovaraju ovom filteru",
