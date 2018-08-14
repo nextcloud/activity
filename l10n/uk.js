@@ -2,7 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activities" : "Активність",
-    "An error occurred while loading activities" : "Під час заванатаження подій відбулася помилка",
+    "An error occurred while loading activities" : "Під час завантаження подій відбулася помилка",
     "No activity yet" : "Поки що активність відсутня",
     "Load more activities" : "Завантажити більше активності",
     "Copied!" : "Скопійовано!",
