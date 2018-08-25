@@ -36,6 +36,7 @@ OC.L10N.register(
     "Mail" : "電子郵件",
     "Stream" : "串流",
     "Activity" : "活動",
+    "This application enables users to view actions related to their files in Nextcloud." : "此應用程序允許使用者能夠在Nextcloud中查看與其文件相關的操作。",
     "Activity feed" : "動態",
     "Send activity emails" : "寄送有關活動的郵件",
     "Default settings" : "預設設定",
