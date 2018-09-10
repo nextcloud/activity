@@ -58,7 +58,7 @@ $(function(){
 
 		prefill: function () {
 			this.ignoreScroll += 1;
-			if (this.$content.scrollTop() + $(window).height() > this.$container.height() + 100) {
+			if (this.$content.scrollTop() + $(window).height() > this.$container.height() - 100) {
 				this.ignoreScroll += 1;
 				this.loadMoreActivities();
 			}
@@ -67,7 +67,7 @@ $(function(){
 
 		onScroll: function () {
 			if (this.ignoreScroll <= 0
-				&& this.$content.scrollTop() + $(window).height() > this.$container.height() + 100) {
+				&& this.$content.scrollTop() + $(window).height() > this.$container.height() - 100) {
 				this.ignoreScroll = 1;
 				this.loadMoreActivities();
 			}
