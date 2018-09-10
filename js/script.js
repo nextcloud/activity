@@ -51,14 +51,14 @@ $(function(){
 		ignoreScroll: 0,
 		$container: $('#container'),
 		lastDateGroup: null,
-		$content: $('#app-content'),
+		$content: $(document),
 		firstKnownId: 0,
 		lastGivenId: 0,
 		activities: {},
 
 		prefill: function () {
 			this.ignoreScroll += 1;
-			if (this.$content.scrollTop() + this.$content.height() > this.$container.height() - 100) {
+			if (this.$content.scrollTop() + $(window).height() > this.$container.height() - 100) {
 				this.ignoreScroll += 1;
 				this.loadMoreActivities();
 			}
@@ -66,8 +66,8 @@ $(function(){
 		},
 
 		onScroll: function () {
-			if (this.ignoreScroll <= 0 && this.$content.scrollTop() +
-				this.$content.height() > this.$container.height() - 100) {
+			if (this.ignoreScroll <= 0
+				&& this.$content.scrollTop() + $(window).height() > this.$container.height() - 100) {
 				this.ignoreScroll = 1;
 				this.loadMoreActivities();
 			}
