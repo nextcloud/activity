@@ -35,6 +35,7 @@ OC.L10N.register(
     "Mail" : "Sähköposti",
     "Stream" : "Luettelo",
     "Activity" : "Toimet",
+    "This application enables users to view actions related to their files in Nextcloud." : "Tämä sovellus mahdollistaa käyttäjien tarkastella toimintoja liittyen heidän tiedostoihin Nextcloudissa.",
     "Activity feed" : "Toiminnan syöte",
     "Send activity emails" : "Lähetä sähköpostiviestejä toimista",
     "Default settings" : "Oletusasetukset",
