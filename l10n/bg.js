@@ -29,6 +29,7 @@ OC.L10N.register(
     "Activity notification for %s" : "Известиe за активност %s",
     "Hello %s" : "Здравейте %s",
     "Hello %s," : "Здравейте %s,",
+    "There was some activity at %s" : "Имаше събитие в %s",
     "_and %n more _::_and %n more _" : ["и %n още ","и %n още "],
     ", " : ", ",
     "%s and %s" : "%s и %s",
