@@ -7,7 +7,7 @@ OC.L10N.register(
     "Load more activities" : "Načíst více aktivit",
     "Copied!" : "Zkopírováno!",
     "Not supported!" : "Nepodporováno!",
-    "Press ⌘-C to copy." : "Pro zkopírování stiskněte ⌘-C.",
+    "Press ⌘-C to copy." : "Zkopírujete stisknutím ⌘-C.",
     "Press Ctrl-C to copy." : "Pro zkopírování stiskněte Ctrl-C.",
     "Home" : "Domů",
     "{name} (invisible)" : "{name} (neviditelné)",
