@@ -27,7 +27,7 @@
     "Activity notification for %s" : "Obvestila o dejavnosti za %s",
     "Hello %s" : "Pozdravljeni, %s,",
     "Hello %s," : "Pozdravljeni, %s,",
-    "There was some activity at %s" : "Bilo je nekaj dejavosti ob %s",
+    "There was some activity at %s" : "Nekaj dejavnosti je bilo izvedenih ob %s",
     "_and %n more _::_and %n more _" : ["- in še %n","- in še %n","- in še %n","- in še %n"],
     ", " : ",",
     "%s and %s" : "%s in %s",
