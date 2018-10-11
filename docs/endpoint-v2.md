@@ -98,6 +98,7 @@ Field name | Type | Value description
 ---------- | ---- | -----------------
 `source` | string | Full URL of the image to be displayed
 `link` | string | Full URL the preview should be wrapped in
+`mimeType` | string | The mime type of the file (not the preview)
 `isMimeTypeIcon` | bool | True if `source` points to a mime type icon instead of a real preview
 
 In case the endpoint returns more fields, they should be ignored and are deprecated (only for backwards compatibility usage) or internal.

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -151,16 +152,16 @@ class APIv2 extends OCSController {
 	 * @throws \OutOfBoundsException when no user is given
 	 */
 	protected function validateParameters($filter, $since, $limit, $previews, $objectType, $objectId, $sort) {
-		$this->filter = is_string($filter) ? $filter : 'all';
+		$this->filter = \is_string($filter) ? $filter : 'all';
 		if ($this->filter !== $this->data->validateFilter($this->filter)) {
-			throw new InvalidFilterException();
+			throw new InvalidFilterException('Invalid filter');
 		}
 		$this->since = (int) $since;
 		$this->limit = (int) $limit;
 		$this->loadPreviews = (bool) $previews;
 		$this->objectType = (string) $objectType;
 		$this->objectId = (int) $objectId;
-		$this->sort = in_array($sort, ['asc', 'desc'], true) ? $sort : 'desc';
+		$this->sort = \in_array($sort, ['asc', 'desc'], true) ? $sort : 'desc';
 
 		if (($this->objectType !== '' && $this->objectId === 0) || ($this->objectType === '' && $this->objectId !== 0)) {
 			// Only allowed together
@@ -173,7 +174,7 @@ class APIv2 extends OCSController {
 			$this->user = $user->getUID();
 		} else {
 			// No user logged in
-			throw new \OutOfBoundsException();
+			throw new \OutOfBoundsException('Not logged in');
 		}
 	}
 
@@ -188,7 +189,7 @@ class APIv2 extends OCSController {
 	 * @param string $sort
 	 * @return DataResponse
 	 */
-	public function getDefault($since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc') {
+	public function getDefault($since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc'): DataResponse {
 		return $this->get('all', $since, $limit, $previews, $object_type, $object_id, $sort);
 	}
 
@@ -204,7 +205,7 @@ class APIv2 extends OCSController {
 	 * @param string $sort
 	 * @return DataResponse
 	 */
-	public function getFilter($filter, $since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc') {
+	public function getFilter($filter, $since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc'): DataResponse {
 		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort);
 	}
 
@@ -213,7 +214,7 @@ class APIv2 extends OCSController {
 	 *
 	 * @return DataResponse
 	 */
-	public function listFilters() {
+	public function listFilters(): DataResponse {
 		$filters = $this->activityManager->getFilters();
 
 		$filters = array_map(function(IFilter $filter) {
@@ -247,7 +248,7 @@ class APIv2 extends OCSController {
 	 * @param string $sort
 	 * @return DataResponse
 	 */
-	protected function get($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort) {
+	protected function get($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort): DataResponse {
 		try {
 			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 		} catch (InvalidFilterException $e) {
@@ -293,7 +294,7 @@ class APIv2 extends OCSController {
 			if ($this->loadPreviews) {
 				$activity['previews'] = [];
 				if ($activity['object_type'] === 'files') {
-					if (!empty($activity['objects']) && is_array($activity['objects'])) {
+					if (!empty($activity['objects']) && \is_array($activity['objects'])) {
 						foreach ($activity['objects'] as $objectId => $objectName) {
 							if (((int) $objectId) === 0 || $objectName === '') {
 								// No file, no preview
@@ -315,13 +316,7 @@ class APIv2 extends OCSController {
 		return new DataResponse($preparedActivities, Http::STATUS_OK, $headers);
 	}
 
-	/**
-	 * @param array $headers
-	 * @param bool $hasMoreActivities
-	 * @param array $data
-	 * @return array
-	 */
-	protected function generateHeaders(array $headers, $hasMoreActivities, array $data) {
+	protected function generateHeaders(array $headers, bool $hasMoreActivities, array $data): array {
 		if ($hasMoreActivities && isset($headers['X-Activity-Last-Given'])) {
 			// Set the "Link" header for the next page
 			$nextPageParameters = [
@@ -354,13 +349,7 @@ class APIv2 extends OCSController {
 		return $headers;
 	}
 
-	/**
-	 * @param string $owner
-	 * @param int $fileId
-	 * @param string $filePath
-	 * @return array
-	 */
-	protected function getPreview($owner, $fileId, $filePath) {
+	protected function getPreview(string $owner, int $fileId, string $filePath): array {
 		$info = $this->infoCache->getInfoById($owner, $fileId, $filePath);
 
 		if (!$info['exists'] || $info['view'] !== '') {
@@ -370,55 +359,48 @@ class APIv2 extends OCSController {
 		$preview = [
 			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
 			'source'		=> '',
+			'mimeType'		=> 'application/octet-stream',
 			'isMimeTypeIcon' => true,
 		];
 
 		// show a preview image if the file still exists
 		if ($info['is_dir']) {
 			$preview['source'] = $this->getPreviewPathFromMimeType('dir');
+			$preview['mimeType'] = 'dir';
 		} else {
 			$this->view->chroot('/' . $owner . '/files');
 			$fileInfo = $this->view->getFileInfo($info['path']);
-			if (!($fileInfo instanceof FileInfo)) {
-				$pathPreview = $this->getPreviewFromPath($filePath, $info);
-				$preview['source'] = $pathPreview['source'];
+			if (!$fileInfo instanceof FileInfo) {
+				$preview = $this->getPreviewFromPath($filePath, $info);
 			} else if ($this->preview->isAvailable($fileInfo)) {
-				$preview['isMimeTypeIcon'] = false;
 				$preview['source'] = $this->urlGenerator->linkToRouteAbsolute('core.Preview.getPreview', [
 					'file' => $info['path'],
 					'c' => $this->view->getETag($info['path']),
 					'x' => 150,
 					'y' => 150,
 				]);
+				$preview['mimeType'] = $fileInfo->getMimetype();
+				$preview['isMimeTypeIcon'] = false;
 			} else {
 				$preview['source'] = $this->getPreviewPathFromMimeType($fileInfo->getMimetype());
+				$preview['mimeType'] = $fileInfo->getMimetype();
 			}
 		}
 
 		return $preview;
 	}
 
-	/**
-	 * @param string $filePath
-	 * @param array $info
-	 * @return array
-	 */
-	protected function getPreviewFromPath($filePath, $info) {
+	protected function getPreviewFromPath(string $filePath, array $info): array {
 		$mimeType = $info['is_dir'] ? 'dir' : $this->mimeTypeDetector->detectPath($filePath);
-		$preview = [
+		return [
 			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
 			'source'		=> $this->getPreviewPathFromMimeType($mimeType),
+			'mimeType'		=> $mimeType,
 			'isMimeTypeIcon' => true,
 		];
-
-		return $preview;
 	}
 
-	/**
-	 * @param string $mimeType
-	 * @return string
-	 */
-	protected function getPreviewPathFromMimeType($mimeType) {
+	protected function getPreviewPathFromMimeType(string $mimeType): string {
 		$mimeTypeIcon = $this->mimeTypeDetector->mimeTypeIcon($mimeType);
 		if (substr($mimeTypeIcon, -4) === '.png') {
 			$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
@@ -427,18 +409,12 @@ class APIv2 extends OCSController {
 		return $this->urlGenerator->getAbsoluteURL($mimeTypeIcon);
 	}
 
-	/**
-	 * @param string $path
-	 * @param bool $isDir
-	 * @param string $view
-	 * @return string
-	 */
-	protected function getPreviewLink($path, $isDir, $view) {
+	protected function getPreviewLink(string $path, bool $isDir, string $view): string {
 		$params = [
 			'dir' => $path,
 		];
 		if (!$isDir) {
-			$params['dir'] = (substr_count($path, '/') === 1) ? '/' : dirname($path);
+			$params['dir'] = (substr_count($path, '/') === 1) ? '/' : \dirname($path);
 			$params['scrollto'] = basename($path);
 		}
 		if ($view !== '') {
