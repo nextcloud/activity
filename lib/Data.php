@@ -109,33 +109,26 @@ class Data {
 	 * @param int    $latestSendTime Activity $timestamp + batch setting of $affectedUser
 	 * @return bool
 	 */
-	public function storeMail(IEvent $event, $latestSendTime) {
-		if ($event->getAffectedUser() === '' || $event->getAffectedUser() === null) {
+	public function storeMail(IEvent $event, int $latestSendTime): bool {
+		$affectedUser = $event->getAffectedUser();
+		if ($affectedUser === '' || $affectedUser === null) {
 			return false;
 		}
 
-		// store in DB
-		$queryBuilder = $this->connection->getQueryBuilder();
-		$queryBuilder->insert('activity_mq')
+		$query = $this->connection->getQueryBuilder();
+		$query->insert('activity_mq')
 			->values([
-				'amq_appid' => $queryBuilder->createParameter('app'),
-				'amq_subject' => $queryBuilder->createParameter('subject'),
-				'amq_subjectparams' => $queryBuilder->createParameter('subjectparams'),
-				'amq_affecteduser' => $queryBuilder->createParameter('affecteduser'),
-				'amq_timestamp' => $queryBuilder->createParameter('timestamp'),
-				'amq_type' => $queryBuilder->createParameter('type'),
-				'amq_latest_send' => $queryBuilder->createParameter('latest_send'),
-			])
-			->setParameters([
-				'app' => $event->getApp(),
-				'subject' => $event->getSubject(),
-				'subjectparams' => json_encode($event->getSubjectParameters()),
-				'affecteduser' => $event->getAffectedUser(),
-				'timestamp' => (int) $event->getTimestamp(),
-				'type' => $event->getType(),
-				'latest_send' => $latestSendTime,
-			])
-			->execute();
+				'amq_appid' => $query->createNamedParameter($event->getApp()),
+				'amq_subject' => $query->createNamedParameter($event->getSubject()),
+				'amq_subjectparams' => $query->createNamedParameter(json_encode($event->getSubjectParameters())),
+				'amq_affecteduser' => $query->createNamedParameter($affectedUser),
+				'amq_timestamp' => $query->createNamedParameter((int) $event->getTimestamp()),
+				'amq_type' => $query->createNamedParameter($event->getType()),
+				'amq_latest_send' => $query->createNamedParameter($latestSendTime),
+				'object_type' => $query->createNamedParameter($event->getObjectType()),
+				'object_id' => $query->createNamedParameter($event->getObjectId()),
+			]);
+		$query->execute();
 
 		return true;
 	}

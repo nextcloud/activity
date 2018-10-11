@@ -358,7 +358,8 @@ class MailQueueHandler {
 				$event->setApp($activity['amq_appid'])
 					->setType($activity['amq_type'])
 					->setTimestamp((int) $activity['amq_timestamp'])
-					->setSubject($activity['amq_subject'], json_decode($activity['amq_subjectparams'], true));
+					->setSubject($activity['amq_subject'], json_decode($activity['amq_subjectparams'], true))
+					->setObject($activity['object_type'], (int) $activity['object_id']);
 			} catch (\InvalidArgumentException $e) {
 				continue;
 			}
