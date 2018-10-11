@@ -353,7 +353,7 @@ class APIv2 extends OCSController {
 		$info = $this->infoCache->getInfoById($owner, $fileId, $filePath);
 
 		if (!$info['exists'] || $info['view'] !== '') {
-			return $this->getPreviewFromPath($filePath, $info);
+			return $this->getPreviewFromPath($fileId, $filePath, $info);
 		}
 
 		$preview = [
@@ -361,6 +361,8 @@ class APIv2 extends OCSController {
 			'source'		=> '',
 			'mimeType'		=> 'application/octet-stream',
 			'isMimeTypeIcon' => true,
+			'fileId'		=> $fileId,
+			'view'			=> $info['view'] ?: 'files',
 		];
 
 		// show a preview image if the file still exists
@@ -371,7 +373,7 @@ class APIv2 extends OCSController {
 			$this->view->chroot('/' . $owner . '/files');
 			$fileInfo = $this->view->getFileInfo($info['path']);
 			if (!$fileInfo instanceof FileInfo) {
-				$preview = $this->getPreviewFromPath($filePath, $info);
+				$preview = $this->getPreviewFromPath($fileId, $filePath, $info);
 			} else if ($this->preview->isAvailable($fileInfo)) {
 				$preview['source'] = $this->urlGenerator->linkToRouteAbsolute('core.Preview.getPreview', [
 					'file' => $info['path'],
@@ -390,13 +392,15 @@ class APIv2 extends OCSController {
 		return $preview;
 	}
 
-	protected function getPreviewFromPath(string $filePath, array $info): array {
+	protected function getPreviewFromPath(int $fileId, string $filePath, array $info): array {
 		$mimeType = $info['is_dir'] ? 'dir' : $this->mimeTypeDetector->detectPath($filePath);
 		return [
 			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
 			'source'		=> $this->getPreviewPathFromMimeType($mimeType),
 			'mimeType'		=> $mimeType,
 			'isMimeTypeIcon' => true,
+			'fileId'		=> $fileId,
+			'view'			=> $info['view'] ?: 'files',
 		];
 	}
 

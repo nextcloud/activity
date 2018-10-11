@@ -99,6 +99,8 @@ Field name | Type | Value description
 `source` | string | Full URL of the image to be displayed
 `link` | string | Full URL the preview should be wrapped in
 `mimeType` | string | The mime type of the file (not the preview)
+`fileId` | int | The if of the actual file
+`view` | string | The view where the file can be found (either `files` or `trashbin`)
 `isMimeTypeIcon` | bool | True if `source` points to a mime type icon instead of a real preview
 
 In case the endpoint returns more fields, they should be ignored and are deprecated (only for backwards compatibility usage) or internal.
@@ -113,15 +115,15 @@ In case the endpoint returns more fields, they should be ignored and are depreca
     "type": "file_created",
     "user": "test1",
     "affecteduser": "admin",
-    "subject": "test1 created hello.jpg",
+    "subject": "test1 created hello.txt",
     "subject_rich": {
       "0": "test1 created {file1}",
       "1": {
         "file1": {
           "type": "file",
           "id": 23,
-          "name": "hello.jpg",
-          "path": "\/test\/hello.jpg"
+          "name": "hello.txt",
+          "path": "\/test\/hello.txt"
         }
       }
     },
@@ -134,12 +136,15 @@ In case the endpoint returns more fields, they should be ignored and are depreca
     "link": "",
     "object_type": "files",
     "object_id": 23,
-    "object_name": "\/test\/hello.jpg",
+    "object_name": "\/test\/hello.txt",
     "previews": [
       {
-        "link": "https:\/\/localhost\/index.php\/apps\/files\/?dir=\/test&scrollto=hello.jpg",
-        "source": "https:\/\/localhost\/index.php\/core\/preview.png?file=\/hello.jpg&x=150&y=150",
-        "isMimeTypeIcon": false
+        "link": "https:\/\/localhost\/index.php\/apps\/files\/?dir=\/test&scrollto=hello.txt",
+        "source": "https:\/\/localhost\/index.php\/core\/preview.png?file=\/hello.txt&x=150&y=150",
+         "mimeType": "text/plain",
+         "view": "files",
+         "fileId": 23,
+         "isMimeTypeIcon": false
       }
     ]
   }
