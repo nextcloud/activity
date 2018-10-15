@@ -7,28 +7,11 @@
  * later. See the COPYING file.
  */
 
-(function(OC, OCA, Handlebars) {
+(function(OC, OCA) {
 	OCA.Activity = OCA.Activity || {};
 
 	OCA.Activity.RichObjectStringParser = {
 		avatarsEnabled: true,
-
-		_fileTemplate: '<a class="filename has-tooltip" href="{{link}}" title="{{title}}">{{name}}</a>',
-		_fileNoPathTemplate: '<a class="filename" href="{{link}}">{{name}}</a>',
-		_fileRootTemplate: '<a class="filename has-tooltip" href="{{link}}" title="' + t('activity', 'Home') + '"><span class="icon icon-home"></span></a>',
-
-		_systemTagTemplate: '<strong class="systemtag">{{name}}</strong>',
-
-		_emailTemplate: '<a class="email" href="mailto:{{id}}">{{name}}</a>',
-
-		_userLocalTemplate: '<span class="avatar-name-wrapper" data-user="{{id}}"><div class="avatar" data-user="{{id}}" data-user-display-name="{{name}}"></div><strong>{{name}}</strong></span>',
-		_userRemoteTemplate: '<strong>{{name}}</strong>',
-
-		_openGraphTemplate: '{{#if link}}<a href="{{link}}">{{/if}}<div id="opengraph-{{id}}" class="opengraph">' +
-		'{{#if thumb}}<div class="opengraph-thumb" style="background-image: url(\'{{thumb}}\')"></div>{{/if}}' +
-		'<div class="opengraph-name {{#if thumb}}opengraph-with-thumb{{/if}}">{{name}}</div>' +
-		'<div class="opengraph-description {{#if thumb}}opengraph-with-thumb{{/if}}">{{description}}</div>' +
-		'<span class="opengraph-website">{{website}}</span></div>{{#if link}}</a>{{/if}}',
 
 		_unknownTemplate: '<strong>{{name}}</strong>',
 		_unknownLinkTemplate: '<a href="{{link}}">{{name}}</a>',
@@ -71,10 +54,6 @@
 					return this.parseFileParameter(parameter);
 
 				case 'systemtag':
-					if (!this.systemTagTemplate) {
-						this.systemTagTemplate = Handlebars.compile(this._systemTagTemplate);
-					}
-
 					var name = parameter.name;
 					if (parameter.visibility !== '1') {
 						name = t('activity', '{name} (invisible)', parameter);
@@ -82,50 +61,29 @@
 						name = t('activity', '{name} (restricted)', parameter);
 					}
 
-					return this.systemTagTemplate({
+					return OCA.Activity.Templates.systemTag({
 						name: name
 					});
 
 				case 'email':
-					if (!this.emailTemplate) {
-						this.emailTemplate = Handlebars.compile(this._emailTemplate);
-					}
-
-					return this.emailTemplate(parameter);
+					return OCA.Activity.Templates.email(parameter);
 
 				case 'open-graph':
-					if (!this.openGraphTemplate) {
-						this.openGraphTemplate = Handlebars.compile(this._openGraphTemplate);
-					}
-
-					return this.openGraphTemplate(parameter);
+					return OCA.Activity.Templates.openGraph(parameter);
 
 				case 'user':
 					if (_.isUndefined(parameter.server)) {
-						if (!this.userLocalTemplate) {
-							this.userLocalTemplate = Handlebars.compile(this._userLocalTemplate);
-						}
-						return this.userLocalTemplate(parameter);
+						return OCA.Activity.Templates.userLocal(parameter);
 					}
 
-					if (!this.userRemoteTemplate) {
-						this.userRemoteTemplate = Handlebars.compile(this._userRemoteTemplate);
-					}
-
-					return this.userRemoteTemplate(parameter);
+					return OCA.Activity.Templates.userRemote(parameter);
 
 				default:
 					if (!_.isUndefined(parameter.link)) {
-						if (!this.unknownLinkTemplate) {
-							this.unknownLinkTemplate = Handlebars.compile(this._unknownLinkTemplate);
-						}
-						return this.unknownLinkTemplate(parameter);
+						return OCA.Activity.Templates.unkownLink(parameter);
 					}
 
-					if (!this.unknownTemplate) {
-						this.unknownTemplate = Handlebars.compile(this._unknownTemplate);
-					}
-					return this.unknownTemplate(parameter);
+					return OCA.Activity.Templates.unknown(parameter);
 			}
 		},
 
@@ -138,14 +96,8 @@
 		 * @param {string} parameter.link
 		 */
 		parseFileParameter: function(parameter) {
-			if (!this.fileTemplate) {
-				this.fileTemplate = Handlebars.compile(this._fileTemplate);
-				this.fileNoPathTemplate = Handlebars.compile(this._fileNoPathTemplate);
-				this.fileRootTemplate = Handlebars.compile(this._fileRootTemplate);
-			}
-
 			if (parameter.path === '') {
-				return this.fileRootTemplate(parameter);
+				return OCA.Activity.Templates.fileRoot(parameter);
 			}
 
 			var lastSlashPosition = parameter.path.lastIndexOf('/'),
@@ -157,12 +109,12 @@
 			}
 
 			if (parameter.path === '' || parameter.path === '/') {
-				return this.fileNoPathTemplate(parameter);
+				return OCA.Activity.Templates.fileNoPath(parameter);
 			}
-			return this.fileTemplate(_.extend(parameter, {
+			return OCA.Activity.Templates.file(_.extend(parameter, {
 				title: parameter.path.length === 0 ? '' : t('activity', 'in {path}', parameter)
 			}));
 		}
 	};
 
-})(OC, OCA, Handlebars);
+})(OC, OCA);

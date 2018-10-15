@@ -24,6 +24,7 @@
  */
 script('activity', [
 	'richObjectStringParser',
+	'templates',
 	'script',
 	'feedSettings',
 ]);
