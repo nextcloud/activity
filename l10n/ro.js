@@ -26,6 +26,7 @@ OC.L10N.register(
     "By others" : "De către alții",
     "By you" : "De către tine",
     "\"remote user\"" : "\"utilizator la distanță\"",
+    "Activity notification for %s" : "Notificare activitate pentru %s",
     "Hello %s" : "Salut %s",
     "Hello %s," : "Salut %s,",
     "There was some activity at %s" : "A fost activitate la %s",
