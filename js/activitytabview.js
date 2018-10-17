@@ -9,28 +9,6 @@
  */
 
 (function() {
-	var TEMPLATE =
-		'<div class="activity-section">' +
-		'<div class="loading hidden" style="height: 50px"></div>' +
-		'<div class="emptycontent">' +
-		'    <div class="icon-activity"></div>' +
-		'    <p>{{emptyMessage}}</p>' +
-		'</div>' +
-		'<ul class="activities hidden">' +
-		'</ul>' +
-		'<input type="button" class="showMore" value="{{moreLabel}}"' +
-		'</div>';
-	var ACTIVITY_TEMPLATE =
-		'    <li class="activity box">' +
-		'        <div class="activity-icon">' +
-		'        {{#if icon}}' +
-		'          <img src="{{icon}}" alt="">' +
-		'        {{/if}}' +
-		'        </div>' +
-		'        <div class="activitysubject">{{{subject}}}</div>' +
-		'        <span class="activitytime has-tooltip live-relative-timestamp" data-timestamp="{{timestamp}}" title="{{formattedDateTooltip}}">{{formattedDate}}</span>' +
-		'        <div class="activitymessage">{{{message}}}</div>' +
-		'    </li>';
 
 	/**
 	 * @class OCA.Activity.ActivityTabView
@@ -67,10 +45,7 @@
 		},
 
 		template: function(data) {
-			if (!this._template) {
-				this._template = Handlebars.compile(TEMPLATE);
-			}
-			return this._template(data);
+			return OCA.Activity.Templates['activitytabview'](data);
 		},
 
 		get$: function() {
@@ -178,11 +153,7 @@
 		},
 
 		activityTemplate: function(params) {
-			if (!this._activityTemplate) {
-				this._activityTemplate = Handlebars.compile(ACTIVITY_TEMPLATE);
-			}
-
-			return this._activityTemplate(params);
+			return OCA.Activity.Templates['activitytabview_activity'](params);
 		},
 
 		_onAddModel: function(model, collection, options) {

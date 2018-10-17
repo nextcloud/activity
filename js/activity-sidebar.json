@@ -1,5 +1,6 @@
 [
   "richObjectStringParser.js",
+  "templates.js",
   "activitymodel.js",
   "activitycollection.js",
   "activitytabview.js",

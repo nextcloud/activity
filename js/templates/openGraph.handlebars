@@ -1,0 +1,14 @@
+{{#if link}}
+	<a href="{{link}}">
+{{/if}}
+	<div id="opengraph-{{id}}" class="opengraph">
+		{{#if thumb}}
+			<div class="opengraph-thumb" style="background-image: url('{{thumb}}')"></div>
+		{{/if}}
+		<div class="opengraph-name {{#if thumb}}opengraph-with-thumb{{/if}}">{{name}}</div>
+		<div class="opengraph-description {{#if thumb}}opengraph-with-thumb{{/if}}">{{description}}</div>
+		<span class="opengraph-website">{{website}}</span>
+	</div>
+{{#if link}}
+	</a>
+{{/if}}

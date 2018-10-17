@@ -1,0 +1,10 @@
+<li class="activity box">
+	<div class="activity-icon">
+		{{#if icon}}
+			<img src="{{icon}}" alt="">
+		{{/if}}
+	</div>
+	<div class="activitysubject">{{{subject}}}</div>
+	<span class="activitytime has-tooltip live-relative-timestamp" data-timestamp="{{timestamp}}" title="{{formattedDateTooltip}}">{{formattedDate}}</span>
+	<div class="activitymessage">{{{message}}}</div>
+</li>
