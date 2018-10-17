@@ -194,8 +194,6 @@
 	vertical-align: top;
 	margin-top: 2px;
 	background-size: contain;
-
-	filter: alpha(opacity=50);
 	opacity: .5;
 }
 .activity-icon img {
