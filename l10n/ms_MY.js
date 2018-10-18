@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Tidak menyokong!",
     "Press ⌘-C to copy." : "Tekan ⌘-C untuk menyalin.",
     "Press Ctrl-C to copy." : "Tekan Ctrl-C untuk menyalin.",
-    "Home" : "Rumah",
     "{name} (invisible)" : "{nama} (halimunan)",
     "{name} (restricted)" : "{nama} (disekat)",
     "in {path}" : "dalam {haluan}",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "RSS feed" : "Suapan RSS",
     "No more events to load" : "Tiada aktiviti untuk memuat",
     "Files" : "Fail",
+    "Home" : "Rumah",
     "Activity notification" : "Peringatan aktiviti"
 },
 "nplurals=1; plural=0;");

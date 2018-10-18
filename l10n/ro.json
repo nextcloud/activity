@@ -7,7 +7,6 @@
     "Not supported!" : "Nu este suportat!",
     "Press ⌘-C to copy." : "Apasă ⌘-C pentru a copia.",
     "Press Ctrl-C to copy." : "Apasă Ctrl-C pentru a copia.",
-    "Home" : "Acasă",
     "{name} (invisible)" : "{name} (invizibil)",
     "{name} (restricted)" : "{name} (restricționat)",
     "in {path}" : "în {cale}",
@@ -52,6 +51,7 @@
     "RSS feed" : "Flux RSS",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
     "Files" : "Fișiere",
+    "Home" : "Acasă",
     "Activity notification" : "Notificări de activitate"
 },"pluralForm" :"nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));"
 }

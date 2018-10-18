@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Ei tuettu!",
     "Press ⌘-C to copy." : "Paina ⌘-C kopioidaksesi.",
     "Press Ctrl-C to copy." : "Paina Ctrl-C kopioidaksesi.",
-    "Home" : "Koti",
     "{name} (invisible)" : "{name} (näkymätön)",
     "{name} (restricted)" : "{name} (rajoitettu)",
     "in {path}" : "polussa {path}",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "RSS feed" : "RSS-syöte",
     "No more events to load" : "Ei enempää tapahtumia ladattavaksi",
     "Files" : "Tiedostot",
+    "Home" : "Koti",
     "Activity notification" : "Ilmoitus toiminnasta"
 },
 "nplurals=2; plural=(n != 1);");

@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Nepodporováno!",
     "Press ⌘-C to copy." : "Zkopírujete stisknutím ⌘-C.",
     "Press Ctrl-C to copy." : "Zkopírujete stisknutím Ctrl-C.",
-    "Home" : "Domů",
     "{name} (invisible)" : "{name} (neviditelné)",
     "{name} (restricted)" : "{name} (omezeno)",
     "in {path}" : "v {path}",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "RSS feed" : "RSS kanál",
     "No more events to load" : "Žádné další události k načtení",
     "Files" : "Soubory",
+    "Home" : "Domů",
     "Activity notification" : "Upozornění na aktivity"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

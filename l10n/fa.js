@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "پشتیبانی وجود ندارد!",
     "Press ⌘-C to copy." : "برای کپی کردن از دکمه های ویندوز و c  استفاده نمایید ",
     "Press Ctrl-C to copy." : "برای کپی کردن از دکمه ctrl+c استفاده نمایید",
-    "Home" : "خانه ",
     "{name} (invisible)" : "{نام} (غیر قایل نمایش)",
     "{name} (restricted)" : "{نام } (دسترسی محدود) ",
     "in {path}" : "در { مسیر }",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "RSS feed" : "فید RSS",
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
     "Files" : "فایل ها",
+    "Home" : "خانه ",
     "Activity notification" : "هشدارهای فعالیت"
 },
 "nplurals=2; plural=(n > 1);");

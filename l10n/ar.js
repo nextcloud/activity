@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "غير مدعوم!",
     "Press ⌘-C to copy." : "اضغط  C-⌘ للنسخ.",
     "Press Ctrl-C to copy." : "اضغط Ctrl-C للنسخ.",
-    "Home" : "الرئيسية",
     "{name} (invisible)" : "{الأسم} (مخفي)",
     "{name} (restricted)" : "{الأسم} (مخصص)",
     "in {path}" : "في {المسار}",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "RSS feed" : "مزود ار أس أس ",
     "No more events to load" : "لا توجد أي أحداث للتحميل",
     "Files" : "الملفات",
+    "Home" : "الرئيسية",
     "Activity notification" : "تنبيه النشاط"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

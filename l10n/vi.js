@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Không được hỗ trợ",
     "Press ⌘-C to copy." : "Ấn ⌘-C để sao chép",
     "Press Ctrl-C to copy." : "Ấn Ctrl-C để sao chép",
-    "Home" : "Trang nhất",
     "{name} (invisible)" : "{name} (ẩn)",
     "{name} (restricted)" : "{name} (hạn chế)",
     "in {path}" : "trong {path}",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "RSS feed" : "Nội dung RSS",
     "No more events to load" : "Không có sự kiện nào",
     "Files" : "Tệp tin",
+    "Home" : "Trang nhất",
     "Activity notification" : "Thông báo hoạt động"
 },
 "nplurals=1; plural=0;");
