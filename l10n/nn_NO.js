@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Ikkje støtta!",
     "Press ⌘-C to copy." : "Trykk  ⌘-C for å kopiere.",
     "Press Ctrl-C to copy." : "Trykk Ctrl-C for å kopiere.",
-    "Home" : "Heim",
     "{name} (invisible)" : "{namn} (usynleg)",
     "{name} (restricted)" : "{namn} (avgrensa)",
     "in {path}" : "i {spor}",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "RSS feed" : "RSS-straum",
     "No more events to load" : "Inga fleire hendingar å lasta",
     "Files" : "Filer",
+    "Home" : "Heim",
     "Activity notification" : "Aktivitets notifikasjonar"
 },
 "nplurals=2; plural=(n != 1);");

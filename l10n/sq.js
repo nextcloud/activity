@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Nuk suportohet!",
     "Press ⌘-C to copy." : "Shtyp ⌘-C për të kopjuar.",
     "Press Ctrl-C to copy." : "Shtyp Ctrl-C për të kopjuar.",
-    "Home" : "Kryefaqja",
     "{name} (invisible)" : "{emri} (i padukshëm)",
     "{name} (restricted)" : "{emri} (i kufizuar)",
     "in {path}" : "në {rruga}",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "RSS feed" : "Prurja RSS",
     "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
     "Files" : "Skedar",
+    "Home" : "Kryefaqja",
     "Activity notification" : "Njoftim veprimtarie"
 },
 "nplurals=2; plural=(n != 1);");

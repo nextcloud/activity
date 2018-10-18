@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "အထောက်အပံ့ မပြု!",
     "Press ⌘-C to copy." : "ကူးယူရန်အတွက် ⌘-C ကိုနှိပ်ပါ။",
     "Press Ctrl-C to copy." : "ကူးယူရန်အတွက် Ctrl-C ကိုနှိပ်ပါ။",
-    "Home" : "ပင်မစာမျက်နှာ",
     "{name} (restricted)" : "{name} (ကန့်သတ်ထား)",
     "in {path}" : "{path} တွင်",
     "This stream will show events like additions, changes & shares" : "ဤ လမ်းကြောင်းသည်  ပေါင်းထည့်ခြင်း၊ ပြောင်းလဲခြင်းနှင့် မျှဝေခြင်း စသည့် အဖြစ်အပျက်များကို ပြသပေးပါမည်။",
@@ -34,6 +33,7 @@ OC.L10N.register(
     "%s and %s" : "%sနှင့် %s",
     "Mail" : "စာ",
     "Stream" : "လမ်းကြောင်း",
-    "Activity" : "လုပ်ဆောင်မှု"
+    "Activity" : "လုပ်ဆောင်မှု",
+    "Home" : "ပင်မစာမျက်နှာ"
 },
 "nplurals=1; plural=0;");

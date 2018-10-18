@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Не се поддържа!",
     "Press ⌘-C to copy." : "За копиране натиснете ⌘-C",
     "Press Ctrl-C to copy." : "За копиране натиснете Ctrl-C",
-    "Home" : "Начало",
     "{name} (invisible)" : "{name} (невидим)",
     "{name} (restricted)" : "{name} (ограничен)",
     "in {path}" : "в {path}",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "RSS feed" : "RSS емисия",
     "No more events to load" : "Няма повече известия за зареждане",
     "Files" : "Файлове",
+    "Home" : "Начало",
     "Activity notification" : "Известия за активност"
 },
 "nplurals=2; plural=(n != 1);");

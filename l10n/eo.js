@@ -7,7 +7,6 @@ OC.L10N.register(
     "Not supported!" : "Ne subtenite!",
     "Press ⌘-C to copy." : "Premu ⌘-C pro kopii",
     "Press Ctrl-C to copy." : "Premi Ctrl-C pro kopii.",
-    "Home" : "Hejme",
     "{name} (invisible)" : "{name} (nevidebla)",
     "in {path}" : "en {path}",
     "Today" : "Hodiaŭ",
@@ -31,6 +30,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktivigi RSS fluo",
     "RSS feed" : "RSS-a kanalo",
     "Files" : "Dosieroj",
+    "Home" : "Hejme",
     "Activity notification" : "Aktivaĵo-sciigo"
 },
 "nplurals=2; plural=(n != 1);");

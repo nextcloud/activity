@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Δεν υποστηρίζεται!",
     "Press ⌘-C to copy." : "Για αντιγραφή πατήστε ⌘-C.",
     "Press Ctrl-C to copy." : "Για αντιγραφή πατήστε Ctrl-C",
-    "Home" : "Αρχική",
     "{name} (invisible)" : "{name} (αόρατος/η)",
     "{name} (restricted)" : "{name} (περιορισμένη πρόσβαση)",
     "in {path}" : "στην {path}",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "RSS feed" : "Ροή RSS",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "Files" : "Αρχεία",
+    "Home" : "Αρχική",
     "Activity notification" : "Ειδοποίηση δραστηριότητας"
 },
 "nplurals=2; plural=(n != 1);");

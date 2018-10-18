@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Ekki stutt!",
     "Press ⌘-C to copy." : "Ýttu á ⌘-C til að afrita.",
     "Press Ctrl-C to copy." : "Ýttu á Ctrl-C til að afrita.",
-    "Home" : "Heim",
     "{name} (invisible)" : "{name} (ósýnilegt)",
     "{name} (restricted)" : "{name} (takmarkað)",
     "in {path}" : "í {path}",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "RSS feed" : "RSS-veita",
     "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
     "Files" : "Skrár",
+    "Home" : "Heim",
     "Activity notification" : "Tilkynning um virkni"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

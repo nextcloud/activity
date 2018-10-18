@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Nepalaikoma!",
     "Press ⌘-C to copy." : "Norėdami nukopijuoti, paspauskite ⌘-C.",
     "Press Ctrl-C to copy." : "Paspauskite Ctrl-C, kad nukopijuotumėte.",
-    "Home" : "Pagrindinis",
     "{name} (invisible)" : "{name} (nematomas)",
     "{name} (restricted)" : "{name} (apribotas)",
     "in {path}" : "ties {path}",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "RSS feed" : "RSS kanalas",
     "No more events to load" : "Nėra daugiau rodytinų įvykių",
     "Files" : "Failai",
+    "Home" : "Pagrindinis",
     "Activity notification" : "Veiklos pranešimai"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");
