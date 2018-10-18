@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Ni podprto!",
     "Press ⌘-C to copy." : "Pritisni ⌘-C za kopiranje.",
     "Press Ctrl-C to copy." : "Pritisni Ctrl-C za kopiranje",
-    "Home" : "Začetni pogled",
     "{name} (invisible)" : "{ime} (nevidno)",
     "{name} (restricted)" : "{ime} (omejeno)",
     "in {path}" : "v {pot}",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "RSS feed" : "Viri RSS",
     "No more events to load" : "Ni več dogodkov za nalaganje",
     "Files" : "Datoteke",
+    "Home" : "Začetni pogled",
     "Activity notification" : "Obvestila o dejavnosti"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

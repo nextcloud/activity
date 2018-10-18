@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Ez da onartzen!",
     "Press ⌘-C to copy." : "Sakatu ⌘-C kopiatzeko",
     "Press Ctrl-C to copy." : "Sakatu Ktrl+C kopiatzeko",
-    "Home" : "Etxea",
     "{name} (invisible)" : "{name} (ikusezina)",
     "{name} (restricted)" : "{name} (mugatua)",
     "in {path}" : "hemen {path}",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "RSS feed" : "RSS jarioa",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
     "Files" : "Fitxategiak",
+    "Home" : "Etxea",
     "Activity notification" : "Jarduera jakinarazpena"
 },
 "nplurals=2; plural=(n != 1);");

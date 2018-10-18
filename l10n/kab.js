@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Ur yettusefrak ara!",
     "Press ⌘-C to copy." : "Senned ɣef ⌘-C akken ad tneɣleḍ.",
     "Press Ctrl-C to copy." : "Senned ɣef Ctrl-C akken ad tneɣleḍ.",
-    "Home" : "Asnubeg",
     "{name} (invisible)" : "{isem} (uffir)",
     "{name} (restricted)" : "{isem} (yegdel)",
     "in {path}" : "deg {ubrid}",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "RSS feed" : "Asuddem RSS",
     "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
     "Files" : "Ifuyla",
+    "Home" : "Asnubeg",
     "Activity notification" : "Alɣu n urmud"
 },
 "nplurals=2; plural=(n != 1);");

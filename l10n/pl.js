@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Brak wsparcia!",
     "Press ⌘-C to copy." : "Wciśnij ⌘-C, aby skopiować.",
     "Press Ctrl-C to copy." : "Wciśnij Ctrl-C, aby skopiować.",
-    "Home" : "Strona główna",
     "{name} (invisible)" : "{name} (niewidoczny)",
     "{name} (restricted)" : "{name} (ograniczony)",
     "in {path}" : "w {path}",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "RSS feed" : "Kanał RSS",
     "No more events to load" : "Brak zdarzeń do załadowania",
     "Files" : "Pliki",
+    "Home" : "Strona główna",
     "Activity notification" : "Powiadomienie o aktywności"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

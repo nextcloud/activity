@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Tidak didukung!",
     "Press ⌘-C to copy." : "Tekan ⌘-C untuk menyalin.",
     "Press Ctrl-C to copy." : "Tekan Ctrl-C untuk menyalin.",
-    "Home" : "Beranda",
     "{name} (invisible)" : "{name} (tersembunyi)",
     "{name} (restricted)" : "{name} (terbatas)",
     "in {path}" : "di {path}",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "RSS feed" : "RSS feed",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
     "Files" : "Berkas",
+    "Home" : "Beranda",
     "Activity notification" : "Pemberitahuan aktivitas"
 },
 "nplurals=1; plural=0;");

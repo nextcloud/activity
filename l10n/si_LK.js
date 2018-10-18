@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "සහාය දක්වන්නේ නැත.",
     "Press ⌘-C to copy." : "පිටපත් කිරීම සදහා Ctrl + C ඔබන්න.",
     "Press Ctrl-C to copy." : "පිටපත් කිරීම සදහා Ctrl + C ඔබන්න.",
-    "Home" : "නිවස.",
     "{name} (invisible)" : "{නම} (නොපෙනෙන)",
     "{name} (restricted)" : "{නම} (සීමිත)",
     "Today" : "අද",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Daily" : "දිනපතා",
     "Weekly" : "සතිපතා",
     "Settings" : "සැකසුම්",
-    "Files" : "ගොනු"
+    "Files" : "ගොනු",
+    "Home" : "නිවස."
 },
 "nplurals=2; plural=(n != 1);");

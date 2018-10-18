@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Pole toetatud!",
     "Press ⌘-C to copy." : "Kopeerimiseks vajuta ⌘ + C.",
     "Press Ctrl-C to copy." : "Kopeerimiseks vajuta Ctrl + C.",
-    "Home" : "Avaleht",
     "{name} (invisible)" : "{name} (nähtamatu)",
     "{name} (restricted)" : "{name} (piiratud)",
     "in {path}" : "kataloogis {path}",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "RSS feed" : "RRS voog",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
     "Files" : "Failid",
+    "Home" : "Avaleht",
     "Activity notification" : "Tegevuste teavitused"
 },
 "nplurals=2; plural=(n != 1);");

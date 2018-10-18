@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "지원하지 않음!",
     "Press ⌘-C to copy." : "복사하려면 ⌘-C 키를 누르십시오.",
     "Press Ctrl-C to copy." : "복사하려면 Ctrl-C 키를 누르십시오.",
-    "Home" : "홈",
     "{name} (invisible)" : "{name} (숨겨짐)",
     "{name} (restricted)" : "{name} (제한됨)",
     "in {path}" : "{path}에 있음",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "RSS feed" : "RSS 피드",
     "No more events to load" : "더 이상 불러올 이벤트 없음",
     "Files" : "파일",
+    "Home" : "홈",
     "Activity notification" : "활동 알림"
 },
 "nplurals=1; plural=0;");
