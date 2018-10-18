@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "არ არის მხარდაჭერილი!",
     "Press ⌘-C to copy." : "კოპირებისთვის დააჭირეთ ⌘-C-ს.",
     "Press Ctrl-C to copy." : "კოპირებისთვის დააჭირეთ Ctrl-C-ს.",
-    "Home" : "სახლი",
     "{name} (invisible)" : "{name} (უჩინარი)",
     "{name} (restricted)" : "{name} (აკრძალული)",
     "in {path}" : "{path}-ში",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "RSS feed" : "RSS ლენტა",
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
     "Files" : "ფაილები",
+    "Home" : "სახლი",
     "Activity notification" : "შეტყობინება აქტივობის შესახებ"
 },
 "nplurals=2; plural=(n!=1);");

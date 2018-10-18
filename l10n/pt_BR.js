@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Não suportado!",
     "Press ⌘-C to copy." : "Pressione ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Pressione Ctrl-C para copiar.",
-    "Home" : "Início",
     "{name} (invisible)" : "{nome} (invisível)",
     "{name} (restricted)" : "{name} (restrito)",
     "in {path}" : "em {path}",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "RSS feed" : "Feed RSS",
     "No more events to load" : "Não há mais eventos para carregar",
     "Files" : "Arquivos",
+    "Home" : "Início",
     "Activity notification" : "Notificação de atividade"
 },
 "nplurals=2; plural=(n > 1);");

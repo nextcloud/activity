@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "לא נתמך!",
     "Press ⌘-C to copy." : "יש ללחוץ על ‎⌘+C כדי להעתיק.",
     "Press Ctrl-C to copy." : "יש ללחוץ על Ctrl+C כדי להעתיק.",
-    "Home" : "בית",
     "{name} (invisible)" : "{name} (בלתי נראה)",
     "{name} (restricted)" : "{name} (מוגבל)",
     "in {path}" : "ב{path}",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "RSS feed" : "ערוץ RSS",
     "No more events to load" : "אין אירועים נוספים לטעינה",
     "Files" : "קבצים",
+    "Home" : "בית",
     "Activity notification" : "דיווח פעילות"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

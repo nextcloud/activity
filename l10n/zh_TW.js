@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "不支援！",
     "Press ⌘-C to copy." : "按下 ⌘-C 來複製",
     "Press Ctrl-C to copy." : "按下 Ctrl-C 來複製",
-    "Home" : "首頁",
     "{name} (invisible)" : "{name} (隱形)",
     "{name} (restricted)" : "{name} (受限)",
     "in {path}" : "在 {path}",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "RSS feed" : "RSS 摘要",
     "No more events to load" : "已載入所有事件",
     "Files" : "檔案",
+    "Home" : "首頁",
     "Activity notification" : "活動通知"
 },
 "nplurals=1; plural=0;");

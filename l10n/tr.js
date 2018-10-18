@@ -9,7 +9,6 @@ OC.L10N.register(
     "Not supported!" : "Desteklenmiyor!",
     "Press ⌘-C to copy." : "Kopyalamak için ⌘-C tuşlarına basın.",
     "Press Ctrl-C to copy." : "Kopyalamak için Ctrl-C tuşlarına basın.",
-    "Home" : "Giriş",
     "{name} (invisible)" : "{name} (görüntülenmez)",
     "{name} (restricted)" : "{name} (kısıtlı)",
     "in {path}" : "{path} içinde",
@@ -57,6 +56,7 @@ OC.L10N.register(
     "RSS feed" : "RSS akışı",
     "No more events to load" : "Yüklenecek başka bir olay yok",
     "Files" : "Dosyalar",
+    "Home" : "Giriş",
     "Activity notification" : "Etkinlik bildirimi"
 },
 "nplurals=2; plural=(n > 1);");
