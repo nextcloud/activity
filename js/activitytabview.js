@@ -56,6 +56,10 @@
 			return t('activity', 'Activities');
 		},
 
+		getIcon: function() {
+			return 'icon-activity';
+		},
+
 		setFileInfo: function(fileInfo) {
 			this._fileInfo = fileInfo;
 			if (this._fileInfo) {
