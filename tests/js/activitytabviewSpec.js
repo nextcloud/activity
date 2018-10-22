@@ -93,7 +93,7 @@ describe('ActivityTabView', function() {
 			var $activities = tabView.$container.find('.activity');
 			expect($activities.length).toEqual(2);
 			var $a1 = $activities.eq(0);
-			expect($a1.find('.activitysubject').text()).toEqual('The Subject test.txt');
+			expect($a1.find('.activitysubject').text()).toEqual('The Subject test.txt\n');
 			expect($a1.find('.activitysubject strong').length).toEqual(1);
 			expect($a1.find('.activitymessage').text()).toEqual('Some message');
 			expect($a1.find('.activitymessage strong').length).toEqual(0);
