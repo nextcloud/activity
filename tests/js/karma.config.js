@@ -32,7 +32,8 @@ module.exports = function(config) {
 		'js/script.js',
 		'js/activitymodel.js',
 		'js/activitycollection.js',
-		'js/activitytabview.js'
+		'js/activitytabview.js',
+		'js/templates.js'
 	];
 
 	var testFiles = [
