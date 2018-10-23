@@ -261,36 +261,36 @@ class MailQueueHandler {
 	 * @return array [data of the first max. 200 entries, total number of entries]
 	 */
 	protected function getItemsForUser($affectedUser, $maxTime, $maxNumItems = self::ENTRY_LIMIT) {
-		$query = $this->connection->prepare(
-			'SELECT * '
-			. ' FROM `*PREFIX*activity_mq` '
-			. ' WHERE `amq_timestamp` <= ? '
-			. ' AND `amq_affecteduser` = ? '
-			. ' ORDER BY `amq_timestamp` ASC',
-			$maxNumItems
-		);
-		$query->execute([(int) $maxTime, $affectedUser]);
+		$query = $this->connection->getQueryBuilder();
+		$query->select('*')
+			->from('activity_mq')
+			->where($query->expr()->lte('amq_timestamp', $query->createNamedParameter($maxTime)))
+			->andWhere($query->expr()->eq('amq_affecteduser', $query->createNamedParameter($affectedUser)))
+			->orderBy('amq_timestamp', 'ASC')
+			->setMaxResults($maxNumItems);
+		$result = $query->execute();
 
-		$activities = array();
-		while ($row = $query->fetch()) {
+		$activities = [];
+		while ($row = $result->fetch()) {
 			$activities[] = $row;
 		}
+		$result->closeCursor();
 
 		if (isset($activities[$maxNumItems - 1])) {
 			// Reached the limit, run a query to get the actual count.
-			$query = $this->connection->prepare(
-				'SELECT COUNT(*) AS `actual_count`'
-				. ' FROM `*PREFIX*activity_mq` '
-				. ' WHERE `amq_timestamp` <= ? '
-				. ' AND `amq_affecteduser` = ?'
-			);
-			$query->execute([(int) $maxTime, $affectedUser]);
+			$query = $this->connection->getQueryBuilder();
+			$query->selectAlias($query->func()->count('*'), 'actual_count')
+				->from('activity_mq')
+				->where($query->expr()->lte('amq_timestamp', $query->createNamedParameter($maxTime)))
+				->andWhere($query->expr()->eq('amq_affecteduser', $query->createNamedParameter($affectedUser)));
+			$result = $query->execute();
+			$row = $result->fetch();
+			$result->closeCursor();
 
-			$row = $query->fetch();
 			return [$activities, $row['actual_count'] - $maxNumItems];
-		} else {
-			return [$activities, 0];
 		}
+
+		return [$activities, 0];
 	}
 
 	/**
@@ -355,17 +355,17 @@ class MailQueueHandler {
 		foreach ($mailData as $activity) {
 			$event = $this->activityManager->generateEvent();
 			try {
-				$event->setApp($activity['amq_appid'])
-					->setType($activity['amq_type'])
+				$event->setApp((string) $activity['amq_appid'])
+					->setType((string) $activity['amq_type'])
 					->setTimestamp((int) $activity['amq_timestamp'])
-					->setSubject($activity['amq_subject'], json_decode($activity['amq_subjectparams'], true))
-					->setObject($activity['object_type'], (int) $activity['object_id']);
+					->setSubject((string) $activity['amq_subject'], (array) json_decode($activity['amq_subjectparams'], true))
+					->setObject((string) $activity['object_type'], (int) $activity['object_id']);
 			} catch (\InvalidArgumentException $e) {
 				continue;
 			}
 
 			$relativeDateTime = $this->dateFormatter->formatDateTimeRelativeDay(
-				$activity['amq_timestamp'],
+				(int) $activity['amq_timestamp'],
 				'long', 'short',
 				new \DateTimeZone($timezone), $l
 			);
