@@ -53,7 +53,7 @@
 		},
 
 		getLabel: function() {
-			return t('activity', 'Activities');
+			return t('activity', 'Activity');
 		},
 
 		getIcon: function() {
