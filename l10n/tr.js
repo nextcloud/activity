@@ -1,10 +1,10 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Etkinlikler",
-    "An error occurred while loading activities" : "Etkinlikler yüklenirken bir sorun çıktı",
+    "Activities" : "İşlemler",
+    "An error occurred while loading activities" : "İşlemler yüklenirken bir sorun çıktı",
     "No activity yet" : "Henüz bir işlem yok",
-    "Load more activities" : "Diğer etkinlikleri yükle",
+    "Load more activities" : "Diğer işlemleri yükle",
     "Copied!" : "Kopyalandı!",
     "Not supported!" : "Desteklenmiyor!",
     "Press ⌘-C to copy." : "Kopyalamak için ⌘-C tuşlarına basın.",
@@ -21,7 +21,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Akış adresiniz geçersiz",
     "Your settings have been updated." : "Ayarlarınız güncellendi.",
     "Settings have been updated." : "Ayarlar güncellendi",
-    "All activities" : "Tüm etkinlikler",
+    "All activities" : "Tüm işlemler",
     "By others" : "Diğerleri tarafından",
     "By you" : "Sizin tarafınızdan",
     "\"remote user\"" : "\"uzak kullanıcı\"",
