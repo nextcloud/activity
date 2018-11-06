@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "النشاطات",
+    "Activity" : "نشاط",
     "An error occurred while loading activities" : "حدث خطأ اثناء تحميل النشاطات ",
     "No activity yet" : "لا يوجد أي أنشطة حتى الأن",
     "Load more activities" : "تحميل المزيد من النشاطات",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s و %s",
     "Mail" : "البريد",
     "Stream" : "البث",
-    "Activity" : "نشاط",
     "Activity feed" : "تغذية الأنشطة",
     "Send activity emails" : "ارسل ايميل عن النشاطات",
     "Default settings" : "الإعدادات الإفتراضية",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "RSS feed" : "مزود ار أس أس ",
     "No more events to load" : "لا توجد أي أحداث للتحميل",
     "Files" : "الملفات",
+    "Activities" : "النشاطات",
     "Home" : "الرئيسية",
     "Activity notification" : "تنبيه النشاط"
 },

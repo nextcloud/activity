@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Actividaes",
+    "Activity" : "Actividá",
     "An error occurred while loading activities" : "Asocedió un fallu entrín se cargaben les actividaes",
     "No activity yet" : "Entá nun hai actividaes",
     "Load more activities" : "Cargar más actividaes",
@@ -33,7 +33,6 @@ OC.L10N.register(
     "%s and %s" : "%s y %s",
     "Mail" : "Corréu",
     "Stream" : "Fluxu de rede",
-    "Activity" : "Actividá",
     "Activity feed" : "Feed d'actividá",
     "Notify about your own actions via email" : "Avisar per corréu tocante a les mios propies aiciones",
     "You need to set up your email address before you can receive notification emails." : "Precises configurar la to direición de corréu enantes que pueas recibir correos d'avisu.",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Habilitar feed RSS",
     "No more events to load" : "Nun hai más eventos pa cargar",
     "Files" : "Ficheros",
+    "Activities" : "Actividaes",
     "Activity notification" : "Avisu d'actividá"
 },
 "nplurals=2; plural=(n != 1);");

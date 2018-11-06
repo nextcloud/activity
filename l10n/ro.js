@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Activități",
+    "Activity" : "Activitate",
     "An error occurred while loading activities" : "A apărut o eroare la încărcarea activităților",
     "No activity yet" : "Nici o activitate încă.",
     "Load more activities" : "Încarcă mai multe activități",
@@ -33,7 +33,6 @@ OC.L10N.register(
     "%s and %s" : "%s și %s",
     "Mail" : "Mail",
     "Stream" : "Flux",
-    "Activity" : "Activitate",
     "This application enables users to view actions related to their files in Nextcloud." : "Aceasta aplicatie permite utilizatorilor sa vizualizeze actiuni aferente fisierelor din Nextcloid.",
     "Activity feed" : "Flux de activitate",
     "Send activity emails" : "Trimitere email-uri cu activitatea",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "RSS feed" : "Flux RSS",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
     "Files" : "Fișiere",
+    "Activities" : "Activități",
     "Home" : "Acasă",
     "Activity notification" : "Notificări de activitate"
 },

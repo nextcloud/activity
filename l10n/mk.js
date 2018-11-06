@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Активности",
+    "Activity" : "Активност",
     "No activity yet" : "Сеуште нема активности",
     "This stream will show events like additions, changes & shares" : "Овој стрим ќе прикажува настани како додатоци, промени и споделувања",
     "There are no events for this filter" : "Нема настани за овој филтер",
@@ -16,7 +16,6 @@ OC.L10N.register(
     "%s and %s" : "%s и %s",
     "Mail" : "Електронска пошта",
     "Stream" : "Стрим",
-    "Activity" : "Активност",
     "Activity feed" : "Feed на активности",
     "Notify about your own actions via email" : "Извести за своите активности преку порака",
     "You need to set up your email address before you can receive notification emails." : "Треба да ја внесете Вашата електронска адреса за да можете да примате известувања по електронска пошта.",
@@ -27,6 +26,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Овозможи RSS feed",
     "No more events to load" : "Нема повеќе настани да вчитам",
     "Files" : "Датотеки",
+    "Activities" : "Активности",
     "Activity notification" : "Известување за Активности"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

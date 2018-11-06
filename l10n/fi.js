@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Toimet",
+    "Activity" : "Toimet",
     "An error occurred while loading activities" : "Toimia ladattaessa tapahtui virhe",
     "No activity yet" : "Ei toimia vielä",
     "Load more activities" : "Lataa lisää toimia",
@@ -33,7 +33,6 @@ OC.L10N.register(
     "%s and %s" : "%s ja %s",
     "Mail" : "Sähköposti",
     "Stream" : "Luettelo",
-    "Activity" : "Toimet",
     "This application enables users to view actions related to their files in Nextcloud." : "Tämä sovellus mahdollistaa käyttäjien tarkastella toimintoja liittyen heidän tiedostoihin Nextcloudissa.",
     "Activity feed" : "Toiminnan syöte",
     "Send activity emails" : "Lähetä sähköpostiviestejä toimista",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "RSS feed" : "RSS-syöte",
     "No more events to load" : "Ei enempää tapahtumia ladattavaksi",
     "Files" : "Tiedostot",
+    "Activities" : "Toimet",
     "Home" : "Koti",
     "Activity notification" : "Ilmoitus toiminnasta"
 },

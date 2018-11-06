@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Aktivitas",
+    "Activity" : "Aktivitas",
     "An error occurred while loading activities" : "Terjadi kesalahan saat memuat aktivitas",
     "No activity yet" : "Belum ada aktivitas",
     "Load more activities" : "Muat aktivitas lainnya",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s dan %s",
     "Mail" : "Email",
     "Stream" : "Stream",
-    "Activity" : "Aktivitas",
     "Activity feed" : "Feed aktivitas",
     "Send activity emails" : "Kirim email aktivitas",
     "Default settings" : "Pengaturan default",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "RSS feed" : "RSS feed",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
     "Files" : "Berkas",
+    "Activities" : "Aktivitas",
     "Home" : "Beranda",
     "Activity notification" : "Pemberitahuan aktivitas"
 },

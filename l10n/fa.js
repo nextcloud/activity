@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "فعالیت‌ها",
+    "Activity" : "فعالیت",
     "An error occurred while loading activities" : "در هنگام بارگزاری فعالیت ها خطایی رخ داده است ",
     "No activity yet" : "هنوز فعالیتی انجام نشده",
     "Load more activities" : "نمایش فعالیت های بیشتر",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s و %s",
     "Mail" : "ایمیل",
     "Stream" : "Stream",
-    "Activity" : "فعالیت",
     "This application enables users to view actions related to their files in Nextcloud." : "این نرم‌افراز مشاهده فعالیت‌های مربوط به فایل‌های موجود در Nextcloud را برای کاربران ممکن می‌سازد.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "این نرم‌افزار  امکان مشاهده فایل‌های موجود در Nextcloud را برای کاربران ممکن می‌سازد.\nبا فعال شدن این بخش، کاربران یک آیکون جدید با عنوان \"فعالیت\" در منو نرم افزارها مشاهده می‌کنند. \nبا کلیک بر روی آن صفحه جدیدی به کاربر نمایش داده می‌شود تا فعالیت‌های  مربوط به فایل را پیگیری نماید که شامل فایل‌های جدید، فایل‌های پاک شده، جابجایی‌، تغییر نام، به روزرسانی‌ها و فعالیت‌های مربوط به اشتراک گذاری می‌باشد. \nکاربر می‌تواند تنظیمات فعالیت خود را در منو شخصی پیکربندی کند.\nبه این صورت می‌توان تعیین کرد که چه نوع فعالیت‌های ذخیره شوند و  اینکه کاربر فعالیت‌های خود را مشاهده کند یا خیر. \nهمچنین اینکه گزارش‌ها فقط به صورت آنلاین در دسترس باشد یا به صورت ایمیل‌هایی در یک دوره زمانی مشخص برای کاربر ارسال شود نیز قابل تنظیم است. \nاطلاعات بیشتر در راهنمای فعالیت  وجود دارد. ",
     "Activity feed" : "feed فعالیت",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "RSS feed" : "فید RSS",
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
     "Files" : "فایل ها",
+    "Activities" : "فعالیت‌ها",
     "Home" : "خانه ",
     "Activity notification" : "هشدارهای فعالیت"
 },

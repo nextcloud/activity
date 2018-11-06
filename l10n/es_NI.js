@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Actividades",
+    "Activity" : "Actividad",
     "An error occurred while loading activities" : "Se presentó un error al cargar las actividades",
     "No activity yet" : "Aún no tiene actividad",
     "Load more activities" : "Cargar más actividades",
@@ -33,7 +33,6 @@ OC.L10N.register(
     "%s and %s" : "%s y %s",
     "Mail" : "Correo",
     "Stream" : "Flujo",
-    "Activity" : "Actividad",
     "Activity feed" : "Fuente de actividad",
     "Send activity emails" : "Enviar correos de actividades",
     "Default settings" : "Configuraciones predeterminadas",
@@ -53,6 +52,7 @@ OC.L10N.register(
     "RSS feed" : "Fuente RSS",
     "No more events to load" : "No hay más eventos por cargar",
     "Files" : "Archivos",
+    "Activities" : "Actividades",
     "Home" : "Inicio",
     "Activity notification" : "Notificación de actividad"
 },
