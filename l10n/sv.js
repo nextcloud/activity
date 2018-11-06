@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Aktivitetsflöde",
+    "Activity" : "Aktivitetsflödet",
     "An error occurred while loading activities" : "Något gick snett vid inläsning av aktiviteter",
     "No activity yet" : "Inga aktiviteter ännu",
     "Load more activities" : "Ladda fler aktiviteter",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s och %s",
     "Mail" : "E-post",
     "Stream" : "Flödet",
-    "Activity" : "Aktivitetsflödet",
     "This application enables users to view actions related to their files in Nextcloud." : "Denna applikation tillåter användare att visa handlingar relaterade till deras filer i Nextcloud ",
     "Activity feed" : "Aktivitetsflöde",
     "Send activity emails" : "Skicka aktivitets-epost",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "RSS feed" : "RSS-flöde",
     "No more events to load" : "Inga fler aktiviteter.",
     "Files" : "Filer",
+    "Activities" : "Aktivitetsflöde",
     "Home" : "Hem",
     "Activity notification" : "Notis om aktivitet"
 },

@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "動態",
+    "Activity" : "動態",
     "An error occurred while loading activities" : "載入動態時出錯",
     "No activity yet" : "暫無動態",
     "Load more activities" : "載入更多動態",
@@ -33,7 +33,6 @@ OC.L10N.register(
     "%s and %s" : "%s和%s",
     "Mail" : "郵件",
     "Stream" : "Stream",
-    "Activity" : "動態",
     "Activity feed" : "動態  feed",
     "Default settings" : "預設設定",
     "Configure the default activity settings for new users." : "為新用戶設置默認的活動配置",
@@ -50,6 +49,7 @@ OC.L10N.register(
     "Enable RSS feed" : "啟用 RSS 源",
     "No more events to load" : "已無更多事件",
     "Files" : "檔案",
+    "Activities" : "動態",
     "Activity notification" : "動態通知"
 },
 "nplurals=1; plural=0;");

@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Atividades",
+    "Activity" : "Atividade",
     "An error occurred while loading activities" : "Ocorreu um erro ao carregar atividades",
     "No activity yet" : "Nenhuma atividade",
     "Load more activities" : "Carregar mais atividades",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s e %s",
     "Mail" : "E-mail",
     "Stream" : "Stream",
-    "Activity" : "Atividade",
     "This application enables users to view actions related to their files in Nextcloud." : "Este aplicativo permite aos usuários visualizem as ações relacionadas aos seus arquivos no Nextcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Este aplicativo permite aos usuários visualizarem as ações relacionadas aos seus arquivos no Nextcloud.\n\t\tDepois de ativado, os usuários verão um novo ícone \"Atividade\" no menu de aplicativos.\n\t\tQuando clicado, uma nova página aparece para os usuários rastrearem a atividade relacionada aos arquivos - arquivos novos, excluídos, movidos, renomeados, atualizações e atividades compartilhadas.\n\t\tO usuário pode individualmente definir configurações de atividade em seu menu pessoal.\n\t\tIsso define o tipo de atividade a ser registrada, bem como se o usuário vê suas próprias atividades,\n\t\tse eles estão disponíveis apenas online e se recebem um resumo por e-mail regularmente.\n\t\tMais informações estão disponíveis na documentação da Activity.",
     "Activity feed" : "Feed de atividade",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "RSS feed" : "Feed RSS",
     "No more events to load" : "Não há mais eventos para carregar",
     "Files" : "Arquivos",
+    "Activities" : "Atividades",
     "Home" : "Início",
     "Activity notification" : "Notificação de atividade"
 },

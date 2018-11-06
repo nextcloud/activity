@@ -1,5 +1,5 @@
 { "translations": {
-    "Activities" : "פעילויות",
+    "Activity" : "פעילות",
     "An error occurred while loading activities" : "אירעה שגיאה בעת טעינת הפעילויות",
     "No activity yet" : "אין עדיין פעילויות",
     "Load more activities" : "טעינת פעילויות נוספות",
@@ -32,7 +32,6 @@
     "%s and %s" : "%s ו- %s",
     "Mail" : "דואר",
     "Stream" : "הזרמת מידע",
-    "Activity" : "פעילות",
     "This application enables users to view actions related to their files in Nextcloud." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שקשורות לקבצים שלהם ב־Nextcloud.",
     "Activity feed" : "דיווחי פעילות",
     "Send activity emails" : "שליחת הודעות פעילות בדוא״ל",
@@ -53,6 +52,7 @@
     "RSS feed" : "ערוץ RSS",
     "No more events to load" : "אין אירועים נוספים לטעינה",
     "Files" : "קבצים",
+    "Activities" : "פעילויות",
     "Home" : "בית",
     "Activity notification" : "דיווח פעילות"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;"

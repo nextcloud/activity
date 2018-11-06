@@ -1,6 +1,7 @@
 OC.L10N.register(
     "activity",
     {
+    "Activity" : "সক্রিয়তা",
     "Personal activity feed for %s" : "%s এর জনন সক্রিয়তা বারতা",
     "Your settings have been updated." : "আপনার সেটিং নবায়ন করা হয়েছে৷",
     "Hello %s," : "হেলো %s,",
@@ -8,7 +9,6 @@ OC.L10N.register(
     "%s and %s" : "%s এবং %s",
     "Mail" : "মেইল",
     "Stream" : "ধারা",
-    "Activity" : "সক্রিয়তা",
     "Activity feed" : "সক্রিয়তা বারতা",
     "You need to set up your email address before you can receive notification emails." : "ইমেইল বারতা পাওয়ার আগে আপনাকে নিজের ইমেইল ঠিকানা নিরধারন করতে হবে৷",
     "Send emails:" : "ইমেইল পাঠান",

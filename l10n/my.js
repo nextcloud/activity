@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "လုပ်ဆောင်မှုများ",
+    "Activity" : "လုပ်ဆောင်မှု",
     "An error occurred while loading activities" : "ဆောင်ရွက်မှုများ လုပ်ဆောင်နေစဉ် ပြဿနာတစ်ခု ကြုံတွေ့ခဲ့သည်",
     "No activity yet" : "လုပ်ဆောင်မှုမရှိသေး",
     "Load more activities" : "လုပ်ဆောင်မှုများ ပိုမိုပြသရန်",
@@ -33,7 +33,7 @@ OC.L10N.register(
     "%s and %s" : "%sနှင့် %s",
     "Mail" : "စာ",
     "Stream" : "လမ်းကြောင်း",
-    "Activity" : "လုပ်ဆောင်မှု",
+    "Activities" : "လုပ်ဆောင်မှုများ",
     "Home" : "ပင်မစာမျက်နှာ"
 },
 "nplurals=1; plural=0;");

@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "აქტივობები",
+    "Activity" : "აქტივობა",
     "An error occurred while loading activities" : "აქტივობების ჩატვირთვისას წარმოიშვა შეცდომა",
     "No activity yet" : "ჯერ-ჯერობით აქტივობები არაა",
     "Load more activities" : "მეტი აქტივობის ჩატვირთვა",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s და %s",
     "Mail" : "ფოსტა",
     "Stream" : "ნაკადი",
-    "Activity" : "აქტივობა",
     "Activity feed" : "აქტივობათა ლენტი",
     "Send activity emails" : "აქტივობის ელ-წერილების გაგზავნა.",
     "Default settings" : "საწყისი პარამეტრები",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "RSS feed" : "RSS ლენტა",
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
     "Files" : "ფაილები",
+    "Activities" : "აქტივობები",
     "Home" : "სახლი",
     "Activity notification" : "შეტყობინება აქტივობის შესახებ"
 },

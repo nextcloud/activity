@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "활동",
+    "Activity" : "활동",
     "An error occurred while loading activities" : "활동을 불러오는 중 오류 발생",
     "No activity yet" : "아직 활동 없음",
     "Load more activities" : "더 많은 활동 불러오기",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s, %s",
     "Mail" : "메일",
     "Stream" : "스트림",
-    "Activity" : "활동",
     "This application enables users to view actions related to their files in Nextcloud." : "이 애플리케이션은 사용자들이 Nextcloud에서 파일 관련 활동을 볼 수 있도록 합니다.",
     "Activity feed" : "활동 피드",
     "Send activity emails" : "활동 이메일 보내기",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "RSS feed" : "RSS 피드",
     "No more events to load" : "더 이상 불러올 이벤트 없음",
     "Files" : "파일",
+    "Activities" : "활동",
     "Home" : "홈",
     "Activity notification" : "활동 알림"
 },

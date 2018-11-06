@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Aktivitéiten",
+    "Activity" : "Aktivitéit",
     "No activity yet" : "Bis elo keng Aktivitéit",
     "Load more activities" : "Lued méi Aktivitéiten",
     "Copied!" : "Kopéiert!",
@@ -28,7 +28,6 @@ OC.L10N.register(
     "%s and %s" : "%s an %s",
     "Mail" : "Mail",
     "Stream" : "Floss",
-    "Activity" : "Aktivitéit",
     "Activity feed" : "Aktivitéits-Feed",
     "List your own actions in the stream" : "Weis är aner Aktivitéiten am Floss",
     "Notify about your own actions via email" : "Iwwer eegene Aktiounen iwwer E-Mail informéieren",
@@ -41,6 +40,7 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS-Feed aktivéieren",
     "No more events to load" : "Keng weider Evenementer fir ze lueden",
     "Files" : "Fichieren",
+    "Activities" : "Aktivitéiten",
     "Activity notification" : "Aktivitéits-Notifikatiounen"
 },
 "nplurals=2; plural=(n != 1);");
