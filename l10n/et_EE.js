@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Tegevused",
+    "Activity" : "Tegevused",
     "An error occurred while loading activities" : "Tegevuse laadimisel tekkis tõrge",
     "No activity yet" : "Tegevusi veel pole",
     "Load more activities" : "Lae rohkem tegevusi",
@@ -33,7 +33,6 @@ OC.L10N.register(
     "%s and %s" : "%s ja %s",
     "Mail" : "Kirjad",
     "Stream" : "Voog",
-    "Activity" : "Tegevused",
     "Activity feed" : "Tegevuste voog",
     "Send activity emails" : "Saada tegevuste kohta e-kirju",
     "Default settings" : "Vaikeseaded",
@@ -53,6 +52,7 @@ OC.L10N.register(
     "RSS feed" : "RRS voog",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
     "Files" : "Failid",
+    "Activities" : "Tegevused",
     "Home" : "Avaleht",
     "Activity notification" : "Tegevuste teavitused"
 },

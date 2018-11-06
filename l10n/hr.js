@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Aktivnosti",
+    "Activity" : "Aktivnost",
     "An error occurred while loading activities" : "Greška pri učitavanju aktivnosti",
     "No activity yet" : "Nema aktivnosti zasad",
     "Load more activities" : "Učitaj više aktivnosti",
@@ -26,7 +26,6 @@ OC.L10N.register(
     "%s and %s" : "%s i %s",
     "Mail" : "Pošta",
     "Stream" : "Strujanje",
-    "Activity" : "Aktivnost",
     "Activity feed" : "Sažetak aktivnosti",
     "Default settings" : "Zadane postavke",
     "Configure the default activity settings for new users." : "Definiraj osnovne postavke aktivnosti za nove korisnike.",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "RSS feed" : "Sažetak događaja RSS",
     "No more events to load" : "Nema više događaja za učitavanje",
     "Files" : "Datoteke",
+    "Activities" : "Aktivnosti",
     "Home" : "Početna",
     "Activity notification" : "Notifikacija o aktivnosti"
 },

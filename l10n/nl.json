@@ -1,5 +1,5 @@
 { "translations": {
-    "Activities" : "Activiteiten",
+    "Activity" : "Activiteit",
     "An error occurred while loading activities" : "Er is een fout opgetreden bij het laden van activiteiten",
     "No activity yet" : "Nog geen activiteit",
     "Load more activities" : "Meer activiteiten laden",
@@ -32,7 +32,6 @@
     "%s and %s" : "%s en %s",
     "Mail" : "E-mail",
     "Stream" : "Doorlopend",
-    "Activity" : "Activiteit",
     "This application enables users to view actions related to their files in Nextcloud." : "Deze applicatie laat gebruikers acties met betrekking tot hun bestanden op Nextcloud zien",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Deze applicatie laat gebruikers acties gerelateerd aan hun bestanden in Nextcloud zien.\n\t\tWanneer ingeschakeld zien gebruikers een nieuw pictogra, \"Activiteit\" in hun apps menu.\n\t\tBij aanklikken verschijnt een nieuwe pagina waarmee gebruikers het gedrag m.b,t, hun bestanden kunnen monitoren – van nieuw bestanden tot verwijderde bestanden, verplaatsen, hernoemen, bijwerken en delen.\n\t\tDe gebruiker kan individuele activiteiteninstellingen configureren in hun persoonlijke menu.\n\t\tDit is de instelling voor te registreren activiteiten en ook of de gebruikers hun eigen activiteiten te zien krijgen,\n\t\tof ze alleen beschikbaar zijn online en of ze een periodiek e-mailbericht met samenvatting ontvangen.\n\t\tMeer informatie is beschikbaar in de Activity documentatie.",
     "Activity feed" : "Activiteitenkanaal",
@@ -54,6 +53,7 @@
     "RSS feed" : "RSS kanaal",
     "No more events to load" : "Geen meer activiteiten beschikbaar",
     "Files" : "Bestanden",
+    "Activities" : "Activiteiten",
     "Home" : "Thuis",
     "Activity notification" : "Activiteitenmelding"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

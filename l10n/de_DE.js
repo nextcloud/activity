@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Aktivitäten",
+    "Activity" : "Aktivität",
     "An error occurred while loading activities" : "Es ist ein Fehler beim Laden der Aktivitäten aufgetreten",
     "No activity yet" : "Bislang keine Aktivitäten",
     "Load more activities" : "Weitere Aktivitäten laden",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s und %s",
     "Mail" : "E-Mail",
     "Stream" : "Stream",
-    "Activity" : "Aktivität",
     "This application enables users to view actions related to their files in Nextcloud." : "Diese App erlaubt es Nutzern, Aktivitäten ihrer Dateien in Nextcloud zu verfolgen.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Diese App ermöglicht es Benutzern Ereignisse zu ihren Dateien zu sehen.\nSobald dies aktiviert ist, sehen die Benutzer ein neues Symbol \"Aktivitäten\" in Ihrem App-Menü.\nWenn darauf geklickt wird, erscheint eine neue Seite für die Benutzer, auf welcher er die Aktivitäten in Bezug auf die Dateien verfolgen können - von erstellten und gelöschten Dateien, über Verschiebe -, Umbenennungs- , Aktualisier- und Teilaktionen.\nDer Benutzer kann seine Individuelle Aktivitätseinstellung im persönlichen Menü vornehmen.\nDies setzt den Typ von Aktivität zur Aufzeichnung und ob der Benutzer seine eigenen Aktivitäten sieht,\nob diese nur Online verfügbar sind und ob E-Mail-Benachrichtigungen auf täglicher Basis verschickt werden.\nWeitere Informationen sind unter Aktivitäten in der Dokumentation verfügbar.",
     "Activity feed" : "Feed der Aktivitäten",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "RSS feed" : "RSS-Feed",
     "No more events to load" : "Keine weiteren Ereignisse zu laden",
     "Files" : "Dateien",
+    "Activities" : "Aktivitäten",
     "Home" : "Home",
     "Activity notification" : "Benachrichtigung über die Aktivitäten"
 },

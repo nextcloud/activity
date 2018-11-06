@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Irmuden",
+    "Activity" : "Armud",
     "An error occurred while loading activities" : "Teḍra-d tuccḍa deg usali n irmuden",
     "No activity yet" : "Ulac armud yakan",
     "Load more activities" : "Sali-d ugar n irmuden",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s akked %s",
     "Mail" : "Tirawt",
     "Stream" : "Asuddem",
-    "Activity" : "Armud",
     "This application enables users to view actions related to their files in Nextcloud." : "Asnas-ag ad yeǧǧ iseqdacen ad walin tigawin yeɛnan ifuyla-nnsen di Nextcloud.",
     "Activity feed" : "Asuddem n warmud",
     "Send activity emails" : "Azen imaylen n warmud",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "RSS feed" : "Asuddem RSS",
     "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
     "Files" : "Ifuyla",
+    "Activities" : "Irmuden",
     "Home" : "Asnubeg",
     "Activity notification" : "Alɣu n urmud"
 },

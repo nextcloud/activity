@@ -1,6 +1,7 @@
 OC.L10N.register(
     "activity",
     {
+    "Activity" : "Fəallıq",
     "Today" : "Bu gün",
     "Yesterday" : "Dünən",
     "Personal activity feed for %s" : "%s üçün şəxsi fəaliyyətin ötürülməsi",
@@ -12,7 +13,6 @@ OC.L10N.register(
     "%s and %s" : "%s və %s",
     "Mail" : "Məktub",
     "Stream" : "Axın",
-    "Activity" : "Fəallıq",
     "Activity feed" : "Fəaliyyətin ötürülməsi",
     "Notify about your own actions via email" : "Öz gördüyünüz işlər haqqənda email-lə xəbərdar elə",
     "You need to set up your email address before you can receive notification emails." : "Xəbərdarlıq məktubları almazdan öncə, siz mail ünvanınızı təyin etməlisiniz.",

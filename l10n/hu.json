@@ -1,5 +1,5 @@
 { "translations": {
-    "Activities" : "Tevékenységek",
+    "Activity" : "Tevékenység",
     "An error occurred while loading activities" : "Hiba történt a tevékenységek betöltése közben",
     "No activity yet" : "Nincs még tevékenység",
     "Load more activities" : "Több tevékenység betöltése",
@@ -32,7 +32,6 @@
     "%s and %s" : "%s és %s",
     "Mail" : "Levél",
     "Stream" : "Folyam",
-    "Activity" : "Tevékenység",
     "This application enables users to view actions related to their files in Nextcloud." : "Ez az alkalmazás lehetővé teszi a felhasználók számára, hogy megtekinthessék a fájlokhoz kapcsolódó műveleteket a Nextcloud-ban.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ez az alkalmazás lehetővé teszi, hogy a felhasználók megtekinthessék a fájljaikkal kapcsolatos tevékenységeket a Nextcloudban.\n\t\tBekapcsolás után a felhasználó egy új, \"Tevékenység\" ikont talál az alkalmazás menüben.\n\t\tKlikk után egy új lap jelenik meg, ahol a felhasználó követheti a fájlokhoz kapcsolódó tevékenységeket - az új fájloktól a fájltörlésekig, mozgatás, átnevezés, frissítés és megosztási tevékenységeket.\n\t\tA felhasználó a saját személyes menüjében konfigurálhatja a saját egyedi tevékenység-beállításait.\n\t\tEzzel beállíthatja, hogy mely tevékenységek kerüljenek naplózásra, ahogy azt is, hogy a felhasználó lássa-e saját tevékenységeit,\n\t\tvalamint azt, hogy csak online módon legyenek elérhetők vagy emailben valamilyen rendszerességgel.\n\t\tTovábbi információ a Tevékenység dokumentációban érhető el.",
     "Activity feed" : "Tevékenységi hírfolyam",
@@ -54,6 +53,7 @@
     "RSS feed" : "RSS-csatorna",
     "No more events to load" : "Nincs több esemény",
     "Files" : "Fájlok",
+    "Activities" : "Tevékenységek",
     "Home" : "Kezdőlap",
     "Activity notification" : "Tevékenység értesítés"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

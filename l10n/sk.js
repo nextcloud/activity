@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Aktivity",
+    "Activity" : "Aktivita",
     "An error occurred while loading activities" : "Pri pokuse o načítanie aktivity nastala chyba",
     "No activity yet" : "Zatiaľ žiadne aktivity.",
     "Load more activities" : "Načítať viac aktivít",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s a %s",
     "Mail" : "Pošta",
     "Stream" : "Prúd",
-    "Activity" : "Aktivita",
     "This application enables users to view actions related to their files in Nextcloud." : "Táto aplikácia povolí používateľom sledovať akcie súvisiace s ich súbormi v Nextcloude.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Táto aplikácia povolí používateľom sledovať akcie súvisiace s ich súbormi v Nextcloude.\n\t\tPo zapnutí uvidia používatelia novú ikonu \"Aktivita\" v ich ponuke aplikácií.\n\t\tPo kliknutí sa zobrazí nová stránka kde budú môcť sledovať aktivitu súvisiacu s ich súbormi - ako sú napr. nové súbory, vymazané súbory, presunutia, premenovania, aktualizované súbory a aktivitu na sprístupnených súboroch.\n\t\tPoužívateľ môže mať svoje vlastné nastavenia v jeho osobnom menu.\n\t\tMôže si nastaviť typ aktivity pre zaznamenávanie, taktiež aj či vôbec chce vidieť svoju vlastnú aktivitu,\n\t\tprípadne či ju chce vidieť len online alebo ju dostavať v pravidelnom e-mailovom výkaze.\n\t\tViac informácií môžete získať v dokumentácii k apke Aktivity.",
     "Activity feed" : "Prehľad aktivít",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "RSS feed" : "RSS kanál",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
     "Files" : "Súbory",
+    "Activities" : "Aktivity",
     "Home" : "Domov",
     "Activity notification" : "Upozornenia na aktivity"
 },

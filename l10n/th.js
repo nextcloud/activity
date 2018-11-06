@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "กิจกรรม",
+    "Activity" : "กิจกรรม",
     "An error occurred while loading activities" : "เกิดข้อผิดพลาดขณะโหลดกิจกรรม",
     "No activity yet" : "ยังไม่มีกิจกรรม",
     "Load more activities" : "โหลดกิจกรรมอื่นๆ",
@@ -32,7 +32,6 @@ OC.L10N.register(
     "%s and %s" : "%s และ %s",
     "Mail" : "จดหมาย",
     "Stream" : "สตรีม",
-    "Activity" : "กิจกรรม",
     "Activity feed" : "ฟีดกิจกรรม",
     "Configure the default activity settings for new users." : "ตั้งค่ากิจกรรมเริ่มต้นให้ผู้ใช้ใหม่",
     "List your own actions in the stream" : "รายชื่อการกระทำของคุณในสตรีม",
@@ -47,6 +46,7 @@ OC.L10N.register(
     "Enable RSS feed" : "เปิดใช้งานฟีด RSS",
     "No more events to load" : "ไม่มีการโหลดกิจกรรมเพิ่มเติม",
     "Files" : "ไฟล์",
+    "Activities" : "กิจกรรม",
     "Activity notification" : "การแจ้งเตือนกิจกรรม"
 },
 "nplurals=1; plural=0;");

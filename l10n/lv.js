@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Izmaiņas",
+    "Activity" : "Izmaiņas",
     "An error occurred while loading activities" : "Radās kļūda, ielādējot darbības",
     "No activity yet" : "Vēl nav aktivitāšu",
     "Load more activities" : "Ielādēt vairāk izmaiņas",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s un %s",
     "Mail" : "E-pasts",
     "Stream" : "Datu straume",
-    "Activity" : "Izmaiņas",
     "This application enables users to view actions related to their files in Nextcloud." : "Šī aplikācija iespējo lietotājiem paraudzīts darbības saistītas ar viņu failiem Nextcloud",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Šī aplikācija iespējo lietotājiem paraudzīts darbības saistītas ar viņu failiem Nextcloud.\n\t\tKad iespējota, lietotājs redzēs jaunu ikonu “Izmaiņas” aplikāciju joslā.\n\t\tKlikšķinot, parādīsies jauna lapa ar notikušajām izmaiņām saistībā ar lietotāja datnēm – tai skaitā jaunās, dzēstās, mainītās datnes, atjauninājumus un kopīgošanas statistiku.\n\t\tLietotājs var iestatīt individuāli izmaiņu iestatījumus viņa personīgajā izvēlnē.\n\t\tŠis iespējo izmaiņu veidu ko saglabāt, kā arī vai lietotājs redz savas izmaiņas,\n\t\tvai tās ir piejamas tikai tiešsastē, un vai tie saņems regulāru epasta atskaiti. \n\t\tVairāk informācijas pieejams Izmaiņu dokumentācijā.",
     "Activity feed" : "Izmaiņu plūsma",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "RSS feed" : "RSS plūsma",
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "Files" : "Datnes",
+    "Activities" : "Izmaiņas",
     "Home" : "Mājas",
     "Activity notification" : "Brīdinājumi par izmaiņām"
 },
