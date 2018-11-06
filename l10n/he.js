@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "פעילויות",
+    "Activity" : "פעילות",
     "An error occurred while loading activities" : "אירעה שגיאה בעת טעינת הפעילויות",
     "No activity yet" : "אין עדיין פעילויות",
     "Load more activities" : "טעינת פעילויות נוספות",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s ו- %s",
     "Mail" : "דואר",
     "Stream" : "הזרמת מידע",
-    "Activity" : "פעילות",
     "This application enables users to view actions related to their files in Nextcloud." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שקשורות לקבצים שלהם ב־Nextcloud.",
     "Activity feed" : "דיווחי פעילות",
     "Send activity emails" : "שליחת הודעות פעילות בדוא״ל",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "RSS feed" : "ערוץ RSS",
     "No more events to load" : "אין אירועים נוספים לטעינה",
     "Files" : "קבצים",
+    "Activities" : "פעילויות",
     "Home" : "בית",
     "Activity notification" : "דיווח פעילות"
 },

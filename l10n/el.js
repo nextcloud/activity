@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Δραστηριότητες",
+    "Activity" : "Δραστηριότητα",
     "An error occurred while loading activities" : "Παρουσιάστηκε σφάλμα κατά την φόρτωση των δραστηριοτήτων",
     "No activity yet" : "Καμία δραστηριότητα ακόμα",
     "Load more activities" : "Φόρτωση περισσότερων δραστηριοτήτων",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s και %s",
     "Mail" : "Ταχυδρομείο",
     "Stream" : "Ροή",
-    "Activity" : "Δραστηριότητα",
     "Activity feed" : "Ροή Δραστηριότητας",
     "Send activity emails" : "Αποστολή emails δραστηριοτήτων",
     "Default settings" : "Προεπιλεγμένες ρυθμίσεις",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "RSS feed" : "Ροή RSS",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "Files" : "Αρχεία",
+    "Activities" : "Δραστηριότητες",
     "Home" : "Αρχική",
     "Activity notification" : "Ειδοποίηση δραστηριότητας"
 },

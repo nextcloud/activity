@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "ක්‍රියාකාරකම්",
+    "Activity" : "ක්‍රියාකාරකම",
     "An error occurred while loading activities" : "ක්‍රියාකාරකම් ප්‍රවේශනය කිරීමේදී ගැටළු මතුවී ඇත.",
     "No activity yet" : "මේ වෙනතුරු කිසිම ක්‍රියාකාරකම් නොමැත.",
     "Load more activities" : "තවත් ක්‍රියාකාරකම් පූරණය කරන්න",
@@ -25,7 +25,6 @@ OC.L10N.register(
     "%s and %s" : "%sසහ %s",
     "Mail" : "තැපෑල",
     "Stream" : "ප්‍රවාහය",
-    "Activity" : "ක්‍රියාකාරකම",
     "Activity feed" : "ක්‍රියාකාරකම් පෝෂකය",
     "Default settings" : "ස්වාබාවික සැකසුම්",
     "Send emails:" : "විද්‍යුත් තැපැල් යැවීම :",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Weekly" : "සතිපතා",
     "Settings" : "සැකසුම්",
     "Files" : "ගොනු",
+    "Activities" : "ක්‍රියාකාරකම්",
     "Home" : "නිවස."
 },
 "nplurals=2; plural=(n != 1);");

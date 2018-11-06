@@ -1,5 +1,5 @@
 { "translations": {
-    "Activities" : "Δραστηριότητες",
+    "Activity" : "Δραστηριότητα",
     "An error occurred while loading activities" : "Παρουσιάστηκε σφάλμα κατά την φόρτωση των δραστηριοτήτων",
     "No activity yet" : "Καμία δραστηριότητα ακόμα",
     "Load more activities" : "Φόρτωση περισσότερων δραστηριοτήτων",
@@ -32,7 +32,6 @@
     "%s and %s" : "%s και %s",
     "Mail" : "Ταχυδρομείο",
     "Stream" : "Ροή",
-    "Activity" : "Δραστηριότητα",
     "Activity feed" : "Ροή Δραστηριότητας",
     "Send activity emails" : "Αποστολή emails δραστηριοτήτων",
     "Default settings" : "Προεπιλεγμένες ρυθμίσεις",
@@ -52,6 +51,7 @@
     "RSS feed" : "Ροή RSS",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "Files" : "Αρχεία",
+    "Activities" : "Δραστηριότητες",
     "Home" : "Αρχική",
     "Activity notification" : "Ειδοποίηση δραστηριότητας"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

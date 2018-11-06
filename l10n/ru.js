@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "События",
+    "Activity" : "События",
     "An error occurred while loading activities" : "При загрузке списка событий произошла ошибка",
     "No activity yet" : "Пока не произошло ни одного события",
     "Load more activities" : "Загрузить ещё события",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s и %s",
     "Mail" : "Почта",
     "Stream" : "Поток",
-    "Activity" : "События",
     "This application enables users to view actions related to their files in Nextcloud." : "Это приложение позволяет пользователям просматривать действия, связанные с их файлами в Nextcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Это приложение позволяет пользователям просматривать действия, связанные с их файлами в Nextcloud.\n\t\tПосле включения в меню приложений появится значок «Действия».\n\t\tПри нажатии появляется новая страница для отслеживания действий, связанных с файлами, - от новых файлов, до удаленных файлов, перемещения, переименования, обновлений и совместного использования\t.\n\t\tПользователь может настроить свои индивидуальные настройки активности в своем личном кабинете..\n\t\tЗдесь устанавливается тип активности для записи в протокол действий, а также, видит ли пользователь свои действия,\n\t\tдоступны ли они только в режиме онлайн, и регулярно ли они получают электронную сводку.\n\t\tДополнительная информация доступна в документации по \"Действиям\".",
     "Activity feed" : "Лента событий",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "RSS feed" : "RSS лента",
     "No more events to load" : "Больше нет событий для загрузки",
     "Files" : "Файлы",
+    "Activities" : "События",
     "Home" : "Главная страница",
     "Activity notification" : "Оповещение о произошедших событиях"
 },

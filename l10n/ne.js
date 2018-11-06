@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "क्रियाकलापहरू",
+    "Activity" : "गतिविधि",
     "An error occurred while loading activities" : "क्रियाकलापहरू लोड गर्दा त्रुटि देखापर्यो",
     "No activity yet" : "अझै सम्म कुनै क्रियाकलाप छैन",
     "Load more activities" : "थप क्रियाकलापहरू लोड गर्नुहोस्",
@@ -33,7 +33,6 @@ OC.L10N.register(
     "%s and %s" : "%s र %s",
     "Mail" : "पत्र",
     "Stream" : "स्ट्रिम",
-    "Activity" : "गतिविधि",
     "Activity feed" : "गतिविधि पाटि",
     "Send activity emails" : "गतिविधिको इमेलहरू पठाउनुहोस्",
     "Default settings" : "पूर्वनिर्धारित सेटिङहरू",
@@ -51,6 +50,7 @@ OC.L10N.register(
     "RSS feed" : "RSS फिड",
     "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
     "Files" : "फाइलहरू",
+    "Activities" : "क्रियाकलापहरू",
     "Home" : "गृह",
     "Activity notification" : "गतिविधि सूचना"
 },

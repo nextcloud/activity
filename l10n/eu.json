@@ -1,5 +1,5 @@
 { "translations": {
-    "Activities" : "Jarduerak",
+    "Activity" : "Jarduera",
     "An error occurred while loading activities" : "Errorea gertatu da jarduerak kargatzean",
     "No activity yet" : "Oraindik ez dago jarduerarik",
     "Load more activities" : "Kargatu jarduera gehiago",
@@ -32,7 +32,6 @@
     "%s and %s" : "%s eta %s",
     "Mail" : "Posta",
     "Stream" : "Korrontea",
-    "Activity" : "Jarduera",
     "This application enables users to view actions related to their files in Nextcloud." : "Aplikazio honek aukera ematen die erabiltzaileei Nextcloud-eko euren fitxategiekin lotutako ekintzak ikusteko.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Aplikazio honek erabiltzaileari  Nextcloud honetan dauzkan fitxategietan egindako ekintzak ikusteko aukera ematen dio.\n\t\tGaituz gero, erabiltzaileek ikusiko dute \"Jarduera\" dioen ikono berri bat beren aplikazioaren menuetan.\n\t\tKlik egiterakoan, orri berri bat agertuko da erabiltzaileek beren fitxategietan egindako aldaketa guztien jarraipena egiteko – bai fitxategi berrien sorkuntza, bai fitxategien ezabaketa, bai mugitze, bai berrizendatze, bai eguneratze, bai partekatze.\n\t\tErabiltzaileek konfiguratu ahal dute haien jarduera ezarpenak beren menu pertsonalean.\n\t\tHonek doitzen du grabatuko den jarduera mota, baita erabiltzaileak nola ikusten dituen bere-berak diren jarduketak,\n\t\tea jarduketa horiek bakarrik egongo ote diren eskura online ala ez, eta ea posta elektroniko mezu bat jasoko duen hautatutako baldintza batzuetan.\n\t\tInformazio gehiago Jarduera dokumentazio biltegian.",
     "Activity feed" : "Jardueren jarioa",
@@ -54,6 +53,7 @@
     "RSS feed" : "RSS jarioa",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
     "Files" : "Fitxategiak",
+    "Activities" : "Jarduerak",
     "Home" : "Etxea",
     "Activity notification" : "Jarduera jakinarazpena"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

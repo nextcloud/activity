@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Үйлдлүүд",
+    "Activity" : "Үйлдлүүд",
     "An error occurred while loading activities" : "Үйлдлүүдийг ачааллахад алдаа гарлаа",
     "No activity yet" : "Одоохондоо ямар ч үйлдэл алга",
     "Load more activities" : "Бусад үйлдлүүдийг ачаалах",
@@ -28,7 +28,6 @@ OC.L10N.register(
     "%s and %s" : "%s ба %s",
     "Mail" : "Цахим шуудан",
     "Stream" : "Урсгал",
-    "Activity" : "Үйлдлүүд",
     "Activity feed" : "Үйлдлүүдйн тэжээл",
     "Configure the default activity settings for new users." : "Шинэ хэрэглэгчдийн \"Үйлдлүүд\" хэсгийн анхдагч тохиргоог тохируулах",
     "List your own actions in the stream" : "\"Үйлдлүүд\" апп-д өөрийн үйл ажиллагааг харуулах",
@@ -42,6 +41,7 @@ OC.L10N.register(
     "Settings" : "Тохиргоо",
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
     "Files" : "Файлууд",
+    "Activities" : "Үйлдлүүд",
     "Activity notification" : "Үйл ажиллагааны мэдэгдэл"
 },
 "nplurals=2; plural=(n != 1);");

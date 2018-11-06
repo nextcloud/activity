@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Dejavnosti",
+    "Activity" : "Dejavnosti",
     "An error occurred while loading activities" : "Med nalaganjem dejavnosti je prišlo do napake",
     "No activity yet" : "Ni še zabeležene dejavnosti",
     "Load more activities" : "Naloži več dejavnosti",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s in %s",
     "Mail" : "Elektronska pošta",
     "Stream" : "Pretok",
-    "Activity" : "Dejavnosti",
     "This application enables users to view actions related to their files in Nextcloud." : "Program omogoča pregled dogodkov in dejavnosti, povezanih z datotekami v oblaku Nextcloud.",
     "Activity feed" : "Objava dejavnosti z viri RSS",
     "Send activity emails" : "Pošiljaj obvestila o dejavnosti na elektronske naslove",
@@ -55,6 +54,7 @@ OC.L10N.register(
     "RSS feed" : "Viri RSS",
     "No more events to load" : "Ni več dogodkov za nalaganje",
     "Files" : "Datoteke",
+    "Activities" : "Dejavnosti",
     "Home" : "Začetni pogled",
     "Activity notification" : "Obvestila o dejavnosti"
 },

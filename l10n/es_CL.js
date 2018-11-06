@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Actividades",
+    "Activity" : "Actividad",
     "An error occurred while loading activities" : "Se presentó un error al cargar las actividades",
     "No activity yet" : "Aún no tiene actividad",
     "Load more activities" : "Cargar más actividades",
@@ -34,7 +34,6 @@ OC.L10N.register(
     "%s and %s" : "%s y %s",
     "Mail" : "Correo",
     "Stream" : "Flujo",
-    "Activity" : "Actividad",
     "This application enables users to view actions related to their files in Nextcloud." : "Esta aplicación permite a los usuarios ver las acciones relacionadas con sus archivos en Nextcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Esta aplicación permite a los usuarios ver las acciones relacionadas con sus archivos en Nextcloud.\n\t\tUna vez habilitados, los usuarios puede evr un nuevo icono \"Actividad \" en su menu apps.\n\t\tCuando hagan clic, una nueva pagina aparecerá para los usaurios para monitorear las actividades relacionadas con un archivo - desde nuevos archivos, hasta archivos borrados, movidos?, renombrados, actualizados y actividadad compartida.",
     "Activity feed" : "Fuente de actividad",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "RSS feed" : "Fuente RSS",
     "No more events to load" : "No hay más eventos por cargar",
     "Files" : "Archivos",
+    "Activities" : "Actividades",
     "Home" : "Inicio",
     "Activity notification" : "Notificación de actividad"
 },

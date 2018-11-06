@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activities" : "Activitates",
+    "Activity" : "Activitate",
     "An error occurred while loading activities" : "Un error durante le cargamento de activitates",
     "No activity yet" : "Nulle activitate ancora",
     "Load more activities" : "Incarga altere activitates",
@@ -30,7 +30,6 @@ OC.L10N.register(
     "%s and %s" : "%s e %s",
     "Mail" : "Posta",
     "Stream" : "Fluxo",
-    "Activity" : "Activitate",
     "Activity feed" : "Syndication de activitate",
     "List your own actions in the stream" : "Lista tu proprie actiones de file in le fluxo",
     "Notify about your own actions via email" : "Notifica super tu proprie actiones via e-posta",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Habilita syndication RSS",
     "No more events to load" : "Nulle altere eventos a cargar",
     "Files" : "Files",
+    "Activities" : "Activitates",
     "Activity notification" : "Notification de activitate"
 },
 "nplurals=2; plural=(n != 1);");
