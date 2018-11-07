@@ -651,7 +651,7 @@ class APIv2Test extends TestCase {
 		]);
 		$controller->expects($this->any())
 			->method('getPreviewFromPath')
-			->with($path)
+			->with($fileId, $path)
 			->willReturn(['getPreviewFromPath']);
 
 		$this->assertSame(['getPreviewFromPath'], self::invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
@@ -659,10 +659,10 @@ class APIv2Test extends TestCase {
 
 	public function dataGetPreview() {
 		return [
-			['author', 42, '/path', '/currentPath', true, true, false, '/preview/dir', true],
-			['author', 42, '/file.txt', '/currentFile.txt', false, true, false, '/preview/mpeg', true],
-			['author', 42, '/file.txt', '/currentFile.txt', false, true, true, '/preview/currentFile.txt', false],
-			['author', 42, '/file.txt', '/currentFile.txt', false, false, true, 'source::getPreviewFromPath', true],
+			['author', 42, '/path', '/currentPath', true, true, false, '/preview/dir', true, 'dir'],
+			['author', 42, '/file.txt', '/currentFile.txt', false, true, false, '/preview/mpeg', true, 'audio/mp3'],
+			['author', 42, '/file.txt', '/currentFile.txt', false, true, true, '/preview/currentFile.txt', false, 'text/plain'],
+			['author', 42, '/file.txt', '/currentFile.txt', false, false, true, 'source::getPreviewFromPath', true, 'text/plain'],
 		];
 	}
 
@@ -678,8 +678,9 @@ class APIv2Test extends TestCase {
 	 * @param bool $isMimeSup
 	 * @param string $source
 	 * @param bool $isMimeTypeIcon
+	 * @param string $mimeType
 	 */
-	public function testGetPreview($author, $fileId, $path, $returnedPath, $isDir, $validFileInfo, $isMimeSup, $source, $isMimeTypeIcon) {
+	public function testGetPreview($author, $fileId, $path, $returnedPath, $isDir, $validFileInfo, $isMimeSup, $source, $isMimeTypeIcon, $mimeType) {
 
 		$controller = $this->getController([
 			'getPreviewLink',
@@ -726,7 +727,7 @@ class APIv2Test extends TestCase {
 				->willReturn($isMimeSup);
 
 			if (!$isMimeSup) {
-				$fileInfo->expects($this->once())
+				$fileInfo->expects($this->atLeastOnce())
 					->method('getMimetype')
 					->willReturn('audio/mp3');
 
@@ -735,6 +736,10 @@ class APIv2Test extends TestCase {
 					->with('audio/mp3')
 					->willReturn('/preview/mpeg');
 			} else {
+				$fileInfo->expects($this->atLeastOnce())
+					->method('getMimetype')
+					->willReturn('text/plain');
+
 				$this->urlGenerator->expects($this->once())
 					->method('linkToRouteAbsolute')
 					->with('core.Preview.getPreview', $this->anything())
@@ -753,33 +758,44 @@ class APIv2Test extends TestCase {
 
 			$controller->expects($this->once())
 				->method('getPreviewFromPath')
-				->with($path, $this->anything())
-				->willReturn(['source' => 'source::getPreviewFromPath']);
+				->with($fileId, $path, $this->anything())
+				->willReturn([
+					'link' => '/preview' . $returnedPath,
+					'source' => 'source::getPreviewFromPath',
+					'mimeType'		=> $mimeType,
+					'isMimeTypeIcon' => $isMimeTypeIcon,
+					'fileId'		=> $fileId,
+					'view'			=> 'files',
+				]);
 		}
 
 		$this->assertSame([
 			'link' => '/preview' . $returnedPath,
 			'source' => $source,
+			'mimeType'		=> $mimeType,
 			'isMimeTypeIcon' => $isMimeTypeIcon,
+			'fileId'		=> $fileId,
+			'view'			=> 'files',
 		], self::invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
 	}
 
 	public function dataGetPreviewFromPath() {
 		return [
-			['dir', 'dir', true, ''],
-			['test.txt', 'text/plain', false, 'trashbin'],
-			['test.mp3', 'audio/mpeg', false, ''],
+			[23, 'dir', 'dir', true, ''],
+			[42, 'test.txt', 'text/plain', false, 'trashbin'],
+			[128, 'test.mp3', 'audio/mpeg', false, ''],
 		];
 	}
 
 	/**
 	 * @dataProvider dataGetPreviewFromPath
+	 * @param int $fileId
 	 * @param string $filePath
 	 * @param string $mimeType
 	 * @param bool $isDir
 	 * @param string $view
 	 */
-	public function testGetPreviewFromPath($filePath, $mimeType, $isDir, $view) {
+	public function testGetPreviewFromPath($fileId, $filePath, $mimeType, $isDir, $view) {
 		$controller = $this->getController([
 			'getPreviewPathFromMimeType',
 			'getPreviewLink',
@@ -801,9 +817,12 @@ class APIv2Test extends TestCase {
 			[
 				'link' => 'target-link',
 				'source' => 'mime-type-icon',
+				'mimeType'		=> $mimeType,
 				'isMimeTypeIcon' => true,
+				'fileId'		=> $fileId,
+				'view'			=> $view ?: 'files',
 			],
-			self::invokePrivate($controller, 'getPreviewFromPath', [$filePath, ['path' => $filePath, 'is_dir' => $isDir, 'view' => $view]])
+			self::invokePrivate($controller, 'getPreviewFromPath', [$fileId, $filePath, ['path' => $filePath, 'is_dir' => $isDir, 'view' => $view]])
 		);
 	}
 
