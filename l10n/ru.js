@@ -50,7 +50,7 @@ OC.L10N.register(
     "Weekly" : "Еженедельно",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Выберите, уведомления о каких событиях отправлять по email, а какие выводить в ленте.",
     "Choose which activities you want to see in your stream." : "Выберите типы событий для их показа в ленте.",
-    "Settings" : "Настройки",
+    "Settings" : "Параметры",
     "Enable RSS feed" : "Включить RSS ленту",
     "RSS feed" : "RSS лента",
     "No more events to load" : "Больше нет событий для загрузки",
