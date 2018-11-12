@@ -436,10 +436,16 @@ class MailQueueHandler {
 		foreach ($event->getRichSubjectParameters() as $placeholder => $parameter) {
 			$placeholders[] = '{' . $placeholder . '}';
 
-			if (isset($parameter['link'])) {
-				$replacements[] = '<a href="' . $parameter['link'] . '">' . htmlspecialchars($parameter['name']) . '</a>';
+			if ($parameter['type'] === 'file') {
+				$replacement = $parameter['path'];
 			} else {
-				$replacements[] = '<strong>' . htmlspecialchars($parameter['name']) . '</strong>';
+				$replacement = $parameter['name'];
+			}
+
+			if (isset($parameter['link'])) {
+				$replacements[] = '<a href="' . $parameter['link'] . '">' . htmlspecialchars($replacement) . '</a>';
+			} else {
+				$replacements[] = '<strong>' . htmlspecialchars($replacement) . '</strong>';
 			}
 		}
 
