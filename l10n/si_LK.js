@@ -13,6 +13,7 @@ OC.L10N.register(
     "{name} (restricted)" : "{නම} (සීමිත)",
     "Today" : "අද",
     "Yesterday" : "ඊයේ",
+    "Open file" : "ගොනුව අරින්න",
     "All activities" : "සියලුම ක්‍රියාකාරකම්",
     "By others" : "අනිකුත් අයගෙන්",
     "By you" : "මා විසින්",
