@@ -34,6 +34,7 @@ OC.L10N.register(
     "%s and %s" : "%s و %s",
     "Mail" : "البريد",
     "Stream" : "البث",
+    "This application enables users to view actions related to their files in Nextcloud." : "هذا التطبيق يمكن المستخدمين من عرض الإجراءات المتعلقة بملفاتهم في نكست كلاود.",
     "Activity feed" : "تغذية الأنشطة",
     "Send activity emails" : "ارسل ايميل عن النشاطات",
     "Default settings" : "الإعدادات الإفتراضية",
