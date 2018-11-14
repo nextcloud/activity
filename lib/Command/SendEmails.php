@@ -23,17 +23,18 @@
 
 namespace OCA\Activity\Command;
 
+use OC\Core\Command\Base;
 use OCA\Activity\MailQueueHandler;
 use OCA\Activity\UserSettings;
 use OCP\IConfig;
 use OCP\ILogger;
-use Symfony\Component\Console\Command\Command;
+use Stecman\Component\Symfony\Console\BashCompletion\CompletionContext;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SendEmails extends Command {
+class SendEmails extends Base {
 
 	/** @var MailQueueHandler */
 	protected $queueHandler;
@@ -114,5 +115,17 @@ class SendEmails extends Command {
 		}
 
 		return 0;
+	}
+
+	/**
+	 * @param string $argumentName
+	 * @param CompletionContext $context
+	 * @return string[]
+	 */
+	public function completeArgumentValues($argumentName, CompletionContext $context) {
+		if ($argumentName === 'restrict-batching') {
+			return ['asap', 'hourly', 'daily', 'weekly'];
+		}
+		return [];
 	}
 }
