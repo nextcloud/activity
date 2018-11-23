@@ -27,6 +27,9 @@ use OCA\Activity\Parameter\IParameter;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
+use OCP\ILogger;
+use OCP\RichObjectStrings\InvalidObjectExeption;
+use OCP\RichObjectStrings\IValidator;
 
 class GroupHelper {
 	/** @var IEvent[] */
@@ -46,6 +49,12 @@ class GroupHelper {
 	/** @var \OCA\Activity\DataHelper */
 	protected $dataHelper;
 
+	/** @var IValidator */
+	protected $richObjectValidator;
+
+	/** @var ILogger */
+	protected $logger;
+
 	/** @var LegacyParser */
 	protected $legacyParser;
 
@@ -53,14 +62,18 @@ class GroupHelper {
 	 * @param IL10N $l
 	 * @param \OCP\Activity\IManager $activityManager
 	 * @param \OCA\Activity\DataHelper $dataHelper
+	 * @param IValidator $richObjectValidator
+	 * @param ILogger $logger
 	 * @param LegacyParser $legacyParser
 	 */
-	public function __construct(IL10N $l, IManager $activityManager, DataHelper $dataHelper, LegacyParser $legacyParser) {
+	public function __construct(IL10N $l, IManager $activityManager, DataHelper $dataHelper, IValidator $richObjectValidator, ILogger $logger, LegacyParser $legacyParser) {
 		$this->allowGrouping = true;
 
 		$this->l = $l;
 		$this->activityManager = $activityManager;
 		$this->dataHelper = $dataHelper;
+		$this->richObjectValidator = $richObjectValidator;
+		$this->logger = $logger;
 		$this->legacyParser = $legacyParser;
 	}
 
@@ -97,6 +110,24 @@ class GroupHelper {
 				} else {
 					$event = $provider->parse($language, $event);
 				}
+				try {
+					$this->richObjectValidator->validate($event->getRichSubject(), $event->getRichSubjectParameters());
+				} catch (InvalidObjectExeption $e) {
+					$this->logger->logException($e);
+					$event->setRichSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed', []);
+					$event->setParsedSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed');
+				}
+
+				if ($event->getRichMessage()) {
+					try {
+						$this->richObjectValidator->validate($event->getRichMessage(), $event->getRichMessageParameters());
+					} catch (InvalidObjectExeption $e) {
+						$this->logger->logException($e);
+						$event->setRichMessage('Rich message or a parameter is malformed', []);
+						$event->setParsedMessage('Rich message or a parameter is malformed');
+					}
+				}
+
 				$this->activityManager->setFormattingObject('', 0);
 
 				$child = $event->getChildEvent();
