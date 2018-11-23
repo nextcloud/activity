@@ -788,6 +788,11 @@ class FilesHooks {
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	protected function unshareFromUser(IShare $share) {
+		if ($share->getSharedWith() === $this->currentUser->getUID()) {
+			$this->selfUnshareFromUser($share);
+			return;
+		}
+
 		// User performing the share
 		$this->shareNotificationForSharer('unshared_user_self', $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
 
@@ -803,6 +808,22 @@ class FilesHooks {
 			$this->userSettings->getUserSetting($share->getSharedWith(), 'stream', Files_Sharing::TYPE_SHARED),
 			$this->userSettings->getUserSetting($share->getSharedWith(), 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($share->getSharedWith(), 'setting', 'batchtime') : false
 		);
+	}
+
+	/**
+	 * Unharing a file or folder from a user
+	 *
+	 * @param IShare $share
+	 * @throws \OCP\Files\NotFoundException
+	 */
+	protected function selfUnshareFromUser(IShare $share) {
+		// User performing the share
+		$this->shareNotificationForSharer('self_unshared', $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+
+		// Owner
+		if ($this->currentUser->getUID() !== null) {
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'self_unshared_by', $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+		}
 	}
 
 	/**
