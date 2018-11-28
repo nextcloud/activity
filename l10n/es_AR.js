@@ -33,6 +33,7 @@ OC.L10N.register(
     "%s and %s" : "%s y %s",
     "Mail" : "Correo Electrónico",
     "Stream" : "Compartir",
+    "This application enables users to view actions related to their files in Nextcloud." : "Esta aplicación permite a los usuarios ver acciones relacionadas con sus archivos en Nextcloud.",
     "Activity feed" : "Secuencia de Actividad",
     "Send activity emails" : "Enviar emails de actividad",
     "Default settings" : "Configuraciónes por defecto",
