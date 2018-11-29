@@ -1,10 +1,7 @@
-<?php
 /**
- * @copyright Copyright (c) 2016, ownCloud, Inc.
+ * @copyright Copyright (c) 2018 John Molakvoæ <skjnldsv@protonmail.com>
  *
- * @author Jan-Christoph Borchardt <hey@jancborchardt.net>
- * @author Joas Schilling <coding@schilljs.com>
- * @author Thomas Müller <thomas.mueller@tmit.eu>
+ * @author John Molakvoæ <skjnldsv@protonmail.com>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -19,13 +16,23 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-script('activity', [
-	'activity',
-]);
-style('activity', 'style');
-?>
+import '@babel/polyfill'
 
-<div id="activity-content"></div>
+import Vue from 'vue'
+import App from './App'
+
+Vue.prototype.t = t
+Vue.prototype.n = n
+Vue.prototype.OC = OC
+Vue.prototype.OCA = OCA
+
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
+
+/* eslint-disable-next-line no-new */
+new Vue({
+	render: h => h(App)
+}).$mount('#content')

@@ -26,12 +26,14 @@ return [
 		['name' => 'APIv2#getDefault', 'url' => '/api/v2/activity', 'verb' => 'GET'],
 		['name' => 'APIv2#listFilters', 'url' => '/api/v2/activity/filters', 'verb' => 'GET'],
 		['name' => 'APIv2#getFilter', 'url' => '/api/v2/activity/{filter}', 'verb' => 'GET'],
+		['name' => 'APIv2#getFeedLink', 'url' => '/api/v2/feed', 'verb' => 'GET'],
+		['name' => 'APIv2#toggleFeedLink', 'url' => '/api/v2/feed', 'verb' => 'POST'],
 	],
 	'routes' => [
 		['name' => 'Settings#personal', 'url' => '/settings', 'verb' => 'POST'],
 		['name' => 'Settings#admin', 'url' => '/settings/admin', 'verb' => 'POST'],
 		['name' => 'Settings#feed', 'url' => '/settings/feed', 'verb' => 'POST'],
-		['name' => 'Activities#showList', 'url' => '/', 'verb' => 'GET'],
 		['name' => 'Feed#show', 'url' => '/rss.php', 'verb' => 'GET'],
+		['name' => 'Activities#showList', 'url' => '/{filter}', 'verb' => 'GET', 'defaults' => ['filter' => '']],
 	],
 ];

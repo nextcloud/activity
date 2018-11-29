@@ -37,11 +37,13 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
 use OCP\Files\FileInfo;
 use OCP\Files\IMimeTypeDetector;
+use OCP\IConfig;
 use OCP\IPreview;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserSession;
+use OCP\Security\ISecureRandom;
 
 class APIv2 extends OCSController {
 
@@ -69,6 +71,9 @@ class APIv2 extends OCSController {
 	/** @var bool */
 	protected $loadPreviews;
 
+	/** @var IConfig */
+	protected $config;
+
 	/** @var IManager */
 	protected $activityManager;
 
@@ -83,6 +88,9 @@ class APIv2 extends OCSController {
 
 	/** @var IURLGenerator */
 	protected $urlGenerator;
+
+	/** @var ISecureRandom */
+	protected $random;
 
 	/** @var IUserSession */
 	protected $userSession;
@@ -99,45 +107,35 @@ class APIv2 extends OCSController {
 	/** @var ViewInfoCache */
 	protected $infoCache;
 
-	/**
-	 * OCSEndPoint constructor.
-	 *
-	 * @param string $appName
-	 * @param IRequest $request
-	 * @param IManager $activityManager
-	 * @param Data $data
-	 * @param GroupHelper $helper
-	 * @param UserSettings $settings
-	 * @param IURLGenerator $urlGenerator
-	 * @param IUserSession $userSession
-	 * @param IPreview $preview
-	 * @param IMimeTypeDetector $mimeTypeDetector
-	 * @param View $view
-	 * @param ViewInfoCache $infoCache
-	 */
 	public function __construct($appName,
 								IRequest $request,
+								IConfig $config,
 								IManager $activityManager,
 								Data $data,
 								GroupHelper $helper,
 								UserSettings $settings,
 								IURLGenerator $urlGenerator,
+								ISecureRandom $random,
 								IUserSession $userSession,
 								IPreview $preview,
 								IMimeTypeDetector $mimeTypeDetector,
 								View $view,
-								ViewInfoCache $infoCache) {
+								ViewInfoCache $infoCache,
+								string $userId) {
 		parent::__construct($appName, $request);
+		$this->config = $config;
 		$this->activityManager = $activityManager;
 		$this->data = $data;
 		$this->helper = $helper;
 		$this->settings = $settings;
 		$this->urlGenerator = $urlGenerator;
+		$this->random = $random;
 		$this->userSession = $userSession;
 		$this->preview = $preview;
 		$this->mimeTypeDetector = $mimeTypeDetector;
 		$this->view = $view;
 		$this->infoCache = $infoCache;
+		$this->user = $userId;
 	}
 
 	/**
@@ -236,6 +234,48 @@ class APIv2 extends OCSController {
 		});
 
 		return new DataResponse($filters);
+	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+	 * @return DataResponse
+	 */
+	public function getFeedLink(): DataResponse {
+		$token = $this->config->getUserValue($this->user, 'activity', 'rsstoken', '');
+		$feedLink = $token !== '' ? $this->urlGenerator->linkToRouteAbsolute('activity.Feed.show', ['token' => $token]) : '';
+
+		return new DataResponse([
+			'feedLink' => $feedLink,
+		]);
+	}
+
+	/**
+	 * @NoAdminRequired
+	 *
+	 * @param bool $enable
+	 * @return DataResponse
+	 */
+	public function toggleFeedLink(bool $enable): DataResponse {
+		$feedToken = $feedLink = '';
+
+		if ($enable) {
+			$conflicts = true;
+
+			// Check for collisions
+			while (!empty($conflicts)) {
+				$feedToken = $this->random->generate(30, ISecureRandom::CHAR_UPPER . ISecureRandom::CHAR_LOWER . ISecureRandom::CHAR_DIGITS);
+				$conflicts = $this->config->getUsersForUserValue('activity', 'rsstoken', $feedToken);
+			}
+
+			$feedLink = $this->urlGenerator->linkToRouteAbsolute('activity.Feed.show', ['token' => $feedToken]);
+		}
+
+		$this->config->setUserValue($this->user, 'activity', 'rsstoken', $feedToken);
+
+		return new DataResponse([
+			'feedLink' => $feedLink,
+		]);
 	}
 
 	/**
