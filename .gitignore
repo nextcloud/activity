@@ -52,6 +52,7 @@ nbproject
 
 # Tests - auto-generated files
 /PhantomJS_*
+/node_modules
 /tests/coverage*
 /tests/clover.xml
 /tests/js/node_modules

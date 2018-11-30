@@ -1,5 +1,5 @@
 <template>
-	<div id="content" class="app-vueexample">
+	<div id="content" class="app-activity">
 		<div id="app-navigation">
 			<app-navigation :menu="menu">
 				<template slot="settings-content">
@@ -14,9 +14,7 @@
 				</template>
 			</app-navigation>
 		</div>
-		<div id="app-content">
-			htrhtr
-		</div>
+		<router-view></router-view>
 	</div>
 </template>
 
@@ -31,46 +29,24 @@ export default {
 	components: {
 		AppNavigation
 	},
-	data: function() {
+	data () {
 		return {
-			feedLink: '',
-			filters: []
+			feedLink: ''
 		}
 	},
 
 	computed: {
+		filters() {
+			return this.$store.getters.getFilters;
+		},
 		menu () {
 			return {
 				items: this.filters,
-				loading: false
+				loading: this.loading
 			};
 		}
 	},
 	methods: {
-		loadFilters () {
-			axios
-				.get(OC.linkToOCS('apps/activity/api/v2/activity', 2) + 'filters', { headers: { requesttoken: OC.requestToken } })
-				.then(response => {
-					if (!_.isUndefined(response.data) && !_.isUndefined(response.data.ocs) && !_.isUndefined(response.data.ocs.data) && _.isArray(response.data.ocs.data)) {
-						response.data.ocs.data.forEach(function(filter) {
-							this.filters.push({
-								id: filter.id,
-								href: filter.id === 'all' ? OC.generateUrl('apps/activity') : OC.generateUrl('apps/activity') + '?filter=' + filter.id,
-								// router: OC.generateUrl('apps/activity/' + filter.id),
-								iconUrl: filter.icon,
-								text: filter.name,
-								classes: (/*this.$route.params.filter || */'all') === filter.id ? 'active' : ''
-							});
-						}.bind(this));
-					} else {
-						console.debug("data.ocs.data is undefined or not an array");
-					}
-				})
-				.catch(() => {
-					OC.Notification.showTemporary(t('activity', 'Failed to load activity filters'));
-				});
-		},
-
 		loadFeedLink () {
 			axios
 				.get(OC.linkToOCS('apps/activity/api/v2', 2) + 'feed', { headers: { requesttoken: OC.requestToken } })
@@ -98,12 +74,18 @@ export default {
 				});
 		},
 
-		onCopy: function (e) {
+		onCopy: function () {
 			OC.Notification.showTemporary(t('activity', 'Feed link copied!'))
+		},
+
+		goBack () {
+			window.history.length > 1
+				? this.$router.go(-1)
+				: this.$router.push('/')
 		}
 	},
-	mounted () {
-		this.loadFilters();
+	beforeMount () {
+		this.$store.dispatch('fetchFilters');
 		this.loadFeedLink();
 	}
 }

@@ -22,17 +22,49 @@
 import '@babel/polyfill'
 
 import Vue from 'vue'
+import VueRouter from 'vue-router'
+import VueClipboard from 'vue-clipboard2'
 import App from './App'
+import ActivityFilter from './views/ActivityFilter'
+import store from './store'
+import {sync} from "vuex-router-sync";
 
 Vue.prototype.t = t
 Vue.prototype.n = n
 Vue.prototype.OC = OC
 Vue.prototype.OCA = OCA
 
-import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard)
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+	mode: 'history',
+	// if index.php is in the url AND we got this far, then it's working:
+	// let's keep using index.php in the url
+	base: OC.generateUrl(''),
+	linkActiveClass: 'active',
+	routes: [
+		{
+			path: '/:index(index.php/)?apps/activity',
+			component: ActivityFilter,
+			props: true,
+			name: 'activity-base',
+			children: [
+				{
+					path: ':filter',
+					name: 'activity-filter',
+					component: ActivityFilter
+				}
+			]
+		}
+	]
+})
+
+sync(store, router)
 
 /* eslint-disable-next-line no-new */
 new Vue({
-	render: h => h(App)
+	render: h => h(App),
+	router,
+	store
 }).$mount('#content')
