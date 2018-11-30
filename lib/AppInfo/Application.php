@@ -110,5 +110,6 @@ class Application extends App {
 
 		$eventDispatcher = $this->getContainer()->getServer()->getEventDispatcher();
 		$eventDispatcher->addListener('OCP\Share::preUnshare', [FilesHooksStatic::class, 'unShare']);
+		$eventDispatcher->addListener('OCP\Share::postUnshareFromSelf', [FilesHooksStatic::class, 'unShare']);
 	}
 }
