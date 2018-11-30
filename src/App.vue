@@ -36,6 +36,9 @@ export default {
 	},
 
 	computed: {
+		filter() {
+			return this.$route.params.filter;
+		},
 		filters() {
 			return this.$store.getters.getFilters;
 		},
@@ -84,8 +87,17 @@ export default {
 				: this.$router.push('/')
 		}
 	},
+	watch: {
+		// watch url change and group select
+		filter: function (val, old) {
+			this.$store.commit('reset');
+			this.$store.dispatch('fetchActivities', this.filter);
+			// this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+		}
+	},
 	beforeMount () {
 		this.$store.dispatch('fetchFilters');
+		this.$store.dispatch('fetchActivities', this.filter);
 		this.loadFeedLink();
 	}
 }

@@ -82,15 +82,15 @@
 				return displayDate;
 			},
 			parsedSubject: function () {
-				if (this.subject_rich[0].length > 1) {
-					return OCA.Activity.RichObjectStringParser.parseMessage(this.subject_rich[0], this.subject_rich[1]);
-				}
+				// if (this.subject_rich[0].length > 1) {
+				// 	return OCA.Activity.RichObjectStringParser.parseMessage(this.subject_rich[0], this.subject_rich[1]);
+				// }
 				return this.subject;
 			},
 			parsedMessage: function () {
-				if (this.message_rich[0].length > 1) {
-					return OCA.Activity.RichObjectStringParser.parseMessage(this.message_rich[0], this.message_rich[1]);
-				}
+				// if (this.message_rich[0].length > 1) {
+				// 	return OCA.Activity.RichObjectStringParser.parseMessage(this.message_rich[0], this.message_rich[1]);
+				// }
 				return this.message;
 			},
 			useLink: function () {

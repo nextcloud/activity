@@ -33,12 +33,19 @@ const mutations = {
 		Vue.set(state.filters, filter.id, filter);
 	},
 
+	appendActivities(state, activities) {
+		state.activities = state.activities.concat(activities);
+	},
+
 	reset(state) {
 		state.activities = [];
 	}
 };
 
 const getters = {
+	getActivities(state) {
+		return state.activities;
+	},
 	getFilters(state) {
 		return state.filters;
 	},
@@ -75,6 +82,23 @@ const actions = {
 			})
 			.catch(() => {
 				OC.Notification.showTemporary(t('activity', 'Failed to load activity filters'));
+			});
+	},
+
+	fetchActivities(context, filter) {
+		return axios
+			.get(OC.linkToOCS('apps/activity/api/v2/activity', 2) + filter + '?previews=true', { headers: { requesttoken: OC.requestToken } })
+			.then(response => {
+				if (!_.isUndefined(response.data) && !_.isUndefined(response.data.ocs) && !_.isUndefined(response.data.ocs.data) && _.isArray(response.data.ocs.data)) {
+					context.commit('appendActivities', response.data.ocs.data);
+				} else {
+					console.debug("data.ocs.data is undefined or not an array");
+				}
+			})
+			.catch(error => {
+				if (error.response && error.response.status !== 304) {
+					OC.Notification.showTemporary(t('activity', 'Failed to load activity filters'));
+				}
 			});
 	},
 

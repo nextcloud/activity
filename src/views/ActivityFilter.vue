@@ -1,7 +1,7 @@
 <template>
 	<div id="app-content">
 		<virtual-list :size="40" :remain="8" v-if="activities.length > 0">
-			<activity v-for="activity of activities" :key="activity.id" />
+			<activity v-for="a in activities" v-bind="a" :key="a.activity_id"></activity>
 		</virtual-list>
 
 		<div class="emptycontent" :class="{ hidden: !!activities.length }">
@@ -18,12 +18,10 @@ import VirtualScrollList from 'vue-virtual-scroll-list'
 
 export default {
 	name: 'ActivityFilter',
-	data () {
-		return {
-			activities: []
-		}
-	},
 	computed: {
+		activities () {
+			return this.$store.getters.getActivities;
+		},
 		filterIcon () {
 			return this.$store.getters.getFilterIcon(this.$route.params.filter);
 		},
