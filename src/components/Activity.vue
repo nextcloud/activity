@@ -12,6 +12,8 @@
 				</div>
 				<div v-else class="activitysubject" v-html="parsedSubject"></div>
 
+				<rich-object-string :string="subject_rich[0]" :parameters="subject_rich[1]" :link="link"></rich-object-string>
+
 				<span class="activitytime has-tooltip live-relative-timestamp" :data-timestamp="timestamp" :title="formatDate">
 					{{relativeDate}}
 				</span>
@@ -32,6 +34,8 @@
 </template>
 
 <script>
+	import RichObjectString from "./RichObjectString";
+
 	export default {
 		name: 'activity',
 
@@ -48,6 +52,10 @@
 			'datetime',
 			'previews'
 		],
+
+		components: {
+			RichObjectString
+		},
 
 		computed: {
 			timestamp: function () {

@@ -11,10 +11,6 @@
 	OCA.Activity = OCA.Activity || {};
 
 	OCA.Activity.RichObjectStringParser = {
-		avatarsEnabled: true,
-
-		_unknownTemplate: '<strong>{{name}}</strong>',
-		_unknownLinkTemplate: '<a href="{{link}}">{{name}}</a>',
 
 		/**
 		 * @param {string} subject
