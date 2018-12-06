@@ -28,7 +28,7 @@ OC.L10N.register(
     "Activity notification for %s" : "Notis om aktivitet för %s",
     "Hello %s" : "Hej %s",
     "Hello %s," : "Hej %s,",
-    "There was some activity at %s" : "Det var lite aktivitet på %s",
+    "There was some activity at %s" : "Det var aktivitet på %s",
     "_and %n more _::_and %n more _" : ["och %n till","och %n till"],
     ", " : ",",
     "%s and %s" : "%s och %s",
