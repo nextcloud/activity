@@ -30,12 +30,18 @@ use OCA\Activity\Parameter\Collection;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
+use OCP\ILogger;
+use OCP\RichObjectStrings\IValidator;
 
 class GroupHelperTest extends TestCase {
 	/** @var IManager|\PHPUnit_Framework_MockObject_MockObject */
 	protected $activityManager;
 	/** @var DataHelper|\PHPUnit_Framework_MockObject_MockObject */
 	protected $dataHelper;
+	/** @var IValidator|\PHPUnit_Framework_MockObject_MockObject */
+	protected $validator;
+	/** @var ILogger|\PHPUnit_Framework_MockObject_MockObject */
+	protected $logger;
 	/** @var LegacyParser|\PHPUnit_Framework_MockObject_MockObject */
 	protected $legacyParser;
 	/** @var IL10N|\PHPUnit_Framework_MockObject_MockObject */
@@ -48,6 +54,8 @@ class GroupHelperTest extends TestCase {
 		$this->activityManager = $this->createMock(IManager::class);
 		$this->dataHelper = $this->createMock(DataHelper::class);
 		$this->legacyParser = $this->createMock(LegacyParser::class);
+		$this->validator = $this->createMock(IValidator::class);
+		$this->logger = $this->createMock(ILogger::class);
 	}
 
 	/**
@@ -62,25 +70,28 @@ class GroupHelperTest extends TestCase {
 					$this->l,
 					$this->activityManager,
 					$this->dataHelper,
-					$this->legacyParser
-				);
-			} else {
-				return new GroupHelperDisabled(
-					$this->l,
-					$this->activityManager,
-					$this->dataHelper,
+					$this->validator,
+					$this->logger,
 					$this->legacyParser
 				);
 			}
-		} else {
-			return $this->getMockBuilder($grouping ? 'OCA\Activity\GroupHelper' : 'OCA\Activity\GroupHelperDisabled')
-				->setConstructorArgs([
-					$this->activityManager,
-					$this->dataHelper
-				])
-				->setMethods($methods)
-				->getMock();
+			return new GroupHelperDisabled(
+				$this->l,
+				$this->activityManager,
+				$this->dataHelper,
+				$this->validator,
+				$this->logger,
+				$this->legacyParser
+			);
 		}
+
+		return $this->getMockBuilder($grouping ? 'OCA\Activity\GroupHelper' : 'OCA\Activity\GroupHelperDisabled')
+			->setConstructorArgs([
+				$this->activityManager,
+				$this->dataHelper
+			])
+			->setMethods($methods)
+			->getMock();
 	}
 
 	public function testSetUser() {
