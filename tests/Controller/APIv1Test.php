@@ -37,6 +37,7 @@ use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\IConfig;
 use OCP\IL10N;
+use OCP\ILogger;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUserSession;
@@ -240,7 +241,7 @@ class APIv1Test extends TestCase {
 			'activity',
 			$this->getMockBuilder(IRequest::class)->getMock(),
 			$data,
-			new GroupHelper($l, $activityManager, $dataHelper, new LegacyParser($languageFactory, $dataHelper, $parser)),
+			new GroupHelper($l, $activityManager, $dataHelper, $this->createMock(IValidator::class), $this->createMock(ILogger::class), new LegacyParser($languageFactory, $dataHelper, $parser)),
 			new UserSettings($activityManager, $config, $data),
 			new PlainTextParser($l),
 			$currentUser
