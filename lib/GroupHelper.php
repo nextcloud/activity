@@ -58,15 +58,12 @@ class GroupHelper {
 	/** @var LegacyParser */
 	protected $legacyParser;
 
-	/**
-	 * @param IL10N $l
-	 * @param \OCP\Activity\IManager $activityManager
-	 * @param \OCA\Activity\DataHelper $dataHelper
-	 * @param IValidator $richObjectValidator
-	 * @param ILogger $logger
-	 * @param LegacyParser $legacyParser
-	 */
-	public function __construct(IL10N $l, IManager $activityManager, DataHelper $dataHelper, IValidator $richObjectValidator, ILogger $logger, LegacyParser $legacyParser) {
+	public function __construct(IL10N $l,
+								IManager $activityManager,
+								DataHelper $dataHelper,
+								IValidator $richObjectValidator,
+								ILogger $logger,
+								LegacyParser $legacyParser) {
 		$this->allowGrouping = true;
 
 		$this->l = $l;
