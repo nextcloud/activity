@@ -32,5 +32,31 @@ $(document).ready(function() {
 			'activity', 'enable_email',
 			$(this).attr('checked') === 'checked' ? 'yes' : 'no'
 		);
-	})
+	});
+
+	$('#activity_webhook_enabled').on('change', function() {
+		OCP.AppConfig.setValue(
+			'activity', 'enable_webhook',
+			$(this).attr('checked') === 'checked' ? 'yes' : 'no'
+		);
+	});
+
+	$('#activity_webhook_ssl_verification').on('change', function() {
+		OCP.AppConfig.setValue(
+			'activity', 'webhook_ssl_verification_enabled',
+			$(this).attr('checked') === 'checked' ? 'yes' : 'no'
+		);
+	});
+
+	$('#webhook_settings_form').on('submit', function(event) {
+		event.preventDefault();
+		OCP.AppConfig.setValue(
+			'activity', 'webhook_url',
+			$("#webhook_url").val()
+		);
+		OCP.AppConfig.setValue(
+			'activity', 'webhook_token',
+			$("#webhook_token").val()
+		);
+	});
 });

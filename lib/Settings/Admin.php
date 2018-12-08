@@ -84,6 +84,7 @@ class Admin implements ISettings {
 			if ($setting->canChangeMail()) {
 				$methods[] = IExtension::METHOD_MAIL;
 			}
+			$methods[] = 'webhook';
 
 			$identifier = $setting->getIdentifier();
 
@@ -91,6 +92,7 @@ class Admin implements ISettings {
 				'desc'		=> $setting->getName(),
 				IExtension::METHOD_MAIL		=> $this->userSettings->getConfigSetting('email', $identifier),
 				IExtension::METHOD_STREAM	=> $this->userSettings->getConfigSetting('stream', $identifier),
+				'webhook'	=> $this->userSettings->getConfigSetting('webhook', $identifier),
 				'methods'	=> $methods,
 			);
 		}
@@ -110,6 +112,10 @@ class Admin implements ISettings {
 			'activities'		=> $activities,
 			'is_email_set'		=> true,
 			'email_enabled'		=> $this->config->getAppValue('activity', 'enable_email', 'yes') === 'yes',
+			'webhook_enabled'	=> $this->config->getAppValue('activity', 'enable_webhook', 'no') === 'yes',
+			'webhook_url'		=> $this->config->getAppValue('activity', 'webhook_url', ''),
+			'webhook_token'		=> $this->config->getAppValue('activity', 'webhook_token', ''),
+			'webhook_ssl_verification_enabled'		=> $this->config->getAppValue('activity', 'webhook_ssl_verification_enabled', 'yes') === 'yes',
 
 			'setting_batchtime'	=> $settingBatchTime,
 
@@ -119,6 +125,7 @@ class Admin implements ISettings {
 			'methods'			=> [
 				IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
 				IExtension::METHOD_STREAM => $this->l10n->t('Stream'),
+				'webhook' => $this->l10n->t('Webhook'),
 			],
 		], 'blank');
 	}

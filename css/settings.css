@@ -25,3 +25,11 @@ table.activitysettings td.small label {
 .nav-icon-activity {
 	background-image: url('../img/activity-dark.svg?v=1');
 }
+
+#webhook_settings_form {
+	display:inline-block;
+}
+
+#webhook_url {
+	width: 260px;
+}

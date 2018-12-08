@@ -83,9 +83,10 @@ class Personal implements ISettings {
 			return $a->getPriority() > $b->getPriority();
 		});
 
+		$webhookEnabled = $this->config->getAppValue('activity', 'enable_webhook', 'no') === 'yes';
 		$activities = [];
 		foreach ($settings as $setting) {
-			if (!$setting->canChangeStream() && !$setting->canChangeMail()) {
+			if (!$setting->canChangeStream() && !$setting->canChangeMail() && !$webhookEnabled) {
 				// No setting can be changed => don't display
 				continue;
 			}
@@ -97,6 +98,9 @@ class Personal implements ISettings {
 			if ($setting->canChangeMail()) {
 				$methods[] = IExtension::METHOD_MAIL;
 			}
+			if ($webhookEnabled) {
+				$methods[] = 'webhook';
+			}
 
 			$identifier = $setting->getIdentifier();
 
@@ -104,6 +108,7 @@ class Personal implements ISettings {
 				'desc'		=> $setting->getName(),
 				IExtension::METHOD_MAIL		=> $this->userSettings->getUserSetting($this->user, 'email', $identifier),
 				IExtension::METHOD_STREAM	=> $this->userSettings->getUserSetting($this->user, 'stream', $identifier),
+				'webhook'	=> $this->userSettings->getUserSetting($this->user, 'webhook', $identifier),
 				'methods'	=> $methods,
 			);
 		}
@@ -128,6 +133,9 @@ class Personal implements ISettings {
 			$methods = [
 				IExtension::METHOD_STREAM => $this->l10n->t('Stream'),
 			];
+		}
+		if ($webhookEnabled) {
+			$methods['webhook'] = $this->l10n->t('Webhook');
 		}
 
 		return new TemplateResponse('activity', 'settings/personal', [

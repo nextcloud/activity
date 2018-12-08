@@ -28,9 +28,30 @@ style('activity', 'settings');
 
 	<h2><?php p($l->t('Activity')); ?></h2>
 
+
+	<input id="activity_webhook_enabled" name="activity_webhook_enabled" type="checkbox" class="checkbox"
+		   value="1" <?php if ($_['webhook_enabled']) { print_unescaped('checked="checked"'); } ?> />
+	<label for="activity_webhook_enabled"><?php p($l->t('Send activity HTTP(S) requests:')); ?></label>
+
+	<form id="webhook_settings_form">
+		<label>
+			<input id="webhook_url" type="url" placeholder="https://..." value="<?php p($_['webhook_url']) ?>" maxlength="250" />
+		</label>
+		<label>
+			<input id="webhook_token" type="text" placeholder="<?php p($l->t('Secret (optional)')); ?>" value="<?php p($_['webhook_token']) ?>" maxlength="250" />
+		</label>
+		<input id="webhook_save" type="submit" class="button" value="<?php p($l->t('Save')); ?>">
+	</form>
+	<br />
+
+	<input id="activity_webhook_ssl_verification" name="activity_webhook_ssl_verification" type="checkbox" class="checkbox"
+		   value="1" <?php if ($_['webhook_ssl_verification_enabled']) { print_unescaped('checked="checked"'); } ?> />
+	<label for="activity_webhook_ssl_verification"><?php p($l->t('Webhook SSL Verification')); ?></label>
+	<br />
 	<input id="activity_email_enabled" name="activity_email_enabled" type="checkbox" class="checkbox"
 		   value="1" <?php if ($_['email_enabled']) { print_unescaped('checked="checked"'); } ?> />
 	<label for="activity_email_enabled"><?php p($l->t('Send activity emails')); ?></label>
+
 
 </div>
 

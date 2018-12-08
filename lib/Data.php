@@ -42,13 +42,17 @@ class Data {
 	/** @var IDBConnection */
 	protected $connection;
 
+	/** @var WebhookHelper */
+	protected $webhookHelper;
+
 	/**
 	 * @param IManager $activityManager
 	 * @param IDBConnection $connection
 	 */
-	public function __construct(IManager $activityManager, IDBConnection $connection) {
+	public function __construct(IManager $activityManager, IDBConnection $connection, WebhookHelper $webhookHelper) {
 		$this->activityManager = $activityManager;
 		$this->connection = $connection;
+		$this->webhookHelper = $webhookHelper;
 	}
 
 	/**
@@ -99,6 +103,32 @@ class Data {
 			])
 			->execute();
 
+		return true;
+	}
+
+	/**
+	 * Send an http(s) request for the event to the webhook url
+	 *
+	 * @param IEvent $event
+	 * @return bool
+	 */
+	public function sendWebhookRequest(IEvent $event) {
+		$content = [
+				'app' => $event->getApp(),
+				'type' => $event->getType(),
+				'affecteduser' => $event->getAffectedUser(),
+				'user' => $event->getAuthor(),
+				'timestamp' => (int) $event->getTimestamp(),
+				'subject' => $event->getSubject(),
+				'subjectparams' => $event->getSubjectParameters(),
+				'message' => $event->getMessage(),
+				'messageparams' => $event->getMessageParameters(),
+				'object_type' => $event->getObjectType(),
+				'object_id' => (int) $event->getObjectId(),
+				'object_name' => $event->getObjectName(),
+				'link' => $event->getLink(),
+			];
+		$this->webhookHelper->sendWebhookRequest($content);
 		return true;
 	}
 

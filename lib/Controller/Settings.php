@@ -105,6 +105,7 @@ class Settings extends Controller {
 			$notify_setting_selfemail = false) {
 
 		$settings = $this->manager->getSettings();
+		$webhookEnabled = $this->config->getAppValue('activity', 'enable_webhook', 'no') === 'yes';
 		foreach ($settings as $setting) {
 			if ($setting->canChangeStream()) {
 				$this->config->setUserValue(
@@ -119,6 +120,14 @@ class Settings extends Controller {
 					$this->user, 'activity',
 					'notify_email_' . $setting->getIdentifier(),
 					(int) $this->request->getParam($setting->getIdentifier() . '_email', false)
+				);
+			}
+
+			if ($webhookEnabled) {
+				$this->config->setUserValue(
+					$this->user, 'activity',
+					'notify_webhook_' . $setting->getIdentifier(),
+					(int) $this->request->getParam($setting->getIdentifier() . '_webhook', false)
 				);
 			}
 		}
@@ -167,6 +176,7 @@ class Settings extends Controller {
 			$notify_setting_selfemail = false) {
 
 		$settings = $this->manager->getSettings();
+		$webhookEnabled = $this->config->getAppValue('activity', 'enable_webhook', 'no') === 'yes';
 		foreach ($settings as $setting) {
 			if ($setting->canChangeStream()) {
 				$this->config->setAppValue(
@@ -181,6 +191,14 @@ class Settings extends Controller {
 					'activity',
 					'notify_email_' . $setting->getIdentifier(),
 					(int) $this->request->getParam($setting->getIdentifier() . '_email', false)
+				);
+			}
+
+			if ($webhookEnabled) {
+				$this->config->setAppValue(
+					'activity',
+					'notify_webhook_' . $setting->getIdentifier(),
+					(int) $this->request->getParam($setting->getIdentifier() . '_webhook', false)
 				);
 			}
 		}

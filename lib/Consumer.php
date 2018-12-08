@@ -66,6 +66,7 @@ class Consumer implements IConsumer {
 		$selfAction = $event->getAffectedUser() === $event->getAuthor();
 		$streamSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'stream', $event->getType());
 		$emailSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'email', $event->getType());
+		$webhookSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'webhook', $event->getType());
 		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'batchtime') : false;
 
 		// User is not the author or wants to see their own actions
@@ -74,6 +75,10 @@ class Consumer implements IConsumer {
 		// Add activity to stream
 		if ($streamSetting && $createStream) {
 			$this->data->send($event);
+		}
+
+		if($webhookSetting) {
+			$this->data->sendWebhookRequest($event);
 		}
 
 		// User is not the author or wants to see their own actions

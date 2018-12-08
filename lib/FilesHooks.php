@@ -220,6 +220,7 @@ class FilesHooks {
 				$fileId, $path, true,
 				!empty($filteredStreamUsers[$user]),
 				$filteredEmailUsers[$user] ?? false,
+				$this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'webhook', $activityType),
 				$activityType
 			);
 		}
@@ -405,6 +406,7 @@ class FilesHooks {
 				$fileId, $path . '/' . $fileName, true,
 				!empty($filteredStreamUsers[$user]),
 				$filteredEmailUsers[$user] ?? false,
+				$this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'webhook', Files::TYPE_SHARE_CHANGED),
 				Files::TYPE_SHARE_CHANGED
 			);
 		}
@@ -505,6 +507,7 @@ class FilesHooks {
 				$fileId, $path . '/' . $oldFileName, true,
 				!empty($filteredStreamUsers[$user]),
 				$filteredEmailUsers[$user] ?? false,
+				$this->userSettings->filterUsersBySetting($users, 'webhook', Files::TYPE_SHARE_DELETED),
 				Files::TYPE_SHARE_DELETED
 			);
 		}
@@ -544,6 +547,7 @@ class FilesHooks {
 				$fileId, $path . '/' . $fileName, true,
 				!empty($filteredStreamUsers[$user]),
 				$filteredEmailUsers[$user] ?? false,
+				$this->userSettings->filterUsersBySetting($users, 'webhook', Files::TYPE_SHARE_CREATED),
 				Files::TYPE_SHARE_CREATED
 			);
 		}
@@ -590,6 +594,7 @@ class FilesHooks {
 				$fileId, $afterPathMap[$user] . '/' . $fileName, true,
 				!empty($filteredStreamUsers[$user]),
 				$filteredEmailUsers[$user] ?? false,
+				$this->userSettings->filterUsersBySetting($users, 'webhook', Files::TYPE_SHARE_CHANGED),
 				Files::TYPE_SHARE_CHANGED
 			);
 		}
@@ -703,7 +708,8 @@ class FilesHooks {
 			$shareWith, 'shared_with_by', [[$fileSource => $fileTarget], $this->currentUser->getUserIdentifier()],
 			(int) $fileSource, $fileTarget, $itemType === 'file',
 			$this->userSettings->getUserSetting($shareWith, 'stream', Files_Sharing::TYPE_SHARED),
-			$this->userSettings->getUserSetting($shareWith, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($shareWith, 'setting', 'batchtime') : false
+			$this->userSettings->getUserSetting($shareWith, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($shareWith, 'setting', 'batchtime') : false,
+			$this->userSettings->getUserSetting($shareWith, 'webhook', Files_Sharing::TYPE_SHARED)
 		);
 	}
 
@@ -760,7 +766,8 @@ class FilesHooks {
 			$linkOwner, 'shared_link_self', [[$fileSource => $path]],
 			(int) $fileSource, $path, $itemType === 'file',
 			$this->userSettings->getUserSetting($linkOwner, 'stream', Files_Sharing::TYPE_SHARED),
-			$this->userSettings->getUserSetting($linkOwner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($linkOwner, 'setting', 'batchtime') : false
+			$this->userSettings->getUserSetting($linkOwner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($linkOwner, 'setting', 'batchtime') : false,
+			$this->userSettings->getUserSetting($linkOwner, 'webhook', Files_Sharing::TYPE_SHARED)
 		);
 	}
 
@@ -806,7 +813,8 @@ class FilesHooks {
 			$share->getSharedWith(), 'unshared_by', [[$share->getNodeId() => $share->getTarget()], $this->currentUser->getUserIdentifier()],
 			$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
 			$this->userSettings->getUserSetting($share->getSharedWith(), 'stream', Files_Sharing::TYPE_SHARED),
-			$this->userSettings->getUserSetting($share->getSharedWith(), 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($share->getSharedWith(), 'setting', 'batchtime') : false
+			$this->userSettings->getUserSetting($share->getSharedWith(), 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($share->getSharedWith(), 'setting', 'batchtime') : false,
+			$this->userSettings->getUserSetting($share->getSharedWith(), 'webhook', Files_Sharing::TYPE_SHARED)
 		);
 	}
 
@@ -875,7 +883,9 @@ class FilesHooks {
 			$owner, $actionSharer, [[$share->getNodeId() => $share->getTarget()]],
 			$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
 			$this->userSettings->getUserSetting($owner, 'stream', Files_Sharing::TYPE_SHARED),
-			$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false
+			$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false,
+			
+			$this->userSettings->getUserSetting($owner, 'webhook', Files_Sharing::TYPE_SHARED)
 		);
 
 		if ($share->getSharedBy() !== $share->getShareOwner()) {
@@ -884,7 +894,8 @@ class FilesHooks {
 				$owner, $actionOwner, [[$share->getNodeId() => $share->getTarget()], $share->getSharedBy()],
 				$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
 				$this->userSettings->getUserSetting($owner, 'stream', Files_Sharing::TYPE_SHARED),
-				$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false
+				$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false,
+				$this->userSettings->getUserSetting($owner, 'webhook', Files_Sharing::TYPE_SHARED)
 			);
 		}
 	}
@@ -925,7 +936,8 @@ class FilesHooks {
 				$user, $actionUser, [[$fileSource => $path], $this->currentUser->getUserIdentifier()],
 				$fileSource, $path, ($itemType === 'file'),
 				!empty($filteredStreamUsersInGroup[$user]),
-				$filteredEmailUsersInGroup[$user] ?? false
+				$filteredEmailUsersInGroup[$user] ?? false,
+				$this->userSettings->filterUsersBySetting($userIds, 'webhook', Files_Sharing::TYPE_SHARED)
 			);
 		}
 	}
@@ -979,7 +991,8 @@ class FilesHooks {
 			$sharer, $subject, [[$fileSource => $path], $shareWith],
 			$fileSource, $path, ($itemType === 'file'),
 			$this->userSettings->getUserSetting($sharer, 'stream', Files_Sharing::TYPE_SHARED),
-			$this->userSettings->getUserSetting($sharer, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($sharer, 'setting', 'batchtime') : false
+			$this->userSettings->getUserSetting($sharer, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($sharer, 'setting', 'batchtime') : false,
+			$this->userSettings->getUserSetting($sharer, 'webhook', Files_Sharing::TYPE_SHARED)
 		);
 	}
 
@@ -1005,7 +1018,8 @@ class FilesHooks {
 			$owner, $subject, [[$fileSource => $path], $this->currentUser->getUserIdentifier(), $shareWith],
 			$fileSource, $path, ($itemType === 'file'),
 			$this->userSettings->getUserSetting($owner, 'stream', Files_Sharing::TYPE_SHARED),
-			$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false
+			$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false,
+			$this->userSettings->getUserSetting($owner, 'webhook', Files_Sharing::TYPE_SHARED)
 		);
 	}
 
@@ -1070,9 +1084,10 @@ class FilesHooks {
 	 * @param bool $isFile If the item is a file, we link to the parent directory
 	 * @param bool $streamSetting
 	 * @param int $emailSetting
+	 * @param bool $webhookSetting
 	 * @param string $type
 	 */
-	protected function addNotificationsForUser($user, $subject, $subjectParams, $fileId, $path, $isFile, $streamSetting, $emailSetting, $type = Files_Sharing::TYPE_SHARED) {
+	protected function addNotificationsForUser($user, $subject, $subjectParams, $fileId, $path, $isFile, $streamSetting, $emailSetting, $webhookSetting, $type = Files_Sharing::TYPE_SHARED) {
 		if (!$streamSetting && !$emailSetting) {
 			return;
 		}
@@ -1113,6 +1128,10 @@ class FilesHooks {
 		if ($emailSetting !== false && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser->getUID(), 'setting', 'selfemail'))) {
 			$latestSend = time() + $emailSetting;
 			$this->activityData->storeMail($event, $latestSend);
+		}
+
+		if($webhookSetting) {
+			$this->activityData->sendWebhookRequest($event);
 		}
 	}
 }
