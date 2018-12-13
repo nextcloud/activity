@@ -32,6 +32,7 @@
     "%s and %s" : "%s dan %s",
     "Mail" : "Email",
     "Stream" : "Stream",
+    "This application enables users to view actions related to their files in Nextcloud." : "Aplikasi ini memungkinkan pengguna untuk melihat aksi yang terkait dengan file yang mereka simpan di NextCloud",
     "Activity feed" : "Feed aktivitas",
     "Send activity emails" : "Kirim email aktivitas",
     "Default settings" : "Pengaturan default",
