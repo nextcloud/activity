@@ -26,7 +26,7 @@ OC.L10N.register(
     "By you" : "本地来源",
     "\"remote user\"" : "远程用户",
     "Activity notification for %s" : "%s 的动态通知",
-    "Hello %s" : "你好%s",
+    "Hello %s" : "您好%s",
     "Hello %s," : "%s 您好，",
     "There was some activity at %s" : "在 %s 里有一些动态",
     "_and %n more _::_and %n more _" : ["* 以及其他 %n 项"],
