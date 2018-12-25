@@ -47,7 +47,7 @@ OC.L10N.register(
     "Hourly" : "Vsako uro",
     "Daily" : "Dnevno",
     "Weekly" : "Tedensko",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Izberite za katere aktivnosti želite prejeti elektronsko pošto in katere se naj se prikažejo v pretoku aktivnosti aplikacije.",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Izberite, katera obvestila o dejavnostih želite prejeti na elektronski naslov in katera naj se le prikažejo v razdelku zgodovine dejavnosti.",
     "Choose which activities you want to see in your stream." : "Izbor dejavnosti, ki naj se izpišejo v pretoku.",
     "Settings" : "Nastavitve",
     "Enable RSS feed" : "Omogoči vire RSS",
