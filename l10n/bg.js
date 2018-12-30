@@ -16,7 +16,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Няма събития от този филтър",
     "Today" : "Днес",
     "Yesterday" : "Вчера",
-    "Open file" : "Отвори файл",
+    "Open file" : "Отвори файла",
     "Personal activity feed for %s" : "Поток за активността на %s",
     "Your feed URL is invalid" : "Емисията е с невалиден URL адрес",
     "Your settings have been updated." : "Вашите настройки са актуализирани.",
