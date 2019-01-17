@@ -41,7 +41,7 @@ OC.L10N.register(
     "Default settings" : "Defaŭltaj agordoj",
     "Configure the default activity settings for new users." : "Agordu la defaŭltajn aktivaĵojn por novaj uzantoj.",
     "List your own actions in the stream" : "Listigi viajn proprajn aktivaĵojn en la fluo",
-    "Notify about your own actions via email" : "Sciigi retmesaĝe pri viaj propraj aktivaĵoj",
+    "Notify about your own actions via email" : "Ricevi per retpoŝtmesaĝo viajn proprajn aktivaĵojn",
     "You need to set up your email address before you can receive notification emails." : "Vi bezonas agordi vian retpoŝtadreson, por povi ricevi sciigojn retmesaĝe.",
     "Send emails:" : "Sendi retmesaĝojn:",
     "As soon as possible" : "Kiel eble plej baldaŭ",
