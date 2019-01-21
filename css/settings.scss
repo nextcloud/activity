@@ -23,5 +23,5 @@ table.activitysettings td.small label {
 }
 
 .nav-icon-activity {
-	background-image: url('../img/activity-dark.svg?v=1');
+	@include icon-color('activity-dark', 'activity', $color-black);
 }
