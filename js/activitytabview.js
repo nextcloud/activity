@@ -136,6 +136,7 @@
 				subject: subject,
 				formattedDate: activity.getRelativeDate(),
 				formattedDateTooltip: activity.getFullDate(),
+				isMonochromeIcon: activity.isMonochromeIcon(),
 				timestamp: moment(activity.get('datetime')).valueOf(),
 				message: message,
 				icon: activity.get('icon')
