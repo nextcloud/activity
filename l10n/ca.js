@@ -50,7 +50,7 @@ OC.L10N.register(
     "Weekly" : "Setmanalment",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Trieu per quines activitats voleu obtenir una notificació per correu electrònic i que ha d'aparèixer en el flux de treball de les apps.",
     "Choose which activities you want to see in your stream." : "Trieu per quines activitats voleu obtenir una notificació per correu electrònic i que ha d'aparèixer en el flux de treball de les apps.",
-    "Settings" : "Configuració",
+    "Settings" : "Paràmetres",
     "Enable RSS feed" : "Activa el canal RSS",
     "RSS feed" : "Canal RSS",
     "No more events to load" : "No hi ha més elements a carregar",
