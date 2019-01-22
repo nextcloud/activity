@@ -209,11 +209,13 @@ $(function(){
 				activity.link = '';
 			}
 
+			var monochromeIcon = activity.type !== 'file_created' && activity.type !== 'file_deleted' && activity.type !== 'favorite';
+
 			var content = ''
 				+ '<div class="box" data-activity-id="' + activity.activity_id + '">' + "\n"
 				+ '	<div class="messagecontainer">' + "\n"
 
-				+ '		<div class="activity-icon">'
+				+ '		<div class="activity-icon' + ((monochromeIcon) ? ' monochrome' : '') +'">'
 				+ ((activity.icon) ? '			<img src="' + activity.icon + '" alt="" />' : '')
 				+ '		</div>' + "\n"
 

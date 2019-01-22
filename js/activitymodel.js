@@ -21,7 +21,7 @@
 		 *
 		 * @returns int UNIX milliseconds timestamp
 		 */
-		getUnixMilliseconds: function() {
+		getUnixMilliseconds: function () {
 			if (_.isUndefined(this.unixMilliseconds)) {
 				this.unixMilliseconds = moment(this.get('datetime')).valueOf();
 			}
@@ -40,6 +40,13 @@
 		 */
 		getFullDate: function () {
 			return OC.Util.formatDate(this.getUnixMilliseconds());
+		},
+
+		/**
+		 * @returns bool
+		 */
+		isMonochromeIcon: function () {
+			return this.get('type') !== 'file_created' && this.get('type') !== 'file_deleted' && this.get('type') !== 'favorite';
 		}
 	});
 
