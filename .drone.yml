@@ -19,6 +19,16 @@ pipeline:
     when:
       matrix:
         TESTS: signed-off-check
+  handlebars:
+    image: node
+    commands:
+      - npm install -g handlebars
+      - ./check-handlebars-templates.sh
+    when:
+      matrix:
+        TESTS: handlebars
+
 matrix:
   include:
     - TESTS: signed-off-check
+    - TESTS: handlebars
