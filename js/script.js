@@ -209,7 +209,7 @@ $(function(){
 				activity.link = '';
 			}
 
-			var monochromeIcon = activity.type !== 'file_created' && activity.type !== 'file_deleted';
+			var monochromeIcon = activity.type !== 'file_created' && activity.type !== 'file_deleted' && activity.type !== 'favorite';
 
 			var content = ''
 				+ '<div class="box" data-activity-id="' + activity.activity_id + '">' + "\n"

@@ -46,7 +46,7 @@
 		 * @returns bool
 		 */
 		isMonochromeIcon: function () {
-			return this.get('type') !== 'file_created' && this.get('type') !== 'file_deleted';
+			return this.get('type') !== 'file_created' && this.get('type') !== 'file_deleted' && this.get('type') !== 'favorite';
 		}
 	});
 
