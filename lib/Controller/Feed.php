@@ -24,7 +24,6 @@ namespace OCA\Activity\Controller;
 
 use OCA\Activity\Data;
 use OCA\Activity\GroupHelper;
-use OCA\Activity\PlainTextParser;
 use OCA\Activity\UserSettings;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Controller;
@@ -108,9 +107,7 @@ class Feed extends Controller {
 
 			// Overwrite user and language in the helper
 			$this->l = $this->l10nFactory->get('activity', $userLang);
-			$parser = new PlainTextParser($this->l);
 			$this->helper->setL10n($this->l);
-			$this->helper->setUser($user);
 
 			$description = (string) $this->l->t('Personal activity feed for %s', $user);
 			$response = $this->data->get($this->helper, $this->settings, $user, 0, self::DEFAULT_PAGE_SIZE, 'desc', 'all');

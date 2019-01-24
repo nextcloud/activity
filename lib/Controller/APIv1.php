@@ -24,7 +24,6 @@ namespace OCA\Activity\Controller;
 use OCA\Activity\CurrentUser;
 use OCA\Activity\Data;
 use OCA\Activity\GroupHelper;
-use OCA\Activity\PlainTextParser;
 use OCA\Activity\UserSettings;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
@@ -41,9 +40,6 @@ class APIv1 extends OCSController {
 	/** @var UserSettings */
 	protected $userSettings;
 
-	/** @var PlainTextParser */
-	protected $parser;
-
 	/** @var CurrentUser */
 	protected $currentUser;
 
@@ -53,7 +49,6 @@ class APIv1 extends OCSController {
 	 * @param Data $data
 	 * @param GroupHelper $groupHelper
 	 * @param UserSettings $userSettings
-	 * @param PlainTextParser $parser
 	 * @param CurrentUser $currentUser
 	 */
 	public function __construct($appName,
@@ -61,14 +56,12 @@ class APIv1 extends OCSController {
 								Data $data,
 								GroupHelper $groupHelper,
 								UserSettings $userSettings,
-								PlainTextParser $parser,
 								CurrentUser $currentUser) {
 		parent::__construct($appName, $request);
 
 		$this->data = $data;
 		$this->userSettings = $userSettings;
 		$this->groupHelper = $groupHelper;
-		$this->parser = $parser;
 		$this->currentUser = $currentUser;
 	}
 

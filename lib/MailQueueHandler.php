@@ -23,7 +23,6 @@
 
 namespace OCA\Activity;
 
-use OCA\Activity\Extension\LegacyParser;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
@@ -37,6 +36,7 @@ use OCP\IUser;
 use OCP\IUserManager;
 use OCP\L10N\IFactory;
 use OCP\Mail\IMailer;
+use OCP\RichObjectStrings\IValidator;
 use OCP\Util;
 
 /**
@@ -66,9 +66,6 @@ class MailQueueHandler {
 	/** @var IDateTimeFormatter */
 	protected $dateFormatter;
 
-	/** @var DataHelper */
-	protected $dataHelper;
-
 	/** @var IDBConnection */
 	protected $connection;
 
@@ -87,8 +84,8 @@ class MailQueueHandler {
 	/** @var IManager */
 	protected $activityManager;
 
-	/** @var LegacyParser */
-	protected $legacyParser;
+	/** @var IValidator */
+	protected $richObjectValidator;
 
 	/** @var IConfig */
 	protected $config;
@@ -96,41 +93,24 @@ class MailQueueHandler {
 	/** @var ILogger */
 	protected $logger;
 
-	/**
-	 * Constructor
-	 *
-	 * @param IDateTimeFormatter $dateFormatter
-	 * @param IDBConnection $connection
-	 * @param DataHelper $dataHelper
-	 * @param IMailer $mailer
-	 * @param IURLGenerator $urlGenerator
-	 * @param IUserManager $userManager
-	 * @param IFactory $lFactory
-	 * @param IManager $activityManager
-	 * @param LegacyParser $legacyParser
-	 * @param IConfig $config
-	 * @param ILogger $logger
-	 */
 	public function __construct(IDateTimeFormatter $dateFormatter,
 								IDBConnection $connection,
-								DataHelper $dataHelper,
 								IMailer $mailer,
 								IURLGenerator $urlGenerator,
 								IUserManager $userManager,
 								IFactory $lFactory,
 								IManager $activityManager,
-								LegacyParser $legacyParser,
+								IValidator $richObjectValidator,
 								IConfig $config,
 								ILogger $logger) {
 		$this->dateFormatter = $dateFormatter;
 		$this->connection = $connection;
-		$this->dataHelper = $dataHelper;
 		$this->mailer = $mailer;
 		$this->urlGenerator = $urlGenerator;
 		$this->userManager = $userManager;
 		$this->lFactory = $lFactory;
 		$this->activityManager = $activityManager;
-		$this->legacyParser = $legacyParser;
+		$this->richObjectValidator = $richObjectValidator;
 		$this->config = $config;
 		$this->logger = $logger;
 	}
@@ -347,8 +327,6 @@ class MailQueueHandler {
 		list($mailData, $skippedCount) = $this->getItemsForUser($userName, $maxTime);
 
 		$l = $this->getLanguage($lang);
-		$this->dataHelper->setUser($userName);
-		$this->dataHelper->setL10n($l);
 		$this->activityManager->setCurrentUserId($userName);
 
 		$activityEvents = [];
@@ -468,10 +446,27 @@ class MailQueueHandler {
 			}
 		}
 
+		try {
+			$this->richObjectValidator->validate($event->getRichSubject(), $event->getRichSubjectParameters());
+		} catch (InvalidObjectExeption $e) {
+			$this->logger->logException($e);
+			$event->setRichSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed', []);
+			$event->setParsedSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed');
+		}
+
+		if ($event->getRichMessage()) {
+			try {
+				$this->richObjectValidator->validate($event->getRichMessage(), $event->getRichMessageParameters());
+			} catch (InvalidObjectExeption $e) {
+				$this->logger->logException($e);
+				$event->setRichMessage('Rich message or a parameter is malformed', []);
+				$event->setParsedMessage('Rich message or a parameter is malformed');
+			}
+		}
+
 		if (!$event->getParsedSubject()) {
-			$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
-			$event = $this->legacyParser->parse($lang, $event);
-			$this->activityManager->setFormattingObject('', 0);
+			$this->logger->debug('Activity "' . $event->getRichSubject() . '" was not parsed by any provider');
+			throw new \InvalidArgumentException('Activity "' . $event->getRichSubject() . '" was not parsed by any provider');
 		}
 
 		return $event;

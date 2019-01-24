@@ -22,8 +22,6 @@
 
 namespace OCA\Activity;
 
-use OCA\Activity\Extension\LegacyParser;
-use OCA\Activity\Parameter\IParameter;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
@@ -46,39 +44,22 @@ class GroupHelper {
 	/** @var \OCP\Activity\IManager */
 	protected $activityManager;
 
-	/** @var \OCA\Activity\DataHelper */
-	protected $dataHelper;
-
 	/** @var IValidator */
 	protected $richObjectValidator;
 
 	/** @var ILogger */
 	protected $logger;
 
-	/** @var LegacyParser */
-	protected $legacyParser;
-
 	public function __construct(IL10N $l,
 								IManager $activityManager,
-								DataHelper $dataHelper,
 								IValidator $richObjectValidator,
-								ILogger $logger,
-								LegacyParser $legacyParser) {
+								ILogger $logger) {
 		$this->allowGrouping = true;
 
 		$this->l = $l;
 		$this->activityManager = $activityManager;
-		$this->dataHelper = $dataHelper;
 		$this->richObjectValidator = $richObjectValidator;
 		$this->logger = $logger;
-		$this->legacyParser = $legacyParser;
-	}
-
-	/**
-	 * @param string $user
-	 */
-	public function setUser($user) {
-		$this->dataHelper->setUser($user);
 	}
 
 	/**
@@ -86,7 +67,6 @@ class GroupHelper {
 	 */
 	public function setL10n(IL10N $l) {
 		$this->l = $l;
-		$this->dataHelper->setL10n($l);
 	}
 
 	/**
@@ -136,14 +116,8 @@ class GroupHelper {
 		}
 
 		if (!$event->getParsedSubject()) {
-			try {
-				$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
-				$event = $this->legacyParser->parse($language, $event);
-				$this->activityManager->setFormattingObject('', 0);
-			} catch (\InvalidArgumentException $e) {
-				\OC::$server->getLogger()->debug('Failed to parse activity');
-				return;
-			}
+			$this->logger->debug('Activity "' . $event->getRichSubject() . '" was not parsed by any provider');
+			return;
 		}
 
 		$this->event[$id] = $event;

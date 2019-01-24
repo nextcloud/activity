@@ -25,12 +25,10 @@ use OC\Activity\Manager;
 use OCA\Activity\Controller\APIv1;
 use OCA\Activity\CurrentUser;
 use OCA\Activity\Data;
-use OCA\Activity\DataHelper;
-use OCA\Activity\Extension\LegacyParser;
 use OCA\Activity\GroupHelper;
-use OCA\Activity\Parameter\Factory;
-use OCA\Activity\PlainTextParser;
-use OCA\Activity\Tests\Mock\Extension;
+use OCA\Activity\Tests\Mock\Provider;
+use OCA\Activity\Tests\Mock\Setting1;
+use OCA\Activity\Tests\Mock\Setting2;
 use OCA\Activity\Tests\TestCase;
 use OCA\Activity\UserSettings;
 use OCP\Activity\IExtension;
@@ -39,9 +37,7 @@ use OCP\IConfig;
 use OCP\IL10N;
 use OCP\ILogger;
 use OCP\IRequest;
-use OCP\IURLGenerator;
 use OCP\IUserSession;
-use OCP\L10N\IFactory;
 use OCP\RichObjectStrings\IValidator;
 
 /**
@@ -108,8 +104,7 @@ class APIv1Test extends TestCase {
 	protected function cleanUp() {
 		$data = new Data(
 			$this->getMockBuilder(IManager::class)->getMock(),
-			\OC::$server->getDatabaseConnection(),
-			$this->getMockBuilder(IUserSession::class)->getMock()
+			\OC::$server->getDatabaseConnection()
 		);
 
 		$this->deleteUser($data, 'activity-api-user1');
@@ -140,7 +135,7 @@ class APIv1Test extends TestCase {
 					'date' => null,
 					'id' => null,
 					'message' => '',
-					'subject' => 'Subject2 @User #A/B.txt',
+					'subject' => 'Subject2 @User #/A/B.txt',
 				),
 				array(
 					'link' => 'link',
@@ -148,7 +143,7 @@ class APIv1Test extends TestCase {
 					'date' => null,
 					'id' => null,
 					'message' => '',
-					'subject' => 'Subject1 #A/B.txt',
+					'subject' => 'Subject1 #/A/B.txt',
 				),
 			)),
 			array('activity-api-user1', 0, 1, array(
@@ -158,7 +153,7 @@ class APIv1Test extends TestCase {
 					'date' => null,
 					'id' => null,
 					'message' => '',
-					'subject' => 'Subject2 @User #A/B.txt',
+					'subject' => 'Subject2 @User #/A/B.txt',
 				),
 			)),
 			array('activity-api-user1', 1, 1, array(
@@ -168,7 +163,7 @@ class APIv1Test extends TestCase {
 					'date' => null,
 					'id' => null,
 					'message' => '',
-					'subject' => 'Subject1 #A/B.txt',
+					'subject' => 'Subject1 #/A/B.txt',
 				),
 			)),
 			array('activity-api-user1', 5, 1, array(
@@ -178,7 +173,7 @@ class APIv1Test extends TestCase {
 					'date' => null,
 					'id' => null,
 					'message' => '',
-					'subject' => 'Subject2 @User #A/B.txt',
+					'subject' => 'Subject2 @User #/A/B.txt',
 				),
 			)),
 		);
@@ -204,11 +199,6 @@ class APIv1Test extends TestCase {
 			->will($this->returnCallback(function($text, $parameters = array()) {
 				return vsprintf($text, $parameters);
 			}));
-		$languageFactory = $this->createMock(IFactory::class);
-		$languageFactory->expects(empty($expected) ? $this->never() : $this->atLeastOnce())
-			->method('get')
-			->with('activity')
-			->willReturn($l);
 
 		$activityManager = new Manager(
 			$this->getMockBuilder(IRequest::class)->getMock(),
@@ -216,9 +206,9 @@ class APIv1Test extends TestCase {
 			$config,
 			\OC::$server->query(IValidator::class)
 		);
-		$activityManager->registerExtension(function() use ($l) {
-			return new Extension($l, $this->getMockBuilder(IURLGenerator::class)->getMock());
-		});
+		$activityManager->registerProvider(Provider::class);
+		$activityManager->registerSetting(Setting1::class);
+		$activityManager->registerSetting(Setting2::class);
 
 		$currentUser = $this->getMockBuilder(CurrentUser::class)
 			->disableOriginalConstructor()
@@ -228,22 +218,14 @@ class APIv1Test extends TestCase {
 			->willReturn($user);
 
 		$data = new Data($activityManager, \OC::$server->getDatabaseConnection());
-		$dataHelper = new DataHelper(
-			$activityManager,
-			\OC::$server->query(Factory::class),
-			$this->getMockBuilder(IFactory::class)->getMock(),
-			$l
-		);
-		$parser = new PlainTextParser($l);
 
 		/** @var APIv1 $controller */
 		$controller = new APIv1(
 			'activity',
 			$this->getMockBuilder(IRequest::class)->getMock(),
 			$data,
-			new GroupHelper($l, $activityManager, $dataHelper, $this->createMock(IValidator::class), $this->createMock(ILogger::class), new LegacyParser($languageFactory, $dataHelper, $parser)),
-			new UserSettings($activityManager, $config, $data),
-			new PlainTextParser($l),
+			new GroupHelper($l, $activityManager, $this->createMock(IValidator::class), $this->createMock(ILogger::class)),
+			new UserSettings($activityManager, $config),
 			$currentUser
 		);
 		$response = $controller->get($start, $count);

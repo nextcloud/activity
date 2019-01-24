@@ -158,7 +158,6 @@ class Data {
 		if ($user === '') {
 			throw new \OutOfBoundsException('Invalid user', 1);
 		}
-		$groupHelper->setUser($user);
 
 		$activeFilter = null;
 		try {
