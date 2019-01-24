@@ -1,9 +1,9 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Activiteit",
+    "Activity" : "Aktiviteit",
     "An error occurred while loading activities" : "Er is een fout opgetreden bij het laden van activiteiten",
-    "No activity yet" : "Nog geen activiteit",
+    "No activity yet" : "Nog geen aktiviteiten",
     "Load more activities" : "Meer activiteiten laden",
     "Copied!" : "Gekopieerd!",
     "Not supported!" : "Niet ondersteund!",
