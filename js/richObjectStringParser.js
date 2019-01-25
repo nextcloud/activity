@@ -49,7 +49,7 @@
 		parseParameter: function(parameter) {
 			switch (parameter.type) {
 				case 'file':
-					return this.parseFileParameter(parameter);
+					return this.parseFileParameter(parameter).trim("\n");
 
 				case 'systemtag':
 					var name = parameter.name;
@@ -61,27 +61,27 @@
 
 					return OCA.Activity.Templates.systemTag({
 						name: name
-					});
+					}).trim("\n");
 
 				case 'email':
-					return OCA.Activity.Templates.email(parameter);
+					return OCA.Activity.Templates.email(parameter).trim("\n");
 
 				case 'open-graph':
-					return OCA.Activity.Templates.openGraph(parameter);
+					return OCA.Activity.Templates.openGraph(parameter).trim("\n");
 
 				case 'user':
 					if (_.isUndefined(parameter.server)) {
-						return OCA.Activity.Templates.userLocal(parameter);
+						return OCA.Activity.Templates.userLocal(parameter).trim("\n");
 					}
 
-					return OCA.Activity.Templates.userRemote(parameter);
+					return OCA.Activity.Templates.userRemote(parameter).trim("\n");
 
 				default:
 					if (!_.isUndefined(parameter.link)) {
-						return OCA.Activity.Templates.unkownLink(parameter);
+						return OCA.Activity.Templates.unkownLink(parameter).trim("\n");
 					}
 
-					return OCA.Activity.Templates.unknown(parameter);
+					return OCA.Activity.Templates.unknown(parameter).trim("\n");
 			}
 		},
 
