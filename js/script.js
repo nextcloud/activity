@@ -197,11 +197,11 @@ $(function(){
 		},
 
 		addActivity: function(activity) {
-			var subject = activity.subject;
+			var subject = escapeHTML(activity.subject);
 			if (activity.subject_rich[0].length > 1) {
 				subject = OCA.Activity.RichObjectStringParser.parseMessage(activity.subject_rich[0], activity.subject_rich[1]);
 			}
-			var message = activity.message;
+			var message = escapeHTML(activity.message);
 			if (activity.message_rich[0].length > 1) {
 				message = OCA.Activity.RichObjectStringParser.parseMessage(activity.message_rich[0], activity.message_rich[1]);
 			}
