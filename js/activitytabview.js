@@ -121,12 +121,12 @@
 		 */
 		_formatItem: function(activity) {
 
-			var subject = activity.get('subject'),
+			var subject = escapeHTML(activity.get('subject')),
 				subject_rich = activity.get('subject_rich');
 			if (subject_rich[0].length > 1) {
 				subject = OCA.Activity.RichObjectStringParser.parseMessage(subject_rich[0], subject_rich[1]);
 			}
-			var message = activity.get('message'),
+			var message = escapeHTML(activity.get('message')),
 				message_rich = activity.get('message_rich');
 			if (message_rich[0].length > 1) {
 				message = OCA.Activity.RichObjectStringParser.parseMessage(message_rich[0], message_rich[1]);

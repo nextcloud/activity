@@ -13,18 +13,16 @@
 	OCA.Activity.RichObjectStringParser = {
 		avatarsEnabled: true,
 
-		_unknownTemplate: '<strong>{{name}}</strong>',
-		_unknownLinkTemplate: '<a href="{{link}}">{{name}}</a>',
-
 		/**
-		 * @param {string} subject
+		 * @param {string} message
 		 * @param {Object} parameters
 		 * @returns {string}
 		 */
-		parseMessage: function(subject, parameters) {
+		parseMessage: function(message, parameters) {
+			message = escapeHTML(message);
 			var self = this,
-				regex = /\{([a-z0-9]+)\}/gi,
-				matches = subject.match(regex);
+				regex = /\{([a-z\-_0-9]+)\}/gi,
+				matches = message.match(regex);
 
 			_.each(matches, function(parameter) {
 				parameter = parameter.substring(1, parameter.length - 1);
@@ -35,10 +33,10 @@
 				}
 
 				var parsed = self.parseParameter(parameters[parameter]);
-				subject = subject.replace('{' + parameter + '}', parsed);
+				message = message.replace('{' + parameter + '}', parsed);
 			});
 
-			return subject;
+			return message.replace(new RegExp("\n", 'g'), '<br>');
 		},
 
 		/**
@@ -51,7 +49,7 @@
 		parseParameter: function(parameter) {
 			switch (parameter.type) {
 				case 'file':
-					return this.parseFileParameter(parameter);
+					return this.parseFileParameter(parameter).trim("\n");
 
 				case 'systemtag':
 					var name = parameter.name;
@@ -63,27 +61,27 @@
 
 					return OCA.Activity.Templates.systemTag({
 						name: name
-					});
+					}).trim("\n");
 
 				case 'email':
-					return OCA.Activity.Templates.email(parameter);
+					return OCA.Activity.Templates.email(parameter).trim("\n");
 
 				case 'open-graph':
-					return OCA.Activity.Templates.openGraph(parameter);
+					return OCA.Activity.Templates.openGraph(parameter).trim("\n");
 
 				case 'user':
 					if (_.isUndefined(parameter.server)) {
-						return OCA.Activity.Templates.userLocal(parameter);
+						return OCA.Activity.Templates.userLocal(parameter).trim("\n");
 					}
 
-					return OCA.Activity.Templates.userRemote(parameter);
+					return OCA.Activity.Templates.userRemote(parameter).trim("\n");
 
 				default:
 					if (!_.isUndefined(parameter.link)) {
-						return OCA.Activity.Templates.unkownLink(parameter);
+						return OCA.Activity.Templates.unkownLink(parameter).trim("\n");
 					}
 
-					return OCA.Activity.Templates.unknown(parameter);
+					return OCA.Activity.Templates.unknown(parameter).trim("\n");
 			}
 		},
 
