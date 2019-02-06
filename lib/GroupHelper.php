@@ -219,14 +219,15 @@ class GroupHelper {
 	 * @param IEvent $event
 	 * @return array
 	 */
-	protected function getObjectsFromChildren(IEvent $event) {
+	protected function getObjectsFromChildren(IEvent $event): array {
 		$child = $event->getChildEvent();
+		$objects = [];
 		if ($child instanceof IEvent) {
 			$objects = $this->getObjectsFromChildren($child);
-			$objects[$event->getObjectId()] = $event->getObjectName();
-			return $objects;
-		} else {
-			return [$event->getObjectId() => $event->getObjectName()];
 		}
+		if ($event->getObjectId() !== 0 || $event->getObjectName() !== '') {
+			$objects[$event->getObjectId()] = $event->getObjectName();
+		}
+		return $objects;
 	}
 }

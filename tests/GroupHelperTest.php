@@ -32,6 +32,7 @@ use OCP\Activity\IManager;
 use OCP\IL10N;
 use OCP\ILogger;
 use OCP\RichObjectStrings\IValidator;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class GroupHelperTest extends TestCase {
 	/** @var IManager|\PHPUnit_Framework_MockObject_MockObject */
@@ -202,7 +203,48 @@ class GroupHelperTest extends TestCase {
 			->willReturn($event);
 
 		$helper = $this->getHelper();
-		$instance = $this->invokePrivate($helper, 'arrayToEvent', [$activity]);
+		$instance = self::invokePrivate($helper, 'arrayToEvent', [$activity]);
 		$this->assertSame($event, $instance);
+	}
+
+
+	protected function createEvent(array $data): IEvent {
+		/** @var IEvent|MockObject $event */
+		$event = $this->createMock(IEvent::class);
+		$event->expects($this->atLeastOnce())
+			->method('getObjectId')
+			->willReturn($data['id']);
+		$event->expects($this->atLeastOnce())
+			->method('getObjectName')
+			->willReturn($data['name']);
+
+		if (isset($data['child'])) {
+			$event->expects($this->once())
+				->method('getChildEvent')
+				->willReturn($this->createEvent($data['child']));
+		}
+
+		return $event;
+	}
+
+	public function dataGetObjectsFromChildren() {
+		return [
+			[['id' => 0, 'name' => ''], []],
+			[['id' => 12, 'name' => ''], [12 => '']],
+			[['id' => 0, 'name' => 'zero'], [0 => 'zero']],
+			[['id' => 12, 'name' => 'twelve'], [12 => 'twelve']],
+			[['id' => 12, 'name' => 'twelve', 'child' => ['id' => 11, 'name' => 'eleven', 'child' => ['id' => 10, 'name' => 'ten']]], [10 => 'ten', 11 => 'eleven', 12 => 'twelve']],
+		];
+	}
+
+	/**
+	 * @dataProvider dataGetObjectsFromChildren
+	 * @param array $data
+	 * @param array $expected
+	 */
+	public function testGetObjectsFromChildren(array $data, array $expected) {
+		$event = $this->createEvent($data);
+		$helper = $this->getHelper();
+		$this->assertSame($expected, self::invokePrivate($helper, 'getObjectsFromChildren', [$event]));
 	}
 }
