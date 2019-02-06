@@ -22,11 +22,8 @@
 
 namespace OCA\Activity\Tests;
 
-use OCA\Activity\DataHelper;
-use OCA\Activity\Extension\LegacyParser;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\GroupHelperDisabled;
-use OCA\Activity\Parameter\Collection;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
@@ -37,14 +34,10 @@ use PHPUnit\Framework\MockObject\MockObject;
 class GroupHelperTest extends TestCase {
 	/** @var IManager|\PHPUnit_Framework_MockObject_MockObject */
 	protected $activityManager;
-	/** @var DataHelper|\PHPUnit_Framework_MockObject_MockObject */
-	protected $dataHelper;
 	/** @var IValidator|\PHPUnit_Framework_MockObject_MockObject */
 	protected $validator;
 	/** @var ILogger|\PHPUnit_Framework_MockObject_MockObject */
 	protected $logger;
-	/** @var LegacyParser|\PHPUnit_Framework_MockObject_MockObject */
-	protected $legacyParser;
 	/** @var IL10N|\PHPUnit_Framework_MockObject_MockObject */
 	protected $l;
 
@@ -53,8 +46,6 @@ class GroupHelperTest extends TestCase {
 
 		$this->l = $this->createMock(IL10N::class);
 		$this->activityManager = $this->createMock(IManager::class);
-		$this->dataHelper = $this->createMock(DataHelper::class);
-		$this->legacyParser = $this->createMock(LegacyParser::class);
 		$this->validator = $this->createMock(IValidator::class);
 		$this->logger = $this->createMock(ILogger::class);
 	}
@@ -70,48 +61,33 @@ class GroupHelperTest extends TestCase {
 				return new GroupHelper(
 					$this->l,
 					$this->activityManager,
-					$this->dataHelper,
 					$this->validator,
-					$this->logger,
-					$this->legacyParser
+					$this->logger
 				);
 			}
 			return new GroupHelperDisabled(
 				$this->l,
 				$this->activityManager,
-				$this->dataHelper,
 				$this->validator,
-				$this->logger,
-				$this->legacyParser
+				$this->logger
 			);
 		}
 
-		return $this->getMockBuilder($grouping ? 'OCA\Activity\GroupHelper' : 'OCA\Activity\GroupHelperDisabled')
+		return $this->getMockBuilder($grouping ? GroupHelper::class : GroupHelperDisabled::class)
 			->setConstructorArgs([
+				$this->l,
 				$this->activityManager,
-				$this->dataHelper
+				$this->validator,
+				$this->logger
 			])
 			->setMethods($methods)
 			->getMock();
-	}
-
-	public function testSetUser() {
-		$helper = $this->getHelper();
-
-		$this->dataHelper->expects($this->once())
-			->method('setUser')
-			->with('foobar');
-
-		$helper->setUser('foobar');
 	}
 
 	public function testSetL10n() {
 		$helper = $this->getHelper();
 
 		$l = \OC::$server->getL10NFactory()->get('activity', 'de');
-		$this->dataHelper->expects($this->once())
-			->method('setL10n')
-			->with($l);
 
 		$helper->setL10n($l);
 	}

@@ -36,20 +36,12 @@ use OCA\Activity\Controller\Feed;
 use OCA\Activity\Controller\Settings;
 use OCA\Activity\CurrentUser;
 use OCA\Activity\Data;
-use OCA\Activity\DataHelper;
 use OCA\Activity\FilesHooks;
-use OCA\Activity\Formatter\BaseFormatter;
-use OCA\Activity\Formatter\CloudIDFormatter;
-use OCA\Activity\Formatter\FileFormatter;
-use OCA\Activity\Formatter\IFormatter;
-use OCA\Activity\Formatter\UserFormatter;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\GroupHelperDisabled;
 use OCA\Activity\Hooks;
 use OCA\Activity\MailQueueHandler;
 use OCA\Activity\Navigation;
-use OCA\Activity\Parameter\Factory;
-use OCA\Activity\PlainTextParser;
 use OCA\Activity\Tests\TestCase;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
@@ -95,7 +87,6 @@ class ApplicationTest extends TestCase {
 			array(Consumer::class, IConsumer::class),
 			array(CurrentUser::class),
 			array(Data::class),
-			array(DataHelper::class),
 			array(FilesHooks::class),
 			array(GroupHelper::class),
 			array(GroupHelperDisabled::class),
@@ -103,7 +94,6 @@ class ApplicationTest extends TestCase {
 			array(Hooks::class),
 			array(MailQueueHandler::class),
 			array(Navigation::class),
-			array(PlainTextParser::class),
 			array(UserSettings::class),
 			array(ViewInfoCache::class),
 
@@ -126,23 +116,6 @@ class ApplicationTest extends TestCase {
 			array('FeedController', Controller::class),
 			array('SettingsController', Settings::class),
 			array('SettingsController', Controller::class),
-
-			// Formatter
-			array(BaseFormatter::class),
-			array(BaseFormatter::class, IFormatter::class),
-			array(CloudIDFormatter::class),
-			array(CloudIDFormatter::class, IFormatter::class),
-			array(FileFormatter::class),
-			array(FileFormatter::class, IFormatter::class),
-			array(UserFormatter::class),
-			array(UserFormatter::class, IFormatter::class),
-
-			// Parameter
-			array(Factory::class),
-			//array(Collection::class),
-			//array(Collection::class, IParameter::class),
-			//array(Parameter::class),
-			//array(Parameter::class, IParameter::class),
 		);
 	}
 
@@ -155,6 +128,6 @@ class ApplicationTest extends TestCase {
 		if ($expected === null) {
 			$expected = $service;
 		}
-		$this->assertTrue($this->container->query($service) instanceof $expected);
+		$this->assertInstanceOf($expected, $this->container->query($service));
 	}
 }

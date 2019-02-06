@@ -23,7 +23,6 @@
 
 namespace OCA\Activity\Tests;
 
-use OCA\Activity\Extension\LegacyParser;
 use OCA\Activity\MailQueueHandler;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -35,10 +34,11 @@ use OCP\Activity\IManager;
 use OCP\Mail\IEMailTemplate;
 use OCP\Mail\IMailer;
 use OC\Mail\Message;
-use OCA\Activity\DataHelper;
 use OCP\IURLGenerator;
 use OCP\IDateTimeFormatter;
 use OCP\IUser;
+use OCP\RichObjectStrings\IValidator;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class MailQueueHandlerTest
@@ -68,11 +68,8 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var \PHPUnit_Framework_MockObject_MockObject|IManager */
 	protected $activityManager;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|DataHelper */
-	protected $dataHelper;
-
-	/** @var \PHPUnit_Framework_MockObject_MockObject|LegacyParser */
-	protected $legacyParser;
+	/** @var IValidator|MockObject */
+	protected $richObjectValidator;
 
 	/** @var IConfig|\PHPUnit_Framework_MockObject_MockObject */
 	protected $config;
@@ -89,7 +86,6 @@ class MailQueueHandlerTest extends TestCase {
 		$app = self::getUniqueID('MailQueueHandlerTest');
 		$this->userManager = $this->createMock(IUserManager::class);
 		$this->lFactory = $this->createMock(IFactory::class);
-		$this->legacyParser = $this->createMock(LegacyParser::class);
 		$this->config = $this->createMock(IConfig::class);
 		$this->logger = $this->createMock(ILogger::class);
 		$this->dateTimeFormatter = $this->createMock(IDateTimeFormatter::class);
@@ -143,16 +139,8 @@ class MailQueueHandlerTest extends TestCase {
 			->method('getProviders')
 			->willReturn([]);
 
-		$this->legacyParser->expects($this->any())
-			->method('parse')
-			->willReturnArgument(1);
-
-		$this->dataHelper = $this->createMock(DataHelper::class);
-		$this->dataHelper->expects($this->any())
-			->method('getParameters')
-			->willReturn([]);
-
 		$this->message = $this->createMock(Message::class);
+		$this->richObjectValidator = $this->createMock(IValidator::class);
 		$this->mailer = $this->createMock(IMailer::class);
 		$this->mailer->expects($this->any())
 			->method('createMessage')
@@ -160,13 +148,12 @@ class MailQueueHandlerTest extends TestCase {
 		$this->mailQueueHandler = new MailQueueHandler(
 			$this->dateTimeFormatter,
 			$connection,
-			$this->dataHelper,
 			$this->mailer,
 			$this->createMock(IURLGenerator::class),
 			$this->userManager,
 			$this->lFactory,
 			$this->activityManager,
-			$this->legacyParser,
+			$this->richObjectValidator,
 			$this->config,
 			$this->logger
 		);

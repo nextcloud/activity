@@ -21,7 +21,6 @@
 
 namespace OCA\Activity;
 
-use OCA\Activity\Extension\LegacyParser;
 use OCP\Activity\IManager;
 use OCP\IL10N;
 use OCP\ILogger;
@@ -29,24 +28,14 @@ use OCP\RichObjectStrings\IValidator;
 
 class GroupHelperDisabled extends GroupHelper {
 
-	/**
-	 * @param IL10N $l
-	 * @param IManager $activityManager
-	 * @param DataHelper $dataHelper
-	 * @param LegacyParser $legacyParser
-	 */
 	public function __construct(IL10N $l,
 								IManager $activityManager,
-								DataHelper $dataHelper,
 								IValidator $richObjectValidator,
-								ILogger $logger,
-								LegacyParser $legacyParser) {
+								ILogger $logger) {
 		parent::__construct($l,
-									$activityManager,
-									$dataHelper,
-									$richObjectValidator,
-									$logger,
-									$legacyParser);
+							$activityManager,
+							$richObjectValidator,
+							$logger);
 		$this->allowGrouping = false;
 	}
 }
