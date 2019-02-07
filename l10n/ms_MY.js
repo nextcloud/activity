@@ -22,7 +22,6 @@ OC.L10N.register(
     "By you" : "Oleh anda",
     "Hello %s" : "Hai %s",
     "Hello %s," : "Hai %s,",
-    ", " : ",",
     "Mail" : "Mel",
     "Stream" : "Strim",
     "Activity feed" : "Suapan aktiviti",
@@ -36,9 +35,10 @@ OC.L10N.register(
     "Settings" : "Tetapan",
     "RSS feed" : "Suapan RSS",
     "No more events to load" : "Tiada aktiviti untuk memuat",
-    "Files" : "Fail",
     "Activities" : "Aktiviti",
     "Home" : "Rumah",
-    "Activity notification" : "Peringatan aktiviti"
+    "Activity notification" : "Peringatan aktiviti",
+    ", " : ",",
+    "Files" : "Fail"
 },
 "nplurals=1; plural=0;");

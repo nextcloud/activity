@@ -24,13 +24,10 @@ OC.L10N.register(
     "All activities" : "Kaikkien toimet",
     "By others" : "Muiden",
     "By you" : "Sinun",
-    "\"remote user\"" : "\"etäkäyttäjä\"",
     "Hello %s" : "Hei %s",
     "Hello %s," : "Hei %s,",
     "There was some activity at %s" : "Toimintaa kohteessa %s",
     "_and %n more _::_and %n more _" : ["ja %n lisää","ja %n lisää"],
-    ", " : ", ",
-    "%s and %s" : "%s ja %s",
     "Mail" : "Sähköposti",
     "Stream" : "Luettelo",
     "This application enables users to view actions related to their files in Nextcloud." : "Tämä sovellus mahdollistaa käyttäjien tarkastella toimintoja liittyen heidän tiedostoihin Nextcloudissa.",
@@ -52,9 +49,12 @@ OC.L10N.register(
     "Enable RSS feed" : "Käytä RSS-syötettä",
     "RSS feed" : "RSS-syöte",
     "No more events to load" : "Ei enempää tapahtumia ladattavaksi",
-    "Files" : "Tiedostot",
     "Activities" : "Toimet",
     "Home" : "Koti",
-    "Activity notification" : "Ilmoitus toiminnasta"
+    "\"remote user\"" : "\"etäkäyttäjä\"",
+    "Activity notification" : "Ilmoitus toiminnasta",
+    ", " : ", ",
+    "%s and %s" : "%s ja %s",
+    "Files" : "Tiedostot"
 },
 "nplurals=2; plural=(n != 1);");

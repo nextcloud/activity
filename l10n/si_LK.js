@@ -17,13 +17,10 @@ OC.L10N.register(
     "All activities" : "සියලුම ක්‍රියාකාරකම්",
     "By others" : "අනිකුත් අයගෙන්",
     "By you" : "මා විසින්",
-    "\"remote user\"" : "\"දූරස්ථ පරිශීලකයා\"",
     "Hello %s" : "ආයුබෝවන් %s",
     "Hello %s," : "ආයුබෝවන් %s,",
     "There was some activity at %s" : "සමහර ක්‍රියාකාරකම් %s",
     "_and %n more _::_and %n more _" : ["තවත් %nවැඩිපුර","තවත් %n වැඩිපුර"],
-    ", " : ", ",
-    "%s and %s" : "%sසහ %s",
     "Mail" : "තැපෑල",
     "Stream" : "ප්‍රවාහය",
     "Activity feed" : "ක්‍රියාකාරකම් පෝෂකය",
@@ -34,8 +31,11 @@ OC.L10N.register(
     "Daily" : "දිනපතා",
     "Weekly" : "සතිපතා",
     "Settings" : "සැකසුම්",
-    "Files" : "ගොනු",
     "Activities" : "ක්‍රියාකාරකම්",
-    "Home" : "නිවස."
+    "Home" : "නිවස.",
+    "\"remote user\"" : "\"දූරස්ථ පරිශීලකයා\"",
+    ", " : ", ",
+    "%s and %s" : "%sසහ %s",
+    "Files" : "ගොනු"
 },
 "nplurals=2; plural=(n != 1);");

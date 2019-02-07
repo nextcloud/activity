@@ -22,14 +22,11 @@
     "All activities" : "All aktivitet",
     "By others" : "Av andre",
     "By you" : "Av deg",
-    "\"remote user\"" : "\"ekstern bruker\"",
     "Activity notification for %s" : "Aktivitetsvarsel for %s",
     "Hello %s" : "Hei %s",
     "Hello %s," : "Hei %s,",
     "There was some activity at %s" : "Det har vært aktivitet ved %s",
     "_and %n more _::_and %n more _" : ["og %n til","og %n til"],
-    ", " : ", ",
-    "%s and %s" : "%s og %s",
     "Mail" : "E-post",
     "Stream" : "Strøm",
     "This application enables users to view actions related to their files in Nextcloud." : "Denne applikasjonen viser aksjoner for dine filer i Nextcloud.",
@@ -52,9 +49,12 @@
     "Enable RSS feed" : "Aktiver RSS-nyhetskilde",
     "RSS feed" : "RSS-nyhetskilde",
     "No more events to load" : "Ingen flere hendelser å laste inn",
-    "Files" : "Filer",
     "Activities" : "Aktiviteter",
     "Home" : "Hjem",
-    "Activity notification" : "Varsel om aktivitet"
+    "\"remote user\"" : "\"ekstern bruker\"",
+    "Activity notification" : "Varsel om aktivitet",
+    ", " : ", ",
+    "%s and %s" : "%s og %s",
+    "Files" : "Filer"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

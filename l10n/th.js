@@ -24,13 +24,10 @@ OC.L10N.register(
     "All activities" : "กิจกรรมทั้งหมด",
     "By others" : "โดยผู้อื่น",
     "By you" : "โดยคุณ",
-    "\"remote user\"" : "\"ผู้ใช้โดยการรีโมท\"",
     "Hello %s" : "สวัสดี %s",
     "Hello %s," : "สวัสดี %s",
     "There was some activity at %s" : "มีกิจกรรมบางอย่าง ที่ %s",
     "_and %n more _::_and %n more _" : ["และอีก %n"],
-    ", " : "หรือ",
-    "%s and %s" : "%s และ %s",
     "Mail" : "จดหมาย",
     "Stream" : "สตรีม",
     "Activity feed" : "ฟีดกิจกรรม",
@@ -51,9 +48,12 @@ OC.L10N.register(
     "Enable RSS feed" : "เปิดใช้งานฟีด RSS",
     "RSS feed" : "ฟีด RSS",
     "No more events to load" : "ไม่มีการโหลดกิจกรรมเพิ่มเติม",
-    "Files" : "ไฟล์",
     "Activities" : "กิจกรรม",
     "Home" : "หน้าหลัก",
-    "Activity notification" : "การแจ้งเตือนกิจกรรม"
+    "\"remote user\"" : "\"ผู้ใช้โดยการรีโมท\"",
+    "Activity notification" : "การแจ้งเตือนกิจกรรม",
+    ", " : "หรือ",
+    "%s and %s" : "%s และ %s",
+    "Files" : "ไฟล์"
 },
 "nplurals=1; plural=0;");

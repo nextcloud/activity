@@ -22,14 +22,11 @@
     "All activities" : "Tất cả hoạt động",
     "By others" : "Bởi người khác",
     "By you" : "Bởi bạn",
-    "\"remote user\"" : "\"Người dùng từ xa\"",
     "Activity notification for %s" : "Thông báo hoạt động của %s",
     "Hello %s" : "Xin chào %s",
     "Hello %s," : "Xin chào %s,",
     "There was some activity at %s" : "Có một số hoạt động tại %s",
     "_and %n more _::_and %n more _" : ["và %n thêm"],
-    ", " : ", ",
-    "%s and %s" : "%s và %s",
     "Mail" : "Thư điện tử",
     "Stream" : "Luồng",
     "This application enables users to view actions related to their files in Nextcloud." : "Đây là ứng dụng cho phép người dùng xem các hành động liên quan đến dữ liệu của họ trên Máy chủ",
@@ -52,9 +49,12 @@
     "Enable RSS feed" : "Bật nguồn cấp dữ liệu RSS",
     "RSS feed" : "Nội dung RSS",
     "No more events to load" : "Không có sự kiện nào",
-    "Files" : "Tệp tin",
     "Activities" : "Lịch sử hoạt động",
     "Home" : "Trang nhất",
-    "Activity notification" : "Thông báo hoạt động"
+    "\"remote user\"" : "\"Người dùng từ xa\"",
+    "Activity notification" : "Thông báo hoạt động",
+    ", " : ", ",
+    "%s and %s" : "%s và %s",
+    "Files" : "Tệp tin"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

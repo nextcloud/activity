@@ -22,14 +22,11 @@
     "All activities" : "Όλες οι δραστηριότητες",
     "By others" : "Από άλλους",
     "By you" : "Από εσάς",
-    "\"remote user\"" : "\"απομακρυσμένος χρήστης\"",
     "Activity notification for %s" : "Ειδοποίηση δραστηριότητας για %s",
     "Hello %s" : "Γεια σας %s",
     "Hello %s," : "Γεια σας %s,",
     "There was some activity at %s" : "Υπήρξε δραστηριότητα στο %s",
     "_and %n more _::_and %n more _" : ["και %n επιπλέον","και %n επιπλέον"],
-    ", " : ", ",
-    "%s and %s" : "%s και %s",
     "Mail" : "Ταχυδρομείο",
     "Stream" : "Ροή",
     "Activity feed" : "Ροή Δραστηριότητας",
@@ -50,9 +47,12 @@
     "Enable RSS feed" : "Ενεργοποίηση ροής πληροφοριών RSS",
     "RSS feed" : "Ροή RSS",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
-    "Files" : "Αρχεία",
     "Activities" : "Δραστηριότητες",
     "Home" : "Αρχική",
-    "Activity notification" : "Ειδοποίηση δραστηριότητας"
+    "\"remote user\"" : "\"απομακρυσμένος χρήστης\"",
+    "Activity notification" : "Ειδοποίηση δραστηριότητας",
+    ", " : ", ",
+    "%s and %s" : "%s και %s",
+    "Files" : "Αρχεία"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
