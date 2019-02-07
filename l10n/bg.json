@@ -22,14 +22,11 @@
     "All activities" : "Всички активности",
     "By others" : "От други",
     "By you" : "От Вас",
-    "\"remote user\"" : "\"отдалечен потребител\"",
     "Activity notification for %s" : "Известиe за активност %s",
     "Hello %s" : "Здравейте %s",
     "Hello %s," : "Здравейте %s,",
     "There was some activity at %s" : "Имаше събитие в %s",
     "_and %n more _::_and %n more _" : ["и %n още ","и %n още "],
-    ", " : ", ",
-    "%s and %s" : "%s и %s",
     "Mail" : "Поща",
     "Stream" : "Поток",
     "This application enables users to view actions related to their files in Nextcloud." : "Приложението позволява на потребителите да прегледат действия свързани с файловете им в Nextcloud.",
@@ -52,9 +49,12 @@
     "Enable RSS feed" : "Разрешаване на RSS емисии",
     "RSS feed" : "RSS емисия",
     "No more events to load" : "Няма повече известия за зареждане",
-    "Files" : "Файлове",
     "Activities" : "Активности",
     "Home" : "Начало",
-    "Activity notification" : "Известия за активност"
+    "\"remote user\"" : "\"отдалечен потребител\"",
+    "Activity notification" : "Известия за активност",
+    ", " : ", ",
+    "%s and %s" : "%s и %s",
+    "Files" : "Файлове"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

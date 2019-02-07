@@ -22,14 +22,11 @@
     "All activities" : "כל הפעילויות",
     "By others" : "על ידי אחרים",
     "By you" : "על ידך",
-    "\"remote user\"" : "\"משתמש מרוחק\"",
     "Activity notification for %s" : "התרעת פעילות עבור %s",
     "Hello %s" : "שלום %s",
     "Hello %s," : "שלום %s,",
     "There was some activity at %s" : "הייתה פעילות ב%s",
     "_and %n more _::_and %n more _" : ["ו־%n נוסף","ו־%n נוספים","ו־%n נוספים","ו־%n נוספים"],
-    ", " : ",",
-    "%s and %s" : "%s ו- %s",
     "Mail" : "דואר",
     "Stream" : "הזרמת מידע",
     "This application enables users to view actions related to their files in Nextcloud." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שקשורות לקבצים שלהם ב־Nextcloud.",
@@ -51,9 +48,12 @@
     "Enable RSS feed" : "לאפשר הזנת RSS",
     "RSS feed" : "ערוץ RSS",
     "No more events to load" : "אין אירועים נוספים לטעינה",
-    "Files" : "קבצים",
     "Activities" : "פעילויות",
     "Home" : "בית",
-    "Activity notification" : "דיווח פעילות"
+    "\"remote user\"" : "\"משתמש מרוחק\"",
+    "Activity notification" : "דיווח פעילות",
+    ", " : ",",
+    "%s and %s" : "%s ו- %s",
+    "Files" : "קבצים"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;"
 }

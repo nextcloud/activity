@@ -23,17 +23,17 @@ OC.L10N.register(
     "All activities" : "လုပ်ဆောင်ချက်အားလုံး",
     "By others" : "အခြားသူများမှ",
     "By you" : "သင့်ထံမှ",
-    "\"remote user\"" : "\"အဝေးမှ အသုံးပြုသူ\"",
     "Activity notification for %s" : "%sအတွက် လုပ်ဆောင်မှု အသိပေးချက်",
     "Hello %s" : "မင်္ဂလာပါ %s",
     "Hello %s," : "မင်္ဂလာပါ %s၊",
     "There was some activity at %s" : "%sက လုပ်ဆောင်မှု အချို့ ရှိခဲ့သည်။",
     "_and %n more _::_and %n more _" : ["နှင့် အပို%n"],
-    ", " : "၊",
-    "%s and %s" : "%sနှင့် %s",
     "Mail" : "စာ",
     "Stream" : "လမ်းကြောင်း",
     "Activities" : "လုပ်ဆောင်မှုများ",
-    "Home" : "ပင်မစာမျက်နှာ"
+    "Home" : "ပင်မစာမျက်နှာ",
+    "\"remote user\"" : "\"အဝေးမှ အသုံးပြုသူ\"",
+    ", " : "၊",
+    "%s and %s" : "%sနှင့် %s"
 },
 "nplurals=1; plural=0;");

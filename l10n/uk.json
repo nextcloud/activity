@@ -22,14 +22,11 @@
     "All activities" : "Всі дії",
     "By others" : "Іншими",
     "By you" : "Вами",
-    "\"remote user\"" : "\"віддалений користувач\"",
     "Activity notification for %s" : "Повідомлення про активність для %s",
     "Hello %s" : "Вітаємо %s",
     "Hello %s," : "Вітаємо %s,",
     "There was some activity at %s" : "Остання подія відбулася о %s",
     "_and %n more _::_and %n more _" : ["та ще %n","та ще %n","та ще %n","та ще %n"],
-    ", " : ",",
-    "%s and %s" : "%s і %s",
     "Mail" : "Пошта",
     "Stream" : "Потік",
     "This application enables users to view actions related to their files in Nextcloud." : "Додаток дозволяє користувачам переглядати дії над їх файлами у Nextcloud.",
@@ -52,9 +49,12 @@
     "Enable RSS feed" : "Активувати RSS стрічку",
     "RSS feed" : "Стрічка RSS",
     "No more events to load" : "Більше немає подій для завантаження",
-    "Files" : "Файли",
     "Activities" : "Активність",
     "Home" : "Домівка",
-    "Activity notification" : "Повідомлення про події"
+    "\"remote user\"" : "\"віддалений користувач\"",
+    "Activity notification" : "Повідомлення про події",
+    ", " : ",",
+    "%s and %s" : "%s і %s",
+    "Files" : "Файли"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"
 }

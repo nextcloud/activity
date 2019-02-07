@@ -21,11 +21,8 @@ OC.L10N.register(
     "All activities" : "All Aktivitéiten",
     "By others" : "Vun aneren",
     "By you" : "Vun dir",
-    "\"remote user\"" : "\"Remote-Benotzer\"",
     "Hello %s," : "Hallo %s,",
     "There was some activity at %s" : "Et goufen Ännerungen bei ¦%s",
-    ", " : ", ",
-    "%s and %s" : "%s an %s",
     "Mail" : "Mail",
     "Stream" : "Floss",
     "Activity feed" : "Aktivitéits-Feed",
@@ -39,8 +36,11 @@ OC.L10N.register(
     "Settings" : "Astellungen",
     "Enable RSS feed" : "RSS-Feed aktivéieren",
     "No more events to load" : "Keng weider Evenementer fir ze lueden",
-    "Files" : "Fichieren",
     "Activities" : "Aktivitéiten",
-    "Activity notification" : "Aktivitéits-Notifikatiounen"
+    "\"remote user\"" : "\"Remote-Benotzer\"",
+    "Activity notification" : "Aktivitéits-Notifikatiounen",
+    ", " : ", ",
+    "%s and %s" : "%s an %s",
+    "Files" : "Fichieren"
 },
 "nplurals=2; plural=(n != 1);");

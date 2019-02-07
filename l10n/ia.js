@@ -23,11 +23,8 @@ OC.L10N.register(
     "All activities" : "Omne activitates",
     "By others" : "Per alteres",
     "By you" : "Per vos",
-    "\"remote user\"" : "\"usator remote\"",
     "Hello %s," : "Salute %s,",
     "There was some activity at %s" : "Il habeva alcun activitate in %s",
-    ", " : ",",
-    "%s and %s" : "%s e %s",
     "Mail" : "Posta",
     "Stream" : "Fluxo",
     "Activity feed" : "Syndication de activitate",
@@ -41,8 +38,11 @@ OC.L10N.register(
     "Settings" : "Configurationes",
     "Enable RSS feed" : "Habilita syndication RSS",
     "No more events to load" : "Nulle altere eventos a cargar",
-    "Files" : "Files",
     "Activities" : "Activitates",
-    "Activity notification" : "Notification de activitate"
+    "\"remote user\"" : "\"usator remote\"",
+    "Activity notification" : "Notification de activitate",
+    ", " : ",",
+    "%s and %s" : "%s e %s",
+    "Files" : "Files"
 },
 "nplurals=2; plural=(n != 1);");

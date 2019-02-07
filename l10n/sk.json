@@ -22,14 +22,11 @@
     "All activities" : "Všetky aktivity",
     "By others" : "Aktivity ostatných",
     "By you" : "Vlastné aktivity",
-    "\"remote user\"" : "\"vzdialený používateľ\"",
     "Activity notification for %s" : "Upozornenia na aktivity pre %s",
     "Hello %s" : "Ahoj %s",
     "Hello %s," : "Ahoj %s,",
     "There was some activity at %s" : "Bola zaznamenaná aktivita u používateľa %s",
     "_and %n more _::_and %n more _" : ["a %n ďalší","a %n ďalšie","a %n ďalších","a %n ďalších"],
-    ", " : ", ",
-    "%s and %s" : "%s a %s",
     "Mail" : "Pošta",
     "Stream" : "Prúd",
     "This application enables users to view actions related to their files in Nextcloud." : "Táto aplikácia povolí používateľom sledovať akcie súvisiace s ich súbormi v Nextcloude.",
@@ -52,9 +49,12 @@
     "Enable RSS feed" : "Povoliť RSS kanál",
     "RSS feed" : "RSS kanál",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
-    "Files" : "Súbory",
     "Activities" : "Aktivity",
     "Home" : "Domov",
-    "Activity notification" : "Upozornenia na aktivity"
+    "\"remote user\"" : "\"vzdialený používateľ\"",
+    "Activity notification" : "Upozornenia na aktivity",
+    ", " : ", ",
+    "%s and %s" : "%s a %s",
+    "Files" : "Súbory"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"
 }

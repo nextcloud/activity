@@ -22,14 +22,11 @@
     "All activities" : "Tüm işlemler",
     "By others" : "Diğerleri tarafından",
     "By you" : "Sizin tarafınızdan",
-    "\"remote user\"" : "\"uzak kullanıcı\"",
     "Activity notification for %s" : "%s için işlem bildirimi",
     "Hello %s" : "Merhaba %s",
     "Hello %s," : "Merhaba %s,",
     "There was some activity at %s" : "%s üzerinde bazı işlemler yapıldı",
     "_and %n more _::_and %n more _" : ["ve %n diğer","ve %n diğer"],
-    ", " : ", ",
-    "%s and %s" : "%s ve %s",
     "Mail" : "Posta",
     "Stream" : "Akış",
     "This application enables users to view actions related to their files in Nextcloud." : "Bu uygulama, kullanıcıların Nextcloud üzerindeki dosyaları üzerinde yapılan işlemleri görebilmesini sağlar.",
@@ -52,9 +49,12 @@
     "Enable RSS feed" : "RSS akışı kullanılsın",
     "RSS feed" : "RSS akışı",
     "No more events to load" : "Yüklenecek başka bir olay yok",
-    "Files" : "Dosyalar",
     "Activities" : "İşlemler",
     "Home" : "Giriş",
-    "Activity notification" : "İşlem bildirimi"
+    "\"remote user\"" : "\"uzak kullanıcı\"",
+    "Activity notification" : "İşlem bildirimi",
+    ", " : ", ",
+    "%s and %s" : "%s ve %s",
+    "Files" : "Dosyalar"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }
