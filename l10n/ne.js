@@ -24,13 +24,10 @@ OC.L10N.register(
     "All activities" : "सबै गतिविधिहरू",
     "By others" : "अरूद्वारा",
     "By you" : "तपाईं द्वारा",
-    "\"remote user\"" : "\"रिमोट प्रयोगकर्ता\"",
     "Hello %s" : "नमस्ते %s",
     "Hello %s," : "नमस्ते %s,",
     "There was some activity at %s" : "%s मा केही गतिविधि थियो",
     "_and %n more _::_and %n more _" : ["र थप %n","र %n थप "],
-    ", " : ",",
-    "%s and %s" : "%s र %s",
     "Mail" : "पत्र",
     "Stream" : "स्ट्रिम",
     "Activity feed" : "गतिविधि पाटि",
@@ -49,9 +46,12 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS फिड सक्षम गर्नुहोस्",
     "RSS feed" : "RSS फिड",
     "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
-    "Files" : "फाइलहरू",
     "Activities" : "क्रियाकलापहरू",
     "Home" : "गृह",
-    "Activity notification" : "गतिविधि सूचना"
+    "\"remote user\"" : "\"रिमोट प्रयोगकर्ता\"",
+    "Activity notification" : "गतिविधि सूचना",
+    ", " : ",",
+    "%s and %s" : "%s र %s",
+    "Files" : "फाइलहरू"
 },
 "nplurals=2; plural=(n != 1);");

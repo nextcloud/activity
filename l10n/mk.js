@@ -10,10 +10,7 @@ OC.L10N.register(
     "Personal activity feed for %s" : "Feed на лични активности за %s",
     "Your feed URL is invalid" : "Вашиот URL за feed не е исправен",
     "Your settings have been updated." : "Вашите нагодувања беа освежени.",
-    "\"remote user\"" : "\"далечен корисник\"",
     "Hello %s," : "Здраво %s,",
-    ", " : ", ",
-    "%s and %s" : "%s и %s",
     "Mail" : "Електронска пошта",
     "Stream" : "Стрим",
     "Activity feed" : "Feed на активности",
@@ -25,8 +22,11 @@ OC.L10N.register(
     "Weekly" : "Неделно",
     "Enable RSS feed" : "Овозможи RSS feed",
     "No more events to load" : "Нема повеќе настани да вчитам",
-    "Files" : "Датотеки",
     "Activities" : "Активности",
-    "Activity notification" : "Известување за Активности"
+    "\"remote user\"" : "\"далечен корисник\"",
+    "Activity notification" : "Известување за Активности",
+    ", " : ", ",
+    "%s and %s" : "%s и %s",
+    "Files" : "Датотеки"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

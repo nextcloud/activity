@@ -22,14 +22,11 @@
     "All activities" : "Akk irmuden",
     "By others" : "Sɣur wiyaḍ",
     "By you" : "Sɣur-k",
-    "\"remote user\"" : "\"aseqdac anmeggag\"",
     "Activity notification for %s" : "Talɣut n warmud i %s",
     "Hello %s" : "Azul %s",
     "Hello %s," : "Azul %s,",
     "There was some activity at %s" : "Yella yiwen n urmud deg %s",
     "_and %n more _::_and %n more _" : ["akked %n nniḍen","akked %n nniḍen "],
-    ", " : ", ",
-    "%s and %s" : "%s akked %s",
     "Mail" : "Tirawt",
     "Stream" : "Asuddem",
     "This application enables users to view actions related to their files in Nextcloud." : "Asnas-ag ad yeǧǧ iseqdacen ad walin tigawin yeɛnan ifuyla-nnsen di Nextcloud.",
@@ -50,9 +47,12 @@
     "Enable RSS feed" : "Ssermed asuddem RSS",
     "RSS feed" : "Asuddem RSS",
     "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
-    "Files" : "Ifuyla",
     "Activities" : "Irmuden",
     "Home" : "Asnubeg",
-    "Activity notification" : "Alɣu n urmud"
+    "\"remote user\"" : "\"aseqdac anmeggag\"",
+    "Activity notification" : "Alɣu n urmud",
+    ", " : ", ",
+    "%s and %s" : "%s akked %s",
+    "Files" : "Ifuyla"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

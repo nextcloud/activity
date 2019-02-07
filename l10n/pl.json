@@ -22,14 +22,11 @@
     "All activities" : "Wszystkie aktywności",
     "By others" : "Przez innych",
     "By you" : "Przez Ciebie",
-    "\"remote user\"" : "\"użytkownik zdalny\"",
     "Activity notification for %s" : "Powiadomienie o aktywności dla %s",
     "Hello %s" : "Witaj %s",
     "Hello %s," : "Witaj %s,",
     "There was some activity at %s" : "Zaistniała aktywność przy %s",
     "_and %n more _::_and %n more _" : ["i %n więcej","i %n więcej","i %n więcej","i %n więcej"],
-    ", " : ", ",
-    "%s and %s" : "%s oraz %s",
     "Mail" : "E-mail",
     "Stream" : "Strumień",
     "This application enables users to view actions related to their files in Nextcloud." : "Ta aplikacja umożliwia użytkownikom przeglądanie akcji związanych z ich plikami w usłudze NextCloud.",
@@ -52,9 +49,12 @@
     "Enable RSS feed" : "Włącz kanał RSS",
     "RSS feed" : "Kanał RSS",
     "No more events to load" : "Brak zdarzeń do załadowania",
-    "Files" : "Pliki",
     "Activities" : "Aktywności",
     "Home" : "Strona główna",
-    "Activity notification" : "Powiadomienie o aktywności"
+    "\"remote user\"" : "\"użytkownik zdalny\"",
+    "Activity notification" : "Powiadomienie o aktywności",
+    ", " : ", ",
+    "%s and %s" : "%s oraz %s",
+    "Files" : "Pliki"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }

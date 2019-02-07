@@ -22,14 +22,11 @@
     "All activities" : "Totes les activitats",
     "By others" : "Per altres",
     "By you" : "Per tu",
-    "\"remote user\"" : "\"usuari remot\"",
     "Activity notification for %s" : "Notificació d'activitat per 1%s",
     "Hello %s" : "Hola %s",
     "Hello %s," : "Hola %s,",
     "There was some activity at %s" : "Hi va haver activitat a %s",
     "_and %n more _::_and %n more _" : ["i %n més","i %n més"],
-    ", " : ", ",
-    "%s and %s" : "%s i %s",
     "Mail" : "Correu electrònic",
     "Stream" : "Flux",
     "This application enables users to view actions related to their files in Nextcloud." : "Aquesta aplicació permet als usuaris veure accions relacionades amb els seus fitxers a Nextcloud.",
@@ -52,9 +49,12 @@
     "Enable RSS feed" : "Activa el canal RSS",
     "RSS feed" : "Canal RSS",
     "No more events to load" : "No hi ha més elements a carregar",
-    "Files" : "Fitxers",
     "Activities" : "Activitats",
     "Home" : "Inici",
-    "Activity notification" : "Notificació d'activitat"
+    "\"remote user\"" : "\"usuari remot\"",
+    "Activity notification" : "Notificació d'activitat",
+    ", " : ", ",
+    "%s and %s" : "%s i %s",
+    "Files" : "Fitxers"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

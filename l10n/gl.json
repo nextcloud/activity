@@ -22,14 +22,11 @@
     "All activities" : "Todas as actividades",
     "By others" : "Por outros",
     "By you" : "Por ti",
-    "\"remote user\"" : "«usuario remoto»",
     "Activity notification for %s" : "Notificación de actividade para %s",
     "Hello %s" : "Ola %s",
     "Hello %s," : "Ola %s,",
     "There was some activity at %s" : "Houbo actividade en %s",
     "_and %n more _::_and %n more _" : ["e %n máis","e %n máis"],
-    ", " : ", ",
-    "%s and %s" : "%s e %s",
     "Mail" : "Correo",
     "Stream" : "Fluxo",
     "This application enables users to view actions related to their files in Nextcloud." : "Este aplicativo permítelle aos usuarios ver as accións relacionadas cos seus ficheiros en Nextcloud.",
@@ -52,9 +49,12 @@
     "Enable RSS feed" : "Activar as fontes RSS",
     "RSS feed" : "Fontes RSS",
     "No more events to load" : "Non hai máis eventos para cargar",
-    "Files" : "Ficheiros",
     "Activities" : "Actividades",
     "Home" : "Inicio",
-    "Activity notification" : "Notificación da actividade"
+    "\"remote user\"" : "«usuario remoto»",
+    "Activity notification" : "Notificación da actividade",
+    ", " : ", ",
+    "%s and %s" : "%s e %s",
+    "Files" : "Ficheiros"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

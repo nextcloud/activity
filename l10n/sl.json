@@ -22,14 +22,11 @@
     "All activities" : "Vse dejavnosti",
     "By others" : "Dejavnosti drugih",
     "By you" : "Moje dejavnosti",
-    "\"remote user\"" : "\"oddaljeni uporabnik\"",
     "Activity notification for %s" : "Obvestila o dejavnosti za %s",
     "Hello %s" : "Pozdravljeni, %s,",
     "Hello %s," : "Pozdravljeni, %s,",
     "There was some activity at %s" : "Nekaj dejavnosti je bilo izvedenih ob %s",
     "_and %n more _::_and %n more _" : ["- in še %n","- in še %n","- in še %n","- in še %n"],
-    ", " : ",",
-    "%s and %s" : "%s in %s",
     "Mail" : "Elektronska pošta",
     "Stream" : "Pretok",
     "This application enables users to view actions related to their files in Nextcloud." : "Program omogoča pregled dogodkov in dejavnosti, povezanih z datotekami v oblaku Nextcloud.",
@@ -51,9 +48,12 @@
     "Enable RSS feed" : "Omogoči vire RSS",
     "RSS feed" : "Viri RSS",
     "No more events to load" : "Ni več dogodkov za nalaganje",
-    "Files" : "Datoteke",
     "Activities" : "Dejavnosti",
     "Home" : "Začetni pogled",
-    "Activity notification" : "Obvestila o dejavnosti"
+    "\"remote user\"" : "\"oddaljeni uporabnik\"",
+    "Activity notification" : "Obvestila o dejavnosti",
+    ", " : ",",
+    "%s and %s" : "%s in %s",
+    "Files" : "Datoteke"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

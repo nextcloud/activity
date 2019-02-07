@@ -22,14 +22,11 @@
     "All activities" : "ყველა აქტივობა",
     "By others" : "სხვების მიერ",
     "By you" : "თქვენს მიერ",
-    "\"remote user\"" : "\"დისტანციური მომხმარებელი\"",
     "Activity notification for %s" : "აქტივობის შეტყობინება %s-თვის",
     "Hello %s" : "გამარჯობა, %s",
     "Hello %s," : "გამარჯობა, %s,",
     "There was some activity at %s" : "%s-ზე იყო გარკვეული აქტივობა",
     "_and %n more _::_and %n more _" : ["და კიდევ %n","და კიდევ %n"],
-    ", " : ",",
-    "%s and %s" : "%s და %s",
     "Mail" : "ფოსტა",
     "Stream" : "ნაკადი",
     "Activity feed" : "აქტივობათა ლენტი",
@@ -50,9 +47,12 @@
     "Enable RSS feed" : "RSS ლენტის გააქტიურება",
     "RSS feed" : "RSS ლენტა",
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
-    "Files" : "ფაილები",
     "Activities" : "აქტივობები",
     "Home" : "სახლი",
-    "Activity notification" : "შეტყობინება აქტივობის შესახებ"
+    "\"remote user\"" : "\"დისტანციური მომხმარებელი\"",
+    "Activity notification" : "შეტყობინება აქტივობის შესახებ",
+    ", " : ",",
+    "%s and %s" : "%s და %s",
+    "Files" : "ფაილები"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

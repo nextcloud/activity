@@ -24,13 +24,10 @@ OC.L10N.register(
     "All activities" : "Todas las actividades",
     "By others" : "Por otros",
     "By you" : "Por Ud.",
-    "\"remote user\"" : "\"usuario remoto\"",
     "Hello %s" : "Hola %s",
     "Hello %s," : "Hola %s:",
     "There was some activity at %s" : "Ha habido alguna actividad en %s",
     "_and %n more _::_and %n more _" : ["y %n mas","y %n más"],
-    ", " : ", ",
-    "%s and %s" : "%s y %s",
     "Mail" : "Correo Electrónico",
     "Stream" : "Compartir",
     "This application enables users to view actions related to their files in Nextcloud." : "Esta aplicación permite a los usuarios ver acciones relacionadas con sus archivos en Nextcloud.",
@@ -52,9 +49,12 @@ OC.L10N.register(
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
     "No more events to load" : "No hay más eventos para cargar",
-    "Files" : "Archivos",
     "Activities" : "Actividades",
     "Home" : "Inicio",
-    "Activity notification" : "Notificación de Actividad"
+    "\"remote user\"" : "\"usuario remoto\"",
+    "Activity notification" : "Notificación de Actividad",
+    ", " : ", ",
+    "%s and %s" : "%s y %s",
+    "Files" : "Archivos"
 },
 "nplurals=2; plural=(n != 1);");
