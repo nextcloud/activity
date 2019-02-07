@@ -22,14 +22,11 @@
     "All activities" : "Alle aktiwiteite",
     "By others" : "Deur ander",
     "By you" : "Deur u",
-    "\"remote user\"" : "“afstandsgebruiker”",
     "Activity notification for %s" : "Aktiwiteitkennisgewing vir %s",
     "Hello %s" : "Dag %s",
     "Hello %s," : "Dag %s,",
     "There was some activity at %s" : "Daar was aktiwiteit by %s",
     "_and %n more _::_and %n more _" : ["en nog %n","en nog %n"],
-    ", " : ", ",
-    "%s and %s" : "%s en %s",
     "Mail" : "Pos",
     "Stream" : "Stroom",
     "This application enables users to view actions related to their files in Nextcloud." : "Hierdie toepassing stel gebruikers in staat om aksies te sien wat verwant is aan hul lêers in Nextcloud.",
@@ -52,9 +49,12 @@
     "Enable RSS feed" : "Aktiveer RSS-voer",
     "RSS feed" : "RSS-voer",
     "No more events to load" : "Geen meer gebeure om te laai",
-    "Files" : "Lêers",
     "Activities" : "Aktiwiteite",
     "Home" : "Tuis",
-    "Activity notification" : "Aktiwiteitkennisgewing"
+    "\"remote user\"" : "“afstandsgebruiker”",
+    "Activity notification" : "Aktiwiteitkennisgewing",
+    ", " : ", ",
+    "%s and %s" : "%s en %s",
+    "Files" : "Lêers"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

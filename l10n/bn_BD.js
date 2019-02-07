@@ -5,8 +5,6 @@ OC.L10N.register(
     "Personal activity feed for %s" : "%s এর জনন সক্রিয়তা বারতা",
     "Your settings have been updated." : "আপনার সেটিং নবায়ন করা হয়েছে৷",
     "Hello %s," : "হেলো %s,",
-    ", " : ", ",
-    "%s and %s" : "%s এবং %s",
     "Mail" : "মেইল",
     "Stream" : "ধারা",
     "Activity feed" : "সক্রিয়তা বারতা",
@@ -17,7 +15,9 @@ OC.L10N.register(
     "Weekly" : "সাপ্তাহিক",
     "Enable RSS feed" : "RSS feed উপযোগী ক኉ন",
     "No more events to load" : "লোড করার কোন ইভেন্ট খুঁজে পাওয়া গেল না।",
-    "Files" : "ফাইল",
-    "Activity notification" : "সক্রিয়তা বিগগপতি"
+    "Activity notification" : "সক্রিয়তা বিগগপতি",
+    ", " : ", ",
+    "%s and %s" : "%s এবং %s",
+    "Files" : "ফাইল"
 },
 "nplurals=2; plural=(n != 1);");

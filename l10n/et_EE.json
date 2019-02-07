@@ -22,13 +22,10 @@
     "All activities" : "Kõik tegevused",
     "By others" : "Teiste poolt",
     "By you" : "Sinu poolt",
-    "\"remote user\"" : "\"eemal olev kasutaja\"",
     "Hello %s" : "Tere %s",
     "Hello %s," : "Tere %s,",
     "There was some activity at %s" : "Mõningane tegevus %s",
     "_and %n more _::_and %n more _" : ["ja %n veel","ja%n veel "],
-    ", " : ", ",
-    "%s and %s" : "%s ja %s",
     "Mail" : "Kirjad",
     "Stream" : "Voog",
     "Activity feed" : "Tegevuste voog",
@@ -49,9 +46,12 @@
     "Enable RSS feed" : "Luba RSS voog",
     "RSS feed" : "RRS voog",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
-    "Files" : "Failid",
     "Activities" : "Tegevused",
     "Home" : "Avaleht",
-    "Activity notification" : "Tegevuste teavitused"
+    "\"remote user\"" : "\"eemal olev kasutaja\"",
+    "Activity notification" : "Tegevuste teavitused",
+    ", " : ", ",
+    "%s and %s" : "%s ja %s",
+    "Files" : "Failid"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

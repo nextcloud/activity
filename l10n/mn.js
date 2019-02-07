@@ -22,10 +22,8 @@ OC.L10N.register(
     "All activities" : "Бүх үйлдэлүүд",
     "By others" : "Бусдын үйлдлүүд",
     "By you" : "Таны үйлдлүүд",
-    "\"remote user\"" : "\"алсын хэрэглэгч\"",
     "Hello %s" : "Сайн байна уу, %s",
     "Hello %s," : "Сайн байна уу, %s,",
-    "%s and %s" : "%s ба %s",
     "Mail" : "Цахим шуудан",
     "Stream" : "Урсгал",
     "Activity feed" : "Үйлдлүүдйн тэжээл",
@@ -40,8 +38,10 @@ OC.L10N.register(
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Та цахим шуудангаар ямар үйлдлийн талаар мэдээлэл авахыг хүсэж байгаа болон \"Үйлдлүүд\" хэсэгт ямар үйлдэл харуулахыг хүсэж байгаагаа сонгоно уу.",
     "Settings" : "Тохиргоо",
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
-    "Files" : "Файлууд",
     "Activities" : "Үйлдлүүд",
-    "Activity notification" : "Үйл ажиллагааны мэдэгдэл"
+    "\"remote user\"" : "\"алсын хэрэглэгч\"",
+    "Activity notification" : "Үйл ажиллагааны мэдэгдэл",
+    "%s and %s" : "%s ба %s",
+    "Files" : "Файлууд"
 },
 "nplurals=2; plural=(n != 1);");

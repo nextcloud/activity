@@ -22,13 +22,10 @@
     "All activities" : "Todas las actividades",
     "By others" : "Por otros",
     "By you" : "Por usted",
-    "\"remote user\"" : "\"usuario remoto\"",
     "Hello %s" : "Hola %s",
     "Hello %s," : "Hola %s,",
     "There was some activity at %s" : "Se tuvo algo de actividad en %s",
     "_and %n more _::_and %n more _" : ["y %n más","y %n más"],
-    ", " : ",",
-    "%s and %s" : "%s y %s",
     "Mail" : "Correo",
     "Stream" : "Flujo",
     "Activity feed" : "Fuente de actividad",
@@ -49,9 +46,12 @@
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
     "No more events to load" : "No hay más eventos por cargar",
-    "Files" : "Archivos",
     "Activities" : "Actividades",
     "Home" : "Inicio",
-    "Activity notification" : "Notificación de actividad"
+    "\"remote user\"" : "\"usuario remoto\"",
+    "Activity notification" : "Notificación de actividad",
+    ", " : ",",
+    "%s and %s" : "%s y %s",
+    "Files" : "Archivos"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

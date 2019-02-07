@@ -22,11 +22,8 @@ OC.L10N.register(
     "Your settings have been updated." : "Vaše su postavke ažurirane.",
     "Settings have been updated." : "Postavke ažurirane.",
     "All activities" : "Sve aktivnosti",
-    "\"remote user\"" : "\"udaljeni korisnik\"",
     "Hello %s" : "Bokić %s",
     "Hello %s," : "Bokić %s",
-    ", " : ", ",
-    "%s and %s" : "%s i %s",
     "Mail" : "Pošta",
     "Stream" : "Strujanje",
     "Activity feed" : "Sažetak aktivnosti",
@@ -44,9 +41,12 @@ OC.L10N.register(
     "Enable RSS feed" : "Omogućite sažetak događaja RSS",
     "RSS feed" : "Sažetak događaja RSS",
     "No more events to load" : "Nema više događaja za učitavanje",
-    "Files" : "Datoteke",
     "Activities" : "Aktivnosti",
     "Home" : "Početna",
-    "Activity notification" : "Notifikacija o aktivnosti"
+    "\"remote user\"" : "\"udaljeni korisnik\"",
+    "Activity notification" : "Notifikacija o aktivnosti",
+    ", " : ", ",
+    "%s and %s" : "%s i %s",
+    "Files" : "Datoteke"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

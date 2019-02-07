@@ -22,14 +22,11 @@
     "All activities" : "すべてのアクティビティ",
     "By others" : "他ユーザー",
     "By you" : "自分",
-    "\"remote user\"" : "\"リモートユーザー\"",
     "Activity notification for %s" : "\"%s\" のアクティビティ通知",
     "Hello %s" : "%s さん、こんにちは",
     "Hello %s," : "%s さん、こんにちは",
     "There was some activity at %s" : "%s　にアクティビティがありました。",
     "_and %n more _::_and %n more _" : ["および他 %n "],
-    ", " : ", ",
-    "%s and %s" : "%s と %s",
     "Mail" : "メール",
     "Stream" : "タイムライン",
     "This application enables users to view actions related to their files in Nextcloud." : "このアプリケーションは、ユーザーのファイル関連のアクションを表示します。",
@@ -52,9 +49,12 @@
     "Enable RSS feed" : "RSSフィードを有効にする",
     "RSS feed" : "RSS フィード",
     "No more events to load" : "これ以上読み込むイベントはありません",
-    "Files" : "ファイル",
     "Activities" : "アクティビティ",
     "Home" : "ホーム",
-    "Activity notification" : "アクティビティ通知"
+    "\"remote user\"" : "\"リモートユーザー\"",
+    "Activity notification" : "アクティビティ通知",
+    ", " : ", ",
+    "%s and %s" : "%s と %s",
+    "Files" : "ファイル"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

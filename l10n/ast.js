@@ -24,13 +24,10 @@ OC.L10N.register(
     "All activities" : "Toles actividaes",
     "By others" : "Por otros",
     "By you" : "Por ti",
-    "\"remote user\"" : "«usuariu remotu»",
     "Hello %s" : "%sHola ",
     "Hello %s," : "Hola %s,",
     "There was some activity at %s" : "Hebo dalgo d'actividá en %s",
     "_and %n more _::_and %n more _" : ["y %n más","y %n más"],
-    ", " : ", ",
-    "%s and %s" : "%s y %s",
     "Mail" : "Corréu",
     "Stream" : "Fluxu de rede",
     "Activity feed" : "Feed d'actividá",
@@ -44,8 +41,11 @@ OC.L10N.register(
     "Settings" : "Axustes",
     "Enable RSS feed" : "Habilitar feed RSS",
     "No more events to load" : "Nun hai más eventos pa cargar",
-    "Files" : "Ficheros",
     "Activities" : "Actividaes",
-    "Activity notification" : "Avisu d'actividá"
+    "\"remote user\"" : "«usuariu remotu»",
+    "Activity notification" : "Avisu d'actividá",
+    ", " : ", ",
+    "%s and %s" : "%s y %s",
+    "Files" : "Ficheros"
 },
 "nplurals=2; plural=(n != 1);");

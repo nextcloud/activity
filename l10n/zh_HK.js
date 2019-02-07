@@ -24,13 +24,10 @@ OC.L10N.register(
     "All activities" : "所有動態",
     "By others" : "其他來源",
     "By you" : "本地来源",
-    "\"remote user\"" : "遠程用戶",
     "Hello %s" : "你好%s",
     "Hello %s," : "你好%s",
     "There was some activity at %s" : "在%s 裡有一些動態",
     "_and %n more _::_and %n more _" : ["和%n等"],
-    ", " : ",",
-    "%s and %s" : "%s和%s",
     "Mail" : "郵件",
     "Stream" : "Stream",
     "Activity feed" : "動態  feed",
@@ -48,8 +45,11 @@ OC.L10N.register(
     "Settings" : "設定",
     "Enable RSS feed" : "啟用 RSS 源",
     "No more events to load" : "已無更多事件",
-    "Files" : "檔案",
     "Activities" : "動態",
-    "Activity notification" : "動態通知"
+    "\"remote user\"" : "遠程用戶",
+    "Activity notification" : "動態通知",
+    ", " : ",",
+    "%s and %s" : "%s和%s",
+    "Files" : "檔案"
 },
 "nplurals=1; plural=0;");
