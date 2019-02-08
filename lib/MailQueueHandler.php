@@ -355,10 +355,10 @@ class MailQueueHandler {
 		foreach ($mailData as $activity) {
 			$event = $this->activityManager->generateEvent();
 			try {
-				$event->setApp($activity['amq_appid'])
-					->setType($activity['amq_type'])
+				$event->setApp((string) $activity['amq_appid'])
+					->setType((string) $activity['amq_type'])
 					->setTimestamp((int) $activity['amq_timestamp'])
-					->setSubject($activity['amq_subject'], json_decode($activity['amq_subjectparams'], true));
+					->setSubject((string) $activity['amq_subject'], (array) json_decode($activity['amq_subjectparams'], true));
 			} catch (\InvalidArgumentException $e) {
 				continue;
 			}
