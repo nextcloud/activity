@@ -148,8 +148,8 @@ class GroupHelper {
 			->setAffectedUser((string) $row['affecteduser'])
 			->setAuthor((string) $row['user'])
 			->setTimestamp((int) $row['timestamp'])
-			->setSubject((string) $row['subject'], json_decode($row['subjectparams'], true))
-			->setMessage((string) $row['message'], json_decode($row['messageparams'], true))
+			->setSubject((string) $row['subject'], (array) json_decode($row['subjectparams'], true))
+			->setMessage((string) $row['message'], (array) json_decode($row['messageparams'], true))
 			->setObject((string) $row['object_type'], (int) $row['object_id'], (string) $row['file'])
 			->setLink((string) $row['link']);
 
