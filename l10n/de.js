@@ -52,7 +52,7 @@ OC.L10N.register(
     "RSS feed" : "RSS-Feed",
     "No more events to load" : "Keine weiteren Ereignisse zu laden",
     "Activities" : "Aktivitäten",
-    "Home" : "Home",
+    "Home" : "Privat",
     "\"remote user\"" : "„Externer Benutzer“",
     "Activity notification" : "Benachrichtigung über die Aktivitäten",
     ", " : ", ",
