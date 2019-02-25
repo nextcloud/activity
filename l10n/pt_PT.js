@@ -10,7 +10,7 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Pressione ⌘-C para copiar.",
     "Press Ctrl-C to copy." : "Pressione Ctrl-C para copiar.",
     "{name} (invisible)" : "{name} (invisível)",
-    "{name} (restricted)" : "{name} (restricted)",
+    "{name} (restricted)" : "{name} (restrito)",
     "in {path}" : "em {path}",
     "This stream will show events like additions, changes & shares" : "Esta transmissão irá mostrar os eventos, tais como adições, alterações e partilhas",
     "There are no events for this filter" : "Não existem eventos para este filtro",
