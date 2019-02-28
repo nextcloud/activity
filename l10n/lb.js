@@ -38,7 +38,6 @@ OC.L10N.register(
     "No more events to load" : "Keng weider Evenementer fir ze lueden",
     "Activities" : "Aktivitéiten",
     "\"remote user\"" : "\"Remote-Benotzer\"",
-    "Activity notification" : "Aktivitéits-Notifikatiounen",
     ", " : ", ",
     "%s and %s" : "%s an %s",
     "Files" : "Fichieren"

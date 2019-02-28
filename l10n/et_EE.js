@@ -51,7 +51,6 @@ OC.L10N.register(
     "Activities" : "Tegevused",
     "Home" : "Avaleht",
     "\"remote user\"" : "\"eemal olev kasutaja\"",
-    "Activity notification" : "Tegevuste teavitused",
     ", " : ", ",
     "%s and %s" : "%s ja %s",
     "Files" : "Failid"

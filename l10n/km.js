@@ -15,7 +15,6 @@ OC.L10N.register(
     "Weekly" : "រាល់​សប្ដាហ៍",
     "Enable RSS feed" : "បើក RSS feed",
     "No more events to load" : "គ្មាន​ព្រឹត្តិការណ៍​ផ្សេងទៀត​បើក​ដំណើរការទេ",
-    "Activity notification" : "សេចក្ដីជូន​ដំណឺង​ស្ដីពីសកម្មភាព",
     ", " : ", ",
     "%s and %s" : "%s និង %s",
     "Files" : "ឯកសារ"

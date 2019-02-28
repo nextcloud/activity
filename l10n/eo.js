@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Aktivaĵoj",
     "Home" : "Hejmo",
     "\"remote user\"" : "„fora uzanto“",
-    "Activity notification" : "Aktivaĵo-sciigo",
     ", " : ", ",
     "%s and %s" : "%s kaj %s",
     "Files" : "Dosieroj"

@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "İşlemler",
     "Home" : "Giriş",
     "\"remote user\"" : "\"uzak kullanıcı\"",
-    "Activity notification" : "İşlem bildirimi",
     ", " : ", ",
     "%s and %s" : "%s ve %s",
     "Files" : "Dosyalar"

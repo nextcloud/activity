@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Veiklos",
     "Home" : "Pagrindinis",
     "\"remote user\"" : "\"naudotojas kitame serveryje\"",
-    "Activity notification" : "Veiklos pranešimai",
     ", " : ",",
     "%s and %s" : "%s ir %s",
     "Files" : "Failai"

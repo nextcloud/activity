@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Активности",
     "Home" : "Почетна",
     "\"remote user\"" : "„удаљени корисник“",
-    "Activity notification" : "Обавештења о активностима",
     ", " : ", ",
     "%s and %s" : "%s и %s",
     "Files" : "Фајлови"

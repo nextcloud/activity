@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Lịch sử hoạt động",
     "Home" : "Trang nhất",
     "\"remote user\"" : "\"Người dùng từ xa\"",
-    "Activity notification" : "Thông báo hoạt động",
     ", " : ", ",
     "%s and %s" : "%s và %s",
     "Files" : "Tệp tin"

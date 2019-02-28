@@ -47,7 +47,6 @@ OC.L10N.register(
     "No more events to load" : "已無更多事件",
     "Activities" : "動態",
     "\"remote user\"" : "遠程用戶",
-    "Activity notification" : "動態通知",
     ", " : ",",
     "%s and %s" : "%s和%s",
     "Files" : "檔案"

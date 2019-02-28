@@ -43,7 +43,6 @@ OC.L10N.register(
     "No more events to load" : "Nun hai más eventos pa cargar",
     "Activities" : "Actividaes",
     "\"remote user\"" : "«usuariu remotu»",
-    "Activity notification" : "Avisu d'actividá",
     ", " : ", ",
     "%s and %s" : "%s y %s",
     "Files" : "Ficheros"

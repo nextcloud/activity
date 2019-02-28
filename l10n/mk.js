@@ -24,7 +24,6 @@ OC.L10N.register(
     "No more events to load" : "Нема повеќе настани да вчитам",
     "Activities" : "Активности",
     "\"remote user\"" : "\"далечен корисник\"",
-    "Activity notification" : "Известување за Активности",
     ", " : ", ",
     "%s and %s" : "%s и %s",
     "Files" : "Датотеки"

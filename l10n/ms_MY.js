@@ -37,7 +37,6 @@ OC.L10N.register(
     "No more events to load" : "Tiada aktiviti untuk memuat",
     "Activities" : "Aktiviti",
     "Home" : "Rumah",
-    "Activity notification" : "Peringatan aktiviti",
     ", " : ",",
     "Files" : "Fail"
 },

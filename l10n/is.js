@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Virkniaðgerðir",
     "Home" : "Heim",
     "\"remote user\"" : "\"fjartengdur notandi\"",
-    "Activity notification" : "Tilkynning um virkni",
     ", " : ",",
     "%s and %s" : "%s og %s",
     "Files" : "Skrár"
