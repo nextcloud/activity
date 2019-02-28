@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Aktiwiteite",
     "Home" : "Tuis",
     "\"remote user\"" : "“afstandsgebruiker”",
-    "Activity notification" : "Aktiwiteitkennisgewing",
     ", " : ", ",
     "%s and %s" : "%s en %s",
     "Files" : "Lêers"

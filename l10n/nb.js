@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Aktiviteter",
     "Home" : "Hjem",
     "\"remote user\"" : "\"ekstern bruker\"",
-    "Activity notification" : "Varsel om aktivitet",
     ", " : ", ",
     "%s and %s" : "%s og %s",
     "Files" : "Filer"

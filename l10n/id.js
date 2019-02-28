@@ -53,7 +53,6 @@ OC.L10N.register(
     "Activities" : "Aktivitas",
     "Home" : "Beranda",
     "\"remote user\"" : "\"remote user\"",
-    "Activity notification" : "Pemberitahuan aktivitas",
     ", " : ", ",
     "%s and %s" : "%s dan %s",
     "Files" : "Berkas"

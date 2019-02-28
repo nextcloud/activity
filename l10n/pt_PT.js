@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Atividades",
     "Home" : "Início",
     "\"remote user\"" : "\"utilizador remoto\"",
-    "Activity notification" : "Notificação de Atividade",
     ", " : ", ",
     "%s and %s" : "%s e %s",
     "Files" : "Ficheiros"

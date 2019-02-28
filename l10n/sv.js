@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Aktivitetsflöde",
     "Home" : "Hem",
     "\"remote user\"" : "\"externanvändare\"",
-    "Activity notification" : "Notis om aktivitet",
     ", " : ",",
     "%s and %s" : "%s och %s",
     "Files" : "Filer"

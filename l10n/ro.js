@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Activități",
     "Home" : "Acasă",
     "\"remote user\"" : "\"utilizator la distanță\"",
-    "Activity notification" : "Notificări de activitate",
     ", " : ",",
     "%s and %s" : "%s și %s",
     "Files" : "Fișiere"

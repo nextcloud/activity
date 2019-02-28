@@ -52,7 +52,6 @@ OC.L10N.register(
     "Activities" : "Irmuden",
     "Home" : "Asnubeg",
     "\"remote user\"" : "\"aseqdac anmeggag\"",
-    "Activity notification" : "Alɣu n urmud",
     ", " : ", ",
     "%s and %s" : "%s akked %s",
     "Files" : "Ifuyla"

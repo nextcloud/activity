@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Tevékenységek",
     "Home" : "Kezdőlap",
     "\"remote user\"" : "\"távoli felhasználó\"",
-    "Activity notification" : "Tevékenység értesítés",
     ", " : ", ",
     "%s and %s" : "%s és %s",
     "Files" : "Fájlok"

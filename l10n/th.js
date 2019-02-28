@@ -51,7 +51,6 @@ OC.L10N.register(
     "Activities" : "กิจกรรม",
     "Home" : "หน้าหลัก",
     "\"remote user\"" : "\"ผู้ใช้โดยการรีโมท\"",
-    "Activity notification" : "การแจ้งเตือนกิจกรรม",
     ", " : "หรือ",
     "%s and %s" : "%s และ %s",
     "Files" : "ไฟล์"

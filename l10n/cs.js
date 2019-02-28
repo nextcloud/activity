@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Aktivity",
     "Home" : "Domů",
     "\"remote user\"" : "„uživatel na protějšku“",
-    "Activity notification" : "Upozornění na aktivity",
     ", " : ", ",
     "%s and %s" : "%s a %s",
     "Files" : "Soubory"

@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "فعالیت‌ها",
     "Home" : "خانه ",
     "\"remote user\"" : "\"کاربران از راه‌ دور\"",
-    "Activity notification" : "هشدارهای فعالیت",
     ", " : ",",
     "%s and %s" : "%s و %s",
     "Files" : "فایل ها"

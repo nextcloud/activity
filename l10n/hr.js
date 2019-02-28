@@ -44,7 +44,6 @@ OC.L10N.register(
     "Activities" : "Aktivnosti",
     "Home" : "Početna",
     "\"remote user\"" : "\"udaljeni korisnik\"",
-    "Activity notification" : "Notifikacija o aktivnosti",
     ", " : ", ",
     "%s and %s" : "%s i %s",
     "Files" : "Datoteke"

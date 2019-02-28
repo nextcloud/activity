@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "События",
     "Home" : "Главная страница",
     "\"remote user\"" : "«дистанционный пользователь»",
-    "Activity notification" : "Оповещение о произошедших событиях",
     ", " : ",",
     "%s and %s" : "%s и %s",
     "Files" : "Файлы"

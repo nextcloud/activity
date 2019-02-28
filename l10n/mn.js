@@ -40,7 +40,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
     "Activities" : "Үйлдлүүд",
     "\"remote user\"" : "\"алсын хэрэглэгч\"",
-    "Activity notification" : "Үйл ажиллагааны мэдэгдэл",
     "%s and %s" : "%s ба %s",
     "Files" : "Файлууд"
 },
