@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Activitats",
     "Home" : "Inici",
     "\"remote user\"" : "\"usuari remot\"",
-    "Activity notification" : "Notificació d'activitat",
     ", " : ", ",
     "%s and %s" : "%s i %s",
     "Files" : "Fitxers"

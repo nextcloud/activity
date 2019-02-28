@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Activiteiten",
     "Home" : "Thuis",
     "\"remote user\"" : "\"externe gebruiker\"",
-    "Activity notification" : "Activiteitenmelding",
     ", " : ", ",
     "%s and %s" : "%s en %s",
     "Files" : "Bestanden"

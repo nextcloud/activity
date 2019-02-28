@@ -52,7 +52,6 @@ OC.L10N.register(
     "Activities" : "Δραστηριότητες",
     "Home" : "Αρχική",
     "\"remote user\"" : "\"απομακρυσμένος χρήστης\"",
-    "Activity notification" : "Ειδοποίηση δραστηριότητας",
     ", " : ", ",
     "%s and %s" : "%s και %s",
     "Files" : "Αρχεία"

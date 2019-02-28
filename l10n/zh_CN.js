@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "动态",
     "Home" : "主页",
     "\"remote user\"" : "远程用户",
-    "Activity notification" : "动态通知",
     ", " : "，",
     "%s and %s" : "%s 和 %s",
     "Files" : "文件"

@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Jarduerak",
     "Home" : "Etxea",
     "\"remote user\"" : "\"urruneko erabiltzailea\"",
-    "Activity notification" : "Jarduera jakinarazpena",
     ", " : ", ",
     "%s and %s" : "%s eta %s",
     "Files" : "Fitxategiak"

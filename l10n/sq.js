@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Veprimtaritë",
     "Home" : "Kryefaqja",
     "\"remote user\"" : "\"përdorues i largët\"",
-    "Activity notification" : "Njoftim veprimtarie",
     ", " : ",",
     "%s and %s" : "%s dhe %s",
     "Files" : "Skedar"

@@ -52,7 +52,6 @@ OC.L10N.register(
     "Activities" : "Toimet",
     "Home" : "Koti",
     "\"remote user\"" : "\"etäkäyttäjä\"",
-    "Activity notification" : "Ilmoitus toiminnasta",
     ", " : ", ",
     "%s and %s" : "%s ja %s",
     "Files" : "Tiedostot"

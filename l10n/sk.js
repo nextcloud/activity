@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Aktivity",
     "Home" : "Domov",
     "\"remote user\"" : "\"vzdialený používateľ\"",
-    "Activity notification" : "Upozornenia na aktivity",
     ", " : ", ",
     "%s and %s" : "%s a %s",
     "Files" : "Súbory"

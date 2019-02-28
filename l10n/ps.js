@@ -37,7 +37,6 @@ OC.L10N.register(
     "Activities" : "کړنې",
     "Home" : "کور",
     "\"remote user\"" : "\"د بل ځای کارن\"",
-    "Activity notification" : "د کړنې خبرتیا",
     ", " : "،",
     "%s and %s" : "%s او %s",
     "Files" : "فایلونه"

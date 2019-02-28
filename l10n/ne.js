@@ -49,7 +49,6 @@ OC.L10N.register(
     "Activities" : "क्रियाकलापहरू",
     "Home" : "गृह",
     "\"remote user\"" : "\"रिमोट प्रयोगकर्ता\"",
-    "Activity notification" : "गतिविधि सूचना",
     ", " : ",",
     "%s and %s" : "%s र %s",
     "Files" : "फाइलहरू"

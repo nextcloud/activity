@@ -54,7 +54,6 @@ OC.L10N.register(
     "Activities" : "Darbības",
     "Home" : "Sākums",
     "\"remote user\"" : "\"attālināts lietotājs\"",
-    "Activity notification" : "Brīdinājumi par darbībām",
     ", " : ",",
     "%s and %s" : "%s un %s",
     "Files" : "Datnes"

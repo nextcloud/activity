@@ -53,7 +53,6 @@ OC.L10N.register(
     "Activities" : "النشاطات",
     "Home" : "الرئيسية",
     "\"remote user\"" : "\"مستخدم عن بعد\"",
-    "Activity notification" : "تنبيه النشاط",
     ", " : ",",
     "%s and %s" : "%s و %s",
     "Files" : "الملفات"

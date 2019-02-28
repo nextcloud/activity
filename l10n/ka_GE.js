@@ -52,7 +52,6 @@ OC.L10N.register(
     "Activities" : "აქტივობები",
     "Home" : "სახლი",
     "\"remote user\"" : "\"დისტანციური მომხმარებელი\"",
-    "Activity notification" : "შეტყობინება აქტივობის შესახებ",
     ", " : ",",
     "%s and %s" : "%s და %s",
     "Files" : "ფაილები"
