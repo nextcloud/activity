@@ -1,7 +1,7 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Aktivitetsflödet",
+    "Activity" : "Aktiviteter",
     "An error occurred while loading activities" : "Något gick snett vid inläsning av aktiviteter",
     "No activity yet" : "Inga aktiviteter ännu",
     "Load more activities" : "Ladda fler aktiviteter",
