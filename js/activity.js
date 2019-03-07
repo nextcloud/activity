@@ -86,328 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./js/templates2.js":
-/*!**************************!*\
-  !*** ./js/templates2.js ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-(function () {
-  var template = Handlebars.template,
-      templates = Handlebars.templates = Handlebars.templates || {};
-  templates['activitytabview'] = template({
-    "compiler": [7, ">= 4.0.0"],
-    "main": function (container, depth0, helpers, partials, data) {
-      var helper,
-          alias1 = depth0 != null ? depth0 : container.nullContext || {},
-          alias2 = helpers.helperMissing,
-          alias3 = "function",
-          alias4 = container.escapeExpression;
-      return "<div class=\"activity-section\">\n	<div class=\"loading hidden\" style=\"height: 50px\"></div>\n	<div class=\"emptycontent\">\n		<div class=\"icon-activity\"></div>\n		<p>" + alias4((helper = (helper = helpers.emptyMessage || (depth0 != null ? depth0.emptyMessage : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "emptyMessage",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</p>\n	</div>\n	<ul class=\"activities hidden\">\n	</ul>\n	<input type=\"button\" class=\"showMore\" value=\"" + alias4((helper = (helper = helpers.moreLabel || (depth0 != null ? depth0.moreLabel : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "moreLabel",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\">\n</div>\n";
-    },
-    "useData": true
-  });
-  templates['activitytabview_activity'] = template({
-    "1": function (container, depth0, helpers, partials, data) {
-      var helper;
-      return "			<img src=\"" + container.escapeExpression((helper = (helper = helpers.icon || (depth0 != null ? depth0.icon : depth0)) != null ? helper : helpers.helperMissing, typeof helper === "function" ? helper.call(depth0 != null ? depth0 : container.nullContext || {}, {
-        "name": "icon",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\" alt=\"\">\n";
-    },
-    "compiler": [7, ">= 4.0.0"],
-    "main": function (container, depth0, helpers, partials, data) {
-      var stack1,
-          helper,
-          alias1 = depth0 != null ? depth0 : container.nullContext || {},
-          alias2 = helpers.helperMissing,
-          alias3 = "function",
-          alias4 = container.escapeExpression;
-      return "<li class=\"activity box\">\n	<div class=\"activity-icon\">\n" + ((stack1 = helpers["if"].call(alias1, depth0 != null ? depth0.icon : depth0, {
-        "name": "if",
-        "hash": {},
-        "fn": container.program(1, data, 0),
-        "inverse": container.noop,
-        "data": data
-      })) != null ? stack1 : "") + "	</div>\n	<div class=\"activitysubject\">" + ((stack1 = (helper = (helper = helpers.subject || (depth0 != null ? depth0.subject : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "subject",
-        "hash": {},
-        "data": data
-      }) : helper)) != null ? stack1 : "") + "</div>\n	<span class=\"activitytime has-tooltip live-relative-timestamp\" data-timestamp=\"" + alias4((helper = (helper = helpers.timestamp || (depth0 != null ? depth0.timestamp : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "timestamp",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\" title=\"" + alias4((helper = (helper = helpers.formattedDateTooltip || (depth0 != null ? depth0.formattedDateTooltip : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "formattedDateTooltip",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\">" + alias4((helper = (helper = helpers.formattedDate || (depth0 != null ? depth0.formattedDate : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "formattedDate",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</span>\n	<div class=\"activitymessage\">" + ((stack1 = (helper = (helper = helpers.message || (depth0 != null ? depth0.message : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "message",
-        "hash": {},
-        "data": data
-      }) : helper)) != null ? stack1 : "") + "</div>\n</li>\n";
-    },
-    "useData": true
-  });
-  templates['email'] = template({
-    "compiler": [7, ">= 4.0.0"],
-    "main": function (container, depth0, helpers, partials, data) {
-      var helper,
-          alias1 = depth0 != null ? depth0 : container.nullContext || {},
-          alias2 = helpers.helperMissing,
-          alias3 = "function",
-          alias4 = container.escapeExpression;
-      return "<a class=\"email\" href=\"mailto:" + alias4((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "id",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\">" + alias4((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "name",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</a>\n";
-    },
-    "useData": true
-  });
-  templates['file'] = template({
-    "compiler": [7, ">= 4.0.0"],
-    "main": function (container, depth0, helpers, partials, data) {
-      var helper,
-          alias1 = depth0 != null ? depth0 : container.nullContext || {},
-          alias2 = helpers.helperMissing,
-          alias3 = "function",
-          alias4 = container.escapeExpression;
-      return "<a class=\"filename has-tooltip\" href=\"" + alias4((helper = (helper = helpers.link || (depth0 != null ? depth0.link : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "link",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\" title=\"" + alias4((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "title",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\">" + alias4((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "name",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</a>\n";
-    },
-    "useData": true
-  });
-  templates['fileNoPath'] = template({
-    "compiler": [7, ">= 4.0.0"],
-    "main": function (container, depth0, helpers, partials, data) {
-      var helper,
-          alias1 = depth0 != null ? depth0 : container.nullContext || {},
-          alias2 = helpers.helperMissing,
-          alias3 = "function",
-          alias4 = container.escapeExpression;
-      return "<a class=\"filename\" href=\"" + alias4((helper = (helper = helpers.link || (depth0 != null ? depth0.link : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "link",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\">" + alias4((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "name",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</a>\n";
-    },
-    "useData": true
-  });
-  templates['fileRoot'] = template({
-    "compiler": [7, ">= 4.0.0"],
-    "main": function (container, depth0, helpers, partials, data) {
-      var helper;
-      return "<a class=\"filename has-tooltip\" href=\"" + container.escapeExpression((helper = (helper = helpers.link || (depth0 != null ? depth0.link : depth0)) != null ? helper : helpers.helperMissing, typeof helper === "function" ? helper.call(depth0 != null ? depth0 : container.nullContext || {}, {
-        "name": "link",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\" title=\"' + t('activity', 'Home') + '\"><span class=\"icon icon-home\"></span></a>\n";
-    },
-    "useData": true
-  });
-  templates['openGraph'] = template({
-    "1": function (container, depth0, helpers, partials, data) {
-      var helper;
-      return "	<a href=\"" + container.escapeExpression((helper = (helper = helpers.link || (depth0 != null ? depth0.link : depth0)) != null ? helper : helpers.helperMissing, typeof helper === "function" ? helper.call(depth0 != null ? depth0 : container.nullContext || {}, {
-        "name": "link",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\">\n";
-    },
-    "3": function (container, depth0, helpers, partials, data) {
-      var helper;
-      return "			<div class=\"opengraph-thumb\" style=\"background-image: url('" + container.escapeExpression((helper = (helper = helpers.thumb || (depth0 != null ? depth0.thumb : depth0)) != null ? helper : helpers.helperMissing, typeof helper === "function" ? helper.call(depth0 != null ? depth0 : container.nullContext || {}, {
-        "name": "thumb",
-        "hash": {},
-        "data": data
-      }) : helper)) + "')\"></div>\n";
-    },
-    "5": function (container, depth0, helpers, partials, data) {
-      return "opengraph-with-thumb";
-    },
-    "7": function (container, depth0, helpers, partials, data) {
-      return "	</a>\n";
-    },
-    "compiler": [7, ">= 4.0.0"],
-    "main": function (container, depth0, helpers, partials, data) {
-      var stack1,
-          helper,
-          alias1 = depth0 != null ? depth0 : container.nullContext || {},
-          alias2 = helpers.helperMissing,
-          alias3 = "function",
-          alias4 = container.escapeExpression;
-      return ((stack1 = helpers["if"].call(alias1, depth0 != null ? depth0.link : depth0, {
-        "name": "if",
-        "hash": {},
-        "fn": container.program(1, data, 0),
-        "inverse": container.noop,
-        "data": data
-      })) != null ? stack1 : "") + "	<div id=\"opengraph-" + alias4((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "id",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\" class=\"opengraph\">\n" + ((stack1 = helpers["if"].call(alias1, depth0 != null ? depth0.thumb : depth0, {
-        "name": "if",
-        "hash": {},
-        "fn": container.program(3, data, 0),
-        "inverse": container.noop,
-        "data": data
-      })) != null ? stack1 : "") + "		<div class=\"opengraph-name " + ((stack1 = helpers["if"].call(alias1, depth0 != null ? depth0.thumb : depth0, {
-        "name": "if",
-        "hash": {},
-        "fn": container.program(5, data, 0),
-        "inverse": container.noop,
-        "data": data
-      })) != null ? stack1 : "") + "\">" + alias4((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "name",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</div>\n		<div class=\"opengraph-description " + ((stack1 = helpers["if"].call(alias1, depth0 != null ? depth0.thumb : depth0, {
-        "name": "if",
-        "hash": {},
-        "fn": container.program(5, data, 0),
-        "inverse": container.noop,
-        "data": data
-      })) != null ? stack1 : "") + "\">" + alias4((helper = (helper = helpers.description || (depth0 != null ? depth0.description : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "description",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</div>\n		<span class=\"opengraph-website\">" + alias4((helper = (helper = helpers.website || (depth0 != null ? depth0.website : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "website",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</span>\n	</div>\n" + ((stack1 = helpers["if"].call(alias1, depth0 != null ? depth0.link : depth0, {
-        "name": "if",
-        "hash": {},
-        "fn": container.program(7, data, 0),
-        "inverse": container.noop,
-        "data": data
-      })) != null ? stack1 : "");
-    },
-    "useData": true
-  });
-  templates['systemTag'] = template({
-    "compiler": [7, ">= 4.0.0"],
-    "main": function (container, depth0, helpers, partials, data) {
-      var helper;
-      return "<strong class=\"systemtag\">" + container.escapeExpression((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing, typeof helper === "function" ? helper.call(depth0 != null ? depth0 : container.nullContext || {}, {
-        "name": "name",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</strong>\n";
-    },
-    "useData": true
-  });
-  templates['unknown'] = template({
-    "compiler": [7, ">= 4.0.0"],
-    "main": function (container, depth0, helpers, partials, data) {
-      var helper;
-      return "<strong>" + container.escapeExpression((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing, typeof helper === "function" ? helper.call(depth0 != null ? depth0 : container.nullContext || {}, {
-        "name": "name",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</strong>\n";
-    },
-    "useData": true
-  });
-  templates['unkownLink'] = template({
-    "compiler": [7, ">= 4.0.0"],
-    "main": function (container, depth0, helpers, partials, data) {
-      var helper,
-          alias1 = depth0 != null ? depth0 : container.nullContext || {},
-          alias2 = helpers.helperMissing,
-          alias3 = "function",
-          alias4 = container.escapeExpression;
-      return "<a href=\"" + alias4((helper = (helper = helpers.link || (depth0 != null ? depth0.link : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "link",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\">" + alias4((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "name",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</a>\n";
-    },
-    "useData": true
-  });
-  templates['userLocal'] = template({
-    "compiler": [7, ">= 4.0.0"],
-    "main": function (container, depth0, helpers, partials, data) {
-      var helper,
-          alias1 = depth0 != null ? depth0 : container.nullContext || {},
-          alias2 = helpers.helperMissing,
-          alias3 = "function",
-          alias4 = container.escapeExpression;
-      return "<span class=\"avatar-name-wrapper\" data-user=\"" + alias4((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "id",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\"><div class=\"avatar\" data-user=\"" + alias4((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "id",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\" data-user-display-name=\"" + alias4((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "name",
-        "hash": {},
-        "data": data
-      }) : helper)) + "\"></div><strong>" + alias4((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-        "name": "name",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</strong></span>\n";
-    },
-    "useData": true
-  });
-  templates['userRemote'] = template({
-    "compiler": [7, ">= 4.0.0"],
-    "main": function (container, depth0, helpers, partials, data) {
-      var helper;
-      return "<strong>" + container.escapeExpression((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing, typeof helper === "function" ? helper.call(depth0 != null ? depth0 : container.nullContext || {}, {
-        "name": "name",
-        "hash": {},
-        "data": data
-      }) : helper)) + "</strong>\n";
-    },
-    "useData": true
-  });
-})();
-
-/***/ }),
-
 /***/ "./node_modules/@babel/polyfill/lib/index.js":
 /*!***************************************************!*\
   !*** ./node_modules/@babel/polyfill/lib/index.js ***!
@@ -2378,17 +2056,33 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _js_templates2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../js/templates2 */ "./js/templates2.js");
-/* harmony import */ var _js_templates2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_js_templates2__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var v_runtime_template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! v-runtime-template */ "./node_modules/v-runtime-template/dist/v-runtime-template.es.js");
+/* harmony import */ var _RichObjects_File_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RichObjects/File.vue */ "./src/components/RichObjects/File.vue");
+//
+//
+//
+//
 //
 //
 //
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'rich-object-string',
   props: ['string', 'parameters', 'link'],
+
+  data() {
+    return {
+      template: `trhrthrth`
+    };
+  },
+
+  components: {
+    VRuntimeTemplate: v_runtime_template__WEBPACK_IMPORTED_MODULE_0__["default"],
+    File: _RichObjects_File_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   computed: {
     richObjectString() {
       var subject = this.string,
@@ -2408,6 +2102,7 @@ __webpack_require__.r(__webpack_exports__);
         subject = subject.replace('{' + parameter + '}', parsed);
       }.bind(this));
 
+      this.template = subject;
       return subject;
     },
 
@@ -2475,30 +2170,47 @@ __webpack_require__.r(__webpack_exports__);
      * @param {string} parameter.link
      */
     parseFileParameter(parameter) {
-      if (parameter.path === '') {
-        return Handlebars.templates.fileRoot(parameter);
-      }
-
-      var lastSlashPosition = parameter.path.lastIndexOf('/'),
-          firstSlashPosition = parameter.path.indexOf('/');
-      parameter.path = parameter.path.substring(firstSlashPosition === 0 ? 1 : 0, lastSlashPosition);
-
-      if (!parameter.link) {
-        parameter.link = OC.generateUrl('/f/{fileId}', {
-          fileId: parameter.id
-        });
-      }
-
-      if (parameter.path === '' || parameter.path === '/') {
-        return Handlebars.templates.fileNoPath(parameter);
-      }
-
-      return Handlebars.templates.file(_.extend(parameter, {
-        title: parameter.path.length === 0 ? '' : t('activity', 'in {path}', parameter)
-      }));
+      // if (parameter.path === '') {
+      // 	return Handlebars.templates.fileRoot(parameter);
+      // }
+      //
+      // var lastSlashPosition = parameter.path.lastIndexOf('/'),
+      // 	firstSlashPosition = parameter.path.indexOf('/');
+      // parameter.path = parameter.path.substring(firstSlashPosition === 0 ? 1 : 0, lastSlashPosition);
+      //
+      // if (!parameter.link) {
+      // 	parameter.link = OC.generateUrl('/f/{fileId}', {fileId: parameter.id});
+      // }
+      //
+      // if (parameter.path === '' || parameter.path === '/') {
+      // 	return Handlebars.templates.fileNoPath(parameter);
+      // }
+      console.log('<file :name="parameter.name"></file>');
+      return '<file :name="' + parameter.name + '"></file>';
     }
 
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js?!./src/components/RichObjects/File.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/RichObjects/File.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'rich-object-file',
+  props: ['id', 'name', 'path', 'link'],
+  methods: {}
 });
 
 /***/ }),
@@ -12376,6 +12088,95 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/v-runtime-template/dist/v-runtime-template.es.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/v-runtime-template/dist/v-runtime-template.es.js ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/**
+ * v-runtime-template v1.6.2
+ * (c) 2019 Alex J <alexjovermorales@gmail.com>
+ * @license MIT
+ */
+
+var defineDescriptor = function (src, dest, name) {
+  if (!dest.hasOwnProperty(name)) {
+    var descriptor = Object.getOwnPropertyDescriptor(src, name);
+    Object.defineProperty(dest, name, descriptor);
+  }
+};
+
+var merge = function (objs) {
+  var res = {};
+  objs.forEach(function (obj) {
+    obj &&
+      Object.getOwnPropertyNames(obj).forEach(function (name) { return defineDescriptor(obj, res, name); }
+      );
+  });
+  return res;
+};
+
+var buildFromProps = function (obj, props) {
+  var res = {};
+  props.forEach(function (prop) { return defineDescriptor(obj, res, prop); });
+  return res;
+};
+
+var index = {
+  props: {
+    template: String
+  },
+  render: function render(h) {
+    var this$1 = this;
+
+    if (this.template) {
+      var ref = this.$parent;
+      var $data = ref.$data; if ( $data === void 0 ) $data = {};
+      var $props = ref.$props; if ( $props === void 0 ) $props = {};
+      var $options = ref.$options; if ( $options === void 0 ) $options = {};
+      var components = $options.components; if ( components === void 0 ) components = {};
+      var computed = $options.computed; if ( computed === void 0 ) computed = {};
+      var methods = $options.methods; if ( methods === void 0 ) methods = {};
+
+      var passthrough = {$data:{}, $props:{}, $options:{}, components:{}, computed:{}, methods:{}};
+
+      //build new objects by removing keys if already exists (e.g. created by mixins)
+      Object.keys($data).forEach(function (e) {if(typeof this$1.$data[e]==="undefined") { passthrough.$data[e] = $data[e]; }} );
+      Object.keys($props).forEach(function (e) {if(typeof this$1.$props[e]==="undefined") { passthrough.$props[e] = $props[e]; }} );
+      Object.keys(methods).forEach(function (e) {if(typeof this$1.$options.methods[e]==="undefined") { passthrough.methods[e] = methods[e]; }} );
+      Object.keys(computed).forEach(function (e) {if(typeof this$1.$options.computed[e]==="undefined") { passthrough.computed[e] = computed[e]; }} );
+      Object.keys(components).forEach(function (e) {if(typeof this$1.$options.components[e]==="undefined") { passthrough.components[e] = components[e]; }} );
+
+      var methodKeys = Object.keys(passthrough.methods || {});
+      var dataKeys = Object.keys(passthrough.$data || {});
+      var propKeys = Object.keys(passthrough.$props || {});
+      var allKeys = dataKeys.concat(propKeys).concat(methodKeys);
+      var methodsFromProps = buildFromProps(this.$parent, methodKeys);
+      var props = merge([passthrough.$data, passthrough.$props, methodsFromProps]);
+
+      var dynamic = {
+        template: this.template || "<div></div>",
+        props: allKeys,
+        computed: passthrough.computed,
+        components: passthrough.components
+      };
+
+      return h(dynamic, {
+        props: props
+      });
+    }
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (index);
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-clipboard2/vue-clipboard.js":
 /*!******************************************************!*\
   !*** ./node_modules/vue-clipboard2/vue-clipboard.js ***!
@@ -12643,15 +12444,15 @@ var render = function() {
                     staticClass: "activitysubject",
                     domProps: { innerHTML: _vm._s(_vm.parsedSubject) }
                   }),
-              _vm._v(" "),
+              _vm._v("\n\n\t\t\thiiiii"),
               _c("rich-object-string", {
                 attrs: {
-                  string: _vm.subject_rich[0],
+                  string: _vm.subject_rich[0] + _vm.subject_rich[0],
                   parameters: _vm.subject_rich[1],
                   link: _vm.link
                 }
               }),
-              _vm._v(" "),
+              _vm._v("hooo\n\n\t\t\t"),
               _c(
                 "span",
                 {
@@ -12743,11 +12544,48 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.wrapMessageInLink
-    ? _c("a", {
-        attrs: { href: _vm.link },
-        domProps: { innerHTML: _vm._s(_vm.richObjectString) }
-      })
-    : _c("div", { domProps: { innerHTML: _vm._s(_vm.richObjectString) } })
+    ? _c(
+        "a",
+        { attrs: { href: _vm.link } },
+        [_c("v-runtime-template", { attrs: { template: _vm.template } })],
+        1
+      )
+    : _c(
+        "div",
+        [_c("v-runtime-template", { attrs: { template: _vm.template } })],
+        1
+      )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/components/RichObjects/File.vue?vue&type=template&id=0d83cb63&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/RichObjects/File.vue?vue&type=template&id=0d83cb63& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "a",
+    {
+      staticClass: "filename has-tooltip",
+      attrs: { href: _vm.link, title: _vm.title }
+    },
+    [_vm._v("vregergregerg")]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -28174,6 +28012,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RichObjectString_vue_vue_type_template_id_5901295c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RichObjectString_vue_vue_type_template_id_5901295c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./src/components/RichObjects/File.vue":
+/*!*********************************************!*\
+  !*** ./src/components/RichObjects/File.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _File_vue_vue_type_template_id_0d83cb63___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./File.vue?vue&type=template&id=0d83cb63& */ "./src/components/RichObjects/File.vue?vue&type=template&id=0d83cb63&");
+/* harmony import */ var _File_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./File.vue?vue&type=script&lang=js& */ "./src/components/RichObjects/File.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _File_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _File_vue_vue_type_template_id_0d83cb63___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _File_vue_vue_type_template_id_0d83cb63___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "src/components/RichObjects/File.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./src/components/RichObjects/File.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./src/components/RichObjects/File.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_File_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib!../../../node_modules/vue-loader/lib??vue-loader-options!./File.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js?!./src/components/RichObjects/File.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_File_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./src/components/RichObjects/File.vue?vue&type=template&id=0d83cb63&":
+/*!****************************************************************************!*\
+  !*** ./src/components/RichObjects/File.vue?vue&type=template&id=0d83cb63& ***!
+  \****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_File_vue_vue_type_template_id_0d83cb63___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./File.vue?vue&type=template&id=0d83cb63& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./src/components/RichObjects/File.vue?vue&type=template&id=0d83cb63&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_File_vue_vue_type_template_id_0d83cb63___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_File_vue_vue_type_template_id_0d83cb63___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

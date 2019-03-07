@@ -12,7 +12,7 @@
 				</div>
 				<div v-else class="activitysubject" v-html="parsedSubject"></div>
 
-				<rich-object-string :string="subject_rich[0]" :parameters="subject_rich[1]" :link="link"></rich-object-string>
+				hiiiii<rich-object-string :string="subject_rich[0] + subject_rich[0]" :parameters="subject_rich[1]" :link="link"></rich-object-string>hooo
 
 				<span class="activitytime has-tooltip live-relative-timestamp" :data-timestamp="timestamp" :title="formatDate">
 					{{relativeDate}}

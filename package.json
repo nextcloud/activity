@@ -19,6 +19,7 @@
 		"axios": "^0.18.0",
 		"nextcloud-vue": "^0.4.2",
 		"uuid": "^3.3.2",
+		"v-runtime-template": "^1.6.2",
 		"vue": "^2.5.17",
 		"vue-click-outside": "^1.0.7",
 		"vue-clipboard2": "^0.2.1",

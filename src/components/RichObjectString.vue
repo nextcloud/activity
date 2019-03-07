@@ -1,10 +1,16 @@
 <template>
-	<a v-if="wrapMessageInLink" v-html="richObjectString" :href="link"></a>
-	<div v-else v-html="richObjectString"></div>
+	<a v-if="wrapMessageInLink" :href="link">
+		<v-runtime-template :template="template"/>
+	</a>
+	<div v-else>
+		<v-runtime-template :template="template"/>
+	</div>
 </template>
 
 <script>
-	import "../../js/templates2";
+	import VRuntimeTemplate from 'v-runtime-template';
+	import File from './RichObjects/File.vue';
+
 	export default {
 		name: 'rich-object-string',
 
@@ -13,6 +19,17 @@
 			'parameters',
 			'link'
 		],
+
+		data() {
+			return {
+				template: `trhrthrth`,
+			}
+		},
+
+		components: {
+			VRuntimeTemplate,
+			File
+		},
 
 		computed: {
 			richObjectString () {
@@ -32,6 +49,7 @@
 					subject = subject.replace('{' + parameter + '}', parsed);
 				}.bind(this));
 
+				this.template = subject;
 				return subject;
 			},
 
@@ -98,24 +116,23 @@
 			 * @param {string} parameter.link
 			 */
 			parseFileParameter (parameter) {
-				if (parameter.path === '') {
-					return Handlebars.templates.fileRoot(parameter);
-				}
-
-				var lastSlashPosition = parameter.path.lastIndexOf('/'),
-					firstSlashPosition = parameter.path.indexOf('/');
-				parameter.path = parameter.path.substring(firstSlashPosition === 0 ? 1 : 0, lastSlashPosition);
-
-				if (!parameter.link) {
-					parameter.link = OC.generateUrl('/f/{fileId}', {fileId: parameter.id});
-				}
-
-				if (parameter.path === '' || parameter.path === '/') {
-					return Handlebars.templates.fileNoPath(parameter);
-				}
-				return Handlebars.templates.file(_.extend(parameter, {
-					title: parameter.path.length === 0 ? '' : t('activity', 'in {path}', parameter)
-				}));
+				// if (parameter.path === '') {
+				// 	return Handlebars.templates.fileRoot(parameter);
+				// }
+				//
+				// var lastSlashPosition = parameter.path.lastIndexOf('/'),
+				// 	firstSlashPosition = parameter.path.indexOf('/');
+				// parameter.path = parameter.path.substring(firstSlashPosition === 0 ? 1 : 0, lastSlashPosition);
+				//
+				// if (!parameter.link) {
+				// 	parameter.link = OC.generateUrl('/f/{fileId}', {fileId: parameter.id});
+				// }
+				//
+				// if (parameter.path === '' || parameter.path === '/') {
+				// 	return Handlebars.templates.fileNoPath(parameter);
+				// }
+				console.log('<file :name="parameter.name"></file>');
+				return '<file :name="' + parameter.name + '"></file>';
 			}
 		}
 	}
