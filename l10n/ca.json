@@ -1,7 +1,7 @@
 { "translations": {
     "Activity" : "Activitat",
-    "An error occurred while loading activities" : "S'ha produït un error mentre que es carregaven les activitats",
-    "No activity yet" : "No hi ha cap activitat",
+    "An error occurred while loading activities" : "S'ha produït un error mentre es carregaven les activitats",
+    "No activity yet" : "Encara no hi ha activitats",
     "Load more activities" : "Carrega més activitats",
     "Copied!" : "Copiat!",
     "Not supported!" : "No suportat!",
@@ -39,7 +39,7 @@
     "Notify about your own actions via email" : "Notifica sobre les vostres pròpies accions via email",
     "You need to set up your email address before you can receive notification emails." : "Heu d'establir l'adreça de correu electrònic abans que pugueu rebre correus de notificació",
     "Send emails:" : "Envia correus electrònics:",
-    "As soon as possible" : "Tant aviat com sigui possible",
+    "As soon as possible" : "Tan aviat com sigui possible",
     "Hourly" : "Cada hora",
     "Daily" : "Diàriament",
     "Weekly" : "Setmanalment",
