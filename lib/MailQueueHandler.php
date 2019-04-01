@@ -410,6 +410,10 @@ class MailQueueHandler {
 	 * @return string
 	 */
 	protected function getHTMLSubject(IEvent $event): string {
+		if ($event->getRichSubject() === '') {
+			return htmlspecialchars($event->getParsedSubject());
+		}
+
 		$placeholders = $replacements = [];
 		foreach ($event->getRichSubjectParameters() as $placeholder => $parameter) {
 			$placeholders[] = '{' . $placeholder . '}';
