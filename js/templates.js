@@ -66,11 +66,13 @@ templates['fileNoPath'] = template({"compiler":[7,">= 4.0.0"],"main":function(co
     + "</a>\n";
 },"useData":true});
 templates['fileRoot'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper;
+    var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "<a class=\"filename has-tooltip\" href=\""
-    + container.escapeExpression(((helper = (helper = helpers.link || (depth0 != null ? depth0.link : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"link","hash":{},"data":data}) : helper)))
-    + "\" title=\"' + t('activity', 'Home') + '\"><span class=\"icon icon-home\"></span></a>\n";
+    + alias4(((helper = (helper = helpers.link || (depth0 != null ? depth0.link : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"link","hash":{},"data":data}) : helper)))
+    + "\" title=\""
+    + alias4(((helper = (helper = helpers.homeTXT || (depth0 != null ? depth0.homeTXT : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"homeTXT","hash":{},"data":data}) : helper)))
+    + "\"><span class=\"icon icon-home\"></span></a>\n";
 },"useData":true});
 templates['openGraph'] = template({"1":function(container,depth0,helpers,partials,data) {
     var helper;
