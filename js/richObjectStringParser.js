@@ -97,7 +97,9 @@
 		 */
 		parseFileParameter: function(parameter) {
 			if (parameter.path === '') {
-				return OCA.Activity.Templates.fileRoot(parameter);
+				return OCA.Activity.Templates.fileRoot(_.extend(parameter, {
+					homeTXT: t('activity', 'Home')
+				}));
 			}
 
 			var lastSlashPosition = parameter.path.lastIndexOf('/'),
