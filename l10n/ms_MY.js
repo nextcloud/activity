@@ -11,6 +11,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Tekan Ctrl-C untuk menyalin.",
     "{name} (invisible)" : "{nama} (halimunan)",
     "{name} (restricted)" : "{nama} (disekat)",
+    "Home" : "Rumah",
     "in {path}" : "dalam {haluan}",
     "Today" : "Hari ini",
     "Yesterday" : "Semalam",
@@ -36,7 +37,6 @@ OC.L10N.register(
     "RSS feed" : "Suapan RSS",
     "No more events to load" : "Tiada aktiviti untuk memuat",
     "Activities" : "Aktiviti",
-    "Home" : "Rumah",
     ", " : ",",
     "Files" : "Fail"
 },
