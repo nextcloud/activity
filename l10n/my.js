@@ -10,6 +10,7 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "ကူးယူရန်အတွက် ⌘-C ကိုနှိပ်ပါ။",
     "Press Ctrl-C to copy." : "ကူးယူရန်အတွက် Ctrl-C ကိုနှိပ်ပါ။",
     "{name} (restricted)" : "{name} (ကန့်သတ်ထား)",
+    "Home" : "ပင်မစာမျက်နှာ",
     "in {path}" : "{path} တွင်",
     "This stream will show events like additions, changes & shares" : "ဤ လမ်းကြောင်းသည်  ပေါင်းထည့်ခြင်း၊ ပြောင်းလဲခြင်းနှင့် မျှဝေခြင်း စသည့် အဖြစ်အပျက်များကို ပြသပေးပါမည်။",
     "There are no events for this filter" : "ဤ စစ်ထုတ်မှုအတွက် ဖြစ်စဉ် တစ်ခုမှမရှိပါ။",
@@ -31,7 +32,6 @@ OC.L10N.register(
     "Mail" : "စာ",
     "Stream" : "လမ်းကြောင်း",
     "Activities" : "လုပ်ဆောင်မှုများ",
-    "Home" : "ပင်မစာမျက်နှာ",
     "\"remote user\"" : "\"အဝေးမှ အသုံးပြုသူ\"",
     ", " : "၊",
     "%s and %s" : "%sနှင့် %s"
