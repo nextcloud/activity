@@ -6,7 +6,7 @@ php:
 
 env:
   global:
-    - CORE_BRANCH=master
+    - CORE_BRANCH=stable16
     - APP_NAME=activity
   matrix:
     - DB=sqlite
@@ -60,8 +60,8 @@ matrix:
       env: DB=mysql;CODECHECK=1
     - php: 7.1
       env: DB=mysql;CODECHECK=2
-    - php: 7.1
-      env: DB=mysql;JSTESTS=1
+#    - php: 7.1
+#      env: DB=mysql;JSTESTS=1
   allow_failures:
     - env: DB=mysql;CODECHECK=2
   fast_finish: true

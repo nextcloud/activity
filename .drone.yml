@@ -1,34 +1,17 @@
-clone:
-  git:
-    image: plugins/git
-    depth: 1
+kind: pipeline
+name: handlebars
 
-pipeline:
-  signed-off-check:
-    image: nextcloudci/php7.1:php7.1-16
-    environment:
-      - APP_NAME=activity
-      - CORE_BRANCH=master
-      - DB=sqlite
-    commands:
-      - wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/before_install.sh
-      - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
-      - cd ../server
-      - php ./build/signed-off-checker.php
-    secrets: [ github_token ]
-    when:
-      matrix:
-        TESTS: signed-off-check
-  handlebars:
+steps:
+  - name: check-handlebars-templates
     image: node
     commands:
       - npm install -g handlebars
       - ./check-handlebars-templates.sh
-    when:
-      matrix:
-        TESTS: handlebars
 
-matrix:
-  include:
-    - TESTS: signed-off-check
-    - TESTS: handlebars
+trigger:
+  branch:
+    - master
+    - stable*
+  event:
+    - pull_request
+    - push
