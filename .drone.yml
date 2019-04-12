@@ -1,18 +1,17 @@
-clone:
-  git:
-    image: plugins/git
-    depth: 1
+kind: pipeline
+name: handlebars
 
-pipeline:
-  handlebars:
+steps:
+  - name: check-handlebars-templates
     image: node
     commands:
       - npm install -g handlebars
       - ./check-handlebars-templates.sh
-    when:
-      matrix:
-        TESTS: handlebars
 
-matrix:
-  include:
-    - TESTS: handlebars
+trigger:
+  branch:
+    - master
+    - stable*
+  event:
+    - pull_request
+    - push
