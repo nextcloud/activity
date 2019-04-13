@@ -54,7 +54,7 @@ OC.L10N.register(
     "No more events to load" : "Nėra daugiau rodytinų įvykių",
     "Activities" : "Veiklos",
     "\"remote user\"" : "\"naudotojas kitame serveryje\"",
-    ", " : ",",
+    ", " : ", ",
     "%s and %s" : "%s ir %s",
     "Files" : "Failai"
 },
