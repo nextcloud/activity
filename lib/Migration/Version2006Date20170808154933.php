@@ -106,7 +106,6 @@ class Version2006Date20170808154933 extends SimpleMigrationStep {
 				'default' => 0,
 			]);
 			$table->setPrimaryKey(['activity_id']);
-			$table->addIndex(['timestamp'], 'activity_time');
 			$table->addIndex(['affecteduser', 'timestamp'], 'activity_user_time');
 			$table->addIndex(['affecteduser', 'user', 'timestamp'], 'activity_filter_by');
 			// FIXME Fixed install, see Version2006Date20170808155040: $table->addIndex(['affecteduser', 'app', 'timestamp'], 'activity_filter_app');

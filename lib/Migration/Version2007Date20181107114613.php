@@ -55,10 +55,6 @@ class Version2007Date20181107114613 extends SimpleMigrationStep {
 			]);
 		}
 
-		if (!$table->hasIndex('activity_time')) {
-			$table->addIndex(['timestamp'], 'activity_time');
-		}
-
 		if (!$table->hasIndex('activity_object')) {
 			$table->addIndex(['object_type', 'object_id'], 'activity_object');
 		}
