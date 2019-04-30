@@ -51,7 +51,7 @@ OC.L10N.register(
     "Settings" : "Nastavitve",
     "Enable RSS feed" : "Omogoči vire RSS",
     "RSS feed" : "Viri RSS",
-    "No more events to load" : "Ni več dogodkov za nalaganje",
+    "No more events to load" : "Ni zabeleženih drugih dogodkov",
     "Activities" : "Dejavnosti",
     "\"remote user\"" : "\"oddaljeni uporabnik\"",
     ", " : ",",
