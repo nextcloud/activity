@@ -381,11 +381,11 @@ class APIv2 extends OCSController {
 					'x' => 150,
 					'y' => 150,
 				]);
-				$preview['mimeType'] = $fileInfo->getMimetype();
+				$preview['mimeType'] = $fileInfo->getMimetype() ?: 'application/octet-stream';
 				$preview['isMimeTypeIcon'] = false;
 			} else {
-				$preview['source'] = $this->getPreviewPathFromMimeType($fileInfo->getMimetype());
-				$preview['mimeType'] = $fileInfo->getMimetype();
+				$preview['mimeType'] = $fileInfo->getMimetype() ?: 'application/octet-stream';
+				$preview['source'] = $this->getPreviewPathFromMimeType($preview['mimeType']);
 			}
 		}
 
