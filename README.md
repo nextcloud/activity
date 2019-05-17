@@ -5,6 +5,11 @@ The activity app for Nextcloud
 Provides an activity feed showing your file changes and other interesting things
 going on in your Nextcloud.
 
+## 🏗 Development setup
+1. ☁ Clone this app into the `apps` folder of your Nextcloud: `git clone https://github.com/nextcloud/activity.git`
+2. ✅ Enable the app through the app management of your Nextcloud
+3. 🎉 Partytime!
+
 ## QA metrics on master branch:
 
 [![Build Status](https://travis-ci.org/nextcloud/activity.svg?branch=master)](https://travis-ci.org/nextcloud/activity/branches)
