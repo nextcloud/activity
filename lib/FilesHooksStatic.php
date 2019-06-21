@@ -105,4 +105,15 @@ class FilesHooksStatic {
 			self::getHooks()->unShare($share);
 		}
 	}
+
+	/**
+	 * "Unsharing a share from self only" event
+	 * @param GenericEvent $event
+	 */
+	public static function unShareSelf(GenericEvent $event) {
+		$share = $event->getSubject();
+		if ($share instanceof IShare) {
+			self::getHooks()->unShareSelf($share);
+		}
+	}
 }

@@ -782,6 +782,21 @@ class FilesHooks {
 	}
 
 	/**
+	 * Manage unsharing a share from self only events
+	 * @param IShare $share
+	 * @throws \OCP\Files\NotFoundException
+	 */
+	public function unShareSelf(IShare $share) {
+		if (in_array($share->getNodeType(), ['file', 'folder'], true)) {
+			if ($share->getShareType() === Share::SHARE_TYPE_GROUP) {
+				$this->unshareFromSelfGroup($share);
+			} else {
+				$this->unShare($share);
+			}
+		}
+	}
+
+	/**
 	 * Unharing a file or folder from a user
 	 *
 	 * @param IShare $share
@@ -851,6 +866,22 @@ class FilesHooks {
 			$this->addNotificationsForGroupUsers($users, 'unshared_by', $share->getNodeId(), $share->getNodeType(), $share->getTarget(), $share->getId());
 			$offset += self::USER_BATCH_SIZE;
 			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
+		}
+	}
+
+	/**
+	 * Unsharing a file or folder from self from a group share
+	 *
+	 * @param IShare $share
+	 * @throws \OCP\Files\NotFoundException
+	 */
+	protected function unshareFromSelfGroup(IShare $share) {
+		// User performing the unshare
+		$this->shareNotificationForSharer('self_unshared', $this->currentUser->getUID(), $share->getNodeId(), $share->getNodeType());
+
+		// Owner
+		if ($this->currentUser->getUID() !== null) {
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'self_unshared_by', $this->currentUser->getUID(), $share->getNodeId(), $share->getNodeType());
 		}
 	}
 
