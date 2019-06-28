@@ -40,7 +40,7 @@ OC.L10N.register(
     "Configure the default activity settings for new users." : "Definir as configurações de atividade padrões para novos usuários.",
     "List your own actions in the stream" : "Listar suas próprias ações no stream",
     "Notify about your own actions via email" : "Notificar suas próprias ações por e-mail",
-    "You need to set up your email address before you can receive notification emails." : "Você precisa configurar o endereço de e-mail antes que você possa receber mensagens de notificação.",
+    "You need to set up your email address before you can receive notification emails." : "Você precisa configurar o endereço de e-mail para receber mensagens de notificação.",
     "Send emails:" : "Enviar e-mails:",
     "As soon as possible" : "Assim que possível",
     "Hourly" : "De hora em hora",
