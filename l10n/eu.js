@@ -8,7 +8,7 @@ OC.L10N.register(
     "Copied!" : "Kopiatuta!",
     "Not supported!" : "Ez da onartzen!",
     "Press ⌘-C to copy." : "Sakatu ⌘-C kopiatzeko",
-    "Press Ctrl-C to copy." : "Sakatu Ktrl+C kopiatzeko",
+    "Press Ctrl-C to copy." : "Sakatu Ctrl-C kopiatzeko.",
     "{name} (invisible)" : "{name} (ikusezina)",
     "{name} (restricted)" : "{name} (mugatua)",
     "Home" : "Etxea",
