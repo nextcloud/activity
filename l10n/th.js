@@ -26,7 +26,7 @@ OC.L10N.register(
     "By others" : "โดยผู้อื่น",
     "By you" : "โดยคุณ",
     "Hello %s" : "สวัสดี %s",
-    "Hello %s," : "สวัสดี %s",
+    "Hello %s," : "สวัสดี %s,",
     "There was some activity at %s" : "มีกิจกรรมบางอย่าง ที่ %s",
     "_and %n more _::_and %n more _" : ["และอีก %n"],
     "Mail" : "จดหมาย",
