@@ -2,9 +2,9 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Activitat",
-    "An error occurred while loading activities" : "S'ha produït un error mentre es carregava l'activitat",
+    "An error occurred while loading activities" : "S'ha produït un error mentre es carregaven les activitats",
     "No activity yet" : "Encara no hi ha activitat",
-    "Load more activities" : "Carrega més esdeveniments",
+    "Load more activities" : "Carrega més activitats",
     "Copied!" : "S'ha copiat!",
     "Not supported!" : "No compatible!",
     "Press ⌘-C to copy." : "Premeu ⌘+C per copiar.",
