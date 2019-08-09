@@ -29,6 +29,7 @@ OC.L10N.register(
     "Hello %s" : "Здраво %s",
     "Hello %s," : "Здраво %s,",
     "There was some activity at %s" : "Имаше активност во %s",
+    "_and %n more _::_and %n more _" : ["и уште %n","и %n други"],
     "Mail" : "Електронска пошта",
     "Stream" : "Стрим",
     "This application enables users to view actions related to their files in Nextcloud." : "Оваа апликација им овозможува на корисниците да ги прикажуваат активностите поврзани со нивните датотеки во Nextcloud.",
