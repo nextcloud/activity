@@ -793,17 +793,27 @@ class FilesHooks {
 			return;
 		}
 
+		if ($share->isExpired()) {
+			$actionSharer = 'expired_user';
+			$actionOwner = 'expired_user';
+			$actionUser = 'expired';
+		} else {
+			$actionSharer = 'unshared_user_self';
+			$actionOwner = 'unshared_user_by';
+			$actionUser = 'unshared_by';
+		}
+
 		// User performing the share
-		$this->shareNotificationForSharer('unshared_user_self', $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+		$this->shareNotificationForSharer($actionSharer, $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
 
 		// Owner
 		if ($this->currentUser->getUID() !== null) {
-			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'unshared_user_by', $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), $actionOwner, $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
 		}
 
 		// Recipient
 		$this->addNotificationsForUser(
-			$share->getSharedWith(), 'unshared_by', [[$share->getNodeId() => $share->getTarget()], $this->currentUser->getUserIdentifier()],
+			$share->getSharedWith(), $actionUser, [[$share->getNodeId() => $share->getTarget()], $this->currentUser->getUserIdentifier()],
 			$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
 			$this->userSettings->getUserSetting($share->getSharedWith(), 'stream', Files_Sharing::TYPE_SHARED),
 			$this->userSettings->getUserSetting($share->getSharedWith(), 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($share->getSharedWith(), 'setting', 'batchtime') : false
@@ -839,16 +849,26 @@ class FilesHooks {
 			return;
 		}
 
+		if ($share->isExpired()) {
+			$actionSharer = 'expired_group';
+			$actionOwner = 'expired_group';
+			$actionUser = 'expired';
+		} else {
+			$actionSharer = 'unshared_group_self';
+			$actionOwner = 'unshared_group_by';
+			$actionUser = 'unshared_by';
+		}
+
 		// User performing the share
-		$this->shareNotificationForSharer('unshared_group_self', $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+		$this->shareNotificationForSharer($actionSharer, $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
 		if ($this->currentUser->getUID() !== null) {
-			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'unshared_group_by', $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), $actionOwner, $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
 		}
 
 		$offset = 0;
 		$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		while (!empty($users)) {
-			$this->addNotificationsForGroupUsers($users, 'unshared_by', $share->getNodeId(), $share->getNodeType(), $share->getTarget(), $share->getId());
+			$this->addNotificationsForGroupUsers($users, $actionUser, $share->getNodeId(), $share->getNodeType(), $share->getTarget(), $share->getId());
 			$offset += self::USER_BATCH_SIZE;
 			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		}
@@ -862,7 +882,8 @@ class FilesHooks {
 	 */
 	protected function unshareLink(IShare $share) {
 		$owner = $share->getSharedBy();
-		if ($this->currentUser->getUID() === null) {
+
+		if ($share->isExpired()) {
 			// Link expired
 			$actionSharer = 'link_expired';
 			$actionOwner = 'link_by_expired';
