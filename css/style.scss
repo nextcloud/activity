@@ -13,18 +13,11 @@
 }
 .activitymessage {
 	margin-left: 25px;
-	color:#666;
+	color: var(--color-text-maxcontrast);
 	text-overflow: ellipsis;
 }
 .activity-previews {
 	margin-left: 24px;
-}
-
-#no_more_activities .head {
-	font-size: 1.5em;
-	color: #333;
-	font-weight: bold;
-	text-shadow: #aaa 0 1px 0;
 }
 
 #no_more_activities {
@@ -37,7 +30,7 @@
 	z-index: 100;
 	margin: 40px auto;
 	bottom: 20px;
-	color: #555;
+	color: var(--color-text-maxcontrast);
 }
 
 #loading_activities {
@@ -97,7 +90,7 @@
 
 	.activitytime {
 		float: right;
-		color:#666;
+		color: var(--color-text-maxcontrast);
 		font-size: 0.8em;
 		padding: 20px;
 		margin: -20px;
@@ -115,7 +108,7 @@
 
 	.grouped .more{
 		cursor: default;
-		color: #666;
+		color: var(--color-text-maxcontrast);
 	}
 }
 
@@ -152,7 +145,7 @@
 	display: inline-block;
 	padding: 2px 5px;
 	border-radius: 3px;
-	background-color: #f8f8f8;
+	background-color: var(--color-background-darker);
 	font-weight: normal;
 }
 
@@ -226,7 +219,7 @@
 	max-width: 700px;
 	height: 125px;
 	position: relative;
-	border: 1px solid #ddd;
+	border: 1px solid var(--color-border-dark);
 	padding-right: 15px;
 }
 
@@ -246,7 +239,7 @@
 	height: 119px;
 	margin: 3px 15px 5px 3px;
 	position: absolute;
-	background: #eee center no-repeat;
+	background: var(--color-border) center no-repeat;
 	background-size: 220px;
 }
 
@@ -260,5 +253,5 @@
 	bottom: 0;
 	font-size: 10px;
 	text-transform: uppercase;
-	color: #999;
+	color: var(--color-text-maxcontrast);
 }
