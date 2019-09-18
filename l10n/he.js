@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "לאפשר הזנת RSS",
     "RSS feed" : "ערוץ RSS",
     "No more events to load" : "אין אירועים נוספים לטעינה",
-    "Activities" : "פעילויות",
     "\"remote user\"" : "\"משתמש מרוחק\"",
     ", " : ",",
     "%s and %s" : "%s ו- %s",

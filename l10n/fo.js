@@ -19,7 +19,6 @@ OC.L10N.register(
     "Hourly" : "Hvønn tíma",
     "Daily" : "Hvønn dag",
     "Weekly" : "Hvørja viku",
-    "Activities" : "Virksemi",
     ", " : ",",
     "%s and %s" : "%s og %s",
     "Files" : "fílur"

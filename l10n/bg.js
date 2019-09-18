@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Разрешаване на RSS емисии",
     "RSS feed" : "RSS емисия",
     "No more events to load" : "Няма повече известия за зареждане",
-    "Activities" : "Активности",
     "\"remote user\"" : "\"отдалечен потребител\"",
     ", " : ", ",
     "%s and %s" : "%s и %s",

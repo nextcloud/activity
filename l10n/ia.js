@@ -38,7 +38,6 @@ OC.L10N.register(
     "Settings" : "Configurationes",
     "Enable RSS feed" : "Habilita syndication RSS",
     "No more events to load" : "Nulle altere eventos a cargar",
-    "Activities" : "Activitates",
     "\"remote user\"" : "\"usator remote\"",
     ", " : ",",
     "%s and %s" : "%s e %s",

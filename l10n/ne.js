@@ -47,7 +47,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS फिड सक्षम गर्नुहोस्",
     "RSS feed" : "RSS फिड",
     "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
-    "Activities" : "क्रियाकलापहरू",
     "\"remote user\"" : "\"रिमोट प्रयोगकर्ता\"",
     ", " : ",",
     "%s and %s" : "%s र %s",

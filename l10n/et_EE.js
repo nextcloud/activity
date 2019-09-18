@@ -49,7 +49,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Luba RSS voog",
     "RSS feed" : "RRS voog",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
-    "Activities" : "Tegevused",
     "\"remote user\"" : "\"eemal olev kasutaja\"",
     ", " : ", ",
     "%s and %s" : "%s ja %s",

@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Bật nguồn cấp dữ liệu RSS",
     "RSS feed" : "Nội dung RSS",
     "No more events to load" : "Không có sự kiện nào",
-    "Activities" : "Lịch sử hoạt động",
     "\"remote user\"" : "\"Người dùng từ xa\"",
     ", " : ", ",
     "%s and %s" : "%s và %s",

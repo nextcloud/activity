@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Zet RSS-kanaal aan",
     "RSS feed" : "RSS kanaal",
     "No more events to load" : "Geen activiteiten meer beschikbaar",
-    "Activities" : "Activiteiten",
     "\"remote user\"" : "\"externe gebruiker\"",
     ", " : ", ",
     "%s and %s" : "%s en %s",

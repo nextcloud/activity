@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Activați feed RSS",
     "RSS feed" : "Flux RSS",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
-    "Activities" : "Activități",
     "\"remote user\"" : "\"utilizator la distanță\"",
     ", " : ",",
     "%s and %s" : "%s și %s",

@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Ενεργοποίηση ροής πληροφοριών RSS",
     "RSS feed" : "Ροή RSS",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
-    "Activities" : "Δραστηριότητες",
     "\"remote user\"" : "\"απομακρυσμένος χρήστης\"",
     ", " : ", ",
     "%s and %s" : "%s και %s",

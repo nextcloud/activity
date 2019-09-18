@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktivigi RSS-fluo",
     "RSS feed" : "RSS-a fluo",
     "No more events to load" : "Ne estas pli da eventoj.",
-    "Activities" : "Aktivaĵoj",
     "\"remote user\"" : "„fora uzanto“",
     ", " : ", ",
     "%s and %s" : "%s kaj %s",
