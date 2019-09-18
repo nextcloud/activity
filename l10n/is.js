@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Virkja RSS-veitu",
     "RSS feed" : "RSS-veita",
     "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
-    "Activities" : "Virkniaðgerðir",
     "\"remote user\"" : "\"fjartengdur notandi\"",
     ", " : ",",
     "%s and %s" : "%s og %s",

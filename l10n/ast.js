@@ -41,7 +41,6 @@ OC.L10N.register(
     "Settings" : "Axustes",
     "Enable RSS feed" : "Habilitar feed RSS",
     "No more events to load" : "Nun hai más eventos pa cargar",
-    "Activities" : "Actividaes",
     "\"remote user\"" : "«usuariu remotu»",
     ", " : ", ",
     "%s and %s" : "%s y %s",

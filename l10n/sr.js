@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Укључи РСС довод",
     "RSS feed" : "РСС довод",
     "No more events to load" : "Нема више догађаја за приказ",
-    "Activities" : "Активности",
     "\"remote user\"" : "„удаљени корисник“",
     ", " : ", ",
     "%s and %s" : "%s и %s",

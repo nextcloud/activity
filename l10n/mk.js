@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Овозможи RSS feed",
     "RSS feed" : "RSS feed",
     "No more events to load" : "Нема повеќе настани за вчитување",
-    "Activities" : "Активности",
     "\"remote user\"" : "\"далечен корисник\"",
     ", " : ", ",
     "%s and %s" : "%s и %s",

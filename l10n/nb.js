@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Skru på RSS-strøm",
     "RSS feed" : "RSS-strøm",
     "No more events to load" : "Ingen flere hendelser å laste inn",
-    "Activities" : "Aktiviteter",
     "\"remote user\"" : "\"ekstern bruker\"",
     ", " : ", ",
     "%s and %s" : "%s og %s",

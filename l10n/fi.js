@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Ota RSS -syöte käyttöön",
     "RSS feed" : "RSS-syöte",
     "No more events to load" : "Ei enempää tapahtumia",
-    "Activities" : "Tapahtumat",
     "\"remote user\"" : "\"etäkäyttäjä\"",
     ", " : ", ",
     "%s and %s" : "%s ja %s",

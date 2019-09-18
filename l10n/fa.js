@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "فعالسازی فید RSS",
     "RSS feed" : "فید RSS",
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
-    "Activities" : "فعالیت‌ها",
     "\"remote user\"" : "\"کاربران از راه‌ دور\"",
     ", " : ",",
     "%s and %s" : "%s و %s",

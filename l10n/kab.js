@@ -50,7 +50,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Ssermed asuddem RSS",
     "RSS feed" : "Asuddem RSS",
     "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
-    "Activities" : "Irmuden",
     "\"remote user\"" : "\"aseqdac anmeggag\"",
     ", " : ", ",
     "%s and %s" : "%s akked %s",

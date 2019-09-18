@@ -36,7 +36,6 @@ OC.L10N.register(
     "Settings" : "Tetapan",
     "RSS feed" : "Suapan RSS",
     "No more events to load" : "Tiada aktiviti untuk memuat",
-    "Activities" : "Aktiviti",
     ", " : ",",
     "Files" : "Fail"
 },

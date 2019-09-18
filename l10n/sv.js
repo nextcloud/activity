@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "RSS feed" : "RSS-flöde",
     "No more events to load" : "Inga fler aktiviteter.",
-    "Activities" : "Aktivitetsflöde",
     "\"remote user\"" : "\"externanvändare\"",
     ", " : ",",
     "%s and %s" : "%s och %s",

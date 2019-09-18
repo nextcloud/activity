@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RRS لړ فعال کړئ",
     "RSS feed" : "RRS لړ ",
     "No more events to load" : "نورې کړنې نشته",
-    "Activities" : "کړنې",
     "\"remote user\"" : "\"د بل ځای کارن\"",
     ", " : "،",
     "%s and %s" : "%s او %s",

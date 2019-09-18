@@ -51,7 +51,6 @@ OC.L10N.register(
     "Enable RSS feed" : "تفعيل خاصية الخلاصات",
     "RSS feed" : "مزود ار أس أس ",
     "No more events to load" : "لا توجد أي أحداث للتحميل",
-    "Activities" : "النشاطات",
     "\"remote user\"" : "\"مستخدم عن بعد\"",
     ", " : ",",
     "%s and %s" : "%s و %s",

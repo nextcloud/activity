@@ -50,7 +50,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS ლენტის გააქტიურება",
     "RSS feed" : "RSS ლენტა",
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
-    "Activities" : "აქტივობები",
     "\"remote user\"" : "\"დისტანციური მომხმარებელი\"",
     ", " : ",",
     "%s and %s" : "%s და %s",

@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "RSS feed" : "RSS jarioa",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
-    "Activities" : "Jarduerak",
     "\"remote user\"" : "\"urruneko erabiltzailea\"",
     ", " : ", ",
     "%s and %s" : "%s eta %s",
