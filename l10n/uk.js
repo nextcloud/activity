@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Активувати RSS стрічку",
     "RSS feed" : "Стрічка RSS",
     "No more events to load" : "Більше немає подій для завантаження",
-    "Activities" : "Активність",
     "\"remote user\"" : "\"віддалений користувач\"",
     ", " : ",",
     "%s and %s" : "%s і %s",

@@ -45,7 +45,6 @@ OC.L10N.register(
     "Settings" : "設定",
     "Enable RSS feed" : "啟用 RSS 源",
     "No more events to load" : "已無更多事件",
-    "Activities" : "動態",
     "\"remote user\"" : "遠程用戶",
     ", " : ",",
     "%s and %s" : "%s和%s",

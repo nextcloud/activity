@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Povoliť RSS kanál",
     "RSS feed" : "RSS kanál",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
-    "Activities" : "Aktivity",
     "\"remote user\"" : "\"vzdialený používateľ\"",
     ", " : ", ",
     "%s and %s" : "%s a %s",

@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS-csatorna engedélyezése",
     "RSS feed" : "RSS-csatorna",
     "No more events to load" : "Nincs több esemény",
-    "Activities" : "Tevékenységek",
     "\"remote user\"" : "„távoli felhasználó”",
     ", " : ", ",
     "%s and %s" : "%s és %s",

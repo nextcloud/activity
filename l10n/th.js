@@ -49,7 +49,6 @@ OC.L10N.register(
     "Enable RSS feed" : "เปิดใช้งานฟีด RSS",
     "RSS feed" : "ฟีด RSS",
     "No more events to load" : "ไม่มีการโหลดกิจกรรมเพิ่มเติม",
-    "Activities" : "กิจกรรม",
     "\"remote user\"" : "\"ผู้ใช้โดยการรีโมท\"",
     ", " : "หรือ",
     "%s and %s" : "%s และ %s",

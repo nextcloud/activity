@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktiveer RSS-voer",
     "RSS feed" : "RSS-voer",
     "No more events to load" : "Geen meer gebeure om te laai",
-    "Activities" : "Aktiwiteite",
     "\"remote user\"" : "“afstandsgebruiker”",
     ", " : ", ",
     "%s and %s" : "%s en %s",

@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSSフィードを有効にする",
     "RSS feed" : "RSS フィード",
     "No more events to load" : "これ以上読み込むイベントはありません",
-    "Activities" : "アクティビティ",
     "\"remote user\"" : "\"リモートユーザー\"",
     ", " : ", ",
     "%s and %s" : "%s と %s",

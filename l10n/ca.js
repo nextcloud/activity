@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Activa el canal RSS",
     "RSS feed" : "Canal RSS",
     "No more events to load" : "No hi ha més esdeveniments per carregar",
-    "Activities" : "Activitats",
     "\"remote user\"" : "«usuari remot»",
     ", " : ", ",
     "%s and %s" : "%s i %s",
