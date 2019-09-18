@@ -36,7 +36,6 @@ OC.L10N.register(
     "Settings" : "Astellungen",
     "Enable RSS feed" : "RSS-Feed aktivéieren",
     "No more events to load" : "Keng weider Evenementer fir ze lueden",
-    "Activities" : "Aktivitéiten",
     "\"remote user\"" : "\"Remote-Benotzer\"",
     ", " : ", ",
     "%s and %s" : "%s an %s",

@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Включить RSS ленту",
     "RSS feed" : "RSS лента",
     "No more events to load" : "Больше нет событий для загрузки",
-    "Activities" : "События",
     "\"remote user\"" : "«дистанционный пользователь»",
     ", " : ",",
     "%s and %s" : "%s и %s",

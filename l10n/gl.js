@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Activar as fontes RSS",
     "RSS feed" : "Fontes RSS",
     "No more events to load" : "Non hai máis eventos para cargar",
-    "Activities" : "Actividades",
     "\"remote user\"" : "«usuario remoto»",
     ", " : ", ",
     "%s and %s" : "%s e %s",

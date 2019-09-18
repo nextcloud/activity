@@ -31,7 +31,6 @@ OC.L10N.register(
     "_and %n more _::_and %n more _" : ["နှင့် အပို%n"],
     "Mail" : "စာ",
     "Stream" : "လမ်းကြောင်း",
-    "Activities" : "လုပ်ဆောင်မှုများ",
     "\"remote user\"" : "\"အဝေးမှ အသုံးပြုသူ\"",
     ", " : "၊",
     "%s and %s" : "%sနှင့် %s"

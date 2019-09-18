@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Ieslēgt RSS plūsmu",
     "RSS feed" : "RSS plūsma",
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
-    "Activities" : "Darbības",
     "\"remote user\"" : "\"attālināts lietotājs\"",
     ", " : ",",
     "%s and %s" : "%s un %s",

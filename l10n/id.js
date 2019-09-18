@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktifkan RSS feed",
     "RSS feed" : "RSS feed",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
-    "Activities" : "Aktivitas",
     "\"remote user\"" : "\"remote user\"",
     ", " : ", ",
     "%s and %s" : "%s dan %s",

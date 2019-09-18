@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktivizoni Prurje RSS",
     "RSS feed" : "Prurja RSS",
     "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
-    "Activities" : "Veprimtaritë",
     "\"remote user\"" : "\"përdorues i largët\"",
     ", " : ",",
     "%s and %s" : "%s dhe %s",

@@ -52,7 +52,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Omogući sažetak događaja RSS",
     "RSS feed" : "Sažetak događaja RSS",
     "No more events to load" : "Nema više događaja za učitavanje",
-    "Activities" : "Aktivnosti",
     "\"remote user\"" : "„udaljeni korisnik”",
     ", " : ", ",
     "%s and %s" : "%s i %s",
