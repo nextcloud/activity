@@ -72,13 +72,18 @@ class Hooks {
 
 	static public function setDefaultsForUser($params) {
 		$config = \OC::$server->getConfig();
-		if ($config->getUserValue($params['uid'], 'activity','notify_setting_batchtime', null) !== null) {
+		if ($config->getUserValue($params['uid'], 'activity', 'configured', null) !== null) {
 			// Already has settings
 			return;
 		}
 
 		foreach ($config->getAppKeys('activity') as $key) {
 			if (strpos($key, 'notify_') !== 0) {
+				continue;
+			}
+
+			if ($config->getUserValue($params['uid'], 'activity', $key, null) !== null) {
+				// Already has this setting
 				continue;
 			}
 
@@ -89,6 +94,9 @@ class Hooks {
 				$config->getAppValue('activity', $key)
 			);
 		}
+
+		// Mark settings as set
+		$config->setUserValue($params['uid'], 'activity', 'configured', '1');
 	}
 
 	/**
