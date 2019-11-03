@@ -19,7 +19,7 @@ OC.L10N.register(
     "Yesterday" : "Igår",
     "Open file" : "Öppna fil",
     "Personal activity feed for %s" : "Personligt aktivitetsflöde för %s",
-    "Your feed URL is invalid" : "URL:en för flödet är felaktig.",
+    "Your feed URL is invalid" : "Din flödeswebbadress är ogiltig",
     "Your settings have been updated." : "Dina inställningar har uppdaterats.",
     "Settings have been updated." : "Inställningarna har blivit uppdaterade.",
     "All activities" : "Alla aktiviteter",
