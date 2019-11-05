@@ -3,6 +3,7 @@
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
  * @author Joas Schilling <coding@schilljs.com>
+ * @author John Molakvoæ <skjnldsv@protonmail.com>
  *
  * @license AGPL-3.0
  *
@@ -33,13 +34,19 @@ use OCA\Activity\Controller\RemoteActivity;
 use OCA\Activity\Controller\Settings;
 use OCA\Activity\FilesHooksStatic;
 use OCA\Activity\Hooks;
+use OCA\Activity\Listener\LoadSidebarScripts;
+use OCA\Files\Event\LoadSidebar;
 use OCP\AppFramework\App;
-use OCP\IL10N;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Util;
 
 class Application extends App {
+
+	const APP_ID = 'activity';
+
 	public function __construct () {
-		parent::__construct('activity');
+		parent::__construct(self::APP_ID);
+
 		$container = $this->getContainer();
 
 		// Allow automatic DI for the View, until we migrated to Nodes API
@@ -59,6 +66,8 @@ class Application extends App {
 		$container->registerAlias('SettingsController', Settings::class);
 
 		$container->registerCapability(Capabilities::class);
+
+		$this->register();
 	}
 
 	/**
@@ -86,8 +95,8 @@ class Application extends App {
 	 * Register the hooks and events
 	 */
 	public function registerHooksAndEvents() {
-		$eventDispatcher = $this->getContainer()->getServer()->getEventDispatcher();
-		$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', [Hooks::class, 'onLoadFilesAppScripts']);
+		$eventDispatcher = $this->getContainer()->query(IEventDispatcher::class);
+		$eventDispatcher->addServiceListener(LoadSidebar::class, LoadSidebarScripts::class);
 
 		Util::connectHook('OC_User', 'post_deleteUser', Hooks::class, 'deleteUser');
 		Util::connectHook('OC_User', 'post_login', Hooks::class, 'setDefaultsForUser');

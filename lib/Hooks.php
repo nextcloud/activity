@@ -90,12 +90,4 @@ class Hooks {
 			);
 		}
 	}
-
-	/**
-	 * Load additional scripts when the files app is visible
-	 */
-	public static function onLoadFilesAppScripts() {
-		Util::addStyle('activity', 'style');
-		Util::addScript('activity', 'activity-sidebar');
-	}
 }
