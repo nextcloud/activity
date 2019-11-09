@@ -28,7 +28,7 @@ OC.L10N.register(
     "Activity notification for %s" : "Obvestila o dejavnosti za %s",
     "Hello %s" : "Pozdravljeni, %s,",
     "Hello %s," : "Pozdravljeni, %s,",
-    "There was some activity at %s" : "Nekaj dejavnosti je bilo izvedenih ob %s",
+    "There was some activity at %s" : "V oblaku %s se je nekaj dogajalo ...",
     "_and %n more _::_and %n more _" : ["- in še %n","- in še %n","- in še %n","– in še %n"],
     "Mail" : "Elektronska pošta",
     "Stream" : "Pretok",
