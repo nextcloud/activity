@@ -12,7 +12,7 @@ If you have questions about how to install or use Nextcloud, please direct these
   - You can also filter by appending e. g. "state:open" to the search string.
   - More info on [search syntax within github](https://help.github.com/articles/searching-issues)
 * This repository ([Activity](https://github.com/nextcloud/activity/issues)) is *only* for issues within the Nextcloud Activity App code.
-* __SECURITY__: Report any potential security bug to us via [our HackerOne page](https://hackerone.com/nextcloud) or security@nextcloud.com following our [security policy](https://nextcloud.com/security/) instead of filing an issue in our bug tracker.
+* __SECURITY__: Report any potential security bug to us via [our HackerOne page](https://hackerone.com/nextcloud) following our [security policy](https://nextcloud.com/security/) instead of filing an issue in our bug tracker.
 * Report the issue using our [template][template], it includes all the information we need to track down the issue.
 
 Help us to maximize the effort we can spend fixing issues and adding new features, by not reporting duplicate issues.
