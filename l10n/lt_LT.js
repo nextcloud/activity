@@ -46,7 +46,7 @@ OC.L10N.register(
     "Hourly" : "Kas valandą",
     "Daily" : "Kasdien",
     "Weekly" : "Kas savaitę",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Pasirinkti kurioms veikloms norite gauti el. pašto pranešimus, ir kurios turėtų būti rodomos veiklos programėlės sraute.",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Pasirinkite apie kokią veiklą norite gauti pranešimus el. paštu bei kokia veikla turėtų būti rodoma veiklos programėlės sraute.",
     "Choose which activities you want to see in your stream." : "Pasirinkti kurias veiklas norite matyti savo sraute.",
     "Settings" : "Nustatymai",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
