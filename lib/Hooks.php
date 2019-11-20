@@ -72,7 +72,7 @@ class Hooks {
 
 	static public function setDefaultsForUser($params) {
 		$config = \OC::$server->getConfig();
-		if ($config->getUserValue($params['uid'], 'activity', 'configured', null) !== null) {
+		if ($config->getUserValue($params['uid'], 'activity', 'configured', 'no') === 'yes') {
 			// Already has settings
 			return;
 		}
@@ -95,8 +95,8 @@ class Hooks {
 			);
 		}
 
-		// Mark settings as set
-		$config->setUserValue($params['uid'], 'activity', 'configured', '1');
+		// Mark settings as configured
+		$config->setUserValue($params['uid'], 'activity', 'configured', 'yes');
 	}
 
 	/**
