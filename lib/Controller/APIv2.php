@@ -357,7 +357,7 @@ class APIv2 extends OCSController {
 		}
 
 		$preview = [
-			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir'] ?? false, $info['view']),
+			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
 			'source'		=> '',
 			'mimeType'		=> 'application/octet-stream',
 			'isMimeTypeIcon' => true,
@@ -395,7 +395,7 @@ class APIv2 extends OCSController {
 	protected function getPreviewFromPath(int $fileId, string $filePath, array $info): array {
 		$mimeType = $info['is_dir'] ? 'dir' : $this->mimeTypeDetector->detectPath($filePath);
 		return [
-			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir'] ?? false, $info['view']),
+			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
 			'source'		=> $this->getPreviewPathFromMimeType($mimeType),
 			'mimeType'		=> $mimeType,
 			'isMimeTypeIcon' => true,
