@@ -87,7 +87,7 @@ class ViewInfoCache {
 		$this->cachePath[$user][$path] = [
 			'path'		=> $path,
 			'exists'	=> $exists,
-			'is_dir'	=> $exists ? $this->view->is_dir($path) : false,
+			'is_dir'	=> $exists ? (bool)$this->view->is_dir($path) : false,
 			'view'		=> '',
 		];
 
@@ -128,7 +128,7 @@ class ViewInfoCache {
 				$cache = [
 					'path'		=> substr($path, strlen('/files')),
 					'exists'	=> true,
-					'is_dir'	=> $this->view->is_dir($path),
+					'is_dir'	=> (bool)$this->view->is_dir($path),
 					'view'		=> 'trashbin',
 				];
 			} catch (NotFoundException $e) {
