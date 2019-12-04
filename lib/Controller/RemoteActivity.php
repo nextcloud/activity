@@ -89,7 +89,6 @@ class RemoteActivity extends OCSController {
 		}
 		$time = $date->getTimestamp();
 
-		\OC::$server->getLogger()->warning(json_encode(func_get_args()));
 		if (!isset($to['type'], $to['name']) || $to['type'] !== 'Person') {
 			return new DataResponse([], Http::STATUS_BAD_REQUEST);
 		}
