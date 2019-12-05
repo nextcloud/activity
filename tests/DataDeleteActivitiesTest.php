@@ -40,7 +40,7 @@ class DataDeleteActivitiesTest extends TestCase {
 	/** @var Data */
 	protected $data;
 
-	protected function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 
 		$activities = array(
@@ -74,7 +74,7 @@ class DataDeleteActivitiesTest extends TestCase {
 		);
 	}
 
-	protected function tearDown() {
+	protected function tearDown(): void {
 		$this->data->deleteActivities(array(
 			'type' => 'test',
 		));

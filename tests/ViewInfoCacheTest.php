@@ -32,7 +32,7 @@ class ViewInfoCacheTest extends TestCase {
 	/** @var \OCA\Activity\ViewInfoCache|\PHPUnit_Framework_MockObject_MockObject */
 	protected $infoCache;
 
-	protected function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 
 		$this->view = $this->getMockBuilder('OC\Files\View')

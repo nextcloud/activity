@@ -49,7 +49,7 @@ use OCP\RichObjectStrings\IValidator;
 class APIv1Test extends TestCase {
 	protected $originalWEBROOT;
 
-	protected function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 		$this->cleanUp();
 
@@ -94,7 +94,7 @@ class APIv1Test extends TestCase {
 		}
 	}
 
-	protected function tearDown() {
+	protected function tearDown(): void {
 		$this->cleanUp();
 		\OC::$WEBROOT = $this->originalWEBROOT;
 
