@@ -11,6 +11,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Pulsa Ctrl-C pro copiar.",
     "{name} (invisible)" : "{name} (invisibile)",
     "{name} (restricted)" : "{name} (restringite)",
+    "Home" : "Initio",
     "in {path}" : "in {path}",
     "This stream will show events like additions, changes & shares" : "Iste fluxo monstra eventos como additiones, cambiamentos e compartimentos",
     "There are no events for this filter" : "Il non ha eventos pro iste filtro",
