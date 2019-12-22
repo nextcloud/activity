@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Fəallıq",
+    "Home" : "Ev",
     "Today" : "Bu gün",
     "Yesterday" : "Dünən",
     "Personal activity feed for %s" : "%s üçün şəxsi fəaliyyətin ötürülməsi",
@@ -17,6 +18,7 @@ OC.L10N.register(
     "Hourly" : "Saatlıq",
     "Daily" : "Günlük",
     "Weekly" : "Həftəlik",
+    "Settings" : "Quraşdırmalar",
     "Enable RSS feed" : "RSS ötürməsinin işə salinmaslı",
     "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur",
     "\"remote user\"" : "\"uzaq istifadəçi\"",
