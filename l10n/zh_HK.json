@@ -9,6 +9,7 @@
     "Press Ctrl-C to copy." : "按下 Ctrl-C 複製",
     "{name} (invisible)" : "{name} (不可見)",
     "{name} (restricted)" : "{name} (受限的)",
+    "Home" : "主頁",
     "in {path}" : "在 {path}",
     "This stream will show events like additions, changes & shares" : "stream中會顯示諸如添加、更改和分享之類的事件",
     "There are no events for this filter" : "沒有符合當前篩選條件的事件。",

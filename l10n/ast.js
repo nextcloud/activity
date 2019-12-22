@@ -11,6 +11,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Primi Ctrl-C pa copiar.",
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (torgóse)",
+    "Home" : "Aniciu",
     "in {path}" : "en {path}",
     "This stream will show events like additions, changes & shares" : "Esti fluxu amosará eventos como amiestos, camudancies y comparticiones",
     "There are no events for this filter" : "Nun hai eventos pa esta peñera",

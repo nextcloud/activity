@@ -11,6 +11,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Хуулахын тулд Ctrl-C дарна уу.",
     "{name} (invisible)" : "{name} (үл харагдах)",
     "{name} (restricted)" : "{name} (хязгаартай)",
+    "Home" : "Нүүр",
     "in {path}" : "{path} -д",
     "This stream will show events like additions, changes & shares" : "Файл нэмэх, өөрчлөх болон түгээх гэх мэт үйл явдлууд энд харагдана",
     "There are no events for this filter" : "Энд ямар нэг үйл явдал алга",
@@ -39,6 +40,7 @@ OC.L10N.register(
     "Settings" : "Тохиргоо",
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
     "\"remote user\"" : "\"алсын хэрэглэгч\"",
+    ", " : ", ",
     "%s and %s" : "%s ба %s",
     "Files" : "Файлууд"
 },

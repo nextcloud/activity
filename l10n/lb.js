@@ -11,6 +11,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Dréck CTRL-C fir ze kopéieren.",
     "{name} (invisible)" : "[Numm][verstoppt]",
     "{name} (restricted)" : "[Numm][verbueden]",
+    "Home" : "Doheem",
     "in {path}" : "am [Pad]",
     "This stream will show events like additions, changes & shares" : "Dëse Floss weist Evenementer wéi dobäigesaten, geännert a gedeelte Fichieren un",
     "There are no events for this filter" : "Et gi keng Evenenementer fir dëse Filter",
