@@ -1,0 +1,8 @@
+{ "translations": {
+    "Today" : "այսօր",
+    "Yesterday" : "երեկ",
+    "Mail" : "Փոստ",
+    "Settings" : "կարգավորումներ",
+    "Files" : "Ֆայլեր"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

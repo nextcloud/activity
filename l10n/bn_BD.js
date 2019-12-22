@@ -2,6 +2,9 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "সক্রিয়তা",
+    "Home" : "নিবাস",
+    "Today" : "আজ",
+    "Yesterday" : "গতকাল",
     "Personal activity feed for %s" : "%s এর জনন সক্রিয়তা বারতা",
     "Your settings have been updated." : "আপনার সেটিং নবায়ন করা হয়েছে৷",
     "Hello %s," : "হেলো %s,",
@@ -13,6 +16,7 @@ OC.L10N.register(
     "Hourly" : "ঘনটাভিততিক",
     "Daily" : "দৈনিক",
     "Weekly" : "সাপ্তাহিক",
+    "Settings" : "সেটিংস",
     "Enable RSS feed" : "RSS feed উপযোগী ক኉ন",
     "No more events to load" : "লোড করার কোন ইভেন্ট খুঁজে পাওয়া গেল না।",
     ", " : ", ",
