@@ -11,7 +11,7 @@
     "{name} (restricted)" : "{name} (受限的)",
     "Home" : "主页",
     "in {path}" : "在 {path}",
-    "This stream will show events like additions, changes & shares" : "流中会显示诸如添加、更改和分享之类的事件",
+    "This stream will show events like additions, changes & shares" : "流中会显示诸如添加、更改和共享之类的事件",
     "There are no events for this filter" : "没有符合当前筛选条件的事件。",
     "Today" : "今天",
     "Yesterday" : "昨天",
