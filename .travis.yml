@@ -1,8 +1,8 @@
 language: php
 php:
-  - 7.1
   - 7.2
   - 7.3
+  - 7.4snapshot
 services:
   - mysql
   - postgresql
@@ -55,15 +55,15 @@ script:
 
 matrix:
   include:
-    - php: 7.1
+    - php: 7.3
       env: DB=mysql
-    - php: 7.1
+    - php: 7.3
       env: DB=pgsql
-    - php: 7.1
+    - php: 7.3
       env: DB=mysql;CODECHECK=1
-    - php: 7.1
+    - php: 7.3
       env: DB=mysql;CODECHECK=2
-#    - php: 7.1
+#    - php: 7.3
 #      env: DB=mysql;JSTESTS=1
   allow_failures:
     - env: DB=mysql;CODECHECK=2
