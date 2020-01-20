@@ -44,7 +44,7 @@ class CurrentUserTest extends TestCase {
 	/** @var \OCP\Share\IManager|\PHPUnit_Framework_MockObject_MockObject */
 	protected $shareManager;
 
-	protected function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 
 		$this->request = $this->getMockBuilder('OCP\IRequest')

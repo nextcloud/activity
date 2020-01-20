@@ -47,7 +47,7 @@ class DataTest extends TestCase {
 	/** @var \OCP\IUserSession|\PHPUnit_Framework_MockObject_MockObject */
 	protected $session;
 
-	protected function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 
 		$this->activityLanguage = $activityLanguage = \OCP\Util::getL10N('activity', 'en');
@@ -61,7 +61,7 @@ class DataTest extends TestCase {
 		);
 	}
 
-	protected function tearDown() {
+	protected function tearDown(): void {
 		$this->restoreService('UserSession');
 		parent::tearDown();
 	}

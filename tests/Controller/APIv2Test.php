@@ -92,7 +92,7 @@ class APIv2Test extends TestCase {
 	/** @var APIv2 */
 	protected $controller;
 
-	protected function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 
 		$this->activityManager = $this->createMock(IManager::class);
@@ -113,7 +113,7 @@ class APIv2Test extends TestCase {
 		$this->overwriteService('AvatarManager', $this->avatarManager);
 	}
 
-	public function tearDown() {
+	protected function tearDown(): void {
 
 		$this->restoreService('AvatarManager');
 		parent::tearDown();

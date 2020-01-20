@@ -64,7 +64,7 @@ class FeedTest extends TestCase {
 	/** @var Feed */
 	protected $controller;
 
-	protected function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 
 		$this->data = $this->createMock(Data::class);
