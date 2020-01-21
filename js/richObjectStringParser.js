@@ -69,6 +69,9 @@
 				case 'open-graph':
 					return OCA.Activity.Templates.openGraph(parameter).trim("\n");
 
+				case 'calendar-event':
+					return OCA.Activity.Templates.calendarEvent(parameter).trim("\n");
+
 				case 'user':
 					if (_.isUndefined(parameter.server)) {
 						return OCA.Activity.Templates.userLocal(parameter).trim("\n");
