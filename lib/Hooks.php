@@ -48,7 +48,7 @@ class Hooks {
 	 */
 	static protected function deleteUserStream($user) {
 		// Delete activity entries
-		$app = new Application();
+		$app = \OC::$server->query(Application::class);
 		/** @var Data $activityData */
 		$activityData = $app->getContainer()->query(Data::class);
 		$activityData->deleteActivities(array('affecteduser' => $user));
