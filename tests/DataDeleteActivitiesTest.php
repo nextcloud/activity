@@ -131,4 +131,44 @@ class DataDeleteActivitiesTest extends TestCase {
 
 		$this->assertEquals($expected, $users);
 	}
+
+	public function testChunkingDeleteNotUsedWhenNotOnMysql() {
+		$ttl = (60 * 60 * 24 * max(1, 365));
+		$timelimit = time() - $ttl;
+		$activityManager = $this->createMock(\OCP\Activity\IManager::class);
+		$connection = $this->createMock(\OCP\IDBConnection::class);
+		$platform = $this->createMock(SqlitePlatform::class);
+		$connection->expects($this->once())->method('getDatabasePlatform')->willReturn($platform);
+
+		$statement = $this->createMock(Statement::class);
+		// Wont chunk
+		$statement->expects($this->exactly(0))->method('rowCount')->willReturnOnConsecutiveCalls(100000, 50);
+		$connection->expects($this->once())->method('prepare')->willReturn($statement);
+
+		$userSession = $this->createMock(\OCP\IUserSession::class);
+		$data = new Data($activityManager, $connection, $userSession);
+		$data->deleteActivities(array(
+			'timestamp' => array($timelimit, '<'),
+		));
+	}
+
+	public function testDeleteActivitiesIsChunkedOnMysql() {
+		$ttl = (60 * 60 * 24 * max(1, 365));
+		$timelimit = time() - $ttl;
+		$activityManager = $this->createMock(\OCP\Activity\IManager::class);
+		$connection = $this->createMock(\OCP\IDBConnection::class);
+		$platform = $this->createMock(MySqlPlatform::class);
+		$connection->expects($this->once())->method('getDatabasePlatform')->willReturn($platform);
+
+		$statement = $this->createMock(Statement::class);
+		// Will chunk
+		$statement->expects($this->exactly(2))->method('rowCount')->willReturnOnConsecutiveCalls(100000, 50);
+		$connection->expects($this->once())->method('prepare')->willReturn($statement);
+
+		$userSession = $this->createMock(\OCP\IUserSession::class);
+		$data = new Data($activityManager, $connection, $userSession);
+		$data->deleteActivities(array(
+			'timestamp' => array($timelimit, '<'),
+		));
+	}
 }
