@@ -24,6 +24,7 @@
 
 namespace OCA\Activity;
 
+use Doctrine\DBAL\Platforms\MySqlPlatform;
 use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
 use OCP\Activity\IFilter;
@@ -378,8 +379,24 @@ class Data {
 			$sqlWhere = ' WHERE ' . implode(' AND ', $sqlWhereList);
 		}
 
-		$query = $this->connection->prepare(
-			'DELETE FROM `*PREFIX*activity`' . $sqlWhere);
-		$query->execute($sqlParameters);
+		// Add galera safe delete chunking if using mysql
+		// Stops us hitting wsrep_max_ws_rows when large row counts are deleted
+		if($this->connection->getDatabasePlatform() instanceof MySqlPlatform) {
+			// Then use chunked delete
+			$max = 100000;
+			$query = $this->connection->prepare(
+				'DELETE FROM `*PREFIX*activity`' . $sqlWhere . " LIMIT " . $max);
+			do {
+				$query->execute($sqlParameters);
+				$deleted = $query->rowCount();
+			} while($deleted === $max);
+		} else {
+			// Dont use chunked delete - let the DB handle the large row count natively
+			$query = $this->connection->prepare(
+				'DELETE FROM `*PREFIX*activity`' . $sqlWhere);
+			$query->execute($sqlParameters);
+		}
+
+
 	}
 }
