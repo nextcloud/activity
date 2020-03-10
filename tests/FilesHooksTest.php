@@ -243,8 +243,8 @@ class FilesHooksTest extends TestCase {
 				[
 					'user' => [
 						'subject' => 'restored_self',
-						'subject_params' => [[1337 => '/user/files/path']],
-						'path' => '/user/files/path',
+						'subject_params' => [[1337 => '/path']],
+						'path' => '/path',
 						'stream' => true,
 						'email' => 42,
 					],
@@ -258,8 +258,8 @@ class FilesHooksTest extends TestCase {
 				[
 					'user1' => [
 						'subject' => 'restored_by',
-						'subject_params' => [[1337 => '/user1/files/path'], 'user'],
-						'path' => '/user1/files/path',
+						'subject_params' => [[1337 => '/path'], 'user'],
+						'path' => '/path',
 						'stream' => true,
 						'email' => 0,
 					],
