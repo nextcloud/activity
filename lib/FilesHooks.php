@@ -210,7 +210,7 @@ class FilesHooks {
 			return $mount->getUser()->getUID();
 		}, $mountsForFile);
 		$affectedPaths = array_map(function (ICachedMountFileInfo $mount) {
-			return $mount->getPath();
+			return $this->getVisiblePath($mount->getPath());
 		}, $mountsForFile);
 		$affectedUsers = array_combine($affectedUserIds, $affectedPaths);
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
@@ -631,15 +631,20 @@ class FilesHooks {
 		$accessList = $this->shareHelper->getPathsForAccessList($node);
 
 		$path = $node->getPath();
-		$sections = explode('/', $path, 4);
+		$accessList['ownerPath'] = $this->getVisiblePath($path);
+		return $accessList;
+	}
 
-		$accessList['ownerPath'] = '/';
+	protected function getVisiblePath(string $absolutePath): string {
+		$sections = explode('/', $absolutePath, 4);
+
+		$path = '/';
 		if (isset($sections[3])) {
 			// Not the case when a file in root is renamed
-			$accessList['ownerPath'] .= $sections[3];
+			$path .= $sections[3];
 		}
 
-		return $accessList;
+		return $path;
 	}
 
 	/**
