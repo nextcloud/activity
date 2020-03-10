@@ -37,6 +37,7 @@ use OCP\Files\IRootFolder;
 use OCP\Files\Mount\IMountPoint;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
+use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IGroup;
 use OCP\IGroupManager;
@@ -85,6 +86,10 @@ class FilesHooks {
 
 	/** @var CurrentUser */
 	protected $currentUser;
+	/** @var IUserMountCache */
+	protected $userMountCache;
+	/** @var IConfig */
+	protected $config;
 
 	/** @var string|bool */
 	protected $moveCase = false;
@@ -96,25 +101,7 @@ class FilesHooks {
 	protected $oldParentOwner;
 	/** @var string */
 	protected $oldParentId;
-	/** @var IUserMountCache */
-	protected $userMountCache;
 
-	/**
-	 * Constructor
-	 *
-	 * @param IManager $manager
-	 * @param Data $activityData
-	 * @param UserSettings $userSettings
-	 * @param IGroupManager $groupManager
-	 * @param View $view
-	 * @param IRootFolder $rootFolder
-	 * @param IShareHelper $shareHelper
-	 * @param IDBConnection $connection
-	 * @param IURLGenerator $urlGenerator
-	 * @param ILogger $logger
-	 * @param CurrentUser $currentUser
-	 * @param IUserMountCache $userMountCache
-	 */
 	public function __construct(IManager $manager,
 								Data $activityData,
 								UserSettings $userSettings,
@@ -126,7 +113,8 @@ class FilesHooks {
 								IURLGenerator $urlGenerator,
 								ILogger $logger,
 								CurrentUser $currentUser,
-								IUserMountCache $userMountCache) {
+								IUserMountCache $userMountCache,
+								IConfig $config) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
@@ -139,6 +127,7 @@ class FilesHooks {
 		$this->logger = $logger;
 		$this->currentUser = $currentUser;
 		$this->userMountCache = $userMountCache;
+		$this->config = $config;
 	}
 
 	/**
@@ -205,14 +194,19 @@ class FilesHooks {
 
 		$this->generateRemoteActivity($accessList['remotes'], $activityType, time(), $this->currentUser->getCloudId(), $accessList['ownerPath']);
 
-		$mountsForFile = $this->userMountCache->getMountsForFileId($fileId);
-		$affectedUserIds = array_map(function (ICachedMountInfo $mount) {
-			return $mount->getUser()->getUID();
-		}, $mountsForFile);
-		$affectedPaths = array_map(function (ICachedMountFileInfo $mount) {
-			return $this->getVisiblePath($mount->getPath());
-		}, $mountsForFile);
-		$affectedUsers = array_combine($affectedUserIds, $affectedPaths);
+		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
+			$mountsForFile = $this->userMountCache->getMountsForFileId($fileId);
+			$affectedUserIds = array_map(function (ICachedMountInfo $mount) {
+				return $mount->getUser()->getUID();
+			}, $mountsForFile);
+			$affectedPaths = array_map(function (ICachedMountFileInfo $mount) {
+				return $this->getVisiblePath($mount->getPath());
+			}, $mountsForFile);
+			$affectedUsers = array_combine($affectedUserIds, $affectedPaths);
+		} else {
+			$affectedUsers = $accessList['users'];
+		}
+
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
 

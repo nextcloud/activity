@@ -29,6 +29,7 @@ use OCA\Activity\Tests\TestCase;
 use OCP\Files\Config\IUserMountCache;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
+use OCP\IConfig;
 use OCP\ILogger;
 use OCP\Share;
 use OCP\Share\IShareHelper;
@@ -63,8 +64,10 @@ class FilesHooksTest extends TestCase {
 	protected $shareHelper;
 	/** @var IURLGenerator|\PHPUnit_Framework_MockObject_MockObject */
 	protected $urlGenerator;
-	/** @var IUserMountCache|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IUserMountCache|MockObject */
 	protected $userMountCache;
+	/** @var IConfig|MockObject */
+	protected $config;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -78,6 +81,7 @@ class FilesHooksTest extends TestCase {
 		$this->shareHelper = $this->createMock(IShareHelper::class);
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->userMountCache = $this->createMock(IUserMountCache::class);
+		$this->config = $this->createMock(IConfig::class);
 
 		$this->filesHooks = $this->getFilesHooks();
 	}
@@ -112,7 +116,8 @@ class FilesHooksTest extends TestCase {
 					$this->urlGenerator,
 					$logger,
 					$currentUser,
-					$this->userMountCache
+					$this->userMountCache,
+					$this->config,
 				])
 				->setMethods($mockedMethods)
 				->getMock();
@@ -130,7 +135,8 @@ class FilesHooksTest extends TestCase {
 			$this->urlGenerator,
 			$logger,
 			$currentUser,
-			$this->userMountCache
+			$this->userMountCache,
+			$this->config
 		);
 	}
 
@@ -240,6 +246,39 @@ class FilesHooksTest extends TestCase {
 					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user' => true]],
 					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, ['user' => 42]],
 				],
+				'mountcache_used' => false,
+				[
+					'user' => [
+						'subject' => 'restored_self',
+						'subject_params' => [[1337 => '/user/files/path']],
+						'path' => '/user/files/path',
+						'stream' => true,
+						'email' => 42,
+					],
+				],
+			],
+			[
+				[
+					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user1' => true]],
+					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, []],
+				],
+				'mountcache_used' => false,
+				[
+					'user1' => [
+						'subject' => 'restored_by',
+						'subject_params' => [[1337 => '/user1/files/path'], 'user'],
+						'path' => '/user1/files/path',
+						'stream' => true,
+						'email' => 0,
+					],
+				],
+			],
+			[
+				[
+					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user' => true]],
+					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, ['user' => 42]],
+				],
+				'mountcache_used' => true,
 				[
 					'user' => [
 						'subject' => 'restored_self',
@@ -255,6 +294,7 @@ class FilesHooksTest extends TestCase {
 					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user1' => true]],
 					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, []],
 				],
+				'mountcache_used' => true,
 				[
 					'user1' => [
 						'subject' => 'restored_by',
@@ -272,6 +312,7 @@ class FilesHooksTest extends TestCase {
 	 * @dataProvider dataAddNotificationsForFileAction
 	 *
 	 * @param array $filterUsers
+	 * @param bool $mountCacheUsed
 	 * @param array $addNotifications
 	 */
 	public function testAddNotificationsForFileAction($filterUsers, $addNotifications) {
@@ -298,37 +339,47 @@ class FilesHooksTest extends TestCase {
 				'remotes' => [],
 			]);
 
-		$this->userMountCache->expects($this->once())
-			->method('getMountsForFileId')
-			->willReturn([
-				new CachedMountFileInfo(
-					$this->getUserMock('user'),
-					1,
-					1,
-					'/user/files/',
-					null,
-					'',
-					'path'
-				),
-				new CachedMountFileInfo(
-					$this->getUserMock('user1'),
-					1,
-					1,
-					'/user1/files/',
-					null,
-					'',
-					'path'
-				),
-				new CachedMountFileInfo(
-					$this->getUserMock('user2'),
-					1,
-					1,
-					'/user2/files/',
-					null,
-					'',
-					'path'
-				)
-			]);
+		$this->config->expects($this->once())
+			->method('getSystemValueBool')
+			->with('activity_use_cached_mountpoints', false)
+			->willReturn($mountCacheUsed);
+
+		if ($mountCacheUsed) {
+			$this->userMountCache->expects($this->once())
+				->method('getMountsForFileId')
+				->willReturn([
+					new CachedMountFileInfo(
+						$this->getUserMock('user'),
+						1,
+						1,
+						'/user/files/',
+						null,
+						'',
+						'path'
+					),
+					new CachedMountFileInfo(
+						$this->getUserMock('user1'),
+						1,
+						1,
+						'/user1/files/',
+						null,
+						'',
+						'path'
+					),
+					new CachedMountFileInfo(
+						$this->getUserMock('user2'),
+						1,
+						1,
+						'/user2/files/',
+						null,
+						'',
+						'path'
+					)
+				]);
+		} else {
+			$this->userMountCache->expects($this->never())
+				->method('getMountsForFileId');
+		}
 
 		$this->settings->expects($this->exactly(2))
 			->method('filterUsersBySetting')
