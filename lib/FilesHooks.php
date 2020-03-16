@@ -635,7 +635,11 @@ class FilesHooks {
 	 */
 	protected function getSourcePathAndOwner($path) {
 		$view = Filesystem::getView();
-		$owner = $view->getOwner($path);
+		try {
+			$owner = $view->getOwner($path);
+		} catch (NotFoundException $e) {
+			$owner = null;
+		}
 		$owner = !is_string($owner) || $owner === '' ? null : $owner;
 		$fileId = 0;
 		$currentUser = $this->currentUser->getUID();
