@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -22,11 +23,11 @@
 
 namespace OCA\Activity\Tests\BackgroundJob;
 
+use OC\BackgroundJob\JobList;
 use OCA\Activity\BackgroundJob\EmailNotification;
 use OCA\Activity\MailQueueHandler;
 use OCA\Activity\Tests\TestCase;
 use OCP\ILogger;
-use OCP\IConfig;
 use OCP\BackgroundJob\IJobList;
 
 /**
@@ -36,7 +37,7 @@ use OCP\BackgroundJob\IJobList;
  * @package OCA\Activity\Tests\BackgroundJob
  */
 class EmailNotificationTest extends TestCase {
-	public function constructAndRunData() {
+	public function constructAndRunData(): array {
 		return [
 			[true],
 			[false],
@@ -45,10 +46,9 @@ class EmailNotificationTest extends TestCase {
 
 	/**
 	 * @dataProvider constructAndRunData
-	 *
 	 * @param bool $isCLI
 	 */
-	public function testConstructAndRun($isCLI) {
+	public function testConstructAndRun(bool $isCLI): void {
 		$backgroundJob = new EmailNotification(
 			$this->createMock(MailQueueHandler::class),
 			$isCLI
@@ -57,7 +57,7 @@ class EmailNotificationTest extends TestCase {
 		$jobList = $this->createMock(IJobList::class);
 		$logger = $this->createMock(ILogger::class);
 
-		/** @var \OC\BackgroundJob\JobList $jobList */
+		/** @var JobList $jobList */
 		$backgroundJob->execute($jobList, $logger);
 		$this->assertTrue(true);
 	}

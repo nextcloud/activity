@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2017 Joas Schilling <coding@schilljs.com>
  *
@@ -27,7 +28,7 @@ use OCA\Activity\Capabilities;
 
 class CapabilitiesTest extends TestCase {
 
-	public function testGetCapabilities() {
+	public function testGetCapabilities(): void {
 		$capabilities = new Capabilities();
 
 		$this->assertSame([

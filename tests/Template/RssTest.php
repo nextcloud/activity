@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -27,7 +28,7 @@ use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Http\TemplateResponse;
 
 class RssTest extends TestCase{
-	public function dataEmpty() {
+	public function dataEmpty(): array {
 		return [
 			['de', 'http://localhost', 'description', 'Fri, 28 Aug 2015 11:47:14 +0000'],
 			['en', 'http://nextcloud.org', 'Desc', 'Fri, 28 Aug 2015 11:47:15 +0000'],
@@ -42,7 +43,7 @@ class RssTest extends TestCase{
 	 * @param string $description
 	 * @param string $timeDate
 	 */
-	public function testEmpty($language, $link, $description, $timeDate) {
+	public function testEmpty(string $language, string $link, string $description, string $timeDate): void {
 		$template = new TemplateResponse('activity', 'rss', [
 			'rssLang'		=> $language,
 			'rssLink'		=> $link,
@@ -68,7 +69,7 @@ class RssTest extends TestCase{
 		);
 	}
 
-	public function dataContent() {
+	public function dataContent(): array {
 		return [
 			[[], ''],
 			[
@@ -111,7 +112,7 @@ class RssTest extends TestCase{
 	 * @param array $activities
 	 * @param string $expected
 	 */
-	public function testContent(array $activities, $expected) {
+	public function testContent(array $activities, string $expected): void {
 		$template = new TemplateResponse('activity', 'rss', [
 			'rssLang'		=> 'en',
 			'rssLink'		=> 'http://nextcloud.org',

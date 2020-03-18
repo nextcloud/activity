@@ -26,14 +26,15 @@ use OCA\Activity\UserSettings;
 use OCP\Activity\IManager;
 use OCP\Activity\ISetting;
 use OCP\IConfig;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class UserSettingsTest extends TestCase {
 	/** @var UserSettings */
 	protected $userSettings;
 
-	/** @var IManager|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IManager|MockObject */
 	protected $activityManager;
-	/** @var IConfig|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IConfig|MockObject */
 	protected $config;
 
 	protected function setUp(): void {
@@ -43,7 +44,7 @@ class UserSettingsTest extends TestCase {
 		$this->userSettings = new UserSettings($this->activityManager, $this->config);
 	}
 
-	public function getDefaultSettingData() {
+	public function getDefaultSettingData(): array {
 		return [
 			['stream', 'type1', true],
 			['email', 'type1', false],
@@ -61,7 +62,7 @@ class UserSettingsTest extends TestCase {
 	 * @param string $type
 	 * @param mixed $expected
 	 */
-	public function testGetDefaultSetting($method, $type, $expected) {
+	public function testGetDefaultSetting(string $method, string $type, $expected): void {
 		if ($method !== 'setting') {
 			if ($type === 'not-exists') {
 				$this->activityManager->expects($this->once())

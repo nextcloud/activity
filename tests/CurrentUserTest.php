@@ -23,10 +23,13 @@ namespace OCA\Activity\Tests;
 
 
 use OCA\Activity\CurrentUser;
+use OCP\IRequest;
 use OCP\IUser;
-use OCP\Share;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IShare;
+use PHPUnit\Framework\MockObject\MockObject;
+use OCP\IUserSession;
+use OCP\Share\IManager;
 
 /**
  * Class CurrentUserTest
@@ -35,55 +38,47 @@ use OCP\Share\IShare;
  */
 class CurrentUserTest extends TestCase {
 
-	/** @var \OCP\IRequest|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IRequest|MockObject */
 	protected $request;
 
-	/** @var \OCP\IUserSession|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IUserSession|MockObject */
 	protected $userSession;
 
-	/** @var \OCP\Share\IManager|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IManager|MockObject */
 	protected $shareManager;
 
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->request = $this->getMockBuilder('OCP\IRequest')
-			->disableOriginalConstructor()
-			->getMock();
-
-		$this->userSession = $this->getMockBuilder('OCP\IUserSession')
-			->disableOriginalConstructor()
-			->getMock();
-
-		$this->shareManager = $this->getMockBuilder('OCP\Share\IManager')
-			->disableOriginalConstructor()
-			->getMock();
+		$this->request = $this->createMock(IRequest::class);
+		$this->userSession = $this->createMock(IUserSession::class);
+		$this->shareManager = $this->createMock(IManager::class);
 	}
 
 	/**
 	 * @param array $methods
-	 * @return CurrentUser|\PHPUnit_Framework_MockObject_MockObject
+	 * @return CurrentUser|MockObject
 	 */
-	protected function getInstance(array $methods = []) {
+	protected function getInstance(array $methods = []): CurrentUser {
 		if (empty($methods)) {
 			return new CurrentUser(
 				$this->userSession,
 				$this->request,
 				$this->shareManager
 			);
-		} else {
-			return $this->getMockBuilder('OCA\Activity\CurrentUser')
-				->setConstructorArgs([
-					$this->userSession,
-					$this->request,
-					$this->shareManager,
-				])
-				->setMethods($methods)
-				->getMock();
 		}
+
+		return $this->getMockBuilder(CurrentUser::class)
+			->setConstructorArgs([
+				$this->userSession,
+				$this->request,
+				$this->shareManager,
+			])
+			->onlyMethods($methods)
+			->getMock();
 	}
 
-	public function dataGetUserIdentifier() {
+	public function dataGetUserIdentifier(): array {
 		return [
 			[null, null, null, ''],
 			[null, 'uid', -1, 'uid'],
@@ -100,13 +95,13 @@ class CurrentUserTest extends TestCase {
 	 * @param string|int|null $tokenResult
 	 * @param string $expected
 	 */
-	public function testGetUserIdentifier($cachedIdentifier, $uidResult, $tokenResult, $expected) {
+	public function testGetUserIdentifier(?string $cachedIdentifier, $uidResult, $tokenResult, string $expected): void {
 		$instance = $this->getInstance([
 			'getUID',
 			'getCloudIDFromToken',
 		]);
 
-		$this->invokePrivate($instance, 'identifier', [$cachedIdentifier]);
+		self::invokePrivate($instance, 'identifier', [$cachedIdentifier]);
 
 		$instance->expects($uidResult !== -1 ? $this->once() : $this->never())
 			->method('getUID')
@@ -123,17 +118,15 @@ class CurrentUserTest extends TestCase {
 	 * @param string $uid
 	 * @return IUser
 	 */
-	protected function getUserMock($uid) {
-		$user = $this->getMockBuilder('OCP\IUser')
-			->disableOriginalConstructor()
-			->getMock();
+	protected function getUserMock(string $uid): IUser {
+		$user = $this->createMock(IUser::class);
 		$user->expects($this->once())
 			->method('getUID')
 			->willReturn($uid);
 		return $user;
 	}
 
-	public function dataGetUID() {
+	public function dataGetUID(): array  {
 		return [
 			[null, null],
 			[$this->getUserMock('uid'), 'uid'],
@@ -147,7 +140,7 @@ class CurrentUserTest extends TestCase {
 	 * @param IUser|null $user
 	 * @param string|null $expected
 	 */
-	public function testGetUID($user, $expected) {
+	public function testGetUID(?IUser $user, ?string $expected): void {
 		$instance = $this->getInstance();
 
 		$this->userSession->expects($this->once())
@@ -162,25 +155,23 @@ class CurrentUserTest extends TestCase {
 	 * @param string $shareWith
 	 * @return IShare
 	 */
-	protected function getShareMock($type, $shareWith) {
-		$share = $this->getMockBuilder('OCP\Share\IShare')
-			->disableOriginalConstructor()
-			->getMock();
+	protected function getShareMock(int $type, ?string $shareWith): IShare {
+		$share = $this->createMock(IShare::class);
 		$share->expects($this->once())
 			->method('getShareType')
 			->willReturn($type);
 		$share->expects($shareWith !== null  ? $this->once() : $this->never())
 			->method('getSharedWith')
-			->willReturn($shareWith);
+			->willReturn((string) $shareWith);
 		return $share;
 	}
 
-	public function dataGetCloudIDFromToken() {
+	public function dataGetCloudIDFromToken(): array {
 		return [
 			[[], null, null],
-			[['PHP_AUTH_USER' => 'token23'], $this->getShareMock(Share::SHARE_TYPE_LINK, null), null],
+			[['PHP_AUTH_USER' => 'token23'], $this->getShareMock(IShare::TYPE_LINK, null), null],
 			[['PHP_AUTH_USER' => 'token32'], new ShareNotFound(), null],
-			[['PHP_AUTH_USER' => 'token42'], $this->getShareMock(Share::SHARE_TYPE_REMOTE, 'test@localhost'), 'test@localhost'],
+			[['PHP_AUTH_USER' => 'token42'], $this->getShareMock(IShare::TYPE_REMOTE, 'test@localhost'), 'test@localhost'],
 		];
 	}
 
@@ -191,7 +182,7 @@ class CurrentUserTest extends TestCase {
 	 * @param IShare|\Exception|null $share
 	 * @param string|null $expected
 	 */
-	public function testGetCloudIDFromToken(array $server, $share, $expected) {
+	public function testGetCloudIDFromToken(array $server, $share, ?string $expected): void {
 		$instance = $this->getInstance();
 
 		$this->request->server = $server;
@@ -211,6 +202,6 @@ class CurrentUserTest extends TestCase {
 				->willReturn($share);
 		}
 
-		$this->assertSame($expected, $this->invokePrivate($instance, 'getCloudIDFromToken'));
+		$this->assertSame($expected, self::invokePrivate($instance, 'getCloudIDFromToken'));
 	}
 }

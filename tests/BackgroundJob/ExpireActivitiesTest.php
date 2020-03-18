@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -22,6 +23,7 @@
 
 namespace OCA\Activity\Tests\BackgroundJob;
 
+use OC\BackgroundJob\JobList;
 use OCA\Activity\BackgroundJob\ExpireActivities;
 use OCA\Activity\Data;
 use OCA\Activity\Tests\TestCase;
@@ -35,7 +37,7 @@ use OCP\BackgroundJob\IJobList;
  * @package OCA\Activity\Tests\BackgroundJob
  */
 class ExpireActivitiesTest extends TestCase {
-	public function testExecute() {
+	public function testExecute(): void {
 		$backgroundJob = new ExpireActivities(
 			$this->createMock(Data::class),
 			$this->createMock(IConfig::class)
@@ -43,7 +45,7 @@ class ExpireActivitiesTest extends TestCase {
 
 		$jobList = $this->createMock(IJobList::class);
 
-		/** @var \OC\BackgroundJob\JobList $jobList */
+		/** @var JobList $jobList */
 		$backgroundJob->execute($jobList);
 		$this->assertTrue(true);
 

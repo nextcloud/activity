@@ -26,6 +26,7 @@ use OCA\Activity\Controller\Activities;
 use OCA\Activity\Tests\TestCase;
 use OCP\ILogger;
 use OCP\Template;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use OCP\IRequest;
 use OCA\Activity\Data;
@@ -40,15 +41,15 @@ use OCP\AppFramework\Http\TemplateResponse;
  * @package OCA\Activity\Tests\Controller
  */
 class ActivitiesTest extends TestCase {
-	/** @var IRequest|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IRequest|MockObject */
 	protected $request;
-	/** @var IConfig|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IConfig|MockObject */
 	protected $config;
-	/** @var Data|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var Data|MockObject */
 	protected $data;
-	/** @var EventDispatcherInterface|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var EventDispatcherInterface|MockObject */
 	protected $eventDispatcher;
-	/** @var Navigation|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var Navigation|MockObject */
 	protected $navigation;
 
 	/** @var Activities */
@@ -66,7 +67,7 @@ class ActivitiesTest extends TestCase {
 		$this->controller = $this->getController();
 	}
 
-	protected function getController(array $methods = []) {
+	protected function getController(array $methods = []): Activities {
 		if (empty($methods)) {
 			return new Activities(
 				'activity',
@@ -78,7 +79,7 @@ class ActivitiesTest extends TestCase {
 			);
 		}
 
-		return $this->getMockBuilder('OCA\Activity\Controller\Activities')
+		return $this->getMockBuilder(Activities::class)
 			->setConstructorArgs([
 				'activity',
 				$this->request,
@@ -87,11 +88,11 @@ class ActivitiesTest extends TestCase {
 				$this->navigation,
 				$this->eventDispatcher,
 			])
-			->setMethods($methods)
+			->onlyMethods($methods)
 			->getMock();
 	}
 
-	public function testShowList() {
+	public function testShowList(): void {
 		$template = new Template('activity', 'stream.app.navigation', '');
 		$template->assign('activeNavigation', 'all');
 		$template->assign('navigations', []);

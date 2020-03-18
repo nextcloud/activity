@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -47,6 +48,7 @@ use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IConsumer;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\IAppContainer;
 use OCP\AppFramework\OCSController;
 use OCP\Capabilities\ICapability;
 use OCP\IL10N;
@@ -58,10 +60,10 @@ use OCP\IL10N;
  * @package OCA\Activity\Tests\AppInfo
  */
 class ApplicationTest extends TestCase {
-	/** @var \OCA\Activity\AppInfo\Application */
+	/** @var Application */
 	protected $app;
 
-	/** @var \OCP\AppFramework\IAppContainer */
+	/** @var IAppContainer */
 	protected $container;
 
 	protected function setUp(): void {
@@ -70,53 +72,53 @@ class ApplicationTest extends TestCase {
 		$this->container = $this->app->getContainer();
 	}
 
-	public function testContainerAppName() {
+	public function testContainerAppName(): void {
 		$this->app = new Application();
 		$this->assertEquals('activity', $this->container->getAppName());
 	}
 
-	public function queryData() {
-		return array(
-			array(IL10N::class),
-			array(View::class),
+	public function queryData(): array {
+		return [
+			[IL10N::class],
+			[View::class],
 
 			// lib/
-			array(Capabilities::class),
-			array(Capabilities::class, ICapability::class),
-			array(Consumer::class),
-			array(Consumer::class, IConsumer::class),
-			array(CurrentUser::class),
-			array(Data::class),
-			array(FilesHooks::class),
-			array(GroupHelper::class),
-			array(GroupHelperDisabled::class),
-			array(GroupHelperDisabled::class, GroupHelper::class),
-			array(Hooks::class),
-			array(MailQueueHandler::class),
-			array(Navigation::class),
-			array(UserSettings::class),
-			array(ViewInfoCache::class),
+			[Capabilities::class],
+			[Capabilities::class, ICapability::class],
+			[Consumer::class],
+			[Consumer::class, IConsumer::class],
+			[CurrentUser::class],
+			[Data::class],
+			[FilesHooks::class],
+			[GroupHelper::class],
+			[GroupHelperDisabled::class],
+			[GroupHelperDisabled::class, GroupHelper::class],
+			[Hooks::class],
+			[MailQueueHandler::class],
+			[Navigation::class],
+			[UserSettings::class],
+			[ViewInfoCache::class],
 
 			// BackgroundJob
-			array(EmailNotification::class),
-			array(EmailNotification::class, TimedJob::class),
-			array(ExpireActivities::class,),
-			array(ExpireActivities::class, TimedJob::class),
+			[EmailNotification::class],
+			[EmailNotification::class, TimedJob::class],
+			[ExpireActivities::class,],
+			[ExpireActivities::class, TimedJob::class],
 
 			// Controller
-			array('ActivitiesController', Activities::class),
-			array('ActivitiesController', Controller::class),
-			array('APIv1Controller', APIv1::class),
-			array('APIv1Controller', Controller::class),
-			array('APIv1Controller', OCSController::class),
-			array('APIv2Controller', APIv2::class),
-			array('APIv2Controller', Controller::class),
-			array('APIv2Controller', OCSController::class),
-			array('FeedController', Feed::class),
-			array('FeedController', Controller::class),
-			array('SettingsController', Settings::class),
-			array('SettingsController', Controller::class),
-		);
+			['ActivitiesController', Activities::class],
+			['ActivitiesController', Controller::class],
+			['APIv1Controller', APIv1::class],
+			['APIv1Controller', Controller::class],
+			['APIv1Controller', OCSController::class],
+			['APIv2Controller', APIv2::class],
+			['APIv2Controller', Controller::class],
+			['APIv2Controller', OCSController::class],
+			['FeedController', Feed::class],
+			['FeedController', Controller::class],
+			['SettingsController', Settings::class],
+			['SettingsController', Controller::class],
+		];
 	}
 
 	/**
@@ -124,7 +126,7 @@ class ApplicationTest extends TestCase {
 	 * @param string $service
 	 * @param string $expected
 	 */
-	public function testContainerQuery($service, $expected = null) {
+	public function testContainerQuery(string $service, ?string $expected = null): void {
 		if ($expected === null) {
 			$expected = $service;
 		}

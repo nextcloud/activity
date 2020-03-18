@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -90,8 +91,7 @@ class HooksDeleteUserTest extends TestCase {
 		parent::tearDown();
 	}
 
-	public function testHooksDeleteUser() {
-
+	public function testHooksDeleteUser(): void {
 		$this->assertUserActivities(array('delete', 'otherUser'));
 		$this->assertUserMailQueue(array('delete', 'otherUser'));
 		Hooks::deleteUser(array('uid' => 'delete'));
@@ -99,17 +99,17 @@ class HooksDeleteUserTest extends TestCase {
 		$this->assertUserMailQueue(array('otherUser'));
 	}
 
-	protected function assertUserActivities($expected) {
+	protected function assertUserActivities(array $expected): void {
 		$query = \OC::$server->getDatabaseConnection()->prepare("SELECT `affecteduser` FROM `*PREFIX*activity` WHERE `type` = 'test'");
 		$this->assertTableKeys($expected, $query, 'affecteduser');
 	}
 
-	protected function assertUserMailQueue($expected) {
+	protected function assertUserMailQueue(array $expected): void {
 		$query = \OC::$server->getDatabaseConnection()->prepare("SELECT `amq_affecteduser` FROM `*PREFIX*activity_mq` WHERE `amq_type` = 'test'");
 		$this->assertTableKeys($expected, $query, 'amq_affecteduser');
 	}
 
-	protected function assertTableKeys($expected, Statement $query, $keyName) {
+	protected function assertTableKeys(array $expected, Statement $query, string $keyName): void {
 		$query->execute();
 
 		$users = array();

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -50,34 +51,34 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var MailQueueHandler */
 	protected $mailQueueHandler;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|IMailer */
+	/** @var MockObject|IMailer */
 	protected $mailer;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	/** @var MockObject */
 	protected $message;
 
 	/** @var IUserManager */
 	protected $oldUserManager;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|IUserManager */
+	/** @var MockObject|IUserManager */
 	protected $userManager;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|IFactory */
+	/** @var MockObject|IFactory */
 	protected $lFactory;
 
-	/** @var \PHPUnit_Framework_MockObject_MockObject|IManager */
+	/** @var MockObject|IManager */
 	protected $activityManager;
 
 	/** @var IValidator|MockObject */
 	protected $richObjectValidator;
 
-	/** @var IConfig|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IConfig|MockObject */
 	protected $config;
 
-	/** @var ILogger|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var ILogger|MockObject */
 	protected $logger;
 
-	/** @var IDateTimeFormatter|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IDateTimeFormatter|MockObject */
 	protected $dateTimeFormatter;
 
 	protected function setUp(): void {
@@ -166,8 +167,7 @@ class MailQueueHandlerTest extends TestCase {
 		parent::tearDown();
 	}
 
-	public function getAffectedUsersData()
-	{
+	public function getAffectedUsersData(): array {
 		return [
 			[null, ['user2', 'user1', 'user3'], []],
 			[5, ['user2', 'user1', 'user3'], []],
@@ -184,7 +184,7 @@ class MailQueueHandlerTest extends TestCase {
 	 * @param array $affected
 	 * @param array $untouched
 	 */
-	public function testGetAffectedUsers($limit, $affected, $untouched) {
+	public function testGetAffectedUsers(?int $limit, array $affected, array $untouched): void {
 		$maxTime = 200;
 
 		$this->assertRemainingMailEntries($untouched, $maxTime, 'before doing anything');
@@ -209,7 +209,7 @@ class MailQueueHandlerTest extends TestCase {
 		$this->assertRemainingMailEntries($untouched, $maxTime, 'after deleting the affected items');
 	}
 
-	public function testGetItemsForUser() {
+	public function testGetItemsForUser(): void {
 		list($data, $skipped) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200]);
 		$this->assertCount(2, $data, 'Failed to assert the user has 2 entries');
 		$this->assertSame(0, $skipped);
@@ -229,7 +229,7 @@ class MailQueueHandlerTest extends TestCase {
 		$this->assertSame(12, $skipped);
 	}
 
-	public function testSendEmailToUser() {
+	public function testSendEmailToUser(): void {
 		$maxTime = 200;
 		$user = 'user2';
 		$userDisplayName = 'user two';
@@ -298,15 +298,13 @@ class MailQueueHandlerTest extends TestCase {
 	 * @param int $maxTime
 	 * @param string $explain
 	 */
-	protected function assertRemainingMailEntries(array $users, $maxTime, $explain) {
-		if (!empty($untouched)) {
-			foreach ($users as $user) {
-				list($data,) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
-				$this->assertNotEmpty(
-					$data,
-					'Failed asserting that the remaining user ' . $user. ' still has mails in the queue ' . $explain
-				);
-			}
+	protected function assertRemainingMailEntries(array $users, int $maxTime, string $explain): void {
+		foreach ($users as $user) {
+			list($data,) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			$this->assertNotEmpty(
+				$data,
+				'Failed asserting that the remaining user ' . $user. ' still has mails in the queue ' . $explain
+			);
 		}
 	}
 }

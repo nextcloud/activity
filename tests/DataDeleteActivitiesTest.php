@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -23,6 +24,9 @@
 namespace OCA\Activity\Tests;
 
 use Doctrine\DBAL\Driver\Statement;
+use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Platforms\SqlitePlatform;
+use OCA\Activity\BackgroundJob\ExpireActivities;
 use OCA\Activity\Data;
 use OCP\Activity\IExtension;
 use OCP\IConfig;
@@ -43,12 +47,12 @@ class DataDeleteActivitiesTest extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$activities = array(
-			array('affectedUser' => 'delete', 'subject' => 'subject', 'time' => 0),
-			array('affectedUser' => 'delete', 'subject' => 'subject2', 'time' => time() - 2 * 365 * 24 * 3600),
-			array('affectedUser' => 'otherUser', 'subject' => 'subject', 'time' => time()),
-			array('affectedUser' => 'otherUser', 'subject' => 'subject2', 'time' => time()),
-		);
+		$activities = [
+			['affectedUser' => 'delete', 'subject' => 'subject', 'time' => 0],
+			['affectedUser' => 'delete', 'subject' => 'subject2', 'time' => time() - 2 * 365 * 24 * 3600],
+			['affectedUser' => 'otherUser', 'subject' => 'subject', 'time' => time()],
+			['affectedUser' => 'otherUser', 'subject' => 'subject2', 'time' => time()],
+		];
 
 		$queryActivity = \OC::$server->getDatabaseConnection()->prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
 		foreach ($activities as $activity) {
@@ -82,45 +86,45 @@ class DataDeleteActivitiesTest extends TestCase {
 		parent::tearDown();
 	}
 
-	public function deleteActivitiesData() {
-		return array(
-			array(array('affecteduser' => 'delete'), array('otherUser')),
-			array(array('affecteduser' => array('delete', '=')), array('otherUser')),
-			array(array('timestamp' => array(time() - 10, '<')), array('otherUser')),
-			array(array('timestamp' => array(time() - 10, '>')), array('delete')),
-		);
+	public function deleteActivitiesData(): array {
+		return [
+			[['affecteduser' => 'delete'], ['otherUser']],
+			[['affecteduser' => ['delete', '=']], ['otherUser']],
+			[['timestamp' => [time() - 10, '<']], ['otherUser']],
+			[['timestamp' => [time() - 10, '>']], ['delete']],
+		];
 	}
 
 	/**
 	 * @dataProvider deleteActivitiesData
 	 */
-	public function testDeleteActivities($condition, $expected) {
+	public function testDeleteActivities(array $condition, array $expected): void {
 		$this->assertUserActivities(array('delete', 'otherUser'));
 		$this->data->deleteActivities($condition);
 		$this->assertUserActivities($expected);
 	}
 
-	public function testExpireActivities() {
+	public function testExpireActivities(): void {
 		$config = $this->createMock(IConfig::class);
-		$backgroundjob = new \OCA\Activity\BackgroundJob\ExpireActivities(
+		$backgroundjob = new ExpireActivities(
 			$this->data,
 			$config
 		);
-		$this->assertUserActivities(array('delete', 'otherUser'));
+		$this->assertUserActivities(['delete', 'otherUser']);
 		$jobList = $this->createMock(IJobList::class);
 		$backgroundjob->execute($jobList);
-		$this->assertUserActivities(array('otherUser'));
+		$this->assertUserActivities(['otherUser']);
 	}
 
-	protected function assertUserActivities($expected) {
+	protected function assertUserActivities(array $expected) {
 		$query = \OC::$server->getDatabaseConnection()->prepare("SELECT `affecteduser` FROM `*PREFIX*activity` WHERE `type` = 'test'");
 		$this->assertTableKeys($expected, $query, 'affecteduser');
 	}
 
-	protected function assertTableKeys($expected, Statement $query, $keyName) {
+	protected function assertTableKeys(array $expected, Statement $query, string $keyName): void {
 		$query->execute();
 
-		$users = array();
+		$users = [];
 		while ($row = $query->fetch()) {
 			$users[] = $row[$keyName];
 		}
@@ -132,7 +136,7 @@ class DataDeleteActivitiesTest extends TestCase {
 		$this->assertEquals($expected, $users);
 	}
 
-	public function testChunkingDeleteNotUsedWhenNotOnMysql() {
+	public function testChunkingDeleteNotUsedWhenNotOnMysql(): void {
 		$ttl = (60 * 60 * 24 * max(1, 365));
 		$timelimit = time() - $ttl;
 		$activityManager = $this->createMock(\OCP\Activity\IManager::class);
@@ -145,14 +149,14 @@ class DataDeleteActivitiesTest extends TestCase {
 		$statement->expects($this->exactly(0))->method('rowCount')->willReturnOnConsecutiveCalls(100000, 50);
 		$connection->expects($this->once())->method('prepare')->willReturn($statement);
 
-		$userSession = $this->createMock(\OCP\IUserSession::class);
+		$userSession = $this->createMock(IUserSession::class);
 		$data = new Data($activityManager, $connection, $userSession);
 		$data->deleteActivities(array(
 			'timestamp' => array($timelimit, '<'),
 		));
 	}
 
-	public function testDeleteActivitiesIsChunkedOnMysql() {
+	public function testDeleteActivitiesIsChunkedOnMysql(): void {
 		$ttl = (60 * 60 * 24 * max(1, 365));
 		$timelimit = time() - $ttl;
 		$activityManager = $this->createMock(\OCP\Activity\IManager::class);
@@ -165,7 +169,7 @@ class DataDeleteActivitiesTest extends TestCase {
 		$statement->expects($this->exactly(2))->method('rowCount')->willReturnOnConsecutiveCalls(100000, 50);
 		$connection->expects($this->once())->method('prepare')->willReturn($statement);
 
-		$userSession = $this->createMock(\OCP\IUserSession::class);
+		$userSession = $this->createMock(IUserSession::class);
 		$data = new Data($activityManager, $connection, $userSession);
 		$data->deleteActivities(array(
 			'timestamp' => array($timelimit, '<'),
