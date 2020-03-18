@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -32,13 +33,13 @@ use OCP\RichObjectStrings\IValidator;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class GroupHelperTest extends TestCase {
-	/** @var IManager|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IManager|MockObject */
 	protected $activityManager;
-	/** @var IValidator|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IValidator|MockObject */
 	protected $validator;
-	/** @var ILogger|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var ILogger|MockObject */
 	protected $logger;
-	/** @var IL10N|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IL10N|MockObject */
 	protected $l;
 
 	protected function setUp(): void {
@@ -53,9 +54,9 @@ class GroupHelperTest extends TestCase {
 	/**
 	 * @param array $methods
 	 * @param bool $grouping
-	 * @return GroupHelper|\PHPUnit_Framework_MockObject_MockObject
+	 * @return GroupHelper|MockObject
 	 */
-	protected function getHelper(array $methods = [], $grouping = false) {
+	protected function getHelper(array $methods = [], $grouping = false): GroupHelper {
 		if (empty($methods)) {
 			if ($grouping) {
 				return new GroupHelper(
@@ -80,19 +81,20 @@ class GroupHelperTest extends TestCase {
 				$this->validator,
 				$this->logger
 			])
-			->setMethods($methods)
+			->onlyMethods($methods)
 			->getMock();
 	}
 
-	public function testSetL10n() {
+	public function testSetL10n(): void {
 		$helper = $this->getHelper();
 
 		$l = \OC::$server->getL10NFactory()->get('activity', 'de');
 
 		$helper->setL10n($l);
+		$this->assertTrue(true);
 	}
 
-	public function dataGetEventFromArray() {
+	public function dataGetEventFromArray(): array {
 		return [
 			[
 				[
@@ -135,7 +137,7 @@ class GroupHelperTest extends TestCase {
 	 * @dataProvider dataGetEventFromArray
 	 * @param array $activity
 	 */
-	public function testGetEventFromArray(array $activity) {
+	public function testGetEventFromArray(array $activity): void {
 		$event = $this->createMock(IEvent::class);
 		$event->expects($this->once())
 			->method('setApp')
@@ -203,7 +205,7 @@ class GroupHelperTest extends TestCase {
 		return $event;
 	}
 
-	public function dataGetObjectsFromChildren() {
+	public function dataGetObjectsFromChildren(): array {
 		return [
 			[['id' => 0, 'name' => ''], []],
 			[['id' => 12, 'name' => ''], [12 => '']],
@@ -218,7 +220,7 @@ class GroupHelperTest extends TestCase {
 	 * @param array $data
 	 * @param array $expected
 	 */
-	public function testGetObjectsFromChildren(array $data, array $expected) {
+	public function testGetObjectsFromChildren(array $data, array $expected): void {
 		$event = $this->createEvent($data);
 		$helper = $this->getHelper();
 		$this->assertSame($expected, self::invokePrivate($helper, 'getObjectsFromChildren', [$event]));

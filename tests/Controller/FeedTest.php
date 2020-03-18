@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -35,27 +36,28 @@ use OCA\Activity\UserSettings;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Data;
 use OCP\IUser;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class FeedTest extends TestCase {
-	/** @var IConfig|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IConfig|MockObject */
 	protected $config;
 
-	/** @var IRequest|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IRequest|MockObject */
 	protected $request;
 
-	/** @var Data|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var Data|MockObject */
 	protected $data;
 
-	/** @var GroupHelper|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var GroupHelper|MockObject */
 	protected $helper;
 
-	/** @var UserSettings|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var UserSettings|MockObject */
 	protected $userSettings;
 
-	/** @var IManager|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IManager|MockObject */
 	protected $manager;
 
-	/** @var IUserSession|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IUserSession|MockObject */
 	protected $session;
 
 	/** @var \OCP\IL10N */
@@ -76,7 +78,7 @@ class FeedTest extends TestCase {
 		$this->session = $this->createMock(IUserSession::class);
 		$this->manager = $this->createMock(IManager::class);
 
-		/** @var $urlGenerator IURLGenerator|\PHPUnit_Framework_MockObject_MockObject */
+		/** @var $urlGenerator IURLGenerator|MockObject */
 		$urlGenerator = $this->createMock(IURLGenerator::class);
 
 		$this->controller = new Feed(
@@ -93,7 +95,7 @@ class FeedTest extends TestCase {
 	}
 
 
-	public function showData() {
+	public function showData(): array {
 		return [
 			['application/rss+xml', 'application/rss+xml'],
 			[null, 'text/xml; charset=UTF-8'],
@@ -106,7 +108,7 @@ class FeedTest extends TestCase {
 	 * @param string $acceptHeader
 	 * @param string $expectedHeader
 	 */
-	public function testShow($acceptHeader, $expectedHeader) {
+	public function testShow(?string $acceptHeader, string $expectedHeader): void {
 		$this->mockUserSession('test');
 		$this->data->expects($this->any())
 			->method('get')
@@ -128,8 +130,8 @@ class FeedTest extends TestCase {
 		$this->assertNotEmpty($renderedResponse);
 
 		$l = Util::getL10N('activity');
-		$description = (string) $l->t('Your feed URL is invalid');
-		$this->assertNotContains($description, $renderedResponse);
+		$description = $l->t('Your feed URL is invalid');
+		$this->assertStringNotContainsString($description, $renderedResponse);
 	}
 
 	/**
@@ -138,7 +140,7 @@ class FeedTest extends TestCase {
 	 * @param string $acceptHeader
 	 * @param string $expectedHeader
 	 */
-	public function testShowNoToken($acceptHeader, $expectedHeader) {
+	public function testShowNoToken(?string $acceptHeader, string $expectedHeader): void {
 		$this->manager->expects($this->any())
 			->method('getCurrentUserId')
 			->willThrowException(new \UnexpectedValueException());
@@ -160,10 +162,10 @@ class FeedTest extends TestCase {
 
 		$l = Util::getL10N('activity');
 		$description = (string) $l->t('Your feed URL is invalid');
-		$this->assertContains($description, $renderedResponse);
+		$this->assertStringContainsString($description, $renderedResponse);
 	}
 
-	protected function mockUserSession($user) {
+	protected function mockUserSession(string $user): void {
 		$mockUser = $this->createMock(IUser::class);
 		$mockUser->expects($this->any())
 			->method('getUID')

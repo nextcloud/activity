@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016 Joas Schilling <coding@schilljs.com>
  *
@@ -101,9 +102,9 @@ class APIv1Test extends TestCase {
 		parent::tearDown();
 	}
 
-	protected function cleanUp() {
+	protected function cleanUp(): void {
 		$data = new Data(
-			$this->getMockBuilder(IManager::class)->getMock(),
+			$this->createMock(IManager::class),
 			\OC::$server->getDatabaseConnection()
 		);
 
@@ -115,7 +116,7 @@ class APIv1Test extends TestCase {
 		));
 	}
 
-	protected function deleteUser(Data $data, $uid) {
+	protected function deleteUser(Data $data, string $uid): void {
 		$data->deleteActivities(array(
 			'affecteduser' => $uid,
 		));
@@ -125,58 +126,58 @@ class APIv1Test extends TestCase {
 		}
 	}
 
-	public function getData() {
-		return array(
-			array('activity-api-user2', 0, 30, array()),
-			array('activity-api-user1', 0, 30, array(
-				array(
+	public function getData(): array {
+		return [
+			['activity-api-user2', 0, 30, []],
+			['activity-api-user1', 0, 30, [
+				[
 					'link' => 'link',
 					'file' => 'file',
 					'date' => null,
 					'id' => null,
 					'message' => '',
 					'subject' => 'Subject2 @User #/A/B.txt',
-				),
-				array(
+				],
+				[
 					'link' => 'link',
 					'file' => 'file',
 					'date' => null,
 					'id' => null,
 					'message' => '',
 					'subject' => 'Subject1 #/A/B.txt',
-				),
-			)),
-			array('activity-api-user1', 0, 1, array(
-				array(
+				],
+			]],
+			['activity-api-user1', 0, 1, [
+				[
 					'link' => 'link',
 					'file' => 'file',
 					'date' => null,
 					'id' => null,
 					'message' => '',
 					'subject' => 'Subject2 @User #/A/B.txt',
-				),
-			)),
-			array('activity-api-user1', 1, 1, array(
-				array(
+				],
+			]],
+			['activity-api-user1', 1, 1, [
+				[
 					'link' => 'link',
 					'file' => 'file',
 					'date' => null,
 					'id' => null,
 					'message' => '',
 					'subject' => 'Subject1 #/A/B.txt',
-				),
-			)),
-			array('activity-api-user1', 5, 1, array(
-				array(
+				],
+			]],
+			['activity-api-user1', 5, 1, [
+				[
 					'link' => 'link',
 					'file' => 'file',
 					'date' => null,
 					'id' => null,
 					'message' => '',
 					'subject' => 'Subject2 @User #/A/B.txt',
-				),
-			)),
-		);
+				],
+			]],
+		];
 	}
 
 	/**
@@ -187,13 +188,13 @@ class APIv1Test extends TestCase {
 	 * @param int $count
 	 * @param array $expected
 	 */
-	public function testGet($user, $start, $count, $expected) {
-		$config = $this->getMockBuilder(IConfig::class)->getMock();
+	public function testGet(string $user, int $start, int $count, array $expected): void {
+		$config = $this->createMock(IConfig::class);
 		$config->expects($this->any())
 			->method('getUserValue')
 			->willReturnArgument(3);
 
-		$l = $this->getMockBuilder(IL10N::class)->getMock();
+		$l = $this->createMock(IL10N::class);
 		$l->expects($this->any())
 			->method('t')
 			->will($this->returnCallback(function($text, $parameters = array()) {
@@ -201,8 +202,8 @@ class APIv1Test extends TestCase {
 			}));
 
 		$activityManager = new Manager(
-			$this->getMockBuilder(IRequest::class)->getMock(),
-			$this->getMockBuilder(IUserSession::class)->getMock(),
+			$this->createMock(IRequest::class),
+			$this->createMock(IUserSession::class),
 			$config,
 			\OC::$server->query(IValidator::class)
 		);
@@ -219,10 +220,9 @@ class APIv1Test extends TestCase {
 
 		$data = new Data($activityManager, \OC::$server->getDatabaseConnection());
 
-		/** @var APIv1 $controller */
 		$controller = new APIv1(
 			'activity',
-			$this->getMockBuilder(IRequest::class)->getMock(),
+			$this->createMock(IRequest::class),
 			$data,
 			new GroupHelper($l, $activityManager, $this->createMock(IValidator::class), $this->createMock(ILogger::class)),
 			new UserSettings($activityManager, $config),
@@ -231,7 +231,7 @@ class APIv1Test extends TestCase {
 		$response = $controller->get($start, $count);
 
 		$data = $response->getData();
-		$this->assertEquals(sizeof($expected), sizeof($data), 'Number of expected activities does not match');
+		$this->assertCount(count($expected), $data, 'Number of expected activities does not match');
 
 		while (!empty($expected)) {
 			$assertExpected = array_shift($expected);

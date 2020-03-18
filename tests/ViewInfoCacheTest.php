@@ -22,44 +22,44 @@
 
 namespace OCA\Activity\Tests;
 
+use OC\Files\View;
 use OCA\Activity\ViewInfoCache;
 use OCP\Files\NotFoundException;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class ViewInfoCacheTest extends TestCase {
-	/** @var \OC\Files\View|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var View|MockObject */
 	protected $view;
 
-	/** @var \OCA\Activity\ViewInfoCache|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var ViewInfoCache|MockObject */
 	protected $infoCache;
 
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->view = $this->getMockBuilder('OC\Files\View')
-			->disableOriginalConstructor()
-			->getMock();
+		$this->view = $this->createMock(View::class);
 	}
 
 	/**
 	 * @param array $methods
-	 * @return ViewInfoCache|\PHPUnit_Framework_MockObject_MockObject
+	 * @return ViewInfoCache|MockObject
 	 */
-	public function getCache(array $methods = []) {
+	public function getCache(array $methods = []): ViewInfoCache {
 		if (empty($methods)) {
 			return new ViewInfoCache(
 				$this->view
 			);
-		} else {
-			return $this->getMockBuilder('OCA\Activity\ViewInfoCache')
-				->setConstructorArgs([
-					$this->view,
-				])
-				->setMethods($methods)
-				->getMock();
 		}
+
+		return $this->getMockBuilder(ViewInfoCache::class)
+			->setConstructorArgs([
+				$this->view,
+			])
+			->setMethods($methods)
+			->getMock();
 	}
 
-	public function dataGetInfoByPath() {
+	public function dataGetInfoByPath(): array {
 		return [
 			[
 				'user', 'path', [], true, 'findInfoByPath',
@@ -109,7 +109,7 @@ class ViewInfoCacheTest extends TestCase {
 	 * @param bool $callsFind
 	 * @param string $expected
 	 */
-	public function testGetInfoByPath($user, $path, $cache, $callsFind, $expected) {
+	public function testGetInfoByPath(string $user, string $path, array $cache, bool $callsFind, string $expected): void {
 		$infoCache = $this->getCache([
 			'findInfoByPath',
 		]);
@@ -122,12 +122,12 @@ class ViewInfoCacheTest extends TestCase {
 			$infoCache->expects($this->never())
 				->method('findInfoByPath');
 		}
-		$this->invokePrivate($infoCache, 'cachePath', [$cache]);
+		self::invokePrivate($infoCache, 'cachePath', [$cache]);
 
 		$this->assertSame($expected, $infoCache->getInfoByPath($user, $path));
 	}
 
-	public function dataGetInfoById() {
+	public function dataGetInfoById(): array {
 		return [
 			[
 				'user', 23, 'path', [], true, 'findInfoById',
@@ -193,7 +193,7 @@ class ViewInfoCacheTest extends TestCase {
 	 * @param bool $callsFind
 	 * @param string $expected
 	 */
-	public function testGetInfoById($user, $id, $path, $cache, $callsFind, $expected) {
+	public function testGetInfoById(string $user, int $id, string $path, array $cache, bool $callsFind, $expected): void {
 		$infoCache = $this->getCache([
 			'findInfoById',
 		]);
@@ -206,12 +206,12 @@ class ViewInfoCacheTest extends TestCase {
 			$infoCache->expects($this->never())
 				->method('findInfoById');
 		}
-		$this->invokePrivate($infoCache, 'cacheId', [$cache]);
+		self::invokePrivate($infoCache, 'cacheId', [$cache]);
 
 		$this->assertSame($expected, $infoCache->getInfoById($user, $id, $path));
 	}
 
-	public function dataFindByPath() {
+	public function dataFindByPath(): array {
 		return [
 			['user1', 'path1', true, true, [
 				'path'		=> 'path1',
@@ -243,7 +243,7 @@ class ViewInfoCacheTest extends TestCase {
 	 * @param bool $is_dir
 	 * @param array $expected
 	 */
-	public function testFindByPath($user, $path, $exists, $is_dir, $expected) {
+	public function testFindByPath(string $user, string $path, bool $exists, ?bool $is_dir, array $expected): void {
 		$this->view->expects($this->once())
 			->method('chroot')
 			->with('/' . $user . '/files');
@@ -258,10 +258,10 @@ class ViewInfoCacheTest extends TestCase {
 
 		$infoCache = $this->getCache();
 
-		$this->assertSame($expected, $this->invokePrivate($infoCache, 'findInfoByPath', [$user, $path]));
+		$this->assertSame($expected,self::invokePrivate($infoCache, 'findInfoByPath', [$user, $path]));
 	}
 
-	public function dataFindInfoById() {
+	public function dataFindInfoById(): array {
 		return [
 			[
 				'user1', 23, '/test1', null, null, '/test1', false,
@@ -371,10 +371,10 @@ class ViewInfoCacheTest extends TestCase {
 	 * @param string|null $pathTrash
 	 * @param string $isDirPath
 	 * @param bool $isDir
-	 * @param string $expected
+	 * @param array $expected
 	 * @param array $expectedCache
 	 */
-	public function testFindInfoById($user, $fileId, $filename, $path, $pathTrash, $isDirPath, $isDir, $expected, array $expectedCache) {
+	public function testFindInfoById(string $user, int $fileId, string $filename, ?string $path, ?string $pathTrash, string $isDirPath, bool $isDir, array $expected, array $expectedCache): void {
 		$this->view->expects($this->at(0))
 			->method('chroot')
 			->with('/' . $user . '/files');
@@ -411,7 +411,7 @@ class ViewInfoCacheTest extends TestCase {
 			->willReturn($isDir);
 
 		$infoCache = $this->getCache();
-		$this->assertSame($expected, $this->invokePrivate($infoCache, 'findInfoById', [$user, $fileId, $filename]));
-		$this->assertSame($expectedCache, $this->invokePrivate($infoCache, 'cacheId'));
+		$this->assertSame($expected, self::invokePrivate($infoCache, 'findInfoById', [$user, $fileId, $filename]));
+		$this->assertSame($expectedCache, self::invokePrivate($infoCache, 'cacheId'));
 	}
 }

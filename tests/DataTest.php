@@ -25,8 +25,12 @@ namespace OCA\Activity\Tests;
 use OCA\Activity\Data;
 use OCA\Activity\Tests\Mock\Extension;
 use OCP\Activity\IManager;
+use OCP\IL10N;
 use OCP\IUserSession;
 use OCP\RichObjectStrings\IValidator;
+use OCP\Util;
+use PHPUnit\Framework\MockObject\MockObject;
+use OC\User\Session;
 
 /**
  * Class DataTest
@@ -35,22 +39,22 @@ use OCP\RichObjectStrings\IValidator;
  * @package OCA\Activity\Tests
  */
 class DataTest extends TestCase {
-	/** @var \OCA\Activity\Data */
+	/** @var Data */
 	protected $data;
 
-	/** @var \OCP\IL10N */
+	/** @var IL10N */
 	protected $activityLanguage;
 
-	/** @var \OC\Activity\Manager|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IManager|MockObject */
 	protected $activityManager;
 
-	/** @var \OCP\IUserSession|\PHPUnit_Framework_MockObject_MockObject */
+	/** @var IUserSession|MockObject */
 	protected $session;
 
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->activityLanguage = $activityLanguage = \OCP\Util::getL10N('activity', 'en');
+		$this->activityLanguage = Util::getL10N('activity', 'en');
 		$this->activityManager = $this->createMock(IManager::class);
 		$this->session = $this->createMock(IUserSession::class);
 
@@ -66,7 +70,7 @@ class DataTest extends TestCase {
 		parent::tearDown();
 	}
 
-	public function dataSend() {
+	public function dataSend(): array {
 		return [
 			// Default case
 			['author', 'affectedUser', 'author', 'affectedUser', true],
@@ -88,10 +92,8 @@ class DataTest extends TestCase {
 	 * @param string $expectedAffected
 	 * @param bool $expectedActivity
 	 */
-	public function testSend($actionUser, $affectedUser, $expectedAuthor, $expectedAffected, $expectedActivity) {
-		$mockSession = $this->getMockBuilder('\OC\User\Session')
-			->disableOriginalConstructor()
-			->getMock();
+	public function testSend(string $actionUser, string $affectedUser, string $expectedAuthor, string $expectedAffected, bool $expectedActivity): void {
+		$mockSession = $this->createMock(Session::class);
 
 		$this->overwriteService('UserSession', $mockSession);
 		$this->deleteTestActivities();
@@ -135,10 +137,8 @@ class DataTest extends TestCase {
 	 * @param string $expectedAffected
 	 * @param bool $expectedActivity
 	 */
-	public function testStoreMail($actionUser, $affectedUser, $expectedAuthor, $expectedAffected, $expectedActivity) {
-		$mockSession = $this->getMockBuilder('\OC\User\Session')
-			->disableOriginalConstructor()
-			->getMock();
+	public function testStoreMail(string $actionUser, string $affectedUser, string $expectedAuthor, string $expectedAffected, bool $expectedActivity): void {
+		$mockSession = $this->createMock(Session::class);
 
 		$this->overwriteService('UserSession', $mockSession);
 		$this->deleteTestMails();
@@ -172,7 +172,7 @@ class DataTest extends TestCase {
 		$this->restoreService('UserSession');
 	}
 
-	public function dataSetOffsetFromSince() {
+	public function dataSetOffsetFromSince(): array {
 		return [
 			['ASC', '`timestamp` >= \'123465789\'', '`activity_id` > \'{id}\'', null, null, null],
 			['DESC', '`timestamp` <= \'123465789\'', '`activity_id` < \'{id}\'', null, null, null],
@@ -192,9 +192,9 @@ class DataTest extends TestCase {
 	 * @param int $offsetId
 	 * @param string $expectedHeader
 	 */
-	public function testSetOffsetFromSince($sort, $timestampWhere, $idWhere, $offsetUser, $offsetId, $expectedHeader) {
+	public function testSetOffsetFromSince(string $sort, ?string $timestampWhere, ?string $idWhere, ?string $offsetUser, $offsetId, ?string $expectedHeader): void {
 		$this->deleteTestActivities();
-		$user = $this->getUniqueID('testing');
+		$user = self::getUniqueID('testing');
 		if ($offsetUser === null) {
 			$offsetUser = $user;
 		} else if ($offsetUser === 'invalid-user') {
@@ -248,7 +248,7 @@ class DataTest extends TestCase {
 			$offsetId += $id;
 		}
 
-		$headers = $this->invokePrivate($this->data, 'setOffsetFromSince', [$mock, $offsetUser, $offsetId, $sort]);
+		$headers = self::invokePrivate($this->data, 'setOffsetFromSince', [$mock, $offsetUser, $offsetId, $sort]);
 
 		if ($expectedHeader) {
 			$this->assertArrayHasKey($expectedHeader, $headers);
@@ -263,7 +263,7 @@ class DataTest extends TestCase {
 	/**
 	 * Delete all testing activities
 	 */
-	protected function deleteTestActivities() {
+	protected function deleteTestActivities(): void {
 		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
 		$query->delete('activity')
 			->where($query->expr()->eq('app', $query->createNamedParameter('test')));
@@ -273,7 +273,7 @@ class DataTest extends TestCase {
 	/**
 	 * Delete all testing mails
 	 */
-	protected function deleteTestMails() {
+	protected function deleteTestMails(): void {
 		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
 		$query->delete('activity_mq')
 			->where($query->expr()->eq('amq_appid', $query->createNamedParameter('test')));
