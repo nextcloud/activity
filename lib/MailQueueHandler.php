@@ -443,14 +443,14 @@ class MailQueueHandler {
 	 * @throws \InvalidArgumentException when the event could not be parsed
 	 */
 	protected function parseEvent($lang, IEvent $event) {
+		$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
 		foreach ($this->activityManager->getProviders() as $provider) {
 			try {
-				$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
 				$event = $provider->parse($lang, $event);
-				$this->activityManager->setFormattingObject('', 0);
 			} catch (\InvalidArgumentException $e) {
 			}
 		}
+		$this->activityManager->setFormattingObject('', 0);
 
 		try {
 			$this->richObjectValidator->validate($event->getRichSubject(), $event->getRichSubjectParameters());
