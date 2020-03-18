@@ -335,6 +335,7 @@ class MailQueueHandler {
 			try {
 				$event->setApp((string) $activity['amq_appid'])
 					->setType((string) $activity['amq_type'])
+					->setAffectedUser((string) $activity['amq_affecteduser'])
 					->setTimestamp((int) $activity['amq_timestamp'])
 					->setSubject((string) $activity['amq_subject'], (array) json_decode($activity['amq_subjectparams'], true))
 					->setObject((string) $activity['object_type'], (int) $activity['object_id']);
