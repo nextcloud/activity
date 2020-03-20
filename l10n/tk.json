@@ -1,0 +1,10 @@
+{ "translations": {
+    "Home" : "Baş sahypa",
+    "Today" : "Şu gün",
+    "Yesterday" : "Düýn",
+    "Open file" : "Faýl açmak",
+    "Hello %s" : "Salam%s",
+    "Settings" : "Sazlamalar",
+    "Files" : "Faýllar"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
