@@ -36,6 +36,7 @@ use OCP\IUser;
 use OCP\IUserManager;
 use OCP\L10N\IFactory;
 use OCP\Mail\IMailer;
+use OCP\RichObjectStrings\InvalidObjectExeption;
 use OCP\RichObjectStrings\IValidator;
 use OCP\Util;
 
@@ -335,6 +336,7 @@ class MailQueueHandler {
 			try {
 				$event->setApp((string) $activity['amq_appid'])
 					->setType((string) $activity['amq_type'])
+					->setAffectedUser((string) $activity['amq_affecteduser'])
 					->setTimestamp((int) $activity['amq_timestamp'])
 					->setSubject((string) $activity['amq_subject'], (array) json_decode($activity['amq_subjectparams'], true))
 					->setObject((string) $activity['object_type'], (int) $activity['object_id']);
@@ -441,14 +443,14 @@ class MailQueueHandler {
 	 * @throws \InvalidArgumentException when the event could not be parsed
 	 */
 	protected function parseEvent($lang, IEvent $event) {
+		$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
 		foreach ($this->activityManager->getProviders() as $provider) {
 			try {
-				$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
 				$event = $provider->parse($lang, $event);
-				$this->activityManager->setFormattingObject('', 0);
 			} catch (\InvalidArgumentException $e) {
 			}
 		}
+		$this->activityManager->setFormattingObject('', 0);
 
 		try {
 			$this->richObjectValidator->validate($event->getRichSubject(), $event->getRichSubjectParameters());
