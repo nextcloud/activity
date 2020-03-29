@@ -4,7 +4,7 @@ OC.L10N.register(
     "Activity" : "Aktiviteter",
     "An error occurred while loading activities" : "Något gick snett vid inläsning av aktiviteter",
     "No activity yet" : "Inga aktiviteter ännu",
-    "Load more activities" : "Ladda fler aktiviteter",
+    "Load more activities" : "Läs in fler aktiviteter",
     "Copied!" : "Kopierad!",
     "Not supported!" : "Stöds inte!",
     "Press ⌘-C to copy." : "Tryck ⌘-C för att kopiera.",
