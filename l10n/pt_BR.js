@@ -46,7 +46,7 @@ OC.L10N.register(
     "Hourly" : "De hora em hora",
     "Daily" : "Diariamente",
     "Weekly" : "Semanalmente",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Escolha para quais atividades você quer receber uma notificação por e-mail e quais devem ser mostradas no fluxo de atividade do aplicativo.",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Escolha para quais atividades você quer receber uma notificação por e-mail e quais devem ser mostradas no fluxo de atividades do aplicativo.",
     "Choose which activities you want to see in your stream." : "Escolha quais atividades você quer ver no seu log.",
     "Settings" : "Configurações",
     "Enable RSS feed" : "Ativar feed RSS",
