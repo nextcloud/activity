@@ -23,11 +23,14 @@ declare(strict_types=1);
 
 namespace OCA\Activity;
 
+use OC\Files\Config\CachedMountFileInfo;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\Tests\TestCase;
+use OCP\Files\Config\IUserMountCache;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
+use OCP\IConfig;
 use OCP\ILogger;
 use OCP\IUser;
 use OCP\Share\IShare;
@@ -36,11 +39,11 @@ use OCP\Activity\IManager;
 use OCP\IGroupManager;
 use OC\Files\View;
 use OCP\IURLGenerator;
-use PHPUnit\Framework\MockObject\MockObject;
 use OCP\IGroup;
 use OCA\Files_Sharing\SharedStorage;
 use OCP\Files\Mount\IMountPoint;
 use OCP\Activity\IEvent;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class FilesHooksTest
@@ -68,6 +71,10 @@ class FilesHooksTest extends TestCase {
 	protected $shareHelper;
 	/** @var IURLGenerator|MockObject */
 	protected $urlGenerator;
+	/** @var IUserMountCache|MockObject */
+	protected $userMountCache;
+	/** @var IConfig|MockObject */
+	protected $config;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -80,6 +87,8 @@ class FilesHooksTest extends TestCase {
 		$this->rootFolder = $this->createMock(IRootFolder::class);
 		$this->shareHelper = $this->createMock(IShareHelper::class);
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
+		$this->userMountCache = $this->createMock(IUserMountCache::class);
+		$this->config = $this->createMock(IConfig::class);
 
 		$this->filesHooks = $this->getFilesHooks();
 	}
@@ -114,6 +123,8 @@ class FilesHooksTest extends TestCase {
 					$this->urlGenerator,
 					$logger,
 					$currentUser,
+					$this->userMountCache,
+					$this->config,
 				])
 				->onlyMethods($mockedMethods)
 				->getMock();
@@ -130,7 +141,9 @@ class FilesHooksTest extends TestCase {
 			\OC::$server->getDatabaseConnection(),
 			$this->urlGenerator,
 			$logger,
-			$currentUser
+			$currentUser,
+			$this->userMountCache,
+			$this->config
 		);
 	}
 
@@ -238,11 +251,12 @@ class FilesHooksTest extends TestCase {
 					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user' => true]],
 					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, ['user' => 42]],
 				],
+				'mountcache_used' => false,
 				[
 					'user' => [
 						'subject' => 'restored_self',
-						'subject_params' => [[1337 => '/user/path']],
-						'path' => '/user/path',
+						'subject_params' => [[1337 => '/user/files/path']],
+						'path' => '/user/files/path',
 						'stream' => true,
 						'email' => 42,
 					],
@@ -253,11 +267,44 @@ class FilesHooksTest extends TestCase {
 					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user1' => true]],
 					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, []],
 				],
+				'mountcache_used' => false,
 				[
 					'user1' => [
 						'subject' => 'restored_by',
-						'subject_params' => [[1337 => '/user1/path'], 'user'],
-						'path' => '/user1/path',
+						'subject_params' => [[1337 => '/user1/files/path'], 'user'],
+						'path' => '/user1/files/path',
+						'stream' => true,
+						'email' => 0,
+					],
+				],
+			],
+			[
+				[
+					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user' => true]],
+					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, ['user' => 42]],
+				],
+				'mountcache_used' => true,
+				[
+					'user' => [
+						'subject' => 'restored_self',
+						'subject_params' => [[1337 => '/path']],
+						'path' => '/path',
+						'stream' => true,
+						'email' => 42,
+					],
+				],
+			],
+			[
+				[
+					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user1' => true]],
+					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, []],
+				],
+				'mountcache_used' => true,
+				[
+					'user1' => [
+						'subject' => 'restored_by',
+						'subject_params' => [[1337 => '/path'], 'user'],
+						'path' => '/path',
 						'stream' => true,
 						'email' => 0,
 					],
@@ -270,9 +317,10 @@ class FilesHooksTest extends TestCase {
 	 * @dataProvider dataAddNotificationsForFileAction
 	 *
 	 * @param array $filterUsers
+	 * @param bool $mountCacheUsed
 	 * @param array $addNotifications
 	 */
-	public function testAddNotificationsForFileAction(array $filterUsers, array $addNotifications): void {
+	public function testAddNotificationsForFileAction(array $filterUsers, bool $mountCacheUsed, array $addNotifications): void {
 		$filesHooks = $this->getFilesHooks([
 			'getSourcePathAndOwner',
 			'getUserPathsFromPath',
@@ -289,12 +337,54 @@ class FilesHooksTest extends TestCase {
 			->willReturn([
 				'ownerPath' => '/owner/path',
 				'users' => [
-					'user' => '/user/path',
-					'user1' => '/user1/path',
-					'user2' => '/user2/path',
+					'user' => '/user/files/path',
+					'user1' => '/user1/files/path',
+					'user2' => '/user2/files/path',
 				],
 				'remotes' => [],
 			]);
+
+		$this->config->expects($this->once())
+			->method('getSystemValueBool')
+			->with('activity_use_cached_mountpoints', false)
+			->willReturn($mountCacheUsed);
+
+		if ($mountCacheUsed) {
+			$this->userMountCache->expects($this->once())
+				->method('getMountsForFileId')
+				->willReturn([
+					new CachedMountFileInfo(
+						$this->getUserMock('user'),
+						1,
+						1,
+						'/user/files/',
+						null,
+						'',
+						'path'
+					),
+					new CachedMountFileInfo(
+						$this->getUserMock('user1'),
+						1,
+						1,
+						'/user1/files/',
+						null,
+						'',
+						'path'
+					),
+					new CachedMountFileInfo(
+						$this->getUserMock('user2'),
+						1,
+						1,
+						'/user2/files/',
+						null,
+						'',
+						'path'
+					)
+				]);
+		} else {
+			$this->userMountCache->expects($this->never())
+				->method('getMountsForFileId');
+		}
 
 		$this->settings->expects($this->exactly(2))
 			->method('filterUsersBySetting')
@@ -853,7 +943,7 @@ class FilesHooksTest extends TestCase {
 			['notAuthor', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
 			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
 			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
-			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath','path/subpath', false, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
+			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path/subpath', false, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
 		];
 	}
 

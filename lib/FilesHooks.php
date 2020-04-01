@@ -30,10 +30,14 @@ use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IManager;
+use OCP\Files\Config\ICachedMountFileInfo;
+use OCP\Files\Config\ICachedMountInfo;
+use OCP\Files\Config\IUserMountCache;
 use OCP\Files\IRootFolder;
 use OCP\Files\Mount\IMountPoint;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
+use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IGroup;
 use OCP\IGroupManager;
@@ -82,6 +86,10 @@ class FilesHooks {
 
 	/** @var CurrentUser */
 	protected $currentUser;
+	/** @var IUserMountCache */
+	protected $userMountCache;
+	/** @var IConfig */
+	protected $config;
 
 	/** @var string|bool */
 	protected $moveCase = false;
@@ -94,21 +102,6 @@ class FilesHooks {
 	/** @var string */
 	protected $oldParentId;
 
-	/**
-	 * Constructor
-	 *
-	 * @param IManager $manager
-	 * @param Data $activityData
-	 * @param UserSettings $userSettings
-	 * @param IGroupManager $groupManager
-	 * @param View $view
-	 * @param IRootFolder $rootFolder
-	 * @param IShareHelper $shareHelper
-	 * @param IDBConnection $connection
-	 * @param IURLGenerator $urlGenerator
-	 * @param ILogger $logger
-	 * @param CurrentUser $currentUser
-	 */
 	public function __construct(IManager $manager,
 								Data $activityData,
 								UserSettings $userSettings,
@@ -119,7 +112,9 @@ class FilesHooks {
 								IDBConnection $connection,
 								IURLGenerator $urlGenerator,
 								ILogger $logger,
-								CurrentUser $currentUser) {
+								CurrentUser $currentUser,
+								IUserMountCache $userMountCache,
+								IConfig $config) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
@@ -131,6 +126,8 @@ class FilesHooks {
 		$this->urlGenerator = $urlGenerator;
 		$this->logger = $logger;
 		$this->currentUser = $currentUser;
+		$this->userMountCache = $userMountCache;
+		$this->config = $config;
 	}
 
 	/**
@@ -197,7 +194,19 @@ class FilesHooks {
 
 		$this->generateRemoteActivity($accessList['remotes'], $activityType, time(), $this->currentUser->getCloudId(), $accessList['ownerPath']);
 
-		$affectedUsers = $accessList['users'];
+		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
+			$mountsForFile = $this->userMountCache->getMountsForFileId($fileId);
+			$affectedUserIds = array_map(function (ICachedMountInfo $mount) {
+				return $mount->getUser()->getUID();
+			}, $mountsForFile);
+			$affectedPaths = array_map(function (ICachedMountFileInfo $mount) {
+				return $this->getVisiblePath($mount->getPath());
+			}, $mountsForFile);
+			$affectedUsers = array_combine($affectedUserIds, $affectedPaths);
+		} else {
+			$affectedUsers = $accessList['users'];
+		}
+
 		$filteredStreamUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'stream', $activityType);
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting(array_keys($affectedUsers), 'email', $activityType);
 
@@ -616,15 +625,20 @@ class FilesHooks {
 		$accessList = $this->shareHelper->getPathsForAccessList($node);
 
 		$path = $node->getPath();
-		$sections = explode('/', $path, 4);
+		$accessList['ownerPath'] = $this->getVisiblePath($path);
+		return $accessList;
+	}
 
-		$accessList['ownerPath'] = '/';
+	protected function getVisiblePath(string $absolutePath): string {
+		$sections = explode('/', $absolutePath, 4);
+
+		$path = '/';
 		if (isset($sections[3])) {
 			// Not the case when a file in root is renamed
-			$accessList['ownerPath'] .= $sections[3];
+			$path .= $sections[3];
 		}
 
-		return $accessList;
+		return $path;
 	}
 
 	/**
