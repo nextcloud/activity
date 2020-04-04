@@ -325,6 +325,11 @@ class MailQueueHandler {
 			return true;
 		}
 
+		if (!$this->mailer->validateMailAddress($email)) {
+			$this->logger->warning('Notification for user "{user}" not sent because the email address "{email}" is invalid.', ['user' => $userName, 'email' => $email]);
+			return true;
+		}
+
 		list($mailData, $skippedCount) = $this->getItemsForUser($userName, $maxTime);
 
 		$l = $this->getLanguage($lang);

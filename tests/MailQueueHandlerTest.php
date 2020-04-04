@@ -242,6 +242,10 @@ class MailQueueHandlerTest extends TestCase {
 		$this->mailer->expects($this->once())
 			->method('createEMailTemplate')
 			->willReturn($template);
+		$this->mailer->expects($this->once())
+			->method('validateMailAddress')
+			->with($email)
+			->willReturn(true);
 
 		$template->expects($this->once())
 			->method('addHeader');
