@@ -15,7 +15,7 @@ OC.L10N.register(
     "in {path}" : "во {path}",
     "This stream will show events like additions, changes & shares" : "Овој стрим ќе прикажува настани како додатоци, промени и споделувања",
     "There are no events for this filter" : "Нема настани за овој филтер",
-    "Today" : "Денеска",
+    "Today" : "Денес",
     "Yesterday" : "Вчера",
     "Open file" : "Отвори датотека",
     "Personal activity feed for %s" : "Feed на лични активности за %s",
