@@ -4,7 +4,6 @@ OC.L10N.register(
     "Home" : "﻿ಮುಖಪುಟ",
     "Today" : "Today",
     "Mail" : "ಅಂಚೆ",
-    "Settings" : "ಆಯ್ಕೆ",
-    "Files" : "ಕಡತಗಳು"
+    "Settings" : "ಆಯ್ಕೆ"
 },
 "nplurals=2; plural=(n > 1);");

@@ -7,7 +7,7 @@ OC.L10N.register(
     "Load more activities" : "Laad meer activiteiten",
     "Copied!" : "Gekopieerd!",
     "Not supported!" : "Niet ondersteund!",
-    "Press ⌘-C to copy." : "Druk op ⌘-C om te kopiëren.",
+    "Press ⌘-C to copy." : "Druk ⌘-C om te kopiëren.",
     "Press Ctrl-C to copy." : "Druk op Ctrl-C om te kopiëren.",
     "{name} (invisible)" : "{name} (onzichtbaar)",
     "{name} (restricted)" : "{name} (beperkt)",
@@ -23,8 +23,8 @@ OC.L10N.register(
     "Your settings have been updated." : "Je instellingen zijn bijgewerkt",
     "Settings have been updated." : "Instellingen zijn bijgewerkt",
     "All activities" : "Alle activiteiten",
-    "By others" : "Door anderen",
-    "By you" : "Door jou",
+    "By others" : "Van anderen",
+    "By you" : "Van jou",
     "Activity notification for %s" : "Activiteit melding voor %s",
     "Hello %s" : "Hallo %s",
     "Hello %s," : "Hallo %s,",
@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Instellingen",
     "Enable RSS feed" : "Zet RSS-kanaal aan",
     "RSS feed" : "RSS kanaal",
-    "No more events to load" : "Geen activiteiten meer beschikbaar",
-    "\"remote user\"" : "\"externe gebruiker\"",
-    ", " : ", ",
-    "%s and %s" : "%s en %s",
-    "Files" : "Bestanden"
+    "No more events to load" : "Geen activiteiten meer beschikbaar"
 },
 "nplurals=2; plural=(n != 1);");

@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Instillingar",
     "Enable RSS feed" : "Skru på RSS-straum",
     "RSS feed" : "RSS-straum",
-    "No more events to load" : "Inga fleire hendingar å lasta",
-    "\"remote user\"" : "\"fjern brukar\"",
-    ", " : ",",
-    "%s and %s" : "%s og %s",
-    "Files" : "Filer"
+    "No more events to load" : "Inga fleire hendingar å lasta"
 },
 "nplurals=2; plural=(n != 1);");

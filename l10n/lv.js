@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Iestatījumi",
     "Enable RSS feed" : "Ieslēgt RSS plūsmu",
     "RSS feed" : "RSS plūsma",
-    "No more events to load" : "Nav vairs notikumu, ko ielādēt",
-    "\"remote user\"" : "\"attālināts lietotājs\"",
-    ", " : ",",
-    "%s and %s" : "%s un %s",
-    "Files" : "Datnes"
+    "No more events to load" : "Nav vairs notikumu, ko ielādēt"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

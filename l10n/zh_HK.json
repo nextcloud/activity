@@ -43,10 +43,6 @@
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "選擇哪些活動你想收到提示郵件，這將顯示在活動應用stream裡",
     "Settings" : "設定",
     "Enable RSS feed" : "啟用 RSS 源",
-    "No more events to load" : "已無更多事件",
-    "\"remote user\"" : "遠程用戶",
-    ", " : ",",
-    "%s and %s" : "%s和%s",
-    "Files" : "檔案"
+    "No more events to load" : "已無更多事件"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

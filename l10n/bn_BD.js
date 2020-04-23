@@ -18,9 +18,6 @@ OC.L10N.register(
     "Weekly" : "সাপ্তাহিক",
     "Settings" : "সেটিংস",
     "Enable RSS feed" : "RSS feed উপযোগী ক኉ন",
-    "No more events to load" : "লোড করার কোন ইভেন্ট খুঁজে পাওয়া গেল না।",
-    ", " : ", ",
-    "%s and %s" : "%s এবং %s",
-    "Files" : "ফাইল"
+    "No more events to load" : "লোড করার কোন ইভেন্ট খুঁজে পাওয়া গেল না।"
 },
 "nplurals=2; plural=(n != 1);");

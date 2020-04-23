@@ -35,8 +35,6 @@ OC.L10N.register(
     "Weekly" : "Setiap minggu",
     "Settings" : "Tetapan",
     "RSS feed" : "Suapan RSS",
-    "No more events to load" : "Tiada aktiviti untuk memuat",
-    ", " : ",",
-    "Files" : "Fail"
+    "No more events to load" : "Tiada aktiviti untuk memuat"
 },
 "nplurals=1; plural=0;");

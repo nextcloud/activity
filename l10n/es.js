@@ -25,7 +25,7 @@ OC.L10N.register(
     "All activities" : "Todas las actividades",
     "By others" : "Por otros",
     "By you" : "Por ti",
-    "Activity notification for %s" : "Notifiación de actividad para %s",
+    "Activity notification for %s" : "Notificación de actividad para %s",
     "Hello %s" : "Hola %s",
     "Hello %s," : "Hola %s,",
     "There was some activity at %s" : "Ha habido actividad en %s",
@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Configuración",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
-    "No more events to load" : "No hay más eventos por cargar.",
-    "\"remote user\"" : "\"usuario remoto\"",
-    ", " : ", ",
-    "%s and %s" : "%s y %s",
-    "Files" : "Archivos"
+    "No more events to load" : "No hay más eventos por cargar."
 },
 "nplurals=2; plural=(n != 1);");

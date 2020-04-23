@@ -16,9 +16,9 @@
     "Today" : "今天",
     "Yesterday" : "昨天",
     "Open file" : "開啟檔案",
-    "Personal activity feed for %s" : "個人動態 %s",
+    "Personal activity feed for %s" : "%s 的個人動態摘要",
     "Your feed URL is invalid" : "您的 Feed URL 是無效的",
-    "Your settings have been updated." : "您的設定已更新",
+    "Your settings have been updated." : "您的設定已更新。",
     "Settings have been updated." : "設定已更新。",
     "All activities" : "所有活動",
     "By others" : "由其他人",
@@ -26,8 +26,8 @@
     "Activity notification for %s" : "%s 的活動通知",
     "Hello %s" : "%s你好",
     "Hello %s," : "哈囉 %s ，",
-    "There was some activity at %s" : "%s 的活動",
-    "_and %n more _::_and %n more _" : ["以及多%n個"],
+    "There was some activity at %s" : "%s 有一些活動",
+    "_and %n more _::_and %n more _" : ["以及其餘 %n 項"],
     "Mail" : "電子郵件",
     "Stream" : "串流",
     "This application enables users to view actions related to their files in Nextcloud." : "此應用程式允許使用者能夠在 Nextcloud 中查看與其文件相關的操作。",
@@ -47,12 +47,8 @@
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "選擇你希望接受到郵件通知或者在應用程式中顯示的活動。",
     "Choose which activities you want to see in your stream." : "請選擇您想在您串流中看到的活動",
     "Settings" : "設定",
-    "Enable RSS feed" : "啟用 RSS feed",
+    "Enable RSS feed" : "啟用 RSS 摘要",
     "RSS feed" : "RSS 摘要",
-    "No more events to load" : "已載入所有事件",
-    "\"remote user\"" : "「遠端用戶」",
-    ", " : "，",
-    "%s and %s" : "%s 與 %s",
-    "Files" : "檔案"
+    "No more events to load" : "已載入所有事件"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

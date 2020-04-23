@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Axustes",
     "Enable RSS feed" : "Activar as fontes RSS",
     "RSS feed" : "Fontes RSS",
-    "No more events to load" : "Non hai máis eventos para cargar",
-    "\"remote user\"" : "«usuario remoto»",
-    ", " : ", ",
-    "%s and %s" : "%s e %s",
-    "Files" : "Ficheiros"
+    "No more events to load" : "Non hai máis eventos para cargar"
 },
 "nplurals=2; plural=(n != 1);");

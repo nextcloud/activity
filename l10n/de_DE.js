@@ -43,7 +43,7 @@ OC.L10N.register(
     "You need to set up your email address before you can receive notification emails." : "Bevor Sie E-Mail-Benachrichtigungen empfangen können, müssen Sie Ihre E-Mail-Adresse einrichten.",
     "Send emails:" : "E-Mails senden:",
     "As soon as possible" : "So bald wie möglich",
-    "Hourly" : "stündlich",
+    "Hourly" : "Stündlich",
     "Daily" : "täglich",
     "Weekly" : "wöchentlich",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Wählen Sie für welche Aktivitäten E-Mails empfangen und welche Aktivitäten in Ihrem Feed angezeigt werden.",
@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Einstellungen",
     "Enable RSS feed" : "RSS-Feed aktivieren",
     "RSS feed" : "RSS-Feed",
-    "No more events to load" : "Keine weiteren Ereignisse zu laden",
-    "\"remote user\"" : "„Externer Benutzer“",
-    ", " : ", ",
-    "%s and %s" : "%s und %s",
-    "Files" : "Dateien"
+    "No more events to load" : "Keine weiteren Ereignisse zu laden"
 },
 "nplurals=2; plural=(n != 1);");

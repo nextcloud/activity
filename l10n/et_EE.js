@@ -25,12 +25,14 @@ OC.L10N.register(
     "All activities" : "Kõik tegevused",
     "By others" : "Teiste poolt",
     "By you" : "Sinu poolt",
+    "Activity notification for %s" : "Tegevuse: %s, märguanne",
     "Hello %s" : "Tere %s",
     "Hello %s," : "Tere %s,",
     "There was some activity at %s" : "Mõningane tegevus %s",
     "_and %n more _::_and %n more _" : ["ja %n veel","ja%n veel "],
     "Mail" : "Kirjad",
     "Stream" : "Voog",
+    "This application enables users to view actions related to their files in Nextcloud." : "See rakendus võimaldab kasutajal vaadata oma Nextcloudi failidega seonduvaid tegevsi.",
     "Activity feed" : "Tegevuste voog",
     "Send activity emails" : "Saada tegevuste kohta e-kirju",
     "Default settings" : "Vaikeseaded",
@@ -48,10 +50,6 @@ OC.L10N.register(
     "Settings" : "Seaded",
     "Enable RSS feed" : "Luba RSS voog",
     "RSS feed" : "RRS voog",
-    "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
-    "\"remote user\"" : "\"eemal olev kasutaja\"",
-    ", " : ", ",
-    "%s and %s" : "%s ja %s",
-    "Files" : "Failid"
+    "No more events to load" : "Pole rohkem sündmusi, mida laadida."
 },
 "nplurals=2; plural=(n != 1);");

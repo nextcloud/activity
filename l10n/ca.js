@@ -17,7 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "No hi ha esdeveniments per a aquest filtre",
     "Today" : "Avui",
     "Yesterday" : "Ahir",
-    "Open file" : "Fitxer obert",
+    "Open file" : "Obre el fitxer",
     "Personal activity feed for %s" : "Canal d'activitat personal per a %s",
     "Your feed URL is invalid" : "L'URL del canal no és vàlida",
     "Your settings have been updated." : "S'han actualitzat els vostres paràmetres.",
@@ -26,8 +26,8 @@ OC.L10N.register(
     "By others" : "Activitat d'altres usuaris",
     "By you" : "Activitat pròpia",
     "Activity notification for %s" : "Notificació d'activitat per %s",
-    "Hello %s" : "Hola %s",
-    "Hello %s," : "Hola %s,",
+    "Hello %s" : "Hola, %s",
+    "Hello %s," : "Hola, %s,",
     "There was some activity at %s" : "Hi va haver activitat el %s",
     "_and %n more _::_and %n more _" : ["i %n més","i %n més"],
     "Mail" : "Correu electrònic",
@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Paràmetres",
     "Enable RSS feed" : "Activa el canal RSS",
     "RSS feed" : "Canal RSS",
-    "No more events to load" : "No hi ha més esdeveniments per carregar",
-    "\"remote user\"" : "«usuari remot»",
-    ", " : ", ",
-    "%s and %s" : "%s i %s",
-    "Files" : "Fitxers"
+    "No more events to load" : "No hi ha més esdeveniments per carregar"
 },
 "nplurals=2; plural=(n != 1);");

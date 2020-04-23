@@ -46,10 +46,6 @@ OC.L10N.register(
     "Settings" : "सेटिङ्हरू",
     "Enable RSS feed" : "RSS फिड सक्षम गर्नुहोस्",
     "RSS feed" : "RSS फिड",
-    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
-    "\"remote user\"" : "\"रिमोट प्रयोगकर्ता\"",
-    ", " : ",",
-    "%s and %s" : "%s र %s",
-    "Files" : "फाइलहरू"
+    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्"
 },
 "nplurals=2; plural=(n != 1);");

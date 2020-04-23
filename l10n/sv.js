@@ -4,7 +4,7 @@ OC.L10N.register(
     "Activity" : "Aktiviteter",
     "An error occurred while loading activities" : "Något gick snett vid inläsning av aktiviteter",
     "No activity yet" : "Inga aktiviteter ännu",
-    "Load more activities" : "Ladda fler aktiviteter",
+    "Load more activities" : "Läs in fler aktiviteter",
     "Copied!" : "Kopierad!",
     "Not supported!" : "Stöds inte!",
     "Press ⌘-C to copy." : "Tryck ⌘-C för att kopiera.",
@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Inställningar",
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "RSS feed" : "RSS-flöde",
-    "No more events to load" : "Inga fler aktiviteter.",
-    "\"remote user\"" : "\"externanvändare\"",
-    ", " : ",",
-    "%s and %s" : "%s och %s",
-    "Files" : "Filer"
+    "No more events to load" : "Inga fler aktiviteter."
 },
 "nplurals=2; plural=(n != 1);");

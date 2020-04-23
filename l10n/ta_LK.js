@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Home" : "அகம்",
     "Today" : "இன்று",
-    "Settings" : "அமைப்புகள்",
-    "Files" : "கோப்புகள்"
+    "Settings" : "அமைப்புகள்"
 },
 "nplurals=2; plural=(n != 1);");

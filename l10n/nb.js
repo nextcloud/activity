@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Innstillinger",
     "Enable RSS feed" : "Skru på RSS-strøm",
     "RSS feed" : "RSS-strøm",
-    "No more events to load" : "Ingen flere hendelser å laste inn",
-    "\"remote user\"" : "\"ekstern bruker\"",
-    ", " : ", ",
-    "%s and %s" : "%s og %s",
-    "Files" : "Filer"
+    "No more events to load" : "Ingen flere hendelser å laste inn"
 },
 "nplurals=2; plural=(n != 1);");

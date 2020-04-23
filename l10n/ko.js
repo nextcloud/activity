@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "설정",
     "Enable RSS feed" : "RSS 피드 사용",
     "RSS feed" : "RSS 피드",
-    "No more events to load" : "더 이상 불러올 이벤트 없음",
-    "\"remote user\"" : "\"원격 사용자\"",
-    ", " : ", ",
-    "%s and %s" : "%s, %s",
-    "Files" : "파일"
+    "No more events to load" : "더 이상 불러올 이벤트 없음"
 },
 "nplurals=1; plural=0;");

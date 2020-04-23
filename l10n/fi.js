@@ -49,12 +49,8 @@ OC.L10N.register(
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Valitse mistä tapahtumista haluat saada sähköposti-ilmoituksen ja mitkä näkyvät vain tapahtumavirrassa.",
     "Choose which activities you want to see in your stream." : "Valitse tapahtumat jotka haluat nähdä tapahtumavirrassasi.",
     "Settings" : "Asetukset",
-    "Enable RSS feed" : "Ota RSS -syöte käyttöön",
+    "Enable RSS feed" : "Ota RSS-syöte käyttöön",
     "RSS feed" : "RSS-syöte",
-    "No more events to load" : "Ei enempää tapahtumia",
-    "\"remote user\"" : "\"etäkäyttäjä\"",
-    ", " : ", ",
-    "%s and %s" : "%s ja %s",
-    "Files" : "Tiedostot"
+    "No more events to load" : "Ei enempää tapahtumia"
 },
 "nplurals=2; plural=(n != 1);");

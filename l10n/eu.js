@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Ezarpenak",
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "RSS feed" : "RSS jarioa",
-    "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
-    "\"remote user\"" : "\"urruneko erabiltzailea\"",
-    ", " : ", ",
-    "%s and %s" : "%s eta %s",
-    "Files" : "Fitxategiak"
+    "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik"
 },
 "nplurals=2; plural=(n != 1);");

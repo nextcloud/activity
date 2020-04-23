@@ -15,7 +15,7 @@ OC.L10N.register(
     "in {path}" : "w {path}",
     "This stream will show events like additions, changes & shares" : "Ta lista pokaże takie wydarzenia jak: dodatki, zmiany i udostępnienia",
     "There are no events for this filter" : "Brak wydarzeń dla tego filtra",
-    "Today" : "Dziś",
+    "Today" : "Dzisiaj",
     "Yesterday" : "Wczoraj",
     "Open file" : "Otwórz plik",
     "Personal activity feed for %s" : "Osobisty zasób aktywności dla %s",
@@ -35,7 +35,7 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud." : "Ta aplikacja umożliwia użytkownikom przeglądanie akcji związanych z ich plikami w usłudze Nextcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ta aplikacja umożliwia użytkownikom przeglądanie akcji związanych z ich plikami w usłudze Nextcloud.\n\t\tPo włączeniu użytkownicy zobaczą nową ikonę \"Aktywność\" w menu aplikacji\n\t\tPo kliknięciu pojawia się nowa strona, na której użytkownicy mogą śledzić działania związane z plikami - od nowych plików, po usunięte pliki, przenoszenie, zmianę nazwy, aktualizacje i wspólną aktywność.\n\t\tUżytkownik może skonfigurować swoje indywidualne ustawienia aktywności w osobistym menu.\n\t\tOkreśla typ czynności do zapisania, a także, czy użytkownik widzi własne czynności,\n\t\tczy są one dostępne tylko w trybie online i czy są one regularnie otrzymywane z podsumowaniem wiadomości e-mail\n\t\tWięcej informacji można znaleźć w Dokumentacji aktywności\". ",
     "Activity feed" : "Zasób aktywności",
-    "Send activity emails" : "Wyślij e-maile o aktywnościach",
+    "Send activity emails" : "Wysyłaj e-maile o aktywnościach",
     "Default settings" : "Ustawienia domyślne",
     "Configure the default activity settings for new users." : "Konfiguruj ustawienia domyśnej aktywności dla nowych użytkowników.",
     "List your own actions in the stream" : "Umieść swoje własne aktywności w strumieniu",
@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Ustawienia",
     "Enable RSS feed" : "Włącz kanał RSS",
     "RSS feed" : "Kanał RSS",
-    "No more events to load" : "Brak wydarzeń do załadowania",
-    "\"remote user\"" : "\"użytkownik zdalny\"",
-    ", " : ", ",
-    "%s and %s" : "%s oraz %s",
-    "Files" : "Pliki"
+    "No more events to load" : "Brak wydarzeń do załadowania"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");
