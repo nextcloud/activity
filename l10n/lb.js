@@ -39,10 +39,6 @@ OC.L10N.register(
     "Weekly" : "All Woch",
     "Settings" : "Astellungen",
     "Enable RSS feed" : "RSS-Feed aktivéieren",
-    "No more events to load" : "Keng weider Evenementer fir ze lueden",
-    "\"remote user\"" : "\"Remote-Benotzer\"",
-    ", " : ", ",
-    "%s and %s" : "%s an %s",
-    "Files" : "Fichieren"
+    "No more events to load" : "Keng weider Evenementer fir ze lueden"
 },
 "nplurals=2; plural=(n != 1);");

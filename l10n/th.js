@@ -48,10 +48,6 @@ OC.L10N.register(
     "Settings" : "การตั้งค่า",
     "Enable RSS feed" : "เปิดใช้งานฟีด RSS",
     "RSS feed" : "ฟีด RSS",
-    "No more events to load" : "ไม่มีการโหลดกิจกรรมเพิ่มเติม",
-    "\"remote user\"" : "\"ผู้ใช้โดยการรีโมท\"",
-    ", " : "หรือ",
-    "%s and %s" : "%s และ %s",
-    "Files" : "ไฟล์"
+    "No more events to load" : "ไม่มีการโหลดกิจกรรมเพิ่มเติม"
 },
 "nplurals=1; plural=0;");

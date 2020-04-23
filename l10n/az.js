@@ -20,10 +20,6 @@ OC.L10N.register(
     "Weekly" : "Həftəlik",
     "Settings" : "Quraşdırmalar",
     "Enable RSS feed" : "RSS ötürməsinin işə salinmaslı",
-    "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur",
-    "\"remote user\"" : "\"uzaq istifadəçi\"",
-    ", " : ",",
-    "%s and %s" : "%s və %s",
-    "Files" : "Fayllar"
+    "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur"
 },
 "nplurals=2; plural=(n != 1);");

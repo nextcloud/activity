@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Agordo",
     "Enable RSS feed" : "Aktivigi RSS-fluo",
     "RSS feed" : "RSS-a fluo",
-    "No more events to load" : "Ne estas pli da eventoj.",
-    "\"remote user\"" : "„fora uzanto“",
-    ", " : ", ",
-    "%s and %s" : "%s kaj %s",
-    "Files" : "Dosieroj"
+    "No more events to load" : "Ne estas pli da eventoj."
 },
 "nplurals=2; plural=(n != 1);");

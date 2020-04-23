@@ -30,9 +30,6 @@ OC.L10N.register(
     "There was some activity at %s" : "%sက လုပ်ဆောင်မှု အချို့ ရှိခဲ့သည်။",
     "_and %n more _::_and %n more _" : ["နှင့် အပို%n"],
     "Mail" : "စာ",
-    "Stream" : "လမ်းကြောင်း",
-    "\"remote user\"" : "\"အဝေးမှ အသုံးပြုသူ\"",
-    ", " : "၊",
-    "%s and %s" : "%sနှင့် %s"
+    "Stream" : "လမ်းကြောင်း"
 },
 "nplurals=1; plural=0;");

@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Pengaturan",
     "Enable RSS feed" : "Aktifkan RSS feed",
     "RSS feed" : "RSS feed",
-    "No more events to load" : "Tidak ada lagi acara untuk dimuat",
-    "\"remote user\"" : "\"remote user\"",
-    ", " : ", ",
-    "%s and %s" : "%s dan %s",
-    "Files" : "Berkas"
+    "No more events to load" : "Tidak ada lagi acara untuk dimuat"
 },
 "nplurals=1; plural=0;");

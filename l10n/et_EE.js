@@ -50,10 +50,6 @@ OC.L10N.register(
     "Settings" : "Seaded",
     "Enable RSS feed" : "Luba RSS voog",
     "RSS feed" : "RRS voog",
-    "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
-    "\"remote user\"" : "\"eemal olev kasutaja\"",
-    ", " : ", ",
-    "%s and %s" : "%s ja %s",
-    "Files" : "Failid"
+    "No more events to load" : "Pole rohkem sündmusi, mida laadida."
 },
 "nplurals=2; plural=(n != 1);");

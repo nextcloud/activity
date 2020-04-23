@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Instellings",
     "Enable RSS feed" : "Aktiveer RSS-voer",
     "RSS feed" : "RSS-voer",
-    "No more events to load" : "Geen meer gebeure om te laai",
-    "\"remote user\"" : "“afstandsgebruiker”",
-    ", " : ", ",
-    "%s and %s" : "%s en %s",
-    "Files" : "Lêers"
+    "No more events to load" : "Geen meer gebeure om te laai"
 },
 "nplurals=2; plural=(n != 1);");

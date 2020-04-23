@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Paràmetres",
     "Enable RSS feed" : "Activa el canal RSS",
     "RSS feed" : "Canal RSS",
-    "No more events to load" : "No hi ha més esdeveniments per carregar",
-    "\"remote user\"" : "«usuari remot»",
-    ", " : ", ",
-    "%s and %s" : "%s i %s",
-    "Files" : "Fitxers"
+    "No more events to load" : "No hi ha més esdeveniments per carregar"
 },
 "nplurals=2; plural=(n != 1);");

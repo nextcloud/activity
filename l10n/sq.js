@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Konfigurimet",
     "Enable RSS feed" : "Aktivizoni Prurje RSS",
     "RSS feed" : "Prurja RSS",
-    "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
-    "\"remote user\"" : "\"përdorues i largët\"",
-    ", " : ",",
-    "%s and %s" : "%s dhe %s",
-    "Files" : "Skedar"
+    "No more events to load" : "S’ka më veprimtari për t’u ngarkuar"
 },
 "nplurals=2; plural=(n != 1);");

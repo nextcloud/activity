@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Поставке",
     "Enable RSS feed" : "Укључи РСС довод",
     "RSS feed" : "РСС довод",
-    "No more events to load" : "Нема више догађаја за приказ",
-    "\"remote user\"" : "„удаљени корисник“",
-    ", " : ", ",
-    "%s and %s" : "%s и %s",
-    "Files" : "Фајлови"
+    "No more events to load" : "Нема више догађаја за приказ"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Inställningar",
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "RSS feed" : "RSS-flöde",
-    "No more events to load" : "Inga fler aktiviteter.",
-    "\"remote user\"" : "\"externanvändare\"",
-    ", " : ",",
-    "%s and %s" : "%s och %s",
-    "Files" : "Filer"
+    "No more events to load" : "Inga fler aktiviteter."
 },
 "nplurals=2; plural=(n != 1);");

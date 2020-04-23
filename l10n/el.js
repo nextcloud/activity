@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Ρυθμίσεις",
     "Enable RSS feed" : "Ενεργοποίηση ροής πληροφοριών RSS",
     "RSS feed" : "Ροή RSS",
-    "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
-    "\"remote user\"" : "\"απομακρυσμένος χρήστης\"",
-    ", " : ", ",
-    "%s and %s" : "%s και %s",
-    "Files" : "Αρχεία"
+    "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση"
 },
 "nplurals=2; plural=(n != 1);");

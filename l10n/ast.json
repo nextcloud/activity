@@ -39,10 +39,6 @@
     "Weekly" : "Selmanalmente",
     "Settings" : "Axustes",
     "Enable RSS feed" : "Habilitar feed RSS",
-    "No more events to load" : "Nun hai más eventos pa cargar",
-    "\"remote user\"" : "«usuariu remotu»",
-    ", " : ", ",
-    "%s and %s" : "%s y %s",
-    "Files" : "Ficheros"
+    "No more events to load" : "Nun hai más eventos pa cargar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

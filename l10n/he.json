@@ -49,10 +49,6 @@
     "Settings" : "הגדרות",
     "Enable RSS feed" : "לאפשר הזנת RSS",
     "RSS feed" : "ערוץ RSS",
-    "No more events to load" : "אין אירועים נוספים לטעינה",
-    "\"remote user\"" : "\"משתמש מרוחק\"",
-    ", " : ",",
-    "%s and %s" : "%s ו- %s",
-    "Files" : "קבצים"
+    "No more events to load" : "אין אירועים נוספים לטעינה"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;"
 }

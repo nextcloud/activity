@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "設定",
     "Enable RSS feed" : "RSSフィードを有効にする",
     "RSS feed" : "RSS フィード",
-    "No more events to load" : "これ以上読み込むイベントはありません",
-    "\"remote user\"" : "\"リモートユーザー\"",
-    ", " : ", ",
-    "%s and %s" : "%s と %s",
-    "Files" : "ファイル"
+    "No more events to load" : "これ以上読み込むイベントはありません"
 },
 "nplurals=1; plural=0;");

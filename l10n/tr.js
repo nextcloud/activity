@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Ayarlar",
     "Enable RSS feed" : "RSS akışı kullanılsın",
     "RSS feed" : "RSS akışı",
-    "No more events to load" : "Yüklenecek başka bir olay yok",
-    "\"remote user\"" : "\"uzak kullanıcı\"",
-    ", " : ", ",
-    "%s and %s" : "%s ve %s",
-    "Files" : "Dosyalar"
+    "No more events to load" : "Yüklenecek başka bir olay yok"
 },
 "nplurals=2; plural=(n > 1);");
