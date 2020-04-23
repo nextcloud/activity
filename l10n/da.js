@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Indstillinger",
     "Enable RSS feed" : "Aktivér RSS feed",
     "RSS feed" : "RSS feed",
-    "No more events to load" : "Der er Ikke flere aktiviteter som kan indlæses",
-    "\"remote user\"" : "\"ekstern bruger\"",
-    ", " : ", ",
-    "%s and %s" : "%s og %s",
-    "Files" : "Filer"
+    "No more events to load" : "Der er Ikke flere aktiviteter som kan indlæses"
 },
 "nplurals=2; plural=(n != 1);");

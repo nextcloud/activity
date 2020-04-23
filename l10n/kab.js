@@ -49,10 +49,6 @@ OC.L10N.register(
     "Settings" : "Iɣewwaṛen",
     "Enable RSS feed" : "Ssermed asuddem RSS",
     "RSS feed" : "Asuddem RSS",
-    "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
-    "\"remote user\"" : "\"aseqdac anmeggag\"",
-    ", " : ", ",
-    "%s and %s" : "%s akked %s",
-    "Files" : "Ifuyla"
+    "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen"
 },
 "nplurals=2; plural=(n != 1);");

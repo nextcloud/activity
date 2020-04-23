@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "سمونې",
     "Enable RSS feed" : "RRS لړ فعال کړئ",
     "RSS feed" : "RRS لړ ",
-    "No more events to load" : "نورې کړنې نشته",
-    "\"remote user\"" : "\"د بل ځای کارن\"",
-    ", " : "،",
-    "%s and %s" : "%s او %s",
-    "Files" : "فایلونه"
+    "No more events to load" : "نورې کړنې نشته"
 },
 "nplurals=2; plural=(n != 1);");

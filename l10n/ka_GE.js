@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "პარამეტრები",
     "Enable RSS feed" : "RSS ლენტის გააქტიურება",
     "RSS feed" : "RSS ლენტა",
-    "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
-    "\"remote user\"" : "\"დისტანციური მომხმარებელი\"",
-    ", " : ",",
-    "%s and %s" : "%s და %s",
-    "Files" : "ფაილები"
+    "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია"
 },
 "nplurals=2; plural=(n!=1);");

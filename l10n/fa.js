@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "تنظیمات",
     "Enable RSS feed" : "فعالسازی فید RSS",
     "RSS feed" : "فید RSS",
-    "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
-    "\"remote user\"" : "\"کاربران از راه‌ دور\"",
-    ", " : ",",
-    "%s and %s" : "%s و %s",
-    "Files" : "فایل ها"
+    "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد"
 },
 "nplurals=2; plural=(n > 1);");

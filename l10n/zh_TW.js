@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "設定",
     "Enable RSS feed" : "啟用 RSS 摘要",
     "RSS feed" : "RSS 摘要",
-    "No more events to load" : "已載入所有事件",
-    "\"remote user\"" : "「遠端使用者」",
-    ", " : "，",
-    "%s and %s" : "%s 與 %s",
-    "Files" : "檔案"
+    "No more events to load" : "已載入所有事件"
 },
 "nplurals=1; plural=0;");

@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Setări",
     "Enable RSS feed" : "Activați feed RSS",
     "RSS feed" : "Flux RSS",
-    "No more events to load" : "Nu mai sunt evenimente de încărcat",
-    "\"remote user\"" : "\"utilizator la distanță\"",
-    ", " : ",",
-    "%s and %s" : "%s și %s",
-    "Files" : "Fișiere"
+    "No more events to load" : "Nu mai sunt evenimente de încărcat"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Beállítások",
     "Enable RSS feed" : "RSS-csatorna engedélyezése",
     "RSS feed" : "RSS-csatorna",
-    "No more events to load" : "Nincs több esemény",
-    "\"remote user\"" : "„távoli felhasználó”",
-    ", " : ", ",
-    "%s and %s" : "%s és %s",
-    "Files" : "Fájlok"
+    "No more events to load" : "Nincs több esemény"
 },
 "nplurals=2; plural=(n != 1);");

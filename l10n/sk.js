@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Nastavenia",
     "Enable RSS feed" : "Povoliť RSS kanál",
     "RSS feed" : "RSS kanál",
-    "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
-    "\"remote user\"" : "\"vzdialený používateľ\"",
-    ", " : ", ",
-    "%s and %s" : "%s a %s",
-    "Files" : "Súbory"
+    "No more events to load" : "Žiadne ďalšie udalosti na načítanie"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

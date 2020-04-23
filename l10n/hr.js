@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Postavke",
     "Enable RSS feed" : "Omogući sažetak događaja RSS",
     "RSS feed" : "Sažetak događaja RSS",
-    "No more events to load" : "Nema više događaja za učitavanje",
-    "\"remote user\"" : "„udaljeni korisnik”",
-    ", " : ", ",
-    "%s and %s" : "%s i %s",
-    "Files" : "Datoteke"
+    "No more events to load" : "Nema više događaja za učitavanje"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

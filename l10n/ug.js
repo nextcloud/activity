@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Home" : "ئۆي",
     "Today" : "بۈگۈن",
-    "Settings" : "تەڭشەكلەر",
-    "Files" : "ھۆججەتلەر"
+    "Settings" : "تەڭشەكلەر"
 },
 "nplurals=1; plural=0;");

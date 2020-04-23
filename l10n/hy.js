@@ -4,7 +4,6 @@ OC.L10N.register(
     "Today" : "այսօր",
     "Yesterday" : "երեկ",
     "Mail" : "Փոստ",
-    "Settings" : "կարգավորումներ",
-    "Files" : "Ֆայլեր"
+    "Settings" : "կարգավորումներ"
 },
 "nplurals=2; plural=(n != 1);");

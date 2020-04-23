@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Các cài đặt",
     "Enable RSS feed" : "Bật nguồn cấp dữ liệu RSS",
     "RSS feed" : "Nội dung RSS",
-    "No more events to load" : "Không có sự kiện nào",
-    "\"remote user\"" : "\"Người dùng từ xa\"",
-    ", " : ", ",
-    "%s and %s" : "%s và %s",
-    "Files" : "Tệp tin"
+    "No more events to load" : "Không có sự kiện nào"
 },
 "nplurals=1; plural=0;");

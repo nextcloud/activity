@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Nustatymai",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "RSS feed" : "RSS kanalas",
-    "No more events to load" : "Nėra daugiau rodytinų įvykių",
-    "\"remote user\"" : "\"naudotojas kitame serveryje\"",
-    ", " : ", ",
-    "%s and %s" : "%s ir %s",
-    "Files" : "Failai"
+    "No more events to load" : "Nėra daugiau rodytinų įvykių"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

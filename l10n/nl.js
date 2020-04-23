@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Instellingen",
     "Enable RSS feed" : "Zet RSS-kanaal aan",
     "RSS feed" : "RSS kanaal",
-    "No more events to load" : "Geen activiteiten meer beschikbaar",
-    "\"remote user\"" : "\"externe gebruiker\"",
-    ", " : ", ",
-    "%s and %s" : "%s en %s",
-    "Files" : "Bestanden"
+    "No more events to load" : "Geen activiteiten meer beschikbaar"
 },
 "nplurals=2; plural=(n != 1);");

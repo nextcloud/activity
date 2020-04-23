@@ -31,10 +31,6 @@ OC.L10N.register(
     "Hourly" : "පැයක් පාසා",
     "Daily" : "දිනපතා",
     "Weekly" : "සතිපතා",
-    "Settings" : "සැකසුම්",
-    "\"remote user\"" : "\"දූරස්ථ පරිශීලකයා\"",
-    ", " : ", ",
-    "%s and %s" : "%sසහ %s",
-    "Files" : "ගොනු"
+    "Settings" : "සැකසුම්"
 },
 "nplurals=2; plural=(n != 1);");

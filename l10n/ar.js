@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "الإعدادات",
     "Enable RSS feed" : "تفعيل مجرى RSS",
     "RSS feed" : "مجرى RSS",
-    "No more events to load" : "لا توجد أي أحداث للتحميل",
-    "\"remote user\"" : "\"مستخدم عن بعد\"",
-    ", " : "،",
-    "%s and %s" : "%s و %s",
-    "Files" : "الملفات"
+    "No more events to load" : "لا توجد أي أحداث للتحميل"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");
