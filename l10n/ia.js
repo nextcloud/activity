@@ -40,10 +40,6 @@ OC.L10N.register(
     "Weekly" : "Cata septimana",
     "Settings" : "Configurationes",
     "Enable RSS feed" : "Habilita syndication RSS",
-    "No more events to load" : "Nulle altere eventos a cargar",
-    "\"remote user\"" : "\"usator remote\"",
-    ", " : ",",
-    "%s and %s" : "%s e %s",
-    "Files" : "Files"
+    "No more events to load" : "Nulle altere eventos a cargar"
 },
 "nplurals=2; plural=(n != 1);");

@@ -51,10 +51,6 @@ OC.L10N.register(
     "Settings" : "Настройки",
     "Enable RSS feed" : "Разрешаване на RSS емисии",
     "RSS feed" : "RSS емисия",
-    "No more events to load" : "Няма повече известия за зареждане",
-    "\"remote user\"" : "\"отдалечен потребител\"",
-    ", " : ", ",
-    "%s and %s" : "%s и %s",
-    "Files" : "Файлове"
+    "No more events to load" : "Няма повече известия за зареждане"
 },
 "nplurals=2; plural=(n != 1);");
