@@ -132,6 +132,7 @@ class MailQueueHandler {
 			// No users found to notify, mission abort
 			return 0;
 		}
+		$this->logger->debug('Sending notification emails to users: '. implode("|",$affectedUsers));
 
 		$userLanguages = $this->config->getUserValueForUsers('core', 'lang', $affectedUsers);
 		$userTimezones = $this->config->getUserValueForUsers('core', 'timezone', $affectedUsers);
@@ -177,6 +178,7 @@ class MailQueueHandler {
 		}
 		$this->activityManager->setRequirePNG(false);
 
+		$this->logger->debug('eMail notifications sent. Will delete: ' . implode("|",$deleteItemsForUsers));
 		// Delete all entries we dealt with
 		$this->deleteSentItems($deleteItemsForUsers, $sendTime);
 
@@ -405,6 +407,12 @@ class MailQueueHandler {
 		try {
 			$this->mailer->send($message);
 		} catch (\Exception $e) {
+			$this->logger->logException($e, [
+							'message' => 'Failed sending email to user "{user}"',
+							'user' => $user,
+							'app' => 'activity',
+							]);
+			$this->activityManager->setCurrentUserId(null);
 			return false;
 		}
 
@@ -498,6 +506,8 @@ class MailQueueHandler {
 		$query->delete('activity_mq')
 			->where($query->expr()->lte('amq_timestamp', $query->createNamedParameter($maxTime, IQueryBuilder::PARAM_INT)))
 			->andWhere($query->expr()->in('amq_affecteduser', $query->createNamedParameter($affectedUsers, IQueryBuilder::PARAM_STR_ARRAY), IQueryBuilder::PARAM_STR));
-		$query->execute();
+		$this->logger->debug('Delete SQL: ' . $query->getSQL());
+		$result = $query->execute();
+		$this->logger->debug('Delete Statement returned: ' . $result);
 	}
 }
