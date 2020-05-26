@@ -315,7 +315,7 @@ class FilesHooksTest extends TestCase {
 	 * @param bool $mountCacheUsed
 	 * @param array $addNotifications
 	 */
-	public function testAddNotificationsForFileAction($filterUsers, $addNotifications) {
+	public function testAddNotificationsForFileAction($filterUsers, $mountCacheUsed, $addNotifications) {
 		$filesHooks = $this->getFilesHooks([
 			'getSourcePathAndOwner',
 			'getUserPathsFromPath',
