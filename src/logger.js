@@ -1,10 +1,7 @@
-<?php
-/**
- * @copyright Copyright (c) 2016, ownCloud, Inc.
+/*
+ * @copyright 2020 Christoph Wurst <christoph@winzerhof-wurst.at>
  *
- * @author Jan-Christoph Borchardt <hey@jancborchardt.net>
- * @author Joas Schilling <coding@schilljs.com>
- * @author Thomas Müller <thomas.mueller@tmit.eu>
+ * @author 2020 Christoph Wurst <christoph@winzerhof-wurst.at>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -20,8 +17,8 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
-script('activity', 'dist/activity');
-style('activity', 'style');
-?>
+
+import { getLoggerBuilder } from '@nextcloud/logger'
+
+export default getLoggerBuilder().setApp('activity').detectUser().build()
