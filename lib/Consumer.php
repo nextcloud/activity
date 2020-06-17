@@ -37,9 +37,8 @@ class Consumer implements IConsumer {
 
 	/** @var UserSettings */
 	protected $userSettings;
-
-	/** @var IFactory */
-	protected $l10nFactory;
+	/** @var NotificationGenerator */
+	protected $notificationGenerator;
 
 	/**
 	 * Constructor
@@ -47,13 +46,13 @@ class Consumer implements IConsumer {
 	 * @param Data $data
 	 * @param IManager $manager
 	 * @param UserSettings $userSettings
-	 * @param IFactory $l10nFactory
+	 * @param NotificationGenerator $notificationGenerator
 	 */
-	public function __construct(Data $data, IManager $manager, UserSettings $userSettings, IFactory $l10nFactory) {
+	public function __construct(Data $data, IManager $manager, UserSettings $userSettings, NotificationGenerator $notificationGenerator) {
 		$this->data = $data;
 		$this->manager = $manager;
 		$this->userSettings = $userSettings;
-		$this->l10nFactory = $l10nFactory;
+		$this->notificationGenerator = $notificationGenerator;
 	}
 
 	/**
@@ -64,7 +63,6 @@ class Consumer implements IConsumer {
 	 */
 	public function receive(IEvent $event) {
 		$selfAction = $event->getAffectedUser() === $event->getAuthor();
-		$streamSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'stream', $event->getType());
 		$emailSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'email', $event->getType());
 		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'batchtime') : false;
 
@@ -72,8 +70,9 @@ class Consumer implements IConsumer {
 		$createStream = !$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'self');
 
 		// Add activity to stream
-		if ($streamSetting && $createStream) {
-			$this->data->send($event);
+		if ($createStream) {
+			$activityId = $this->data->send($event);
+			$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
 		}
 
 		// User is not the author or wants to see their own actions

@@ -111,7 +111,7 @@ class DataTest extends TestCase {
 			$event->setAuthor($actionUser);
 		}
 
-		$this->assertSame($expectedActivity, $this->data->send($event));
+		$this->assertSame($expectedActivity, $this->data->send($event) !== false);
 
 		$connection = \OC::$server->getDatabaseConnection();
 		$query = $connection->prepare('SELECT `user`, `affecteduser` FROM `*PREFIX*activity` WHERE `app` = ? ORDER BY `activity_id` DESC');

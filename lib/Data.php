@@ -56,9 +56,9 @@ class Data {
 	 * Send an event into the activity stream
 	 *
 	 * @param IEvent $event
-	 * @return bool
+	 * @return int
 	 */
-	public function send(IEvent $event) {
+	public function send(IEvent $event): int {
 		if ($event->getAffectedUser() === '' || $event->getAffectedUser() === null) {
 			return false;
 		}
@@ -100,7 +100,7 @@ class Data {
 			])
 			->execute();
 
-		return true;
+		return $this->connection->lastInsertId('activity');
 	}
 
 	/**
@@ -396,7 +396,31 @@ class Data {
 				'DELETE FROM `*PREFIX*activity`' . $sqlWhere);
 			$query->execute($sqlParameters);
 		}
+	}
 
+	public function getById(int $activityId): ?IEvent {
+		$query = $this->connection->getQueryBuilder();
+		$query->select('*')
+			->from('activity')
+			->where($query->expr()->eq('activity_id', $query->createNamedParameter($activityId)));
 
+		$result = $query->execute();
+		$hasMore = false;
+		if ($row = $result->fetch()) {
+			$event = $this->activityManager->generateEvent();
+			$event->setApp((string) $row['app'])
+				->setType((string) $row['type'])
+				->setAffectedUser((string) $row['affecteduser'])
+				->setAuthor((string) $row['user'])
+				->setTimestamp((int) $row['timestamp'])
+				->setSubject((string) $row['subject'], (array) json_decode($row['subjectparams'], true))
+				->setMessage((string) $row['message'], (array) json_decode($row['messageparams'], true))
+				->setObject((string) $row['object_type'], (int) $row['object_id'], (string) $row['file'])
+				->setLink((string) $row['link']);
+
+			return $event;
+		} else {
+			return null;
+		}
 	}
 }

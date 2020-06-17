@@ -101,6 +101,8 @@ class FilesHooks {
 	protected $oldParentOwner;
 	/** @var string */
 	protected $oldParentId;
+	/** @var NotificationGenerator */
+	protected $notificationGenerator;
 
 	public function __construct(IManager $manager,
 								Data $activityData,
@@ -114,7 +116,9 @@ class FilesHooks {
 								ILogger $logger,
 								CurrentUser $currentUser,
 								IUserMountCache $userMountCache,
-								IConfig $config) {
+								IConfig $config,
+								NotificationGenerator $notificationGenerator
+	) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
@@ -128,6 +132,7 @@ class FilesHooks {
 		$this->currentUser = $currentUser;
 		$this->userMountCache = $userMountCache;
 		$this->config = $config;
+		$this->notificationGenerator = $notificationGenerator;
 	}
 
 	/**
@@ -1176,7 +1181,8 @@ class FilesHooks {
 
 		// Add activity to stream
 		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser->getUID(), 'setting', 'self'))) {
-			$this->activityData->send($event);
+			$activityId = $this->activityData->send($event);
+			$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
 		}
 
 		// Add activity to mail queue
