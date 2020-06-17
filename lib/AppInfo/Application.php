@@ -53,9 +53,6 @@ class Application extends App {
 		$container->registerService(View::class, function() {
 			return new View('');
 		}, false);
-		$container->registerService('isCLI', function() {
-			return \OC::$CLI;
-		});
 
 		// Aliases for the controllers so we can use the automatic DI
 		$container->registerAlias('ActivitiesController', Activities::class);
