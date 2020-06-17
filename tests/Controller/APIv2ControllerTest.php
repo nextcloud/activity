@@ -23,7 +23,7 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests\Controller;
 
-use OCA\Activity\Controller\APIv2;
+use OCA\Activity\Controller\APIv2Controller;
 use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\Tests\TestCase;
 use OCP\Activity\IFilter;
@@ -52,7 +52,7 @@ use PHPUnit\Framework\MockObject\MockObject;
  * @group DB
  * @package OCA\Activity\Tests\Controller
  */
-class APIv2Test extends TestCase {
+class APIv2ControllerTest extends TestCase {
 	/** @var IRequest|MockObject */
 	protected $request;
 
@@ -92,7 +92,7 @@ class APIv2Test extends TestCase {
 	/** @var IL10N */
 	protected $l10n;
 
-	/** @var APIv2 */
+	/** @var APIv2Controller */
 	protected $controller;
 
 	protected function setUp(): void {
@@ -122,9 +122,9 @@ class APIv2Test extends TestCase {
 		parent::tearDown();
 	}
 
-	protected function getController(array $methods = []): APIv2 {
+	protected function getController(array $methods = []): APIv2Controller {
 		if (empty($methods)) {
-			return new APIv2(
+			return new APIv2Controller(
 				'activity',
 				$this->request,
 				$this->activityManager,
@@ -140,7 +140,7 @@ class APIv2Test extends TestCase {
 			);
 		}
 
-		return $this->getMockBuilder(APIv2::class)
+		return $this->getMockBuilder(APIv2Controller::class)
 			->setConstructorArgs([
 				'activity',
 				$this->request,

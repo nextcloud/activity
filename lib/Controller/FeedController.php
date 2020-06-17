@@ -34,7 +34,7 @@ use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\L10N\IFactory;
 
-class Feed extends Controller {
+class FeedController extends Controller {
 	const DEFAULT_PAGE_SIZE = 30;
 
 	/** @var \OCA\Activity\Data */

@@ -30,11 +30,11 @@ use OCA\Activity\BackgroundJob\EmailNotification;
 use OCA\Activity\BackgroundJob\ExpireActivities;
 use OCA\Activity\Capabilities;
 use OCA\Activity\Consumer;
-use OCA\Activity\Controller\Activities;
-use OCA\Activity\Controller\APIv1;
-use OCA\Activity\Controller\APIv2;
-use OCA\Activity\Controller\Feed;
-use OCA\Activity\Controller\Settings;
+use OCA\Activity\Controller\ActivitiesController;
+use OCA\Activity\Controller\APIv1Controller;
+use OCA\Activity\Controller\APIv2Controller;
+use OCA\Activity\Controller\FeedController;
+use OCA\Activity\Controller\SettingsController;
 use OCA\Activity\CurrentUser;
 use OCA\Activity\Data;
 use OCA\Activity\FilesHooks;
@@ -106,18 +106,18 @@ class ApplicationTest extends TestCase {
 			[ExpireActivities::class, TimedJob::class],
 
 			// Controller
-			['ActivitiesController', Activities::class],
-			['ActivitiesController', Controller::class],
-			['APIv1Controller', APIv1::class],
-			['APIv1Controller', Controller::class],
-			['APIv1Controller', OCSController::class],
-			['APIv2Controller', APIv2::class],
-			['APIv2Controller', Controller::class],
-			['APIv2Controller', OCSController::class],
-			['FeedController', Feed::class],
-			['FeedController', Controller::class],
-			['SettingsController', Settings::class],
-			['SettingsController', Controller::class],
+			[ActivitiesController::class],
+			[ActivitiesController::class, Controller::class],
+			[APIv1Controller::class],
+			[APIv1Controller::class, Controller::class],
+			[APIv1Controller::class, OCSController::class],
+			[APIv2Controller::class],
+			[APIv2Controller::class, Controller::class],
+			[APIv2Controller::class, OCSController::class],
+			[FeedController::class],
+			[FeedController::class, Controller::class],
+			[SettingsController::class, SettingsController::class],
+			[SettingsController::class, Controller::class],
 		];
 	}
 

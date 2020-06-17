@@ -29,7 +29,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
 use OCP\IRequest;
 
-class APIv1 extends OCSController {
+class APIv1Controller extends OCSController {
 
 	/** @var Data */
 	protected $data;

@@ -37,7 +37,7 @@ use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\Security\ISecureRandom;
 
-class Settings extends Controller {
+class SettingsController extends Controller {
 	/** @var \OCP\IConfig */
 	protected $config;
 
