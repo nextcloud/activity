@@ -7,6 +7,16 @@
  * See the COPYING-README file.
  *
  */
+
+function escapeHTML(text) {
+	return text.toString()
+		.split('&').join('&amp;')
+		.split('<').join('&lt;')
+		.split('>').join('&gt;')
+		.split('"').join('&quot;')
+		.split('\'').join('&#039;')
+}
+
 $(function(){
 	OCA.Activity = OCA.Activity || {};
 
