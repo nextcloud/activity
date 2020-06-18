@@ -31,7 +31,7 @@ use OCP\IRequest;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
-class Activities extends Controller {
+class ActivitiesController extends Controller {
 
 	/** @var IConfig */
 	protected $config;

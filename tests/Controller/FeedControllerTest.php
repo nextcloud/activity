@@ -23,7 +23,7 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests\Controller;
 
-use OCA\Activity\Controller\Feed;
+use OCA\Activity\Controller\FeedController;
 use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\Util;
@@ -38,7 +38,7 @@ use OCA\Activity\Data;
 use OCP\IUser;
 use PHPUnit\Framework\MockObject\MockObject;
 
-class FeedTest extends TestCase {
+class FeedControllerTest extends TestCase {
 	/** @var IConfig|MockObject */
 	protected $config;
 
@@ -63,7 +63,7 @@ class FeedTest extends TestCase {
 	/** @var \OCP\IL10N */
 	protected $l10n;
 
-	/** @var Feed */
+	/** @var FeedController */
 	protected $controller;
 
 	protected function setUp(): void {
@@ -81,7 +81,7 @@ class FeedTest extends TestCase {
 		/** @var $urlGenerator IURLGenerator|MockObject */
 		$urlGenerator = $this->createMock(IURLGenerator::class);
 
-		$this->controller = new Feed(
+		$this->controller = new FeedController(
 			'activity',
 			$this->request,
 			$this->data,

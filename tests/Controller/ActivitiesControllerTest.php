@@ -22,7 +22,7 @@
 
 namespace OCA\Activity\Tests\Controller;
 
-use OCA\Activity\Controller\Activities;
+use OCA\Activity\Controller\ActivitiesController;
 use OCA\Activity\Tests\TestCase;
 use OCP\ILogger;
 use OCP\Template;
@@ -40,7 +40,7 @@ use OCP\AppFramework\Http\TemplateResponse;
  * @group DB
  * @package OCA\Activity\Tests\Controller
  */
-class ActivitiesTest extends TestCase {
+class ActivitiesControllerTest extends TestCase {
 	/** @var IRequest|MockObject */
 	protected $request;
 	/** @var IConfig|MockObject */
@@ -52,7 +52,7 @@ class ActivitiesTest extends TestCase {
 	/** @var Navigation|MockObject */
 	protected $navigation;
 
-	/** @var Activities */
+	/** @var ActivitiesController */
 	protected $controller;
 
 	protected function setUp(): void {
@@ -67,9 +67,9 @@ class ActivitiesTest extends TestCase {
 		$this->controller = $this->getController();
 	}
 
-	protected function getController(array $methods = []): Activities {
+	protected function getController(array $methods = []): ActivitiesController {
 		if (empty($methods)) {
-			return new Activities(
+			return new ActivitiesController(
 				'activity',
 				$this->request,
 				$this->config,
@@ -79,7 +79,7 @@ class ActivitiesTest extends TestCase {
 			);
 		}
 
-		return $this->getMockBuilder(Activities::class)
+		return $this->getMockBuilder(ActivitiesController::class)
 			->setConstructorArgs([
 				'activity',
 				$this->request,

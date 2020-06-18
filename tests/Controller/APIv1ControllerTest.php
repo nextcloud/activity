@@ -23,7 +23,7 @@ declare(strict_types=1);
 namespace OCA\Activity\Tests\Controller;
 
 use OC\Activity\Manager;
-use OCA\Activity\Controller\APIv1;
+use OCA\Activity\Controller\APIv1Controller;
 use OCA\Activity\CurrentUser;
 use OCA\Activity\Data;
 use OCA\Activity\GroupHelper;
@@ -47,7 +47,7 @@ use OCP\RichObjectStrings\IValidator;
  * @group DB
  * @package OCA\Activity\Tests\Controller
  */
-class APIv1Test extends TestCase {
+class APIv1ControllerTest extends TestCase {
 	protected $originalWEBROOT;
 
 	protected function setUp(): void {
@@ -220,7 +220,7 @@ class APIv1Test extends TestCase {
 
 		$data = new Data($activityManager, \OC::$server->getDatabaseConnection());
 
-		$controller = new APIv1(
+		$controller = new APIv1Controller(
 			'activity',
 			$this->createMock(IRequest::class),
 			$data,
