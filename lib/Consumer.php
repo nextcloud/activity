@@ -74,7 +74,7 @@ class Consumer implements IConsumer {
 		if ($createStream) {
 			$activityId = $this->data->send($event);
 
-			if ($notificationSetting) {
+			if (!$selfAction && $notificationSetting) {
 				$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
 			}
 		}
