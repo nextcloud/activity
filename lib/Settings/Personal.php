@@ -25,9 +25,9 @@ namespace OCA\Activity\Settings;
 
 use OCA\Activity\CurrentUser;
 use OCA\Activity\UserSettings;
+use OCP\Activity\ActivitySettings;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
-use OCP\Activity\ISetting;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -75,7 +75,7 @@ class Personal implements ISettings {
 	 */
 	public function getForm() {
 		$settings = $this->manager->getSettings();
-		usort($settings, function(ISetting $a, ISetting $b) {
+		usort($settings, function(ActivitySettings $a, ActivitySettings $b) {
 			if ($a->getPriority() === $b->getPriority()) {
 				return $a->getIdentifier() > $b->getIdentifier();
 			}
@@ -85,17 +85,18 @@ class Personal implements ISettings {
 
 		$activities = [];
 		foreach ($settings as $setting) {
-			if (!$setting->canChangeStream() && !$setting->canChangeMail()) {
+			if (!$setting->canChangeMail() && !$setting->canChangeNotification()) {
 				// No setting can be changed => don't display
 				continue;
 			}
 
 			$methods = [];
-			if ($setting->canChangeStream()) {
-				$methods[] = IExtension::METHOD_STREAM;
-			}
 			if ($setting->canChangeMail()) {
 				$methods[] = IExtension::METHOD_MAIL;
+			}
+
+			if ($setting->canChangeNotification()) {
+				$methods[] = IExtension::METHOD_NOTIFICATION;
 			}
 
 			$identifier = $setting->getIdentifier();
@@ -103,7 +104,7 @@ class Personal implements ISettings {
 			$activities[$identifier] = array(
 				'desc'		=> $setting->getName(),
 				IExtension::METHOD_MAIL		=> $this->userSettings->getUserSetting($this->user, 'email', $identifier),
-				IExtension::METHOD_STREAM	=> $this->userSettings->getUserSetting($this->user, 'stream', $identifier),
+				IExtension::METHOD_NOTIFICATION	=> $this->userSettings->getUserSetting($this->user, 'notification', $identifier),
 				'methods'	=> $methods,
 			);
 		}
@@ -122,12 +123,13 @@ class Personal implements ISettings {
 		if ($emailEnabled) {
 			$methods = [
 				IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
-				IExtension::METHOD_STREAM => $this->l10n->t('Stream'),
 			];
 		} else {
-			$methods = [
-				IExtension::METHOD_STREAM => $this->l10n->t('Stream'),
-			];
+			$methods = [];
+		}
+
+		if ($this->config->getAppValue('activity', 'enable_notify', 'yes') === 'yes') {
+			$methods[IExtension::METHOD_NOTIFICATION] = $this->l10n->t('Notification');
 		}
 
 		return new TemplateResponse('activity', 'settings/personal', [

@@ -63,6 +63,7 @@ class Consumer implements IConsumer {
 	 */
 	public function receive(IEvent $event) {
 		$selfAction = $event->getAffectedUser() === $event->getAuthor();
+		$notificationSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'notification', $event->getType());
 		$emailSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'email', $event->getType());
 		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'batchtime') : false;
 
@@ -72,7 +73,10 @@ class Consumer implements IConsumer {
 		// Add activity to stream
 		if ($createStream) {
 			$activityId = $this->data->send($event);
-			$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
+
+			if ($notificationSetting) {
+				$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
+			}
 		}
 
 		// User is not the author or wants to see their own actions

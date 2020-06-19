@@ -135,7 +135,14 @@ class UserSettings {
 
 		try {
 			$setting = $this->manager->getSettingById($type);
-			return ($method === 'stream') ? $setting->isDefaultEnabledStream() : $setting->isDefaultEnabledMail();
+			switch ($method) {
+				case 'email':
+					return $setting->isDefaultEnabledMail();
+				case 'notification':
+					return $setting->isDefaultEnabledNotification();
+				default:
+					return false;
+			}
 		} catch (\InvalidArgumentException $e) {
 			return false;
 		}

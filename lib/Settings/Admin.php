@@ -22,9 +22,9 @@
 namespace OCA\Activity\Settings;
 
 use OCA\Activity\UserSettings;
+use OCP\Activity\ActivitySettings;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
-use OCP\Activity\ISetting;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -62,7 +62,7 @@ class Admin implements ISettings {
 	 */
 	public function getForm() {
 		$settings = $this->manager->getSettings();
-		usort($settings, function(ISetting $a, ISetting $b) {
+		usort($settings, function(ActivitySettings $a, ActivitySettings $b) {
 			if ($a->getPriority() === $b->getPriority()) {
 				return $a->getIdentifier() > $b->getIdentifier();
 			}
@@ -72,17 +72,18 @@ class Admin implements ISettings {
 
 		$activities = [];
 		foreach ($settings as $setting) {
-			if (!$setting->canChangeStream() && !$setting->canChangeMail()) {
+			if (!$setting->canChangeMail() && !$setting->canChangeNotification()) {
 				// No setting can be changed => don't display
 				continue;
 			}
 
 			$methods = [];
-			if ($setting->canChangeStream()) {
-				$methods[] = IExtension::METHOD_STREAM;
-			}
 			if ($setting->canChangeMail()) {
 				$methods[] = IExtension::METHOD_MAIL;
+			}
+
+			if ($setting->canChangeNotification()) {
+				$methods[] = IExtension::METHOD_NOTIFICATION;
 			}
 
 			$identifier = $setting->getIdentifier();
@@ -90,7 +91,7 @@ class Admin implements ISettings {
 			$activities[$identifier] = array(
 				'desc'		=> $setting->getName(),
 				IExtension::METHOD_MAIL		=> $this->userSettings->getConfigSetting('email', $identifier),
-				IExtension::METHOD_STREAM	=> $this->userSettings->getConfigSetting('stream', $identifier),
+				IExtension::METHOD_NOTIFICATION	=> $this->userSettings->getConfigSetting('notification', $identifier),
 				'methods'	=> $methods,
 			);
 		}
@@ -118,7 +119,7 @@ class Admin implements ISettings {
 
 			'methods'			=> [
 				IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
-				IExtension::METHOD_STREAM => $this->l10n->t('Stream'),
+				IExtension::METHOD_NOTIFICATION => $this->l10n->t('Notification'),
 			],
 		], 'blank');
 	}
