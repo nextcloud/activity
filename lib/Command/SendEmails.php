@@ -85,7 +85,7 @@ class SendEmails extends Base {
 	 * @param OutputInterface $output
 	 * @return int
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output) {
+	protected function execute(InputInterface $input, OutputInterface $output): int {
 		// We don't use time() but "time() - 1" here, so we don't run into
 		// runtime issues later and delete emails, which were created in the
 		// same second, but were not collected for the emails.
