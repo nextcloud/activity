@@ -132,7 +132,7 @@ class MailQueueHandler {
 			// No users found to notify, mission abort
 			return 0;
 		}
-		$this->logger->debug('Sending notification emails to users: '. implode("|",$affectedUsers));
+		$this->logger->debug('Sending notification emails to users: '. implode(',', $affectedUsers));
 
 		$userLanguages = $this->config->getUserValueForUsers('core', 'lang', $affectedUsers);
 		$userTimezones = $this->config->getUserValueForUsers('core', 'timezone', $affectedUsers);
@@ -178,7 +178,7 @@ class MailQueueHandler {
 		}
 		$this->activityManager->setRequirePNG(false);
 
-		$this->logger->debug('eMail notifications sent. Will delete: ' . implode("|",$deleteItemsForUsers));
+		$this->logger->debug('Email notifications sent. Will delete: ' . implode(', ', $deleteItemsForUsers));
 		// Delete all entries we dealt with
 		$this->deleteSentItems($deleteItemsForUsers, $sendTime);
 
