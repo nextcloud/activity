@@ -20,19 +20,21 @@
   -->
 
 <template>
-	<div id="emptycontent">
-		<div class="icon-file" />
-		<h2>{{ t('activity', 'No activity') }}</h2>
+	<div>
+		<div v-for="activity in activities" :key="activity.activity_id">
+			{{ activity.activity_id }}
+		</div>
 	</div>
 </template>
 
 <script>
-import logger from '../logger'
-
 export default {
 	name: 'Stream',
-	mounted() {
-		logger.info('mounted')
+	props: {
+		activities: {
+			type: Array,
+			required: true,
+		},
 	},
 }
 </script>
