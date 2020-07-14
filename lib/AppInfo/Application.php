@@ -31,32 +31,31 @@ use OCA\Activity\Hooks;
 use OCA\Activity\Listener\LoadSidebarScripts;
 use OCA\Files\Event\LoadSidebar;
 use OCP\AppFramework\App;
-use OCP\EventDispatcher\IEventDispatcher;
+use OCP\AppFramework\Bootstrap\IBootContext;
+use OCP\AppFramework\Bootstrap\IBootstrap;
+use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\Util;
 
-class Application extends App {
+class Application extends App implements IBootstrap {
 
 	const APP_ID = 'activity';
 
 	public function __construct () {
 		parent::__construct(self::APP_ID);
+	}
 
-		$container = $this->getContainer();
-
+	public function register(IRegistrationContext $context): void {
 		// Allow automatic DI for the View, until we migrated to Nodes API
-		$container->registerService(View::class, function() {
+		$context->registerService(View::class, function() {
 			return new View('');
 		}, false);
 
-		$container->registerCapability(Capabilities::class);
+		$context->registerCapability(Capabilities::class);
 
-		$this->register();
+		$context->registerEventListener(LoadSidebar::class, LoadSidebarScripts::class);
 	}
 
-	/**
-	 * Register the different app parts
-	 */
-	public function register() {
+	public function boot(IBootContext $context): void {
 		$this->registerActivityConsumer();
 		$this->registerHooksAndEvents();
 	}
@@ -64,7 +63,7 @@ class Application extends App {
 	/**
 	 * Registers the consumer to the Activity Manager
 	 */
-	public function registerActivityConsumer() {
+	private function registerActivityConsumer() {
 		$c = $this->getContainer();
 		/** @var \OCP\IServerContainer $server */
 		$server = $c->getServer();
@@ -77,10 +76,7 @@ class Application extends App {
 	/**
 	 * Register the hooks and events
 	 */
-	public function registerHooksAndEvents() {
-		$eventDispatcher = $this->getContainer()->query(IEventDispatcher::class);
-		$eventDispatcher->addServiceListener(LoadSidebar::class, LoadSidebarScripts::class);
-
+	private function registerHooksAndEvents() {
 		Util::connectHook('OC_User', 'post_deleteUser', Hooks::class, 'deleteUser');
 		Util::connectHook('OC_User', 'post_login', Hooks::class, 'setDefaultsForUser');
 
@@ -90,7 +86,7 @@ class Application extends App {
 	/**
 	 * Register the hooks for filesystem operations
 	 */
-	public function registerFilesActivity() {
+	private function registerFilesActivity() {
 		// All other events from other apps have to be send via the Consumer
 		Util::connectHook('OC_Filesystem', 'post_create', FilesHooksStatic::class, 'fileCreate');
 		Util::connectHook('OC_Filesystem', 'post_update', FilesHooksStatic::class, 'fileUpdate');
