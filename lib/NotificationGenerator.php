@@ -103,7 +103,7 @@ class NotificationGenerator implements INotifier {
 		}
 
 		$event = $this->data->getById((int)$notification->getObjectId());
-		if (!$event) {
+		if (!$event || $event->getAffectedUser() !== $notification->getUser()) {
 			throw new \InvalidArgumentException();
 		}
 		$event = $this->populateEvent($event, $languageCode);
