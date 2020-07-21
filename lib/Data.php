@@ -25,6 +25,7 @@
 namespace OCA\Activity;
 
 use Doctrine\DBAL\Platforms\MySqlPlatform;
+use OCA\Activity\Filter\AllFilter;
 use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
 use OCP\Activity\IFilter;
@@ -167,23 +168,20 @@ class Data {
 			// Unknown filter => ignore and show all activities
 		}
 
-		$enabledNotifications = $userSettings->getNotificationTypes($user, 'stream');
-		if ($activeFilter instanceof IFilter) {
-			$enabledNotifications = $activeFilter->filterTypes($enabledNotifications);
-		}
-		$enabledNotifications = array_unique($enabledNotifications);
-
-		// We don't want to display any activities
-		if (empty($enabledNotifications)) {
-			throw new \BadMethodCallException('No settings enabled', 3);
-		}
-
 		$query = $this->connection->getQueryBuilder();
 		$query->select('*')
 			->from('activity');
 
-		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)))
-			->andWhere($query->expr()->in('type', $query->createNamedParameter($enabledNotifications, IQueryBuilder::PARAM_STR_ARRAY)));
+		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)));
+
+		if ($activeFilter instanceof IFilter && !($activeFilter instanceof AllFilter)) {
+			$notificationTypes = $userSettings->getNotificationTypes();
+			$notificationTypes = $activeFilter->filterTypes($notificationTypes);
+			$notificationTypes = array_unique($notificationTypes);
+
+			$query->andWhere($query->expr()->in('type', $query->createNamedParameter($notificationTypes, IQueryBuilder::PARAM_STR_ARRAY)));
+		}
+
 		if ($filter === 'self') {
 			$query->andWhere($query->expr()->eq('user', $query->createNamedParameter($user)));
 
