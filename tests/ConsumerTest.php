@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\Consumer;
+use OCA\Activity\NotificationGenerator;
 use OCP\Activity\IManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Activity\Data;
@@ -52,12 +53,17 @@ class ConsumerTest extends TestCase {
 	/** @var \OCA\Activity\UserSettings */
 	protected $userSettings;
 
+	/** @var NotificationGenerator|MockObject */
+	protected $notificationGenerator;
+
 	protected function setUp(): void {
 		parent::setUp();
 		$this->deleteTestActivities();
 
 		$this->activityManager = $this->createMock(IManager::class);
 		$this->data = $this->createMock(Data::class);
+		$this->data->method('send')
+			->willReturn(1);
 
 		$this->userSettings = $this->getMockBuilder(UserSettings::class)
 			->onlyMethods(array('getUserSetting'))
@@ -65,6 +71,8 @@ class ConsumerTest extends TestCase {
 			->getMock();
 
 		$l10n = $this->createMock(IL10N::class);
+
+		$this->notificationGenerator = $this->createMock(NotificationGenerator::class);
 
 		$this->l10nFactory = $this->createMock(IFactory::class);
 		$this->l10nFactory->expects($this->any())
@@ -76,8 +84,8 @@ class ConsumerTest extends TestCase {
 			->method('getUserSetting')
 			->with($this->stringContains('affectedUser'), $this->anything(), $this->anything())
 			->willReturnMap([
-				['affectedUser', 'stream', 'type', true],
-				['affectedUser2', 'stream', 'type', true],
+				['affectedUser', 'notification', 'type', true],
+				['affectedUser2', 'notification', 'type', true],
 				['affectedUser', 'setting', 'self', true],
 				['affectedUser2', 'setting', 'self', false],
 				['affectedUser', 'email', 'type', true],
@@ -137,7 +145,7 @@ class ConsumerTest extends TestCase {
 	 * @param array|false $expected
 	 */
 	public function testReceiveStream(string $type, string $author, string $affectedUser, string $subject, $expected): void {
-		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->l10nFactory);
+		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
 		$event = \OC::$server->getActivityManager()->generateEvent();
 		$event->setApp('test')
 			->setType($type)
@@ -150,7 +158,7 @@ class ConsumerTest extends TestCase {
 			->setLink('link');
 		$this->deleteTestActivities();
 
-		if ($expected === false) {
+		if ($author === $affectedUser && $this->userSettings->getUserSetting($affectedUser, 'setting', 'self') === false) {
 			$this->data->expects($this->never())
 				->method('send');
 		} else {
@@ -172,7 +180,7 @@ class ConsumerTest extends TestCase {
 	 */
 	public function testReceiveEmail(string $type, string $author, string $affectedUser, string $subject, $expected): void {
 		$time = time();
-		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->l10nFactory);
+		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
 		$event = \OC::$server->getActivityManager()->generateEvent();
 		$event->setApp('test')
 			->setType($type)
@@ -191,6 +199,40 @@ class ConsumerTest extends TestCase {
 			$this->data->expects($this->once())
 				->method('storeMail')
 				->with($event, $time + 10);
+		}
+
+		$consumer->receive($event);
+	}
+
+	/**
+	 * @dataProvider receiveData
+	 *
+	 * @param string $type
+	 * @param string $author
+	 * @param string $affectedUser
+	 * @param string $subject
+	 * @param array|false $expected
+	 */
+	public function testReceiveNotification(string $type, string $author, string $affectedUser, string $subject, $expected): void {
+		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
+		$event = \OC::$server->getActivityManager()->generateEvent();
+		$event->setApp('test')
+			->setType($type)
+			->setAffectedUser($affectedUser)
+			->setAuthor($author)
+			->setTimestamp(time())
+			->setSubject($subject, ['subjectParam1', 'subjectParam2'])
+			->setMessage('message', ['messageParam1', 'messageParam2'])
+			->setObject('', 0 , 'file')
+			->setLink('link');
+		$this->deleteTestActivities();
+
+		if ($expected === false || $author === $affectedUser) {
+			$this->notificationGenerator->expects($this->never())
+				->method('sendNotificationForEvent');
+		} else {
+			$this->notificationGenerator->expects($this->once())
+				->method('sendNotificationForEvent');
 		}
 
 		$consumer->receive($event);

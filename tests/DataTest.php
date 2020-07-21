@@ -56,12 +56,10 @@ class DataTest extends TestCase {
 
 		$this->activityLanguage = Util::getL10N('activity', 'en');
 		$this->activityManager = $this->createMock(IManager::class);
-		$this->session = $this->createMock(IUserSession::class);
 
 		$this->data = new Data(
 			$this->activityManager,
-			\OC::$server->getDatabaseConnection(),
-			$this->session
+			\OC::$server->getDatabaseConnection()
 		);
 	}
 
@@ -111,7 +109,7 @@ class DataTest extends TestCase {
 			$event->setAuthor($actionUser);
 		}
 
-		$this->assertSame($expectedActivity, $this->data->send($event) !== false);
+		$this->assertSame($expectedActivity, $this->data->send($event) !== 0);
 
 		$connection = \OC::$server->getDatabaseConnection();
 		$query = $connection->prepare('SELECT `user`, `affecteduser` FROM `*PREFIX*activity` WHERE `app` = ? ORDER BY `activity_id` DESC');

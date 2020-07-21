@@ -75,6 +75,8 @@ class FilesHooksTest extends TestCase {
 	protected $userMountCache;
 	/** @var IConfig|MockObject */
 	protected $config;
+	/** @var NotificationGenerator|MockObject */
+	protected $notificationGenerator;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -89,6 +91,7 @@ class FilesHooksTest extends TestCase {
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->userMountCache = $this->createMock(IUserMountCache::class);
 		$this->config = $this->createMock(IConfig::class);
+		$this->notificationGenerator = $this->createMock(NotificationGenerator::class);
 
 		$this->filesHooks = $this->getFilesHooks();
 	}
@@ -125,6 +128,7 @@ class FilesHooksTest extends TestCase {
 					$currentUser,
 					$this->userMountCache,
 					$this->config,
+					$this->notificationGenerator
 				])
 				->onlyMethods($mockedMethods)
 				->getMock();
@@ -143,7 +147,8 @@ class FilesHooksTest extends TestCase {
 			$logger,
 			$currentUser,
 			$this->userMountCache,
-			$this->config
+			$this->config,
+			$this->notificationGenerator
 		);
 	}
 

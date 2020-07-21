@@ -189,7 +189,7 @@ class FilesHooks {
 			return;
 		}
 
-		list($filePath, $uidOwner, $fileId) = $this->getSourcePathAndOwner($filePath);
+		[$filePath, $uidOwner, $fileId] = $this->getSourcePathAndOwner($filePath);
 		if ($fileId === 0) {
 			// Could not find the file for the owner ...
 			return;
@@ -324,7 +324,7 @@ class FilesHooks {
 			$this->moveCase = 'moveCross';
 		}
 
-		list($this->oldParentPath, $this->oldParentOwner, $this->oldParentId) = $this->getSourcePathAndOwner($oldDir);
+		[$this->oldParentPath, $this->oldParentOwner, $this->oldParentId] = $this->getSourcePathAndOwner($oldDir);
 		if ($this->oldParentId === 0) {
 			// Could not find the file for the owner ...
 			$this->moveCase = false;
@@ -372,8 +372,8 @@ class FilesHooks {
 		$fileName = basename($newPath);
 		$oldFileName = basename($oldPath);
 
-		list(, , $fileId) = $this->getSourcePathAndOwner($newPath);
-		list($parentPath, $parentOwner, $parentId) = $this->getSourcePathAndOwner($dirName);
+		[, , $fileId] = $this->getSourcePathAndOwner($newPath);
+		[$parentPath, $parentOwner, $parentId] = $this->getSourcePathAndOwner($dirName);
 		if ($fileId === 0 || $parentId === 0) {
 			// Could not find the file for the owner ...
 			return;
@@ -435,8 +435,8 @@ class FilesHooks {
 		$fileName = basename($newPath);
 		$oldFileName = basename($oldPath);
 
-		list(, , $fileId) = $this->getSourcePathAndOwner($newPath);
-		list($parentPath, $parentOwner, $parentId) = $this->getSourcePathAndOwner($dirName);
+		[, , $fileId] = $this->getSourcePathAndOwner($newPath);
+		[$parentPath, $parentOwner, $parentId] = $this->getSourcePathAndOwner($dirName);
 		if ($fileId === 0 || $parentId === 0) {
 			// Could not find the file for the owner ...
 			return;
@@ -665,7 +665,7 @@ class FilesHooks {
 
 		if ($owner === null || $owner !== $currentUser) {
 			/** @var \OCP\Files\Storage\IStorage $storage */
-			list($storage,) = $view->resolvePath($path);
+			[$storage,] = $view->resolvePath($path);
 
 			if ($owner !== null && !$storage->instanceOfStorage('OCA\Files_Sharing\External\Storage')) {
 				Filesystem::initMountPoints($owner);
@@ -673,7 +673,7 @@ class FilesHooks {
 				// Probably a remote user, let's try to at least generate activities
 				// for the current user
 				if ($currentUser === null) {
-					list(,$owner,) = explode('/', $view->getAbsolutePath($path), 3);
+					[,$owner,] = explode('/', $view->getAbsolutePath($path), 3);
 				} else {
 					$owner = $currentUser;
 				}
@@ -1182,7 +1182,10 @@ class FilesHooks {
 		// Add activity to stream
 		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser->getUID(), 'setting', 'self'))) {
 			$activityId = $this->activityData->send($event);
-			$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
+
+			if ($activityId) {
+				$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
+			}
 		}
 
 		// Add activity to mail queue

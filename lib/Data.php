@@ -61,7 +61,7 @@ class Data {
 	 */
 	public function send(IEvent $event): int {
 		if ($event->getAffectedUser() === '' || $event->getAffectedUser() === null) {
-			return false;
+			return 0;
 		}
 
 		// store in DB

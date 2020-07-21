@@ -23,6 +23,7 @@
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\UserSettings;
+use OCP\Activity\ActivitySettings;
 use OCP\Activity\IManager;
 use OCP\Activity\ISetting;
 use OCP\IConfig;
@@ -46,7 +47,6 @@ class UserSettingsTest extends TestCase {
 
 	public function getDefaultSettingData(): array {
 		return [
-			['stream', 'type1', true],
 			['email', 'type1', false],
 			['setting', 'self', true],
 			['setting', 'selfemail', false],
@@ -70,10 +70,7 @@ class UserSettingsTest extends TestCase {
 					->with($type)
 					->willThrowException(new \InvalidArgumentException());
 			} else {
-				$s = $this->createMock(ISetting::class);
-				$s->expects($method === 'stream' ? $this->once() : $this->never())
-					->method('isDefaultEnabledStream')
-					->willReturn($expected);
+				$s = $this->createMock(ActivitySettings::class);
 				$s->expects($method === 'email' ? $this->once() : $this->never())
 					->method('isDefaultEnabledMail')
 					->willReturn($expected);
