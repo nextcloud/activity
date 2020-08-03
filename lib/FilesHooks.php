@@ -101,6 +101,8 @@ class FilesHooks {
 	protected $oldParentOwner;
 	/** @var string */
 	protected $oldParentId;
+	/** @var NotificationGenerator */
+	protected $notificationGenerator;
 
 	public function __construct(IManager $manager,
 								Data $activityData,
@@ -114,7 +116,9 @@ class FilesHooks {
 								ILogger $logger,
 								CurrentUser $currentUser,
 								IUserMountCache $userMountCache,
-								IConfig $config) {
+								IConfig $config,
+								NotificationGenerator $notificationGenerator
+	) {
 		$this->manager = $manager;
 		$this->activityData = $activityData;
 		$this->userSettings = $userSettings;
@@ -128,6 +132,7 @@ class FilesHooks {
 		$this->currentUser = $currentUser;
 		$this->userMountCache = $userMountCache;
 		$this->config = $config;
+		$this->notificationGenerator = $notificationGenerator;
 	}
 
 	/**
@@ -184,7 +189,7 @@ class FilesHooks {
 			return;
 		}
 
-		list($filePath, $uidOwner, $fileId) = $this->getSourcePathAndOwner($filePath);
+		[$filePath, $uidOwner, $fileId] = $this->getSourcePathAndOwner($filePath);
 		if ($fileId === 0) {
 			// Could not find the file for the owner ...
 			return;
@@ -319,7 +324,7 @@ class FilesHooks {
 			$this->moveCase = 'moveCross';
 		}
 
-		list($this->oldParentPath, $this->oldParentOwner, $this->oldParentId) = $this->getSourcePathAndOwner($oldDir);
+		[$this->oldParentPath, $this->oldParentOwner, $this->oldParentId] = $this->getSourcePathAndOwner($oldDir);
 		if ($this->oldParentId === 0) {
 			// Could not find the file for the owner ...
 			$this->moveCase = false;
@@ -367,8 +372,8 @@ class FilesHooks {
 		$fileName = basename($newPath);
 		$oldFileName = basename($oldPath);
 
-		list(, , $fileId) = $this->getSourcePathAndOwner($newPath);
-		list($parentPath, $parentOwner, $parentId) = $this->getSourcePathAndOwner($dirName);
+		[, , $fileId] = $this->getSourcePathAndOwner($newPath);
+		[$parentPath, $parentOwner, $parentId] = $this->getSourcePathAndOwner($dirName);
 		if ($fileId === 0 || $parentId === 0) {
 			// Could not find the file for the owner ...
 			return;
@@ -430,8 +435,8 @@ class FilesHooks {
 		$fileName = basename($newPath);
 		$oldFileName = basename($oldPath);
 
-		list(, , $fileId) = $this->getSourcePathAndOwner($newPath);
-		list($parentPath, $parentOwner, $parentId) = $this->getSourcePathAndOwner($dirName);
+		[, , $fileId] = $this->getSourcePathAndOwner($newPath);
+		[$parentPath, $parentOwner, $parentId] = $this->getSourcePathAndOwner($dirName);
 		if ($fileId === 0 || $parentId === 0) {
 			// Could not find the file for the owner ...
 			return;
@@ -660,7 +665,7 @@ class FilesHooks {
 
 		if ($owner === null || $owner !== $currentUser) {
 			/** @var \OCP\Files\Storage\IStorage $storage */
-			list($storage,) = $view->resolvePath($path);
+			[$storage,] = $view->resolvePath($path);
 
 			if ($owner !== null && !$storage->instanceOfStorage('OCA\Files_Sharing\External\Storage')) {
 				Filesystem::initMountPoints($owner);
@@ -668,7 +673,7 @@ class FilesHooks {
 				// Probably a remote user, let's try to at least generate activities
 				// for the current user
 				if ($currentUser === null) {
-					list(,$owner,) = explode('/', $view->getAbsolutePath($path), 3);
+					[,$owner,] = explode('/', $view->getAbsolutePath($path), 3);
 				} else {
 					$owner = $currentUser;
 				}
@@ -1176,7 +1181,11 @@ class FilesHooks {
 
 		// Add activity to stream
 		if ($streamSetting && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser->getUID(), 'setting', 'self'))) {
-			$this->activityData->send($event);
+			$activityId = $this->activityData->send($event);
+
+			if ($activityId) {
+				$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
+			}
 		}
 
 		// Add activity to mail queue

@@ -106,13 +106,11 @@ class SettingsController extends Controller {
 
 		$settings = $this->manager->getSettings();
 		foreach ($settings as $setting) {
-			if ($setting->canChangeStream()) {
-				$this->config->setUserValue(
-					$this->user, 'activity',
-					'notify_stream_' . $setting->getIdentifier(),
-					(int) $this->request->getParam($setting->getIdentifier() . '_stream', false)
-				);
-			}
+			$this->config->setUserValue(
+				$this->user, 'activity',
+				'notify_notification_' . $setting->getIdentifier(),
+				(int) $this->request->getParam($setting->getIdentifier() . '_notification', false)
+			);
 
 			if ($setting->canChangeMail()) {
 				$this->config->setUserValue(
@@ -168,13 +166,11 @@ class SettingsController extends Controller {
 
 		$settings = $this->manager->getSettings();
 		foreach ($settings as $setting) {
-			if ($setting->canChangeStream()) {
-				$this->config->setAppValue(
-					'activity',
-					'notify_stream_' . $setting->getIdentifier(),
-					(int) $this->request->getParam($setting->getIdentifier() . '_stream', false)
-				);
-			}
+			$this->config->setAppValue(
+				'activity',
+				'notify_notification_' . $setting->getIdentifier(),
+				(int) $this->request->getParam($setting->getIdentifier() . '_notification', false)
+			);
 
 			if ($setting->canChangeMail()) {
 				$this->config->setAppValue(

@@ -22,6 +22,7 @@
 
 namespace OCA\Activity;
 
+use OCP\Activity\ActivitySettings;
 use OCP\Activity\IManager;
 use OCP\IConfig;
 
@@ -135,30 +136,27 @@ class UserSettings {
 
 		try {
 			$setting = $this->manager->getSettingById($type);
-			return ($method === 'stream') ? $setting->isDefaultEnabledStream() : $setting->isDefaultEnabledMail();
+			switch ($method) {
+				case 'email':
+					return $setting->isDefaultEnabledMail();
+				case 'notification':
+					return $setting->isDefaultEnabledNotification();
+				default:
+					return false;
+			}
 		} catch (\InvalidArgumentException $e) {
 			return false;
 		}
 	}
 
 	/**
-	 * Get a list with enabled notification types for a user
-	 *
-	 * @param string	$user	Name of the user
-	 * @param string	$method	Should be one of 'stream' or 'email'
-	 * @return array
+	 * Get a list with all notification types
 	 */
-	public function getNotificationTypes($user, $method) {
-		$notificationTypes = array();
-
+	public function getNotificationTypes() {
 		$settings = $this->manager->getSettings();
-		foreach ($settings as $setting) {
-			if ($this->getUserSetting($user, $method, $setting->getIdentifier())) {
-				$notificationTypes[] = $setting->getIdentifier();
-			}
-		}
-
-		return $notificationTypes;
+		return array_map(function(ActivitySettings $setting) {
+			return $setting->getIdentifier();
+		}, $settings);
 	}
 
 	/**

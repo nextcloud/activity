@@ -29,6 +29,7 @@ use OCA\Activity\Consumer;
 use OCA\Activity\FilesHooksStatic;
 use OCA\Activity\Hooks;
 use OCA\Activity\Listener\LoadSidebarScripts;
+use OCA\Activity\NotificationGenerator;
 use OCA\Files\Event\LoadSidebar;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
@@ -58,6 +59,7 @@ class Application extends App implements IBootstrap {
 	public function boot(IBootContext $context): void {
 		$this->registerActivityConsumer();
 		$this->registerHooksAndEvents();
+		$this->registerNotifier();
 	}
 
 	/**
@@ -71,6 +73,11 @@ class Application extends App implements IBootstrap {
 		$server->getActivityManager()->registerConsumer(function() use ($c) {
 			return $c->query(Consumer::class);
 		});
+	}
+
+	public function registerNotifier() {
+		$server = $this->getContainer()->getServer();
+		$server->getNotificationManager()->registerNotifierService(NotificationGenerator::class);
 	}
 
 	/**

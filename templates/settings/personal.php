@@ -29,9 +29,9 @@ style('activity', 'settings');
 	<h2><?php p($l->t('Activity')); ?></h2>
 	<p class="settings-hint">
 		<?php if ($_['email_enabled']) { ?>
-			<?php p($l->t('Choose for which activities you want to get an email notification, and which should show up in the activity app stream.')); ?>
+			<?php p($l->t('Choose for which activities you want to get an email or push notification.')); ?>
 		<?php } else { ?>
-			<?php p($l->t('Choose which activities you want to see in your stream.')); ?>
+			<?php p($l->t('Choose for which activities you want to get a push notification.')); ?>
 		<?php } ?>
 	</p>
 

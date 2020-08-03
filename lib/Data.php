@@ -25,6 +25,7 @@
 namespace OCA\Activity;
 
 use Doctrine\DBAL\Platforms\MySqlPlatform;
+use OCA\Activity\Filter\AllFilter;
 use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
 use OCP\Activity\IFilter;
@@ -56,11 +57,11 @@ class Data {
 	 * Send an event into the activity stream
 	 *
 	 * @param IEvent $event
-	 * @return bool
+	 * @return int
 	 */
-	public function send(IEvent $event) {
+	public function send(IEvent $event): int {
 		if ($event->getAffectedUser() === '' || $event->getAffectedUser() === null) {
-			return false;
+			return 0;
 		}
 
 		// store in DB
@@ -100,7 +101,7 @@ class Data {
 			])
 			->execute();
 
-		return true;
+		return $this->connection->lastInsertId('activity');
 	}
 
 	/**
@@ -167,23 +168,20 @@ class Data {
 			// Unknown filter => ignore and show all activities
 		}
 
-		$enabledNotifications = $userSettings->getNotificationTypes($user, 'stream');
-		if ($activeFilter instanceof IFilter) {
-			$enabledNotifications = $activeFilter->filterTypes($enabledNotifications);
-		}
-		$enabledNotifications = array_unique($enabledNotifications);
-
-		// We don't want to display any activities
-		if (empty($enabledNotifications)) {
-			throw new \BadMethodCallException('No settings enabled', 3);
-		}
-
 		$query = $this->connection->getQueryBuilder();
 		$query->select('*')
 			->from('activity');
 
-		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)))
-			->andWhere($query->expr()->in('type', $query->createNamedParameter($enabledNotifications, IQueryBuilder::PARAM_STR_ARRAY)));
+		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)));
+
+		if ($activeFilter instanceof IFilter && !($activeFilter instanceof AllFilter)) {
+			$notificationTypes = $userSettings->getNotificationTypes();
+			$notificationTypes = $activeFilter->filterTypes($notificationTypes);
+			$notificationTypes = array_unique($notificationTypes);
+
+			$query->andWhere($query->expr()->in('type', $query->createNamedParameter($notificationTypes, IQueryBuilder::PARAM_STR_ARRAY)));
+		}
+
 		if ($filter === 'self') {
 			$query->andWhere($query->expr()->eq('user', $query->createNamedParameter($user)));
 
@@ -396,7 +394,31 @@ class Data {
 				'DELETE FROM `*PREFIX*activity`' . $sqlWhere);
 			$query->execute($sqlParameters);
 		}
+	}
 
+	public function getById(int $activityId): ?IEvent {
+		$query = $this->connection->getQueryBuilder();
+		$query->select('*')
+			->from('activity')
+			->where($query->expr()->eq('activity_id', $query->createNamedParameter($activityId)));
 
+		$result = $query->execute();
+		$hasMore = false;
+		if ($row = $result->fetch()) {
+			$event = $this->activityManager->generateEvent();
+			$event->setApp((string) $row['app'])
+				->setType((string) $row['type'])
+				->setAffectedUser((string) $row['affecteduser'])
+				->setAuthor((string) $row['user'])
+				->setTimestamp((int) $row['timestamp'])
+				->setSubject((string) $row['subject'], (array) json_decode($row['subjectparams'], true))
+				->setMessage((string) $row['message'], (array) json_decode($row['messageparams'], true))
+				->setObject((string) $row['object_type'], (int) $row['object_id'], (string) $row['file'])
+				->setLink((string) $row['link']);
+
+			return $event;
+		} else {
+			return null;
+		}
 	}
 }
