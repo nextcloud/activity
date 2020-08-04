@@ -31,7 +31,7 @@ OC.L10N.register(
     "There was some activity at %s" : "%s　にアクティビティがありました。",
     "_and %n more _::_and %n more _" : ["および他 %n "],
     "Mail" : "メール",
-    "Stream" : "タイムライン",
+    "Notification" : "通知",
     "This application enables users to view actions related to their files in Nextcloud." : "このアプリケーションは、ユーザーのファイル関連のアクションを表示します。",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "このアプリケーションは、ユーザーが行ったファイル関連のアクションを表示します。\n\t\t有効にすると、アプリのメニューに「アクティビティ」アイコンが表示されます。\n\t\tこのアイコンをクリックすると、ファイルの追加/削除/更新/移動/名前の変更/共有、これらのファイルへのアクションの履歴を表示します。\n\t\t個人の設定メニューで記録するアクティビティ関連の設定ができます。\n\t\tこの設定メニューでは、記録するアクティビティタイプの選択と記録方法、通知方法の選択が可能です。\n\t\tまた、通知方法でメールを選択した場合には、通知間隔の選択ができます。\n\t\t詳細は、アクティビティのドキュメントを参照してください。",
     "Activity feed" : "アクティビティフィード",
@@ -46,11 +46,12 @@ OC.L10N.register(
     "Hourly" : "1時間ごと",
     "Daily" : "毎日",
     "Weekly" : "毎週",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "メール通知を受け取るアクティビティと、アクティビティアプリストリームに表示するアクティビティを選択してください。",
-    "Choose which activities you want to see in your stream." : "ストリームに表示したいアクティビティを選択",
     "Settings" : "設定",
     "Enable RSS feed" : "RSSフィードを有効にする",
     "RSS feed" : "RSS フィード",
-    "No more events to load" : "これ以上読み込むイベントはありません"
+    "No more events to load" : "これ以上読み込むイベントはありません",
+    "Stream" : "タイムライン",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "メール通知を受け取るアクティビティと、アクティビティアプリストリームに表示するアクティビティを選択してください。",
+    "Choose which activities you want to see in your stream." : "ストリームに表示したいアクティビティを選択"
 },
 "nplurals=1; plural=0;");

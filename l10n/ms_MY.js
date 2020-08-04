@@ -24,7 +24,6 @@ OC.L10N.register(
     "Hello %s" : "Hai %s",
     "Hello %s," : "Hai %s,",
     "Mail" : "Mel",
-    "Stream" : "Strim",
     "Activity feed" : "Suapan aktiviti",
     "Send activity emails" : "Hantar emel aktiviti",
     "Default settings" : "Tetapan lalai",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Weekly" : "Setiap minggu",
     "Settings" : "Tetapan",
     "RSS feed" : "Suapan RSS",
-    "No more events to load" : "Tiada aktiviti untuk memuat"
+    "No more events to load" : "Tiada aktiviti untuk memuat",
+    "Stream" : "Strim"
 },
 "nplurals=1; plural=0;");

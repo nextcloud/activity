@@ -31,7 +31,6 @@ OC.L10N.register(
     "There was some activity at %s" : "%s-ზე იყო გარკვეული აქტივობა",
     "_and %n more _::_and %n more _" : ["და კიდევ %n","და კიდევ %n"],
     "Mail" : "ფოსტა",
-    "Stream" : "ნაკადი",
     "This application enables users to view actions related to their files in Nextcloud." : "ეს აპლიკაცია მომხმარებლებს აძლევს საშუალებას დაინახონ „Nextcloud“-ზე მათ ფაილებთან დაკავშირებული ქმედებები.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "ეს აპლიკაცია მომხმარებლებს აძლევს საშუალებას დაინახონ „Nextcloud“-ზე მათ ფაილებთან დაკავშირებული ქმედებები.\n\t\tგააქტირების შემთხვევაში მომხმარებლები დაინახავენ ახალ სიმბოლოს „აქტივობა“ თავიანთ აპლიკაციის მინიუში.\n\t\tდაჭერის შემთხვევაში მომხმარებლებისთვის გამოჩნდება ახალი გვერდი",
     "Activity feed" : "აქტივობათა ლენტი",
@@ -46,11 +45,12 @@ OC.L10N.register(
     "Hourly" : "საათობრივი",
     "Daily" : "ყოველდღიური",
     "Weekly" : "ყოველკვირეული",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "აირჩიეთ თუ რომელ აქტივობებზე გსურთ მიიღოთ ელ-შეტყობინება და რომელი მათგანი გამოჩნდეს აქტივობის აპლკაციის ნაკადში.",
-    "Choose which activities you want to see in your stream." : "აირჩიეთ თუ რომელი აქტივობების ხილვა გსურთ თქვენს ნაკადში.",
     "Settings" : "პარამეტრები",
     "Enable RSS feed" : "RSS ლენტის გააქტიურება",
     "RSS feed" : "RSS ლენტა",
-    "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია"
+    "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
+    "Stream" : "ნაკადი",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "აირჩიეთ თუ რომელ აქტივობებზე გსურთ მიიღოთ ელ-შეტყობინება და რომელი მათგანი გამოჩნდეს აქტივობის აპლკაციის ნაკადში.",
+    "Choose which activities you want to see in your stream." : "აირჩიეთ თუ რომელი აქტივობების ხილვა გსურთ თქვენს ნაკადში."
 },
 "nplurals=2; plural=(n!=1);");

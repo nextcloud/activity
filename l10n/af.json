@@ -29,7 +29,7 @@
     "There was some activity at %s" : "Daar was aktiwiteit by %s",
     "_and %n more _::_and %n more _" : ["en nog %n","en nog %n"],
     "Mail" : "Pos",
-    "Stream" : "Stroom",
+    "Notification" : "Kennisgewing",
     "This application enables users to view actions related to their files in Nextcloud." : "Hierdie toepassing stel gebruikers in staat om aksies te sien wat verwant is aan hul lêers in Nextcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Hierdie toepassing stel gebruikers in staat om aksies te sien wat verwant is aan hul lêers in Nextcloud.\n\t\tSodra dit aangeskakel is sal gebruikers 'n nuwe ikoon \"Aktiwiteit\" sien in hul toepe spyskaart.\n\t\tWanneer dit geklik word sal 'n nuwe bladsy verskyn vir gebruikers om die aktiwiteit te spoor wat verwant is aan lêers - vanaf nuwe lêers, na verwyderde lêers, skuif, hernoem, opdaterings en gedeelde aktiwiteit.\n\t\tDie gebruiker kan hul individuele aktiwiteit verstellings konfigureer in hul persoonlike spyskaart.\n\t\tDit stel die tipe aktiwiteit om op te neem, asook of die gebruiker hul eie aktiwiteite kan sien,\n\t\tof hierdie alleenlik beskikbaar is aanlyn, en of hulle 'n epos opsomming op 'n gereelde basis ontvang.\n\t\tMeer inligting is beskikbaar in die Aktiwiteit dokumentasie.",
     "Activity feed" : "Aktiwiteitsvoer",
@@ -44,11 +44,12 @@
     "Hourly" : "Uurliks",
     "Daily" : "Daagliks",
     "Weekly" : "Weekliks",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Kies vir welke aktiwiteite u ’n e-poskennisgewing wil ontvang en welke in die aktiwiteittoepstroom moet vertoon.",
-    "Choose which activities you want to see in your stream." : "Kies watter aktiwiteite u in u stroom wil sien",
     "Settings" : "Instellings",
     "Enable RSS feed" : "Aktiveer RSS-voer",
     "RSS feed" : "RSS-voer",
-    "No more events to load" : "Geen meer gebeure om te laai"
+    "No more events to load" : "Geen meer gebeure om te laai",
+    "Stream" : "Stroom",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Kies vir welke aktiwiteite u ’n e-poskennisgewing wil ontvang en welke in die aktiwiteittoepstroom moet vertoon.",
+    "Choose which activities you want to see in your stream." : "Kies watter aktiwiteite u in u stroom wil sien"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

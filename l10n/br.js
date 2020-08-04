@@ -31,7 +31,6 @@ OC.L10N.register(
     "There was some activity at %s" : "Oberezioù a oa e %s",
     "_and %n more _::_and %n more _" : ["hag %n all","ha %n all","ha %n all","ha %n all","ha %n all"],
     "Mail" : "Postel",
-    "Stream" : "Red",
     "This application enables users to view actions related to their files in Nextcloud." : "Ar meziant mañ a aotre an implijourien da gwelet oberennoù liammet d'o restroù e Nexcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ar meziant mañ  oaotre an implijer gwelet an oberennoù liammet d'o restroù Nexcloud.\n\t\tUr wech aotreet, an implijer a welo un icon nevez \"OIberennoù\" en o roll meziant.\n\t\tPa vez pouezet, ur bajenn nevez a vo diskouelet evit m'a vefe heuliet an oberennoù liammet d'o restroù - eus ar restroù nevez, betek lemel ur restr, fiñval, adenvel, neveziñ ha rannañ oberennoù.\n\t\tAn implijer a hell stummañ o stumm oberennoù en o roll bersonnel.\n\t\tLakaaet vez stumm an oberenn da enrolladur, ha diskwellet vez d'an implijer e oberennoù,\n\t\tmemes m'a ne vez tizett an oberenn dre ar rouedat nemetkenn, ha ma vez kaset posteloù diveriñ.\n\t\tMuioc'h a ditouroù en dielvadur Activity.",
     "Activity feed" : "Gwazh oberantizoù",
@@ -46,11 +45,12 @@ OC.L10N.register(
     "Hourly" : "Pep heurvez",
     "Daily" : "Bemdeiz",
     "Weekly" : "Pep sizhun",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Choazit evit peseurt oberiantiz o peus c'hoant kavout un gemenadenn dre postel, ha peseurt re a vo diskouezet er red oberioù meziant.",
-    "Choose which activities you want to see in your stream." : "Choazit an oberezioù o peus c'hoant gwelet er red.",
     "Settings" : "Arventennoù",
     "Enable RSS feed" : "Aotreiñ ar red RSS",
     "RSS feed" : "red RSS",
-    "No more events to load" : "Darvoud ebet all da gargañ"
+    "No more events to load" : "Darvoud ebet all da gargañ",
+    "Stream" : "Red",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Choazit evit peseurt oberiantiz o peus c'hoant kavout un gemenadenn dre postel, ha peseurt re a vo diskouezet er red oberioù meziant.",
+    "Choose which activities you want to see in your stream." : "Choazit an oberezioù o peus c'hoant gwelet er red."
 },
 "nplurals=5; plural=((n%10 == 1) && (n%100 != 11) && (n%100 !=71) && (n%100 !=91) ? 0 :(n%10 == 2) && (n%100 != 12) && (n%100 !=72) && (n%100 !=92) ? 1 :(n%10 ==3 || n%10==4 || n%10==9) && (n%100 < 10 || n% 100 > 19) && (n%100 < 70 || n%100 > 79) && (n%100 < 90 || n%100 > 99) ? 2 :(n != 0 && n % 1000000 == 0) ? 3 : 4);");

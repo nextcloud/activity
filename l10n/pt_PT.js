@@ -31,7 +31,7 @@ OC.L10N.register(
     "There was some activity at %s" : "Houve alguma atividade em %s",
     "_and %n more _::_and %n more _" : ["e %n mais ","e %n mais "],
     "Mail" : "Correio",
-    "Stream" : "Transmissão",
+    "Notification" : "Notificação",
     "This application enables users to view actions related to their files in Nextcloud." : "Esta aplicação permite que os utilizadores visualizem as ações relacionadas com os seus ficheiros em Nextcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Esta aplicação permite que os utilizadores visualizem ações relacionadas aos seus ficheiros na Nextcloud.\n\t\tDepois de ativado, os utilizadores poderão ver um novo ícone \"Atividade\" no menu de aplicações.\n\t\tQuando carregar, uma nova página aparece para os utilizadores poderem reverem a sua atividade relacionada aos arquivos - desde novos arquivos, arquivos apagados, mover, renomear, atualizações e atividades compartilhadas.\n\t\tO utilizador pode definir  as suas configurações individuais de atividade no seu menu pessoal.\n\t\tIsto define o tipo de atividade a ser registrada, bem como se o utilizador vê as suas próprias atividades,\n\t\tse estiver disponível apenas on-line e se recebem um resumo por e-mail frequentemente.\n\t\tMais informações estão disponíveis na documentação da Atividade.",
     "Activity feed" : "Actividade de feed",
@@ -46,11 +46,12 @@ OC.L10N.register(
     "Hourly" : "Hora a hora",
     "Daily" : "Diariamente",
     "Weekly" : "Semanalmente",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Escolher as atividades que pretende para receber a notificação por e-mail, e quais serão mostradas nas atividades da transmissão da aplicação.",
-    "Choose which activities you want to see in your stream." : "Escolha quais as atividades que pretende ver na sua transmissão.",
     "Settings" : "Definições",
     "Enable RSS feed" : "Ativar fonte RSS",
     "RSS feed" : "Fonte RSS",
-    "No more events to load" : "Sem mais eventos para carregar"
+    "No more events to load" : "Sem mais eventos para carregar",
+    "Stream" : "Transmissão",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Escolher as atividades que pretende para receber a notificação por e-mail, e quais serão mostradas nas atividades da transmissão da aplicação.",
+    "Choose which activities you want to see in your stream." : "Escolha quais as atividades que pretende ver na sua transmissão."
 },
 "nplurals=2; plural=(n != 1);");

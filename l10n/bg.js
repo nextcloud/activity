@@ -31,7 +31,6 @@ OC.L10N.register(
     "There was some activity at %s" : "Имаше събитие в %s",
     "_and %n more _::_and %n more _" : ["и %n още ","и %n още "],
     "Mail" : "Поща",
-    "Stream" : "Поток",
     "This application enables users to view actions related to their files in Nextcloud." : "Приложението позволява на потребителите да прегледат действия свързани с файловете им в Nextcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Приложението позволява на потребителите да следят действия свързани с файловете им в  Nextcloud.\n\t\tСлед като се включи, потребителите ще видят елемент “Активност” , в менюто на приложения.\n\t\tПоказва действия свързани с файлове – създаване, изтриване, местене, преименуване.\n\t\tПотребителите могат да персонализират настройките на потока.\n\t\tТип на активност за показване и филтриране на собствените действия,\n\t\tда са достъпни само през браузър или да получават имейл известия.\n\t\tДопълнителна информация ще намерите в документацията на Activity.",
     "Activity feed" : "Поток на активността",
@@ -46,11 +45,12 @@ OC.L10N.register(
     "Hourly" : "Всеки час",
     "Daily" : "Всеки ден",
     "Weekly" : "Всяка седмица",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Изберете за кои активности да получавате известие по имейл и кои да се показват в потока на активността.",
-    "Choose which activities you want to see in your stream." : "Изберете кои активности искате да виждате в потока на активността.",
     "Settings" : "Настройки",
     "Enable RSS feed" : "Разрешаване на RSS емисии",
     "RSS feed" : "RSS емисия",
-    "No more events to load" : "Няма повече известия за зареждане"
+    "No more events to load" : "Няма повече известия за зареждане",
+    "Stream" : "Поток",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Изберете за кои активности да получавате известие по имейл и кои да се показват в потока на активността.",
+    "Choose which activities you want to see in your stream." : "Изберете кои активности искате да виждате в потока на активността."
 },
 "nplurals=2; plural=(n != 1);");

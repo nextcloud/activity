@@ -31,7 +31,6 @@ OC.L10N.register(
     "There was some activity at %s" : "Det var aktivitet hjå %s",
     "_and %n more _::_and %n more _" : ["og %n til","og %n fleire"],
     "Mail" : "Post",
-    "Stream" : "Straum",
     "This application enables users to view actions related to their files in Nextcloud." : "Denne applikasjon viser hendingar for dine filer i Nextcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Denne applikasjon viser hendingar for dine filer i Nextcloud.\n\t\tNår aktivert vil du sjå ikon \"Hendingar\" i program meny.\n\t\tVed klikk vil ny side visast for brukar for å spore hendingar relatert til fil. Hendingar kan vere ny fil, sletta fil, endra navn, flytta, oppdatert og delt..\n\t\tIndividuelle hendingar kan konfigurerast i personleg meny.\n\t\tDette bestemmer hva for hendingar som skal sporast så vel som om brukar ser sine eigne hendingar,\n\t\tom desse er tilgjengelege online og om får e-post med hendingar på regelmessig basis.\n\t\tMeir informasjon er tilgjengeleg i dokumentasjon for hendingar..",
     "Activity feed" : "Aktivitetsstraum",
@@ -46,11 +45,12 @@ OC.L10N.register(
     "Hourly" : "Kvar time",
     "Daily" : "Kvar dag",
     "Weekly" : "Kvar veke",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Vel for kva for aktivitetar du ynsker notifikasjonar på e-post, og kva for hendinger som skal vises i app straumen.",
-    "Choose which activities you want to see in your stream." : "Velg kva for aktivitetar du vil sjå i straumen din.",
     "Settings" : "Instillingar",
     "Enable RSS feed" : "Skru på RSS-straum",
     "RSS feed" : "RSS-straum",
-    "No more events to load" : "Inga fleire hendingar å lasta"
+    "No more events to load" : "Inga fleire hendingar å lasta",
+    "Stream" : "Straum",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Vel for kva for aktivitetar du ynsker notifikasjonar på e-post, og kva for hendinger som skal vises i app straumen.",
+    "Choose which activities you want to see in your stream." : "Velg kva for aktivitetar du vil sjå i straumen din."
 },
 "nplurals=2; plural=(n != 1);");

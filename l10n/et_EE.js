@@ -31,7 +31,6 @@ OC.L10N.register(
     "There was some activity at %s" : "Mõningane tegevus %s",
     "_and %n more _::_and %n more _" : ["ja %n veel","ja%n veel "],
     "Mail" : "Kirjad",
-    "Stream" : "Voog",
     "This application enables users to view actions related to their files in Nextcloud." : "See rakendus võimaldab kasutajal vaadata oma Nextcloudi failidega seonduvaid tegevsi.",
     "Activity feed" : "Tegevuste voog",
     "Send activity emails" : "Saada tegevuste kohta e-kirju",
@@ -45,11 +44,12 @@ OC.L10N.register(
     "Hourly" : "Iga tund",
     "Daily" : "Iga päev",
     "Weekly" : "Iga nädal",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Valige, milliste tegevuste jaoks soovite saada meilisõnumit ja mis peaks ilmuma aktiivsuse rakenduste voos.",
-    "Choose which activities you want to see in your stream." : "Valige, milliseid tegevusi soovite voos kuvada.",
     "Settings" : "Seaded",
     "Enable RSS feed" : "Luba RSS voog",
     "RSS feed" : "RRS voog",
-    "No more events to load" : "Pole rohkem sündmusi, mida laadida."
+    "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
+    "Stream" : "Voog",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Valige, milliste tegevuste jaoks soovite saada meilisõnumit ja mis peaks ilmuma aktiivsuse rakenduste voos.",
+    "Choose which activities you want to see in your stream." : "Valige, milliseid tegevusi soovite voos kuvada."
 },
 "nplurals=2; plural=(n != 1);");

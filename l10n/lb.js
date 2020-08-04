@@ -28,7 +28,6 @@ OC.L10N.register(
     "Hello %s," : "Hallo %s,",
     "There was some activity at %s" : "Et goufen Ännerungen bei ¦%s",
     "Mail" : "Mail",
-    "Stream" : "Floss",
     "Activity feed" : "Aktivitéits-Feed",
     "List your own actions in the stream" : "Weis är aner Aktivitéiten am Floss",
     "Notify about your own actions via email" : "Iwwer eegene Aktiounen iwwer E-Mail informéieren",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Weekly" : "All Woch",
     "Settings" : "Astellungen",
     "Enable RSS feed" : "RSS-Feed aktivéieren",
-    "No more events to load" : "Keng weider Evenementer fir ze lueden"
+    "No more events to load" : "Keng weider Evenementer fir ze lueden",
+    "Stream" : "Floss"
 },
 "nplurals=2; plural=(n != 1);");
