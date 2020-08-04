@@ -31,7 +31,6 @@ OC.L10N.register(
     "There was some activity at %s" : "Yella yiwen n urmud deg %s",
     "_and %n more _::_and %n more _" : ["akked %n nniḍen","akked %n nniḍen "],
     "Mail" : "Tirawt",
-    "Stream" : "Asuddem",
     "This application enables users to view actions related to their files in Nextcloud." : "Asnas-ag ad yeǧǧ iseqdacen ad walin tigawin yeɛnan ifuyla-nnsen di Nextcloud.",
     "Activity feed" : "Asuddem n warmud",
     "Send activity emails" : "Azen imaylen n warmud",
@@ -44,11 +43,12 @@ OC.L10N.register(
     "Hourly" : "S usrag",
     "Daily" : "S wass",
     "Weekly" : "S umalas",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Fren ineḍruyen iwumi tebɣiḍ ad tawiḍ talɣut s imayl u i tebɣiḍ daɣen ad ten-twaliḍ deg usuddem n warmud inek.",
-    "Choose which activities you want to see in your stream." : "Fren irmuden i tebɣiḍ ad twaliḍ deg usuddem-inek.",
     "Settings" : "Iɣewwaṛen",
     "Enable RSS feed" : "Ssermed asuddem RSS",
     "RSS feed" : "Asuddem RSS",
-    "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen"
+    "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
+    "Stream" : "Asuddem",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Fren ineḍruyen iwumi tebɣiḍ ad tawiḍ talɣut s imayl u i tebɣiḍ daɣen ad ten-twaliḍ deg usuddem n warmud inek.",
+    "Choose which activities you want to see in your stream." : "Fren irmuden i tebɣiḍ ad twaliḍ deg usuddem-inek."
 },
 "nplurals=2; plural=(n != 1);");

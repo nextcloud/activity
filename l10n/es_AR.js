@@ -31,7 +31,7 @@ OC.L10N.register(
     "There was some activity at %s" : "Ha habido alguna actividad en %s",
     "_and %n more _::_and %n more _" : ["y %n mas","y %n más"],
     "Mail" : "Correo Electrónico",
-    "Stream" : "Compartir",
+    "Notification" : "Notificación",
     "This application enables users to view actions related to their files in Nextcloud." : "Esta aplicación permite a los usuarios ver acciones relacionadas con sus archivos en Nextcloud.",
     "Activity feed" : "Secuencia de Actividad",
     "Send activity emails" : "Enviar emails de actividad",
@@ -45,11 +45,12 @@ OC.L10N.register(
     "Hourly" : "Cada Hora",
     "Daily" : "Diariamente",
     "Weekly" : "Semanalmente",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Elija por cuales actividades desea recibir una notificación por email y cuál debe mostrarse en la app stream",
-    "Choose which activities you want to see in your stream." : "Elige qué actividades quieres ver en tu transmisión.",
     "Settings" : "Preferencias",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
-    "No more events to load" : "No hay más eventos para cargar"
+    "No more events to load" : "No hay más eventos para cargar",
+    "Stream" : "Compartir",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Elija por cuales actividades desea recibir una notificación por email y cuál debe mostrarse en la app stream",
+    "Choose which activities you want to see in your stream." : "Elige qué actividades quieres ver en tu transmisión."
 },
 "nplurals=2; plural=(n != 1);");

@@ -30,7 +30,6 @@ OC.L10N.register(
     "There was some activity at %s" : "%s मा केही गतिविधि थियो",
     "_and %n more _::_and %n more _" : ["र थप %n","र %n थप "],
     "Mail" : "पत्र",
-    "Stream" : "स्ट्रिम",
     "Activity feed" : "गतिविधि पाटि",
     "Send activity emails" : "गतिविधिको इमेलहरू पठाउनुहोस्",
     "Default settings" : "पूर्वनिर्धारित सेटिङहरू",
@@ -46,6 +45,7 @@ OC.L10N.register(
     "Settings" : "सेटिङ्हरू",
     "Enable RSS feed" : "RSS फिड सक्षम गर्नुहोस्",
     "RSS feed" : "RSS फिड",
-    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्"
+    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
+    "Stream" : "स्ट्रिम"
 },
 "nplurals=2; plural=(n != 1);");
