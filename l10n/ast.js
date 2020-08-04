@@ -30,7 +30,6 @@ OC.L10N.register(
     "There was some activity at %s" : "Hebo dalgo d'actividá en %s",
     "_and %n more _::_and %n more _" : ["y %n más","y %n más"],
     "Mail" : "Corréu",
-    "Stream" : "Fluxu de rede",
     "Activity feed" : "Feed d'actividá",
     "Notify about your own actions via email" : "Avisar per corréu tocante a les mios propies aiciones",
     "You need to set up your email address before you can receive notification emails." : "Precises configurar la to direición de corréu enantes que pueas recibir correos d'avisu.",
@@ -41,6 +40,7 @@ OC.L10N.register(
     "Weekly" : "Selmanalmente",
     "Settings" : "Axustes",
     "Enable RSS feed" : "Habilitar feed RSS",
-    "No more events to load" : "Nun hai más eventos pa cargar"
+    "No more events to load" : "Nun hai más eventos pa cargar",
+    "Stream" : "Fluxu de rede"
 },
 "nplurals=2; plural=(n != 1);");

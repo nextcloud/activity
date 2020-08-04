@@ -23,7 +23,6 @@ OC.L10N.register(
     "There was some activity at %s" : "සමහර ක්‍රියාකාරකම් %s",
     "_and %n more _::_and %n more _" : ["තවත් %nවැඩිපුර","තවත් %n වැඩිපුර"],
     "Mail" : "තැපෑල",
-    "Stream" : "ප්‍රවාහය",
     "Activity feed" : "ක්‍රියාකාරකම් පෝෂකය",
     "Default settings" : "ස්වාබාවික සැකසුම්",
     "Send emails:" : "විද්‍යුත් තැපැල් යැවීම :",
@@ -31,6 +30,7 @@ OC.L10N.register(
     "Hourly" : "පැයක් පාසා",
     "Daily" : "දිනපතා",
     "Weekly" : "සතිපතා",
-    "Settings" : "සැකසුම්"
+    "Settings" : "සැකසුම්",
+    "Stream" : "ප්‍රවාහය"
 },
 "nplurals=2; plural=(n != 1);");

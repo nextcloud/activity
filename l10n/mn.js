@@ -26,7 +26,7 @@ OC.L10N.register(
     "Hello %s" : "Сайн байна уу, %s",
     "Hello %s," : "Сайн байна уу, %s,",
     "Mail" : "Цахим шуудан",
-    "Stream" : "Урсгал",
+    "Notification" : "Мэдэгдэл",
     "Activity feed" : "Үйлдлүүдйн тэжээл",
     "Configure the default activity settings for new users." : "Шинэ хэрэглэгчдийн \"Үйлдлүүд\" хэсгийн анхдагч тохиргоог тохируулах",
     "List your own actions in the stream" : "\"Үйлдлүүд\" апп-д өөрийн үйл ажиллагааг харуулах",
@@ -36,8 +36,9 @@ OC.L10N.register(
     "Hourly" : "Цаг бүр",
     "Daily" : "Өдөр бүр",
     "Weekly" : "Долоо хоног бүр",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Та цахим шуудангаар ямар үйлдлийн талаар мэдээлэл авахыг хүсэж байгаа болон \"Үйлдлүүд\" хэсэгт ямар үйлдэл харуулахыг хүсэж байгаагаа сонгоно уу.",
     "Settings" : "Тохиргоо",
-    "Enable RSS feed" : "RSS feed идэвхжүүлэх"
+    "Enable RSS feed" : "RSS feed идэвхжүүлэх",
+    "Stream" : "Урсгал",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Та цахим шуудангаар ямар үйлдлийн талаар мэдээлэл авахыг хүсэж байгаа болон \"Үйлдлүүд\" хэсэгт ямар үйлдэл харуулахыг хүсэж байгаагаа сонгоно уу."
 },
 "nplurals=2; plural=(n != 1);");

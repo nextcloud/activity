@@ -31,7 +31,6 @@ OC.L10N.register(
     "There was some activity at %s" : "הייתה פעילות ב%s",
     "_and %n more _::_and %n more _" : ["ו־%n נוסף","ו־%n נוספים","ו־%n נוספים","ו־%n נוספים"],
     "Mail" : "דואר",
-    "Stream" : "הזרמת מידע",
     "This application enables users to view actions related to their files in Nextcloud." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שקשורות לקבצים שלהם ב־Nextcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שבוצעו על הקבצים שלהם ב־Nextcloud.\n\t\tלאחר ההפעלה, המשתמשים יראו סמל „פעילות” חדש בתפריט היישומונים שלהם.\n\t\tלחיצה על הסמל, תוביל לעמוד חדש שיופיע בפני המשתמש לצורך מעקב אחר הפעילות שקשורה בקבצים - החל מיצירת קבצים חדשים, קבצים שנמחקו, העברות, שינויי שם, עדכונים ופעילות משותפת.\n\t\tכל משתמש יכול להגדיר את הפעילות העצמית בתפריט האישי שלו.\n\t\tדרך התפריט ניתן גם להגדיר את סוג הפעילות שתתועד לצד האם למשתמש תהיה אפשרות לראות את הפעילויות שלו עצמו,\n\t\tבין אם התיעוד הזה יהיה זמין באופן מקוון והאם תיעוד הפעילות יישלח כמקבץ בדוא״ל.\n\t\tניתן למצוא מידע נוסף בתיעוד של הפעילות.",
     "Activity feed" : "דיווחי פעילות",
@@ -46,11 +45,12 @@ OC.L10N.register(
     "Hourly" : "שעתי",
     "Daily" : "יומי",
     "Weekly" : "שבועי",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "נא לבחור עבור אילו מהפעילויות ברצונך לקבל התרעות בדוא״ל ואילו תופענה בתזרים הפעילויות של היישומון.",
-    "Choose which activities you want to see in your stream." : "נא לבחור אילו פעילויות יופיעו בתזרים שלך.",
     "Settings" : "הגדרות",
     "Enable RSS feed" : "לאפשר הזנת RSS",
     "RSS feed" : "ערוץ RSS",
-    "No more events to load" : "אין אירועים נוספים לטעינה"
+    "No more events to load" : "אין אירועים נוספים לטעינה",
+    "Stream" : "הזרמת מידע",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "נא לבחור עבור אילו מהפעילויות ברצונך לקבל התרעות בדוא״ל ואילו תופענה בתזרים הפעילויות של היישומון.",
+    "Choose which activities you want to see in your stream." : "נא לבחור אילו פעילויות יופיעו בתזרים שלך."
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

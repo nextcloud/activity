@@ -31,7 +31,7 @@ OC.L10N.register(
     "There was some activity at %s" : "Zaistniała aktywność przy %s",
     "_and %n more _::_and %n more _" : ["i %n więcej","i %n więcej","i %n więcej","i %n więcej"],
     "Mail" : "E-mail",
-    "Stream" : "Strumień",
+    "Notification" : "Powiadomienie",
     "This application enables users to view actions related to their files in Nextcloud." : "Ta aplikacja umożliwia użytkownikom przeglądanie akcji związanych z ich plikami w usłudze Nextcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ta aplikacja umożliwia użytkownikom przeglądanie akcji związanych z ich plikami w usłudze Nextcloud.\n\t\tPo włączeniu użytkownicy zobaczą nową ikonę \"Aktywność\" w menu aplikacji\n\t\tPo kliknięciu pojawia się nowa strona, na której użytkownicy mogą śledzić działania związane z plikami - od nowych plików, po usunięte pliki, przenoszenie, zmianę nazwy, aktualizacje i wspólną aktywność.\n\t\tUżytkownik może skonfigurować swoje indywidualne ustawienia aktywności w osobistym menu.\n\t\tOkreśla typ czynności do zapisania, a także, czy użytkownik widzi własne czynności,\n\t\tczy są one dostępne tylko w trybie online i czy są one regularnie otrzymywane z podsumowaniem wiadomości e-mail\n\t\tWięcej informacji można znaleźć w Dokumentacji aktywności\". ",
     "Activity feed" : "Zasób aktywności",
@@ -46,11 +46,12 @@ OC.L10N.register(
     "Hourly" : "Co godzinę",
     "Daily" : "Codziennie",
     "Weekly" : "Co tydzień",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Wybierz, dla których aktywności chcesz otrzymywać powiadomienia e-mailowe, a które powinny być wyświetlane na liście aktywności.",
-    "Choose which activities you want to see in your stream." : "Wybierz aktywności, które chcesz zobaczyć w swoim strumieniu.",
     "Settings" : "Ustawienia",
     "Enable RSS feed" : "Włącz kanał RSS",
     "RSS feed" : "Kanał RSS",
-    "No more events to load" : "Brak wydarzeń do załadowania"
+    "No more events to load" : "Brak wydarzeń do załadowania",
+    "Stream" : "Strumień",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Wybierz, dla których aktywności chcesz otrzymywać powiadomienia e-mailowe, a które powinny być wyświetlane na liście aktywności.",
+    "Choose which activities you want to see in your stream." : "Wybierz aktywności, które chcesz zobaczyć w swoim strumieniu."
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");
