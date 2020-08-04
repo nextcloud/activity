@@ -31,7 +31,6 @@ OC.L10N.register(
     "There was some activity at %s" : "Okazis aktivoj je %s",
     "_and %n more _::_and %n more _" : ["kaj %n alia","kaj %n aliaj"],
     "Mail" : "Retpoŝto",
-    "Stream" : "Fluo",
     "This application enables users to view actions related to their files in Nextcloud." : "Tiu ĉi aplikaĵo ebligas uzantojn vidi kio okazas al iliaj dosieroj en Nextcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Tiu ĉi aplikaĵo ebligas uzantojn vidi kio okazas al iliaj dosieroj en Nextcloud..\n\t\tKiam ŝaltita, uzantoj vidos novan bildsimbolon „Aktivaĵoj“ en ilia aplikaĵa menuo.\n\t\tKiam oni alklakas ĝin, nova paĝo montriĝas kaj ebligas al oni sekvi la aktivaĵojn pri la dosieroj — dosieroj novaj, forigitaj, movitaj, alinomitaj, ĝisdatigitaj kaj kunhavigitaj —.\n\t\tLa uzanto povas agordi sian aktivecon en la persona menuo.\n\t\tTiu ebligas elekti lin/ŝin kian tipon de aktivaĵoj registri, kaj ankaŭ ĉu la uzanto volas vidi siajn aktivaĵojn,\n\t\tĉu tiuj disponeblas rete, ĉu ricevi mesaĝaran retmesaĝon regule.\n\t\tPli da informoj en la dokumentaro pri Aktivaĵoj.",
     "Activity feed" : "Aktivaĵa fluo",
@@ -46,11 +45,12 @@ OC.L10N.register(
     "Hourly" : "Ĉiuhore",
     "Daily" : "Ĉiutage",
     "Weekly" : "Ĉiusemajne",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Elektu kiujn aktivaĵojn vi volas ricevi retmesaĝe kaj vidi en la fluo.",
-    "Choose which activities you want to see in your stream." : "Elektu la aktivaĵojn, kiujn vi volas vidi en la fluo.",
     "Settings" : "Agordo",
     "Enable RSS feed" : "Aktivigi RSS-fluo",
     "RSS feed" : "RSS-a fluo",
-    "No more events to load" : "Ne estas pli da eventoj."
+    "No more events to load" : "Ne estas pli da eventoj.",
+    "Stream" : "Fluo",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Elektu kiujn aktivaĵojn vi volas ricevi retmesaĝe kaj vidi en la fluo.",
+    "Choose which activities you want to see in your stream." : "Elektu la aktivaĵojn, kiujn vi volas vidi en la fluo."
 },
 "nplurals=2; plural=(n != 1);");

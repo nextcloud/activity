@@ -28,7 +28,7 @@
     "There was some activity at %s" : "Se tuvo algo de actividad en %s",
     "_and %n more _::_and %n more _" : ["y %n más","y %n más"],
     "Mail" : "Correo",
-    "Stream" : "Flujo",
+    "Notification" : "Notificación",
     "Activity feed" : "Fuente de actividad",
     "Send activity emails" : "Enviar correos de actividades",
     "Default settings" : "Configuraciones predeterminadas",
@@ -41,11 +41,12 @@
     "Hourly" : "Cada hora",
     "Daily" : "Diariamente",
     "Weekly" : "Semanalmente",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Selecciona las actividades para las cuales deseas obtener una notificación por correo electrónico y cuales deben mostrarse en el listado de actividades.",
-    "Choose which activities you want to see in your stream." : "Eliije cuáles actividades quieres ver en tu fuente.",
     "Settings" : "Configuraciones ",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
-    "No more events to load" : "No hay más eventos por cargar"
+    "No more events to load" : "No hay más eventos por cargar",
+    "Stream" : "Flujo",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Selecciona las actividades para las cuales deseas obtener una notificación por correo electrónico y cuales deben mostrarse en el listado de actividades.",
+    "Choose which activities you want to see in your stream." : "Eliije cuáles actividades quieres ver en tu fuente."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

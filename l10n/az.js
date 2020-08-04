@@ -10,7 +10,6 @@ OC.L10N.register(
     "Your settings have been updated." : "Sizin configləriniz yenilendi.",
     "Hello %s," : "Salam %s,",
     "Mail" : "Məktub",
-    "Stream" : "Axın",
     "Activity feed" : "Fəaliyyətin ötürülməsi",
     "Notify about your own actions via email" : "Öz gördüyünüz işlər haqqənda email-lə xəbərdar elə",
     "You need to set up your email address before you can receive notification emails." : "Xəbərdarlıq məktubları almazdan öncə, siz mail ünvanınızı təyin etməlisiniz.",
@@ -20,6 +19,7 @@ OC.L10N.register(
     "Weekly" : "Həftəlik",
     "Settings" : "Quraşdırmalar",
     "Enable RSS feed" : "RSS ötürməsinin işə salinmaslı",
-    "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur"
+    "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur",
+    "Stream" : "Axın"
 },
 "nplurals=2; plural=(n != 1);");

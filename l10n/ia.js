@@ -28,7 +28,6 @@ OC.L10N.register(
     "Hello %s," : "Salute %s,",
     "There was some activity at %s" : "Il habeva alcun activitate in %s",
     "Mail" : "Posta",
-    "Stream" : "Fluxo",
     "Activity feed" : "Syndication de activitate",
     "Default settings" : "Configurationes predefinite",
     "List your own actions in the stream" : "Lista tu proprie actiones de file in le fluxo",
@@ -40,6 +39,7 @@ OC.L10N.register(
     "Weekly" : "Cata septimana",
     "Settings" : "Configurationes",
     "Enable RSS feed" : "Habilita syndication RSS",
-    "No more events to load" : "Nulle altere eventos a cargar"
+    "No more events to load" : "Nulle altere eventos a cargar",
+    "Stream" : "Fluxo"
 },
 "nplurals=2; plural=(n != 1);");
