@@ -83,7 +83,7 @@ class Personal implements ISettings {
 			return $a->getPriority() > $b->getPriority();
 		});
 
-		$activities = [];
+		$activityGroups = [];
 		foreach ($settings as $setting) {
 			if (!$setting->canChangeMail() && !$setting->canChangeNotification()) {
 				// No setting can be changed => don't display
@@ -100,8 +100,16 @@ class Personal implements ISettings {
 			}
 
 			$identifier = $setting->getIdentifier();
+			$groupIdentifier = $setting->getGroupIdentifier();
 
-			$activities[$identifier] = array(
+			if (!isset($activityGroups[$groupIdentifier])) {
+				$activityGroups[$groupIdentifier] = [
+					'activities' => [],
+					'name' => $setting->getGroupName()
+				];
+			}
+
+			$activityGroups[$groupIdentifier]['activities'][$identifier] = array(
 				'desc'		=> $setting->getName(),
 				IExtension::METHOD_MAIL		=> $this->userSettings->getUserSetting($this->user, 'email', $identifier),
 				IExtension::METHOD_NOTIFICATION	=> $this->userSettings->getUserSetting($this->user, 'notification', $identifier),
@@ -134,7 +142,7 @@ class Personal implements ISettings {
 
 		return new TemplateResponse('activity', 'settings/personal', [
 			'setting'			=> 'personal',
-			'activities'		=> $activities,
+			'activityGroups'	=> $activityGroups,
 			'is_email_set'		=> !empty($this->config->getUserValue($this->user, 'settings', 'email', '')),
 			'email_enabled'		=> $emailEnabled,
 

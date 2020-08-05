@@ -70,7 +70,7 @@ class Admin implements ISettings {
 			return $a->getPriority() > $b->getPriority();
 		});
 
-		$activities = [];
+		$activityGroups = [];
 		foreach ($settings as $setting) {
 			if (!$setting->canChangeMail() && !$setting->canChangeNotification()) {
 				// No setting can be changed => don't display
@@ -87,8 +87,16 @@ class Admin implements ISettings {
 			}
 
 			$identifier = $setting->getIdentifier();
+			$groupIdentifier = $setting->getGroupIdentifier();
 
-			$activities[$identifier] = array(
+			if (!isset($activityGroups[$groupIdentifier])) {
+				$activityGroups[$groupIdentifier] = [
+					'activities' => [],
+					'name' => $setting->getGroupName()
+				];
+			}
+
+			$activityGroups[$groupIdentifier]['activities'][$identifier] = array(
 				'desc'		=> $setting->getName(),
 				IExtension::METHOD_MAIL		=> $this->userSettings->getConfigSetting('email', $identifier),
 				IExtension::METHOD_NOTIFICATION	=> $this->userSettings->getConfigSetting('notification', $identifier),
@@ -108,7 +116,7 @@ class Admin implements ISettings {
 
 		return new TemplateResponse('activity', 'settings/admin', [
 			'setting'			=> 'admin',
-			'activities'		=> $activities,
+			'activityGroups'		=> $activityGroups,
 			'is_email_set'		=> true,
 			'email_enabled'		=> $this->config->getAppValue('activity', 'enable_email', 'yes') === 'yes',
 
