@@ -30,6 +30,7 @@ OC.L10N.register(
     "There was some activity at %s" : "Se tuvo algo de actividad en %s",
     "_and %n more _::_and %n more _" : ["y %n más","y %n más"],
     "Mail" : "Correo",
+    "Notification" : "Notificación",
     "Activity feed" : "Fuente de actividad",
     "Send activity emails" : "Enviar correos de actividades",
     "Default settings" : "Configuraciones predeterminadas",

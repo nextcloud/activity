@@ -46,6 +46,8 @@ OC.L10N.register(
     "Hourly" : "Cada hora",
     "Daily" : "Diariamente",
     "Weekly" : "Semanalmente",
+    "Choose for which activities you want to get an email or push notification." : "Elige para qué actividades quieres recibir un email o una notificación push.",
+    "Choose for which activities you want to get a push notification." : "Elige para qué actividades quieres recibir una notificación push.",
     "Settings" : "Configuración",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
