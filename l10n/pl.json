@@ -44,12 +44,14 @@
     "Hourly" : "Co godzinę",
     "Daily" : "Codziennie",
     "Weekly" : "Co tydzień",
+    "Choose for which activities you want to get an email or push notification." : "Wybierz, dla jakich działań chcesz otrzymywać powiadomienia e-mailem lub push.",
+    "Choose for which activities you want to get a push notification." : "Wybierz, dla jakich działań chcesz otrzymywać powiadomienia push.",
     "Settings" : "Ustawienia",
     "Enable RSS feed" : "Włącz kanał RSS",
     "RSS feed" : "Kanał RSS",
     "No more events to load" : "Brak wydarzeń do załadowania",
     "Stream" : "Strumień",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Wybierz, dla których aktywności chcesz otrzymywać powiadomienia e-mailowe, a które powinny być wyświetlane na liście aktywności.",
+    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Wybierz, dla których aktywności chcesz otrzymywać powiadomienia e-mailem, a które powinny być wyświetlane na liście aktywności.",
     "Choose which activities you want to see in your stream." : "Wybierz aktywności, które chcesz zobaczyć w swoim strumieniu."
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }
