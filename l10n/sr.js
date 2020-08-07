@@ -46,6 +46,8 @@ OC.L10N.register(
     "Hourly" : "сваки сат",
     "Daily" : "дневно",
     "Weekly" : "недељно",
+    "Choose for which activities you want to get an email or push notification." : "Одаберите за које активности желите да добијате е-пошту или брза обавештења.",
+    "Choose for which activities you want to get a push notification." : "Одаберите за које активности желите да добијате брза обавештења.",
     "Settings" : "Поставке",
     "Enable RSS feed" : "Укључи РСС довод",
     "RSS feed" : "РСС довод",
