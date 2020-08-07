@@ -46,6 +46,8 @@ OC.L10N.register(
     "Hourly" : "Vsako uro",
     "Daily" : "Dnevno",
     "Weekly" : "Tedensko",
+    "Choose for which activities you want to get an email or push notification." : "Za katere dejavnosti želite prejeti sporočilo na elektronski naslov ali pa potisno obvestilo na napravi.",
+    "Choose for which activities you want to get a push notification." : "Za katere dejavnosti želite prejeti potisno obvestilo na napravi.",
     "Settings" : "Nastavitve",
     "Enable RSS feed" : "Omogoči vire RSS",
     "RSS feed" : "Viri RSS",
