@@ -127,7 +127,7 @@ class Admin implements ISettings {
 
 			'methods'			=> [
 				IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
-				IExtension::METHOD_NOTIFICATION => $this->l10n->t('Notification'),
+				IExtension::METHOD_NOTIFICATION => $this->l10n->t('Push'),
 			],
 		], 'blank');
 	}
@@ -136,7 +136,7 @@ class Admin implements ISettings {
 	 * @return string the section ID, e.g. 'sharing'
 	 */
 	public function getSection() {
-		return 'activity';
+		return 'notification';
 	}
 
 	/**

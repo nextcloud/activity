@@ -61,7 +61,7 @@ class AdminSection implements IIconSection {
 	 * @since 9.1
 	 */
 	public function getID() {
-		return 'activity';
+		return 'notification';
 	}
 
 	/**
@@ -72,7 +72,7 @@ class AdminSection implements IIconSection {
 	 * @since 9.1
 	 */
 	public function getName() {
-		return $this->l->t('Activity');
+		return $this->l->t('Notifications');
 	}
 
 	/**

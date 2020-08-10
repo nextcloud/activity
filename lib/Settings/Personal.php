@@ -137,7 +137,7 @@ class Personal implements ISettings {
 		}
 
 		if ($this->config->getAppValue('activity', 'enable_notify', 'yes') === 'yes') {
-			$methods[IExtension::METHOD_NOTIFICATION] = $this->l10n->t('Notification');
+			$methods[IExtension::METHOD_NOTIFICATION] = $this->l10n->t('Push');
 		}
 
 		return new TemplateResponse('activity', 'settings/personal', [
@@ -159,7 +159,7 @@ class Personal implements ISettings {
 	 * @return string the section ID, e.g. 'sharing'
 	 */
 	public function getSection() {
-		return 'activity';
+		return 'notification';
 	}
 
 	/**
