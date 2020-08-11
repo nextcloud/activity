@@ -44,6 +44,8 @@
     "Hourly" : "Orduero",
     "Daily" : "Egunero",
     "Weekly" : "Astero",
+    "Choose for which activities you want to get an email or push notification." : "Aukeratu zein jardueratarako lortu posta elektronikoa edo push jakinarazpena.",
+    "Choose for which activities you want to get a push notification." : "Aukeratu zein jardueratarako lortu push jakinarazpena.",
     "Settings" : "Ezarpenak",
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "RSS feed" : "RSS jarioa",

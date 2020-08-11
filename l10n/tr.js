@@ -46,6 +46,8 @@ OC.L10N.register(
     "Hourly" : "Saatlik",
     "Daily" : "Günlük",
     "Weekly" : "Haftalık",
+    "Choose for which activities you want to get an email or push notification." : "E-posta ya da anında bildirim almak istediğiniz işlemleri seçin.",
+    "Choose for which activities you want to get a push notification." : "Anında bildirim almak istediğiniz işlemleri seçin.",
     "Settings" : "Ayarlar",
     "Enable RSS feed" : "RSS akışı kullanılsın",
     "RSS feed" : "RSS akışı",
