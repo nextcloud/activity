@@ -117,7 +117,7 @@ class RemoteActivity extends QueuedJob {
 			case Files::TYPE_SHARE_CREATED:
 			case Files::TYPE_SHARE_RESTORED:
 				return 'Create';
-			case Files::TYPE_SHARE_CHANGED:
+			case Files::TYPE_FILE_CHANGED:
 				if ($secondPath !== '') {
 					return 'Move';
 				}

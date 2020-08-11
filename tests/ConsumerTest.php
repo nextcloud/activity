@@ -158,7 +158,7 @@ class ConsumerTest extends TestCase {
 			->setLink('link');
 		$this->deleteTestActivities();
 
-		if ($author === $affectedUser && $this->userSettings->getUserSetting($affectedUser, 'setting', 'self') === false) {
+		if ($author === $affectedUser) {
 			$this->data->expects($this->never())
 				->method('send');
 		} else {

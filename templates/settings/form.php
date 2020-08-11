@@ -62,18 +62,7 @@
 		</tbody>
 	</table>
 
-	<br />
-	<input id="notify_setting_self" name="notify_setting_self" type="checkbox" class="checkbox"
-		value="1" <?php if ($_['notify_self']): ?> checked="checked"<?php endif; ?> />
-	<label for="notify_setting_self"><?php p($l->t('List your own actions in the stream')); ?></label>
-	<br />
-
 <?php if ($_['email_enabled']) { ?>
-	<input id="notify_setting_selfemail" name="notify_setting_selfemail" type="checkbox" class="checkbox"
-		value="1" <?php if ($_['notify_selfemail']): ?> checked="checked"<?php endif; ?> />
-	<label for="notify_setting_selfemail"><?php p($l->t('Notify about your own actions via email')); ?></label>
-	<br />
-
 	<?php if (!$_['is_email_set']): ?>
 		<br />
 		<strong><?php p($l->t('You need to set up your email address before you can receive notification emails.')); ?></strong>
