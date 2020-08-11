@@ -26,11 +26,11 @@ style('activity', 'settings');
 
 <div class="section">
 
-	<h2><?php p($l->t('Activity')); ?></h2>
+	<h2><?php p($l->t('Notifications')); ?></h2>
 
 	<input id="activity_email_enabled" name="activity_email_enabled" type="checkbox" class="checkbox"
 		   value="1" <?php if ($_['email_enabled']) { print_unescaped('checked="checked"'); } ?> />
-	<label for="activity_email_enabled"><?php p($l->t('Send activity emails')); ?></label>
+	<label for="activity_email_enabled"><?php p($l->t('Enable notification emails')); ?></label>
 
 </div>
 
@@ -39,7 +39,7 @@ style('activity', 'settings');
 	<h2><?php p($l->t('Default settings')); ?></h2>
 
 	<p class="settings-hint">
-		<?php p($l->t('Configure the default activity settings for new users.')); ?>
+		<?php p($l->t('Configure the default notification settings for new users.')); ?>
 	</p>
 
 	<?php print_unescaped($this->inc('settings/form')); ?>

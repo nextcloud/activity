@@ -28,33 +28,36 @@
 ?>
 
 	<table class="grid activitysettings">
-		<thead>
+		<tbody>
+		<?php foreach ($_['activityGroups'] as $group): ?>
+			<tr>
+				<th colspan="3" class="group-header"><?php p($group['name']) ?></th>
+			</tr>
 			<tr>
 				<?php foreach ($_['methods'] as $method => $methodName): ?>
-				<th class="small activity_select_group" data-select-group="<?php p($method) ?>">
-					<?php p($methodName); ?>
-				</th>
+					<th class="small activity_select_group" data-select-group="<?php p($method) ?>">
+						<?php p($methodName); ?>
+					</th>
 				<?php endforeach; ?>
 				<th><span id="activity_notifications_msg" class="msg"></span></th>
 			</tr>
-		</thead>
-		<tbody>
-		<?php foreach ($_['activities'] as $activity => $data): ?>
-			<tr>
-				<?php foreach ($_['methods'] as $method => $methodName): ?>
-				<td class="small">
-					<input type="checkbox" id="<?php p($activity) ?>_<?php p($method) ?>" name="<?php p($activity) ?>_<?php p($method) ?>"
-						value="1" class="<?php p($activity) ?> <?php p($method) ?> checkbox"
-						<?php if (!in_array($method, $data['methods'])): ?> disabled="disabled"<?php endif; ?>
-						<?php if ($data[$method]): ?> checked="checked"<?php endif; ?> />
-					<label for="<?php p($activity) ?>_<?php p($method) ?>">
-					</label>
-				</td>
-				<?php endforeach; ?>
-				<td class="activity_select_group" data-select-group="<?php p($activity) ?>">
-					<?php echo $data['desc']; ?>
-				</td>
-			</tr>
+			<?php foreach ($group['activities'] as $activity => $data): ?>
+				<tr>
+					<?php foreach ($_['methods'] as $method => $methodName): ?>
+					<td class="small">
+						<input type="checkbox" id="<?php p($activity) ?>_<?php p($method) ?>" name="<?php p($activity) ?>_<?php p($method) ?>"
+							value="1" class="<?php p($activity) ?> <?php p($method) ?> checkbox"
+							<?php if (!in_array($method, $data['methods'])): ?> disabled="disabled"<?php endif; ?>
+							<?php if ($data[$method]): ?> checked="checked"<?php endif; ?> />
+						<label for="<?php p($activity) ?>_<?php p($method) ?>">
+						</label>
+					</td>
+					<?php endforeach; ?>
+					<td class="activity_select_group" data-select-group="<?php p($activity) ?>">
+						<?php echo $data['desc']; ?>
+					</td>
+				</tr>
+			<?php endforeach; ?>
 		<?php endforeach; ?>
 		</tbody>
 	</table>

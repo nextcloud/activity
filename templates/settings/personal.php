@@ -26,7 +26,7 @@ style('activity', 'settings');
 
 <form id="activity_notifications" class="section">
 
-	<h2><?php p($l->t('Activity')); ?></h2>
+	<h2><?php p($l->t('Notifications')); ?></h2>
 	<p class="settings-hint">
 		<?php if ($_['email_enabled']) { ?>
 			<?php p($l->t('Choose for which activities you want to get an email or push notification.')); ?>

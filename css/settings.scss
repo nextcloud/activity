@@ -7,6 +7,12 @@ table.activitysettings th.small {
 	width: 5em;
 }
 
+table.activitysettings th.group-header {
+	font-size: 1.3em;
+	color: $color-black;
+	padding: 0.5em;
+}
+
 table.activitysettings tbody tr {
 	height: 2.5em;
 }
