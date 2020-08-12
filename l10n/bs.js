@@ -9,6 +9,7 @@ OC.L10N.register(
     "Yesterday" : "Jučer",
     "Open file" : "Otvori Datoteku",
     "Mail" : "E-Pošta",
+    "Notifications" : "Notifikacija",
     "Hourly" : "Svakog sata",
     "Daily" : "Dnevno",
     "Weekly" : "Sedmično",

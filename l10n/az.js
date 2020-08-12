@@ -10,6 +10,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Sizin configləriniz yenilendi.",
     "Hello %s," : "Salam %s,",
     "Mail" : "Məktub",
+    "Notifications" : "Xəbərdarlıqlar",
     "Activity feed" : "Fəaliyyətin ötürülməsi",
     "Notify about your own actions via email" : "Öz gördüyünüz işlər haqqənda email-lə xəbərdar elə",
     "You need to set up your email address before you can receive notification emails." : "Xəbərdarlıq məktubları almazdan öncə, siz mail ünvanınızı təyin etməlisiniz.",
