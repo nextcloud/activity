@@ -31,9 +31,7 @@ OC.L10N.register(
     "_and %n more _::_and %n more _" : ["र थप %n","र %n थप "],
     "Mail" : "पत्र",
     "Activity feed" : "गतिविधि पाटि",
-    "Send activity emails" : "गतिविधिको इमेलहरू पठाउनुहोस्",
     "Default settings" : "पूर्वनिर्धारित सेटिङहरू",
-    "Configure the default activity settings for new users." : "नयाँ प्रयोगकर्ताका लागि पूर्वनिर्धारित गतिविधि सेटिङहरू मिलाउनुहोस्।",
     "List your own actions in the stream" : "पाटिमा आफ्नो कार्यहरू सूचीबद्ध गर्नुहोस्",
     "Notify about your own actions via email" : "इमेल मार्फत आफ्नो कार्यहरूको बारेमा सूचित गर्नुहोस्",
     "You need to set up your email address before you can receive notification emails." : "अग्रसूचना ईमेलहरू प्राप्त गर्नु अघि तपाईंले आफ्नो ईमेल ठेगाना सेट अप गर्न आवश्यक छ।",
@@ -46,6 +44,8 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS फिड सक्षम गर्नुहोस्",
     "RSS feed" : "RSS फिड",
     "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
-    "Stream" : "स्ट्रिम"
+    "Stream" : "स्ट्रिम",
+    "Send activity emails" : "गतिविधिको इमेलहरू पठाउनुहोस्",
+    "Configure the default activity settings for new users." : "नयाँ प्रयोगकर्ताका लागि पूर्वनिर्धारित गतिविधि सेटिङहरू मिलाउनुहोस्।"
 },
 "nplurals=2; plural=(n != 1);");

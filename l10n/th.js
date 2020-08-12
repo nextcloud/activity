@@ -34,9 +34,7 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud." : "แอปพลิเคชั่นนี้ ช่วยให้ผู้ใช้สามารถดูการทำงานที่เกี่ยวข้องกับไฟล์ใน Nextcloud",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "แอปพลิเคชั่นนี้ช่วยให้ผู้ใช้สามารถดูการทำงานที่เกี่ยวข้องกับไฟล์ใน Nextcloud\nเมื่อเปิดใช้งานผู้ใช้จะเห็นไอคอนใหม่“ กิจกรรม” ในเมนูแอพของพวกเขา\nเมื่อคลิกแล้วจะมีหน้าใหม่ปรากฏขึ้นให้ผู้ใช้ติดตามกิจกรรมที่เกี่ยวข้องกับไฟล์ตั้งแต่ไฟล์ใหม่ไปจนถึงไฟล์ที่ถูกลบย้ายเปลี่ยนชื่ออัปเดตและกิจกรรมที่แชร์\nผู้ใช้สามารถกำหนดการตั้งค่ากิจกรรมส่วนตัวในเมนูส่วนตัว\nสิ่งนี้จะกำหนดประเภทของกิจกรรมที่จะบันทึกรวมถึงว่าผู้ใช้เห็นกิจกรรมของตนเองหรือไม่\nไม่ว่าจะเป็นออนไลน์เท่านั้นหรือไม่และพวกเขาจะได้รับอีเมลสรุปเป็นประจำหรือไม่\nข้อมูลเพิ่มเติมมีอยู่ในเอกสารกิจกรรม",
     "Activity feed" : "ฟีดกิจกรรม",
-    "Send activity emails" : "ติดตามการส่งอีเมล์",
     "Default settings" : "ค่าเริ่มต้น",
-    "Configure the default activity settings for new users." : "ตั้งค่ากิจกรรมเริ่มต้นให้ผู้ใช้ใหม่",
     "List your own actions in the stream" : "รายชื่อการกระทำของคุณในสตรีม",
     "Notify about your own actions via email" : "แจ้งเตือนเกี่ยวกับสิ่งที่คุณทำผ่านทางอีเมล",
     "You need to set up your email address before you can receive notification emails." : "คุณจะได้รับอีเมลแจ้งเตือนหลังจากที่คุณตั้งค่าที่อยู่อีเมลของคุณ",
@@ -50,6 +48,8 @@ OC.L10N.register(
     "RSS feed" : "ฟีด RSS",
     "No more events to load" : "ไม่มีการโหลดกิจกรรมเพิ่มเติม",
     "Stream" : "สตรีม",
+    "Send activity emails" : "ติดตามการส่งอีเมล์",
+    "Configure the default activity settings for new users." : "ตั้งค่ากิจกรรมเริ่มต้นให้ผู้ใช้ใหม่",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "เลือกกิจกรรมที่คุณต้องการให้แจ้งทาง Email และกิจกรรมไหนที่ต้องการให้แสดงใน แอพสตรีม",
     "Choose which activities you want to see in your stream." : "เลือกกิจกรรมที่คุณต้องการเห็นในสตรีมของคุณ"
 },
