@@ -23,7 +23,6 @@
     "Hello %s," : "Hai %s,",
     "Mail" : "Mel",
     "Activity feed" : "Suapan aktiviti",
-    "Send activity emails" : "Hantar emel aktiviti",
     "Default settings" : "Tetapan lalai",
     "Send emails:" : "Hantar email:",
     "As soon as possible" : "Secepat yang boleh",
@@ -33,6 +32,7 @@
     "Settings" : "Tetapan",
     "RSS feed" : "Suapan RSS",
     "No more events to load" : "Tiada aktiviti untuk memuat",
-    "Stream" : "Strim"
+    "Stream" : "Strim",
+    "Send activity emails" : "Hantar emel aktiviti"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

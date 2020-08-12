@@ -29,13 +29,11 @@
     "There was some activity at %s" : "There was some activity at %s",
     "_and %n more _::_and %n more _" : ["and %n more","and %n more"],
     "Mail" : "Mail",
-    "Notification" : "Notification",
+    "Notifications" : "Notifications",
     "This application enables users to view actions related to their files in Nextcloud." : "This application enables users to view actions related to their files in Nextcloud.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation.",
     "Activity feed" : "Activity feed",
-    "Send activity emails" : "Send activity emails",
     "Default settings" : "Default settings",
-    "Configure the default activity settings for new users." : "Configure the default activity settings for new users.",
     "List your own actions in the stream" : "List your own actions in the stream",
     "Notify about your own actions via email" : "Notify about your own actions via email",
     "You need to set up your email address before you can receive notification emails." : "You need to set up your email address before you can receive notification emails.",
@@ -49,6 +47,8 @@
     "RSS feed" : "RSS feed",
     "No more events to load" : "No more events to load",
     "Stream" : "Stream",
+    "Send activity emails" : "Send activity emails",
+    "Configure the default activity settings for new users." : "Configure the default activity settings for new users.",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Choose for which activities you want to get an email notification, and which should show up in the activity app stream",
     "Choose which activities you want to see in your stream." : "Choose which activities you want to see in your stream."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
