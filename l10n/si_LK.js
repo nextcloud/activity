@@ -23,6 +23,7 @@ OC.L10N.register(
     "There was some activity at %s" : "සමහර ක්‍රියාකාරකම් %s",
     "_and %n more _::_and %n more _" : ["තවත් %nවැඩිපුර","තවත් %n වැඩිපුර"],
     "Mail" : "තැපෑල",
+    "Notifications" : "නිවේදන ",
     "Activity feed" : "ක්‍රියාකාරකම් පෝෂකය",
     "Default settings" : "ස්වාබාවික සැකසුම්",
     "Send emails:" : "විද්‍යුත් තැපැල් යැවීම :",

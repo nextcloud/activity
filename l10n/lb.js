@@ -28,6 +28,7 @@ OC.L10N.register(
     "Hello %s," : "Hallo %s,",
     "There was some activity at %s" : "Et goufen Ännerungen bei ¦%s",
     "Mail" : "Mail",
+    "Notifications" : "Notifikatiounen",
     "Activity feed" : "Aktivitéits-Feed",
     "List your own actions in the stream" : "Weis är aner Aktivitéiten am Floss",
     "Notify about your own actions via email" : "Iwwer eegene Aktiounen iwwer E-Mail informéieren",
