@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace OCA\Activity;
 
 use OC\Files\Config\CachedMountFileInfo;
+use OC\Tags;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\Tests\TestCase;
@@ -32,6 +33,7 @@ use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\IConfig;
 use OCP\ILogger;
+use OCP\ITagManager;
 use OCP\IUser;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
@@ -77,6 +79,9 @@ class FilesHooksTest extends TestCase {
 	protected $config;
 	/** @var NotificationGenerator|MockObject */
 	protected $notificationGenerator;
+	/** @var ITagManager|MockObject */
+	protected $tagManager;
+	protected $tags;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -92,6 +97,13 @@ class FilesHooksTest extends TestCase {
 		$this->userMountCache = $this->createMock(IUserMountCache::class);
 		$this->config = $this->createMock(IConfig::class);
 		$this->notificationGenerator = $this->createMock(NotificationGenerator::class);
+		$this->tagManager = $this->createMock(ITagManager::class);
+		$this->tags = $this->createMock(Tags::class);
+		$this->tags->method('getUsersFavoritingObject')
+			->willReturn([]);
+
+		$this->tagManager->method('load')
+			->willReturn($this->tags);
 
 		$this->filesHooks = $this->getFilesHooks();
 	}
@@ -128,7 +140,8 @@ class FilesHooksTest extends TestCase {
 					$currentUser,
 					$this->userMountCache,
 					$this->config,
-					$this->notificationGenerator
+					$this->notificationGenerator,
+					$this->tagManager
 				])
 				->onlyMethods($mockedMethods)
 				->getMock();
@@ -148,7 +161,8 @@ class FilesHooksTest extends TestCase {
 			$currentUser,
 			$this->userMountCache,
 			$this->config,
-			$this->notificationGenerator
+			$this->notificationGenerator,
+			$this->tagManager
 		);
 	}
 
@@ -181,7 +195,7 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', Files::TYPE_SHARE_CREATED, $selfSubject, $othersSubject);
+			->with('path', $selfSubject, $othersSubject);
 
 		$filesHooks->fileCreate('path');
 	}
@@ -209,7 +223,7 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', Files::TYPE_SHARE_CHANGED, 'changed_self', 'changed_by');
+			->with('path', 'changed_self', 'changed_by');
 
 		$filesHooks->fileUpdate('path');
 	}
@@ -221,7 +235,7 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
+			->with('path', 'deleted_self', 'deleted_by');
 
 		$filesHooks->fileDelete('path');
 	}
@@ -233,7 +247,7 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
+			->with('path', 'restored_self', 'restored_by');
 
 		$filesHooks->fileRestore('path');
 	}
@@ -253,64 +267,96 @@ class FilesHooksTest extends TestCase {
 		return [
 			[
 				[
-					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user' => true]],
-					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, ['user' => 42]],
+					'email' => ['user' => 42],
+					'notification' => ['user' => true],
 				],
 				'mountcache_used' => false,
+				'isFavorite' => true,
 				[
 					'user' => [
 						'subject' => 'restored_self',
 						'subject_params' => [[1337 => '/user/files/path']],
 						'path' => '/user/files/path',
-						'stream' => true,
+						'notification' => true,
 						'email' => 42,
 					],
-				],
-			],
-			[
-				[
-					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user1' => true]],
-					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, []],
-				],
-				'mountcache_used' => false,
-				[
 					'user1' => [
 						'subject' => 'restored_by',
 						'subject_params' => [[1337 => '/user1/files/path'], 'user'],
 						'path' => '/user1/files/path',
-						'stream' => true,
+						'notification' => false,
 						'email' => 0,
 					],
 				],
 			],
 			[
 				[
-					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user' => true]],
-					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, ['user' => 42]],
+					'email' => [],
+					'notification' => ['user1' => false],
 				],
-				'mountcache_used' => true,
+				'mountcache_used' => false,
+				'isFavorite' => true,
 				[
 					'user' => [
 						'subject' => 'restored_self',
-						'subject_params' => [[1337 => '/path']],
-						'path' => '/path',
-						'stream' => true,
-						'email' => 42,
+						'subject_params' => [[1337 => '/user/files/path']],
+						'path' => '/user/files/path',
+						'notification' => false,
+						'email' => 0,
+					],
+					'user1' => [
+						'subject' => 'restored_by',
+						'subject_params' => [[1337 => '/user1/files/path'], 'user'],
+						'path' => '/user1/files/path',
+						'notification' => false,
+						'email' => 0,
 					],
 				],
 			],
 			[
 				[
-					[['user', 'user1', 'user2'], 'stream', Files::TYPE_SHARE_RESTORED, ['user1' => true]],
-					[['user', 'user1', 'user2'], 'email', Files::TYPE_SHARE_RESTORED, []],
+					'email' => ['user' => 42],
+					'notification' => ['user' => false],
 				],
 				'mountcache_used' => true,
+				'isFavorite' => true,
 				[
+					'user' => [
+						'subject' => 'restored_self',
+						'subject_params' => [[1337 => '/path']],
+						'path' => '/path',
+						'notification' => false,
+						'email' => 42,
+					],
 					'user1' => [
 						'subject' => 'restored_by',
 						'subject_params' => [[1337 => '/path'], 'user'],
 						'path' => '/path',
-						'stream' => true,
+						'notification' => false,
+						'email' => 0,
+					],
+				],
+			],
+			[
+				[
+					'email' => [],
+					'notification' => ['user1' => true],
+				],
+				'mountcache_used' => true,
+				'isFavorite' => true,
+				[
+					'user' => [
+						'subject' => 'restored_self',
+						'subject_params' => [[1337 => '/path']],
+						'path' => '/path',
+						'notification' => false,
+						'email' => 0,
+					],
+					'user1' => [
+						'subject' => 'restored_by',
+						'subject_params' => [[1337 => '/path'], 'user'],
+						'path' => '/path',
+						'notification' => true,
 						'email' => 0,
 					],
 				],
@@ -323,14 +369,20 @@ class FilesHooksTest extends TestCase {
 	 *
 	 * @param array $filterUsers
 	 * @param bool $mountCacheUsed
+	 * @param bool $isFavorite
 	 * @param array $addNotifications
 	 */
-	public function testAddNotificationsForFileAction(array $filterUsers, bool $mountCacheUsed, array $addNotifications): void {
+	public function testAddNotificationsForFileAction(array $filterUsers, bool $mountCacheUsed, bool $isFavorite, array $addNotifications): void {
 		$filesHooks = $this->getFilesHooks([
 			'getSourcePathAndOwner',
 			'getUserPathsFromPath',
 			'addNotificationsForUser',
 		]);
+
+		if ($isFavorite) {
+			$this->tags->method('getUsersFavoritingObject')
+				->willReturn(['user', 'user1', 'user2']);
+		}
 
 		$filesHooks->expects($this->once())
 			->method('getSourcePathAndOwner')
@@ -393,7 +445,9 @@ class FilesHooksTest extends TestCase {
 
 		$this->settings->expects($this->exactly(2))
 			->method('filterUsersBySetting')
-			->willReturnMap($filterUsers);
+			->willReturnCallback(function($users, $method, $type) use ($filterUsers) {
+				return $filterUsers[$method];
+			});
 
 		$i = 2;
 		foreach ($addNotifications as $user => $arguments) {
@@ -406,14 +460,14 @@ class FilesHooksTest extends TestCase {
 					1337,
 					$arguments['path'],
 					true,
-					$arguments['stream'],
 					$arguments['email'],
-					Files::TYPE_SHARE_RESTORED
+					$arguments['notification'],
+					Files::TYPE_FILE_CHANGED
 				);
 			$i++;
 		}
 
-		self::invokePrivate($filesHooks, 'addNotificationsForFileAction', ['path', Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by']);
+		self::invokePrivate($filesHooks, 'addNotificationsForFileAction', ['path', 'restored_self', 'restored_by']);
 	}
 
 	public function testHookShareWithUser(): void {
@@ -495,7 +549,7 @@ class FilesHooksTest extends TestCase {
 			->method('getUserSetting')
 			->willReturnMap(
 				[
-					['recipient', 'stream', Files_Sharing::TYPE_SHARED, true],
+					['recipient', 'notification', Files_Sharing::TYPE_SHARED, true],
 					['recipient', 'email', Files_Sharing::TYPE_SHARED, true],
 					['recipient', 'setting', 'batchtime', 42],
 				]
@@ -513,8 +567,8 @@ class FilesHooksTest extends TestCase {
 				1337,
 				$fileTarget,
 				$isFile,
-				true,
-				42
+				42,
+				true
 			);
 
 		self::invokePrivate($filesHooks, 'shareWithUser', [
@@ -561,7 +615,7 @@ class FilesHooksTest extends TestCase {
 				2, 1,
 				['user1'],
 				[
-					[['user1'], 'stream', Files_Sharing::TYPE_SHARED, ['user1' => true]],
+					[['user1'], 'notification', Files_Sharing::TYPE_SHARED, ['user1' => true]],
 					[['user1'], 'email', Files_Sharing::TYPE_SHARED, []],
 				],
 				[
@@ -569,7 +623,7 @@ class FilesHooksTest extends TestCase {
 						'subject' => 'shared_with_by',
 						'subject_params' => [[42 => '/file'], 'user'],
 						'path' => '/file',
-						'stream' => true,
+						'notification' => true,
 						'email' => 0,
 					],
 				],
@@ -582,7 +636,7 @@ class FilesHooksTest extends TestCase {
 				2, 1,
 				['user1'],
 				[
-					[['user1'], 'stream', Files_Sharing::TYPE_SHARED, ['user1' => false]],
+					[['user1'], 'notification', Files_Sharing::TYPE_SHARED, ['user1' => false]],
 					[['user1'], 'email', Files_Sharing::TYPE_SHARED, ['user1' => false]],
 				],
 				[],
@@ -658,8 +712,8 @@ class FilesHooksTest extends TestCase {
 					42,
 					$arguments['path'],
 					true,
-					$arguments['stream'],
 					$arguments['email'],
+					$arguments['notification'],
 					Files_Sharing::TYPE_SHARED
 				);
 			$i++;
@@ -668,32 +722,6 @@ class FilesHooksTest extends TestCase {
 		self::invokePrivate($filesHooks, 'shareWithGroup', [
 			'group1', 42, 'file', '/file', 1337, true
 		]);
-	}
-
-	public function dataAddNotificationsForUserWithoutSettings(): array {
-		return [
-			['user', 'subject', ['parameter'], 42, 'path', true, false, false, Files::TYPE_SHARE_CREATED]
-		];
-	}
-
-	/**
-	 * @dataProvider dataAddNotificationsForUserWithoutSettings
-	 *
-	 * @param string $user
-	 * @param string $subject
-	 * @param array $parameter
-	 * @param int $fileId
-	 * @param string $path
-	 * @param bool $isFile
-	 * @param bool $stream
-	 * @param bool $email
-	 * @param string $type
-	 */
-	public function testAddNotificationsForUserWithoutSettings(string $user, string $subject, array $parameter, int $fileId, string $path, bool $isFile, bool $stream, bool $email, string $type): void {
-		$this->activityManager->expects($this->never())
-			->method('generateEvent');
-
-		self::invokePrivate($this->filesHooks, 'addNotificationsForUser', [$user, $subject, $parameter, $fileId, $path, $isFile, $stream, $email, $type]);
 	}
 
 	public function dataReshareNotificationForSharer(): array {
@@ -728,7 +756,7 @@ class FilesHooksTest extends TestCase {
 		$this->settings->expects(($path !== null) ? $this->exactly(3) : $this->never())
 			->method('getUserSetting')
 			->willReturnMap([
-				['owner', 'stream', Files_Sharing::TYPE_SHARED, true],
+				['owner', 'notification', Files_Sharing::TYPE_SHARED, true],
 				['owner', 'email', Files_Sharing::TYPE_SHARED, true],
 				['owner', 'setting', 'batchtime', 21],
 			]);
@@ -779,7 +807,7 @@ class FilesHooksTest extends TestCase {
 		$this->settings->expects(($path !== null) ? $this->exactly(3) : $this->never())
 			->method('getUserSetting')
 			->willReturnMap([
-				['user', 'stream', Files_Sharing::TYPE_SHARED, true],
+				['user', 'notification', Files_Sharing::TYPE_SHARED, true],
 				['user', 'email', Files_Sharing::TYPE_SHARED, true],
 				['user', 'setting', 'batchtime', 21],
 			]);
@@ -915,7 +943,7 @@ class FilesHooksTest extends TestCase {
 		$this->settings->expects(($path !== null) ? $this->exactly(3) : $this->never())
 			->method('getUserSetting')
 			->willReturnMap([
-				['user', 'stream', Files_Sharing::TYPE_SHARED, true],
+				['user', 'notification', Files_Sharing::TYPE_SHARED, true],
 				['user', 'email', Files_Sharing::TYPE_SHARED, true],
 				['user', 'setting', 'batchtime', 21],
 			]);
@@ -962,7 +990,7 @@ class FilesHooksTest extends TestCase {
 	 * @param string $path
 	 * @param string $urlPath
 	 * @param bool $isFile
-	 * @param bool $stream
+	 * @param bool $notification
 	 * @param bool $email
 	 * @param string $type
 	 * @param bool $selfSetting
@@ -971,7 +999,7 @@ class FilesHooksTest extends TestCase {
 	 * @param bool $sentStream
 	 * @param bool $sentEmail
 	 */
-	public function testAddNotificationsForUser(string $user, string $subject, array $parameter, int $fileId, string $path, string $urlPath, bool $isFile, bool $stream, bool $email, string $type, bool $selfSetting, bool $selfEmailSetting, string $app, bool $sentStream, bool $sentEmail): void {
+	public function testAddNotificationsForUser(string $user, string $subject, array $parameter, int $fileId, string $path, string $urlPath, bool $isFile, bool $notification, bool $email, string $type, bool $selfSetting, bool $selfEmailSetting, string $app, bool $sentStream, bool $sentEmail): void {
 		$this->settings->expects($this->any())
 			->method('getUserSetting')
 			->willReturnMap([
@@ -1029,13 +1057,13 @@ class FilesHooksTest extends TestCase {
 			->method('generateEvent')
 			->willReturn($event);
 
-		$this->data->expects($sentStream ? $this->once() : $this->never())
+		$this->data->expects(($user !== 'user' || $selfSetting) ? $this->once() : $this->never())
 			->method('send')
 			->with($event);
 		$this->data->expects($sentEmail ? $this->once() : $this->never())
 			->method('storeMail')
 			->with($event, $this->anything());
 
-		self::invokePrivate($this->filesHooks, 'addNotificationsForUser', [$user, $subject, $parameter, $fileId, $path, $isFile, $stream, $email, $type]);
+		self::invokePrivate($this->filesHooks, 'addNotificationsForUser', [$user, $subject, $parameter, $fileId, $path, $isFile, $email, $notification, $type]);
 	}
 }

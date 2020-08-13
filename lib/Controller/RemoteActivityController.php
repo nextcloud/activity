@@ -228,7 +228,7 @@ class RemoteActivityController extends OCSController {
 				return Files::TYPE_SHARE_CREATED;
 			case 'Move':
 			case 'Update':
-				return Files::TYPE_SHARE_CHANGED;
+				return Files::TYPE_FILE_CHANGED;
 			case 'Delete':
 				return Files::TYPE_SHARE_DELETED;
 		}
