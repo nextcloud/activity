@@ -1057,7 +1057,7 @@ class FilesHooksTest extends TestCase {
 			->method('generateEvent')
 			->willReturn($event);
 
-		$this->data->expects(($user !== 'user' || $selfSetting) ? $this->once() : $this->never())
+		$this->data->expects($this->once())
 			->method('send')
 			->with($event);
 		$this->data->expects($sentEmail ? $this->once() : $this->never())

@@ -1174,12 +1174,10 @@ class FilesHooks {
 		}
 
 		// Add activity to stream
-		if (!$selfAction || $this->userSettings->getUserSetting($this->currentUser->getUID(), 'setting', 'self')) {
-			$activityId = $this->activityData->send($event);
+		$activityId = $this->activityData->send($event);
 
-			if ($activityId && !$selfAction && $notificationSetting) {
-				$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
-			}
+		if ($activityId && !$selfAction && $notificationSetting) {
+			$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
 		}
 
 		// Add activity to mail queue
