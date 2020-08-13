@@ -28,6 +28,7 @@ OC.L10N.register(
     "Hello %s," : "Salute %s,",
     "There was some activity at %s" : "Il habeva alcun activitate in %s",
     "Mail" : "Posta",
+    "Notifications" : "Notificationes",
     "Activity feed" : "Syndication de activitate",
     "Default settings" : "Configurationes predefinite",
     "List your own actions in the stream" : "Lista tu proprie actiones de file in le fluxo",
