@@ -69,7 +69,7 @@
 	<?php endif; ?>
 
 	<br />
-	<label for="notify_setting_batchtime"><?php p($l->t('Send emails:')); ?></label>
+	<label for="notify_setting_batchtime"><?php p($l->t('Send notification emails:')); ?></label>
 	<select id="notify_setting_batchtime" name="notify_setting_batchtime">
 		<option value="3"<?php if ($_['setting_batchtime'] === \OCA\Activity\UserSettings::EMAIL_SEND_ASAP): ?> selected="selected"<?php endif; ?>><?php p($l->t('As soon as possible')); ?></option>
 		<option value="0"<?php if ($_['setting_batchtime'] === \OCA\Activity\UserSettings::EMAIL_SEND_HOURLY): ?> selected="selected"<?php endif; ?>><?php p($l->t('Hourly')); ?></option>

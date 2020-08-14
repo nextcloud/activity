@@ -97,12 +97,15 @@ class SettingsController extends Controller {
 	 * @param int $notify_setting_batchtime
 	 * @param bool $notify_setting_self
 	 * @param bool $notify_setting_selfemail
+	 * @param bool $activity_digest
 	 * @return DataResponse
 	 */
 	public function personal(
 			$notify_setting_batchtime = UserSettings::EMAIL_SEND_HOURLY,
 			$notify_setting_self = false,
-			$notify_setting_selfemail = false) {
+			$notify_setting_selfemail = false,
+			$activity_digest = false
+	) {
 
 		$settings = $this->manager->getSettings();
 		foreach ($settings as $setting) {
@@ -144,6 +147,11 @@ class SettingsController extends Controller {
 			$this->user, 'activity',
 			'notify_setting_selfemail',
 			(int) $notify_setting_selfemail
+		);
+		$this->config->setUserValue(
+			$this->user, 'activity',
+			'notify_setting_activity_digest',
+			(int) $activity_digest
 		);
 
 		return new DataResponse(array(
