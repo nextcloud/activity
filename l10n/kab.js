@@ -34,8 +34,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud." : "Asnas-ag ad yeǧǧ iseqdacen ad walin tigawin yeɛnan ifuyla-nnsen di Nextcloud.",
     "Activity feed" : "Asuddem n warmud",
     "Default settings" : "Iɣewwaren n lexṣas",
-    "List your own actions in the stream" : "Ssebder tigawin-inek ded usuddem",
-    "Notify about your own actions via email" : "Azen-iyi-d imaylen n talɣut ɣef tigawin-iw",
     "You need to set up your email address before you can receive notification emails." : "Ilaq ad tesɣewreḍ tansa imayl iwakken ad tizmireḍ ad teṭṭfeḍ talɣut s imayl.",
     "Send emails:" : "Azen imaylen:",
     "Hourly" : "S usrag",
@@ -48,6 +46,8 @@ OC.L10N.register(
     "Stream" : "Asuddem",
     "Send activity emails" : "Azen imaylen n warmud",
     "Configure the default activity settings for new users." : "Seɣwer iɣewwaren n warmud n lexṣas i iseqdacen imaynuten.",
+    "List your own actions in the stream" : "Ssebder tigawin-inek ded usuddem",
+    "Notify about your own actions via email" : "Azen-iyi-d imaylen n talɣut ɣef tigawin-iw",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Fren ineḍruyen iwumi tebɣiḍ ad tawiḍ talɣut s imayl u i tebɣiḍ daɣen ad ten-twaliḍ deg usuddem n warmud inek.",
     "Choose which activities you want to see in your stream." : "Fren irmuden i tebɣiḍ ad twaliḍ deg usuddem-inek."
 },

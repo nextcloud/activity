@@ -37,8 +37,6 @@
     "Enable notification emails" : "Activar os correos de notificación",
     "Default settings" : "Axustes predeterminados",
     "Configure the default notification settings for new users." : "Configure os axustes predeterminados de notificación pra novos usuarios.",
-    "List your own actions in the stream" : "Amosa as súas propias accións no fluxo",
-    "Notify about your own actions via email" : "Notifica as súas propias accións mediante o correo-e",
     "You need to set up your email address before you can receive notification emails." : "É necesario estabelecer o enderezo de correo para poder recibir correos de notificación.",
     "Send emails:" : "Enviar os correos:",
     "As soon as possible" : "O antes posíbel",
@@ -54,6 +52,8 @@
     "Stream" : "Fluxo",
     "Send activity emails" : "Enviar correos de actividade",
     "Configure the default activity settings for new users." : "Configure os axustes predeterminados de actividade pra novos usuarios.",
+    "List your own actions in the stream" : "Amosa as súas propias accións no fluxo",
+    "Notify about your own actions via email" : "Notifica as súas propias accións mediante o correo-e",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Escolla as actividades das que quere recibir unha notificación por correo-e e as que deben aparecer no fluxo de actividades da aplicación.",
     "Choose which activities you want to see in your stream." : "Escollas as actividades que quere ver no seu fluxo."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

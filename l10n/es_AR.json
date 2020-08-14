@@ -33,8 +33,6 @@
     "This application enables users to view actions related to their files in Nextcloud." : "Esta aplicación permite a los usuarios ver acciones relacionadas con sus archivos en Nextcloud.",
     "Activity feed" : "Secuencia de Actividad",
     "Default settings" : "Configuraciónes por defecto",
-    "List your own actions in the stream" : "Listar sus propias acciones en el stream",
-    "Notify about your own actions via email" : "Notificar de tus acciones vía email",
     "You need to set up your email address before you can receive notification emails." : "Necesitas configurar tu dirección de correo electrónico antes de poder recibir las notificaciones en tu correo electrónico.",
     "Send emails:" : "Enviar correo electrónico:",
     "As soon as possible" : "Lo antes posible",
@@ -48,6 +46,8 @@
     "Stream" : "Compartir",
     "Send activity emails" : "Enviar emails de actividad",
     "Configure the default activity settings for new users." : "Configure la actividad por defecto para nuevos usuarios.",
+    "List your own actions in the stream" : "Listar sus propias acciones en el stream",
+    "Notify about your own actions via email" : "Notificar de tus acciones vía email",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Elija por cuales actividades desea recibir una notificación por email y cuál debe mostrarse en la app stream",
     "Choose which activities you want to see in your stream." : "Elige qué actividades quieres ver en tu transmisión."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

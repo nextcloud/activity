@@ -36,8 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Deze applicatie laat gebruikers acties gerelateerd aan hun bestanden in Nextcloud zien.\n\t\tWanneer ingeschakeld zien gebruikers een nieuw pictogra, \"Activiteit\" in hun apps menu.\n\t\tBij aanklikken verschijnt een nieuwe pagina waarmee gebruikers het gedrag m.b,t, hun bestanden kunnen monitoren – van nieuw bestanden tot verwijderde bestanden, verplaatsen, hernoemen, bijwerken en delen.\n\t\tDe gebruiker kan individuele activiteiteninstellingen configureren in hun persoonlijke menu.\n\t\tDit is de instelling voor te registreren activiteiten en ook of de gebruikers hun eigen activiteiten te zien krijgen,\n\t\tof ze alleen beschikbaar zijn online en of ze een periodiek e-mailbericht met samenvatting ontvangen.\n\t\tMeer informatie is beschikbaar in de Activity documentatie.",
     "Activity feed" : "Activiteitenkanaal",
     "Default settings" : "Standaardinstellingen",
-    "List your own actions in the stream" : "Toon je eigen activiteiten in het overzicht",
-    "Notify about your own actions via email" : "Melding van je eigen activiteiten via e-mail",
     "You need to set up your email address before you can receive notification emails." : "Je moet je e-mailadres instellen voordat je meldingen van activiteiten op e-mail kan ontvangen.",
     "Send emails:" : "Verstuur e-mails:",
     "As soon as possible" : "Zo snel mogelijk",
@@ -51,6 +49,8 @@ OC.L10N.register(
     "Stream" : "Doorlopend",
     "Send activity emails" : "Activiteiten per e-mail verzenden",
     "Configure the default activity settings for new users." : "Configureer de standaardactiviteit voor nieuwe gebruikers.",
+    "List your own actions in the stream" : "Toon je eigen activiteiten in het overzicht",
+    "Notify about your own actions via email" : "Melding van je eigen activiteiten via e-mail",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Kies voor welke activiteiten je een e-mailnotificatie wenst en welke in de activiteiten app-stream moeten verschijnen.",
     "Choose which activities you want to see in your stream." : "Kies welke activiteiten je in je stream wilt zien."
 },

@@ -36,8 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Program omogoča pregled dejavnosti, povezanih z datotekami v okolju Nextcloud.\n\t\tZ namestitvijo se pokaže nov vnos menija »Dejavnost«.\n\t\tS klikom se odpre nova stran s seznamom dejavnosti, povezanih z datotekami – od dodanih novih oziroma izbrisanih datotek, preurejanj, preimenovanj, posodobitev in souporabe.\n\t\tPosamezen uporabnik lahko svoje prilagodi nastavitve beleženja.\n\t\tMogoče je izbrati vrste dejavnosti, ki se beležijo in tudi ali naj uporabnik spremlja tudi svoje dejavnosti,\n\t\tali v spletnem vmesniku ali po elektronski pošti in seveda kako pogosto.\nVeč podrobnosti je na voljo v dokumentaciji.",
     "Activity feed" : "Objava dejavnosti z viri RSS",
     "Default settings" : "Prevzete nastavitve",
-    "List your own actions in the stream" : "Izpiši moje dejavnosti v seznamu.",
-    "Notify about your own actions via email" : "O mojih dejanjih me obvesti po elektronski pošti",
     "You need to set up your email address before you can receive notification emails." : "Za prejemanje obvestil prek elektronske pošte je treba najprej nastaviti elektronski poštni naslov.",
     "Send emails:" : "Pošlji elektronsko sporočilo:",
     "As soon as possible" : "Čimprej",
@@ -53,6 +51,8 @@ OC.L10N.register(
     "Stream" : "Pretok",
     "Send activity emails" : "Pošiljaj obvestila o dejavnosti na elektronske naslove",
     "Configure the default activity settings for new users." : "Prilagodi privzete nastavitve dejavnosti za nove uporabnike.",
+    "List your own actions in the stream" : "Izpiši moje dejavnosti v seznamu.",
+    "Notify about your own actions via email" : "O mojih dejanjih me obvesti po elektronski pošti",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Izberite, katera obvestila o dejavnostih želite prejeti na elektronski naslov in katera naj se le prikažejo v razdelku zgodovine dejavnosti.",
     "Choose which activities you want to see in your stream." : "Izbor dejavnosti, ki naj se izpišejo v pretoku."
 },

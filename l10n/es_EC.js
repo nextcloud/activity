@@ -36,8 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Esta aplicación permite a los usuarios ver acciones relacionadas con sus archivos en Nextcloud.\n\t\tUna vez habilitado, los usuarios verán un nuevo ícono \"Actividad\" en su menú de aplicaciones.\n\t\tAl hacer clic, aparece una nueva página para que los usuarios realicen un seguimiento de la actividad relacionada con los archivos: desde archivos nuevos hasta archivos eliminados, mover, cambiar el nombre, actualizaciones y actividad compartida.\n\t\tEl usuario puede configurar sus ajustes de actividad individuales en su menú personal.\n\t\tEsto establece el tipo de actividad para registrar, así como si el usuario ve sus propias actividades,\n\t\tsi estos solo están disponibles en línea y si reciben un resumen de correo electrónico de forma regular.\n\t\tMás información está disponible en la documentación de la Actividad.",
     "Activity feed" : "Fuente de actividad",
     "Default settings" : "Configuraciones predeterminadas",
-    "List your own actions in the stream" : "Enlista tus propias acciones en el flujo",
-    "Notify about your own actions via email" : "Notificar de tus propias acciones vía correo electrónico",
     "You need to set up your email address before you can receive notification emails." : "Necesitas configurar tu dirección de correo electrónico antes de que puedas recibir correos de notificación",
     "Send emails:" : "Enviar correos electrónicos:",
     "As soon as possible" : "Lo antes posible",
@@ -51,6 +49,8 @@ OC.L10N.register(
     "Stream" : "Flujo",
     "Send activity emails" : "Enviar correos de actividades",
     "Configure the default activity settings for new users." : "Ajustar las configuraciones de las actividades predeterminadas para usuarios nuevos. ",
+    "List your own actions in the stream" : "Enlista tus propias acciones en el flujo",
+    "Notify about your own actions via email" : "Notificar de tus propias acciones vía correo electrónico",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Selecciona las actividades para las cuales deseas obtener una notificación por correo electrónico y cuales deben mostrarse en el listado de actividades.",
     "Choose which activities you want to see in your stream." : "Eliije cuáles actividades quieres ver en tu fuente."
 },
