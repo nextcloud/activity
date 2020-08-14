@@ -12,7 +12,6 @@ OC.L10N.register(
     "Mail" : "Məktub",
     "Notifications" : "Xəbərdarlıqlar",
     "Activity feed" : "Fəaliyyətin ötürülməsi",
-    "Notify about your own actions via email" : "Öz gördüyünüz işlər haqqənda email-lə xəbərdar elə",
     "You need to set up your email address before you can receive notification emails." : "Xəbərdarlıq məktubları almazdan öncə, siz mail ünvanınızı təyin etməlisiniz.",
     "Send emails:" : "Məktubları yolla",
     "Hourly" : "Saatlıq",
@@ -21,6 +20,7 @@ OC.L10N.register(
     "Settings" : "Quraşdırmalar",
     "Enable RSS feed" : "RSS ötürməsinin işə salinmaslı",
     "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur",
-    "Stream" : "Axın"
+    "Stream" : "Axın",
+    "Notify about your own actions via email" : "Öz gördüyünüz işlər haqqənda email-lə xəbərdar elə"
 },
 "nplurals=2; plural=(n != 1);");

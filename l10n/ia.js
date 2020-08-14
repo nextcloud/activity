@@ -31,8 +31,6 @@ OC.L10N.register(
     "Notifications" : "Notificationes",
     "Activity feed" : "Syndication de activitate",
     "Default settings" : "Configurationes predefinite",
-    "List your own actions in the stream" : "Lista tu proprie actiones de file in le fluxo",
-    "Notify about your own actions via email" : "Notifica super tu proprie actiones via e-posta",
     "You need to set up your email address before you can receive notification emails." : "Tu necessita configurar tu adresse de e-posta ante que tu pote reciper messages de e-posta de notification.",
     "Send emails:" : "Invia messages de e-posta:",
     "Hourly" : "Cata hora",
@@ -41,6 +39,8 @@ OC.L10N.register(
     "Settings" : "Configurationes",
     "Enable RSS feed" : "Habilita syndication RSS",
     "No more events to load" : "Nulle altere eventos a cargar",
-    "Stream" : "Fluxo"
+    "Stream" : "Fluxo",
+    "List your own actions in the stream" : "Lista tu proprie actiones de file in le fluxo",
+    "Notify about your own actions via email" : "Notifica super tu proprie actiones via e-posta"
 },
 "nplurals=2; plural=(n != 1);");

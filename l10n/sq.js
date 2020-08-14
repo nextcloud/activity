@@ -36,8 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ky aplikacion u mundëson përdorueve të shikojnë veprimet e tyre lidhur me skedarët e tyre në Nextcloud.\n\t\tPasi aktivizohet, përdoruesit shohin një ikonë të re \"Aktiviteti\" në menunë e aplikacionit të tyre.\n\t\tKur klikohet shfaqet një faqe e re në mënyrë që përdoruesit të ndjekin aktivitetin lidhur me skedarët - nga skedarët e rinj, skedarët e fshirë, lëvizjen, riemërtimin, përditësimet dhe aktivitetin e shpërdarë.\n\t\tPërdoruesi mund të konfigurojë parametrat individual të aktivitetit në menunë e tyre personale.\n\t\tKjo përcakton llojin e aktivitetit që do ruhet, si dhe nëse përdoruesi do të ruajë aktivitetin e vet,\n\t\tnëse këto do të jenë të disponueshme vetëm në webfaqje, apo ata do të marin një email përmbledhës rregullisht.\n\t\tMë shumë informacione mund të gjeni tek dokumentimi i Aktivitetit.",
     "Activity feed" : "Prurje veprimtarie",
     "Default settings" : "Konfigurime të paracaktuara",
-    "List your own actions in the stream" : "Listo veprimet e tua në rrjedhë",
-    "Notify about your own actions via email" : "Njoftoni me email mbi veprimet tuaja",
     "You need to set up your email address before you can receive notification emails." : "Kërkohet të caktoni adresën tuaj email, përpara se të mund të merrni email-e njoftimesh.",
     "Send emails:" : "Dërgo email-e:",
     "As soon as possible" : "Sa më shpejt të jetë e mundur",
@@ -51,6 +49,8 @@ OC.L10N.register(
     "Stream" : "Rrjedhë",
     "Send activity emails" : "Dërgo emaile rreth aktivitetit",
     "Configure the default activity settings for new users." : "Vendosni konfigurimet fillestare të aktiviteteve për përdoruesit e rinj",
+    "List your own actions in the stream" : "Listo veprimet e tua në rrjedhë",
+    "Notify about your own actions via email" : "Njoftoni me email mbi veprimet tuaja",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Zgjidhni se për cilat aktivitete doni të merrni njoftime me email, dhe cilat duhet të shfaqen në daljen e aplikacionit të aktiviteteve.",
     "Choose which activities you want to see in your stream." : "Zgjidhni aktivitetet që dëshironi të shihni në transmetimin tuaj."
 },

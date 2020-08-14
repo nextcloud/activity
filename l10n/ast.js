@@ -32,7 +32,6 @@ OC.L10N.register(
     "Mail" : "Corréu",
     "Notifications" : "Notificaciones",
     "Activity feed" : "Feed d'actividá",
-    "Notify about your own actions via email" : "Avisar per corréu tocante a les mios propies aiciones",
     "You need to set up your email address before you can receive notification emails." : "Precises configurar la to direición de corréu enantes que pueas recibir correos d'avisu.",
     "Send emails:" : "Unviar correos:",
     "As soon as possible" : "Namái que seya posible",
@@ -42,6 +41,7 @@ OC.L10N.register(
     "Settings" : "Axustes",
     "Enable RSS feed" : "Habilitar feed RSS",
     "No more events to load" : "Nun hai más eventos pa cargar",
-    "Stream" : "Fluxu de rede"
+    "Stream" : "Fluxu de rede",
+    "Notify about your own actions via email" : "Avisar per corréu tocante a les mios propies aiciones"
 },
 "nplurals=2; plural=(n != 1);");
