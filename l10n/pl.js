@@ -39,8 +39,6 @@ OC.L10N.register(
     "Enable notification emails" : "Włącz powiadomienia e-mailem",
     "Default settings" : "Ustawienia domyślne",
     "Configure the default notification settings for new users." : "Skonfiguruj domyślne ustawienia powiadomień dla nowych użytkowników.",
-    "List your own actions in the stream" : "Umieść swoje własne aktywności w strumieniu",
-    "Notify about your own actions via email" : "Powiadamiaj mnie o moich aktywnościach przez e-mail",
     "You need to set up your email address before you can receive notification emails." : "Musisz skonfigurować swój adres e-mail, aby móc otrzymywać e-maile z powiadomieniami.",
     "Send emails:" : "Wyślij e-maile:",
     "As soon as possible" : "Tak szybko, jak to możliwe",
@@ -56,6 +54,8 @@ OC.L10N.register(
     "Stream" : "Strumień",
     "Send activity emails" : "Wysyłaj e-maile o aktywnościach",
     "Configure the default activity settings for new users." : "Skonfiguruj domyślne ustawienia aktywności dla nowych użytkowników.",
+    "List your own actions in the stream" : "Umieść swoje własne aktywności w strumieniu",
+    "Notify about your own actions via email" : "Powiadamiaj mnie o moich aktywnościach przez e-mail",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Wybierz, dla których aktywności chcesz otrzymywać powiadomienia e-mailem, a które powinny być wyświetlane na liście aktywności.",
     "Choose which activities you want to see in your stream." : "Wybierz aktywności, które chcesz zobaczyć w swoim strumieniu."
 },

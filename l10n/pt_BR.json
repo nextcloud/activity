@@ -37,8 +37,6 @@
     "Enable notification emails" : "Ativar e-mails de notificação",
     "Default settings" : "Configurações padrões",
     "Configure the default notification settings for new users." : "Configurar as definições padrão de notificação para novos usuários.",
-    "List your own actions in the stream" : "Listar suas próprias ações no stream",
-    "Notify about your own actions via email" : "Notificar suas próprias ações por e-mail",
     "You need to set up your email address before you can receive notification emails." : "Você precisa configurar o endereço de e-mail para receber mensagens de notificação.",
     "Send emails:" : "Enviar e-mails:",
     "As soon as possible" : "Assim que possível",
@@ -54,6 +52,8 @@
     "Stream" : "Stream",
     "Send activity emails" : "Enviar e-mails de atividades",
     "Configure the default activity settings for new users." : "Definir as configurações de atividade padrões para novos usuários.",
+    "List your own actions in the stream" : "Listar suas próprias ações no stream",
+    "Notify about your own actions via email" : "Notificar suas próprias ações por e-mail",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Escolha para quais atividades você quer receber uma notificação por e-mail e quais devem ser mostradas no fluxo de atividades do aplicativo.",
     "Choose which activities you want to see in your stream." : "Escolha quais atividades você quer ver no seu log."
 },"pluralForm" :"nplurals=2; plural=(n > 1);"

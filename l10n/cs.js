@@ -39,8 +39,6 @@ OC.L10N.register(
     "Enable notification emails" : "Zapnout upozorňování e-mailem",
     "Default settings" : "Výchozí nastavení",
     "Configure the default notification settings for new users." : "Nastavte výchozí volby ohledně upozorňování pro nově vytvářené uživatele.",
-    "List your own actions in the stream" : "Vypisovat v proudu i vaše vlastní akce",
-    "Notify about your own actions via email" : "Upozorňovat e-mailem i na vaše vlastní akce",
     "You need to set up your email address before you can receive notification emails." : "Pokud chcete dostávat upozornění e-mailem, je třeba nejprve nastavit svou e-mailovou adresu.",
     "Send emails:" : "Posílat e-maily:",
     "As soon as possible" : "Co možná nejdříve",
@@ -56,6 +54,8 @@ OC.L10N.register(
     "Stream" : "Proud",
     "Send activity emails" : "Posílat e-maily o aktivitě",
     "Configure the default activity settings for new users." : "Nastavte výchozí nastavení aktivit pro nové uživatele.",
+    "List your own actions in the stream" : "Vypisovat v proudu i vaše vlastní akce",
+    "Notify about your own actions via email" : "Upozorňovat e-mailem i na vaše vlastní akce",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Zvolte, o kterých aktivitách budete upozorněni e-mailem a které se zobrazí v proudu aplikace Aktivita.",
     "Choose which activities you want to see in your stream." : "Zvolte, které aktivity chcete v proudu pro vás."
 },

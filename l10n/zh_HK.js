@@ -33,8 +33,6 @@ OC.L10N.register(
     "Notifications" : "通知",
     "Activity feed" : "動態  feed",
     "Default settings" : "預設設定",
-    "List your own actions in the stream" : "在stream裡面列出您自己的行為",
-    "Notify about your own actions via email" : "通過郵件通知您自己的動態",
     "You need to set up your email address before you can receive notification emails." : "要接收通知郵件，需要先設置您的電子郵件地址。",
     "Send emails:" : "發送郵件：",
     "As soon as possible" : "盡快",
@@ -46,6 +44,8 @@ OC.L10N.register(
     "No more events to load" : "已無更多事件",
     "Stream" : "Stream",
     "Configure the default activity settings for new users." : "為新用戶設置默認的活動配置",
+    "List your own actions in the stream" : "在stream裡面列出您自己的行為",
+    "Notify about your own actions via email" : "通過郵件通知您自己的動態",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "選擇哪些活動你想收到提示郵件，這將顯示在活動應用stream裡"
 },
 "nplurals=1; plural=0;");

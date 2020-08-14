@@ -36,8 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Это приложение позволяет пользователям просматривать действия, связанные с их файлами в Nextcloud.\n\t\tПосле включения в меню приложений появится значок «Действия».\n\t\tПри нажатии появляется новая страница для отслеживания действий, связанных с файлами, - от новых файлов, до удаленных файлов, перемещения, переименования, обновлений и совместного использования\t.\n\t\tПользователь может настроить свои индивидуальные настройки активности в своем личном кабинете..\n\t\tЗдесь устанавливается тип активности для записи в протокол действий, а также, видит ли пользователь свои действия,\n\t\tдоступны ли они только в режиме онлайн, и регулярно ли они получают электронную сводку.\n\t\tДополнительная информация доступна в документации по \"Действиям\".",
     "Activity feed" : "Лента событий",
     "Default settings" : "Параметры по умолчанию",
-    "List your own actions in the stream" : "Показывать в ленте собственные действия",
-    "Notify about your own actions via email" : "Уведомлять по почте о собственных действиях",
     "You need to set up your email address before you can receive notification emails." : "Для получения уведомлений укажите свой адрес электронной почты в настройках.",
     "Send emails:" : "Отправлять электронные сообщения:",
     "As soon as possible" : "Как можно быстрее",
@@ -51,6 +49,8 @@ OC.L10N.register(
     "Stream" : "Поток",
     "Send activity emails" : "Отправлять эл. письма о событиях",
     "Configure the default activity settings for new users." : "Параметры способов отправки уведомлений, используемые по умолчанию для новых пользователей:",
+    "List your own actions in the stream" : "Показывать в ленте собственные действия",
+    "Notify about your own actions via email" : "Уведомлять по почте о собственных действиях",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Выберите, уведомления о каких событиях отправлять по email, а какие выводить в ленте.",
     "Choose which activities you want to see in your stream." : "Выберите типы событий для их показа в ленте."
 },

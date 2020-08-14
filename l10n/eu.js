@@ -36,8 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Aplikazio honek erabiltzaileari  Nextcloud honetan dauzkan fitxategietan egindako ekintzak ikusteko aukera ematen dio.\n\t\tGaituz gero, erabiltzaileek ikusiko dute \"Jarduera\" dioen ikono berri bat beren aplikazioaren menuetan.\n\t\tKlik egiterakoan, orri berri bat agertuko da erabiltzaileek beren fitxategietan egindako aldaketa guztien jarraipena egin dezaten – fitxategi berrien sorkuntzatik hasi, eta, fitxategien ezabaketa, leku-aldatze, berrizendatze, eguneratze zein partekatzeraino.\n\t\tErabiltzaileek haien jarduera ezarpenak konfiguratu ditzazkete menu pertsonalean.\n\t\tHonek, gordeko den jarduera mota ezarriko du, baita erabiltzaileak nola ikusiko dituen jarduera propioak:\n\t\tbakarrik sarearen bidez eskuragarri egongo diren, eta posta elektronikoz laburpen mezu bat jaso nahiko duten aldiro, alegia.\n\t\tInformazio gehiago dago eskuragarri Jardueren dokumentazio biltegian.",
     "Activity feed" : "Jardueren jarioa",
     "Default settings" : "Lehenetsitako ezarpenak",
-    "List your own actions in the stream" : "Zerrendatu zeure ekintzak korrontean",
-    "Notify about your own actions via email" : "Jakinarazi zeure ekintzei buruz posta elektroniko bidez",
     "You need to set up your email address before you can receive notification emails." : "Zure helbide elektronikoa konfiguratu behar duzu jakinarazpenak posta elektronikoz jaso aurretik.",
     "Send emails:" : "Bidali postak:",
     "As soon as possible" : "Ahal bezain laster",
@@ -53,6 +51,8 @@ OC.L10N.register(
     "Stream" : "Korrontea",
     "Send activity emails" : "Jardueraren mezu elektronikoak bidali",
     "Configure the default activity settings for new users." : "Konfiguratu jarduera ezarpen lehenetsiak erabiltzaile berrientzat.",
+    "List your own actions in the stream" : "Zerrendatu zeure ekintzak korrontean",
+    "Notify about your own actions via email" : "Jakinarazi zeure ekintzei buruz posta elektroniko bidez",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Aukeratu zein jardueratarako eskuratu nahi duzun jakinarazpena posta elektronikoz, eta zein erakutsi behar liratekeen Jarduera aplikazioaren korrontean.",
     "Choose which activities you want to see in your stream." : "Aukeratu zein jarduera ikusi nahi dituzun zure korrontean."
 },

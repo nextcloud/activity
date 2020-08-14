@@ -36,8 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "\t\tPrograma skirta naudotojams stebėti su jų failais susijusius veiksmus Nextcloud'e.\n\t\tĮjungus, meniu juostoje atsiras ikona \"Veiklos\".\n\t\tPaspaudus, atsidarys naujas puslapis, skirtas stebėti veiklą, susijusią su failais - nuo naujų iki ištrintų failų, perkeltus, pervadintus, atnaujintus ir bendrintus failus.\n\t\tVartotojas gali konfigūruoti savo individualius veiklų nustatymus savo asmeniniame meniu.\n\t\tTai nustato registruojamos veiklos tipus, jų matomumą naudotojui,\n\t\tar jie yra pasiekiami tik internetu,  ar naudotojai reguliariai  gauna santrauką elektroniniu paštu.",
     "Activity feed" : "Veiklos kanalas",
     "Default settings" : "Numatytieji nustatymai",
-    "List your own actions in the stream" : "Rodyti jūsų veiklą sraute",
-    "Notify about your own actions via email" : "Pranešti sau apie savo asmeninius veiksmus el. paštu",
     "You need to set up your email address before you can receive notification emails." : "Jums turite nurodyti elektroninio pašto adresą norėdami gauti pranešimus.",
     "Send emails:" : "Siųsti el. laiškus:",
     "As soon as possible" : "Kuo greičiau",
@@ -51,6 +49,8 @@ OC.L10N.register(
     "Stream" : "Srautas",
     "Send activity emails" : "Siųsti el. laiškus apie veiklą",
     "Configure the default activity settings for new users." : "Nustatyti numatytas veiklas naujiems naudotojams",
+    "List your own actions in the stream" : "Rodyti jūsų veiklą sraute",
+    "Notify about your own actions via email" : "Pranešti sau apie savo asmeninius veiksmus el. paštu",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Pasirinkite apie kokią veiklą norite gauti pranešimus el. paštu bei kokia veikla turėtų būti rodoma veiklos programėlės sraute.",
     "Choose which activities you want to see in your stream." : "Pasirinkti kurias veiklas norite matyti savo sraute."
 },

@@ -36,8 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "本应用能够让用户查看与他们在Nextcloud中的文件相关的活动。\n\t\t一旦启用，用户将看到在他们的应用菜单中出现了一个名为”动态“的新图标.\n\t\t点击后会出现一个页面让用户跟踪文件的动态，包括新增文件、删除文件、移动、重命名、修改和共享。\n\t\t用户可以在个人的菜单中指定单独的动态设置。\n\t\t可以设置要记录的活动类型，以及是否用户看到自己的活动、\n\t\t是否只能在线查看、是否定期收到电子邮件摘要。\n\t\t 更多信息可以在动态文档中进行查看。",
     "Activity feed" : "活动订阅源",
     "Default settings" : "默认设置",
-    "List your own actions in the stream" : "在流里面列出您自己的行为",
-    "Notify about your own actions via email" : "通过邮件通知您自己的动态",
     "You need to set up your email address before you can receive notification emails." : "要接收通知邮件，需要先设置您的电子邮件地址。",
     "Send emails:" : "发送电子邮件：",
     "As soon as possible" : "尽快",
@@ -51,6 +49,8 @@ OC.L10N.register(
     "Stream" : "流",
     "Send activity emails" : "发送动态电子邮件",
     "Configure the default activity settings for new users." : "为新用户设置默认的活动配置",
+    "List your own actions in the stream" : "在流里面列出您自己的行为",
+    "Notify about your own actions via email" : "通过邮件通知您自己的动态",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "选择您想收到哪些活动的通知邮件，以及哪些活动在应用中显示。",
     "Choose which activities you want to see in your stream." : "选择您要在流中看到哪些活动。"
 },

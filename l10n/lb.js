@@ -30,8 +30,6 @@ OC.L10N.register(
     "Mail" : "Mail",
     "Notifications" : "Notifikatiounen",
     "Activity feed" : "Aktivitéits-Feed",
-    "List your own actions in the stream" : "Weis är aner Aktivitéiten am Floss",
-    "Notify about your own actions via email" : "Iwwer eegene Aktiounen iwwer E-Mail informéieren",
     "You need to set up your email address before you can receive notification emails." : "Du muss deng E-Mail-Adress konfiguréieren ier s de Notifikatiouns-Maile kanns emfänken.",
     "Send emails:" : "Emaile schécken:",
     "Hourly" : "All Stonn",
@@ -40,6 +38,8 @@ OC.L10N.register(
     "Settings" : "Astellungen",
     "Enable RSS feed" : "RSS-Feed aktivéieren",
     "No more events to load" : "Keng weider Evenementer fir ze lueden",
-    "Stream" : "Floss"
+    "Stream" : "Floss",
+    "List your own actions in the stream" : "Weis är aner Aktivitéiten am Floss",
+    "Notify about your own actions via email" : "Iwwer eegene Aktiounen iwwer E-Mail informéieren"
 },
 "nplurals=2; plural=(n != 1);");
