@@ -115,7 +115,7 @@ class DigestSender {
 			return;
 		}
 
-		['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend);
+		['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
 		if ($count == 0) {
 			return;
 		}
@@ -128,7 +128,7 @@ class DigestSender {
 			$lastSend,
 			self::ACTIVITY_LIMIT,
 			'asc',
-			'all',
+			'by',
 			'',
 			0,
 			true
@@ -141,15 +141,8 @@ class DigestSender {
 			'activityEvents' => $activities,
 			'skippedCount' => $skippedCount,
 		]);
-		$template->setSubject($l10n->t('Daily activity digest for ' . $this->defaults->getName()));
+		$template->setSubject($l10n->t('Daily activity summary for ' . $this->defaults->getName()));
 		$template->addHeader();
-		$template->addHeading($l10n->t('Hello %s', [$user->getDisplayName()]), $l10n->t('Hello %s,', [$user->getDisplayName()]));
-
-		$homeLink = '<a href="' . $this->urlGenerator->getAbsoluteURL('/') . '">' . htmlspecialchars($this->defaults->getName()) . '</a>';
-		$template->addBodyText(
-			$l10n->t('There was some activity at %s', [$homeLink]),
-			$l10n->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')])
-		);
 
 		foreach ($activities as $event) {
 			$relativeDateTime = $this->dateFormatter->formatDateTimeRelativeDay(
@@ -176,7 +169,6 @@ class DigestSender {
 
 		try {
 			$this->mailer->send($message);
-			var_dump($lastActivityId);
 			$this->config->setUserValue($user->getUID(), 'activity', 'activity_digest_last_send', $lastActivityId);
 		} catch (\Exception $e) {
 			var_dump($e->getMessage());
