@@ -28,8 +28,6 @@ OC.L10N.register(
     "Mail" : "Цахим шуудан",
     "Notifications" : "Мэдэгдэл",
     "Activity feed" : "Үйлдлүүдйн тэжээл",
-    "List your own actions in the stream" : "\"Үйлдлүүд\" апп-д өөрийн үйл ажиллагааг харуулах",
-    "Notify about your own actions via email" : "Цахим шуудангаар өөрийн үйл ажиллагааны тухай мэдэгдэл хүлээн авах",
     "You need to set up your email address before you can receive notification emails." : "Та цахим шуудангаар мэдэгдэл хүлээн авахын тулд цахим шуудангаа тохируулна уу?",
     "Send emails:" : "Цахим шуудан илгээх:",
     "Hourly" : "Цаг бүр",
@@ -39,6 +37,8 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
     "Stream" : "Урсгал",
     "Configure the default activity settings for new users." : "Шинэ хэрэглэгчдийн \"Үйлдлүүд\" хэсгийн анхдагч тохиргоог тохируулах",
+    "List your own actions in the stream" : "\"Үйлдлүүд\" апп-д өөрийн үйл ажиллагааг харуулах",
+    "Notify about your own actions via email" : "Цахим шуудангаар өөрийн үйл ажиллагааны тухай мэдэгдэл хүлээн авах",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Та цахим шуудангаар ямар үйлдлийн талаар мэдээлэл авахыг хүсэж байгаа болон \"Үйлдлүүд\" хэсэгт ямар үйлдэл харуулахыг хүсэж байгаагаа сонгоно уу."
 },
 "nplurals=2; plural=(n != 1);");

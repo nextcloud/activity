@@ -39,8 +39,6 @@ OC.L10N.register(
     "Enable notification emails" : "Bildirim e-postaları kullanılsın",
     "Default settings" : "Varsayılan ayarlar",
     "Configure the default notification settings for new users." : "Yeni kullanıcılar için varsayılan bildirim ayarlarını yapılandırın.",
-    "List your own actions in the stream" : "Akışta kendi etkinliklerinizi görüntüleyin",
-    "Notify about your own actions via email" : "Kendi etkinlikleriniz e-posta ile bildirilsin",
     "You need to set up your email address before you can receive notification emails." : "Bildirim e-postalarını alabilmek için e-posta adresinizi belirtmelisiniz.",
     "Send emails:" : "E-posta gönderimi:",
     "As soon as possible" : "Olabildiğince çabuk",
@@ -56,6 +54,8 @@ OC.L10N.register(
     "Stream" : "Akış",
     "Send activity emails" : "İşlem e-postaları gönderilsin",
     "Configure the default activity settings for new users." : "Yeni kullanıcılar için varsayılan işlem ayarlarını yapılandırın.",
+    "List your own actions in the stream" : "Akışta kendi etkinliklerinizi görüntüleyin",
+    "Notify about your own actions via email" : "Kendi etkinlikleriniz e-posta ile bildirilsin",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "E-posta bildirimlerinin gönderilmesini ve uygulama işlem akışında yer almasını istediğiniz işlemleri seçin.",
     "Choose which activities you want to see in your stream." : "Akışınızda yer almasını istediğiniz işlemleri seçin."
 },

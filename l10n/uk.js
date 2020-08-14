@@ -36,8 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Застосунок дозволяє користувачам переглядати журнал дій, які відбуваються з їхніми файлами у Nextcloud.\n\t\tКоли застосунок увімкнено, у меню застосунків користувачів з'являється нова піктограма  \"Журнал\".\n\t\tПо натисканню на неї відкривається сторінка, на якій користувачі можуть відслідковувати дії з файлами: створення та вилучення файлів, переміщення, перейменування, оновлення та зміни у спільному доступі.\n\t\tКористувач може визначити власні налаштування у особистому меню.\n\t\tНалаштовується тип дій, які будуть відслідковуватися, чи слід відображати користувачеві власні дії,\n\t\tчи переглядати журнал дій лише в онлайні, або отримувати періодичні звіти на поштову скриньку.",
     "Activity feed" : "Стрічка дій",
     "Default settings" : "Типові налаштування",
-    "List your own actions in the stream" : "Показувати власні події у потоці",
-    "Notify about your own actions via email" : "Повідомляти про мої події електронною поштою",
     "You need to set up your email address before you can receive notification emails." : "Для отримання повідомлень зазначте електронну адресу в особистих налаштуваннях.",
     "Send emails:" : "Надсилати електронну пошту:",
     "As soon as possible" : "Якнайшвидше",
@@ -51,6 +49,8 @@ OC.L10N.register(
     "Stream" : "Потік",
     "Send activity emails" : "Надсилати оновлення ел. поштою",
     "Configure the default activity settings for new users." : "Типові налаштування журналу подій для нових користувачів.",
+    "List your own actions in the stream" : "Показувати власні події у потоці",
+    "Notify about your own actions via email" : "Повідомляти про мої події електронною поштою",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Виберіть ті події, для яких ви бажаєте отримувати сповіщення електронною поштою, а які потрібно показувати у потоці дій застосунку.",
     "Choose which activities you want to see in your stream." : "Виберіть події, які ви бажаєте бачити у потоці."
 },

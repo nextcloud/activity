@@ -36,8 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ova aplikacija korisnicima omogućuje pregledavanje radnji u vezi s njihovim datotekama u Nextcloudu.\n\t\tKada je omogućena, korisnici će u izborniku aplikacija vidjeti novu ikonu „Aktivnost”.\n\t\tKlikom na ikonu prikazat će se nova stranica na kojoj korisnici mogu pratiti aktivnosti u vezi s datotekama – od novih datoteka, izbrisanih datoteka, premještanja, preimenovanja, ažuriranja i dijeljenih aktivnosti.\n\t\tKorisnik može konfigurirati pojedinačne postavke aktivnosti u osobnom izborniku.\n\t\tTime se određuje vrsta aktivnosti koju treba bilježiti, vidi li korisnik vlastite aktivnosti,\n\t\tjesu li aktivnosti dostupne samo na mreži i prima li korisnik redovito pregled aktivnosti putem e-pošte.\n\t\tViše informacija dostupno je u dokumentaciji Aktivnosti.",
     "Activity feed" : "Sažetak aktivnosti",
     "Default settings" : "Zadane postavke",
-    "List your own actions in the stream" : "Prikaži vlastite radnje na popisu",
-    "Notify about your own actions via email" : "Pošalji e-poštom obavijest o vlastitim radnjama",
     "You need to set up your email address before you can receive notification emails." : "Morate navesti svoju adresu e-pošte kako biste primali poruke s obavijestima.",
     "Send emails:" : "Pošalji poruku e-pošte:",
     "As soon as possible" : "Čim prije moguće",
@@ -51,6 +49,8 @@ OC.L10N.register(
     "Stream" : "Strujanje",
     "Send activity emails" : "Šalji e-poštu s pregledom aktivnosti",
     "Configure the default activity settings for new users." : "Konfigurirajte osnovne postavke aktivnosti za nove korisnike.",
+    "List your own actions in the stream" : "Prikaži vlastite radnje na popisu",
+    "Notify about your own actions via email" : "Pošalji e-poštom obavijest o vlastitim radnjama",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Odaberite za koje aktivnosti želite primati obavijest e-poštom i koje bi se trebale prikazivati u strujanju aktivnosti.",
     "Choose which activities you want to see in your stream." : "Odaberite aktivnosti koje želite vidjeti u svom strujanju."
 },
