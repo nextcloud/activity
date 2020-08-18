@@ -104,6 +104,12 @@ class Admin implements ISettings {
 			);
 		}
 
+		if (isset($activityGroups['other'])) {
+			$otherActivities = $activityGroups['other'];
+			unset($activityGroups['other']);
+			$activityGroups['other'] = $otherActivities;
+		}
+
 		$settingBatchTime = UserSettings::EMAIL_SEND_HOURLY;
 		$currentSetting = (int) $this->userSettings->getConfigSetting('setting', 'batchtime');
 		if ($currentSetting === 3600 * 24 * 7) {
@@ -136,7 +142,7 @@ class Admin implements ISettings {
 	 * @return string the section ID, e.g. 'sharing'
 	 */
 	public function getSection() {
-		return 'notification';
+		return 'activity';
 	}
 
 	/**
