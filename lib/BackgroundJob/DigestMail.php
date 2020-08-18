@@ -32,11 +32,12 @@ class DigestMail extends TimedJob {
 
 	/** @var DigestSender */
 	protected $digestSender;
+	/** @var ITimeFactory */
 	protected $timeFactory;
 
 	public function __construct(DigestSender $digestSender, ITimeFactory $timeFactory) {
-		// run daily
-		$this->setInterval(24 * 60 * 60);
+		// run hourly
+		$this->setInterval(60 * 60);
 
 		$this->digestSender = $digestSender;
 		$this->timeFactory = $timeFactory;

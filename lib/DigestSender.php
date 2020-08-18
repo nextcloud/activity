@@ -24,7 +24,6 @@ declare(strict_types=1);
 namespace OCA\Activity;
 
 use OCP\Activity\IEvent;
-use OCP\Activity\IManager;
 use OCP\Defaults;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
@@ -33,9 +32,10 @@ use OCP\IUserManager;
 use OCP\L10N\IFactory;
 use OCP\Mail\IMailer;
 use OCP\Util;
+use Psr\Log\LoggerInterface;
 
 class DigestSender {
-	const ACTIVITY_LIMIT = 20;
+	public const ACTIVITY_LIMIT = 20;
 
 	private $config;
 	private $data;
@@ -46,8 +46,8 @@ class DigestSender {
 	private $urlGenerator;
 	private $defaults;
 	private $l10nFactory;
-	private $activityManager;
 	private $dateFormatter;
+	private $logger;
 
 	public function __construct(
 		IConfig $config,
@@ -59,8 +59,8 @@ class DigestSender {
 		IURLGenerator $urlGenerator,
 		Defaults $defaults,
 		IFactory $l10nFactory,
-		IManager $activityManager,
-		IDateTimeFormatter $dateTimeFormatter
+		IDateTimeFormatter $dateTimeFormatter,
+		LoggerInterface $logger
 	) {
 		$this->config = $config;
 		$this->data = $data;
@@ -71,21 +71,41 @@ class DigestSender {
 		$this->urlGenerator = $urlGenerator;
 		$this->defaults = $defaults;
 		$this->l10nFactory = $l10nFactory;
-		$this->activityManager = $activityManager;
 		$this->dateFormatter = $dateTimeFormatter;
+		$this->logger = $logger;
 	}
 
-	public function sendDigests(int $now) {
+	public function sendDigests(int $now): void {
 		$users = $this->getDigestUsers();
 		$userLanguages = $this->config->getUserValueForUsers('core', 'lang', $users);
 		$userTimezones = $this->config->getUserValueForUsers('core', 'timezone', $users);
+		$digestDate = $this->config->getUserValueForUsers('activity', 'digest', $users);
 		$defaultLanguage = $this->config->getSystemValue('default_language', 'en');
 		$defaultTimeZone = date_default_timezone_get();
+		$timezoneDigestDay = [];
 
 		foreach ($users as $user) {
 			$language = (!empty($userLanguages[$user])) ? $userLanguages[$user] : $defaultLanguage;
 			$timezone = (!empty($userTimezones[$user])) ? $userTimezones[$user] : $defaultTimeZone;
+
+			// Check if the user's timezone is after 6am already
+			if (!isset($timezoneDigestDay[$timezone])) {
+				$timezoneDate = new \DateTime('now', new \DateTimeZone($timezone));
+				if ($timezoneDate->format('H') < 6) {
+					// Still before 6am, so dont send yet.
+					$timezoneDate->sub(new \DateInterval('P1D'));
+				}
+				$timezoneDigestDay[$timezone] = $timezoneDate->format('Y.m.d');
+			}
+
+			$userDigestDate = $digestDate[$user] ?? '';
+			if ($userDigestDate === $timezoneDigestDay[$timezone]) {
+				// User got todays digits already
+				continue;
+			}
+
 			$this->sendDigestForUser($user, $now, $timezone, $language);
+			$this->config->setUserValue($user, 'activity', 'digest', $timezoneDigestDay[$timezone]);
 		}
 	}
 
@@ -104,6 +124,7 @@ class DigestSender {
 			return $lastSend;
 		}
 
+		// Don't flood on first email with old news, just consider the last 24h
 		return $this->data->getFirstActivitySince($user, $now - (24 * 60 * 60));
 	}
 
@@ -115,8 +136,10 @@ class DigestSender {
 			return;
 		}
 
-		['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
-		if ($count == 0) {
+		['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, false);
+		$count = (int) $count;
+		$lastActivityId = (int) $lastActivityId;
+		if ($count === 0) {
 			return;
 		}
 
@@ -171,7 +194,7 @@ class DigestSender {
 			$this->mailer->send($message);
 			$this->config->setUserValue($user->getUID(), 'activity', 'activity_digest_last_send', $lastActivityId);
 		} catch (\Exception $e) {
-			var_dump($e->getMessage());
+			$this->logger->error($e->getMessage());
 			return;
 		}
 	}

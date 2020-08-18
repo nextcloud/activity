@@ -456,7 +456,8 @@ class Data {
 	public function getActivitySince(string $user, int $since, bool $byOthers) {
 		$query = $this->connection->getQueryBuilder();
 		$nameParam = $query->createNamedParameter($user);
-		$query->select($query->func()->count('activity_id'), $query->func()->max('activity_id'))
+		$query->select($query->func()->count('activity_id', 'count'))
+			->selectAlias($query->func()->max('activity_id'), 'max')
 			->from('activity')
 			->where($query->expr()->eq('affecteduser', $nameParam))
 			->andWhere($query->expr()->gt('activity_id', $query->createNamedParameter($since, IQueryBuilder::PARAM_INT)));
