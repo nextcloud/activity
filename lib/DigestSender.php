@@ -100,7 +100,7 @@ class DigestSender {
 
 			$userDigestDate = $digestDate[$user] ?? '';
 			if ($userDigestDate === $timezoneDigestDay[$timezone]) {
-				// User got todays digits already
+				// User got todays digest already
 				continue;
 			}
 
