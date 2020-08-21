@@ -88,14 +88,14 @@ class Data {
 				'type' => $event->getType(),
 				'affecteduser' => $event->getAffectedUser(),
 				'user' => $event->getAuthor(),
-				'timestamp' => (int) $event->getTimestamp(),
+				'timestamp' => (int)$event->getTimestamp(),
 				'subject' => $event->getSubject(),
 				'subjectparams' => json_encode($event->getSubjectParameters()),
 				'message' => $event->getMessage(),
 				'messageparams' => json_encode($event->getMessageParameters()),
 				'priority' => IExtension::PRIORITY_MEDIUM,
 				'object_type' => $event->getObjectType(),
-				'object_id' => (int) $event->getObjectId(),
+				'object_id' => (int)$event->getObjectId(),
 				'object_name' => $event->getObjectName(),
 				'link' => $event->getLink(),
 			])
@@ -108,7 +108,7 @@ class Data {
 	 * Send an event as email
 	 *
 	 * @param IEvent $event
-	 * @param int    $latestSendTime Activity $timestamp + batch setting of $affectedUser
+	 * @param int $latestSendTime Activity $timestamp + batch setting of $affectedUser
 	 * @return bool
 	 */
 	public function storeMail(IEvent $event, int $latestSendTime): bool {
@@ -124,7 +124,7 @@ class Data {
 				'amq_subject' => $query->createNamedParameter($event->getSubject()),
 				'amq_subjectparams' => $query->createNamedParameter(json_encode($event->getSubjectParameters())),
 				'amq_affecteduser' => $query->createNamedParameter($affectedUser),
-				'amq_timestamp' => $query->createNamedParameter((int) $event->getTimestamp()),
+				'amq_timestamp' => $query->createNamedParameter((int)$event->getTimestamp()),
 				'amq_type' => $query->createNamedParameter($event->getType()),
 				'amq_latest_send' => $query->createNamedParameter($latestSendTime),
 				'object_type' => $query->createNamedParameter($event->getObjectType()),
@@ -150,12 +150,11 @@ class Data {
 	 * @param string $objectType Allows to filter the activities to a given object. May only appear together with $objectId
 	 * @param int $objectId Allows to filter the activities to a given object. May only appear together with $objectType
 	 *
+	 * @param bool $returnEvents return only the events
 	 * @return array
 	 *
-	 * @throws \OutOfBoundsException if the user (Code: 1) or the since (Code: 2) is invalid
-	 * @throws \BadMethodCallException if the user has selected to display no types for this filter (Code: 3)
 	 */
-	public function get(GroupHelper $groupHelper, UserSettings $userSettings, $user, $since, $limit, $sort, $filter, $objectType = '', $objectId = 0) {
+	public function get(GroupHelper $groupHelper, UserSettings $userSettings, $user, $since, $limit, $sort, $filter, $objectType = '', $objectId = 0, bool $returnEvents = false) {
 		// get current user
 		if ($user === '') {
 			throw new \OutOfBoundsException('Invalid user', 1);
@@ -241,13 +240,17 @@ class Data {
 				$hasMore = true;
 				break;
 			}
-			$headers['X-Activity-Last-Given'] = (int) $row['activity_id'];
+			$headers['X-Activity-Last-Given'] = (int)$row['activity_id'];
 			$groupHelper->addActivity($row);
 			$limit--;
 		}
 		$result->closeCursor();
 
-		return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
+		if ($returnEvents) {
+			return $groupHelper->getEvents();
+		} else {
+			return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
+		}
 	}
 
 	/**
@@ -265,7 +268,7 @@ class Data {
 			$queryBuilder = $this->connection->getQueryBuilder();
 			$queryBuilder->select(['affecteduser', 'timestamp'])
 				->from('activity')
-				->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter((int) $since)));
+				->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter((int)$since)));
 			$result = $queryBuilder->execute();
 			$activity = $result->fetch();
 			$result->closeCursor();
@@ -274,7 +277,7 @@ class Data {
 				if ($activity['affecteduser'] !== $user) {
 					throw new \OutOfBoundsException('Invalid since', 2);
 				}
-				$timestamp = (int) $activity['timestamp'];
+				$timestamp = (int)$activity['timestamp'];
 
 				if ($sort === 'DESC') {
 					$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($timestamp)));
@@ -302,7 +305,7 @@ class Data {
 
 		if ($activity !== false) {
 			return [
-				'X-Activity-First-Known' => (int) $activity['activity_id'],
+				'X-Activity-First-Known' => (int)$activity['activity_id'],
 			];
 		}
 
@@ -342,9 +345,9 @@ class Data {
 		$ttl = (60 * 60 * 24 * max(1, $expireDays));
 
 		$timelimit = time() - $ttl;
-		$this->deleteActivities(array(
-			'timestamp' => array($timelimit, '<'),
-		));
+		$this->deleteActivities([
+			'timestamp' => [$timelimit, '<'],
+		]);
 	}
 
 	/**
@@ -356,7 +359,7 @@ class Data {
 	 */
 	public function deleteActivities($conditions) {
 		$sqlWhere = '';
-		$sqlParameters = $sqlWhereList = array();
+		$sqlParameters = $sqlWhereList = [];
 		foreach ($conditions as $column => $comparison) {
 			$sqlWhereList[] = " `$column` " . ((is_array($comparison) && isset($comparison[1])) ? $comparison[1] : '=') . ' ? ';
 			$sqlParameters[] = (is_array($comparison)) ? $comparison[0] : $comparison;
@@ -368,7 +371,7 @@ class Data {
 
 		// Add galera safe delete chunking if using mysql
 		// Stops us hitting wsrep_max_ws_rows when large row counts are deleted
-		if($this->connection->getDatabasePlatform() instanceof MySqlPlatform) {
+		if ($this->connection->getDatabasePlatform() instanceof MySqlPlatform) {
 			// Then use chunked delete
 			$max = 100000;
 			$query = $this->connection->prepare(
@@ -376,7 +379,7 @@ class Data {
 			do {
 				$query->execute($sqlParameters);
 				$deleted = $query->rowCount();
-			} while($deleted === $max);
+			} while ($deleted === $max);
 		} else {
 			// Dont use chunked delete - let the DB handle the large row count natively
 			$query = $this->connection->prepare(
@@ -395,19 +398,63 @@ class Data {
 		$hasMore = false;
 		if ($row = $result->fetch()) {
 			$event = $this->activityManager->generateEvent();
-			$event->setApp((string) $row['app'])
-				->setType((string) $row['type'])
-				->setAffectedUser((string) $row['affecteduser'])
-				->setAuthor((string) $row['user'])
-				->setTimestamp((int) $row['timestamp'])
-				->setSubject((string) $row['subject'], (array) json_decode($row['subjectparams'], true))
-				->setMessage((string) $row['message'], (array) json_decode($row['messageparams'], true))
-				->setObject((string) $row['object_type'], (int) $row['object_id'], (string) $row['file'])
-				->setLink((string) $row['link']);
+			$event->setApp((string)$row['app'])
+				->setType((string)$row['type'])
+				->setAffectedUser((string)$row['affecteduser'])
+				->setAuthor((string)$row['user'])
+				->setTimestamp((int)$row['timestamp'])
+				->setSubject((string)$row['subject'], (array)json_decode($row['subjectparams'], true))
+				->setMessage((string)$row['message'], (array)json_decode($row['messageparams'], true))
+				->setObject((string)$row['object_type'], (int)$row['object_id'], (string)$row['file'])
+				->setLink((string)$row['link']);
 
 			return $event;
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Get the id of the first activity in the stream since a specified time
+	 *
+	 * @param string $user
+	 * @param int $timestamp
+	 * @return int
+	 */
+	public function getFirstActivitySince(string $user, int $timestamp): int {
+		$query = $this->connection->getQueryBuilder();
+		$query->select('activity_id')
+			->from('activity')
+			->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)))
+			->andWhere($query->expr()->gt('timestamp', $query->createNamedParameter($timestamp, IQueryBuilder::PARAM_INT)))
+			->orderBy('timestamp', 'ASC')
+			->setMaxResults(1);
+
+		$res = $query->execute()->fetch(\PDO::FETCH_COLUMN);
+		return (int)$res;
+	}
+
+	/**
+	 * Get the number of activity items and the latest activity id since the specified activity
+	 *
+	 * @param string $user
+	 * @param int $since
+	 * @param bool $byOthers
+	 * @return array
+	 */
+	public function getActivitySince(string $user, int $since, bool $byOthers) {
+		$query = $this->connection->getQueryBuilder();
+		$nameParam = $query->createNamedParameter($user);
+		$query->select($query->func()->count('activity_id', 'count'))
+			->selectAlias($query->func()->max('activity_id'), 'max')
+			->from('activity')
+			->where($query->expr()->eq('affecteduser', $nameParam))
+			->andWhere($query->expr()->gt('activity_id', $query->createNamedParameter($since, IQueryBuilder::PARAM_INT)));
+
+		if ($byOthers) {
+			$query->andWhere($query->expr()->neq('user', $nameParam));
+		}
+
+		return $query->execute()->fetch();
 	}
 }

@@ -140,6 +140,13 @@ class GroupHelper {
 	}
 
 	/**
+	 * @return IEvent[]
+	 */
+	public function getEvents(): array {
+		return $this->event;
+	}
+
+	/**
 	 * @param array $row
 	 * @return IEvent
 	 */

@@ -158,6 +158,8 @@ class Personal implements ISettings {
 			'notify_selfemail'	=> $this->userSettings->getUserSetting($this->user, 'setting', 'selfemail'),
 
 			'methods'			=> $methods,
+
+			'activity_digest_enabled' => $this->userSettings->getUserSetting($this->user, 'setting', 'activity_digest')
 		], 'blank');
 	}
 
