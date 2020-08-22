@@ -14,10 +14,10 @@ OC.L10N.register(
     "Hello %s" : "Hey %s",
     "Hello %s," : "Hey %s,",
     "Mail" : "Post",
-    "Send emails:" : "Send t-postar:",
     "As soon as possible" : "So skjótt sum gjørligt",
     "Hourly" : "Hvønn tíma",
     "Daily" : "Hvønn dag",
-    "Weekly" : "Hvørja viku"
+    "Weekly" : "Hvørja viku",
+    "Send emails:" : "Send t-postar:"
 },
 "nplurals=2; plural=(n != 1);");
