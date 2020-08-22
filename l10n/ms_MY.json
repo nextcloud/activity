@@ -24,7 +24,6 @@
     "Mail" : "Mel",
     "Activity feed" : "Suapan aktiviti",
     "Default settings" : "Tetapan lalai",
-    "Send emails:" : "Hantar email:",
     "As soon as possible" : "Secepat yang boleh",
     "Hourly" : "Setiap jam",
     "Daily" : "Setiap hari",
@@ -33,6 +32,7 @@
     "RSS feed" : "Suapan RSS",
     "No more events to load" : "Tiada aktiviti untuk memuat",
     "Stream" : "Strim",
-    "Send activity emails" : "Hantar emel aktiviti"
+    "Send activity emails" : "Hantar emel aktiviti",
+    "Send emails:" : "Hantar email:"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -10,10 +10,9 @@ OC.L10N.register(
     "Your settings have been updated." : "Sizin configləriniz yenilendi.",
     "Hello %s," : "Salam %s,",
     "Mail" : "Məktub",
-    "Notifications" : "Xəbərdarlıqlar",
     "Activity feed" : "Fəaliyyətin ötürülməsi",
+    "Notifications" : "Xəbərdarlıqlar",
     "You need to set up your email address before you can receive notification emails." : "Xəbərdarlıq məktubları almazdan öncə, siz mail ünvanınızı təyin etməlisiniz.",
-    "Send emails:" : "Məktubları yolla",
     "Hourly" : "Saatlıq",
     "Daily" : "Günlük",
     "Weekly" : "Həftəlik",
@@ -21,6 +20,7 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS ötürməsinin işə salinmaslı",
     "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur",
     "Stream" : "Axın",
-    "Notify about your own actions via email" : "Öz gördüyünüz işlər haqqənda email-lə xəbərdar elə"
+    "Notify about your own actions via email" : "Öz gördüyünüz işlər haqqənda email-lə xəbərdar elə",
+    "Send emails:" : "Məktubları yolla"
 },
 "nplurals=2; plural=(n != 1);");
