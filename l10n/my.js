@@ -21,6 +21,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "သင်၏ ပေးပို့ချက် URL မှားယွင်းနေသည်။",
     "Your settings have been updated." : "သင်၏ ပြင်ဆင်ချက်များကို မွမ်းမံပြီးဖြစ်သည်။",
     "Settings have been updated." : "ပြင်ဆင်ချက်များ မွမ်းမံပြီးပြီ။",
+    "_and %n more _::_and %n more _" : ["နှင့် အပို%n"],
     "All activities" : "လုပ်ဆောင်ချက်အားလုံး",
     "By others" : "အခြားသူများမှ",
     "By you" : "သင့်ထံမှ",
@@ -28,7 +29,6 @@ OC.L10N.register(
     "Hello %s" : "မင်္ဂလာပါ %s",
     "Hello %s," : "မင်္ဂလာပါ %s၊",
     "There was some activity at %s" : "%sက လုပ်ဆောင်မှု အချို့ ရှိခဲ့သည်။",
-    "_and %n more _::_and %n more _" : ["နှင့် အပို%n"],
     "Mail" : "စာ",
     "Stream" : "လမ်းကြောင်း"
 },

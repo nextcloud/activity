@@ -28,11 +28,10 @@ OC.L10N.register(
     "Hello %s," : "Salute %s,",
     "There was some activity at %s" : "Il habeva alcun activitate in %s",
     "Mail" : "Posta",
-    "Notifications" : "Notificationes",
     "Activity feed" : "Syndication de activitate",
+    "Notifications" : "Notificationes",
     "Default settings" : "Configurationes predefinite",
     "You need to set up your email address before you can receive notification emails." : "Tu necessita configurar tu adresse de e-posta ante que tu pote reciper messages de e-posta de notification.",
-    "Send emails:" : "Invia messages de e-posta:",
     "Hourly" : "Cata hora",
     "Daily" : "Cata die",
     "Weekly" : "Cata septimana",
@@ -41,6 +40,7 @@ OC.L10N.register(
     "No more events to load" : "Nulle altere eventos a cargar",
     "Stream" : "Fluxo",
     "List your own actions in the stream" : "Lista tu proprie actiones de file in le fluxo",
-    "Notify about your own actions via email" : "Notifica super tu proprie actiones via e-posta"
+    "Notify about your own actions via email" : "Notifica super tu proprie actiones via e-posta",
+    "Send emails:" : "Invia messages de e-posta:"
 },
 "nplurals=2; plural=(n != 1);");
