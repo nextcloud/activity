@@ -41,7 +41,7 @@ OC.L10N.register(
     "Default settings" : "Standardeinstellungen",
     "Configure the default notification settings for new users." : "Voreinstellungen der Benachrichtigungen für neue Benutzer.",
     "You need to set up your email address before you can receive notification emails." : "Bevor Du E-Mail-Benachrichtigungen empfangen kannst, musst Du Deine E-Mail-Adresse einrichten.",
-    "Send notification emails:" : "Benachrichtigs-E-Mails senden an:",
+    "Send notification emails:" : "Benachrichtigs-E-Mails senden:",
     "As soon as possible" : "So bald wie möglich",
     "Hourly" : "Stündlich",
     "Daily" : "Täglich",
