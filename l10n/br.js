@@ -13,7 +13,7 @@ OC.L10N.register(
     "{name} (restricted)" : "{anv} (bevennet)",
     "Home" : "Degemer",
     "in {path}" : "e {treug}",
-    "This stream will show events like additions, changes & shares" : "Ar red ma a diskouezo darvoudoù evel ouzhpennadennoù, cheñchamentoù & rannadennoù",
+    "This stream will show events like additions, changes & shares" : "Ar red ma a diskouezo darvoudoù evel ouzhpennadennoù, cheñchamantoù & rannadennoù",
     "There are no events for this filter" : "N'ez eus darvoud ebet evit ar filtr",
     "Today" : "Hiziv",
     "Yesterday" : "Dec'h",
