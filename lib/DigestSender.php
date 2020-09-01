@@ -136,7 +136,7 @@ class DigestSender {
 			return;
 		}
 
-		['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, false);
+		['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
 		$count = (int) $count;
 		$lastActivityId = (int) $lastActivityId;
 		if ($count === 0) {
