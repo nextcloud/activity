@@ -10,7 +10,7 @@ To create and publish an event to the activity app, a new `IEvent` should be fet
 
 $event = $this->activityManager->createEvent();
 ...
-$this->activityManager->->publish($event);
+$this->activityManager->publish($event);
 ```
 
 The following values **must** be set before publishing an event:
