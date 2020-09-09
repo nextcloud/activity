@@ -37,6 +37,7 @@ OC.L10N.register(
     "Notifications" : "Известия",
     "Default settings" : "Стандартни настройкки",
     "You need to set up your email address before you can receive notification emails." : "Първо трябва да въведете вашия имейл адрес (в профила си), за да получавате известия.",
+    "Send notification emails:" : "Изпрати уведомителни е-мейли:",
     "As soon as possible" : "Възможно по-скоро",
     "Hourly" : "Всеки час",
     "Daily" : "Всеки ден",
