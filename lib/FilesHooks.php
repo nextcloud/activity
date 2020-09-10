@@ -187,10 +187,17 @@ class FilesHooks {
 	}
 
 	private function getFileChangeActivitySettings(int $fileId, array $users): array {
+		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_FILE_CHANGED);
+		$filteredNotificationUsers = $this->userSettings->filterUsersBySetting($users, 'notification', Files::TYPE_FILE_CHANGED);
+
 		$favoriteUsers = $this->tagManager->getUsersFavoritingObject($fileId);
-		$users = array_intersect($users, $favoriteUsers);
-		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_FAVORITE_CHANGED);
-		$filteredNotificationUsers = $this->userSettings->filterUsersBySetting($users, 'notification', Files::TYPE_FAVORITE_CHANGED);
+		if (!empty($favoriteUsers)) {
+			$favoriteUsers = array_intersect($users, $favoriteUsers);
+			if (!empty($favoriteUsers)) {
+				$filteredEmailUsers = array_merge($filteredEmailUsers, $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_FAVORITE_CHANGED));
+				$filteredNotificationUsers = array_merge($filteredNotificationUsers, $this->userSettings->filterUsersBySetting($users, 'notification', Files::TYPE_FAVORITE_CHANGED));
+			}
+		}
 
 		return [$filteredEmailUsers, $filteredNotificationUsers];
 	}
