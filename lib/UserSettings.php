@@ -165,7 +165,7 @@ class UserSettings {
 	 * @param array $users
 	 * @param string $method
 	 * @param string $type
-	 * @return array Returns a "username => b:true" Map for method = stream
+	 * @return array Returns a "username => b:true" Map for method = notification
 	 *               Returns a "username => i:batchtime" Map for method = email
 	 */
 	public function filterUsersBySetting($users, $method, $type) {
@@ -202,7 +202,7 @@ class UserSettings {
 		// we add all users that didn't set the preference yet.
 		if ($this->getDefaultFromSetting($method, $type)) {
 			foreach ($users as $user) {
-				if ($method === 'stream') {
+				if ($method === 'notification') {
 					$filteredUsers[$user] = true;
 				} else {
 					$filteredUsers[$user] = $this->getDefaultFromSetting('setting', 'batchtime');
