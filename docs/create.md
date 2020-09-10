@@ -23,7 +23,7 @@ The following values **must** be set before publishing an event:
 
 Additionally these values **can** be set:
 * `setAuthor()` - if no author is set, the current user will be used
-* `setTimestamp()` - if no not set, the current time will be used
+* `setTimestamp()` - if no time is set, the current time will be used
 * `setMessage()`
 * `setLink()` - should be done in `IProvider::parse()`
 * `setIcon()` - should be done in `IProvider::parse()`
