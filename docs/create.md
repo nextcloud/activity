@@ -19,11 +19,11 @@ The following values **must** be set before publishing an event:
 * `setType()` - this must match an `\OCP\Activity\ISetting::getIdentifier()`
 * `setAffectedUser()`
 * `setSubject()`
+* `setObject()`
 
 Additionally these values **can** be set:
 * `setAuthor()` - if no author is set, the current user will be used
 * `setTimestamp()` - if no not set, the current time will be used
-* `setObject()`
 * `setMessage()`
 * `setLink()` - should be done in `IProvider::parse()`
 * `setIcon()` - should be done in `IProvider::parse()`
