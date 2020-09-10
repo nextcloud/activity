@@ -153,9 +153,9 @@ class FilesHooks {
 		}
 
 		if ($this->currentUser->getUserIdentifier() !== '') {
-			$this->addNotificationsForFileAction($path, 'created_self', 'created_by');
+			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
 		} else {
-			$this->addNotificationsForFileAction($path, '', 'created_public');
+			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, '', 'created_public');
 		}
 	}
 
@@ -165,7 +165,7 @@ class FilesHooks {
 	 * @param string $path Path of the file that has been modified
 	 */
 	public function fileUpdate($path) {
-		$this->addNotificationsForFileAction($path, 'changed_self', 'changed_by');
+		$this->addNotificationsForFileAction($path, Files::TYPE_FILE_CHANGED, 'changed_self', 'changed_by');
 	}
 
 	/**
@@ -174,7 +174,7 @@ class FilesHooks {
 	 * @param string $path Path of the file that has been deleted
 	 */
 	public function fileDelete($path) {
-		$this->addNotificationsForFileAction($path, 'deleted_self', 'deleted_by');
+		$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
 	}
 
 	/**
@@ -183,14 +183,21 @@ class FilesHooks {
 	 * @param string $path Path of the file that has been restored
 	 */
 	public function fileRestore($path) {
-		$this->addNotificationsForFileAction($path, 'restored_self', 'restored_by');
+		$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
 	}
 
 	private function getFileChangeActivitySettings(int $fileId, array $users): array {
+		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_FILE_CHANGED);
+		$filteredNotificationUsers = $this->userSettings->filterUsersBySetting($users, 'notification', Files::TYPE_FILE_CHANGED);
+
 		$favoriteUsers = $this->tagManager->getUsersFavoritingObject($fileId);
-		$users = array_intersect($users, $favoriteUsers);
-		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_FAVORITE_CHANGED);
-		$filteredNotificationUsers = $this->userSettings->filterUsersBySetting($users, 'notification', Files::TYPE_FAVORITE_CHANGED);
+		if (!empty($favoriteUsers)) {
+			$favoriteUsers = array_intersect($users, $favoriteUsers);
+			if (!empty($favoriteUsers)) {
+				$filteredEmailUsers = array_merge($filteredEmailUsers, $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_FAVORITE_CHANGED));
+				$filteredNotificationUsers = array_merge($filteredNotificationUsers, $this->userSettings->filterUsersBySetting($users, 'notification', Files::TYPE_FAVORITE_CHANGED));
+			}
+		}
 
 		return [$filteredEmailUsers, $filteredNotificationUsers];
 	}
@@ -199,11 +206,11 @@ class FilesHooks {
 	 * Creates the entries for file actions on $file_path
 	 *
 	 * @param string $filePath The file that is being changed
-	 * @param int $activityType The activity type
+	 * @param string $activityType The activity type
 	 * @param string $subject The subject for the actor
 	 * @param string $subjectBy The subject for other users (with "by $actor")
 	 */
-	protected function addNotificationsForFileAction($filePath, $subject, $subjectBy) {
+	protected function addNotificationsForFileAction($filePath, $activityType, $subject, $subjectBy) {
 		// Do not add activities for .part-files
 		if (substr($filePath, -5) === '.part') {
 			return;
@@ -217,7 +224,7 @@ class FilesHooks {
 
 		$accessList = $this->getUserPathsFromPath($filePath, $uidOwner);
 
-		$this->generateRemoteActivity($accessList['remotes'], Files::TYPE_FILE_CHANGED, time(), $this->currentUser->getCloudId(), $accessList['ownerPath']);
+		$this->generateRemoteActivity($accessList['remotes'], $activityType, time(), $this->currentUser->getCloudId(), $accessList['ownerPath']);
 
 		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
 			$mountsForFile = $this->userMountCache->getMountsForFileId($fileId);
@@ -250,7 +257,7 @@ class FilesHooks {
 				$fileId, $path, true,
 				$filteredEmailUsers[$user] ?? false,
 				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_FILE_CHANGED
+				$activityType
 			);
 		}
 	}
@@ -492,8 +499,8 @@ class FilesHooks {
 			}
 		}
 
-		$this->generateRemoteActivity($deleteRemotes, Files::TYPE_FILE_CHANGED, time(), $this->currentUser->getCloudId());
-		$this->generateRemoteActivity($addRemotes, Files::TYPE_FILE_CHANGED, time(), $this->currentUser->getCloudId());
+		$this->generateRemoteActivity($deleteRemotes, Files::TYPE_SHARE_DELETED, time(), $this->currentUser->getCloudId());
+		$this->generateRemoteActivity($addRemotes, Files::TYPE_SHARE_CREATED, time(), $this->currentUser->getCloudId());
 		$this->generateRemoteActivity($moveRemotes, Files::TYPE_FILE_CHANGED, time(), $this->currentUser->getCloudId());
 	}
 
@@ -526,7 +533,7 @@ class FilesHooks {
 				$fileId, $path . '/' . $oldFileName, true,
 				$filteredEmailUsers[$user] ?? false,
 				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_FILE_CHANGED
+				Files::TYPE_SHARE_DELETED
 			);
 		}
 	}

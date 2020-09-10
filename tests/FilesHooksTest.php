@@ -195,7 +195,7 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', $selfSubject, $othersSubject);
+			->with('path', Files::TYPE_SHARE_CREATED, $selfSubject, $othersSubject);
 
 		$filesHooks->fileCreate('path');
 	}
@@ -223,7 +223,7 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', 'changed_self', 'changed_by');
+			->with('path', Files::TYPE_FILE_CHANGED, 'changed_self', 'changed_by');
 
 		$filesHooks->fileUpdate('path');
 	}
@@ -235,7 +235,7 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', 'deleted_self', 'deleted_by');
+			->with('path', Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
 
 		$filesHooks->fileDelete('path');
 	}
@@ -247,7 +247,7 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', 'restored_self', 'restored_by');
+			->with('path', Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
 
 		$filesHooks->fileRestore('path');
 	}
@@ -462,12 +462,12 @@ class FilesHooksTest extends TestCase {
 					true,
 					$arguments['email'],
 					$arguments['notification'],
-					Files::TYPE_FILE_CHANGED
+					Files::TYPE_SHARE_RESTORED
 				);
 			$i++;
 		}
 
-		self::invokePrivate($filesHooks, 'addNotificationsForFileAction', ['path', 'restored_self', 'restored_by']);
+		self::invokePrivate($filesHooks, 'addNotificationsForFileAction', ['path', Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by']);
 	}
 
 	public function testHookShareWithUser(): void {
