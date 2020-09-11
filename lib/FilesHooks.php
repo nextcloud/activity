@@ -194,8 +194,8 @@ class FilesHooks {
 		if (!empty($favoriteUsers)) {
 			$favoriteUsers = array_intersect($users, $favoriteUsers);
 			if (!empty($favoriteUsers)) {
-				$filteredEmailUsers = array_merge($filteredEmailUsers, $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_FAVORITE_CHANGED));
-				$filteredNotificationUsers = array_merge($filteredNotificationUsers, $this->userSettings->filterUsersBySetting($users, 'notification', Files::TYPE_FAVORITE_CHANGED));
+				$filteredEmailUsers = array_merge($filteredEmailUsers, $this->userSettings->filterUsersBySetting($favoriteUsers, 'email', Files::TYPE_FAVORITE_CHANGED));
+				$filteredNotificationUsers = array_merge($filteredNotificationUsers, $this->userSettings->filterUsersBySetting($favoriteUsers, 'notification', Files::TYPE_FAVORITE_CHANGED));
 			}
 		}
 
