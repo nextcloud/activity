@@ -350,6 +350,7 @@ class FilesHooks {
 			return;
 		}
 		$this->oldAccessList = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
+		$this->oldAccessList['users'] = $this->getAffectedUsers($this->oldAccessList['users'], $this->oldParentId);
 	}
 
 
@@ -409,7 +410,7 @@ class FilesHooks {
 		}
 		$this->generateRemoteActivity($renameRemotes, Files::TYPE_FILE_CHANGED, time(), $this->currentUser->getCloudId());
 
-		$affectedUsers = $accessList['users'];
+		$affectedUsers = $this->getAffectedUsers($accessList['users'], $fileId);
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers));
 
 		foreach ($affectedUsers as $user => $path) {
@@ -456,7 +457,7 @@ class FilesHooks {
 			return;
 		}
 		$accessList = $this->getUserPathsFromPath($parentPath, $parentOwner);
-		$affectedUsers = $accessList['users'];
+		$affectedUsers = $this->getAffectedUsers($accessList['users'], $fileId);
 		$oldUsers = $this->oldAccessList['users'];
 
 		$beforeUsers = array_keys($oldUsers);
