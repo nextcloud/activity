@@ -233,18 +233,7 @@ class FilesHooks {
 			$this->generateRemoteActivity($accessList['remotes'], $activityType, time(), $this->currentUser->getCloudId(), $accessList['ownerPath']);
 		}
 
-		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
-			$mountsForFile = $this->userMountCache->getMountsForFileId($fileId);
-			$affectedUserIds = array_map(function (ICachedMountInfo $mount) {
-				return $mount->getUser()->getUID();
-			}, $mountsForFile);
-			$affectedPaths = array_map(function (ICachedMountFileInfo $mount) {
-				return $this->getVisiblePath($mount->getPath());
-			}, $mountsForFile);
-			$affectedUsers = array_combine($affectedUserIds, $affectedPaths);
-		} else {
-			$affectedUsers = $accessList['users'];
-		}
+		$affectedUsers = $this->getAffectedUsers($accessList['users'], $fileId);
 
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers));
 
@@ -1196,5 +1185,27 @@ class FilesHooks {
 			$latestSend = time() + $emailSetting;
 			$this->activityData->storeMail($event, $latestSend);
 		}
+	}
+
+	/**
+	 * Gets an array of the users that should be notified for a path
+	 *
+	 * @param $defaultUsers
+	 * @param $fileId
+	 * @return array|mixed
+	 */
+	protected function getAffectedUsers($defaultUsers, $fileId) {
+		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
+			$mountsForFile = $this->userMountCache->getMountsForFileId($fileId);
+			$affectedUserIds = array_map(function (ICachedMountInfo $mount) {
+				return $mount->getUser()->getUID();
+			}, $mountsForFile);
+			$affectedPaths = array_map(function (ICachedMountFileInfo $mount) {
+				return $this->getVisiblePath($mount->getPath());
+			}, $mountsForFile);
+			return array_combine($affectedUserIds, $affectedPaths);
+		}
+
+		return $defaultUsers;
 	}
 }
