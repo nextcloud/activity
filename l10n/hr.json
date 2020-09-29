@@ -39,6 +39,8 @@
     "Hourly" : "Svaki sat",
     "Daily" : "Svakodnevno",
     "Weekly" : "Svaki tjedan",
+    "Choose for which activities you want to get an email or push notification." : "Odaberite za koje aktivnosti želite primati obavijest e-poštom ili push obavijesti.",
+    "Choose for which activities you want to get a push notification." : "Odaberite za koje aktivnosti želite primati push obavijesti.",
     "Settings" : "Postavke",
     "Enable RSS feed" : "Omogući sažetak događaja RSS",
     "RSS feed" : "Sažetak događaja RSS",
