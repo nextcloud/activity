@@ -37,6 +37,7 @@ OC.L10N.register(
     "Notifications" : "通知",
     "Enable notification emails" : "启用邮件通知",
     "Default settings" : "默认设置",
+    "Configure the default notification settings for new users." : "为新用户配置默认通知设置",
     "You need to set up your email address before you can receive notification emails." : "要接收通知邮件，需要先设置您的电子邮件地址。",
     "Send notification emails:" : "发送通知邮件",
     "As soon as possible" : "尽快",
