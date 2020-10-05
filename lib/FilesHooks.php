@@ -190,16 +190,20 @@ class FilesHooks {
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_FILE_CHANGED);
 		$filteredNotificationUsers = $this->userSettings->filterUsersBySetting($users, 'notification', Files::TYPE_FILE_CHANGED);
 
-		$favoriteUsers = $this->tagManager->getUsersFavoritingObject($fileId);
-		if (!empty($favoriteUsers)) {
-			$favoriteUsers = array_intersect($users, $favoriteUsers);
+		if ($this->tagManager !== null) {
+			$favoriteUsers = $this->tagManager->getUsersFavoritingObject($fileId);
 			if (!empty($favoriteUsers)) {
-				$filteredEmailUsers = array_merge($filteredEmailUsers, $this->userSettings->filterUsersBySetting($favoriteUsers, 'email', Files::TYPE_FAVORITE_CHANGED));
-				$filteredNotificationUsers = array_merge($filteredNotificationUsers, $this->userSettings->filterUsersBySetting($favoriteUsers, 'notification', Files::TYPE_FAVORITE_CHANGED));
+				$favoriteUsers = array_intersect($users, $favoriteUsers);
+				if (!empty($favoriteUsers)) {
+					$filteredEmailUsers = array_merge($filteredEmailUsers, $this->userSettings->filterUsersBySetting($favoriteUsers, 'email', Files::TYPE_FAVORITE_CHANGED));
+					$filteredNotificationUsers = array_merge($filteredNotificationUsers, $this->userSettings->filterUsersBySetting($favoriteUsers, 'notification', Files::TYPE_FAVORITE_CHANGED));
+				}
 			}
+
+			return [$filteredEmailUsers, $filteredNotificationUsers];
 		}
 
-		return [$filteredEmailUsers, $filteredNotificationUsers];
+		return [[null], [null]];
 	}
 
 	/**

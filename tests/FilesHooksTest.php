@@ -143,7 +143,7 @@ class FilesHooksTest extends TestCase {
 					$this->notificationGenerator,
 					$this->tagManager
 				])
-				->onlyMethods($mockedMethods)
+				->setMethods($mockedMethods)
 				->getMock();
 		}
 
@@ -891,7 +891,7 @@ class FilesHooksTest extends TestCase {
 		if ($validMountPoint) {
 			$storage = $this->getMockBuilder(SharedStorage::class)
 				->disableOriginalConstructor()
-				->onlyMethods([
+				->setMethods([
 					'instanceOfStorage',
 					'getSharedFrom',
 				])
@@ -1065,5 +1065,12 @@ class FilesHooksTest extends TestCase {
 			->with($event, $this->anything());
 
 		self::invokePrivate($this->filesHooks, 'addNotificationsForUser', [$user, $subject, $parameter, $fileId, $path, $isFile, $email, $notification, $type]);
+	}
+
+	public function testPublicLinkActivity() {
+		$fileHooks = $this->getFilesHooks();
+		$result = $this->invokePrivate($fileHooks, 'getFileChangeActivitySettings', [12, ['user']]);
+
+		$this->assertEquals([null, null], $result);
 	}
 }
