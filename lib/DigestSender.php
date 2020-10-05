@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace OCA\Activity;
 
 use OCP\Activity\IEvent;
+use OCP\Activity\IManager;
 use OCP\Defaults;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
@@ -42,6 +43,7 @@ class DigestSender {
 	private $userSettings;
 	private $groupHelper;
 	private $mailer;
+	private $activityManager;
 	private $userManager;
 	private $urlGenerator;
 	private $defaults;
@@ -55,6 +57,7 @@ class DigestSender {
 		UserSettings $userSettings,
 		GroupHelper $groupHelper,
 		IMailer $mailer,
+		IManager $activityManager,
 		IUserManager $userManager,
 		IURLGenerator $urlGenerator,
 		Defaults $defaults,
@@ -67,6 +70,7 @@ class DigestSender {
 		$this->userSettings = $userSettings;
 		$this->groupHelper = $groupHelper;
 		$this->mailer = $mailer;
+		$this->activityManager = $activityManager;
 		$this->userManager = $userManager;
 		$this->urlGenerator = $urlGenerator;
 		$this->defaults = $defaults;
@@ -135,6 +139,7 @@ class DigestSender {
 		if ($lastSend === 0) {
 			return;
 		}
+		$this->activityManager->setCurrentUserId($uid);
 
 		['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
 		$count = (int) $count;
@@ -190,6 +195,7 @@ class DigestSender {
 		$message->useTemplate($template);
 		$message->setFrom([Util::getDefaultEmailAddress('no-reply') => $this->defaults->getName()]);
 
+		$this->activityManager->setCurrentUserId(null);
 		try {
 			$this->mailer->send($message);
 			$this->config->setUserValue($user->getUID(), 'activity', 'activity_digest_last_send', $lastActivityId);
