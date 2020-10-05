@@ -26,7 +26,6 @@ namespace OCA\Activity;
 
 use OC\Files\Filesystem;
 use OC\Files\View;
-use OC\Tags;
 use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
@@ -105,7 +104,7 @@ class FilesHooks {
 	protected $oldParentId;
 	/** @var NotificationGenerator */
 	protected $notificationGenerator;
-	/** @var Tags */
+	/** @var ITagManager */
 	protected $tagManager;
 
 	public function __construct(
@@ -139,7 +138,7 @@ class FilesHooks {
 		$this->userMountCache = $userMountCache;
 		$this->config = $config;
 		$this->notificationGenerator = $notificationGenerator;
-		$this->tagManager = $tagManager->load('files');
+		$this->tagManager = $tagManager;
 	}
 
 	/**
