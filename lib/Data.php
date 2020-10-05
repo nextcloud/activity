@@ -31,8 +31,12 @@ use OCP\Activity\IExtension;
 use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\IConfig;
 use OCP\IDBConnection;
-use OCP\IL10N;
+use OCP\IGroup;
+use OCP\IGroupManager;
+use OCP\IUser;
+use OCP\IUserManager;
 
 /**
  * @brief Class for managing the data in the activities
@@ -44,13 +48,34 @@ class Data {
 	/** @var IDBConnection */
 	protected $connection;
 
+	/** @var IConfig */
+	protected $config;
+
+	/** @var IGroupManager */
+	protected $groupManager;
+
+	/** @var IUserManager */
+	protected $userManager;
+
 	/**
 	 * @param IManager $activityManager
 	 * @param IDBConnection $connection
+	 * @param IConfig $config
+	 * @param IGroupManager $groupManager
+	 * @param IUserManager $userManager
 	 */
-	public function __construct(IManager $activityManager, IDBConnection $connection) {
+	public function __construct(
+		IManager $activityManager,
+		IDBConnection $connection,
+		IConfig $config,
+		IGroupManager $groupManager,
+		IUserManager $userManager
+	) {
 		$this->activityManager = $activityManager;
 		$this->connection = $connection;
+		$this->config = $config;
+		$this->groupManager = $groupManager;
+		$this->userManager = $userManager;
 	}
 
 	/**
@@ -113,7 +138,7 @@ class Data {
 	 */
 	public function storeMail(IEvent $event, int $latestSendTime): bool {
 		$affectedUser = $event->getAffectedUser();
-		if ($affectedUser === '' || $affectedUser === null) {
+		if ($affectedUser === '' || $affectedUser === null || $this->isSystemUser($event->getAuthor())) {
 			return false;
 		}
 
@@ -220,6 +245,16 @@ class Data {
 				/** @var \OCA\Files\Activity\Filter\Favorites $favoriteFilter */
 				$favoriteFilter->filterFavorites($query);
 			} catch (\InvalidArgumentException $e) {
+			}
+		}
+
+		// if the user is not a system user, hide system users activities
+		if (!$this->isSystemUser($user)){
+			$systemUsers = $this->getSystemUsers();
+			if(!empty($systemUsers)){
+				$query->andWhere($query->expr()->notIn('user', $query->createNamedParameter(
+					$systemUsers, IQueryBuilder::PARAM_STR_ARRAY
+				)));
 			}
 		}
 
@@ -456,5 +491,56 @@ class Data {
 		}
 
 		return $query->execute()->fetch();
+	}
+
+	/**
+	 * @param mixed $user
+	 * @return bool
+	 */
+	protected function isSystemUser($user)
+	{
+		if(!($user instanceof IUser)){
+			$user = $this->userManager->get($user);
+		}
+		foreach ($this->getSystemUserGroups() as $group){
+			$group = $this->groupManager->get($group);
+			if (!($group instanceof IGroup)) {
+				continue;
+			}
+			if($group->inGroup($user)){
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	protected function getSystemUserGroups()
+	{
+		$systemUsersGroupList = $this->config->getAppValue('activity', 'activity_system_users_group_list', '');
+		return json_decode($systemUsersGroupList);
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getSystemUsers()
+	{
+		$users = [];
+		foreach ($this->getSystemUserGroups() as $group) {
+			$group = $this->groupManager->get($group);
+			if (!($group instanceof IGroup)) {
+				continue;
+			}
+			$groupUsers = $group->getUsers();
+			foreach ($groupUsers as $user){
+				array_push($users, $user->getUID());
+			}
+		}
+
+		return $users;
 	}
 }

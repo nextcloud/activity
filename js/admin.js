@@ -32,5 +32,14 @@ $(document).ready(function() {
 			'activity', 'enable_email',
 			$(this).attr('checked') === 'checked' ? 'yes' : 'no'
 		);
-	})
+	});
+
+	$('#activity_system_users_group_list').each(function (index, element) {
+		OC.Settings.setupGroupsSelect($(element));
+		$(element).change(function(ev) {
+			var groups = ev.val || [];
+			groups = JSON.stringify(groups);
+			OCP.AppConfig.setValue('activity', $(this).attr('name'), groups);
+		});
+	});
 });

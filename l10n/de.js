@@ -56,6 +56,7 @@ OC.L10N.register(
     "Stream" : "Stream",
     "Send activity emails" : "E-Mails zu Aktivitäten senden",
     "Configure the default activity settings for new users." : "Nehme die Voreinstellungen der Aktivitäten für neue Benutzer vor.",
+	"Define groups, such as system users groups, whose activities will not be displayed (except for themselves)." : "Definiere Gruppen, z. B. Systembenutzergruppen, deren Aktivitäten nicht angezeigt werden (außer für sich selbst).",
     "List your own actions in the stream" : "Deine eigenen Aktivitäten im Stream auflisten",
     "Notify about your own actions via email" : "Über Deine eigenen Aktivitäten via E-Mail benachrichtigen",
     "Send emails:" : "Sende E-Mails:",
