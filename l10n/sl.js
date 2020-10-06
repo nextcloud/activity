@@ -52,7 +52,7 @@ OC.L10N.register(
     "Settings" : "Nastavitve",
     "Enable RSS feed" : "Omogoči vire RSS",
     "RSS feed" : "Viri RSS",
-    "No more events to load" : "Ni zabeleženih drugih dogodkov",
+    "No more events to load" : "Ni načrtovanih drugih dogodkov",
     "Stream" : "Pretok",
     "Send activity emails" : "Pošiljaj obvestila o dejavnosti na elektronske naslove",
     "Configure the default activity settings for new users." : "Prilagodi privzete nastavitve dejavnosti za nove uporabnike.",
