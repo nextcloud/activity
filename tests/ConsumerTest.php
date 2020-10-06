@@ -144,7 +144,7 @@ class ConsumerTest extends TestCase {
 	 * @param string $subject
 	 * @param array|false $expected
 	 */
-	public function testReceiveStream(string $type, string $author, string $affectedUser, string $subject, $expected): void {
+	public function testReceiveStream(string $type, string $author, string $affectedUser, string $subject): void {
 		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
 		$event = \OC::$server->getActivityManager()->generateEvent();
 		$event->setApp('test')
@@ -158,13 +158,8 @@ class ConsumerTest extends TestCase {
 			->setLink('link');
 		$this->deleteTestActivities();
 
-		if ($author === $affectedUser) {
-			$this->data->expects($this->never())
-				->method('send');
-		} else {
-			$this->data->expects($this->once())
-				->method('send');
-		}
+		$this->data->expects($this->once())
+			->method('send');
 
 		$consumer->receive($event);
 	}
