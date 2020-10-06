@@ -83,7 +83,7 @@ class MailQueueHandlerTest extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$app = self::getUniqueID('MailQueueHandlerTest');
+		$app = self::getUniqueID('MailQueueHandlerTest', 10);
 		$this->userManager = $this->createMock(IUserManager::class);
 		$this->lFactory = $this->createMock(IFactory::class);
 		$this->config = $this->createMock(IConfig::class);
@@ -219,7 +219,7 @@ class MailQueueHandlerTest extends TestCase {
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 
-		$app = self::getUniqueID('MailQueueHandlerTest');
+		$app = self::getUniqueID('MailQueueHandlerTest', 10);
 		for ($i = 0; $i < 15; $i++) {
 			$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 160 + $i));
 		}
