@@ -67,10 +67,7 @@ class Consumer implements IConsumer {
 		$emailSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'email', $event->getType());
 		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'batchtime') : false;
 
-		// Add activity to stream
-		if (!$selfAction) {
-			$activityId = $this->data->send($event);
-		}
+		$activityId = $this->data->send($event);
 
 		if (!$selfAction && $notificationSetting && $activityId) {
 			$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
