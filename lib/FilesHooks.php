@@ -26,6 +26,7 @@ namespace OCA\Activity;
 
 use OC\Files\Filesystem;
 use OC\Files\View;
+use OC\TagManager;
 use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
@@ -104,7 +105,7 @@ class FilesHooks {
 	protected $oldParentId;
 	/** @var NotificationGenerator */
 	protected $notificationGenerator;
-	/** @var ITagManager */
+	/** @var ITagManager|TagManager */
 	protected $tagManager;
 
 	public function __construct(
@@ -189,7 +190,7 @@ class FilesHooks {
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_FILE_CHANGED);
 		$filteredNotificationUsers = $this->userSettings->filterUsersBySetting($users, 'notification', Files::TYPE_FILE_CHANGED);
 
-		$favoriteUsers = $this->tagManager->getUsersFavoritingObject($fileId);
+		$favoriteUsers = $this->tagManager->getUsersFavoritingObject('files', $fileId);
 		if (!empty($favoriteUsers)) {
 			$favoriteUsers = array_intersect($users, $favoriteUsers);
 			if (!empty($favoriteUsers)) {
