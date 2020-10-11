@@ -22,6 +22,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "フィードURLが無効です",
     "Your settings have been updated." : "設定を更新しました。",
     "Settings have been updated." : "設定を更新しました。",
+    "Daily activity summary for " : "日次活動サマリー：",
     "_and %n more _::_and %n more _" : ["および他 %n "],
     "All activities" : "すべてのアクティビティ",
     "By others" : "他ユーザー",
