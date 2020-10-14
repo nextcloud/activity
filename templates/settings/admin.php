@@ -38,7 +38,7 @@ style('activity', 'settings');
 	<p class="settings-hint indent">
 		<?php p($l->t('Define groups, such as system users groups, whose activities will not be displayed (except for themselves).')); ?>
 		<br />
-		<input name="activity_system_users_group_list" id="activity_system_users_group_list" value="<?php p($_['systemGroupList']) ?>" style="width: 400px" class="noJSAutoUpdate"/>
+		<input name="activity_system_users_group_list" id="activity_system_users_group_list" value="<?php p($_['system_users_group_list']) ?>" style="width: 400px" class="noJSAutoUpdate"/>
 	</p>
 
 </div>
