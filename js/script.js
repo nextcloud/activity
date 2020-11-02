@@ -100,6 +100,9 @@ $(function(){
 						self.handleActivitiesCallback([]);
 						self.saveHeaders(xhr.getAllResponseHeaders());
 						return;
+					} else if (status === 'nocontent'){
+						self.handleActivitiesCallback([]);
+						self.ignoreScroll -= 1;
 					}
 
 					self.saveHeaders(xhr.getAllResponseHeaders());
