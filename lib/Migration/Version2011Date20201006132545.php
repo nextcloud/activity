@@ -27,19 +27,10 @@ namespace OCA\Activity\Migration;
 use Closure;
 use Doctrine\DBAL\Types\Type;
 use OCP\DB\ISchemaWrapper;
-use OCP\IDBConnection;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
 
-class Version2011Date20201006132544 extends SimpleMigrationStep {
-
-	/** @var IDBConnection */
-	protected $connection;
-
-	public function __construct(IDBConnection $connection) {
-		$this->connection = $connection;
-	}
-
+class Version2011Date20201006132545 extends SimpleMigrationStep {
 	/**
 	 * @param IOutput $output
 	 * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
@@ -51,39 +42,12 @@ class Version2011Date20201006132544 extends SimpleMigrationStep {
 		$schema = $schemaClosure();
 
 		$table = $schema->getTable('activity_mq');
-
-		$column = $table->getColumn('amq_appid');
-		$column->setType(Type::getType('string'));
-		$column->setNotnull(true);
-		$column->setLength(32);
-
 		$column = $table->getColumn('amq_subjectparams');
-		// Can't switch from Long to clob on Oracle, so we need an intermediate column
 		if ($column->getType() !== Type::getType('text')) {
-			$table->addColumn('amq_subjectparams2', 'text', [
-				'notnull' => true,
-			]);
+			$table->dropColumn('amq_subjectparams');
+			return $schema;
 		}
 
-		return $schema;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @since 13.0.0
-	 */
-	public function postSchemaChange(IOutput $output, \Closure $schemaClosure, array $options): void {
-		/** @var ISchemaWrapper $schema */
-		$schema = $schemaClosure();
-
-		if (!$schema->getTable('activity_mq')->hasColumn('amq_subjectparams2')) {
-			return;
-		}
-
-		$query = $this->connection->getQueryBuilder();
-		$query->update('activity_mq')
-			->set('amq_subjectparams2', 'amq_subjectparams');
-		$query->execute();
+		return null;
 	}
 }
