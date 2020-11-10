@@ -229,10 +229,11 @@ class DataTest extends TestCase {
 		if ($timestampWhere !== null && $idWhere !== null) {
 			$mock->expects($this->exactly(2))
 				->method('andWhere')
-				->withConsecutive(
-					[$timestampWhere],
-					[str_replace('{id}', $id, $idWhere)]
-				);
+//				->withConsecutive(
+//					[$timestampWhere],
+//					[str_replace('{id}', $id, $idWhere)]
+//				)
+				;
 		} else {
 			$mock->expects($this->never())
 				->method('andWhere');
