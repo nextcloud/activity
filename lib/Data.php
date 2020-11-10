@@ -101,7 +101,7 @@ class Data {
 			])
 			->execute();
 
-		return $this->connection->lastInsertId('activity');
+		return $queryBuilder->getLastInsertId();
 	}
 
 	/**
