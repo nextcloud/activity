@@ -51,7 +51,10 @@ jobs:
 
       - name: Set up PHPUnit
         working-directory: apps/${{ env.APP_NAME }}
-        run: composer i
+        run: |
+          wget https://raw.githubusercontent.com/nextcloud/travis_ci/master/composer-phpunit8.json
+          mv composer-phpunit8.json composer.json
+          composer i
 
       - name: Set up php ${{ matrix.php-versions }}
         uses: "shivammathur/setup-php@v2"
