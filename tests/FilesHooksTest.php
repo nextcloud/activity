@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace OCA\Activity;
 
 use OC\Files\Config\CachedMountFileInfo;
+use OC\TagManager;
 use OC\Tags;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
@@ -33,7 +34,6 @@ use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\IConfig;
 use OCP\ILogger;
-use OCP\ITagManager;
 use OCP\IUser;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
@@ -79,7 +79,7 @@ class FilesHooksTest extends TestCase {
 	protected $config;
 	/** @var NotificationGenerator|MockObject */
 	protected $notificationGenerator;
-	/** @var ITagManager|MockObject */
+	/** @var TagManager|MockObject */
 	protected $tagManager;
 	protected $tags;
 
@@ -97,9 +97,9 @@ class FilesHooksTest extends TestCase {
 		$this->userMountCache = $this->createMock(IUserMountCache::class);
 		$this->config = $this->createMock(IConfig::class);
 		$this->notificationGenerator = $this->createMock(NotificationGenerator::class);
-		$this->tagManager = $this->createMock(ITagManager::class);
+		$this->tagManager = $this->createMock(TagManager::class);
 		$this->tags = $this->createMock(Tags::class);
-		$this->tags->method('getUsersFavoritingObject')
+		$this->tagManager->method('getUsersFavoritingObject')
 			->willReturn([]);
 
 		$this->tagManager->method('load')
@@ -380,7 +380,7 @@ class FilesHooksTest extends TestCase {
 		]);
 
 		if ($isFavorite) {
-			$this->tags->method('getUsersFavoritingObject')
+			$this->tagManager->method('getUsersFavoritingObject')
 				->willReturn(['user', 'user1', 'user2']);
 		}
 

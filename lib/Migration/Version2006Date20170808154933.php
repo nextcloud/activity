@@ -146,9 +146,8 @@ class Version2006Date20170808154933 extends SimpleMigrationStep {
 				'notnull' => true,
 				'length' => 255,
 			]);
-			$table->addColumn('amq_subjectparams', 'string', [
+			$table->addColumn('amq_subjectparams', 'text', [
 				'notnull' => true,
-				'length' => 4000,
 			]);
 			$table->setPrimaryKey(['mail_id']);
 			$table->addIndex(['amq_affecteduser'], 'amp_user');

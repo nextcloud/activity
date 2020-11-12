@@ -31,7 +31,7 @@ use OCP\IDBConnection;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
 
-class Version2011Date20201006132544 extends SimpleMigrationStep {
+class Version2011Date20201006132546 extends SimpleMigrationStep {
 
 	/** @var IDBConnection */
 	protected $connection;
@@ -51,21 +51,14 @@ class Version2011Date20201006132544 extends SimpleMigrationStep {
 		$schema = $schemaClosure();
 
 		$table = $schema->getTable('activity_mq');
-
-		$column = $table->getColumn('amq_appid');
-		$column->setType(Type::getType('string'));
-		$column->setNotnull(true);
-		$column->setLength(32);
-
-		$column = $table->getColumn('amq_subjectparams');
-		// Can't switch from Long to clob on Oracle, so we need an intermediate column
-		if ($column->getType() !== Type::getType('text')) {
-			$table->addColumn('amq_subjectparams2', 'text', [
+		if (!$table->hasColumn('amq_subjectparams')) {
+			$table->addColumn('amq_subjectparams', 'text', [
 				'notnull' => true,
 			]);
+			return $schema;
 		}
 
-		return $schema;
+		return null;
 	}
 
 	/**
@@ -77,13 +70,14 @@ class Version2011Date20201006132544 extends SimpleMigrationStep {
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
 
-		if (!$schema->getTable('activity_mq')->hasColumn('amq_subjectparams2')) {
+		if (!$schema->getTable('activity_mq')->hasColumn('amq_subjectparams2')
+			|| !$schema->getTable('activity_mq')->hasColumn('amq_subjectparams')) {
 			return;
 		}
 
 		$query = $this->connection->getQueryBuilder();
 		$query->update('activity_mq')
-			->set('amq_subjectparams2', 'amq_subjectparams');
+			->set('amq_subjectparams', 'amq_subjectparams2');
 		$query->execute();
 	}
 }
