@@ -57,7 +57,7 @@ OC.L10N.register(
     "Send activity emails" : "Pošiljaj obvestila o dejavnosti na elektronske naslove",
     "Configure the default activity settings for new users." : "Prilagodi privzete nastavitve dejavnosti za nove uporabnike.",
     "List your own actions in the stream" : "Izpiši moje dejavnosti v seznamu.",
-    "Notify about your own actions via email" : "O mojih dejanjih me obvesti po elektronski pošti",
+    "Notify about your own actions via email" : "O mojih dejanjih me obvesti po elektronski pošti.",
     "Send emails:" : "Pošlji elektronsko sporočilo:",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Izberite, katera obvestila o dejavnostih želite prejeti na elektronski naslov in katera naj se le prikažejo v razdelku zgodovine dejavnosti.",
     "Choose which activities you want to see in your stream." : "Izbor dejavnosti, ki naj se izpišejo v pretoku."
