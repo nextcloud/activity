@@ -59,7 +59,7 @@ class Version2011Date20201006132544 extends SimpleMigrationStep {
 
 		$column = $table->getColumn('amq_subjectparams');
 		// Can't switch from Long to clob on Oracle, so we need an intermediate column
-		if ($column->getType() !== Type::getType('text')) {
+		if ($column->getType()->getName() !== Type::TEXT) {
 			$table->addColumn('amq_subjectparams2', 'text', [
 				'notnull' => false,
 			]);
