@@ -53,7 +53,7 @@ class Version2011Date20201006132546 extends SimpleMigrationStep {
 		$table = $schema->getTable('activity_mq');
 		if (!$table->hasColumn('amq_subjectparams')) {
 			$table->addColumn('amq_subjectparams', 'text', [
-				'notnull' => true,
+				'notnull' => false,
 			]);
 			return $schema;
 		}

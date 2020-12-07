@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2020 Joas Schilling <coding@schilljs.com>
  *
@@ -19,20 +20,20 @@ declare(strict_types=1);
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 namespace OCA\Activity\Migration;
 
 use Closure;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Platforms\OraclePlatform;
 use OCP\DB\ISchemaWrapper;
 use OCP\IDBConnection;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
 
-class Version2011Date20201006132544 extends SimpleMigrationStep {
-
+class Version2011Date20201207091915 extends SimpleMigrationStep {
 	/** @var IDBConnection */
 	protected $connection;
 
@@ -46,44 +47,29 @@ class Version2011Date20201006132544 extends SimpleMigrationStep {
 	 * @param array $options
 	 * @return null|ISchemaWrapper
 	 */
-	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options) {
+	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {
+		if ($this->connection->getDatabasePlatform() instanceof OraclePlatform) {
+			// Temporarily disabled until we figured a way to allow CLOB to be turned into nullable
+			return null;
+		}
+
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
 
-		$table = $schema->getTable('activity_mq');
+		$result = $this->ensureColumnIsNullable($schema, 'activity_mq', 'amq_subjectparams');
 
-		$column = $table->getColumn('amq_appid');
-		$column->setType(Type::getType('string'));
-		$column->setNotnull(true);
-		$column->setLength(32);
-
-		$column = $table->getColumn('amq_subjectparams');
-		// Can't switch from Long to clob on Oracle, so we need an intermediate column
-		if ($column->getType()->getName() !== Type::TEXT) {
-			$table->addColumn('amq_subjectparams2', 'text', [
-				'notnull' => false,
-			]);
-		}
-
-		return $schema;
+		return $result ? $schema : null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @since 13.0.0
-	 */
-	public function postSchemaChange(IOutput $output, \Closure $schemaClosure, array $options): void {
-		/** @var ISchemaWrapper $schema */
-		$schema = $schemaClosure();
+	protected function ensureColumnIsNullable(ISchemaWrapper $schema, string $tableName, string $columnName): bool {
+		$table = $schema->getTable($tableName);
+		$column = $table->getColumn($columnName);
 
-		if (!$schema->getTable('activity_mq')->hasColumn('amq_subjectparams2')) {
-			return;
+		if ($column->getNotnull()) {
+			$column->setNotnull(false);
+			return true;
 		}
 
-		$query = $this->connection->getQueryBuilder();
-		$query->update('activity_mq')
-			->set('amq_subjectparams2', 'amq_subjectparams');
-		$query->execute();
+		return false;
 	}
 }

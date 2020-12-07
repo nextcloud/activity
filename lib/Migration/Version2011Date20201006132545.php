@@ -43,7 +43,7 @@ class Version2011Date20201006132545 extends SimpleMigrationStep {
 
 		$table = $schema->getTable('activity_mq');
 		$column = $table->getColumn('amq_subjectparams');
-		if ($column->getType() !== Type::getType('text')) {
+		if ($column->getType()->getName() !== Type::TEXT) {
 			$table->dropColumn('amq_subjectparams');
 			return $schema;
 		}
