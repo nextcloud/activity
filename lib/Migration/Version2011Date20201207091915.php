@@ -27,11 +27,20 @@ declare(strict_types=1);
 namespace OCA\Activity\Migration;
 
 use Closure;
+use Doctrine\DBAL\Platforms\OraclePlatform;
 use OCP\DB\ISchemaWrapper;
+use OCP\IDBConnection;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
 
 class Version2011Date20201207091915 extends SimpleMigrationStep {
+	/** @var IDBConnection */
+	protected $connection;
+
+	public function __construct(IDBConnection $connection) {
+		$this->connection = $connection;
+	}
+
 	/**
 	 * @param IOutput $output
 	 * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
@@ -39,6 +48,11 @@ class Version2011Date20201207091915 extends SimpleMigrationStep {
 	 * @return null|ISchemaWrapper
 	 */
 	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {
+		if ($this->connection->getDatabasePlatform() instanceof OraclePlatform) {
+			// Temporarily disabled until we figured a way to allow CLOB to be turned into nullable
+			return null;
+		}
+
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
 
