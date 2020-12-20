@@ -56,7 +56,7 @@ OC.L10N.register(
     "Stream" : "Registre",
     "Send activity emails" : "Envia missatges de correu sobre l'activitat",
     "Configure the default activity settings for new users." : "Configureu els paràmetres d'activitat per defecte per als usuaris nous.",
-    "List your own actions in the stream" : "Mostra les accions pròpies al registre",
+    "List your own actions in the stream" : "Mostra les accions pròpies en el registre",
     "Notify about your own actions via email" : "Notifica les accions pròpies per correu electrònic",
     "Send emails:" : "Envia els correus electrònics:",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Trieu per a quina activitat voleu rebre una notificació per correu electrònic i quines voleu que apareguin en el registre de l'aplicació Activitat.",
