@@ -78,13 +78,14 @@ class NotificationGenerator implements INotifier {
 	}
 
 	private function populateEvent(IEvent $event, string $language) {
+		$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
 		foreach ($this->activityManager->getProviders() as $provider) {
 			try {
-				$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
 				$event = $provider->parse($language, $event);
 			} catch (\InvalidArgumentException $e) {
 			}
 		}
+		$this->activityManager->setFormattingObject('', 0);
 
 		return $event;
 	}
@@ -106,7 +107,9 @@ class NotificationGenerator implements INotifier {
 		if (!$event || $event->getAffectedUser() !== $notification->getUser()) {
 			throw new \InvalidArgumentException();
 		}
+		$this->activityManager->setCurrentUserId($notification->getUser());
 		$event = $this->populateEvent($event, $languageCode);
+		$this->activityManager->setCurrentUserId(null);
 
 		return $this->getDisplayNotificationForEvent($event, $event->getObjectId());
 	}
