@@ -25,7 +25,6 @@ declare(strict_types=1);
 namespace OCA\Activity\Migration;
 
 use Closure;
-use Doctrine\DBAL\Types\Type;
 use OCP\DB\ISchemaWrapper;
 use OCP\IDBConnection;
 use OCP\Migration\IOutput;

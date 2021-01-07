@@ -23,7 +23,7 @@
 
 namespace OCA\Activity\Migration;
 
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use OCP\DB\ISchemaWrapper;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
@@ -43,7 +43,7 @@ class Version2006Date20170808154933 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('activity')) {
 			$table = $schema->createTable('activity');
-			$table->addColumn('activity_id', Type::BIGINT, [
+			$table->addColumn('activity_id', Types::BIGINT, [
 				'autoincrement' => true,
 				'notnull' => true,
 				'length' => 20,
@@ -100,7 +100,7 @@ class Version2006Date20170808154933 extends SimpleMigrationStep {
 				'notnull' => false,
 				'length' => 255,
 			]);
-			$table->addColumn('object_id', Type::BIGINT, [
+			$table->addColumn('object_id', Types::BIGINT, [
 				'notnull' => true,
 				'length' => 20,
 				'default' => 0,
@@ -115,7 +115,7 @@ class Version2006Date20170808154933 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable('activity_mq')) {
 			$table = $schema->createTable('activity_mq');
-			$table->addColumn('mail_id', Type::BIGINT, [
+			$table->addColumn('mail_id', Types::BIGINT, [
 				'autoincrement' => true,
 				'notnull' => true,
 				'length' => 20,
@@ -156,5 +156,4 @@ class Version2006Date20170808154933 extends SimpleMigrationStep {
 		}
 		return $schema;
 	}
-
 }

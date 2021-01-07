@@ -26,7 +26,7 @@ namespace OCA\Activity\Migration;
 
 use Closure;
 use Doctrine\DBAL\Schema\SchemaException;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use OCP\DB\ISchemaWrapper;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
@@ -49,11 +49,11 @@ class Version2008Date20181011095117 extends SimpleMigrationStep {
 			return null;
 		}
 
-		$table->addColumn('object_type', Type::STRING, [
+		$table->addColumn('object_type', Types::STRING, [
 			'notnull' => false,
 			'length' => 255,
 		]);
-		$table->addColumn('object_id', Type::BIGINT, [
+		$table->addColumn('object_id', Types::BIGINT, [
 			'notnull' => true,
 			'length' => 20,
 			'default' => 0,
