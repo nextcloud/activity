@@ -31,6 +31,15 @@ style('activity', 'settings');
 	<input id="activity_email_enabled" name="activity_email_enabled" type="checkbox" class="checkbox"
 		   value="1" <?php if ($_['email_enabled']) { print_unescaped('checked="checked"'); } ?> />
 	<label for="activity_email_enabled"><?php p($l->t('Enable notification emails')); ?></label>
+	<br />
+	<br />
+	<br />
+
+	<p class="settings-hint indent">
+		<?php p($l->t('Define groups, such as system users groups, whose activities will not be displayed (except for themselves).')); ?>
+		<br />
+		<input name="activity_system_users_group_list" id="activity_system_users_group_list" value="<?php p($_['system_users_group_list']) ?>" style="width: 400px" class="noJSAutoUpdate"/>
+	</p>
 
 </div>
 

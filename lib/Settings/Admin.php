@@ -120,6 +120,10 @@ class Admin implements ISettings {
 			$settingBatchTime = UserSettings::EMAIL_SEND_ASAP;
 		}
 
+		$systemUsersGroups = $this->config->getAppValue('activity', 'activity_system_users_group_list', '');
+		$systemUsersGroupList = !is_null(json_decode($systemUsersGroups))
+			? implode('|', json_decode($systemUsersGroups, true)) : '';
+
 		return new TemplateResponse('activity', 'settings/admin', [
 			'setting'			=> 'admin',
 			'activityGroups'		=> $activityGroups,
@@ -135,6 +139,8 @@ class Admin implements ISettings {
 				IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
 				IExtension::METHOD_NOTIFICATION => $this->l10n->t('Push'),
 			],
+
+			'system_users_group_list' => $systemUsersGroupList,
 		], 'blank');
 	}
 
