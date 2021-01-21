@@ -58,3 +58,5 @@ nbproject
 /tests/js/node_modules
 /tests/js/run.sh
 /tests/karma-coverage
+/vendor
+/.php_cs.cache
