@@ -23,11 +23,10 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests;
 
-use Doctrine\DBAL\Driver\Statement;
 use OCA\Activity\Data;
 use OCA\Activity\Hooks;
 use OCP\Activity\IExtension;
-use OCP\IUserSession;
+use OCP\DB\IPreparedStatement;
 use OCP\Activity\IManager;
 
 /**
@@ -79,8 +78,7 @@ class HooksDeleteUserTest extends TestCase {
 	protected function tearDown(): void {
 		$data = new Data(
 			$this->createMock(IManager::class),
-			\OC::$server->getDatabaseConnection(),
-			$this->createMock(IUserSession::class)
+			\OC::$server->getDatabaseConnection()
 		);
 		$data->deleteActivities(array(
 			'type' => 'test',
@@ -109,7 +107,7 @@ class HooksDeleteUserTest extends TestCase {
 		$this->assertTableKeys($expected, $query, 'amq_affecteduser');
 	}
 
-	protected function assertTableKeys(array $expected, Statement $query, string $keyName): void {
+	protected function assertTableKeys(array $expected, IPreparedStatement $query, string $keyName): void {
 		$query->execute();
 
 		$users = array();
