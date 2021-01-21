@@ -23,12 +23,12 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests;
 
-use Doctrine\DBAL\Driver\Statement;
-use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Platforms\SqlitePlatform;
 use OCA\Activity\BackgroundJob\ExpireActivities;
 use OCA\Activity\Data;
 use OCP\Activity\IExtension;
+use OCP\DB\IPreparedStatement;
 use OCP\IConfig;
 use OCP\IUserSession;
 use OCP\Activity\IManager;
@@ -121,7 +121,7 @@ class DataDeleteActivitiesTest extends TestCase {
 		$this->assertTableKeys($expected, $query, 'affecteduser');
 	}
 
-	protected function assertTableKeys(array $expected, Statement $query, string $keyName): void {
+	protected function assertTableKeys(array $expected, IPreparedStatement $query, string $keyName): void {
 		$query->execute();
 
 		$users = [];
@@ -144,7 +144,7 @@ class DataDeleteActivitiesTest extends TestCase {
 		$platform = $this->createMock(SqlitePlatform::class);
 		$connection->expects($this->once())->method('getDatabasePlatform')->willReturn($platform);
 
-		$statement = $this->createMock(Statement::class);
+		$statement = $this->createMock(IPreparedStatement::class);
 		// Wont chunk
 		$statement->expects($this->exactly(0))->method('rowCount')->willReturnOnConsecutiveCalls(100000, 50);
 		$connection->expects($this->once())->method('prepare')->willReturn($statement);
@@ -161,10 +161,10 @@ class DataDeleteActivitiesTest extends TestCase {
 		$timelimit = time() - $ttl;
 		$activityManager = $this->createMock(\OCP\Activity\IManager::class);
 		$connection = $this->createMock(\OCP\IDBConnection::class);
-		$platform = $this->createMock(MySqlPlatform::class);
+		$platform = $this->createMock(MySQLPlatform::class);
 		$connection->expects($this->once())->method('getDatabasePlatform')->willReturn($platform);
 
-		$statement = $this->createMock(Statement::class);
+		$statement = $this->createMock(IPreparedStatement::class);
 		// Will chunk
 		$statement->expects($this->exactly(2))->method('rowCount')->willReturnOnConsecutiveCalls(100000, 50);
 		$connection->expects($this->once())->method('prepare')->willReturn($statement);

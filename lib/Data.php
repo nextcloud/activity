@@ -24,7 +24,7 @@
 
 namespace OCA\Activity;
 
-use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Platforms\MySQLPlatform;
 use OCA\Activity\Filter\AllFilter;
 use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
@@ -32,7 +32,6 @@ use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
-use OCP\IL10N;
 
 /**
  * @brief Class for managing the data in the activities
@@ -371,7 +370,7 @@ class Data {
 
 		// Add galera safe delete chunking if using mysql
 		// Stops us hitting wsrep_max_ws_rows when large row counts are deleted
-		if ($this->connection->getDatabasePlatform() instanceof MySqlPlatform) {
+		if ($this->connection->getDatabasePlatform() instanceof MySQLPlatform) {
 			// Then use chunked delete
 			$max = 100000;
 			$query = $this->connection->prepare(
