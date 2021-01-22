@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016 Joas Schilling <coding@schilljs.com>
@@ -59,25 +60,25 @@ class APIv1ControllerTest extends TestCase {
 		\OC::$server->getUserManager()->createUser('activity-api-user1', 'activity-api-user1');
 		\OC::$server->getUserManager()->createUser('activity-api-user2', 'activity-api-user2');
 
-		$activities = array(
-			array(
+		$activities = [
+			[
 				'affectedUser' => 'activity-api-user1',
 				'subject' => 'subject1',
-				'subjectparams' => array('/A/B.txt'),
+				'subjectparams' => ['/A/B.txt'],
 				'type' => 'type1',
-			),
-			array(
+			],
+			[
 				'affectedUser' => 'activity-api-user1',
 				'subject' => 'subject2',
-				'subjectparams' => array('/A/B.txt', 'User'),
+				'subjectparams' => ['/A/B.txt', 'User'],
 				'type' => 'type2',
-			),
-		);
+			],
+		];
 
 		$queryActivity = \OC::$server->getDatabaseConnection()->prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
 		$loop = 0;
 		foreach ($activities as $activity) {
-			$queryActivity->execute(array(
+			$queryActivity->execute([
 				'app1',
 				$activity['subject'],
 				json_encode($activity['subjectparams']),
@@ -90,7 +91,7 @@ class APIv1ControllerTest extends TestCase {
 				time() + $loop,
 				IExtension::PRIORITY_MEDIUM,
 				$activity['type'],
-			));
+			]);
 			$loop++;
 		}
 	}
@@ -111,15 +112,15 @@ class APIv1ControllerTest extends TestCase {
 		$this->deleteUser($data, 'activity-api-user1');
 		$this->deleteUser($data, 'activity-api-user2');
 
-		$data->deleteActivities(array(
+		$data->deleteActivities([
 			'app' => 'app1',
-		));
+		]);
 	}
 
 	protected function deleteUser(Data $data, string $uid): void {
-		$data->deleteActivities(array(
+		$data->deleteActivities([
 			'affecteduser' => $uid,
-		));
+		]);
 		$user = \OC::$server->getUserManager()->get($uid);
 		if ($user) {
 			$user->delete();
@@ -197,7 +198,7 @@ class APIv1ControllerTest extends TestCase {
 		$l = $this->createMock(IL10N::class);
 		$l->expects($this->any())
 			->method('t')
-			->will($this->returnCallback(function($text, $parameters = array()) {
+			->will($this->returnCallback(function ($text, $parameters = []) {
 				return vsprintf($text, $parameters);
 			}));
 

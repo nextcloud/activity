@@ -58,7 +58,6 @@ class NotificationGenerator implements INotifier {
 	}
 
 	private function getNotificationForEvent(IEvent $event, int $activityId): INotification {
-
 		$notification = $this->notificationManager->createNotification();
 		$notification->setApp($event->getApp());
 		$notification->setUser($event->getAffectedUser());

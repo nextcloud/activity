@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
@@ -117,7 +118,6 @@ class APIv2ControllerTest extends TestCase {
 	}
 
 	protected function tearDown(): void {
-
 		$this->restoreService('AvatarManager');
 		parent::tearDown();
 	}
@@ -416,7 +416,7 @@ class APIv2ControllerTest extends TestCase {
 			$this->data->expects($this->once())
 				->method('get')
 				->willThrowException($dataGetThrows);
-		} else if ($dataGetThrows === false) {
+		} elseif ($dataGetThrows === false) {
 			$this->data->expects($this->once())
 				->method('get')
 				->willReturn([
@@ -640,10 +640,10 @@ class APIv2ControllerTest extends TestCase {
 			->method('getInfoById')
 			->with($author, $fileId, $path)
 			->willReturn([
-				'path'		=> $returnedPath,
-				'exists'	=> $exists,
-				'is_dir'	=> false,
-				'view'		=> '',
+				'path' => $returnedPath,
+				'exists' => $exists,
+				'is_dir' => false,
+				'view' => '',
 			]);
 
 		$controller = $this->getController([
@@ -681,7 +681,6 @@ class APIv2ControllerTest extends TestCase {
 	 * @param string $mimeType
 	 */
 	public function testGetPreview(string $author, int $fileId, string $path, string $returnedPath, bool $isDir, bool $validFileInfo, bool $isMimeSup, string $source, bool $isMimeTypeIcon, string $mimeType): void {
-
 		$controller = $this->getController([
 			'getPreviewLink',
 			'getPreviewFromPath',
@@ -692,16 +691,16 @@ class APIv2ControllerTest extends TestCase {
 			->method('getInfoById')
 			->with($author, $fileId, $path)
 			->willReturn([
-				'path'		=> $returnedPath,
-				'exists'	=> true,
-				'is_dir'	=> $isDir,
-				'view'		=> '',
+				'path' => $returnedPath,
+				'exists' => true,
+				'is_dir' => $isDir,
+				'view' => '',
 			]);
 
 		$controller->expects($this->once())
 			->method('getPreviewLink')
 			->with($returnedPath, $isDir)
-			->willReturnCallback(function($path) {
+			->willReturnCallback(function ($path) {
 				return '/preview' . $path;
 			});
 
@@ -710,7 +709,7 @@ class APIv2ControllerTest extends TestCase {
 				->method('getPreviewPathFromMimeType')
 				->with('dir')
 				->willReturn('/preview/dir');
-		} else if ($validFileInfo) {
+		} elseif ($validFileInfo) {
 			$fileInfo = $this->createMock(FileInfo::class);
 
 			$this->view->expects($this->once())
@@ -743,7 +742,7 @@ class APIv2ControllerTest extends TestCase {
 				$this->urlGenerator->expects($this->once())
 					->method('linkToRouteAbsolute')
 					->with('core.Preview.getPreview', $this->anything())
-					->willReturnCallback(function() use ($returnedPath) {
+					->willReturnCallback(function () use ($returnedPath) {
 						return '/preview' . $returnedPath;
 					});
 			}
@@ -762,20 +761,20 @@ class APIv2ControllerTest extends TestCase {
 				->willReturn([
 					'link' => '/preview' . $returnedPath,
 					'source' => 'source::getPreviewFromPath',
-					'mimeType'		=> $mimeType,
+					'mimeType' => $mimeType,
 					'isMimeTypeIcon' => $isMimeTypeIcon,
-					'fileId'		=> $fileId,
-					'view'			=> 'files',
+					'fileId' => $fileId,
+					'view' => 'files',
 				]);
 		}
 
 		$this->assertSame([
 			'link' => '/preview' . $returnedPath,
 			'source' => $source,
-			'mimeType'		=> $mimeType,
+			'mimeType' => $mimeType,
 			'isMimeTypeIcon' => $isMimeTypeIcon,
-			'fileId'		=> $fileId,
-			'view'			=> 'files',
+			'fileId' => $fileId,
+			'view' => 'files',
 		], self::invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
 	}
 
@@ -817,16 +816,16 @@ class APIv2ControllerTest extends TestCase {
 			[
 				'link' => 'target-link',
 				'source' => 'mime-type-icon',
-				'mimeType'		=> $mimeType,
+				'mimeType' => $mimeType,
 				'isMimeTypeIcon' => true,
-				'fileId'		=> $fileId,
-				'view'			=> $view ?: 'files',
+				'fileId' => $fileId,
+				'view' => $view ?: 'files',
 			],
 			self::invokePrivate($controller, 'getPreviewFromPath', [$fileId, $filePath, ['path' => $filePath, 'is_dir' => $isDir, 'view' => $view]])
 		);
 	}
 
-	public function dataGetPreviewPathFromMimeType(): array  {
+	public function dataGetPreviewPathFromMimeType(): array {
 		return [
 			['dir', 'folder.png', 'absolute-folder.svg'],
 			['text/plain', 'text.svg', 'absolute-text.svg'],
@@ -848,7 +847,7 @@ class APIv2ControllerTest extends TestCase {
 
 		$this->urlGenerator->expects($this->once())
 			->method('getAbsoluteURL')
-			->willReturnCallback(function($url) {
+			->willReturnCallback(function ($url) {
 				return 'absolute-' . $url;
 			});
 

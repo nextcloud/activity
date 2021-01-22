@@ -62,7 +62,7 @@ class Admin implements ISettings {
 	 */
 	public function getForm() {
 		$settings = $this->manager->getSettings();
-		usort($settings, function(ActivitySettings $a, ActivitySettings $b) {
+		usort($settings, function (ActivitySettings $a, ActivitySettings $b) {
 			if ($a->getPriority() === $b->getPriority()) {
 				return $a->getIdentifier() > $b->getIdentifier();
 			}
@@ -96,12 +96,12 @@ class Admin implements ISettings {
 				];
 			}
 
-			$activityGroups[$groupIdentifier]['activities'][$identifier] = array(
-				'desc'		=> $setting->getName(),
-				IExtension::METHOD_MAIL		=> $this->userSettings->getConfigSetting('email', $identifier),
-				IExtension::METHOD_NOTIFICATION	=> $this->userSettings->getConfigSetting('notification', $identifier),
-				'methods'	=> $methods,
-			);
+			$activityGroups[$groupIdentifier]['activities'][$identifier] = [
+				'desc' => $setting->getName(),
+				IExtension::METHOD_MAIL => $this->userSettings->getConfigSetting('email', $identifier),
+				IExtension::METHOD_NOTIFICATION => $this->userSettings->getConfigSetting('notification', $identifier),
+				'methods' => $methods,
+			];
 		}
 
 		if (isset($activityGroups['other'])) {
@@ -114,24 +114,24 @@ class Admin implements ISettings {
 		$currentSetting = (int) $this->userSettings->getConfigSetting('setting', 'batchtime');
 		if ($currentSetting === 3600 * 24 * 7) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_WEEKLY;
-		} else if ($currentSetting === 3600 * 24) {
+		} elseif ($currentSetting === 3600 * 24) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_DAILY;
-		} else if ($currentSetting === 0) {
+		} elseif ($currentSetting === 0) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_ASAP;
 		}
 
 		return new TemplateResponse('activity', 'settings/admin', [
-			'setting'			=> 'admin',
-			'activityGroups'		=> $activityGroups,
-			'is_email_set'		=> true,
-			'email_enabled'		=> $this->config->getAppValue('activity', 'enable_email', 'yes') === 'yes',
+			'setting' => 'admin',
+			'activityGroups' => $activityGroups,
+			'is_email_set' => true,
+			'email_enabled' => $this->config->getAppValue('activity', 'enable_email', 'yes') === 'yes',
 
-			'setting_batchtime'	=> $settingBatchTime,
+			'setting_batchtime' => $settingBatchTime,
 
-			'notify_self'		=> $this->userSettings->getConfigSetting('setting', 'self'),
-			'notify_selfemail'	=> $this->userSettings->getConfigSetting('setting', 'selfemail'),
+			'notify_self' => $this->userSettings->getConfigSetting('setting', 'self'),
+			'notify_selfemail' => $this->userSettings->getConfigSetting('setting', 'selfemail'),
 
-			'methods'			=> [
+			'methods' => [
 				IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
 				IExtension::METHOD_NOTIFICATION => $this->l10n->t('Push'),
 			],
@@ -155,5 +155,4 @@ class Admin implements ISettings {
 	public function getPriority() {
 		return 55;
 	}
-
 }

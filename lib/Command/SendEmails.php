@@ -94,11 +94,11 @@ class SendEmails extends Base {
 		$restrictBatching = $input->getArgument('restrict-batching');
 		if ($restrictBatching === 'hourly') {
 			$restrictEmails = UserSettings::EMAIL_SEND_HOURLY;
-		} else if ($restrictBatching === 'daily') {
+		} elseif ($restrictBatching === 'daily') {
 			$restrictEmails = UserSettings::EMAIL_SEND_DAILY;
-		} else if ($restrictBatching === 'weekly') {
+		} elseif ($restrictBatching === 'weekly') {
 			$restrictEmails = UserSettings::EMAIL_SEND_WEEKLY;
-		} else if ($restrictBatching === 'asap') {
+		} elseif ($restrictBatching === 'asap') {
 			$restrictEmails = UserSettings::EMAIL_SEND_ASAP;
 		} else {
 			$restrictEmails = null;

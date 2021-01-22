@@ -42,16 +42,15 @@ class Version2006Date20170808155040 extends SimpleMigrationStep {
 		/**
 		 * FIXME To prevent slowness on update we don't change the index.
 		 * FIXME Anyone complaining can manually update it.
-
-		$schema = $schemaClosure();
-
-		$table = $schema->getTable('activity');
-		$table->dropIndex('activity_filter_app');
-		$table->addIndex(['affecteduser', 'type', 'app', 'timestamp'], 'activity_filter');
-
-		return $schema;
+		 *
+		 * $schema = $schemaClosure();
+		 *
+		 * $table = $schema->getTable('activity');
+		 * $table->dropIndex('activity_filter_app');
+		 * $table->addIndex(['affecteduser', 'type', 'app', 'timestamp'], 'activity_filter');
+		 *
+		 * return $schema;
 		 */
 		return null;
 	}
-
 }

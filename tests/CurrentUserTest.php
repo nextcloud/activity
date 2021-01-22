@@ -21,7 +21,6 @@
 
 namespace OCA\Activity\Tests;
 
-
 use OCA\Activity\CurrentUser;
 use OCP\IRequest;
 use OCP\IUser;
@@ -126,7 +125,7 @@ class CurrentUserTest extends TestCase {
 		return $user;
 	}
 
-	public function dataGetUID(): array  {
+	public function dataGetUID(): array {
 		return [
 			[null, null],
 			[$this->getUserMock('uid'), 'uid'],
@@ -190,7 +189,7 @@ class CurrentUserTest extends TestCase {
 		if ($share === null) {
 			$this->shareManager->expects($this->never())
 				->method('getShareByToken');
-		} else if ($share instanceof \Exception) {
+		} elseif ($share instanceof \Exception) {
 			$this->shareManager->expects($this->once())
 				->method('getShareByToken')
 				->with($server['PHP_AUTH_USER'])

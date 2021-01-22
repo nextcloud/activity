@@ -47,13 +47,12 @@ use OCP\Util;
  * @package OCA\Activity
  */
 class MailQueueHandler {
+	public const CLI_EMAIL_BATCH_SIZE = 500;
 
-	const CLI_EMAIL_BATCH_SIZE = 500;
-
-	const WEB_EMAIL_BATCH_SIZE = 25;
+	public const WEB_EMAIL_BATCH_SIZE = 25;
 
 	/** Number of entries we want to list in the email */
-	const ENTRY_LIMIT = 200;
+	public const ENTRY_LIMIT = 200;
 
 	/** @var array */
 	protected $languages;
@@ -213,18 +212,18 @@ class MailQueueHandler {
 		if ($restrictEmails !== null) {
 			if ($restrictEmails === UserSettings::EMAIL_SEND_HOURLY) {
 				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(3600))));
-			} else if ($restrictEmails === UserSettings::EMAIL_SEND_DAILY) {
+			} elseif ($restrictEmails === UserSettings::EMAIL_SEND_DAILY) {
 				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(3600 * 24))));
-			} else if ($restrictEmails === UserSettings::EMAIL_SEND_WEEKLY) {
+			} elseif ($restrictEmails === UserSettings::EMAIL_SEND_WEEKLY) {
 				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(3600 * 24 * 7))));
-			} else if ($restrictEmails === UserSettings::EMAIL_SEND_ASAP) {
+			} elseif ($restrictEmails === UserSettings::EMAIL_SEND_ASAP) {
 				$query->where($query->expr()->eq('amq_timestamp', 'amq_latest_send'));
 			}
 		}
 
 		$result = $query->execute();
 
-		$affectedUsers = array();
+		$affectedUsers = [];
 		while ($row = $result->fetch()) {
 			$affectedUsers[] = $row['amq_affecteduser'];
 		}
@@ -330,7 +329,7 @@ class MailQueueHandler {
 			return true;
 		}
 
-		list($mailData, $skippedCount) = $this->getItemsForUser($userName, $maxTime);
+		[$mailData, $skippedCount] = $this->getItemsForUser($userName, $maxTime);
 
 		$l = $this->getLanguage($lang);
 		$this->activityManager->setCurrentUserId($userName);

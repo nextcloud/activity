@@ -23,7 +23,6 @@
 
 namespace OCA\Activity;
 
-
 use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\IConfig;
@@ -97,7 +96,7 @@ class Navigation {
 	protected function getRSSLink() {
 		$rssToken = $this->config->getUserValue($this->currentUser->getUID(), 'activity', 'rsstoken');
 		if ($rssToken) {
-			return $this->URLGenerator->linkToRouteAbsolute('activity.Feed.show', array('token' => $rssToken));
+			return $this->URLGenerator->linkToRouteAbsolute('activity.Feed.show', ['token' => $rssToken]);
 		} else {
 			return '';
 		}
@@ -110,7 +109,7 @@ class Navigation {
 	 */
 	public function getLinkList() {
 		$filters = $this->activityManager->getFilters();
-		usort($filters, function(IFilter $a, IFilter $b) {
+		usort($filters, function (IFilter $a, IFilter $b) {
 			if ($a->getPriority() === $b->getPriority()) {
 				return $a->getIdentifier() > $b->getIdentifier();
 			}
@@ -124,7 +123,7 @@ class Navigation {
 				'id' => $filter->getIdentifier(),
 				'icon' => $filter->getIcon(),
 				'name' => $filter->getName(),
-				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', array('filter' => $filter->getIdentifier())),
+				'url' => $this->URLGenerator->linkToRoute('activity.Activities.showList', ['filter' => $filter->getIdentifier()]),
 			];
 		}
 

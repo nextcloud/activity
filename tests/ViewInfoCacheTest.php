@@ -214,22 +214,22 @@ class ViewInfoCacheTest extends TestCase {
 	public function dataFindByPath(): array {
 		return [
 			['user1', 'path1', true, true, [
-				'path'		=> 'path1',
-				'exists'	=> true,
-				'is_dir'	=> true,
-				'view'		=> '',
+				'path' => 'path1',
+				'exists' => true,
+				'is_dir' => true,
+				'view' => '',
 			]],
 			['user2', 'path2', true, false, [
-				'path'		=> 'path2',
-				'exists'	=> true,
-				'is_dir'	=> false,
-				'view'		=> '',
+				'path' => 'path2',
+				'exists' => true,
+				'is_dir' => false,
+				'view' => '',
 			]],
 			['user3', 'path3', false, null, [
-				'path'		=> 'path3',
-				'exists'	=> false,
-				'is_dir'	=> false,
-				'view'		=> '',
+				'path' => 'path3',
+				'exists' => false,
+				'is_dir' => false,
+				'view' => '',
 			]],
 		];
 	}
@@ -266,18 +266,18 @@ class ViewInfoCacheTest extends TestCase {
 			[
 				'user1', 23, '/test1', null, null, '/test1', false,
 				[
-					'path'		=> '/test1',
-					'exists'	=> false,
-					'is_dir'	=> false,
-					'view'		=> '',
+					'path' => '/test1',
+					'exists' => false,
+					'is_dir' => false,
+					'view' => '',
 				],
 				[
 					'user1' => [
 						23 => [
-							'path'		=> null,
-							'exists'	=> false,
-							'is_dir'	=> false,
-							'view'		=> '',
+							'path' => null,
+							'exists' => false,
+							'is_dir' => false,
+							'view' => '',
 						],
 					],
 				],
@@ -285,18 +285,18 @@ class ViewInfoCacheTest extends TestCase {
 			[
 				'user2', 23, '/test1', null, '/files/test3', '/files/test3', false,
 				[
-					'path'		=> '/test3',
-					'exists'	=> true,
-					'is_dir'	=> false,
-					'view'		=> 'trashbin',
+					'path' => '/test3',
+					'exists' => true,
+					'is_dir' => false,
+					'view' => 'trashbin',
 				],
 				[
 					'user2' => [
 						23 => [
-							'path'		=> '/test3',
-							'exists'	=> true,
-							'is_dir'	=> false,
-							'view'		=> 'trashbin',
+							'path' => '/test3',
+							'exists' => true,
+							'is_dir' => false,
+							'view' => 'trashbin',
 						],
 					],
 				],
@@ -304,18 +304,18 @@ class ViewInfoCacheTest extends TestCase {
 			[
 				'user3', 23, '/test1', null, '/files/test3', '/files/test3', true,
 				[
-					'path'		=> '/test3',
-					'exists'	=> true,
-					'is_dir'	=> true,
-					'view'		=> 'trashbin',
+					'path' => '/test3',
+					'exists' => true,
+					'is_dir' => true,
+					'view' => 'trashbin',
 				],
 				[
 					'user3' => [
 						23 => [
-							'path'		=> '/test3',
-							'exists'	=> true,
-							'is_dir'	=> true,
-							'view'		=> 'trashbin',
+							'path' => '/test3',
+							'exists' => true,
+							'is_dir' => true,
+							'view' => 'trashbin',
 						],
 					],
 				],
@@ -323,18 +323,18 @@ class ViewInfoCacheTest extends TestCase {
 			[
 				'user4', 23, '/test1', '/test3', null, '/test3', false,
 				[
-					'path'		=> '/test3',
-					'exists'	=> true,
-					'is_dir'	=> false,
-					'view'		=> '',
+					'path' => '/test3',
+					'exists' => true,
+					'is_dir' => false,
+					'view' => '',
 				],
 				[
 					'user4' => [
 						23 => [
-							'path'		=> '/test3',
-							'exists'	=> true,
-							'is_dir'	=> false,
-							'view'		=> '',
+							'path' => '/test3',
+							'exists' => true,
+							'is_dir' => false,
+							'view' => '',
 						],
 					],
 				],
@@ -342,18 +342,18 @@ class ViewInfoCacheTest extends TestCase {
 			[
 				'user5', 23, '/test1', '/test3', null, '/test3', true,
 				[
-					'path'		=> '/test3',
-					'exists'	=> true,
-					'is_dir'	=> true,
-					'view'		=> '',
+					'path' => '/test3',
+					'exists' => true,
+					'is_dir' => true,
+					'view' => '',
 				],
 				[
 					'user5' => [
 						23 => [
-							'path'		=> '/test3',
-							'exists'	=> true,
-							'is_dir'	=> true,
-							'view'		=> '',
+							'path' => '/test3',
+							'exists' => true,
+							'is_dir' => true,
+							'view' => '',
 						],
 					],
 				],

@@ -24,7 +24,6 @@ namespace OCA\Activity;
 
 use OCA\Activity\AppInfo\Application;
 use OCP\IDBConnection;
-use OCP\Util;
 
 /**
  * Handles the stream and mail queue of a user when he is being deleted
@@ -35,7 +34,7 @@ class Hooks {
 	 *
 	 * @param array $params The hook params
 	 */
-	static public function deleteUser($params) {
+	public static function deleteUser($params) {
 		$connection = \OC::$server->getDatabaseConnection();
 		self::deleteUserStream($params['uid']);
 		self::deleteUserMailQueue($connection, $params['uid']);
@@ -46,12 +45,12 @@ class Hooks {
 	 *
 	 * @param string $user
 	 */
-	static protected function deleteUserStream($user) {
+	protected static function deleteUserStream($user) {
 		// Delete activity entries
 		$app = \OC::$server->query(Application::class);
 		/** @var Data $activityData */
 		$activityData = $app->getContainer()->query(Data::class);
-		$activityData->deleteActivities(array('affecteduser' => $user));
+		$activityData->deleteActivities(['affecteduser' => $user]);
 	}
 
 	/**
@@ -60,7 +59,7 @@ class Hooks {
 	 * @param IDBConnection $connection
 	 * @param string $user
 	 */
-	static protected function deleteUserMailQueue(IDBConnection $connection, $user) {
+	protected static function deleteUserMailQueue(IDBConnection $connection, $user) {
 		// Delete entries from mail queue
 		$queryBuilder = $connection->getQueryBuilder();
 
@@ -70,7 +69,7 @@ class Hooks {
 		$queryBuilder->execute();
 	}
 
-	static public function setDefaultsForUser($params) {
+	public static function setDefaultsForUser($params) {
 		$config = \OC::$server->getConfig();
 		if ($config->getUserValue($params['uid'], 'activity', 'configured', 'no') === 'yes') {
 			// Already has settings

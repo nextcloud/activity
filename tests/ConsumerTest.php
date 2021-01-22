@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
@@ -66,7 +67,7 @@ class ConsumerTest extends TestCase {
 			->willReturn(1);
 
 		$this->userSettings = $this->getMockBuilder(UserSettings::class)
-			->onlyMethods(array('getUserSetting'))
+			->onlyMethods(['getUserSetting'])
 			->disableOriginalConstructor()
 			->getMock();
 

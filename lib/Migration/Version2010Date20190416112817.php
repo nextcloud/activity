@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace OCA\Activity\Migration;
@@ -31,5 +32,4 @@ class Version2010Date20190416112817 extends SimpleMigrationStep {
 
 		return $schema;
 	}
-
 }

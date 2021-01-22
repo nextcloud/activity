@@ -54,7 +54,7 @@ use OCP\Share\IShareHelper;
  * The class to handle the filesystem hooks
  */
 class FilesHooks {
-	const USER_BATCH_SIZE = 50;
+	public const USER_BATCH_SIZE = 50;
 
 	/** @var \OCP\Activity\IManager */
 	protected $manager;
@@ -324,7 +324,7 @@ class FilesHooks {
 			 * - a/ shared: move/rename
 			 */
 			$this->moveCase = 'moveUp';
-		} else if (strpos($newDir, $oldDir) === 0) {
+		} elseif (strpos($newDir, $oldDir) === 0) {
 			/**
 			 * a/b moved to a/c/b
 			 *
@@ -417,7 +417,6 @@ class FilesHooks {
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers));
 
 		foreach ($affectedUsers as $user => $path) {
-
 			if ($user === $this->currentUser->getUID()) {
 				$userSubject = 'renamed_self';
 				$userParams = [
@@ -552,7 +551,6 @@ class FilesHooks {
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
 
 		foreach ($users as $user) {
-
 			$path = $pathMap[$user];
 
 			if ($user === $this->currentUser->getUID()) {
@@ -704,9 +702,9 @@ class FilesHooks {
 		if ($params['itemType'] === 'file' || $params['itemType'] === 'folder') {
 			if ((int)$params['shareType'] === Share::SHARE_TYPE_USER) {
 				$this->shareWithUser($params['shareWith'], (int)$params['fileSource'], $params['itemType'], $params['fileTarget']);
-			} else if ((int)$params['shareType'] === Share::SHARE_TYPE_GROUP) {
+			} elseif ((int)$params['shareType'] === Share::SHARE_TYPE_GROUP) {
 				$this->shareWithGroup($params['shareWith'], (int)$params['fileSource'], $params['itemType'], $params['fileTarget'], (int)$params['id']);
-			} else if ((int)$params['shareType'] === Share::SHARE_TYPE_LINK) {
+			} elseif ((int)$params['shareType'] === Share::SHARE_TYPE_LINK) {
 				$this->shareByLink((int)$params['fileSource'], $params['itemType'], $params['uidOwner']);
 			}
 		}
@@ -803,9 +801,9 @@ class FilesHooks {
 		if (in_array($share->getNodeType(), ['file', 'folder'], true)) {
 			if ($share->getShareType() === Share::SHARE_TYPE_USER) {
 				$this->unshareFromUser($share);
-			} else if ($share->getShareType() === Share::SHARE_TYPE_GROUP) {
+			} elseif ($share->getShareType() === Share::SHARE_TYPE_GROUP) {
 				$this->unshareFromGroup($share);
-			} else if ($share->getShareType() === Share::SHARE_TYPE_LINK) {
+			} elseif ($share->getShareType() === Share::SHARE_TYPE_LINK) {
 				$this->unshareLink($share);
 			}
 		}
@@ -1000,7 +998,6 @@ class FilesHooks {
 
 		$affectedUsers = $this->fixPathsForShareExceptions($affectedUsers, $shareId);
 		foreach ($affectedUsers as $user => $path) {
-
 			$this->addNotificationsForUser(
 				$user, $actionUser, [[$fileSource => $path], $this->currentUser->getUserIdentifier()],
 				$fileSource, $path, ($itemType === 'file'),

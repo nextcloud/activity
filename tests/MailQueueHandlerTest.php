@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
@@ -96,12 +97,12 @@ class MailQueueHandlerTest extends TestCase {
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
 
-		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user1', 150, 'phpunit', 152));
-		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user1', 150, 'phpunit', 153));
-		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user2', 150, 'phpunit', 150));
-		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user2', 150, 'phpunit', 151));
-		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user3', 150, 'phpunit', 154));
-		$query->execute(array($app, 'Test data', json_encode(['Param1']), 'user3', 150, 'phpunit', 155));
+		$query->execute([$app, 'Test data', json_encode(['Param1']), 'user1', 150, 'phpunit', 152]);
+		$query->execute([$app, 'Test data', json_encode(['Param1']), 'user1', 150, 'phpunit', 153]);
+		$query->execute([$app, 'Test data', json_encode(['Param1']), 'user2', 150, 'phpunit', 150]);
+		$query->execute([$app, 'Test data', json_encode(['Param1']), 'user2', 150, 'phpunit', 151]);
+		$query->execute([$app, 'Test data', json_encode(['Param1']), 'user3', 150, 'phpunit', 154]);
+		$query->execute([$app, 'Test data', json_encode(['Param1']), 'user3', 150, 'phpunit', 155]);
 
 		$event = $this->createMock(IEvent::class);
 		$event->expects($this->any())
@@ -193,7 +194,7 @@ class MailQueueHandlerTest extends TestCase {
 
 		$this->assertEquals($affected, $users);
 		foreach ($users as $user) {
-			list($data, $skipped) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			[$data, $skipped] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
 			$this->assertNotEmpty($data, 'Failed asserting that each user has a mail entry');
 			$this->assertSame(0, $skipped);
 		}
@@ -202,7 +203,7 @@ class MailQueueHandlerTest extends TestCase {
 		self::invokePrivate($this->mailQueueHandler, 'deleteSentItems', [$users, $maxTime]);
 
 		foreach ($users as $user) {
-			list($data, $skipped) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			[$data, $skipped] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
 			$this->assertEmpty($data, 'Failed to assert that all entries for the affected users have been deleted');
 			$this->assertSame(0, $skipped);
 		}
@@ -210,7 +211,7 @@ class MailQueueHandlerTest extends TestCase {
 	}
 
 	public function testGetItemsForUser(): void {
-		list($data, $skipped) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200]);
+		[$data, $skipped] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200]);
 		$this->assertCount(2, $data, 'Failed to assert the user has 2 entries');
 		$this->assertSame(0, $skipped);
 
@@ -221,10 +222,10 @@ class MailQueueHandlerTest extends TestCase {
 
 		$app = self::getUniqueID('MailQueueHandlerTest', 10);
 		for ($i = 0; $i < 15; $i++) {
-			$query->execute(array($app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 160 + $i));
+			$query->execute([$app, 'Test data', 'Param1', 'user1', 150, 'phpunit', 160 + $i]);
 		}
 
-		list($data, $skipped) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200, 5]);
+		[$data, $skipped] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200, 5]);
 		$this->assertCount(5, $data, 'Failed to assert the user has 2 entries');
 		$this->assertSame(12, $skipped);
 	}
@@ -304,7 +305,7 @@ class MailQueueHandlerTest extends TestCase {
 	 */
 	protected function assertRemainingMailEntries(array $users, int $maxTime, string $explain): void {
 		foreach ($users as $user) {
-			list($data,) = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			[$data,] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
 			$this->assertNotEmpty(
 				$data,
 				'Failed asserting that the remaining user ' . $user. ' still has mails in the queue ' . $explain

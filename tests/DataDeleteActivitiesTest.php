@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
@@ -56,7 +57,7 @@ class DataDeleteActivitiesTest extends TestCase {
 
 		$queryActivity = \OC::$server->getDatabaseConnection()->prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
 		foreach ($activities as $activity) {
-			$queryActivity->execute(array(
+			$queryActivity->execute([
 				'app',
 				$activity['subject'],
 				json_encode([]),
@@ -69,7 +70,7 @@ class DataDeleteActivitiesTest extends TestCase {
 				$activity['time'],
 				IExtension::PRIORITY_MEDIUM,
 				'test',
-			));
+			]);
 		}
 		$this->data = new Data(
 			$this->createMock(IManager::class),
@@ -79,9 +80,9 @@ class DataDeleteActivitiesTest extends TestCase {
 	}
 
 	protected function tearDown(): void {
-		$this->data->deleteActivities(array(
+		$this->data->deleteActivities([
 			'type' => 'test',
-		));
+		]);
 
 		parent::tearDown();
 	}
@@ -99,7 +100,7 @@ class DataDeleteActivitiesTest extends TestCase {
 	 * @dataProvider deleteActivitiesData
 	 */
 	public function testDeleteActivities(array $condition, array $expected): void {
-		$this->assertUserActivities(array('delete', 'otherUser'));
+		$this->assertUserActivities(['delete', 'otherUser']);
 		$this->data->deleteActivities($condition);
 		$this->assertUserActivities($expected);
 	}
@@ -151,9 +152,9 @@ class DataDeleteActivitiesTest extends TestCase {
 
 		$userSession = $this->createMock(IUserSession::class);
 		$data = new Data($activityManager, $connection, $userSession);
-		$data->deleteActivities(array(
-			'timestamp' => array($timelimit, '<'),
-		));
+		$data->deleteActivities([
+			'timestamp' => [$timelimit, '<'],
+		]);
 	}
 
 	public function testDeleteActivitiesIsChunkedOnMysql(): void {
@@ -171,8 +172,8 @@ class DataDeleteActivitiesTest extends TestCase {
 
 		$userSession = $this->createMock(IUserSession::class);
 		$data = new Data($activityManager, $connection, $userSession);
-		$data->deleteActivities(array(
-			'timestamp' => array($timelimit, '<'),
-		));
+		$data->deleteActivities([
+			'timestamp' => [$timelimit, '<'],
+		]);
 	}
 }

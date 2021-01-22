@@ -40,6 +40,8 @@ style('activity', 'settings');
 	<h2><?php p($l->t('Activity')); ?></h2>
 
 	<input id="activity_email_enabled" name="activity_digest" type="checkbox" class="checkbox"
-		   value="1" <?php if ($_['activity_digest_enabled']) { print_unescaped('checked="checked"'); } ?> />
+		   value="1" <?php if ($_['activity_digest_enabled']) {
+	print_unescaped('checked="checked"');
+} ?> />
 	<label for="activity_email_enabled"><?php p($l->t('Send daily activity summary in the morning')); ?></label>
 </form>

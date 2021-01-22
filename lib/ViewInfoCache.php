@@ -22,7 +22,6 @@
 
 namespace OCA\Activity;
 
-
 use OC\Files\View;
 use OCP\Files\NotFoundException;
 
@@ -85,10 +84,10 @@ class ViewInfoCache {
 		$exists = $this->view->file_exists($path);
 
 		$this->cachePath[$user][$path] = [
-			'path'		=> $path,
-			'exists'	=> $exists,
-			'is_dir'	=> $exists ? (bool)$this->view->is_dir($path) : false,
-			'view'		=> '',
+			'path' => $path,
+			'exists' => $exists,
+			'is_dir' => $exists ? (bool)$this->view->is_dir($path) : false,
+			'view' => '',
 		];
 
 		return $this->cachePath[$user][$path];
@@ -104,10 +103,10 @@ class ViewInfoCache {
 		$this->view->chroot('/' . $user . '/files');
 
 		$cache = [
-			'path'		=> $filePath,
-			'exists'	=> false,
-			'is_dir'	=> false,
-			'view'		=> '',
+			'path' => $filePath,
+			'exists' => false,
+			'is_dir' => false,
+			'view' => '',
 		];
 
 		$notFound = false;
@@ -126,10 +125,10 @@ class ViewInfoCache {
 				$path = $this->view->getPath($fileId);
 
 				$cache = [
-					'path'		=> substr($path, strlen('/files')),
-					'exists'	=> true,
-					'is_dir'	=> (bool)$this->view->is_dir($path),
-					'view'		=> 'trashbin',
+					'path' => substr($path, strlen('/files')),
+					'exists' => true,
+					'is_dir' => (bool)$this->view->is_dir($path),
+					'view' => 'trashbin',
 				];
 			} catch (NotFoundException $e) {
 				$notFound = true;

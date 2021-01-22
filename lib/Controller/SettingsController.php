@@ -25,12 +25,9 @@ namespace OCA\Activity\Controller;
 
 use OCA\Activity\CurrentUser;
 use OCA\Activity\UserSettings;
-use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
-use OCP\Activity\ISetting;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
@@ -106,7 +103,6 @@ class SettingsController extends Controller {
 			$notify_setting_selfemail = false,
 			$activity_digest = false
 	) {
-
 		$settings = $this->manager->getSettings();
 		foreach ($settings as $setting) {
 			$this->config->setUserValue(
@@ -127,9 +123,9 @@ class SettingsController extends Controller {
 		$email_batch_time = 3600;
 		if ($notify_setting_batchtime === UserSettings::EMAIL_SEND_DAILY) {
 			$email_batch_time = 3600 * 24;
-		} else if ($notify_setting_batchtime === UserSettings::EMAIL_SEND_WEEKLY) {
+		} elseif ($notify_setting_batchtime === UserSettings::EMAIL_SEND_WEEKLY) {
 			$email_batch_time = 3600 * 24 * 7;
-		} else if ($notify_setting_batchtime === UserSettings::EMAIL_SEND_ASAP) {
+		} elseif ($notify_setting_batchtime === UserSettings::EMAIL_SEND_ASAP) {
 			$email_batch_time = 0;
 		}
 
@@ -154,11 +150,11 @@ class SettingsController extends Controller {
 			(int) $activity_digest
 		);
 
-		return new DataResponse(array(
-			'data'		=> array(
-				'message'	=> (string) $this->l10n->t('Your settings have been updated.'),
-			),
-		));
+		return new DataResponse([
+			'data' => [
+				'message' => (string) $this->l10n->t('Your settings have been updated.'),
+			],
+		]);
 	}
 
 	/**
@@ -171,7 +167,6 @@ class SettingsController extends Controller {
 			$notify_setting_batchtime = UserSettings::EMAIL_SEND_HOURLY,
 			$notify_setting_self = false,
 			$notify_setting_selfemail = false) {
-
 		$settings = $this->manager->getSettings();
 		foreach ($settings as $setting) {
 			$this->config->setAppValue(
@@ -192,9 +187,9 @@ class SettingsController extends Controller {
 		$email_batch_time = 3600;
 		if ($notify_setting_batchtime === UserSettings::EMAIL_SEND_DAILY) {
 			$email_batch_time = 3600 * 24;
-		} else if ($notify_setting_batchtime === UserSettings::EMAIL_SEND_WEEKLY) {
+		} elseif ($notify_setting_batchtime === UserSettings::EMAIL_SEND_WEEKLY) {
 			$email_batch_time = 3600 * 24 * 7;
-		} else if ($notify_setting_batchtime === UserSettings::EMAIL_SEND_ASAP) {
+		} elseif ($notify_setting_batchtime === UserSettings::EMAIL_SEND_ASAP) {
 			$email_batch_time = 0;
 		}
 
@@ -214,11 +209,11 @@ class SettingsController extends Controller {
 			(int) $notify_setting_selfemail
 		);
 
-		return new DataResponse(array(
-			'data'		=> array(
-				'message'	=> (string) $this->l10n->t('Settings have been updated.'),
-			),
-		));
+		return new DataResponse([
+			'data' => [
+				'message' => (string) $this->l10n->t('Settings have been updated.'),
+			],
+		]);
 	}
 
 	/**
@@ -244,11 +239,11 @@ class SettingsController extends Controller {
 
 		$this->config->setUserValue($this->user, 'activity', 'rsstoken', $token);
 
-		return new DataResponse(array(
-			'data'		=> array(
-				'message'	=> (string) $this->l10n->t('Your settings have been updated.'),
-				'rsslink'	=> $tokenUrl,
-			),
-		));
+		return new DataResponse([
+			'data' => [
+				'message' => (string) $this->l10n->t('Your settings have been updated.'),
+				'rsslink' => $tokenUrl,
+			],
+		]);
 	}
 }
