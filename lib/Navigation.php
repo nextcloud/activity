@@ -109,12 +109,12 @@ class Navigation {
 	 */
 	public function getLinkList() {
 		$filters = $this->activityManager->getFilters();
-		usort($filters, function (IFilter $a, IFilter $b) {
+		usort($filters, static function (IFilter $a, IFilter $b) {
 			if ($a->getPriority() === $b->getPriority()) {
-				return $a->getIdentifier() > $b->getIdentifier();
+				return (int) ($a->getIdentifier() > $b->getIdentifier());
 			}
 
-			return $a->getPriority() > $b->getPriority();
+			return (int) ($a->getPriority() > $b->getPriority());
 		});
 
 		$entries = [];

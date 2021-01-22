@@ -12,27 +12,31 @@
 			<directory name="vendor" />
 		</ignoreFiles>
 	</projectFiles>
-	<extraFiles>
-		<directory name="vendor" />
-		<ignoreFiles>
-			<directory name="vendor/phpunit/php-code-coverage" />
-		</ignoreFiles>
-	</extraFiles>
 	<issueHandlers>
 		<UndefinedClass>
 			<errorLevel type="suppress">
+				<referencedClass name="Doctrine\DBAL\Platforms\MySQLPlatform" />
 				<referencedClass name="Doctrine\DBAL\Types\Types" />
+				<referencedClass name="OC" />
+				<referencedClass name="OC\Core\Command\Base" />
+				<referencedClass name="OC\Files\Filesystem" />
 				<referencedClass name="OC\Files\View" />
+				<referencedClass name="OC\Hooks\Emitter" />
+				<referencedClass name="OC\TagManager" />
+				<referencedClass name="OC_Template" />
 				<referencedClass name="OCA\Files\Event\LoadSidebar" />
 			</errorLevel>
 		</UndefinedClass>
 		<UndefinedDocblockClass>
 			<errorLevel type="suppress">
+				<referencedClass name="Doctrine\DBAL\Driver\Statement" />
+				<referencedClass name="Doctrine\DBAL\Platforms\AbstractPlatform" />
 				<referencedClass name="Doctrine\DBAL\Schema\Schema" />
 				<referencedClass name="Doctrine\DBAL\Schema\SchemaException" />
-				<referencedClass name="Doctrine\DBAL\Driver\Statement" />
 				<referencedClass name="Doctrine\DBAL\Schema\Table" />
 				<referencedClass name="OC\Files\View" />
+				<referencedClass name="OC\TagManager" />
+				<referencedClass name="OC\Hooks\Emitter" />
 			</errorLevel>
 		</UndefinedDocblockClass>
 	</issueHandlers>

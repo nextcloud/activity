@@ -109,12 +109,12 @@ class FeedController extends Controller {
 			$this->l = $this->l10nFactory->get('activity', $userLang);
 			$this->helper->setL10n($this->l);
 
-			$description = (string) $this->l->t('Personal activity feed for %s', $user);
+			$description = $this->l->t('Personal activity feed for %s', $user);
 			$response = $this->data->get($this->helper, $this->settings, $user, 0, self::DEFAULT_PAGE_SIZE, 'desc', 'all');
 			$activities = $response['data'];
 		} catch (\UnexpectedValueException $e) {
 			$this->l = $this->l10nFactory->get('activity');
-			$description = (string) $this->l->t('Your feed URL is invalid');
+			$description = $this->l->t('Your feed URL is invalid');
 
 			$activities = [
 				[

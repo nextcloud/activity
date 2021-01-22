@@ -108,14 +108,14 @@ class SettingsController extends Controller {
 			$this->config->setUserValue(
 				$this->user, 'activity',
 				'notify_notification_' . $setting->getIdentifier(),
-				(int) $this->request->getParam($setting->getIdentifier() . '_notification', false)
+				(string)(int) $this->request->getParam($setting->getIdentifier() . '_notification', false)
 			);
 
 			if ($setting->canChangeMail()) {
 				$this->config->setUserValue(
 					$this->user, 'activity',
 					'notify_email_' . $setting->getIdentifier(),
-					(int) $this->request->getParam($setting->getIdentifier() . '_email', false)
+					(string)(int) $this->request->getParam($setting->getIdentifier() . '_email', false)
 				);
 			}
 		}
@@ -132,27 +132,27 @@ class SettingsController extends Controller {
 		$this->config->setUserValue(
 			$this->user, 'activity',
 			'notify_setting_batchtime',
-			$email_batch_time
+			(string)$email_batch_time
 		);
 		$this->config->setUserValue(
 			$this->user, 'activity',
 			'notify_setting_self',
-			(int) $notify_setting_self
+			(string)(int) $notify_setting_self
 		);
 		$this->config->setUserValue(
 			$this->user, 'activity',
 			'notify_setting_selfemail',
-			(int) $notify_setting_selfemail
+			(string)(int) $notify_setting_selfemail
 		);
 		$this->config->setUserValue(
 			$this->user, 'activity',
 			'notify_setting_activity_digest',
-			(int) $activity_digest
+			(string)(int) $activity_digest
 		);
 
 		return new DataResponse([
 			'data' => [
-				'message' => (string) $this->l10n->t('Your settings have been updated.'),
+				'message' => $this->l10n->t('Your settings have been updated.'),
 			],
 		]);
 	}
@@ -172,14 +172,14 @@ class SettingsController extends Controller {
 			$this->config->setAppValue(
 				'activity',
 				'notify_notification_' . $setting->getIdentifier(),
-				(int) $this->request->getParam($setting->getIdentifier() . '_notification', false)
+				(string)(int)$this->request->getParam($setting->getIdentifier() . '_notification', false)
 			);
 
 			if ($setting->canChangeMail()) {
 				$this->config->setAppValue(
 					'activity',
 					'notify_email_' . $setting->getIdentifier(),
-					(int) $this->request->getParam($setting->getIdentifier() . '_email', false)
+					(string)(int) $this->request->getParam($setting->getIdentifier() . '_email', false)
 				);
 			}
 		}
@@ -196,22 +196,22 @@ class SettingsController extends Controller {
 		$this->config->setAppValue(
 			'activity',
 			'notify_setting_batchtime',
-			$email_batch_time
+			(string)$email_batch_time
 		);
 		$this->config->setAppValue(
 			'activity',
 			'notify_setting_self',
-			(int) $notify_setting_self
+			(string)(int) $notify_setting_self
 		);
 		$this->config->setAppValue(
 			'activity',
 			'notify_setting_selfemail',
-			(int) $notify_setting_selfemail
+			(string)(int) $notify_setting_selfemail
 		);
 
 		return new DataResponse([
 			'data' => [
-				'message' => (string) $this->l10n->t('Settings have been updated.'),
+				'message' => $this->l10n->t('Settings have been updated.'),
 			],
 		]);
 	}
@@ -241,7 +241,7 @@ class SettingsController extends Controller {
 
 		return new DataResponse([
 			'data' => [
-				'message' => (string) $this->l10n->t('Your settings have been updated.'),
+				'message' => $this->l10n->t('Your settings have been updated.'),
 				'rsslink' => $tokenUrl,
 			],
 		]);

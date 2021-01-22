@@ -24,7 +24,7 @@ namespace OCA\Activity;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserSession;
-use OCP\Share;
+use OCP\Share\IShare;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
 
@@ -121,7 +121,7 @@ class CurrentUser {
 			$token = $this->request->server['PHP_AUTH_USER'];
 			try {
 				$share = $this->shareManager->getShareByToken($token);
-				if ($share->getShareType() === Share::SHARE_TYPE_REMOTE) {
+				if ($share->getShareType() === IShare::TYPE_REMOTE) {
 					return $share->getSharedWith();
 				}
 			} catch (ShareNotFound $e) {

@@ -181,13 +181,13 @@ class GroupHelper {
 			'timestamp' => $event->getTimestamp(),
 			'subject' => $event->getParsedSubject(),
 			'subject_rich' => [
-				(string) $event->getRichSubject(),
-				(array) $event->getRichSubjectParameters(),
+				$event->getRichSubject(),
+				$event->getRichSubjectParameters(),
 			],
 			'message' => $event->getParsedMessage(),
 			'message_rich' => [
-				(string) $event->getRichMessage(),
-				(array) $event->getRichMessageParameters(),
+				$event->getRichMessage(),
+				$event->getRichMessageParameters(),
 			],
 			'object_type' => $event->getObjectType(),
 			'object_id' => $event->getObjectId(),

@@ -62,12 +62,12 @@ class Admin implements ISettings {
 	 */
 	public function getForm() {
 		$settings = $this->manager->getSettings();
-		usort($settings, function (ActivitySettings $a, ActivitySettings $b) {
+		usort($settings, static function (ActivitySettings $a, ActivitySettings $b) {
 			if ($a->getPriority() === $b->getPriority()) {
-				return $a->getIdentifier() > $b->getIdentifier();
+				return (int) ($a->getIdentifier() > $b->getIdentifier());
 			}
 
-			return $a->getPriority() > $b->getPriority();
+			return (int) ($a->getPriority() > $b->getPriority());
 		});
 
 		$activityGroups = [];

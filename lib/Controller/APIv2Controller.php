@@ -227,12 +227,12 @@ class APIv2Controller extends OCSController {
 		}, $filters);
 
 		// php 5.6 has problems with usort and objects
-		usort($filters, function (array $a, array $b) {
+		usort($filters, static function (array $a, array $b) {
 			if ($a['priority'] === $b['priority']) {
-				return $a['id'] > $b['id'];
+				return (int) ($a['id'] > $b['id']);
 			}
 
-			return $a['priority'] > $b['priority'];
+			return (int) ($a['priority'] > $b['priority']);
 		});
 
 		return new DataResponse($filters);
@@ -252,9 +252,9 @@ class APIv2Controller extends OCSController {
 		try {
 			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 		} catch (InvalidFilterException $e) {
-			return new DataResponse(null, Http::STATUS_NOT_FOUND);
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		} catch (\OutOfBoundsException $e) {
-			return new DataResponse(null, Http::STATUS_FORBIDDEN);
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
 
 		$this->activityManager->setRequirePNG($this->request->isUserAgent([IRequest::USER_AGENT_CLIENT_IOS]));
@@ -274,10 +274,10 @@ class APIv2Controller extends OCSController {
 			);
 		} catch (\OutOfBoundsException $e) {
 			// Invalid since argument
-			return new DataResponse(null, Http::STATUS_FORBIDDEN);
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		} catch (\BadMethodCallException $e) {
 			// No activity settings enabled
-			return new DataResponse(null, Http::STATUS_NO_CONTENT);
+			return new DataResponse([], Http::STATUS_NO_CONTENT);
 		}
 		$this->activityManager->setRequirePNG(false);
 

@@ -46,7 +46,6 @@ use OCP\ILogger;
 use OCP\ITagManager;
 use OCP\IURLGenerator;
 use OCP\IUser;
-use OCP\Share;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
 
@@ -86,6 +85,13 @@ class FilesHooks {
 	/** @var ILogger */
 	protected $logger;
 
+	/**
+	 * @psalm-suppress UndefinedClass
+	 * @var ITagManager|TagManager
+	 */
+	protected $tagManager;
+
+
 	/** @var CurrentUser */
 	protected $currentUser;
 	/** @var IUserMountCache */
@@ -105,8 +111,6 @@ class FilesHooks {
 	protected $oldParentId;
 	/** @var NotificationGenerator */
 	protected $notificationGenerator;
-	/** @var ITagManager|TagManager */
-	protected $tagManager;
 
 	public function __construct(
 		IManager $manager,
@@ -190,6 +194,7 @@ class FilesHooks {
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_FILE_CHANGED);
 		$filteredNotificationUsers = $this->userSettings->filterUsersBySetting($users, 'notification', Files::TYPE_FILE_CHANGED);
 
+		/** @psalm-suppress UndefinedMethod */
 		$favoriteUsers = $this->tagManager->getUsersFavoritingObject('files', $fileId);
 		if (!empty($favoriteUsers)) {
 			$favoriteUsers = array_intersect($users, $favoriteUsers);
@@ -700,11 +705,11 @@ class FilesHooks {
 	 */
 	public function share($params) {
 		if ($params['itemType'] === 'file' || $params['itemType'] === 'folder') {
-			if ((int)$params['shareType'] === Share::SHARE_TYPE_USER) {
+			if ((int)$params['shareType'] === IShare::TYPE_USER) {
 				$this->shareWithUser($params['shareWith'], (int)$params['fileSource'], $params['itemType'], $params['fileTarget']);
-			} elseif ((int)$params['shareType'] === Share::SHARE_TYPE_GROUP) {
+			} elseif ((int)$params['shareType'] === IShare::TYPE_GROUP) {
 				$this->shareWithGroup($params['shareWith'], (int)$params['fileSource'], $params['itemType'], $params['fileTarget'], (int)$params['id']);
-			} elseif ((int)$params['shareType'] === Share::SHARE_TYPE_LINK) {
+			} elseif ((int)$params['shareType'] === IShare::TYPE_LINK) {
 				$this->shareByLink((int)$params['fileSource'], $params['itemType'], $params['uidOwner']);
 			}
 		}
@@ -730,7 +735,7 @@ class FilesHooks {
 			$shareWith, 'shared_with_by', [[$fileSource => $fileTarget], $this->currentUser->getUserIdentifier()],
 			(int)$fileSource, $fileTarget, $itemType === 'file',
 			$this->userSettings->getUserSetting($shareWith, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($shareWith, 'setting', 'batchtime') : false,
-			$this->userSettings->getUserSetting($shareWith, 'notification', Files_Sharing::TYPE_SHARED)
+			(bool) $this->userSettings->getUserSetting($shareWith, 'notification', Files_Sharing::TYPE_SHARED)
 		);
 	}
 
@@ -787,7 +792,7 @@ class FilesHooks {
 			$linkOwner, 'shared_link_self', [[$fileSource => $path]],
 			(int)$fileSource, $path, $itemType === 'file',
 			$this->userSettings->getUserSetting($linkOwner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($linkOwner, 'setting', 'batchtime') : false,
-			$this->userSettings->getUserSetting($linkOwner, 'notification', Files_Sharing::TYPE_SHARED)
+			(bool) $this->userSettings->getUserSetting($linkOwner, 'notification', Files_Sharing::TYPE_SHARED)
 		);
 	}
 
@@ -799,11 +804,11 @@ class FilesHooks {
 	 */
 	public function unShare(IShare $share) {
 		if (in_array($share->getNodeType(), ['file', 'folder'], true)) {
-			if ($share->getShareType() === Share::SHARE_TYPE_USER) {
+			if ($share->getShareType() === IShare::TYPE_USER) {
 				$this->unshareFromUser($share);
-			} elseif ($share->getShareType() === Share::SHARE_TYPE_GROUP) {
+			} elseif ($share->getShareType() === IShare::TYPE_GROUP) {
 				$this->unshareFromGroup($share);
-			} elseif ($share->getShareType() === Share::SHARE_TYPE_LINK) {
+			} elseif ($share->getShareType() === IShare::TYPE_LINK) {
 				$this->unshareLink($share);
 			}
 		}
@@ -817,7 +822,7 @@ class FilesHooks {
 	 */
 	public function unShareSelf(IShare $share) {
 		if (in_array($share->getNodeType(), ['file', 'folder'], true)) {
-			if ($share->getShareType() === Share::SHARE_TYPE_GROUP) {
+			if ($share->getShareType() === IShare::TYPE_GROUP) {
 				$this->unshareFromSelfGroup($share);
 			} else {
 				$this->unShare($share);
@@ -860,7 +865,7 @@ class FilesHooks {
 			$share->getSharedWith(), $actionUser, [[$share->getNodeId() => $share->getTarget()], $this->currentUser->getUserIdentifier()],
 			$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
 			$this->userSettings->getUserSetting($share->getSharedWith(), 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($share->getSharedWith(), 'setting', 'batchtime') : false,
-			$this->userSettings->getUserSetting($share->getSharedWith(), 'notification', Files_Sharing::TYPE_SHARED)
+			(bool) $this->userSettings->getUserSetting($share->getSharedWith(), 'notification', Files_Sharing::TYPE_SHARED)
 		);
 	}
 
@@ -912,7 +917,7 @@ class FilesHooks {
 		$offset = 0;
 		$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		while (!empty($users)) {
-			$this->addNotificationsForGroupUsers($users, $actionUser, $share->getNodeId(), $share->getNodeType(), $share->getTarget(), $share->getId());
+			$this->addNotificationsForGroupUsers($users, $actionUser, $share->getNodeId(), $share->getNodeType(), $share->getTarget(), (int) $share->getId());
 			$offset += self::USER_BATCH_SIZE;
 			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		}
@@ -956,7 +961,7 @@ class FilesHooks {
 			$owner, $actionSharer, [[$share->getNodeId() => $share->getTarget()]],
 			$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
 			$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false,
-			$this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED)
+			(bool) $this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED)
 		);
 
 		if ($share->getSharedBy() !== $share->getShareOwner()) {
@@ -965,7 +970,7 @@ class FilesHooks {
 				$owner, $actionOwner, [[$share->getNodeId() => $share->getTarget()], $share->getSharedBy()],
 				$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
 				$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false,
-				$this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED)
+				(bool) $this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED)
 			);
 		}
 	}
@@ -1056,7 +1061,7 @@ class FilesHooks {
 			$sharer, $subject, [[$fileSource => $path], $shareWith],
 			$fileSource, $path, ($itemType === 'file'),
 			$this->userSettings->getUserSetting($sharer, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($sharer, 'setting', 'batchtime') : false,
-			$this->userSettings->getUserSetting($sharer, 'notification', Files_Sharing::TYPE_SHARED)
+			(bool) $this->userSettings->getUserSetting($sharer, 'notification', Files_Sharing::TYPE_SHARED)
 		);
 	}
 
@@ -1082,7 +1087,7 @@ class FilesHooks {
 			$owner, $subject, [[$fileSource => $path], $this->currentUser->getUserIdentifier(), $shareWith],
 			$fileSource, $path, ($itemType === 'file'),
 			$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false,
-			$this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED)
+			(bool) $this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED)
 		);
 	}
 
@@ -1145,7 +1150,7 @@ class FilesHooks {
 	 * @param int $fileId
 	 * @param string $path
 	 * @param bool $isFile If the item is a file, we link to the parent directory
-	 * @param int $emailSetting
+	 * @param int|bool $emailSetting
 	 * @param bool $notificationSetting
 	 * @param string $type
 	 */

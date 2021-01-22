@@ -119,7 +119,7 @@ class DigestSender {
 	 * @return string[]
 	 */
 	private function getDigestUsers(): array {
-		return $this->config->getUsersForUserValue('activity', 'notify_setting_activity_digest', 1);
+		return $this->config->getUsersForUserValue('activity', 'notify_setting_activity_digest', '1');
 	}
 
 	private function getLastSendActivity(string $user, int $now): int {
@@ -199,7 +199,7 @@ class DigestSender {
 		$this->activityManager->setCurrentUserId(null);
 		try {
 			$this->mailer->send($message);
-			$this->config->setUserValue($user->getUID(), 'activity', 'activity_digest_last_send', $lastActivityId);
+			$this->config->setUserValue($user->getUID(), 'activity', 'activity_digest_last_send', (string) $lastActivityId);
 		} catch (\Exception $e) {
 			$this->logger->error($e->getMessage());
 			return;
