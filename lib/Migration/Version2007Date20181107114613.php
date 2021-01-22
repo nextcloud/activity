@@ -25,7 +25,7 @@ declare(strict_types=1);
 namespace OCA\Activity\Migration;
 
 use Closure;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use OCP\DB\ISchemaWrapper;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
@@ -44,11 +44,11 @@ class Version2007Date20181107114613 extends SimpleMigrationStep {
 		$table = $schema->getTable('activity');
 
 		if (!$table->hasColumn('object_type')) {
-			$table->addColumn('object_type', Type::STRING, [
+			$table->addColumn('object_type', Types::STRING, [
 				'notnull' => false,
 				'length' => 255,
 			]);
-			$table->addColumn('object_id', Type::BIGINT, [
+			$table->addColumn('object_id', Types::BIGINT, [
 				'notnull' => true,
 				'length' => 20,
 				'default' => 0,
