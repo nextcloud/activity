@@ -60,6 +60,6 @@ OC.L10N.register(
     "Notify about your own actions via email" : "Notificar de tus propias acciones vía correo electrónico",
     "Send emails:" : "Enviar correos electrónicos:",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Selecciona las actividades para las cuales deseas obtener una notificación por correo electrónico y cuales deben mostrarse en el listado de actividades.",
-    "Choose which activities you want to see in your stream." : "Eliije cuáles actividades quieres ver en tu fuente."
+    "Choose which activities you want to see in your stream." : "Elige cuáles actividades quieres ver en tu fuente."
 },
 "nplurals=2; plural=(n != 1);");
