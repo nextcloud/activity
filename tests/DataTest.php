@@ -23,11 +23,9 @@
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\Data;
-use OCA\Activity\Tests\Mock\Extension;
 use OCP\Activity\IManager;
 use OCP\IL10N;
 use OCP\IUserSession;
-use OCP\RichObjectStrings\IValidator;
 use OCP\Util;
 use PHPUnit\Framework\MockObject\MockObject;
 use OC\User\Session;
@@ -195,7 +193,7 @@ class DataTest extends TestCase {
 		$user = self::getUniqueID('testing');
 		if ($offsetUser === null) {
 			$offsetUser = $user;
-		} else if ($offsetUser === 'invalid-user') {
+		} elseif ($offsetUser === 'invalid-user') {
 			$this->expectException('OutOfBoundsException');
 			$this->expectExceptionMessage('Invalid since');
 			$this->expectExceptionCode(2);
@@ -241,7 +239,7 @@ class DataTest extends TestCase {
 
 		if ($offsetId === null) {
 			$offsetId = $id;
-		} else if ($offsetId === false) {
+		} elseif ($offsetId === false) {
 			$offsetId = 0;
 		} else {
 			$offsetId += $id;

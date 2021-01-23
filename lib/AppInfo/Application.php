@@ -38,16 +38,15 @@ use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\Util;
 
 class Application extends App implements IBootstrap {
+	public const APP_ID = 'activity';
 
-	const APP_ID = 'activity';
-
-	public function __construct () {
+	public function __construct() {
 		parent::__construct(self::APP_ID);
 	}
 
 	public function register(IRegistrationContext $context): void {
 		// Allow automatic DI for the View, until we migrated to Nodes API
-		$context->registerService(View::class, function() {
+		$context->registerService(View::class, function () {
 			return new View('');
 		}, false);
 
@@ -70,7 +69,7 @@ class Application extends App implements IBootstrap {
 		/** @var \OCP\IServerContainer $server */
 		$server = $c->getServer();
 
-		$server->getActivityManager()->registerConsumer(function() use ($c) {
+		$server->getActivityManager()->registerConsumer(function () use ($c) {
 			return $c->query(Consumer::class);
 		});
 	}

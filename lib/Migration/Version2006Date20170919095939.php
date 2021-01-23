@@ -27,7 +27,6 @@ use OCP\DB\ISchemaWrapper;
 use OCP\Migration\BigIntMigration;
 use OCP\Migration\IOutput;
 
-
 class Version2006Date20170919095939 extends BigIntMigration {
 
 	/**
@@ -53,7 +52,7 @@ class Version2006Date20170919095939 extends BigIntMigration {
 		/**
 		 * FIXME To prevent slowness on update we don't change the schema.
 		 * FIXME Instead it can be updated with ./occ db:convert-filecache-bigint
-		parent::changeSchema($output, $schemaClosure, $options);
+		 * parent::changeSchema($output, $schemaClosure, $options);
 		 */
 
 		return null;

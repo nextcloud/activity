@@ -83,16 +83,16 @@ class APIv1Controller extends OCSController {
 			$this->currentUser->getUID(), $start, $count, 'desc', 'all'
 		);
 
-		$entries = array();
-		foreach($activities['data'] as $entry) {
-			$entries[] = array(
+		$entries = [];
+		foreach ($activities['data'] as $entry) {
+			$entries[] = [
 				'id' => $entry['activity_id'],
 				'subject' => $entry['subject'],
 				'message' => $entry['message'],
 				'file' => $entry['object_name'],
 				'link' => $entry['link'],
 				'date' => date('c', $entry['timestamp']),
-			);
+			];
 		}
 
 		return new DataResponse($entries);

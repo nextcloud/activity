@@ -35,7 +35,7 @@ class FilesHooksStatic {
 	/**
 	 * @return FilesHooks
 	 */
-	static protected function getHooks() {
+	protected static function getHooks() {
 		return \OC::$server->query(FilesHooks::class);
 	}
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
@@ -23,11 +24,10 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests\Template;
 
-
 use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Http\TemplateResponse;
 
-class RssTest extends TestCase{
+class RssTest extends TestCase {
 	public function dataEmpty(): array {
 		return [
 			['de', 'http://localhost', 'description', 'Fri, 28 Aug 2015 11:47:14 +0000'],
@@ -45,11 +45,11 @@ class RssTest extends TestCase{
 	 */
 	public function testEmpty(string $language, string $link, string $description, string $timeDate): void {
 		$template = new TemplateResponse('activity', 'rss', [
-			'rssLang'		=> $language,
-			'rssLink'		=> $link,
-			'rssPubDate'	=> $timeDate,
-			'description'	=> $description,
-			'activities'	=> [],
+			'rssLang' => $language,
+			'rssLink' => $link,
+			'rssPubDate' => $timeDate,
+			'description' => $description,
+			'activities' => [],
 		], '');
 
 		$this->assertSame(
@@ -114,11 +114,11 @@ class RssTest extends TestCase{
 	 */
 	public function testContent(array $activities, string $expected): void {
 		$template = new TemplateResponse('activity', 'rss', [
-			'rssLang'		=> 'en',
-			'rssLink'		=> 'http://nextcloud.org',
-			'rssPubDate'	=> 'Fri, 28 Aug 2015 11:47:15 +0000',
-			'description'	=> 'Desc',
-			'activities'	=> $activities,
+			'rssLang' => 'en',
+			'rssLink' => 'http://nextcloud.org',
+			'rssPubDate' => 'Fri, 28 Aug 2015 11:47:15 +0000',
+			'description' => 'Desc',
+			'activities' => $activities,
 		], '');
 		$rendered = $template->render();
 

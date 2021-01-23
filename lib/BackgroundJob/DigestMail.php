@@ -23,7 +23,6 @@ declare(strict_types=1);
 
 namespace OCA\Activity\BackgroundJob;
 
-
 use OC\BackgroundJob\TimedJob;
 use OCA\Activity\DigestSender;
 use OCP\AppFramework\Utility\ITimeFactory;

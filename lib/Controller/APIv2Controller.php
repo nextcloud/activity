@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
@@ -22,7 +23,6 @@ declare(strict_types=1);
  */
 
 namespace OCA\Activity\Controller;
-
 
 use OC\Files\View;
 use OCA\Activity\Data;
@@ -217,7 +217,7 @@ class APIv2Controller extends OCSController {
 	public function listFilters(): DataResponse {
 		$filters = $this->activityManager->getFilters();
 
-		$filters = array_map(function(IFilter $filter) {
+		$filters = array_map(function (IFilter $filter) {
 			return [
 				'id' => $filter->getIdentifier(),
 				'name' => $filter->getName(),
@@ -227,12 +227,12 @@ class APIv2Controller extends OCSController {
 		}, $filters);
 
 		// php 5.6 has problems with usort and objects
-		usort($filters, function(array $a, array $b) {
+		usort($filters, static function (array $a, array $b) {
 			if ($a['priority'] === $b['priority']) {
-				return $a['id'] > $b['id'];
+				return (int) ($a['id'] > $b['id']);
 			}
 
-			return $a['priority'] > $b['priority'];
+			return (int) ($a['priority'] > $b['priority']);
 		});
 
 		return new DataResponse($filters);
@@ -252,9 +252,9 @@ class APIv2Controller extends OCSController {
 		try {
 			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 		} catch (InvalidFilterException $e) {
-			return new DataResponse(null, Http::STATUS_NOT_FOUND);
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		} catch (\OutOfBoundsException $e) {
-			return new DataResponse(null, Http::STATUS_FORBIDDEN);
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
 
 		$this->activityManager->setRequirePNG($this->request->isUserAgent([IRequest::USER_AGENT_CLIENT_IOS]));
@@ -274,10 +274,10 @@ class APIv2Controller extends OCSController {
 			);
 		} catch (\OutOfBoundsException $e) {
 			// Invalid since argument
-			return new DataResponse(null, Http::STATUS_FORBIDDEN);
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		} catch (\BadMethodCallException $e) {
 			// No activity settings enabled
-			return new DataResponse(null, Http::STATUS_NO_CONTENT);
+			return new DataResponse([], Http::STATUS_NO_CONTENT);
 		}
 		$this->activityManager->setRequirePNG(false);
 
@@ -303,7 +303,7 @@ class APIv2Controller extends OCSController {
 
 							$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $objectId, $objectName);
 						}
-					} else if ($activity['object_id']) {
+					} elseif ($activity['object_id']) {
 						$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $activity['object_id'], $activity['object_name']);
 					}
 				}
@@ -357,12 +357,12 @@ class APIv2Controller extends OCSController {
 		}
 
 		$preview = [
-			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
-			'source'		=> '',
-			'mimeType'		=> 'application/octet-stream',
+			'link' => $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
+			'source' => '',
+			'mimeType' => 'application/octet-stream',
 			'isMimeTypeIcon' => true,
-			'fileId'		=> $fileId,
-			'view'			=> $info['view'] ?: 'files',
+			'fileId' => $fileId,
+			'view' => $info['view'] ?: 'files',
 		];
 
 		// show a preview image if the file still exists
@@ -374,7 +374,7 @@ class APIv2Controller extends OCSController {
 			$fileInfo = $this->view->getFileInfo($info['path']);
 			if (!$fileInfo instanceof FileInfo) {
 				$preview = $this->getPreviewFromPath($fileId, $filePath, $info);
-			} else if ($this->preview->isAvailable($fileInfo)) {
+			} elseif ($this->preview->isAvailable($fileInfo)) {
 				$preview['source'] = $this->urlGenerator->linkToRouteAbsolute('core.Preview.getPreview', [
 					'file' => $info['path'],
 					'c' => $this->view->getETag($info['path']),
@@ -395,12 +395,12 @@ class APIv2Controller extends OCSController {
 	protected function getPreviewFromPath(int $fileId, string $filePath, array $info): array {
 		$mimeType = $info['is_dir'] ? 'dir' : $this->mimeTypeDetector->detectPath($filePath);
 		return [
-			'link'			=> $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
-			'source'		=> $this->getPreviewPathFromMimeType($mimeType),
-			'mimeType'		=> $mimeType,
+			'link' => $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
+			'source' => $this->getPreviewPathFromMimeType($mimeType),
+			'mimeType' => $mimeType,
 			'isMimeTypeIcon' => true,
-			'fileId'		=> $fileId,
-			'view'			=> $info['view'] ?: 'files',
+			'fileId' => $fileId,
+			'view' => $info['view'] ?: 'files',
 		];
 	}
 

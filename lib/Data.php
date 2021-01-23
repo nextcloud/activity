@@ -59,7 +59,7 @@ class Data {
 	 * @return int
 	 */
 	public function send(IEvent $event): int {
-		if ($event->getAffectedUser() === '' || $event->getAffectedUser() === null) {
+		if ($event->getAffectedUser() === '') {
 			return 0;
 		}
 
@@ -87,14 +87,14 @@ class Data {
 				'type' => $event->getType(),
 				'affecteduser' => $event->getAffectedUser(),
 				'user' => $event->getAuthor(),
-				'timestamp' => (int)$event->getTimestamp(),
+				'timestamp' => $event->getTimestamp(),
 				'subject' => $event->getSubject(),
 				'subjectparams' => json_encode($event->getSubjectParameters()),
 				'message' => $event->getMessage(),
 				'messageparams' => json_encode($event->getMessageParameters()),
 				'priority' => IExtension::PRIORITY_MEDIUM,
 				'object_type' => $event->getObjectType(),
-				'object_id' => (int)$event->getObjectId(),
+				'object_id' => $event->getObjectId(),
 				'object_name' => $event->getObjectName(),
 				'link' => $event->getLink(),
 			])
@@ -112,7 +112,7 @@ class Data {
 	 */
 	public function storeMail(IEvent $event, int $latestSendTime): bool {
 		$affectedUser = $event->getAffectedUser();
-		if ($affectedUser === '' || $affectedUser === null) {
+		if ($affectedUser === '') {
 			return false;
 		}
 
@@ -123,7 +123,7 @@ class Data {
 				'amq_subject' => $query->createNamedParameter($event->getSubject()),
 				'amq_subjectparams' => $query->createNamedParameter(json_encode($event->getSubjectParameters())),
 				'amq_affecteduser' => $query->createNamedParameter($affectedUser),
-				'amq_timestamp' => $query->createNamedParameter((int)$event->getTimestamp()),
+				'amq_timestamp' => $query->createNamedParameter($event->getTimestamp()),
 				'amq_type' => $query->createNamedParameter($event->getType()),
 				'amq_latest_send' => $query->createNamedParameter($latestSendTime),
 				'object_type' => $query->createNamedParameter($event->getObjectType()),
@@ -182,11 +182,9 @@ class Data {
 
 		if ($filter === 'self') {
 			$query->andWhere($query->expr()->eq('user', $query->createNamedParameter($user)));
-
-		} else if ($filter === 'by') {
+		} elseif ($filter === 'by') {
 			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
-
-		} else if ($filter === 'filter') {
+		} elseif ($filter === 'filter') {
 			if (!$userSettings->getUserSetting($user, 'setting', 'self')) {
 				$query->andWhere($query->expr()->orX(
 					$query->expr()->neq('user', $query->createNamedParameter($user)),

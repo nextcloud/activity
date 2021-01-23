@@ -23,5 +23,5 @@
 namespace OCA\Activity\Extension;
 
 class Files_Sharing {
-	const TYPE_SHARED = 'shared';
+	public const TYPE_SHARED = 'shared';
 }

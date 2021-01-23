@@ -25,7 +25,6 @@ namespace OCA\Activity\Tests;
 use OCA\Activity\UserSettings;
 use OCP\Activity\ActivitySettings;
 use OCP\Activity\IManager;
-use OCP\Activity\ISetting;
 use OCP\IConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -79,7 +78,6 @@ class UserSettingsTest extends TestCase {
 					->with($type)
 					->willReturn($s);
 			}
-
 		}
 		$this->assertEquals($expected, self::invokePrivate($this->userSettings, 'getDefaultFromSetting', [$method, $type]));
 	}

@@ -75,12 +75,12 @@ class Personal implements ISettings {
 	 */
 	public function getForm() {
 		$settings = $this->manager->getSettings();
-		usort($settings, function(ActivitySettings $a, ActivitySettings $b) {
+		usort($settings, static function (ActivitySettings $a, ActivitySettings $b) {
 			if ($a->getPriority() === $b->getPriority()) {
-				return $a->getIdentifier() > $b->getIdentifier();
+				return (int) ($a->getIdentifier() > $b->getIdentifier());
 			}
 
-			return $a->getPriority() > $b->getPriority();
+			return (int) ($a->getPriority() > $b->getPriority());
 		});
 
 		$activityGroups = [];
@@ -109,12 +109,12 @@ class Personal implements ISettings {
 				];
 			}
 
-			$activityGroups[$groupIdentifier]['activities'][$identifier] = array(
-				'desc'		=> $setting->getName(),
-				IExtension::METHOD_MAIL		=> $this->userSettings->getUserSetting($this->user, 'email', $identifier),
-				IExtension::METHOD_NOTIFICATION	=> $this->userSettings->getUserSetting($this->user, 'notification', $identifier),
-				'methods'	=> $methods,
-			);
+			$activityGroups[$groupIdentifier]['activities'][$identifier] = [
+				'desc' => $setting->getName(),
+				IExtension::METHOD_MAIL => $this->userSettings->getUserSetting($this->user, 'email', $identifier),
+				IExtension::METHOD_NOTIFICATION => $this->userSettings->getUserSetting($this->user, 'notification', $identifier),
+				'methods' => $methods,
+			];
 		}
 
 		if (isset($activityGroups['other'])) {
@@ -127,9 +127,9 @@ class Personal implements ISettings {
 		$currentSetting = (int) $this->userSettings->getUserSetting($this->user, 'setting', 'batchtime');
 		if ($currentSetting === 3600 * 24 * 7) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_WEEKLY;
-		} else if ($currentSetting === 3600 * 24) {
+		} elseif ($currentSetting === 3600 * 24) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_DAILY;
-		} else if ($currentSetting === 0) {
+		} elseif ($currentSetting === 0) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_ASAP;
 		}
 
@@ -147,17 +147,17 @@ class Personal implements ISettings {
 		}
 
 		return new TemplateResponse('activity', 'settings/personal', [
-			'setting'			=> 'personal',
-			'activityGroups'	=> $activityGroups,
-			'is_email_set'		=> !empty($this->config->getUserValue($this->user, 'settings', 'email', '')),
-			'email_enabled'		=> $emailEnabled,
+			'setting' => 'personal',
+			'activityGroups' => $activityGroups,
+			'is_email_set' => !empty($this->config->getUserValue($this->user, 'settings', 'email', '')),
+			'email_enabled' => $emailEnabled,
 
-			'setting_batchtime'	=> $settingBatchTime,
+			'setting_batchtime' => $settingBatchTime,
 
-			'notify_self'		=> $this->userSettings->getUserSetting($this->user, 'setting', 'self'),
-			'notify_selfemail'	=> $this->userSettings->getUserSetting($this->user, 'setting', 'selfemail'),
+			'notify_self' => $this->userSettings->getUserSetting($this->user, 'setting', 'self'),
+			'notify_selfemail' => $this->userSettings->getUserSetting($this->user, 'setting', 'selfemail'),
 
-			'methods'			=> $methods,
+			'methods' => $methods,
 
 			'activity_digest_enabled' => $this->userSettings->getUserSetting($this->user, 'setting', 'activity_digest')
 		], 'blank');

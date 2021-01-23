@@ -82,7 +82,6 @@ class RemoteActivityController extends OCSController {
 	 * @return DataResponse
 	 */
 	public function receiveActivity($token, array $to, array $actor, $type, $updated, array $object = [], array $target = [], array $origin = []) {
-
 		$date = \DateTime::createFromFormat(\DateTime::W3C, $updated);
 		if ($date === false) {
 			return new DataResponse([], Http::STATUS_BAD_REQUEST);

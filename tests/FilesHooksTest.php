@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
@@ -445,7 +446,7 @@ class FilesHooksTest extends TestCase {
 
 		$this->settings->expects($this->exactly(2))
 			->method('filterUsersBySetting')
-			->willReturnCallback(function($users, $method, $type) use ($filterUsers) {
+			->willReturnCallback(function ($users, $method, $type) use ($filterUsers) {
 				return $filterUsers[$method];
 			});
 

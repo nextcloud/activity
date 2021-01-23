@@ -41,10 +41,10 @@ class UserSettings {
 	/** @var Data */
 	protected $data;
 
-	const EMAIL_SEND_HOURLY = 0;
-	const EMAIL_SEND_DAILY = 1;
-	const EMAIL_SEND_WEEKLY = 2;
-	const EMAIL_SEND_ASAP = 3;
+	public const EMAIL_SEND_HOURLY = 0;
+	public const EMAIL_SEND_DAILY = 1;
+	public const EMAIL_SEND_WEEKLY = 2;
+	public const EMAIL_SEND_ASAP = 3;
 
 	/**
 	 * @param IManager $manager
@@ -154,7 +154,7 @@ class UserSettings {
 	 */
 	public function getNotificationTypes() {
 		$settings = $this->manager->getSettings();
-		return array_map(function(ActivitySettings $setting) {
+		return array_map(function (ActivitySettings $setting) {
 			return $setting->getIdentifier();
 		}, $settings);
 	}
@@ -177,7 +177,7 @@ class UserSettings {
 			return [];
 		}
 
-		$filteredUsers = array();
+		$filteredUsers = [];
 		$potentialUsers = $this->config->getUserValueForUsers('activity', 'notify_' . $method . '_' . $type, $users);
 		foreach ($potentialUsers as $user => $value) {
 			if ($value) {

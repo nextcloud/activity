@@ -29,7 +29,9 @@ style('activity', 'settings');
 	<h2><?php p($l->t('Notifications')); ?></h2>
 
 	<input id="activity_email_enabled" name="activity_email_enabled" type="checkbox" class="checkbox"
-		   value="1" <?php if ($_['email_enabled']) { print_unescaped('checked="checked"'); } ?> />
+		   value="1" <?php if ($_['email_enabled']) {
+	print_unescaped('checked="checked"');
+} ?> />
 	<label for="activity_email_enabled"><?php p($l->t('Enable notification emails')); ?></label>
 
 </div>
