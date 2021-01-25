@@ -108,7 +108,15 @@ class DigestSender {
 				continue;
 			}
 
-			$this->sendDigestForUser($user, $now, $timezone, $language);
+			try {
+				$this->sendDigestForUser($user, $now, $timezone, $language);
+			} catch (\Throwable $e) {
+				$this->logger->error('Exception occurred while sending user digest email', [
+					'exception' => $e,
+				]);
+			}
+			// We still update the digest time after an failed email,
+			// so it hopefully works tomorrow
 			$this->config->setUserValue($user, 'activity', 'digest', $timezoneDigestDay[$timezone]);
 		}
 	}
