@@ -16,7 +16,7 @@ OC.L10N.register(
     "This stream will show events like additions, changes & shares" : "Custu flussu at a mustrare eventos che a agiuntas, càmbios e cumpartziduras",
     "There are no events for this filter" : "Non ddoe at eventos pro custu filtru",
     "Today" : "Oe",
-    "Yesterday" : "Cras",
+    "Yesterday" : "Eris",
     "Open file" : "Aberi archìviu",
     "Personal activity feed for %s" : "Flussu de atividade personale de su %s",
     "Your feed URL is invalid" : "S'URL de flussu tuo non est vàlidu",
