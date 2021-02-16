@@ -19,7 +19,7 @@ OC.L10N.register(
     "Yesterday" : "Eris",
     "Open file" : "Aberi archìviu",
     "Personal activity feed for %s" : "Flussu de atividade personale de su %s",
-    "Your feed URL is invalid" : "S'URL de flussu tuo non est vàlidu",
+    "Your feed URL is invalid" : "S'URL de flussu tuo no est vàlidu",
     "Your settings have been updated." : "Is impostatziones tuas sunt istadas agiornadas.",
     "Settings have been updated." : "Is impostatziones sunt istadas agiornadas.",
     "Daily activity summary for " : "Resumu de is atividades de cada die de",
