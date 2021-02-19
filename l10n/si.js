@@ -8,7 +8,7 @@ OC.L10N.register(
     "Copied!" : "පිටපත් කළා!",
     "Not supported!" : "සහාය නොදක්වයි!",
     "Press ⌘-C to copy." : "පිටපත් කිරීමට ⌘-C ඔබන්න.",
-    "Press Ctrl-C to copy." : "පිටපත් කිරීමට Ctrl-C to ඔබන්න.",
+    "Press Ctrl-C to copy." : "පිටපත් කිරීමට Ctrl-C ඔබන්න.",
     "{name} (invisible)" : "{name} (නොපෙනෙන)",
     "{name} (restricted)" : "{name} (සීමිත)",
     "Home" : "මුල් පිටුව",
