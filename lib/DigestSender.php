@@ -178,7 +178,7 @@ class DigestSender {
 			'activityEvents' => $activities,
 			'skippedCount' => $skippedCount,
 		]);
-		$template->setSubject($l10n->t('Daily activity summary for ' . $this->defaults->getName()));
+		$template->setSubject($l10n->t('Daily activity summary for %s', $this->defaults->getName()));
 		$template->addHeader();
 
 		foreach ($activities as $event) {
