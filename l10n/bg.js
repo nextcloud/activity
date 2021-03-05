@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Емисията е с невалиден URL адрес",
     "Your settings have been updated." : "Вашите настройки са актуализирани.",
     "Settings have been updated." : "Настройките бяха актуализирани.",
-    "Daily activity summary for " : "Обобщение на дневната активност",
     "_and %n more _::_and %n more _" : ["и %n още ","и %n още "],
     "All activities" : "Всички активности",
     "By others" : "От други",

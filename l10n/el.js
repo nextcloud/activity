@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Η διεύθυνση ροής πληροφοριών URL δεν είναι έγκυρη",
     "Your settings have been updated." : "Οι ρυθμίσεις σας έχουν ενημερωθεί.",
     "Settings have been updated." : "Οι ρυθμίσεις έχουν ενημερωθεί.",
-    "Daily activity summary for " : "Σύνοψη ημερήσιας δραστηριότητας για",
     "_and %n more _::_and %n more _" : ["και %n επιπλέον","και %n επιπλέον"],
     "All activities" : "Όλες οι δραστηριότητες",
     "By others" : "Από άλλους",

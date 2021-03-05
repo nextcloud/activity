@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Slóðin á virkniveituna þína ógild",
     "Your settings have been updated." : "Stillingar þínar eru breyttar.",
     "Settings have been updated." : "Stillingar hafa uppfærst.",
-    "Daily activity summary for " : "Yfirlit um daglega virkni fyrir",
     "_and %n more _::_and %n more _" : ["og %n til viðbótar","og %n til viðbótar"],
     "All activities" : "Öll virkni",
     "By others" : "Virkni annarra",

@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Adresa URL a fluxului este greșită",
     "Your settings have been updated." : "Setările au fost actualizate.",
     "Settings have been updated." : "Setările au fost actualizate.",
-    "Daily activity summary for " : "Sumar zilnic de activitate pentru",
     "_and %n more _::_and %n more _" : ["și încă %n","și încă %n","și încă %n"],
     "All activities" : "Toate activitățile",
     "By others" : "De către alții",
