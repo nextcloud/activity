@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Nevažeći URL sažetka",
     "Your settings have been updated." : "Vaše su postavke ažurirane.",
     "Settings have been updated." : "Postavke su ažurirane.",
-    "Daily activity summary for " : "Dnevni sažetak aktivnosti za ",
     "_and %n more _::_and %n more _" : ["i još %n ","i još %n ","i još %n "],
     "All activities" : "Sve aktivnosti",
     "By others" : "Od drugih",
