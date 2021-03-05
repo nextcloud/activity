@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Zure jarioaren URLa baliogabea da",
     "Your settings have been updated." : "Zure ezarpenak eguneratu dira.",
     "Settings have been updated." : "Ezarpenak eguneratu dira.",
-    "Daily activity summary for " : "Eguneko jardueraren laburpena",
     "_and %n more _::_and %n more _" : ["eta %n gehiago","eta %n gehiago"],
     "All activities" : "Jarduera guztiak",
     "By others" : "Besteenak",

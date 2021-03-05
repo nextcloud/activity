@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Direizh eo URL ho froud",
     "Your settings have been updated." : "Nevesaet eo bet hoc'h arventennoù",
     "Settings have been updated." : "Nevesaet ez eus bet arventennoù zo.",
-    "Daily activity summary for " : "Diverrañ an obererezh pemdeziek evit",
     "_and %n more _::_and %n more _" : ["hag %n all","ha %n all","ha %n all","ha %n all","ha %n all"],
     "All activities" : "Hollad obererezhioù",
     "By others" : "Gant tud all",

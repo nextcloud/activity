@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Неверная ссылка на ленту",
     "Your settings have been updated." : "Параметры обновлены.",
     "Settings have been updated." : "Параметры обновлены.",
-    "Daily activity summary for " : "Сводка событий за день",
     "_and %n more _::_and %n more _" : ["и ещё %n","и ещё %n","и ещё %n","и ещё %n"],
     "All activities" : "Все события",
     "By others" : "Других",

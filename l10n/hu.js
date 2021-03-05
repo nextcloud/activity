@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "A hírfolyam URL érvénytelen",
     "Your settings have been updated." : "Beállításai sikeresen frissítve.",
     "Settings have been updated." : "Beállítások frissítve.",
-    "Daily activity summary for " : "Napi tevékenység-összefoglaló ehhez: ",
     "_and %n more _::_and %n more _" : ["és %n további ","és %n további "],
     "All activities" : "Minden tevékenység",
     "By others" : "Másoké",

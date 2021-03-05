@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Адреса вашої стрічки помилкова",
     "Your settings have been updated." : "Налаштування успішно оновлено.",
     "Settings have been updated." : "Налаштування було оновлено.",
-    "Daily activity summary for " : "Підсумок за день для",
     "_and %n more _::_and %n more _" : ["та ще %n","та ще %n","та ще %n","та ще %n "],
     "All activities" : "Всі події",
     "By others" : "Події інших",

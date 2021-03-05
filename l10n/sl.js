@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Spletni naslov vira ni veljaven",
     "Your settings have been updated." : "Nastavitve so posodobljene.",
     "Settings have been updated." : "Nastavitve so posodobljene.",
-    "Daily activity summary for " : "Dnevni povzetek dejavnosti za",
     "_and %n more _::_and %n more _" : ["- in še %n","- in še %n","- in še %n","– in še %n"],
     "All activities" : "Vse dejavnosti",
     "By others" : "Dejavnosti drugih",
