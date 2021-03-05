@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "هذا الرابط غير صحيح",
     "Your settings have been updated." : "تم تحديث إعداداتك.",
     "Settings have been updated." : "تم تحديث الاعدادات.",
-    "Daily activity summary for " : "الخلاصة اليومية للأنشطة ل",
     "_and %n more _::_and %n more _" : ["فقط","و %n آخر","و %n آخرين","و %n أنشطة أخرى","و %n أنشطة أخرى","و %n أنشطة أخرى"],
     "All activities" : "جميع الأنشطة",
     "By others" : "بواسطة أخرين",

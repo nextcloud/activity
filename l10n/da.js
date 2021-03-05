@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Din feed-URL er ugyldig",
     "Your settings have been updated." : "Dine indstillinger er blevet opdateret.",
     "Settings have been updated." : "Indstillingerne er blevet opdateret.",
-    "Daily activity summary for " : "Daglig aktivitetsoversigt for",
     "_and %n more _::_and %n more _" : ["og %n mere ","og %n flere"],
     "All activities" : "Alle aktiviteter",
     "By others" : "Af andre",

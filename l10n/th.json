@@ -20,7 +20,6 @@
     "Your feed URL is invalid" : "ฟีด URL ของคุณไม่ถูกต้อง",
     "Your settings have been updated." : "อัพเดทการตั้งค่าเรียบร้อยแล้ว",
     "Settings have been updated." : "อัพเดทการตั้งค่าแล้ว",
-    "Daily activity summary for " : "สรุปกิจกรรมรวมของวัน",
     "_and %n more _::_and %n more _" : ["และอีก %n"],
     "All activities" : "กิจกรรมทั้งหมด",
     "By others" : "โดยผู้อื่น",

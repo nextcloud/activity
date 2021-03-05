@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Akış adresiniz geçersiz",
     "Your settings have been updated." : "Ayarlarınız güncellendi.",
     "Settings have been updated." : "Ayarlar güncellendi",
-    "Daily activity summary for " : "Şunun için günlük işlem özeti",
     "_and %n more _::_and %n more _" : ["ve %n diğer","ve %n diğer"],
     "All activities" : "Tüm işlemler",
     "By others" : "Diğerleri tarafından",

@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "URL adresa kanálu není platná",
     "Your settings have been updated." : "Vaše nastavení bylo aktualizováno.",
     "Settings have been updated." : "Nastavení byla zaktualizována.",
-    "Daily activity summary for " : "Souhrn denních aktivit pro ",
     "_and %n more _::_and %n more _" : ["a %n další","a %n další","a %n dalších","a %n další"],
     "All activities" : "Všechny aktivity",
     "By others" : "Ostatními",

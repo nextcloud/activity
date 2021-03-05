@@ -20,7 +20,6 @@
     "Your feed URL is invalid" : "L'URL del canal no és vàlid",
     "Your settings have been updated." : "S'han actualitzat els vostres paràmetres.",
     "Settings have been updated." : "S'han actualitzat els paràmetres.",
-    "Daily activity summary for " : "Resum d'activitat diari per a ",
     "_and %n more _::_and %n more _" : ["i %n més ","i %n més "],
     "All activities" : "Tota l'activitat",
     "By others" : "Activitat d'altres usuaris",

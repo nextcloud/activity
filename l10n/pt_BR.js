@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "A URL do feed é inválida",
     "Your settings have been updated." : "Suas configurações foram atualizadas.",
     "Settings have been updated." : "As configurações foram atualizadas.",
-    "Daily activity summary for " : "Resumo da atividade diária para",
     "_and %n more _::_and %n more _" : ["e %n mais","e %n mais"],
     "All activities" : "Todas as atividades",
     "By others" : "Por outros",

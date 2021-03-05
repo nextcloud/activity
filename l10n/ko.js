@@ -22,7 +22,6 @@ OC.L10N.register(
     "Your feed URL is invalid" : "피드 주소가 잘못되었습니다",
     "Your settings have been updated." : "설정이 업데이트되었습니다.",
     "Settings have been updated." : "설정이 업데이트되었습니다.",
-    "Daily activity summary for " : "일일 활동 요약",
     "_and %n more _::_and %n more _" : ["%n개 더"],
     "All activities" : "모든 활동",
     "By others" : "다른 사람",
