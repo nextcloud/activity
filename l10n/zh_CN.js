@@ -22,6 +22,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "您的订阅源地址无效",
     "Your settings have been updated." : "您的设置已更新。",
     "Settings have been updated." : "设置已更新。",
+    "Daily activity summary for %s" : "%s 的每日活动概况",
     "_and %n more _::_and %n more _" : ["更多 %n 项"],
     "All activities" : "所有动态",
     "By others" : "其他来源",
