@@ -22,6 +22,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Je activiteitenkanaal link is ongeldig",
     "Your settings have been updated." : "Je instellingen zijn bijgewerkt",
     "Settings have been updated." : "Instellingen zijn bijgewerkt",
+    "Daily activity summary for %s" : "Dagelijkse activiteits samenvatting voor %s",
     "_and %n more _::_and %n more _" : ["en %n meer ","en %n meer "],
     "All activities" : "Alle activiteiten",
     "By others" : "Van anderen",
