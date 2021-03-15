@@ -20,7 +20,7 @@ OC.L10N.register(
     "Open file" : "Otevřít soubor",
     "Personal activity feed for %s" : "Přehled aktivit uživatele %s",
     "Your feed URL is invalid" : "URL adresa kanálu není platná",
-    "Your settings have been updated." : "Vaše nastavení bylo aktualizováno.",
+    "Your settings have been updated." : "Vaše nastavení byla aktualizována.",
     "Settings have been updated." : "Nastavení byla zaktualizována.",
     "Daily activity summary for %s" : "Souhrn denních aktivit pro %s",
     "_and %n more _::_and %n more _" : ["a %n další","a %n další","a %n dalších","a %n další"],
