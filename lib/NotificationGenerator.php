@@ -49,10 +49,7 @@ class NotificationGenerator implements INotifier {
 		$selfAction = $event->getAffectedUser() === $event->getAuthor();
 		$notifySetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'notify', $event->getType());
 
-		// User is not the author or wants to see their own actions
-		$createStream = !$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'self');
-
-		if (($notifySetting || true) && $event->getGenerateNotification()) {
+		if ($notifySetting && !$selfAction && $event->getGenerateNotification()) {
 			$this->notificationManager->notify($this->getNotificationForEvent($event, $activityId));
 		}
 	}
