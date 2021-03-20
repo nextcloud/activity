@@ -22,6 +22,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Syötteen osoite on virheellinen",
     "Your settings have been updated." : "Asetuksesi on päivitetty.",
     "Settings have been updated." : "Asetukset on päivitetty.",
+    "Daily activity summary for %s" : "Päivittäisten toimien yhteenveto%s lle",
     "_and %n more _::_and %n more _" : ["ja %n lisää","ja %n lisää"],
     "All activities" : "Kaikki tapahtumat",
     "By others" : "Muiden tapahtumat",
