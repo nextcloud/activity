@@ -156,10 +156,12 @@ class FilesHooks {
 			return;
 		}
 
+		$isDir = $this->view->is_dir($path);
+
 		if ($this->currentUser->getUserIdentifier() !== '') {
-			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
+			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, $isDir ? 'created_self' : 'upload_self', $isDir ? 'created_by' : 'upload_by');
 		} else {
-			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, '', 'created_public');
+			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, '', $isDir ? 'created_public' : 'uploaded_public');
 		}
 	}
 
