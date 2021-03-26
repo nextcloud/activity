@@ -394,7 +394,7 @@ class MailQueueHandler {
 			$template->addBodyListItem($l->n('and %n more ', 'and %n more ', $skippedCount));
 		}
 
-		$template->addFooter();
+		$template->addFooter('', $lang);
 
 		$message = $this->mailer->createMessage();
 		$message->setTo([$email => $user->getDisplayName()]);
