@@ -197,7 +197,7 @@ class DigestSender {
 			$template->addBodyListItem($l10n->n('and %n more ', 'and %n more ', $skippedCount));
 		}
 
-		$template->addFooter();
+		$template->addFooter('', $language);
 
 		$message = $this->mailer->createMessage();
 		$message->setTo([$user->getEMailAddress() => $user->getDisplayName()]);
