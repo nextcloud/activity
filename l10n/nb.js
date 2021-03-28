@@ -22,6 +22,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Nettadressen for din strøm er ikke gyldig",
     "Your settings have been updated." : "Innstillingene dine ble oppdatert.",
     "Settings have been updated." : "Innstillinger oppdatert.",
+    "Daily activity summary for %s" : "Daglig aktivitetssammendrag for %s",
     "_and %n more _::_and %n more _" : ["og %n til","og %n til"],
     "All activities" : "All aktivitet",
     "By others" : "Av andre",
