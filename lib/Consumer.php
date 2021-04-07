@@ -73,11 +73,8 @@ class Consumer implements IConsumer {
 			$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
 		}
 
-		// User is not the author or wants to see their own actions
-		$createEmail = !$selfAction || $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'selfemail');
-
-		// Add activity to mail queue
-		if ($emailSetting !== false && $createEmail) {
+		// Add activity to mail queue and user is not the author
+		if ($emailSetting !== false && !$selfAction) {
 			$latestSend = $event->getTimestamp() + $emailSetting;
 			$this->data->storeMail($event, $latestSend);
 		}

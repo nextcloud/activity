@@ -48,8 +48,6 @@ class UserSettingsTest extends TestCase {
 	public function getDefaultSettingData(): array {
 		return [
 			['email', 'type1', false],
-			['setting', 'self', true],
-			['setting', 'selfemail', false],
 			['setting', 'batchtime', 3600],
 			['setting', 'not-exists', false],
 		];
