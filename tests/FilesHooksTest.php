@@ -1001,12 +1001,6 @@ class FilesHooksTest extends TestCase {
 	 * @param bool $sentEmail
 	 */
 	public function testAddNotificationsForUser(string $user, string $subject, array $parameter, int $fileId, string $path, string $urlPath, bool $isFile, bool $notification, bool $email, string $type, bool $selfSetting, bool $selfEmailSetting, string $app, bool $sentStream, bool $sentEmail): void {
-		$this->settings->expects($this->any())
-			->method('getUserSetting')
-			->willReturnMap([
-				[$user, 'setting', 'self', $selfSetting],
-				[$user, 'setting', 'selfemail', $selfEmailSetting],
-			]);
 
 		$this->urlGenerator->expects($this->once())
 			->method('linkToRouteAbsolute')
