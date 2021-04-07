@@ -184,7 +184,7 @@ class ConsumerTest extends TestCase {
 			->setObject('', 0 , 'file')
 			->setLink('link');
 
-		if ($expected === false) {
+		if ($expected === false || $author === $affectedUser) {
 			$this->data->expects($this->never())
 				->method('storeMail');
 		} else {
