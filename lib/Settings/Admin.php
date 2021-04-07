@@ -128,9 +128,6 @@ class Admin implements ISettings {
 
 			'setting_batchtime' => $settingBatchTime,
 
-			'notify_self' => $this->userSettings->getConfigSetting('setting', 'self'),
-			'notify_selfemail' => $this->userSettings->getConfigSetting('setting', 'selfemail'),
-
 			'methods' => [
 				IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
 				IExtension::METHOD_NOTIFICATION => $this->l10n->t('Push'),

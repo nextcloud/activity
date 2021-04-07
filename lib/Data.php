@@ -185,18 +185,6 @@ class Data {
 		} elseif ($filter === 'by') {
 			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
 		} elseif ($filter === 'filter') {
-			if (!$userSettings->getUserSetting($user, 'setting', 'self')) {
-				$query->andWhere($query->expr()->orX(
-					$query->expr()->neq('user', $query->createNamedParameter($user)),
-					$query->expr()->notIn('type', $query->createNamedParameter([
-						'file_created',
-						'file_changed',
-						'file_deleted',
-						'file_restored',
-					], IQueryBuilder::PARAM_STR_ARRAY))
-				));
-			}
-
 			$query->andWhere($query->expr()->eq('object_type', $query->createNamedParameter($objectType)));
 			$query->andWhere($query->expr()->eq('object_id', $query->createNamedParameter($objectId)));
 		}
