@@ -995,7 +995,6 @@ class FilesHooksTest extends TestCase {
 	 * @param bool $sentEmail
 	 */
 	public function testAddNotificationsForUser(string $user, string $subject, array $parameter, int $fileId, string $path, string $urlPath, bool $isFile, bool $notification, bool $email, string $type, string $app, bool $sentEmail): void {
-
 		$this->urlGenerator->expects($this->once())
 			->method('linkToRouteAbsolute')
 			->with('files.view.index', ['dir' => $urlPath])
