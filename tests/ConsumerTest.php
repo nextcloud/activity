@@ -87,12 +87,8 @@ class ConsumerTest extends TestCase {
 			->willReturnMap([
 				['affectedUser', 'notification', 'type', true],
 				['affectedUser2', 'notification', 'type', true],
-				['affectedUser', 'setting', 'self', true],
-				['affectedUser2', 'setting', 'self', false],
 				['affectedUser', 'email', 'type', true],
 				['affectedUser2', 'email', 'type', true],
-				['affectedUser', 'setting', 'selfemail', true],
-				['affectedUser2', 'setting', 'selfemail', false],
 				['affectedUser', 'setting', 'batchtime', 10],
 				['affectedUser2', 'setting', 'batchtime', 10],
 			]);
@@ -188,7 +184,7 @@ class ConsumerTest extends TestCase {
 			->setObject('', 0 , 'file')
 			->setLink('link');
 
-		if ($expected === false) {
+		if ($expected === false || $author === $affectedUser) {
 			$this->data->expects($this->never())
 				->method('storeMail');
 		} else {

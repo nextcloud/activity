@@ -1190,7 +1190,7 @@ class FilesHooks {
 		}
 
 		// Add activity to mail queue
-		if ($emailSetting !== false && (!$selfAction || $this->userSettings->getUserSetting($this->currentUser->getUID(), 'setting', 'selfemail'))) {
+		if ($emailSetting !== false && !$selfAction) {
 			$latestSend = time() + $emailSetting;
 			$this->activityData->storeMail($event, $latestSend);
 		}

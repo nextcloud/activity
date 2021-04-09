@@ -852,7 +852,6 @@ class FilesHooksTest extends TestCase {
 		return [
 			[false, false, 'owner', '', 1],
 			[true, false, 'owner', '', 1],
-			[true, true, 'owner', null, 1],
 			[true, true, 'owner', '', 1],
 			[true, true, 'owner', 'owner', 1],
 			[true, true, 'owner', 'sharee', 2],
@@ -967,17 +966,15 @@ class FilesHooksTest extends TestCase {
 
 	public function dataAddNotificationsForUser(): array {
 		return [
-			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files_Sharing::TYPE_SHARED, false, false, 'files_sharing', false, false],
-			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files_Sharing::TYPE_SHARED, true, false, 'files_sharing', true, false],
-			['notAuthor', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files::TYPE_SHARE_CREATED, false, false, 'files', true, false],
-			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, true, false, Files::TYPE_SHARE_CREATED, false, false, 'files', true, false],
+			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files_Sharing::TYPE_SHARED, 'files_sharing', false],
+			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files_Sharing::TYPE_SHARED, 'files_sharing', false],
+			['notAuthor', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files::TYPE_SHARE_CREATED, 'files', false],
+			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, true, false, Files::TYPE_SHARE_CREATED, 'files', false],
 
-			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files_Sharing::TYPE_SHARED, false, false, 'files_sharing', false, false],
-			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files_Sharing::TYPE_SHARED, false, true, 'files_sharing', false, true],
-			['notAuthor', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
-			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
-			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
-			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path/subpath', false, false, true, Files::TYPE_SHARE_CREATED, false, false, 'files', false, true],
+			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files_Sharing::TYPE_SHARED, 'files_sharing', false],
+			['notAuthor', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, 'files', true],
+			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, 'files', true],
+			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path/subpath', false, false, true, Files::TYPE_SHARE_CREATED, 'files', true],
 		];
 	}
 
@@ -994,20 +991,10 @@ class FilesHooksTest extends TestCase {
 	 * @param bool $notification
 	 * @param bool $email
 	 * @param string $type
-	 * @param bool $selfSetting
-	 * @param bool $selfEmailSetting
 	 * @param string $app
-	 * @param bool $sentStream
 	 * @param bool $sentEmail
 	 */
-	public function testAddNotificationsForUser(string $user, string $subject, array $parameter, int $fileId, string $path, string $urlPath, bool $isFile, bool $notification, bool $email, string $type, bool $selfSetting, bool $selfEmailSetting, string $app, bool $sentStream, bool $sentEmail): void {
-		$this->settings->expects($this->any())
-			->method('getUserSetting')
-			->willReturnMap([
-				[$user, 'setting', 'self', $selfSetting],
-				[$user, 'setting', 'selfemail', $selfEmailSetting],
-			]);
-
+	public function testAddNotificationsForUser(string $user, string $subject, array $parameter, int $fileId, string $path, string $urlPath, bool $isFile, bool $notification, bool $email, string $type, string $app, bool $sentEmail): void {
 		$this->urlGenerator->expects($this->once())
 			->method('linkToRouteAbsolute')
 			->with('files.view.index', ['dir' => $urlPath])

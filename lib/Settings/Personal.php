@@ -154,9 +154,6 @@ class Personal implements ISettings {
 
 			'setting_batchtime' => $settingBatchTime,
 
-			'notify_self' => $this->userSettings->getUserSetting($this->user, 'setting', 'self'),
-			'notify_selfemail' => $this->userSettings->getUserSetting($this->user, 'setting', 'selfemail'),
-
 			'methods' => $methods,
 
 			'activity_digest_enabled' => $this->userSettings->getUserSetting($this->user, 'setting', 'activity_digest')
