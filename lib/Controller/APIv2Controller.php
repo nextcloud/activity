@@ -363,6 +363,7 @@ class APIv2Controller extends OCSController {
 			'isMimeTypeIcon' => true,
 			'fileId' => $fileId,
 			'view' => $info['view'] ?: 'files',
+			'filename' => basename($filePath),
 		];
 
 		// show a preview image if the file still exists
