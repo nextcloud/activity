@@ -765,6 +765,7 @@ class APIv2ControllerTest extends TestCase {
 					'isMimeTypeIcon' => $isMimeTypeIcon,
 					'fileId' => $fileId,
 					'view' => 'files',
+					'filename' => basename($path),
 				]);
 		}
 
@@ -775,6 +776,7 @@ class APIv2ControllerTest extends TestCase {
 			'isMimeTypeIcon' => $isMimeTypeIcon,
 			'fileId' => $fileId,
 			'view' => 'files',
+			'filename' => basename($path),
 		], self::invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
 	}
 
@@ -820,6 +822,7 @@ class APIv2ControllerTest extends TestCase {
 				'isMimeTypeIcon' => true,
 				'fileId' => $fileId,
 				'view' => $view ?: 'files',
+				'filename' => basename($filePath),
 			],
 			self::invokePrivate($controller, 'getPreviewFromPath', [$fileId, $filePath, ['path' => $filePath, 'is_dir' => $isDir, 'view' => $view]])
 		);
