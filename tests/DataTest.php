@@ -62,7 +62,6 @@ class DataTest extends TestCase {
 	}
 
 	protected function tearDown(): void {
-		$this->restoreService('UserSession');
 		parent::tearDown();
 	}
 
@@ -89,9 +88,6 @@ class DataTest extends TestCase {
 	 * @param bool $expectedActivity
 	 */
 	public function testSend(string $actionUser, string $affectedUser, string $expectedAuthor, string $expectedAffected, bool $expectedActivity): void {
-		$mockSession = $this->createMock(Session::class);
-
-		$this->overwriteService('UserSession', $mockSession);
 		$this->deleteTestActivities();
 
 		$event = \OC::$server->getActivityManager()->generateEvent();
@@ -121,7 +117,6 @@ class DataTest extends TestCase {
 		}
 
 		$this->deleteTestActivities();
-		$this->restoreService('UserSession');
 	}
 
 	/**
@@ -134,9 +129,6 @@ class DataTest extends TestCase {
 	 * @param bool $expectedActivity
 	 */
 	public function testStoreMail(string $actionUser, string $affectedUser, string $expectedAuthor, string $expectedAffected, bool $expectedActivity): void {
-		$mockSession = $this->createMock(Session::class);
-
-		$this->overwriteService('UserSession', $mockSession);
 		$this->deleteTestMails();
 
 		$time = time();
@@ -165,7 +157,6 @@ class DataTest extends TestCase {
 		}
 
 		$this->deleteTestMails();
-		$this->restoreService('UserSession');
 	}
 
 	public function dataSetOffsetFromSince(): array {
