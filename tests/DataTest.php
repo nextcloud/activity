@@ -28,7 +28,6 @@ use OCP\IL10N;
 use OCP\IUserSession;
 use OCP\Util;
 use PHPUnit\Framework\MockObject\MockObject;
-use OC\User\Session;
 
 /**
  * Class DataTest
