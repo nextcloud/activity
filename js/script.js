@@ -253,7 +253,7 @@ $(function(){
 				for (var i = 0; i < activity.previews.length; i++) {
 					var preview = activity.previews[i];
 					content += ((preview.link) ? '<a href="' + preview.link + '">' + "\n" : '')
-						+ '<img class="preview' + ((preview.isMimeTypeIcon) ? ' preview-mimetype-icon' : '') + '" src="' + preview.source + '" alt="' + t('activity', 'Open file') + '" />' + "\n"
+						+ '<img class="preview' + ((preview.isMimeTypeIcon) ? ' preview-mimetype-icon' : '') + '" src="' + preview.source + '" alt="' + t('activity', 'Open {filename}', preview) + '" />' + "\n"
 						+ ((preview.link) ? '</a>' + "\n" : '')
 				}
 				content += '</div>';
