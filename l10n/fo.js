@@ -9,7 +9,6 @@ OC.L10N.register(
     "in {path}" : "í {path}",
     "Today" : "Ídag",
     "Yesterday" : "Ígjár",
-    "Open file" : "Opna fíluna",
     "All activities" : "Alt virksemi",
     "Hello %s" : "Hey %s",
     "Hello %s," : "Hey %s,",
@@ -18,6 +17,7 @@ OC.L10N.register(
     "Hourly" : "Hvønn tíma",
     "Daily" : "Hvønn dag",
     "Weekly" : "Hvørja viku",
+    "Open file" : "Opna fíluna",
     "Send emails:" : "Send t-postar:"
 },
 "nplurals=2; plural=(n != 1);");

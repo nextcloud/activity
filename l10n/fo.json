@@ -7,7 +7,6 @@
     "in {path}" : "í {path}",
     "Today" : "Ídag",
     "Yesterday" : "Ígjár",
-    "Open file" : "Opna fíluna",
     "All activities" : "Alt virksemi",
     "Hello %s" : "Hey %s",
     "Hello %s," : "Hey %s,",
@@ -16,6 +15,7 @@
     "Hourly" : "Hvønn tíma",
     "Daily" : "Hvønn dag",
     "Weekly" : "Hvørja viku",
+    "Open file" : "Opna fíluna",
     "Send emails:" : "Send t-postar:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

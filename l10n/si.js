@@ -15,7 +15,6 @@ OC.L10N.register(
     "in {path}" : "{path} තුළ",
     "Today" : "අද",
     "Yesterday" : "ඊයේ",
-    "Open file" : "ගොනුව විවෘත කරන්න",
     "Your settings have been updated." : "ඔබගේ සැකසුම් යාවත්කාලීන කර ඇත.",
     "Settings have been updated." : "සැකසුම් යාවත්කාලීන කර ඇත.",
     "All activities" : "සියලුම ක්‍රියාකාරකම්",
@@ -33,6 +32,7 @@ OC.L10N.register(
     "Weekly" : "සතිපතා",
     "Settings" : "සැකසුම්",
     "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත",
+    "Open file" : "ගොනුව විවෘත කරන්න",
     "Send activity emails" : "ක්‍රියාකාරකම් විද්‍යුත් තැපෑල යවන්න",
     "Notify about your own actions via email" : "ඔබගේ ක්‍රියාමාර්ග පිළිබඳ විද්‍යුත් තැපෑලෙන් දැනුම් දෙන්න"
 },

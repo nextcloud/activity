@@ -15,7 +15,6 @@ OC.L10N.register(
     "in {path}" : "dalam {haluan}",
     "Today" : "Hari ini",
     "Yesterday" : "Semalam",
-    "Open file" : "Buka fail",
     "Your settings have been updated." : "Tetapan anda sudah dikemaskini.",
     "Settings have been updated." : "Tetapan sudah dikemaskini.",
     "All activities" : "Semua aktiviti",
@@ -33,6 +32,7 @@ OC.L10N.register(
     "Settings" : "Tetapan",
     "RSS feed" : "Suapan RSS",
     "No more events to load" : "Tiada aktiviti untuk memuat",
+    "Open file" : "Buka fail",
     "Stream" : "Strim",
     "Send activity emails" : "Hantar emel aktiviti",
     "Send emails:" : "Hantar email:"

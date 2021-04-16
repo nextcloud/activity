@@ -17,7 +17,6 @@ OC.L10N.register(
     "There are no events for this filter" : "Cap d’eveniment per aqueste filtre",
     "Today" : "Uèi",
     "Yesterday" : "Ièr",
-    "Open file" : "Dobrir fichièr",
     "Personal activity feed for %s" : "Fil d’activitat personal per %s",
     "Your feed URL is invalid" : "L’URL del fil es invalida",
     "Your settings have been updated." : "Los paramètres son estats actualizats.",
@@ -28,6 +27,7 @@ OC.L10N.register(
     "Mail" : "Mail",
     "Notifications" : "Notificacions",
     "Default settings" : "Paramètres par defaut",
-    "Settings" : "Paramètres"
+    "Settings" : "Paramètres",
+    "Open file" : "Dobrir fichièr"
 },
 "nplurals=2; plural=(n > 1);");
