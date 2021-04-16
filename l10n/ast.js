@@ -17,7 +17,6 @@ OC.L10N.register(
     "There are no events for this filter" : "Nun hai eventos pa esta peñera",
     "Today" : "Güei",
     "Yesterday" : "Ayeri",
-    "Open file" : "Abrir ficheru",
     "Personal activity feed for %s" : "Feed d'actividá personal pa %s",
     "Your feed URL is invalid" : "La URL del to feed nun ye válida",
     "Your settings have been updated." : "Anováronse los tos axustes.",
@@ -40,6 +39,7 @@ OC.L10N.register(
     "Settings" : "Axustes",
     "Enable RSS feed" : "Habilitar feed RSS",
     "No more events to load" : "Nun hai más eventos pa cargar",
+    "Open file" : "Abrir ficheru",
     "Stream" : "Fluxu de rede",
     "Notify about your own actions via email" : "Avisar per corréu tocante a les mios propies aiciones",
     "Send emails:" : "Unviar correos:"
