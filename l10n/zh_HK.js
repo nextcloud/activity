@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "在此篩選器下沒有系統事件",
     "Today" : "今日",
     "Yesterday" : "昨日",
+    "Open {filename}" : "打開  {filename}",
     "Personal activity feed for %s" : "%s 的個人系統事件摘要",
     "Your feed URL is invalid" : "您的 Feed URL 是無效的",
     "Your settings have been updated." : "您的設定已更新。",

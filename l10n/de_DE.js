@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Keine Ereignisse für diesen Filter vorhanden",
     "Today" : "Heute",
     "Yesterday" : "Gestern",
+    "Open {filename}" : "{filename} öffnen",
     "Personal activity feed for %s" : "Persönlicher Feed der Aktivitäten für %s",
     "Your feed URL is invalid" : "Ihre Feed-URL ist ungültig",
     "Your settings have been updated." : "Ihre Einstellungen wurden aktualisiert.",
