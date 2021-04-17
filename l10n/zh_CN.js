@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "没有符合当前筛选条件的事件。",
     "Today" : "今天",
     "Yesterday" : "昨天",
+    "Open {filename}" : "打开 {filename}",
     "Personal activity feed for %s" : "%s 的个人活动订阅源",
     "Your feed URL is invalid" : "您的订阅源地址无效",
     "Your settings have been updated." : "您的设置已更新。",
