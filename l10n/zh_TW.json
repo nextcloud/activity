@@ -15,6 +15,7 @@
     "There are no events for this filter" : "在此篩選器下沒有活動",
     "Today" : "今天",
     "Yesterday" : "昨天",
+    "Open {filename}" : "開啟 {filename}",
     "Personal activity feed for %s" : "%s 的個人動態摘要",
     "Your feed URL is invalid" : "您的 Feed URL 是無效的",
     "Your settings have been updated." : "您的設定已更新。",
