@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "No hay eventos para este filtro",
     "Today" : "Hoy",
     "Yesterday" : "Ayer",
+    "Open {filename}" : "Abrir {filename}",
     "Personal activity feed for %s" : "Fuente de actividad personal para %s",
     "Your feed URL is invalid" : "La URL de tu fuente no es válida",
     "Your settings have been updated." : "Tus ajustes han sido actualizados.",
