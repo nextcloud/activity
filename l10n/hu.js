@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Ehhez a szűrőhöz nem található esemény",
     "Today" : "Ma",
     "Yesterday" : "Tegnap",
+    "Open {filename}" : "{filename} megnyitása",
     "Personal activity feed for %s" : "Személyes tevékenységnapló ehhez: %s",
     "Your feed URL is invalid" : "A hírfolyam URL érvénytelen",
     "Your settings have been updated." : "Beállításai sikeresen frissítve.",
