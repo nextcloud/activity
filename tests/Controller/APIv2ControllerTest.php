@@ -35,7 +35,6 @@ use OCP\IL10N;
 use OCP\IUser;
 use OCP\Files\FileInfo;
 use OCP\IRequest;
-use OCP\IAvatarManager;
 use OCA\Activity\ViewInfoCache;
 use OC\Files\View;
 use OCP\Files\IMimeTypeDetector;
@@ -87,9 +86,6 @@ class APIv2ControllerTest extends TestCase {
 	/** @var ViewInfoCache|MockObject */
 	protected $infoCache;
 
-	/** @var IAvatarManager|MockObject */
-	protected $avatarManager;
-
 	/** @var IL10N */
 	protected $l10n;
 
@@ -109,16 +105,12 @@ class APIv2ControllerTest extends TestCase {
 		$this->mimeTypeDetector = $this->createMock(IMimeTypeDetector::class);
 		$this->view = $this->createMock(View::class);
 		$this->infoCache = $this->createMock(ViewInfoCache::class);
-		$this->avatarManager = $this->createMock(IAvatarManager::class);
 		$this->request = $this->createMock(IRequest::class);
 
 		$this->controller = $this->getController();
-
-		$this->overwriteService('AvatarManager', $this->avatarManager);
 	}
 
 	protected function tearDown(): void {
-		$this->restoreService('AvatarManager');
 		parent::tearDown();
 	}
 

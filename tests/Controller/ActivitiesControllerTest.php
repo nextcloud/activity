@@ -108,9 +108,9 @@ class ActivitiesControllerTest extends TestCase {
 		$templateResponse = $this->controller->showList();
 		$this->assertInstanceOf(TemplateResponse::class, $templateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
-		$this->overwriteService('Logger', $this->createMock(ILogger::class));
+		$this->overwriteService(ILogger::class, $this->createMock(ILogger::class));
 		$renderedResponse = $templateResponse->render();
-		$this->restoreService('Logger');
+		$this->restoreService(ILogger::class);
 		$this->assertNotEmpty($renderedResponse);
 	}
 }
