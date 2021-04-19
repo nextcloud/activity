@@ -15,6 +15,7 @@
     "There are no events for this filter" : "Ez dago gertaerarik iragazki honetarako",
     "Today" : "Gaur",
     "Yesterday" : "Atzo",
+    "Open {filename}" : "Ireki {filename}",
     "Personal activity feed for %s" : "%s-(r)en jarduera jario pertsonala",
     "Your feed URL is invalid" : "Zure jarioaren URLa baliogabea da",
     "Your settings have been updated." : "Zure ezarpenak eguneratu dira.",
