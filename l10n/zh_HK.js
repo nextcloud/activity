@@ -57,7 +57,7 @@ OC.L10N.register(
     "Stream" : "串流",
     "Send activity emails" : "傳送有關系統事件的電郵",
     "Configure the default activity settings for new users." : "為新用戶設置預設系統事件設定。",
-    "List your own actions in the stream" : "列出屬於您的系統事件。",
+    "List your own actions in the stream" : "在信息流中列出您的操作",
     "Notify about your own actions via email" : "透過郵件來通知有關於您的系統事件狀態",
     "Send emails:" : "傳送電郵：",
     "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "選擇你希望接受到電郵通知或者在應用程式中顯示的系統事件。",
