@@ -3,6 +3,5 @@
   "templates.js",
   "activitymodel.js",
   "activitycollection.js",
-  "activitytabview.js",
-  "filesplugin.js"
+  "activity-sidebar.js"
 ]

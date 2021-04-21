@@ -54,6 +54,9 @@ build-js-production:
 watch-js:
 	npm run watch
 
+serve-js:
+	npm run serve
+
 # Linting
 lint:
 	npm run lint
@@ -70,7 +73,7 @@ stylelint-fix:
 
 # Cleaning
 clean:
-	rm -rf js/*
+	rm -rf js/*hot-update.*
 
 clean-dev:
 	rm -rf node_modules
