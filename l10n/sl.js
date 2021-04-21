@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Ta filter ne pokaže nobenih dogodkov",
     "Today" : "Danes",
     "Yesterday" : "Včeraj",
+    "Open {filename}" : "Odpri {filename}",
     "Personal activity feed for %s" : "Osebne dejavnosti za %s",
     "Your feed URL is invalid" : "Spletni naslov vira ni veljaven",
     "Your settings have been updated." : "Nastavitve so posodobljene.",
