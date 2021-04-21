@@ -1,0 +1,73 @@
+{
+	"name": "activity",
+	"description": "This application enables users to view a log of activities about them or about files.",
+	"version": "2.15.0",
+	"author": "Julius Härtl <jus@bitgrid.net",
+	"contributors": [],
+	"bugs": {
+		"url": "https://github.com/nextcloud/activity/issues"
+	},
+	"repository": {
+		"url": "https://github.com/nextcloud/activity",
+		"type": "git"
+	},
+	"homepage": "https://github.com/nextcloud/activity",
+	"license": "agpl",
+	"private": true,
+	"scripts": {
+		"build": "NODE_ENV=production webpack --progress --hide-modules --config webpack.js",
+		"dev": "NODE_ENV=development webpack --progress --config webpack.js",
+		"watch": "NODE_ENV=development webpack --progress --watch --config webpack.js",
+		"lint": "eslint --ext .js,.vue src",
+		"lint:fix": "eslint --ext .js,.vue src --fix",
+		"stylelint": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue",
+		"stylelint:fix": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue --fix"
+	},
+	"dependencies": {
+		"@nextcloud/axios": "^1.6.0",
+		"@nextcloud/l10n": "^1.4.1",
+		"@nextcloud/moment": "^1.1.1",
+		"@nextcloud/router": "^2.0.0",
+		"@nextcloud/vue": "^3.9.0",
+		"vue": "^2.6.12"
+	},
+	"browserslist": [
+		"extends @nextcloud/browserslist-config"
+	],
+	"engines": {
+		"node": ">=10.0.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.13.15",
+		"@babel/plugin-syntax-dynamic-import": "^7.8.3",
+		"@babel/preset-env": "^7.13.15",
+		"@nextcloud/browserslist-config": "^2.1.0",
+		"@nextcloud/eslint-config": "^2.2.0",
+		"@nextcloud/eslint-plugin": "^1.5.0",
+		"@nextcloud/webpack-vue-config": "^1.2.0",
+		"babel-eslint": "^10.1.0",
+		"babel-loader": "^8.2.2",
+		"css-loader": "^3.6.0",
+		"eslint": "^6.8.0",
+		"eslint-config-standard": "^14.1.1",
+		"eslint-import-resolver-webpack": "^0.13.0",
+		"eslint-loader": "^4.0.2",
+		"eslint-plugin-import": "^2.22.1",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^4.3.1",
+		"eslint-plugin-standard": "^4.1.0",
+		"eslint-plugin-vue": "^6.2.2",
+		"file-loader": "^6.2.0",
+		"node-sass": "^4.14.1",
+		"sass-loader": "^8.0.2",
+		"stylelint": "^13.12.0",
+		"stylelint-config-recommended-scss": "^4.2.0",
+		"stylelint-scss": "^3.19.0",
+		"stylelint-webpack-plugin": "^2.1.1",
+		"url-loader": "^4.1.1",
+		"vue-loader": "^15.9.6",
+		"vue-template-compiler": "^2.6.12",
+		"webpack": "^4.46.0",
+		"webpack-cli": "^3.3.12"
+	}
+}
