@@ -60,3 +60,7 @@ nbproject
 /tests/karma-coverage
 /vendor
 /.php_cs.cache
+
+# Vue.js
+/build/
+node_modules/

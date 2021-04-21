@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
-<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
-	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>activity</id>
 	<name>Activity</name>
-	<summary>This application enables users to view actions related to their files in Nextcloud.</summary>
+	<summary>This application enables users to view a log of activities about them or about files.</summary>
 	<description>
 		This application enables users to view actions related to their files in Nextcloud.
 		Once enabled, users will see a new icon “Activity” in their apps menu.
@@ -19,9 +18,9 @@
 	<author>Frank Karlitschek</author>
 	<author>Joas Schilling</author>
 
-	<default_enable/>
+	<default_enable />
 	<types>
-		<filesystem/>
+		<filesystem />
 	</types>
 
 	<documentation>
