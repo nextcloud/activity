@@ -160,24 +160,6 @@
 	margin: 0 5px 2px 3px;
 }
 
-.activityTabView .activity.box {
-	position: relative;
-}
-.activityTabView .activity-icon {
-	position: absolute;
-	margin-top: 3px;
-}
-.activityTabView .activitysubject {
-	width: 90%;
-	margin-left: 24px;
-	display: block;
-	min-height: 28px;
-}
-.activityTabView .box .activitytime {
-	padding: 0;
-	margin: -15px 0 0;
-}
-
 .icon-activity {
 	@include icon-color('activity-dark', 'activity', $color-black);
 }

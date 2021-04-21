@@ -64,3 +64,4 @@ nbproject
 # Vue.js
 /build/
 node_modules/
+js/*hot-update.*
