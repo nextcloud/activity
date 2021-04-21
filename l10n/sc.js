@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Non ddoe at eventos pro custu filtru",
     "Today" : "Oe",
     "Yesterday" : "Eris",
+    "Open {filename}" : "Aberi {filename}",
     "Personal activity feed for %s" : "Flussu de atividade personale de su %s",
     "Your feed URL is invalid" : "S'URL de flussu tuo no est vàlidu",
     "Your settings have been updated." : "Is impostatziones tuas sunt istadas agiornadas.",
