@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Pro tato kritéria nejsou žádné události",
     "Today" : "Dnes",
     "Yesterday" : "Včera",
+    "Open {filename}" : "Otevřít {filename}",
     "Personal activity feed for %s" : "Přehled aktivit uživatele %s",
     "Your feed URL is invalid" : "URL adresa kanálu není platná",
     "Your settings have been updated." : "Vaše nastavení byla aktualizována.",
