@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Отсутствуют события, соответствующие фильтру",
     "Today" : "Сегодня",
     "Yesterday" : "Вчера",
+    "Open {filename}" : "Открыть {filename}",
     "Personal activity feed for %s" : "Персональная лента событий %s",
     "Your feed URL is invalid" : "Неверная ссылка на ленту",
     "Your settings have been updated." : "Параметры обновлены.",
