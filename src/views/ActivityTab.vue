@@ -74,7 +74,7 @@ export default {
 		async update(fileInfo) {
 			this.fileInfo = fileInfo
 			this.resetState()
-			this.getActivities()
+			await this.getActivities()
 		},
 		/**
 		 * Get the existing activities

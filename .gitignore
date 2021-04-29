@@ -65,3 +65,6 @@ nbproject
 /build/
 node_modules/
 js/*hot-update.*
+coverage
+cypress/screenshots/
+cypress/videos/

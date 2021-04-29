@@ -1,3 +1,5 @@
 js/dist/activity-sidebar.js binary
 js/dist/*.LICENCE.map binary
 js/dist/*.js.map binary
+package-lock.json binary
+src/test/__snapshots__/*.snap
