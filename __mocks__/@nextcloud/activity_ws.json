@@ -1,0 +1,584 @@
+{
+	"ocs": {
+		"meta": {
+			"status": "ok",
+			"statuscode": 200,
+			"message": "OK"
+		},
+		"data": [
+			{
+				"activity_id": 25,
+				"app": "comments",
+				"type": "comments",
+				"user": "admin",
+				"subject": "You commented",
+				"subject_rich": [
+					"You commented",
+					[]
+				],
+				"message": "zerzer",
+				"message_rich": [
+					"zerzer",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "",
+				"objects": {
+					"776": ""
+				},
+				"link": "",
+				"icon": "http:\/\/localhost:8080\/core\/img\/actions\/comment.svg",
+				"datetime": "2021-04-29T13:57:11+00:00"
+			},
+			{
+				"activity_id": 23,
+				"app": "files",
+				"type": "file_changed",
+				"user": "admin",
+				"subject": "You renamed Test file - renamed.md to Test file - renamed - looooooooong.md",
+				"subject_rich": [
+					"You renamed {oldfile} to {newfile}",
+					{
+						"newfile": {
+							"type": "file",
+							"id": "776",
+							"name": "Test file - renamed - looooooooong.md",
+							"path": "Test file - renamed - looooooooong.md",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/776"
+						},
+						"oldfile": {
+							"type": "file",
+							"id": "776",
+							"name": "Test file - renamed.md",
+							"path": "Test file - renamed.md",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/776"
+						}
+					}
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "\/\/Test file - renamed - looooooooong.md",
+				"objects": {
+					"776": "\/\/Test file - renamed - looooooooong.md"
+				},
+				"link": "http:\/\/localhost:8080\/index.php\/apps\/files\/?dir=\/",
+				"icon": "http:\/\/localhost:8080\/apps\/files\/img\/change.svg",
+				"datetime": "2021-04-29T09:12:46+00:00"
+			},
+			{
+				"activity_id": 22,
+				"app": "comments",
+				"type": "comments",
+				"user": "admin",
+				"subject": "You commented",
+				"subject_rich": [
+					"You commented",
+					[]
+				],
+				"message": "An edited comment",
+				"message_rich": [
+					"An edited comment",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "",
+				"objects": {
+					"776": ""
+				},
+				"link": "",
+				"icon": "http:\/\/localhost:8080\/core\/img\/actions\/comment.svg",
+				"datetime": "2021-04-29T09:05:01+00:00"
+			},
+			{
+				"activity_id": 21,
+				"app": "comments",
+				"type": "comments",
+				"user": "admin",
+				"subject": "You commented",
+				"subject_rich": [
+					"You commented",
+					[]
+				],
+				"message": "A veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery long and useleeeeeeeeeeeeeeees comment",
+				"message_rich": [
+					"A veeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeery long and useleeeeeeeeeeeeeeees comment",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "",
+				"objects": {
+					"776": ""
+				},
+				"link": "",
+				"icon": "http:\/\/localhost:8080\/core\/img\/actions\/comment.svg",
+				"datetime": "2021-04-29T09:04:56+00:00"
+			},
+			{
+				"activity_id": 20,
+				"app": "comments",
+				"type": "comments",
+				"user": "admin",
+				"subject": "You commented",
+				"subject_rich": [
+					"You commented",
+					[]
+				],
+				"message": "A comment",
+				"message_rich": [
+					"A comment",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "",
+				"objects": {
+					"776": ""
+				},
+				"link": "",
+				"icon": "http:\/\/localhost:8080\/core\/img\/actions\/comment.svg",
+				"datetime": "2021-04-29T09:04:43+00:00"
+			},
+			{
+				"activity_id": 19,
+				"app": "files",
+				"type": "favorite",
+				"user": "admin",
+				"subject": "Added to favorites",
+				"subject_rich": [
+					"",
+					[]
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "Test file - renamed.md",
+				"objects": {
+					"776": "Test file - renamed.md"
+				},
+				"link": "",
+				"icon": "http:\/\/localhost:8080\/core\/img\/actions\/starred.svg",
+				"datetime": "2021-04-29T08:52:19+00:00"
+			},
+			{
+				"activity_id": 18,
+				"app": "files",
+				"type": "unfavorite",
+				"user": "admin",
+				"subject": "Removed from favorites",
+				"subject_rich": [
+					"",
+					[]
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "Test file - renamed.md",
+				"objects": {
+					"776": "Test file - renamed.md"
+				},
+				"link": "",
+				"icon": "http:\/\/localhost:8080\/core\/img\/actions\/star.svg",
+				"datetime": "2021-04-29T08:52:07+00:00"
+			},
+			{
+				"activity_id": 15,
+				"app": "files",
+				"type": "file_changed",
+				"user": "admin",
+				"subject": "You changed Test file - renamed.md",
+				"subject_rich": [
+					"You changed {file1}",
+					{
+						"file1": {
+							"type": "file",
+							"id": "776",
+							"name": "Test file - renamed.md",
+							"path": "Test file - renamed.md",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/776"
+						}
+					}
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "\/Test file - renamed.md",
+				"objects": {
+					"776": "\/Test file - renamed.md"
+				},
+				"link": "http:\/\/localhost:8080\/index.php\/apps\/files\/?dir=\/",
+				"icon": "http:\/\/localhost:8080\/apps\/files\/img\/change.svg",
+				"datetime": "2021-04-29T08:51:42+00:00"
+			},
+			{
+				"activity_id": 14,
+				"app": "systemtags",
+				"type": "systemtags",
+				"user": "admin",
+				"subject": "Added system tag 2gat",
+				"subject_rich": [
+					"Added system tag {systemtag}",
+					{
+						"systemtag": {
+							"type": "systemtag",
+							"id": 2,
+							"name": "2gat",
+							"assignable": "1",
+							"visibility": "1"
+						}
+					}
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "",
+				"objects": {
+					"776": ""
+				},
+				"link": "",
+				"icon": "http:\/\/localhost:8080\/core\/img\/actions\/tag.svg",
+				"datetime": "2021-04-29T08:50:54+00:00"
+			},
+			{
+				"activity_id": 12,
+				"app": "systemtags",
+				"type": "systemtags",
+				"user": "admin",
+				"subject": "Added system tag tag1",
+				"subject_rich": [
+					"Added system tag {systemtag}",
+					{
+						"systemtag": {
+							"type": "systemtag",
+							"id": 1,
+							"name": "tag1",
+							"assignable": "1",
+							"visibility": "1"
+						}
+					}
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "",
+				"objects": {
+					"776": ""
+				},
+				"link": "",
+				"icon": "http:\/\/localhost:8080\/core\/img\/actions\/tag.svg",
+				"datetime": "2021-04-29T08:50:49+00:00"
+			},
+			{
+				"activity_id": 10,
+				"app": "files_sharing",
+				"type": "shared",
+				"user": "admin",
+				"subject": "Shared as public link",
+				"subject_rich": [
+					"Shared as public link",
+					{
+						"file": {
+							"type": "file",
+							"id": "776",
+							"name": "Test file - renamed.md",
+							"path": "Test file - renamed.md",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/776"
+						}
+					}
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "\/Test file - renamed.md",
+				"objects": {
+					"776": "\/Test file - renamed.md"
+				},
+				"link": "http:\/\/localhost:8080\/index.php\/apps\/files\/?dir=\/",
+				"icon": "http:\/\/localhost:8080\/core\/img\/actions\/share.svg",
+				"datetime": "2021-04-29T08:49:55+00:00"
+			},
+			{
+				"activity_id": 9,
+				"app": "files",
+				"type": "file_changed",
+				"user": "admin",
+				"subject": "You moved Templates\/Test file - renamed.md to ",
+				"subject_rich": [
+					"You moved {oldfile} to {newfile}",
+					{
+						"newfile": {
+							"type": "file",
+							"id": "710",
+							"name": "",
+							"path": "",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/710"
+						},
+						"oldfile": {
+							"type": "file",
+							"id": "776",
+							"name": "Test file - renamed.md",
+							"path": "Templates\/Test file - renamed.md",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/776"
+						}
+					}
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "\/\/Test file - renamed.md",
+				"objects": {
+					"776": "\/\/Test file - renamed.md"
+				},
+				"link": "http:\/\/localhost:8080\/index.php\/apps\/files\/?dir=\/",
+				"icon": "http:\/\/localhost:8080\/apps\/files\/img\/change.svg",
+				"datetime": "2021-04-29T08:49:44+00:00"
+			},
+			{
+				"activity_id": 8,
+				"app": "files",
+				"type": "file_changed",
+				"user": "admin",
+				"subject": "You renamed Templates\/Test file.md to Templates\/Test file - renamed.md",
+				"subject_rich": [
+					"You renamed {oldfile} to {newfile}",
+					{
+						"newfile": {
+							"type": "file",
+							"id": "776",
+							"name": "Test file - renamed.md",
+							"path": "Templates\/Test file - renamed.md",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/776"
+						},
+						"oldfile": {
+							"type": "file",
+							"id": "776",
+							"name": "Test file.md",
+							"path": "Templates\/Test file.md",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/776"
+						}
+					}
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "\/Templates\/Test file - renamed.md",
+				"objects": {
+					"776": "\/Templates\/Test file - renamed.md"
+				},
+				"link": "http:\/\/localhost:8080\/index.php\/apps\/files\/?dir=\/Templates",
+				"icon": "http:\/\/localhost:8080\/apps\/files\/img\/change.svg",
+				"datetime": "2021-04-29T08:49:40+00:00"
+			},
+			{
+				"activity_id": 7,
+				"app": "files",
+				"type": "file_changed",
+				"user": "admin",
+				"subject": "You moved Documents\/Test file.md to Templates",
+				"subject_rich": [
+					"You moved {oldfile} to {newfile}",
+					{
+						"newfile": {
+							"type": "file",
+							"id": "754",
+							"name": "Templates",
+							"path": "Templates",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/754"
+						},
+						"oldfile": {
+							"type": "file",
+							"id": "776",
+							"name": "Test file.md",
+							"path": "Documents\/Test file.md",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/776"
+						}
+					}
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "\/Templates\/Test file.md",
+				"objects": {
+					"776": "\/Templates\/Test file.md"
+				},
+				"link": "http:\/\/localhost:8080\/index.php\/apps\/files\/?dir=\/Templates",
+				"icon": "http:\/\/localhost:8080\/apps\/files\/img\/change.svg",
+				"datetime": "2021-04-29T08:49:28+00:00"
+			},
+			{
+				"activity_id": 6,
+				"app": "files",
+				"type": "file_changed",
+				"user": "admin",
+				"subject": "You moved Test file.md to Documents",
+				"subject_rich": [
+					"You moved {oldfile} to {newfile}",
+					{
+						"newfile": {
+							"type": "file",
+							"id": "753",
+							"name": "Documents",
+							"path": "Documents",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/753"
+						},
+						"oldfile": {
+							"type": "file",
+							"id": "776",
+							"name": "Test file.md",
+							"path": "Test file.md",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/776"
+						}
+					}
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "\/Documents\/Test file.md",
+				"objects": {
+					"776": "\/Documents\/Test file.md"
+				},
+				"link": "http:\/\/localhost:8080\/index.php\/apps\/files\/?dir=\/Documents",
+				"icon": "http:\/\/localhost:8080\/apps\/files\/img\/change.svg",
+				"datetime": "2021-04-29T08:49:19+00:00"
+			},
+			{
+				"activity_id": 5,
+				"app": "files",
+				"type": "favorite",
+				"user": "admin",
+				"subject": "Added to favorites",
+				"subject_rich": [
+					"",
+					[]
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "Test file.md",
+				"objects": {
+					"776": "Test file.md"
+				},
+				"link": "",
+				"icon": "http:\/\/localhost:8080\/core\/img\/actions\/starred.svg",
+				"datetime": "2021-04-29T08:49:16+00:00"
+			},
+			{
+				"activity_id": 4,
+				"app": "files",
+				"type": "file_changed",
+				"user": "admin",
+				"subject": "You changed Test file.md",
+				"subject_rich": [
+					"You changed {file}",
+					{
+						"file": {
+							"type": "file",
+							"id": "776",
+							"name": "Test file.md",
+							"path": "Test file.md",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/776"
+						}
+					}
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "\/Test file.md",
+				"objects": {
+					"776": "\/Test file.md"
+				},
+				"link": "http:\/\/localhost:8080\/index.php\/apps\/files\/?dir=\/",
+				"icon": "http:\/\/localhost:8080\/apps\/files\/img\/change.svg",
+				"datetime": "2021-04-29T08:49:09+00:00"
+			},
+			{
+				"activity_id": 3,
+				"app": "files",
+				"type": "file_created",
+				"user": "admin",
+				"subject": "You created Test file.md",
+				"subject_rich": [
+					"You created {file}",
+					{
+						"file": {
+							"type": "file",
+							"id": "776",
+							"name": "Test file.md",
+							"path": "Test file.md",
+							"link": "http:\/\/localhost:8080\/index.php\/f\/776"
+						}
+					}
+				],
+				"message": "",
+				"message_rich": [
+					"",
+					[]
+				],
+				"object_type": "files",
+				"object_id": 776,
+				"object_name": "\/Test file.md",
+				"objects": {
+					"776": "\/Test file.md"
+				},
+				"link": "http:\/\/localhost:8080\/index.php\/apps\/files\/?dir=\/",
+				"icon": "http:\/\/localhost:8080\/apps\/files\/img\/add-color.svg",
+				"datetime": "2021-04-29T08:49:01+00:00"
+			}
+		]
+	}
+}
