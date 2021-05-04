@@ -17,6 +17,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Er zijn geen gebeurtenissen voor deze filter",
     "Today" : "Vandaag",
     "Yesterday" : "Gisteren",
+    "Open {filename}" : "Openen {filename}",
     "Personal activity feed for %s" : "Persoonlijk activiteitenkanaal voor %s",
     "Your feed URL is invalid" : "Je activiteitenkanaal link is ongeldig",
     "Your settings have been updated." : "Je instellingen zijn bijgewerkt",
