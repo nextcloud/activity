@@ -2,7 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Activity" : "Atividades",
-    "An error occurred while loading activities" : "Ddoe at àpidu un'errore carrighende is atividades",
+    "An error occurred while loading activities" : "B'at àpidu un'errore carrighende is atividades",
     "No activity yet" : "Ancora peruna atividade ",
     "Load more activities" : "Càrriga àteras atividades",
     "Copied!" : "Copiadu!",
