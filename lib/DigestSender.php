@@ -87,6 +87,7 @@ class DigestSender {
 		$defaultLanguage = $this->config->getSystemValue('default_language', 'en');
 		$defaultTimeZone = date_default_timezone_get();
 		$timezoneDigestDay = [];
+		$this->activityManager->setRequirePNG(true);
 
 		foreach ($users as $user) {
 			$language = (!empty($userLanguages[$user])) ? $userLanguages[$user] : $defaultLanguage;
@@ -119,6 +120,8 @@ class DigestSender {
 			// so it hopefully works tomorrow
 			$this->config->setUserValue($user, 'activity', 'digest', $timezoneDigestDay[$timezone]);
 		}
+
+		$this->activityManager->setRequirePNG(false);
 	}
 
 	/**
