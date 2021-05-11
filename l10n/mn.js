@@ -1,10 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Үйлдлүүд",
-    "An error occurred while loading activities" : "Үйлдлүүдийг ачааллахад алдаа гарлаа",
-    "No activity yet" : "Одоохондоо ямар ч үйлдэл алга",
-    "Load more activities" : "Бусад үйлдлүүдийг ачаалах",
     "Copied!" : "Хуулав!",
     "Not supported!" : "Дэмжихгүй!",
     "Press ⌘-C to copy." : "Хуулахын тулд ⌘-C дарна уу.",
@@ -26,6 +22,8 @@ OC.L10N.register(
     "Hello %s" : "Сайн байна уу, %s",
     "Hello %s," : "Сайн байна уу, %s,",
     "Mail" : "Цахим шуудан",
+    "Activity" : "Үйлдлүүд",
+    "No activity yet" : "Одоохондоо ямар ч үйлдэл алга",
     "Activity feed" : "Үйлдлүүдйн тэжээл",
     "Notifications" : "Мэдэгдэл",
     "Enable notification emails" : "Эмэйл мэдэгдлийг идэвхжүүлэх",
@@ -37,6 +35,8 @@ OC.L10N.register(
     "Weekly" : "Долоо хоног бүр",
     "Settings" : "Тохиргоо",
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
+    "An error occurred while loading activities" : "Үйлдлүүдийг ачааллахад алдаа гарлаа",
+    "Load more activities" : "Бусад үйлдлүүдийг ачаалах",
     "Open file" : "Файл онгойлгох",
     "Stream" : "Урсгал",
     "Configure the default activity settings for new users." : "Шинэ хэрэглэгчдийн \"Үйлдлүүд\" хэсгийн анхдагч тохиргоог тохируулах",

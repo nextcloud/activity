@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Fəallıq",
     "Home" : "Ev",
     "Today" : "Bu gün",
     "Yesterday" : "Dünən",
@@ -10,6 +9,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Sizin configləriniz yenilendi.",
     "Hello %s," : "Salam %s,",
     "Mail" : "Məktub",
+    "Activity" : "Fəallıq",
     "Activity feed" : "Fəaliyyətin ötürülməsi",
     "Notifications" : "Xəbərdarlıqlar",
     "You need to set up your email address before you can receive notification emails." : "Xəbərdarlıq məktubları almazdan öncə, siz mail ünvanınızı təyin etməlisiniz.",
