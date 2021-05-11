@@ -1,10 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "गतिविधि",
-    "An error occurred while loading activities" : "क्रियाकलापहरू लोड गर्दा त्रुटि देखापर्यो",
-    "No activity yet" : "अझै सम्म कुनै क्रियाकलाप छैन",
-    "Load more activities" : "थप क्रियाकलापहरू लोड गर्नुहोस्",
     "Copied!" : "प्रतिलिपि गरियो!",
     "Not supported!" : "समर्थित छैन!",
     "Press ⌘-C to copy." : "प्रतिलिपि गर्न ⌘-C थिच्नुहोस्।",
@@ -29,6 +25,8 @@ OC.L10N.register(
     "Hello %s," : "नमस्ते %s,",
     "There was some activity at %s" : "%s मा केही गतिविधि थियो",
     "Mail" : "पत्र",
+    "Activity" : "गतिविधि",
+    "No activity yet" : "अझै सम्म कुनै क्रियाकलाप छैन",
     "Activity feed" : "गतिविधि पाटि",
     "Default settings" : "पूर्वनिर्धारित सेटिङहरू",
     "You need to set up your email address before you can receive notification emails." : "अग्रसूचना ईमेलहरू प्राप्त गर्नु अघि तपाईंले आफ्नो ईमेल ठेगाना सेट अप गर्न आवश्यक छ।",
@@ -40,6 +38,8 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS फिड सक्षम गर्नुहोस्",
     "RSS feed" : "RSS फिड",
     "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
+    "An error occurred while loading activities" : "क्रियाकलापहरू लोड गर्दा त्रुटि देखापर्यो",
+    "Load more activities" : "थप क्रियाकलापहरू लोड गर्नुहोस्",
     "Open file" : "फाईल खोल्नुहोस्",
     "Stream" : "स्ट्रिम",
     "Send activity emails" : "गतिविधिको इमेलहरू पठाउनुहोस्",

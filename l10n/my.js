@@ -1,10 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "လုပ်ဆောင်မှု",
-    "An error occurred while loading activities" : "ဆောင်ရွက်မှုများ လုပ်ဆောင်နေစဉ် ပြဿနာတစ်ခု ကြုံတွေ့ခဲ့သည်",
-    "No activity yet" : "လုပ်ဆောင်မှုမရှိသေး",
-    "Load more activities" : "လုပ်ဆောင်မှုများ ပိုမိုပြသရန်",
     "Copied!" : "ကူးယူပြီး!",
     "Not supported!" : "အထောက်အပံ့ မပြု!",
     "Press ⌘-C to copy." : "ကူးယူရန်အတွက် ⌘-C ကိုနှိပ်ပါ။",
@@ -29,6 +25,10 @@ OC.L10N.register(
     "Hello %s," : "မင်္ဂလာပါ %s၊",
     "There was some activity at %s" : "%sက လုပ်ဆောင်မှု အချို့ ရှိခဲ့သည်။",
     "Mail" : "စာ",
+    "Activity" : "လုပ်ဆောင်မှု",
+    "No activity yet" : "လုပ်ဆောင်မှုမရှိသေး",
+    "An error occurred while loading activities" : "ဆောင်ရွက်မှုများ လုပ်ဆောင်နေစဉ် ပြဿနာတစ်ခု ကြုံတွေ့ခဲ့သည်",
+    "Load more activities" : "လုပ်ဆောင်မှုများ ပိုမိုပြသရန်",
     "Open file" : "ဖိုင်ဖွင့်ရန်",
     "Stream" : "လမ်းကြောင်း"
 },

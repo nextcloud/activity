@@ -1,10 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Activitat",
-    "An error occurred while loading activities" : "Una error s’es producha en cargant las activitats",
-    "No activity yet" : "Cap d’activitat pel moment",
-    "Load more activities" : "Cargar mai d’activiats",
     "Copied!" : "Copiat !",
     "Not supported!" : "Pas pres en carga !",
     "Press ⌘-C to copy." : "Quichar ⌘-C per copiar.",
@@ -25,9 +21,13 @@ OC.L10N.register(
     "Hello %s" : "Adieu %s",
     "Hello %s," : "Adieu %s,",
     "Mail" : "Mail",
+    "Activity" : "Activitat",
+    "No activity yet" : "Cap d’activitat pel moment",
     "Notifications" : "Notificacions",
     "Default settings" : "Paramètres par defaut",
     "Settings" : "Paramètres",
+    "An error occurred while loading activities" : "Una error s’es producha en cargant las activitats",
+    "Load more activities" : "Cargar mai d’activiats",
     "Open file" : "Dobrir fichièr"
 },
 "nplurals=2; plural=(n > 1);");
