@@ -1,10 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Activitate",
-    "An error occurred while loading activities" : "Un error durante le cargamento de activitates",
-    "No activity yet" : "Nulle activitate ancora",
-    "Load more activities" : "Incarga altere activitates",
     "Copied!" : "Copiate!",
     "Not supported!" : "Non supportate!",
     "Press ⌘-C to copy." : "Pulsa ⌘-C pro copiar.",
@@ -27,6 +23,8 @@ OC.L10N.register(
     "Hello %s," : "Salute %s,",
     "There was some activity at %s" : "Il habeva alcun activitate in %s",
     "Mail" : "Posta",
+    "Activity" : "Activitate",
+    "No activity yet" : "Nulle activitate ancora",
     "Activity feed" : "Syndication de activitate",
     "Notifications" : "Notificationes",
     "Default settings" : "Configurationes predefinite",
@@ -37,6 +35,8 @@ OC.L10N.register(
     "Settings" : "Configurationes",
     "Enable RSS feed" : "Habilita syndication RSS",
     "No more events to load" : "Nulle altere eventos a cargar",
+    "An error occurred while loading activities" : "Un error durante le cargamento de activitates",
+    "Load more activities" : "Incarga altere activitates",
     "Open file" : "Aperir file",
     "Stream" : "Fluxo",
     "List your own actions in the stream" : "Lista tu proprie actiones de file in le fluxo",

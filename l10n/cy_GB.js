@@ -1,12 +1,12 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Gweithred",
-    "No activity yet" : "Dim gweithred eto",
     "Home" : "Cartref",
     "Today" : "Heddiw",
     "Yesterday" : "Ddoe",
     "Mail" : "E-bost",
+    "Activity" : "Gweithred",
+    "No activity yet" : "Dim gweithred eto",
     "Notifications" : "Hysbysiadau",
     "Settings" : "Gosodiadau"
 },

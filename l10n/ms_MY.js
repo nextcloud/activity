@@ -1,10 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Aktiviti",
-    "An error occurred while loading activities" : "Masalah timbul semasa memuat aktiviti",
-    "No activity yet" : "Tiada aktiviti",
-    "Load more activities" : "Memuat lebih aktiviti",
     "Copied!" : "Disalin!",
     "Not supported!" : "Tidak menyokong!",
     "Press ⌘-C to copy." : "Tekan ⌘-C untuk menyalin.",
@@ -23,6 +19,8 @@ OC.L10N.register(
     "Hello %s" : "Hai %s",
     "Hello %s," : "Hai %s,",
     "Mail" : "Mel",
+    "Activity" : "Aktiviti",
+    "No activity yet" : "Tiada aktiviti",
     "Activity feed" : "Suapan aktiviti",
     "Default settings" : "Tetapan lalai",
     "As soon as possible" : "Secepat yang boleh",
@@ -32,6 +30,8 @@ OC.L10N.register(
     "Settings" : "Tetapan",
     "RSS feed" : "Suapan RSS",
     "No more events to load" : "Tiada aktiviti untuk memuat",
+    "An error occurred while loading activities" : "Masalah timbul semasa memuat aktiviti",
+    "Load more activities" : "Memuat lebih aktiviti",
     "Open file" : "Buka fail",
     "Stream" : "Strim",
     "Send activity emails" : "Hantar emel aktiviti",

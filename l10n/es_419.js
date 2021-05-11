@@ -1,10 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Actividad",
-    "An error occurred while loading activities" : "Se presentó un error al cargar las actividades",
-    "No activity yet" : "Aún no tiene actividad",
-    "Load more activities" : "Cargar más actividades",
     "Copied!" : "¡Copiado!",
     "Not supported!" : "¡No soportado!",
     "Press ⌘-C to copy." : "Presiona ⌘-C para copiar.",
@@ -29,6 +25,8 @@ OC.L10N.register(
     "Hello %s," : "Hola %s,",
     "There was some activity at %s" : "Se tuvo algo de actividad en %s",
     "Mail" : "Correo",
+    "Activity" : "Actividad",
+    "No activity yet" : "Aún no tiene actividad",
     "Activity feed" : "Fuente de actividad",
     "Notifications" : "Notificaciones",
     "Default settings" : "Configuraciones predeterminadas",
@@ -41,6 +39,8 @@ OC.L10N.register(
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
     "No more events to load" : "No hay más eventos por cargar",
+    "An error occurred while loading activities" : "Se presentó un error al cargar las actividades",
+    "Load more activities" : "Cargar más actividades",
     "Open file" : "Abrir archivo",
     "Stream" : "Flujo",
     "Send activity emails" : "Enviar correos de actividades",
