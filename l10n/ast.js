@@ -1,10 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Actividá",
-    "An error occurred while loading activities" : "Asocedió un fallu entrín se cargaben les actividaes",
-    "No activity yet" : "Entá nun hai actividaes",
-    "Load more activities" : "Cargar más actividaes",
     "Copied!" : "¡Copióse!",
     "Not supported!" : "¡Nun se sofita!",
     "Press ⌘-C to copy." : "Primi ⌘-C pa copiar.",
@@ -29,6 +25,8 @@ OC.L10N.register(
     "Hello %s," : "Hola %s,",
     "There was some activity at %s" : "Hebo dalgo d'actividá en %s",
     "Mail" : "Corréu",
+    "Activity" : "Actividá",
+    "No activity yet" : "Entá nun hai actividaes",
     "Activity feed" : "Feed d'actividá",
     "Notifications" : "Notificaciones",
     "You need to set up your email address before you can receive notification emails." : "Precises configurar la to direición de corréu enantes que pueas recibir correos d'avisu.",
@@ -39,6 +37,8 @@ OC.L10N.register(
     "Settings" : "Axustes",
     "Enable RSS feed" : "Habilitar feed RSS",
     "No more events to load" : "Nun hai más eventos pa cargar",
+    "An error occurred while loading activities" : "Asocedió un fallu entrín se cargaben les actividaes",
+    "Load more activities" : "Cargar más actividaes",
     "Open file" : "Abrir ficheru",
     "Stream" : "Fluxu de rede",
     "Notify about your own actions via email" : "Avisar per corréu tocante a les mios propies aiciones",
