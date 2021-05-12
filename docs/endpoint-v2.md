@@ -102,6 +102,7 @@ Field name | Type | Value description
 `fileId` | int | The if of the actual file
 `view` | string | The view where the file can be found (either `files` or `trashbin`)
 `isMimeTypeIcon` | bool | True if `source` points to a mime type icon instead of a real preview
+`filename` | string | The filename of the file the preview is for
 
 In case the endpoint returns more fields, they should be ignored and are deprecated (only for backwards compatibility usage) or internal.
 
@@ -144,7 +145,8 @@ In case the endpoint returns more fields, they should be ignored and are depreca
          "mimeType": "text/plain",
          "view": "files",
          "fileId": 23,
-         "isMimeTypeIcon": false
+         "isMimeTypeIcon": false,
+         "filename": "hello.txt"
       }
     ]
   }
