@@ -13,6 +13,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Nėra įvykių pasirinktam filtrui",
     "Today" : "Šiandien",
     "Yesterday" : "Vakar",
+    "Open {filename}" : "Atverti {filename}",
     "Personal activity feed for %s" : "%s asmeninės veiklos kanalas",
     "Your feed URL is invalid" : "Jūsų kanalo URL nuoroda yra neteisinga",
     "Your settings have been updated." : "Jūsų nustatymai atnaujinti.",
