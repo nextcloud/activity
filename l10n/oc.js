@@ -26,6 +26,7 @@ OC.L10N.register(
     "Notifications" : "Notificacions",
     "Default settings" : "Paramètres par defaut",
     "Settings" : "Paramètres",
+    "Enable RSS feed" : "Activar lo flux RSS",
     "An error occurred while loading activities" : "Una error s’es producha en cargant las activitats",
     "Load more activities" : "Cargar mai d’activiats",
     "Open file" : "Dobrir fichièr"
