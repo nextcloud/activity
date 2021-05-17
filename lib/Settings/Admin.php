@@ -26,6 +26,7 @@ use OCP\Activity\ActivitySettings;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\Settings\ISettings;
@@ -44,17 +45,21 @@ class Admin implements ISettings {
 	/** @var UserSettings */
 	protected $userSettings;
 
+	/** @var IInitialState */
+	private $initialStateService;
+
 	/**
 	 * @param IConfig $config
 	 * @param IL10N $l10n
 	 * @param IManager $manager
 	 * @param UserSettings $userSettings
 	 */
-	public function __construct(IConfig $config, IL10N $l10n, UserSettings $userSettings, IManager $manager) {
+	public function __construct(IConfig $config, IL10N $l10n, UserSettings $userSettings, IManager $manager, IInitialState $initialStateService) {
 		$this->config = $config;
 		$this->l10n = $l10n;
 		$this->manager = $manager;
 		$this->userSettings = $userSettings;
+		$this->initialStateService = $initialStateService;
 	}
 
 	/**
@@ -120,19 +125,40 @@ class Admin implements ISettings {
 			$settingBatchTime = UserSettings::EMAIL_SEND_ASAP;
 		}
 
-		return new TemplateResponse('activity', 'settings/admin', [
-			'setting' => 'admin',
-			'activityGroups' => $activityGroups,
-			'is_email_set' => true,
-			'email_enabled' => $this->config->getAppValue('activity', 'enable_email', 'yes') === 'yes',
+		$this->initialStateService->provideInitialState(
+			'setting',
+			'admin'
+		);
 
-			'setting_batchtime' => $settingBatchTime,
+		$this->initialStateService->provideInitialState(
+			'activityGroups',
+			$activityGroups
+		);
 
-			'methods' => [
+		$this->initialStateService->provideInitialState(
+			'is_email_set',
+			true
+		);
+
+		$this->initialStateService->provideInitialState(
+			'email_enabled',
+			$this->config->getAppValue('activity', 'enable_email', 'yes') === 'yes'
+		);
+
+		$this->initialStateService->provideInitialState(
+			'setting_batchtime',
+			$settingBatchTime
+		);
+
+		$this->initialStateService->provideInitialState(
+			'methods',
+			[
 				IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
 				IExtension::METHOD_NOTIFICATION => $this->l10n->t('Push'),
-			],
-		], 'blank');
+			]
+		);
+
+		return new TemplateResponse('activity', 'settings/admin', [], 'blank');
 	}
 
 	/**

@@ -18,30 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-script('activity', 'settings');
-style('activity', 'settings');
-/** @var array $_ */
-/** @var \OCP\IL10N $l */
+script('activity', 'activity-userSettings');
 ?>
 
-<form id="activity_notifications" class="section">
-
-	<h2><?php p($l->t('Notifications')); ?></h2>
-	<p class="settings-hint">
-		<?php if ($_['email_enabled']) { ?>
-			<?php p($l->t('Choose for which activities you want to get an email or push notification.')); ?>
-		<?php } else { ?>
-			<?php p($l->t('Choose for which activities you want to get a push notification.')); ?>
-		<?php } ?>
-	</p>
-
-	<?php print_unescaped($this->inc('settings/form')); ?>
-
-	<h2><?php p($l->t('Activity')); ?></h2>
-
-	<input id="activity_email_enabled" name="activity_digest" type="checkbox" class="checkbox"
-		   value="1" <?php if ($_['activity_digest_enabled']) {
-	print_unescaped('checked="checked"');
-} ?> />
-	<label for="activity_email_enabled"><?php p($l->t('Send daily activity summary in the morning')); ?></label>
-</form>
+<div id="activity-user-settings"></div>

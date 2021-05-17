@@ -1,5 +1,7 @@
 js/activity-dashboard.js binary
 js/activity-sidebar.js binary
+js/activity-adminSettings.js binary
+js/activity-userSettings.js binary
 js/*.LICENCE.map binary
 js/*.js.map binary
 package-lock.json binary

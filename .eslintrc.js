@@ -8,5 +8,6 @@ module.exports = {
 		'node/no-unpublished-import': ['error', {
 			allowModules: ['@vue/test-utils', '@testing-library/vue'],
 		}],
+		'valid-jsdoc': 'off',
 	},
 }

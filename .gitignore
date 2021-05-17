@@ -43,6 +43,9 @@ nbproject
 # vim ex mode
 .vimrc
 
+# vscode
+.vscode
+
 # Mac OS
 .DS_Store
 

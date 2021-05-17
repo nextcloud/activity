@@ -1,6 +1,7 @@
-<?php
 /**
- * @copyright Copyright (c) 2017 Joas Schilling <coding@schilljs.com>
+ * @copyright Copyright (c) 2021 Louis Chemineau <louis@chmn.me>
+ *
+ * @author Louis Chemineau <louis@chmn.me>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -15,10 +16,20 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-script('activity', 'activity-adminSettings');
-?>
 
-<div id="activity-admin-settings"></div>
+/**
+ *
+ * @typedef {Object} ActivityGroup
+ * @property {string} name - The name of the activity group
+ * @property {Object.<string, ActivityType>} activities - List off activities
+ **/
+
+/**
+ *
+ * @typedef {Object} ActivityType
+ * @property {string} desc - The activity's description
+ * @property {Array<string>} methods - List of available methods to send a notification
+ **/

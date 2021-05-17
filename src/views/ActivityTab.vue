@@ -104,7 +104,7 @@ export default {
 				}
 				this.error = t('activity', 'Unable to load the activity list')
 				this.loading = false
-				console.error('Error loading the activity list', error)
+				logger.error('Error loading the activity list', error)
 			}
 		},
 		/**

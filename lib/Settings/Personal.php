@@ -29,6 +29,7 @@ use OCP\Activity\ActivitySettings;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\Settings\ISettings;
@@ -49,6 +50,9 @@ class Personal implements ISettings {
 	/** @var string */
 	protected $user;
 
+	/** @var IInitialState */
+	private $initialStateService;
+
 	/**
 	 * constructor of the controller
 	 *
@@ -62,12 +66,14 @@ class Personal implements ISettings {
 								IManager $manager,
 								UserSettings $userSettings,
 								IL10N $l10n,
-								CurrentUser $currentUser) {
+								CurrentUser $currentUser,
+								IInitialState $initialStateService) {
 		$this->config = $config;
 		$this->manager = $manager;
 		$this->userSettings = $userSettings;
 		$this->l10n = $l10n;
 		$this->user = (string) $currentUser->getUID();
+		$this->initialStateService = $initialStateService;
 	}
 
 	/**
@@ -146,18 +152,21 @@ class Personal implements ISettings {
 			$methods[IExtension::METHOD_NOTIFICATION] = $this->l10n->t('Push');
 		}
 
-		return new TemplateResponse('activity', 'settings/personal', [
-			'setting' => 'personal',
-			'activityGroups' => $activityGroups,
-			'is_email_set' => !empty($this->config->getUserValue($this->user, 'settings', 'email', '')),
-			'email_enabled' => $emailEnabled,
+		$this->initialStateService->provideInitialState('setting', 'personal');
+		$this->initialStateService->provideInitialState('activityGroups', $activityGroups);
+		$this->initialStateService->provideInitialState(
+			'is_email_set',
+			!empty($this->config->getUserValue($this->user, 'settings', 'email', ''))
+		);
+		$this->initialStateService->provideInitialState('email_enabled', $emailEnabled);
+		$this->initialStateService->provideInitialState('setting_batchtime', $settingBatchTime);
+		$this->initialStateService->provideInitialState('methods', $methods);
+		$this->initialStateService->provideInitialState(
+			'activity_digest_enabled',
+			$this->userSettings->getUserSetting($this->user, 'setting', 'activity_digest')
+		);
 
-			'setting_batchtime' => $settingBatchTime,
-
-			'methods' => $methods,
-
-			'activity_digest_enabled' => $this->userSettings->getUserSetting($this->user, 'setting', 'activity_digest')
-		], 'blank');
+		return new TemplateResponse('activity', 'settings/personal', [], 'blank');
 	}
 
 	/**
