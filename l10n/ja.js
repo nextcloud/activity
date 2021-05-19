@@ -13,6 +13,7 @@ OC.L10N.register(
     "There are no events for this filter" : "このフィルターで表示される予定はありません。",
     "Today" : "今日",
     "Yesterday" : "昨日",
+    "Open {filename}" : "{filename}を開く",
     "Personal activity feed for %s" : "\"%s\" の個人アクティビティフィード",
     "Your feed URL is invalid" : "フィードURLが無効です",
     "Your settings have been updated." : "設定を更新しました。",
