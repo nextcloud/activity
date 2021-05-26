@@ -20,10 +20,12 @@
  *
  */
 
+/// <reference types="Cypress" />
+
 import { randHash } from '../utils'
 const randUser = randHash()
 
-describe('Open test.md in viewer', function() {
+describe('Check activity listing in the sidebar', function() {
 	before(function() {
 		cy.nextcloudCreateUser(randUser, 'password')
 		cy.login(randUser, 'password')
