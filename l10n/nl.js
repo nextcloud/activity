@@ -23,7 +23,7 @@ OC.L10N.register(
     "All activities" : "Alle activiteiten",
     "By others" : "Van anderen",
     "By you" : "Van jou",
-    "Activity notification for %s" : "Activiteits melding voor %s",
+    "Activity notification for %s" : "Activiteitsmelding voor %s",
     "Hello %s" : "Hallo %s",
     "Hello %s," : "Hallo %s,",
     "There was some activity at %s" : "Er was een activiteit op %s",
