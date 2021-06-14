@@ -11,11 +11,13 @@
 	margin-left: 5px;
 	text-overflow: ellipsis;
 }
+
 .activitymessage {
 	margin-left: 25px;
 	color: var(--color-text-maxcontrast);
 	text-overflow: ellipsis;
 }
+
 .activity-previews {
 	margin-left: 24px;
 }
@@ -120,6 +122,7 @@
 	margin-right: 6px;
 	width: 16px;
 }
+
 #app-navigation li span.no-icon {
 	padding-left: 25px;
 }
@@ -173,6 +176,7 @@
 	background-size: contain;
 	opacity: .5;
 }
+
 .activity-icon img {
 	max-width: 16px;
 	max-height: 16px;
