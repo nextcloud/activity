@@ -15,7 +15,7 @@
     "Your feed URL is invalid" : "Jūsu plūsmas URL nav derīgs.",
     "Your settings have been updated." : "Jūsu uzstādījumi ir atjaunoti.",
     "Settings have been updated." : "Iestādījumi ir atjaunoti.",
-    "_and %n more _::_and %n more _" : ["un vēl %n","un vēl %n","un vēl %n"],
+    "_and %n more _::_and %n more _" : ["un vēl %n","un vēl %n"],
     "All activities" : "Visas darbības",
     "By others" : "Citu",
     "By you" : "Jūsu",
