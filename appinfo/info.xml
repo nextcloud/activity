@@ -24,7 +24,7 @@
 	</types>
 
 	<documentation>
-		<admin>https://docs.nextcloud.org/server/14/admin_manual/configuration_server/activity_configuration.html</admin>
+		<admin>https://docs.nextcloud.org/server/stable/admin_manual/configuration_server/activity_configuration.html</admin>
 	</documentation>
 
 	<category>monitoring</category>
@@ -35,7 +35,7 @@
 	<repository>https://github.com/nextcloud/activity.git</repository>
 
 	<dependencies>
-		<nextcloud min-version="22" max-version="22" />
+		<nextcloud min-version="23" max-version="23" />
 	</dependencies>
 
 	<background-jobs>
