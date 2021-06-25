@@ -79,6 +79,7 @@
 		"@nextcloud/paths": "^2.0.0",
 		"@nextcloud/router": "^2.0.0",
 		"@nextcloud/vue": "^3.9.0",
+		"@nextcloud/vue-dashboard": "^2.0.1",
 		"vue": "^2.6.12"
 	},
 	"devDependencies": {

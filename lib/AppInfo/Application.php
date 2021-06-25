@@ -30,6 +30,7 @@ use OCA\Activity\FilesHooksStatic;
 use OCA\Activity\Hooks;
 use OCA\Activity\Listener\LoadSidebarScripts;
 use OCA\Activity\NotificationGenerator;
+use OCA\Activity\Dashboard\ActivityWidget;
 use OCA\Files\Event\LoadSidebar;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
@@ -40,8 +41,8 @@ use OCP\Util;
 class Application extends App implements IBootstrap {
 	public const APP_ID = 'activity';
 
-	public function __construct() {
-		parent::__construct(self::APP_ID);
+	public function __construct(array $params=[]) {
+		parent::__construct(self::APP_ID, $params);
 	}
 
 	public function register(IRegistrationContext $context): void {
@@ -51,8 +52,8 @@ class Application extends App implements IBootstrap {
 		}, false);
 
 		$context->registerCapability(Capabilities::class);
-
 		$context->registerEventListener(LoadSidebar::class, LoadSidebarScripts::class);
+		$context->registerDashboardWidget(ActivityWidget::class);
 	}
 
 	public function boot(IBootContext $context): void {

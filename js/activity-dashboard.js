@@ -13058,9 +13058,9 @@ var _vueDashboard = __webpack_require__(/*! @nextcloud/vue-dashboard */ "./node_
 
 var _axios = _interopRequireDefault(__webpack_require__(/*! @nextcloud/axios */ "./node_modules/@nextcloud/axios/dist/index.js"));
 
-var _router = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
-
 var _ActivityModel = _interopRequireDefault(__webpack_require__(/*! ../models/ActivityModel */ "./src/models/ActivityModel.js"));
+
+var _router = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13076,13 +13076,10 @@ var _default = {
   },
   data: function data() {
     return {
-      error: '',
       loading: true,
-      fileInfo: null,
       activities: []
     };
   },
-  computed: {},
   mounted: function mounted() {
     this.getActivities();
   },
@@ -13097,17 +13094,13 @@ var _default = {
                 _context.prev = 0;
                 this.loading = true;
                 _context.next = 4;
-                return _axios.default.get((0, _router.generateOcsUrl)('apps/activity/api/v2/activity/filter'), {
-                  params: {
-                    format: 'json'
-                  }
-                });
+                return _axios.default.get((0, _router.generateOcsUrl)('apps/activity/api/v2/activity'));
 
               case 4:
                 activities = _context.sent;
                 this.loading = false;
                 this.processActivities(activities);
-                _context.next = 17;
+                _context.next = 16;
                 break;
 
               case 9:
@@ -13123,11 +13116,10 @@ var _default = {
                 return _context.abrupt("return");
 
               case 14:
-                this.error = t('activity', 'Unable to load the activity list');
                 this.loading = false;
                 console.error('Error loading the activity list', _context.t0);
 
-              case 17:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -13143,7 +13135,6 @@ var _default = {
     }(),
     processActivities: function processActivities(_ref) {
       var data = _ref.data;
-      console.log("processActivities");
 
       if (data.ocs && data.ocs.data && data.ocs.data.length > 0) {
         // create Activity objects and sort by newest
@@ -13153,8 +13144,13 @@ var _default = {
           return b.timestamp - a.timestamp;
         });
       }
-    },
-    getAppUrl: function getAppUrl(task) {// return generateUrl('apps/tasks') + `/#/calendars/${task.calendar.id}/tasks/${task.uri}`
+
+      console.log(data);
+    }
+  },
+  computed: {
+    showMoreUrl: function showMoreUrl() {
+      return this.activities.length > 7 ? (0, _router.generateUrl)('/apps/activity') : null;
     }
   }
 };
@@ -21085,7 +21081,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(false);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "#tasks_panel .calendar-dot {\n  height: 1rem;\n  width: 1rem;\n  margin-top: 0.2rem;\n  border-radius: 50%;\n  min-width: 1rem;\n  min-height: 1rem;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "#activity_panel .calendar-dot {\n  height: 1rem;\n  width: 1rem;\n  margin-top: 0.2rem;\n  border-radius: 50%;\n  min-width: 1rem;\n  min-height: 1rem;\n}", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -54903,8 +54899,8 @@ var render = function() {
     attrs: {
       id: "activity_panel",
       items: _vm.activities,
-      "empty-content-icon": "icon-activity",
-      "show-more-text": _vm.t("activity", "more activities"),
+      "show-more-text": _vm.t("activity", "activities"),
+      "show-more-url": _vm.showMoreUrl,
       loading: _vm.loading,
       "half-empty-content-message": _vm.t("activity", "No activities")
     },
@@ -54916,29 +54912,13 @@ var render = function() {
           return [
             _c("DashboardWidgetItem", {
               attrs: {
-                "main-text": item,
-                "sub-text": item,
-                "target-url": _vm.getAppUrl(item)
-              },
-              scopedSlots: _vm._u(
-                [
-                  {
-                    key: "avatar",
-                    fn: function() {
-                      return [
-                        _c("div", {
-                          staticClass: "calendar-dot",
-                          style: { "background-color": item.calendar.color },
-                          attrs: { title: item.calendar.displayName }
-                        })
-                      ]
-                    },
-                    proxy: true
-                  }
-                ],
-                null,
-                true
-              )
+                item: item._activity,
+                id: item.activity_id,
+                "target-url": item.link,
+                "avatar-username": item.user,
+                "main-text": item.subject,
+                "sub-text": item.datetime
+              }
             })
           ]
         }
@@ -63960,6 +63940,8 @@ var _Dashboard = _interopRequireDefault(__webpack_require__(/*! ./views/Dashboar
 
 var _router = __webpack_require__(/*! @nextcloud/router */ "./node_modules/@nextcloud/router/dist/index.js");
 
+var _auth = __webpack_require__(/*! @nextcloud/auth */ "./node_modules/@nextcloud/auth/dist/index.js");
+
 var _l10n = __webpack_require__(/*! @nextcloud/l10n */ "./node_modules/@nextcloud/l10n/dist/index.js");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm.js"));
@@ -63989,11 +63971,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 // import store from './store/store.js'
 // import './css/dashboard.scss'
-// import { getRequestToken } from '@nextcloud/auth'
 // import Vuex from 'vuex'
 // Vue.use(Vuex)
 // eslint-disable-next-line
-__webpack_require__.nc = btoa(getRequestToken()); // eslint-disable-next-line
+__webpack_require__.nc = btoa((0, _auth.getRequestToken)()); // eslint-disable-next-line
 
 __webpack_require__.p = (0, _router.generateFilePath)('activity', '', 'js/');
 _vue.default.prototype.t = _l10n.translate;
@@ -64014,4 +63995,4 @@ document.addEventListener('DOMContentLoaded', function () {
 }();
 /******/ })()
 ;
-//# sourceMappingURL=activity-sidebar.js.map?v=510105b305d8bbac3315
+//# sourceMappingURL=activity-dashboard.js.map?v=8d9505c825dc0e395246
