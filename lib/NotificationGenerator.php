@@ -62,7 +62,11 @@ class NotificationGenerator implements INotifier {
 		$notification->setObject('activity_notification', (string)$activityId);
 		$notification->setSubject($event->getSubject());
 
-		if ($notification->getRichMessage()) {
+		if ($event->getRichSubject()) {
+			$notification->setRichSubject($event->getRichSubject(), $event->getRichSubjectParameters());
+		}
+
+		if ($event->getRichMessage()) {
 			$notification->setRichMessage($event->getRichMessage(), $event->getRichMessageParameters());
 		}
 
@@ -116,11 +120,15 @@ class NotificationGenerator implements INotifier {
 		$notification->setRichSubject($event->getRichSubject(), $event->getRichSubjectParameters());
 		$notification->setParsedSubject($event->getParsedSubject());
 
-		if ($notification->getRichMessage()) {
+		if ($event->getIcon()) {
+			$notification->setIcon($event->getIcon());
+		}
+
+		if ($event->getRichMessage()) {
 			$notification->setRichMessage($event->getRichMessage(), $event->getRichMessageParameters());
 		}
 
-		if ($notification->getParsedMessage()) {
+		if ($event->getParsedMessage()) {
 			$notification->setParsedSubject($event->getParsedSubject());
 		}
 
