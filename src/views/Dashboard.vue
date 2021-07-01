@@ -47,6 +47,7 @@ import { DashboardWidget, DashboardWidgetItem } from '@nextcloud/vue-dashboard'
 import axios from '@nextcloud/axios'
 import ActivityModel from '../models/ActivityModel'
 import { generateUrl, generateOcsUrl } from '@nextcloud/router'
+import { getCurrentUser } from '@nextcloud/auth'
 
 const POLLING_INTERVAL = 30
 
@@ -105,6 +106,7 @@ export default {
 				// create Activity objects and sort by newest
 				this.activities = data.ocs.data
 					.map(activity => new ActivityModel(activity))
+					.filter(item => item.user !== getCurrentUser()?.uid)
 			}
 		},
 		changeWindowVisibility() {
