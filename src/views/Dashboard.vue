@@ -117,13 +117,10 @@ export default {
 
 <style lang="scss">
 #activity_panel {
-	.calendar-dot {
-		height: 1rem;
-		width: 1rem;
-		margin-top: .2rem;
-		border-radius: 50%;
-		min-width: 1rem;
-		min-height: 1rem;
+	.item-icon {
+		body.theme--dark & {
+			filter: invert(100%);
+		}
 	}
 }
 </style>
