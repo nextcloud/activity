@@ -33,11 +33,11 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 			<!-- {{item._activity}} -->
 			<DashboardWidgetItem
 				:id="item.activity_id"
-				:item="item._activity"
 				:target-url="item.link"
 				:avatar-username="item.user"
-				:main-text="item.subject"
-				:sub-text="item.datetime" />
+				:overlay-icon-url="item.icon"
+				:main-text="item.dateFromNow"
+				:sub-text="item.subject" />
 		</template>
 	</DashboardWidget>
 </template>
@@ -47,6 +47,8 @@ import { DashboardWidget, DashboardWidgetItem } from '@nextcloud/vue-dashboard'
 import axios from '@nextcloud/axios'
 import ActivityModel from '../models/ActivityModel'
 import { generateUrl, generateOcsUrl } from '@nextcloud/router'
+
+const POLLING_INTERVAL = 30
 
 export default {
 	name: 'Dashboard',
@@ -58,6 +60,7 @@ export default {
 		return {
 			loading: true,
 			activities: [],
+			windowVisibility: true,
 		}
 	},
 	computed: {
@@ -65,11 +68,27 @@ export default {
 			return this.activities.length > 7 ? generateUrl('/apps/activity') : null
 		},
 	},
-	mounted() {
+	watch: {
+		windowVisibility(newValue) {
+			if (newValue) {
+				this.getActivities()
+			}
+		},
+	},
+	beforeDestroy() {
+		document.removeEventListener('visibilitychange', this.changeWindowVisibility)
+	},
+	beforeMount() {
 		this.getActivities()
+		setInterval(this.getActivities, POLLING_INTERVAL * 1000)
+		document.addEventListener('visibilitychange', this.changeWindowVisibility)
 	},
 	methods: {
 		async getActivities() {
+			if (!this.windowVisibility) {
+				// Dashboard is not visible, so don't update the room list
+				return
+			}
 			try {
 				this.loading = true
 				const activities = await axios.get(generateOcsUrl('apps/activity/api/v2/activity'))
@@ -93,7 +112,10 @@ export default {
 					.map(activity => new ActivityModel(activity))
 					.sort((a, b) => b.timestamp - a.timestamp)
 			}
-			console.log(data)
+			// console.log(data)
+		},
+		changeWindowVisibility() {
+			this.windowVisibility = !document.hidden
 		},
 	},
 

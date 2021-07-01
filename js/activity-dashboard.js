@@ -13068,6 +13068,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+var POLLING_INTERVAL = 30;
 var _default = {
   name: 'Dashboard',
   components: {
@@ -13077,11 +13078,29 @@ var _default = {
   data: function data() {
     return {
       loading: true,
-      activities: []
+      activities: [],
+      windowVisibility: true
     };
   },
-  mounted: function mounted() {
+  computed: {
+    showMoreUrl: function showMoreUrl() {
+      return this.activities.length > 7 ? (0, _router.generateUrl)('/apps/activity') : null;
+    }
+  },
+  watch: {
+    windowVisibility: function windowVisibility(newValue) {
+      if (newValue) {
+        this.getActivities();
+      }
+    }
+  },
+  beforeDestroy: function beforeDestroy() {
+    document.removeEventListener('visibilitychange', this.changeWindowVisibility);
+  },
+  beforeMount: function beforeMount() {
     this.getActivities();
+    setInterval(this.getActivities, POLLING_INTERVAL * 1000);
+    document.addEventListener('visibilitychange', this.changeWindowVisibility);
   },
   methods: {
     getActivities: function () {
@@ -13091,40 +13110,48 @@ var _default = {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
+                if (this.windowVisibility) {
+                  _context.next = 2;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 2:
+                _context.prev = 2;
                 this.loading = true;
-                _context.next = 4;
+                _context.next = 6;
                 return _axios.default.get((0, _router.generateOcsUrl)('apps/activity/api/v2/activity'));
 
-              case 4:
+              case 6:
                 activities = _context.sent;
                 this.loading = false;
                 this.processActivities(activities);
-                _context.next = 16;
+                _context.next = 18;
                 break;
 
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](0);
+              case 11:
+                _context.prev = 11;
+                _context.t0 = _context["catch"](2);
 
                 if (!(_context.t0.response !== undefined && _context.t0.response.status === 304)) {
-                  _context.next = 14;
+                  _context.next = 16;
                   break;
                 }
 
                 this.loading = false;
                 return _context.abrupt("return");
 
-              case 14:
+              case 16:
                 this.loading = false;
                 console.error('Error loading the activity list', _context.t0);
 
-              case 16:
+              case 18:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 9]]);
+        }, _callee, this, [[2, 11]]);
       }));
 
       function getActivities() {
@@ -13143,14 +13170,11 @@ var _default = {
         }).sort(function (a, b) {
           return b.timestamp - a.timestamp;
         });
-      }
+      } // console.log(data)
 
-      console.log(data);
-    }
-  },
-  computed: {
-    showMoreUrl: function showMoreUrl() {
-      return this.activities.length > 7 ? (0, _router.generateUrl)('/apps/activity') : null;
+    },
+    changeWindowVisibility: function changeWindowVisibility() {
+      this.windowVisibility = !document.hidden;
     }
   }
 };
@@ -54912,12 +54936,12 @@ var render = function() {
           return [
             _c("DashboardWidgetItem", {
               attrs: {
-                item: item._activity,
                 id: item.activity_id,
                 "target-url": item.link,
                 "avatar-username": item.user,
-                "main-text": item.subject,
-                "sub-text": item.datetime
+                "overlay-icon-url": item.icon,
+                "main-text": item.dateFromNow,
+                "sub-text": item.subject
               }
             })
           ]
@@ -63995,4 +64019,4 @@ document.addEventListener('DOMContentLoaded', function () {
 }();
 /******/ })()
 ;
-//# sourceMappingURL=activity-dashboard.js.map?v=8d9505c825dc0e395246
+//# sourceMappingURL=activity-dashboard.js.map?v=2bd508e390e15d0a6c0a
