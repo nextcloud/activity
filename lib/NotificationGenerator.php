@@ -47,7 +47,7 @@ class NotificationGenerator implements INotifier {
 
 	public function sendNotificationForEvent(IEvent $event, int $activityId) {
 		$selfAction = $event->getAffectedUser() === $event->getAuthor();
-		$notifySetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'notify', $event->getType());
+		$notifySetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'notification', $event->getType());
 
 		if ($notifySetting && !$selfAction && $event->getGenerateNotification()) {
 			$this->notificationManager->notify($this->getNotificationForEvent($event, $activityId));
