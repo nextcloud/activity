@@ -36,8 +36,8 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 				:target-url="item.link"
 				:avatar-username="item.user"
 				:overlay-icon-url="item.icon"
-				:main-text="item.dateFromNow"
-				:sub-text="item.subject" />
+				:main-text="item.subject"
+				:sub-text="item.dateFromNow" />
 		</template>
 	</DashboardWidget>
 </template>
@@ -95,11 +95,6 @@ export default {
 				this.loading = false
 				this.processActivities(activities)
 			} catch (error) {
-				// Status 304 is not an error.
-				if (error.response !== undefined && error.response.status === 304) {
-					this.loading = false
-					return
-				}
 				this.loading = false
 				console.error('Error loading the activity list', error)
 			}
@@ -110,9 +105,7 @@ export default {
 				// create Activity objects and sort by newest
 				this.activities = data.ocs.data
 					.map(activity => new ActivityModel(activity))
-					.sort((a, b) => b.timestamp - a.timestamp)
 			}
-			// console.log(data)
 		},
 		changeWindowVisibility() {
 			this.windowVisibility = !document.hidden

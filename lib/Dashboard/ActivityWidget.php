@@ -55,7 +55,7 @@ class ActivityWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function getTitle(): string {
-		return $this->l10n->t('Latest activities');
+		return $this->l10n->t('Recent activity');
 	}
 
 	/**
