@@ -34,8 +34,7 @@ ifeq (, $(composer))
 	php $(build_tools_directory)/composer.phar install --prefer-dist
 	php $(build_tools_directory)/composer.phar update --prefer-dist
 else
-	composer install --prefer-dist
-	composer update --prefer-dist
+	composer install
 endif
 
 npm-init:
