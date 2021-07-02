@@ -38,7 +38,7 @@ import Vue from 'vue'
 __webpack_nonce__ = btoa(getRequestToken())
 
 // eslint-disable-next-line
-__webpack_public_path__ = generateFilePath('activity', '', 'js/')
+__webpack_public_path__ = generateFilePath(appName, '', 'js/')
 
 Vue.prototype.t = translate
 Vue.prototype.n = translatePlural
@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		const View = Vue.extend(Dashboard)
 		const vm = new View({
 			propsData: {},
-			// store,
 		}).$mount(el)
 		return vm
 	})
