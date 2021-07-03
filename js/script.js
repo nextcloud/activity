@@ -222,7 +222,7 @@ $(function(){
 				activity.link = '';
 			}
 
-			var monochromeIcon = activity.type !== 'file_created' && activity.type !== 'file_deleted' && activity.type !== 'favorite';
+			var monochromeIcon = activity.type !== 'file_created' && activity.type !== 'file_deleted' && activity.type !== 'favorite' && !activity.icon.endsWith('-color.svg');
 
 			var content = ''
 				+ '<div class="activity box" data-activity-id="' + activity.activity_id + '">' + "\n"
