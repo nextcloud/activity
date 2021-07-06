@@ -79,7 +79,7 @@ class ActivitiesController extends Controller {
 		$event = new GenericEvent($filter);
 		$this->eventDispatcher->dispatch('OCA\Activity::loadAdditionalScripts', $event);
 
-		return new TemplateResponse('activity', 'stream.body', [
+		return new TemplateResponse('activity', 'app', [
 			'appNavigation' => $this->navigation->getTemplate($filter),
 			'avatars' => $this->config->getSystemValue('enable_avatars', true) ? 'yes' : 'no',
 			'filter' => $filter,
