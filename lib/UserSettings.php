@@ -157,6 +157,10 @@ class UserSettings {
 		return array_map(function(ActivitySettings $setting) {
 			return $setting->getIdentifier();
 		}, $settings);
+		if (array_search('file_changed', $return) !== false) {
+			array_push($return, 'file_created', 'file_deleted', 'file_restored');
+		}
+		return $return;
 	}
 
 	/**
