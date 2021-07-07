@@ -30,7 +30,7 @@ $(document).ready(function() {
 	$('#activity_email_enabled').on('change', function() {
 		OCP.AppConfig.setValue(
 			'activity', 'enable_email',
-			$(this).attr('checked') === 'checked' ? 'yes' : 'no'
+			$(this).prop('checked') === 'checked' ? 'yes' : 'no'
 		);
 	})
 });
