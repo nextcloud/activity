@@ -154,7 +154,7 @@ class UserSettings {
 	 */
 	public function getNotificationTypes() {
 		$settings = $this->manager->getSettings();
-		return array_map(function(ActivitySettings $setting) {
+		$return = array_map(function(ActivitySettings $setting) {
 			return $setting->getIdentifier();
 		}, $settings);
 		if (array_search('file_changed', $return) !== false) {
