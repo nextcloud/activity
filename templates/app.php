@@ -28,4 +28,5 @@ script('activity', [
 style('activity', 'style');
 ?>
 
-<div id="activity-app"></div>
+<!-- TODO - @skjnldsv, WTF ? -->
+<!-- No need for an element as we mount the Vue app on #content which is already here -->

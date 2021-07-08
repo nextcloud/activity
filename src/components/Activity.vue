@@ -29,8 +29,37 @@
 			:size="15" />
 
 		<div class="activity-entry__content">
-			<RichText class="activity-entry__content__subject" :text="subjectText" :arguments="subjectArguments" />
+			<div class="activity-entry__content__subject">
+				<Avatar
+					v-if="showAvatar"
+					class="activity-entry__avatar"
+					:user="activity.user"
+					:show-user-status="false"
+					:display-name="activity.user"
+					:size="21" />
+
+				<RichText :text="subjectText" :arguments="subjectArguments" />
+			</div>
 			<RichText class="activity-entry__content__message" :text="messageText" :arguments="messageArguments" />
+			<div v-if="activity.previews !== undefined" class="activity-entry__content__previews">
+				<span v-for="preview in activity.previews" :key="preview.fileId" class="activity-entry__content__previews__preview">
+					<template v-if="preview.link !== undefined">
+						<a :href="preview.link">
+							<img v-tooltip.bottom="preview.filename"
+								:class="{'activity-entry__content__preview__image--mimetype-icon': preview.isMimeTypeIcon}"
+								class="activity-entry__content__previews__preview__image"
+								:src="preview.source"
+								:alt="t('activity', 'Open {filename}', preview)">
+						</a>
+					</template>
+					<template v-else>
+						<img :class="{'preview-mimetype-icon': preview.isMimeTypeIcon}"
+							class="preview"
+							:src="preview.source"
+							:alt="t('activity', 'Open {filename}', preview)">
+					</template>
+				</span>
+			</div>
 		</div>
 
 		<span v-tooltip.bottom="activity.formattedDate" class="activity-entry__date">{{ dateFromNow }}</span>
@@ -67,6 +96,13 @@ export default {
 		activity: {
 			type: ActivityModel,
 			required: true,
+		},
+		/**
+		 * Wether to show the user avatar or not.
+		 */
+		showAvatar: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {
@@ -191,6 +227,11 @@ export default {
 	&__icon {
 		opacity: 0.5;
 		margin-top: 4px;
+		margin-right: 12px;
+	}
+
+	&__avatar {
+		margin-top: 1px;
 		margin-right: 8px;
 	}
 
@@ -198,13 +239,45 @@ export default {
 		display: flex;
 		flex-direction: column;
 		flex-grow: 1;
-		overflow-wrap: break-word;
-		white-space: pre-wrap;
-		word-break: break-word;
-		overflow: hidden;
+
+		&__subject, &__message {
+			overflow-wrap: break-word;
+			white-space: pre-wrap;
+			word-break: break-word;
+			overflow: hidden;
+		}
+
+		&__subject {
+			display: flex;
+		}
 
 		&__message {
 			color: var(--color-text-lighter);
+		}
+
+		&__previews {
+			padding-top: 8px;
+
+			&__preview {
+
+				&__image {
+					width: 50px;
+					height: 50px;
+					margin-right: 12px;
+					transition: box-shadow 0.1s ease-in-out;
+					box-shadow: 0 0 2px 0 var(--color-box-shadow);
+
+					&:hover {
+						box-shadow: 0 0 5px 0 var(--color-box-shadow);
+					}
+
+					&--dir-icon,
+					&--mimetype-icon {
+						width: 50px;
+						height: 50px;
+					}
+				}
+			}
 		}
 
 		::v-deep a {

@@ -24,24 +24,52 @@
 	<Content app-name="activity">
 		<AppNavigation>
 			<template #list>
-				<AppNavigationItem :to="{name: 'timeline'}"
+				<AppNavigationItem
+					to="/"
 					class="app-navigation__activity"
 					:title="t('activity', 'All activities')"
 					icon="activity"
 					exact />
-				<AppNavigationItem to="?filter=self" :title="t('activity', 'By you')" icon="icon-user" />
-				<AppNavigationItem to="?filter=by" :title="t('activity', 'By others')" icon="icon-group" />
-				<AppNavigationItem to="?filter=files_favorites" :title="t('activity', 'Favorites')" icon="icon-favorite" />
-				<AppNavigationItem to="?filter=files" :title="t('activity', 'File changes')" icon="icon-folder" />
-				<AppNavigationItem to="?filter=files_sharing" :title="t('activity', 'File shares')" icon="icon-share" />
-				<AppNavigationItem to="?filter=calendar" :title="t('activity', 'Calendar')" icon="icon-calendar" />
-				<AppNavigationItem to="?filter=calendar_todo" :title="t('activity', 'Todo')" icon="icon-todo" />
-				<AppNavigationItem to="?filter=comments" :title="t('activity', 'Comments')" icon="icon-comments" />
-				<AppNavigationItem to="?filter=contacts" :title="t('activity', 'Contacts')" icon="icon-contacts" />
+				<AppNavigationItem exact
+					to="/?filter=self"
+					:title="t('activity', 'By you')"
+					icon="icon-user" />
+				<AppNavigationItem exact
+					to="/?filter=by"
+					:title="t('activity', 'By others')"
+					icon="icon-group" />
+				<AppNavigationItem exact
+					to="/?filter=files_favorites"
+					:title="t('activity', 'Favorites')"
+					icon="icon-favorite" />
+				<AppNavigationItem exact
+					to="/?filter=files"
+					:title="t('activity', 'File changes')"
+					icon="icon-folder" />
+				<AppNavigationItem exact
+					to="/?filter=files_sharing"
+					:title="t('activity', 'File shares')"
+					icon="icon-share" />
+				<AppNavigationItem exact
+					to="/?filter=calendar"
+					:title="t('activity', 'Calendar')"
+					icon="icon-calendar" />
+				<AppNavigationItem exact
+					to="/?filter=calendar_todo"
+					:title="t('activity', 'Todo')"
+					icon="icon-todo" />
+				<AppNavigationItem exact
+					to="/?filter=comments"
+					:title="t('activity', 'Comments')"
+					icon="icon-comments" />
+				<AppNavigationItem exact
+					to="/?filter=contacts"
+					:title="t('activity', 'Contacts')"
+					icon="icon-contacts" />
 			</template>
 			<template #footer>
 				<AppNavigationSettings :title="t('activity', 'Settings')">
-					<AppNavigationItem to="?filter=contacts" :title="t('activity', 'Enable RSS Feed')" icon="icon-contacts" />
+					<AppNavigationItem to="/?filter=contacts" :title="t('activity', 'Enable RSS Feed')" icon="icon-contacts" />
 				</AppNavigationSettings>
 			</template>
 		</AppNavigation>
@@ -62,15 +90,14 @@
 			</div>
 		</div> -->
 
-		<AppContent :class="{ 'icon-loading': loading }">
-			<!--  -->
+		<AppContent>
+			<router-view />
 		</AppContent>
 	</Content>
 </template>
 
 <script>
-// import { generateUrl } from '@nextcloud/router'
-
+import { loadState } from '@nextcloud/initial-state'
 import Content from '@nextcloud/vue/dist/Components/Content'
 import AppContent from '@nextcloud/vue/dist/Components/AppContent'
 import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
@@ -89,19 +116,15 @@ export default {
 	data() {
 		return {
 			loading: true,
+			appNavigation: loadState('activity', 'appNavigation', ''),
+			avatars: loadState('activity', 'avatars'),
+			filter: loadState('activity', 'filter'),
 		}
 	},
 }
 </script>
 <style lang="scss" scoped>
-.app-content {
-	display: flex;
-	flex-grow: 1;
-	flex-direction: column;
-	align-content: space-between;
-}
-
-.app-navigation__photos::v-deep .app-navigation-entry-icon.icon-photos {
-	background-size: 20px;
+.app-activity {
+	width: 100%;
 }
 </style>

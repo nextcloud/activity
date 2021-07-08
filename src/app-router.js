@@ -24,7 +24,7 @@ import { generateUrl } from '@nextcloud/router'
 import Router from 'vue-router'
 import Vue from 'vue'
 
-const Timeline = () => import('../views/Timeline')
+const AppActivityList = () => import('./components/AppActivityList')
 
 Vue.use(Router)
 
@@ -37,142 +37,10 @@ export default new Router({
 	routes: [
 		{
 			path: '/',
-			component: Timeline,
-			name: 'timeline',
+			component: AppActivityList,
 			props: route => ({
+				filter: route.query.filter,
 			}),
 		},
-		{
-			path: '?filter=self',
-			component: Timeline,
-			name: 'timeline',
-			props: route => ({
-			}),
-		},
-		{
-			path: '?filter=by',
-			component: Timeline,
-			name: 'timeline',
-			props: route => ({
-			}),
-		},
-		{
-			path: '?filter=files_favorites',
-			component: Timeline,
-			name: 'timeline',
-			props: route => ({
-			}),
-		},
-		{
-			path: '?filter=files',
-			component: Timeline,
-			name: 'timeline',
-			props: route => ({
-			}),
-		},
-		{
-			path: '?filter=files_sharing',
-			component: Timeline,
-			name: 'timeline',
-			props: route => ({
-			}),
-		},
-		{
-			path: '?filter=calendar',
-			component: Timeline,
-			name: 'timeline',
-			props: route => ({
-			}),
-		},
-		{
-			path: '?filter=calendar_todo',
-			component: Timeline,
-			name: 'timeline',
-			props: route => ({
-			}),
-		},
-		{
-			path: '?filter=comments',
-			component: Timeline,
-			name: 'timeline',
-			props: route => ({
-			}),
-		},
-		{
-			path: '?filter=contacts',
-			component: Timeline,
-			name: 'timeline',
-			props: route => ({
-			}),
-		},
-		// 	path: '/',
-		// 	component: Timeline,
-		// 	name: 'timeline',
-		// 	props: route => ({
-		// 		rootTitle: t('photos', 'Your photos'),
-		// 	}),
-
-		// {
-		// {
-		// 	path: '/albums/:path*',
-		// 	component: Albums,
-		// 	name: 'albums',
-		// 	props: route => ({
-		// 		path: parsePathParams(route.params.path),
-		// 		// if path is empty
-		// 		isRoot: !route.params.path,
-		// 		rootTitle: t('photos', 'Your folders'),
-		// 	}),
-		// },
-		// {
-		// 	path: '/shared/:path*',
-		// 	component: Albums,
-		// 	name: 'shared',
-		// 	props: route => ({
-		// 		path: parsePathParams(route.params.path),
-		// 		// if path is empty
-		// 		isRoot: !route.params.path,
-		// 		rootTitle: t('photos', 'Shared with you'),
-		// 		showShared: true,
-		// 	}),
-		// },
-		// {
-		// 	path: '/videos',
-		// 	component: Timeline,
-		// 	name: 'videos',
-		// 	props: route => ({
-		// 		rootTitle: t('photos', 'Your videos'),
-		// 		mimesType: videoMimes,
-		// 	}),
-		// },
-		// {
-		// 	path: '/favorites',
-		// 	component: Timeline,
-		// 	name: 'favorites',
-		// 	props: route => ({
-		// 		rootTitle: t('photos', 'Favorites'),
-		// 		onlyFavorites: true,
-		// 	}),
-		// },
-		// {
-		// 	path: '/tags/:path*',
-		// 	component: Tags,
-		// 	name: 'tags',
-		// 	redirect: !areTagsInstalled ? { name: 'timeline' } : null,
-		// 	props: route => ({
-		// 		path: `${route.params.path ? route.params.path : ''}`,
-		// 		// if path is empty
-		// 		isRoot: !route.params.path,
-		// 		rootTitle: t('photos', 'Tagged photos'),
-		// 	}),
-		// },
-		// {
-		// 	path: '/maps',
-		// 	name: 'maps',
-		// 	// router-link doesn't support external url, let's force the redirect
-		// 	beforeEnter() {
-		// 		window.open(mapsPath, '_blank')
-		// 	},
-		// },
 	],
 })

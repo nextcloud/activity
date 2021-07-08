@@ -23,11 +23,13 @@
 namespace OCA\Activity\Controller;
 
 use OCA\Activity\Data;
+use OCA\Activity\AppInfo\Application;
 use OCA\Activity\Navigation;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IRequest;
+use OCP\AppFramework\Services\IInitialState;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
@@ -45,6 +47,9 @@ class ActivitiesController extends Controller {
 	/** @var EventDispatcherInterface */
 	protected $eventDispatcher;
 
+	/** @var IInitialState */
+	private $initialState;
+
 	/**
 	 * @param string $appName
 	 * @param IRequest $request
@@ -58,12 +63,14 @@ class ActivitiesController extends Controller {
 								IConfig $config,
 								Data $data,
 								Navigation $navigation,
-								EventDispatcherInterface $eventDispatcher) {
+								EventDispatcherInterface $eventDispatcher,
+								IInitialState $initialState) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
 		$this->config = $config;
 		$this->navigation = $navigation;
 		$this->eventDispatcher = $eventDispatcher;
+		$this->initialState = $initialState;
 	}
 
 	/**
@@ -79,10 +86,10 @@ class ActivitiesController extends Controller {
 		$event = new GenericEvent($filter);
 		$this->eventDispatcher->dispatch('OCA\Activity::loadAdditionalScripts', $event);
 
-		return new TemplateResponse('activity', 'app', [
-			'appNavigation' => $this->navigation->getTemplate($filter),
-			'avatars' => $this->config->getSystemValue('enable_avatars', true) ? 'yes' : 'no',
-			'filter' => $filter,
-		]);
+		$this->initialState->provideInitialState('appNavigation', $this->navigation->getTemplate($filter));
+		$this->initialState->provideInitialState('avatars', $this->config->getSystemValue('enable_avatars', true) ? 'yes' : 'no');
+		$this->initialState->provideInitialState('filter', $filter);
+
+		return new TemplateResponse(Application::APP_ID, 'app');
 	}
 }

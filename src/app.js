@@ -40,7 +40,8 @@ Vue.use(Vuex)
 
 // eslint-disable-next-line no-new
 new Vue({
-	el: '#activity-app',
+	el: '#content',
+	// eslint-disable-next-line vue/match-component-file-name
 	name: 'ActivityApp',
 	router,
 	render: h => h(ActivityApp),

@@ -20,38 +20,41 @@
  *
  */
 
-import { generateOcsUrl } from '@nextcloud/router'
-import axios from '@nextcloud/axios'
+let callback = null
+let loading = false
+let lastScrollTop = 0
 
-import logger from '../logger'
+async function handleScroll(scrollEvent) {
+	if (callback === null || loading) {
+		return
+	}
 
-export default {
-	async getActivities() {
+	const scrollTop = scrollEvent.target.scrollTop
+	const scrollHeight = scrollEvent.target.scrollHeight
+	const clientHeight = scrollEvent.target.clientHeight
+	const nearEndOfScroll = scrollTop >= scrollHeight - clientHeight - 500
+
+	// Return here if the user is scrolling upward.
+	if (scrollTop < lastScrollTop) {
+		lastScrollTop = scrollTop
+		return
+	}
+	lastScrollTop = scrollTop
+
+	if (nearEndOfScroll) {
 		try {
-			this.loading = true
-
-			const activities = await axios.get(
-				generateOcsUrl('apps/activity/api/v2/activity/filter'),
-				{
-					params: {
-						format: 'json',
-						object_type: 'files',
-						object_id: this.fileInfo.id,
-					},
-				})
-
-			this.loading = false
-
-			this.processActivities(activities)
-		} catch (error) {
-			// Status 304 is not an error.
-			if (error.response !== undefined && error.response.status === 304) {
-				this.loading = false
-				return
-			}
-			this.error = t('activity', 'Unable to load the activity list')
-			this.loading = false
-			logger.error('Error loading the activity list', error)
+			console.warn(scrollTop, scrollHeight, clientHeight, nearEndOfScroll)
+			loading = true
+			await callback()
+		} finally {
+			loading = false
 		}
 	}
+}
+
+export default {
+	inserted(el, binding) {
+		callback = binding.value
+		el.addEventListener('scroll', handleScroll)
+	},
 }

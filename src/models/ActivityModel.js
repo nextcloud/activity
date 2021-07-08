@@ -22,6 +22,17 @@
 
 import moment from '@nextcloud/moment'
 
+/**
+ * @typedef {Object} ActivityPreview
+ * @property {number} fileId - the file's id
+ * @property {string} filename - the file's name
+ * @property {string} [link] - the link to the file
+ * @property {string} mimeType - the mime type
+ * @property {boolean} isMimeTypeIcon - wether or not the preview is just a mime type icon
+ * @property {string} source - the link to the preview
+ * @property {string} view - the view
+ */
+
 export default class ActivityModel {
 
 	_activity;
@@ -264,14 +275,45 @@ export default class ActivityModel {
 	}
 
 	/**
-	 * Get the activity timestamp
+	 * Get the activity formatted datetime rounded at the current day
 	 *
 	 * @returns {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
+	get formattedDay() {
+		const day = moment(this._activity.datetime).format('LL')
+
+		switch (day) {
+		case moment().format('LL'):
+			return t('activity', 'Today')
+		case moment().subtract(1, 'd').format('LL'):
+			return t('activity', 'Yesterday')
+		default:
+			return day
+		}
+	}
+
+	/**
+	 * Get the activity timestamp
+	 *
+	 * @returns {number}
+	 * @readonly
+	 * @memberof ActivityModel
+	 */
 	get timestamp() {
 		return moment(this._activity.datetime).unix()
+	}
+
+	/**
+	 * Get the activity previews
+	 *
+	 * @returns {Array<ActivityPreview>}
+	 * @readonly
+	 * @memberof ActivityModel
+	 */
+	get previews() {
+		return this._activity.previews
 	}
 
 }

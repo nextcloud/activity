@@ -22,175 +22,194 @@
  -->
 
 <template>
+	<div v-infinite-scroll="getActivities" class="activities">
 		<!-- error message -->
 		<EmptyContent v-if="error" icon="icon-error">
-			{{ t('activity', 'An error occurred') }}
-			{{ error }}
+			{{ t('activity', 'An error occurred') }} - {{ error }}
 		</EmptyContent>
-		<template v-else>
+		<div v-else>
 			<!-- activities content -->
-			<ul>
-				<Activity
-					v-for="activity in activities"
-					:key="activity.id"
-					:activity="activity" />
-			</ul>
+			<div v-for="group in activitiesByDate" :key="group[0].formattedDay" class="activities__group">
+				<h2 v-tooltip.bottom="group[0].formattedDate" class="activities__group__header">
+					{{ group[0].formattedDay }}
+				</h2>
+
+				<ul class="activities__group__content">
+					<Activity
+						v-for="activity in group"
+						:key="activity.id"
+						:show-avatar="true"
+						:activity="activity" />
+				</ul>
+			</div>
 
 			<EmptyContent v-if="activities.length === 0 && !loading" icon="icon-activity">
 				{{ t('activity', 'No activity yet') }}
 			</EmptyContent>
-		</template>
+		</div>
 	</div>
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
-
+import { generateOcsUrl } from '@nextcloud/router'
 import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
+import axios from '@nextcloud/axios'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
 
-// import cancelableRequest from '../utils/CancelableRequest'
+import Activity from './Activity'
 import ActivityFetcher from '../mixins/ActivityFetcher'
+import InfiniteScroll from '../directives/InfiniteScroll'
+import ActivityModel from '../models/ActivityModel'
+import logger from '../logger'
 
 export default {
-	name: 'Timeline',
+	name: 'AppActivityList',
 	components: {
+		Activity,
 		EmptyContent,
 	},
-	props: {
-		loading: {
-			type: Boolean,
-			required: true,
-		},
-		filters: {
-			type: Array,
-			default: false
-		}
+	directives: {
+		tooltip: Tooltip,
+		'infinite-scroll': InfiniteScroll,
 	},
 	mixins: [ActivityFetcher],
+	props: {
+		filter: {
+			type: String,
+			default: 'all',
+		},
+	},
+
 	data() {
 		return {
+			loading: true,
+			/** @type {Array<ActivityModel>} */
 			activities: [],
-			// cancelRequest: null,
 			error: null,
+			firstKnownId: 0,
+			lastGivenId: 0,
+			outOfContent: false,
 		}
 	},
 
 	computed: {
-		// global lists
-		...mapGetters([
-			'files',
-			'timeline',
-		]),
 		/**
-		 * @return {boolean} - Wether or not there is some activities.
+		 * Group activities by date.
+		 *
+		 * @returns {Object<string, Array<ActivityModel>>}
 		 */
-		isEmpty() {
-			return this.activities.length === 0
+		activitiesByDate() {
+			const activitiesByDate = {}
+
+			for (const activity of this.activities) {
+				if (activitiesByDate[activity.formattedDay] === undefined) {
+					activitiesByDate[activity.formattedDay] = []
+				}
+
+				activitiesByDate[activity.formattedDay].push(activity)
+			}
+
+			return activitiesByDate
 		},
 	},
-
-	beforeMount() {
+	afterMount() {
 		this.getActivities()
 	},
-
-	// beforeDestroy() {
-	// 	// cancel any pending requests
-	// 	if (this.cancelRequest) {
-	// 		this.cancelRequest('Changed view')
-	// 	}
-	// 	this.resetState()
-	// },
-
+	watch: {
+		filter() {
+			this.resetState()
+			this.getActivities()
+		},
+	},
 	methods: {
-		/** Return next batch of data depending on global offset
-		 * @param {boolean} doReturn Returns a Promise with the list instead of a boolean
-		 * @returns {Promise<boolean>} Returns a Promise with a boolean that stops infinite loading
-		 */
-		async getContent(doReturn) {
-			if (this.done) {
-				return Promise.resolve(true)
+		resetState() {
+			this.activities = []
+			this.error = null
+			this.firstKnownId = 0
+			this.lastGivenId = 0
+			this.outOfContent = false
+		},
+		async getActivities() {
+			if (this.outOfContent) {
+				return
 			}
-
-			// cancel any pending requests
-			if (this.cancelRequest) {
-				this.cancelRequest('Changed view')
-			}
-
-			// if we don't already have some cached data let's show a loader
-			if (this.timeline.length === 0) {
-				this.$emit('update:loading', true)
-			}
-
-			// done loading even with errors
-			const { request, cancel } = cancelableRequest(getPhotos)
-			this.cancelRequest = cancel
-
-			const numberOfImagesPerBatch = this.gridConfig.count * 5 // loading 5 rows
 
 			try {
-				// Load next batch of images
-				const files = await request(this.onlyFavorites, {
-					page: this.page,
-					perPage: numberOfImagesPerBatch,
-					mimesType: this.mimesType,
-				})
+				this.loading = true
 
-				// If we get less files than requested that means we got to the end
-				if (files.length !== numberOfImagesPerBatch) {
-					this.done = true
+				const response = await axios.get(
+					generateOcsUrl(`apps/activity/api/v2/activity/${this.filter}`),
+					{
+						params: {
+							format: 'json',
+							previews: true,
+							since: this.lastGivenId,
+						},
+						headers: {
+							'Accept-Language': OC.getLanguage(),
+						},
+					})
+
+				if (response.headers['x-activity-first-known'] !== undefined) {
+					this.firstKnownId = parseInt(response.headers['x-activity-first-known'], 10)
 				}
 
-				this.$store.dispatch('updateTimeline', files)
-				this.$store.dispatch('appendFiles', files)
-
-				this.page += 1
-
-				if (doReturn) {
-					return Promise.resolve(files)
+				if (response.headers['x-activity-last-given'] !== undefined) {
+					this.lastGivenId = parseInt(response.headers['x-activity-last-given'], 10)
 				}
 
-				return Promise.resolve(false)
+				this.processActivities(response)
 			} catch (error) {
-				if (error.response && error.response.status) {
-					if (error.response.status === 404) {
-						this.error = 404
-						setTimeout(() => {
-							this.$router.push({ name: this.$route.name })
-						}, 3000)
-					} else {
-						this.error = error
-					}
+				// Status 304 is not an error, it just means that we are out of content.
+				if (error.response !== undefined && error.response.status === 304) {
+					this.outOfContent = true
+					return
 				}
-
-				// cancelled request, moving on...
-				console.error('Error fetching timeline', error)
-				return Promise.resolve(true)
+				this.error = t('activity', 'Unable to load the activity list')
+				logger.error('Error loading the activity list', error)
 			} finally {
-				// done loading even with errors
-				this.$emit('update:loading', false)
-				this.cancelRequest = null
+				this.loading = false
+			}
+		},
+		/**
+		* Process the current activity data
+		* and init activities[]
+		*
+		* @param {Object} activity the activity ocs api request data
+		* @param {Object} activity.data the request data
+		*/
+		processActivities({ data }) {
+			if (data.ocs && data.ocs.data && data.ocs.data.length > 0) {
+				// create Activity objects and sort by newest
+				const newActivities = data.ocs.data
+					.map(activity => new ActivityModel(activity))
+					.sort((a, b) => b.timestamp - a.timestamp)
+
+				this.activities.push(...newActivities)
+
+				logger.debug(`Processed ${this.activities.length} activity(ies)`, { activities: this.activities, fileInfo: this.fileInfo })
 			}
 		},
 	},
-
 }
 </script>
-
 <style lang="scss" scoped>
-$previous: 0;
-@each $size, $config in get('sizes') {
-	$marginTop: map-get($config, 'marginTop');
-	$marginW: map-get($config, 'marginW');
-	// if this is the last entry, only use min-width
-	$rule: '(min-width: #{$previous}px) and (max-width: #{$size}px)';
-	@if $size == 'max' {
-		$rule: '(min-width: #{$previous}px)';
+.activities {
+	padding: 30px;
+	// Add space the the first header is not to close to the hamburger menu.
+	padding-top: 32px;
+	// TODO - use variable
+	height: calc(100vh - 50px);
+	overflow: scroll;
+}
+
+.activities__group {
+	margin-bottom: 60px;
+
+	&__header {
+		margin-left: 20px;
+		// Center the tooltip bellow the text.
+		width: fit-content;
 	}
-	@media #{$rule} {
-		.grid-container {
-			padding: 0px #{$marginW}px 256px #{$marginW}px;
-		}
-	}
-	$previous: $size;
 }
 </style>

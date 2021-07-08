@@ -8,47 +8,47 @@
  *
  */
 
-function escapeHTML(text) {
-	return text.toString()
-		.split('&').join('&amp;')
-		.split('<').join('&lt;')
-		.split('>').join('&gt;')
-		.split('"').join('&quot;')
-		.split('\'').join('&#039;')
-}
+// function escapeHTML(text) {
+// 	return text.toString()
+// 		.split('&').join('&amp;')
+// 		.split('<').join('&lt;')
+// 		.split('>').join('&gt;')
+// 		.split('"').join('&quot;')
+// 		.split('\'').join('&#039;')
+// }
 
 $(function(){
-	OCA.Activity = OCA.Activity || {};
+	// OCA.Activity = OCA.Activity || {};
 
 	OCA.Activity.Filter = {
-		filter: undefined,
-		$navigation: $('#app-navigation'),
+		// filter: undefined,
+		// $navigation: $('#app-navigation'),
 
 
-		_onPopState: function(params) {
-			params = _.extend({
-				filter: 'all'
-			}, params);
+		// _onPopState: function(params) {
+		// 	params = _.extend({
+		// 		filter: 'all'
+		// 	}, params);
 
-			this.setFilter(params.filter);
-		},
+		// 	this.setFilter(params.filter);
+		// },
 
 		setFilter: function (filter) {
-			if (filter === this.filter) {
-				return;
-			}
+			// if (filter === this.filter) {
+			// 	return;
+			// }
 
-			this.$navigation.find('a[data-navigation=' + this.filter + ']').parent().removeClass('active');
-			OCA.Activity.InfinitScrolling.firstKnownId = 0;
-			OCA.Activity.InfinitScrolling.lastGivenId = 0;
+			// this.$navigation.find('a[data-navigation=' + this.filter + ']').parent().removeClass('active');
+			// OCA.Activity.InfinitScrolling.firstKnownId = 0;
+			// OCA.Activity.InfinitScrolling.lastGivenId = 0;
 
-			this.filter = filter;
+			// this.filter = filter;
 
 			OCA.Activity.InfinitScrolling.$container.animate({ scrollTop: 0 }, 'slow');
-			OCA.Activity.InfinitScrolling.$container.children().remove();
-			$('#emptycontent').addClass('hidden');
-			$('#no_more_activities').addClass('hidden');
-			$('#loading_activities').removeClass('hidden');
+			// OCA.Activity.InfinitScrolling.$container.children().remove();
+			// $('#emptycontent').addClass('hidden');
+			// $('#no_more_activities').addClass('hidden');
+			// $('#loading_activities').removeClass('hidden');
 			OCA.Activity.InfinitScrolling.ignoreScroll = 0;
 
 			this.$navigation.find('a[data-navigation=' + filter + ']').parent().addClass('active');
@@ -58,30 +58,30 @@ $(function(){
 	};
 
 	OCA.Activity.InfinitScrolling = {
-		ignoreScroll: 0,
-		$container: $('#container'),
-		lastDateGroup: null,
-		$content: $(document),
-		firstKnownId: 0,
-		lastGivenId: 0,
-		activities: {},
+		// ignoreScroll: 0,
+		// $container: $('#container'),
+		// lastDateGroup: null,
+		// $content: $(document),
+		// firstKnownId: 0,
+		// lastGivenId: 0,
+		// activities: {},
 
-		prefill: function () {
-			this.ignoreScroll += 1;
-			if (this.$content.scrollTop() + $(window).height() > this.$container.height() - 100) {
-				this.ignoreScroll += 1;
-				this.loadMoreActivities();
-			}
-			this.ignoreScroll -= 1;
-		},
+		// prefill: function () {
+		// 	this.ignoreScroll += 1;
+		// 	if (this.$content.scrollTop() + $(window).height() > this.$container.height() - 100) {
+		// 		this.ignoreScroll += 1;
+		// 		this.loadMoreActivities();
+		// 	}
+		// 	this.ignoreScroll -= 1;
+		// },
 
-		onScroll: function () {
-			if (this.ignoreScroll <= 0
-				&& this.$content.scrollTop() + $(window).height() > this.$container.height() - 100) {
-				this.ignoreScroll = 1;
-				this.loadMoreActivities();
-			}
-		},
+		// onScroll: function () {
+		// 	if (this.ignoreScroll <= 0
+		// 		&& this.$content.scrollTop() + $(window).height() > this.$container.height() - 100) {
+		// 		this.ignoreScroll = 1;
+		// 		this.loadMoreActivities();
+		// 	}
+		// },
 
 		/**
 		 * Request a new bunch of activities from the server
@@ -89,26 +89,26 @@ $(function(){
 		loadMoreActivities: function () {
 			var self = this;
 
-			$.ajax({
-				url: OC.linkToOCS('apps/activity/api/v2/activity', 2) + OCA.Activity.Filter.filter + '?format=json&previews=true&since=' + self.lastGivenId,
-				type: 'GET',
-				beforeSend: function(xhr) {
-					xhr.setRequestHeader("Accept-Language", OC.getLanguage());
-				},
+			// $.ajax({
+			// 	url: OC.linkToOCS('apps/activity/api/v2/activity', 2) + OCA.Activity.Filter.filter + '?format=json&previews=true&since=' + self.lastGivenId,
+			// 	type: 'GET',
+				// beforeSend: function(xhr) {
+				// 	xhr.setRequestHeader("Accept-Language", OC.getLanguage());
+				// },
 				success: function(response, status, xhr) {
 					if (status === 'notmodified') {
 						self.handleActivitiesCallback([]);
-						self.saveHeaders(xhr.getAllResponseHeaders());
+						// self.saveHeaders(xhr.getAllResponseHeaders());
 						return;
 					} else if (status === 'nocontent'){
 						self.handleActivitiesCallback([]);
-						self.ignoreScroll -= 1;
+						// self.ignoreScroll -= 1;
 					}
 
-					self.saveHeaders(xhr.getAllResponseHeaders());
+					// self.saveHeaders(xhr.getAllResponseHeaders());
 					if (typeof response != 'undefined') {
 						self.handleActivitiesCallback(response.ocs.data);
-						self.ignoreScroll -= 1;
+						// self.ignoreScroll -= 1;
 					}
 				}
 			});
@@ -117,20 +117,20 @@ $(function(){
 		/**
 		 * Read the X-Activity-First-Known and X-Activity-Last-Given headers
 		 * @param headers
-		 */
-		saveHeaders: function(headers) {
-			var self = this;
+		//  */
+		// saveHeaders: function(headers) {
+		// 	var self = this;
 
-			headers = headers.split("\n");
-			_.each(headers, function (header) {
-				var parts = header.split(':');
-				if (parts[0].toLowerCase() === 'x-activity-first-known') {
-					self.firstKnownId = parseInt(parts[1].trim(), 10);
-				} else if (parts[0].toLowerCase() === 'x-activity-last-given') {
-					self.lastGivenId = parseInt(parts[1].trim(), 10);
-				}
-			});
-		},
+		// 	headers = headers.split("\n");
+		// 	_.each(headers, function (header) {
+		// 		var parts = header.split(':');
+		// 		if (parts[0].toLowerCase() === 'x-activity-first-known') {
+		// 			self.firstKnownId = parseInt(parts[1].trim(), 10);
+		// 		} else if (parts[0].toLowerCase() === 'x-activity-last-given') {
+		// 			self.lastGivenId = parseInt(parts[1].trim(), 10);
+		// 		}
+		// 	});
+		// },
 
 		/**
 		 * Append activities to the view or display end/no content
@@ -168,56 +168,56 @@ $(function(){
 			}
 		},
 
-		appendActivityToContainer: function (activity) {
-			activity.timestamp = moment(activity.datetime).valueOf();
-			this.makeSureDateGroupExists(activity.timestamp);
+		// appendActivityToContainer: function (activity) {
+			// activity.timestamp = moment(activity.datetime).valueOf();
+			// this.makeSureDateGroupExists(activity.timestamp);
 
-			this.activities[activity.activity_id] = activity;
-			this.addActivity(activity);
-		},
+			// this.activities[activity.activity_id] = activity;
+			// this.addActivity(activity);
+		// },
 
-		makeSureDateGroupExists: function(timestamp) {
-			var dayOfYear = OC.Util.formatDate(timestamp, 'YYYY-DDD');
-			var $lastGroup = this.$container.children().last();
+		// makeSureDateGroupExists: function(timestamp) {
+		// 	var dayOfYear = OC.Util.formatDate(timestamp, 'YYYY-DDD');
+		// 	var $lastGroup = this.$container.children().last();
 
-			if ($lastGroup.data('date') !== dayOfYear) {
-				var dateOfDay = OC.Util.formatDate(timestamp, 'LL'),
-					displayDate = dateOfDay;
+		// 	if ($lastGroup.data('date') !== dayOfYear) {
+		// 		var dateOfDay = OC.Util.formatDate(timestamp, 'LL'),
+		// 			displayDate = dateOfDay;
 
-				var today = OC.Util.formatDate(moment(), 'YYYY-DDD');
-				if (dayOfYear === today) {
-					displayDate = t('activity', 'Today');
-				} else {
-					var yesterday = OC.Util.formatDate(moment().subtract(1, 'd'), 'YYYY-DDD');
+				// var today = OC.Util.formatDate(moment(), 'YYYY-DDD');
+				// if (dayOfYear === today) {
+				// 	displayDate = t('activity', 'Today');
+				// } else {
+				// 	var yesterday = OC.Util.formatDate(moment().subtract(1, 'd'), 'YYYY-DDD');
 
-					if (dayOfYear === yesterday) {
-						displayDate = t('activity', 'Yesterday');
-					}
-				}
+				// 	if (dayOfYear === yesterday) {
+				// 		displayDate = t('activity', 'Yesterday');
+				// 	}
+				// }
 
-				var content = '<div class="section activity-section group" data-date="' + escapeHTML(dayOfYear) + '">' + "\n"
-					+'	<h2>'+"\n"
-					+'		<span class="has-tooltip" title="' + escapeHTML(dateOfDay) + '">' + escapeHTML(displayDate) + '</span>' + "\n"
-					+'	</h2>' + "\n"
-					+'	<div class="boxcontainer">' + "\n"
-					+'	</div>' + "\n"
-					+'</div>';
-				var $content = $(content);
-				this.processElements($content);
-				this.$container.append($content);
-				this.lastDateGroup = $content;
-			}
-		},
+		// 		var content = '<div class="section activity-section group" data-date="' + escapeHTML(dayOfYear) + '">' + "\n"
+		// 			+'	<h2>'+"\n"
+		// 			+'		<span class="has-tooltip" title="' + escapeHTML(dateOfDay) + '">' + escapeHTML(displayDate) + '</span>' + "\n"
+		// 			+'	</h2>' + "\n"
+		// 			+'	<div class="boxcontainer">' + "\n"
+		// 			+'	</div>' + "\n"
+		// 			+'</div>';
+		// 		var $content = $(content);
+		// 		this.processElements($content);
+		// 		this.$container.append($content);
+		// 		this.lastDateGroup = $content;
+		// 	}
+		// },
 
 		addActivity: function(activity) {
-			var subject = escapeHTML(activity.subject);
-			if (activity.subject_rich[0].length > 1) {
-				subject = OCA.Activity.RichObjectStringParser.parseMessage(activity.subject_rich[0], activity.subject_rich[1]);
-			}
-			var message = escapeHTML(activity.message);
-			if (activity.message_rich[0].length > 1) {
-				message = OCA.Activity.RichObjectStringParser.parseMessage(activity.message_rich[0], activity.message_rich[1]);
-			}
+			// var subject = escapeHTML(activity.subject);
+			// if (activity.subject_rich[0].length > 1) {
+			// 	subject = OCA.Activity.RichObjectStringParser.parseMessage(activity.subject_rich[0], activity.subject_rich[1]);
+			// }
+			// var message = escapeHTML(activity.message);
+			// if (activity.message_rich[0].length > 1) {
+			// 	message = OCA.Activity.RichObjectStringParser.parseMessage(activity.message_rich[0], activity.message_rich[1]);
+			// }
 			if (subject.indexOf('<a') >= 0) {
 				activity.link = '';
 			}
@@ -242,29 +242,29 @@ $(function(){
 				+ '			' + escapeHTML(OC.Util.relativeModifiedDate(activity.timestamp)) + "\n"
 				+'		</span>' + "\n";
 
-			if (message) {
-				content += '<div class="activitymessage">' + "\n"
-					+ message + "\n"
-					+'</div>' + "\n";
-			}
+			// if (message) {
+			// 	content += '<div class="activitymessage">' + "\n"
+			// 		+ message + "\n"
+			// 		+'</div>' + "\n";
+			// }
 
-			if (activity.previews && activity.previews.length) {
-				content += '<div class="activity-previews">';
-				for (var i = 0; i < activity.previews.length; i++) {
-					var preview = activity.previews[i];
-					content += ((preview.link) ? '<a href="' + preview.link + '">' + "\n" : '')
-						+ '<img class="preview' + ((preview.isMimeTypeIcon) ? ' preview-mimetype-icon' : '') + '" src="' + preview.source + '" alt="' + t('activity', 'Open {filename}', preview) + '" />' + "\n"
-						+ ((preview.link) ? '</a>' + "\n" : '')
-				}
-				content += '</div>';
-			}
+			// if (activity.previews && activity.previews.length) {
+			// 	content += '<div class="activity-previews">';
+			// 	for (var i = 0; i < activity.previews.length; i++) {
+			// 		var preview = activity.previews[i];
+			// 		content += ((preview.link) ? '<a href="' + preview.link + '">' + "\n" : '')
+			// 			+ '<img class="preview' + ((preview.isMimeTypeIcon) ? ' preview-mimetype-icon' : '') + '" src="' + preview.source + '" alt="' + t('activity', 'Open {filename}', preview) + '" />' + "\n"
+			// 			+ ((preview.link) ? '</a>' + "\n" : '')
+			// 	}
+			// 	content += '</div>';
+			// }
 
-			content += '	</div>' + "\n"
-				+'</div>';
+			// content += '	</div>' + "\n"
+			// 	+'</div>';
 
-			var $content = $(content);
+			// var $content = $(content);
 			this.processElements($content);
-			this.lastDateGroup.append($content);
+			// this.lastDateGroup.append($content);
 		},
 
 		processElements: function ($element) {
@@ -309,13 +309,6 @@ $(function(){
 	OCA.Activity.InfinitScrolling.$content.on('scroll', _.bind(OCA.Activity.InfinitScrolling.onScroll, OCA.Activity.InfinitScrolling));
 
 	OCA.Activity.Filter.$navigation.find('a[data-navigation]').on('click', function (event) {
-		var filter = $(this).attr('data-navigation');
-		if (filter !== OCA.Activity.Filter.filter) {
-			OC.Util.History.pushState({
-				filter: filter
-			});
-		}
-		OCA.Activity.Filter.setFilter(filter);
-		event.preventDefault();
+w
 	});
 });
