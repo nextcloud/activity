@@ -229,7 +229,9 @@ class FilesHooks {
 
 		$accessList = $this->getUserPathsFromPath($filePath, $uidOwner);
 
-		$this->generateRemoteActivity($accessList['remotes'], $activityType, time(), $this->currentUser->getCloudId(), $accessList['ownerPath']);
+		if (!empty($accessList['remotes'])) {
+			$this->generateRemoteActivity($accessList['remotes'], $activityType, time(), $this->currentUser->getCloudId(), $accessList['ownerPath']);
+		}
 
 		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
 			$mountsForFile = $this->userMountCache->getMountsForFileId($fileId);
