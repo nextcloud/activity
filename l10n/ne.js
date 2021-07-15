@@ -40,12 +40,6 @@ OC.L10N.register(
     "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
     "An error occurred while loading activities" : "क्रियाकलापहरू लोड गर्दा त्रुटि देखापर्यो",
     "Load more activities" : "थप क्रियाकलापहरू लोड गर्नुहोस्",
-    "Open file" : "फाईल खोल्नुहोस्",
-    "Stream" : "स्ट्रिम",
-    "Send activity emails" : "गतिविधिको इमेलहरू पठाउनुहोस्",
-    "Configure the default activity settings for new users." : "नयाँ प्रयोगकर्ताका लागि पूर्वनिर्धारित गतिविधि सेटिङहरू मिलाउनुहोस्।",
-    "List your own actions in the stream" : "पाटिमा आफ्नो कार्यहरू सूचीबद्ध गर्नुहोस्",
-    "Notify about your own actions via email" : "इमेल मार्फत आफ्नो कार्यहरूको बारेमा सूचित गर्नुहोस्",
-    "Send emails:" : "इ-मेलहरू पठाउनुहोस्:"
+    "Open file" : "फाईल खोल्नुहोस्"
 },
 "nplurals=2; plural=(n != 1);");

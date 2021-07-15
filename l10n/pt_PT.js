@@ -55,14 +55,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Ocorreu um erro ao carregar as atividades",
     "Load more activities" : "Carregar mais atividades ",
     "Open file" : "Abrir ficheiro",
-    "Stream" : "Transmissão",
-    "This application enables users to view actions related to their files in Nextcloud." : "Esta aplicação permite que os utilizadores visualizem as ações relacionadas com os seus ficheiros em Nextcloud.",
-    "Send activity emails" : "Enviar mensagens da atividade",
-    "Configure the default activity settings for new users." : "Configurar as definições predefinidas das atividades para os novos utilizadores.",
-    "List your own actions in the stream" : "Listar as suas próprias acções na transmissão",
-    "Notify about your own actions via email" : "Notificar sobre as suas próprias ações via e-mail",
-    "Send emails:" : "Enviar e-mails:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Escolher as atividades que pretende para receber a notificação por e-mail, e quais serão mostradas nas atividades da transmissão da aplicação.",
-    "Choose which activities you want to see in your stream." : "Escolha quais as atividades que pretende ver na sua transmissão."
+    "This application enables users to view actions related to their files in Nextcloud." : "Esta aplicação permite que os utilizadores visualizem as ações relacionadas com os seus ficheiros em Nextcloud."
 },
 "nplurals=2; plural=(n != 1);");

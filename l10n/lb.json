@@ -34,10 +34,6 @@
     "No more events to load" : "Keng weider Evenementer fir ze lueden",
     "An error occurred while loading activities" : "Fehler beim Lueden vun den Aktivitéiten",
     "Load more activities" : "Lued méi Aktivitéiten",
-    "Open file" : "Fichier opmaachen",
-    "Stream" : "Floss",
-    "List your own actions in the stream" : "Weis är aner Aktivitéiten am Floss",
-    "Notify about your own actions via email" : "Iwwer eegene Aktiounen iwwer E-Mail informéieren",
-    "Send emails:" : "Emaile schécken:"
+    "Open file" : "Fichier opmaachen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

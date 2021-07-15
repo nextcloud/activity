@@ -42,14 +42,6 @@
     "An error occurred while loading activities" : "Eraro okazis dum ŝarĝado de la aktivaĵoj",
     "Load more activities" : "Ŝarĝi pli da aktivaĵoj",
     "Open file" : "Malfermi dosieron",
-    "Stream" : "Fluo",
-    "This application enables users to view actions related to their files in Nextcloud." : "Tiu ĉi aplikaĵo ebligas uzantojn vidi kio okazas al iliaj dosieroj en Nextcloud.",
-    "Send activity emails" : "Sendi aktivaĵajn retmesaĝojn",
-    "Configure the default activity settings for new users." : "Agordu la defaŭltajn aktivaĵojn por novaj uzantoj.",
-    "List your own actions in the stream" : "Listigi viajn proprajn aktivaĵojn en la fluo",
-    "Notify about your own actions via email" : "Ricevi per retpoŝtmesaĝo viajn proprajn aktivaĵojn",
-    "Send emails:" : "Sendi retmesaĝojn:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Elektu kiujn aktivaĵojn vi volas ricevi retmesaĝe kaj vidi en la fluo.",
-    "Choose which activities you want to see in your stream." : "Elektu la aktivaĵojn, kiujn vi volas vidi en la fluo."
+    "This application enables users to view actions related to their files in Nextcloud." : "Tiu ĉi aplikaĵo ebligas uzantojn vidi kio okazas al iliaj dosieroj en Nextcloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

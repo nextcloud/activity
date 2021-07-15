@@ -50,14 +50,6 @@
     "An error occurred while loading activities" : "'n Fout het voorgekom tydens laaiing van aktiwiteite",
     "Load more activities" : "Laai nog aktiwiteite",
     "Open file" : "Open lêer",
-    "Stream" : "Stroom",
-    "This application enables users to view actions related to their files in Nextcloud." : "Hierdie toepassing stel gebruikers in staat om aksies te sien wat verwant is aan hul lêers in Nextcloud.",
-    "Send activity emails" : "Stuur aktiwiteit e-posse",
-    "Configure the default activity settings for new users." : "Verstel die verstekaktiwiteitinstellings vir nuwe gebruikers.",
-    "List your own actions in the stream" : "Lys u eie aktiwiteite in die stroom",
-    "Notify about your own actions via email" : "Laat weet oor u eie aktiwiteite d.m.v. e-pos",
-    "Send emails:" : "Stuur e-posse:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Kies vir welke aktiwiteite u ’n e-poskennisgewing wil ontvang en welke in die aktiwiteittoepstroom moet vertoon.",
-    "Choose which activities you want to see in your stream." : "Kies watter aktiwiteite u in u stroom wil sien"
+    "This application enables users to view actions related to their files in Nextcloud." : "Hierdie toepassing stel gebruikers in staat om aksies te sien wat verwant is aan hul lêers in Nextcloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

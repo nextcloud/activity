@@ -44,14 +44,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Ndodhi një gabim gjatë ngarkimit të aktiviteteve",
     "Load more activities" : "Ngarko më tepër veprimtari",
     "Open file" : "Hap skedarin",
-    "Stream" : "Rrjedhë",
-    "This application enables users to view actions related to their files in Nextcloud." : "Ky aplikacion u mundëson përdoruesve të shikojnë veprimet lidhur me skedarët e tyre në Nextcloud.",
-    "Send activity emails" : "Dërgo emaile rreth aktivitetit",
-    "Configure the default activity settings for new users." : "Vendosni konfigurimet fillestare të aktiviteteve për përdoruesit e rinj",
-    "List your own actions in the stream" : "Listo veprimet e tua në rrjedhë",
-    "Notify about your own actions via email" : "Njoftoni me email mbi veprimet tuaja",
-    "Send emails:" : "Dërgo email-e:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Zgjidhni se për cilat aktivitete doni të merrni njoftime me email, dhe cilat duhet të shfaqen në daljen e aplikacionit të aktiviteteve.",
-    "Choose which activities you want to see in your stream." : "Zgjidhni aktivitetet që dëshironi të shihni në transmetimin tuaj."
+    "This application enables users to view actions related to their files in Nextcloud." : "Ky aplikacion u mundëson përdoruesve të shikojnë veprimet lidhur me skedarët e tyre në Nextcloud."
 },
 "nplurals=2; plural=(n != 1);");

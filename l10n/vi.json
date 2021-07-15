@@ -53,14 +53,6 @@
     "An error occurred while loading activities" : "Đã xảy ra lỗi trong khi tải các lịch sử hoạt động",
     "Load more activities" : "Tải thêm hoạt động",
     "Open file" : "Mở tệp",
-    "Stream" : "Luồng",
-    "This application enables users to view actions related to their files in Nextcloud." : "Đây là ứng dụng cho phép người dùng xem các hành động liên quan đến dữ liệu của họ trên vWorkspace",
-    "Send activity emails" : "Gửi các thư báo tình hoạt hoạt động",
-    "Configure the default activity settings for new users." : "Cấu hình các cài đặt hoạt động mặc định cho người dùng mới.",
-    "List your own actions in the stream" : "Danh sách hành động của bạn",
-    "Notify about your own actions via email" : "Thông báo hành động của bạn qua email",
-    "Send emails:" : "Gửi emails:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Chọn các hoạt động nào bạn muốn nhận thông báo bằng email, và hoạt động nào nên sẽ hiển thị trong luồng ứng dụng hoạt động.",
-    "Choose which activities you want to see in your stream." : "Lựa chọn các hoạt động nào mà bạn muồn xem trong luồng công việc của bạn"
+    "This application enables users to view actions related to their files in Nextcloud." : "Đây là ứng dụng cho phép người dùng xem các hành động liên quan đến dữ liệu của họ trên vWorkspace"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -51,14 +51,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "אירעה שגיאה בעת טעינת הפעילויות",
     "Load more activities" : "טעינת פעילויות נוספות",
     "Open file" : "פתיחת קובץ",
-    "Stream" : "הזרמת מידע",
-    "This application enables users to view actions related to their files in Nextcloud." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שקשורות לקבצים שלהם ב־Nextcloud.",
-    "Send activity emails" : "שליחת הודעות פעילות בדוא״ל",
-    "Configure the default activity settings for new users." : "הגדרת תצורת הפעילות כבררת מחדל למשתמשים חדשים.",
-    "List your own actions in the stream" : "הצגת הפעולות שלך בהזנה",
-    "Notify about your own actions via email" : "דיווח על האירועים שלך על בסיס דואר אלקטרוני",
-    "Send emails:" : "שליחת הודעות דואר אלקטרוני:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "נא לבחור עבור אילו מהפעילויות ברצונך לקבל התרעות בדוא״ל ואילו תופענה בתזרים הפעילויות של היישומון.",
-    "Choose which activities you want to see in your stream." : "נא לבחור אילו פעילויות יופיעו בתזרים שלך."
+    "This application enables users to view actions related to their files in Nextcloud." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שקשורות לקבצים שלהם ב־Nextcloud."
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

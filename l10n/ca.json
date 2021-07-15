@@ -51,14 +51,6 @@
     "An error occurred while loading activities" : "S'ha produït un error en carregar l'activitat",
     "Load more activities" : "Carrega més activitat",
     "Open file" : "Obre el fitxer",
-    "Stream" : "Registre",
-    "This application enables users to view actions related to their files in Nextcloud." : "Aquesta aplicació permet als usuaris veure les accions relacionades amb els seus fitxers al Nextcloud.",
-    "Send activity emails" : "Envia missatges de correu sobre l'activitat",
-    "Configure the default activity settings for new users." : "Configureu els paràmetres d'activitat per defecte per als usuaris nous.",
-    "List your own actions in the stream" : "Mostra les accions pròpies en el registre",
-    "Notify about your own actions via email" : "Notifica les accions pròpies per correu electrònic",
-    "Send emails:" : "Envia els correus electrònics:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Trieu per a quina activitat voleu rebre una notificació per correu electrònic i quines voleu que apareguin en el registre de l'aplicació Activitat.",
-    "Choose which activities you want to see in your stream." : "Trieu quina activitat voleu veure en el registre."
+    "This application enables users to view actions related to their files in Nextcloud." : "Aquesta aplicació permet als usuaris veure les accions relacionades amb els seus fitxers al Nextcloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -51,14 +51,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "حدث خلل أثناء تحميل الأنشطة",
     "Load more activities" : "تحميل المزيد من الأنشطة",
     "Open file" : "فتح ملف",
-    "Stream" : "جدول",
-    "This application enables users to view actions related to their files in Nextcloud." : "هذا التطبيق يمكن المستخدمين من رؤية الإجراءات المتعلقة بملفاتهم على نكست كلاود.",
-    "Send activity emails" : "أرسل إيميل عن الأنشطة",
-    "Configure the default activity settings for new users." : "عدل الإعدادات الإفتراضية للمستخدمين الجدد.",
-    "List your own actions in the stream" : "اعرض إجراءاتك على الجدول",
-    "Notify about your own actions via email" : "تلقي إشعار عن أنشطتك عبر البريد الإلكتروني",
-    "Send emails:" : "إرسال رسائل إلكترونية:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "اختر الأنشطة تريد تلقي رسائل إشعارات عنها والتي تظهر على جدول الأنشطة.",
-    "Choose which activities you want to see in your stream." : "اختر الأنشطة التي ترغب في رؤيتها على جدول الأنشطة"
+    "This application enables users to view actions related to their files in Nextcloud." : "هذا التطبيق يمكن المستخدمين من رؤية الإجراءات المتعلقة بملفاتهم على نكست كلاود."
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

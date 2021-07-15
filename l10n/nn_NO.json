@@ -53,14 +53,6 @@
     "An error occurred while loading activities" : "Ein feil oppstod under lastinga av aktivitetar",
     "Load more activities" : "Lastar fleire aktivitetar",
     "Open file" : "Opne fil",
-    "Stream" : "Straum",
-    "This application enables users to view actions related to their files in Nextcloud." : "Denne applikasjon viser hendingar for dine filer i Nextcloud.",
-    "Send activity emails" : "Send aktivitets e-postar",
-    "Configure the default activity settings for new users." : "Set standar instillingane for nye brukare.",
-    "List your own actions in the stream" : "Vis dine eigane aktivitetar i straumen",
-    "Notify about your own actions via email" : "Varsle om eigne aktivitetar på e-post",
-    "Send emails:" : "Send e-postar:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Vel for kva for aktivitetar du ynsker notifikasjonar på e-post, og kva for hendinger som skal vises i app straumen.",
-    "Choose which activities you want to see in your stream." : "Velg kva for aktivitetar du vil sjå i straumen din."
+    "This application enables users to view actions related to their files in Nextcloud." : "Denne applikasjon viser hendingar for dine filer i Nextcloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

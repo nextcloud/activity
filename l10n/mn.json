@@ -35,12 +35,6 @@
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
     "An error occurred while loading activities" : "Үйлдлүүдийг ачааллахад алдаа гарлаа",
     "Load more activities" : "Бусад үйлдлүүдийг ачаалах",
-    "Open file" : "Файл онгойлгох",
-    "Stream" : "Урсгал",
-    "Configure the default activity settings for new users." : "Шинэ хэрэглэгчдийн \"Үйлдлүүд\" хэсгийн анхдагч тохиргоог тохируулах",
-    "List your own actions in the stream" : "\"Үйлдлүүд\" апп-д өөрийн үйл ажиллагааг харуулах",
-    "Notify about your own actions via email" : "Цахим шуудангаар өөрийн үйл ажиллагааны тухай мэдэгдэл хүлээн авах",
-    "Send emails:" : "Цахим шуудан илгээх:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Та цахим шуудангаар ямар үйлдлийн талаар мэдээлэл авахыг хүсэж байгаа болон \"Үйлдлүүд\" хэсэгт ямар үйлдэл харуулахыг хүсэж байгаагаа сонгоно уу."
+    "Open file" : "Файл онгойлгох"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

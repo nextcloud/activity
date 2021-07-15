@@ -54,14 +54,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "در هنگام بارگزاری فعالیت ها خطایی رخ داده است ",
     "Load more activities" : "نمایش فعالیت های بیشتر",
     "Open file" : "باز کردن فایل",
-    "Stream" : "Stream",
-    "This application enables users to view actions related to their files in Nextcloud." : "این نرم‌افراز مشاهده فعالیت‌های مربوط به فایل‌های موجود در Nextcloud را برای کاربران ممکن می‌سازد.",
-    "Send activity emails" : "ارسال ایمیل فعالیت",
-    "Configure the default activity settings for new users." : "برای کاربران جدید تنظیمات فعالیت های پیشفرض را پیکره بندی کنید ",
-    "List your own actions in the stream" : "نوع فعالیتی را که در Stream دوست دارید لیست کنید",
-    "Notify about your own actions via email" : "اطلاع رسانی درباره اعمال شخصی تان با ایمیل",
-    "Send emails:" : "ارسال ایمیل ها:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "فعالیتی را که می خواهید پیغام آن برای شما ایمیل شود و همچنین فعالیتی را که می خواهید پیغام آن در نرم افزار شما مشاهده گردد انتخاب کنید",
-    "Choose which activities you want to see in your stream." : "انتخاب فعالیتهایی که می خواهید در stream خود ببینید."
+    "This application enables users to view actions related to their files in Nextcloud." : "این نرم‌افراز مشاهده فعالیت‌های مربوط به فایل‌های موجود در Nextcloud را برای کاربران ممکن می‌سازد."
 },
 "nplurals=2; plural=(n > 1);");

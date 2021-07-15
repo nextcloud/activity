@@ -39,9 +39,6 @@ OC.L10N.register(
     "No more events to load" : "Nun hai más eventos pa cargar",
     "An error occurred while loading activities" : "Asocedió un fallu entrín se cargaben les actividaes",
     "Load more activities" : "Cargar más actividaes",
-    "Open file" : "Abrir ficheru",
-    "Stream" : "Fluxu de rede",
-    "Notify about your own actions via email" : "Avisar per corréu tocante a les mios propies aiciones",
-    "Send emails:" : "Unviar correos:"
+    "Open file" : "Abrir ficheru"
 },
 "nplurals=2; plural=(n != 1);");

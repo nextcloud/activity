@@ -51,14 +51,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Villa kom upp við að hlaða inn virkni",
     "Load more activities" : "Hlaða inn virkni",
     "Open file" : "Opna skrá",
-    "Stream" : "Streymi",
-    "This application enables users to view actions related to their files in Nextcloud." : "Þetta forrit gerir notendum kleift að skoða aðgerðir sem tengjast skránum þeirra í Nextcloud.",
-    "Send activity emails" : "Senda virkni með tölvupósti",
-    "Configure the default activity settings for new users." : "Ákvarðaðu sjálfgefnar virknistillingar fyrir nýja notendur.",
-    "List your own actions in the stream" : "Telja upp þínar eigin aðgerðir í streyminu",
-    "Notify about your own actions via email" : "Tilkynna um þína eigin virkni með tölvupósti",
-    "Send emails:" : "Senda tölvupóst:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Ákvarðaðu fyrir hvaða virkniaðgerðir þú munt fá tölvupóst sem ætti að birtast í fréttastreyminu þínu.",
-    "Choose which activities you want to see in your stream." : "Ákvarðaðu hvaða virkniaðgerðir þú vilt að birtist í fréttastreyminu þínu."
+    "This application enables users to view actions related to their files in Nextcloud." : "Þetta forrit gerir notendum kleift að skoða aðgerðir sem tengjast skránum þeirra í Nextcloud."
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

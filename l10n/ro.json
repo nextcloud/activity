@@ -53,14 +53,6 @@
     "An error occurred while loading activities" : "A apărut o eroare la încărcarea activităților",
     "Load more activities" : "Încarcă mai multe activități",
     "Open file" : "Deschide fișier",
-    "Stream" : "Flux",
-    "This application enables users to view actions related to their files in Nextcloud." : "Aceasta aplicație permite utilizatorilor sa vizualizeze acțiuni aferente fișierelor din Nextcloud.",
-    "Send activity emails" : "Trimitere email-uri cu activitate",
-    "Configure the default activity settings for new users." : "Configurați setările implicite ale activităților pentru utilizatorii noi.",
-    "List your own actions in the stream" : "Afișează propriile tale acțiuni în flux",
-    "Notify about your own actions via email" : "Notificări pentru activitățile tale prin email",
-    "Send emails:" : "Trimite email-uri:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Alegeți pentru care activități doriți să primiți o notificare pe email și care să apară în aplicația fluxului de activități.",
-    "Choose which activities you want to see in your stream." : "Alege ce activități vrei sa vezi în flux."
+    "This application enables users to view actions related to their files in Nextcloud." : "Aceasta aplicație permite utilizatorilor sa vizualizeze acțiuni aferente fișierelor din Nextcloud."
 },"pluralForm" :"nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));"
 }
