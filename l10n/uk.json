@@ -52,14 +52,6 @@
     "An error occurred while loading activities" : "Під час завантаження подій відбулася помилка",
     "Load more activities" : "Інші події",
     "Open file" : "Відкрити файл",
-    "Stream" : "Потік",
-    "This application enables users to view actions related to their files in Nextcloud." : "Застосунок дозволяє користувачам переглядати дії з власними файлами у Nextcloud.",
-    "Send activity emails" : "Надсилати оновлення ел. поштою",
-    "Configure the default activity settings for new users." : "Типові налаштування журналу подій для нових користувачів.",
-    "List your own actions in the stream" : "Показувати власні події у потоці",
-    "Notify about your own actions via email" : "Повідомляти про мої власні події електронною поштою",
-    "Send emails:" : "Надсилати електронну пошту:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Виберіть ті події, для яких ви бажаєте отримувати сповіщення електронною поштою, а які потрібно показувати у потоці дій застосунку.",
-    "Choose which activities you want to see in your stream." : "Виберіть події, які ви бажаєте бачити у потоці."
+    "This application enables users to view actions related to their files in Nextcloud." : "Застосунок дозволяє користувачам переглядати дії з власними файлами у Nextcloud."
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"
 }

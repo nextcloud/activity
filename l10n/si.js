@@ -32,8 +32,6 @@ OC.L10N.register(
     "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත",
     "An error occurred while loading activities" : "ක්‍රියාකාරකම් පූරණය කිරීමේදී දෝෂයක් ඇතිවිය",
     "Load more activities" : "තවත් ක්‍රියාකාරකම් පූරණය කරන්න",
-    "Open file" : "ගොනුව විවෘත කරන්න",
-    "Send activity emails" : "ක්‍රියාකාරකම් විද්‍යුත් තැපෑල යවන්න",
-    "Notify about your own actions via email" : "ඔබගේ ක්‍රියාමාර්ග පිළිබඳ විද්‍යුත් තැපෑලෙන් දැනුම් දෙන්න"
+    "Open file" : "ගොනුව විවෘත කරන්න"
 },
 "nplurals=2; plural=(n != 1);");

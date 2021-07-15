@@ -30,8 +30,8 @@ OC.L10N.register(
     "Mail" : "E-mail",
     "Push" : "Push",
     "Activity" : "Aktywność",
-    "This application enables users to view a log of activities about them or about files." : "Aplikacja umożliwia użytkownikom przeglądanie dziennika aktywności dotyczących ich lub plików.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ta aplikacja umożliwia użytkownikom przeglądanie akcji związanych z ich plikami w usłudze Nextcloud.\n\t\tPo włączeniu użytkownicy zobaczą nową ikonę \"Aktywność\" w menu aplikacji\n\t\tPo kliknięciu pojawia się nowa strona, na której użytkownicy mogą śledzić działania związane z plikami - od nowych plików, po usunięte pliki, przenoszenie, zmianę nazwy, aktualizacje i wspólną aktywność.\n\t\tUżytkownik może skonfigurować swoje indywidualne ustawienia aktywności w osobistym menu.\n\t\tOkreśla typ czynności do zapisania, a także, czy użytkownik widzi własne czynności,\n\t\tczy są one dostępne tylko w trybie online i czy są one regularnie otrzymywane z podsumowaniem wiadomości e-mail\n\t\tWięcej informacji można znaleźć w Dokumentacji aktywności\". ",
+    "This application enables users to view a log of activities about them or about files." : "Aplikacja umożliwia użytkownikom przeglądanie dziennika aktywności dotyczących ich samych lub plików.",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Aplikacja umożliwia użytkownikom przeglądanie akcji związanych z ich plikami w usłudze Nextcloud.\n\t\tPo włączeniu użytkownicy zobaczą nową ikonę \"Aktywność\" w menu aplikacji\n\t\tPo kliknięciu pojawia się nowa strona, na której użytkownicy mogą śledzić działania związane z plikami - od nowych plików, po usunięte pliki, przenoszenie, zmianę nazwy, aktualizacje i wspólną aktywność.\n\t\tUżytkownik może skonfigurować swoje indywidualne ustawienia aktywności w osobistym menu.\n\t\tOkreśla typ czynności do zapisania, a także, czy użytkownik widzi własne czynności,\n\t\tczy są one dostępne tylko w trybie online i czy są one regularnie otrzymywane z podsumowaniem wiadomości e-mail\n\t\tWięcej informacji można znaleźć w Dokumentacji aktywności\". ",
     "No activity yet" : "Brak aktywności",
     "Unable to load the activity list" : "Nie można załadować listy aktywności",
     "Activity feed" : "Zasób aktywności",
@@ -55,14 +55,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Wystąpił błąd podczas ładowania aktywności",
     "Load more activities" : "Załaduj więcej aktywności",
     "Open file" : "Otwórz plik",
-    "Stream" : "Strumień",
-    "This application enables users to view actions related to their files in Nextcloud." : "Ta aplikacja umożliwia użytkownikom przeglądanie akcji związanych z ich plikami w usłudze Nextcloud.",
-    "Send activity emails" : "Wysyłaj e-maile o aktywności",
-    "Configure the default activity settings for new users." : "Skonfiguruj domyślne ustawienia aktywności dla nowych użytkowników.",
-    "List your own actions in the stream" : "Umieść swoje własne aktywności w strumieniu",
-    "Notify about your own actions via email" : "Powiadamiaj mnie o moich aktywnościach przez e-mail",
-    "Send emails:" : "Wyślij e-maile:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Wybierz, dla których aktywności chcesz otrzymywać powiadomienie e-mailem, a które powinny pojawiać się w aktywnościach aplikacji.",
-    "Choose which activities you want to see in your stream." : "Wybierz aktywności, które chcesz zobaczyć w swoim strumieniu."
+    "This application enables users to view actions related to their files in Nextcloud." : "Aplikacja umożliwia użytkownikom przeglądanie akcji związanych z ich plikami w usłudze Nextcloud."
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

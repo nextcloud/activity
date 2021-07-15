@@ -15,8 +15,6 @@ OC.L10N.register(
     "Weekly" : "រាល់​សប្ដាហ៍",
     "Settings" : "ការកំណត់",
     "Enable RSS feed" : "បើក RSS feed",
-    "No more events to load" : "គ្មាន​ព្រឹត្តិការណ៍​ផ្សេងទៀត​បើក​ដំណើរការទេ",
-    "Stream" : "ស្ទ្រីម",
-    "Send emails:" : "ផ្ញើ​អ៊ីមែល"
+    "No more events to load" : "គ្មាន​ព្រឹត្តិការណ៍​ផ្សេងទៀត​បើក​ដំណើរការទេ"
 },
 "nplurals=1; plural=0;");

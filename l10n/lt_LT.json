@@ -45,14 +45,6 @@
     "An error occurred while loading activities" : "Įkeliant veiklas, įvyko klaida",
     "Load more activities" : "Įkelti daugiau veiklų",
     "Open file" : "Atverti failą",
-    "Stream" : "Srautas",
-    "This application enables users to view actions related to their files in Nextcloud." : "Programa skirta naudotojams stebėti su jų failais susijusius veiksmus Nextcloud'e.",
-    "Send activity emails" : "Siųsti el. laiškus apie veiklą",
-    "Configure the default activity settings for new users." : "Nustatyti numatytas veiklas naujiems naudotojams",
-    "List your own actions in the stream" : "Rodyti jūsų veiklą sraute",
-    "Notify about your own actions via email" : "Pranešti sau apie savo asmeninius veiksmus el. paštu",
-    "Send emails:" : "Siųsti el. laiškus:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Pasirinkite apie kokią veiklą norite gauti pranešimus el. paštu bei kokia veikla turėtų būti rodoma veiklos programėlės sraute.",
-    "Choose which activities you want to see in your stream." : "Pasirinkti kurias veiklas norite matyti savo sraute."
+    "This application enables users to view actions related to their files in Nextcloud." : "Programa skirta naudotojams stebėti su jų failais susijusius veiksmus Nextcloud'e."
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"
 }

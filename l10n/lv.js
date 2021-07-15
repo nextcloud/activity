@@ -17,7 +17,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Jūsu plūsmas URL nav derīgs.",
     "Your settings have been updated." : "Jūsu uzstādījumi ir atjaunoti.",
     "Settings have been updated." : "Iestādījumi ir atjaunoti.",
-    "_and %n more _::_and %n more _" : ["un vēl %n","un vēl %n"],
+    "_and %n more _::_and %n more _" : ["un vēl %n","un vēl %n","un vēl %n"],
     "All activities" : "Visas darbības",
     "By others" : "Citu",
     "By you" : "Jūsu",
@@ -50,14 +50,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Radās kļūda, ielādējot darbības",
     "Load more activities" : "Ielādēt vairāk darbības",
     "Open file" : "Atvērt datni",
-    "Stream" : "Datu plūsma",
-    "This application enables users to view actions related to their files in Nextcloud." : "Šī lietotne sniedz iespēju lietotājiem paraudzīt darbības ar viņu Nextcloud datnēm",
-    "Send activity emails" : "Sūtīt darbību e-pastus",
-    "Configure the default activity settings for new users." : "Iestatīt darbību noklusējuma iestatījumus jaunajiem lietotājiem.",
-    "List your own actions in the stream" : "Attēlot savas darbības plūsmā",
-    "Notify about your own actions via email" : "Paziņot par savām darbībām, izmantojot e-pastu",
-    "Send emails:" : "E-pastus sūtīt:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Izvēlēties, par kurām darbībām saņemt paziņojumus e-pastā un kuras parādīt darbību lietotnes plūsmā.",
-    "Choose which activities you want to see in your stream." : "Izvēlaties kuras darbības attēlot jūsu plūsmā"
+    "This application enables users to view actions related to their files in Nextcloud." : "Šī lietotne sniedz iespēju lietotājiem paraudzīt darbības ar viņu Nextcloud datnēm"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

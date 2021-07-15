@@ -55,14 +55,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Hiba történt a tevékenységek betöltése közben",
     "Load more activities" : "Több tevékenység betöltése",
     "Open file" : "Fájl megnyitása",
-    "Stream" : "Hírfolyam",
-    "This application enables users to view actions related to their files in Nextcloud." : "Ez az alkalmazás lehetővé teszi a felhasználók számára, hogy megtekinthessék a fájlokhoz kapcsolódó műveleteket a Nextcloudban.",
-    "Send activity emails" : "Tevékenységi e-mailek küldése",
-    "Configure the default activity settings for new users." : "Új felhasználók alapértelmezett tevékenységbeállításai.",
-    "List your own actions in the stream" : "Saját tevékenységek listázása a hírfolyamban",
-    "Notify about your own actions via email" : "Értesítsen a saját tevékenységeimről e-mailben",
-    "Send emails:" : "E-mailek küldése: ",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Válassza ki, hogy mely tevékenységekről akar e-mail értesítőt kapni, és melyik jelenjen meg a tevékenység alkalmazás hírfolyamában.",
-    "Choose which activities you want to see in your stream." : "Válassza ki, hogy mely tevékenységeket akar a hírfolyamán látni."
+    "This application enables users to view actions related to their files in Nextcloud." : "Ez az alkalmazás lehetővé teszi a felhasználók számára, hogy megtekinthessék a fájlokhoz kapcsolódó műveleteket a Nextcloudban."
 },
 "nplurals=2; plural=(n != 1);");

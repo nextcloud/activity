@@ -41,14 +41,6 @@
     "An error occurred while loading activities" : "د کړنو د لیدلو په وخت کې يوه ستونزه رامنځ ته شوه.",
     "Load more activities" : "نورې کړنې پرانيستل",
     "Open file" : "فایل پرانيستل",
-    "Stream" : "لېست",
-    "This application enables users to view actions related to their files in Nextcloud." : "دغه اپلیکیشن کاروونکو ته دا اجازه ورکوي په Nextcloud کې خپلو دوتنو ته ورته کړنې وويني.",
-    "Send activity emails" : "کړنې په ايمیل کې لېږل",
-    "Configure the default activity settings for new users." : "نويو کاروونکو ته د کړنې اساسي تنظيمات ترتيب کړئ",
-    "List your own actions in the stream" : "خپل فعاليتونه په بهير کې لېسټ کړئ",
-    "Notify about your own actions via email" : "د ايمېل له لارې د خپلو فعاليتونو په اړه خبر شئ.",
-    "Send emails:" : "ايمېل ولېږئ",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "هغه کړنې انتخاب کړئ چې تاسې غواړئ په اړه يې ايمېل ترلاسه کړئ او د کړنو اپليکيشن په بهير کې را ښکاره شي.",
-    "Choose which activities you want to see in your stream." : "د خپل بهير لپاره هغه کړنې انتخاب کړئ چې غواړئ ويې وينئ"
+    "This application enables users to view actions related to their files in Nextcloud." : "دغه اپلیکیشن کاروونکو ته دا اجازه ورکوي په Nextcloud کې خپلو دوتنو ته ورته کړنې وويني."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

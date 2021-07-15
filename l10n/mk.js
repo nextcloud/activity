@@ -53,14 +53,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Грешка при вчитување на активностите",
     "Load more activities" : "Вчитај повеќе активности",
     "Open file" : "Отвори датотека",
-    "Stream" : "Стрим",
-    "This application enables users to view actions related to their files in Nextcloud." : "Оваа апликација им овозможува на корисниците да ги прикажуваат активностите поврзани со нивните датотеки во Nextcloud.",
-    "Send activity emails" : "Испрати активности на е-пошта",
-    "Configure the default activity settings for new users." : "Конфигурирајте ги стандардните поставки за активност за нови корисници.",
-    "List your own actions in the stream" : "Наведете ги вашите сопствени акции во stream-от",
-    "Notify about your own actions via email" : "Извести за своите активности преку порака",
-    "Send emails:" : "Прати пораки:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Изберете за кои активности сакате да добивате известување по е-пошта, а кои треба да се појавуваат во текот на апликацијата за активност.",
-    "Choose which activities you want to see in your stream." : "Изберете кои активности сакате да ги видите во вашиот \"stream\"."
+    "This application enables users to view actions related to their files in Nextcloud." : "Оваа апликација им овозможува на корисниците да ги прикажуваат активностите поврзани со нивните датотеки во Nextcloud."
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

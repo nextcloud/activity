@@ -35,10 +35,6 @@
     "No more events to load" : "Nulle altere eventos a cargar",
     "An error occurred while loading activities" : "Un error durante le cargamento de activitates",
     "Load more activities" : "Incarga altere activitates",
-    "Open file" : "Aperir file",
-    "Stream" : "Fluxo",
-    "List your own actions in the stream" : "Lista tu proprie actiones de file in le fluxo",
-    "Notify about your own actions via email" : "Notifica super tu proprie actiones via e-posta",
-    "Send emails:" : "Invia messages de e-posta:"
+    "Open file" : "Aperir file"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

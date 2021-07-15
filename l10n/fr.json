@@ -53,14 +53,6 @@
     "An error occurred while loading activities" : "Une erreur est survenue lors du chargement des activités",
     "Load more activities" : "Charger plus d'activités",
     "Open file" : "Ouvrir le fichier",
-    "Stream" : "Flux",
-    "This application enables users to view actions related to their files in Nextcloud." : "Cette application permet aux utilisateurs de voir les actions concernant leurs fichiers dans Nextcloud.",
-    "Send activity emails" : "Envoyer des courriels d'activité",
-    "Configure the default activity settings for new users." : "Configurez les paramètres d'activité par défaut pour les nouveaux utilisateurs.",
-    "List your own actions in the stream" : "Lister vos propres actions dans le flux",
-    "Notify about your own actions via email" : "M'informer de mes propres actions par courriel",
-    "Send emails:" : "Envoyer des courriels :",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Choisissez les activités pour lesquelles vous souhaitez obtenir une notification par e-mail et que vous voulez voir apparaître dans le flux d'activité.",
-    "Choose which activities you want to see in your stream." : "Choisissez les activités que vous souhaitez voir apparaître dans votre flux."
+    "This application enables users to view actions related to their files in Nextcloud." : "Cette application permet aux utilisateurs de voir les actions concernant leurs fichiers dans Nextcloud."
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

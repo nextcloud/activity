@@ -55,14 +55,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "アクティビティの読み込み中にエラーが発生しました",
     "Load more activities" : "さらにアクティビティを読み込む",
     "Open file" : "ファイルを開く",
-    "Stream" : "タイムライン",
-    "This application enables users to view actions related to their files in Nextcloud." : "このアプリケーションは、ユーザーのファイル関連のアクションを表示します。",
-    "Send activity emails" : "アクティビティメールを送信する",
-    "Configure the default activity settings for new users." : "新しいユーザーのデフォルトのアクティビティ設定を行います。",
-    "List your own actions in the stream" : "タイムライン上に自分のアクションを表示する",
-    "Notify about your own actions via email" : "メールで自分のアクションを通知する",
-    "Send emails:" : "メールの送信:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "メール通知を受け取るアクティビティと、アクティビティアプリストリームに表示するアクティビティを選択してください。",
-    "Choose which activities you want to see in your stream." : "ストリームに表示したいアクティビティを選択"
+    "This application enables users to view actions related to their files in Nextcloud." : "このアプリケーションは、ユーザーのファイル関連のアクションを表示します。"
 },
 "nplurals=1; plural=0;");
