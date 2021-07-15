@@ -55,14 +55,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "載入系統事件時發生錯誤",
     "Load more activities" : "載入更多系統事件",
     "Open file" : "開啟檔案",
-    "Stream" : "串流",
-    "This application enables users to view actions related to their files in Nextcloud." : "此應用程式允許用戶在 Nextcloud 中查看與其檔案相關的操作。",
-    "Send activity emails" : "傳送有關系統事件的電郵",
-    "Configure the default activity settings for new users." : "為新用戶設置預設系統事件設定。",
-    "List your own actions in the stream" : "在信息流中列出您的操作",
-    "Notify about your own actions via email" : "透過郵件來通知有關於您的系統事件狀態",
-    "Send emails:" : "傳送電郵：",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "選擇你希望接受到電郵通知或者在應用程式中顯示的系統事件。",
-    "Choose which activities you want to see in your stream." : "請選擇您想在您串流中看到的系統事件。"
+    "This application enables users to view actions related to their files in Nextcloud." : "此應用程式允許用戶在 Nextcloud 中查看與其檔案相關的操作。"
 },
 "nplurals=1; plural=0;");

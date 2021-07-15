@@ -44,14 +44,6 @@
     "An error occurred while loading activities" : "Terjadi kesalahan saat memuat aktivitas",
     "Load more activities" : "Muat aktivitas lainnya",
     "Open file" : "Membuka berkas",
-    "Stream" : "Stream",
-    "This application enables users to view actions related to their files in Nextcloud." : "Aplikasi ini memungkinkan pengguna untuk melihat aksi yang terkait dengan file yang mereka simpan di NextCloud",
-    "Send activity emails" : "Kirim surel aktivitas",
-    "Configure the default activity settings for new users." : "Konfigurasikan pengaturan aktivitas bawaan untuk pengguna baru.",
-    "List your own actions in the stream" : "Cantumkan tindakan anda dalam stream",
-    "Notify about your own actions via email" : "Notifikasi aktivitas Anda via surel",
-    "Send emails:" : "Kirim surel:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Pilih aktivitas yang ingin Anda dapatkan notifikasi email, dan mana yang harus muncul di aktivitas aplikasi.",
-    "Choose which activities you want to see in your stream." : "Pilih aktivitas mana yang ingin Anda lihat di stream Anda."
+    "This application enables users to view actions related to their files in Nextcloud." : "Aplikasi ini memungkinkan pengguna untuk melihat aksi yang terkait dengan file yang mereka simpan di NextCloud"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

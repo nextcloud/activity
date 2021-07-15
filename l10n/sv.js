@@ -55,14 +55,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Något gick snett vid inläsning av aktiviteter",
     "Load more activities" : "Läs in fler aktiviteter",
     "Open file" : "Öppna fil",
-    "Stream" : "Flödet",
-    "This application enables users to view actions related to their files in Nextcloud." : "Denna applikation låter användarna se händelser relaterade till deras filer i Nextcloud.",
-    "Send activity emails" : "Skicka aktivitets-epost",
-    "Configure the default activity settings for new users." : "Ställ in aktivitetsinställningar för nya användare",
-    "List your own actions in the stream" : "Visa dina egna aktiviteter i aktivitetsflödet",
-    "Notify about your own actions via email" : "Skicka notifieringsmail gällande dina egna aktiviteter",
-    "Send emails:" : "Skicka e-post:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Välj vilka typer av aktiviteter du vill ha en notis om via e-post och vilka som ska dyka upp i aktivitetsflödet.",
-    "Choose which activities you want to see in your stream." : "Välj vilka aktiviteter du vill se i ditt flöde."
+    "This application enables users to view actions related to their files in Nextcloud." : "Denna applikation låter användarna se händelser relaterade till deras filer i Nextcloud."
 },
 "nplurals=2; plural=(n != 1);");

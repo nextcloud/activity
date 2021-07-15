@@ -50,14 +50,6 @@
     "An error occurred while loading activities" : "Der opstod en fejl under indlæsning af aktiviteter",
     "Load more activities" : "Indlæs flere aktiviteter",
     "Open file" : "Åbn dokument",
-    "Stream" : "Stream",
-    "This application enables users to view actions related to their files in Nextcloud." : "Denne app giver brugere mulighed for at se en liste af handlinger relateret til deres filer i Nextcloud.",
-    "Send activity emails" : "Send aktivitets email",
-    "Configure the default activity settings for new users." : "Konfigurer standard aktivitetsindstillingerne for nye brugere.",
-    "List your own actions in the stream" : "Vis dine egne handlinger i strømmen",
-    "Notify about your own actions via email" : "Giv meddelelse om egne handlinger via e-mail",
-    "Send emails:" : "Send e-mails:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Vælg for hvilke aktiviteter du vil modtage en email notifikation og hvilke der skal vises i aktivitet app stream.",
-    "Choose which activities you want to see in your stream." : "Vælg hvilke aktiviteter der skal vises i din stream."
+    "This application enables users to view actions related to their files in Nextcloud." : "Denne app giver brugere mulighed for at se en liste af handlinger relateret til deres filer i Nextcloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

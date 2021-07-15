@@ -53,14 +53,6 @@
     "An error occurred while loading activities" : "載入活動時發生錯誤",
     "Load more activities" : "載入更多活動",
     "Open file" : "開啟檔案",
-    "Stream" : "串流",
-    "This application enables users to view actions related to their files in Nextcloud." : "此應用程式允許使用者能夠在 Nextcloud 中查看與其檔案相關的操作。",
-    "Send activity emails" : "寄送有關活動的郵件",
-    "Configure the default activity settings for new users." : "為新使用者設置預設活動設定。",
-    "List your own actions in the stream" : "列出屬於您的活動。",
-    "Notify about your own actions via email" : "透過郵件來通知有關於您的活動狀態",
-    "Send emails:" : "寄送郵件：",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "選擇你希望接受到郵件通知或者在應用程式中顯示的活動。",
-    "Choose which activities you want to see in your stream." : "請選擇您想在您串流中看到的活動"
+    "This application enables users to view actions related to their files in Nextcloud." : "此應用程式允許使用者能夠在 Nextcloud 中查看與其檔案相關的操作。"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -55,14 +55,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Pri pokuse o načítanie aktivity nastala chyba",
     "Load more activities" : "Načítať viac aktivít",
     "Open file" : "Otvoriť súbor",
-    "Stream" : "Prúd",
-    "This application enables users to view actions related to their files in Nextcloud." : "Táto aplikácia povolí používateľom sledovať akcie súvisiace s ich súbormi v Nextcloude.",
-    "Send activity emails" : "Odoslať emaily s aktivitou",
-    "Configure the default activity settings for new users." : "Upravte predvolené nastavenia aktivít pre nových používateľov.",
-    "List your own actions in the stream" : "Zobraziť vlastné akcie v prúde",
-    "Notify about your own actions via email" : "Poslať oznámenie o vlastnej činnosti emailom",
-    "Send emails:" : "Odoslať emaily:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Vyberte, na ktoré aktivity chcete byť upozornení e-mailom a ktoré sa zobrazia v prúde aktivít v aplikácii.",
-    "Choose which activities you want to see in your stream." : "Vyberte, ktoré aktivity chcete vidieť vo svojom prúde."
+    "This application enables users to view actions related to their files in Nextcloud." : "Táto aplikácia povolí používateľom sledovať akcie súvisiace s ich súbormi v Nextcloude."
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

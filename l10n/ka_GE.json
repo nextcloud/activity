@@ -42,14 +42,6 @@
     "An error occurred while loading activities" : "აქტივობების ჩატვირთვისას წარმოიშვა შეცდომა",
     "Load more activities" : "მეტი აქტივობის ჩატვირთვა",
     "Open file" : "ფაილის გახსნა",
-    "Stream" : "ნაკადი",
-    "This application enables users to view actions related to their files in Nextcloud." : "ეს აპლიკაცია მომხმარებლებს აძლევს საშუალებას დაინახონ „Nextcloud“-ზე მათ ფაილებთან დაკავშირებული ქმედებები.",
-    "Send activity emails" : "აქტივობის ელ-წერილების გაგზავნა.",
-    "Configure the default activity settings for new users." : "საწყისი პარამეტრების კონფიგურირება ახალი მოხმარებლებისთვის.",
-    "List your own actions in the stream" : "საკუთარი აქტივობების გამოჩენა ნაკადში",
-    "Notify about your own actions via email" : "საკუთარ მოქმედებებზე შეტყობინებების ელ-ფოსტით მიღება",
-    "Send emails:" : "ელ-წერილების გაგზავნა:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "აირჩიეთ თუ რომელ აქტივობებზე გსურთ მიიღოთ ელ-შეტყობინება და რომელი მათგანი გამოჩნდეს აქტივობის აპლკაციის ნაკადში.",
-    "Choose which activities you want to see in your stream." : "აირჩიეთ თუ რომელი აქტივობების ხილვა გსურთ თქვენს ნაკადში."
+    "This application enables users to view actions related to their files in Nextcloud." : "ეს აპლიკაცია მომხმარებლებს აძლევს საშუალებას დაინახონ „Nextcloud“-ზე მათ ფაილებთან დაკავშირებული ქმედებები."
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

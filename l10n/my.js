@@ -29,7 +29,6 @@ OC.L10N.register(
     "No activity yet" : "လုပ်ဆောင်မှုမရှိသေး",
     "An error occurred while loading activities" : "ဆောင်ရွက်မှုများ လုပ်ဆောင်နေစဉ် ပြဿနာတစ်ခု ကြုံတွေ့ခဲ့သည်",
     "Load more activities" : "လုပ်ဆောင်မှုများ ပိုမိုပြသရန်",
-    "Open file" : "ဖိုင်ဖွင့်ရန်",
-    "Stream" : "လမ်းကြောင်း"
+    "Open file" : "ဖိုင်ဖွင့်ရန်"
 },
 "nplurals=1; plural=0;");

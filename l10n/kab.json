@@ -39,14 +39,6 @@
     "An error occurred while loading activities" : "Teḍra-d tuccḍa deg usali n irmuden",
     "Load more activities" : "Sali-d ugar n irmuden",
     "Open file" : "Ldi afaylu",
-    "Stream" : "Asuddem",
-    "This application enables users to view actions related to their files in Nextcloud." : "Asnas-ag ad yeǧǧ iseqdacen ad walin tigawin yeɛnan ifuyla-nnsen di Nextcloud.",
-    "Send activity emails" : "Azen imaylen n warmud",
-    "Configure the default activity settings for new users." : "Seɣwer iɣewwaren n warmud n lexṣas i iseqdacen imaynuten.",
-    "List your own actions in the stream" : "Ssebder tigawin-inek ded usuddem",
-    "Notify about your own actions via email" : "Azen-iyi-d imaylen n talɣut ɣef tigawin-iw",
-    "Send emails:" : "Azen imaylen:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Fren ineḍruyen iwumi tebɣiḍ ad tawiḍ talɣut s imayl u i tebɣiḍ daɣen ad ten-twaliḍ deg usuddem n warmud inek.",
-    "Choose which activities you want to see in your stream." : "Fren irmuden i tebɣiḍ ad twaliḍ deg usuddem-inek."
+    "This application enables users to view actions related to their files in Nextcloud." : "Asnas-ag ad yeǧǧ iseqdacen ad walin tigawin yeɛnan ifuyla-nnsen di Nextcloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
