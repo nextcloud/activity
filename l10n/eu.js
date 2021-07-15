@@ -55,14 +55,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Errorea gertatu da jarduerak kargatzean",
     "Load more activities" : "Kargatu jarduera gehiago",
     "Open file" : "Ireki fitxategia",
-    "Stream" : "Korrontea",
-    "This application enables users to view actions related to their files in Nextcloud." : "Aplikazio honek aukera ematen die erabiltzaileei Nextcloud-eko euren fitxategiekin lotutako ekintzak ikusteko.",
-    "Send activity emails" : "Jardueraren mezu elektronikoak bidali",
-    "Configure the default activity settings for new users." : "Konfiguratu jarduera ezarpen lehenetsiak erabiltzaile berrientzat.",
-    "List your own actions in the stream" : "Zerrendatu zeure ekintzak korrontean",
-    "Notify about your own actions via email" : "Jakinarazi zeure ekintzei buruz posta elektroniko bidez",
-    "Send emails:" : "Bidali postak:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Aukeratu zein jardueratarako eskuratu nahi duzun jakinarazpena posta elektronikoz, eta zein erakutsi behar liratekeen Jarduera aplikazioaren korrontean.",
-    "Choose which activities you want to see in your stream." : "Aukeratu zein jarduera ikusi nahi dituzun zure korrontean."
+    "This application enables users to view actions related to their files in Nextcloud." : "Aplikazio honek aukera ematen die erabiltzaileei Nextcloud-eko euren fitxategiekin lotutako ekintzak ikusteko."
 },
 "nplurals=2; plural=(n != 1);");

@@ -18,9 +18,6 @@ OC.L10N.register(
     "Weekly" : "Həftəlik",
     "Settings" : "Quraşdırmalar",
     "Enable RSS feed" : "RSS ötürməsinin işə salinmaslı",
-    "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur",
-    "Stream" : "Axın",
-    "Notify about your own actions via email" : "Öz gördüyünüz işlər haqqənda email-lə xəbərdar elə",
-    "Send emails:" : "Məktubları yolla"
+    "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur"
 },
 "nplurals=2; plural=(n != 1);");

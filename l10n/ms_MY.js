@@ -32,9 +32,6 @@ OC.L10N.register(
     "No more events to load" : "Tiada aktiviti untuk memuat",
     "An error occurred while loading activities" : "Masalah timbul semasa memuat aktiviti",
     "Load more activities" : "Memuat lebih aktiviti",
-    "Open file" : "Buka fail",
-    "Stream" : "Strim",
-    "Send activity emails" : "Hantar emel aktiviti",
-    "Send emails:" : "Hantar email:"
+    "Open file" : "Buka fail"
 },
 "nplurals=1; plural=0;");

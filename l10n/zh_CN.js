@@ -55,14 +55,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "加载动态时发生错误",
     "Load more activities" : "加载更多动态",
     "Open file" : "打开文件",
-    "Stream" : "流",
-    "This application enables users to view actions related to their files in Nextcloud." : "本应用可以让用户们查看和他们在Nextcloud上的文件相关的活动。",
-    "Send activity emails" : "发送动态电子邮件",
-    "Configure the default activity settings for new users." : "为新用户设置默认的活动配置",
-    "List your own actions in the stream" : "在流里面列出您自己的行为",
-    "Notify about your own actions via email" : "通过邮件通知您自己的动态",
-    "Send emails:" : "发送电子邮件：",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "选择您想收到哪些活动的通知邮件，以及哪些活动在应用中显示。",
-    "Choose which activities you want to see in your stream." : "选择您要在流中看到哪些活动。"
+    "This application enables users to view actions related to their files in Nextcloud." : "本应用可以让用户们查看和他们在Nextcloud上的文件相关的活动。"
 },
 "nplurals=1; plural=0;");

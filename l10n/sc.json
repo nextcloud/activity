@@ -53,14 +53,6 @@
     "An error occurred while loading activities" : "B'at àpidu un'errore carrighende is atividades",
     "Load more activities" : "Càrriga àteras atividades",
     "Open file" : "Aberi archìviu",
-    "Stream" : "Direta ",
-    "This application enables users to view actions related to their files in Nextcloud." : "Custa aplicatzione abìlitat is utentes a bìdere atziones ligadas a is archìvios issoro in Nextcloud.",
-    "Send activity emails" : "Imbia messàgios de atividade",
-    "Configure the default activity settings for new users." : "Cunfigura is impostatziones de atividade predefinidas pro is utentes noos.",
-    "List your own actions in the stream" : "Elenca is atziones tuas in su flussu",
-    "Notify about your own actions via email" : "Piga nota de is atziones tuas tràmite posta eletrònica",
-    "Send emails:" : "Imbia messàgios de posta eletrònica:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Sèbera pro cales atividades cheres retzire unu messàgiu de notìfica, e cales diant dèvere apàrrere in s'applicatzione de su flussu de atividades.",
-    "Choose which activities you want to see in your stream." : "Sèbera cales atividades cheres bìdere in su flussu tuo."
+    "This application enables users to view actions related to their files in Nextcloud." : "Custa aplicatzione abìlitat is utentes a bìdere atziones ligadas a is archìvios issoro in Nextcloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

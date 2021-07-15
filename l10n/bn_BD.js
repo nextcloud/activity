@@ -51,14 +51,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "ক্রিয়াকলাপ লোড করার সময় একটি ত্রুটি ঘটেছে",
     "Load more activities" : "আরও ক্রিয়াকলাপ লোড করুন",
     "Open file" : "খোলা ফাইল",
-    "Stream" : "ধারা",
-    "This application enables users to view actions related to their files in Nextcloud." : "এই অ্যাপ্লিকেশনটি ব্যবহারকারীদের নেক্সটক্লাউডে তাদের ফাইলগুলির সাথে সম্পর্কিত ক্রিয়া দেখতে সক্ষম করে।",
-    "Send activity emails" : "ক্রিয়াকলাপ ইমেল প্রেরণ করুন",
-    "Configure the default activity settings for new users." : "নতুন ব্যবহারকারীদের জন্য ডিফল্ট ক্রিয়াকলাপ সেটিংস কনফিগার করুন।",
-    "List your own actions in the stream" : "আপনার নিজের ক্রিয়াকে স্ট্রিমে তালিকাবদ্ধ করুন",
-    "Notify about your own actions via email" : "ইমেলের মাধ্যমে আপনার নিজের ক্রিয়াকলাপ সম্পর্কে অবহিত করুন",
-    "Send emails:" : "ইমেইল পাঠান",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "আপনি কোন ক্রিয়াকলাপের জন্য ইমেল বিজ্ঞপ্তি পেতে চান এবং কোনটি অ্যাপ্লিকেশন অ্যাপ্লিকেশন স্ট্রিমে প্রদর্শিত হবে তা চয়ন করুন।",
-    "Choose which activities you want to see in your stream." : "আপনি আপনার স্ট্রিমে কোন ক্রিয়াকলাপ দেখতে চান তা চয়ন করুন।"
+    "This application enables users to view actions related to their files in Nextcloud." : "এই অ্যাপ্লিকেশনটি ব্যবহারকারীদের নেক্সটক্লাউডে তাদের ফাইলগুলির সাথে সম্পর্কিত ক্রিয়া দেখতে সক্ষম করে।"
 },
 "nplurals=2; plural=(n != 1);");

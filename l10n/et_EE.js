@@ -43,14 +43,6 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Tegevuse laadimisel tekkis tõrge",
     "Load more activities" : "Lae rohkem tegevusi",
     "Open file" : "Ava fail",
-    "Stream" : "Voog",
-    "This application enables users to view actions related to their files in Nextcloud." : "See rakendus võimaldab kasutajal vaadata oma Nextcloudi failidega seonduvaid tegevsi.",
-    "Send activity emails" : "Saada tegevuste kohta e-kirju",
-    "Configure the default activity settings for new users." : "Uute kasutajate vaiketegevuste seadete konfigureerimine.",
-    "List your own actions in the stream" : "Loetle oma tegevused voos",
-    "Notify about your own actions via email" : "Teavite omaenda tegevustest e-postiga",
-    "Send emails:" : "Saada kirjad:",
-    "Choose for which activities you want to get an email notification, and which should show up in the activity app stream." : "Valige, milliste tegevuste jaoks soovite saada meilisõnumit ja mis peaks ilmuma aktiivsuse rakenduste voos.",
-    "Choose which activities you want to see in your stream." : "Valige, milliseid tegevusi soovite voos kuvada."
+    "This application enables users to view actions related to their files in Nextcloud." : "See rakendus võimaldab kasutajal vaadata oma Nextcloudi failidega seonduvaid tegevsi."
 },
 "nplurals=2; plural=(n != 1);");
