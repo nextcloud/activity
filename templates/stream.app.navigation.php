@@ -53,6 +53,11 @@
 				<input id="feed-link" class="feed-link" type="text" readonly="readonly" value="<?php p($_['rssLink']); ?>" />
 				<a class="icon-clippy" data-clipboard-target="#rssurl input"></a>
 			</span>
+			<div id="activity-personal-settings-link">
+				<a href="<?php p($_['personalSettingsLink']); ?>">
+					<span class="no-icon"><?php p($l->t('Personal Activity Settings')); ?></span>
+				</a>
+			</div>
 		</div>
 	</div>
 </div>
