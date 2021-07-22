@@ -194,6 +194,15 @@
 	margin-left: 5px;
 }
 
+#activity-personal-settings-link {
+	text-decoration: underline;
+	
+	a {
+		display: block;
+		padding: 10px 0px 10px 25px;
+	}
+}
+
 .activitymessage .avatar-name-wrapper,
 .activitysubject .avatar-name-wrapper {
 	position: relative;
