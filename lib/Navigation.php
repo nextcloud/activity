@@ -87,6 +87,7 @@ class Navigation {
 		$template->assign('activeNavigation', $active);
 		$template->assign('navigations', $this->getLinkList());
 		$template->assign('rssLink', $this->getRSSLink());
+		$template->assign('personalSettingsLink', $this->getPersonalSettingsLink());
 
 		return $template;
 	}
@@ -129,5 +130,12 @@ class Navigation {
 		}
 
 		return $entries;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getPersonalSettingsLink() {
+		return $this->URLGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'activity']);
 	}
 }
