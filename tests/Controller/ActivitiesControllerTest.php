@@ -97,6 +97,7 @@ class ActivitiesControllerTest extends TestCase {
 		$template->assign('activeNavigation', 'all');
 		$template->assign('navigations', []);
 		$template->assign('rssLink', '');
+		$template->assign('personalSettingsLink', '');
 		$this->navigation->expects($this->any())
 			->method('getTemplate')
 			->willReturn($template);
