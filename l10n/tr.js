@@ -54,6 +54,7 @@ OC.L10N.register(
     "Settings" : "Ayarlar",
     "Enable RSS feed" : "RSS akışı kullanılsın",
     "RSS feed" : "RSS akışı",
+    "Personal Activity Settings" : "Kişisel işlem ayarları",
     "No more events to load" : "Yüklenecek başka bir olay yok",
     "An error occurred while loading activities" : "İşlemler yüklenirken bir sorun çıktı",
     "Load more activities" : "Diğer işlemleri yükle",
