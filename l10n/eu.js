@@ -54,6 +54,7 @@ OC.L10N.register(
     "Settings" : "Ezarpenak",
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "RSS feed" : "RSS jarioa",
+    "Personal Activity Settings" : "Jarduera pertsonal ezarpenak",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
     "An error occurred while loading activities" : "Errorea gertatu da jarduerak kargatzean",
     "Load more activities" : "Kargatu jarduera gehiago",
