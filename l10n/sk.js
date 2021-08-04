@@ -54,6 +54,7 @@ OC.L10N.register(
     "Settings" : "Nastavenia",
     "Enable RSS feed" : "Povoliť RSS kanál",
     "RSS feed" : "RSS kanál",
+    "Personal Activity Settings" : "Nastavenia osobnej aktivity",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
     "An error occurred while loading activities" : "Pri pokuse o načítanie aktivity nastala chyba",
     "Load more activities" : "Načítať viac aktivít",
