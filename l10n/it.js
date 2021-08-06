@@ -54,6 +54,7 @@ OC.L10N.register(
     "Settings" : "Impostazioni",
     "Enable RSS feed" : "Abilita fonte RSS",
     "RSS feed" : "Fonte RSS",
+    "Personal Activity Settings" : "Impostazioni attività personali",
     "No more events to load" : "Non ci sono altri eventi da caricare",
     "An error occurred while loading activities" : "E' avvenuto un errore durante il caricamento delle attività",
     "Load more activities" : "Carica altre attività",
