@@ -1,11 +1,11 @@
 OC.L10N.register(
     "activity",
     {
-    "Copied!" : "คัดลอกแล้ว",
-    "Not supported!" : "ไม่สนับสนุน",
+    "Copied!" : "คัดลอกแล้ว!",
+    "Not supported!" : "ไม่สนับสนุน!",
     "Press ⌘-C to copy." : "กด ⌘-C เพื่อคัดลอก",
     "Press Ctrl-C to copy." : "กด Ctrl-C เพื่อคัดลอก",
-    "{name} (invisible)" : "{name} (ซ่อนสถานะ)",
+    "{name} (invisible)" : "{name} (ไม่แสดงสถานะ)",
     "{name} (restricted)" : "{name} (จำกัด)",
     "Home" : "หน้าหลัก",
     "in {path}" : "ใน {path}",
@@ -16,7 +16,7 @@ OC.L10N.register(
     "Open {filename}" : "เปิด {filename}",
     "Personal activity feed for %s" : "ฟีดกิจกรรมส่วนตัวสำหรับ %s",
     "Your feed URL is invalid" : "ฟีด URL ของคุณไม่ถูกต้อง",
-    "Your settings have been updated." : "อัปเดตการตั้งค่าเรียบร้อยแล้ว",
+    "Your settings have been updated." : "อัปเดตการตั้งค่าของคุณแล้ว",
     "Settings have been updated." : "อัปเดตการตั้งค่าแล้ว",
     "Recent activity" : "กิจกรรมล่าสุด",
     "Daily activity summary for %s" : "สรุปกิจกรรมประจำวันสำหรับ %s",
@@ -31,7 +31,7 @@ OC.L10N.register(
     "Mail" : "จดหมาย",
     "Push" : "พุช",
     "Activity" : "กิจกรรม",
-    "This application enables users to view a log of activities about them or about files." : "โปรแกรมนี้ทำให้ผู้ใช้มองเห็น รายการกิจกรรมที่เกิดสิ่งนั้นหรือเกี่ยวข้องกับไฟล์",
+    "This application enables users to view a log of activities about them or about files." : "แอปพลิเคชันนี้ทำให้ผู้ใช้มองเห็นบันทึกกิจกรรมที่เกี่ยวกับเขาหรือไฟล์ต่าง ๆ",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "แอปพลิเคชั่นนี้ช่วยให้ผู้ใช้สามารถดูการทำงานที่เกี่ยวข้องกับไฟล์ใน Nextcloud\nเมื่อเปิดใช้งานผู้ใช้จะเห็นไอคอนใหม่“ กิจกรรม” ในเมนูแอพของพวกเขา\nเมื่อคลิกแล้วจะมีหน้าใหม่ปรากฏขึ้นให้ผู้ใช้ติดตามกิจกรรมที่เกี่ยวข้องกับไฟล์ตั้งแต่ไฟล์ใหม่ไปจนถึงไฟล์ที่ถูกลบย้ายเปลี่ยนชื่ออัปเดตและกิจกรรมที่แชร์\nผู้ใช้สามารถกำหนดการตั้งค่ากิจกรรมส่วนตัวในเมนูส่วนตัว\nสิ่งนี้จะกำหนดประเภทของกิจกรรมที่จะบันทึกรวมถึงว่าผู้ใช้เห็นกิจกรรมของตนเองหรือไม่\nไม่ว่าจะเป็นออนไลน์เท่านั้นหรือไม่และพวกเขาจะได้รับอีเมลสรุปเป็นประจำหรือไม่\nข้อมูลเพิ่มเติมมีอยู่ในเอกสารกิจกรรม",
     "No activity yet" : "ยังไม่มีกิจกรรม",
     "Unable to load the activity list" : "ไม่สามารถโหลดรายการกิจกรรม",
@@ -54,10 +54,11 @@ OC.L10N.register(
     "Settings" : "การตั้งค่า",
     "Enable RSS feed" : "เปิดใช้งานฟีด RSS",
     "RSS feed" : "ฟีด RSS",
-    "No more events to load" : "ไม่มีการโหลดกิจกรรมเพิ่มเติม",
+    "Personal Activity Settings" : "การตั้งค่ากิจกรรมส่วนตัว",
+    "No more events to load" : "ไม่มีกิจกรรมเพิ่มเติมที่จะโหลด",
     "An error occurred while loading activities" : "เกิดข้อผิดพลาดขณะโหลดกิจกรรม",
-    "Load more activities" : "โหลดกิจกรรมอื่น ๆ",
+    "Load more activities" : "โหลดกิจกรรมเพิ่มเติม",
     "Open file" : "เปิดไฟล์",
-    "This application enables users to view actions related to their files in Nextcloud." : "แอปพลิเคชั่นนี้ ช่วยให้ผู้ใช้สามารถดูการทำงานที่เกี่ยวข้องกับไฟล์ใน Nextcloud"
+    "This application enables users to view actions related to their files in Nextcloud." : "แอปพลิเคชันนี้ช่วยให้ผู้ใช้สามารถดูการทำงานที่เกี่ยวข้องกับไฟล์ของผู้ใช้ใน Nextcloud"
 },
 "nplurals=1; plural=0;");
