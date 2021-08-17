@@ -54,6 +54,7 @@ OC.L10N.register(
     "Settings" : "Параметри",
     "Enable RSS feed" : "Овозможи RSS канал",
     "RSS feed" : "RSS канал",
+    "Personal Activity Settings" : "Параметри за лични активности",
     "No more events to load" : "Нема повеќе настани за вчитување",
     "An error occurred while loading activities" : "Грешка при вчитување на активностите",
     "Load more activities" : "Вчитај повеќе активности",
