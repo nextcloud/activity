@@ -31,6 +31,7 @@ use OCP\Activity\IManager;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IL10N;
+use OCP\IUser;
 use OCP\Settings\ISettings;
 
 class Personal implements ISettings {
@@ -47,6 +48,9 @@ class Personal implements ISettings {
 	protected $l10n;
 
 	/** @var string */
+	protected $userId;
+
+	/** @var null|IUser */
 	protected $user;
 
 	/**
@@ -58,16 +62,19 @@ class Personal implements ISettings {
 	 * @param IL10N $l10n
 	 * @param CurrentUser $currentUser
 	 */
-	public function __construct(IConfig $config,
-								IManager $manager,
-								UserSettings $userSettings,
-								IL10N $l10n,
-								CurrentUser $currentUser) {
+	public function __construct(
+		IConfig $config,
+		IManager $manager,
+		UserSettings $userSettings,
+		IL10N $l10n,
+		CurrentUser $currentUser
+	) {
 		$this->config = $config;
 		$this->manager = $manager;
 		$this->userSettings = $userSettings;
 		$this->l10n = $l10n;
-		$this->user = (string) $currentUser->getUID();
+		$this->userId = (string) $currentUser->getUID();
+		$this->user = $currentUser->getUser();
 	}
 
 	/**
@@ -111,8 +118,8 @@ class Personal implements ISettings {
 
 			$activityGroups[$groupIdentifier]['activities'][$identifier] = [
 				'desc' => $setting->getName(),
-				IExtension::METHOD_MAIL => $this->userSettings->getUserSetting($this->user, 'email', $identifier),
-				IExtension::METHOD_NOTIFICATION => $this->userSettings->getUserSetting($this->user, 'notification', $identifier),
+				IExtension::METHOD_MAIL => $this->userSettings->getUserSetting($this->userId, 'email', $identifier),
+				IExtension::METHOD_NOTIFICATION => $this->userSettings->getUserSetting($this->userId, 'notification', $identifier),
 				'methods' => $methods,
 			];
 		}
@@ -124,7 +131,7 @@ class Personal implements ISettings {
 		}
 
 		$settingBatchTime = UserSettings::EMAIL_SEND_HOURLY;
-		$currentSetting = (int) $this->userSettings->getUserSetting($this->user, 'setting', 'batchtime');
+		$currentSetting = (int) $this->userSettings->getUserSetting($this->userId, 'setting', 'batchtime');
 		if ($currentSetting === 3600 * 24 * 7) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_WEEKLY;
 		} elseif ($currentSetting === 3600 * 24) {
@@ -146,17 +153,18 @@ class Personal implements ISettings {
 			$methods[IExtension::METHOD_NOTIFICATION] = $this->l10n->t('Push');
 		}
 
+
 		return new TemplateResponse('activity', 'settings/personal', [
 			'setting' => 'personal',
 			'activityGroups' => $activityGroups,
-			'is_email_set' => !empty($this->config->getUserValue($this->user, 'settings', 'email', '')),
+			'is_email_set' => $this->user instanceof IUser && !empty($this->user->getEMailAddress()),
 			'email_enabled' => $emailEnabled,
 
 			'setting_batchtime' => $settingBatchTime,
 
 			'methods' => $methods,
 
-			'activity_digest_enabled' => $this->userSettings->getUserSetting($this->user, 'setting', 'activity_digest')
+			'activity_digest_enabled' => $this->userSettings->getUserSetting($this->userId, 'setting', 'activity_digest')
 		], 'blank');
 	}
 

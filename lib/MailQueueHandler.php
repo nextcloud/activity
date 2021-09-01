@@ -134,7 +134,6 @@ class MailQueueHandler {
 
 		$userLanguages = $this->config->getUserValueForUsers('core', 'lang', $affectedUsers);
 		$userTimezones = $this->config->getUserValueForUsers('core', 'timezone', $affectedUsers);
-		$userEmails = $this->config->getUserValueForUsers('settings', 'email', $affectedUsers);
 		$userEnabled = $this->config->getUserValueForUsers('core', 'enabled', $affectedUsers);
 
 		// Send Email
@@ -149,7 +148,9 @@ class MailQueueHandler {
 				continue;
 			}
 
-			if (empty($userEmails[$user])) {
+			$userObject = $this->userManager->get($user);
+			$email = $userObject ? $userObject->getEMailAddress() : '';
+			if (empty($email)) {
 				// The user did not setup an email address
 				// So we will not send an email :(
 				$this->logger->debug("Couldn't send notification email to user '{user}' (email address isn't set for that user)", ['user' => $user, 'app' => 'activity']);
@@ -160,7 +161,7 @@ class MailQueueHandler {
 			$language = (!empty($userLanguages[$user])) ? $userLanguages[$user] : $default_lang;
 			$timezone = (!empty($userTimezones[$user])) ? $userTimezones[$user] : $defaultTimeZone;
 			try {
-				if ($this->sendEmailToUser($user, $userEmails[$user], $language, $timezone, $sendTime)) {
+				if ($this->sendEmailToUser($user, $email, $language, $timezone, $sendTime)) {
 					$deleteItemsForUsers[] = $user;
 				} else {
 					$this->logger->debug("Failed sending activity email to user '{user}'.", ['user' => $user, 'app' => 'activity']);
