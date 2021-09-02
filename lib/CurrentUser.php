@@ -57,6 +57,10 @@ class CurrentUser {
 		$this->sessionUser = false;
 	}
 
+	public function getUser(): ?IUser {
+		return $this->userSession->getUser();
+	}
+
 	/**
 	 * Get an identifier for the user, session or token
 	 * @return string
@@ -79,7 +83,7 @@ class CurrentUser {
 	}
 
 	/**
-	 * Get the current user from the session
+	 * Get the current user id from the session
 	 * @return string|null
 	 */
 	public function getUID() {
@@ -96,7 +100,7 @@ class CurrentUser {
 	}
 
 	/**
-	 * Get the current user from the session
+	 * Get the current user cloud id from the session
 	 * @return string|null
 	 */
 	public function getCloudId() {
