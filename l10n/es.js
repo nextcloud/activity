@@ -36,7 +36,7 @@ OC.L10N.register(
     "No activity yet" : "Ninguna actividad aún",
     "Unable to load the activity list" : "No se pudo cargar la lista de actividades",
     "activities" : "actividades",
-    "No activities" : "No hay actividades",
+    "No activities" : "No hay actividad",
     "Activity feed" : "Fuente de actividad",
     "Notifications" : "Notificaciones",
     "Enable notification emails" : "Activar las notificaciones de emails",
