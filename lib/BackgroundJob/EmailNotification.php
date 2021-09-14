@@ -39,14 +39,10 @@ class EmailNotification extends TimedJob {
 	/** @var bool */
 	protected $isCLI;
 
-	/**
-	 * @param MailQueueHandler $mailQueueHandler
-	 * @param bool $isCLI
-	 */
 	public function __construct(MailQueueHandler $mailQueueHandler,
-								$isCLI) {
-		// Run all 15 Minutes
-		$this->setInterval(15 * 60);
+								bool $isCLI) {
+		// Run everytime cron is executed, so the batching doesn't delay too much
+		$this->setInterval(1);
 
 		$this->queueHandler = $mailQueueHandler;
 		$this->isCLI = $isCLI;
