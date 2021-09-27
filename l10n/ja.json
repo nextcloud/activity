@@ -39,7 +39,7 @@
     "Notifications" : "通知",
     "Enable notification emails" : "メール通知を有効にする",
     "Default settings" : "デフォルト設定",
-    "Configure the default notification settings for new users." : "新規ユーザーのデフォルトの通知設定を設定",
+    "Configure the default notification settings for new users." : "新規ユーザーのデフォルトの通知設定を設定します。",
     "You need to set up your email address before you can receive notification emails." : "通知メールを受け取る前にメールアドレスを設定してください。",
     "Send notification emails:" : "通知メール送信のタイミング: ",
     "As soon as possible" : "できるだけ早く",
