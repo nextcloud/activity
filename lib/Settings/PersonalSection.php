@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2017 Joas Schilling <coding@schilljs.com>
  *
@@ -50,7 +53,7 @@ class PersonalSection implements IIconSection {
 	 * @since 12
 	 */
 	public function getIcon() {
-		return $this->url->imagePath('activity', 'activity-dark.svg');
+		return $this->url->imagePath('activity', 'notifications-dark.svg');
 	}
 
 	/**
@@ -61,7 +64,7 @@ class PersonalSection implements IIconSection {
 	 * @since 9.1
 	 */
 	public function getID() {
-		return 'activity';
+		return 'notifications';
 	}
 
 	/**
@@ -72,7 +75,7 @@ class PersonalSection implements IIconSection {
 	 * @since 9.1
 	 */
 	public function getName() {
-		return $this->l->t('Activity');
+		return $this->l->t('Notifications');
 	}
 
 	/**
