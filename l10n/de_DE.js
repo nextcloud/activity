@@ -31,6 +31,7 @@ OC.L10N.register(
     "Mail" : "E-Mail",
     "Push" : "Push",
     "Activity" : "Aktivität",
+    "Notifications" : "Benachrichtigungen",
     "This application enables users to view a log of activities about them or about files." : "Diese Anwendung ermöglicht es Benutzern, ein Protokoll der Aktivitäten über sie oder über Dateien anzuzeigen.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Diese App ermöglicht es Benutzern Ereignisse zu ihren Dateien zu sehen.\nSobald diese aktiviert ist, sehen die Benutzer ein neues Symbol \"Aktivitäten\" in Ihrem App-Menü.\nWenn darauf geklickt wird, erscheint eine neue Seite für die Benutzer, auf welcher diese die Aktivitäten in Bezug auf die Dateien verfolgen können - von erstellten und gelöschten Dateien, über Verschiebe -, Umbenennungs- , Aktualisier- und Teilaktionen.\nDer Benutzer kann seine individuelle Aktivitätseinstellung im persönlichen Menü vornehmen.\nDies setzt den Typ von Aktivität zur Aufzeichnung und ob der Benutzer seine eigenen Aktivitäten sieht,\nob diese nur Online verfügbar sind und ob E-Mail-Benachrichtigungen auf täglicher Basis verschickt werden.\nWeitere Informationen sind unter Aktivitäten in der Dokumentation verfügbar.",
     "No activity yet" : "Bislang keine Aktivitäten",
@@ -38,12 +39,10 @@ OC.L10N.register(
     "activities" : "Aktivitäten",
     "No activities" : "Keine Aktivitäten",
     "Activity feed" : "Feed der Aktivitäten",
-    "Notifications" : "Benachrichtigungen",
     "Enable notification emails" : "Benachrichtigungs-E-Mails einschalten",
     "Default settings" : "Standardeinstellungen",
     "Configure the default notification settings for new users." : "Voreinstellungen der Benachrichtigungen für neue Benutzer.",
     "You need to set up your email address before you can receive notification emails." : "Bevor Sie E-Mail-Benachrichtigungen empfangen können, müssen Sie Ihre E-Mail-Adresse einrichten.",
-    "Send notification emails:" : "Benachrichtigungs-E-Mails senden:",
     "As soon as possible" : "So bald wie möglich",
     "Hourly" : "Stündlich",
     "Daily" : "täglich",
@@ -59,6 +58,7 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Es ist ein Fehler beim Laden der Aktivitäten aufgetreten",
     "Load more activities" : "Weitere Aktivitäten laden",
     "Open file" : "Datei öffnen",
-    "This application enables users to view actions related to their files in Nextcloud." : "Diese Anwendung erlaubt es dem Benutzer, Aktivitäten zu dessen Dateien in Nextcloud zu verfolgen."
+    "This application enables users to view actions related to their files in Nextcloud." : "Diese Anwendung erlaubt es dem Benutzer, Aktivitäten zu dessen Dateien in Nextcloud zu verfolgen.",
+    "Send notification emails:" : "Benachrichtigungs-E-Mails senden:"
 },
 "nplurals=2; plural=(n != 1);");

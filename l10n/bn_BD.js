@@ -28,15 +28,14 @@ OC.L10N.register(
     "Mail" : "মেইল",
     "Push" : "ঠেলা",
     "Activity" : "সক্রিয়তা",
+    "Notifications" : "বার্তাসমূহ",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "এই অ্যাপ্লিকেশনটি ব্যবহারকারীদের নেক্সটক্লাউডে তাদের ফাইলগুলির সাথে সম্পর্কিত ক্রিয়া দেখতে সক্ষম করে।\n\t\tসক্ষম হয়ে গেলে ব্যবহারকারীরা তাদের অ্যাপস মেনুতে একটি নতুন আইকন \"ক্রিয়াকলাপ\" দেখতে পাবেন।\n\t\tক্লিক করা হলে, একটি নতুন পৃষ্ঠা ব্যবহারকারীদের জন্য ফাইল সম্পর্কিত কার্যকলাপ - নতুন ফাইল থেকে মুছে ফেলা, ফাইল পরিবর্তন, পুনরায় নামকরণ, আপডেট এবং ভাগ করা ক্রিয়াকলাপ ট্র্যাক করতে উপস্থিত হয়।\n\t\tব্যবহারকারী তাদের ব্যক্তিগত মেনুতে তাদের পৃথক কার্যকলাপ সেটিংস কনফিগার করতে পারেন।\n\t\tএটি রেকর্ড করার জন্য ক্রিয়াকলাপের ধরণের পাশাপাশি ব্যবহারকারীকে তাদের নিজস্ব ক্রিয়াকলাপ দেখে কিনা তা নির্ধারণ করে\n\t\tএগুলি কেবল অনলাইনে উপলব্ধ কিনা এবং তারা নিয়মিত কোনও ইমেল হজম পায় কিনা।\n\t\tক্রিয়াকলাপ ডকুমেন্টেশনে আরও তথ্য উপলব্ধ। ",
     "No activity yet" : "এখনও কোন কার্যকলাপ নেই",
     "Activity feed" : "সক্রিয়তা বারতা",
-    "Notifications" : "বার্তাসমূহ",
     "Enable notification emails" : "বিজ্ঞপ্তি ইমেলগুলি সক্ষম করুন",
     "Default settings" : "ডিফল্ট সেটিংস",
     "Configure the default notification settings for new users." : "নতুন ব্যবহারকারীদের জন্য ডিফল্ট বিজ্ঞপ্তি সেটিংস কনফিগার করুন।",
     "You need to set up your email address before you can receive notification emails." : "ইমেইল বারতা পাওয়ার আগে আপনাকে নিজের ইমেইল ঠিকানা নিরধারন করতে হবে৷",
-    "Send notification emails:" : "বিজ্ঞপ্তি ইমেলগুলি প্রেরণ করুন:",
     "As soon as possible" : "যত দ্রুত সম্ভব ",
     "Hourly" : "ঘনটাভিততিক",
     "Daily" : "দৈনিক",
@@ -51,6 +50,7 @@ OC.L10N.register(
     "An error occurred while loading activities" : "ক্রিয়াকলাপ লোড করার সময় একটি ত্রুটি ঘটেছে",
     "Load more activities" : "আরও ক্রিয়াকলাপ লোড করুন",
     "Open file" : "খোলা ফাইল",
-    "This application enables users to view actions related to their files in Nextcloud." : "এই অ্যাপ্লিকেশনটি ব্যবহারকারীদের নেক্সটক্লাউডে তাদের ফাইলগুলির সাথে সম্পর্কিত ক্রিয়া দেখতে সক্ষম করে।"
+    "This application enables users to view actions related to their files in Nextcloud." : "এই অ্যাপ্লিকেশনটি ব্যবহারকারীদের নেক্সটক্লাউডে তাদের ফাইলগুলির সাথে সম্পর্কিত ক্রিয়া দেখতে সক্ষম করে।",
+    "Send notification emails:" : "বিজ্ঞপ্তি ইমেলগুলি প্রেরণ করুন:"
 },
 "nplurals=2; plural=(n != 1);");

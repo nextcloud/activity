@@ -29,17 +29,16 @@ OC.L10N.register(
     "There was some activity at %s" : "تعدادی فعالیت در %s وجود دارد",
     "Mail" : "ایمیل",
     "Activity" : "فعالیت",
+    "Notifications" : "آگاهی‌ها",
     "This application enables users to view a log of activities about them or about files." : "این برنامه، کاربران را قادر می‌سازد تا بتوانند سیاهه فعالیت‌های مربوط به خود یا مربتط با پرونده‌ها را ببینند.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "این برنامه کاربران را قادر می سازد تا مشاهده کنند فعالیت های مرتبط با فایل هایشان را درNextcloud.\nپس از فعال شدن کاربران در منوی برنامه یک آیکون جدید بنام فعّالیت خواهند دید. \nوقتی که روی آن کلیک می کنید، یک صفحه جدید به شما نمایش داده می شود برای اینکه کاربران فعّالیت های مرتبط با فایل ها را دنبال کنند- از فایل جدید تا فایل های حذف شده، منتقل شده،‌ تغییر نام یافته، به روز شده و به اشتراک گذاری فعّالیت \nکاربر می تواند به صورت مجزا فعّالیت خود را در تنظیمات در منوی شخصی پیکربندی کردن\nاین مجموعه از نوع تنظیمات  فعّالیت برای ثبت کردن به خوبی نشان میدهد کاربر فعّالیت‌ها ی خود را ببنید اگر چه آنها فقط به صورت آنلاین قابل دسترسی می باشند و حتی آنها به صورت منظم دریافت یک هشدار ایمیل می کنند.\nاطلاعات بیشتر در مستندات فعّالیت وجود دارد. \n ",
     "No activity yet" : "هنوز فعالیتی انجام نشده",
     "Unable to load the activity list" : "ناتونی در بار کردن سیاهه فعالیت",
     "Activity feed" : "feed فعالیت",
-    "Notifications" : "آگاهی‌ها",
     "Enable notification emails" : "فعال‌سازی اعلان از طریق رایانامه‌ها",
     "Default settings" : "تنظیمات پیش فرض",
     "Configure the default notification settings for new users." : "تنظیمات پیش‌فرض اعلان برای کاربران جدید را پیکربندی کنید.",
     "You need to set up your email address before you can receive notification emails." : "قبل از دریافت ایمیل های هشدار می بایست ادرس ایمیل خود را تنظیم کنید",
-    "Send notification emails:" : "ارسال اطلاعیه از طریق ایمیل:",
     "As soon as possible" : "هرچه زودتر",
     "Hourly" : "به طور ساعتی",
     "Daily" : "روزانه",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "An error occurred while loading activities" : "در هنگام بارگزاری فعالیت ها خطایی رخ داده است ",
     "Load more activities" : "نمایش فعالیت های بیشتر",
     "Open file" : "باز کردن فایل",
-    "This application enables users to view actions related to their files in Nextcloud." : "این نرم‌افراز مشاهده فعالیت‌های مربوط به فایل‌های موجود در Nextcloud را برای کاربران ممکن می‌سازد."
+    "This application enables users to view actions related to their files in Nextcloud." : "این نرم‌افراز مشاهده فعالیت‌های مربوط به فایل‌های موجود در Nextcloud را برای کاربران ممکن می‌سازد.",
+    "Send notification emails:" : "ارسال اطلاعیه از طریق ایمیل:"
 },
 "nplurals=2; plural=(n > 1);");

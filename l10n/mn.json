@@ -21,13 +21,12 @@
     "Hello %s," : "Сайн байна уу, %s,",
     "Mail" : "Цахим шуудан",
     "Activity" : "Үйлдлүүд",
+    "Notifications" : "Мэдэгдэл",
     "No activity yet" : "Одоохондоо ямар ч үйлдэл алга",
     "Activity feed" : "Үйлдлүүдйн тэжээл",
-    "Notifications" : "Мэдэгдэл",
     "Enable notification emails" : "Эмэйл мэдэгдлийг идэвхжүүлэх",
     "Default settings" : "Өгөгдмөл тохиргоо",
     "You need to set up your email address before you can receive notification emails." : "Та цахим шуудангаар мэдэгдэл хүлээн авахын тулд цахим шуудангаа тохируулна уу?",
-    "Send notification emails:" : "Эмэйлээр мэдэгдэл авах ",
     "Hourly" : "Цаг бүр",
     "Daily" : "Өдөр бүр",
     "Weekly" : "Долоо хоног бүр",
@@ -35,6 +34,7 @@
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
     "An error occurred while loading activities" : "Үйлдлүүдийг ачааллахад алдаа гарлаа",
     "Load more activities" : "Бусад үйлдлүүдийг ачаалах",
-    "Open file" : "Файл онгойлгох"
+    "Open file" : "Файл онгойлгох",
+    "Send notification emails:" : "Эмэйлээр мэдэгдэл авах "
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
