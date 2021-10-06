@@ -31,6 +31,7 @@ OC.L10N.register(
     "Mail" : "Пошта",
     "Push" : "Push",
     "Activity" : "Події",
+    "Notifications" : "Сповіщення",
     "This application enables users to view a log of activities about them or about files." : "Цей додаток дозволяє користувачам переглядати журнал активності про  їх або їх файлів.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Застосунок дозволяє користувачам переглядати журнал дій, які відбуваються з їхніми файлами у Nextcloud.\n\t\tКоли застосунок увімкнено, у меню застосунків користувачів з'являється нова піктограма  \"Журнал\".\n\t\tПо натисканню на неї відкривається сторінка, на якій користувачі можуть відслідковувати дії з файлами: створення та вилучення файлів, переміщення, перейменування, оновлення та зміни у спільному доступі.\n\t\tКористувач може визначити власні налаштування у особистому меню.\n\t\tНалаштовується тип дій, які будуть відслідковуватися, чи слід відображати користувачеві власні дії,\n\t\tчи переглядати журнал дій лише в онлайні, або отримувати періодичні звіти на поштову скриньку.",
     "No activity yet" : "Поки що відсутні події",
@@ -38,12 +39,10 @@ OC.L10N.register(
     "activities" : "події",
     "No activities" : "Активність відсутня",
     "Activity feed" : "Стрічка дій",
-    "Notifications" : "Сповіщення",
     "Enable notification emails" : "Увімкнути сповіщення електронною поштою",
     "Default settings" : "Типові налаштування",
     "Configure the default notification settings for new users." : "Налаштувати параметри сповіщень для нових користувачів.",
     "You need to set up your email address before you can receive notification emails." : "Для отримання повідомлень зазначте електронну адресу в особистих налаштуваннях.",
-    "Send notification emails:" : "Відправити сповіщення:",
     "As soon as possible" : "Якнайшвидше",
     "Hourly" : "Щогодини",
     "Daily" : "Щоденно",
@@ -59,6 +58,7 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Під час завантаження подій відбулася помилка",
     "Load more activities" : "Інші події",
     "Open file" : "Відкрити файл",
-    "This application enables users to view actions related to their files in Nextcloud." : "Застосунок дозволяє користувачам переглядати дії з власними файлами у Nextcloud."
+    "This application enables users to view actions related to their files in Nextcloud." : "Застосунок дозволяє користувачам переглядати дії з власними файлами у Nextcloud.",
+    "Send notification emails:" : "Відправити сповіщення:"
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

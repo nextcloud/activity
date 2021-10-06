@@ -31,6 +31,7 @@ OC.L10N.register(
     "Mail" : "Pošta",
     "Push" : "Vyskakovacie oznámenia",
     "Activity" : "Aktivita",
+    "Notifications" : "Hlásenia",
     "This application enables users to view a log of activities about them or about files." : "Táto aplikácia umožní uživateľom prezerať záznam ich aktivít alebo aktivít práce so súbormi.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Táto aplikácia povolí používateľom sledovať akcie súvisiace s ich súbormi v Nextcloude.\n\t\tPo zapnutí uvidia používatelia novú ikonu \"Aktivita\" v ich ponuke aplikácií.\n\t\tPo kliknutí sa zobrazí nová stránka kde budú môcť sledovať aktivitu súvisiacu s ich súbormi - ako sú napr. nové súbory, vymazané súbory, presunutia, premenovania, aktualizované súbory a aktivitu na sprístupnených súboroch.\n\t\tPoužívateľ môže mať svoje vlastné nastavenia v jeho osobnom menu.\n\t\tMôže si nastaviť typ aktivity pre zaznamenávanie, taktiež aj či vôbec chce vidieť svoju vlastnú aktivitu,\n\t\tprípadne či ju chce vidieť len online alebo ju dostavať v pravidelnom e-mailovom výkaze.\n\t\tViac informácií môžete získať v dokumentácii k apke Aktivity.",
     "No activity yet" : "Zatiaľ žiadne aktivity.",
@@ -38,12 +39,10 @@ OC.L10N.register(
     "activities" : "aktivity",
     "No activities" : "Žiadne aktivity",
     "Activity feed" : "Prehľad aktivít",
-    "Notifications" : "Hlásenia",
     "Enable notification emails" : "Zapnúť upozorňovanie e-mailom",
     "Default settings" : "Predvolená nastavenia",
     "Configure the default notification settings for new users." : "Nastavte predvolené nastavenia upozornení pre nových používateľov.",
     "You need to set up your email address before you can receive notification emails." : "Ak chcete dostávať oznámenia emailom, musíte najskôr vyplniť vašu emailovú adresu.",
-    "Send notification emails:" : "Posielať e-mailové oznámenia: ",
     "As soon as possible" : "Čo najskôr",
     "Hourly" : "Každú hodinu",
     "Daily" : "Denne",
@@ -59,6 +58,7 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Pri pokuse o načítanie aktivity nastala chyba",
     "Load more activities" : "Načítať viac aktivít",
     "Open file" : "Otvoriť súbor",
-    "This application enables users to view actions related to their files in Nextcloud." : "Táto aplikácia povolí používateľom sledovať akcie súvisiace s ich súbormi v Nextcloude."
+    "This application enables users to view actions related to their files in Nextcloud." : "Táto aplikácia povolí používateľom sledovať akcie súvisiace s ich súbormi v Nextcloude.",
+    "Send notification emails:" : "Posielať e-mailové oznámenia: "
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");
