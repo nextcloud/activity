@@ -44,6 +44,7 @@ OC.L10N.register(
     "Settings" : "Nustatymai",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "RSS feed" : "RSS kanalas",
+    "Personal Activity Settings" : "Asmeninės veiklos nustatymai",
     "No more events to load" : "Nėra daugiau rodytinų įvykių",
     "An error occurred while loading activities" : "Įkeliant veiklas, įvyko klaida",
     "Load more activities" : "Įkelti daugiau veiklų",
