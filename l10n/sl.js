@@ -50,6 +50,7 @@ OC.L10N.register(
     "Settings" : "Nastavitve",
     "Enable RSS feed" : "Omogoči vire RSS",
     "RSS feed" : "Viri RSS",
+    "Personal Activity Settings" : "Nastavitve osebne dejavnosti",
     "No more events to load" : "Ni načrtovanih drugih dogodkov",
     "An error occurred while loading activities" : "Med nalaganjem dejavnosti je prišlo do napake",
     "Load more activities" : "Naloži več dejavnosti",
