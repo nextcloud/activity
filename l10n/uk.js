@@ -43,12 +43,14 @@ OC.L10N.register(
     "Default settings" : "Типові налаштування",
     "Configure the default notification settings for new users." : "Налаштувати параметри сповіщень для нових користувачів.",
     "You need to set up your email address before you can receive notification emails." : "Для отримання повідомлень зазначте електронну адресу в особистих налаштуваннях.",
+    "Send activity emails:" : "Надсилати інформацію про події на ел. пошту:",
     "As soon as possible" : "Якнайшвидше",
     "Hourly" : "Щогодини",
     "Daily" : "Щоденно",
     "Weekly" : "Щотижня",
     "Choose for which activities you want to get an email or push notification." : "Оберіть події щодо яких Ви бажаєте отримувати сповіщення електронною поштою або у вигляді push-сповіщень.",
     "Choose for which activities you want to get a push notification." : "Оберіть події щодо яких Ви бажаєте отримувати puch-сповіщеня.",
+    "Daily activity summary" : "Щоденні підсумки про події",
     "Send daily activity summary in the morning" : "Надсилати підсумки дня вранці",
     "Settings" : "Налаштування",
     "Enable RSS feed" : "Активувати стрічку RSS",
@@ -59,6 +61,6 @@ OC.L10N.register(
     "Load more activities" : "Інші події",
     "Open file" : "Відкрити файл",
     "This application enables users to view actions related to their files in Nextcloud." : "Застосунок дозволяє користувачам переглядати дії з власними файлами у Nextcloud.",
-    "Send notification emails:" : "Відправити сповіщення:"
+    "Send notification emails:" : "Надсилати сповіщення на ел. пошту:"
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");
