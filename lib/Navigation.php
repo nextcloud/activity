@@ -135,6 +135,6 @@ class Navigation {
 	 * @return string
 	 */
 	protected function getPersonalSettingsLink() {
-		return $this->URLGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'activity']);
+		return $this->URLGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications']);
 	}
 }
