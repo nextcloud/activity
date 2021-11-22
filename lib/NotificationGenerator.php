@@ -74,6 +74,10 @@ class NotificationGenerator implements INotifier {
 			$notification->setMessage($event->getMessage());
 		}
 
+		if ($event->getLink()) {
+			$notification->setLink($event->getLink());
+		}
+
 		return $notification;
 	}
 
