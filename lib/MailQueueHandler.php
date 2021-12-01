@@ -39,7 +39,7 @@ use OCP\Mail\IMailer;
 use OCP\RichObjectStrings\InvalidObjectExeption;
 use OCP\RichObjectStrings\IValidator;
 use OCP\Util;
-
+use OCP\IUserBackend;
 /**
  * Class MailQueueHandler
  * Gets the users from the database and
@@ -92,6 +92,9 @@ class MailQueueHandler {
 
 	/** @var ILogger */
 	protected $logger;
+
+	/** @var UserInterface|null */
+	private $backend;
 
 	public function __construct(IDateTimeFormatter $dateFormatter,
 								IDBConnection $connection,
@@ -366,16 +369,17 @@ class MailQueueHandler {
 				'relativeDateTime' => $relativeDateTime
 			];
 		}
+		$recUser = $this->userManager->get($userName);
 
 		$template = $this->mailer->createEMailTemplate('activity.Notification', [
-			'displayname' => $user->getDisplayName(),
+			'displayname' => $recUser->getDisplayNameOtherUser(),
 			'url' => $this->urlGenerator->getAbsoluteURL('/'),
 			'activityEvents' => $activityEvents,
 			'skippedCount' => $skippedCount,
 		]);
 		$template->setSubject($l->t('Activity notification for %s', $this->getSenderData('name')));
 		$template->addHeader();
-		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
+		$template->addHeading($l->t('Hello %s',[$recUser->getDisplayNameOtherUser()]), $l->t('Hello %s,',[$recUser->getDisplayNameOtherUser()]));
 
 		$homeLink = '<a href="' . $this->urlGenerator->getAbsoluteURL('/') . '">' . htmlspecialchars($this->getSenderData('name')) . '</a>';
 		$template->addBodyText(
@@ -428,7 +432,12 @@ class MailQueueHandler {
 			if ($parameter['type'] === 'file') {
 				$replacement = $parameter['path'];
 			} else {
-				$replacement = $parameter['name'];
+				$eventUser = $this->userManager->get($parameter['id']);
+				if(isset($eventUser)){
+					$replacement = $eventUser->getDisplayNameOtherUser();
+				}else{
+					$replacement = $parameter['id'];
+				}
 			}
 
 			if (isset($parameter['link'])) {
