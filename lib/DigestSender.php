@@ -176,13 +176,14 @@ class DigestSender {
 		$skippedCount = max(0, $count - self::ACTIVITY_LIMIT);
 
 		$template = $this->mailer->createEMailTemplate('activity.Notification', [
-			'displayname' => $user->getDisplayName(),
+			'displayname' => $user->getDisplayNameOtherUser(),
 			'url' => $this->urlGenerator->getAbsoluteURL('/'),
 			'activityEvents' => $activities,
 			'skippedCount' => $skippedCount,
 		]);
 		$template->setSubject($l10n->t('Daily activity summary for %s', $this->defaults->getName()));
 		$template->addHeader();
+		$template->addHeading($l10n->t('Hello %s',[$user->getDisplayNameOtherUser()]), $l10n->t('Hello %s,',[$user->getDisplayNameOtherUser()]));
 
 		foreach ($activities as $event) {
 			$relativeDateTime = $this->dateFormatter->formatDateTimeRelativeDay(
