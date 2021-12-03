@@ -5,6 +5,7 @@ declare(strict_types=1);
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
  * @author Joas Schilling <coding@schilljs.com>
+ * @author Thomas Citharel <nextcloud@tcit.fr>
  * @author Thomas Müller <thomas.mueller@tmit.eu>
  *
  * @license AGPL-3.0
@@ -228,6 +229,18 @@ class MailQueueHandlerTest extends TestCase {
 		[$data, $skipped] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200, 5]);
 		$this->assertCount(5, $data, 'Failed to assert the user has 2 entries');
 		$this->assertSame(12, $skipped);
+	}
+
+	public function testPurgeItemsForUser(): void {
+		[$data, $skipped] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200]);
+		$this->assertCount(2, $data, 'Failed to assert the user has 2 entries');
+		$this->assertSame(0, $skipped);
+
+		$this->mailQueueHandler->purgeItemsForUser('user1');
+
+		[$data, $skipped] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', ['user1', 200]);
+		$this->assertCount(0, $data, 'Failed to assert the user has no entries left');
+		$this->assertSame(0, $skipped);
 	}
 
 	public function testSendEmailToUser(): void {

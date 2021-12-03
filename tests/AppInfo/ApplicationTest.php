@@ -5,6 +5,7 @@ declare(strict_types=1);
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
  * @author Joas Schilling <coding@schilljs.com>
+ * @author Thomas Citharel <nextcloud@tcit.fr>
  *
  * @license AGPL-3.0
  *
@@ -41,7 +42,6 @@ use OCA\Activity\Data;
 use OCA\Activity\FilesHooks;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\GroupHelperDisabled;
-use OCA\Activity\Hooks;
 use OCA\Activity\MailQueueHandler;
 use OCA\Activity\Navigation;
 use OCA\Activity\Tests\TestCase;
@@ -94,7 +94,6 @@ class ApplicationTest extends TestCase {
 			[GroupHelper::class],
 			[GroupHelperDisabled::class],
 			[GroupHelperDisabled::class, GroupHelper::class],
-			[Hooks::class],
 			[MailQueueHandler::class],
 			[Navigation::class],
 			[UserSettings::class],
