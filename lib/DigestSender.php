@@ -180,10 +180,12 @@ class DigestSender {
 			'url' => $this->urlGenerator->getAbsoluteURL('/'),
 			'activityEvents' => $activities,
 			'skippedCount' => $skippedCount,
+			'userId'  => $uid
 		]);
 		$template->setSubject($l10n->t('Daily activity summary for %s', $this->defaults->getName()));
 		$template->addHeader();
 		$template->addHeading($l10n->t('Hello %s',[$user->getDisplayNameOtherUser()]), $l10n->t('Hello %s,',[$user->getDisplayNameOtherUser()]));
+
 
 		foreach ($activities as $event) {
 			$relativeDateTime = $this->dateFormatter->formatDateTimeRelativeDay(

@@ -376,6 +376,7 @@ class MailQueueHandler {
 			'url' => $this->urlGenerator->getAbsoluteURL('/'),
 			'activityEvents' => $activityEvents,
 			'skippedCount' => $skippedCount,
+			'userId'  => $userName
 		]);
 		$template->setSubject($l->t('Activity notification for %s', $this->getSenderData('name')));
 		$template->addHeader();
