@@ -180,7 +180,8 @@ class DigestSender {
 			'url' => $this->urlGenerator->getAbsoluteURL('/'),
 			'activityEvents' => $activities,
 			'skippedCount' => $skippedCount,
-			'userId'  => $uid
+			'userId'  => $uid,
+			'dialyActivity' => true
 		]);
 		$template->setSubject($l10n->t('Daily activity summary for %s', $this->defaults->getName()));
 		$template->addHeader();
