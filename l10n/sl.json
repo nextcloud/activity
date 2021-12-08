@@ -40,7 +40,7 @@
     "Enable notification emails" : "Omogoči obveščanje prek elektronske pošte",
     "Default settings" : "Prevzete nastavitve",
     "Configure the default notification settings for new users." : "Prilagodi privzete nastavitve obveščanja za nove uporabnike.",
-    "You need to set up your email address before you can receive notification emails." : "Za prejemanje obvestil prek elektronske pošte je treba najprej nastaviti elektronski poštni naslov.",
+    "You need to set up your email address before you can receive notification emails." : "Za prejemanje obvestil po elektronski pošti je treba najprej nastaviti elektronski poštni naslov.",
     "Send activity emails:" : "Pošiljaj obvestila o dejavnosti na elektronske naslove:",
     "As soon as possible" : "Čimprej",
     "Hourly" : "Vsako uro",
