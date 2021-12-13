@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
-                "reference": "f6e631b529586cb53beca6bb1cbfd50d38dfae8b"
+                "reference": "2cb624ed5bbc3a9a766ea822a79b341d54438e93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/f6e631b529586cb53beca6bb1cbfd50d38dfae8b",
-                "reference": "f6e631b529586cb53beca6bb1cbfd50d38dfae8b",
+                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/2cb624ed5bbc3a9a766ea822a79b341d54438e93",
+                "reference": "2cb624ed5bbc3a9a766ea822a79b341d54438e93",
                 "shasum": ""
             },
             "require": {
@@ -27,10 +27,11 @@
                 "psr/event-dispatcher": "^1.0",
                 "psr/log": "^1.1"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "23.0.0-dev"
+                    "dev-master": "24.0.0-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -44,7 +45,11 @@
                 }
             ],
             "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
-            "time": "2021-06-24T11:36:19+00:00"
+            "support": {
+                "issues": "https://github.com/ChristophWurst/nextcloud_composer/issues",
+                "source": "https://github.com/ChristophWurst/nextcloud_composer/tree/master"
+            },
+            "time": "2021-12-10T01:11:16+00:00"
         },
         {
             "name": "composer/semver",
@@ -3847,5 +3852,5 @@
     "platform-overrides": {
         "php": "7.3"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.1.0"
 }
