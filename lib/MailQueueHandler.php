@@ -4,6 +4,7 @@
  *
  * @author Joas Schilling <coding@schilljs.com>
  * @author Lukas Reschke <lukas@statuscode.ch>
+ * @author Thomas Citharel <nextcloud@tcit.fr>
  *
  * @license AGPL-3.0
  *
@@ -272,6 +273,14 @@ class MailQueueHandler {
 		}
 
 		return [$activities, 0];
+	}
+
+	public function purgeItemsForUser(string $affectedUser): void {
+		$queryBuilder = $this->connection->getQueryBuilder();
+
+		$queryBuilder->delete('activity_mq')
+			->where($queryBuilder->expr()->eq('amq_affecteduser', $queryBuilder->createNamedParameter($affectedUser)));
+		$queryBuilder->executeStatement();
 	}
 
 	/**

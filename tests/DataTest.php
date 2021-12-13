@@ -3,6 +3,7 @@
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
  * @author Joas Schilling <coding@schilljs.com>
+ * @author Thomas Citharel <nextcloud@tcit.fr>
  *
  * @license AGPL-3.0
  *
@@ -24,6 +25,8 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\Data;
 use OCP\Activity\IManager;
+use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\IUserSession;
 use OCP\Util;
@@ -42,21 +45,26 @@ class DataTest extends TestCase {
 	/** @var IL10N */
 	protected $activityLanguage;
 
-	/** @var IManager|MockObject */
-	protected $activityManager;
-
 	/** @var IUserSession|MockObject */
 	protected $session;
+
+	/** @var IDBConnection */
+	protected $dbConnection;
+
+	/** @var IManager */
+	protected $realActivityManager;
 
 	protected function setUp(): void {
 		parent::setUp();
 
 		$this->activityLanguage = Util::getL10N('activity', 'en');
-		$this->activityManager = $this->createMock(IManager::class);
+		$activityManager = $this->createMock(IManager::class);
+		$this->dbConnection = \OC::$server->get(IDBConnection::class);
+		$this->realActivityManager = \OC::$server->get(IManager::class);
 
 		$this->data = new Data(
-			$this->activityManager,
-			\OC::$server->getDatabaseConnection()
+			$activityManager,
+			$this->dbConnection
 		);
 	}
 
@@ -89,7 +97,7 @@ class DataTest extends TestCase {
 	public function testSend(string $actionUser, string $affectedUser, string $expectedAuthor, string $expectedAffected, bool $expectedActivity): void {
 		$this->deleteTestActivities();
 
-		$event = \OC::$server->getActivityManager()->generateEvent();
+		$event = $this->realActivityManager->generateEvent();
 		$event->setApp('test')
 			->setType('type')
 			->setSubject('subject', []);
@@ -104,10 +112,13 @@ class DataTest extends TestCase {
 
 		$this->assertSame($expectedActivity, $this->data->send($event) !== 0);
 
-		$connection = \OC::$server->getDatabaseConnection();
-		$query = $connection->prepare('SELECT `user`, `affecteduser` FROM `*PREFIX*activity` WHERE `app` = ? ORDER BY `activity_id` DESC');
-		$query->execute(['test']);
-		$row = $query->fetch();
+		$qb = $this->dbConnection->getQueryBuilder();
+		$query = $qb->select('user', 'affecteduser')
+			->from('activity')
+			->where($qb->expr()->eq('app', $qb->createNamedParameter('test')))
+			->orderBy('activity_id', 'DESC');
+		$result = $query->executeQuery();
+		$row = $result->fetch();
 
 		if ($expectedActivity) {
 			$this->assertEquals(['user' => $expectedAuthor, 'affecteduser' => $expectedAffected], $row);
@@ -132,7 +143,7 @@ class DataTest extends TestCase {
 
 		$time = time();
 
-		$event = \OC::$server->getActivityManager()->generateEvent();
+		$event = $this->realActivityManager->generateEvent();
 		$event->setApp('test')
 			->setType('type')
 			->setSubject('subject', [])
@@ -144,10 +155,13 @@ class DataTest extends TestCase {
 
 		$this->assertSame($expectedActivity, $this->data->storeMail($event, $time + 10));
 
-		$connection = \OC::$server->getDatabaseConnection();
-		$query = $connection->prepare('SELECT `amq_latest_send`, `amq_affecteduser` FROM `*PREFIX*activity_mq` WHERE `amq_appid` = ? ORDER BY `mail_id` DESC');
-		$query->execute(['test']);
-		$row = $query->fetch();
+		$qb = $this->dbConnection->getQueryBuilder();
+		$query = $qb->select('amq_latest_send', 'amq_affecteduser')
+			->from('activity_mq')
+			->where($qb->expr()->eq('amq_appid', $qb->createNamedParameter('test')))
+			->orderBy('mail_id', 'DESC');
+		$result = $query->executeQuery();
+		$row = $result->fetch();
 
 		if ($expectedActivity) {
 			$this->assertEquals(['amq_latest_send' => $time + 10, 'amq_affecteduser' => $expectedAffected], $row);
@@ -172,11 +186,12 @@ class DataTest extends TestCase {
 	 * @dataProvider dataSetOffsetFromSince
 	 *
 	 * @param string $sort
-	 * @param string $timestampWhere
-	 * @param string $idWhere
-	 * @param string $offsetUser
-	 * @param int $offsetId
-	 * @param string $expectedHeader
+	 * @param string|null $timestampWhere
+	 * @param string|null $idWhere
+	 * @param string|null $offsetUser
+	 * @param int|bool|null $offsetId
+	 * @param string|null $expectedHeader
+	 * @throws \OCP\DB\Exception
 	 */
 	public function testSetOffsetFromSince(string $sort, ?string $timestampWhere, ?string $idWhere, ?string $offsetUser, $offsetId, ?string $expectedHeader): void {
 		$this->deleteTestActivities();
@@ -189,8 +204,7 @@ class DataTest extends TestCase {
 			$this->expectExceptionCode(2);
 		}
 
-		$connection = \OC::$server->getDatabaseConnection();
-		$query = $connection->getQueryBuilder();
+		$query = $this->dbConnection->getQueryBuilder();
 		$query->insert('activity')
 			->values([
 				'app' => $query->createNamedParameter('test'),
@@ -200,10 +214,10 @@ class DataTest extends TestCase {
 				'subjectparams' => $query->createNamedParameter('subjectparams'),
 				'priority' => 1,
 			])
-			->execute();
+			->executeStatement();
 		$id = $query->getLastInsertId();
 
-		$mock = $this->getMockBuilder('OCP\DB\QueryBuilder\IQueryBuilder')
+		$mock = $this->getMockBuilder(IQueryBuilder::class)
 			->disableOriginalConstructor()
 			->getMock();
 		$mock->expects($this->any())
@@ -247,23 +261,62 @@ class DataTest extends TestCase {
 		$this->deleteTestActivities();
 	}
 
+	public function testDeleteAffectedUserActivities(): void {
+		$this->deleteTestActivities();
+		$user1 = self::getUniqueID('testing');
+		$user2 = self::getUniqueID('testing');
+		$this->insertActivityForAffectedUser($user1);
+		$this->insertActivityForAffectedUser($user2);
+
+		$this->assertEquals(1, $this->countActivitiesForAffectedUser($user1));
+		$this->assertEquals(1, $this->countActivitiesForAffectedUser($user2));
+		$this->data->deleteActivities(['affecteduser' => $user1]);
+		$this->assertEquals(0, $this->countActivitiesForAffectedUser($user1));
+		$this->assertEquals(1, $this->countActivitiesForAffectedUser($user2));
+		$this->deleteTestActivities();
+	}
+
 	/**
 	 * Delete all testing activities
 	 */
 	protected function deleteTestActivities(): void {
-		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$query = $this->dbConnection->getQueryBuilder();
 		$query->delete('activity')
 			->where($query->expr()->eq('app', $query->createNamedParameter('test')));
-		$query->execute();
+		$query->executeStatement();
 	}
 
 	/**
 	 * Delete all testing mails
 	 */
 	protected function deleteTestMails(): void {
-		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$query = $this->dbConnection->getQueryBuilder();
 		$query->delete('activity_mq')
 			->where($query->expr()->eq('amq_appid', $query->createNamedParameter('test')));
-		$query->execute();
+		$query->executeStatement();
+	}
+
+	private function insertActivityForAffectedUser(string $user): void {
+		$query = $this->dbConnection->getQueryBuilder();
+		$query->insert('activity')
+			->values([
+				'app' => $query->createNamedParameter('test'),
+				'affecteduser' => $query->createNamedParameter($user),
+				'timestamp' => 123465789,
+				'subject' => $query->createNamedParameter('subject'),
+				'subjectparams' => $query->createNamedParameter('subjectparams'),
+				'priority' => 1,
+			])
+			->executeStatement();
+	}
+
+	private function countActivitiesForAffectedUser(string $user): int {
+		$query = $this->dbConnection->getQueryBuilder();
+		$query->select($query->func()->count('activity_id', 'count'))
+			->from('activity')
+			->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)));
+		$result = $query->executeQuery();
+		$row = $result->fetch();
+		return $row['count'];
 	}
 }
