@@ -3,7 +3,7 @@
  *
  * @author Louis Chemineau <louis@chmn.me>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license GPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -22,6 +22,13 @@
 
 import moment from '@nextcloud/moment'
 
+/**
+ * @typedef RichObject
+ * @type {object}
+ * @property {string} id - The id of the riche object.
+ * @property {string} type - The type of the file object.
+ */
+
 export default class ActivityModel {
 
 	_activity;
@@ -29,7 +36,7 @@ export default class ActivityModel {
 	/**
 	 * Create the activity object
 	 *
-	 * @param {Object} rawActivity the activity object from the ocs response
+	 * @param {object} rawActivity the activity object from the ocs response
 	 */
 	constructor(rawActivity) {
 		if (typeof rawActivity !== 'object') {
@@ -60,7 +67,7 @@ export default class ActivityModel {
 	/**
 	 * get the activity id
 	 *
-	 * @returns {int}
+	 * @return {number}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -71,7 +78,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity app
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -82,7 +89,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity type
 	 *
-	 * @returns {int}
+	 * @return {number}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -93,7 +100,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity user
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -104,7 +111,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity subject
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -115,7 +122,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity subject_rich template
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -126,7 +133,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity subject_rich objects
 	 *
-	 * @returns {Object.<string, RichObject>}
+	 * @return {object.<string, RichObject>}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -141,7 +148,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity message
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -152,7 +159,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity message_rich template
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -163,7 +170,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity message_rich objects
 	 *
-	 * @returns {Object.<string, RichObject>}
+	 * @return {object.<string, RichObject>}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -178,7 +185,7 @@ export default class ActivityModel {
 	/**
 	 * Get the object_type
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -189,7 +196,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity object_id
 	 *
-	 * @returns {int}
+	 * @return {number}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -200,7 +207,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity object_name
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -211,7 +218,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity link
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -222,7 +229,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity icon
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -233,7 +240,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity datetime
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -244,7 +251,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity formatted date from the current date
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -255,7 +262,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity formatted datetime
 	 *
-	 * @returns {string}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -266,7 +273,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity timestamp
 	 *
-	 * @returns {string}
+	 * @return {number}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */

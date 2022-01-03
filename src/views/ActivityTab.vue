@@ -69,7 +69,8 @@ export default {
 	methods: {
 		/**
 		 * Update current fileInfo and fetch new activities
-		 * @param {Object} fileInfo the current file FileInfo
+		 *
+		 * @param {object} fileInfo the current file FileInfo
 		 */
 		async update(fileInfo) {
 			this.fileInfo = fileInfo
@@ -119,8 +120,8 @@ export default {
 		 * Process the current activity data
 		 * and init activities[]
 		 *
-		 * @param {Object} activity the activity ocs api request data
-		 * @param {Object} activity.data the request data
+		 * @param {object} activity the activity ocs api request data
+		 * @param {object} activity.data the request data
 		 */
 		processActivities({ data }) {
 			if (data.ocs && data.ocs.data && data.ocs.data.length > 0) {
