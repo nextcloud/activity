@@ -41,7 +41,7 @@
 			"json",
 			"vue"
 		],
-		"testEnvironment": "jest-environment-jsdom-sixteen",
+		"testEnvironment": "jest-environment-jsdom",
 		"transform": {
 			"^.+\\.js$": "babel-jest",
 			"^.+\\.vue$": "vue-jest"
