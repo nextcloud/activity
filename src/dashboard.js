@@ -1,9 +1,9 @@
-/*
+/**
  * @copyright Copyright (c) 2021 Jakob Röhrl <jakob.roehrl@web.de>
  *
  * @author Jakob Röhrl <jakob.roehrl@web.de>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license GPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as

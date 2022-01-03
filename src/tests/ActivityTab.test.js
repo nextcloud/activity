@@ -3,7 +3,7 @@
  *
  * @author Louis Chemineau <louis@chmn.me>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license GPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -23,7 +23,7 @@ import { mount } from '@vue/test-utils'
 
 import ActivityTab from '../views/ActivityTab.vue'
 
-test('Create ActivityTab', async() => {
+test('Create ActivityTab', async () => {
 	const wrapper = mount(ActivityTab, {})
 
 	expect(wrapper.vm.$data.activities.length).toBe(0)

@@ -53,7 +53,8 @@ export default {
 	computed: {
 		/**
 		 * Return true if the path is the root folder.
-		 * @returns {boolean}
+		 *
+		 * @return {boolean}
 		 */
 		isRoot() {
 			// eslint-disable-next-line no-console
@@ -61,14 +62,16 @@ export default {
 		},
 		/**
 		 * Return true if the parent path is the root folder.
-		 * @returns {boolean}
+		 *
+		 * @return {boolean}
 		 */
 		parentPathIsRoot() {
 			return isSamePath(this.parentFolder, '/')
 		},
 		/**
 		 * Remove the file name from the path.
-		 * @returns {string}
+		 *
+		 * @return {string}
 		 */
 		parentFolder() {
 			return dirname(this.name)

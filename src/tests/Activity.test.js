@@ -3,7 +3,7 @@
  *
  * @author Louis Chemineau <louis@chmn.me>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license GPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -40,7 +40,7 @@ afterAll(() => {
 	global.Date.now = realDateNow
 })
 
-test('Display relative date gets updated every minutes', async() => {
+test('Display relative date gets updated every minutes', async () => {
 	const { baseElement, getByText } = render(Activity, { props: { activity: new ActivityModel(wsData.ocs.data[1]) } })
 	expect(baseElement.textContent).toContain('You renamed  Test file - renamed.md  to  Test file - renamed - looooooooong.md')
 
@@ -56,7 +56,7 @@ test('Display relative date gets updated every minutes', async() => {
 	global.Date.now = jest.fn(() => currentDate.getTime())
 })
 
-test('Display correct information for renames', async() => {
+test('Display correct information for renames', async () => {
 	const { baseElement, getByText } = render(Activity, { props: { activity: new ActivityModel(wsData.ocs.data[1]) } })
 
 	expect(baseElement.textContent).toContain('You renamed  Test file - renamed.md  to  Test file - renamed - looooooooong.md')
@@ -70,7 +70,7 @@ test('Display correct information for renames', async() => {
 	expect(baseElement.innerHTML).toMatchSnapshot()
 })
 
-test('Display correct information for comments', async() => {
+test('Display correct information for comments', async () => {
 	const { baseElement } = render(Activity, { props: { activity: new ActivityModel(wsData.ocs.data[4]) } })
 
 	expect(baseElement.textContent).toContain('You commented')
@@ -80,7 +80,7 @@ test('Display correct information for comments', async() => {
 	expect(baseElement.innerHTML).toMatchSnapshot()
 })
 
-test('Display correct information for favorites', async() => {
+test('Display correct information for favorites', async () => {
 	const { baseElement } = render(Activity, { props: { activity: new ActivityModel(wsData.ocs.data[5]) } })
 
 	expect(baseElement.textContent).toContain('Added to favorites')
@@ -88,7 +88,7 @@ test('Display correct information for favorites', async() => {
 	expect(baseElement.innerHTML).toMatchSnapshot()
 })
 
-test('Display correct information for unfavorites', async() => {
+test('Display correct information for unfavorites', async () => {
 	const { baseElement } = render(Activity, { props: { activity: new ActivityModel(wsData.ocs.data[6]) } })
 
 	expect(baseElement.textContent).toContain('Removed from favorites')
@@ -96,7 +96,7 @@ test('Display correct information for unfavorites', async() => {
 	expect(baseElement.innerHTML).toMatchSnapshot()
 })
 
-test('Display correct information for changes', async() => {
+test('Display correct information for changes', async () => {
 	const { baseElement, getByText } = render(Activity, { props: { activity: new ActivityModel(wsData.ocs.data[7]) } })
 
 	expect(baseElement.textContent).toContain('You changed  Test file - renamed.md')
@@ -107,7 +107,7 @@ test('Display correct information for changes', async() => {
 	expect(baseElement.innerHTML).toMatchSnapshot()
 })
 
-test('Display correct information for tags', async() => {
+test('Display correct information for tags', async () => {
 	const { baseElement } = render(Activity, { props: { activity: new ActivityModel(wsData.ocs.data[9]) } })
 
 	expect(baseElement.textContent).toContain('Added system tag tag1')
@@ -115,14 +115,14 @@ test('Display correct information for tags', async() => {
 	expect(baseElement.innerHTML).toMatchSnapshot()
 })
 
-test('Display correct information for shares', async() => {
+test('Display correct information for shares', async () => {
 	const { baseElement } = render(Activity, { props: { activity: new ActivityModel(wsData.ocs.data[10]) } })
 	expect(baseElement.textContent).toContain('Shared as public link')
 
 	expect(baseElement.innerHTML).toMatchSnapshot()
 })
 
-test('Display correct information for moves', async() => {
+test('Display correct information for moves', async () => {
 	const { baseElement, getByText } = render(Activity, { props: { activity: new ActivityModel(wsData.ocs.data[14]) } })
 
 	expect(baseElement.textContent).toContain('You moved  Test file.md  to  Documents')
@@ -136,7 +136,7 @@ test('Display correct information for moves', async() => {
 	expect(baseElement.innerHTML).toMatchSnapshot()
 })
 
-test('Display correct information for creations', async() => {
+test('Display correct information for creations', async () => {
 	const { baseElement, getByText } = render(Activity, { props: { activity: new ActivityModel(wsData.ocs.data[17]) } })
 
 	expect(baseElement.textContent).toContain('You created  Test file.md')

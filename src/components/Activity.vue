@@ -51,6 +51,13 @@ import SystemTagRichArgument from './richArgumentsTypes/SystemTagRichArgument'
 import CalendarEventRichArgument from './richArgumentsTypes/CalendarEventRichArgument'
 import OpenGraphRichArgument from './richArgumentsTypes/OpenGraphRichArgument'
 
+/**
+ * @typedef RichObject
+ * @type {object}
+ * @property {string} id - The id of the riche object.
+ * @property {string} type - The type of the file object.
+ */
+
 export default {
 	name: 'Activity',
 	components: {
@@ -77,25 +84,25 @@ export default {
 	},
 	computed: {
 		/**
-		 * @returns {String} The activity's messageRichTemplate. Fallback to message if messageRichTemplate does not exists
+		 * @return {string} The activity's messageRichTemplate. Fallback to message if messageRichTemplate does not exists
 		 */
 		messageText() {
 			return this.activity.messageRichTemplate || this.activity.message
 		},
 		/**
-		 * @returns {Object} A map of rich arguments with a Component to build them.
+		 * @return {object} A map of rich arguments with a Component to build them.
 		 */
 		messageArguments() {
 			return this.mapRichObjectsToRichArguments(this.activity.messageRichObjects)
 		},
 		/**
-		 * @returns {String} The activity's subjectRichTemplate. Fallback to subject if subjectRichTemplate does not exists
+		 * @return {string} The activity's subjectRichTemplate. Fallback to subject if subjectRichTemplate does not exists
 		 */
 		subjectText() {
 			return this.activity.subjectRichTemplate || this.activity.subject
 		},
 		/**
-		 * @returns {Object} A map of rich arguments with a Component to build them.
+		 * @return {object} A map of rich arguments with a Component to build them.
 		 */
 		subjectArguments() {
 			return this.mapRichObjectsToRichArguments(this.activity.subjectRichObjects)
@@ -112,10 +119,12 @@ export default {
 		updateDateFromNow() {
 			this.dateFromNow = this.activity.dateFromNow
 		},
+
 		/**
 		 * Map an collection of rich text objects to rich arguments for the RichText component
-		 * @arg {Object.<string, RichObject>} richObjects the collection of rich text objects
-		 * @returns {Object.<string, RichArgument>}
+		 *
+		 * @param {Array.<object.<string, RichObject>>} richObjects - The rich text object
+		 * @return {object<string, object>}
 		 */
 		mapRichObjectsToRichArguments(richObjects) {
 			const args = {}
@@ -126,10 +135,12 @@ export default {
 
 			return args
 		},
+
 		/**
 		 * Map rich text object to rich argument for the RichText component
-		 * @arg {RichObject} richObject the rich text object
-		 * @returns {RichArgument}
+		 *
+		 * @param {object.<string, RichObject>} richObject - The rich text object
+		 * @return {object}}
 		 */
 		mapRichObjectToRichArgument(richObject) {
 			switch (richObject.type) {
