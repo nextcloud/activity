@@ -84,7 +84,7 @@
 		"vue": "^2.6.12"
 	},
 	"devDependencies": {
-		"@cypress/browserify-preprocessor": "^3.0.1",
+		"@cypress/browserify-preprocessor": "^3.0.2",
 		"@nextcloud/babel-config": "^1.0.0-beta.1",
 		"@nextcloud/browserslist-config": "^2.1.0",
 		"@nextcloud/eslint-config": "^6.1.2",
