@@ -42,7 +42,6 @@ OC.L10N.register(
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
     "An error occurred while loading activities" : "Tegevuse laadimisel tekkis tõrge",
     "Load more activities" : "Lae rohkem tegevusi",
-    "Open file" : "Ava fail",
     "This application enables users to view actions related to their files in Nextcloud." : "See rakendus võimaldab kasutajal vaadata oma Nextcloudi failidega seonduvaid tegevsi."
 },
 "nplurals=2; plural=(n != 1);");

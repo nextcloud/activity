@@ -49,7 +49,6 @@ OC.L10N.register(
     "No more events to load" : "אין אירועים נוספים לטעינה",
     "An error occurred while loading activities" : "אירעה שגיאה בעת טעינת הפעילויות",
     "Load more activities" : "טעינת פעילויות נוספות",
-    "Open file" : "פתיחת קובץ",
     "This application enables users to view actions related to their files in Nextcloud." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שקשורות לקבצים שלהם ב־Nextcloud.",
     "Send notification emails:" : "שלח הודעות דוא\"ל:"
 },

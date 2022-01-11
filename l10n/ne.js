@@ -39,7 +39,6 @@ OC.L10N.register(
     "RSS feed" : "RSS फिड",
     "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
     "An error occurred while loading activities" : "क्रियाकलापहरू लोड गर्दा त्रुटि देखापर्यो",
-    "Load more activities" : "थप क्रियाकलापहरू लोड गर्नुहोस्",
-    "Open file" : "फाईल खोल्नुहोस्"
+    "Load more activities" : "थप क्रियाकलापहरू लोड गर्नुहोस्"
 },
 "nplurals=2; plural=(n != 1);");

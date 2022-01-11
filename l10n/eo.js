@@ -43,7 +43,6 @@ OC.L10N.register(
     "No more events to load" : "Ne estas pli da eventoj.",
     "An error occurred while loading activities" : "Eraro okazis dum ŝarĝado de la aktivaĵoj",
     "Load more activities" : "Ŝarĝi pli da aktivaĵoj",
-    "Open file" : "Malfermi dosieron",
     "This application enables users to view actions related to their files in Nextcloud." : "Tiu ĉi aplikaĵo ebligas uzantojn vidi kio okazas al iliaj dosieroj en Nextcloud."
 },
 "nplurals=2; plural=(n != 1);");

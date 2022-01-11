@@ -59,7 +59,6 @@ OC.L10N.register(
     "No more events to load" : "Yüklenecek başka bir olay yok",
     "An error occurred while loading activities" : "İşlemler yüklenirken bir sorun çıktı",
     "Load more activities" : "Diğer işlemleri yükle",
-    "Open file" : "Dosya aç",
     "This application enables users to view actions related to their files in Nextcloud." : "Bu uygulama, kullanıcıların Nextcloud üzerindeki dosyaları üzerinde yapılan işlemleri görebilmesini sağlar.",
     "Send notification emails:" : "Bildirim e-postaları gönderilsin:"
 },

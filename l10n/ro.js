@@ -59,7 +59,6 @@ OC.L10N.register(
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
     "An error occurred while loading activities" : "A apărut o eroare la încărcarea activităților",
     "Load more activities" : "Încarcă mai multe activități",
-    "Open file" : "Deschide fișier",
     "This application enables users to view actions related to their files in Nextcloud." : "Aceasta aplicație permite utilizatorilor sa vizualizeze acțiuni aferente fișierelor din Nextcloud.",
     "Send notification emails:" : "Trimite notificări pe e-mail:"
 },

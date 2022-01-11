@@ -43,7 +43,6 @@ OC.L10N.register(
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
     "An error occurred while loading activities" : "აქტივობების ჩატვირთვისას წარმოიშვა შეცდომა",
     "Load more activities" : "მეტი აქტივობის ჩატვირთვა",
-    "Open file" : "ფაილის გახსნა",
     "This application enables users to view actions related to their files in Nextcloud." : "ეს აპლიკაცია მომხმარებლებს აძლევს საშუალებას დაინახონ „Nextcloud“-ზე მათ ფაილებთან დაკავშირებული ქმედებები."
 },
 "nplurals=2; plural=(n!=1);");

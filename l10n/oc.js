@@ -49,7 +49,6 @@ OC.L10N.register(
     "No more events to load" : "Pas mai d’eveniment de cargar",
     "An error occurred while loading activities" : "Una error s’es producha en cargant las activitats",
     "Load more activities" : "Cargar mai d’activiats",
-    "Open file" : "Dobrir fichièr",
     "Send notification emails:" : "Enviar de notificacions per mail :"
 },
 "nplurals=2; plural=(n > 1);");

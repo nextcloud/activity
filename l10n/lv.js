@@ -48,7 +48,6 @@ OC.L10N.register(
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "An error occurred while loading activities" : "Radās kļūda, ielādējot darbības",
     "Load more activities" : "Ielādēt vairāk darbības",
-    "Open file" : "Atvērt datni",
     "This application enables users to view actions related to their files in Nextcloud." : "Šī lietotne sniedz iespēju lietotājiem paraudzīt darbības ar viņu Nextcloud datnēm",
     "Send notification emails:" : "Sūtīt paziņojumu e-pastus:"
 },

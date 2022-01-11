@@ -31,7 +31,6 @@ OC.L10N.register(
     "RSS feed" : "Suapan RSS",
     "No more events to load" : "Tiada aktiviti untuk memuat",
     "An error occurred while loading activities" : "Masalah timbul semasa memuat aktiviti",
-    "Load more activities" : "Memuat lebih aktiviti",
-    "Open file" : "Buka fail"
+    "Load more activities" : "Memuat lebih aktiviti"
 },
 "nplurals=1; plural=0;");

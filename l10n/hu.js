@@ -59,7 +59,6 @@ OC.L10N.register(
     "No more events to load" : "Nincs több esemény",
     "An error occurred while loading activities" : "Hiba történt a tevékenységek betöltése közben",
     "Load more activities" : "Több tevékenység betöltése",
-    "Open file" : "Fájl megnyitása",
     "This application enables users to view actions related to their files in Nextcloud." : "Ez az alkalmazás lehetővé teszi a felhasználók számára, hogy megtekinthessék a fájlokhoz kapcsolódó műveleteket a Nextcloudban.",
     "Send notification emails:" : "Értesítési e-mailek küldése:"
 },
