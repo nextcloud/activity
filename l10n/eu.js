@@ -45,7 +45,7 @@ OC.L10N.register(
     "You need to set up your email address before you can receive notification emails." : "Zure helbide elektronikoa konfiguratu behar duzu jakinarazpenak posta elektronikoz jasotzeko.",
     "Send activity emails:" : "Bidali jarduera e-postak:",
     "As soon as possible" : "Ahal bezain laster",
-    "Hourly" : "Orduero",
+    "Hourly" : "Orduro",
     "Daily" : "Egunero",
     "Weekly" : "Astero",
     "Choose for which activities you want to get an email or push notification." : "Aukeratu zein jardueratarako jaso nahi duzun posta elektronikoa edo push jakinarazpena.",
@@ -59,7 +59,6 @@ OC.L10N.register(
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
     "An error occurred while loading activities" : "Errorea gertatu da jarduerak kargatzean",
     "Load more activities" : "Kargatu jarduera gehiago",
-    "Open file" : "Ireki fitxategia",
     "This application enables users to view actions related to their files in Nextcloud." : "Aplikazio honek aukera ematen die erabiltzaileei Nextcloud-eko euren fitxategiekin lotutako ekintzak ikusteko.",
     "Send notification emails:" : "Bidali jakinarazpen e-postak"
 },

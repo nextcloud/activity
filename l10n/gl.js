@@ -50,7 +50,6 @@ OC.L10N.register(
     "No more events to load" : "Non hai máis eventos para cargar",
     "An error occurred while loading activities" : "Produciuse un erro ao cargar as actividades",
     "Load more activities" : "Cargar máis actividades",
-    "Open file" : "Abrir ficheiro",
     "This application enables users to view actions related to their files in Nextcloud." : "Esta aplicación permítelle aos usuarios ver as accións relacionadas cos seus ficheiros en Nextcloud.",
     "Send notification emails:" : "Enviar os correos de notificación:"
 },

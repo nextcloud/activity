@@ -42,7 +42,7 @@ OC.L10N.register(
     "Enable notification emails" : "Omogoči obveščanje prek elektronske pošte",
     "Default settings" : "Prevzete nastavitve",
     "Configure the default notification settings for new users." : "Prilagodi privzete nastavitve obveščanja za nove uporabnike.",
-    "You need to set up your email address before you can receive notification emails." : "Za prejemanje obvestil prek elektronske pošte je treba najprej nastaviti elektronski poštni naslov.",
+    "You need to set up your email address before you can receive notification emails." : "Za prejemanje obvestil po elektronski pošti je treba najprej nastaviti elektronski poštni naslov.",
     "Send activity emails:" : "Pošiljaj obvestila o dejavnosti na elektronske naslove:",
     "As soon as possible" : "Čimprej",
     "Hourly" : "Vsako uro",
@@ -59,7 +59,6 @@ OC.L10N.register(
     "No more events to load" : "Ni načrtovanih drugih dogodkov",
     "An error occurred while loading activities" : "Med nalaganjem dejavnosti je prišlo do napake",
     "Load more activities" : "Naloži več dejavnosti",
-    "Open file" : "Odpri datoteko",
     "This application enables users to view actions related to their files in Nextcloud." : "Program omogoča pregled dogodkov in dejavnosti, povezanih z datotekami v oblaku Nextcloud.",
     "Send notification emails:" : "Pošlji obvestila prek elektronske pošte:"
 },

@@ -16,7 +16,6 @@ OC.L10N.register(
     "As soon as possible" : "So skjótt sum gjørligt",
     "Hourly" : "Hvønn tíma",
     "Daily" : "Hvønn dag",
-    "Weekly" : "Hvørja viku",
-    "Open file" : "Opna fíluna"
+    "Weekly" : "Hvørja viku"
 },
 "nplurals=2; plural=(n != 1);");

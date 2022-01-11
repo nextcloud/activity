@@ -59,7 +59,6 @@ OC.L10N.register(
     "No more events to load" : "已載入所有事件",
     "An error occurred while loading activities" : "載入活動時發生錯誤",
     "Load more activities" : "載入更多活動",
-    "Open file" : "開啟檔案",
     "This application enables users to view actions related to their files in Nextcloud." : "此應用程式允許使用者能夠在 Nextcloud 中查看與其檔案相關的操作。",
     "Send notification emails:" : "透過電子郵件接收通知"
 },

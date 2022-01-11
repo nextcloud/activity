@@ -42,7 +42,6 @@ OC.L10N.register(
     "No more events to load" : "نورې کړنې نشته",
     "An error occurred while loading activities" : "د کړنو د لیدلو په وخت کې يوه ستونزه رامنځ ته شوه.",
     "Load more activities" : "نورې کړنې پرانيستل",
-    "Open file" : "فایل پرانيستل",
     "This application enables users to view actions related to their files in Nextcloud." : "دغه اپلیکیشن کاروونکو ته دا اجازه ورکوي په Nextcloud کې خپلو دوتنو ته ورته کړنې وويني."
 },
 "nplurals=2; plural=(n != 1);");

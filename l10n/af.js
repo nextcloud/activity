@@ -50,7 +50,6 @@ OC.L10N.register(
     "No more events to load" : "Geen meer gebeure om te laai",
     "An error occurred while loading activities" : "'n Fout het voorgekom tydens laaiing van aktiwiteite",
     "Load more activities" : "Laai nog aktiwiteite",
-    "Open file" : "Open lêer",
     "This application enables users to view actions related to their files in Nextcloud." : "Hierdie toepassing stel gebruikers in staat om aksies te sien wat verwant is aan hul lêers in Nextcloud.",
     "Send notification emails:" : "Stuur e-poskennisgewings:"
 },
