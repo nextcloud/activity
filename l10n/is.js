@@ -49,7 +49,6 @@ OC.L10N.register(
     "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
     "An error occurred while loading activities" : "Villa kom upp við að hlaða inn virkni",
     "Load more activities" : "Hlaða inn virkni",
-    "Open file" : "Opna skrá",
     "This application enables users to view actions related to their files in Nextcloud." : "Þetta forrit gerir notendum kleift að skoða aðgerðir sem tengjast skránum þeirra í Nextcloud.",
     "Send notification emails:" : "Senda tilkynningapóst:"
 },

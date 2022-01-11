@@ -52,7 +52,6 @@ OC.L10N.register(
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
     "An error occurred while loading activities" : "در هنگام بارگزاری فعالیت ها خطایی رخ داده است ",
     "Load more activities" : "نمایش فعالیت های بیشتر",
-    "Open file" : "باز کردن فایل",
     "This application enables users to view actions related to their files in Nextcloud." : "این نرم‌افراز مشاهده فعالیت‌های مربوط به فایل‌های موجود در Nextcloud را برای کاربران ممکن می‌سازد.",
     "Send notification emails:" : "ارسال اطلاعیه از طریق ایمیل:"
 },

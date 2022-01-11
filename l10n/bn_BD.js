@@ -49,7 +49,6 @@ OC.L10N.register(
     "No more events to load" : "লোড করার কোন ইভেন্ট খুঁজে পাওয়া গেল না।",
     "An error occurred while loading activities" : "ক্রিয়াকলাপ লোড করার সময় একটি ত্রুটি ঘটেছে",
     "Load more activities" : "আরও ক্রিয়াকলাপ লোড করুন",
-    "Open file" : "খোলা ফাইল",
     "This application enables users to view actions related to their files in Nextcloud." : "এই অ্যাপ্লিকেশনটি ব্যবহারকারীদের নেক্সটক্লাউডে তাদের ফাইলগুলির সাথে সম্পর্কিত ক্রিয়া দেখতে সক্ষম করে।",
     "Send notification emails:" : "বিজ্ঞপ্তি ইমেলগুলি প্রেরণ করুন:"
 },

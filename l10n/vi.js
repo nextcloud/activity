@@ -59,7 +59,6 @@ OC.L10N.register(
     "No more events to load" : "Không có sự kiện nào",
     "An error occurred while loading activities" : "Đã xảy ra lỗi trong khi tải các lịch sử hoạt động",
     "Load more activities" : "Tải thêm hoạt động",
-    "Open file" : "Mở tệp",
     "This application enables users to view actions related to their files in Nextcloud." : "Đây là ứng dụng cho phép người dùng xem các hành động liên quan đến dữ liệu của họ trên vWorkspace",
     "Send notification emails:" : "Gửi các email thông báo:"
 },

@@ -5,7 +5,6 @@ OC.L10N.register(
     "Today" : "Şu gün",
     "Yesterday" : "Düýn",
     "Hello %s" : "Salam%s",
-    "Settings" : "Sazlamalar",
-    "Open file" : "Faýl açmak"
+    "Settings" : "Sazlamalar"
 },
 "nplurals=2; plural=(n != 1);");

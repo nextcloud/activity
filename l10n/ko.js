@@ -59,7 +59,6 @@ OC.L10N.register(
     "No more events to load" : "더 이상 불러올 이벤트 없음",
     "An error occurred while loading activities" : "활동을 불러오는 중 오류 발생",
     "Load more activities" : "더 많은 활동 불러오기",
-    "Open file" : "파일 열기",
     "This application enables users to view actions related to their files in Nextcloud." : "이 애플리케이션은 사용자들이 Nextcloud에서 파일 관련 활동을 볼 수 있도록 합니다.",
     "Send notification emails:" : "알림 이메일 전송:"
 },

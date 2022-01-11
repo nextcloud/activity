@@ -59,7 +59,6 @@ OC.L10N.register(
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "An error occurred while loading activities" : "Παρουσιάστηκε σφάλμα κατά την φόρτωση των δραστηριοτήτων",
     "Load more activities" : "Φόρτωση περισσότερων δραστηριοτήτων",
-    "Open file" : "Άνοιγμα αρχείου",
     "This application enables users to view actions related to their files in Nextcloud." : "Η εφαρμογή επιτρέπει στους χρήστες να δουν ενέργειες που αφορούν τα αρχεία τους στο Nextcloud.",
     "Send notification emails:" : "Αποστολή ειδοποιήσεων μέσω email:"
 },

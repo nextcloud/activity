@@ -59,7 +59,6 @@ OC.L10N.register(
     "No more events to load" : "Ei enempää tapahtumia",
     "An error occurred while loading activities" : "Tapahtumien latauksessa tapahtui virhe",
     "Load more activities" : "Lataa lisää tapahtumia",
-    "Open file" : "Avaa tiedosto",
     "This application enables users to view actions related to their files in Nextcloud." : "Tämän sovelluksen avulla käyttäjät voivat katsoa tiedostoihinsa liittyviä tapahtumia Nextcloudissa.",
     "Send notification emails:" : "Lähetä ilmoitussähköposteja:"
 },

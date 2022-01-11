@@ -35,7 +35,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS-Feed aktivéieren",
     "No more events to load" : "Keng weider Evenementer fir ze lueden",
     "An error occurred while loading activities" : "Fehler beim Lueden vun den Aktivitéiten",
-    "Load more activities" : "Lued méi Aktivitéiten",
-    "Open file" : "Fichier opmaachen"
+    "Load more activities" : "Lued méi Aktivitéiten"
 },
 "nplurals=2; plural=(n != 1);");

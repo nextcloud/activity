@@ -59,7 +59,6 @@ OC.L10N.register(
     "No more events to load" : "Відсутні події для завантаження",
     "An error occurred while loading activities" : "Під час завантаження подій відбулася помилка",
     "Load more activities" : "Інші події",
-    "Open file" : "Відкрити файл",
     "This application enables users to view actions related to their files in Nextcloud." : "Застосунок дозволяє користувачам переглядати дії з власними файлами у Nextcloud.",
     "Send notification emails:" : "Надсилати сповіщення на ел. пошту:"
 },

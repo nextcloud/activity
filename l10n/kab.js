@@ -40,7 +40,6 @@ OC.L10N.register(
     "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
     "An error occurred while loading activities" : "Teḍra-d tuccḍa deg usali n irmuden",
     "Load more activities" : "Sali-d ugar n irmuden",
-    "Open file" : "Ldi afaylu",
     "This application enables users to view actions related to their files in Nextcloud." : "Asnas-ag ad yeǧǧ iseqdacen ad walin tigawin yeɛnan ifuyla-nnsen di Nextcloud."
 },
 "nplurals=2; plural=(n != 1);");

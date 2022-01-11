@@ -36,7 +36,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
     "An error occurred while loading activities" : "Үйлдлүүдийг ачааллахад алдаа гарлаа",
     "Load more activities" : "Бусад үйлдлүүдийг ачаалах",
-    "Open file" : "Файл онгойлгох",
     "Send notification emails:" : "Эмэйлээр мэдэгдэл авах "
 },
 "nplurals=2; plural=(n != 1);");

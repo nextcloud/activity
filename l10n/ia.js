@@ -36,7 +36,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Habilita syndication RSS",
     "No more events to load" : "Nulle altere eventos a cargar",
     "An error occurred while loading activities" : "Un error durante le cargamento de activitates",
-    "Load more activities" : "Incarga altere activitates",
-    "Open file" : "Aperir file"
+    "Load more activities" : "Incarga altere activitates"
 },
 "nplurals=2; plural=(n != 1);");
