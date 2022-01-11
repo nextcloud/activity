@@ -59,7 +59,6 @@ OC.L10N.register(
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
     "An error occurred while loading activities" : "Pri pokuse o načítanie aktivity nastala chyba",
     "Load more activities" : "Načítať viac aktivít",
-    "Open file" : "Otvoriť súbor",
     "This application enables users to view actions related to their files in Nextcloud." : "Táto aplikácia povolí používateľom sledovať akcie súvisiace s ich súbormi v Nextcloude.",
     "Send notification emails:" : "Posielať e-mailové oznámenia: "
 },

@@ -49,7 +49,6 @@ OC.L10N.register(
     "No more events to load" : "Darvoud all ebet da gargañ",
     "An error occurred while loading activities" : "Emañ ur fazi evit kargañ oberiantizoù",
     "Load more activities" : "Kargañ obererezhioù ouzhpenn",
-    "Open file" : "Digeriñ ur restr",
     "This application enables users to view actions related to their files in Nextcloud." : "Gant an arload-mañ e c'hall an implijerien gwelet obererezhioù liammet gant o restroù e Nextcloud.",
     "Send notification emails:" : "Kas kemennadennoù dre bostel :"
 },

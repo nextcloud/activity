@@ -43,7 +43,6 @@ OC.L10N.register(
     "No more events to load" : "No more events to load",
     "An error occurred while loading activities" : "An error occurred while loading activities",
     "Load more activities" : "Load more activities",
-    "Open file" : "Open file",
     "This application enables users to view actions related to their files in Nextcloud." : "This application enables users to view actions related to their files in Nextcloud."
 },
 "nplurals=2; plural=(n != 1);");

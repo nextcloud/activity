@@ -57,7 +57,6 @@
     "No more events to load" : "Der er Ikke flere aktiviteter som kan indlæses",
     "An error occurred while loading activities" : "Der opstod en fejl under indlæsning af aktiviteter",
     "Load more activities" : "Indlæs flere aktiviteter",
-    "Open file" : "Åbn dokument",
     "This application enables users to view actions related to their files in Nextcloud." : "Denne app giver brugere mulighed for at se en liste af handlinger relateret til deres filer i Nextcloud.",
     "Send notification emails:" : "Send notifikations emails:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

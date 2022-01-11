@@ -57,7 +57,6 @@ OC.L10N.register(
     "No more events to load" : "Perunu eventu de carrigare",
     "An error occurred while loading activities" : "B'at àpidu un'errore carrighende is atividades",
     "Load more activities" : "Càrriga àteras atividades",
-    "Open file" : "Aberi archìviu",
     "This application enables users to view actions related to their files in Nextcloud." : "Custa aplicatzione abìlitat is utentes a bìdere atziones ligadas a is archìvios issoro in Nextcloud.",
     "Send notification emails:" : "Imbia messàgios de notìfica:"
 },

@@ -38,7 +38,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Habilitar feed RSS",
     "No more events to load" : "Nun hai más eventos pa cargar",
     "An error occurred while loading activities" : "Asocedió un fallu entrín se cargaben les actividaes",
-    "Load more activities" : "Cargar más actividaes",
-    "Open file" : "Abrir ficheru"
+    "Load more activities" : "Cargar más actividaes"
 },
 "nplurals=2; plural=(n != 1);");

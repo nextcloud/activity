@@ -49,7 +49,6 @@ OC.L10N.register(
     "No more events to load" : "Нема више догађаја за приказ",
     "An error occurred while loading activities" : "Дошло је до грешке приликом учитавања активности",
     "Load more activities" : "Учитај још активности",
-    "Open file" : "Отвори фајл",
     "This application enables users to view actions related to their files in Nextcloud." : "Ова апликација омогућава корисницима да виде радње везане за њихове Некстклауд фајлове.",
     "Send notification emails:" : "Шаљи обавештења е-поштом:"
 },

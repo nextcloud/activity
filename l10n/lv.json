@@ -46,7 +46,6 @@
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "An error occurred while loading activities" : "Radās kļūda, ielādējot darbības",
     "Load more activities" : "Ielādēt vairāk darbības",
-    "Open file" : "Atvērt datni",
     "This application enables users to view actions related to their files in Nextcloud." : "Šī lietotne sniedz iespēju lietotājiem paraudzīt darbības ar viņu Nextcloud datnēm",
     "Send notification emails:" : "Sūtīt paziņojumu e-pastus:"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"

@@ -53,7 +53,6 @@ OC.L10N.register(
     "No more events to load" : "Inga fleire hendingar å lasta",
     "An error occurred while loading activities" : "Ein feil oppstod under lastinga av aktivitetar",
     "Load more activities" : "Lastar fleire aktivitetar",
-    "Open file" : "Opne fil",
     "This application enables users to view actions related to their files in Nextcloud." : "Denne applikasjon viser hendingar for dine filer i Nextcloud.",
     "Send notification emails:" : "Send epost varsel:"
 },
