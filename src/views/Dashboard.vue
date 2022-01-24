@@ -22,8 +22,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 <template>
-	<DashboardWidget
-		id="activity_panel"
+	<DashboardWidget id="activity_panel"
 		:items="activities"
 		:show-more-text="t('activity', 'activities')"
 		:show-more-url="showMoreUrl"
@@ -31,8 +30,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 		:half-empty-content-message="t('activity', 'No activities')">
 		<template #default="{ item }">
 			<!-- {{item._activity}} -->
-			<DashboardWidgetItem
-				:id="item.activity_id"
+			<DashboardWidgetItem :id="item.activity_id"
 				:target-url="item.link"
 				:avatar-username="item.user"
 				:overlay-icon-url="item.icon"

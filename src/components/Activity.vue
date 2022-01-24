@@ -21,8 +21,7 @@
 
 <template>
 	<li class="activity-entry">
-		<Avatar
-			class="activity-entry__icon"
+		<Avatar class="activity-entry__icon"
 			:disable-menu="true"
 			:disable-tooltip="true"
 			:url="activity.icon"
