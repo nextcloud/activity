@@ -29,8 +29,7 @@
 		<template v-else>
 			<!-- activities content -->
 			<ul>
-				<Activity
-					v-for="activity in activities"
+				<Activity v-for="activity in activities"
 					:key="activity.id"
 					:activity="activity" />
 			</ul>
