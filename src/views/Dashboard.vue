@@ -24,7 +24,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 <template>
 	<DashboardWidget id="activity_panel"
 		:items="activities"
-		:show-more-text="t('activity', 'activities')"
+		:show-more-text="t('activity', 'Activities')"
 		:show-more-url="showMoreUrl"
 		:loading="loading"
 		:half-empty-content-message="t('activity', 'No activities')">
