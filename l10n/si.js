@@ -25,7 +25,6 @@ OC.L10N.register(
     "Activity" : "ක්‍රියාකාරකම",
     "Notifications" : "දැනුම්දීම්",
     "No activity yet" : "තවම ක්‍රියාකාරකමක් නොමැත",
-    "activities" : "ක්‍රියාකාරකම්",
     "No activities" : "ක්‍රියාකාරකම් නැත",
     "Enable notification emails" : "දැනුම්දීම් විද්‍යුත් තැපෑල සබල කරන්න",
     "Default settings" : "සාමාන්‍ය සැකසුම්",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "Settings" : "සැකසුම්",
     "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත",
     "An error occurred while loading activities" : "ක්‍රියාකාරකම් පූරණය කිරීමේදී දෝෂයක් ඇතිවිය",
-    "Load more activities" : "තවත් ක්‍රියාකාරකම් පූරණය කරන්න"
+    "Load more activities" : "තවත් ක්‍රියාකාරකම් පූරණය කරන්න",
+    "activities" : "ක්‍රියාකාරකම්"
 },
 "nplurals=2; plural=(n != 1);");

@@ -36,7 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Aplikazio honek erabiltzaileari  Nextcloud honetan dauzkan fitxategietan egindako ekintzak ikusteko aukera ematen dio.\n\t\tGaituz gero, erabiltzaileek \"Jarduera\" dioen ikono berri bat ikusiko dute beren aplikazioaren menuetan.\n\t\tKlik egiterakoan, orri berri bat agertuko da erabiltzaileek beren fitxategietan egindako aldaketa guztien jarraipena egin dezaten – fitxategi sortu berriak, ezabaketak, leku-aldatzeak, berrizendatzeak, eguneratzeak eta partekatzeak.\n\t\tErabiltzaileek haien jarduera ezarpenak konfiguratu ditzakete menu pertsonalean.\n\t\tHonek, gordeko den jarduera mota zehaztuko du, eta baita ere erabiltzaileak nola ikusiko dituen jarduera propioak:\n\t\tsarean bakarrik egongo diren eskuragarri, eta bestalde ea tarteka posta elektronikoz laburpen mezu bat jaso nahiko duen.\n\t\tInformazio gehiago dago eskuragarri Jarduera (Activity) aplikazioaren dokumentazio biltegian.",
     "No activity yet" : "Oraindik ez dago jarduerarik",
     "Unable to load the activity list" : "Ezin izan da jarduera-zerrenda kargatu",
-    "activities" : "Jarduerak",
     "No activities" : "Ez da jarduerarik",
     "Activity feed" : "Jardueren jarioa",
     "Enable notification emails" : "Gaitu notifikazio emailak",
@@ -60,6 +59,7 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Errorea gertatu da jarduerak kargatzean",
     "Load more activities" : "Kargatu jarduera gehiago",
     "This application enables users to view actions related to their files in Nextcloud." : "Aplikazio honek aukera ematen die erabiltzaileei Nextcloud-eko euren fitxategiekin lotutako ekintzak ikusteko.",
-    "Send notification emails:" : "Bidali jakinarazpen e-postak"
+    "Send notification emails:" : "Bidali jakinarazpen e-postak",
+    "activities" : "Jarduerak"
 },
 "nplurals=2; plural=(n != 1);");
