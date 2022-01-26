@@ -33,7 +33,6 @@ OC.L10N.register(
     "Notifications" : "Notificacions",
     "No activity yet" : "Cap d’activitat pel moment",
     "Unable to load the activity list" : "Cargament impossible de la lista de las activitats",
-    "activities" : "activitats",
     "No activities" : "Cap d’activitat",
     "Activity feed" : "Flux d’activitat",
     "Enable notification emails" : "Activar las notificacions per corrièl",
@@ -49,6 +48,7 @@ OC.L10N.register(
     "No more events to load" : "Pas mai d’eveniment de cargar",
     "An error occurred while loading activities" : "Una error s’es producha en cargant las activitats",
     "Load more activities" : "Cargar mai d’activiats",
-    "Send notification emails:" : "Enviar de notificacions per mail :"
+    "Send notification emails:" : "Enviar de notificacions per mail :",
+    "activities" : "activitats"
 },
 "nplurals=2; plural=(n > 1);");

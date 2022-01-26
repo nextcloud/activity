@@ -32,7 +32,6 @@ OC.L10N.register(
     "Notifications" : "अधिसूचना",
     "No activity yet" : "अजुन कोणतीही क्रिया नाही",
     "Unable to load the activity list" : "क्रियेची यादी घेता आली नाही",
-    "activities" : "क्रिया",
     "No activities" : "कोणत्याही क्रिया नाहीत",
     "Activity feed" : "क्रियेची फीड",
     "Enable notification emails" : "अधिसूचना ई-मेल सुरु करा",
@@ -44,6 +43,7 @@ OC.L10N.register(
     "Weekly" : "साप्ताहिक",
     "Daily activity summary" : "दैनिक क्रिया सारांश",
     "Settings" : "सेटिंग",
-    "Send notification emails:" : "अधिसूचना ई-मेल पाठवा:"
+    "Send notification emails:" : "अधिसूचना ई-मेल पाठवा:",
+    "activities" : "क्रिया"
 },
 "nplurals=2; plural=(n != 1);");

@@ -36,7 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Это приложение позволяет пользователям просматривать действия, связанные с их файлами в Nextcloud.\n\t\tПосле включения в меню приложений появится значок «Действия».\n\t\tПри нажатии появляется новая страница для отслеживания действий, связанных с файлами, - от новых файлов, до удаленных файлов, перемещения, переименования, обновлений и совместного использования\t.\n\t\tПользователь может настроить свои индивидуальные настройки активности в своем личном кабинете..\n\t\tЗдесь устанавливается тип активности для записи в протокол действий, а также, видит ли пользователь свои действия,\n\t\tдоступны ли они только в режиме онлайн, и регулярно ли они получают электронную сводку.\n\t\tДополнительная информация доступна в документации по \"Действиям\".",
     "No activity yet" : "Пока не произошло ни одного события",
     "Unable to load the activity list" : "Не удалось загрузить список событий",
-    "activities" : "события",
     "No activities" : "События отсуствуют",
     "Activity feed" : "Лента событий",
     "Enable notification emails" : "Включить уведомления о событиях по эл. почте",
@@ -60,6 +59,7 @@ OC.L10N.register(
     "An error occurred while loading activities" : "При загрузке списка событий произошла ошибка",
     "Load more activities" : "Загрузить ещё события",
     "This application enables users to view actions related to their files in Nextcloud." : "Это приложение позволяет пользователям просматривать действия, связанные с их файлами в Nextcloud.",
-    "Send notification emails:" : "Частота рассылки эл. писем:"
+    "Send notification emails:" : "Частота рассылки эл. писем:",
+    "activities" : "события"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

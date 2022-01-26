@@ -36,7 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Η εφαρμογή επιτρέπει στους χρήστες να δουν ενέργειες που αφορούν τα αρχεία τους στο Nextcloud.\n\t\tΜόλις ενεργοποιηθεί, οι χρήστες θα βλέπουν ένα νέο εικονίδιο με τίτλο \"Δραστηριότητα\" στο μενού εφαρμογών τους.\n\t\tΜε το που γίνει κλικ, θα εμφανιστεί μία νέα σελίδα που επιτρέπει στους χρήστες να παρακολουθήσουν τις δραστηριότητες που αφορούν τα αρχεία τους - νέα αρχεία, διαγραμμένα, μετακινήσεις, μετονομασίες, ενημερώσεις και δραστηριότητες ενημερώσεων.\n\t\tΟ χρήστης μπορεί αν ρυθμίσει τις ρυθμίσεις ατομικής δραστηριότητας στο προσωπικό του μενού.\n\t\tΡυθμίζει τον τύπο της καταγραφής δραστηριότητας, όπως επίσης και το αν ο χρήστης θα βλέπει τις προσωπικές του δραστηριότητες.\n\t\tεάν θα είναι διαθέσιμες μόνο online, ή εάν θα λαμβάνει ένα συγκεντρωτικό email ανά τακτά χρονικά διαστήματα.\n\t\tΠερισσότερες πληροφορίες είναι διαθέσιμες στο εγχειρίδιο Δραστηριοτήτων.",
     "No activity yet" : "Καμία δραστηριότητα ακόμα",
     "Unable to load the activity list" : "Δεν είναι δυνατή η φόρτωση της λίστας δραστηριοτήτων",
-    "activities" : "δραστηριότητες",
     "No activities" : "Καμία δραστηριότητα",
     "Activity feed" : "Ροή Δραστηριότητας",
     "Enable notification emails" : "Ενεργοποίηση ειδοποιήσεων μέσω e-mail",
@@ -60,6 +59,7 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Παρουσιάστηκε σφάλμα κατά την φόρτωση των δραστηριοτήτων",
     "Load more activities" : "Φόρτωση περισσότερων δραστηριοτήτων",
     "This application enables users to view actions related to their files in Nextcloud." : "Η εφαρμογή επιτρέπει στους χρήστες να δουν ενέργειες που αφορούν τα αρχεία τους στο Nextcloud.",
-    "Send notification emails:" : "Αποστολή ειδοποιήσεων μέσω email:"
+    "Send notification emails:" : "Αποστολή ειδοποιήσεων μέσω email:",
+    "activities" : "δραστηριότητες"
 },
 "nplurals=2; plural=(n != 1);");

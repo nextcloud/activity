@@ -36,7 +36,6 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Приложението позволява на потребителите да следят действия свързани с файловете им в  Nextcloud.\n\t\tСлед като се включи, потребителите ще видят елемент “Активност” , в менюто на приложения.\n\t\tПоказва действия свързани с файлове – създаване, изтриване, местене, преименуване.\n\t\tПотребителите могат да персонализират настройките на потока.\n\t\tТип на активност за показване и филтриране на собствените действия,\n\t\tда са достъпни само през браузър или да получават имейл известия.\n\t\tДопълнителна информация ще намерите в документацията на Activity.",
     "No activity yet" : "Все още няма активност",
     "Unable to load the activity list" : "Неуспешно зареждане на списъкът с активности",
-    "activities" : "активности",
     "No activities" : "Няма активности",
     "Activity feed" : "Поток на активността",
     "Enable notification emails" : "Разрешаване на известяващи имейли",
@@ -60,6 +59,7 @@ OC.L10N.register(
     "An error occurred while loading activities" : "Възникна грешка при зареждането на активностите",
     "Load more activities" : "Зареди по-стари",
     "This application enables users to view actions related to their files in Nextcloud." : "Приложението позволява на потребителите да прегледат действия свързани с файловете им в Nextcloud.",
-    "Send notification emails:" : "Изпрати уведомителни е-мейли:"
+    "Send notification emails:" : "Изпрати уведомителни е-мейли:",
+    "activities" : "активности"
 },
 "nplurals=2; plural=(n != 1);");
