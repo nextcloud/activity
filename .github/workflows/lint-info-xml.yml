@@ -22,10 +22,10 @@ jobs:
         uses: actions/checkout@master
 
       - name: Download schema
-        run: wget https://raw.githubusercontent.com/nextcloud/server/master/resources/app-info-shipped.xsd
+        run: wget https://raw.githubusercontent.com/nextcloud/appstore/master/nextcloudappstore/api/v1/release/info.xsd
 
       - name: Lint info.xml
         uses: ChristophWurst/xmllint-action@v1
         with:
           xml-file: ./appinfo/info.xml
-          xml-schema-file: ./app-info-shipped.xsd
+          xml-schema-file: ./info.xsd
