@@ -229,10 +229,10 @@ class APIv2Controller extends OCSController {
 		// php 5.6 has problems with usort and objects
 		usort($filters, static function (array $a, array $b) {
 			if ($a['priority'] === $b['priority']) {
-				return (int) ($a['id'] > $b['id']);
+				return ($a['id'] > $b['id']) ? 1 : -1;
 			}
 
-			return (int) ($a['priority'] > $b['priority']);
+			return $a['priority'] - $b['priority'];
 		});
 
 		return new DataResponse($filters);
