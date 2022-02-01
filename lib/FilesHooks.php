@@ -523,7 +523,7 @@ class FilesHooks {
 
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
 
-		$this->connection->beginTransaction();
+		$shouldFlush = $this->startActivityTransaction();
 		foreach ($users as $user) {
 			$path = $pathMap[$user];
 
@@ -543,7 +543,7 @@ class FilesHooks {
 				Files::TYPE_SHARE_DELETED
 			);
 		}
-		$this->connection->commit();
+		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -559,7 +559,7 @@ class FilesHooks {
 
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
 
-		$this->connection->beginTransaction();
+		$shouldFlush = $this->startActivityTransaction();
 		foreach ($users as $user) {
 			$path = $pathMap[$user];
 
@@ -579,7 +579,7 @@ class FilesHooks {
 				Files::TYPE_FILE_CHANGED
 			);
 		}
-		$this->connection->commit();
+		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -598,7 +598,7 @@ class FilesHooks {
 
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
 
-		$this->connection->beginTransaction();
+		$shouldFlush = $this->startActivityTransaction();
 		foreach ($users as $user) {
 			if ($oldFileName === $fileName) {
 				$userParams = [[$newParentId => $afterPathMap[$user] . '/']];
@@ -622,7 +622,7 @@ class FilesHooks {
 				Files::TYPE_FILE_CHANGED
 			);
 		}
-		$this->connection->commit();
+		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -924,13 +924,13 @@ class FilesHooks {
 
 		$offset = 0;
 		$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
-		$this->connection->beginTransaction();
+		$shouldFlush = $this->startActivityTransaction();
 		while (!empty($users)) {
 			$this->addNotificationsForGroupUsers($users, $actionUser, $share->getNodeId(), $share->getNodeType(), $share->getTarget(), (int) $share->getId());
 			$offset += self::USER_BATCH_SIZE;
 			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		}
-		$this->connection->commit();
+		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -1012,7 +1012,7 @@ class FilesHooks {
 		$filteredNotificationUsers = $this->userSettings->filterUsersBySetting($userIds, 'notification', Files_Sharing::TYPE_SHARED);
 
 		$affectedUsers = $this->fixPathsForShareExceptions($affectedUsers, $shareId);
-		$this->connection->beginTransaction();
+		$shouldFlush = $this->startActivityTransaction();
 		foreach ($affectedUsers as $user => $path) {
 			$this->addNotificationsForUser(
 				$user, $actionUser, [[$fileSource => $path], $this->currentUser->getUserIdentifier()],
@@ -1021,7 +1021,7 @@ class FilesHooks {
 				$filteredNotificationUsers[$user] ?? false
 			);
 		}
-		$this->connection->commit();
+		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -1206,5 +1206,17 @@ class FilesHooks {
 			$latestSend = time() + $emailSetting;
 			$this->activityData->storeMail($event, $latestSend);
 		}
+	}
+
+	protected function startActivityTransaction(): bool {
+		$this->connection->beginTransaction();
+		return $this->notificationGenerator->deferNotifications();
+	}
+
+	protected function commitActivityTransaction(bool $shouldFlush): void {
+		if ($shouldFlush) {
+			$this->notificationGenerator->flushNotifications();
+		}
+		$this->connection->commit();
 	}
 }
