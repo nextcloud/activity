@@ -24,8 +24,6 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests;
 
-use Doctrine\DBAL\Platforms\MySQLPlatform;
-use Doctrine\DBAL\Platforms\SqlitePlatform;
 use OCA\Activity\BackgroundJob\ExpireActivities;
 use OCA\Activity\Data;
 use OCP\Activity\IExtension;
@@ -135,45 +133,5 @@ class DataDeleteActivitiesTest extends TestCase {
 		sort($expected);
 
 		$this->assertEquals($expected, $users);
-	}
-
-	public function testChunkingDeleteNotUsedWhenNotOnMysql(): void {
-		$ttl = (60 * 60 * 24 * max(1, 365));
-		$timelimit = time() - $ttl;
-		$activityManager = $this->createMock(\OCP\Activity\IManager::class);
-		$connection = $this->createMock(\OCP\IDBConnection::class);
-		$platform = $this->createMock(SqlitePlatform::class);
-		$connection->expects($this->once())->method('getDatabasePlatform')->willReturn($platform);
-
-		$statement = $this->createMock(IPreparedStatement::class);
-		// Wont chunk
-		$statement->expects($this->exactly(0))->method('rowCount')->willReturnOnConsecutiveCalls(100000, 50);
-		$connection->expects($this->once())->method('prepare')->willReturn($statement);
-
-		$userSession = $this->createMock(IUserSession::class);
-		$data = new Data($activityManager, $connection, $userSession);
-		$data->deleteActivities([
-			'timestamp' => [$timelimit, '<'],
-		]);
-	}
-
-	public function testDeleteActivitiesIsChunkedOnMysql(): void {
-		$ttl = (60 * 60 * 24 * max(1, 365));
-		$timelimit = time() - $ttl;
-		$activityManager = $this->createMock(\OCP\Activity\IManager::class);
-		$connection = $this->createMock(\OCP\IDBConnection::class);
-		$platform = $this->createMock(MySQLPlatform::class);
-		$connection->expects($this->once())->method('getDatabasePlatform')->willReturn($platform);
-
-		$statement = $this->createMock(IPreparedStatement::class);
-		// Will chunk
-		$statement->expects($this->exactly(2))->method('rowCount')->willReturnOnConsecutiveCalls(100000, 50);
-		$connection->expects($this->once())->method('prepare')->willReturn($statement);
-
-		$userSession = $this->createMock(IUserSession::class);
-		$data = new Data($activityManager, $connection, $userSession);
-		$data->deleteActivities([
-			'timestamp' => [$timelimit, '<'],
-		]);
 	}
 }

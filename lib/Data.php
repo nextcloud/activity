@@ -343,15 +343,19 @@ class Data {
 	 *    'field' => array('value', 'operator') => `field` operator 'value'
 	 */
 	public function deleteActivities($conditions) {
-		$sqlWhere = '';
-		$sqlParameters = $sqlWhereList = [];
-		foreach ($conditions as $column => $comparison) {
-			$sqlWhereList[] = " `$column` " . ((is_array($comparison) && isset($comparison[1])) ? $comparison[1] : '=') . ' ? ';
-			$sqlParameters[] = (is_array($comparison)) ? $comparison[0] : $comparison;
-		}
+		$delete = $this->connection->getQueryBuilder();
+		$delete->delete('activity');
 
-		if (!empty($sqlWhereList)) {
-			$sqlWhere = ' WHERE ' . implode(' AND ', $sqlWhereList);
+		foreach ($conditions as $column => $comparison) {
+			if (is_array($comparison)) {
+				$operation = $comparison[1] ?? '=';
+				$value = $comparison[0];
+			} else {
+				$operation = '=';
+				$value = $comparison;
+			}
+
+			$delete->andWhere($delete->expr()->comparison($column, $operation, $delete->createNamedParameter($value)));
 		}
 
 		// Add galera safe delete chunking if using mysql
@@ -359,17 +363,13 @@ class Data {
 		if ($this->connection->getDatabasePlatform() instanceof MySQLPlatform) {
 			// Then use chunked delete
 			$max = 100000;
-			$query = $this->connection->prepare(
-				'DELETE FROM `*PREFIX*activity`' . $sqlWhere . " LIMIT " . $max);
+			$delete->setMaxResults($max);
 			do {
-				$query->execute($sqlParameters);
-				$deleted = $query->rowCount();
+				$deleted = $delete->executeStatement();
 			} while ($deleted === $max);
 		} else {
 			// Dont use chunked delete - let the DB handle the large row count natively
-			$query = $this->connection->prepare(
-				'DELETE FROM `*PREFIX*activity`' . $sqlWhere);
-			$query->execute($sqlParameters);
+			$delete->executeStatement();
 		}
 	}
 
@@ -380,7 +380,6 @@ class Data {
 			->where($query->expr()->eq('activity_id', $query->createNamedParameter($activityId)));
 
 		$result = $query->execute();
-		$hasMore = false;
 		if ($row = $result->fetch()) {
 			$event = $this->activityManager->generateEvent();
 			$event->setApp((string)$row['app'])
@@ -394,9 +393,9 @@ class Data {
 				->setLink((string)$row['link']);
 
 			return $event;
-		} else {
-			return null;
 		}
+
+		return null;
 	}
 
 	/**
