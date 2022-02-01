@@ -523,6 +523,7 @@ class FilesHooks {
 
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
 
+		$this->connection->beginTransaction();
 		foreach ($users as $user) {
 			$path = $pathMap[$user];
 
@@ -542,6 +543,7 @@ class FilesHooks {
 				Files::TYPE_SHARE_DELETED
 			);
 		}
+		$this->connection->commit();
 	}
 
 	/**
@@ -557,6 +559,7 @@ class FilesHooks {
 
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
 
+		$this->connection->beginTransaction();
 		foreach ($users as $user) {
 			$path = $pathMap[$user];
 
@@ -576,6 +579,7 @@ class FilesHooks {
 				Files::TYPE_FILE_CHANGED
 			);
 		}
+		$this->connection->commit();
 	}
 
 	/**
@@ -594,6 +598,7 @@ class FilesHooks {
 
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
 
+		$this->connection->beginTransaction();
 		foreach ($users as $user) {
 			if ($oldFileName === $fileName) {
 				$userParams = [[$newParentId => $afterPathMap[$user] . '/']];
@@ -617,6 +622,7 @@ class FilesHooks {
 				Files::TYPE_FILE_CHANGED
 			);
 		}
+		$this->connection->commit();
 	}
 
 	/**
@@ -918,11 +924,13 @@ class FilesHooks {
 
 		$offset = 0;
 		$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
+		$this->connection->beginTransaction();
 		while (!empty($users)) {
 			$this->addNotificationsForGroupUsers($users, $actionUser, $share->getNodeId(), $share->getNodeType(), $share->getTarget(), (int) $share->getId());
 			$offset += self::USER_BATCH_SIZE;
 			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		}
+		$this->connection->commit();
 	}
 
 	/**
@@ -1004,6 +1012,7 @@ class FilesHooks {
 		$filteredNotificationUsers = $this->userSettings->filterUsersBySetting($userIds, 'notification', Files_Sharing::TYPE_SHARED);
 
 		$affectedUsers = $this->fixPathsForShareExceptions($affectedUsers, $shareId);
+		$this->connection->beginTransaction();
 		foreach ($affectedUsers as $user => $path) {
 			$this->addNotificationsForUser(
 				$user, $actionUser, [[$fileSource => $path], $this->currentUser->getUserIdentifier()],
@@ -1012,6 +1021,7 @@ class FilesHooks {
 				$filteredNotificationUsers[$user] ?? false
 			);
 		}
+		$this->connection->commit();
 	}
 
 	/**
