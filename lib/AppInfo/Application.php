@@ -24,23 +24,37 @@
 
 namespace OCA\Activity\AppInfo;
 
+use OC\DB\ConnectionAdapter;
 use OC\Files\View;
+use OC\SystemConfig;
 use OCA\Activity\Capabilities;
 use OCA\Activity\Consumer;
+use OCA\Activity\Data;
 use OCA\Activity\FilesHooksStatic;
 use OCA\Activity\Listener\LoadSidebarScripts;
 use OCA\Activity\Listener\SetUserDefaults;
 use OCA\Activity\Listener\UserDeleted;
+use OCA\Activity\MailQueueHandler;
 use OCA\Activity\NotificationGenerator;
 use OCA\Activity\Dashboard\ActivityWidget;
 use OCA\Files\Event\LoadSidebar;
+use OCP\Activity\IManager;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\IConfig;
+use OCP\IDateTimeFormatter;
+use OCP\ILogger;
+use OCP\IURLGenerator;
+use OCP\IUserManager;
+use OCP\L10N\IFactory;
+use OCP\Mail\IMailer;
+use OCP\RichObjectStrings\IValidator;
 use OCP\User\Events\PostLoginEvent;
 use OCP\User\Events\UserDeletedEvent;
 use OCP\Util;
+use Psr\Container\ContainerInterface;
 
 class Application extends App implements IBootstrap {
 	public const APP_ID = 'activity';
@@ -50,6 +64,47 @@ class Application extends App implements IBootstrap {
 	}
 
 	public function register(IRegistrationContext $context): void {
+		$context->registerService('ActivityDBConnection', function (ContainerInterface $c) {
+			$systemConfig = $c->get(SystemConfig::class);
+			$factory = new \OC\DB\ConnectionFactory($systemConfig);
+			$type = $systemConfig->getValue('dbtype', 'sqlite');
+			if (!$factory->isValidType($type)) {
+				throw new \OC\DatabaseException('Invalid database type');
+			}
+			$connectionParams = $factory->createConnectionParams('activity_');
+			$connection = $factory->getConnection($type, $connectionParams);
+			$connection->getConfiguration()->setSQLLogger($c->get(\OCP\Diagnostics\IQueryLogger::class));
+			return $connection;
+		});
+
+		$context->registerService('ActivityConnectionAdapter', function (ContainerInterface $c) {
+			return new ConnectionAdapter(
+				$c->get('ActivityDBConnection')
+			);
+		});
+
+		$context->registerService(Data::class, function (ContainerInterface $c) {
+			return new Data(
+				$c->get(IManager::class),
+				$c->get('ActivityConnectionAdapter')
+			);
+		});
+
+		$context->registerService(MailQueueHandler::class, function (ContainerInterface $c) {
+			return new MailQueueHandler(
+				$c->get(IDateTimeFormatter::class),
+				$c->get('ActivityConnectionAdapter'),
+				$c->get(IMailer::class),
+				$c->get(IURLGenerator::class),
+				$c->get(IUserManager::class),
+				$c->get(IFactory::class),
+				$c->get(IManager::class),
+				$c->get(IValidator::class),
+				$c->get(IConfig::class),
+				$c->get(ILogger::class)
+			);
+		});
+
 		// Allow automatic DI for the View, until we migrated to Nodes API
 		$context->registerService(View::class, function () {
 			return new View('');
