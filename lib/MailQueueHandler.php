@@ -382,7 +382,7 @@ class MailQueueHandler {
 			'activityEvents' => $activityEvents,
 			'skippedCount' => $skippedCount,
 		]);
-		$template->setSubject($l->t('Activity notification for %s', $this->getSenderData('name')));
+		$template->setSubject($l->t('Activity on %s', $this->getSenderData('name')));
 		$template->addHeader();
 		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
 
