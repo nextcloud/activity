@@ -74,6 +74,18 @@ class Application extends App implements IBootstrap {
 		});
 
 		$context->registerService('ActivityConnectionAdapter', function (ContainerInterface $c) {
+			$systemConfig = $c->get(SystemConfig::class);
+			$configPrefix = 'activity_';
+
+			if ($systemConfig->getValue($configPrefix . 'dbuser', null) === null &&
+				$systemConfig->getValue($configPrefix . 'dbpassword', null) === null &&
+				$systemConfig->getValue($configPrefix . 'dbname', null) === null &&
+				$systemConfig->getValue($configPrefix . 'dbhost', null) === null &&
+				$systemConfig->getValue($configPrefix . 'dbport', null) === null &&
+				$systemConfig->getValue($configPrefix . 'dbdriveroptions', null) === null) {
+				return $c->get(IDBConnection::class);
+			}
+
 			return new ConnectionAdapter(
 				$c->get('ActivityDBConnection')
 			);
