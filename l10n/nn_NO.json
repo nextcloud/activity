@@ -21,7 +21,6 @@
     "All activities" : "Alle aktvitetar",
     "By others" : "Av andre",
     "By you" : "Av deg",
-    "Activity notification for %s" : "Varsel om hending for %s",
     "Hello %s" : "Hei %s",
     "Hello %s," : "Hei %s,",
     "There was some activity at %s" : "Det var aktivitet hjå %s",
@@ -51,6 +50,7 @@
     "No more events to load" : "Inga fleire hendingar å lasta",
     "An error occurred while loading activities" : "Ein feil oppstod under lastinga av aktivitetar",
     "Load more activities" : "Lastar fleire aktivitetar",
+    "Activity notification for %s" : "Varsel om hending for %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Denne applikasjon viser hendingar for dine filer i Nextcloud.",
     "Send notification emails:" : "Send epost varsel:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

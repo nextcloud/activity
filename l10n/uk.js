@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "Всі події",
     "By others" : "Події інших",
     "By you" : "Мої події",
-    "Activity notification for %s" : "Повідомлення про події для %s",
     "Hello %s" : "Вітаємо %s",
     "Hello %s," : "Вітаємо %s,",
     "There was some activity at %s" : "Остання подія відбулася о %s",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "No more events to load" : "Відсутні події для завантаження",
     "An error occurred while loading activities" : "Під час завантаження подій відбулася помилка",
     "Load more activities" : "Інші події",
+    "Activity notification for %s" : "Повідомлення про події для %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Застосунок дозволяє користувачам переглядати дії з власними файлами у Nextcloud.",
     "Send notification emails:" : "Надсилати сповіщення на ел. пошту:",
     "activities" : "події"

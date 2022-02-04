@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "Kaikki tapahtumat",
     "By others" : "Muiden tapahtumat",
     "By you" : "Omat tapahtumat",
-    "Activity notification for %s" : "Toimintailmoitus tapahtumalle %s",
     "Hello %s" : "Hei %s",
     "Hello %s," : "Hei %s,",
     "There was some activity at %s" : "Kohteessa %s oli joitakin tapahtumia",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "No more events to load" : "Ei enempää tapahtumia",
     "An error occurred while loading activities" : "Tapahtumien latauksessa tapahtui virhe",
     "Load more activities" : "Lataa lisää tapahtumia",
+    "Activity notification for %s" : "Toimintailmoitus tapahtumalle %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Tämän sovelluksen avulla käyttäjät voivat katsoa tiedostoihinsa liittyviä tapahtumia Nextcloudissa.",
     "Send notification emails:" : "Lähetä ilmoitussähköposteja:",
     "activities" : "Tapahtumat"

@@ -22,7 +22,6 @@
     "All activities" : "Wszystkie aktywności",
     "By others" : "Przez innych",
     "By you" : "Przez Ciebie",
-    "Activity notification for %s" : "Powiadomienie o aktywności dla %s",
     "Hello %s" : "Witaj %s",
     "Hello %s," : "Witaj %s,",
     "There was some activity at %s" : "Zaistniała aktywność przy %s",
@@ -57,6 +56,7 @@
     "No more events to load" : "Brak wydarzeń do załadowania",
     "An error occurred while loading activities" : "Wystąpił błąd podczas ładowania aktywności",
     "Load more activities" : "Wczytaj więcej aktywności",
+    "Activity notification for %s" : "Powiadomienie o aktywności dla %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Aplikacja umożliwia użytkownikom przeglądanie akcji związanych z ich plikami w usłudze Nextcloud.",
     "Send notification emails:" : "Wyślij e-maile z powiadomieniem:",
     "activities" : "Aktywność"

@@ -23,7 +23,6 @@ OC.L10N.register(
     "All activities" : "تمامی فعالیت ها",
     "By others" : "توسط دیگران",
     "By you" : "توسط شما",
-    "Activity notification for %s" : "اعلان فعالیت برای %s",
     "Hello %s" : "سلام %s",
     "Hello %s," : "سلام %s",
     "There was some activity at %s" : "تعدادی فعالیت در %s وجود دارد",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
     "An error occurred while loading activities" : "در هنگام بارگزاری فعالیت ها خطایی رخ داده است ",
     "Load more activities" : "نمایش فعالیت های بیشتر",
+    "Activity notification for %s" : "اعلان فعالیت برای %s",
     "This application enables users to view actions related to their files in Nextcloud." : "این نرم‌افراز مشاهده فعالیت‌های مربوط به فایل‌های موجود در Nextcloud را برای کاربران ممکن می‌سازد.",
     "Send notification emails:" : "ارسال اطلاعیه از طریق ایمیل:"
 },

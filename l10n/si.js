@@ -18,7 +18,6 @@ OC.L10N.register(
     "All activities" : "සියළුම ක්‍රියාකාරකම්",
     "By others" : "අන් අය විසින්",
     "By you" : "ඔබ විසින්",
-    "Activity notification for %s" : "%s සඳහා ක්‍රියාකාරකම් දැනුම්දීම",
     "Hello %s" : "ආයුබෝවන් %s",
     "Hello %s," : "ආයුබෝවන් %s,",
     "Mail" : "තැපෑල",
@@ -35,6 +34,7 @@ OC.L10N.register(
     "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත",
     "An error occurred while loading activities" : "ක්‍රියාකාරකම් පූරණය කිරීමේදී දෝෂයක් ඇතිවිය",
     "Load more activities" : "තවත් ක්‍රියාකාරකම් පූරණය කරන්න",
+    "Activity notification for %s" : "%s සඳහා ක්‍රියාකාරකම් දැනුම්දීම",
     "activities" : "ක්‍රියාකාරකම්"
 },
 "nplurals=2; plural=(n != 1);");
