@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "Tota l'activitat",
     "By others" : "Activitat d'altres usuaris",
     "By you" : "Activitat pròpia",
-    "Activity notification for %s" : "Notificació d'activitat per a %s",
     "Hello %s" : "Hola, %s",
     "Hello %s," : "Hola, %s,",
     "There was some activity at %s" : "Hi ha hagut activitat a %s",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "No more events to load" : "No hi ha més esdeveniments",
     "An error occurred while loading activities" : "S'ha produït un error en carregar l'activitat",
     "Load more activities" : "Carrega més activitat",
+    "Activity notification for %s" : "Notificació d'activitat per a %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Aquesta aplicació permet als usuaris veure les accions relacionades amb els seus fitxers al Nextcloud.",
     "Send notification emails:" : "Envia els correus electrònics de notificació:",
     "activities" : "activitats"

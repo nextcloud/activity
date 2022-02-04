@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "Tüm işlemler",
     "By others" : "Diğerleri tarafından",
     "By you" : "Sizin tarafınızdan",
-    "Activity notification for %s" : "%s için işlem bildirimi",
     "Hello %s" : "Merhaba %s",
     "Hello %s," : "Merhaba %s,",
     "There was some activity at %s" : "%s üzerinde bazı işlemler yapıldı",
@@ -59,6 +58,7 @@ OC.L10N.register(
     "No more events to load" : "Yüklenecek başka bir olay yok",
     "An error occurred while loading activities" : "İşlemler yüklenirken bir sorun çıktı",
     "Load more activities" : "Diğer işlemleri yükle",
+    "Activity notification for %s" : "%s için işlem bildirimi",
     "This application enables users to view actions related to their files in Nextcloud." : "Bu uygulama, kullanıcıların Nextcloud üzerindeki dosyaları üzerinde yapılan işlemleri görebilmesini sağlar.",
     "Send notification emails:" : "Bildirim e-postaları gönderilsin:",
     "activities" : "işlem"

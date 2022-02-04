@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "جميع الأنشطة",
     "By others" : "بواسطة أخرين",
     "By you" : "بواسطتك",
-    "Activity notification for %s" : "إشعار عن النشاط %s",
     "Hello %s" : "أهلاً %s",
     "Hello %s," : "أهلاً %s،",
     "There was some activity at %s" : "يوجد نشاط على %s",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "No more events to load" : "لا توجد أي أحداث للتحميل",
     "An error occurred while loading activities" : "حدث خلل أثناء تحميل الأنشطة",
     "Load more activities" : "تحميل المزيد من الأنشطة",
+    "Activity notification for %s" : "إشعار عن النشاط %s",
     "This application enables users to view actions related to their files in Nextcloud." : "هذا التطبيق يمكن المستخدمين من رؤية الإجراءات المتعلقة بملفاتهم على نكست كلاود.",
     "Send notification emails:" : "أرسل أشعارات بريدية:",
     "activities" : "الأنشطة"

@@ -22,7 +22,6 @@
     "All activities" : "Všetky aktivity",
     "By others" : "Aktivity ostatných",
     "By you" : "Vlastné aktivity",
-    "Activity notification for %s" : "Upozornenia na aktivity pre %s",
     "Hello %s" : "Ahoj %s",
     "Hello %s," : "Ahoj %s,",
     "There was some activity at %s" : "Bola zaznamenaná aktivita u používateľa %s",
@@ -56,6 +55,7 @@
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
     "An error occurred while loading activities" : "Pri pokuse o načítanie aktivity nastala chyba",
     "Load more activities" : "Načítať viac aktivít",
+    "Activity notification for %s" : "Upozornenia na aktivity pre %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Táto aplikácia povolí používateľom sledovať akcie súvisiace s ich súbormi v Nextcloude.",
     "Send notification emails:" : "Posielať e-mailové oznámenia: ",
     "activities" : "aktivity"

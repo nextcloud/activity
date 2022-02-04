@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "Visos veiklos",
     "By others" : "Kitų",
     "By you" : "Jūsų",
-    "Activity notification for %s" : "Aktyvumo pranešimai %s",
     "Hello %s" : "Sveiki, %s",
     "Hello %s," : "Sveiki, %s,",
     "There was some activity at %s" : "%s buvo veiklos",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "No more events to load" : "Nėra daugiau rodytinų įvykių",
     "An error occurred while loading activities" : "Įkeliant veiklas, įvyko klaida",
     "Load more activities" : "Įkelti daugiau veiklų",
+    "Activity notification for %s" : "Aktyvumo pranešimai %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Programa skirta naudotojams stebėti su jų failais susijusius veiksmus Nextcloud'e.",
     "Send notification emails:" : "Siųsti pranešimus el. paštu:",
     "activities" : "veiklos"

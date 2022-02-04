@@ -22,7 +22,6 @@
     "All activities" : "Όλες οι δραστηριότητες",
     "By others" : "Από άλλους",
     "By you" : "Από εσάς",
-    "Activity notification for %s" : "Ειδοποίηση δραστηριότητας για %s",
     "Hello %s" : "Γεια σας %s",
     "Hello %s," : "Γεια σας %s,",
     "There was some activity at %s" : "Υπήρξε δραστηριότητα στο %s",
@@ -56,6 +55,7 @@
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "An error occurred while loading activities" : "Παρουσιάστηκε σφάλμα κατά την φόρτωση των δραστηριοτήτων",
     "Load more activities" : "Φόρτωση περισσότερων δραστηριοτήτων",
+    "Activity notification for %s" : "Ειδοποίηση δραστηριότητας για %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Η εφαρμογή επιτρέπει στους χρήστες να δουν ενέργειες που αφορούν τα αρχεία τους στο Nextcloud.",
     "Send notification emails:" : "Αποστολή ειδοποιήσεων μέσω email:",
     "activities" : "δραστηριότητες"

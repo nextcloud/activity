@@ -21,7 +21,6 @@ OC.L10N.register(
     "All activities" : "Öll virkni",
     "By others" : "Virkni annarra",
     "By you" : "Virkni þín",
-    "Activity notification for %s" : "Tilkynning um virkni fyrir %s",
     "Hello %s" : "Halló %s",
     "Hello %s," : "Halló %s,",
     "There was some activity at %s" : "Það var einhver virkni í %s",
@@ -49,6 +48,7 @@ OC.L10N.register(
     "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
     "An error occurred while loading activities" : "Villa kom upp við að hlaða inn virkni",
     "Load more activities" : "Hlaða inn virkni",
+    "Activity notification for %s" : "Tilkynning um virkni fyrir %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Þetta forrit gerir notendum kleift að skoða aðgerðir sem tengjast skránum þeirra í Nextcloud.",
     "Send notification emails:" : "Senda tilkynningapóst:"
 },
