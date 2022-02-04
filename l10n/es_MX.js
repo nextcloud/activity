@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "Todas las actividades",
     "By others" : "Por otros",
     "By you" : "Por usted",
-    "Activity notification for %s" : "Notificación de actividad para %s",
     "Hello %s" : "Hola %s",
     "Hello %s," : "Hola %s,",
     "There was some activity at %s" : "Se tuvo algo de actividad en %s",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "No more events to load" : "No hay más eventos por cargar",
     "An error occurred while loading activities" : "Se presentó un error al cargar las actividades",
     "Load more activities" : "Cargar más actividades",
+    "Activity notification for %s" : "Notificación de actividad para %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Esta aplicación le permite a los usuarios ver acciones relacionadas con sus archivos en Nextcloud.",
     "Send notification emails:" : "Enviar correos electrónicos de notificación:",
     "activities" : "actividades"

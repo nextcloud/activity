@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "Toate activitățile",
     "By others" : "De către alții",
     "By you" : "De către tine",
-    "Activity notification for %s" : "Notificare activitate pentru %s",
     "Hello %s" : "Salut %s",
     "Hello %s," : "Salut %s,",
     "There was some activity at %s" : "A fost activitate la %s",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
     "An error occurred while loading activities" : "A apărut o eroare la încărcarea activităților",
     "Load more activities" : "Încarcă mai multe activități",
+    "Activity notification for %s" : "Notificare activitate pentru %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Aceasta aplicație permite utilizatorilor sa vizualizeze acțiuni aferente fișierelor din Nextcloud.",
     "Send notification emails:" : "Trimite notificări pe e-mail:",
     "activities" : "activități"

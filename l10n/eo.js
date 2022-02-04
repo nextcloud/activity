@@ -21,7 +21,6 @@ OC.L10N.register(
     "All activities" : "Ĉiuj aktivaĵoj ",
     "By others" : "De aliuloj",
     "By you" : "De vi",
-    "Activity notification for %s" : "Aktivaĵaj sciigoj por %s",
     "Hello %s" : "Saluton %s",
     "Hello %s," : "Saluton %s,",
     "There was some activity at %s" : "Okazis aktivoj je %s",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "No more events to load" : "Ne estas pli da eventoj.",
     "An error occurred while loading activities" : "Eraro okazis dum ŝarĝado de la aktivaĵoj",
     "Load more activities" : "Ŝarĝi pli da aktivaĵoj",
+    "Activity notification for %s" : "Aktivaĵaj sciigoj por %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Tiu ĉi aplikaĵo ebligas uzantojn vidi kio okazas al iliaj dosieroj en Nextcloud."
 },
 "nplurals=2; plural=(n != 1);");

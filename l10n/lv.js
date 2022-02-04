@@ -21,7 +21,6 @@ OC.L10N.register(
     "All activities" : "Visas darbības",
     "By others" : "Citu",
     "By you" : "Jūsu",
-    "Activity notification for %s" : "Brīdinājumi par darbībām %s",
     "Hello %s" : "Sveiki, %s",
     "Hello %s," : "Sveiki, %s,",
     "There was some activity at %s" : "%s bija kaut kādas darbības",
@@ -48,6 +47,7 @@ OC.L10N.register(
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "An error occurred while loading activities" : "Radās kļūda, ielādējot darbības",
     "Load more activities" : "Ielādēt vairāk darbības",
+    "Activity notification for %s" : "Brīdinājumi par darbībām %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Šī lietotne sniedz iespēju lietotājiem paraudzīt darbības ar viņu Nextcloud datnēm",
     "Send notification emails:" : "Sūtīt paziņojumu e-pastus:"
 },

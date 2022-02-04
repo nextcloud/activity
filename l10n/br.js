@@ -21,7 +21,6 @@ OC.L10N.register(
     "All activities" : "Hollad obererezhioù",
     "By others" : "Gant tud all",
     "By you" : "Ganeoc'h",
-    "Activity notification for %s" : "Kemennadenn obererezh evit %s",
     "Hello %s" : "Demat deoc'h %s",
     "Hello %s," : "Demat deoc'h %s, ",
     "There was some activity at %s" : "Tammoù obererezhioù zo bet da %s",
@@ -49,6 +48,7 @@ OC.L10N.register(
     "No more events to load" : "Darvoud all ebet da gargañ",
     "An error occurred while loading activities" : "Emañ ur fazi evit kargañ oberiantizoù",
     "Load more activities" : "Kargañ obererezhioù ouzhpenn",
+    "Activity notification for %s" : "Kemennadenn obererezh evit %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Gant an arload-mañ e c'hall an implijerien gwelet obererezhioù liammet gant o restroù e Nextcloud.",
     "Send notification emails:" : "Kas kemennadennoù dre bostel :"
 },

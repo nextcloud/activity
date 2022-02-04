@@ -22,7 +22,6 @@ OC.L10N.register(
     "All activities" : "सर्व क्रिया",
     "By others" : "इतरांद्वारे",
     "By you" : "तुमच्याद्वारे",
-    "Activity notification for %s" : " %s साठी क्रिया अधिसूचना",
     "Hello %s" : "नमस्कार %s",
     "Hello %s," : "नमस्कार %s,",
     "There was some activity at %s" : "%s येथे काही क्रिया झाली",
@@ -43,6 +42,7 @@ OC.L10N.register(
     "Weekly" : "साप्ताहिक",
     "Daily activity summary" : "दैनिक क्रिया सारांश",
     "Settings" : "सेटिंग",
+    "Activity notification for %s" : " %s साठी क्रिया अधिसूचना",
     "Send notification emails:" : "अधिसूचना ई-मेल पाठवा:",
     "activities" : "क्रिया"
 },
