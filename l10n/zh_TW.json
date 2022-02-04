@@ -22,7 +22,6 @@
     "All activities" : "所有活動",
     "By others" : "由其他人",
     "By you" : "由您",
-    "Activity notification for %s" : "%s 的活動通知",
     "Hello %s" : "%s你好",
     "Hello %s," : "哈囉 %s ，",
     "There was some activity at %s" : "%s 有一些活動",
@@ -57,6 +56,7 @@
     "No more events to load" : "已載入所有事件",
     "An error occurred while loading activities" : "載入活動時發生錯誤",
     "Load more activities" : "載入更多活動",
+    "Activity notification for %s" : "%s 的活動通知",
     "This application enables users to view actions related to their files in Nextcloud." : "此應用程式允許使用者能夠在 Nextcloud 中查看與其檔案相關的操作。",
     "Send notification emails:" : "透過電子郵件接收通知",
     "activities" : "活動"

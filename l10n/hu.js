@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "Minden tevékenység",
     "By others" : "Másoké",
     "By you" : "Az Öné",
-    "Activity notification for %s" : "Tevékenységértesítés ehhez: %s",
     "Hello %s" : "Kedves %s",
     "Hello %s," : "Kedves %s!",
     "There was some activity at %s" : "Tevékenység volt ennél: %s",
@@ -59,6 +58,7 @@ OC.L10N.register(
     "No more events to load" : "Nincs több esemény",
     "An error occurred while loading activities" : "Hiba történt a tevékenységek betöltése közben",
     "Load more activities" : "Több tevékenység betöltése",
+    "Activity notification for %s" : "Tevékenységértesítés ehhez: %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Ez az alkalmazás lehetővé teszi a felhasználók számára, hogy megtekinthessék a fájlokhoz kapcsolódó műveleteket a Nextcloudban.",
     "Send notification emails:" : "Értesítési e-mailek küldése:",
     "activities" : "tevékenységek"

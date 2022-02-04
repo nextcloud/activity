@@ -21,7 +21,6 @@ OC.L10N.register(
     "All activities" : "Све активности",
     "By others" : "туђе",
     "By you" : "ваше",
-    "Activity notification for %s" : "Обавештења о активностима за %s",
     "Hello %s" : "Здраво %s",
     "Hello %s," : "Здраво %s,",
     "There was some activity at %s" : "Било је активности у %s ",
@@ -49,6 +48,7 @@ OC.L10N.register(
     "No more events to load" : "Нема више догађаја за приказ",
     "An error occurred while loading activities" : "Дошло је до грешке приликом учитавања активности",
     "Load more activities" : "Учитај још активности",
+    "Activity notification for %s" : "Обавештења о активностима за %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Ова апликација омогућава корисницима да виде радње везане за њихове Некстклауд фајлове.",
     "Send notification emails:" : "Шаљи обавештења е-поштом:"
 },

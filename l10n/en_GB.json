@@ -19,7 +19,6 @@
     "All activities" : "All activities",
     "By others" : "By others",
     "By you" : "By you",
-    "Activity notification for %s" : "Activity notification for %s",
     "Hello %s" : "Hello %s",
     "Hello %s," : "Hello %s,",
     "There was some activity at %s" : "There was some activity at %s",
@@ -41,6 +40,7 @@
     "No more events to load" : "No more events to load",
     "An error occurred while loading activities" : "An error occurred while loading activities",
     "Load more activities" : "Load more activities",
+    "Activity notification for %s" : "Activity notification for %s",
     "This application enables users to view actions related to their files in Nextcloud." : "This application enables users to view actions related to their files in Nextcloud."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

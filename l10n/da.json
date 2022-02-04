@@ -22,7 +22,6 @@
     "All activities" : "Alle aktiviteter",
     "By others" : "Af andre",
     "By you" : "Af dig",
-    "Activity notification for %s" : "Aktivitet notifikation for %s",
     "Hello %s" : "Hej %s",
     "Hello %s," : "Hej %s,",
     "There was some activity at %s" : "Der var noget aktivitet omkring %s",
@@ -56,6 +55,7 @@
     "No more events to load" : "Der er Ikke flere aktiviteter som kan indlæses",
     "An error occurred while loading activities" : "Der opstod en fejl under indlæsning af aktiviteter",
     "Load more activities" : "Indlæs flere aktiviteter",
+    "Activity notification for %s" : "Aktivitet notifikation for %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Denne app giver brugere mulighed for at se en liste af handlinger relateret til deres filer i Nextcloud.",
     "Send notification emails:" : "Send notifikations emails:",
     "activities" : "aktiviteter"

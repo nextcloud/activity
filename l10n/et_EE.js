@@ -21,7 +21,6 @@ OC.L10N.register(
     "All activities" : "Kõik tegevused",
     "By others" : "Teiste poolt",
     "By you" : "Sinu poolt",
-    "Activity notification for %s" : "Tegevuse: %s, märguanne",
     "Hello %s" : "Tere %s",
     "Hello %s," : "Tere %s,",
     "There was some activity at %s" : "Mõningane tegevus %s",
@@ -42,6 +41,7 @@ OC.L10N.register(
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
     "An error occurred while loading activities" : "Tegevuse laadimisel tekkis tõrge",
     "Load more activities" : "Lae rohkem tegevusi",
+    "Activity notification for %s" : "Tegevuse: %s, märguanne",
     "This application enables users to view actions related to their files in Nextcloud." : "See rakendus võimaldab kasutajal vaadata oma Nextcloudi failidega seonduvaid tegevsi."
 },
 "nplurals=2; plural=(n != 1);");

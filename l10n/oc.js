@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "Totas las activitats",
     "By others" : "Per d’autres",
     "By you" : "Per vos",
-    "Activity notification for %s" : "Notificacion d’activitat per %s",
     "Hello %s" : "Adieu %s",
     "Hello %s," : "Adieu %s,",
     "There was some activity at %s" : "I a agut una activitat a %s",
@@ -48,6 +47,7 @@ OC.L10N.register(
     "No more events to load" : "Pas mai d’eveniment de cargar",
     "An error occurred while loading activities" : "Una error s’es producha en cargant las activitats",
     "Load more activities" : "Cargar mai d’activiats",
+    "Activity notification for %s" : "Notificacion d’activitat per %s",
     "Send notification emails:" : "Enviar de notificacions per mail :",
     "activities" : "activitats"
 },

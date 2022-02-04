@@ -20,7 +20,6 @@ OC.L10N.register(
     "All activities" : "လုပ်ဆောင်ချက်အားလုံး",
     "By others" : "အခြားသူများမှ",
     "By you" : "သင့်ထံမှ",
-    "Activity notification for %s" : "%sအတွက် လုပ်ဆောင်မှု အသိပေးချက်",
     "Hello %s" : "မင်္ဂလာပါ %s",
     "Hello %s," : "မင်္ဂလာပါ %s၊",
     "There was some activity at %s" : "%sက လုပ်ဆောင်မှု အချို့ ရှိခဲ့သည်။",
@@ -28,6 +27,7 @@ OC.L10N.register(
     "Activity" : "လုပ်ဆောင်မှု",
     "No activity yet" : "လုပ်ဆောင်မှုမရှိသေး",
     "An error occurred while loading activities" : "ဆောင်ရွက်မှုများ လုပ်ဆောင်နေစဉ် ပြဿနာတစ်ခု ကြုံတွေ့ခဲ့သည်",
-    "Load more activities" : "လုပ်ဆောင်မှုများ ပိုမိုပြသရန်"
+    "Load more activities" : "လုပ်ဆောင်မှုများ ပိုမိုပြသရန်",
+    "Activity notification for %s" : "%sအတွက် လုပ်ဆောင်မှု အသိပေးချက်"
 },
 "nplurals=1; plural=0;");

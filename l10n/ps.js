@@ -21,7 +21,6 @@ OC.L10N.register(
     "All activities" : "ټولې کړنې",
     "By others" : "د نورو لخوا",
     "By you" : "ستاسې لخوا",
-    "Activity notification for %s" : "%s لپاره خبرتیا",
     "Hello %s" : "سلامونه %s",
     "Hello %s," : "سلامونه %s،",
     "There was some activity at %s" : "په %s کې يو څه فعاليت و",
@@ -42,6 +41,7 @@ OC.L10N.register(
     "No more events to load" : "نورې کړنې نشته",
     "An error occurred while loading activities" : "د کړنو د لیدلو په وخت کې يوه ستونزه رامنځ ته شوه.",
     "Load more activities" : "نورې کړنې پرانيستل",
+    "Activity notification for %s" : "%s لپاره خبرتیا",
     "This application enables users to view actions related to their files in Nextcloud." : "دغه اپلیکیشن کاروونکو ته دا اجازه ورکوي په Nextcloud کې خپلو دوتنو ته ورته کړنې وويني."
 },
 "nplurals=2; plural=(n != 1);");

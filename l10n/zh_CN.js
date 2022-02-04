@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "所有动态",
     "By others" : "其他来源",
     "By you" : "本地来源",
-    "Activity notification for %s" : "%s 的动态通知",
     "Hello %s" : "%s 你好",
     "Hello %s," : "%s 你好，",
     "There was some activity at %s" : "在 %s 里有一些动态",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "No more events to load" : "已无更多事件",
     "An error occurred while loading activities" : "加载动态时发生错误",
     "Load more activities" : "加载更多动态",
+    "Activity notification for %s" : "%s 的动态通知",
     "This application enables users to view actions related to their files in Nextcloud." : "本应用可以让用户们查看和他们在Nextcloud上的文件相关的活动。",
     "Send notification emails:" : "发送通知邮件",
     "activities" : "活动"

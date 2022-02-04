@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "กิจกรรมทั้งหมด",
     "By others" : "โดยผู้อื่น",
     "By you" : "โดยคุณ",
-    "Activity notification for %s" : "การแจ้งเตือนกิจกรรมสำหรับ %s",
     "Hello %s" : "สวัสดี %s",
     "Hello %s," : "สวัสดี %s",
     "There was some activity at %s" : "มีกิจกรรมบางอย่างที่ %s",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "No more events to load" : "ไม่มีกิจกรรมเพิ่มเติมที่จะโหลด",
     "An error occurred while loading activities" : "เกิดข้อผิดพลาดขณะโหลดกิจกรรม",
     "Load more activities" : "โหลดกิจกรรมเพิ่มเติม",
+    "Activity notification for %s" : "การแจ้งเตือนกิจกรรมสำหรับ %s",
     "This application enables users to view actions related to their files in Nextcloud." : "แอปพลิเคชันนี้ช่วยให้ผู้ใช้สามารถดูการทำงานที่เกี่ยวข้องกับไฟล์ของผู้ใช้ใน Nextcloud",
     "Send notification emails:" : "ส่งอีเมลแจ้งเตือน:",
     "activities" : "กิจกรรม"
