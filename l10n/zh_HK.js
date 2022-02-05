@@ -24,6 +24,7 @@ OC.L10N.register(
     "All activities" : "所有系統事件",
     "By others" : "其他人的活動",
     "By you" : "您的活動",
+    "Activity on %s" : "%s 上的活動",
     "Hello %s" : "%s 您好",
     "Hello %s," : "%s 您好，",
     "There was some activity at %s" : "%s 有一些系統事件",
