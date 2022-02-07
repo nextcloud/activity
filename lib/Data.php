@@ -43,6 +43,12 @@ class Data {
 	/** @var IDBConnection */
 	protected $connection;
 
+	/** @var ?IQueryBuilder */
+	protected $insertActivity;
+
+	/** @var ?IQueryBuilder */
+	protected $insertMail;
+
 	/**
 	 * @param IManager $activityManager
 	 * @param IDBConnection $connection
@@ -63,44 +69,47 @@ class Data {
 			return 0;
 		}
 
-		// store in DB
-		$queryBuilder = $this->connection->getQueryBuilder();
-		$queryBuilder->insert('activity')
-			->values([
-				'app' => $queryBuilder->createParameter('app'),
-				'subject' => $queryBuilder->createParameter('subject'),
-				'subjectparams' => $queryBuilder->createParameter('subjectparams'),
-				'message' => $queryBuilder->createParameter('message'),
-				'messageparams' => $queryBuilder->createParameter('messageparams'),
-				'file' => $queryBuilder->createParameter('object_name'),
-				'link' => $queryBuilder->createParameter('link'),
-				'user' => $queryBuilder->createParameter('user'),
-				'affecteduser' => $queryBuilder->createParameter('affecteduser'),
-				'timestamp' => $queryBuilder->createParameter('timestamp'),
-				'priority' => $queryBuilder->createParameter('priority'),
-				'type' => $queryBuilder->createParameter('type'),
-				'object_type' => $queryBuilder->createParameter('object_type'),
-				'object_id' => $queryBuilder->createParameter('object_id'),
-			])
-			->setParameters([
-				'app' => $event->getApp(),
-				'type' => $event->getType(),
-				'affecteduser' => $event->getAffectedUser(),
-				'user' => $event->getAuthor(),
-				'timestamp' => $event->getTimestamp(),
-				'subject' => $event->getSubject(),
-				'subjectparams' => json_encode($event->getSubjectParameters()),
-				'message' => $event->getMessage(),
-				'messageparams' => json_encode($event->getMessageParameters()),
-				'priority' => IExtension::PRIORITY_MEDIUM,
-				'object_type' => $event->getObjectType(),
-				'object_id' => $event->getObjectId(),
-				'object_name' => $event->getObjectName(),
-				'link' => $event->getLink(),
-			])
-			->execute();
+		if ($this->insertActivity === null) {
+			$this->insertActivity = $this->connection->getQueryBuilder();
+			$this->insertActivity->insert('activity')
+				->values([
+					'app' => $this->insertActivity->createParameter('app'),
+					'subject' => $this->insertActivity->createParameter('subject'),
+					'subjectparams' => $this->insertActivity->createParameter('subjectparams'),
+					'message' => $this->insertActivity->createParameter('message'),
+					'messageparams' => $this->insertActivity->createParameter('messageparams'),
+					'file' => $this->insertActivity->createParameter('object_name'),
+					'link' => $this->insertActivity->createParameter('link'),
+					'user' => $this->insertActivity->createParameter('user'),
+					'affecteduser' => $this->insertActivity->createParameter('affecteduser'),
+					'timestamp' => $this->insertActivity->createParameter('timestamp'),
+					'priority' => $this->insertActivity->createParameter('priority'),
+					'type' => $this->insertActivity->createParameter('type'),
+					'object_type' => $this->insertActivity->createParameter('object_type'),
+					'object_id' => $this->insertActivity->createParameter('object_id'),
+				]);
+		}
 
-		return $queryBuilder->getLastInsertId();
+		// store in DB
+		$this->insertActivity->setParameters([
+			'app' => $event->getApp(),
+			'type' => $event->getType(),
+			'affecteduser' => $event->getAffectedUser(),
+			'user' => $event->getAuthor(),
+			'timestamp' => $event->getTimestamp(),
+			'subject' => $event->getSubject(),
+			'subjectparams' => json_encode($event->getSubjectParameters()),
+			'message' => $event->getMessage(),
+			'messageparams' => json_encode($event->getMessageParameters()),
+			'priority' => IExtension::PRIORITY_MEDIUM,
+			'object_type' => $event->getObjectType(),
+			'object_id' => $event->getObjectId(),
+			'object_name' => $event->getObjectName(),
+			'link' => $event->getLink(),
+		]);
+		$this->insertActivity->executeStatement();
+
+		return $this->insertActivity->getLastInsertId();
 	}
 
 	/**
@@ -116,20 +125,35 @@ class Data {
 			return false;
 		}
 
-		$query = $this->connection->getQueryBuilder();
-		$query->insert('activity_mq')
-			->values([
-				'amq_appid' => $query->createNamedParameter($event->getApp()),
-				'amq_subject' => $query->createNamedParameter($event->getSubject()),
-				'amq_subjectparams' => $query->createNamedParameter(json_encode($event->getSubjectParameters())),
-				'amq_affecteduser' => $query->createNamedParameter($affectedUser),
-				'amq_timestamp' => $query->createNamedParameter($event->getTimestamp()),
-				'amq_type' => $query->createNamedParameter($event->getType()),
-				'amq_latest_send' => $query->createNamedParameter($latestSendTime),
-				'object_type' => $query->createNamedParameter($event->getObjectType()),
-				'object_id' => $query->createNamedParameter($event->getObjectId()),
-			]);
-		$query->execute();
+		if ($this->insertMail === null) {
+			$this->insertMail = $this->connection->getQueryBuilder();
+			$this->insertMail->insert('activity_mq')
+				->values([
+					'amq_appid' => $this->insertMail->createParameter('amq_appid'),
+					'amq_subject' => $this->insertMail->createParameter('amq_subject'),
+					'amq_subjectparams' => $this->insertMail->createParameter('amq_subjectparams'),
+					'amq_affecteduser' => $this->insertMail->createParameter('amq_affecteduser'),
+					'amq_timestamp' => $this->insertMail->createParameter('amq_timestamp'),
+					'amq_type' => $this->insertMail->createParameter('amq_type'),
+					'amq_latest_send' => $this->insertMail->createParameter('amq_latest_send'),
+					'object_type' => $this->insertMail->createParameter('object_type'),
+					'object_id' => $this->insertMail->createParameter('object_id'),
+				]);
+		}
+
+		$this->insertMail->setParameters([
+			'amq_appid' => $event->getApp(),
+			'amq_subject' => $event->getSubject(),
+			'amq_subjectparams' => json_encode($event->getSubjectParameters()),
+			'amq_affecteduser' => $affectedUser,
+			'amq_timestamp' => $event->getTimestamp(),
+			'amq_type' => $event->getType(),
+			'amq_latest_send' => $latestSendTime,
+			'object_type' => $event->getObjectType(),
+			'object_id' => $event->getObjectId(),
+		]);
+
+		$this->insertMail->executeStatement();
 
 		return true;
 	}
