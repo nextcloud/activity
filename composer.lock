@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c3a156fa9324af307447be0a3945a60",
+    "content-hash": "fa7541917faf5f2fc3887ae5acfac06b",
     "packages": [],
     "packages-dev": [
         {
@@ -13,16 +13,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
-                "reference": "2cb624ed5bbc3a9a766ea822a79b341d54438e93"
+                "reference": "6aec9c3521c554466bb7d92559782cf61f391c79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/2cb624ed5bbc3a9a766ea822a79b341d54438e93",
-                "reference": "2cb624ed5bbc3a9a766ea822a79b341d54438e93",
+                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/6aec9c3521c554466bb7d92559782cf61f391c79",
+                "reference": "6aec9c3521c554466bb7d92559782cf61f391c79",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.3 || ~8.0.0",
+                "php": "^7.4 || ~8.0 || ~8.1",
                 "psr/container": "^1.0",
                 "psr/event-dispatcher": "^1.0",
                 "psr/log": "^1.1"
@@ -49,7 +49,7 @@
                 "issues": "https://github.com/ChristophWurst/nextcloud_composer/issues",
                 "source": "https://github.com/ChristophWurst/nextcloud_composer/tree/master"
             },
-            "time": "2021-12-10T01:11:16+00:00"
+            "time": "2022-02-07T08:09:24+00:00"
         },
         {
             "name": "composer/semver",
@@ -3850,7 +3850,7 @@
     "platform": [],
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.3"
+        "php": "7.4"
     },
     "plugin-api-version": "2.1.0"
 }
