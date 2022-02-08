@@ -151,7 +151,7 @@ class ConsumerTest extends TestCase {
 			->setTimestamp(time())
 			->setSubject($subject, ['subjectParam1', 'subjectParam2'])
 			->setMessage('message', ['messageParam1', 'messageParam2'])
-			->setObject('', 0 , 'file')
+			->setObject('', 0, 'file')
 			->setLink('link');
 		$this->deleteTestActivities();
 
@@ -181,7 +181,7 @@ class ConsumerTest extends TestCase {
 			->setTimestamp($time)
 			->setSubject($subject, ['subjectParam1', 'subjectParam2'])
 			->setMessage('message', ['messageParam1', 'messageParam2'])
-			->setObject('', 0 , 'file')
+			->setObject('', 0, 'file')
 			->setLink('link');
 
 		if ($expected === false || $author === $affectedUser) {
@@ -215,7 +215,7 @@ class ConsumerTest extends TestCase {
 			->setTimestamp(time())
 			->setSubject($subject, ['subjectParam1', 'subjectParam2'])
 			->setMessage('message', ['messageParam1', 'messageParam2'])
-			->setObject('', 0 , 'file')
+			->setObject('', 0, 'file')
 			->setLink('link');
 		$this->deleteTestActivities();
 

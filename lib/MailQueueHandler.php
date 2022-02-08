@@ -384,7 +384,7 @@ class MailQueueHandler {
 		]);
 		$template->setSubject($l->t('Activity on %s', $this->getSenderData('name')));
 		$template->addHeader();
-		$template->addHeading($l->t('Hello %s',[$user->getDisplayName()]), $l->t('Hello %s,',[$user->getDisplayName()]));
+		$template->addHeading($l->t('Hello %s', [$user->getDisplayName()]), $l->t('Hello %s,', [$user->getDisplayName()]));
 
 		$homeLink = '<a href="' . $this->urlGenerator->getAbsoluteURL('/') . '">' . htmlspecialchars($this->getSenderData('name')) . '</a>';
 		$template->addBodyText(

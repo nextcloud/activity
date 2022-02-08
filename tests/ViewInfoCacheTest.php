@@ -258,7 +258,7 @@ class ViewInfoCacheTest extends TestCase {
 
 		$infoCache = $this->getCache();
 
-		$this->assertSame($expected,self::invokePrivate($infoCache, 'findInfoByPath', [$user, $path]));
+		$this->assertSame($expected, self::invokePrivate($infoCache, 'findInfoByPath', [$user, $path]));
 	}
 
 	public function dataFindInfoById(): array {

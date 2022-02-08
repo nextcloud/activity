@@ -59,7 +59,7 @@ nbproject
 /tests/js/run.sh
 /tests/karma-coverage
 /vendor
-/.php_cs.cache
+/.php-cs-fixer.cache
 
 # Vue.js
 /build/
