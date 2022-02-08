@@ -4,7 +4,7 @@
 	"license": "AGPL",
 	"require-dev": {
 		"phpunit/phpunit": "^9.5",
-		"nextcloud/coding-standard": "^0.5.0",
+		"nextcloud/coding-standard": "^1.0.0",
 		"psalm/phar": "^4.3",
 		"christophwurst/nextcloud": "dev-master"
 	},
