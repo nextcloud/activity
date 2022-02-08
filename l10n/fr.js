@@ -13,7 +13,7 @@ OC.L10N.register(
     "There are no events for this filter" : "Il n'y a aucun événement pour ce filtre",
     "Today" : "Aujourd'hui",
     "Yesterday" : "Hier",
-    "Open {filename}" : "Ouvrir {filename}",
+    "Open {filename}" : "Ouvrir {fichier}",
     "Personal activity feed for %s" : "Flux d'activité personnel de %s",
     "Your feed URL is invalid" : "Votre URL de fil d’activité n'est pas valide",
     "Your settings have been updated." : "Vos paramètres ont été mis à jour.",
