@@ -104,7 +104,7 @@ class ApplicationTest extends TestCase {
 			[EmailNotification::class],
 			[EmailNotification::class, TimedJob::class],
 			[ExpireActivities::class,],
-			[ExpireActivities::class, TimedJob::class],
+			[ExpireActivities::class, \OCP\BackgroundJob\TimedJob::class],
 
 			// Controller
 			[ActivitiesController::class],
@@ -131,6 +131,6 @@ class ApplicationTest extends TestCase {
 		if ($expected === null) {
 			$expected = $service;
 		}
-		$this->assertInstanceOf($expected, $this->container->query($service));
+		$this->assertInstanceOf($expected, $this->container->get($service));
 	}
 }

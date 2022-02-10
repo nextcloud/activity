@@ -29,6 +29,7 @@ use Doctrine\DBAL\Platforms\SqlitePlatform;
 use OCA\Activity\BackgroundJob\ExpireActivities;
 use OCA\Activity\Data;
 use OCP\Activity\IExtension;
+use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\DB\IPreparedStatement;
 use OCP\IConfig;
 use OCP\IUserSession;
@@ -107,10 +108,15 @@ class DataDeleteActivitiesTest extends TestCase {
 
 	public function testExpireActivities(): void {
 		$config = $this->createMock(IConfig::class);
+		$time = $this->createMock(ITimeFactory::class);
+		$time->method('getTime')
+			->willReturn(time());
 		$backgroundjob = new ExpireActivities(
+			$time,
 			$this->data,
 			$config
 		);
+		$backgroundjob->setId(1);
 		$this->assertUserActivities(['delete', 'otherUser']);
 		$jobList = $this->createMock(IJobList::class);
 		$backgroundjob->execute($jobList);
