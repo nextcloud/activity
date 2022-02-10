@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "Wszystkie aktywności",
     "By others" : "Przez innych",
     "By you" : "Przez Ciebie",
-    "Activity on %s" : "Aktywność w %s",
     "Hello %s" : "Witaj %s",
     "Hello %s," : "Witaj %s,",
     "There was some activity at %s" : "Zaistniała aktywność przy %s",

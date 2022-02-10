@@ -24,7 +24,6 @@ OC.L10N.register(
     "All activities" : "Všetky aktivity",
     "By others" : "Aktivity ostatných",
     "By you" : "Vlastné aktivity",
-    "Activity on %s" : "Aktivita na %s",
     "Hello %s" : "Ahoj %s",
     "Hello %s," : "Ahoj %s,",
     "There was some activity at %s" : "Bola zaznamenaná aktivita u používateľa %s",
