@@ -28,6 +28,7 @@ use OC\BackgroundJob\JobList;
 use OCA\Activity\BackgroundJob\ExpireActivities;
 use OCA\Activity\Data;
 use OCA\Activity\Tests\TestCase;
+use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\IConfig;
 use OCP\BackgroundJob\IJobList;
 
@@ -40,6 +41,7 @@ use OCP\BackgroundJob\IJobList;
 class ExpireActivitiesTest extends TestCase {
 	public function testExecute(): void {
 		$backgroundJob = new ExpireActivities(
+			$this->createMock(ITimeFactory::class),
 			$this->createMock(Data::class),
 			$this->createMock(IConfig::class)
 		);
