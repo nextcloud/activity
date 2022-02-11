@@ -59,20 +59,28 @@ class Application extends App implements IBootstrap {
 		parent::__construct(self::APP_ID);
 	}
 
+	/**
+	 * @psalm-suppress UndefinedClass
+	 */
 	public function register(IRegistrationContext $context): void {
 		$context->registerService('ActivityDBConnection', function (ContainerInterface $c) {
 			$systemConfig = $c->get(SystemConfig::class);
 			$factory = new \OC\DB\ConnectionFactory($systemConfig);
 			$type = $systemConfig->getValue('dbtype', 'sqlite');
 			if (!$factory->isValidType($type)) {
+				/** @psalm-suppress InvalidThrow */
 				throw new \OC\DatabaseException('Invalid database type');
 			}
 			$connectionParams = $factory->createConnectionParams('activity_');
 			$connection = $factory->getConnection($type, $connectionParams);
+			/** @psalm-suppress MissingDependency */
 			$connection->getConfiguration()->setSQLLogger($c->get(\OCP\Diagnostics\IQueryLogger::class));
 			return $connection;
 		});
 
+		/**
+		 * @psalm-suppress UndefinedClass
+		 */
 		$context->registerService('ActivityConnectionAdapter', function (ContainerInterface $c) {
 			$systemConfig = $c->get(SystemConfig::class);
 			$configPrefix = 'activity_';
