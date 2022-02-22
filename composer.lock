@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c3a156fa9324af307447be0a3945a60",
+    "content-hash": "48e1b5eef7e8154f9b3a522fc7e2435a",
     "packages": [],
     "packages-dev": [
         {
             "name": "christophwurst/nextcloud",
-            "version": "dev-master",
+            "version": "dev-stable22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
-                "reference": "47f5b03bdfb678b53c338098d397938db5fd7446"
+                "reference": "bb417df98b148e26119e1814da14114575bb0521"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/47f5b03bdfb678b53c338098d397938db5fd7446",
-                "reference": "47f5b03bdfb678b53c338098d397938db5fd7446",
+                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/bb417df98b148e26119e1814da14114575bb0521",
+                "reference": "bb417df98b148e26119e1814da14114575bb0521",
                 "shasum": ""
             },
             "require": {
@@ -27,11 +27,10 @@
                 "psr/event-dispatcher": "^1.0",
                 "psr/log": "^1.1"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "22.0.0-dev"
+                    "dev-master": "23.0.0-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -47,9 +46,9 @@
             "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
             "support": {
                 "issues": "https://github.com/ChristophWurst/nextcloud_composer/issues",
-                "source": "https://github.com/ChristophWurst/nextcloud_composer/tree/master"
+                "source": "https://github.com/ChristophWurst/nextcloud_composer/tree/stable22"
             },
-            "time": "2021-04-16T23:45:11+00:00"
+            "time": "2022-02-22T09:43:07+00:00"
         },
         {
             "name": "composer/semver",
@@ -3872,5 +3871,5 @@
     "platform-overrides": {
         "php": "7.3"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
