@@ -26,6 +26,7 @@
 				<referencedClass name="OC\TagManager" />
 				<referencedClass name="OC_Template" />
 				<referencedClass name="OCA\Files\Event\LoadSidebar" />
+				<referencedClass name="OCA\Files_Sharing\External\Storage" />
 			</errorLevel>
 		</UndefinedClass>
 		<UndefinedDocblockClass>
