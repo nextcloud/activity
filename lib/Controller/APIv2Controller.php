@@ -373,15 +373,19 @@ class APIv2Controller extends OCSController {
 		} else {
 			$this->view->chroot('/' . $owner . '/files');
 			$fileInfo = $this->view->getFileInfo($info['path']);
-			if (!$fileInfo instanceof FileInfo) {
+			if (!($fileInfo instanceof FileInfo)) {
 				$preview = $this->getPreviewFromPath($fileId, $filePath, $info);
 			} elseif ($this->preview->isAvailable($fileInfo)) {
-				$preview['source'] = $this->urlGenerator->linkToRouteAbsolute('core.Preview.getPreview', [
-					'file' => $info['path'],
-					'c' => $this->view->getETag($info['path']),
-					'x' => 150,
-					'y' => 150,
-				]);
+				$params = [
+					'forceIcon' => 0,
+					'a' => 0,
+					'x' => 250,
+					'y' => 250,
+					'fileId' => $fileId,
+					'c' => $fileInfo->getEtag()
+				];
+
+				$preview['source'] = $this->urlGenerator->linkToRouteAbsolute('core.Preview.getPreviewByFileId', $params);
 				$preview['mimeType'] = $fileInfo->getMimetype() ?: 'application/octet-stream';
 				$preview['isMimeTypeIcon'] = false;
 			} else {
