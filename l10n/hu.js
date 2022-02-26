@@ -24,6 +24,7 @@ OC.L10N.register(
     "All activities" : "Minden tevékenység",
     "By others" : "Másoké",
     "By you" : "Az Öné",
+    "Activity at %s" : "Tevékenység ekkor: %s",
     "Hello %s" : "Kedves %s",
     "Hello %s," : "Kedves %s!",
     "There was some activity at %s" : "Tevékenység volt ennél: %s",
