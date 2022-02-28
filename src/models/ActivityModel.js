@@ -31,7 +31,7 @@ import moment from '@nextcloud/moment'
 
 export default class ActivityModel {
 
-	_activity;
+	_activity
 
 	/**
 	 * Create the activity object
