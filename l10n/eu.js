@@ -24,6 +24,7 @@ OC.L10N.register(
     "All activities" : "Jarduera guztiak",
     "By others" : "Besteenak",
     "By you" : "Zureak",
+    "Activity at %s" : "Jarduera %s -n",
     "Hello %s" : "Kaixo %s",
     "Hello %s," : "Kaixo %s,",
     "There was some activity at %s" : "%s-(e)n jarduera egon da",
