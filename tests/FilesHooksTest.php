@@ -415,28 +415,31 @@ class FilesHooksTest extends TestCase {
 						$this->getUserMock('user'),
 						1,
 						1,
-						'/user/files/',
+						'/user/files',
 						null,
 						'',
-						'path'
+						'path',
+						'files/path'
 					),
 					new CachedMountFileInfo(
 						$this->getUserMock('user1'),
 						1,
 						1,
-						'/user1/files/',
+						'/user1/files',
 						null,
 						'',
-						'path'
+						'path',
+						'files/path'
 					),
 					new CachedMountFileInfo(
 						$this->getUserMock('user2'),
 						1,
 						1,
-						'/user2/files/',
+						'/user2/files',
 						null,
 						'',
-						'path'
+						'path',
+						'files/path'
 					)
 				]);
 		} else {
