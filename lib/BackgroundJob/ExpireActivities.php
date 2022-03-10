@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -22,34 +24,31 @@
 
 namespace OCA\Activity\BackgroundJob;
 
-use OC\BackgroundJob\TimedJob;
 use OCA\Activity\Data;
+use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\BackgroundJob\TimedJob;
 use OCP\IConfig;
 
-/**
- * Class ExpireActivities
- *
- * @package OCA\Activity\BackgroundJob
- */
 class ExpireActivities extends TimedJob {
 	/** @var Data */
 	protected $data;
 	/** @var IConfig */
 	protected $config;
 
-	/**
-	 * @param Data $data
-	 * @param IConfig $config
-	 */
-	public function __construct(Data $data, IConfig $config) {
+	public function __construct(ITimeFactory $time,
+								Data $data,
+								IConfig $config) {
+		parent::__construct($time);
+
 		// Run once per day
 		$this->setInterval(60 * 60 * 24);
+		$this->setTimeSensitivity(self::TIME_INSENSITIVE);
 
 		$this->data = $data;
 		$this->config = $config;
 	}
 
-	protected function run($argument) {
+	protected function run($argument): void {
 		// Remove activities that are older then one year
 		$expireDays = $this->config->getSystemValue('activity_expire_days', 365);
 		$this->data->expire($expireDays);
