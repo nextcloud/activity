@@ -55,7 +55,7 @@
 			</span>
 			<div id="activity-personal-settings-link">
 				<a href="<?php p($_['personalSettingsLink']); ?>">
-					<span class="no-icon"><?php p($l->t('Personal activity settings')); ?></span>
+					<span class="no-icon"><?php p($l->t('Personal notification settings')); ?></span>
 				</a>
 			</div>
 		</div>
