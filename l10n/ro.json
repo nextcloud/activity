@@ -53,13 +53,13 @@
     "Settings" : "Setări",
     "Enable RSS feed" : "Activați flux RSS",
     "RSS feed" : "Flux RSS",
-    "Personal Activity Settings" : "Setări de activitate personale",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
     "An error occurred while loading activities" : "A apărut o eroare la încărcarea activităților",
     "Load more activities" : "Încarcă mai multe activități",
     "Activity notification for %s" : "Notificare activitate pentru %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Aceasta aplicație permite utilizatorilor sa vizualizeze acțiuni aferente fișierelor din Nextcloud.",
     "Send notification emails:" : "Trimite notificări pe e-mail:",
+    "Personal Activity Settings" : "Setări de activitate personale",
     "activities" : "activități"
 },"pluralForm" :"nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));"
 }

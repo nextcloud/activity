@@ -53,13 +53,13 @@
     "Settings" : "Instellingen",
     "Enable RSS feed" : "Zet RSS-kanaal aan",
     "RSS feed" : "RSS-kanaal",
-    "Personal Activity Settings" : "Persoonlijke Activiteiten-instellingen",
     "No more events to load" : "Geen activiteiten meer beschikbaar",
     "An error occurred while loading activities" : "Er is een fout opgetreden bij het laden van activiteiten",
     "Load more activities" : "Laad meer activiteiten",
     "Activity notification for %s" : "Activiteitsmelding voor %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Deze applicatie laat gebruikers acties met betrekking tot hun bestanden op Nextcloud zien",
     "Send notification emails:" : "Stuur e-mailnotificaties:",
+    "Personal Activity Settings" : "Persoonlijke Activiteiten-instellingen",
     "activities" : "activiteiten"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

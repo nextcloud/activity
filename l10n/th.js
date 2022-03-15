@@ -51,13 +51,13 @@ OC.L10N.register(
     "Settings" : "การตั้งค่า",
     "Enable RSS feed" : "เปิดใช้งานฟีด RSS",
     "RSS feed" : "ฟีด RSS",
-    "Personal Activity Settings" : "การตั้งค่ากิจกรรมส่วนตัว",
     "No more events to load" : "ไม่มีกิจกรรมเพิ่มเติมที่จะโหลด",
     "An error occurred while loading activities" : "เกิดข้อผิดพลาดขณะโหลดกิจกรรม",
     "Load more activities" : "โหลดกิจกรรมเพิ่มเติม",
     "Activity notification for %s" : "การแจ้งเตือนกิจกรรมสำหรับ %s",
     "This application enables users to view actions related to their files in Nextcloud." : "แอปพลิเคชันนี้ช่วยให้ผู้ใช้สามารถดูการทำงานที่เกี่ยวข้องกับไฟล์ของผู้ใช้ใน Nextcloud",
     "Send notification emails:" : "ส่งอีเมลแจ้งเตือน:",
+    "Personal Activity Settings" : "การตั้งค่ากิจกรรมส่วนตัว",
     "activities" : "กิจกรรม"
 },
 "nplurals=1; plural=0;");

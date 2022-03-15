@@ -53,13 +53,13 @@
     "Settings" : "Inställningar",
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "RSS feed" : "RSS-flöde",
-    "Personal Activity Settings" : "Personliga inställningar för händelser",
     "No more events to load" : "Inga fler aktiviteter.",
     "An error occurred while loading activities" : "Något gick snett vid inläsning av aktiviteter",
     "Load more activities" : "Läs in fler aktiviteter",
     "Activity notification for %s" : "Notis om aktivitet för %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Denna applikation låter användarna se händelser relaterade till deras filer i Nextcloud.",
     "Send notification emails:" : "Skicka notifieringar via e-post:",
+    "Personal Activity Settings" : "Personliga inställningar för händelser",
     "activities" : "händelser"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

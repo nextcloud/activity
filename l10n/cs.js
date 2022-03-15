@@ -55,13 +55,13 @@ OC.L10N.register(
     "Settings" : "Nastavení",
     "Enable RSS feed" : "Zapnout RSS kanál",
     "RSS feed" : "RSS kanál",
-    "Personal Activity Settings" : "Nastavení pro osobní aktivity",
     "No more events to load" : "Žádné další události k načtení",
     "An error occurred while loading activities" : "Při načítání aktivit došlo k chybě",
     "Load more activities" : "Načíst více aktivit",
     "Activity notification for %s" : "Upozornění na aktivitu pro %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Tato aplikace umožňuje uživatelům prohlížet aktivity vztahující se k jejich souborům v Nextcloud.",
     "Send notification emails:" : "Poslat upozorňovací e-maily:",
+    "Personal Activity Settings" : "Nastavení pro osobní aktivity",
     "activities" : "aktivity"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

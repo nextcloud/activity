@@ -51,13 +51,13 @@
     "Settings" : "Nastavitve",
     "Enable RSS feed" : "Omogoči vire RSS",
     "RSS feed" : "Viri RSS",
-    "Personal Activity Settings" : "Nastavitve osebne dejavnosti",
     "No more events to load" : "Ni načrtovanih drugih dogodkov",
     "An error occurred while loading activities" : "Med nalaganjem dejavnosti je prišlo do napake",
     "Load more activities" : "Naloži več dejavnosti",
     "Activity notification for %s" : "Obvestila o dejavnosti za %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Program omogoča pregled dogodkov in dejavnosti, povezanih z datotekami v oblaku Nextcloud.",
     "Send notification emails:" : "Pošlji obvestila prek elektronske pošte:",
+    "Personal Activity Settings" : "Nastavitve osebne dejavnosti",
     "activities" : "dejavnosti"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

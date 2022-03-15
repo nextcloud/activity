@@ -51,13 +51,13 @@
     "Settings" : "設定",
     "Enable RSS feed" : "RSSフィードを有効にする",
     "RSS feed" : "RSS フィード",
-    "Personal Activity Settings" : "個人のアクティビティ設定",
     "No more events to load" : "これ以上読み込むイベントはありません",
     "An error occurred while loading activities" : "アクティビティの読み込み中にエラーが発生しました",
     "Load more activities" : "さらにアクティビティを読み込む",
     "Activity notification for %s" : "\"%s\" のアクティビティ通知",
     "This application enables users to view actions related to their files in Nextcloud." : "このアプリケーションは、ユーザーのファイル関連のアクションを表示します。",
     "Send notification emails:" : "通知メール送信のタイミング: ",
+    "Personal Activity Settings" : "個人のアクティビティ設定",
     "activities" : "アクティビティ"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
