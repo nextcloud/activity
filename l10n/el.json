@@ -51,13 +51,13 @@
     "Settings" : "Ρυθμίσεις",
     "Enable RSS feed" : "Ενεργοποίηση ροής πληροφοριών RSS",
     "RSS feed" : "Ροή RSS",
-    "Personal Activity Settings" : "Ρυθμίσεις προσωπικών δραστηριοτήτων",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "An error occurred while loading activities" : "Παρουσιάστηκε σφάλμα κατά την φόρτωση των δραστηριοτήτων",
     "Load more activities" : "Φόρτωση περισσότερων δραστηριοτήτων",
     "Activity notification for %s" : "Ειδοποίηση δραστηριότητας για %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Η εφαρμογή επιτρέπει στους χρήστες να δουν ενέργειες που αφορούν τα αρχεία τους στο Nextcloud.",
     "Send notification emails:" : "Αποστολή ειδοποιήσεων μέσω email:",
+    "Personal Activity Settings" : "Ρυθμίσεις προσωπικών δραστηριοτήτων",
     "activities" : "δραστηριότητες"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -55,13 +55,13 @@ OC.L10N.register(
     "Settings" : "Paràmetres",
     "Enable RSS feed" : "Habilita el canal RSS",
     "RSS feed" : "Canal RSS",
-    "Personal Activity Settings" : "Paràmetres de l'activitat personal",
     "No more events to load" : "No hi ha més esdeveniments",
     "An error occurred while loading activities" : "S'ha produït un error en carregar l'activitat",
     "Load more activities" : "Carrega més activitat",
     "Activity notification for %s" : "Notificació d'activitat per a %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Aquesta aplicació permet als usuaris veure les accions relacionades amb els seus fitxers al Nextcloud.",
     "Send notification emails:" : "Envia els correus electrònics de notificació:",
+    "Personal Activity Settings" : "Paràmetres de l'activitat personal",
     "activities" : "activitats"
 },
 "nplurals=2; plural=(n != 1);");
