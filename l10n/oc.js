@@ -43,12 +43,12 @@ OC.L10N.register(
     "Settings" : "Paramètres",
     "Enable RSS feed" : "Activar lo flux RSS",
     "RSS feed" : "Flux RSS",
-    "Personal Activity Settings" : "Paramètres d’activitats personals",
     "No more events to load" : "Pas mai d’eveniment de cargar",
     "An error occurred while loading activities" : "Una error s’es producha en cargant las activitats",
     "Load more activities" : "Cargar mai d’activiats",
     "Activity notification for %s" : "Notificacion d’activitat per %s",
     "Send notification emails:" : "Enviar de notificacions per mail :",
+    "Personal Activity Settings" : "Paramètres d’activitats personals",
     "activities" : "activitats"
 },
 "nplurals=2; plural=(n > 1);");

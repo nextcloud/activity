@@ -49,13 +49,13 @@ OC.L10N.register(
     "Settings" : "Konfigurimet",
     "Enable RSS feed" : "Aktivizoni Prurje RSS",
     "RSS feed" : "Prurja RSS",
-    "Personal Activity Settings" : "Cilësimet e Aktivitetit Personal",
     "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
     "An error occurred while loading activities" : "Ndodhi një gabim gjatë ngarkimit të aktiviteteve",
     "Load more activities" : "Ngarko më tepër veprimtari",
     "Activity notification for %s" : "Njoftim i aktivitetit për %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Ky aplikacion u mundëson përdoruesve të shikojnë veprimet lidhur me skedarët e tyre në Nextcloud.",
     "Send notification emails:" : "Dërgo email njoftimi:",
+    "Personal Activity Settings" : "Cilësimet e Aktivitetit Personal",
     "activities" : "aktivitetet"
 },
 "nplurals=2; plural=(n != 1);");

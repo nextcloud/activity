@@ -55,13 +55,13 @@ OC.L10N.register(
     "Settings" : "Ezarpenak",
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "RSS feed" : "RSS jarioa",
-    "Personal Activity Settings" : "Jarduera pertsonal ezarpenak",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
     "An error occurred while loading activities" : "Errorea gertatu da jarduerak kargatzean",
     "Load more activities" : "Kargatu jarduera gehiago",
     "Activity notification for %s" : "Ekintza ohartarazpena honetarako: %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Aplikazio honek aukera ematen die erabiltzaileei Nextcloud-eko euren fitxategiekin lotutako ekintzak ikusteko.",
     "Send notification emails:" : "Bidali jakinarazpen e-postak",
+    "Personal Activity Settings" : "Jarduera pertsonal ezarpenak",
     "activities" : "Jarduerak"
 },
 "nplurals=2; plural=(n != 1);");

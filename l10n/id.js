@@ -51,13 +51,13 @@ OC.L10N.register(
     "Settings" : "Pengaturan",
     "Enable RSS feed" : "Aktifkan RSS feed",
     "RSS feed" : "RSS feed",
-    "Personal Activity Settings" : "Pengaturan Aktivitas Pribadi",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
     "An error occurred while loading activities" : "Terjadi kesalahan saat memuat aktivitas",
     "Load more activities" : "Muat aktivitas lainnya",
     "Activity notification for %s" : "Notifikasi aktifitas untuk %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Aplikasi ini memungkinkan pengguna untuk melihat aksi yang terkait dengan file yang mereka simpan di NextCloud",
     "Send notification emails:" : "Kirim notifikasi ke email",
+    "Personal Activity Settings" : "Pengaturan Aktivitas Pribadi",
     "activities" : "aktivitas"
 },
 "nplurals=1; plural=0;");
