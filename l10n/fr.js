@@ -55,13 +55,13 @@ OC.L10N.register(
     "Settings" : "Paramètres",
     "Enable RSS feed" : "Activer les flux RSS",
     "RSS feed" : "Flux RSS",
-    "Personal Activity Settings" : "Paramètres de l'activité personnelle",
     "No more events to load" : "Plus aucun événement à charger",
     "An error occurred while loading activities" : "Une erreur est survenue lors du chargement des activités",
     "Load more activities" : "Charger plus d'activités",
     "Activity notification for %s" : "Notification d'activité pour %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Cette application permet aux utilisateurs de voir les actions concernant leurs fichiers dans Nextcloud.",
     "Send notification emails:" : "Envoyer des e-mails de notification :",
+    "Personal Activity Settings" : "Paramètres de l'activité personnelle",
     "activities" : "activités"
 },
 "nplurals=2; plural=(n > 1);");

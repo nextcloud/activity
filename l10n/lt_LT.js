@@ -53,13 +53,13 @@ OC.L10N.register(
     "Settings" : "Nustatymai",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "RSS feed" : "RSS kanalas",
-    "Personal Activity Settings" : "Asmeninės veiklos nustatymai",
     "No more events to load" : "Nėra daugiau rodytinų įvykių",
     "An error occurred while loading activities" : "Įkeliant veiklas, įvyko klaida",
     "Load more activities" : "Įkelti daugiau veiklų",
     "Activity notification for %s" : "Aktyvumo pranešimai %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Programa skirta naudotojams stebėti su jų failais susijusius veiksmus Nextcloud'e.",
     "Send notification emails:" : "Siųsti pranešimus el. paštu:",
+    "Personal Activity Settings" : "Asmeninės veiklos nustatymai",
     "activities" : "veiklos"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

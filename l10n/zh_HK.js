@@ -55,13 +55,13 @@ OC.L10N.register(
     "Settings" : "設定",
     "Enable RSS feed" : "啟用 RSS 摘要",
     "RSS feed" : "RSS 摘要",
-    "Personal Activity Settings" : "個人活動設定",
     "No more events to load" : "已載入所有事件",
     "An error occurred while loading activities" : "載入系統事件時發生錯誤",
     "Load more activities" : "載入更多系統事件",
     "Activity notification for %s" : "%s 的系統事件通告",
     "This application enables users to view actions related to their files in Nextcloud." : "此應用程式允許用戶在 Nextcloud 中查看與其檔案相關的操作。",
     "Send notification emails:" : "透過電郵接收通知：",
+    "Personal Activity Settings" : "個人活動設定",
     "activities" : "活動"
 },
 "nplurals=1; plural=0;");
