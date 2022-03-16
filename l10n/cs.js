@@ -55,6 +55,7 @@ OC.L10N.register(
     "Settings" : "Nastavení",
     "Enable RSS feed" : "Zapnout RSS kanál",
     "RSS feed" : "RSS kanál",
+    "Personal notification settings" : "Nastavení osobního upozorňování",
     "No more events to load" : "Žádné další události k načtení",
     "An error occurred while loading activities" : "Při načítání aktivit došlo k chybě",
     "Load more activities" : "Načíst více aktivit",
