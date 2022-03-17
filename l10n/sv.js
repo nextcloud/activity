@@ -55,6 +55,7 @@ OC.L10N.register(
     "Settings" : "Inställningar",
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "RSS feed" : "RSS-flöde",
+    "Personal notification settings" : "Egna aviseringsinställningar",
     "No more events to load" : "Inga fler aktiviteter.",
     "An error occurred while loading activities" : "Något gick snett vid inläsning av aktiviteter",
     "Load more activities" : "Läs in fler aktiviteter",
