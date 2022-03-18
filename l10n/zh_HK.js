@@ -55,6 +55,7 @@ OC.L10N.register(
     "Settings" : "設定",
     "Enable RSS feed" : "啟用 RSS 摘要",
     "RSS feed" : "RSS 摘要",
+    "Personal notification settings" : "個人通告設定",
     "No more events to load" : "已載入所有事件",
     "An error occurred while loading activities" : "載入系統事件時發生錯誤",
     "Load more activities" : "載入更多系統事件",
