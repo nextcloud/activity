@@ -55,6 +55,7 @@ OC.L10N.register(
     "Settings" : "Instellingen",
     "Enable RSS feed" : "Zet RSS-kanaal aan",
     "RSS feed" : "RSS-kanaal",
+    "Personal notification settings" : "Persoonlijke meldingsinstellingen",
     "No more events to load" : "Geen activiteiten meer beschikbaar",
     "An error occurred while loading activities" : "Er is een fout opgetreden bij het laden van activiteiten",
     "Load more activities" : "Laad meer activiteiten",
