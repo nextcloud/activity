@@ -54,6 +54,7 @@ OC.L10N.register(
     "Settings" : "تنظیمات",
     "Enable RSS feed" : "فعالسازی فید RSS",
     "RSS feed" : "فید RSS",
+    "Personal notification settings" : "تنظیمات اعلان‌های شخصی",
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
     "An error occurred while loading activities" : "در هنگام بارگزاری فعالیت ها خطایی رخ داده است ",
     "Load more activities" : "نمایش فعالیت های بیشتر",
