@@ -79,7 +79,7 @@
 		"@nextcloud/moment": "^1.2.0",
 		"@nextcloud/paths": "^2.1.0",
 		"@nextcloud/router": "^2.0.0",
-		"@nextcloud/vue": "^5.1.0",
+		"@nextcloud/vue": "^5.1.1",
 		"@nextcloud/vue-dashboard": "^2.0.1",
 		"vue": "^2.6.14"
 	},
