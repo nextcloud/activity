@@ -18,6 +18,7 @@
     "Settings have been updated." : "Налады былі абноўлены. ",
     "Recent activity" : "Апошняя актыўнасць",
     "Daily activity summary for %s" : "Зводка штодзённай дзейнасці для %s",
+    "_and %n more _::_and %n more _" : ["і яшчэ %n","і яшчэ %n","і яшчэ %n","і яшчэ %n"],
     "All activities" : "Уся дзейнасць",
     "By others" : "Іншымі",
     "By you" : "Вамі",
@@ -26,6 +27,9 @@
     "Hello %s," : "Прывітанне %s,",
     "There was some activity at %s" : "Была нейкая актыўнасць на %s",
     "Mail" : "Пошта",
+    "Push" : "Push-паведамлення",
+    "Activity" : "Падзеі",
+    "Notifications" : "Апавяшчэнні",
     "Settings" : "Налады"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }
