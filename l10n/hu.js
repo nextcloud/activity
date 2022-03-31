@@ -55,6 +55,7 @@ OC.L10N.register(
     "Settings" : "Beállítások",
     "Enable RSS feed" : "RSS-csatorna engedélyezése",
     "RSS feed" : "RSS-csatorna",
+    "Personal notification settings" : "Személyes értesítési beállítások",
     "No more events to load" : "Nincs több esemény",
     "An error occurred while loading activities" : "Hiba történt a tevékenységek betöltése közben",
     "Load more activities" : "Több tevékenység betöltése",
