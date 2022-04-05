@@ -85,6 +85,8 @@ jobs:
           files: apps/${{ env.APP_NAME }}/${{ env.PHPUNIT_CONFIG }}
 
       - name: PHPUnit
+        # Only run if phpunit config file exists
+        if: steps.check_phpunit.outputs.files_exists == 'true'
         working-directory: apps/${{ env.APP_NAME }}/tests
         run: ../vendor/bin/phpunit -c phpunit.xml
 
