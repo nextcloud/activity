@@ -35,20 +35,14 @@ jobs:
 
     steps:
       - name: Checkout server
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
+          submodules: true
           repository: nextcloud/server
           ref: ${{ matrix.server-versions }}
 
-      - name: Checkout submodules
-        shell: bash
-        run: |
-          auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-          git submodule sync --recursive
-          git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
-
       - name: Checkout app
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: apps/${{ env.APP_NAME }}
 
