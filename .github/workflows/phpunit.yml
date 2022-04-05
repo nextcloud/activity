@@ -8,7 +8,9 @@ on:
       - stable*
 
 env:
-  APP_NAME: activity
+  # Location of the phpunit.xml and phpunit.integration.xml files
+  PHPUNIT_CONFIG: ./tests/phpunit.xml
+  PHPUNIT_INTEGRATION_CONFIG: ./tests/phpunit.integration.xml
 
 jobs:
   phpunit-mysql:
@@ -34,6 +36,11 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval 5s --health-timeout 2s --health-retries 5
 
     steps:
+      - name: Set app env
+        run: |
+          # Split and keep last
+          echo "APP_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
+
       - name: Checkout server
         uses: actions/checkout@v3
         with:
