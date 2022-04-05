@@ -79,6 +79,9 @@ jobs:
         with:
           files: apps/${{ env.APP_NAME }}/${{ env.PHPUNIT_CONFIG }}
 
+      - name: Run Nextcloud
+        run: php -S localhost:8080 &
+
       - name: PHPUnit
         # Only run if phpunit config file exists
         if: steps.check_phpunit.outputs.files_exists == 'true'
@@ -90,11 +93,6 @@ jobs:
         uses: andstor/file-existence-action@v1
         with:
           files: apps/${{ env.APP_NAME }}/${{ env.PHPUNIT_INTEGRATION_CONFIG }}
-
-      - name: Run Nextcloud
-        # Only run if phpunit integration config file exists
-        if: steps.check_integration.outputs.files_exists == 'true'
-        run: php -S localhost:8080 &
 
       - name: PHPUnit integration
         # Only run if phpunit integration config file exists
