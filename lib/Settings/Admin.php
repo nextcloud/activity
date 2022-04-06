@@ -98,8 +98,8 @@ class Admin implements ISettings {
 
 			$activityGroups[$groupIdentifier]['activities'][$identifier] = [
 				'desc' => $setting->getName(),
-				IExtension::METHOD_MAIL => $this->userSettings->getConfigSetting('email', $identifier),
-				IExtension::METHOD_NOTIFICATION => $this->userSettings->getConfigSetting('notification', $identifier),
+				IExtension::METHOD_MAIL => $this->userSettings->getAdminSetting('email', $identifier),
+				IExtension::METHOD_NOTIFICATION => $this->userSettings->getAdminSetting('notification', $identifier),
 				'methods' => $methods,
 			];
 		}
@@ -111,7 +111,7 @@ class Admin implements ISettings {
 		}
 
 		$settingBatchTime = UserSettings::EMAIL_SEND_HOURLY;
-		$currentSetting = (int) $this->userSettings->getConfigSetting('setting', 'batchtime');
+		$currentSetting = (int) $this->userSettings->getAdminSetting('setting', 'batchtime');
 		if ($currentSetting === 3600 * 24 * 7) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_WEEKLY;
 		} elseif ($currentSetting === 3600 * 24) {
