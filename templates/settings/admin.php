@@ -41,7 +41,7 @@ style('activity', 'settings');
 	<h2><?php p($l->t('Default settings')); ?></h2>
 
 	<p class="settings-hint">
-		<?php p($l->t('Configure the default notification settings for new users.')); ?>
+		<?php p($l->t('Configure the default notification settings.')); ?>
 	</p>
 
 	<?php print_unescaped($this->inc('settings/form')); ?>
