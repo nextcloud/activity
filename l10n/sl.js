@@ -41,7 +41,6 @@ OC.L10N.register(
     "Activity feed" : "Objava dejavnosti z viri RSS",
     "Enable notification emails" : "Omogoči obveščanje prek elektronske pošte",
     "Default settings" : "Prevzete nastavitve",
-    "Configure the default notification settings for new users." : "Prilagodi privzete nastavitve obveščanja za nove uporabnike.",
     "You need to set up your email address before you can receive notification emails." : "Za prejemanje obvestil po elektronski pošti je treba najprej nastaviti elektronski poštni naslov.",
     "Send activity emails:" : "Pošiljaj obvestila o dejavnosti na elektronske naslove:",
     "As soon as possible" : "Čimprej",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Load more activities" : "Naloži več dejavnosti",
     "Activity notification for %s" : "Obvestila o dejavnosti za %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Program omogoča pregled dogodkov in dejavnosti, povezanih z datotekami v oblaku Nextcloud.",
+    "Configure the default notification settings for new users." : "Prilagodi privzete nastavitve obveščanja za nove uporabnike.",
     "Send notification emails:" : "Pošlji obvestila prek elektronske pošte:",
     "Personal Activity Settings" : "Nastavitve osebne dejavnosti",
     "activities" : "dejavnosti"

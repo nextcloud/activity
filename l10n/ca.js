@@ -41,7 +41,6 @@ OC.L10N.register(
     "Activity feed" : "Canal d'activitat",
     "Enable notification emails" : "Habilita els correus electrònics de notificació",
     "Default settings" : "Paràmetres per defecte",
-    "Configure the default notification settings for new users." : "Configureu els paràmetres de notificació per defecte per als usuaris nous.",
     "You need to set up your email address before you can receive notification emails." : "Heu de definir la vostra adreça de correu electrònic per a poder rebre correus electrònics de notificació.",
     "Send activity emails:" : "Envia missatges de correu sobre l'activitat:",
     "As soon as possible" : "Tan aviat com sigui possible",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Load more activities" : "Carrega més activitat",
     "Activity notification for %s" : "Notificació d'activitat per a %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Aquesta aplicació permet als usuaris veure les accions relacionades amb els seus fitxers al Nextcloud.",
+    "Configure the default notification settings for new users." : "Configureu els paràmetres de notificació per defecte per als usuaris nous.",
     "Send notification emails:" : "Envia els correus electrònics de notificació:",
     "Personal Activity Settings" : "Paràmetres de l'activitat personal",
     "activities" : "activitats"

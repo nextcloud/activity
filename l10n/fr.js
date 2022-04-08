@@ -41,7 +41,6 @@ OC.L10N.register(
     "Activity feed" : "Fil d'activité",
     "Enable notification emails" : "Activer les notifications par email",
     "Default settings" : "Paramètres par défaut",
-    "Configure the default notification settings for new users." : "Paramétrer les notifications par défaut pour les nouveaux utilisateurs.",
     "You need to set up your email address before you can receive notification emails." : "Vous devez configurer une adresse de courriel pour pouvoir recevoir des notifications par courriel.",
     "Send activity emails:" : "Envoyer des courriels d'activité:",
     "As soon as possible" : "Dès que possible",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Load more activities" : "Charger plus d'activités",
     "Activity notification for %s" : "Notification d'activité pour %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Cette application permet aux utilisateurs de voir les actions concernant leurs fichiers dans Nextcloud.",
+    "Configure the default notification settings for new users." : "Paramétrer les notifications par défaut pour les nouveaux utilisateurs.",
     "Send notification emails:" : "Envoyer des e-mails de notification :",
     "Personal Activity Settings" : "Paramètres de l'activité personnelle",
     "activities" : "activités"

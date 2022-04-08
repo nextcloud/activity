@@ -41,7 +41,6 @@ OC.L10N.register(
     "Activity feed" : "İşlem akışı",
     "Enable notification emails" : "Bildirim e-postaları kullanılsın",
     "Default settings" : "Varsayılan ayarlar",
-    "Configure the default notification settings for new users." : "Yeni kullanıcılar için varsayılan bildirim ayarlarını yapılandırın.",
     "You need to set up your email address before you can receive notification emails." : "Bildirim e-postalarını alabilmek için e-posta adresinizi belirtmelisiniz.",
     "Send activity emails:" : "İşlem e-postaları gönderilsin:",
     "As soon as possible" : "Olabildiğince çabuk",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Load more activities" : "Diğer işlemleri yükle",
     "Activity notification for %s" : "%s için işlem bildirimi",
     "This application enables users to view actions related to their files in Nextcloud." : "Bu uygulama, kullanıcıların Nextcloud üzerindeki dosyaları üzerinde yapılan işlemleri görebilmesini sağlar.",
+    "Configure the default notification settings for new users." : "Yeni kullanıcılar için varsayılan bildirim ayarlarını yapılandırın.",
     "Send notification emails:" : "Bildirim e-postaları gönderilsin:",
     "Personal Activity Settings" : "Kişisel işlem ayarları",
     "activities" : "işlem"

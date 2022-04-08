@@ -41,7 +41,6 @@ OC.L10N.register(
     "Activity feed" : "Prehľad aktivít",
     "Enable notification emails" : "Zapnúť upozorňovanie e-mailom",
     "Default settings" : "Predvolená nastavenia",
-    "Configure the default notification settings for new users." : "Nastavte predvolené nastavenia upozornení pre nových používateľov.",
     "You need to set up your email address before you can receive notification emails." : "Ak chcete dostávať oznámenia emailom, musíte najskôr vyplniť vašu emailovú adresu.",
     "Send activity emails:" : "Odoslať emaily s aktivitou:",
     "As soon as possible" : "Čo najskôr",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Load more activities" : "Načítať viac aktivít",
     "Activity notification for %s" : "Upozornenia na aktivity pre %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Táto aplikácia povolí používateľom sledovať akcie súvisiace s ich súbormi v Nextcloude.",
+    "Configure the default notification settings for new users." : "Nastavte predvolené nastavenia upozornení pre nových používateľov.",
     "Send notification emails:" : "Posielať e-mailové oznámenia: ",
     "Personal Activity Settings" : "Nastavenia osobnej aktivity",
     "activities" : "aktivity"

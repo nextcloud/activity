@@ -41,7 +41,6 @@ OC.L10N.register(
     "Activity feed" : "Flux de Activitate",
     "Enable notification emails" : "Activează notificările pe e-mail",
     "Default settings" : "Setări implicite",
-    "Configure the default notification settings for new users." : "Configurează setările de notificare implicite pentru utilizatorii noi.",
     "You need to set up your email address before you can receive notification emails." : "Trebuie să-ți configurezi adresa de email înainte de a putea primi emailurile de notificare.",
     "Send activity emails:" : "Trimitere email-uri cu activitatea:",
     "As soon as possible" : "Cât mai curând posibil",
@@ -60,6 +59,7 @@ OC.L10N.register(
     "Load more activities" : "Încarcă mai multe activități",
     "Activity notification for %s" : "Notificare activitate pentru %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Aceasta aplicație permite utilizatorilor sa vizualizeze acțiuni aferente fișierelor din Nextcloud.",
+    "Configure the default notification settings for new users." : "Configurează setările de notificare implicite pentru utilizatorii noi.",
     "Send notification emails:" : "Trimite notificări pe e-mail:",
     "Personal Activity Settings" : "Setări de activitate personale",
     "activities" : "activități"

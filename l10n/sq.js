@@ -37,7 +37,6 @@ OC.L10N.register(
     "No activities" : "Asnjë aktivitet",
     "Activity feed" : "Prurje veprimtarie",
     "Default settings" : "Konfigurime të paracaktuara",
-    "Configure the default notification settings for new users." : "Vendosni konfigurimet fillestare të aktiviteteve për përdoruesit e rinj.",
     "You need to set up your email address before you can receive notification emails." : "Kërkohet të caktoni adresën tuaj email, përpara se të mund të merrni email-e njoftimesh.",
     "As soon as possible" : "Sa më shpejt të jetë e mundur",
     "Hourly" : "Çdo orë",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Load more activities" : "Ngarko më tepër veprimtari",
     "Activity notification for %s" : "Njoftim i aktivitetit për %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Ky aplikacion u mundëson përdoruesve të shikojnë veprimet lidhur me skedarët e tyre në Nextcloud.",
+    "Configure the default notification settings for new users." : "Vendosni konfigurimet fillestare të aktiviteteve për përdoruesit e rinj.",
     "Send notification emails:" : "Dërgo email njoftimi:",
     "Personal Activity Settings" : "Cilësimet e Aktivitetit Personal",
     "activities" : "aktivitetet"
