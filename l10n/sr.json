@@ -31,7 +31,6 @@
     "Activity feed" : "Довод активности",
     "Enable notification emails" : "Укључи обавештења е-поштом",
     "Default settings" : "Подразумеване поставке",
-    "Configure the default notification settings for new users." : "Подеси подразумеване поставке обавештавања за нове кориснике.",
     "You need to set up your email address before you can receive notification emails." : "Морате поставити адресу е-поште пре почетка пријема обавештења.",
     "As soon as possible" : "Што је пре могуће",
     "Hourly" : "сваки сат",
@@ -48,6 +47,7 @@
     "Load more activities" : "Учитај још активности",
     "Activity notification for %s" : "Обавештења о активностима за %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Ова апликација омогућава корисницима да виде радње везане за њихове Некстклауд фајлове.",
+    "Configure the default notification settings for new users." : "Подеси подразумеване поставке обавештавања за нове кориснике.",
     "Send notification emails:" : "Шаљи обавештења е-поштом:"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }

@@ -39,7 +39,6 @@ OC.L10N.register(
     "Activity feed" : "Канал на активности",
     "Enable notification emails" : "Овозможи известување на E-пошта",
     "Default settings" : "Стандардни поставки",
-    "Configure the default notification settings for new users." : "Конфигурирај ги стандардните поставки за известување за нови корисници.",
     "You need to set up your email address before you can receive notification emails." : "Треба да ја внесете Вашата адреса на е-пошта за да можете да примате известувања по електронска пошта.",
     "Send activity emails:" : "Испрати активности на е-пошта:",
     "As soon as possible" : "Што побрзо",
@@ -58,6 +57,7 @@ OC.L10N.register(
     "Load more activities" : "Вчитај повеќе активности",
     "Activity notification for %s" : "Известување за активност за %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Оваа апликација им овозможува на корисниците да ги прикажуваат активностите поврзани со нивните датотеки во Nextcloud.",
+    "Configure the default notification settings for new users." : "Конфигурирај ги стандардните поставки за известување за нови корисници.",
     "Send notification emails:" : "Испрати известување на E-пошти:",
     "Personal Activity Settings" : "Параметри за лични активности",
     "activities" : "активности"

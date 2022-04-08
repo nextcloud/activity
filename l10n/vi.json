@@ -39,7 +39,6 @@
     "Activity feed" : "Nguồn cấp dữ liệu hoạt động",
     "Enable notification emails" : "Bật email thông báo",
     "Default settings" : "Cài đặt mặc định",
-    "Configure the default notification settings for new users." : "Thiết lập cài đặt thông báo mặc định cho những người dùng mới.",
     "You need to set up your email address before you can receive notification emails." : "Bạn cần phải thiết lập địa chỉ email trước khi nhận được email thông báo.",
     "Send activity emails:" : "Gửi email thông báo các hoạt động:",
     "As soon as possible" : "Ngay khi có thể",
@@ -59,6 +58,7 @@
     "Load more activities" : "Tải thêm hoạt động",
     "Activity notification for %s" : "Thông báo hoạt động của %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Đây là ứng dụng cho phép người dùng xem các hành động liên quan đến dữ liệu của họ trên vWorkspace",
+    "Configure the default notification settings for new users." : "Thiết lập cài đặt thông báo mặc định cho những người dùng mới.",
     "Send notification emails:" : "Gửi các email thông báo:",
     "Personal Activity Settings" : "Các thiết lập cho hoạt động cá nhân",
     "activities" : "Các hoạt động"

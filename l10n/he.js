@@ -33,7 +33,6 @@ OC.L10N.register(
     "Activity feed" : "דיווחי פעילות",
     "Enable notification emails" : "הפעלת התראות בדוא״ל",
     "Default settings" : "הגדרות ברירת מחדל",
-    "Configure the default notification settings for new users." : "הגדרת תצורת ההתראות כבררת מחדל למשתמשים חדשים.",
     "You need to set up your email address before you can receive notification emails." : "יש להגדיר כתובת דואר אלקטרוני לפני שניתן יהיה לקבל דיווחים.",
     "As soon as possible" : "מהר ככל האפשר",
     "Hourly" : "שעתי",
@@ -50,6 +49,7 @@ OC.L10N.register(
     "Load more activities" : "טעינת פעילויות נוספות",
     "Activity notification for %s" : "התרעת פעילות עבור %s",
     "This application enables users to view actions related to their files in Nextcloud." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שקשורות לקבצים שלהם ב־Nextcloud.",
+    "Configure the default notification settings for new users." : "הגדרת תצורת ההתראות כבררת מחדל למשתמשים חדשים.",
     "Send notification emails:" : "שלח הודעות דוא\"ל:"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

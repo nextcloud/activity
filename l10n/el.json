@@ -39,7 +39,6 @@
     "Activity feed" : "Ροή Δραστηριότητας",
     "Enable notification emails" : "Ενεργοποίηση ειδοποιήσεων μέσω e-mail",
     "Default settings" : "Προεπιλεγμένες ρυθμίσεις",
-    "Configure the default notification settings for new users." : "Καθορίστε τις προεπιλεγμένες ρυθμίσεις ειδοποιήσεων για τους νέους χρήστες.",
     "You need to set up your email address before you can receive notification emails." : "Πρέπει να ρυθμίσετε τη διεύθυνση email σας για να μπορείτε να λαμβάνετε ειδοποιήσεις μέσω email.",
     "Send activity emails:" : "Αποστολή email δραστηριοτήτων",
     "As soon as possible" : "Το συντομότερο δυνατό",
@@ -59,6 +58,7 @@
     "Load more activities" : "Φόρτωση περισσότερων δραστηριοτήτων",
     "Activity notification for %s" : "Ειδοποίηση δραστηριότητας για %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Η εφαρμογή επιτρέπει στους χρήστες να δουν ενέργειες που αφορούν τα αρχεία τους στο Nextcloud.",
+    "Configure the default notification settings for new users." : "Καθορίστε τις προεπιλεγμένες ρυθμίσεις ειδοποιήσεων για τους νέους χρήστες.",
     "Send notification emails:" : "Αποστολή ειδοποιήσεων μέσω email:",
     "Personal Activity Settings" : "Ρυθμίσεις προσωπικών δραστηριοτήτων",
     "activities" : "δραστηριότητες"

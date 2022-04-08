@@ -40,7 +40,6 @@ OC.L10N.register(
     "Activity feed" : "feed فعالیت",
     "Enable notification emails" : "فعال‌سازی اعلان از طریق رایانامه‌ها",
     "Default settings" : "تنظیمات پیش فرض",
-    "Configure the default notification settings for new users." : "تنظیمات پیش‌فرض اعلان برای کاربران جدید را پیکربندی کنید.",
     "You need to set up your email address before you can receive notification emails." : "قبل از دریافت ایمیل های هشدار می بایست ادرس ایمیل خود را تنظیم کنید",
     "Send activity emails:" : "فرستادن رایانامه فعالیت‌ها",
     "As soon as possible" : "هرچه زودتر",
@@ -60,6 +59,7 @@ OC.L10N.register(
     "Load more activities" : "نمایش فعالیت های بیشتر",
     "Activity notification for %s" : "اعلان فعالیت برای %s",
     "This application enables users to view actions related to their files in Nextcloud." : "این نرم‌افراز مشاهده فعالیت‌های مربوط به فایل‌های موجود در Nextcloud را برای کاربران ممکن می‌سازد.",
+    "Configure the default notification settings for new users." : "تنظیمات پیش‌فرض اعلان برای کاربران جدید را پیکربندی کنید.",
     "Send notification emails:" : "ارسال اطلاعیه از طریق ایمیل:",
     "Personal Activity Settings" : "تنظیمات فعالیت‌های شخصی",
     "activities" : "فعالیت‌ها"

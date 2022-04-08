@@ -37,7 +37,6 @@
     "Activity feed" : "アクティビティフィード",
     "Enable notification emails" : "メール通知を有効にする",
     "Default settings" : "デフォルト設定",
-    "Configure the default notification settings for new users." : "新規ユーザーのデフォルトの通知設定を設定します。",
     "You need to set up your email address before you can receive notification emails." : "通知メールを受け取る前にメールアドレスを設定してください。",
     "Send activity emails:" : "通知メールを送る頻度:",
     "As soon as possible" : "逐一",
@@ -56,6 +55,7 @@
     "Load more activities" : "さらにアクティビティを読み込む",
     "Activity notification for %s" : "\"%s\" のアクティビティ通知",
     "This application enables users to view actions related to their files in Nextcloud." : "このアプリケーションは、ユーザーのファイル関連のアクションを表示します。",
+    "Configure the default notification settings for new users." : "新規ユーザーのデフォルトの通知設定を設定します。",
     "Send notification emails:" : "通知メール送信のタイミング: ",
     "Personal Activity Settings" : "個人のアクティビティ設定",
     "activities" : "アクティビティ"

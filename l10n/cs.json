@@ -39,7 +39,6 @@
     "Activity feed" : "Přehled aktivit",
     "Enable notification emails" : "Zapnout upozorňování e-mailem",
     "Default settings" : "Výchozí nastavení",
-    "Configure the default notification settings for new users." : "Nastavte výchozí volby ohledně upozorňování pro nově vytvářené uživatele.",
     "You need to set up your email address before you can receive notification emails." : "Pokud chcete dostávat upozornění e-mailem, je třeba nejprve nastavit svou e-mailovou adresu.",
     "Send activity emails:" : "Posílat e-maily o aktivitě:",
     "As soon as possible" : "Co možná nejdříve",
@@ -59,6 +58,7 @@
     "Load more activities" : "Načíst více aktivit",
     "Activity notification for %s" : "Upozornění na aktivitu pro %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Tato aplikace umožňuje uživatelům prohlížet aktivity vztahující se k jejich souborům v Nextcloud.",
+    "Configure the default notification settings for new users." : "Nastavte výchozí volby ohledně upozorňování pro nově vytvářené uživatele.",
     "Send notification emails:" : "Poslat upozorňovací e-maily:",
     "Personal Activity Settings" : "Nastavení pro osobní aktivity",
     "activities" : "aktivity"

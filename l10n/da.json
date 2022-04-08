@@ -39,7 +39,6 @@
     "Activity feed" : "Feed med aktiviteter",
     "Enable notification emails" : "Aktivér notifikations emails",
     "Default settings" : "Standardindstillinger",
-    "Configure the default notification settings for new users." : "Konfigurer standard konfigurationsindstillinger for nye brugere.",
     "You need to set up your email address before you can receive notification emails." : "Du skal angive din e-mailadresse før du kan modtage notifikationer via e-mail.",
     "Send activity emails:" : "Send aktivitetsmails:",
     "As soon as possible" : "Så hurtigt som muligt",
@@ -58,6 +57,7 @@
     "Load more activities" : "Indlæs flere aktiviteter",
     "Activity notification for %s" : "Aktivitet notifikation for %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Denne app giver brugere mulighed for at se en liste af handlinger relateret til deres filer i Nextcloud.",
+    "Configure the default notification settings for new users." : "Konfigurer standard konfigurationsindstillinger for nye brugere.",
     "Send notification emails:" : "Send notifikations emails:",
     "Personal Activity Settings" : "Indstillinger for personlig aktivitet",
     "activities" : "aktiviteter"

@@ -33,7 +33,6 @@ OC.L10N.register(
     "Activity feed" : "Virkniveita",
     "Enable notification emails" : "Virkja tilkynningapóst",
     "Default settings" : "Sjálfgefnar stillingar",
-    "Configure the default notification settings for new users." : "Ákvarðaðu sjálfgefnar tilkynningastillingar fyrir nýja notendur.",
     "You need to set up your email address before you can receive notification emails." : "Þú verður að gefa upp netfangið þitt svo að þú farir að fá tilkynningapósta.",
     "As soon as possible" : "Um leið og mögulegt er",
     "Hourly" : "Klukkutíma fresti",
@@ -50,6 +49,7 @@ OC.L10N.register(
     "Load more activities" : "Hlaða inn virkni",
     "Activity notification for %s" : "Tilkynning um virkni fyrir %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Þetta forrit gerir notendum kleift að skoða aðgerðir sem tengjast skránum þeirra í Nextcloud.",
+    "Configure the default notification settings for new users." : "Ákvarðaðu sjálfgefnar tilkynningastillingar fyrir nýja notendur.",
     "Send notification emails:" : "Senda tilkynningapóst:"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

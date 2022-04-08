@@ -37,7 +37,6 @@ OC.L10N.register(
     "Activity feed" : "Aktivitetsstraum",
     "Enable notification emails" : "Aktiver epost meldingar ",
     "Default settings" : "Standard instillingar",
-    "Configure the default notification settings for new users." : "Tilpass standard varselinnstillingar for nye brukarar.",
     "You need to set up your email address before you can receive notification emails." : "Du må skriva inn e-postadressa di før du kan få e-postvarsel.",
     "As soon as possible" : "Så snart som mogleg",
     "Hourly" : "Kvar time",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "Load more activities" : "Lastar fleire aktivitetar",
     "Activity notification for %s" : "Varsel om hending for %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Denne applikasjon viser hendingar for dine filer i Nextcloud.",
+    "Configure the default notification settings for new users." : "Tilpass standard varselinnstillingar for nye brukarar.",
     "Send notification emails:" : "Send epost varsel:"
 },
 "nplurals=2; plural=(n != 1);");
