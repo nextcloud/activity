@@ -32,7 +32,6 @@
     "Activity feed" : "Fonte da actividade",
     "Enable notification emails" : "Activar os correos de notificación",
     "Default settings" : "Axustes predeterminados",
-    "Configure the default notification settings for new users." : "Configure os axustes predeterminados de notificación pra novos usuarios.",
     "You need to set up your email address before you can receive notification emails." : "É necesario estabelecer o enderezo de correo para poder recibir correos de notificación.",
     "As soon as possible" : "O antes posíbel",
     "Hourly" : "Cada hora",
@@ -49,6 +48,7 @@
     "Load more activities" : "Cargar máis actividades",
     "Activity notification for %s" : "Notificación de actividade para %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Esta aplicación permítelle aos usuarios ver as accións relacionadas cos seus ficheiros en Nextcloud.",
+    "Configure the default notification settings for new users." : "Configure os axustes predeterminados de notificación pra novos usuarios.",
     "Send notification emails:" : "Enviar os correos de notificación:"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

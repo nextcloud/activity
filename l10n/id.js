@@ -39,7 +39,6 @@ OC.L10N.register(
     "Activity feed" : "Umpan aktivitas",
     "Enable notification emails" : "Aktifkan notifikasi email",
     "Default settings" : "Pengaturan bawaan",
-    "Configure the default notification settings for new users." : "Mengatur pengaturan notifikasi bawaan untuk pengguna baru.",
     "You need to set up your email address before you can receive notification emails." : "Anda perlu menyetel alamat surel sebelum Anda dapat menerima surel pemberitahuan.",
     "As soon as possible" : "Secepatnya",
     "Hourly" : "Setiap jam",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Load more activities" : "Muat aktivitas lainnya",
     "Activity notification for %s" : "Notifikasi aktifitas untuk %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Aplikasi ini memungkinkan pengguna untuk melihat aksi yang terkait dengan file yang mereka simpan di NextCloud",
+    "Configure the default notification settings for new users." : "Mengatur pengaturan notifikasi bawaan untuk pengguna baru.",
     "Send notification emails:" : "Kirim notifikasi ke email",
     "Personal Activity Settings" : "Pengaturan Aktivitas Pribadi",
     "activities" : "aktivitas"

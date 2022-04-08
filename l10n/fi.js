@@ -41,7 +41,6 @@ OC.L10N.register(
     "Activity feed" : "Tapahtumasyöte",
     "Enable notification emails" : "Käytä ilmoitussähköposteja",
     "Default settings" : "Oletusasetukset",
-    "Configure the default notification settings for new users." : "Määritä uusien käyttäjien oletusarvoiset ilmoitusasetukset.",
     "You need to set up your email address before you can receive notification emails." : "Aseta sähköpostiosoite, jotta voit vastaanottaa sähköposti-ilmoituksia.",
     "Send activity emails:" : "Lähetä tapahtumatsähköposteja:",
     "As soon as possible" : "Heti kuin mahdollista",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Load more activities" : "Lataa lisää tapahtumia",
     "Activity notification for %s" : "Toimintailmoitus tapahtumalle %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Tämän sovelluksen avulla käyttäjät voivat katsoa tiedostoihinsa liittyviä tapahtumia Nextcloudissa.",
+    "Configure the default notification settings for new users." : "Määritä uusien käyttäjien oletusarvoiset ilmoitusasetukset.",
     "Send notification emails:" : "Lähetä ilmoitussähköposteja:",
     "Personal Activity Settings" : "Henkilökohtaiset Tapahtuma Asetukset",
     "activities" : "Tapahtumat"

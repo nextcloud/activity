@@ -39,7 +39,6 @@
     "Activity feed" : "活動摘要",
     "Enable notification emails" : "啟用電子郵件通知",
     "Default settings" : "預設設定",
-    "Configure the default notification settings for new users." : "為新使用者設定預設的通知設定。",
     "You need to set up your email address before you can receive notification emails." : "您必須先設定電子郵件，才能接收通知。",
     "Send activity emails:" : "傳送事件電子郵件：",
     "As soon as possible" : "盡快",
@@ -59,6 +58,7 @@
     "Load more activities" : "載入更多活動",
     "Activity notification for %s" : "%s 的活動通知",
     "This application enables users to view actions related to their files in Nextcloud." : "此應用程式允許使用者能夠在 Nextcloud 中查看與其檔案相關的操作。",
+    "Configure the default notification settings for new users." : "為新使用者設定預設的通知設定。",
     "Send notification emails:" : "透過電子郵件接收通知",
     "Personal Activity Settings" : "個人活動設定",
     "activities" : "活動"

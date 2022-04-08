@@ -41,7 +41,6 @@ OC.L10N.register(
     "Activity feed" : "활동 피드",
     "Enable notification emails" : "이메일 알림 활성화",
     "Default settings" : "기본 설정",
-    "Configure the default notification settings for new users." : "새 사용자의 기본 알림 설정을 변경합니다.",
     "You need to set up your email address before you can receive notification emails." : "알림 이메일을 받으려면 이메일 주소를 설정해야 합니다.",
     "Send activity emails:" : "활동 이메일 보내기:",
     "As soon as possible" : "빠른 시일 내에",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Load more activities" : "더 많은 활동 불러오기",
     "Activity notification for %s" : "%s의 활동 알림",
     "This application enables users to view actions related to their files in Nextcloud." : "이 애플리케이션은 사용자들이 Nextcloud에서 파일 관련 활동을 볼 수 있도록 합니다.",
+    "Configure the default notification settings for new users." : "새 사용자의 기본 알림 설정을 변경합니다.",
     "Send notification emails:" : "알림 이메일 전송:",
     "Personal Activity Settings" : "개인 활동 설정",
     "activities" : "활동"

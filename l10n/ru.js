@@ -41,7 +41,6 @@ OC.L10N.register(
     "Activity feed" : "Лента событий",
     "Enable notification emails" : "Включить уведомления о событиях по эл. почте",
     "Default settings" : "Параметры по умолчанию",
-    "Configure the default notification settings for new users." : "Параметры способов отправки уведомлений, используемые по умолчанию для новых пользователей.",
     "You need to set up your email address before you can receive notification emails." : "Для получения уведомлений укажите свой адрес электронной почты в настройках.",
     "Send activity emails:" : "Отправка писем об активности:",
     "As soon as possible" : "Как можно быстрее",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Load more activities" : "Загрузить ещё события",
     "Activity notification for %s" : "Оповещение о произошедших событиях для %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Это приложение позволяет пользователям просматривать действия, связанные с их файлами в Nextcloud.",
+    "Configure the default notification settings for new users." : "Параметры способов отправки уведомлений, используемые по умолчанию для новых пользователей.",
     "Send notification emails:" : "Частота рассылки эл. писем:",
     "Personal Activity Settings" : "Личные параметры событий ",
     "activities" : "события"

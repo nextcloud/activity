@@ -41,7 +41,6 @@ OC.L10N.register(
     "Activity feed" : "Tevékenységi hírfolyam",
     "Enable notification emails" : "Értesítési e-mailek engedélyezése",
     "Default settings" : "Alapértelmezett beállítások",
-    "Configure the default notification settings for new users." : "Az új felhasználók alapértelmezett értesítési beállításainak megadása.",
     "You need to set up your email address before you can receive notification emails." : "Az értesítő üzenetek fogadásához meg kell adnia az e-mail-címét.",
     "Send activity emails:" : "Tevékenységi e-mailek küldése:",
     "As soon as possible" : "A lehető leghamarabb",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Load more activities" : "Több tevékenység betöltése",
     "Activity notification for %s" : "Tevékenységértesítés ehhez: %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Ez az alkalmazás lehetővé teszi a felhasználók számára, hogy megtekinthessék a fájlokhoz kapcsolódó műveleteket a Nextcloudban.",
+    "Configure the default notification settings for new users." : "Az új felhasználók alapértelmezett értesítési beállításainak megadása.",
     "Send notification emails:" : "Értesítési e-mailek küldése:",
     "Personal Activity Settings" : "Személyes tevékenységek beállításai",
     "activities" : "tevékenységek"
