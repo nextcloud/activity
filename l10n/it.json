@@ -39,7 +39,6 @@
     "Activity feed" : "Fonte delle attività",
     "Enable notification emails" : "Abilita notifica tramite email",
     "Default settings" : "Impostazioni predefinite",
-    "Configure the default notification settings for new users." : "Configura le impostazioni predefinite delle notifiche per i nuovi utenti.",
     "You need to set up your email address before you can receive notification emails." : "Devi impostare l'indirizzo del tuo utente prima di poter ricevere le email di notifica.",
     "Send activity emails:" : "Invia email sull'attività:",
     "As soon as possible" : "Non appena possibile",
@@ -58,6 +57,7 @@
     "Load more activities" : "Carica altre attività",
     "Activity notification for %s" : "Notifica delle attività per %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Questa applicazione permette agli utenti di visualizzare le azioni relative ai loro file su Nextcloud.",
+    "Configure the default notification settings for new users." : "Configura le impostazioni predefinite delle notifiche per i nuovi utenti.",
     "Send notification emails:" : "Invia email di notifica:",
     "Personal Activity Settings" : "Impostazioni attività personali",
     "activities" : "attività"

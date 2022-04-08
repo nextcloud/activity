@@ -39,7 +39,6 @@ OC.L10N.register(
     "Activity feed" : "Flussu de atividade",
     "Enable notification emails" : "Ativa messàgios de notìfica",
     "Default settings" : "Impostatziones predefinidas",
-    "Configure the default notification settings for new users." : "Configura is impostatziones de notìfica predefinidas pro is utentes noos.",
     "You need to set up your email address before you can receive notification emails." : "Deves impostare s'indiritzu de posta eletrònica tuo pro retzire is messàgios de notìfica.",
     "As soon as possible" : "Apena possìbile",
     "Hourly" : "Ogni ora",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Load more activities" : "Càrriga àteras atividades",
     "Activity notification for %s" : "Notìfica de atividade de %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Custa aplicatzione abìlitat is utentes a bìdere atziones ligadas a is archìvios issoro in Nextcloud.",
+    "Configure the default notification settings for new users." : "Configura is impostatziones de notìfica predefinidas pro is utentes noos.",
     "Send notification emails:" : "Imbia messàgios de notìfica:",
     "Personal Activity Settings" : "Impostatziones de atividade personale",
     "activities" : "atividades"

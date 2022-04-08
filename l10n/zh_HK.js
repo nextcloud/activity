@@ -41,7 +41,6 @@ OC.L10N.register(
     "Activity feed" : "系統事件摘要",
     "Enable notification emails" : "啟用電郵通告",
     "Default settings" : "默認設定",
-    "Configure the default notification settings for new users." : "為新用戶配置默認通知設置。",
     "You need to set up your email address before you can receive notification emails." : "您必須先設定電郵地址，才能接收通知。",
     "Send activity emails:" : "傳送有關系統事件的電郵：",
     "As soon as possible" : "盡快",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Load more activities" : "載入更多系統事件",
     "Activity notification for %s" : "%s 的系統事件通告",
     "This application enables users to view actions related to their files in Nextcloud." : "此應用程式允許用戶在 Nextcloud 中查看與其檔案相關的操作。",
+    "Configure the default notification settings for new users." : "為新用戶配置默認通知設置。",
     "Send notification emails:" : "透過電郵接收通知：",
     "Personal Activity Settings" : "個人活動設定",
     "activities" : "活動"

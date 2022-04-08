@@ -41,7 +41,6 @@ OC.L10N.register(
     "Activity feed" : "Veiklos kanalas",
     "Enable notification emails" : "Įjungti pranešimus el. paštu",
     "Default settings" : "Numatytieji nustatymai",
-    "Configure the default notification settings for new users." : "Nustatykite numatytuosius pranešimų parametrus naujiems vartotojams.",
     "You need to set up your email address before you can receive notification emails." : "Jums turite nurodyti elektroninio pašto adresą norėdami gauti pranešimus.",
     "Send activity emails:" : "Siųsti veiklų pranešimus el. paštu:",
     "As soon as possible" : "Kuo greičiau",
@@ -60,6 +59,7 @@ OC.L10N.register(
     "Load more activities" : "Įkelti daugiau veiklų",
     "Activity notification for %s" : "Aktyvumo pranešimai %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Programa skirta naudotojams stebėti su jų failais susijusius veiksmus Nextcloud'e.",
+    "Configure the default notification settings for new users." : "Nustatykite numatytuosius pranešimų parametrus naujiems vartotojams.",
     "Send notification emails:" : "Siųsti pranešimus el. paštu:",
     "Personal Activity Settings" : "Asmeninės veiklos nustatymai",
     "activities" : "veiklos"

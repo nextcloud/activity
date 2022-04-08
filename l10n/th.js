@@ -39,7 +39,6 @@ OC.L10N.register(
     "Activity feed" : "ฟีดกิจกรรม",
     "Enable notification emails" : "เปิดอีเมลแจ้งเตือน",
     "Default settings" : "ค่าเริ่มต้น",
-    "Configure the default notification settings for new users." : "กำหนดค่าเริ่มต้นของการแจ้งเตือนสำหรับผู้ใช้ใหม่",
     "You need to set up your email address before you can receive notification emails." : "คุณจะได้รับอีเมลแจ้งเตือนหลังจากที่คุณตั้งค่าที่อยู่อีเมลของคุณ",
     "As soon as possible" : "เร็วที่สุดที่เป็นไปได้",
     "Hourly" : "รายชั่วโมง",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Load more activities" : "โหลดกิจกรรมเพิ่มเติม",
     "Activity notification for %s" : "การแจ้งเตือนกิจกรรมสำหรับ %s",
     "This application enables users to view actions related to their files in Nextcloud." : "แอปพลิเคชันนี้ช่วยให้ผู้ใช้สามารถดูการทำงานที่เกี่ยวข้องกับไฟล์ของผู้ใช้ใน Nextcloud",
+    "Configure the default notification settings for new users." : "กำหนดค่าเริ่มต้นของการแจ้งเตือนสำหรับผู้ใช้ใหม่",
     "Send notification emails:" : "ส่งอีเมลแจ้งเตือน:",
     "Personal Activity Settings" : "การตั้งค่ากิจกรรมส่วนตัว",
     "activities" : "กิจกรรม"

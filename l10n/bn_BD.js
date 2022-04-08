@@ -33,7 +33,6 @@ OC.L10N.register(
     "Activity feed" : "সক্রিয়তা বারতা",
     "Enable notification emails" : "বিজ্ঞপ্তি ইমেলগুলি সক্ষম করুন",
     "Default settings" : "ডিফল্ট সেটিংস",
-    "Configure the default notification settings for new users." : "নতুন ব্যবহারকারীদের জন্য ডিফল্ট বিজ্ঞপ্তি সেটিংস কনফিগার করুন।",
     "You need to set up your email address before you can receive notification emails." : "ইমেইল বারতা পাওয়ার আগে আপনাকে নিজের ইমেইল ঠিকানা নিরধারন করতে হবে৷",
     "As soon as possible" : "যত দ্রুত সম্ভব ",
     "Hourly" : "ঘনটাভিততিক",
@@ -50,6 +49,7 @@ OC.L10N.register(
     "Load more activities" : "আরও ক্রিয়াকলাপ লোড করুন",
     "Activity notification for %s" : "%s জন্য ক্রিয়াকলাপ বিজ্ঞপ্তি",
     "This application enables users to view actions related to their files in Nextcloud." : "এই অ্যাপ্লিকেশনটি ব্যবহারকারীদের নেক্সটক্লাউডে তাদের ফাইলগুলির সাথে সম্পর্কিত ক্রিয়া দেখতে সক্ষম করে।",
+    "Configure the default notification settings for new users." : "নতুন ব্যবহারকারীদের জন্য ডিফল্ট বিজ্ঞপ্তি সেটিংস কনফিগার করুন।",
     "Send notification emails:" : "বিজ্ঞপ্তি ইমেলগুলি প্রেরণ করুন:"
 },
 "nplurals=2; plural=(n != 1);");

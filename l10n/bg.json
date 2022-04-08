@@ -37,7 +37,6 @@
     "Activity feed" : "Поток на активността",
     "Enable notification emails" : "Разрешаване на известяващи имейли",
     "Default settings" : "Стандартни настройкки",
-    "Configure the default notification settings for new users." : "Конфигуриране по подразбиране на известията за нови потребители.",
     "You need to set up your email address before you can receive notification emails." : "Първо трябва да въведете вашия имейл адрес (в профила си), за да получавате известия.",
     "Send activity emails:" : "Изпращане на имейли за акттивността",
     "As soon as possible" : "Възможно по-скоро",
@@ -56,6 +55,7 @@
     "Load more activities" : "Зареди по-стари",
     "Activity notification for %s" : "Известиe за активност %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Приложението позволява на потребителите да прегледат действия свързани с файловете им в Nextcloud.",
+    "Configure the default notification settings for new users." : "Конфигуриране по подразбиране на известията за нови потребители.",
     "Send notification emails:" : "Изпрати уведомителни е-мейли:",
     "Personal Activity Settings" : "Настройки за лична активност",
     "activities" : "активности"

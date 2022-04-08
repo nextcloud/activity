@@ -32,7 +32,6 @@ OC.L10N.register(
     "Activity feed" : "Darbību plūsma",
     "Enable notification emails" : "Iespējot paziņojumu e-pastus",
     "Default settings" : "Noklusējuma iestatījumi",
-    "Configure the default notification settings for new users." : "Konfigurējiet jauno lietotāju noklusējuma paziņojumu iestatījumus.",
     "You need to set up your email address before you can receive notification emails." : "Lai saņemtu paziņojumus e-pastā, jūsu profilā ir nepieciešams uzstādīt e-pasta adresi.",
     "As soon as possible" : "Pēc iespējas atrāk",
     "Hourly" : "Ik stundu",
@@ -49,6 +48,7 @@ OC.L10N.register(
     "Load more activities" : "Ielādēt vairāk darbības",
     "Activity notification for %s" : "Brīdinājumi par darbībām %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Šī lietotne sniedz iespēju lietotājiem paraudzīt darbības ar viņu Nextcloud datnēm",
+    "Configure the default notification settings for new users." : "Konfigurējiet jauno lietotāju noklusējuma paziņojumu iestatījumus.",
     "Send notification emails:" : "Sūtīt paziņojumu e-pastus:"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

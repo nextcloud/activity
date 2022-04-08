@@ -39,7 +39,6 @@
     "Activity feed" : "Aktivitetsflöde",
     "Enable notification emails" : "Aktivera notifieringar via e-post",
     "Default settings" : "Förvalda inställningar",
-    "Configure the default notification settings for new users." : "Konfigurera standardinställningar av notifieringar för nya användare.",
     "You need to set up your email address before you can receive notification emails." : "Du måste ställa in din e-postadress innan du kan ta emot e-postmeddelanden.",
     "Send activity emails:" : "Skicka notifieringar via e-post:",
     "As soon as possible" : "Så snart som möjligt",
@@ -59,6 +58,7 @@
     "Load more activities" : "Läs in fler aktiviteter",
     "Activity notification for %s" : "Notis om aktivitet för %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Denna applikation låter användarna se händelser relaterade till deras filer i Nextcloud.",
+    "Configure the default notification settings for new users." : "Konfigurera standardinställningar av notifieringar för nya användare.",
     "Send notification emails:" : "Skicka notifieringar via e-post:",
     "Personal Activity Settings" : "Personliga inställningar för händelser",
     "activities" : "händelser"

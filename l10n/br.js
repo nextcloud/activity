@@ -33,7 +33,6 @@ OC.L10N.register(
     "Activity feed" : "Lanvad obererezh",
     "Enable notification emails" : "Aotren kas kemennadennoù dre bostel",
     "Default settings" : "Arventennoù dre ziouer",
-    "Configure the default notification settings for new users." : "Kefluniañ arventennoù dre ziouer ar c'hemennadennoù evit an implijerien nevez.",
     "You need to set up your email address before you can receive notification emails." : "Ret eo dec'h merkañ ho chomlec'h postel a-raok gallout resev kemennadennoù dre bostel.",
     "As soon as possible" : "An abretañ ar gwellañ",
     "Hourly" : "Bep eurvezh",
@@ -50,6 +49,7 @@ OC.L10N.register(
     "Load more activities" : "Kargañ obererezhioù ouzhpenn",
     "Activity notification for %s" : "Kemennadenn obererezh evit %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Gant an arload-mañ e c'hall an implijerien gwelet obererezhioù liammet gant o restroù e Nextcloud.",
+    "Configure the default notification settings for new users." : "Kefluniañ arventennoù dre ziouer ar c'hemennadennoù evit an implijerien nevez.",
     "Send notification emails:" : "Kas kemennadennoù dre bostel :"
 },
 "nplurals=5; plural=((n%10 == 1) && (n%100 != 11) && (n%100 !=71) && (n%100 !=91) ? 0 :(n%10 == 2) && (n%100 != 12) && (n%100 !=72) && (n%100 !=92) ? 1 :(n%10 ==3 || n%10==4 || n%10==9) && (n%100 < 10 || n% 100 > 19) && (n%100 < 70 || n%100 > 79) && (n%100 < 90 || n%100 > 99) ? 2 :(n != 0 && n % 1000000 == 0) ? 3 : 4);");
