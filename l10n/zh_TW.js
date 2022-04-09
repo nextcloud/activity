@@ -41,6 +41,7 @@ OC.L10N.register(
     "Activity feed" : "活動摘要",
     "Enable notification emails" : "啟用電子郵件通知",
     "Default settings" : "預設設定",
+    "Configure the default notification settings." : "設定預設的通知設定。",
     "You need to set up your email address before you can receive notification emails." : "您必須先設定電子郵件，才能接收通知。",
     "Send activity emails:" : "傳送事件電子郵件：",
     "As soon as possible" : "盡快",

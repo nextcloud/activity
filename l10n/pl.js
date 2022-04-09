@@ -41,6 +41,7 @@ OC.L10N.register(
     "Activity feed" : "Zasób aktywności",
     "Enable notification emails" : "Włącz powiadomienie e-mailem",
     "Default settings" : "Ustawienia domyślne",
+    "Configure the default notification settings." : "Skonfiguruj domyślne ustawienia powiadomień.",
     "You need to set up your email address before you can receive notification emails." : "Aby otrzymywać wiadomości e-mail z powiadomieniem, musisz skonfigurować swój adres e-mail.",
     "Send activity emails:" : "Wysyłaj e-maile aktywności:",
     "As soon as possible" : "Tak szybko, jak to możliwe",
