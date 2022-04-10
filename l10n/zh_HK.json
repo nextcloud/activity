@@ -39,6 +39,7 @@
     "Activity feed" : "系統事件摘要",
     "Enable notification emails" : "啟用電郵通告",
     "Default settings" : "默認設定",
+    "Configure the default notification settings." : "設定默認的通知設定。",
     "You need to set up your email address before you can receive notification emails." : "您必須先設定電郵地址，才能接收通知。",
     "Send activity emails:" : "傳送有關系統事件的電郵：",
     "As soon as possible" : "盡快",
