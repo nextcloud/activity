@@ -41,6 +41,7 @@ OC.L10N.register(
     "Activity feed" : "Tevékenységi hírfolyam",
     "Enable notification emails" : "Értesítési e-mailek engedélyezése",
     "Default settings" : "Alapértelmezett beállítások",
+    "Configure the default notification settings." : "Állítsa be az alapértelmezett értesítési beállításokat.",
     "You need to set up your email address before you can receive notification emails." : "Az értesítő üzenetek fogadásához meg kell adnia az e-mail-címét.",
     "Send activity emails:" : "Tevékenységi e-mailek küldése:",
     "As soon as possible" : "A lehető leghamarabb",
