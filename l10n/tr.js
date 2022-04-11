@@ -41,6 +41,7 @@ OC.L10N.register(
     "Activity feed" : "İşlem akışı",
     "Enable notification emails" : "Bildirim e-postaları kullanılsın",
     "Default settings" : "Varsayılan ayarlar",
+    "Configure the default notification settings." : "Varsayılan bildirim ayarlarını yapılandırın.",
     "You need to set up your email address before you can receive notification emails." : "Bildirim e-postalarını alabilmek için e-posta adresinizi belirtmelisiniz.",
     "Send activity emails:" : "İşlem e-postaları gönderilsin:",
     "As soon as possible" : "Olabildiğince çabuk",
