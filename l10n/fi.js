@@ -41,6 +41,7 @@ OC.L10N.register(
     "Activity feed" : "Tapahtumasyöte",
     "Enable notification emails" : "Käytä ilmoitussähköposteja",
     "Default settings" : "Oletusasetukset",
+    "Configure the default notification settings." : "Muuta ilmoitusten oletusasetuksia.",
     "You need to set up your email address before you can receive notification emails." : "Aseta sähköpostiosoite, jotta voit vastaanottaa sähköposti-ilmoituksia.",
     "Send activity emails:" : "Lähetä tapahtumatsähköposteja:",
     "As soon as possible" : "Heti kuin mahdollista",
