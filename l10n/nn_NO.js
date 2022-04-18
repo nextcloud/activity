@@ -18,6 +18,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Din feed sin URL er ikkje gyldig",
     "Your settings have been updated." : "Innstillingane dine har blitt oppdaterte.",
     "Settings have been updated." : "Instillingar er blitt oppdaterte.",
+    "Recent activity" : "Nyleg aktivitet",
     "Daily activity summary for %s" : "Dagleg aktivitetsamandrag for %s",
     "_and %n more _::_and %n more _" : ["og %n til","og %n fleire"],
     "All activities" : "Alle aktvitetar",
@@ -34,6 +35,8 @@ OC.L10N.register(
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Denne applikasjon viser hendingar for dine filer i Nextcloud.\n\t\tNår aktivert vil du sjå ikon \"Hendingar\" i program meny.\n\t\tVed klikk vil ny side visast for brukar for å spore hendingar relatert til fil. Hendingar kan vere ny fil, sletta fil, endra navn, flytta, oppdatert og delt..\n\t\tIndividuelle hendingar kan konfigurerast i personleg meny.\n\t\tDette bestemmer hva for hendingar som skal sporast så vel som om brukar ser sine eigne hendingar,\n\t\tom desse er tilgjengelege online og om får e-post med hendingar på regelmessig basis.\n\t\tMeir informasjon er tilgjengeleg i dokumentasjon for hendingar..",
     "No activity yet" : "Ingen aktivitetar enno",
     "Unable to load the activity list" : "Kan ikkje laste aktivitets lista ",
+    "Activities" : "Aktivitetar",
+    "No activities" : "Ingen aktivitetar",
     "Activity feed" : "Aktivitetsstraum",
     "Enable notification emails" : "Aktiver epost meldingar ",
     "Default settings" : "Standard instillingar",
@@ -54,6 +57,7 @@ OC.L10N.register(
     "Activity notification for %s" : "Varsel om hending for %s",
     "This application enables users to view actions related to their files in Nextcloud." : "Denne applikasjon viser hendingar for dine filer i Nextcloud.",
     "Configure the default notification settings for new users." : "Tilpass standard varselinnstillingar for nye brukarar.",
-    "Send notification emails:" : "Send epost varsel:"
+    "Send notification emails:" : "Send epost varsel:",
+    "activities" : "aktivitetar"
 },
 "nplurals=2; plural=(n != 1);");
