@@ -733,7 +733,7 @@ class APIv2ControllerTest extends TestCase {
 
 				$this->urlGenerator->expects($this->once())
 					->method('linkToRouteAbsolute')
-					->with('core.Preview.getPreview', $this->anything())
+					->with('core.Preview.getPreviewByFileId', $this->anything())
 					->willReturnCallback(function () use ($returnedPath) {
 						return '/preview' . $returnedPath;
 					});
