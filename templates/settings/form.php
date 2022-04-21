@@ -27,6 +27,24 @@
 /** @var \OCP\IL10N $l */
 ?>
 
+<?php if ($_['email_enabled']) { ?>
+	<?php if (!$_['is_email_set']): ?>
+		<br />
+		<br />
+		<h3><strong><?php p($l->t('Notification')); ?></strong></h3>
+		<!-- <strong><?php p($l->t('You need to set up your email address before you can receive notification emails.')); ?></strong> -->
+	<?php endif; ?>
+
+
+	<label for="notify_setting_batchtime"><?php p($l->t('Send activity emails:')); ?></label>
+	<select id="notify_setting_batchtime" name="notify_setting_batchtime">
+		<option value="3"<?php if ($_['setting_batchtime'] === \OCA\Activity\UserSettings::EMAIL_SEND_ASAP): ?> selected="selected"<?php endif; ?>><?php p($l->t('As soon as possible')); ?></option>
+		<option value="0"<?php if ($_['setting_batchtime'] === \OCA\Activity\UserSettings::EMAIL_SEND_HOURLY): ?> selected="selected"<?php endif; ?>><?php p($l->t('Hourly')); ?></option>
+		<option value="1"<?php if ($_['setting_batchtime'] === \OCA\Activity\UserSettings::EMAIL_SEND_DAILY): ?> selected="selected"<?php endif; ?>><?php p($l->t('Daily')); ?></option>
+		<option value="2"<?php if ($_['setting_batchtime'] === \OCA\Activity\UserSettings::EMAIL_SEND_WEEKLY): ?> selected="selected"<?php endif; ?>><?php p($l->t('Weekly')); ?></option>
+	</select>
+<?php }?>
+
 	<table class="grid activitysettings">
 		<tbody>
 		<?php foreach ($_['activityGroups'] as $group): ?>
@@ -61,19 +79,3 @@
 		<?php endforeach; ?>
 		</tbody>
 	</table>
-
-<?php if ($_['email_enabled']) { ?>
-	<?php if (!$_['is_email_set']): ?>
-		<br />
-		<strong><?php p($l->t('You need to set up your email address before you can receive notification emails.')); ?></strong>
-	<?php endif; ?>
-
-	<br />
-	<label for="notify_setting_batchtime"><?php p($l->t('Send activity emails:')); ?></label>
-	<select id="notify_setting_batchtime" name="notify_setting_batchtime">
-		<option value="3"<?php if ($_['setting_batchtime'] === \OCA\Activity\UserSettings::EMAIL_SEND_ASAP): ?> selected="selected"<?php endif; ?>><?php p($l->t('As soon as possible')); ?></option>
-		<option value="0"<?php if ($_['setting_batchtime'] === \OCA\Activity\UserSettings::EMAIL_SEND_HOURLY): ?> selected="selected"<?php endif; ?>><?php p($l->t('Hourly')); ?></option>
-		<option value="1"<?php if ($_['setting_batchtime'] === \OCA\Activity\UserSettings::EMAIL_SEND_DAILY): ?> selected="selected"<?php endif; ?>><?php p($l->t('Daily')); ?></option>
-		<option value="2"<?php if ($_['setting_batchtime'] === \OCA\Activity\UserSettings::EMAIL_SEND_WEEKLY): ?> selected="selected"<?php endif; ?>><?php p($l->t('Weekly')); ?></option>
-	</select>
-<?php }

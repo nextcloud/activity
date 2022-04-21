@@ -33,14 +33,16 @@ style('activity', 'settings');
 			<?php p($l->t('Choose for which activities you want to get a push notification.')); ?>
 		<?php } ?>
 	</p>
+	<h3><strong><?php p($l->t('Daily activity summary')); ?></strong></h3>
+	<input type="checkbox" class="checkbox" id="monthly_report">
+    <label for="monthly_report"><?php p($l->t('Monthly Status Report.')); ?></label>
 
-	<?php print_unescaped($this->inc('settings/form')); ?>
-
-	<h2><?php p($l->t('Daily activity summary')); ?></h2>
-
+	<br />
 	<input id="activity_email_enabled" name="activity_digest" type="checkbox" class="checkbox"
 		   value="1" <?php if ($_['activity_digest_enabled']) {
 	print_unescaped('checked="checked"');
 } ?> />
 	<label for="activity_email_enabled"><?php p($l->t('Send daily activity summary in the morning')); ?></label>
+
+	<?php print_unescaped($this->inc('settings/form')); ?>
 </form>
