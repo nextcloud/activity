@@ -26,6 +26,8 @@ OC.L10N.register(
     "Activity" : "Activitate",
     "Notifications" : "Notificationes",
     "No activity yet" : "Nulle activitate ancora",
+    "Activities" : "Activitates",
+    "No activities" : "Nulle activitates",
     "Activity feed" : "Syndication de activitate",
     "Default settings" : "Configurationes predefinite",
     "You need to set up your email address before you can receive notification emails." : "Tu necessita configurar tu adresse de e-posta ante que tu pote reciper messages de e-posta de notification.",

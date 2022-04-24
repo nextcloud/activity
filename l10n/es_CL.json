@@ -27,6 +27,8 @@
     "Notifications" : "Notificaciones",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Esta aplicación permite a los usuarios ver las acciones relacionadas con sus archivos en Nextcloud.\n\t\tUna vez habilitados, los usuarios puede evr un nuevo icono \"Actividad \" en su menu apps.\n\t\tCuando hagan clic, una nueva pagina aparecerá para los usaurios para monitorear las actividades relacionadas con un archivo - desde nuevos archivos, hasta archivos borrados, movidos?, renombrados, actualizados y actividadad compartida.",
     "No activity yet" : "Aún no tiene actividad",
+    "Activities" : "Actividades",
+    "No activities" : "No hay actividades",
     "Activity feed" : "Fuente de actividad",
     "Default settings" : "Configuraciones predeterminadas",
     "You need to set up your email address before you can receive notification emails." : "Necesitas configurar tu dirección de correo electrónico antes de que puedas recibir correos de notificación",
