@@ -21,6 +21,7 @@ OC.L10N.register(
     "Mail" : "Mel",
     "Activity" : "Aktiviti",
     "No activity yet" : "Tiada aktiviti",
+    "Activities" : "Aktiviti",
     "Activity feed" : "Suapan aktiviti",
     "Default settings" : "Tetapan lalai",
     "As soon as possible" : "Secepat yang boleh",

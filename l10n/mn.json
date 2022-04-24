@@ -23,10 +23,12 @@
     "Activity" : "Үйлдлүүд",
     "Notifications" : "Мэдэгдэл",
     "No activity yet" : "Одоохондоо ямар ч үйлдэл алга",
-    "Activity feed" : "Үйлдлүүдйн тэжээл",
-    "Enable notification emails" : "Эмэйл мэдэгдлийг идэвхжүүлэх",
-    "Default settings" : "Өгөгдмөл тохиргоо",
-    "You need to set up your email address before you can receive notification emails." : "Та цахим шуудангаар мэдэгдэл хүлээн авахын тулд цахим шуудангаа тохируулна уу?",
+    "Activities" : "Үйлдлүүд",
+    "No activities" : "Үйлдэл алга",
+    "Activity feed" : "Үйлдлүүдийн тэжээл",
+    "Enable notification emails" : "Имэйл мэдэгдлийг идэвхжүүлэх",
+    "Default settings" : "Өгөгдмөл тохиргоо",
+    "You need to set up your email address before you can receive notification emails." : "Та Имэйлээр мэдэгдэл хүлээн авахын тулд имэйлээ тохируулна уу?",
     "Hourly" : "Цаг бүр",
     "Daily" : "Өдөр бүр",
     "Weekly" : "Долоо хоног бүр",
@@ -34,6 +36,6 @@
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
     "An error occurred while loading activities" : "Үйлдлүүдийг ачааллахад алдаа гарлаа",
     "Load more activities" : "Бусад үйлдлүүдийг ачаалах",
-    "Send notification emails:" : "Эмэйлээр мэдэгдэл авах "
+    "Send notification emails:" : "Имэйлээр мэдэгдэл авах "
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

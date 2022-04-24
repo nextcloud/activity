@@ -28,6 +28,8 @@ OC.L10N.register(
     "Activity" : "Actividad",
     "Notifications" : "Notificaciones",
     "No activity yet" : "Aún no tiene actividad",
+    "Activities" : "Actividades",
+    "No activities" : "No hay actividades",
     "Activity feed" : "Fuente de actividad",
     "Default settings" : "Configuraciones predeterminadas",
     "You need to set up your email address before you can receive notification emails." : "Necesitas configurar tu dirección de correo electrónico antes de que puedas recibir correos de notificación",
