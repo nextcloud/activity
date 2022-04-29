@@ -41,6 +41,7 @@ OC.L10N.register(
     "Activity feed" : "Activiteitenkanaal",
     "Enable notification emails" : "E-mailnotificatie inschakelen",
     "Default settings" : "Standaardinstellingen",
+    "Configure the default notification settings." : "Configureer de standaard notificatieinstellingen",
     "You need to set up your email address before you can receive notification emails." : "Je moet je e-mailadres instellen voordat je meldingen van activiteiten per e-mail kunt ontvangen.",
     "Send activity emails:" : "Activiteiten e-mails verzenden:",
     "As soon as possible" : "Zo snel mogelijk",
