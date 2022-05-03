@@ -55,11 +55,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "RSS feed" : "RSS kanalas",
     "No more events to load" : "Nėra daugiau rodytinų įvykių",
-    "An error occurred while loading activities" : "Įkeliant veiklas, įvyko klaida",
-    "Load more activities" : "Įkelti daugiau veiklų",
     "Activity notification for %s" : "Aktyvumo pranešimai %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Programa skirta naudotojams stebėti su jų failais susijusius veiksmus Nextcloud'e.",
-    "Configure the default notification settings for new users." : "Nustatykite numatytuosius pranešimų parametrus naujiems vartotojams.",
     "Send notification emails:" : "Siųsti pranešimus el. paštu:",
     "Personal Activity Settings" : "Asmeninės veiklos nustatymai",
     "activities" : "veiklos"

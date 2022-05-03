@@ -56,11 +56,7 @@ OC.L10N.register(
     "RSS feed" : "RSS 피드",
     "Personal notification settings" : "개인 알림 설정",
     "No more events to load" : "더 이상 불러올 이벤트 없음",
-    "An error occurred while loading activities" : "활동을 불러오는 중 오류 발생",
-    "Load more activities" : "더 많은 활동 불러오기",
     "Activity notification for %s" : "%s의 활동 알림",
-    "This application enables users to view actions related to their files in Nextcloud." : "이 애플리케이션은 사용자들이 Nextcloud에서 파일 관련 활동을 볼 수 있도록 합니다.",
-    "Configure the default notification settings for new users." : "새 사용자의 기본 알림 설정을 변경합니다.",
     "Send notification emails:" : "알림 이메일 전송:",
     "Personal Activity Settings" : "개인 활동 설정",
     "activities" : "활동"

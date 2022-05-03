@@ -52,11 +52,7 @@
     "Enable RSS feed" : "Овозможи RSS канал",
     "RSS feed" : "RSS канал",
     "No more events to load" : "Нема повеќе настани за вчитување",
-    "An error occurred while loading activities" : "Грешка при вчитување на активностите",
-    "Load more activities" : "Вчитај повеќе активности",
     "Activity notification for %s" : "Известување за активност за %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Оваа апликација им овозможува на корисниците да ги прикажуваат активностите поврзани со нивните датотеки во Nextcloud.",
-    "Configure the default notification settings for new users." : "Конфигурирај ги стандардните поставки за известување за нови корисници.",
     "Send notification emails:" : "Испрати известување на E-пошти:",
     "Personal Activity Settings" : "Параметри за лични активности",
     "activities" : "активности"

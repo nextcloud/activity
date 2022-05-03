@@ -57,11 +57,7 @@ OC.L10N.register(
     "RSS feed" : "RSS-syöte",
     "Personal notification settings" : "Henkilökohtaisten ilmoitusten asetukset",
     "No more events to load" : "Ei enempää tapahtumia",
-    "An error occurred while loading activities" : "Tapahtumien latauksessa tapahtui virhe",
-    "Load more activities" : "Lataa lisää tapahtumia",
     "Activity notification for %s" : "Toimintailmoitus tapahtumalle %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Tämän sovelluksen avulla käyttäjät voivat katsoa tiedostoihinsa liittyviä tapahtumia Nextcloudissa.",
-    "Configure the default notification settings for new users." : "Määritä uusien käyttäjien oletusarvoiset ilmoitusasetukset.",
     "Send notification emails:" : "Lähetä ilmoitussähköposteja:",
     "Personal Activity Settings" : "Henkilökohtaiset Tapahtuma Asetukset",
     "activities" : "Tapahtumat"

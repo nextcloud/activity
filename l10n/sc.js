@@ -52,11 +52,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Ativa su flussu RSS ",
     "RSS feed" : "Ativa su flussu RSS",
     "No more events to load" : "Perunu eventu de carrigare",
-    "An error occurred while loading activities" : "B'at àpidu un'errore carrighende is atividades",
-    "Load more activities" : "Càrriga àteras atividades",
     "Activity notification for %s" : "Notìfica de atividade de %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Custa aplicatzione abìlitat is utentes a bìdere atziones ligadas a is archìvios issoro in Nextcloud.",
-    "Configure the default notification settings for new users." : "Configura is impostatziones de notìfica predefinidas pro is utentes noos.",
     "Send notification emails:" : "Imbia messàgios de notìfica:",
     "Personal Activity Settings" : "Impostatziones de atividade personale",
     "activities" : "atividades"

@@ -41,9 +41,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Укључи РСС довод",
     "RSS feed" : "РСС довод",
     "No more events to load" : "Нема више догађаја за приказ",
-    "An error occurred while loading activities" : "Дошло је до грешке приликом учитавања активности",
-    "Load more activities" : "Учитај још активности",
-    "Activity notification for %s" : "Обавештења о активностима за %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Ова апликација омогућава корисницима да виде радње везане за њихове Некстклауд фајлове."
+    "Activity notification for %s" : "Обавештења о активностима за %s"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

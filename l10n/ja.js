@@ -54,11 +54,7 @@ OC.L10N.register(
     "Enable RSS feed" : "RSSフィードを有効にする",
     "RSS feed" : "RSS フィード",
     "No more events to load" : "これ以上読み込むイベントはありません",
-    "An error occurred while loading activities" : "アクティビティの読み込み中にエラーが発生しました",
-    "Load more activities" : "さらにアクティビティを読み込む",
     "Activity notification for %s" : "\"%s\" のアクティビティ通知",
-    "This application enables users to view actions related to their files in Nextcloud." : "このアプリケーションは、ユーザーのファイル関連のアクションを表示します。",
-    "Configure the default notification settings for new users." : "新規ユーザーのデフォルトの通知設定を設定します。",
     "Send notification emails:" : "通知メール送信のタイミング: ",
     "Personal Activity Settings" : "個人のアクティビティ設定",
     "activities" : "アクティビティ"

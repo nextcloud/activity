@@ -56,11 +56,7 @@ OC.L10N.register(
     "RSS feed" : "Ροή RSS",
     "Personal notification settings" : "Ρυθμίσεις προσωπικών ειδοποιήσεων",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
-    "An error occurred while loading activities" : "Παρουσιάστηκε σφάλμα κατά την φόρτωση των δραστηριοτήτων",
-    "Load more activities" : "Φόρτωση περισσότερων δραστηριοτήτων",
     "Activity notification for %s" : "Ειδοποίηση δραστηριότητας για %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Η εφαρμογή επιτρέπει στους χρήστες να δουν ενέργειες που αφορούν τα αρχεία τους στο Nextcloud.",
-    "Configure the default notification settings for new users." : "Καθορίστε τις προεπιλεγμένες ρυθμίσεις ειδοποιήσεων για τους νέους χρήστες.",
     "Send notification emails:" : "Αποστολή ειδοποιήσεων μέσω email:",
     "Personal Activity Settings" : "Ρυθμίσεις προσωπικών δραστηριοτήτων",
     "activities" : "δραστηριότητες"

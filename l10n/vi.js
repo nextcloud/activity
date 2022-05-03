@@ -56,11 +56,7 @@ OC.L10N.register(
     "RSS feed" : "Nội dung RSS",
     "Personal notification settings" : "Cài đặt thông báo cá nhân",
     "No more events to load" : "Không có sự kiện nào",
-    "An error occurred while loading activities" : "Đã xảy ra lỗi trong khi tải các lịch sử hoạt động",
-    "Load more activities" : "Tải thêm hoạt động",
     "Activity notification for %s" : "Thông báo hoạt động của %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Đây là ứng dụng cho phép người dùng xem các hành động liên quan đến dữ liệu của họ trên vWorkspace",
-    "Configure the default notification settings for new users." : "Thiết lập cài đặt thông báo mặc định cho những người dùng mới.",
     "Send notification emails:" : "Gửi các email thông báo:",
     "Personal Activity Settings" : "Các thiết lập cho hoạt động cá nhân",
     "activities" : "Các hoạt động"
