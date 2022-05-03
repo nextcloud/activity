@@ -55,11 +55,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Activați flux RSS",
     "RSS feed" : "Flux RSS",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
-    "An error occurred while loading activities" : "A apărut o eroare la încărcarea activităților",
-    "Load more activities" : "Încarcă mai multe activități",
     "Activity notification for %s" : "Notificare activitate pentru %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Aceasta aplicație permite utilizatorilor sa vizualizeze acțiuni aferente fișierelor din Nextcloud.",
-    "Configure the default notification settings for new users." : "Configurează setările de notificare implicite pentru utilizatorii noi.",
     "Send notification emails:" : "Trimite notificări pe e-mail:",
     "Personal Activity Settings" : "Setări de activitate personale",
     "activities" : "activități"

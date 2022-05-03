@@ -57,11 +57,7 @@ OC.L10N.register(
     "RSS feed" : "Canal RSS",
     "Personal notification settings" : "Paràmetres de notificacions personals",
     "No more events to load" : "No hi ha més esdeveniments",
-    "An error occurred while loading activities" : "S'ha produït un error en carregar l'activitat",
-    "Load more activities" : "Carrega més activitat",
     "Activity notification for %s" : "Notificació d'activitat per a %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Aquesta aplicació permet als usuaris veure les accions relacionades amb els seus fitxers al Nextcloud.",
-    "Configure the default notification settings for new users." : "Configureu els paràmetres de notificació per defecte per als usuaris nous.",
     "Send notification emails:" : "Envia els correus electrònics de notificació:",
     "Personal Activity Settings" : "Paràmetres de l'activitat personal",
     "activities" : "activitats"

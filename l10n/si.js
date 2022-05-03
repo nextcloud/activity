@@ -32,8 +32,6 @@ OC.L10N.register(
     "Weekly" : "සතිපතා",
     "Settings" : "සැකසුම්",
     "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත",
-    "An error occurred while loading activities" : "ක්‍රියාකාරකම් පූරණය කිරීමේදී දෝෂයක් ඇතිවිය",
-    "Load more activities" : "තවත් ක්‍රියාකාරකම් පූරණය කරන්න",
     "Activity notification for %s" : "%s සඳහා ක්‍රියාකාරකම් දැනුම්දීම",
     "activities" : "ක්‍රියාකාරකම්"
 },

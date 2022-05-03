@@ -48,11 +48,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Activar as fontes RSS",
     "RSS feed" : "Fontes RSS",
     "No more events to load" : "Non hai máis eventos para cargar",
-    "An error occurred while loading activities" : "Produciuse un erro ao cargar as actividades",
-    "Load more activities" : "Cargar máis actividades",
     "Activity notification for %s" : "Notificación de actividade para %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Esta aplicación permítelle aos usuarios ver as accións relacionadas cos seus ficheiros en Nextcloud.",
-    "Configure the default notification settings for new users." : "Configure os axustes predeterminados de notificación pra novos usuarios.",
     "Send notification emails:" : "Enviar os correos de notificación:"
 },
 "nplurals=2; plural=(n != 1);");

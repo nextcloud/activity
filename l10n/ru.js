@@ -56,11 +56,7 @@ OC.L10N.register(
     "RSS feed" : "RSS лента",
     "Personal notification settings" : "Личные настройки уведомлений",
     "No more events to load" : "Больше нет событий для загрузки",
-    "An error occurred while loading activities" : "При загрузке списка событий произошла ошибка",
-    "Load more activities" : "Загрузить ещё события",
     "Activity notification for %s" : "Оповещение о произошедших событиях для %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Это приложение позволяет пользователям просматривать действия, связанные с их файлами в Nextcloud.",
-    "Configure the default notification settings for new users." : "Параметры способов отправки уведомлений, используемые по умолчанию для новых пользователей.",
     "Send notification emails:" : "Частота рассылки эл. писем:",
     "Personal Activity Settings" : "Личные параметры событий ",
     "activities" : "события"

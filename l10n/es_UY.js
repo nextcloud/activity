@@ -40,8 +40,6 @@ OC.L10N.register(
     "Settings" : "Configuraciones ",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
-    "No more events to load" : "No hay más eventos por cargar",
-    "An error occurred while loading activities" : "Se presentó un error al cargar las actividades",
-    "Load more activities" : "Cargar más actividades"
+    "No more events to load" : "No hay más eventos por cargar"
 },
 "nplurals=2; plural=(n != 1);");

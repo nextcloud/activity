@@ -40,9 +40,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Ssermed asuddem RSS",
     "RSS feed" : "Asuddem RSS",
     "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
-    "An error occurred while loading activities" : "Teḍra-d tuccḍa deg usali n irmuden",
-    "Load more activities" : "Sali-d ugar n irmuden",
-    "Activity notification for %s" : "Talɣut n warmud i %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Asnas-ag ad yeǧǧ iseqdacen ad walin tigawin yeɛnan ifuyla-nnsen di Nextcloud."
+    "Activity notification for %s" : "Talɣut n warmud i %s"
 },
 "nplurals=2; plural=(n != 1);");

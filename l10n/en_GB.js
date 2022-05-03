@@ -42,9 +42,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Enable RSS feed",
     "RSS feed" : "RSS feed",
     "No more events to load" : "No more events to load",
-    "An error occurred while loading activities" : "An error occurred while loading activities",
-    "Load more activities" : "Load more activities",
-    "Activity notification for %s" : "Activity notification for %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "This application enables users to view actions related to their files in Nextcloud."
+    "Activity notification for %s" : "Activity notification for %s"
 },
 "nplurals=2; plural=(n != 1);");

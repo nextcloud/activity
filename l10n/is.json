@@ -45,11 +45,7 @@
     "Enable RSS feed" : "Virkja RSS-veitu",
     "RSS feed" : "RSS-veita",
     "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
-    "An error occurred while loading activities" : "Villa kom upp við að hlaða inn virkni",
-    "Load more activities" : "Hlaða inn virkni",
     "Activity notification for %s" : "Tilkynning um virkni fyrir %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Þetta forrit gerir notendum kleift að skoða aðgerðir sem tengjast skránum þeirra í Nextcloud.",
-    "Configure the default notification settings for new users." : "Ákvarðaðu sjálfgefnar tilkynningastillingar fyrir nýja notendur.",
     "Send notification emails:" : "Senda tilkynningapóst:"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

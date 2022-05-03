@@ -57,11 +57,7 @@ OC.L10N.register(
     "RSS feed" : "Kanał RSS",
     "Personal notification settings" : "Osobiste ustawienia powiadomień",
     "No more events to load" : "Brak wydarzeń do załadowania",
-    "An error occurred while loading activities" : "Wystąpił błąd podczas ładowania aktywności",
-    "Load more activities" : "Wczytaj więcej aktywności",
     "Activity notification for %s" : "Powiadomienie o aktywności dla %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Aplikacja umożliwia użytkownikom przeglądanie akcji związanych z ich plikami w usłudze Nextcloud.",
-    "Configure the default notification settings for new users." : "Skonfiguruj domyślne ustawienia powiadomienia dla nowych użytkowników.",
     "Send notification emails:" : "Wyślij e-maile z powiadomieniem:",
     "Personal Activity Settings" : "Osobiste ustawienia aktywności",
     "activities" : "Aktywność"

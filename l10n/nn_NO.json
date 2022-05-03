@@ -50,11 +50,7 @@
     "Enable RSS feed" : "Skru på RSS-straum",
     "RSS feed" : "RSS-straum",
     "No more events to load" : "Inga fleire hendingar å lasta",
-    "An error occurred while loading activities" : "Ein feil oppstod under lastinga av aktivitetar",
-    "Load more activities" : "Lastar fleire aktivitetar",
     "Activity notification for %s" : "Varsel om hending for %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Denne applikasjon viser hendingar for dine filer i Nextcloud.",
-    "Configure the default notification settings for new users." : "Tilpass standard varselinnstillingar for nye brukarar.",
     "Send notification emails:" : "Send epost varsel:",
     "activities" : "aktivitetar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
