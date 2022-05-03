@@ -54,11 +54,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Активувати стрічку RSS",
     "RSS feed" : "Стрічка RSS",
     "No more events to load" : "Відсутні події для завантаження",
-    "An error occurred while loading activities" : "Під час завантаження подій відбулася помилка",
-    "Load more activities" : "Інші події",
     "Activity notification for %s" : "Повідомлення про події для %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Застосунок дозволяє користувачам переглядати дії з власними файлами у Nextcloud.",
-    "Configure the default notification settings for new users." : "Налаштувати параметри сповіщень для нових користувачів.",
     "Send notification emails:" : "Надсилати сповіщення на ел. пошту:",
     "Personal Activity Settings" : "Налаштування особистої активності",
     "activities" : "події"

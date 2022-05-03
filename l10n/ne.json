@@ -37,8 +37,6 @@
     "Settings" : "सेटिङ्हरू",
     "Enable RSS feed" : "RSS फिड सक्षम गर्नुहोस्",
     "RSS feed" : "RSS फिड",
-    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
-    "An error occurred while loading activities" : "क्रियाकलापहरू लोड गर्दा त्रुटि देखापर्यो",
-    "Load more activities" : "थप क्रियाकलापहरू लोड गर्नुहोस्"
+    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -40,9 +40,6 @@
     "Enable RSS feed" : "RSS ლენტის გააქტიურება",
     "RSS feed" : "RSS ლენტა",
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
-    "An error occurred while loading activities" : "აქტივობების ჩატვირთვისას წარმოიშვა შეცდომა",
-    "Load more activities" : "მეტი აქტივობის ჩატვირთვა",
-    "Activity notification for %s" : "აქტივობის შეტყობინება %s-თვის",
-    "This application enables users to view actions related to their files in Nextcloud." : "ეს აპლიკაცია მომხმარებლებს აძლევს საშუალებას დაინახონ „Nextcloud“-ზე მათ ფაილებთან დაკავშირებული ქმედებები."
+    "Activity notification for %s" : "აქტივობის შეტყობინება %s-თვის"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

@@ -45,11 +45,7 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS feed উপযোগী ক኉ন",
     "RSS feed" : "আরএসএস ফিড ",
     "No more events to load" : "লোড করার কোন ইভেন্ট খুঁজে পাওয়া গেল না।",
-    "An error occurred while loading activities" : "ক্রিয়াকলাপ লোড করার সময় একটি ত্রুটি ঘটেছে",
-    "Load more activities" : "আরও ক্রিয়াকলাপ লোড করুন",
     "Activity notification for %s" : "%s জন্য ক্রিয়াকলাপ বিজ্ঞপ্তি",
-    "This application enables users to view actions related to their files in Nextcloud." : "এই অ্যাপ্লিকেশনটি ব্যবহারকারীদের নেক্সটক্লাউডে তাদের ফাইলগুলির সাথে সম্পর্কিত ক্রিয়া দেখতে সক্ষম করে।",
-    "Configure the default notification settings for new users." : "নতুন ব্যবহারকারীদের জন্য ডিফল্ট বিজ্ঞপ্তি সেটিংস কনফিগার করুন।",
     "Send notification emails:" : "বিজ্ঞপ্তি ইমেলগুলি প্রেরণ করুন:"
 },
 "nplurals=2; plural=(n != 1);");

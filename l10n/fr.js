@@ -57,11 +57,7 @@ OC.L10N.register(
     "RSS feed" : "Flux RSS",
     "Personal notification settings" : "Paramètres des notifications personnelles",
     "No more events to load" : "Plus aucun événement à charger",
-    "An error occurred while loading activities" : "Une erreur est survenue lors du chargement des activités",
-    "Load more activities" : "Charger plus d'activités",
     "Activity notification for %s" : "Notification d'activité pour %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Cette application permet aux utilisateurs de voir les actions concernant leurs fichiers dans Nextcloud.",
-    "Configure the default notification settings for new users." : "Paramétrer les notifications par défaut pour les nouveaux utilisateurs.",
     "Send notification emails:" : "Envoyer des e-mails de notification :",
     "Personal Activity Settings" : "Paramètres de l'activité personnelle",
     "activities" : "activités"

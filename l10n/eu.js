@@ -57,11 +57,7 @@ OC.L10N.register(
     "RSS feed" : "RSS jarioa",
     "Personal notification settings" : "Jakinarazpen pertsonalen ezarpenak",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
-    "An error occurred while loading activities" : "Errorea gertatu da jarduerak kargatzean",
-    "Load more activities" : "Kargatu jarduera gehiago",
     "Activity notification for %s" : "Ekintza ohartarazpena honetarako: %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Aplikazio honek aukera ematen die erabiltzaileei Nextcloud-eko euren fitxategiekin lotutako ekintzak ikusteko.",
-    "Configure the default notification settings for new users." : "Konfiguratu jakinarazpenen ezarpen lehenetsiak erabiltzaile berrientzat",
     "Send notification emails:" : "Bidali jakinarazpen e-postak",
     "Personal Activity Settings" : "Jarduera pertsonal ezarpenak",
     "activities" : "Jarduerak"

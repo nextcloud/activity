@@ -36,8 +36,6 @@ OC.L10N.register(
     "Weekly" : "Долоо хоног бүр",
     "Settings" : "Тохиргоо",
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
-    "An error occurred while loading activities" : "Үйлдлүүдийг ачааллахад алдаа гарлаа",
-    "Load more activities" : "Бусад үйлдлүүдийг ачаалах",
     "Send notification emails:" : "Имэйлээр мэдэгдэл авах "
 },
 "nplurals=2; plural=(n != 1);");
