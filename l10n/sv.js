@@ -56,11 +56,7 @@ OC.L10N.register(
     "RSS feed" : "RSS-flöde",
     "Personal notification settings" : "Egna aviseringsinställningar",
     "No more events to load" : "Inga fler aktiviteter.",
-    "An error occurred while loading activities" : "Något gick snett vid inläsning av aktiviteter",
-    "Load more activities" : "Läs in fler aktiviteter",
     "Activity notification for %s" : "Notis om aktivitet för %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Denna applikation låter användarna se händelser relaterade till deras filer i Nextcloud.",
-    "Configure the default notification settings for new users." : "Konfigurera standardinställningar av notifieringar för nya användare.",
     "Send notification emails:" : "Skicka notifieringar via e-post:",
     "Personal Activity Settings" : "Personliga inställningar för händelser",
     "activities" : "händelser"

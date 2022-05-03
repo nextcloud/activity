@@ -28,6 +28,8 @@ OC.L10N.register(
     "Activity" : "Actividad",
     "Notifications" : "Notificaciones",
     "No activity yet" : "Aún no tiene actividad",
+    "Activities" : "Actividades",
+    "No activities" : "No hay actividades",
     "Activity feed" : "Fuente de actividad",
     "Default settings" : "Configuraciones predeterminadas",
     "You need to set up your email address before you can receive notification emails." : "Necesitas configurar tu dirección de correo electrónico antes de que puedas recibir correos de notificación",
@@ -39,8 +41,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
     "No more events to load" : "No hay más eventos por cargar",
-    "An error occurred while loading activities" : "Se presentó un error al cargar las actividades",
-    "Load more activities" : "Cargar más actividades",
     "Activity notification for %s" : "Notificación de actividad para %s"
 },
 "nplurals=2; plural=(n != 1);");

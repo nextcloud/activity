@@ -28,6 +28,8 @@ OC.L10N.register(
     "Activity" : "Tegevused",
     "Notifications" : "Teavitused",
     "No activity yet" : "Tegevusi veel pole",
+    "Activities" : "Tegevused",
+    "No activities" : "Tegevusi pole",
     "Activity feed" : "Tegevuste voog",
     "Default settings" : "Vaikeseaded",
     "You need to set up your email address before you can receive notification emails." : "Enne teavituskirjade saamist pead sa lisama oma e-posti aadressi.",
@@ -39,9 +41,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Luba RSS voog",
     "RSS feed" : "RRS voog",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
-    "An error occurred while loading activities" : "Tegevuse laadimisel tekkis tõrge",
-    "Load more activities" : "Lae rohkem tegevusi",
-    "Activity notification for %s" : "Tegevuse: %s, märguanne",
-    "This application enables users to view actions related to their files in Nextcloud." : "See rakendus võimaldab kasutajal vaadata oma Nextcloudi failidega seonduvaid tegevsi."
+    "Activity notification for %s" : "Tegevuse: %s, märguanne"
 },
 "nplurals=2; plural=(n != 1);");

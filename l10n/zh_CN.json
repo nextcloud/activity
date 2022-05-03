@@ -54,11 +54,7 @@
     "RSS feed" : "RSS 订阅源",
     "Personal notification settings" : "个人通知设置",
     "No more events to load" : "已无更多事件",
-    "An error occurred while loading activities" : "加载动态时发生错误",
-    "Load more activities" : "加载更多动态",
     "Activity notification for %s" : "%s 的动态通知",
-    "This application enables users to view actions related to their files in Nextcloud." : "本应用可以让用户们查看和他们在Nextcloud上的文件相关的活动。",
-    "Configure the default notification settings for new users." : "为新用户配置默认通知设置",
     "Send notification emails:" : "发送通知邮件",
     "Personal Activity Settings" : "个人活动设置",
     "activities" : "活动"

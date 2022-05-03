@@ -57,11 +57,7 @@ OC.L10N.register(
     "RSS feed" : "RSS kanál",
     "Personal notification settings" : "Nastavení osobního upozorňování",
     "No more events to load" : "Žádné další události k načtení",
-    "An error occurred while loading activities" : "Při načítání aktivit došlo k chybě",
-    "Load more activities" : "Načíst více aktivit",
     "Activity notification for %s" : "Upozornění na aktivitu pro %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Tato aplikace umožňuje uživatelům prohlížet aktivity vztahující se k jejich souborům v Nextcloud.",
-    "Configure the default notification settings for new users." : "Nastavte výchozí volby ohledně upozorňování pro nově vytvářené uživatele.",
     "Send notification emails:" : "Poslat upozorňovací e-maily:",
     "Personal Activity Settings" : "Nastavení pro osobní aktivity",
     "activities" : "aktivity"

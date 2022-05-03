@@ -30,6 +30,7 @@ OC.L10N.register(
     "Notifications" : "Kemennadennoù",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Gant an arload-mañ e c'hall an implijerien gwelet an obererezhioù liammet gant o restroù Nextcloud.\n\t\tUr wech aotreet, e welo an implijerien un arlun nevez \"Obererezh\" en o rollad arloadoù.\n\t\tPa vez kliket warni e teuio ur bajenn nevez war wel evit ma c'hallfe an implierien heuliañ an obererezh liammet ouzh ar restroù - eus ar restroù nevez d'ar re dilamet, fiñvet, adanvet, nevesaet pe d'an obererezh rannet gant tud all.\n\t\tGallout a ra an implijerien kefluniañ arventennoù ho obererezh hiniennel en o roll-meuzioù personel.\n\t\tKement-mañ a verk an doare obererezh da vezañ enrollet hag hag-eñ e c'hall an implijerien gwelet o obererezh dezho o-unan,\n\t\tdaoust ha hegerz int enlinennm, daoust ha resev a reont un diverrañ ingal dre bostel.\n\t\tGouzout hiroc'h a c'haller war teuliadur Activity.",
     "No activity yet" : "Tamm obererezh ebet",
+    "Activities" : "Oberiantizoù",
     "Activity feed" : "Lanvad obererezh",
     "Enable notification emails" : "Aotren kas kemennadennoù dre bostel",
     "Default settings" : "Arventennoù dre ziouer",
@@ -45,11 +46,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Aotren al lanvad RSS",
     "RSS feed" : "Lanvad RSS",
     "No more events to load" : "Darvoud all ebet da gargañ",
-    "An error occurred while loading activities" : "Emañ ur fazi evit kargañ oberiantizoù",
-    "Load more activities" : "Kargañ obererezhioù ouzhpenn",
     "Activity notification for %s" : "Kemennadenn obererezh evit %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Gant an arload-mañ e c'hall an implijerien gwelet obererezhioù liammet gant o restroù e Nextcloud.",
-    "Configure the default notification settings for new users." : "Kefluniañ arventennoù dre ziouer ar c'hemennadennoù evit an implijerien nevez.",
     "Send notification emails:" : "Kas kemennadennoù dre bostel :"
 },
 "nplurals=5; plural=((n%10 == 1) && (n%100 != 11) && (n%100 !=71) && (n%100 !=91) ? 0 :(n%10 == 2) && (n%100 != 12) && (n%100 !=72) && (n%100 !=92) ? 1 :(n%10 ==3 || n%10==4 || n%10==9) && (n%100 < 10 || n% 100 > 19) && (n%100 < 70 || n%100 > 79) && (n%100 < 90 || n%100 > 99) ? 2 :(n != 0 && n % 1000000 == 0) ? 3 : 4);");

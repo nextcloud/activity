@@ -13,6 +13,7 @@ OC.L10N.register(
     "Hello %s," : "Hey %s,",
     "Mail" : "Post",
     "Activity" : "Virksemi",
+    "Activities" : "Virksemi",
     "As soon as possible" : "So skjótt sum gjørligt",
     "Hourly" : "Hvønn tíma",
     "Daily" : "Hvønn dag",

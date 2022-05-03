@@ -21,6 +21,7 @@ OC.L10N.register(
     "Mail" : "Mel",
     "Activity" : "Aktiviti",
     "No activity yet" : "Tiada aktiviti",
+    "Activities" : "Aktiviti",
     "Activity feed" : "Suapan aktiviti",
     "Default settings" : "Tetapan lalai",
     "As soon as possible" : "Secepat yang boleh",
@@ -29,8 +30,6 @@ OC.L10N.register(
     "Weekly" : "Setiap minggu",
     "Settings" : "Tetapan",
     "RSS feed" : "Suapan RSS",
-    "No more events to load" : "Tiada aktiviti untuk memuat",
-    "An error occurred while loading activities" : "Masalah timbul semasa memuat aktiviti",
-    "Load more activities" : "Memuat lebih aktiviti"
+    "No more events to load" : "Tiada aktiviti untuk memuat"
 },
 "nplurals=1; plural=0;");

@@ -9,6 +9,7 @@ OC.L10N.register(
     "{name} (restricted)" : "{name} (restricted)",
     "Mail" : "Pochta",
     "Notifications" : "Bildirishnomalar",
+    "Activities" : "Faoliyatlar",
     "Settings" : "Sozlamalar"
 },
 "nplurals=1; plural=0;");

@@ -26,7 +26,10 @@ OC.L10N.register(
     "There was some activity at %s" : "Yella yiwen n urmud deg %s",
     "Mail" : "Tirawt",
     "Activity" : "Armud",
+    "Notifications" : "Ilɣa",
     "No activity yet" : "Ulac armud yakan",
+    "Activities" : "Irmuden",
+    "No activities" : "Ulac armud",
     "Activity feed" : "Asuddem n warmud",
     "Default settings" : "Iɣewwaren n lexṣas",
     "You need to set up your email address before you can receive notification emails." : "Ilaq ad tesɣewreḍ tansa imayl iwakken ad tizmireḍ ad teṭṭfeḍ talɣut s imayl.",
@@ -37,9 +40,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Ssermed asuddem RSS",
     "RSS feed" : "Asuddem RSS",
     "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
-    "An error occurred while loading activities" : "Teḍra-d tuccḍa deg usali n irmuden",
-    "Load more activities" : "Sali-d ugar n irmuden",
-    "Activity notification for %s" : "Talɣut n warmud i %s",
-    "This application enables users to view actions related to their files in Nextcloud." : "Asnas-ag ad yeǧǧ iseqdacen ad walin tigawin yeɛnan ifuyla-nnsen di Nextcloud."
+    "Activity notification for %s" : "Talɣut n warmud i %s"
 },
 "nplurals=2; plural=(n != 1);");

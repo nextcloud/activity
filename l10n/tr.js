@@ -57,11 +57,7 @@ OC.L10N.register(
     "RSS feed" : "RSS akışı",
     "Personal notification settings" : "Kişisel bildirim ayarları",
     "No more events to load" : "Yüklenecek başka bir olay yok",
-    "An error occurred while loading activities" : "İşlemler yüklenirken bir sorun çıktı",
-    "Load more activities" : "Diğer işlemleri yükle",
     "Activity notification for %s" : "%s için işlem bildirimi",
-    "This application enables users to view actions related to their files in Nextcloud." : "Bu uygulama, kullanıcıların Nextcloud üzerindeki dosyaları üzerinde yapılan işlemleri görebilmesini sağlar.",
-    "Configure the default notification settings for new users." : "Yeni kullanıcılar için varsayılan bildirim ayarlarını yapılandırın.",
     "Send notification emails:" : "Bildirim e-postaları gönderilsin:",
     "Personal Activity Settings" : "Kişisel işlem ayarları",
     "activities" : "işlem"
