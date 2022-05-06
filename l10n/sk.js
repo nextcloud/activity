@@ -41,6 +41,7 @@ OC.L10N.register(
     "Activity feed" : "Prehľad aktivít",
     "Enable notification emails" : "Zapnúť upozorňovanie e-mailom",
     "Default settings" : "Predvolená nastavenia",
+    "Configure the default notification settings." : "Nastavte predvolené nastavenia upozornení.",
     "You need to set up your email address before you can receive notification emails." : "Ak chcete dostávať oznámenia emailom, musíte najskôr vyplniť vašu emailovú adresu.",
     "Send activity emails:" : "Odoslať emaily s aktivitou:",
     "As soon as possible" : "Čo najskôr",
