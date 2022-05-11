@@ -183,6 +183,10 @@
 	max-height: 16px;
 }
 
+.activity-icon img.monochrome {
+	filter: var(--background-invert-if-dark);
+}
+
 #rssurl > input.feed-link {
 	width: 80%;
 }
