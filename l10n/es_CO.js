@@ -17,7 +17,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "La URL de tu fuente de es inválida",
     "Your settings have been updated." : "Tus configuraciones se han actualizado.",
     "Settings have been updated." : "Las configuraciones han sido actualizadas",
-    "_and %n more _::_and %n more _" : ["y %n más","y %n más"],
+    "_and %n more _::_and %n more _" : ["y %n más","y %n más","y %n más"],
     "All activities" : "Todas las actividades",
     "By others" : "Por otros",
     "By you" : "Por usted",
@@ -50,4 +50,4 @@ OC.L10N.register(
     "Activity notification for %s" : "Notificación de actividad para %s",
     "Send notification emails:" : "Enviar notificaciones de correos:"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
