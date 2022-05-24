@@ -20,7 +20,7 @@ OC.L10N.register(
     "Settings have been updated." : "Les paramètres ont été mis à jour.",
     "Recent activity" : "Activité récente",
     "Daily activity summary for %s" : "Résumé de l'activité du jour pour %s",
-    "_and %n more _::_and %n more _" : ["et %n autre","et %n autres"],
+    "_and %n more _::_and %n more _" : ["et %n autre","et %n autres","et %n autres"],
     "All activities" : "Toutes les activités",
     "By others" : "Des autres",
     "By you" : "De vous",
@@ -62,4 +62,4 @@ OC.L10N.register(
     "Personal Activity Settings" : "Paramètres de l'activité personnelle",
     "activities" : "activités"
 },
-"nplurals=2; plural=(n > 1);");
+"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
