@@ -39,6 +39,7 @@
     "Activity feed" : "Лента событий",
     "Enable notification emails" : "Включить уведомления о событиях по эл. почте",
     "Default settings" : "Параметры по умолчанию",
+    "Configure the default notification settings." : "Параметры уведомлений по умолчанию.",
     "You need to set up your email address before you can receive notification emails." : "Для получения уведомлений укажите свой адрес электронной почты в настройках.",
     "Send activity emails:" : "Отправка писем об активности:",
     "As soon as possible" : "Как можно быстрее",
