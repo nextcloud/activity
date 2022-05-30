@@ -68,7 +68,7 @@ class NotificationGenerator implements INotifier {
 		$notification->setUser($event->getAffectedUser());
 		$notification->setDateTime(\DateTime::createFromFormat('U', (string)$event->getTimestamp()));
 		$notification->setObject('activity_notification', (string)$activityId);
-		$notification->setSubject($event->getSubject());
+		$notification->setSubject($event->getSubject(), $event->getSubjectParameters());
 
 		if ($event->getRichSubject()) {
 			$notification->setRichSubject($event->getRichSubject(), $event->getRichSubjectParameters());
@@ -79,7 +79,7 @@ class NotificationGenerator implements INotifier {
 		}
 
 		if ($event->getMessage()) {
-			$notification->setMessage($event->getMessage());
+			$notification->setMessage($event->getMessage(), $event->getMessageParameters());
 		}
 
 		if ($event->getLink()) {
@@ -141,7 +141,7 @@ class NotificationGenerator implements INotifier {
 		}
 
 		if ($event->getParsedMessage()) {
-			$notification->setParsedSubject($event->getParsedSubject());
+			$notification->setParsedMessage($event->getParsedMessage());
 		}
 
 		return $notification;
