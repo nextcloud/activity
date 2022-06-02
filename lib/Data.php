@@ -183,6 +183,8 @@ class Data {
 			throw new \OutOfBoundsException('Invalid user', 1);
 		}
 
+		$limit = min(200, $limit);
+
 		$activeFilter = null;
 		try {
 			$activeFilter = $this->activityManager->getFilterById($filter);
