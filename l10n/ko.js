@@ -41,6 +41,7 @@ OC.L10N.register(
     "Activity feed" : "활동 피드",
     "Enable notification emails" : "이메일 알림 활성화",
     "Default settings" : "기본 설정",
+    "Configure the default notification settings." : "기본 알림 설정을 변경합니다..",
     "You need to set up your email address before you can receive notification emails." : "알림 이메일을 받으려면 이메일 주소를 설정해야 합니다.",
     "Send activity emails:" : "활동 이메일 보내기:",
     "As soon as possible" : "빠른 시일 내에",

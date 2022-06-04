@@ -55,7 +55,7 @@ OC.L10N.register(
     "Settings" : "Configuración",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
-    "Personal notification settings" : "Ajustes de las notificaciones personales",
+    "Personal notification settings" : "Ajustes personales de las notificaciones",
     "No more events to load" : "No hay más eventos por cargar.",
     "Activity notification for %s" : "Notificación de actividad para %s",
     "Send notification emails:" : "Enviar notificaciones por emails:",
