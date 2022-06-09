@@ -162,6 +162,10 @@
 	vertical-align: middle;
 	display: inline-block;
 	margin: 0 5px 2px 3px;
+
+	&:focus-visible {
+		box-shadow: 0 0 0 2px var(--color-primary);
+	}
 }
 
 .icon-activity {
@@ -201,7 +205,7 @@
 
 #activity-personal-settings-link {
 	text-decoration: underline;
-	
+
 	a {
 		display: block;
 		padding: 10px 0px 10px 25px;
