@@ -13,6 +13,7 @@ OC.L10N.register(
     "There are no events for this filter" : "N'eus darvoud ebet evit ar sil-mañ",
     "Today" : "Hiziv",
     "Yesterday" : "Dec'h",
+    "Open {filename}" : "Digeriñ {filename}",
     "Personal activity feed for %s" : "Froud obererezhioù personel evit %s ",
     "Your feed URL is invalid" : "Direizh eo URL ho froud",
     "Your settings have been updated." : "Nevesaet eo bet hoc'h arventennoù",
