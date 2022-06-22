@@ -9,6 +9,8 @@ OC.L10N.register(
     "Notifications" : "Hysbysiadau",
     "No activity yet" : "Dim gweithred eto",
     "Activities" : "Gweithgareddau",
+    "Daily" : "Dyddiol",
+    "Weekly" : "Wythnosol",
     "Settings" : "Gosodiadau"
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");
