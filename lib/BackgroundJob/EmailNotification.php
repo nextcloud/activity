@@ -25,6 +25,7 @@ namespace OCA\Activity\BackgroundJob;
 
 use OC\BackgroundJob\TimedJob;
 use OCA\Activity\MailQueueHandler;
+use OCP\IConfig;
 
 /**
  * Class EmailNotification
@@ -36,15 +37,20 @@ class EmailNotification extends TimedJob {
 	/** @var MailQueueHandler */
 	protected $queueHandler;
 
+	/** IConfig $config */
+	private $config;
+
 	/** @var bool */
 	protected $isCLI;
 
 	public function __construct(MailQueueHandler $mailQueueHandler,
+								IConfig $config,
 								bool $isCLI) {
 		// Run everytime cron is executed, so the batching doesn't delay too much
 		$this->setInterval(1);
 
 		$this->queueHandler = $mailQueueHandler;
+		$this->config = $config;
 		$this->isCLI = $isCLI;
 	}
 
@@ -53,6 +59,11 @@ class EmailNotification extends TimedJob {
 		// runtime issues later and delete emails, which were created in the
 		// same second, but were not collected for the emails.
 		$sendTime = time() - 1;
+
+		// do not send any email if the full option is disabled by admin
+		if ($this->config->getAppValue('activity', 'enable_email', 'yes') !== 'yes') {
+			return;
+		}
 
 		if ($this->isCLI) {
 			do {
