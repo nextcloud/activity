@@ -165,11 +165,11 @@ class MailQueueHandler {
 				if ($this->sendEmailToUser($user, $email, $language, $timezone, $sendTime)) {
 					$deleteItemsForUsers[] = $user;
 				} else {
-					$this->logger->debug("Failed sending activity email to user '{user}'.", ['user' => $user, 'app' => 'activity']);
+					$this->logger->warning("Failed sending activity email to user '{user}'.", ['user' => $user, 'app' => 'activity']);
 				}
 			} catch (\Exception $e) {
 				$this->logger->logException($e, [
-					'message' => 'Failed sending activity email to user "{user}"',
+					'message' => 'Failed creating activity email for user "{user}"',
 					'user' => $user,
 					'app' => 'activity',
 				]);
@@ -414,6 +414,11 @@ class MailQueueHandler {
 		try {
 			$this->mailer->send($message);
 		} catch (\Exception $e) {
+			$this->logger->logException($e, [
+				'message' => 'Failed sending activity email to user "{user}"',
+				'user' => $user,
+				'app' => 'activity',
+			]);
 			return false;
 		}
 
