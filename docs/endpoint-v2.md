@@ -24,7 +24,7 @@ GET /ocs/v2.php/apps/activity/api/v2/activity
 With type filter
 
 ```
-GET /ocs/v2.php/apps/activity/api/v2/activity/:filter
+GET /ocs/v2.php/apps/activity/api/v2/activity/filter
 ```
 
 ## Parameters
