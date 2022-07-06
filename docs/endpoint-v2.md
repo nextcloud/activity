@@ -24,8 +24,16 @@ GET /ocs/v2.php/apps/activity/api/v2/activity
 With type filter
 
 ```
-GET /ocs/v2.php/apps/activity/api/v2/activity/:filter
+GET /ocs/v2.php/apps/activity/api/v2/activity/{filter}
 ```
+
+Supported type filters can be obtained from:
+
+```
+GET /ocs/v2.php/apps/activity/api/v2/activity/filters
+```
+
+Additionally, filtering based on `object_type` and `object_id` (see below) is only valid when supplying `filter` as the type filter.  Filtering results based on `object_type` and `object_id` parameters is not supported when using any other type filter.
 
 ## Parameters
 
@@ -33,9 +41,10 @@ Name | Type | Description
 ---- | ---- | -----------
 `since` | int (Optional) | The integer ID of the last activity that you’ve seen.
 `limit` | int (Optional) | How many activities should be returned (Default: `50`)
-`object_type` | string (Optional) | Allows to filter the activities to a given object. May only appear together with `object_id`
-`object_id` | string (Optional) | Allows to filter the activities to a given object. May only appear together with `object_type`
+`object_type` | string (Optional) | Allows to filter the activities to a given object. May only appear together with `object_id` and the `filter` type filter
+`object_id` | string (Optional) | Allows to filter the activities to a given object. May only appear together with `object_type` and the `filter` type filter
 `sort` | string - `asc` or `desc` | Should activities be given ascending or descending (from the `since`) (Default: `desc`)
+
 
 ## HTTP Status
 
