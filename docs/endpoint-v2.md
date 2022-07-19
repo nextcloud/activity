@@ -99,6 +99,7 @@ Field name | Type | Value description
 `object_type` | string (Optional) | Type of the object this activity is about (e.g. `'files'` is used for files and folders)
 `object_id` | int (Optional) | ID of the object this activity is about (e.g. ID in the file cache is used for files and folders)
 `object_name` | string (Optional) | Name of the object this activity is about (e.g. for files it's the relative path to the user's root: `'/folder/.travis.yml'`)
+`objects` | object (Optional) | In activities that reference multiple objects (e.g. an activity detailing several files edited in the same folder), this field holds the objects referenced in this activity. They are stored in `objects` as key-value pairs of the `object_id` and the `object_name`: `{ object_id: object_name}`
 `previews` | array (Optional) | A list of potential previews (currently only available for file activities). See `Preview element` for more information
 
 ### Preview element
