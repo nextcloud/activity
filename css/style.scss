@@ -135,14 +135,16 @@
 	font-weight: bold;
 }
 
-.activity-section a:focus,
 .activity-previews a:hover,
 .activity-previews a:focus {
 	opacity: .5;
 }
 
-.activity-section a:hover {
-	opacity: .7;
+.activity-section a:hover,
+.activity-section a:focus,
+.avatar-name-wrapper:hover,
+.avatar-name-wrapper:focus {
+	color: var(--color-text-maxcontrast);
 }
 
 .activitysubject strong.systemtag {
@@ -179,7 +181,6 @@
 	vertical-align: top;
 	margin-top: 2px;
 	background-size: contain;
-	opacity: .5;
 }
 
 .activity-icon img {
