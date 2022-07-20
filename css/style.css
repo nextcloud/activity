@@ -57,65 +57,63 @@
 	width: 100%;
 	display: block;
 	margin-bottom: 10px;
-
-	.header{
-		height: 32px;
-		margin-bottom: 10px;
-	}
-
-	.messagecontainer{
-		width: 100%;
-		display: block;
-		margin-bottom: 20px;
-	}
-
-	.preview{
-		width: 50px;
-		height: 50px;
-		margin-right: 12px;
-	}
-
-	.preview-dir-icon,
-	.preview-mimetype-icon {
-		width: 50px;
-		height: 50px;
-	}
-
-	.user{
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		float: left;
-		display: inline-block;
-		width: 180px;
-		font-weight: bold;
-	}
-
-	.activitytime {
-		float: right;
-		color: var(--color-text-maxcontrast);
-		font-size: 0.8em;
-		padding: 20px;
-		margin: -20px;
-	}
-
-	.appname {
-		float: right;
-		color: #333;
-		font-size: 0.8em;
-	}
-
-	.grouped{
-		list-style: none;
-	}
-
-	.grouped .more{
-		cursor: default;
-		color: var(--color-text-maxcontrast);
-	}
 }
 
+.activity.box .header{
+	height: 32px;
+	margin-bottom: 10px;
+}
 
+.activity.box .messagecontainer{
+	width: 100%;
+	display: block;
+	margin-bottom: 20px;
+}
+
+.activity.box .preview{
+	width: 50px;
+	height: 50px;
+	margin-right: 12px;
+}
+
+.activity.box .preview-dir-icon,
+.activity.box .preview-mimetype-icon {
+	width: 50px;
+	height: 50px;
+}
+
+.activity.box .user{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	float: left;
+	display: inline-block;
+	width: 180px;
+	font-weight: bold;
+}
+
+.activity.box .activitytime {
+	float: right;
+	color: var(--color-text-maxcontrast);
+	font-size: 0.8em;
+	padding: 20px;
+	margin: -20px;
+}
+
+.activity.box .appname {
+	float: right;
+	color: #333;
+	font-size: 0.8em;
+}
+
+.activity.box .grouped{
+	list-style: none;
+}
+
+.activity.box .grouped .more{
+	cursor: default;
+	color: var(--color-text-maxcontrast);
+}
 
 /* Navigation icons */
 #app-navigation img {
@@ -135,14 +133,16 @@
 	font-weight: bold;
 }
 
-.activity-section a:focus,
 .activity-previews a:hover,
 .activity-previews a:focus {
 	opacity: .5;
 }
 
-.activity-section a:hover {
-	opacity: .7;
+.activity-section a:hover,
+.activity-section a:focus,
+.avatar-name-wrapper:hover,
+.avatar-name-wrapper:focus {
+	color: var(--color-text-maxcontrast);
 }
 
 .activitysubject strong.systemtag {
@@ -162,15 +162,17 @@
 	vertical-align: middle;
 	display: inline-block;
 	margin: 0 5px 2px 3px;
+}
 
-	&:focus-visible {
-		box-shadow: 0 0 0 2px var(--color-primary);
-	}
+.activity-section .avatar:focus-visible {
+	box-shadow: 0 0 0 2px var(--color-primary);
 }
 
 .icon-activity {
-	@include icon-color('activity-dark', 'activity', $color-black);
+	background-image: url(../img/activity-dark.svg);
+	filter: var(--background-invert-if-dark);
 }
+
 /* colored icons, in addition to core ones */
 .activity-icon {
 	min-width: 16px;
@@ -179,7 +181,6 @@
 	vertical-align: top;
 	margin-top: 2px;
 	background-size: contain;
-	opacity: .5;
 }
 
 .activity-icon img {
@@ -205,11 +206,11 @@
 
 #activity-personal-settings-link {
 	text-decoration: underline;
+}
 
-	a {
-		display: block;
-		padding: 10px 0px 10px 25px;
-	}
+#activity-personal-settings-link a {
+	display: block;
+	padding: 10px 0 10px 25px;
 }
 
 .activitymessage .avatar-name-wrapper,
