@@ -48,12 +48,12 @@
     "Choose for which activities you want to get a push notification." : "اختر الأنشطة التي تريد الحصول على إشعار عليها.",
     "Daily activity summary" : "ملخص الأنشطة اليومي",
     "Send daily activity summary in the morning" : "أرسل الخلاصة اليومية في الصباح",
-    "Settings" : "الإعدادات",
     "Enable RSS feed" : "تفعيل مجرى RSS",
     "RSS feed" : "مجرى RSS",
     "No more events to load" : "لا توجد أي أحداث للتحميل",
     "Activity notification for %s" : "إشعار عن النشاط %s",
     "Send notification emails:" : "أرسل أشعارات بريدية:",
+    "Settings" : "الإعدادات",
     "Personal Activity Settings" : "إعدادات الأنشطة الشخصي",
     "activities" : "الأنشطة"
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"

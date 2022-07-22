@@ -36,9 +36,9 @@ OC.L10N.register(
     "Hourly" : "घण्टाको हिसाबले",
     "Daily" : "दैनिक",
     "Weekly" : "साप्ताहिक",
-    "Settings" : "सेटिङ्हरू",
     "Enable RSS feed" : "RSS फिड सक्षम गर्नुहोस्",
     "RSS feed" : "RSS फिड",
-    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्"
+    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
+    "Settings" : "सेटिङ्हरू"
 },
 "nplurals=2; plural=(n != 1);");

@@ -38,10 +38,10 @@ OC.L10N.register(
     "Hourly" : "Hourly",
     "Daily" : "Daily",
     "Weekly" : "Weekly",
-    "Settings" : "Settings",
     "Enable RSS feed" : "Enable RSS feed",
     "RSS feed" : "RSS feed",
     "No more events to load" : "No more events to load",
-    "Activity notification for %s" : "Activity notification for %s"
+    "Activity notification for %s" : "Activity notification for %s",
+    "Settings" : "Settings"
 },
 "nplurals=2; plural=(n != 1);");

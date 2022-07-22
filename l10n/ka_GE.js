@@ -38,10 +38,10 @@ OC.L10N.register(
     "Hourly" : "საათობრივი",
     "Daily" : "ყოველდღიური",
     "Weekly" : "ყოველკვირეული",
-    "Settings" : "პარამეტრები",
     "Enable RSS feed" : "RSS ლენტის გააქტიურება",
     "RSS feed" : "RSS ლენტა",
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
-    "Activity notification for %s" : "აქტივობის შეტყობინება %s-თვის"
+    "Activity notification for %s" : "აქტივობის შეტყობინება %s-თვის",
+    "Settings" : "პარამეტრები"
 },
 "nplurals=2; plural=(n!=1);");

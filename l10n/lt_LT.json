@@ -49,12 +49,12 @@
     "Choose for which activities you want to get a push notification." : "Pasirinkite veiklas, apie kurias norite gauti pranešimus.",
     "Daily activity summary" : "Kasdienių veiklų apžvalga",
     "Send daily activity summary in the morning" : "Siųsti kasdienių veiklų apžvalgą rytais",
-    "Settings" : "Nustatymai",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "RSS feed" : "RSS kanalas",
     "No more events to load" : "Nėra daugiau rodytinų įvykių",
     "Activity notification for %s" : "Aktyvumo pranešimai %s",
     "Send notification emails:" : "Siųsti pranešimus el. paštu:",
+    "Settings" : "Nustatymai",
     "Personal Activity Settings" : "Asmeninės veiklos nustatymai",
     "activities" : "veiklos"
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"

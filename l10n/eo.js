@@ -38,10 +38,10 @@ OC.L10N.register(
     "Hourly" : "Ĉiuhore",
     "Daily" : "Ĉiutage",
     "Weekly" : "Ĉiusemajne",
-    "Settings" : "Agordo",
     "Enable RSS feed" : "Aktivigi RSS-fluo",
     "RSS feed" : "RSS-a fluo",
     "No more events to load" : "Ne estas pli da eventoj.",
-    "Activity notification for %s" : "Aktivaĵaj sciigoj por %s"
+    "Activity notification for %s" : "Aktivaĵaj sciigoj por %s",
+    "Settings" : "Agordo"
 },
 "nplurals=2; plural=(n != 1);");

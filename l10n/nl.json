@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "Selecteer voor welke activiteiten je een pushnotificatie wil ontvangen.",
     "Daily activity summary" : "Dagelijkse activiteitssamenvatting",
     "Send daily activity summary in the morning" : "Stuur 's ochtends een dagelijkse activiteitssamenvatting",
-    "Settings" : "Instellingen",
     "Enable RSS feed" : "Zet RSS-kanaal aan",
     "RSS feed" : "RSS-kanaal",
     "Personal notification settings" : "Persoonlijke meldingsinstellingen",
     "No more events to load" : "Geen activiteiten meer beschikbaar",
     "Activity notification for %s" : "Activiteitsmelding voor %s",
     "Send notification emails:" : "Stuur e-mailnotificaties:",
+    "Settings" : "Instellingen",
     "Personal Activity Settings" : "Persoonlijke Activiteiten-instellingen",
     "activities" : "activiteiten"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

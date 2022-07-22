@@ -42,11 +42,11 @@ OC.L10N.register(
     "Choose for which activities you want to get an email or push notification." : "Izvēlieties, par kurām darbībām vēlaties saņemt e-pastu vai paziņojumu.",
     "Choose for which activities you want to get a push notification." : "Izvēlieties, par kurām darbībām vēlaties saņemt paziņojumu.",
     "Send daily activity summary in the morning" : "Sūtīt dienas darbību kopsavilkumu no rīta",
-    "Settings" : "Iestatījumi",
     "Enable RSS feed" : "Ieslēgt RSS plūsmu",
     "RSS feed" : "RSS plūsma",
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "Activity notification for %s" : "Brīdinājumi par darbībām %s",
-    "Send notification emails:" : "Sūtīt paziņojumu e-pastus:"
+    "Send notification emails:" : "Sūtīt paziņojumu e-pastus:",
+    "Settings" : "Iestatījumi"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

@@ -28,8 +28,8 @@ OC.L10N.register(
     "Hourly" : "Setiap jam",
     "Daily" : "Setiap hari",
     "Weekly" : "Setiap minggu",
-    "Settings" : "Tetapan",
     "RSS feed" : "Suapan RSS",
-    "No more events to load" : "Tiada aktiviti untuk memuat"
+    "No more events to load" : "Tiada aktiviti untuk memuat",
+    "Settings" : "Tetapan"
 },
 "nplurals=1; plural=0;");

@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "Изберете за кои активности да получавате директно известие.",
     "Daily activity summary" : "Обобщение на дневната активност",
     "Send daily activity summary in the morning" : "Изпращане на дневно обобщение за активността сутрин.",
-    "Settings" : "Настройки",
     "Enable RSS feed" : "Разрешаване на RSS емисии",
     "RSS feed" : "RSS емисия",
     "Personal notification settings" : "Лични настройки за известие",
     "No more events to load" : "Няма повече известия за зареждане",
     "Activity notification for %s" : "Известиe за активност %s",
     "Send notification emails:" : "Изпрати уведомителни е-мейли:",
+    "Settings" : "Настройки",
     "Personal Activity Settings" : "Настройки за лична активност",
     "activities" : "активности"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

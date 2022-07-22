@@ -45,11 +45,11 @@ OC.L10N.register(
     "Daily" : "Daagliks",
     "Weekly" : "Weekliks",
     "Send daily activity summary in the morning" : "Stuur soggens daaglikse aktiwiteit",
-    "Settings" : "Instellings",
     "Enable RSS feed" : "Aktiveer RSS-voer",
     "RSS feed" : "RSS-voer",
     "No more events to load" : "Geen meer gebeure om te laai",
     "Activity notification for %s" : "Aktiwiteitkennisgewing vir %s",
-    "Send notification emails:" : "Stuur e-poskennisgewings:"
+    "Send notification emails:" : "Stuur e-poskennisgewings:",
+    "Settings" : "Instellings"
 },
 "nplurals=2; plural=(n != 1);");

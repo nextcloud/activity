@@ -51,12 +51,12 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Vælg for hvilke aktiviteter du ønsker at få en push notifikation",
     "Daily activity summary" : "Daglig aktivitetsoversigt",
     "Send daily activity summary in the morning" : "Send daglig aktivitets overblik om morgenen",
-    "Settings" : "Indstillinger",
     "Enable RSS feed" : "Aktivér RSS feed",
     "RSS feed" : "RSS feed",
     "No more events to load" : "Der er Ikke flere aktiviteter som kan indlæses",
     "Activity notification for %s" : "Aktivitet notifikation for %s",
     "Send notification emails:" : "Send notifikations emails:",
+    "Settings" : "Indstillinger",
     "Personal Activity Settings" : "Indstillinger for personlig aktivitet",
     "activities" : "aktiviteter"
 },
