@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "Zvolte pro které aktivity chcete dostávat upozornění přes službu push.",
     "Daily activity summary" : "Souhrn denních aktivit",
     "Send daily activity summary in the morning" : "Každé ráno poslat souhrn denních aktivit",
-    "Settings" : "Nastavení",
     "Enable RSS feed" : "Zapnout RSS kanál",
     "RSS feed" : "RSS kanál",
     "Personal notification settings" : "Nastavení osobního upozorňování",
     "No more events to load" : "Žádné další události k načtení",
     "Activity notification for %s" : "Upozornění na aktivitu pro %s",
     "Send notification emails:" : "Poslat upozorňovací e-maily:",
+    "Settings" : "Nastavení",
     "Personal Activity Settings" : "Nastavení pro osobní aktivity",
     "activities" : "aktivity"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"

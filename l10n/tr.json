@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "Anında bildirim almak istediğiniz işlemleri seçin.",
     "Daily activity summary" : "Günlük işlem özeti",
     "Send daily activity summary in the morning" : "Günlük işlem özeti sabah gönderilsin",
-    "Settings" : "Ayarlar",
     "Enable RSS feed" : "RSS akışı kullanılsın",
     "RSS feed" : "RSS akışı",
     "Personal notification settings" : "Kişisel bildirim ayarları",
     "No more events to load" : "Yüklenecek başka bir olay yok",
     "Activity notification for %s" : "%s için işlem bildirimi",
     "Send notification emails:" : "Bildirim e-postaları gönderilsin:",
+    "Settings" : "Ayarlar",
     "Personal Activity Settings" : "Kişisel işlem ayarları",
     "activities" : "işlem"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"

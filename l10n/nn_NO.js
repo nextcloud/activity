@@ -48,12 +48,12 @@ OC.L10N.register(
     "Choose for which activities you want to get an email or push notification." : "Vel aktivitet du ønskjer å få tilsendt ein epost eller push varsel. ",
     "Choose for which activities you want to get a push notification." : "Vel aktiviter du ønskjer å få tilsendt ein push varsel.",
     "Send daily activity summary in the morning" : "Send dagleg aktivitetssamandrag om morgonen",
-    "Settings" : "Instillingar",
     "Enable RSS feed" : "Skru på RSS-straum",
     "RSS feed" : "RSS-straum",
     "No more events to load" : "Inga fleire hendingar å lasta",
     "Activity notification for %s" : "Varsel om hending for %s",
     "Send notification emails:" : "Send epost varsel:",
+    "Settings" : "Instillingar",
     "activities" : "aktivitetar"
 },
 "nplurals=2; plural=(n != 1);");

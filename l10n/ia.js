@@ -34,8 +34,8 @@ OC.L10N.register(
     "Hourly" : "Cata hora",
     "Daily" : "Cata die",
     "Weekly" : "Cata septimana",
-    "Settings" : "Configurationes",
     "Enable RSS feed" : "Habilita syndication RSS",
-    "No more events to load" : "Nulle altere eventos a cargar"
+    "No more events to load" : "Nulle altere eventos a cargar",
+    "Settings" : "Configurationes"
 },
 "nplurals=2; plural=(n != 1);");

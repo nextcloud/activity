@@ -33,8 +33,8 @@ OC.L10N.register(
     "Hourly" : "All Stonn",
     "Daily" : "All Dag",
     "Weekly" : "All Woch",
-    "Settings" : "Astellungen",
     "Enable RSS feed" : "RSS-Feed aktivéieren",
-    "No more events to load" : "Keng weider Evenementer fir ze lueden"
+    "No more events to load" : "Keng weider Evenementer fir ze lueden",
+    "Settings" : "Astellungen"
 },
 "nplurals=2; plural=(n != 1);");

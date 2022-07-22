@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "Escolla para que actividades quere obter unha notificación do servidor.",
     "Daily activity summary" : "Resumo diario de actividade",
     "Send daily activity summary in the morning" : "Enviar un resumo diario da actividade pola mañá",
-    "Settings" : "Axustes",
     "Enable RSS feed" : "Activar as fontes RSS",
     "RSS feed" : "Fontes RSS",
     "Personal notification settings" : "Axustes persoais de notificación",
     "No more events to load" : "Non hai máis eventos para cargar",
     "Activity notification for %s" : "Notificación de actividade para %s",
     "Send notification emails:" : "Enviar os correos de notificación:",
+    "Settings" : "Axustes",
     "Personal Activity Settings" : "Axustes persoais de actividade",
     "activities" : "actividades"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
