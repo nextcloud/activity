@@ -36,10 +36,10 @@ OC.L10N.register(
     "Hourly" : "ساعت وار",
     "Daily" : "روزانه",
     "Weekly" : "هفته وار",
-    "Settings" : "سمونې",
     "Enable RSS feed" : "RRS لړ فعال کړئ",
     "RSS feed" : "RRS لړ ",
     "No more events to load" : "نورې کړنې نشته",
-    "Activity notification for %s" : "%s لپاره خبرتیا"
+    "Activity notification for %s" : "%s لپاره خبرتیا",
+    "Settings" : "سمونې"
 },
 "nplurals=2; plural=(n != 1);");

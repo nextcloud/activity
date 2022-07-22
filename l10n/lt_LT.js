@@ -51,12 +51,12 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Pasirinkite veiklas, apie kurias norite gauti pranešimus.",
     "Daily activity summary" : "Kasdienių veiklų apžvalga",
     "Send daily activity summary in the morning" : "Siųsti kasdienių veiklų apžvalgą rytais",
-    "Settings" : "Nustatymai",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "RSS feed" : "RSS kanalas",
     "No more events to load" : "Nėra daugiau rodytinų įvykių",
     "Activity notification for %s" : "Aktyvumo pranešimai %s",
     "Send notification emails:" : "Siųsti pranešimus el. paštu:",
+    "Settings" : "Nustatymai",
     "Personal Activity Settings" : "Asmeninės veiklos nustatymai",
     "activities" : "veiklos"
 },

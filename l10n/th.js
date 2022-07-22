@@ -48,12 +48,12 @@ OC.L10N.register(
     "Choose for which activities you want to get an email or push notification." : "เลือกกิจกรรมที่คุณต้องการรับอีเมลหรือการแจ้งเตือนพุช",
     "Choose for which activities you want to get a push notification." : "เลือกกิจกรรมที่คุณต้องการรับการแจ้งเตือนพุช",
     "Send daily activity summary in the morning" : "ส่งสรุปกิจกรรมประจำวันในตอนเช้า",
-    "Settings" : "การตั้งค่า",
     "Enable RSS feed" : "เปิดใช้งานฟีด RSS",
     "RSS feed" : "ฟีด RSS",
     "No more events to load" : "ไม่มีกิจกรรมเพิ่มเติมที่จะโหลด",
     "Activity notification for %s" : "การแจ้งเตือนกิจกรรมสำหรับ %s",
     "Send notification emails:" : "ส่งอีเมลแจ้งเตือน:",
+    "Settings" : "การตั้งค่า",
     "Personal Activity Settings" : "การตั้งค่ากิจกรรมส่วนตัว",
     "activities" : "กิจกรรม"
 },

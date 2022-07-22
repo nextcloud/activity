@@ -46,12 +46,12 @@
     "Choose for which activities you want to get an email or push notification." : "Sèbera pro cales atividades cheres retzire unu messàgiu o una notìfica automàtica.",
     "Choose for which activities you want to get a push notification." : "Sèbera pro cales atividades cheres retzire una notìfica automàtica.",
     "Send daily activity summary in the morning" : "Imbia unu resumu de is atividades de ogni die a mangianu",
-    "Settings" : "Impostatziones",
     "Enable RSS feed" : "Ativa su flussu RSS ",
     "RSS feed" : "Ativa su flussu RSS",
     "No more events to load" : "Perunu eventu de carrigare",
     "Activity notification for %s" : "Notìfica de atividade de %s",
     "Send notification emails:" : "Imbia messàgios de notìfica:",
+    "Settings" : "Impostatziones",
     "Personal Activity Settings" : "Impostatziones de atividade personale",
     "activities" : "atividades"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

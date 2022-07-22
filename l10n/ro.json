@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "Alege pentru care activități vrei sa primești notificare de tip push.",
     "Daily activity summary" : "Sumar activitate zilnică",
     "Send daily activity summary in the morning" : "Trimite sumarul zilnic de activitate dimineața ",
-    "Settings" : "Setări",
     "Enable RSS feed" : "Activați flux RSS",
     "RSS feed" : "Flux RSS",
     "Personal notification settings" : "Setări personale de notificare",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
     "Activity notification for %s" : "Notificare activitate pentru %s",
     "Send notification emails:" : "Trimite notificări pe e-mail:",
+    "Settings" : "Setări",
     "Personal Activity Settings" : "Setări de activitate personale",
     "activities" : "activități"
 },"pluralForm" :"nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));"

@@ -30,9 +30,9 @@ OC.L10N.register(
     "As soon as possible" : "හැකි ඉක්මනින්",
     "Daily" : "දිනපතා",
     "Weekly" : "සතිපතා",
-    "Settings" : "සැකසුම්",
     "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත",
     "Activity notification for %s" : "%s සඳහා ක්‍රියාකාරකම් දැනුම්දීම",
+    "Settings" : "සැකසුම්",
     "activities" : "ක්‍රියාකාරකම්"
 },
 "nplurals=2; plural=(n != 1);");

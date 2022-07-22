@@ -49,13 +49,13 @@
     "Choose for which activities you want to get a push notification." : "Chọn các hoạt động mà bạn muốn nhận thông báo đẩy.",
     "Daily activity summary" : "Tóm tắt hoạt động trong ngày",
     "Send daily activity summary in the morning" : "Gửi tóm tắt hoạt động hàng ngày vào buổi sáng",
-    "Settings" : "Các cài đặt",
     "Enable RSS feed" : "Bật nguồn cấp dữ liệu RSS",
     "RSS feed" : "Nội dung RSS",
     "Personal notification settings" : "Cài đặt thông báo cá nhân",
     "No more events to load" : "Không có sự kiện nào",
     "Activity notification for %s" : "Thông báo hoạt động của %s",
     "Send notification emails:" : "Gửi các email thông báo:",
+    "Settings" : "Các cài đặt",
     "Personal Activity Settings" : "Các thiết lập cho hoạt động cá nhân",
     "activities" : "Các hoạt động"
 },"pluralForm" :"nplurals=1; plural=0;"

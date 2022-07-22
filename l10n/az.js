@@ -16,8 +16,8 @@ OC.L10N.register(
     "Hourly" : "Saatlıq",
     "Daily" : "Günlük",
     "Weekly" : "Həftəlik",
-    "Settings" : "Quraşdırmalar",
     "Enable RSS feed" : "RSS ötürməsinin işə salinmaslı",
-    "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur"
+    "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur",
+    "Settings" : "Quraşdırmalar"
 },
 "nplurals=2; plural=(n != 1);");

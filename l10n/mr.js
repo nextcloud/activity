@@ -41,9 +41,9 @@ OC.L10N.register(
     "Daily" : "दैनिक",
     "Weekly" : "साप्ताहिक",
     "Daily activity summary" : "दैनिक क्रिया सारांश",
-    "Settings" : "सेटिंग",
     "Activity notification for %s" : " %s साठी क्रिया अधिसूचना",
     "Send notification emails:" : "अधिसूचना ई-मेल पाठवा:",
+    "Settings" : "सेटिंग",
     "activities" : "क्रिया"
 },
 "nplurals=2; plural=(n != 1);");

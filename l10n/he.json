@@ -41,11 +41,11 @@
     "Choose for which activities you want to get an email or push notification." : "נא לבחור עבור אילו פעילויות מעניין אותך לקבל התראות בדוא״ל או בדחיפה.",
     "Choose for which activities you want to get a push notification." : "נא לבחור עבור אילו פעילויות מעניין אותך לקבל התראות בדחיפה.",
     "Send daily activity summary in the morning" : "שלח סיכום יומי של הפעילויות כל בוקר",
-    "Settings" : "הגדרות",
     "Enable RSS feed" : "לאפשר הזנת RSS",
     "RSS feed" : "ערוץ RSS",
     "No more events to load" : "אין אירועים נוספים לטעינה",
     "Activity notification for %s" : "התרעת פעילות עבור %s",
-    "Send notification emails:" : "שלח הודעות דוא\"ל:"
+    "Send notification emails:" : "שלח הודעות דוא\"ל:",
+    "Settings" : "הגדרות"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;"
 }

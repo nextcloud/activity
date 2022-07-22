@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "選擇您要獲取推送通知的系統事件。",
     "Daily activity summary" : "每日系統事件摘要",
     "Send daily activity summary in the morning" : "於早上傳送每日系統事件摘要",
-    "Settings" : "設定",
     "Enable RSS feed" : "啟用 RSS 摘要",
     "RSS feed" : "RSS 摘要",
     "Personal notification settings" : "個人通告設定",
     "No more events to load" : "已載入所有事件",
     "Activity notification for %s" : "%s 的系統事件通告",
     "Send notification emails:" : "透過電郵接收通知：",
+    "Settings" : "設定",
     "Personal Activity Settings" : "個人活動設定",
     "activities" : "活動"
 },"pluralForm" :"nplurals=1; plural=0;"
