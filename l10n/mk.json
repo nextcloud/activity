@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "Изберете за кои активности сакате да добиете Пуш известување.",
     "Daily activity summary" : "Дневно резиме на активности",
     "Send daily activity summary in the morning" : "Испрати дневно резиме на активности наутро",
-    "Settings" : "Параметри",
     "Enable RSS feed" : "Овозможи RSS канал",
     "RSS feed" : "RSS канал",
     "Personal notification settings" : "Персонални параметри за известување",
     "No more events to load" : "Нема повеќе настани за вчитување",
     "Activity notification for %s" : "Известување за активност за %s",
     "Send notification emails:" : "Испрати известување на E-пошти:",
+    "Settings" : "Параметри",
     "Personal Activity Settings" : "Параметри за лични активности",
     "activities" : "активности"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"

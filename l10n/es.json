@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "Elige para qué actividades quieres recibir una notificación push.",
     "Daily activity summary" : "Resumen diario de actividad",
     "Send daily activity summary in the morning" : "Enviar resumen de la actividad diaria por la mañana",
-    "Settings" : "Configuración",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
     "Personal notification settings" : "Ajustes personales de las notificaciones",
     "No more events to load" : "No hay más eventos por cargar.",
     "Activity notification for %s" : "Notificación de actividad para %s",
     "Send notification emails:" : "Enviar notificaciones por emails:",
+    "Settings" : "Configuración",
     "Personal Activity Settings" : "Configuración de actividad personal",
     "activities" : "actividades"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"

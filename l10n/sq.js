@@ -46,12 +46,12 @@ OC.L10N.register(
     "Choose for which activities you want to get an email or push notification." : "Zgjidhni për cilat aktivitete dëshironi të merrni një email ose njoftim.",
     "Choose for which activities you want to get a push notification." : "Zgjidhni për cilat aktivitete dëshironi të merrni një njoftim.",
     "Send daily activity summary in the morning" : "Dërgo përmbledhje të përditshme të aktiviteteve në mëngjes",
-    "Settings" : "Konfigurimet",
     "Enable RSS feed" : "Aktivizoni Prurje RSS",
     "RSS feed" : "Prurja RSS",
     "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
     "Activity notification for %s" : "Njoftim i aktivitetit për %s",
     "Send notification emails:" : "Dërgo email njoftimi:",
+    "Settings" : "Konfigurimet",
     "Personal Activity Settings" : "Cilësimet e Aktivitetit Personal",
     "activities" : "aktivitetet"
 },

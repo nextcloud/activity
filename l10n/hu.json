@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "Válassza ki, hogy mely tevékenységekről akar leküldéses értesítést kapni.",
     "Daily activity summary" : "Napi tevékenység-összefoglaló",
     "Send daily activity summary in the morning" : "Napi tevékenység-összefoglaló küldése reggelente",
-    "Settings" : "Beállítások",
     "Enable RSS feed" : "RSS-csatorna engedélyezése",
     "RSS feed" : "RSS-csatorna",
     "Personal notification settings" : "Személyes értesítési beállítások",
     "No more events to load" : "Nincs több esemény",
     "Activity notification for %s" : "Tevékenységértesítés ehhez: %s",
     "Send notification emails:" : "Értesítési e-mailek küldése:",
+    "Settings" : "Beállítások",
     "Personal Activity Settings" : "Személyes tevékenységek beállításai",
     "activities" : "tevékenységek"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

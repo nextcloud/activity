@@ -36,8 +36,8 @@ OC.L10N.register(
     "Hourly" : "Cada hora",
     "Daily" : "Caldía",
     "Weekly" : "Selmanalmente",
-    "Settings" : "Axustes",
     "Enable RSS feed" : "Habilitar feed RSS",
-    "No more events to load" : "Nun hai más eventos pa cargar"
+    "No more events to load" : "Nun hai más eventos pa cargar",
+    "Settings" : "Axustes"
 },
 "nplurals=2; plural=(n != 1);");

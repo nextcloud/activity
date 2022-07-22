@@ -39,11 +39,11 @@
     "Choose for which activities you want to get an email or push notification." : "আপনি কোন ক্রিয়াকলাপের জন্য ইমেল পেতে চান বা বিজ্ঞপ্তি চাপুন তা চয়ন করুন।",
     "Choose for which activities you want to get a push notification." : "আপনি কোন ধরণের বিজ্ঞপ্তি পেতে চান তা বেছে নিন।",
     "Send daily activity summary in the morning" : "সকালে প্রতিদিনের ক্রিয়াকলাপের সারাংশ পাঠান",
-    "Settings" : "সেটিংস",
     "Enable RSS feed" : "RSS feed উপযোগী ক኉ন",
     "RSS feed" : "আরএসএস ফিড ",
     "No more events to load" : "লোড করার কোন ইভেন্ট খুঁজে পাওয়া গেল না।",
     "Activity notification for %s" : "%s জন্য ক্রিয়াকলাপ বিজ্ঞপ্তি",
-    "Send notification emails:" : "বিজ্ঞপ্তি ইমেলগুলি প্রেরণ করুন:"
+    "Send notification emails:" : "বিজ্ঞপ্তি ইমেলগুলি প্রেরণ করুন:",
+    "Settings" : "সেটিংস"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

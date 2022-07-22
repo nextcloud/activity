@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "Trieu per a quina activitat voleu rebre una notificació automàtica.",
     "Daily activity summary" : "Resum d'activitat diària",
     "Send daily activity summary in the morning" : "Envia un resum d'activitat diari al matí",
-    "Settings" : "Paràmetres",
     "Enable RSS feed" : "Habilita el canal RSS",
     "RSS feed" : "Canal RSS",
     "Personal notification settings" : "Paràmetres de les notificacions personals",
     "No more events to load" : "No hi ha més esdeveniments",
     "Activity notification for %s" : "Notificació d'activitat per a %s",
     "Send notification emails:" : "Envia els correus electrònics de notificació:",
+    "Settings" : "Paràmetres",
     "Personal Activity Settings" : "Paràmetres de l'activitat personal",
     "activities" : "activitats"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

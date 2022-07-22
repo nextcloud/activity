@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "Valitse toiminnat, joista haluat Push-ilmoituksen.",
     "Daily activity summary" : "Päivittäinen yhteenveto tapahtumista",
     "Send daily activity summary in the morning" : "Lähetä aamuisin päivittäisyhteenveto toiminnoista ",
-    "Settings" : "Asetukset",
     "Enable RSS feed" : "Ota RSS-syöte käyttöön",
     "RSS feed" : "RSS-syöte",
     "Personal notification settings" : "Henkilökohtaisten ilmoitusten asetukset",
     "No more events to load" : "Ei enempää tapahtumia",
     "Activity notification for %s" : "Toimintailmoitus tapahtumalle %s",
     "Send notification emails:" : "Lähetä ilmoitussähköposteja:",
+    "Settings" : "Asetukset",
     "Personal Activity Settings" : "Henkilökohtaiset Tapahtuma Asetukset",
     "activities" : "Tapahtumat"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

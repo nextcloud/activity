@@ -41,11 +41,11 @@
     "Choose for which activities you want to get an email or push notification." : "Ákvarðaðu fyrir hvaða virkniaðgerðir þú munt fá tölvupóst eða ýtitilkynningu.",
     "Choose for which activities you want to get a push notification." : "Ákvarðaðu fyrir hvaða virkniaðgerðir þú munt fá ýtitilkynningu.",
     "Send daily activity summary in the morning" : "Senda yfirlit um daglega virkni á morgnanna",
-    "Settings" : "Stillingar",
     "Enable RSS feed" : "Virkja RSS-veitu",
     "RSS feed" : "RSS-veita",
     "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
     "Activity notification for %s" : "Tilkynning um virkni fyrir %s",
-    "Send notification emails:" : "Senda tilkynningapóst:"
+    "Send notification emails:" : "Senda tilkynningapóst:",
+    "Settings" : "Stillingar"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

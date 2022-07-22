@@ -47,13 +47,13 @@
     "Choose for which activities you want to get a push notification." : "ជ្រើសរើសថាតើអ្នកចង់ទទួលបានដំណឹងអំពីសកម្មភាពអ្វីខ្លះតាមរយៈ Push Notification ។",
     "Daily activity summary" : "សង្ខេបនៃសកម្មភាពប្រចាំថ្ងៃ",
     "Send daily activity summary in the morning" : "ផ្ញើសង្ខេបនៃសកម្មភាពប្រចាំថ្ងៃនៅពេលព្រឹក",
-    "Settings" : "ការកំណត់",
     "Enable RSS feed" : "អនុញ្ញាត RSS feed",
     "RSS feed" : "RSS feed",
     "Personal notification settings" : "ការកំណត់ផ្ទាល់ខ្លួនលើការជូនដំណឹង",
     "No more events to load" : "គ្មាន​ព្រឹត្តិការណ៍​ច្រើនទៀតសម្រាប់ទាញយកមកទេ",
     "Activity notification for %s" : "ការជូនដំណឹងអំពីសកម្មភាពសម្រាប់ %s",
     "Send notification emails:" : "ផ្ញើអ៊ីម៉ែលជូនដំណឹង",
+    "Settings" : "ការកំណត់",
     "Personal Activity Settings" : "ការកំណត់ «សកម្មភាពផ្ទាល់ខ្លួន»",
     "activities" : "សកម្មភាពផ្សេងៗ"
 },"pluralForm" :"nplurals=1; plural=0;"

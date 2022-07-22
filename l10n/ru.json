@@ -50,13 +50,13 @@
     "Choose for which activities you want to get a push notification." : "Выберите типы событий для получения уведомлений с использованием push-технологии.",
     "Daily activity summary" : "Ежедневный отчёт об активности",
     "Send daily activity summary in the morning" : "Отправлять ежедневно по утрам сводку событий за день",
-    "Settings" : "Параметры",
     "Enable RSS feed" : "Включить RSS ленту",
     "RSS feed" : "RSS лента",
     "Personal notification settings" : "Личные настройки уведомлений",
     "No more events to load" : "Больше нет событий для загрузки",
     "Activity notification for %s" : "Оповещение о произошедших событиях для %s",
     "Send notification emails:" : "Частота рассылки эл. писем:",
+    "Settings" : "Параметры",
     "Personal Activity Settings" : "Личные параметры событий ",
     "activities" : "события"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
