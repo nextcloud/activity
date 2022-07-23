@@ -52,6 +52,7 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Válassza ki, hogy mely tevékenységekről akar leküldéses értesítést kapni.",
     "Daily activity summary" : "Napi tevékenység-összefoglaló",
     "Send daily activity summary in the morning" : "Napi tevékenység-összefoglaló küldése reggelente",
+    "Activity settings" : "Tevékenység beállításai",
     "Enable RSS feed" : "RSS-csatorna engedélyezése",
     "RSS feed" : "RSS-csatorna",
     "Personal notification settings" : "Személyes értesítési beállítások",
