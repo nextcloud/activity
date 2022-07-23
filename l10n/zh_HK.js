@@ -52,6 +52,7 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "選擇您要獲取推送通知的系統事件。",
     "Daily activity summary" : "每日系統事件摘要",
     "Send daily activity summary in the morning" : "於早上傳送每日系統事件摘要",
+    "Activity settings" : "活動紀錄設定",
     "Enable RSS feed" : "啟用 RSS 摘要",
     "RSS feed" : "RSS 摘要",
     "Personal notification settings" : "個人通告設定",
