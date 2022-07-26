@@ -70,17 +70,17 @@ Cypress.Commands.add('nextcloudCreateUser', (user, password) => {
 })
 
 Cypress.Commands.add('createFolder', dirName => {
-	cy.get('#controls .actions > .button.new').click()
-	cy.get('#controls .actions .newFileMenu a[data-action="folder"]').click()
-	cy.get('#controls .actions .newFileMenu a[data-action="folder"] input[type="text"]').type(dirName)
-	cy.get('#controls .actions .newFileMenu a[data-action="folder"] input.icon-confirm').click()
+	cy.get('.files-controls .actions > .button.new').click()
+	cy.get('.files-controls .actions .newFileMenu a[data-action="folder"]').click()
+	cy.get('.files-controls .actions .newFileMenu a[data-action="folder"] input[type="text"]').type(dirName)
+	cy.get('.files-controls .actions .newFileMenu a[data-action="folder"] input.icon-confirm').click()
 	cy.log('Created folder', dirName)
 	cy.wait(500)
 })
 
 Cypress.Commands.add('moveFile', (fileName, dirName) => {
-	cy.get(`#fileList tr[data-file="${fileName}"] .icon-more`).click()
-	cy.get(`#fileList tr[data-file="${fileName}"] .action-movecopy`).click()
+	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
+	cy.get(`.files-fileList tr[data-file="${fileName}"] .action-movecopy`).click()
 	cy.get(`.oc-dialog tr[data-entryname="${dirName}"]`).click()
 	cy.contains(`Move to ${dirName}`).click()
 	cy.wait(500)
@@ -88,7 +88,7 @@ Cypress.Commands.add('moveFile', (fileName, dirName) => {
 
 Cypress.Commands.add('showSidebarForFile', fileName => {
 	cy.hideSidebar('welcome.txt')
-	cy.get('#fileList tr[data-file="welcome.txt"] .icon-more').click()
+	cy.get('.files-fileList tr[data-file="welcome.txt"] .icon-more').click()
 	cy.contains('Details').click()
 	cy.get('#app-sidebar-vue').contains('Activity').click()
 })
@@ -108,17 +108,17 @@ Cypress.Commands.add('showActivityTab', fileName => {
 })
 
 Cypress.Commands.add('addToFavorites', fileName => {
-	cy.get(`#fileList tr[data-file="${fileName}"] .icon-more`).click()
+	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
 	cy.contains('Add to favorites').click()
 })
 
 Cypress.Commands.add('removeFromFavorites', fileName => {
-	cy.get(`#fileList tr[data-file="${fileName}"] .icon-more`).click()
+	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
 	cy.contains('Remove from favorites').click()
 })
 
 Cypress.Commands.add('createPublicShare', fileName => {
-	cy.get(`#fileList tr[data-file="${fileName}"] .icon-more`).click()
+	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
 	cy.contains('Details').click()
 	cy.get('#app-sidebar-vue').contains('Sharing').click()
 
@@ -128,14 +128,14 @@ Cypress.Commands.add('createPublicShare', fileName => {
 })
 
 Cypress.Commands.add('renameFile', (fileName, newName) => {
-	cy.get(`#fileList tr[data-file="${fileName}"] .icon-more`).click()
-	cy.get(`#fileList tr[data-file="${fileName}"] .action-rename`).click()
-	cy.get(`#fileList tr[data-file="${fileName}"] input.filename`).type(newName).parent().submit()
+	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
+	cy.get(`.files-fileList tr[data-file="${fileName}"] .action-rename`).click()
+	cy.get(`.files-fileList tr[data-file="${fileName}"] input.filename`).type(newName).parent().submit()
 	cy.wait(500)
 })
 
 Cypress.Commands.add('goToDir', (dirName) => {
-	cy.get(`#fileList tr[data-file="${dirName}"]`).click()
+	cy.get(`.files-fileList tr[data-file="${dirName}"]`).click()
 	cy.wait(500)
 })
 
