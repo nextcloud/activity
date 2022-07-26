@@ -52,6 +52,7 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Aukeratu zein jardueratarako jaso nahi duzun push jakinarazpena.",
     "Daily activity summary" : "Eguneko jardueraren laburpena",
     "Send daily activity summary in the morning" : "Bidali goizean eguneroko jardueraren laburpena",
+    "Activity settings" : "Jardueraren ezarpenak",
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "RSS feed" : "RSS jarioa",
     "Personal notification settings" : "Jakinarazpen pertsonalen ezarpenak",
