@@ -52,6 +52,7 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Elige para qué actividades quieres recibir una notificación push.",
     "Daily activity summary" : "Resumen diario de actividad",
     "Send daily activity summary in the morning" : "Enviar resumen de la actividad diaria por la mañana",
+    "Activity settings" : "Configuración de la actividad",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
     "Personal notification settings" : "Ajustes personales de las notificaciones",
