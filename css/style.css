@@ -188,7 +188,8 @@
 	max-height: 16px;
 }
 
-.activity-icon img.monochrome {
+.activity-icon.monochrome {
+	opacity: 0.8;
 	filter: var(--background-invert-if-dark);
 }
 
