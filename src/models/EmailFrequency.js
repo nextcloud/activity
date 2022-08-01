@@ -1,6 +1,7 @@
-<?php
 /**
- * @copyright Copyright (c) 2022 Carl Schwan <carl@carlschwan.eu>
+ * @copyright Copyright (c) 2021 Louis Chemineau <louis@chmn.me>
+ *
+ * @author Louis Chemineau <louis@chmn.me>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -15,12 +16,15 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-\OCP\Util::addScript('activity', 'activity-adminSettings');
-?>
 
-<div id="activity-admin-settings"></div>
-
-<div id="activity-default-settings"></div>
+export default {
+	EmailFrequency: {
+		EMAIL_SEND_HOURLY: 0,
+		EMAIL_SEND_DAILY: 1,
+		EMAIL_SEND_WEEKLY: 2,
+		EMAIL_SEND_ASAP: 3,
+	},
+}
