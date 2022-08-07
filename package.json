@@ -1,105 +1,105 @@
 {
-	"name": "activity",
-	"description": "This application enables users to view a log of activities about them or about files.",
-	"version": "2.17.0",
-	"author": "Julius Härtl <jus@bitgrid.net",
-	"contributors": [],
-	"bugs": {
-		"url": "https://github.com/nextcloud/activity/issues"
-	},
-	"repository": {
-		"url": "https://github.com/nextcloud/activity",
-		"type": "git"
-	},
-	"homepage": "https://github.com/nextcloud/activity",
-	"license": "agpl",
-	"private": true,
-	"scripts": {
-		"build": "NODE_ENV=production webpack --progress --config webpack.js",
-		"dev": "NODE_ENV=development webpack --progress --config webpack.js",
-		"watch": "NODE_ENV=development webpack --progress --watch --config webpack.js",
-		"serve": "NODE_ENV=development webpack serve --progress --config webpack.js",
-		"lint": "eslint --ext .js,.vue src",
-		"lint:fix": "eslint --ext .js,.vue src --fix",
-		"stylelint": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue",
-		"stylelint:fix": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue --fix",
-		"test": "NODE_ENV=test jest --passWithNoTests src/",
-		"test:coverage": "NODE_ENV=test jest --coverage src/",
-		"test:update-snapshots": "NODE_ENV=test jest --updateSnapshot"
-	},
-	"engines": {
-		"node": "^14.0.0",
-		"npm": "^7.0.0"
-	},
-	"browserslist": [
-		"extends @nextcloud/browserslist-config"
-	],
-	"jest": {
-		"verbose": true,
-		"moduleFileExtensions": [
-			"js",
-			"json",
-			"vue"
-		],
-		"testEnvironment": "jest-environment-jsdom",
-		"transform": {
-			"^.+\\.js$": "babel-jest",
-			"^.+\\.vue$": "vue-jest"
-		},
-		"transformIgnorePatterns": [
-			"\\.pnp\\.[^\\/]+$",
-			"/node_modules/(?!(@juliushaertl/vue-richtext)|(vue-material-design-icons)/)"
-		],
-		"snapshotSerializers": [
-			"<rootDir>/node_modules/jest-serializer-vue"
-		],
-		"setupFilesAfterEnv": [
-			"./src/tests/setup.js"
-		],
-		"coverageDirectory": "./coverage/",
-		"collectCoverage": false,
-		"collectCoverageFrom": [
-			"<rootDir>/src/**/*.{js,vue}",
-			"!**/node_modules/**"
-		],
-		"coverageReporters": [
-			"json",
-			"text",
-			"html",
-			"lcov",
-			"clover"
-		]
-	},
-	"dependencies": {
-		"@juliushaertl/vue-richtext": "^1.0.1",
-		"@nextcloud/auth": "^1.3.0",
-		"@nextcloud/axios": "^1.10.0",
-		"@nextcloud/l10n": "^1.6.0",
-		"@nextcloud/logger": "^2.1.0",
-		"@nextcloud/moment": "^1.2.1",
-		"@nextcloud/paths": "^2.1.0",
-		"@nextcloud/router": "^2.0.0",
-		"@nextcloud/vue": "^5.3.1",
-		"@nextcloud/vue-dashboard": "^2.0.1",
-		"vue": "^2.6.14"
-	},
-	"devDependencies": {
-		"@cypress/browserify-preprocessor": "^3.0.2",
-		"@nextcloud/babel-config": "^1.0.0",
-		"@nextcloud/browserslist-config": "^2.1.0",
-		"@nextcloud/eslint-config": "^8.0.0",
-		"@nextcloud/eslint-plugin": "^2.0.0",
-		"@nextcloud/stylelint-config": "^2.1.2",
-		"@nextcloud/webpack-vue-config": "^5.1.0",
-		"@testing-library/vue": "^5.8.3",
-		"@types/jest": "^28.1.6",
-		"@vue/test-utils": "^1.3.0",
-		"babel-core": "^7.0.0-bridge.0",
-		"cypress": "^9.6.1",
-		"jest": "^28.1.3",
-		"jest-environment-jsdom": "^28.1.3",
-		"jest-serializer-vue": "^2.0.2",
-		"regenerator-runtime": "^0.13.9",
-		"vue-jest": "^3.0.7"
-	}
+  "name": "activity",
+  "description": "This application enables users to view a log of activities about them or about files.",
+  "version": "2.17.0",
+  "author": "Julius Härtl <jus@bitgrid.net",
+  "contributors": [],
+  "bugs": {
+    "url": "https://github.com/nextcloud/activity/issues"
+  },
+  "repository": {
+    "url": "https://github.com/nextcloud/activity",
+    "type": "git"
+  },
+  "homepage": "https://github.com/nextcloud/activity",
+  "license": "agpl",
+  "private": true,
+  "scripts": {
+    "build": "NODE_ENV=production webpack --progress --config webpack.js",
+    "dev": "NODE_ENV=development webpack --progress --config webpack.js",
+    "watch": "NODE_ENV=development webpack --progress --watch --config webpack.js",
+    "serve": "NODE_ENV=development webpack serve --progress --config webpack.js",
+    "lint": "eslint --ext .js,.vue src",
+    "lint:fix": "eslint --ext .js,.vue src --fix",
+    "stylelint": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue",
+    "stylelint:fix": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue --fix",
+    "test": "NODE_ENV=test jest --passWithNoTests src/",
+    "test:coverage": "NODE_ENV=test jest --coverage src/",
+    "test:update-snapshots": "NODE_ENV=test jest --updateSnapshot"
+  },
+  "engines": {
+    "node": "^16.0.0",
+    "npm": "^7.0.0 || ^8.0.0"
+  },
+  "browserslist": [
+    "extends @nextcloud/browserslist-config"
+  ],
+  "jest": {
+    "verbose": true,
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "testEnvironment": "jest-environment-jsdom",
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.vue$": "vue-jest"
+    },
+    "transformIgnorePatterns": [
+      "\\.pnp\\.[^\\/]+$",
+      "/node_modules/(?!(@juliushaertl/vue-richtext)|(vue-material-design-icons)/)"
+    ],
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/jest-serializer-vue"
+    ],
+    "setupFilesAfterEnv": [
+      "./src/tests/setup.js"
+    ],
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": false,
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{js,vue}",
+      "!**/node_modules/**"
+    ],
+    "coverageReporters": [
+      "json",
+      "text",
+      "html",
+      "lcov",
+      "clover"
+    ]
+  },
+  "dependencies": {
+    "@juliushaertl/vue-richtext": "^1.0.1",
+    "@nextcloud/auth": "^1.3.0",
+    "@nextcloud/axios": "^1.10.0",
+    "@nextcloud/l10n": "^1.6.0",
+    "@nextcloud/logger": "^2.1.0",
+    "@nextcloud/moment": "^1.2.1",
+    "@nextcloud/paths": "^2.1.0",
+    "@nextcloud/router": "^2.0.0",
+    "@nextcloud/vue": "^5.3.1",
+    "@nextcloud/vue-dashboard": "^2.0.1",
+    "vue": "^2.6.14"
+  },
+  "devDependencies": {
+    "@cypress/browserify-preprocessor": "^3.0.2",
+    "@nextcloud/babel-config": "^1.0.0",
+    "@nextcloud/browserslist-config": "^2.1.0",
+    "@nextcloud/eslint-config": "^8.0.0",
+    "@nextcloud/eslint-plugin": "^2.0.0",
+    "@nextcloud/stylelint-config": "^2.1.2",
+    "@nextcloud/webpack-vue-config": "^5.1.0",
+    "@testing-library/vue": "^5.8.3",
+    "@types/jest": "^28.1.6",
+    "@vue/test-utils": "^1.3.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "cypress": "^9.6.1",
+    "jest": "^28.1.3",
+    "jest-environment-jsdom": "^28.1.3",
+    "jest-serializer-vue": "^2.0.2",
+    "regenerator-runtime": "^0.13.9",
+    "vue-jest": "^3.0.7"
+  }
 }
