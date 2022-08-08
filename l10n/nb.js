@@ -52,6 +52,7 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Velg hvilke aktiviteter du vil motta et push-varsel for.",
     "Daily activity summary" : "Daglig oppsummering for aktiviteter",
     "Send daily activity summary in the morning" : "Send daglig aktivitetssammendrag om morgenen",
+    "Activity settings" : "Aktivitetsinnstillinger",
     "Enable RSS feed" : "Skru på RSS-strøm",
     "RSS feed" : "RSS-strøm",
     "Personal notification settings" : "Personlige innstillinger for varsler",
