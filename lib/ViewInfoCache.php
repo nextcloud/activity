@@ -51,19 +51,6 @@ class ViewInfoCache {
 
 	/**
 	 * @param string $user
-	 * @param string $path
-	 * @return array
-	 */
-	public function getInfoByPath($user, $path) {
-		if (isset($this->cachePath[$user][$path])) {
-			return $this->cachePath[$user][$path];
-		}
-
-		return $this->findInfoByPath($user, $path);
-	}
-
-	/**
-	 * @param string $user
 	 * @param int $fileId
 	 * @param string $path
 	 * @return array
@@ -82,33 +69,11 @@ class ViewInfoCache {
 
 	/**
 	 * @param string $user
-	 * @param string $path
-	 * @return array
-	 */
-	protected function findInfoByPath($user, $path) {
-		$this->view->chroot('/' . $user . '/files');
-
-		$exists = $this->view->file_exists($path);
-
-		$this->cachePath[$user][$path] = [
-			'path' => $path,
-			'exists' => $exists,
-			'is_dir' => $exists ? (bool)$this->view->is_dir($path) : false,
-			'view' => '',
-		];
-
-		return $this->cachePath[$user][$path];
-	}
-
-	/**
-	 * @param string $user
 	 * @param int $fileId
 	 * @param string $filePath
 	 * @return array
 	 */
 	protected function findInfoById($user, $fileId, $filePath) {
-		$this->view->chroot('/' . $user . '/files');
-
 		$cache = [
 			'path' => $filePath,
 			'exists' => false,
