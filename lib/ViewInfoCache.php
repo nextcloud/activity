@@ -124,23 +124,27 @@ class ViewInfoCache {
 			}
 			/** @var Node $entry */
 			$entry = array_shift($entries);
-			//$path = $this->view->getPath($fileId);
 
 			$cache['path'] = $entry->getPath();
 			$cache['is_dir'] = $entry instanceof Folder;
 			$cache['exists'] = true;
 		} catch (NotFoundException $e) {
-			// The file was not found in the normal view, maybe it is in
-			// the trashbin?
-			$this->view->chroot('/' . $user . '/files_trashbin');
-
+			// The file was not found in the normal view,
+			// maybe it is in the trashbin?
 			try {
-				$path = $this->view->getPath($fileId);
+				$userTrashBin = $this->rootFolder->get('/' . $user . '/files_trashbin');
+				$entries = $userTrashBin->getById($fileId);
+				if (empty($entries)) {
+					throw new NotFoundException('No entries returned');
+				}
+
+				/** @var Node $entry */
+				$entry = array_shift($entries);
 
 				$cache = [
-					'path' => substr($path, strlen('/files')),
+					'path' => substr($entry->getPath(), strlen('/files')),
 					'exists' => true,
-					'is_dir' => (bool)$this->view->is_dir($path),
+					'is_dir' => $entry instanceof Folder,
 					'view' => 'trashbin',
 				];
 			} catch (NotFoundException $e) {
