@@ -23,6 +23,9 @@
 namespace OCA\Activity;
 
 use OC\Files\View;
+use OCP\Files\Folder;
+use OCP\Files\IRootFolder;
+use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 
 class ViewInfoCache {
@@ -35,11 +38,15 @@ class ViewInfoCache {
 	/** @var \OC\Files\View */
 	protected $view;
 
+	/** @var IRootFolder */
+	protected $rootFolder;
+
 	/**
 	 * @param View $view
 	 */
-	public function __construct(View $view) {
+	public function __construct(View $view, IRootFolder $rootFolder) {
 		$this->view = $view;
+		$this->rootFolder = $rootFolder;
 	}
 
 	/**
@@ -111,10 +118,16 @@ class ViewInfoCache {
 
 		$notFound = false;
 		try {
-			$path = $this->view->getPath($fileId);
+			$entries = $this->rootFolder->getUserFolder($user)->getById($fileId);
+			if (empty($entries)) {
+				throw new NotFoundException('No entries returned');
+			}
+			/** @var Node $entry */
+			$entry = array_shift($entries);
+			//$path = $this->view->getPath($fileId);
 
-			$cache['path'] = $path;
-			$cache['is_dir'] = $this->view->is_dir($path);
+			$cache['path'] = $entry->getPath();
+			$cache['is_dir'] = $entry instanceof Folder;
 			$cache['exists'] = true;
 		} catch (NotFoundException $e) {
 			// The file was not found in the normal view, maybe it is in
