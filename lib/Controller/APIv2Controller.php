@@ -357,7 +357,7 @@ class APIv2Controller extends OCSController {
 		}
 
 		$preview = [
-			'link' => $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
+			'link' => $this->urlGenerator->linkToRouteAbsolute('files.viewcontroller.showFile', ['fileid' => $fileId]),
 			'source' => '',
 			'mimeType' => 'application/octet-stream',
 			'isMimeTypeIcon' => true,
@@ -400,7 +400,7 @@ class APIv2Controller extends OCSController {
 	protected function getPreviewFromPath(int $fileId, string $filePath, array $info): array {
 		$mimeType = $info['is_dir'] ? 'dir' : $this->mimeTypeDetector->detectPath($filePath);
 		return [
-			'link' => $this->getPreviewLink($info['path'], $info['is_dir'], $info['view']),
+			'link' => $this->urlGenerator->linkToRouteAbsolute('files.viewcontroller.showFile', ['fileid' => $fileId]),
 			'source' => $this->getPreviewPathFromMimeType($mimeType),
 			'mimeType' => $mimeType,
 			'isMimeTypeIcon' => true,
@@ -417,19 +417,5 @@ class APIv2Controller extends OCSController {
 		}
 
 		return $this->urlGenerator->getAbsoluteURL($mimeTypeIcon);
-	}
-
-	protected function getPreviewLink(string $path, bool $isDir, string $view): string {
-		$params = [
-			'dir' => $path,
-		];
-		if (!$isDir) {
-			$params['dir'] = (substr_count($path, '/') === 1) ? '/' : \dirname($path);
-			$params['scrollto'] = basename($path);
-		}
-		if ($view !== '') {
-			$params['view'] = $view;
-		}
-		return $this->urlGenerator->linkToRouteAbsolute('files.view.index', $params);
 	}
 }
