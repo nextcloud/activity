@@ -83,7 +83,7 @@ class ViewInfoCache {
 			/** @var Node $entry */
 			$entry = array_shift($entries);
 
-			$cache['path'] = substr($entry->getPath(), strlen($userFolder->getPath()));
+			$cache['path'] = $userFolder->getRelativePath($entry->getPath());
 			$cache['is_dir'] = $entry instanceof Folder;
 			$cache['exists'] = true;
 			$cache['node'] = $entry;
@@ -91,6 +91,7 @@ class ViewInfoCache {
 			// The file was not found in the normal view,
 			// maybe it is in the trashbin?
 			try {
+				/** @var Folder $userTrashBin */
 				$userTrashBin = $this->rootFolder->get('/' . $user . '/files_trashbin');
 				$entries = $userTrashBin->getById($fileId);
 				if (empty($entries)) {
@@ -101,7 +102,7 @@ class ViewInfoCache {
 				$entry = array_shift($entries);
 
 				$cache = [
-					'path' => substr($entry->getPath(), strlen($userTrashBin->getPath())),
+					'path' => $userTrashBin->getRelativePath($entry->getPath()),
 					'exists' => true,
 					'is_dir' => $entry instanceof Folder,
 					'view' => 'trashbin',
