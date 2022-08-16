@@ -83,16 +83,18 @@ class ViewInfoCache {
 
 		$notFound = false;
 		try {
-			$entries = $this->rootFolder->getUserFolder($user)->getById($fileId);
+			$userFolder = $this->rootFolder->getUserFolder($user);
+			$entries = $userFolder->getById($fileId);
 			if (empty($entries)) {
 				throw new NotFoundException('No entries returned');
 			}
 			/** @var Node $entry */
 			$entry = array_shift($entries);
 
-			$cache['path'] = $entry->getPath();
+			$cache['path'] = substr($entry->getPath(), strlen($userFolder->getPath()));
 			$cache['is_dir'] = $entry instanceof Folder;
 			$cache['exists'] = true;
+			$cache['node'] = $entry;
 		} catch (NotFoundException $e) {
 			// The file was not found in the normal view,
 			// maybe it is in the trashbin?
@@ -107,10 +109,11 @@ class ViewInfoCache {
 				$entry = array_shift($entries);
 
 				$cache = [
-					'path' => substr($entry->getPath(), strlen('/files')),
+					'path' => substr($entry->getPath(), strlen($userTrashBin->getPath())),
 					'exists' => true,
 					'is_dir' => $entry instanceof Folder,
 					'view' => 'trashbin',
+					'node' => $entry,
 				];
 			} catch (NotFoundException $e) {
 				$notFound = true;
