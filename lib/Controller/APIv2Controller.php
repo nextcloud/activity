@@ -93,28 +93,9 @@ class APIv2Controller extends OCSController {
 	/** @var IMimeTypeDetector */
 	protected $mimeTypeDetector;
 
-	/** @var View */
-	protected $view;
-
 	/** @var ViewInfoCache */
 	protected $infoCache;
 
-	/**
-	 * OCSEndPoint constructor.
-	 *
-	 * @param string $appName
-	 * @param IRequest $request
-	 * @param IManager $activityManager
-	 * @param Data $data
-	 * @param GroupHelper $helper
-	 * @param UserSettings $settings
-	 * @param IURLGenerator $urlGenerator
-	 * @param IUserSession $userSession
-	 * @param IPreview $preview
-	 * @param IMimeTypeDetector $mimeTypeDetector
-	 * @param View $view
-	 * @param ViewInfoCache $infoCache
-	 */
 	public function __construct($appName,
 								IRequest $request,
 								IManager $activityManager,
@@ -136,7 +117,6 @@ class APIv2Controller extends OCSController {
 		$this->userSession = $userSession;
 		$this->preview = $preview;
 		$this->mimeTypeDetector = $mimeTypeDetector;
-		$this->view = $view;
 		$this->infoCache = $infoCache;
 	}
 
@@ -371,8 +351,7 @@ class APIv2Controller extends OCSController {
 			$preview['source'] = $this->getPreviewPathFromMimeType('dir');
 			$preview['mimeType'] = 'dir';
 		} else {
-			$this->view->chroot('/' . $owner . '/files');
-			$fileInfo = $this->view->getFileInfo($info['path']);
+			$fileInfo = isset($info['node']) ? $info['node']->getFileInfo() : null;
 			if (!($fileInfo instanceof FileInfo)) {
 				$preview = $this->getPreviewFromPath($fileId, $filePath, $info);
 			} elseif ($this->preview->isAvailable($fileInfo)) {
@@ -382,7 +361,7 @@ class APIv2Controller extends OCSController {
 					'x' => 250,
 					'y' => 250,
 					'fileId' => $fileId,
-					'c' => $fileInfo->getEtag()
+					'c' => $fileInfo->getEtag(),
 				];
 
 				$preview['source'] = $this->urlGenerator->linkToRouteAbsolute('core.Preview.getPreviewByFileId', $params);
