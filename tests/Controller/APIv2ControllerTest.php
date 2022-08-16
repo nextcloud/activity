@@ -33,7 +33,6 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IL10N;
 use OCP\IUser;
-use OCP\Files\FileInfo;
 use OCP\IRequest;
 use OCA\Activity\ViewInfoCache;
 use OCP\Files\IMimeTypeDetector;
@@ -674,7 +673,7 @@ class APIv2ControllerTest extends TestCase {
 		$node = $this->createMock(\OCP\Files\File::class);
 		$this->urlGenerator->expects($this->any())
 			->method('linkToRouteAbsolute')
-			->willReturnCallback(function ($url, $params ) {
+			->willReturnCallback(function ($url, $params) {
 				return $url . '#' . ($params['fileid'] ?? $params['fileId']);
 			});
 
@@ -769,7 +768,7 @@ class APIv2ControllerTest extends TestCase {
 			->willReturn('mime-type-icon');
 		$this->urlGenerator->expects($this->any())
 			->method('linkToRouteAbsolute')
-			->willReturnCallback(function ($url, $params ) {
+			->willReturnCallback(function ($url, $params) {
 				return $url . '#' . ($params['fileid'] ?? $params['fileId']);
 			});
 		$this->mimeTypeDetector->expects($isDir ? $this->never() : $this->once())

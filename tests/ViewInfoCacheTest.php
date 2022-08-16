@@ -22,7 +22,6 @@
 
 namespace OCA\Activity\Tests;
 
-use OC\Files\View;
 use OCA\Activity\ViewInfoCache;
 use OCP\Files\File;
 use OCP\Files\Folder;
