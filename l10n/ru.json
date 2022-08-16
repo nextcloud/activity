@@ -50,6 +50,7 @@
     "Choose for which activities you want to get a push notification." : "Выберите типы событий для получения уведомлений с использованием push-технологии.",
     "Daily activity summary" : "Ежедневный отчёт об активности",
     "Send daily activity summary in the morning" : "Отправлять ежедневно по утрам сводку событий за день",
+    "Activity settings" : "Настройка активности",
     "Enable RSS feed" : "Включить RSS ленту",
     "RSS feed" : "RSS лента",
     "Personal notification settings" : "Личные настройки уведомлений",
