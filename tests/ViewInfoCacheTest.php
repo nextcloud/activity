@@ -22,14 +22,16 @@
 
 namespace OCA\Activity\Tests;
 
-use OC\Files\View;
 use OCA\Activity\ViewInfoCache;
+use OCP\Files\File;
+use OCP\Files\Folder;
+use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class ViewInfoCacheTest extends TestCase {
-	/** @var View|MockObject */
-	protected $view;
+	/** @var IRootFolder|MockObject */
+	protected $rootFolder;
 
 	/** @var ViewInfoCache|MockObject */
 	protected $infoCache;
@@ -37,7 +39,7 @@ class ViewInfoCacheTest extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->view = $this->createMock(View::class);
+		$this->rootFolder = $this->createMock(IRootFolder::class);
 	}
 
 	/**
@@ -47,84 +49,16 @@ class ViewInfoCacheTest extends TestCase {
 	public function getCache(array $methods = []): ViewInfoCache {
 		if (empty($methods)) {
 			return new ViewInfoCache(
-				$this->view
+				$this->rootFolder
 			);
 		}
 
 		return $this->getMockBuilder(ViewInfoCache::class)
 			->setConstructorArgs([
-				$this->view,
+				$this->rootFolder,
 			])
-			->setMethods($methods)
+			->onlyMethods($methods)
 			->getMock();
-	}
-
-	public function dataGetInfoByPath(): array {
-		return [
-			[
-				'user', 'path', [], true, 'findInfoByPath',
-			],
-			[
-				'user',
-				'path',
-				[
-					'user' => [
-						'different/path' => 'returnCache',
-					]
-				],
-				true,
-				'findInfoByPath',
-			],
-			[
-				'user',
-				'path',
-				[
-					'different-user' => [
-						'path' => 'returnCache',
-					]
-				],
-				true,
-				'findInfoByPath',
-			],
-			[
-				'user',
-				'path',
-				[
-					'user' => [
-						'path' => 'returnCache',
-					]
-				],
-				false,
-				'returnCache',
-			],
-		];
-	}
-
-	/**
-	 * @dataProvider dataGetInfoByPath
-	 *
-	 * @param string $user
-	 * @param string $path
-	 * @param array $cache
-	 * @param bool $callsFind
-	 * @param string $expected
-	 */
-	public function testGetInfoByPath(string $user, string $path, array $cache, bool $callsFind, string $expected): void {
-		$infoCache = $this->getCache([
-			'findInfoByPath',
-		]);
-
-		if ($callsFind) {
-			$infoCache->expects($this->once())
-				->method('findInfoByPath')
-				->willReturn('findInfoByPath');
-		} else {
-			$infoCache->expects($this->never())
-				->method('findInfoByPath');
-		}
-		self::invokePrivate($infoCache, 'cachePath', [$cache]);
-
-		$this->assertSame($expected, $infoCache->getInfoByPath($user, $path));
 	}
 
 	public function dataGetInfoById(): array {
@@ -211,56 +145,6 @@ class ViewInfoCacheTest extends TestCase {
 		$this->assertSame($expected, $infoCache->getInfoById($user, $id, $path));
 	}
 
-	public function dataFindByPath(): array {
-		return [
-			['user1', 'path1', true, true, [
-				'path' => 'path1',
-				'exists' => true,
-				'is_dir' => true,
-				'view' => '',
-			]],
-			['user2', 'path2', true, false, [
-				'path' => 'path2',
-				'exists' => true,
-				'is_dir' => false,
-				'view' => '',
-			]],
-			['user3', 'path3', false, null, [
-				'path' => 'path3',
-				'exists' => false,
-				'is_dir' => false,
-				'view' => '',
-			]],
-		];
-	}
-
-	/**
-	 * @dataProvider dataFindByPath
-	 *
-	 * @param string $user
-	 * @param string $path
-	 * @param bool $exists
-	 * @param bool $is_dir
-	 * @param array $expected
-	 */
-	public function testFindByPath(string $user, string $path, bool $exists, ?bool $is_dir, array $expected): void {
-		$this->view->expects($this->once())
-			->method('chroot')
-			->with('/' . $user . '/files');
-		$this->view->expects($this->once())
-			->method('file_exists')
-			->with($path)
-			->willReturn($exists);
-		$this->view->expects($is_dir !== null ? $this->once() : $this->never())
-			->method('is_dir')
-			->with($path)
-			->willReturn($is_dir);
-
-		$infoCache = $this->getCache();
-
-		$this->assertSame($expected, self::invokePrivate($infoCache, 'findInfoByPath', [$user, $path]));
-	}
-
 	public function dataFindInfoById(): array {
 		return [
 			[
@@ -283,7 +167,7 @@ class ViewInfoCacheTest extends TestCase {
 				],
 			],
 			[
-				'user2', 23, '/test1', null, '/files/test3', '/files/test3', false,
+				'user2', 23, '/test1', null, '/test3', '/test3', false,
 				[
 					'path' => '/test3',
 					'exists' => true,
@@ -302,7 +186,7 @@ class ViewInfoCacheTest extends TestCase {
 				],
 			],
 			[
-				'user3', 23, '/test1', null, '/files/test3', '/files/test3', true,
+				'user3', 23, '/test1', null, '/test3', '/test3', true,
 				[
 					'path' => '/test3',
 					'exists' => true,
@@ -375,40 +259,62 @@ class ViewInfoCacheTest extends TestCase {
 	 * @param array $expectedCache
 	 */
 	public function testFindInfoById(string $user, int $fileId, string $filename, ?string $path, ?string $pathTrash, string $isDirPath, bool $isDir, array $expected, array $expectedCache): void {
-		$this->view->expects($this->at(0))
-			->method('chroot')
-			->with('/' . $user . '/files');
+		$userFolder = $this->createMock(Folder::class);
+
+		$this->rootFolder->expects($this->any())
+			->method('getUserFolder')
+			->with($user)
+			->willReturn($userFolder);
 		if ($path === null) {
-			$this->view->expects($this->at(1))
-				->method('getPath')
+			$userFolder->expects($this->once())
+				->method('getById')
 				->with($fileId)
 				->willThrowException(new NotFoundException());
 
-			$this->view->expects($this->at(2))
-				->method('chroot')
-				->with('/' . $user . '/files_trashbin');
+			$userTrashBin = $this->createMock(Folder::class);
+			$this->rootFolder->expects($this->once())
+				->method('get')
+				->with('/' . $user . '/files_trashbin')
+				->willReturn($userTrashBin);
 			if ($pathTrash === null) {
-				$this->view->expects($this->at(3))
-					->method('getPath')
+				$userTrashBin->expects($this->once())
+					->method('getById')
 					->with($fileId)
 					->willThrowException(new NotFoundException());
 			} else {
-				$this->view->expects($this->at(3))
+				$node = $this->createMock($isDir ? Folder::class : File::class);
+				$node->expects($this->any())
 					->method('getPath')
-					->with($fileId)
+					->willReturn('/' . $user . '/files_trashbin' . $pathTrash);
+				$userTrashBin->expects($this->any())
+					->method('getRelativePath')
+					->with('/' . $user . '/files_trashbin' . $pathTrash)
 					->willReturn($pathTrash);
+
+				$userTrashBin->expects($this->once())
+					->method('getById')
+					->with($fileId)
+					->willReturn([2 => $node]);
+				$expected['node'] = $node;
+				$expectedCache[$user][$fileId]['node'] = $node;
 			}
 		} else {
-			$this->view->expects($this->at(1))
+			$node = $this->createMock($isDir ? Folder::class : File::class);
+			$node->expects($this->any())
 				->method('getPath')
-				->with($fileId)
+				->willReturn('/' . $user . '/files' . $path);
+			$userFolder->expects($this->any())
+				->method('getRelativePath')
+				->with('/' . $user . '/files' . $path)
 				->willReturn($path);
-		}
 
-		$this->view->expects(($path === null && $pathTrash === null) ? $this->never() : $this->once())
-			->method('is_dir')
-			->with($isDirPath)
-			->willReturn($isDir);
+			$userFolder->expects($this->once())
+				->method('getById')
+				->with($fileId)
+				->willReturn([3 => $node]);
+			$expected['node'] = $node;
+			$expectedCache[$user][$fileId]['node'] = $node;
+		}
 
 		$infoCache = $this->getCache();
 		$this->assertSame($expected, self::invokePrivate($infoCache, 'findInfoById', [$user, $fileId, $filename]));

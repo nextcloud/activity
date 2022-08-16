@@ -22,7 +22,9 @@
 
 namespace OCA\Activity;
 
-use OC\Files\View;
+use OCP\Files\Folder;
+use OCP\Files\IRootFolder;
+use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 
 class ViewInfoCache {
@@ -32,27 +34,11 @@ class ViewInfoCache {
 	/** @var array */
 	protected $cacheId;
 
-	/** @var \OC\Files\View */
-	protected $view;
+	/** @var IRootFolder */
+	protected $rootFolder;
 
-	/**
-	 * @param View $view
-	 */
-	public function __construct(View $view) {
-		$this->view = $view;
-	}
-
-	/**
-	 * @param string $user
-	 * @param string $path
-	 * @return array
-	 */
-	public function getInfoByPath($user, $path) {
-		if (isset($this->cachePath[$user][$path])) {
-			return $this->cachePath[$user][$path];
-		}
-
-		return $this->findInfoByPath($user, $path);
+	public function __construct(IRootFolder $rootFolder) {
+		$this->rootFolder = $rootFolder;
 	}
 
 	/**
@@ -75,33 +61,11 @@ class ViewInfoCache {
 
 	/**
 	 * @param string $user
-	 * @param string $path
-	 * @return array
-	 */
-	protected function findInfoByPath($user, $path) {
-		$this->view->chroot('/' . $user . '/files');
-
-		$exists = $this->view->file_exists($path);
-
-		$this->cachePath[$user][$path] = [
-			'path' => $path,
-			'exists' => $exists,
-			'is_dir' => $exists ? (bool)$this->view->is_dir($path) : false,
-			'view' => '',
-		];
-
-		return $this->cachePath[$user][$path];
-	}
-
-	/**
-	 * @param string $user
 	 * @param int $fileId
 	 * @param string $filePath
 	 * @return array
 	 */
 	protected function findInfoById($user, $fileId, $filePath) {
-		$this->view->chroot('/' . $user . '/files');
-
 		$cache = [
 			'path' => $filePath,
 			'exists' => false,
@@ -111,24 +75,38 @@ class ViewInfoCache {
 
 		$notFound = false;
 		try {
-			$path = $this->view->getPath($fileId);
+			$userFolder = $this->rootFolder->getUserFolder($user);
+			$entries = $userFolder->getById($fileId);
+			if (empty($entries)) {
+				throw new NotFoundException('No entries returned');
+			}
+			/** @var Node $entry */
+			$entry = array_shift($entries);
 
-			$cache['path'] = $path;
-			$cache['is_dir'] = $this->view->is_dir($path);
+			$cache['path'] = $userFolder->getRelativePath($entry->getPath());
+			$cache['is_dir'] = $entry instanceof Folder;
 			$cache['exists'] = true;
+			$cache['node'] = $entry;
 		} catch (NotFoundException $e) {
-			// The file was not found in the normal view, maybe it is in
-			// the trashbin?
-			$this->view->chroot('/' . $user . '/files_trashbin');
-
+			// The file was not found in the normal view,
+			// maybe it is in the trashbin?
 			try {
-				$path = $this->view->getPath($fileId);
+				/** @var Folder $userTrashBin */
+				$userTrashBin = $this->rootFolder->get('/' . $user . '/files_trashbin');
+				$entries = $userTrashBin->getById($fileId);
+				if (empty($entries)) {
+					throw new NotFoundException('No entries returned');
+				}
+
+				/** @var Node $entry */
+				$entry = array_shift($entries);
 
 				$cache = [
-					'path' => substr($path, strlen('/files')),
+					'path' => $userTrashBin->getRelativePath($entry->getPath()),
 					'exists' => true,
-					'is_dir' => (bool)$this->view->is_dir($path),
+					'is_dir' => $entry instanceof Folder,
 					'view' => 'trashbin',
+					'node' => $entry,
 				];
 			} catch (NotFoundException $e) {
 				$notFound = true;

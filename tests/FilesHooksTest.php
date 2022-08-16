@@ -453,23 +453,25 @@ class FilesHooksTest extends TestCase {
 				return $filterUsers[$method];
 			});
 
-		$i = 2;
+		$addCalls = [];
 		foreach ($addNotifications as $user => $arguments) {
-			$filesHooks->expects($this->at($i))
-				->method('addNotificationsForUser')
-				->with(
-					$user,
-					$arguments['subject'],
-					$arguments['subject_params'],
-					1337,
-					$arguments['path'],
-					true,
-					$arguments['email'],
-					$arguments['notification'],
-					Files::TYPE_SHARE_RESTORED
-				);
-			$i++;
+			$addCalls[] = [
+				$user,
+				$arguments['subject'],
+				$arguments['subject_params'],
+				1337,
+				$arguments['path'],
+				true,
+				$arguments['email'],
+				$arguments['notification'],
+				Files::TYPE_SHARE_RESTORED,
+			];
 		}
+		$filesHooks->expects($this->any())
+			->method('addNotificationsForUser')
+			->withConsecutive(
+				...$addCalls
+			);
 
 		self::invokePrivate($filesHooks, 'addNotificationsForFileAction', ['path', Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by']);
 	}
@@ -676,12 +678,10 @@ class FilesHooksTest extends TestCase {
 		]);
 
 		$group = $this->createMock(IGroup::class);
-		for ($i = 0, $iMax = count($usersInGroup); $i < $iMax; $i++) {
-			$group->expects($this->at($i))
-				->method('searchUsers')
-				->with('')
-				->willReturn($usersInGroup[$i]);
-		}
+		$group->expects($this->any())
+			->method('searchUsers')
+			->with('')
+			->willReturnOnConsecutiveCalls(...$usersInGroup);
 
 		$this->groupManager->expects($this->once())
 			->method('get')
@@ -705,23 +705,25 @@ class FilesHooksTest extends TestCase {
 			->with('user', 'reshared_group_by', 'group1', 42, 'file')
 			->willReturnArgument(0);
 
-		$i = 3;
+		$addCalls = [];
 		foreach ($addNotifications as $user => $arguments) {
-			$filesHooks->expects($this->at($i))
-				->method('addNotificationsForUser')
-				->with(
-					$user,
-					$arguments['subject'],
-					$arguments['subject_params'],
-					42,
-					$arguments['path'],
-					true,
-					$arguments['email'],
-					$arguments['notification'],
-					Files_Sharing::TYPE_SHARED
-				);
-			$i++;
+			$addCalls[] = [
+				$user,
+				$arguments['subject'],
+				$arguments['subject_params'],
+				42,
+				$arguments['path'],
+				true,
+				$arguments['email'],
+				$arguments['notification'],
+				Files_Sharing::TYPE_SHARED,
+			];
 		}
+		$filesHooks->expects($this->any())
+			->method('addNotificationsForUser')
+			->withConsecutive(
+				...$addCalls
+			);
 
 		self::invokePrivate($filesHooks, 'shareWithGroup', [
 			'group1', 42, 'file', '/file', 1337, true
