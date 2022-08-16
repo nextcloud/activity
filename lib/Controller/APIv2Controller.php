@@ -24,7 +24,6 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Controller;
 
-use OC\Files\View;
 use OCA\Activity\Data;
 use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\GroupHelper;
@@ -106,7 +105,6 @@ class APIv2Controller extends OCSController {
 								IUserSession $userSession,
 								IPreview $preview,
 								IMimeTypeDetector $mimeTypeDetector,
-								View $view,
 								ViewInfoCache $infoCache) {
 		parent::__construct($appName, $request);
 		$this->activityManager = $activityManager;
@@ -351,7 +349,7 @@ class APIv2Controller extends OCSController {
 			$preview['source'] = $this->getPreviewPathFromMimeType('dir');
 			$preview['mimeType'] = 'dir';
 		} else {
-			$fileInfo = isset($info['node']) ? $info['node']->getFileInfo() : null;
+			$fileInfo = $info['node'] ?? null;
 			if (!($fileInfo instanceof FileInfo)) {
 				$preview = $this->getPreviewFromPath($fileId, $filePath, $info);
 			} elseif ($this->preview->isAvailable($fileInfo)) {

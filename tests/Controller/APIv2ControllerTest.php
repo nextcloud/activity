@@ -36,7 +36,6 @@ use OCP\IUser;
 use OCP\Files\FileInfo;
 use OCP\IRequest;
 use OCA\Activity\ViewInfoCache;
-use OC\Files\View;
 use OCP\Files\IMimeTypeDetector;
 use OCP\IUserSession;
 use OCP\IURLGenerator;
@@ -80,9 +79,6 @@ class APIv2ControllerTest extends TestCase {
 	/** @var IMimeTypeDetector|MockObject */
 	protected $mimeTypeDetector;
 
-	/** @var View|MockObject */
-	protected $view;
-
 	/** @var ViewInfoCache|MockObject */
 	protected $infoCache;
 
@@ -103,7 +99,6 @@ class APIv2ControllerTest extends TestCase {
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->userSession = $this->createMock(IUserSession::class);
 		$this->mimeTypeDetector = $this->createMock(IMimeTypeDetector::class);
-		$this->view = $this->createMock(View::class);
 		$this->infoCache = $this->createMock(ViewInfoCache::class);
 		$this->request = $this->createMock(IRequest::class);
 
@@ -127,7 +122,6 @@ class APIv2ControllerTest extends TestCase {
 				$this->userSession,
 				$this->preview,
 				$this->mimeTypeDetector,
-				$this->view,
 				$this->infoCache
 			);
 		}
@@ -144,7 +138,6 @@ class APIv2ControllerTest extends TestCase {
 				$this->userSession,
 				$this->preview,
 				$this->mimeTypeDetector,
-				$this->view,
 				$this->infoCache,
 			])
 			->onlyMethods($methods)
@@ -653,7 +646,7 @@ class APIv2ControllerTest extends TestCase {
 		return [
 			['author', 42, '/path', '/currentPath', true, true, false, '/preview/dir', true, 'dir'],
 			['author', 42, '/file.txt', '/currentFile.txt', false, true, false, '/preview/mpeg', true, 'audio/mp3'],
-			['author', 42, '/file.txt', '/currentFile.txt', false, true, true, '/preview/currentFile.txt', false, 'text/plain'],
+			['author', 42, '/file.txt', '/currentFile.txt', false, true, true, 'core.Preview.getPreviewByFileId#42', false, 'text/plain'],
 			['author', 42, '/file.txt', '/currentFile.txt', false, false, true, 'source::getPreviewFromPath', true, 'text/plain'],
 		];
 	}
@@ -674,26 +667,15 @@ class APIv2ControllerTest extends TestCase {
 	 */
 	public function testGetPreview(string $author, int $fileId, string $path, string $returnedPath, bool $isDir, bool $validFileInfo, bool $isMimeSup, string $source, bool $isMimeTypeIcon, string $mimeType): void {
 		$controller = $this->getController([
-			'getPreviewLink',
 			'getPreviewFromPath',
 			'getPreviewPathFromMimeType',
 		]);
 
-		$this->infoCache->expects($this->once())
-			->method('getInfoById')
-			->with($author, $fileId, $path)
-			->willReturn([
-				'path' => $returnedPath,
-				'exists' => true,
-				'is_dir' => $isDir,
-				'view' => '',
-			]);
-
-		$controller->expects($this->once())
-			->method('getPreviewLink')
-			->with($returnedPath, $isDir)
-			->willReturnCallback(function ($path) {
-				return '/preview' . $path;
+		$node = $this->createMock(\OCP\Files\File::class);
+		$this->urlGenerator->expects($this->any())
+			->method('linkToRouteAbsolute')
+			->willReturnCallback(function ($url, $params ) {
+				return $url . '#' . ($params['fileid'] ?? $params['fileId']);
 			});
 
 		if ($isDir) {
@@ -702,23 +684,13 @@ class APIv2ControllerTest extends TestCase {
 				->with('dir')
 				->willReturn('/preview/dir');
 		} elseif ($validFileInfo) {
-			$fileInfo = $this->createMock(FileInfo::class);
-
-			$this->view->expects($this->once())
-				->method('chroot')
-				->with('/' . $author . '/files');
-			$this->view->expects($this->once())
-				->method('getFileInfo')
-				->with($returnedPath)
-				->willReturn($fileInfo);
-
 			$this->preview->expects($this->once())
 				->method('isAvailable')
-				->with($fileInfo)
+				->with($node)
 				->willReturn($isMimeSup);
 
 			if (!$isMimeSup) {
-				$fileInfo->expects($this->atLeastOnce())
+				$node->expects($this->atLeastOnce())
 					->method('getMimetype')
 					->willReturn('audio/mp3');
 
@@ -727,31 +699,18 @@ class APIv2ControllerTest extends TestCase {
 					->with('audio/mp3')
 					->willReturn('/preview/mpeg');
 			} else {
-				$fileInfo->expects($this->atLeastOnce())
+				$node->expects($this->atLeastOnce())
 					->method('getMimetype')
 					->willReturn('text/plain');
-
-				$this->urlGenerator->expects($this->once())
-					->method('linkToRouteAbsolute')
-					->with('core.Preview.getPreviewByFileId', $this->anything())
-					->willReturnCallback(function () use ($returnedPath) {
-						return '/preview' . $returnedPath;
-					});
 			}
 		} else {
-			$this->view->expects($this->once())
-				->method('chroot')
-				->with('/' . $author . '/files');
-			$this->view->expects($this->once())
-				->method('getFileInfo')
-				->with($returnedPath)
-				->willReturn(false);
+			$node = null;
 
 			$controller->expects($this->once())
 				->method('getPreviewFromPath')
 				->with($fileId, $path, $this->anything())
 				->willReturn([
-					'link' => '/preview' . $returnedPath,
+					'link' => 'files.viewcontroller.showFile#' . $fileId,
 					'source' => 'source::getPreviewFromPath',
 					'mimeType' => $mimeType,
 					'isMimeTypeIcon' => $isMimeTypeIcon,
@@ -761,8 +720,19 @@ class APIv2ControllerTest extends TestCase {
 				]);
 		}
 
+		$this->infoCache->expects($this->once())
+			->method('getInfoById')
+			->with($author, $fileId, $path)
+			->willReturn([
+				'path' => $returnedPath,
+				'exists' => true,
+				'is_dir' => $isDir,
+				'view' => '',
+				'node' => $node,
+			]);
+
 		$this->assertSame([
-			'link' => '/preview' . $returnedPath,
+			'link' => 'files.viewcontroller.showFile#' . $fileId,
 			'source' => $source,
 			'mimeType' => $mimeType,
 			'isMimeTypeIcon' => $isMimeTypeIcon,
@@ -791,24 +761,24 @@ class APIv2ControllerTest extends TestCase {
 	public function testGetPreviewFromPath(int $fileId, string $filePath, string $mimeType, bool $isDir, string $view): void {
 		$controller = $this->getController([
 			'getPreviewPathFromMimeType',
-			'getPreviewLink',
 		]);
 
 		$controller->expects($this->once())
 			->method('getPreviewPathFromMimeType')
 			->with($mimeType)
 			->willReturn('mime-type-icon');
-		$controller->expects($this->once())
-			->method('getPreviewLink')
-			->with($filePath, $isDir, $view)
-			->willReturn('target-link');
+		$this->urlGenerator->expects($this->any())
+			->method('linkToRouteAbsolute')
+			->willReturnCallback(function ($url, $params ) {
+				return $url . '#' . ($params['fileid'] ?? $params['fileId']);
+			});
 		$this->mimeTypeDetector->expects($isDir ? $this->never() : $this->once())
 			->method('detectPath')
 			->willReturn($mimeType);
 
 		$this->assertSame(
 			[
-				'link' => 'target-link',
+				'link' => 'files.viewcontroller.showFile#' . $fileId,
 				'source' => 'mime-type-icon',
 				'mimeType' => $mimeType,
 				'isMimeTypeIcon' => true,
@@ -850,32 +820,5 @@ class APIv2ControllerTest extends TestCase {
 			$expected,
 			self::invokePrivate($this->controller, 'getPreviewPathFromMimeType', [$mimeType])
 		);
-	}
-
-	public function dataGetPreviewLink(): array {
-		return [
-			['/folder', true, '', ['dir' => '/folder']],
-			['/folder/sub1', true, 'trashbin', ['dir' => '/folder/sub1', 'view' => 'trashbin']],
-			['/folder/sub1/sub2', true, '', ['dir' => '/folder/sub1/sub2']],
-			['/file.txt', false, '', ['dir' => '/', 'scrollto' => 'file.txt']],
-			['/folder/file.txt', false, 'trashbin', ['dir' => '/folder', 'scrollto' => 'file.txt', 'view' => 'trashbin']],
-			['/folder/sub1/file.txt', false, '', ['dir' => '/folder/sub1', 'scrollto' => 'file.txt']],
-		];
-	}
-
-	/**
-	 * @dataProvider dataGetPreviewLink
-	 *
-	 * @param string $path
-	 * @param bool $isDir
-	 * @param string $view
-	 * @param array $expected
-	 */
-	public function testGetPreviewLink(string $path, bool $isDir, string $view, array $expected): void {
-		$this->urlGenerator->expects($this->once())
-			->method('linkToRouteAbsolute')
-			->with('files.view.index', $expected);
-
-		self::invokePrivate($this->controller, 'getPreviewLink', [$path, $isDir, $view]);
 	}
 }

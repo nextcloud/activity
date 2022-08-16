@@ -22,7 +22,6 @@
 
 namespace OCA\Activity;
 
-use OC\Files\View;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
@@ -35,17 +34,10 @@ class ViewInfoCache {
 	/** @var array */
 	protected $cacheId;
 
-	/** @var \OC\Files\View */
-	protected $view;
-
 	/** @var IRootFolder */
 	protected $rootFolder;
 
-	/**
-	 * @param View $view
-	 */
-	public function __construct(View $view, IRootFolder $rootFolder) {
-		$this->view = $view;
+	public function __construct(IRootFolder $rootFolder) {
 		$this->rootFolder = $rootFolder;
 	}
 
