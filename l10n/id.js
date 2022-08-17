@@ -52,6 +52,7 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Pilih aktivitas apa yang Anda inginkan untuk mendapatkan pemberitahuan push.",
     "Daily activity summary" : "Ringkasan aktivitas harian",
     "Send daily activity summary in the morning" : "Kirim ringkasan aktivitas harian di pagi hari.",
+    "Activity settings" : "Pengaturan aktivitas",
     "Enable RSS feed" : "Aktifkan RSS feed",
     "RSS feed" : "RSS feed",
     "Personal notification settings" : "Pengaturan pemberitahuan pribadi",
