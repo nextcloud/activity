@@ -153,7 +153,7 @@ Cypress.Commands.add('addComment', (fileName, comment) => {
 	cy.showSidebarForFile('welcome.txt')
 	cy.get('#app-sidebar-vue').contains('Comments').click()
 	cy.get('.comment__editor .rich-contenteditable__input').type(comment)
-	cy.get('input.comment__submit').click()
+	cy.get('button.comment__submit').click()
 
 	cy.wait(500)
 })
