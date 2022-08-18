@@ -33,7 +33,7 @@ Cypress.Commands.add('login', (user, password, route = '/apps/files') => {
 	cy.visit(route)
 	cy.get('input[name=user]').type(user)
 	cy.get('input[name=password]').type(password)
-	cy.get('.submit-wrapper input[type=submit]').click()
+	cy.get('button[type=submit]').click()
 	cy.url().should('include', route)
 })
 
@@ -153,7 +153,7 @@ Cypress.Commands.add('addComment', (fileName, comment) => {
 	cy.showSidebarForFile('welcome.txt')
 	cy.get('#app-sidebar-vue').contains('Comments').click()
 	cy.get('.comment__editor .rich-contenteditable__input').type(comment)
-	cy.get('input.comment__submit').click()
+	cy.get('button.comment__submit').click()
 
 	cy.wait(500)
 })
