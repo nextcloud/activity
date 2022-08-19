@@ -1,4 +1,4 @@
-FROM ghcr.io/nextcloud/continuous-integration-server:latest
+FROM nextcloudci/server:latest
 
 RUN mkdir /var/www/html/data
 RUN chown -R www-data:www-data /var/www/html/data

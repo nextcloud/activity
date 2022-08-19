@@ -3,7 +3,7 @@
  *
  * @author Louis Chemineau <louis@chmn.me>
  *
- * @license GPL-3.0-or-later
+ * @license GNU AGPL version 3 or any later version
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -21,13 +21,6 @@
  */
 
 import moment from '@nextcloud/moment'
-
-/**
- * @typedef RichObject
- * @type {object}
- * @property {string} id - The id of the riche object.
- * @property {string} type - The type of the file object.
- */
 
 export default class ActivityModel {
 
@@ -67,7 +60,7 @@ export default class ActivityModel {
 	/**
 	 * get the activity id
 	 *
-	 * @return {number}
+	 * @return {int}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -89,7 +82,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity type
 	 *
-	 * @return {number}
+	 * @return {int}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -133,7 +126,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity subject_rich objects
 	 *
-	 * @return {object.<string, RichObject>}
+	 * @return {object<string, RichObject>}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -170,7 +163,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity message_rich objects
 	 *
-	 * @return {object.<string, RichObject>}
+	 * @return {object<string, RichObject>}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -196,7 +189,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity object_id
 	 *
-	 * @return {number}
+	 * @return {int}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -273,7 +266,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity timestamp
 	 *
-	 * @return {number}
+	 * @return {string}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */

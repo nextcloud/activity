@@ -29,45 +29,28 @@ use OCP\Activity\ActivitySettings;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IUser;
 use OCP\Settings\ISettings;
 
 class Personal implements ISettings {
-	/** @var \OCP\IConfig */
-	protected $config;
+	private IConfig $config;
+	private IManager $manager;
+	private UserSettings $userSettings;
+	private IL10N $l10n;
+	private string $userId;
+	private IUser $user;
+	private IInitialState $initialState;
 
-	/** @var IManager */
-	protected $manager;
-
-	/** @var \OCA\Activity\UserSettings */
-	protected $userSettings;
-
-	/** @var \OCP\IL10N */
-	protected $l10n;
-
-	/** @var string */
-	protected $userId;
-
-	/** @var null|IUser */
-	protected $user;
-
-	/**
-	 * constructor of the controller
-	 *
-	 * @param IConfig $config
-	 * @param IManager $manager
-	 * @param UserSettings $userSettings
-	 * @param IL10N $l10n
-	 * @param CurrentUser $currentUser
-	 */
 	public function __construct(
 		IConfig $config,
 		IManager $manager,
 		UserSettings $userSettings,
 		IL10N $l10n,
-		CurrentUser $currentUser
+		CurrentUser $currentUser,
+		IInitialState $initialState
 	) {
 		$this->config = $config;
 		$this->manager = $manager;
@@ -75,14 +58,12 @@ class Personal implements ISettings {
 		$this->l10n = $l10n;
 		$this->userId = (string) $currentUser->getUID();
 		$this->user = $currentUser->getUser();
+		$this->initialState = $initialState;
 	}
 
-	/**
-	 * @return TemplateResponse
-	 */
-	public function getForm() {
+	public function getForm(): TemplateResponse {
 		$settings = $this->manager->getSettings();
-		usort($settings, static function (ActivitySettings $a, ActivitySettings $b) {
+		usort($settings, static function (ActivitySettings $a, ActivitySettings $b): int {
 			if ($a->getPriority() === $b->getPriority()) {
 				return (int) ($a->getIdentifier() > $b->getIdentifier());
 			}
@@ -152,6 +133,14 @@ class Personal implements ISettings {
 		if ($this->config->getAppValue('activity', 'enable_notify', 'yes') === 'yes') {
 			$methods[IExtension::METHOD_NOTIFICATION] = $this->l10n->t('Push');
 		}
+
+		$this->initialState->provideInitialState('setting', 'personal');
+		$this->initialState->provideInitialState('activity_groups', $activityGroups);
+		$this->initialState->provideInitialState('is_email_set', $this->user instanceof IUser && !empty($this->user->getEMailAddress()));
+		$this->initialState->provideInitialState('email_enabled', $emailEnabled);
+		$this->initialState->provideInitialState('setting_batchtime', $settingBatchTime);
+		$this->initialState->provideInitialState('methods', $methods);
+		$this->initialState->provideInitialState('activity_digest_enabled', $this->userSettings->getUserSetting($this->userId, 'setting', 'activity_digest'));
 
 
 		return new TemplateResponse('activity', 'settings/personal', [

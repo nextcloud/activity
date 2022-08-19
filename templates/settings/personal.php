@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2017 Joas Schilling <coding@schilljs.com>
+ * @copyright Copyright (c) 2022 Carl Schwan <carl@carlschwan.eu>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -18,29 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-script('activity', 'settings');
-style('activity', 'settings');
-/** @var array $_ */
-/** @var \OCP\IL10N $l */
+\OCP\Util::addScript('activity', 'activity-personalSettings');
 ?>
 
-<form id="activity_notifications" class="section">
-	<h2><?php p($l->t('Activity')); ?></h2>
-	<p class="settings-hint">
-		<?php if ($_['email_enabled']) { ?>
-			<?php p($l->t('Choose for which activities you want to get an email or push notification.')); ?>
-		<?php } else { ?>
-			<?php p($l->t('Choose for which activities you want to get a push notification.')); ?>
-		<?php } ?>
-	</p>
+<div id="activity-user-settings"></div>
 
-	<?php print_unescaped($this->inc('settings/form')); ?>
-
-	<h2><?php p($l->t('Daily activity summary')); ?></h2>
-
-	<input id="activity_email_enabled" name="activity_digest" type="checkbox" class="checkbox"
-		   value="1" <?php if ($_['activity_digest_enabled']) {
-	print_unescaped('checked="checked"');
-} ?> />
-	<label for="activity_email_enabled"><?php p($l->t('Send daily activity summary in the morning')); ?></label>
-</form>
+<div id="activity-digest-user-settings"></div>

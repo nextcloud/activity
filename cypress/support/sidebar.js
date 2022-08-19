@@ -22,53 +22,6 @@
 
 /// <reference types="Cypress" />
 
-const url = Cypress.config('baseUrl').replace(/\/index.php\/?$/g, '')
-Cypress.env('baseUrl', url)
-
-Cypress.Commands.add('login', (user, password, route = '/apps/files') => {
-	cy.clearCookies()
-	Cypress.Cookies.defaults({
-		preserve: /^(oc|nc)/,
-	})
-	cy.visit(route)
-	cy.get('input[name=user]').type(user)
-	cy.get('input[name=password]').type(password)
-	cy.get('button[type=submit]').click()
-	cy.url().should('include', route)
-})
-
-Cypress.Commands.add('logout', () => {
-	Cypress.Cookies.defaults({
-		preserve: [],
-	})
-
-	cy.clearLocalStorage()
-	cy.clearCookies()
-
-	Cypress.Cookies.defaults({
-		preserve: /^(oc|nc)/,
-	})
-})
-
-Cypress.Commands.add('nextcloudCreateUser', (user, password) => {
-	cy.request({
-		method: 'POST',
-		url: `${Cypress.env('baseUrl')}/ocs/v1.php/cloud/users?format=json`,
-		form: true,
-		body: {
-			userid: user,
-			password,
-		},
-		auth: { user: 'admin', pass: 'admin' },
-		headers: {
-			'OCS-ApiRequest': 'true',
-			'Content-Type': 'application/x-www-form-urlencoded',
-		},
-	}).then(response => {
-		cy.log(`Created user ${user}`, response.status)
-	})
-})
-
 Cypress.Commands.add('createFolder', dirName => {
 	cy.get('.files-controls .actions > .button.new').click()
 	cy.get('.files-controls .actions .newFileMenu a[data-action="folder"]').click()

@@ -26,43 +26,29 @@ use OCP\Activity\ActivitySettings;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\Settings\ISettings;
 
 class Admin implements ISettings {
+	private IConfig $config;
+	private IL10N $l10n;
+	private IManager $manager;
+	private UserSettings $userSettings;
+	private IInitialState $initialState;
 
-	/** @var IConfig */
-	protected $config;
-
-	/** @var IL10N */
-	protected $l10n;
-
-	/** @var IManager */
-	protected $manager;
-
-	/** @var UserSettings */
-	protected $userSettings;
-
-	/**
-	 * @param IConfig $config
-	 * @param IL10N $l10n
-	 * @param IManager $manager
-	 * @param UserSettings $userSettings
-	 */
-	public function __construct(IConfig $config, IL10N $l10n, UserSettings $userSettings, IManager $manager) {
+	public function __construct(IConfig $config, IL10N $l10n, UserSettings $userSettings, IManager $manager, IInitialState $initialState) {
 		$this->config = $config;
 		$this->l10n = $l10n;
 		$this->manager = $manager;
 		$this->userSettings = $userSettings;
+		$this->initialState = $initialState;
 	}
 
-	/**
-	 * @return TemplateResponse
-	 */
-	public function getForm() {
+	public function getForm(): TemplateResponse {
 		$settings = $this->manager->getSettings();
-		usort($settings, static function (ActivitySettings $a, ActivitySettings $b) {
+		usort($settings, static function (ActivitySettings $a, ActivitySettings $b): int {
 			if ($a->getPriority() === $b->getPriority()) {
 				return (int) ($a->getIdentifier() > $b->getIdentifier());
 			}
@@ -120,36 +106,26 @@ class Admin implements ISettings {
 			$settingBatchTime = UserSettings::EMAIL_SEND_ASAP;
 		}
 
-		return new TemplateResponse('activity', 'settings/admin', [
-			'setting' => 'admin',
-			'activityGroups' => $activityGroups,
-			'is_email_set' => true,
-			'email_enabled' => $this->config->getAppValue('activity', 'enable_email', 'yes') === 'yes',
+		$this->initialState->provideInitialState('setting', 'admin');
+		$this->initialState->provideInitialState('activity_groups', $activityGroups);
+		$this->initialState->provideInitialState('is_email_set', true);
+		$this->initialState->provideInitialState('email_enabled', $this->config->getAppValue('activity', 'enable_email', 'yes') === 'yes');
 
-			'setting_batchtime' => $settingBatchTime,
+		$this->initialState->provideInitialState('setting_batchtime', $settingBatchTime);
 
-			'methods' => [
-				IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
-				IExtension::METHOD_NOTIFICATION => $this->l10n->t('Push'),
-			],
-		], 'blank');
+		$this->initialState->provideInitialState('methods', [
+			IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
+			IExtension::METHOD_NOTIFICATION => $this->l10n->t('Push'),
+		]);
+
+		return new TemplateResponse('activity', 'settings/admin', [], 'blank');
 	}
 
-	/**
-	 * @return string the section ID, e.g. 'sharing'
-	 */
-	public function getSection() {
+	public function getSection(): string {
 		return 'activity';
 	}
 
-	/**
-	 * @return int whether the form should be rather on the top or bottom of
-	 * the admin section. The forms are arranged in ascending order of the
-	 * priority values. It is required to return a value between 0 and 100.
-	 *
-	 * E.g.: 70
-	 */
-	public function getPriority() {
+	public function getPriority(): int {
 		return 55;
 	}
 }

@@ -122,7 +122,7 @@ export default {
 		/**
 		 * Map an collection of rich text objects to rich arguments for the RichText component
 		 *
-		 * @param {Array.<object.<string, RichObject>>} richObjects - The rich text object
+		 * @param {Array.<object<string, RichObject>>} richObjects - The rich text object
 		 * @return {object<string, object>}
 		 */
 		mapRichObjectsToRichArguments(richObjects) {
@@ -138,7 +138,7 @@ export default {
 		/**
 		 * Map rich text object to rich argument for the RichText component
 		 *
-		 * @param {object.<string, RichObject>} richObject - The rich text object
+		 * @param {object<string, RichObject>} richObject - The rich text object
 		 * @return {object}}
 		 */
 		mapRichObjectToRichArgument(richObject) {

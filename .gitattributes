@@ -2,5 +2,6 @@ js/activity-dashboard.js binary
 js/activity-sidebar.js binary
 js/*.LICENCE.map binary
 js/*.js.map binary
+js/activity-*.js binary
 package-lock.json binary
 src/test/__snapshots__/*.snap
