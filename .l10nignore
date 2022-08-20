@@ -1,7 +1,2 @@
-js/activity-dashboard.js
-js/activity-dashboard.js.map
-js/activity-dashboard.js.LICENSE.txt
-js/activity-sidebar.js
-js/activity-sidebar.js.map
-js/activity-sidebar.js.LICENSE.txt
+js/activity-*
 js/templates.js
