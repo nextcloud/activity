@@ -1,6 +1,14 @@
+js/activity-adminSettings.js
+js/activity-adminSettings.js.map 
+js/activity-adminSettings.js.LICENSE.txt
 js/activity-dashboard.js
 js/activity-dashboard.js.map
 js/activity-dashboard.js.LICENSE.txt
+js/activity-personalSettings.js
+js/activity-personalSettings.js.map
+js/activity-personalSettings.js.LICENSE.txt
+js/activity-settings.js
+js/activity-settings.js.map
 js/activity-sidebar.js
 js/activity-sidebar.js.map
 js/activity-sidebar.js.LICENSE.txt
