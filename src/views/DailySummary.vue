@@ -1,5 +1,5 @@
 <template>
-	<SettingsSection :title="t('activity', 'Daily activtiy summary')">
+	<SettingsSection :title="t('activity', 'Daily activity summary')">
 		<CheckboxRadioSwitch :checked="activityDigestEnabled" @update:checked="toggleActivityDigestEnabled({activityDigestEnabled: $event})">
 			{{ t('activity', 'Send daily activity summary in the morning') }}
 		</CheckboxRadioSwitch>
