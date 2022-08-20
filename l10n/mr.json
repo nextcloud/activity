@@ -1,4 +1,11 @@
 { "translations": {
+    "Enable notification emails" : "अधिसूचना ई-मेल सुरु करा",
+    "Default settings" : "मूळ सेटींग",
+    "As soon as possible" : "लवकरात लवकर",
+    "Hourly" : "ताशी",
+    "Daily" : "दैनिक",
+    "Weekly" : "साप्ताहिक",
+    "Activity" : "क्रिया",
     "Copied!" : "कॉपी केले!",
     "Not supported!" : "सपोर्ट करीत नाही!",
     "Press ⌘-C to copy." : "कॉपी करायला ⌘-C दाबा.",
@@ -25,23 +32,16 @@
     "There was some activity at %s" : "%s येथे काही क्रिया झाली",
     "Mail" : "मेल",
     "Push" : "पाठविलेली",
-    "Activity" : "क्रिया",
     "Notifications" : "अधिसूचना",
     "No activity yet" : "अजुन कोणतीही क्रिया नाही",
     "Unable to load the activity list" : "क्रियेची यादी घेता आली नाही",
     "No activities" : "कोणत्याही क्रिया नाहीत",
     "Activity feed" : "क्रियेची फीड",
-    "Enable notification emails" : "अधिसूचना ई-मेल सुरु करा",
-    "Default settings" : "मूळ सेटींग",
-    "Send activity emails:" : "क्रियेची ई-मेल पाठवा:",
-    "As soon as possible" : "लवकरात लवकर",
-    "Hourly" : "ताशी",
-    "Daily" : "दैनिक",
-    "Weekly" : "साप्ताहिक",
-    "Daily activity summary" : "दैनिक क्रिया सारांश",
     "Activity notification for %s" : " %s साठी क्रिया अधिसूचना",
     "Send notification emails:" : "अधिसूचना ई-मेल पाठवा:",
     "Settings" : "सेटिंग",
-    "activities" : "क्रिया"
+    "activities" : "क्रिया",
+    "Send activity emails:" : "क्रियेची ई-मेल पाठवा:",
+    "Daily activity summary" : "दैनिक क्रिया सारांश"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
