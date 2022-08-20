@@ -1,10 +1,11 @@
 OC.L10N.register(
     "activity",
     {
+    "Notification" : "ແຈ້ງການ",
+    "Activity" : "ກິດຈະກໍາ",
     "Home" : "ໜ້າຫຼັກ",
     "Today" : "ມື້ນີ້",
     "Yesterday" : "ມື້ວານນີ້",
-    "Activity" : "ກິດຈະກໍາ",
     "Notifications" : "ການເເຈ້ງເຕືອນ",
     "No activity yet" : "ຍັງບໍ່ມີກິດຈະກໍາເທື່ອ",
     "Activities" : "ບັນດາກິດຈະກຳ",
