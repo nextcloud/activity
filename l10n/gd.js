@@ -1,10 +1,10 @@
 OC.L10N.register(
     "activity",
     {
+    "Activity" : "Gnìomhachd",
     "Home" : "Dachaigh",
     "Today" : "An-diugh",
     "Yesterday" : "An-dè",
-    "Activity" : "Gnìomhachd",
     "Notifications" : "Brathan",
     "No activity yet" : "Gun ghnìomhachd fhathast",
     "Activities" : "Gnìomhachdan",

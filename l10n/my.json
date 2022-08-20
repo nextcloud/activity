@@ -1,4 +1,5 @@
 { "translations": {
+    "Activity" : "လုပ်ဆောင်မှု",
     "Copied!" : "ကူးယူပြီး!",
     "Not supported!" : "အထောက်အပံ့ မပြု!",
     "Press ⌘-C to copy." : "ကူးယူရန်အတွက် ⌘-C ကိုနှိပ်ပါ။",
@@ -22,7 +23,6 @@
     "Hello %s," : "မင်္ဂလာပါ %s၊",
     "There was some activity at %s" : "%sက လုပ်ဆောင်မှု အချို့ ရှိခဲ့သည်။",
     "Mail" : "စာ",
-    "Activity" : "လုပ်ဆောင်မှု",
     "No activity yet" : "လုပ်ဆောင်မှုမရှိသေး",
     "Activities" : "လုပ်ဆောင်မှုများ",
     "Activity notification for %s" : "%sအတွက် လုပ်ဆောင်မှု အသိပေးချက်"

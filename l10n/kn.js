@@ -1,6 +1,7 @@
 OC.L10N.register(
     "activity",
     {
+    "Send email" : "ಇ-ಅಂಚೆಯನ್ನು  ಕಳುಹಿಸಿ",
     "Home" : "﻿ಮುಖಪುಟ",
     "Today" : "Today",
     "Mail" : "ಅಂಚೆ",
