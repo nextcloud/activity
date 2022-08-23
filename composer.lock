@@ -4,26 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3dfa62425c3447ce96869218b7383d46",
+    "content-hash": "5ea89ac54d15d8d1f3f0dc97abf3f71d",
     "packages": [],
     "packages-dev": [
         {
             "name": "christophwurst/nextcloud",
-            "version": "v23.0.2",
+            "version": "dev-stable23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
-                "reference": "7f7b957934d22205aab66c568ac3029bd8f2110d"
+                "reference": "74fa82bb013bb329eb59b18d6eb94a660d724fea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/7f7b957934d22205aab66c568ac3029bd8f2110d",
-                "reference": "7f7b957934d22205aab66c568ac3029bd8f2110d",
+                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/74fa82bb013bb329eb59b18d6eb94a660d724fea",
+                "reference": "74fa82bb013bb329eb59b18d6eb94a660d724fea",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.3 || ~8.0.0",
-                "psr/container": "^1.0",
+                "psr/container": "^1.1.1",
                 "psr/event-dispatcher": "^1.0",
                 "psr/log": "^1.1"
             },
@@ -46,9 +46,9 @@
             "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
             "support": {
                 "issues": "https://github.com/ChristophWurst/nextcloud_composer/issues",
-                "source": "https://github.com/ChristophWurst/nextcloud_composer/tree/v23.0.2"
+                "source": "https://github.com/ChristophWurst/nextcloud_composer/tree/stable23"
             },
-            "time": "2022-02-22T09:41:29+00:00"
+            "time": "2022-08-23T02:31:53+00:00"
         },
         {
             "name": "composer/semver",
@@ -3841,7 +3841,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "christophwurst/nextcloud": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
@@ -3849,5 +3851,5 @@
     "platform-overrides": {
         "php": "7.3"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
