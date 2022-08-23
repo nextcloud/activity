@@ -22,7 +22,7 @@
 
 /// <reference types="Cypress" />
 
-import { randHash } from '../utils'
+import { randHash } from '../../utils'
 const randUser = randHash()
 
 describe('Check that user\'s settings survive a reload', () => {

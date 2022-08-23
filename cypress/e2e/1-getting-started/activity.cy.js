@@ -20,11 +20,12 @@
  *
  */
 
-import { randHash } from '../utils'
+import { randHash } from '../../utils'
+
 const randUser = randHash()
 
-describe('Open test.md in viewer', function() {
-	before(function() {
+describe('Open test.md in viewer', function () {
+	before(function () {
 		cy.nextcloudCreateUser(randUser, 'password')
 		cy.login(randUser, 'password')
 
@@ -33,16 +34,16 @@ describe('Open test.md in viewer', function() {
 		cy.wait(1000)
 	})
 
-	after(function() {
+	after(function () {
 		cy.logout()
 	})
 
-	it('Has creation activity', function() {
+	it('Has creation activity', function () {
 		cy.showActivityTab('welcome.txt')
 		cy.get('.activity-entry').eq(0).should('contains.text', 'You created')
 	})
 
-	it('Has favorite activity', function() {
+	it('Has favorite activity', function () {
 		cy.addToFavorites('welcome.txt')
 		cy.showActivityTab('welcome.txt')
 		cy.get('.activity-entry').eq(0).should('contains.text', 'Added to favorites')
@@ -52,13 +53,13 @@ describe('Open test.md in viewer', function() {
 		cy.get('.activity-entry').eq(0).should('contains.text', 'Removed from favorites')
 	})
 
-	it('Has share activity', function() {
+	it('Has share activity', function () {
 		cy.createPublicShare('welcome.txt')
 		cy.showActivityTab('welcome.txt')
 		cy.get('.activity-entry').eq(0).should('contains.text', 'Shared as public link')
 	})
 
-	it('Has rename activity', function() {
+	it('Has rename activity', function () {
 		cy.renameFile('welcome.txt', 'new name')
 		cy.renameFile('new name.txt', 'welcome')
 
@@ -66,7 +67,7 @@ describe('Open test.md in viewer', function() {
 		cy.get('.activity-entry').eq(0).should('contains.text', 'You renamed')
 	})
 
-	it('Has move activity', function() {
+	it('Has move activity', function () {
 		cy.createFolder('Test folder')
 		cy.moveFile('welcome.txt', 'Test folder')
 		cy.goToDir('Test folder')
@@ -75,14 +76,14 @@ describe('Open test.md in viewer', function() {
 		cy.get('.activity-entry').eq(0).should('contains.text', 'You moved')
 	})
 
-	it('Has tag activity', function() {
+	it('Has tag activity', function () {
 		cy.addTag('welcome.txt', 'my_tag')
 
 		cy.showActivityTab('welcome.txt')
 		cy.get('.activity-entry').eq(0).should('contains.text', 'Added system tag')
 	})
 
-	it('Has comment activity', function() {
+	it('Has comment activity', function () {
 		cy.addComment('welcome.txt', 'A comment')
 
 		cy.showActivityTab('welcome.txt')

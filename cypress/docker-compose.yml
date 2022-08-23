@@ -1,14 +1,18 @@
-version: '3'
+version: '3.7'
 
 services:
     nextcloud:
-        build:
-            context: .
-        restart: always
+        image: ghcr.io/nextcloud/continuous-integration-shallow-server
+
         ports:
-            - 8081:80
+            - 8082:80
+
         environment:
-            CYPRESS_baseUrl:
-            APP_SOURCE:
+            CYPRESS_baseUrl: "http://127.0.0.1:8082/index.php"
+            BRANCH: "${BRANCH:-master}"
+
         volumes:
-            - ${APP_SOURCE}:/var/www/html/apps/activity
+            # Using fallback to make sure this script doesn't mess
+            # with the mounting if APP_NAME is not provided.
+            - ../:/var/www/html/apps/${APP_NAME:-activity}
+            - ./initserver.sh:/initserver.sh
