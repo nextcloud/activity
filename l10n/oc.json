@@ -1,12 +1,4 @@
 { "translations": {
-    "Notification" : "Notificacion",
-    "Enable notification emails" : "Activar las notificacions per corrièl",
-    "Send email" : "Enviar email",
-    "Default settings" : "Paramètres par defaut",
-    "Daily" : "Quotidian",
-    "Weekly" : "Setmanièr",
-    "Activity" : "Activitat",
-    "Send daily activity summary in the morning" : "Envejar lo resumit d'activitat quotidian lo maitin",
     "Copied!" : "Copiat !",
     "Not supported!" : "Pas pres en carga !",
     "Press ⌘-C to copy." : "Quichar ⌘-C per copiar.",
@@ -34,11 +26,20 @@
     "Hello %s," : "Adieu %s,",
     "There was some activity at %s" : "I a agut una activitat a %s",
     "Mail" : "Mail",
+    "Activity" : "Activitat",
     "Notifications" : "Notificacions",
+    "Send email" : "Enviar email",
+    "Daily" : "Quotidian",
+    "Weekly" : "Setmanièr",
     "No activity yet" : "Cap d’activitat pel moment",
     "Unable to load the activity list" : "Cargament impossible de la lista de las activitats",
+    "Notification" : "Notificacion",
+    "Enable notification emails" : "Activar las notificacions per corrièl",
+    "Daily activity summary" : "Resumit d’activitat quotidian",
+    "Send daily activity summary in the morning" : "Envejar lo resumit d'activitat quotidian lo maitin",
     "Activities" : "Activitats",
     "No activities" : "Cap d’activitat",
+    "Default settings" : "Paramètres par defaut",
     "Activity feed" : "Flux d’activitat",
     "Enable RSS feed" : "Activar lo flux RSS",
     "RSS feed" : "Flux RSS",
@@ -47,7 +48,6 @@
     "Send notification emails:" : "Enviar de notificacions per mail :",
     "Settings" : "Paramètres",
     "Personal Activity Settings" : "Paramètres d’activitats personals",
-    "activities" : "activitats",
-    "Daily activity summary" : "Resumit d’activitat quotidian"
+    "activities" : "activitats"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }
