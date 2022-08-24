@@ -1,7 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Activity" : "Падзеі",
     "Copied!" : "Скапіявана!",
     "Not supported!" : "Не падтрымліваецца!",
     "Press ⌘-C to copy." : "Націсніце ⌘-C для капіявання.",
@@ -31,6 +30,7 @@ OC.L10N.register(
     "There was some activity at %s" : "Была нейкая актыўнасць на %s",
     "Mail" : "Пошта",
     "Push" : "Push-паведамлення",
+    "Activity" : "Падзеі",
     "Notifications" : "Апавяшчэнні",
     "No activities" : "Няма дзеянняў",
     "Settings" : "Налады"
