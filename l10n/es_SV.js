@@ -1,16 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Notification" : "Notificación",
-    "Send email" : "Enviar correo electrónico",
-    "Default settings" : "Configuraciones predeterminadas",
-    "You need to set up your email address before you can receive notification emails." : "Necesitas configurar tu dirección de correo electrónico antes de que puedas recibir correos de notificación",
-    "Send activity emails" : "Enviar correos de actividades",
-    "As soon as possible" : "Lo antes posible",
-    "Hourly" : "Cada hora",
-    "Daily" : "Diariamente",
-    "Weekly" : "Semanalmente",
-    "Activity" : "Actividad",
     "Copied!" : "¡Copiado!",
     "Not supported!" : "¡No soportado!",
     "Press ⌘-C to copy." : "Presiona ⌘-C para copiar.",
@@ -35,10 +25,20 @@ OC.L10N.register(
     "Hello %s," : "Hola %s,",
     "There was some activity at %s" : "Se tuvo algo de actividad en %s",
     "Mail" : "Correo",
+    "Activity" : "Actividad",
     "Notifications" : "Notificaciones",
+    "Send email" : "Enviar correo electrónico",
+    "You need to set up your email address before you can receive notification emails." : "Necesitas configurar tu dirección de correo electrónico antes de que puedas recibir correos de notificación",
+    "Send activity emails" : "Enviar correos de actividades",
+    "As soon as possible" : "Lo antes posible",
+    "Hourly" : "Cada hora",
+    "Daily" : "Diariamente",
+    "Weekly" : "Semanalmente",
     "No activity yet" : "Aún no tiene actividad",
+    "Notification" : "Notificación",
     "Activities" : "Actividades",
     "No activities" : "No hay actividades",
+    "Default settings" : "Configuraciones predeterminadas",
     "Activity feed" : "Fuente de actividad",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
@@ -46,4 +46,4 @@ OC.L10N.register(
     "Activity notification for %s" : "Notificación de actividad para %s",
     "Settings" : "Configuraciones "
 },
-"nplurals=2; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

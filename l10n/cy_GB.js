@@ -1,17 +1,17 @@
 OC.L10N.register(
     "activity",
     {
-    "Notification" : "Hysbysiad",
-    "Send email" : "Anfon e-bost",
-    "Daily" : "Dyddiol",
-    "Weekly" : "Wythnosol",
-    "Activity" : "Gweithred",
     "Home" : "Cartref",
     "Today" : "Heddiw",
     "Yesterday" : "Ddoe",
     "Mail" : "E-bost",
+    "Activity" : "Gweithred",
     "Notifications" : "Hysbysiadau",
+    "Send email" : "Anfon e-bost",
+    "Daily" : "Dyddiol",
+    "Weekly" : "Wythnosol",
     "No activity yet" : "Dim gweithred eto",
+    "Notification" : "Hysbysiad",
     "Activities" : "Gweithgareddau",
     "Settings" : "Gosodiadau"
 },

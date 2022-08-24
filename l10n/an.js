@@ -1,13 +1,6 @@
 OC.L10N.register(
     "activity",
     {
-    "Enable notification emails" : "Activar notificazions per email",
-    "Default settings" : "Configurazión per defeuto",
-    "Hourly" : "Cada ora",
-    "Daily" : "Diariamén",
-    "Weekly" : "Semanalmén",
-    "Activity" : "Actividat",
-    "Send daily activity summary in the morning" : "Inviar resumen d'actividat diaria por o maitín.",
     "Copied!" : "Copiado!",
     "Not supported!" : "No suportau!",
     "Press ⌘-C to copy." : "Pretar ⌘-C pa copiar.",
@@ -24,8 +17,15 @@ OC.L10N.register(
     "Hello %s," : "Hola %s,",
     "Mail" : "Correu",
     "Push" : "Empentar",
+    "Activity" : "Actividat",
     "Notifications" : "Notificazions",
-    "Settings" : "Configurazión",
-    "Daily activity summary" : "Resumen d'actividat diaria"
+    "Hourly" : "Cada ora",
+    "Daily" : "Diariamén",
+    "Weekly" : "Semanalmén",
+    "Enable notification emails" : "Activar notificazions per email",
+    "Daily activity summary" : "Resumen d'actividat diaria",
+    "Send daily activity summary in the morning" : "Inviar resumen d'actividat diaria por o maitín.",
+    "Default settings" : "Configurazión per defeuto",
+    "Settings" : "Configurazión"
 },
 "nplurals=2; plural=(n != 1);");
