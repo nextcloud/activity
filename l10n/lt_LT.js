@@ -55,6 +55,7 @@ OC.L10N.register(
     "Configure the default notification settings for new users." : "Nustatykite numatytuosius pranešimų parametrus naujiems vartotojams.",
     "Unable to save the settings" : "Nepavyko įrašyti nustatymų",
     "Activity feed" : "Veiklos kanalas",
+    "Activity settings" : "Veiklos nustatymai",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "RSS feed" : "RSS kanalas",
     "No more events to load" : "Nėra daugiau rodytinų įvykių",
