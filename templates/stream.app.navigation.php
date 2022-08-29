@@ -22,7 +22,7 @@
  *
  */
 ?>
-<div id="app-navigation">
+<div id="app-navigation" role="navigation">
 	<ul>
 	<?php foreach ($_['navigations'] as $navigation) { ?>
 		<li<?php if ($_['activeNavigation'] === $navigation['id']): ?> class="active"<?php endif; ?>>

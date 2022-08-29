@@ -38,7 +38,7 @@ $(function(){
 				return;
 			}
 
-			this.$navigation.find('a[data-navigation=' + this.filter + ']').parent().removeClass('active');
+			this.$navigation.find('a[data-navigation=' + this.filter + ']').parent().removeClass('active').removeAttr('aria-current');
 			OCA.Activity.InfinitScrolling.firstKnownId = 0;
 			OCA.Activity.InfinitScrolling.lastGivenId = 0;
 
@@ -51,7 +51,7 @@ $(function(){
 			$('#loading_activities').removeClass('hidden');
 			OCA.Activity.InfinitScrolling.ignoreScroll = 0;
 
-			this.$navigation.find('a[data-navigation=' + filter + ']').parent().addClass('active');
+			this.$navigation.find('a[data-navigation=' + filter + ']').parent().addClass('active').attr('aria-current', 'page');
 
 			OCA.Activity.InfinitScrolling.prefill();
 		}
