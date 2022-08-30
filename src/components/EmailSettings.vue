@@ -27,8 +27,9 @@
 			<label for="activity_setting_batchtime" class="activity-frequency__label">
 				{{ t('activity', 'Send activity emails') }}
 			</label>
-			<select class="notification-frequency__select"
-				name="notify_setting_batchtime"
+			<select id="activity_setting_batchtime"
+				class="notification-frequency__select"
+				name="activity_setting_batchtime"
 				@change="setSettingBatchtime({settingBatchtime: $event.target.value})">
 				<option :value="EmailFrequency.EMAIL_SEND_ASAP"
 					:selected="settingBatchtime === EmailFrequency.EMAIL_SEND_ASAP">
