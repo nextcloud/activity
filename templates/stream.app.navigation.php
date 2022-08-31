@@ -25,7 +25,7 @@
 <div id="app-navigation" role="navigation">
 	<ul>
 	<?php foreach ($_['navigations'] as $navigation) { ?>
-		<li<?php if ($_['activeNavigation'] === $navigation['id']): ?> class="active"<?php endif; ?>>
+		<li<?php if ($_['activeNavigation'] === $navigation['id']): ?> class="active" aria-current="page"<?php endif; ?>>
 			<a data-navigation="<?php p($navigation['id']) ?>"
 			   href="<?php p($navigation['url']) ?>">
 				<?php if (!empty($navigation['icon'])) { ?>
