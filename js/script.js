@@ -61,7 +61,7 @@ $(function(){
 		ignoreScroll: 0,
 		$container: $('#container'),
 		lastDateGroup: null,
-		$content: $(document),
+		$content: $('#app-content'),
 		firstKnownId: 0,
 		lastGivenId: 0,
 		activities: {},
