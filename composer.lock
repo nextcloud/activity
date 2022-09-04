@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ChristophWurst/nextcloud_composer.git",
-                "reference": "b7bcba48272375f8b55e1a69769337902a95d952"
+                "reference": "a6ffee74b70a14bf4775e058db1b02a4e62375fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/b7bcba48272375f8b55e1a69769337902a95d952",
-                "reference": "b7bcba48272375f8b55e1a69769337902a95d952",
+                "url": "https://api.github.com/repos/ChristophWurst/nextcloud_composer/zipball/a6ffee74b70a14bf4775e058db1b02a4e62375fa",
+                "reference": "a6ffee74b70a14bf4775e058db1b02a4e62375fa",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "issues": "https://github.com/ChristophWurst/nextcloud_composer/issues",
                 "source": "https://github.com/ChristophWurst/nextcloud_composer/tree/master"
             },
-            "time": "2022-08-25T02:31:45+00:00"
+            "time": "2022-09-03T02:36:52+00:00"
         },
         {
             "name": "composer/pcre",
