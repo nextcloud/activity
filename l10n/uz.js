@@ -7,6 +7,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Nusxalash uchun Ctrl-C tugmalarini bosing.",
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (restricted)",
+    "Home" : "Bosh sahifa",
     "Mail" : "Pochta",
     "Notifications" : "Bildirishnomalar",
     "Activities" : "Faoliyatlar",
