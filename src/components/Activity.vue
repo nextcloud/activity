@@ -21,7 +21,7 @@
 
 <template>
 	<li class="activity-entry">
-		<Avatar class="activity-entry__icon"
+		<Avatar :class="[applyMonochromeIconColor, 'activity-entry__icon', 'activity-icon']"
 			:disable-menu="true"
 			:disable-tooltip="true"
 			:url="activity.icon"
@@ -105,6 +105,14 @@ export default {
 		 */
 		subjectArguments() {
 			return this.mapRichObjectsToRichArguments(this.activity.subjectRichObjects)
+		},
+		applyMonochromeIconColor() {
+			// copied from https://github.com/nextcloud/activity/blob/db919d45c45356082b17104614018e2c7e691996/js/script.js#L225
+			const monochromeIcon = this.activity.type !== 'file_created' && this.activity.type !== 'file_deleted' && this.activity.type !== 'favorite' && !this.activity.icon.endsWith('-color.svg');
+			if (monochromeIcon) {
+				return 'monochrome'
+			}
+			return ''
 		},
 	},
 	created() {
@@ -202,6 +210,10 @@ export default {
 		opacity: 0.5;
 		margin-top: 4px;
 		margin-right: 8px;
+	}
+
+	.avatardiv  {
+		background-color: unset !important;
 	}
 
 	&__content {
