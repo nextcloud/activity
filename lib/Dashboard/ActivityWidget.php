@@ -26,22 +26,48 @@ declare(strict_types=1);
 namespace OCA\Activity\Dashboard;
 
 use OCA\Activity\AppInfo\Application;
-use OCP\Dashboard\IWidget;
+use OCA\Activity\Data;
+use OCA\Activity\GroupHelper;
+use OCA\Activity\UserSettings;
+use OCP\Dashboard\IAPIWidget;
+use OCP\Dashboard\IButtonWidget;
+use OCP\Dashboard\IIconWidget;
+use OCP\Dashboard\Model\WidgetButton;
+use OCP\Dashboard\Model\WidgetItem;
+use OCP\IDateTimeFormatter;
 use OCP\IL10N;
+use OCP\IURLGenerator;
+use OCP\Util;
 
-class ActivityWidget implements IWidget {
-
-	/**
-	 * @var IL10N
-	 */
-	private $l10n;
+class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget {
+	private Data $data;
+	private IL10N $l10n;
+	private GroupHelper $helper;
+	private UserSettings $settings;
+	private IDateTimeFormatter $dateTimeFormatter;
+	private IURLGenerator $urlGenerator;
 
 	/**
 	 * ActivityWidget constructor.
 	 * @param IL10N $l10n
+	 * @param Data $data
+	 * @param GroupHelper $helper
+	 * @param UserSettings $settings
+	 * @param IURLGenerator $urlGenerator
+	 * @param IDateTimeFormatter $dateTimeFormatter
 	 */
-	public function __construct(IL10N $l10n) {
+	public function __construct(IL10N $l10n,
+								Data $data,
+								GroupHelper $helper,
+								UserSettings $settings,
+								IURLGenerator $urlGenerator,
+								IDateTimeFormatter $dateTimeFormatter) {
+		$this->data = $data;
 		$this->l10n = $l10n;
+		$this->helper = $helper;
+		$this->settings = $settings;
+		$this->dateTimeFormatter = $dateTimeFormatter;
+		$this->urlGenerator = $urlGenerator;
 	}
 
 	/**
@@ -75,6 +101,15 @@ class ActivityWidget implements IWidget {
 	/**
 	 * @inheritDoc
 	 */
+	public function getIconUrl(): string {
+		return $this->urlGenerator->getAbsoluteURL(
+			$this->urlGenerator->imagePath(Application::APP_ID, 'activity-dark.svg')
+		);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getUrl(): ?string {
 		return null;
 	}
@@ -83,6 +118,49 @@ class ActivityWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function load(): void {
-		\OCP\Util::addScript('activity', 'activity-dashboard');
+		Util::addScript('activity', 'activity-dashboard');
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getItems(string $userId, ?string $since = null, int $limit = 7): array {
+		$activities = $this->data->get(
+			$this->helper,
+			$this->settings,
+			$userId,
+			$since ? (int) $since : 0,
+			50,
+			'desc',
+			'by',
+			'',
+			0
+		);
+		return array_map(function (array $activity) {
+			return new WidgetItem(
+				$activity['subject'],
+				$this->dateTimeFormatter->formatTimeSpan($activity['timestamp']),
+				$activity['link'],
+				$this->urlGenerator->getAbsoluteURL(
+					$this->urlGenerator->linkToRoute('core.avatar.getAvatar', ['userId' => $activity['affecteduser'], 'size' => 44])
+				),
+				(string) $activity['activity_id']
+			);
+		}, array_slice($activities['data'], 0, $limit));
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getWidgetButtons(string $userId): array {
+		return [
+			new WidgetButton(
+				WidgetButton::TYPE_MORE,
+				$this->urlGenerator->getAbsoluteURL(
+					$this->urlGenerator->linkToRoute(Application::APP_ID . '.Activities.showList')
+				),
+				$this->l10n->t('More Activities')
+			),
+		];
 	}
 }
