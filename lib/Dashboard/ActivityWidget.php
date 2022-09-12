@@ -47,15 +47,6 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget {
 	private IDateTimeFormatter $dateTimeFormatter;
 	private IURLGenerator $urlGenerator;
 
-	/**
-	 * ActivityWidget constructor.
-	 * @param IL10N $l10n
-	 * @param Data $data
-	 * @param GroupHelper $helper
-	 * @param UserSettings $settings
-	 * @param IURLGenerator $urlGenerator
-	 * @param IDateTimeFormatter $dateTimeFormatter
-	 */
 	public function __construct(IL10N $l10n,
 								Data $data,
 								GroupHelper $helper,
@@ -111,7 +102,9 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget {
 	 * @inheritDoc
 	 */
 	public function getUrl(): ?string {
-		return null;
+		return $this->urlGenerator->getAbsoluteURL(
+			$this->urlGenerator->linkToRoute(Application::APP_ID . '.Activities.showList')
+		);
 	}
 
 	/**
@@ -125,6 +118,8 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget {
 	 * @inheritDoc
 	 */
 	public function getItems(string $userId, ?string $since = null, int $limit = 7): array {
+		// we set the limit to 50 here because data->get might return less activity entries
+		// in the end we take the first 7 of'em
 		$activities = $this->data->get(
 			$this->helper,
 			$this->settings,
@@ -141,9 +136,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget {
 				$activity['subject'],
 				$this->dateTimeFormatter->formatTimeSpan($activity['timestamp']),
 				$activity['link'],
-				$this->urlGenerator->getAbsoluteURL(
-					$this->urlGenerator->linkToRoute('core.avatar.getAvatar', ['userId' => $activity['affecteduser'], 'size' => 44])
-				),
+				$activity['icon'],
 				(string) $activity['activity_id']
 			);
 		}, array_slice($activities['data'], 0, $limit));
