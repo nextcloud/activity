@@ -22,7 +22,7 @@
 import Vue from 'vue'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 
-import ActivityTab from './views/ActivityTab'
+import ActivityTab from './views/ActivityTab.vue'
 
 Vue.prototype.t = t
 Vue.prototype.n = n

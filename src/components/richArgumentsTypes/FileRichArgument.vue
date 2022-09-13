@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 import { dirname, isSamePath } from '@nextcloud/paths'
 
 export default {

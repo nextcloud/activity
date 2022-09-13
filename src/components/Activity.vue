@@ -37,18 +37,18 @@
 </template>
 
 <script>
-import Avatar from '@nextcloud/vue/dist/Components/Avatar'
-import UserBubble from '@nextcloud/vue/dist/Components/UserBubble'
+import Avatar from '@nextcloud/vue/dist/Components/Avatar.js'
+import UserBubble from '@nextcloud/vue/dist/Components/UserBubble.js'
 import RichText from '@juliushaertl/vue-richtext'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 
-import ActivityModel from '../models/ActivityModel'
+import ActivityModel from '../models/ActivityModel.js'
 
-import FileRichArgument from './richArgumentsTypes/FileRichArgument'
-import EmailRichArgument from './richArgumentsTypes/EmailRichArgument'
-import SystemTagRichArgument from './richArgumentsTypes/SystemTagRichArgument'
-import CalendarEventRichArgument from './richArgumentsTypes/CalendarEventRichArgument'
-import OpenGraphRichArgument from './richArgumentsTypes/OpenGraphRichArgument'
+import FileRichArgument from './richArgumentsTypes/FileRichArgument.vue'
+import EmailRichArgument from './richArgumentsTypes/EmailRichArgument.vue'
+import SystemTagRichArgument from './richArgumentsTypes/SystemTagRichArgument.vue'
+import CalendarEventRichArgument from './richArgumentsTypes/CalendarEventRichArgument.vue'
+import OpenGraphRichArgument from './richArgumentsTypes/OpenGraphRichArgument.vue'
 
 /**
  * @typedef RichObject
@@ -108,7 +108,7 @@ export default {
 		},
 		applyMonochromeIconColor() {
 			// copied from https://github.com/nextcloud/activity/blob/db919d45c45356082b17104614018e2c7e691996/js/script.js#L225
-			const monochromeIcon = this.activity.type !== 'file_created' && this.activity.type !== 'file_deleted' && this.activity.type !== 'favorite' && !this.activity.icon.endsWith('-color.svg');
+			const monochromeIcon = this.activity.type !== 'file_created' && this.activity.type !== 'file_deleted' && this.activity.type !== 'favorite' && !this.activity.icon.endsWith('-color.svg')
 			if (monochromeIcon) {
 				return 'monochrome'
 			}
@@ -130,8 +130,8 @@ export default {
 		/**
 		 * Map an collection of rich text objects to rich arguments for the RichText component
 		 *
-		 * @param {Array.<object<string, RichObject>>} richObjects - The rich text object
-		 * @return {object<string, object>}
+		 * @param {Array.<Object<string, RichObject>>} richObjects - The rich text object
+		 * @return {Object<string, object>}
 		 */
 		mapRichObjectsToRichArguments(richObjects) {
 			const args = {}
@@ -146,7 +146,7 @@ export default {
 		/**
 		 * Map rich text object to rich argument for the RichText component
 		 *
-		 * @param {object<string, RichObject>} richObject - The rich text object
+		 * @param {Object<string, RichObject>} richObject - The rich text object
 		 * @return {object}}
 		 */
 		mapRichObjectToRichArgument(richObject) {

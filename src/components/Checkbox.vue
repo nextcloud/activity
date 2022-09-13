@@ -53,10 +53,10 @@
 </template>
 
 <script>
-import CheckboxBlankOutline from 'vue-material-design-icons/CheckboxBlankOutline'
-import CheckboxBlank from 'vue-material-design-icons/CheckboxBlank'
-import MinusBox from 'vue-material-design-icons/MinusBox'
-import CheckboxMarked from 'vue-material-design-icons/CheckboxMarked'
+import CheckboxBlankOutline from 'vue-material-design-icons/CheckboxBlankOutline.vue'
+import CheckboxBlank from 'vue-material-design-icons/CheckboxBlank.vue'
+import MinusBox from 'vue-material-design-icons/MinusBox.vue'
+import CheckboxMarked from 'vue-material-design-icons/CheckboxMarked.vue'
 
 export default {
 	name: 'Checkbox',

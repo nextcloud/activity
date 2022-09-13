@@ -20,7 +20,7 @@
  *
  */
 
-import Dashboard from './views/Dashboard'
+import Dashboard from './views/Dashboard.vue'
 // import store from './store/store.js'
 
 // import './css/dashboard.scss'

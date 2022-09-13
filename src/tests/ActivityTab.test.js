@@ -20,7 +20,7 @@
  *
  */
 import { mount } from '@vue/test-utils'
-// eslint-disable-next-line node/no-unpublished-import
+// eslint-disable-next-line n/no-unpublished-import
 import 'regenerator-runtime/runtime.js'
 
 import ActivityTab from '../views/ActivityTab.vue'

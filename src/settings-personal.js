@@ -21,11 +21,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import UserSettings from './views/UserSettings'
-import DailySummary from './views/DailySummary'
+import UserSettings from './views/UserSettings.vue'
+import DailySummary from './views/DailySummary.vue'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 import { generateFilePath } from '@nextcloud/router'
-import store from './settings-store'
+import store from './settings-store.js'
 
 Vue.prototype.t = t
 Vue.prototype.n = n
