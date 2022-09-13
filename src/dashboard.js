@@ -3,7 +3,7 @@
  *
  * @author Jakob Röhrl <jakob.roehrl@web.de>
  *
- * @license GPL-3.0-or-later
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,7 +20,7 @@
  *
  */
 
-import Dashboard from './views/Dashboard'
+import Dashboard from './views/Dashboard.vue'
 // import store from './store/store.js'
 
 // import './css/dashboard.scss'

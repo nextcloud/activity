@@ -3,7 +3,7 @@
  *
  * @author Louis Chemineau <louis@chmn.me>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -60,7 +60,7 @@ export default class ActivityModel {
 	/**
 	 * get the activity id
 	 *
-	 * @return {int}
+	 * @return {number}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -82,7 +82,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity type
 	 *
-	 * @return {int}
+	 * @return {number}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -126,7 +126,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity subject_rich objects
 	 *
-	 * @return {object<string, RichObject>}
+	 * @return {Object<string, RichObject>}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -163,7 +163,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity message_rich objects
 	 *
-	 * @return {object<string, RichObject>}
+	 * @return {Object<string, RichObject>}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */
@@ -189,7 +189,7 @@ export default class ActivityModel {
 	/**
 	 * Get the activity object_id
 	 *
-	 * @return {int}
+	 * @return {number}
 	 * @readonly
 	 * @memberof ActivityModel
 	 */

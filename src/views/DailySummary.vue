@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import CheckboxRadioSwitch from '@nextcloud/vue/dist/Components/CheckboxRadioSwitch'
-import SettingsSection from '@nextcloud/vue/dist/Components/SettingsSection'
+import CheckboxRadioSwitch from '@nextcloud/vue/dist/Components/CheckboxRadioSwitch.js'
+import SettingsSection from '@nextcloud/vue/dist/Components/SettingsSection.js'
 import { mapActions, mapState } from 'vuex'
 
 export default {

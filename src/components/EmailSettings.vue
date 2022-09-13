@@ -54,7 +54,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import EmailFrequency from '../models/EmailFrequency'
+import EmailFrequency from '../models/EmailFrequency.js'
 
 export default {
 	name: 'EmailSettings',

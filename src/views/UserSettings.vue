@@ -28,9 +28,9 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import SettingsSection from '@nextcloud/vue/dist/Components/SettingsSection'
-import EmailSettings from '../components/EmailSettings'
-import ActivityGrid from '../components/ActivityGrid'
+import SettingsSection from '@nextcloud/vue/dist/Components/SettingsSection.js'
+import EmailSettings from '../components/EmailSettings.vue'
+import ActivityGrid from '../components/ActivityGrid.vue'
 
 export default {
 	name: 'UserSettings',
@@ -38,17 +38,6 @@ export default {
 		SettingsSection,
 		EmailSettings,
 		ActivityGrid,
-	},
-
-	mounted() {
-		this.setEndpoint({ endpoint: '/apps/activity/settings' })
-	},
-
-	methods: {
-		...mapActions([
-			'setEndpoint',
-			'toggleEmailEnabled',
-		]),
 	},
 
 	computed: {
@@ -62,6 +51,17 @@ export default {
 				return t('activity', 'Choose for which activities you want to get a push notification.')
 			}
 		},
+	},
+
+	mounted() {
+		this.setEndpoint({ endpoint: '/apps/activity/settings' })
+	},
+
+	methods: {
+		...mapActions([
+			'setEndpoint',
+			'toggleEmailEnabled',
+		]),
 	},
 }
 

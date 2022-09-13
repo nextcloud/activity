@@ -27,14 +27,20 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import SettingsSection from '@nextcloud/vue/dist/Components/SettingsSection'
-import ActivityGrid from '../components/ActivityGrid'
+import SettingsSection from '@nextcloud/vue/dist/Components/SettingsSection.js'
+import ActivityGrid from '../components/ActivityGrid.vue'
 
 export default {
 	name: 'DefaultActivitySettings',
 	components: {
 		ActivityGrid,
 		SettingsSection,
+	},
+
+	computed: {
+		...mapState({
+			emailEnabled: 'emailEnabled',
+		}),
 	},
 
 	mounted() {
@@ -46,12 +52,6 @@ export default {
 			'setEndpoint',
 			'toggleEmailEnabled',
 		]),
-	},
-
-	computed: {
-		...mapState({
-			emailEnabled: 'emailEnabled',
-		}),
 	},
 }
 

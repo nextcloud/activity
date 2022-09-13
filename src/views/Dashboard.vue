@@ -43,7 +43,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 <script>
 import { DashboardWidget, DashboardWidgetItem } from '@nextcloud/vue-dashboard'
 import axios from '@nextcloud/axios'
-import ActivityModel from '../models/ActivityModel'
+import ActivityModel from '../models/ActivityModel.js'
 import { generateUrl, generateOcsUrl } from '@nextcloud/router'
 
 const POLLING_INTERVAL = 30

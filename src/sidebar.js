@@ -3,7 +3,7 @@
  *
  * @author Louis Chemineau <louis@chmn.me>
  *
- * @license GPL-3.0-or-later
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -22,7 +22,7 @@
 import Vue from 'vue'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 
-import ActivityTab from './views/ActivityTab'
+import ActivityTab from './views/ActivityTab.vue'
 
 Vue.prototype.t = t
 Vue.prototype.n = n

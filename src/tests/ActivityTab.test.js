@@ -3,7 +3,7 @@
  *
  * @author Louis Chemineau <louis@chmn.me>
  *
- * @license GPL-3.0-or-later
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,7 +20,7 @@
  *
  */
 import { mount } from '@vue/test-utils'
-// eslint-disable-next-line node/no-unpublished-import
+// eslint-disable-next-line n/no-unpublished-import
 import 'regenerator-runtime/runtime.js'
 
 import ActivityTab from '../views/ActivityTab.vue'
