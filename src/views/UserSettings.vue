@@ -19,23 +19,23 @@
   -->
 
 <template>
-	<SettingsSection :title="t('activity', 'Activity')"
+	<NcSettingsSection :title="t('activity', 'Activity')"
 		:description="settingDescription">
 		<ActivityGrid />
 		<EmailSettings />
-	</SettingsSection>
+	</NcSettingsSection>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import SettingsSection from '@nextcloud/vue/dist/Components/SettingsSection.js'
+import NcSettingsSection from '@nextcloud/vue/dist/Components/NcSettingsSection.js'
 import EmailSettings from '../components/EmailSettings.vue'
 import ActivityGrid from '../components/ActivityGrid.vue'
 
 export default {
 	name: 'UserSettings',
 	components: {
-		SettingsSection,
+		NcSettingsSection,
 		EmailSettings,
 		ActivityGrid,
 	},

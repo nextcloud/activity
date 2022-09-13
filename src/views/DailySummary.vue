@@ -1,21 +1,21 @@
 <template>
-	<SettingsSection :title="t('activity', 'Daily activity summary')">
-		<CheckboxRadioSwitch :checked="activityDigestEnabled" @update:checked="toggleActivityDigestEnabled({activityDigestEnabled: $event})">
+	<NcSettingsSection :title="t('activity', 'Daily activity summary')">
+		<NcCheckboxRadioSwitch :checked="activityDigestEnabled" @update:checked="toggleActivityDigestEnabled({activityDigestEnabled: $event})">
 			{{ t('activity', 'Send daily activity summary in the morning') }}
-		</CheckboxRadioSwitch>
-	</SettingsSection>
+		</NcCheckboxRadioSwitch>
+	</NcSettingsSection>
 </template>
 
 <script>
-import CheckboxRadioSwitch from '@nextcloud/vue/dist/Components/CheckboxRadioSwitch.js'
-import SettingsSection from '@nextcloud/vue/dist/Components/SettingsSection.js'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
+import NcSettingsSection from '@nextcloud/vue/dist/Components/NcSettingsSection.js'
 import { mapActions, mapState } from 'vuex'
 
 export default {
 	name: 'DailySummary',
 	components: {
-		CheckboxRadioSwitch,
-		SettingsSection,
+		NcCheckboxRadioSwitch,
+		NcSettingsSection,
 	},
 
 	computed: {

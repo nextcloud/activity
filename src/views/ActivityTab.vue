@@ -23,9 +23,11 @@
 <template>
 	<div :class="{ 'icon-loading': loading }">
 		<!-- error message -->
-		<EmptyContent v-if="error" icon="icon-error">
-			{{ error }}
-		</EmptyContent>
+		<NcEmptyContent v-if="error" :title="error">
+			<template #icon>
+				<span class="icon-error"></span>
+			</template>
+		</NcEmptyContent>
 		<template v-else>
 			<!-- activities content -->
 			<ul>
@@ -34,9 +36,12 @@
 					:activity="activity" />
 			</ul>
 
-			<EmptyContent v-if="activities.length === 0 && !loading" icon="icon-activity">
-				{{ t('activity', 'No activity yet') }}
-			</EmptyContent>
+			<NcEmptyContent v-if="activities.length === 0 && !loading"
+				:title="t('activity', 'No activity yet')">
+				<template #icon>
+					<span class="icon-activity"></span>
+				</template>
+			</NcEmptyContent>
 		</template>
 	</div>
 </template>
@@ -44,7 +49,7 @@
 <script>
 import { generateOcsUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
-import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent.js'
+import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
 
 import Activity from '../components/Activity.vue'
 import ActivityModel from '../models/ActivityModel.js'
@@ -55,7 +60,7 @@ export default {
 	name: 'ActivityTab',
 	components: {
 		Activity,
-		EmptyContent,
+		NcEmptyContent,
 	},
 	data() {
 		return {
@@ -135,3 +140,11 @@ export default {
 	},
 }
 </script>
+
+<style scoped lang="scss">
+::v-deep .empty-content__icon span {
+	background-size: 64px;
+	width: 64px;
+	height: 64px;
+}
+</style>
