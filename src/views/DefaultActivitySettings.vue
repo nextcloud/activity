@@ -19,22 +19,22 @@
   -->
 
 <template>
-	<SettingsSection :title="t('activity', 'Default settings')"
+	<NcSettingsSection :title="t('activity', 'Default settings')"
 		:description="t('activity', 'Configure the default notification settings for new users.')">
 		<ActivityGrid />
-	</SettingsSection>
+	</NcSettingsSection>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import SettingsSection from '@nextcloud/vue/dist/Components/SettingsSection.js'
+import NcSettingsSection from '@nextcloud/vue/dist/Components/NcSettingsSection.js'
 import ActivityGrid from '../components/ActivityGrid.vue'
 
 export default {
 	name: 'DefaultActivitySettings',
 	components: {
 		ActivityGrid,
-		SettingsSection,
+		NcSettingsSection,
 	},
 
 	computed: {

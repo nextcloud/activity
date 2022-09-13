@@ -19,25 +19,25 @@
   -->
 
 <template>
-	<SettingsSection :title="t('activity', 'Notification')">
-		<CheckboxRadioSwitch type="checkbox"
+	<NcSettingsSection :title="t('activity', 'Notification')">
+		<NcCheckboxRadioSwitch type="checkbox"
 			:checked="emailEnabled"
 			@update:checked="toggleEmailEnabled({emailEnabled: $event})">
 			{{ t('activity', 'Enable notification emails') }}
-		</CheckboxRadioSwitch>
-	</SettingsSection>
+		</NcCheckboxRadioSwitch>
+	</NcSettingsSection>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import CheckboxRadioSwitch from '@nextcloud/vue/dist/Components/CheckboxRadioSwitch.js'
-import SettingsSection from '@nextcloud/vue/dist/Components/SettingsSection.js'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
+import NcSettingsSection from '@nextcloud/vue/dist/Components/NcSettingsSection.js'
 
 export default {
 	name: 'AdminSettings',
 	components: {
-		CheckboxRadioSwitch,
-		SettingsSection,
+		NcCheckboxRadioSwitch,
+		NcSettingsSection,
 	},
 
 	computed: {

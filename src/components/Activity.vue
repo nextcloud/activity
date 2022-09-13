@@ -21,7 +21,7 @@
 
 <template>
 	<li class="activity-entry">
-		<Avatar :class="[applyMonochromeIconColor, 'activity-entry__icon', 'activity-icon']"
+		<NcAvatar :class="[applyMonochromeIconColor, 'activity-entry__icon', 'activity-icon']"
 			:disable-menu="true"
 			:disable-tooltip="true"
 			:url="activity.icon"
@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import Avatar from '@nextcloud/vue/dist/Components/Avatar.js'
-import UserBubble from '@nextcloud/vue/dist/Components/UserBubble.js'
+import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
+import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble.js'
 import RichText from '@juliushaertl/vue-richtext'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 
@@ -60,7 +60,7 @@ import OpenGraphRichArgument from './richArgumentsTypes/OpenGraphRichArgument.vu
 export default {
 	name: 'Activity',
 	components: {
-		Avatar,
+		NcAvatar,
 		RichText,
 	},
 	directives: {
@@ -158,12 +158,12 @@ export default {
 				}
 			case 'user':
 				return {
-					component: UserBubble,
+					component: NcUserBubble,
 					props: { displayName: richObject.name, user: richObject.id, url: richObject.link },
 				}
 			case 'group':
 				return {
-					component: UserBubble,
+					component: NcUserBubble,
 					props: {
 						avatarImage: 'icon-group',
 						displayName: richObject.name,

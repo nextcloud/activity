@@ -38,13 +38,13 @@ describe('Check that user\'s settings survive a reload', () => {
 	})
 
 	it('Form survive a reload', () => {
-		cy.get("#app-content input[type='checkbox']").uncheck({force: true}).should('not.be.checked')
+		cy.get("#app-content input[type='checkbox']").uncheck({ force: true }).should('not.be.checked')
 
 		cy.reload()
 
-		cy.get("#app-content input[type='checkbox']").uncheck({force: true}).should('not.be.checked')
+		cy.get("#app-content input[type='checkbox']").uncheck({ force: true }).should('not.be.checked')
 
-		cy.get("#file_changed_notification").check({force: true})
+		cy.get("#file_changed_notification").check({ force: true })
 		cy.contains("A calendar was modified").click()
 		cy.contains("Comments for files").click()
 		cy.contains("Your password or email was modified").click()
@@ -95,21 +95,27 @@ describe('Check that user\'s settings survive a reload', () => {
 	})
 
 	it('Activity summary survive a reload', () => {
-		let input = cy.get("#app-content").contains("Send daily activity summary in the morning").parentsUntil('.settings-section').children('input')
+		cy.intercept({ method: 'POST', url: '**/activity/settings' }).as("apiCall");
 
-		input.check({force: true})
-		input.should('be.checked')
+		cy.get("#app-content")
+			.contains("Send daily activity summary in the morning")
+			.find('input')
+			.check({ force: true })
+			.should('be.checked')
+			.wait('@apiCall')
+			.reload()
 
-		cy.reload()
-		input = cy.get("#app-content").contains("Send daily activity summary in the morning").parentsUntil('.settings-section').children('input')
+		cy.get("#app-content")
+			.contains("Send daily activity summary in the morning")
+			.find('input')
+			.should('be.checked')
+			.uncheck({ force: true })
+			.wait('@apiCall')
+			.reload()
 
-		input.should('be.checked')
-
-		input.uncheck({force: true})
-
-		cy.reload()
-		input = cy.get("#app-content").contains("Send daily activity summary in the morning").parentsUntil('.settings-section').children('input')
-
-		input.should('not.be.checked')
+		cy.get("#app-content")
+			.contains("Send daily activity summary in the morning")
+			.find('input')
+			.should('not.be.checked')
 	})
 })
