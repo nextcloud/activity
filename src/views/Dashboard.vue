@@ -117,10 +117,8 @@ export default {
 
 <style lang="scss">
 #activity_panel {
-	.item-icon {
-		body.theme--dark & {
-			filter: invert(100%);
-		}
+	::v-deep .item-icon {
+		filter: var(--background-invert-if-dark);
 	}
 }
 </style>
