@@ -3,7 +3,7 @@
  *
  * @author Louis Chemineau <louis@chmn.me>
  *
- * @license GPL-3.0-or-later
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -23,7 +23,7 @@ import { render } from '@testing-library/vue'
 import Vue from 'vue'
 
 import Activity from '../components/Activity.vue'
-import ActivityModel from '../models/ActivityModel'
+import ActivityModel from '../models/ActivityModel.js'
 
 const wsData = require('../../__mocks__/@nextcloud/activity_ws.json')
 

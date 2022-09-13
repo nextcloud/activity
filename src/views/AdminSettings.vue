@@ -30,25 +30,14 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import CheckboxRadioSwitch from '@nextcloud/vue/dist/Components/CheckboxRadioSwitch'
-import SettingsSection from '@nextcloud/vue/dist/Components/SettingsSection'
+import CheckboxRadioSwitch from '@nextcloud/vue/dist/Components/CheckboxRadioSwitch.js'
+import SettingsSection from '@nextcloud/vue/dist/Components/SettingsSection.js'
 
 export default {
 	name: 'AdminSettings',
 	components: {
 		CheckboxRadioSwitch,
 		SettingsSection,
-	},
-
-	mounted() {
-		this.setEndpoint({ endpoint: '/apps/activity/settings/admin' })
-	},
-
-	methods: {
-		...mapActions([
-			'setEndpoint',
-			'toggleEmailEnabled',
-		]),
 	},
 
 	computed: {
@@ -62,6 +51,17 @@ export default {
 				return t('activity', 'Choose for which activities you want to get a push notification.')
 			}
 		},
+	},
+
+	mounted() {
+		this.setEndpoint({ endpoint: '/apps/activity/settings/admin' })
+	},
+
+	methods: {
+		...mapActions([
+			'setEndpoint',
+			'toggleEmailEnabled',
+		]),
 	},
 }
 

@@ -3,7 +3,7 @@
   -
   - @author Louis Chemineau <louis@chmn.me>
   -
-  - @license GNU AGPL version 3 or any later version
+  - @license AGPL-3.0-or-later
   -
   - This program is free software: you can redistribute it and/or modify
   - it under the terms of the GNU Affero General Public License as
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 import { dirname, isSamePath } from '@nextcloud/paths'
 
 export default {

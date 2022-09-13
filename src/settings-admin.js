@@ -21,11 +21,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import AdminSettings from './views/AdminSettings'
-import DefaultActivtiySettings from './views/DefaultActivitySettings'
+import AdminSettings from './views/AdminSettings.vue'
+import DefaultActivitySettings from './views/DefaultActivitySettings.vue'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 import { generateFilePath } from '@nextcloud/router'
-import store from './settings-store'
+import store from './settings-store.js'
 
 Vue.prototype.t = t
 Vue.prototype.n = n
@@ -46,6 +46,6 @@ export default {
 		el: '#activity-default-settings',
 		store,
 		name: 'ActivityDefaultSettings',
-		render: h => h(DefaultActivtiySettings),
+		render: h => h(DefaultActivitySettings),
 	}),
 }

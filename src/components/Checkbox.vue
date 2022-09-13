@@ -3,7 +3,7 @@
   -
   - @author John Molakvoæ <skjnldsv@protonmail.com>
   -
-  - @license GNU AGPL version 3 or any later version
+  - @license AGPL-3.0-or-later
   -
   - This program is free software: you can redistribute it and/or modify
   - it under the terms of the GNU Affero General Public License as
@@ -53,10 +53,10 @@
 </template>
 
 <script>
-import CheckboxBlankOutline from 'vue-material-design-icons/CheckboxBlankOutline'
-import CheckboxBlank from 'vue-material-design-icons/CheckboxBlank'
-import MinusBox from 'vue-material-design-icons/MinusBox'
-import CheckboxMarked from 'vue-material-design-icons/CheckboxMarked'
+import CheckboxBlankOutline from 'vue-material-design-icons/CheckboxBlankOutline.vue'
+import CheckboxBlank from 'vue-material-design-icons/CheckboxBlank.vue'
+import MinusBox from 'vue-material-design-icons/MinusBox.vue'
+import CheckboxMarked from 'vue-material-design-icons/CheckboxMarked.vue'
 
 export default {
 	name: 'Checkbox',
