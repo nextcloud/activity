@@ -27,7 +27,8 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 		:show-more-text="t('activity', 'Activities')"
 		:show-more-url="showMoreUrl"
 		:loading="loading"
-		:half-empty-content-message="t('activity', 'No activities')">
+		empty-content-icon="icon-activity"
+		:empty-content-message="t('activity', 'No activities')">
 		<template #default="{ item }">
 			<!-- {{item._activity}} -->
 			<DashboardWidgetItem :id="item.activity_id"
@@ -96,7 +97,11 @@ export default {
 				this.processActivities(activities)
 			} catch (error) {
 				this.loading = false
-				console.error('Error loading the activity list', error)
+				if (error?.response?.status === 304) {
+					this.activities = []
+				} else {
+					console.error('Error loading the activity list', error)
+				}
 			}
 		},
 
