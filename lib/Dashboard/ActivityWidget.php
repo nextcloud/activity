@@ -152,7 +152,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget {
 				$this->urlGenerator->getAbsoluteURL(
 					$this->urlGenerator->linkToRoute(Application::APP_ID . '.Activities.showList')
 				),
-				$this->l10n->t('More Activities')
+				$this->l10n->t('More activities')
 			),
 		];
 	}
