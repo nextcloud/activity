@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Vaše nastavení byla aktualizována.",
     "Settings have been updated." : "Nastavení byla zaktualizována.",
     "Recent activity" : "Nedávná aktivita",
+    "More activities" : "Další aktivity",
     "Daily activity summary for %s" : "Souhrn denních aktivit pro %s",
     "_and %n more _::_and %n more _" : ["a %n další","a %n další","a %n dalších","a %n další"],
     "All activities" : "Všechny aktivity",
