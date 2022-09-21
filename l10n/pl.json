@@ -17,6 +17,7 @@
     "Your settings have been updated." : "Twoje ustawienia zostały zaktualizowane",
     "Settings have been updated." : "Ustawienia zostały zaktualizowane.",
     "Recent activity" : "Ostatnia aktywność",
+    "More activities" : "Więcej aktywności",
     "Daily activity summary for %s" : "Podsumowanie dziennej aktywności dla %s",
     "_and %n more _::_and %n more _" : ["i %n więcej","i %n więcej","i %n więcej","i %n więcej"],
     "All activities" : "Wszystkie aktywności",
