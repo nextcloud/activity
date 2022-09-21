@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "您的設定已更新。",
     "Settings have been updated." : "設定已更新。",
     "Recent activity" : "近期活動",
+    "More activities" : "更多活動",
     "Daily activity summary for %s" : "%s 的每日活動摘要",
     "_and %n more _::_and %n more _" : ["以及其餘 %n 項"],
     "All activities" : "所有活動",
