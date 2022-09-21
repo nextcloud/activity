@@ -1,20 +1,17 @@
 # Nextcloud Activity App
 
-The activity app for Nextcloud
-
-Provides an activity feed showing your file changes and other interesting things
-going on in your Nextcloud.
+This app allows people to see actions related to their files and data in Nextcloud.
+Each person can configure their individual activity settings in the personal settings,
+to choose which activity should be pushed to mobile phones, send via email
+or whether a daily summary is sent each morning.
 
 ## 🏗 Development setup
 1. ☁ Clone this app into the `apps` folder of your Nextcloud: `git clone https://github.com/nextcloud/activity.git`
-2. ✅ Enable the app through the app management of your Nextcloud
-3. 🎉 Partytime!
-
-## QA metrics on master branch:
-
-[![Build Status](https://travis-ci.org/nextcloud/activity.svg?branch=master)](https://travis-ci.org/nextcloud/activity/branches)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nextcloud/activity/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/nextcloud/activity/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nextcloud/activity/?branch=master)
+2. 🛠️ Run `make dev-setup` to install the development dependencies
+3. ✅ Enable the app through the app management of your Nextcloud
+4. 🏗️ Make your changes
+5. 🤖 Compile the frontend with `make build-js-production`
+6. 🚀 Send your pull request
 
 ## API for other apps to interact with activities
 
