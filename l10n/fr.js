@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Vos paramètres ont été mis à jour.",
     "Settings have been updated." : "Les paramètres ont été mis à jour.",
     "Recent activity" : "Activités récentes",
+    "More activities" : "Plus d'activités",
     "Daily activity summary for %s" : "Résumé de l'activité du jour pour %s",
     "_and %n more _::_and %n more _" : ["et %n autre","et %n autres","et %n autres"],
     "All activities" : "Toutes les activités",
