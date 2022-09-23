@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Налаштування успішно оновлено.",
     "Settings have been updated." : "Налаштування було оновлено.",
     "Recent activity" : "Нещодавна активність",
+    "More activities" : "Більше заходів",
     "Daily activity summary for %s" : "Підсумок за день для%s",
     "_and %n more _::_and %n more _" : ["та ще %n","та ще %n","та ще %n","та ще %n "],
     "All activities" : "Всі події",
