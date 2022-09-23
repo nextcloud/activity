@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Zure ezarpenak eguneratu dira.",
     "Settings have been updated." : "Ezarpenak eguneratu dira.",
     "Recent activity" : "Azken jarduera",
+    "More activities" : "Jarduera gehiago",
     "Daily activity summary for %s" : "%s-(r)en eguneko jardueren laburpena",
     "_and %n more _::_and %n more _" : ["eta %n gehiago","eta %n gehiago"],
     "All activities" : "Jarduera guztiak",
