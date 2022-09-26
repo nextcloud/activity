@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Ayarlarınız güncellendi.",
     "Settings have been updated." : "Ayarlar güncellendi",
     "Recent activity" : "Son işlemler",
+    "More activities" : "Diğer işlemler",
     "Daily activity summary for %s" : "%s için günlük işlem özeti",
     "_and %n more _::_and %n more _" : ["ve %n diğer","ve %n diğer"],
     "All activities" : "Tüm işlemler",
