@@ -17,6 +17,7 @@
     "Your settings have been updated." : "Вашите настройки са актуализирани.",
     "Settings have been updated." : "Настройките бяха актуализирани.",
     "Recent activity" : "Последна активност",
+    "More activities" : "Още активности",
     "Daily activity summary for %s" : "Обобщение на дневната активност за %s",
     "_and %n more _::_and %n more _" : ["и %n още ","и %n още "],
     "All activities" : "Всички активности",
