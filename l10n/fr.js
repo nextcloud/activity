@@ -29,7 +29,7 @@ OC.L10N.register(
     "Hello %s" : "Bonjour %s,",
     "Hello %s," : "Bonjour %s,",
     "There was some activity at %s" : "Il y a eu de l'activité sur %s",
-    "Mail" : "Courriel",
+    "Mail" : "E-mail",
     "Push" : "Push",
     "Activity" : "Activité",
     "Notifications" : "Notifications",
@@ -38,8 +38,8 @@ OC.L10N.register(
     "Activity notification configuration" : "Configuration des notifications d'activité",
     "Send email" : "Envoyer un email",
     "Send push notification" : "Envoyer des notifications push",
-    "You need to set up your email address before you can receive notification emails." : "Vous devez configurer une adresse de courriel pour pouvoir recevoir des notifications par courriel.",
-    "Send activity emails" : "Envoyer des courriels d'activité",
+    "You need to set up your email address before you can receive notification emails." : "Vous devez spécifier votre adresse e-mail pour pouvoir recevoir des notifications par e-mail.",
+    "Send activity emails" : "Envoyer des e-mails d'activité",
     "As soon as possible" : "Dès que possible",
     "Hourly" : "Toutes les heures",
     "Daily" : "Quotidiennement",
@@ -48,7 +48,7 @@ OC.L10N.register(
     "Unable to load the activity list" : "Impossible de charger la liste d'activités",
     "Notification" : "Notification",
     "Enable notification emails" : "Activer les notifications par email",
-    "Choose for which activities you want to get an email or push notification." : "Sélectionnez les activités pour lesquelles vous souhaitez recevoir un courriel ou une notification push.",
+    "Choose for which activities you want to get an email or push notification." : "Sélectionnez les activités pour lesquelles vous souhaitez recevoir un e-mail ou une notification push.",
     "Choose for which activities you want to get a push notification." : "Sélectionnez les activités pour lesquelles vous souhaitez recevoir une notification push.",
     "Daily activity summary" : "Résumé journalier des activités",
     "Send daily activity summary in the morning" : "Recevoir un résumé de l'activité chaque matin",
@@ -69,6 +69,6 @@ OC.L10N.register(
     "Settings" : "Paramètres",
     "Personal Activity Settings" : "Paramètres de l'activité personnelle",
     "activities" : "activités",
-    "Send activity emails:" : "Envoyer des courriels d'activité:"
+    "Send activity emails:" : "Envoyer des e-mails d'activité :"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
