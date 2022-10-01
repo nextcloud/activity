@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Вашите параметри се ажурирани.",
     "Settings have been updated." : "Параметрите се ажурирани.",
     "Recent activity" : "Неодамнешни активности",
+    "More activities" : "Повеќе активности",
     "Daily activity summary for %s" : "Дневно резиме на активности за %s",
     "_and %n more _::_and %n more _" : ["и уште %n","и %n други"],
     "All activities" : "Сите активности",
