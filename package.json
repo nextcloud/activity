@@ -71,7 +71,6 @@
     ]
   },
   "dependencies": {
-    "@juliushaertl/vue-richtext": "^1.0.1",
     "@nextcloud/auth": "^2.0.0",
     "@nextcloud/axios": "^2.0.0",
     "@nextcloud/dialogs": "^3.1.4",
@@ -83,6 +82,7 @@
     "@nextcloud/router": "^2.0.0",
     "@nextcloud/vue": "^7.0.0-beta.3",
     "@nextcloud/vue-dashboard": "^2.0.1",
+    "@nextcloud/vue-richtext": "^2.0.4",
     "vue": "^2.7.10",
     "vue-material-design-icons": "^5.1.2",
     "vuex": "^3.6.2"
