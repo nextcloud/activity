@@ -48,7 +48,7 @@
     },
     "transformIgnorePatterns": [
       "\\.pnp\\.[^\\/]+$",
-      "/node_modules/(?!(@juliushaertl/vue-richtext)|(vue-material-design-icons)/)"
+      "/node_modules/(?!(@nextcloud/vue-richtext)|(vue-material-design-icons)/)"
     ],
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
