@@ -17,6 +17,7 @@
     "Your settings have been updated." : "Dine indstillinger er blevet opdateret.",
     "Settings have been updated." : "Indstillingerne er blevet opdateret.",
     "Recent activity" : "Seneste aktivitet",
+    "More activities" : "Flere aktiviteter",
     "Daily activity summary for %s" : "Daglig aktivitetsoversigt for %s",
     "_and %n more _::_and %n more _" : ["og %n mere ","og %n flere"],
     "All activities" : "Alle aktiviteter",
