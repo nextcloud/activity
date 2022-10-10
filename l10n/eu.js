@@ -29,7 +29,7 @@ OC.L10N.register(
     "Hello %s" : "Kaixo %s",
     "Hello %s," : "Kaixo %s,",
     "There was some activity at %s" : "%s-(e)n jarduera egon da",
-    "Mail" : "Posta",
+    "Mail" : "Epostaz",
     "Push" : "Sakatu",
     "Activity" : "Jarduera",
     "Notifications" : "Jakinarazpenak",
