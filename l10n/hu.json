@@ -17,6 +17,7 @@
     "Your settings have been updated." : "Beállításai sikeresen frissítve.",
     "Settings have been updated." : "Beállítások frissítve.",
     "Recent activity" : "Legutóbbi tevékenységek",
+    "More activities" : "További tevékenységek",
     "Daily activity summary for %s" : "Napi tevékenység-összefoglaló ehhez: %s",
     "_and %n more _::_and %n more _" : ["és %n további ","és %n további "],
     "All activities" : "Minden tevékenység",
