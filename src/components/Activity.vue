@@ -39,7 +39,7 @@
 <script>
 import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
 import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble.js'
-import RichText from '@juliushaertl/vue-richtext'
+import RichText from '@nextcloud/vue-richtext'
 import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 
 import ActivityModel from '../models/ActivityModel.js'
