@@ -40,8 +40,10 @@ nbproject
 .settings.xml
 .c9revisions
 
-# vim ex mode
+# vim
 .vimrc
+*.sw[a-p]
+[._]*.un~
 
 # Mac OS
 .DS_Store
