@@ -416,7 +416,7 @@ class MailQueueHandler {
 		} catch (\Exception $e) {
 			$this->logger->logException($e, [
 				'message' => 'Failed sending activity email to user "{user}"',
-				'user' => $user,
+				'user' => $userName,
 				'app' => 'activity',
 			]);
 			return false;
