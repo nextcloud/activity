@@ -83,7 +83,7 @@
     "@nextcloud/vue": "^7.0.0-beta.3",
     "@nextcloud/vue-dashboard": "^2.0.1",
     "@nextcloud/vue-richtext": "^2.0.4",
-    "vue": "^2.7.10",
+    "vue": "^2.7.13",
     "vue-material-design-icons": "^5.1.2",
     "vuex": "^3.6.2"
   },
@@ -104,6 +104,6 @@
     "jest-serializer-vue": "^2.0.2",
     "regenerator-runtime": "^0.13.9",
     "vue-jest": "^3.0.7",
-    "vue-template-compiler": "^2.7.10"
+    "vue-template-compiler": "^2.7.13"
   }
 }
