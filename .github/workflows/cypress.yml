@@ -1,11 +1,13 @@
 name: Cypress
 
-on:
-  pull_request:
-  push:
-    branches:
-      - master
-      - stable*
+on: pull_request
+
+permissions:
+  contents: read
+
+concurrency: 
+  group: cypress-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
 
 env:
   APP_NAME: activity
