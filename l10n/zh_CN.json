@@ -17,6 +17,7 @@
     "Your settings have been updated." : "您的设置已更新。",
     "Settings have been updated." : "设置已更新。",
     "Recent activity" : "最近动态",
+    "More activities" : "更多活动",
     "Daily activity summary for %s" : "%s 的每日动态概况",
     "_and %n more _::_and %n more _" : ["更多 %n 项"],
     "All activities" : "所有动态",
