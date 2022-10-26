@@ -24,6 +24,8 @@ import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 
 import ActivityTab from './views/ActivityTab.vue'
 
+import LightningBolt from 'vue-material-design-icons/LightningBolt.vue'
+
 Vue.prototype.t = t
 Vue.prototype.n = n
 
@@ -35,7 +37,7 @@ let ActivityTabInstance = null
 const activityTab = new OCA.Files.Sidebar.Tab({
 	id: 'activity',
 	name: t('activity', 'Activity'),
-	icon: 'icon-activity',
+	icon: LightningBolt,
 
 	async mount(el, fileInfo, context) {
 		if (ActivityTabInstance) {
