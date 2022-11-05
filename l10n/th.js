@@ -55,9 +55,7 @@ OC.L10N.register(
     "RSS feed" : "ฟีด RSS",
     "No more events to load" : "ไม่มีกิจกรรมเพิ่มเติมที่จะโหลด",
     "Activity notification for %s" : "การแจ้งเตือนกิจกรรมสำหรับ %s",
-    "Send notification emails:" : "ส่งอีเมลแจ้งเตือน:",
-    "Settings" : "การตั้งค่า",
-    "Personal Activity Settings" : "การตั้งค่ากิจกรรมส่วนตัว",
-    "activities" : "กิจกรรม"
+    "activities" : "กิจกรรม",
+    "Settings" : "การตั้งค่า"
 },
 "nplurals=1; plural=0;");

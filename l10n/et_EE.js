@@ -63,11 +63,9 @@ OC.L10N.register(
     "Personal notification settings" : "Isiklikud teavitamise seaded ",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida.",
     "Activity notification for %s" : "Tegevuse: %s, märguanne",
-    "Configure the default notification settings." : "Konfigureerige vaikimisi teavitussätted.",
-    "Send notification emails:" : "Saada teavitusmeile",
-    "Settings" : "Seaded",
-    "Personal Activity Settings" : "Isikliku tegevuse seadistused",
     "activities" : "tegevused",
-    "Send activity emails:" : "Saada e-kirju tegevuse kohta"
+    "Configure the default notification settings." : "Konfigureerige vaikimisi teavitussätted.",
+    "Send activity emails:" : "Saada e-kirju tegevuse kohta",
+    "Settings" : "Seaded"
 },
 "nplurals=2; plural=(n != 1);");

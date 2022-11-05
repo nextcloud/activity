@@ -62,11 +62,9 @@
     "Personal notification settings" : "Paràmetres de les notificacions personals",
     "No more events to load" : "No hi ha més esdeveniments",
     "Activity notification for %s" : "Notificació d'activitat per a %s",
-    "Configure the default notification settings." : "Configureu els paràmetres de notificació per defecte.",
-    "Send notification emails:" : "Envia els correus electrònics de notificació:",
-    "Settings" : "Paràmetres",
-    "Personal Activity Settings" : "Paràmetres de l'activitat personal",
     "activities" : "activitats",
-    "Send activity emails:" : "Envia missatges de correu sobre l'activitat:"
+    "Configure the default notification settings." : "Configureu els paràmetres de notificació per defecte.",
+    "Send activity emails:" : "Envia missatges de correu sobre l'activitat:",
+    "Settings" : "Paràmetres"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

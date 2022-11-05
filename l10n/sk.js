@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Osobné nastavenia upozornení",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
     "Activity notification for %s" : "Upozornenia na aktivity pre %s",
-    "Configure the default notification settings." : "Nastavte predvolené nastavenia upozornení.",
-    "Send notification emails:" : "Posielať e-mailové oznámenia: ",
-    "Settings" : "Nastavenia",
-    "Personal Activity Settings" : "Nastavenia osobnej aktivity",
     "activities" : "aktivity",
-    "Send activity emails:" : "Odoslať emaily s aktivitou:"
+    "Configure the default notification settings." : "Nastavte predvolené nastavenia upozornení.",
+    "Send activity emails:" : "Odoslať emaily s aktivitou:",
+    "Settings" : "Nastavenia"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

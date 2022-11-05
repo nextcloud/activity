@@ -62,11 +62,9 @@
     "Personal notification settings" : "Osebne nastavitve obveščanja",
     "No more events to load" : "Ni načrtovanih drugih dogodkov",
     "Activity notification for %s" : "Obvestila o dejavnosti za %s",
-    "Configure the default notification settings." : "Prilagodi privzete nastavitve obveščanja.",
-    "Send notification emails:" : "Pošlji obvestila prek elektronske pošte:",
-    "Settings" : "Nastavitve",
-    "Personal Activity Settings" : "Nastavitve osebne dejavnosti",
     "activities" : "dejavnosti",
-    "Send activity emails:" : "Pošiljaj obvestila o dejavnosti na elektronske naslove:"
+    "Configure the default notification settings." : "Prilagodi privzete nastavitve obveščanja.",
+    "Send activity emails:" : "Pošiljaj obvestila o dejavnosti na elektronske naslove:",
+    "Settings" : "Nastavitve"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Kişisel bildirim ayarları",
     "No more events to load" : "Yüklenecek başka bir olay yok",
     "Activity notification for %s" : "%s için işlem bildirimi",
-    "Configure the default notification settings." : "Varsayılan bildirim ayarlarını yapılandırın.",
-    "Send notification emails:" : "Bildirim e-postaları gönderilsin:",
-    "Settings" : "Ayarlar",
-    "Personal Activity Settings" : "Kişisel işlem ayarları",
     "activities" : "işlem",
-    "Send activity emails:" : "İşlem e-postaları gönderilsin:"
+    "Configure the default notification settings." : "Varsayılan bildirim ayarlarını yapılandırın.",
+    "Send activity emails:" : "İşlem e-postaları gönderilsin:",
+    "Settings" : "Ayarlar"
 },
 "nplurals=2; plural=(n > 1);");

@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "個人通知設定",
     "No more events to load" : "已載入所有事件",
     "Activity notification for %s" : "%s 的活動通知",
-    "Configure the default notification settings." : "設定預設的通知設定。",
-    "Send notification emails:" : "透過電子郵件接收通知",
-    "Settings" : "設定",
-    "Personal Activity Settings" : "個人活動設定",
     "activities" : "活動",
-    "Send activity emails:" : "傳送事件電子郵件："
+    "Configure the default notification settings." : "設定預設的通知設定。",
+    "Send activity emails:" : "傳送事件電子郵件：",
+    "Settings" : "設定"
 },
 "nplurals=1; plural=0;");

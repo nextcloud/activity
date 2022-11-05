@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Лични настройки за известие",
     "No more events to load" : "Няма повече известия за зареждане",
     "Activity notification for %s" : "Известиe за активност %s",
-    "Configure the default notification settings." : "Конфигуриране на настройките за известие по подразбиране.",
-    "Send notification emails:" : "Изпрати уведомителни е-мейли:",
-    "Settings" : "Настройки",
-    "Personal Activity Settings" : "Настройки за лична активност",
     "activities" : "активности",
-    "Send activity emails:" : "Изпращане на имейли за акттивността"
+    "Configure the default notification settings." : "Конфигуриране на настройките за известие по подразбиране.",
+    "Send activity emails:" : "Изпращане на имейли за акттивността",
+    "Settings" : "Настройки"
 },
 "nplurals=2; plural=(n != 1);");

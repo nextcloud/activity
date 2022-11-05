@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Henkilökohtaisten ilmoitusten asetukset",
     "No more events to load" : "Ei enempää tapahtumia",
     "Activity notification for %s" : "Toimintailmoitus tapahtumalle %s",
-    "Configure the default notification settings." : "Muuta ilmoitusten oletusasetuksia.",
-    "Send notification emails:" : "Lähetä ilmoitussähköposteja:",
-    "Settings" : "Asetukset",
-    "Personal Activity Settings" : "Henkilökohtaiset Tapahtuma Asetukset",
     "activities" : "Tapahtumat",
-    "Send activity emails:" : "Lähetä tapahtumatsähköposteja:"
+    "Configure the default notification settings." : "Muuta ilmoitusten oletusasetuksia.",
+    "Send activity emails:" : "Lähetä tapahtumatsähköposteja:",
+    "Settings" : "Asetukset"
 },
 "nplurals=2; plural=(n != 1);");

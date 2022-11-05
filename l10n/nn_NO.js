@@ -55,8 +55,7 @@ OC.L10N.register(
     "RSS feed" : "RSS-straum",
     "No more events to load" : "Inga fleire hendingar å lasta",
     "Activity notification for %s" : "Varsel om hending for %s",
-    "Send notification emails:" : "Send epost varsel:",
-    "Settings" : "Instillingar",
-    "activities" : "aktivitetar"
+    "activities" : "aktivitetar",
+    "Settings" : "Instillingar"
 },
 "nplurals=2; plural=(n != 1);");

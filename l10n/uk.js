@@ -7,7 +7,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Натисніть Ctrl-C щоб скопіювати.",
     "{name} (invisible)" : "{name} (невидимо)",
     "{name} (restricted)" : "{name} (обмежено)",
-    "Home" : "Домашня сторінка",
+    "Home" : "Домівка",
     "in {path}" : "в {path}",
     "This stream will show events like additions, changes & shares" : "У цьому потоці буде показані події на кшталт доповнення, зміни та поширення",
     "There are no events for this filter" : "За цим фільтром події відсутні",
@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Налаштування персональних сповіщень",
     "No more events to load" : "Відсутні події для завантаження",
     "Activity notification for %s" : "Повідомлення про події для %s",
-    "Configure the default notification settings." : "Налаштувати параметри сповіщень за замовчуванням",
-    "Send notification emails:" : "Надсилати сповіщення на ел. пошту:",
-    "Settings" : "Налаштування",
-    "Personal Activity Settings" : "Налаштування особистої активності",
     "activities" : "події",
-    "Send activity emails:" : "Надсилати інформацію про події на ел. пошту:"
+    "Configure the default notification settings." : "Налаштувати параметри сповіщень за замовчуванням",
+    "Send activity emails:" : "Надсилати інформацію про події на ел. пошту:",
+    "Settings" : "Налаштування"
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

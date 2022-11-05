@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Personlige innstillinger for varsler",
     "No more events to load" : "Ingen flere hendelser å laste inn",
     "Activity notification for %s" : "Aktivitetsvarsel for %s",
-    "Configure the default notification settings." : "Konfigurer standard varslingsinnstillinger",
-    "Send notification emails:" : "Send e-post notifikasjoner:",
-    "Settings" : "Innstillinger",
-    "Personal Activity Settings" : "Personlig aktivitets-instillinger",
     "activities" : "aktiviteter",
-    "Send activity emails:" : "Send e-post om aktiviteter:"
+    "Configure the default notification settings." : "Konfigurer standard varslingsinnstillinger",
+    "Send activity emails:" : "Send e-post om aktiviteter:",
+    "Settings" : "Innstillinger"
 },
 "nplurals=2; plural=(n != 1);");

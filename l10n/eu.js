@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Jakinarazpen pertsonalen ezarpenak",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
     "Activity notification for %s" : "Jarduera jakinarazpena honetarako: %s",
-    "Configure the default notification settings." : "Konfiguratu jakinarazpen-ezarpen lehenetsiak.",
-    "Send notification emails:" : "Bidali jakinarazpen e-postak",
-    "Settings" : "Ezarpenak",
-    "Personal Activity Settings" : "Jarduera pertsonal ezarpenak",
     "activities" : "Jarduerak",
-    "Send activity emails:" : "Bidali jarduera e-postak:"
+    "Configure the default notification settings." : "Konfiguratu jakinarazpen-ezarpen lehenetsiak.",
+    "Send activity emails:" : "Bidali jarduera e-postak:",
+    "Settings" : "Ezarpenak"
 },
 "nplurals=2; plural=(n != 1);");

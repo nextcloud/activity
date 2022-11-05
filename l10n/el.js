@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Ρυθμίσεις προσωπικών ειδοποιήσεων",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "Activity notification for %s" : "Ειδοποίηση δραστηριότητας για %s",
-    "Configure the default notification settings." : "Ρυθμίστε τις προεπιλεγμένες ρυθμίσεις ειδοποιήσεων.",
-    "Send notification emails:" : "Αποστολή ειδοποιήσεων μέσω email:",
-    "Settings" : "Ρυθμίσεις",
-    "Personal Activity Settings" : "Ρυθμίσεις προσωπικών δραστηριοτήτων",
     "activities" : "δραστηριότητες",
-    "Send activity emails:" : "Αποστολή email δραστηριοτήτων"
+    "Configure the default notification settings." : "Ρυθμίστε τις προεπιλεγμένες ρυθμίσεις ειδοποιήσεων.",
+    "Send activity emails:" : "Αποστολή email δραστηριοτήτων",
+    "Settings" : "Ρυθμίσεις"
 },
 "nplurals=2; plural=(n != 1);");
