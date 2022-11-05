@@ -54,9 +54,7 @@ OC.L10N.register(
     "RSS feed" : "Prurja RSS",
     "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
     "Activity notification for %s" : "Njoftim i aktivitetit për %s",
-    "Send notification emails:" : "Dërgo email njoftimi:",
-    "Settings" : "Konfigurimet",
-    "Personal Activity Settings" : "Cilësimet e Aktivitetit Personal",
-    "activities" : "aktivitetet"
+    "activities" : "aktivitetet",
+    "Settings" : "Konfigurimet"
 },
 "nplurals=2; plural=(n != 1);");

@@ -48,7 +48,6 @@
     "RSS feed" : "RSS plūsma",
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "Activity notification for %s" : "Brīdinājumi par darbībām %s",
-    "Send notification emails:" : "Sūtīt paziņojumu e-pastus:",
     "Settings" : "Iestatījumi"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
 }

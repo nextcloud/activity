@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "您的设置已更新。",
     "Settings have been updated." : "设置已更新。",
     "Recent activity" : "最近动态",
+    "More activities" : "更多活动",
     "Daily activity summary for %s" : "%s 的每日动态概况",
     "_and %n more _::_and %n more _" : ["更多 %n 项"],
     "All activities" : "所有动态",
@@ -63,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "个人通知设置",
     "No more events to load" : "已无更多事件",
     "Activity notification for %s" : "%s 的动态通知",
-    "Configure the default notification settings." : "配置默认通知设置",
-    "Send notification emails:" : "发送通知邮件",
-    "Settings" : "设置",
-    "Personal Activity Settings" : "个人活动设置",
     "activities" : "活动",
-    "Send activity emails:" : "发送动态电子邮件："
+    "Configure the default notification settings." : "配置默认通知设置",
+    "Send activity emails:" : "发送动态电子邮件：",
+    "Settings" : "设置"
 },
 "nplurals=1; plural=0;");

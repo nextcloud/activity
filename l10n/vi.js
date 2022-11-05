@@ -59,10 +59,8 @@ OC.L10N.register(
     "Personal notification settings" : "Cài đặt thông báo cá nhân",
     "No more events to load" : "Không có sự kiện nào",
     "Activity notification for %s" : "Thông báo hoạt động của %s",
-    "Send notification emails:" : "Gửi các email thông báo:",
-    "Settings" : "Các cài đặt",
-    "Personal Activity Settings" : "Các thiết lập cho hoạt động cá nhân",
     "activities" : "Các hoạt động",
-    "Send activity emails:" : "Gửi email thông báo các hoạt động:"
+    "Send activity emails:" : "Gửi email thông báo các hoạt động:",
+    "Settings" : "Các cài đặt"
 },
 "nplurals=1; plural=0;");

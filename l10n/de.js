@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Deine Einstellungen wurden aktualisiert.",
     "Settings have been updated." : "Die Einstellungen wurden aktualisiert.",
     "Recent activity" : "Neueste Aktivitäten",
+    "More activities" : "Weitere Aktivitäten",
     "Daily activity summary for %s" : "Tägliche Aktivitätsübersicht für %s",
     "_and %n more _::_and %n more _" : ["und %n weiterer","und %n weitere"],
     "All activities" : "Alle Aktivitäten",
@@ -63,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Persönliche Einstellungen zu Benachrichtigungen",
     "No more events to load" : "Keine weiteren Ereignisse zu laden",
     "Activity notification for %s" : "Benachrichtigung zu Aktivitäten für %s",
-    "Configure the default notification settings." : "Standard Benachrichtigungseinstellungen konfigurieren",
-    "Send notification emails:" : "Benachrichtigungs-E-Mails senden:",
-    "Settings" : "Einstellungen",
-    "Personal Activity Settings" : "Persönliche Aktivitätseinstellungen",
     "activities" : "Aktivitäten",
-    "Send activity emails:" : "E-Mails zu Aktivitäten senden:"
+    "Configure the default notification settings." : "Standard Benachrichtigungseinstellungen konfigurieren",
+    "Send activity emails:" : "E-Mails zu Aktivitäten senden:",
+    "Settings" : "Einstellungen"
 },
 "nplurals=2; plural=(n != 1);");

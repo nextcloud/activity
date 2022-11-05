@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Beállításai sikeresen frissítve.",
     "Settings have been updated." : "Beállítások frissítve.",
     "Recent activity" : "Legutóbbi tevékenységek",
+    "More activities" : "További tevékenységek",
     "Daily activity summary for %s" : "Napi tevékenység-összefoglaló ehhez: %s",
     "_and %n more _::_and %n more _" : ["és %n további ","és %n további "],
     "All activities" : "Minden tevékenység",
@@ -63,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Személyes értesítési beállítások",
     "No more events to load" : "Nincs több esemény",
     "Activity notification for %s" : "Tevékenységértesítés ehhez: %s",
-    "Configure the default notification settings." : "Állítsa be az alapértelmezett értesítési beállításokat.",
-    "Send notification emails:" : "Értesítési e-mailek küldése:",
-    "Settings" : "Beállítások",
-    "Personal Activity Settings" : "Személyes tevékenységek beállításai",
     "activities" : "tevékenységek",
-    "Send activity emails:" : "Tevékenységi e-mailek küldése:"
+    "Configure the default notification settings." : "Állítsa be az alapértelmezett értesítési beállításokat.",
+    "Send activity emails:" : "Tevékenységi e-mailek küldése:",
+    "Settings" : "Beállítások"
 },
 "nplurals=2; plural=(n != 1);");

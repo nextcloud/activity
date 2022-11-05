@@ -60,11 +60,9 @@ OC.L10N.register(
     "Personal notification settings" : "Pengaturan pemberitahuan pribadi",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
     "Activity notification for %s" : "Notifikasi aktifitas untuk %s",
-    "Configure the default notification settings." : "Atur pengaturan pemberitahuan bawaan.",
-    "Send notification emails:" : "Kirim notifikasi ke email",
-    "Settings" : "Pengaturan",
-    "Personal Activity Settings" : "Pengaturan Aktivitas Pribadi",
     "activities" : "aktivitas",
-    "Send activity emails:" : "Kirim aktivitas ke email:"
+    "Configure the default notification settings." : "Atur pengaturan pemberitahuan bawaan.",
+    "Send activity emails:" : "Kirim aktivitas ke email:",
+    "Settings" : "Pengaturan"
 },
 "nplurals=1; plural=0;");

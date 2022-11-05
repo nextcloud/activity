@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Ayarlarınız güncellendi.",
     "Settings have been updated." : "Ayarlar güncellendi",
     "Recent activity" : "Son işlemler",
+    "More activities" : "Diğer işlemler",
     "Daily activity summary for %s" : "%s için günlük işlem özeti",
     "_and %n more _::_and %n more _" : ["ve %n diğer","ve %n diğer"],
     "All activities" : "Tüm işlemler",
@@ -63,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Kişisel bildirim ayarları",
     "No more events to load" : "Yüklenecek başka bir olay yok",
     "Activity notification for %s" : "%s için işlem bildirimi",
-    "Configure the default notification settings." : "Varsayılan bildirim ayarlarını yapılandırın.",
-    "Send notification emails:" : "Bildirim e-postaları gönderilsin:",
-    "Settings" : "Ayarlar",
-    "Personal Activity Settings" : "Kişisel işlem ayarları",
     "activities" : "işlem",
-    "Send activity emails:" : "İşlem e-postaları gönderilsin:"
+    "Configure the default notification settings." : "Varsayılan bildirim ayarlarını yapılandırın.",
+    "Send activity emails:" : "İşlem e-postaları gönderilsin:",
+    "Settings" : "Ayarlar"
 },
 "nplurals=2; plural=(n > 1);");

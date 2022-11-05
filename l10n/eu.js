@@ -19,6 +19,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Zure ezarpenak eguneratu dira.",
     "Settings have been updated." : "Ezarpenak eguneratu dira.",
     "Recent activity" : "Azken jarduera",
+    "More activities" : "Jarduera gehiago",
     "Daily activity summary for %s" : "%s-(r)en eguneko jardueren laburpena",
     "_and %n more _::_and %n more _" : ["eta %n gehiago","eta %n gehiago"],
     "All activities" : "Jarduera guztiak",
@@ -28,7 +29,7 @@ OC.L10N.register(
     "Hello %s" : "Kaixo %s",
     "Hello %s," : "Kaixo %s,",
     "There was some activity at %s" : "%s-(e)n jarduera egon da",
-    "Mail" : "Posta",
+    "Mail" : "Epostaz",
     "Push" : "Sakatu",
     "Activity" : "Jarduera",
     "Notifications" : "Jakinarazpenak",
@@ -63,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Jakinarazpen pertsonalen ezarpenak",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
     "Activity notification for %s" : "Jarduera jakinarazpena honetarako: %s",
-    "Configure the default notification settings." : "Konfiguratu jakinarazpen-ezarpen lehenetsiak.",
-    "Send notification emails:" : "Bidali jakinarazpen e-postak",
-    "Settings" : "Ezarpenak",
-    "Personal Activity Settings" : "Jarduera pertsonal ezarpenak",
     "activities" : "Jarduerak",
-    "Send activity emails:" : "Bidali jarduera e-postak:"
+    "Configure the default notification settings." : "Konfiguratu jakinarazpen-ezarpen lehenetsiak.",
+    "Send activity emails:" : "Bidali jarduera e-postak:",
+    "Settings" : "Ezarpenak"
 },
 "nplurals=2; plural=(n != 1);");

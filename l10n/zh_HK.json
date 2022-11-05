@@ -62,11 +62,9 @@
     "Personal notification settings" : "個人通告設定",
     "No more events to load" : "已載入所有事件",
     "Activity notification for %s" : "%s 的系統事件通告",
-    "Configure the default notification settings." : "設定默認的通知設定。",
-    "Send notification emails:" : "透過電郵接收通知：",
-    "Settings" : "設定",
-    "Personal Activity Settings" : "個人活動設定",
     "activities" : "活動",
-    "Send activity emails:" : "傳送有關系統事件的電郵："
+    "Configure the default notification settings." : "設定默認的通知設定。",
+    "Send activity emails:" : "傳送有關系統事件的電郵：",
+    "Settings" : "設定"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
