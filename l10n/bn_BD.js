@@ -48,7 +48,6 @@ OC.L10N.register(
     "RSS feed" : "আরএসএস ফিড ",
     "No more events to load" : "লোড করার কোন ইভেন্ট খুঁজে পাওয়া গেল না।",
     "Activity notification for %s" : "%s জন্য ক্রিয়াকলাপ বিজ্ঞপ্তি",
-    "Send notification emails:" : "বিজ্ঞপ্তি ইমেলগুলি প্রেরণ করুন:",
     "Settings" : "সেটিংস"
 },
 "nplurals=2; plural=(n != 1);");

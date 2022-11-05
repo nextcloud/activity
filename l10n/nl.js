@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Persoonlijke meldingsinstellingen",
     "No more events to load" : "Geen activiteiten meer beschikbaar",
     "Activity notification for %s" : "Activiteitsmelding voor %s",
-    "Configure the default notification settings." : "Configureer de standaard notificatieinstellingen",
-    "Send notification emails:" : "Stuur e-mailnotificaties:",
-    "Settings" : "Instellingen",
-    "Personal Activity Settings" : "Persoonlijke Activiteiten-instellingen",
     "activities" : "activiteiten",
-    "Send activity emails:" : "Activiteiten e-mails verzenden:"
+    "Configure the default notification settings." : "Configureer de standaard notificatieinstellingen",
+    "Send activity emails:" : "Activiteiten e-mails verzenden:",
+    "Settings" : "Instellingen"
 },
 "nplurals=2; plural=(n != 1);");

@@ -63,11 +63,9 @@ OC.L10N.register(
     "Personal notification settings" : "Persónulegar stillingar á tilkynningum",
     "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
     "Activity notification for %s" : "Tilkynning um virkni fyrir %s",
-    "Configure the default notification settings." : "Ákvarða sjálfgefnar tilkynningastillingar.",
-    "Send notification emails:" : "Senda tilkynningapóst:",
-    "Settings" : "Stillingar",
-    "Personal Activity Settings" : "Persónulegar stillingar á virkni",
     "activities" : "virkni",
-    "Send activity emails:" : "Senda virkni með tölvupósti:"
+    "Configure the default notification settings." : "Ákvarða sjálfgefnar tilkynningastillingar.",
+    "Send activity emails:" : "Senda virkni með tölvupósti:",
+    "Settings" : "Stillingar"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

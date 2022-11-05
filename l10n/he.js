@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "הגדרות התראות אישיות",
     "No more events to load" : "אין אירועים נוספים לטעינה",
     "Activity notification for %s" : "התרעת פעילות עבור %s",
-    "Configure the default notification settings." : "הגדרת התראה ברירת מחדל",
-    "Send notification emails:" : "שלח הודעות דוא\"ל:",
-    "Settings" : "הגדרות",
-    "Personal Activity Settings" : "הגדרות פעילויות אישיות",
     "activities" : "פעילויות",
-    "Send activity emails:" : "שליחת דוא\"ל אודות פעילות: "
+    "Configure the default notification settings." : "הגדרת התראה ברירת מחדל",
+    "Send activity emails:" : "שליחת דוא\"ל אודות פעילות: ",
+    "Settings" : "הגדרות"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

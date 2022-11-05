@@ -58,11 +58,9 @@
     "Personal notification settings" : "개인 알림 설정",
     "No more events to load" : "더 이상 불러올 이벤트 없음",
     "Activity notification for %s" : "%s의 활동 알림",
-    "Configure the default notification settings." : "기본 알림 설정을 변경합니다..",
-    "Send notification emails:" : "알림 이메일 전송:",
-    "Settings" : "설정",
-    "Personal Activity Settings" : "개인 활동 설정",
     "activities" : "활동",
-    "Send activity emails:" : "활동 이메일 보내기:"
+    "Configure the default notification settings." : "기본 알림 설정을 변경합니다..",
+    "Send activity emails:" : "활동 이메일 보내기:",
+    "Settings" : "설정"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
