@@ -36,7 +36,6 @@ OC.L10N.register(
     "Default settings" : "Өгөгдмөл тохиргоо",
     "Activity feed" : "Үйлдлүүдийн тэжээл",
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
-    "Send notification emails:" : "Имэйлээр мэдэгдэл авах ",
     "Settings" : "Тохиргоо"
 },
 "nplurals=2; plural=(n != 1);");

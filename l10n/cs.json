@@ -62,11 +62,9 @@
     "Personal notification settings" : "Nastavení osobního upozorňování",
     "No more events to load" : "Žádné další události k načtení",
     "Activity notification for %s" : "Upozornění na aktivitu pro %s",
-    "Configure the default notification settings." : "Nastavit výchozí nastavení upozorňování.",
-    "Send notification emails:" : "Poslat upozorňovací e-maily:",
-    "Settings" : "Nastavení",
-    "Personal Activity Settings" : "Nastavení pro osobní aktivity",
     "activities" : "aktivity",
-    "Send activity emails:" : "Posílat e-maily o aktivitě:"
+    "Configure the default notification settings." : "Nastavit výchozí nastavení upozorňování.",
+    "Send activity emails:" : "Posílat e-maily o aktivitě:",
+    "Settings" : "Nastavení"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }

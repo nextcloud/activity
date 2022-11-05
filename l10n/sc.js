@@ -56,9 +56,7 @@ OC.L10N.register(
     "RSS feed" : "Ativa su flussu RSS",
     "No more events to load" : "Perunu eventu de carrigare",
     "Activity notification for %s" : "Notìfica de atividade de %s",
-    "Send notification emails:" : "Imbia messàgios de notìfica:",
-    "Settings" : "Impostatziones",
-    "Personal Activity Settings" : "Impostatziones de atividade personale",
-    "activities" : "atividades"
+    "activities" : "atividades",
+    "Settings" : "Impostatziones"
 },
 "nplurals=2; plural=(n != 1);");

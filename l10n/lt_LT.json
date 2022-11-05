@@ -58,10 +58,8 @@
     "RSS feed" : "RSS kanalas",
     "No more events to load" : "Nėra daugiau rodytinų įvykių",
     "Activity notification for %s" : "Aktyvumo pranešimai %s",
-    "Send notification emails:" : "Siųsti pranešimus el. paštu:",
-    "Settings" : "Nustatymai",
-    "Personal Activity Settings" : "Asmeninės veiklos nustatymai",
     "activities" : "veiklos",
-    "Send activity emails:" : "Siųsti veiklų pranešimus el. paštu:"
+    "Send activity emails:" : "Siųsti veiklų pranešimus el. paštu:",
+    "Settings" : "Nustatymai"
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"
 }

@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Egna aviseringsinställningar",
     "No more events to load" : "Inga fler aktiviteter.",
     "Activity notification for %s" : "Notis om aktivitet för %s",
-    "Configure the default notification settings." : "Konfigurera standardinställningar för avisering.",
-    "Send notification emails:" : "Skicka notifieringar via e-post:",
-    "Settings" : "Inställningar",
-    "Personal Activity Settings" : "Personliga inställningar för händelser",
     "activities" : "händelser",
-    "Send activity emails:" : "Skicka notifieringar via e-post:"
+    "Configure the default notification settings." : "Konfigurera standardinställningar för avisering.",
+    "Send activity emails:" : "Skicka notifieringar via e-post:",
+    "Settings" : "Inställningar"
 },
 "nplurals=2; plural=(n != 1);");

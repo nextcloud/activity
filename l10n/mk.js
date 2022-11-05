@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "Персонални параметри за известување",
     "No more events to load" : "Нема повеќе настани за вчитување",
     "Activity notification for %s" : "Известување за активност за %s",
-    "Configure the default notification settings." : "Конфигурирај ги стандардните параметри за известување.",
-    "Send notification emails:" : "Испрати известување на E-пошти:",
-    "Settings" : "Параметри",
-    "Personal Activity Settings" : "Параметри за лични активности",
     "activities" : "активности",
-    "Send activity emails:" : "Испрати активности на е-пошта:"
+    "Configure the default notification settings." : "Конфигурирај ги стандардните параметри за известување.",
+    "Send activity emails:" : "Испрати активности на е-пошта:",
+    "Settings" : "Параметри"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

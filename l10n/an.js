@@ -63,11 +63,9 @@ OC.L10N.register(
     "Personal notification settings" : "Configurazión d'as notificazions personals",
     "No more events to load" : "No i hai más eventos que cargar",
     "Activity notification for %s" : "Notificazión d'actividat para %s",
-    "Configure the default notification settings." : "Configurar os achustes de notificazión por defeuto.",
-    "Send notification emails:" : "Inviar correus electronicos de notificazión:",
-    "Settings" : "Configurazión",
-    "Personal Activity Settings" : "Configurazión de l'actividat personal",
     "activities" : "Actividat",
-    "Send activity emails:" : "Inviar correus electronicos d'actividat:"
+    "Configure the default notification settings." : "Configurar os achustes de notificazión por defeuto.",
+    "Send activity emails:" : "Inviar correus electronicos d'actividat:",
+    "Settings" : "Configurazión"
 },
 "nplurals=2; plural=(n != 1);");

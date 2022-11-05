@@ -45,9 +45,7 @@
     "RSS feed" : "Flux RSS",
     "No more events to load" : "Pas mai d’eveniment de cargar",
     "Activity notification for %s" : "Notificacion d’activitat per %s",
-    "Send notification emails:" : "Enviar de notificacions per mail :",
-    "Settings" : "Paramètres",
-    "Personal Activity Settings" : "Paramètres d’activitats personals",
-    "activities" : "activitats"
+    "activities" : "activitats",
+    "Settings" : "Paramètres"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

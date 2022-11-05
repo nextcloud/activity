@@ -62,11 +62,9 @@
     "Personal notification settings" : "تنظیمات اعلان‌های شخصی",
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
     "Activity notification for %s" : "اعلان فعالیت برای %s",
-    "Configure the default notification settings." : "تنظیمات پیش‌فرض اعلان را پیکربندی کنید.",
-    "Send notification emails:" : "ارسال اطلاعیه از طریق ایمیل:",
-    "Settings" : "تنظیمات",
-    "Personal Activity Settings" : "تنظیمات فعالیت‌های شخصی",
     "activities" : "فعالیت‌ها",
-    "Send activity emails:" : "فرستادن رایانامه فعالیت‌ها"
+    "Configure the default notification settings." : "تنظیمات پیش‌فرض اعلان را پیکربندی کنید.",
+    "Send activity emails:" : "فرستادن رایانامه فعالیت‌ها",
+    "Settings" : "تنظیمات"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

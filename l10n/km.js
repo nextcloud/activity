@@ -53,11 +53,9 @@ OC.L10N.register(
     "Personal notification settings" : "ការកំណត់ផ្ទាល់ខ្លួនលើការជូនដំណឹង",
     "No more events to load" : "គ្មាន​ព្រឹត្តិការណ៍​ច្រើនទៀតសម្រាប់ទាញយកមកទេ",
     "Activity notification for %s" : "ការជូនដំណឹងអំពីសកម្មភាពសម្រាប់ %s",
-    "Configure the default notification settings." : "កែការកំណត់លំនាំដើមនៃការជូនដំណឹង",
-    "Send notification emails:" : "ផ្ញើអ៊ីម៉ែលជូនដំណឹង",
-    "Settings" : "ការកំណត់",
-    "Personal Activity Settings" : "ការកំណត់ «សកម្មភាពផ្ទាល់ខ្លួន»",
     "activities" : "សកម្មភាពផ្សេងៗ",
-    "Send activity emails:" : "ផ្ញើអ៊ីម៉ែលអំពីសកម្មភាព"
+    "Configure the default notification settings." : "កែការកំណត់លំនាំដើមនៃការជូនដំណឹង",
+    "Send activity emails:" : "ផ្ញើអ៊ីម៉ែលអំពីសកម្មភាព",
+    "Settings" : "ការកំណត់"
 },
 "nplurals=1; plural=0;");

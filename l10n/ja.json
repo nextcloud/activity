@@ -62,11 +62,9 @@
     "Personal notification settings" : "個人通知設定",
     "No more events to load" : "これ以上読み込むイベントはありません",
     "Activity notification for %s" : "\"%s\" のアクティビティ通知",
-    "Configure the default notification settings." : "デフォルトの通知設定をする。",
-    "Send notification emails:" : "通知メール送信のタイミング: ",
-    "Settings" : "設定",
-    "Personal Activity Settings" : "個人のアクティビティ設定",
     "activities" : "アクティビティ",
-    "Send activity emails:" : "通知メールを送る頻度:"
+    "Configure the default notification settings." : "デフォルトの通知設定をする。",
+    "Send activity emails:" : "通知メールを送る頻度:",
+    "Settings" : "設定"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

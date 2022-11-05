@@ -39,9 +39,8 @@
     "Default settings" : "मूळ सेटींग",
     "Activity feed" : "क्रियेची फीड",
     "Activity notification for %s" : " %s साठी क्रिया अधिसूचना",
-    "Send notification emails:" : "अधिसूचना ई-मेल पाठवा:",
-    "Settings" : "सेटिंग",
     "activities" : "क्रिया",
-    "Send activity emails:" : "क्रियेची ई-मेल पाठवा:"
+    "Send activity emails:" : "क्रियेची ई-मेल पाठवा:",
+    "Settings" : "सेटिंग"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

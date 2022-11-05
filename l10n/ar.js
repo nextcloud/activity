@@ -64,11 +64,9 @@ OC.L10N.register(
     "Personal notification settings" : "اعدادات الاشعارات الشخصية",
     "No more events to load" : "لا توجد أي أحداث للتحميل",
     "Activity notification for %s" : "إشعار عن النشاط %s",
-    "Configure the default notification settings." : "تهيئة الاعدادات الافتراضية للاشعارات",
-    "Send notification emails:" : "أرسل أشعارات بريدية:",
-    "Settings" : "الإعدادات",
-    "Personal Activity Settings" : "إعدادات الأنشطة الشخصي",
     "activities" : "الأنشطة",
-    "Send activity emails:" : "إرسال ايميلات الأنشطة:"
+    "Configure the default notification settings." : "تهيئة الاعدادات الافتراضية للاشعارات",
+    "Send activity emails:" : "إرسال ايميلات الأنشطة:",
+    "Settings" : "الإعدادات"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

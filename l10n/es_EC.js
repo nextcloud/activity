@@ -56,9 +56,7 @@ OC.L10N.register(
     "RSS feed" : "Fuente RSS",
     "No more events to load" : "No hay más eventos por cargar",
     "Activity notification for %s" : "Notificación de actividad para %s",
-    "Send notification emails:" : "Enviar emails de notificación:",
-    "Settings" : "Configuraciones ",
-    "Personal Activity Settings" : "Configuraciones de actividad personal",
-    "activities" : "actividades"
+    "activities" : "actividades",
+    "Settings" : "Configuraciones "
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
