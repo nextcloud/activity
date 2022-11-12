@@ -48,6 +48,7 @@ OC.L10N.register(
     "Activity feed" : "Darbību plūsma",
     "Enable RSS feed" : "Ieslēgt RSS plūsmu",
     "RSS feed" : "RSS plūsma",
+    "Personal notification settings" : "Personisko paziņojumu iestatījumi",
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "Activity notification for %s" : "Brīdinājumi par darbībām %s",
     "Settings" : "Iestatījumi"
