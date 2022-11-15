@@ -7,7 +7,7 @@
     "{name} (restricted)" : "{name}（受限）",
     "Home" : "主頁",
     "in {path}" : "在 {path}",
-    "This stream will show events like additions, changes & shares" : "這裡將顯示檔案的新增、更動、分享等系統事件",
+    "This stream will show events like additions, changes & shares" : "這裡將顯示檔案的新增、更新、分享等系統事件",
     "There are no events for this filter" : "在此篩選器下沒有系統事件",
     "Today" : "今日",
     "Yesterday" : "昨日",
