@@ -2,14 +2,12 @@
 <info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>activity</id>
 	<name>Activity</name>
-	<summary>This application enables users to view a log of activities about them or about files.</summary>
+	<summary>This application enables people to view a log of activities about them, their files or other data.</summary>
 	<description>
-		This application enables users to view actions related to their files in Nextcloud.
-		Once enabled, users will see a new icon “Activity” in their apps menu.
-		When clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.
-		The user can configure their individual activity settings in their personal menu.
-		This sets the type of activity to record, as well as whether to the user sees their own activities,
-		whether these are only available online, and whether they get an email digest on a regular basis.
+		This app allows people to see actions related to their files and data in Nextcloud.
+		Each person can configure their individual activity settings in the personal settings,
+		to choose which activity should be pushed to mobile phones, send via email
+		or whether a daily summary is sent each morning.
 		More information is available in the Activity documentation.
 	</description>
 

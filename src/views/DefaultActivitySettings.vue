@@ -20,7 +20,7 @@
 
 <template>
 	<NcSettingsSection :title="t('activity', 'Default settings')"
-		:description="t('activity', 'Configure the default notification settings for new users.')">
+		:description="t('activity', 'Configure the default notification settings for new accounts.')">
 		<ActivityGrid />
 	</NcSettingsSection>
 </template>
