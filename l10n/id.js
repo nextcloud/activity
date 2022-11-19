@@ -32,8 +32,6 @@ OC.L10N.register(
     "Push" : "Dorongan",
     "Activity" : "Aktivitas",
     "Notifications" : "Pemberitahuan",
-    "This application enables users to view a log of activities about them or about files." : "Aplikasi ini memungkinkan pengguna untuk melihat log aktivitas tentang mereka atau tentang file.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Aplikasi ini memungkinkan pengguna untuk melihat aksi terkait file mereka di Nextcloud.\n\t\tSetelah diaktifkan, pengguna akan melihat ikon baru \"Aktivitas\" di menu aplikasi mereka.\n\t\tKetika diklik, halaman baru muncul bagi pengguna untuk melacak aktivitas yang terkait dengan file - dari file baru, ke file yang dihapus, memindahkan, mengganti nama, memperbarui, dan aktivitas bersama.\n\t\tPengguna dapat mengonfigurasi pengaturan aktivitas masing-masing dalam menu pribadi mereka.\n\t\tPengaturan ini menetapkan jenis kegiatan untuk dicatat, serta apakah pengguna melihat aktivitas mereka sendiri,\n\t\tapakah ini hanya tersedia online, dan apakah mereka mendapatkan intisari email secara teratur.\n\t\tInformasi lebih lanjut tersedia di dokumentasi Aktivitas.",
     "Send email" : "Kirim surel",
     "You need to set up your email address before you can receive notification emails." : "Anda perlu menyetel alamat surel sebelum Anda dapat menerima surel pemberitahuan.",
     "Send activity emails" : "Kirim surel aktivitas",
@@ -52,7 +50,6 @@ OC.L10N.register(
     "Activities" : "Aktivitas",
     "No activities" : "Tidak ada aktivitas",
     "Default settings" : "Pengaturan bawaan",
-    "Configure the default notification settings for new users." : "Mengatur pengaturan notifikasi bawaan untuk pengguna baru.",
     "Activity feed" : "Umpan aktivitas",
     "Activity settings" : "Pengaturan aktivitas",
     "Enable RSS feed" : "Aktifkan RSS feed",
@@ -60,9 +57,12 @@ OC.L10N.register(
     "Personal notification settings" : "Pengaturan pemberitahuan pribadi",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
     "Activity notification for %s" : "Notifikasi aktifitas untuk %s",
+    "This application enables users to view a log of activities about them or about files." : "Aplikasi ini memungkinkan pengguna untuk melihat log aktivitas tentang mereka atau tentang file.",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Aplikasi ini memungkinkan pengguna untuk melihat aksi terkait file mereka di Nextcloud.\n\t\tSetelah diaktifkan, pengguna akan melihat ikon baru \"Aktivitas\" di menu aplikasi mereka.\n\t\tKetika diklik, halaman baru muncul bagi pengguna untuk melacak aktivitas yang terkait dengan file - dari file baru, ke file yang dihapus, memindahkan, mengganti nama, memperbarui, dan aktivitas bersama.\n\t\tPengguna dapat mengonfigurasi pengaturan aktivitas masing-masing dalam menu pribadi mereka.\n\t\tPengaturan ini menetapkan jenis kegiatan untuk dicatat, serta apakah pengguna melihat aktivitas mereka sendiri,\n\t\tapakah ini hanya tersedia online, dan apakah mereka mendapatkan intisari email secara teratur.\n\t\tInformasi lebih lanjut tersedia di dokumentasi Aktivitas.",
     "activities" : "aktivitas",
     "Configure the default notification settings." : "Atur pengaturan pemberitahuan bawaan.",
     "Send activity emails:" : "Kirim aktivitas ke email:",
-    "Settings" : "Pengaturan"
+    "Settings" : "Pengaturan",
+    "Configure the default notification settings for new users." : "Mengatur pengaturan notifikasi bawaan untuk pengguna baru."
 },
 "nplurals=1; plural=0;");

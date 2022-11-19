@@ -31,8 +31,6 @@
     "Push" : "Пуш",
     "Activity" : "Активност",
     "Notifications" : "Известувања",
-    "This application enables users to view a log of activities about them or about files." : "Оваа апликација им овозможува на корисниците да ги следат промените на активностите или на датотеките.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Оваа апликација им овозможува на корисниците да ги проверат активностите поврзани со нивните датотеки во Nextcloud.\n\t\tОткако ќе биде овозможено, корисниците ќе видат нова икона „Активност” во менито за апликации.\n\t\tКога ќе се кликне на неа, се појавува нова страница за корисниците да ја следат активноста поврзана со датотеките - од нови датотеки, до избришани датотеки, преместување, преименување, надградби и споделена активност.\n\t\tКорисникот може да ги конфигурира неговите поединечни поставки за активност во неговото лично мени.\n\t\tОва ја поставува активноста за снимање, како и дали корисникот ги гледа своите активности,\n\t\tбез разлика дали тие се достапни само онлајн, односно дали тие се редовно сврзани како мејлови.\n\t\tПовеќе информации се достапни во документацијата за активноста.",
     "Activity notification configuration" : "Параметри за известување и активност",
     "Send email" : "Испрати е-пошта",
     "Send push notification" : "Испрати PUSH известување",
@@ -53,7 +51,6 @@
     "Activities" : "Активности",
     "No activities" : "Нема активности",
     "Default settings" : "Стандардни поставки",
-    "Configure the default notification settings for new users." : "Конфигурирај ги стандардните поставки за известување за нови корисници.",
     "Unable to save the settings" : "Неуспешно зачувување на параметрите",
     "Activity feed" : "Канал на активности",
     "Activity settings" : "Праметри за активности",
@@ -62,9 +59,12 @@
     "Personal notification settings" : "Персонални параметри за известување",
     "No more events to load" : "Нема повеќе настани за вчитување",
     "Activity notification for %s" : "Известување за активност за %s",
+    "This application enables users to view a log of activities about them or about files." : "Оваа апликација им овозможува на корисниците да ги следат промените на активностите или на датотеките.",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Оваа апликација им овозможува на корисниците да ги проверат активностите поврзани со нивните датотеки во Nextcloud.\n\t\tОткако ќе биде овозможено, корисниците ќе видат нова икона „Активност” во менито за апликации.\n\t\tКога ќе се кликне на неа, се појавува нова страница за корисниците да ја следат активноста поврзана со датотеките - од нови датотеки, до избришани датотеки, преместување, преименување, надградби и споделена активност.\n\t\tКорисникот може да ги конфигурира неговите поединечни поставки за активност во неговото лично мени.\n\t\tОва ја поставува активноста за снимање, како и дали корисникот ги гледа своите активности,\n\t\tбез разлика дали тие се достапни само онлајн, односно дали тие се редовно сврзани како мејлови.\n\t\tПовеќе информации се достапни во документацијата за активноста.",
     "activities" : "активности",
     "Configure the default notification settings." : "Конфигурирај ги стандардните параметри за известување.",
     "Send activity emails:" : "Испрати активности на е-пошта:",
-    "Settings" : "Параметри"
+    "Settings" : "Параметри",
+    "Configure the default notification settings for new users." : "Конфигурирај ги стандардните поставки за известување за нови корисници."
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }

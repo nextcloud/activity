@@ -31,8 +31,6 @@ OC.L10N.register(
     "Push" : "พุช",
     "Activity" : "กิจกรรม",
     "Notifications" : "การแจ้งเตือน",
-    "This application enables users to view a log of activities about them or about files." : "แอปพลิเคชันนี้ทำให้ผู้ใช้มองเห็นบันทึกกิจกรรมที่เกี่ยวกับเขาหรือไฟล์ต่าง ๆ",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "แอปพลิเคชั่นนี้ช่วยให้ผู้ใช้สามารถดูการทำงานที่เกี่ยวข้องกับไฟล์ใน Nextcloud\nเมื่อเปิดใช้งานผู้ใช้จะเห็นไอคอนใหม่“ กิจกรรม” ในเมนูแอพของพวกเขา\nเมื่อคลิกแล้วจะมีหน้าใหม่ปรากฏขึ้นให้ผู้ใช้ติดตามกิจกรรมที่เกี่ยวข้องกับไฟล์ตั้งแต่ไฟล์ใหม่ไปจนถึงไฟล์ที่ถูกลบย้ายเปลี่ยนชื่ออัปเดตและกิจกรรมที่แชร์\nผู้ใช้สามารถกำหนดการตั้งค่ากิจกรรมส่วนตัวในเมนูส่วนตัว\nสิ่งนี้จะกำหนดประเภทของกิจกรรมที่จะบันทึกรวมถึงว่าผู้ใช้เห็นกิจกรรมของตนเองหรือไม่\nไม่ว่าจะเป็นออนไลน์เท่านั้นหรือไม่และพวกเขาจะได้รับอีเมลสรุปเป็นประจำหรือไม่\nข้อมูลเพิ่มเติมมีอยู่ในเอกสารกิจกรรม",
     "Send email" : "ส่งอีเมล",
     "You need to set up your email address before you can receive notification emails." : "คุณจะได้รับอีเมลแจ้งเตือนหลังจากที่คุณตั้งค่าที่อยู่อีเมลของคุณ",
     "Send activity emails" : "ติดตามการส่งอีเมล์",
@@ -49,13 +47,15 @@ OC.L10N.register(
     "Activities" : "กิจกรรม",
     "No activities" : "ไม่มีกิจกรรม",
     "Default settings" : "ค่าเริ่มต้น",
-    "Configure the default notification settings for new users." : "กำหนดค่าเริ่มต้นของการแจ้งเตือนสำหรับผู้ใช้ใหม่",
     "Activity feed" : "ฟีดกิจกรรม",
     "Enable RSS feed" : "เปิดใช้งานฟีด RSS",
     "RSS feed" : "ฟีด RSS",
     "No more events to load" : "ไม่มีกิจกรรมเพิ่มเติมที่จะโหลด",
     "Activity notification for %s" : "การแจ้งเตือนกิจกรรมสำหรับ %s",
+    "This application enables users to view a log of activities about them or about files." : "แอปพลิเคชันนี้ทำให้ผู้ใช้มองเห็นบันทึกกิจกรรมที่เกี่ยวกับเขาหรือไฟล์ต่าง ๆ",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "แอปพลิเคชั่นนี้ช่วยให้ผู้ใช้สามารถดูการทำงานที่เกี่ยวข้องกับไฟล์ใน Nextcloud\nเมื่อเปิดใช้งานผู้ใช้จะเห็นไอคอนใหม่“ กิจกรรม” ในเมนูแอพของพวกเขา\nเมื่อคลิกแล้วจะมีหน้าใหม่ปรากฏขึ้นให้ผู้ใช้ติดตามกิจกรรมที่เกี่ยวข้องกับไฟล์ตั้งแต่ไฟล์ใหม่ไปจนถึงไฟล์ที่ถูกลบย้ายเปลี่ยนชื่ออัปเดตและกิจกรรมที่แชร์\nผู้ใช้สามารถกำหนดการตั้งค่ากิจกรรมส่วนตัวในเมนูส่วนตัว\nสิ่งนี้จะกำหนดประเภทของกิจกรรมที่จะบันทึกรวมถึงว่าผู้ใช้เห็นกิจกรรมของตนเองหรือไม่\nไม่ว่าจะเป็นออนไลน์เท่านั้นหรือไม่และพวกเขาจะได้รับอีเมลสรุปเป็นประจำหรือไม่\nข้อมูลเพิ่มเติมมีอยู่ในเอกสารกิจกรรม",
     "activities" : "กิจกรรม",
-    "Settings" : "การตั้งค่า"
+    "Settings" : "การตั้งค่า",
+    "Configure the default notification settings for new users." : "กำหนดค่าเริ่มต้นของการแจ้งเตือนสำหรับผู้ใช้ใหม่"
 },
 "nplurals=1; plural=0;");

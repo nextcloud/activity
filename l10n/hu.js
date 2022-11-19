@@ -33,8 +33,6 @@ OC.L10N.register(
     "Push" : "Leküldés",
     "Activity" : "Tevékenység",
     "Notifications" : "Értesítések",
-    "This application enables users to view a log of activities about them or about files." : "Ez az alkalmazás lehetővé teszi a felhasználók számára, hogy megtekinthessék a saját magukról vagy a fájlokról szóló tevékenységnaplót.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ez az alkalmazás lehetővé teszi, hogy a felhasználók megtekinthessék a fájljaikkal kapcsolatos tevékenységeket a Nextcloudban.\n\t\tBekapcsolás után a felhasználók egy új, „Tevékenység” ikont találnak az alkalmazásmenüben.\n\t\tKattintás után egy új lap jelenik meg, ahol a felhasználó követheti a fájlokhoz kapcsolódó tevékenységeket – az új fájlok létrehozását, a fájok törlését, áthelyezését, átnevezését, a frissítési és megosztási tevékenységeket.\n\t\tA felhasználó a saját személyes menüjében adhatja meg az egyéni tevékenység-beállításait.\n\t\tEzzel beállíthatja, hogy mely tevékenységek kerüljenek naplózásra, ahogy azt is, hogy a felhasználó lássa-e a saját tevékenységeit,\n\t\tvalamint azt, hogy ez csak online legyen-e elérhető, vagy e-mailben valamilyen rendszerességgel.\n\t\tTovábbi információk a Tevékenység dokumentációjában érhetőek el.",
     "Activity notification configuration" : "Alkalmazásértesítési beállítások",
     "Send email" : "E-mail küldése",
     "Send push notification" : "Leküldéses értesítés küldése",
@@ -55,7 +53,6 @@ OC.L10N.register(
     "Activities" : "Tevékenységek",
     "No activities" : "Nincs tevékenység",
     "Default settings" : "Alapértelmezett beállítások",
-    "Configure the default notification settings for new users." : "Az új felhasználók alapértelmezett értesítési beállításainak megadása.",
     "Unable to save the settings" : "Nem sikerült menteni a beállításokat",
     "Activity feed" : "Tevékenységi hírfolyam",
     "Activity settings" : "Tevékenység beállításai",
@@ -64,9 +61,12 @@ OC.L10N.register(
     "Personal notification settings" : "Személyes értesítési beállítások",
     "No more events to load" : "Nincs több esemény",
     "Activity notification for %s" : "Tevékenységértesítés ehhez: %s",
+    "This application enables users to view a log of activities about them or about files." : "Ez az alkalmazás lehetővé teszi a felhasználók számára, hogy megtekinthessék a saját magukról vagy a fájlokról szóló tevékenységnaplót.",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ez az alkalmazás lehetővé teszi, hogy a felhasználók megtekinthessék a fájljaikkal kapcsolatos tevékenységeket a Nextcloudban.\n\t\tBekapcsolás után a felhasználók egy új, „Tevékenység” ikont találnak az alkalmazásmenüben.\n\t\tKattintás után egy új lap jelenik meg, ahol a felhasználó követheti a fájlokhoz kapcsolódó tevékenységeket – az új fájlok létrehozását, a fájok törlését, áthelyezését, átnevezését, a frissítési és megosztási tevékenységeket.\n\t\tA felhasználó a saját személyes menüjében adhatja meg az egyéni tevékenység-beállításait.\n\t\tEzzel beállíthatja, hogy mely tevékenységek kerüljenek naplózásra, ahogy azt is, hogy a felhasználó lássa-e a saját tevékenységeit,\n\t\tvalamint azt, hogy ez csak online legyen-e elérhető, vagy e-mailben valamilyen rendszerességgel.\n\t\tTovábbi információk a Tevékenység dokumentációjában érhetőek el.",
     "activities" : "tevékenységek",
     "Configure the default notification settings." : "Állítsa be az alapértelmezett értesítési beállításokat.",
     "Send activity emails:" : "Tevékenységi e-mailek küldése:",
-    "Settings" : "Beállítások"
+    "Settings" : "Beállítások",
+    "Configure the default notification settings for new users." : "Az új felhasználók alapértelmezett értesítési beállításainak megadása."
 },
 "nplurals=2; plural=(n != 1);");

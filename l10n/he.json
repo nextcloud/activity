@@ -31,8 +31,6 @@
     "Push" : "דחיפה",
     "Activity" : "פעילות",
     "Notifications" : "התראות",
-    "This application enables users to view a log of activities about them or about files." : "יישום זה מאפשר למשתמשים לצפות בהיסטוריה של פעילויות הקשורות אליהם, או לקבצים.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שבוצעו על הקבצים שלהם ב־Nextcloud.\n\t\tלאחר ההפעלה, המשתמשים יראו סמל „פעילות” חדש בתפריט היישומונים שלהם.\n\t\tלחיצה על הסמל, תוביל לעמוד חדש שיופיע בפני המשתמש לצורך מעקב אחר הפעילות שקשורה בקבצים - החל מיצירת קבצים חדשים, קבצים שנמחקו, העברות, שינויי שם, עדכונים ופעילות משותפת.\n\t\tכל משתמש יכול להגדיר את הפעילות העצמית בתפריט האישי שלו.\n\t\tדרך התפריט ניתן גם להגדיר את סוג הפעילות שתתועד לצד האם למשתמש תהיה אפשרות לראות את הפעילויות שלו עצמו,\n\t\tבין אם התיעוד הזה יהיה זמין באופן מקוון והאם תיעוד הפעילות יישלח כמקבץ בדוא״ל.\n\t\tניתן למצוא מידע נוסף בתיעוד של הפעילות.",
     "Activity notification configuration" : "הגדרת התראות פעילות",
     "Send email" : "שליחת דואר אלקטרוני",
     "Send push notification" : "שליחת הודעת פוש",
@@ -53,7 +51,6 @@
     "Activities" : "פעילויות",
     "No activities" : "אין פעילויות",
     "Default settings" : "הגדרות ברירת מחדל",
-    "Configure the default notification settings for new users." : "הגדרת תצורת ההתראות כבררת מחדל למשתמשים חדשים.",
     "Unable to save the settings" : "שמירת ההגדרות נכשלה",
     "Activity feed" : "דיווחי פעילות",
     "Activity settings" : "הגדרות פעילות",
@@ -62,9 +59,12 @@
     "Personal notification settings" : "הגדרות התראות אישיות",
     "No more events to load" : "אין אירועים נוספים לטעינה",
     "Activity notification for %s" : "התרעת פעילות עבור %s",
+    "This application enables users to view a log of activities about them or about files." : "יישום זה מאפשר למשתמשים לצפות בהיסטוריה של פעילויות הקשורות אליהם, או לקבצים.",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שבוצעו על הקבצים שלהם ב־Nextcloud.\n\t\tלאחר ההפעלה, המשתמשים יראו סמל „פעילות” חדש בתפריט היישומונים שלהם.\n\t\tלחיצה על הסמל, תוביל לעמוד חדש שיופיע בפני המשתמש לצורך מעקב אחר הפעילות שקשורה בקבצים - החל מיצירת קבצים חדשים, קבצים שנמחקו, העברות, שינויי שם, עדכונים ופעילות משותפת.\n\t\tכל משתמש יכול להגדיר את הפעילות העצמית בתפריט האישי שלו.\n\t\tדרך התפריט ניתן גם להגדיר את סוג הפעילות שתתועד לצד האם למשתמש תהיה אפשרות לראות את הפעילויות שלו עצמו,\n\t\tבין אם התיעוד הזה יהיה זמין באופן מקוון והאם תיעוד הפעילות יישלח כמקבץ בדוא״ל.\n\t\tניתן למצוא מידע נוסף בתיעוד של הפעילות.",
     "activities" : "פעילויות",
     "Configure the default notification settings." : "הגדרת התראה ברירת מחדל",
     "Send activity emails:" : "שליחת דוא\"ל אודות פעילות: ",
-    "Settings" : "הגדרות"
+    "Settings" : "הגדרות",
+    "Configure the default notification settings for new users." : "הגדרת תצורת ההתראות כבררת מחדל למשתמשים חדשים."
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;"
 }
