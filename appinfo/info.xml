@@ -6,7 +6,7 @@
 	<description>
 		This app allows people to see actions related to their files and data in Nextcloud.
 		Each person can configure their individual activity settings in the personal settings,
-		to choose which activity should be pushed to mobile phones, send via email
+		to choose which activity should be pushed to mobile phones, sent via email
 		or whether a daily summary is sent each morning.
 		More information is available in the Activity documentation.
 	</description>
