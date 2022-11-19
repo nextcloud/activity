@@ -33,8 +33,6 @@ OC.L10N.register(
     "Push" : "Transmitir",
     "Activity" : "Atividade",
     "Notifications" : "Notificações",
-    "This application enables users to view a log of activities about them or about files." : "Esta aplicação permite que os utilizadores visualizem um registo das atividades sobre eles ou sobre ficheiros.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Esta aplicação permite que os utilizadores visualizem ações relacionadas aos seus ficheiros na Nextcloud.\n\t\tDepois de ativado, os utilizadores poderão ver um novo ícone \"Atividade\" no menu de aplicações.\n\t\tQuando carregar, uma nova página aparece para os utilizadores poderem reverem a sua atividade relacionada aos arquivos - desde novos arquivos, arquivos apagados, mover, renomear, atualizações e atividades compartilhadas.\n\t\tO utilizador pode definir  as suas configurações individuais de atividade no seu menu pessoal.\n\t\tIsto define o tipo de atividade a ser registrada, bem como se o utilizador vê as suas próprias atividades,\n\t\tse estiver disponível apenas on-line e se recebem um resumo por e-mail frequentemente.\n\t\tMais informações estão disponíveis na documentação da Atividade.",
     "Activity notification configuration" : "Configuração de notificação de atividade",
     "Send email" : "Enviar e-mail",
     "Send push notification" : "Enviar notificação push",
@@ -55,7 +53,6 @@ OC.L10N.register(
     "Activities" : "Atividades",
     "No activities" : "Sem atividades",
     "Default settings" : "Definições predefinidas",
-    "Configure the default notification settings for new users." : "Configurar as predefinições das notificações para os novos utilizadores",
     "Unable to save the settings" : "Não foi possível salvar as configurações",
     "Activity feed" : "Actividade de feed",
     "Activity settings" : "Configurações de atividade",
@@ -64,9 +61,12 @@ OC.L10N.register(
     "Personal notification settings" : "Configurações de notificação pessoal",
     "No more events to load" : "Sem mais eventos para carregar",
     "Activity notification for %s" : "Notificação de atividade para %s",
+    "This application enables users to view a log of activities about them or about files." : "Esta aplicação permite que os utilizadores visualizem um registo das atividades sobre eles ou sobre ficheiros.",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Esta aplicação permite que os utilizadores visualizem ações relacionadas aos seus ficheiros na Nextcloud.\n\t\tDepois de ativado, os utilizadores poderão ver um novo ícone \"Atividade\" no menu de aplicações.\n\t\tQuando carregar, uma nova página aparece para os utilizadores poderem reverem a sua atividade relacionada aos arquivos - desde novos arquivos, arquivos apagados, mover, renomear, atualizações e atividades compartilhadas.\n\t\tO utilizador pode definir  as suas configurações individuais de atividade no seu menu pessoal.\n\t\tIsto define o tipo de atividade a ser registrada, bem como se o utilizador vê as suas próprias atividades,\n\t\tse estiver disponível apenas on-line e se recebem um resumo por e-mail frequentemente.\n\t\tMais informações estão disponíveis na documentação da Atividade.",
     "activities" : "atividades",
     "Configure the default notification settings." : "Defina as configurações de notificação padrão.",
     "Send activity emails:" : "E-mail de envio da atividade: ",
-    "Settings" : "Definições"
+    "Settings" : "Definições",
+    "Configure the default notification settings for new users." : "Configurar as predefinições das notificações para os novos utilizadores"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

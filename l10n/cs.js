@@ -33,8 +33,6 @@ OC.L10N.register(
     "Push" : "Služba push",
     "Activity" : "Aktivita",
     "Notifications" : "Upozorňování",
-    "This application enables users to view a log of activities about them or about files." : "Tato aplikace umožňuje uživatelům prohlížet záznamy aktivit vztahujících se k nim nebo k souborům.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Tato aplikace umožní uživatelům sledovat události související s jejich soubory v Nextcloudu.\n\t\tJakmile je tato aplikace povolená, zobrazí se v menu nová ikona „Aktivita“\n\t\tPo kliknutí na ikonu se zobrazí nová stránka. Na této stránce uživatelé uvidí veškeré aktivity týkající se jejich souborů  – např. přidání a smazání, přesun, přejmenování, aktualizace, či sdílení.\n\t\tUživatel může nakonfigurovat aplikaci podle individuálních potřeb v osobním nastavení\n\t\tZde může zvolit, které jednotlivé události chce sledovat, zda chce sledovat vlastní aktivitu, nebo zda chce dostávat e-maily o zmíněných aktivitách\n\t\tVíce informací je dostupných v dokumentaci aplikace „Aktivita“",
     "Activity notification configuration" : "Nastavení upozorňování ohledně aktivit",
     "Send email" : "Odeslat e-mail",
     "Send push notification" : "Odeslat push upozornění",
@@ -55,7 +53,6 @@ OC.L10N.register(
     "Activities" : "Aktivity",
     "No activities" : "Žádné aktivity",
     "Default settings" : "Výchozí nastavení",
-    "Configure the default notification settings for new users." : "Nastavte výchozí volby ohledně upozorňování pro nově vytvářené uživatele.",
     "Unable to save the settings" : "Nastavení se nedaří uložit",
     "Activity feed" : "Přehled aktivit",
     "Activity settings" : "Nastavení pro Aktivity",
@@ -64,9 +61,12 @@ OC.L10N.register(
     "Personal notification settings" : "Nastavení osobního upozorňování",
     "No more events to load" : "Žádné další události k načtení",
     "Activity notification for %s" : "Upozornění na aktivitu pro %s",
+    "This application enables users to view a log of activities about them or about files." : "Tato aplikace umožňuje uživatelům prohlížet záznamy aktivit vztahujících se k nim nebo k souborům.",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Tato aplikace umožní uživatelům sledovat události související s jejich soubory v Nextcloudu.\n\t\tJakmile je tato aplikace povolená, zobrazí se v menu nová ikona „Aktivita“\n\t\tPo kliknutí na ikonu se zobrazí nová stránka. Na této stránce uživatelé uvidí veškeré aktivity týkající se jejich souborů  – např. přidání a smazání, přesun, přejmenování, aktualizace, či sdílení.\n\t\tUživatel může nakonfigurovat aplikaci podle individuálních potřeb v osobním nastavení\n\t\tZde může zvolit, které jednotlivé události chce sledovat, zda chce sledovat vlastní aktivitu, nebo zda chce dostávat e-maily o zmíněných aktivitách\n\t\tVíce informací je dostupných v dokumentaci aplikace „Aktivita“",
     "activities" : "aktivity",
     "Configure the default notification settings." : "Nastavit výchozí nastavení upozorňování.",
     "Send activity emails:" : "Posílat e-maily o aktivitě:",
-    "Settings" : "Nastavení"
+    "Settings" : "Nastavení",
+    "Configure the default notification settings for new users." : "Nastavte výchozí volby ohledně upozorňování pro nově vytvářené uživatele."
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
