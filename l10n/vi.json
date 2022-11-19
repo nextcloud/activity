@@ -30,8 +30,6 @@
     "Push" : "Đẩy",
     "Activity" : "Hoạt động",
     "Notifications" : "Thông báo",
-    "This application enables users to view a log of activities about them or about files." : "Ứng dụng này cho phép những người dùng xem nhật ký các hoạt động về họ hoặc về các tệp.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ứng dụng này cho phép người dùng xem các hành động liên quan để dữ liệu của họ trên Hệ thống\n\t\tKhi cho phép, người dùng sẽ thấy một biểu tượng mới \"Hoạt động\" trong Danh mục ứng dụng của họ\n\t\tKhi nhấp vào, một trang mới sẽ cho phép người dùng theo dõi các thực hiện liên quan đến dữ liệu - từ tạo file, xóa file, di chuyển, đổi tên, tải lên và thực hiện chia sẽ.\n\t\tNgười dùng có thể cấu hình cài đặt hoạt động trong menu cá nhân của họ.\n\t\tĐiều này thiết đặt các loại hoạt động cần ghi lại, cũng như liệu người dùng có thấy hoạt động của riêng họ hay không,\n\t\tcho dù những điều này chỉ có sẵn trực tuyến và liệu chúng có nhận được email thông báo một cách thường xuyên hay không.\n\t\tĐể có thêm thông tin hãy vào mục tài liệu Hoạt động.",
     "Send email" : "Gửi email",
     "You need to set up your email address before you can receive notification emails." : "Bạn cần phải thiết lập địa chỉ email trước khi nhận được email thông báo.",
     "Send activity emails" : "Gửi các thư báo tình hoạt hoạt động",
@@ -50,15 +48,17 @@
     "Activities" : "Hoạt động",
     "No activities" : "Không có hoạt động",
     "Default settings" : "Cài đặt mặc định",
-    "Configure the default notification settings for new users." : "Thiết lập cài đặt thông báo mặc định cho những người dùng mới.",
     "Activity feed" : "Nguồn cấp dữ liệu hoạt động",
     "Enable RSS feed" : "Bật nguồn cấp dữ liệu RSS",
     "RSS feed" : "Nội dung RSS",
     "Personal notification settings" : "Cài đặt thông báo cá nhân",
     "No more events to load" : "Không có sự kiện nào",
     "Activity notification for %s" : "Thông báo hoạt động của %s",
+    "This application enables users to view a log of activities about them or about files." : "Ứng dụng này cho phép những người dùng xem nhật ký các hoạt động về họ hoặc về các tệp.",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ứng dụng này cho phép người dùng xem các hành động liên quan để dữ liệu của họ trên Hệ thống\n\t\tKhi cho phép, người dùng sẽ thấy một biểu tượng mới \"Hoạt động\" trong Danh mục ứng dụng của họ\n\t\tKhi nhấp vào, một trang mới sẽ cho phép người dùng theo dõi các thực hiện liên quan đến dữ liệu - từ tạo file, xóa file, di chuyển, đổi tên, tải lên và thực hiện chia sẽ.\n\t\tNgười dùng có thể cấu hình cài đặt hoạt động trong menu cá nhân của họ.\n\t\tĐiều này thiết đặt các loại hoạt động cần ghi lại, cũng như liệu người dùng có thấy hoạt động của riêng họ hay không,\n\t\tcho dù những điều này chỉ có sẵn trực tuyến và liệu chúng có nhận được email thông báo một cách thường xuyên hay không.\n\t\tĐể có thêm thông tin hãy vào mục tài liệu Hoạt động.",
     "activities" : "Các hoạt động",
     "Send activity emails:" : "Gửi email thông báo các hoạt động:",
-    "Settings" : "Các cài đặt"
+    "Settings" : "Các cài đặt",
+    "Configure the default notification settings for new users." : "Thiết lập cài đặt thông báo mặc định cho những người dùng mới."
 },"pluralForm" :"nplurals=1; plural=0;"
 }

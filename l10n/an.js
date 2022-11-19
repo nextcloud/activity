@@ -32,8 +32,6 @@ OC.L10N.register(
     "Push" : "Empentar",
     "Activity" : "Actividat",
     "Notifications" : "Notificazions",
-    "This application enables users to view a log of activities about them or about files." : "Ista aplicazión permite a los usuarios veyer un rechistro d'actividat sobre els u sobre fichers.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ista aplicazión permite a los usuarios veyer as azions relazionadas con os suyos fichers en Nextcloud.\n\t\tUna vez activada, os usuarios veyerán un nuevo icono \"Actividat\" en o suyo menú d'aplicazions.\n\t\tEn fer clic en él, apareixe una nueva pachina pa que os usuarios puedan seguir l'actividat relazionada con os fichers, dende os nuevos dica os eliminaus, pasando por os movimientos, os cambios de nombre, as autualizazions y l'actividat compartida.\n\t\tL'usuario puede configurar a suya actividat individual en o suyo menú personal.\n\t\tIsto estableix o tipo d'actividat a cuaternar, asinas como si l'usuario veye as suyas propias actividat,\n\t\tsi istas nomás son disponibles en linia, y si reziben un resumen por correu electronico de forma regular.\n\t\tPa más informazión, consulte a documentazión sobre as actividat.",
     "Activity notification configuration" : "Configurazión d'as notificazions d'actividat",
     "Send email" : "Inviar correu electronico",
     "Send push notification" : "Inviar notificazión push",
@@ -54,7 +52,6 @@ OC.L10N.register(
     "Activities" : "Actividat",
     "No activities" : "No i hai actividat",
     "Default settings" : "Configurazión per defeuto",
-    "Configure the default notification settings for new users." : "Configure os achustes de notificazión por defeuto pa los nuevos usuarios.",
     "Unable to save the settings" : "No se puede alzar a configurazión",
     "Activity feed" : "Fuen d'actividat",
     "Activity settings" : "Configurazión de l'actividat",
@@ -63,9 +60,12 @@ OC.L10N.register(
     "Personal notification settings" : "Configurazión d'as notificazions personals",
     "No more events to load" : "No i hai más eventos que cargar",
     "Activity notification for %s" : "Notificazión d'actividat para %s",
+    "This application enables users to view a log of activities about them or about files." : "Ista aplicazión permite a los usuarios veyer un rechistro d'actividat sobre els u sobre fichers.",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ista aplicazión permite a los usuarios veyer as azions relazionadas con os suyos fichers en Nextcloud.\n\t\tUna vez activada, os usuarios veyerán un nuevo icono \"Actividat\" en o suyo menú d'aplicazions.\n\t\tEn fer clic en él, apareixe una nueva pachina pa que os usuarios puedan seguir l'actividat relazionada con os fichers, dende os nuevos dica os eliminaus, pasando por os movimientos, os cambios de nombre, as autualizazions y l'actividat compartida.\n\t\tL'usuario puede configurar a suya actividat individual en o suyo menú personal.\n\t\tIsto estableix o tipo d'actividat a cuaternar, asinas como si l'usuario veye as suyas propias actividat,\n\t\tsi istas nomás son disponibles en linia, y si reziben un resumen por correu electronico de forma regular.\n\t\tPa más informazión, consulte a documentazión sobre as actividat.",
     "activities" : "Actividat",
     "Configure the default notification settings." : "Configurar os achustes de notificazión por defeuto.",
     "Send activity emails:" : "Inviar correus electronicos d'actividat:",
-    "Settings" : "Configurazión"
+    "Settings" : "Configurazión",
+    "Configure the default notification settings for new users." : "Configure os achustes de notificazión por defeuto pa los nuevos usuarios."
 },
 "nplurals=2; plural=(n != 1);");
