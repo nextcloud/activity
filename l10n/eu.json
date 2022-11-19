@@ -31,8 +31,6 @@
     "Push" : "Sakatu",
     "Activity" : "Jarduera",
     "Notifications" : "Jakinarazpenak",
-    "This application enables users to view a log of activities about them or about files." : "Aplikazio honek aukera ematen die erabiltzaileei beraiei edo fitxategiei buruzko jardueren egunkariak ikusteko.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Aplikazio honek erabiltzaileari  Nextcloud honetan dauzkan fitxategietan egindako ekintzak ikusteko aukera ematen dio.\n\t\tGaituz gero, erabiltzaileek \"Jarduera\" dioen ikono berri bat ikusiko dute beren aplikazioaren menuetan.\n\t\tKlik egiterakoan, orri berri bat agertuko da erabiltzaileek beren fitxategietan egindako aldaketa guztien jarraipena egin dezaten – fitxategi sortu berriak, ezabaketak, leku-aldatzeak, berrizendatzeak, eguneratzeak eta partekatzeak.\n\t\tErabiltzaileek haien jarduera ezarpenak konfiguratu ditzakete menu pertsonalean.\n\t\tHonek, gordeko den jarduera mota zehaztuko du, eta baita ere erabiltzaileak nola ikusiko dituen jarduera propioak:\n\t\tsarean bakarrik egongo diren eskuragarri, eta bestalde ea tarteka posta elektronikoz laburpen mezu bat jaso nahiko duen.\n\t\tInformazio gehiago dago eskuragarri Jarduera (Activity) aplikazioaren dokumentazio biltegian.",
     "Activity notification configuration" : "Jardueren jakinarazpenen konfigurazioa",
     "Send email" : "Bidali posta-mezua",
     "Send push notification" : "Bidali push jakinarazpena",
@@ -53,7 +51,6 @@
     "Activities" : "Jarduerak",
     "No activities" : "Ez da jarduerarik",
     "Default settings" : "Lehenetsitako ezarpenak",
-    "Configure the default notification settings for new users." : "Konfiguratu jakinarazpenen ezarpen lehenetsiak erabiltzaile berrientzat",
     "Unable to save the settings" : "Ezin izan dira ezarpenak gorde",
     "Activity feed" : "Jardueren jarioa",
     "Activity settings" : "Jardueraren ezarpenak",
@@ -62,9 +59,12 @@
     "Personal notification settings" : "Jakinarazpen pertsonalen ezarpenak",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
     "Activity notification for %s" : "Jarduera jakinarazpena honetarako: %s",
+    "This application enables users to view a log of activities about them or about files." : "Aplikazio honek aukera ematen die erabiltzaileei beraiei edo fitxategiei buruzko jardueren egunkariak ikusteko.",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Aplikazio honek erabiltzaileari  Nextcloud honetan dauzkan fitxategietan egindako ekintzak ikusteko aukera ematen dio.\n\t\tGaituz gero, erabiltzaileek \"Jarduera\" dioen ikono berri bat ikusiko dute beren aplikazioaren menuetan.\n\t\tKlik egiterakoan, orri berri bat agertuko da erabiltzaileek beren fitxategietan egindako aldaketa guztien jarraipena egin dezaten – fitxategi sortu berriak, ezabaketak, leku-aldatzeak, berrizendatzeak, eguneratzeak eta partekatzeak.\n\t\tErabiltzaileek haien jarduera ezarpenak konfiguratu ditzakete menu pertsonalean.\n\t\tHonek, gordeko den jarduera mota zehaztuko du, eta baita ere erabiltzaileak nola ikusiko dituen jarduera propioak:\n\t\tsarean bakarrik egongo diren eskuragarri, eta bestalde ea tarteka posta elektronikoz laburpen mezu bat jaso nahiko duen.\n\t\tInformazio gehiago dago eskuragarri Jarduera (Activity) aplikazioaren dokumentazio biltegian.",
     "activities" : "Jarduerak",
     "Configure the default notification settings." : "Konfiguratu jakinarazpen-ezarpen lehenetsiak.",
     "Send activity emails:" : "Bidali jarduera e-postak:",
-    "Settings" : "Ezarpenak"
+    "Settings" : "Ezarpenak",
+    "Configure the default notification settings for new users." : "Konfiguratu jakinarazpenen ezarpen lehenetsiak erabiltzaile berrientzat"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

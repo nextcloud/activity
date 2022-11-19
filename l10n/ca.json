@@ -31,8 +31,6 @@
     "Push" : "Notificació automàtica",
     "Activity" : "Activitat",
     "Notifications" : "Notificacions",
-    "This application enables users to view a log of activities about them or about files." : "Aquesta aplicació permet als usuaris veure un registre de la seva activitat o la dels fitxers.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Aquesta aplicació permet als usuaris veure les accions relacionades amb els seus fitxers al Nextcloud.\n\t\tUn cop habilitada, els usuaris veuran una nova icona anomenada «Activitat» al menú d'aplicacions.\n\t\tEn fer-hi clic, apareixerà una nova pàgina perquè els usuaris facin un seguiment de l'activitat relacionada amb els fitxers: fitxers nous, fitxers suprimits, canvis d'ubicació, canvis de nom, actualitzacions i activitat compartida.\n\t\tL'usuari pot definir els seus paràmetres d'activitat individuals en el seu menú personal.\n\t\tAixò defineix el tipus d'activitat que es registrarà i si l'usuari podrà veure la seva pròpia activitat,\n\t\tsi només estarà disponible en línia o si rebrà un resum per correu electrònic periòdicament.\n\t\tPer a obtenir més informació, consulteu la documentació de l'aplicació Activitat.",
     "Activity notification configuration" : "Configuració de les notificacions d'activitat",
     "Send email" : "Envia un correu electrònic",
     "Send push notification" : "Envia una notificació automàtica",
@@ -53,7 +51,6 @@
     "Activities" : "Activitat",
     "No activities" : "No hi ha cap activitat",
     "Default settings" : "Paràmetres per defecte",
-    "Configure the default notification settings for new users." : "Configureu els paràmetres de notificació per defecte per als usuaris nous.",
     "Unable to save the settings" : "No s'han pogut desar els paràmetres",
     "Activity feed" : "Canal d'activitat",
     "Activity settings" : "Paràmetres de l'activitat",
@@ -62,9 +59,12 @@
     "Personal notification settings" : "Paràmetres de les notificacions personals",
     "No more events to load" : "No hi ha més esdeveniments",
     "Activity notification for %s" : "Notificació d'activitat per a %s",
+    "This application enables users to view a log of activities about them or about files." : "Aquesta aplicació permet als usuaris veure un registre de la seva activitat o la dels fitxers.",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Aquesta aplicació permet als usuaris veure les accions relacionades amb els seus fitxers al Nextcloud.\n\t\tUn cop habilitada, els usuaris veuran una nova icona anomenada «Activitat» al menú d'aplicacions.\n\t\tEn fer-hi clic, apareixerà una nova pàgina perquè els usuaris facin un seguiment de l'activitat relacionada amb els fitxers: fitxers nous, fitxers suprimits, canvis d'ubicació, canvis de nom, actualitzacions i activitat compartida.\n\t\tL'usuari pot definir els seus paràmetres d'activitat individuals en el seu menú personal.\n\t\tAixò defineix el tipus d'activitat que es registrarà i si l'usuari podrà veure la seva pròpia activitat,\n\t\tsi només estarà disponible en línia o si rebrà un resum per correu electrònic periòdicament.\n\t\tPer a obtenir més informació, consulteu la documentació de l'aplicació Activitat.",
     "activities" : "activitats",
     "Configure the default notification settings." : "Configureu els paràmetres de notificació per defecte.",
     "Send activity emails:" : "Envia missatges de correu sobre l'activitat:",
-    "Settings" : "Paràmetres"
+    "Settings" : "Paràmetres",
+    "Configure the default notification settings for new users." : "Configureu els paràmetres de notificació per defecte per als usuaris nous."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
