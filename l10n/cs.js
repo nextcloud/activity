@@ -34,6 +34,7 @@ OC.L10N.register(
     "Activity" : "Aktivita",
     "Notifications" : "Upozorňování",
     "This application enables people to view a log of activities about them, their files or other data." : "Tato aplikace umožňuje lidem prohlížet záznamy aktivit vztahujících se k nim, jejich souborům a dalším datům.",
+    "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Tato aplikace lidem umožňuje zobrazit si akce související s jejich soubory a daty v Nextcloud.\n\t\tKaždá osoba si může nastavit svá vlastní nastavení ohledně aktivit v osobních nastaveních,\n\t\tzvolit si, které aktivity posílat na mobilní telefony, posílat e-mailem\n\t\tnebo zda každé ráno posílat denní přehled.\n\t\tDalší informace jsou k dispozici v dokumentaci k Aktivitám.",
     "Activity notification configuration" : "Nastavení upozorňování ohledně aktivit",
     "Send email" : "Odeslat e-mail",
     "Send push notification" : "Odeslat push upozornění",
