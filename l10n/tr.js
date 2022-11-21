@@ -34,6 +34,7 @@ OC.L10N.register(
     "Activity" : "İşlem",
     "Notifications" : "Bildirimler",
     "This application enables people to view a log of activities about them, their files or other data." : "Bu uygulama, kişilerin dosyaları ve diğer verileri üzerinde yapılan işlemlerin günlük kaydını görebilmesini sağlar.",
+    "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Bu uygulama, kişilerin Nextcloud üzerindeki dosyaları ve verileriyle ilgili işlemleri görmelerini sağlar.\n\t\tHer kişi kişisel ayarlarından, hangi işlemin cep telefonu iletisi olarak,\n\t\te-posta iletisi olarak ya da her sabah günlük özet olarak gönderileceğini\n\t\tseçerek yapılandırabilir.\n\t\tAyrıntılı bilgi almak için işlem belgelerine bakabilirsiniz.",
     "Activity notification configuration" : "İşlem bildirimi yapılandırması",
     "Send email" : "E-posta gönder",
     "Send push notification" : "Anında bildirim gönder",
