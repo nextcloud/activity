@@ -53,6 +53,7 @@ OC.L10N.register(
     "Activities" : "Aktiviteter",
     "No activities" : "Inga händelser",
     "Default settings" : "Förvalda inställningar",
+    "Configure the default notification settings for new accounts." : "Konfigurera standardinställningar av notifieringar för nya konton.",
     "Unable to save the settings" : "Kunde inte spara inställningarna",
     "Activity feed" : "Aktivitetsflöde",
     "Activity settings" : "Aktivitetsinställningar",
