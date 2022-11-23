@@ -31,8 +31,7 @@ use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCP\Activity\IManager;
-use OCP\Files\Config\ICachedMountFileInfo;
-use OCP\Files\Config\ICachedMountInfo;
+use OCP\Constants;
 use OCP\Files\Config\IUserMountCache;
 use OCP\Files\IRootFolder;
 use OCP\Files\Mount\IMountPoint;
@@ -233,20 +232,15 @@ class FilesHooks {
 			$this->generateRemoteActivity($accessList['remotes'], $activityType, time(), $this->currentUser->getCloudId(), $accessList['ownerPath']);
 		}
 
+		$affectedUsers = $accessList['users'];
+
+		// file can be shared using GroupFolders, including ACL check
 		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
-			$mountsForFile = $this->userMountCache->getMountsForFileId($fileId);
-			$affectedUserIds = array_map(function (ICachedMountInfo $mount) {
-				return $mount->getUser()->getUID();
-			}, $mountsForFile);
-			$affectedPaths = array_map(function (ICachedMountFileInfo $mount) {
-				return $this->getVisiblePath($mount->getPath());
-			}, $mountsForFile);
-			$affectedUsers = array_combine($affectedUserIds, $affectedPaths);
-		} else {
-			$affectedUsers = $accessList['users'];
+			$affectedUsers = array_merge($affectedUsers, $this->getAffectedUsersFromCachedMounts($fileId));
 		}
 
-		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers));
+		[$filteredEmailUsers, $filteredNotificationUsers] =
+			$this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers));
 
 		foreach ($affectedUsers as $user => $path) {
 			$user = (string)$user;
@@ -1218,5 +1212,168 @@ class FilesHooks {
 			$this->notificationGenerator->flushNotifications();
 		}
 		$this->connection->commit();
+	}
+
+
+	/**
+	 * @param int $fileId
+	 *
+	 * @return array
+	 */
+	private function getAffectedUsersFromCachedMounts(int $fileId): array {
+		$affectedUsers = $cachedMounts = [];
+		$mountsForFile = $this->userMountCache->getMountsForFileId($fileId);
+		foreach ($mountsForFile as $mount) {
+			$affectedUsers[$mount->getUser()->getUID()] = $this->getVisiblePath($mount->getPath());
+			$cachedMounts[] = [
+				'userId' => $mount->getUser()->getUID(),
+				'provider' => str_replace('\\\\', '\\', $mount->getMountProvider()),
+				'path' => $mount->getPath(),
+				'visiblePath' => $this->getVisiblePath($mount->getPath()),
+				'storageId' => $mount->getStorageId()
+			];
+		}
+
+		$unrelatedUsers = $this->getUnrelatedUsers($fileId, $cachedMounts);
+
+		return array_filter($affectedUsers, function ($userId) use ($unrelatedUsers): bool {
+			return !in_array($userId, $unrelatedUsers);
+		}, ARRAY_FILTER_USE_KEY);
+	}
+
+
+	/**
+	 * returns an array of users that have confirmed no access to fileId
+	 *
+	 * @param int $fileId
+	 * @param array $cachedMounts
+	 *
+	 * @return string[] list of unrelated userIds
+	 */
+	private function getUnrelatedUsers(int $fileId, array $cachedMounts): array {
+		/** @var \OCA\GroupFolders\ACL\RuleManager $ruleManager */
+		/** @var \OCA\GroupFolders\Folder\FolderManager $folderManager */
+		try {
+			$ruleManager = \OC::$server->get(\OCA\GroupFolders\ACL\RuleManager::class);
+			$folderManager = \OC::$server->get(\OCA\GroupFolders\Folder\FolderManager::class);
+		} catch (\Exception $e) {
+			return []; // if we have no access to RuleManager, we cannot filter unrelated users
+		}
+
+		/** @var \OCA\GroupFolders\ACL\Rule[] $rules */
+		$rules = $knownRules = $knownGroupRules = $usersToCheck = $cachedPath = [];
+		foreach ($cachedMounts as $cachedMount) {
+			// we are only interested in filtering GroupFolders ACL
+			if ($cachedMount['provider'] !== 'OCA\GroupFolders\Mount\MountProvider') {
+				continue;
+			}
+
+			// caching rules based on storage id
+			$storageId = $cachedMount['storageId'];
+			if (!array_key_exists($storageId, $knownRules)) {
+				$knownRules[$storageId] = [];
+			}
+
+			$cachedPath[$cachedMount['userId']] = $fullPath = $cachedMount['path'];
+
+			// caching rules based on storage+path to file
+			if (!array_key_exists($cachedMount['visiblePath'], $knownRules[$storageId])) {
+				// we need mountPoint and folderId to generate the correct path
+				try {
+					$node = $this->rootFolder->get($fullPath);
+					$mountPoint = $node->getMountPoint();
+
+					if (!$mountPoint instanceof \OCA\GroupFolders\Mount\GroupMountPoint
+						|| !$folderManager->getFolderAclEnabled($mountPoint->getFolderId())) {
+						continue; // acl are disable
+					}
+
+					$folderPath = $mountPoint->getSourcePath();
+					$path = substr($fullPath, strlen($mountPoint->getMountPoint()));
+				} catch (\Exception $e) {
+					// in case of issue during the process, we can imagine the user have no access to the file
+					$usersToCheck[] = $cachedMount['userId'];
+					continue; // we'll catch rules on next user with access to the file
+				}
+
+				// we generate a list of path from top level of group folder to the file itself to get all rules
+				$paths = [$folderPath];
+				while ($path !== '') {
+					$paths[] = $folderPath . '/' . $path;
+					$path = dirname($path);
+					if ($path === '.' || $path === '/') {
+						$path = '';
+					}
+				}
+
+				// we might already know the rules for some path of the list
+				$paths = array_filter($paths, function (string $path) use ($knownRules, $storageId): bool {
+					if (array_key_exists($path, $knownRules[$storageId])) {
+						return false;
+					}
+
+					return true;
+				});
+
+				// we get and store the rules for each path from the list
+				$rulesPerPath = $ruleManager->getAllRulesForPaths($storageId, $paths);
+				foreach (array_keys($rulesPerPath) as $path) {
+					$rules = array_merge($rules, $rulesPerPath[$path]);
+				}
+
+				$knownRules[$storageId][$cachedMount['visiblePath']] = true;
+			}
+		}
+
+		// using each rules that disable read permission to generate a list of users
+		// that might not have access to fileId
+		foreach ($rules as $rule) {
+			if (($rule->getMask() & Constants::PERMISSION_READ) === 0
+				|| ($rule->getPermissions() & Constants::PERMISSION_READ) !== 0) {
+				continue; // not interested of rules with 'mask' not including read capability (1), or if 'permission' does
+			}
+
+			$mapping = $rule->getUserMapping();
+			$id = $mapping->getId();
+
+			// if mapping is about user
+			if ($mapping->getType() === 'user' && !in_array($id, $usersToCheck)) {
+				$usersToCheck[] = $id;
+			}
+
+			// if mapping is about group
+			if ($mapping->getType() === 'group'
+				&& !in_array($mapping->getId(), $knownGroupRules)) {
+				$knownGroupRules[] = $mapping->getId();
+
+				$group = $this->groupManager->get($id);
+				if ($group === null) {
+					continue;
+				}
+				$userIds = array_map(function (IUser $user): string {
+					return $user->getUID();
+				}, $group->getUsers());
+
+				// merge current user list with members of the group
+				$usersToCheck = array_values(array_unique(array_merge($usersToCheck, $userIds)));
+			}
+		}
+
+
+		// now that we have a list of eventuals filtered users, we confirm they have no access to the file
+		$filteredUsers = [];
+		foreach ($usersToCheck as $userId) {
+			try {
+				$node = $this->rootFolder->get($cachedPath[$userId]);
+				if ($node->isReadable()) {
+					continue; // overkill ? as rootFolder->get() would throw an exception if file is not available
+				}
+			} catch (\Exception $e) {
+			}
+
+			$filteredUsers[] = $userId;
+		}
+
+		return $filteredUsers;
 	}
 }

@@ -40,6 +40,8 @@
 				<referencedClass name="OC\Files\View" />
 				<referencedClass name="OC\TagManager" />
 				<referencedClass name="OC\Hooks\Emitter" />
+				<referencedClass name="OCA\GroupFolders\ACL\RuleManager" />
+				<referencedClass name="OCA\GroupFolders\Folder\FolderManager" />
 			</errorLevel>
 		</UndefinedDocblockClass>
 	</issueHandlers>
