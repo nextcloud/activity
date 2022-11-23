@@ -53,6 +53,7 @@ OC.L10N.register(
     "Activities" : "Activités",
     "No activities" : "Aucune activité",
     "Default settings" : "Paramètres par défaut",
+    "Configure the default notification settings for new accounts." : "Configurer les paramètres de notification par défaut pour les nouveaux comptes.",
     "Unable to save the settings" : "Échec de l'enregistrement des paramètres",
     "Activity feed" : "Fil d'activité",
     "Activity settings" : "Paramètres des activités",

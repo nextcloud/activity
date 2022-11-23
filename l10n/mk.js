@@ -53,6 +53,7 @@ OC.L10N.register(
     "Activities" : "Активности",
     "No activities" : "Нема активности",
     "Default settings" : "Стандардни поставки",
+    "Configure the default notification settings for new accounts." : "Конфигурирај ги стандардните поставки за известување за нови корисници.",
     "Unable to save the settings" : "Неуспешно зачувување на параметрите",
     "Activity feed" : "Канал на активности",
     "Activity settings" : "Праметри за активности",
