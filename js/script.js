@@ -22,6 +22,7 @@ $(function(){
 
 	OCA.Activity.Filter = {
 		filter: undefined,
+		defaultPageTitle: undefined,
 		$navigation: $('#app-navigation'),
 
 
@@ -38,6 +39,10 @@ $(function(){
 				return;
 			}
 
+			if (!this.defaultPageTitle) {
+				this.defaultPageTitle = window.document.title
+			}
+
 			this.$navigation.find('a[data-navigation=' + this.filter + ']').parent().removeClass('active').removeAttr('aria-current');
 			OCA.Activity.InfinitScrolling.firstKnownId = 0;
 			OCA.Activity.InfinitScrolling.lastGivenId = 0;
@@ -51,7 +56,9 @@ $(function(){
 			$('#loading_activities').removeClass('hidden');
 			OCA.Activity.InfinitScrolling.ignoreScroll = 0;
 
-			this.$navigation.find('a[data-navigation=' + filter + ']').parent().addClass('active').attr('aria-current', 'page');
+			var navigationLink = this.$navigation.find('a[data-navigation=' + filter + ']');
+			navigationLink.parent().addClass('active').attr('aria-current', 'page');
+			window.document.title = navigationLink.text().trim() + ' - ' + this.defaultPageTitle;
 
 			OCA.Activity.InfinitScrolling.prefill();
 		}
