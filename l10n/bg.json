@@ -32,6 +32,7 @@
     "Activity" : "Активност",
     "Notifications" : "Известия",
     "This application enables people to view a log of activities about them, their files or other data." : "Това приложение позволява на хората да преглеждат журнал на активности, свързани с тях, техните файлове или други данни.",
+    "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Това приложение позволява на хората да виждат действия, свързани с техните файлове и данни в Nextcloud.\n\t\tВсеки човек може да конфигурира индивидуални настройки на дейностите си в личните настройки,\n\t\tда избере кои дейности да се изпращат на мобилни телефони, като изпращането е по имейл\n\t\tили дали всяка сутрин да се изпраща дневно обобщение.\n\t\tПовече информация е налична в документацията за дейността.",
     "Activity notification configuration" : "Конфигурация на известие за активност",
     "Send email" : "Изпращане на имейл",
     "Send push notification" : "Изпращане на push известие",
