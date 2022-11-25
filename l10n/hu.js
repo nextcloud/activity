@@ -34,6 +34,7 @@ OC.L10N.register(
     "Activity" : "Tevékenység",
     "Notifications" : "Értesítések",
     "This application enables people to view a log of activities about them, their files or other data." : "Ez az alkalmazás lehetővé teszi az emberek számára, hogy megtekinthessék a saját magukról, a fájljaikról vagy a más adataikról szóló tevékenységnaplót.",
+    "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Az alkalmazás lehetővé teszi, hogy emberek lássák a fájljaikra és adataikra vonatkozó műveleteket a Nextcloudban.\n\t\tMindenki beállítja az egyéni tevékenységbeállításait a személyes beállításokban,\n\t\tkiválaszthatja, hogy megy tevékenységek legyenek mobilra leküldve, levélben elküldve,\n\t\tvagy a napi összefoglalóba téve minden reggel.\nTovábbi információk érhetők el a Tevékenységek dokumentációjában.",
     "Activity notification configuration" : "Alkalmazásértesítési beállítások",
     "Send email" : "E-mail küldése",
     "Send push notification" : "Leküldéses értesítés küldése",
