@@ -33,6 +33,7 @@ OC.L10N.register(
     "Push" : "Push",
     "Activity" : "Activité",
     "Notifications" : "Notifications",
+    "This application enables people to view a log of activities about them, their files or other data." : "Cette application permet aux utilisateurs de visualiser leur journal d'activités, leurs fichiers ou d'autres données.",
     "Activity notification configuration" : "Configuration des notifications d'activité",
     "Send email" : "Envoyer un e-mail",
     "Send push notification" : "Envoyer des notifications push",
