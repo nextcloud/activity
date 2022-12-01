@@ -33,6 +33,7 @@ OC.L10N.register(
     "Push" : "Пуш",
     "Activity" : "Активност",
     "Notifications" : "Известувања",
+    "This application enables people to view a log of activities about them, their files or other data." : "Оваа апликација им овозможува на корисниците да ги прегледаат записите од промените, нивните датотеки или на други податоци.",
     "Activity notification configuration" : "Параметри за известување и активност",
     "Send email" : "Испрати е-пошта",
     "Send push notification" : "Испрати PUSH известување",
