@@ -31,7 +31,7 @@
     "Push" : "Push",
     "Activity" : "Activité",
     "Notifications" : "Notifications",
-    "This application enables people to view a log of activities about them, their files or other data." : "Cette application permet aux utilisateurs de visualiser leur journal d'activités, leurs fichiers ou d'autres données.",
+    "This application enables people to view a log of activities about them, their files or other data." : "Cette application permet aux personnes de visualiser un journal des activités les concernant, leurs fichiers ou d'autres données.",
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Cette application permet aux utilisateurs de visualiser les actions relatives à leurs fichiers et données dans Nextcloud.\n\t\tChaque personne peut configurer ses options d'activité individuelle dans les paramètres personnels,\n\t\tpour choisir quelles activités devraient être poussées vers les téléphones mobiles, envoyées par e-mail,\n\t\tou si un résumé quotidien est envoyé chaque matin.\n\t\tPlus d'informations sont accessibles dans la documentation d'Activité.",
     "Activity notification configuration" : "Configuration des notifications d'activité",
     "Send email" : "Envoyer un e-mail",
