@@ -32,6 +32,9 @@ use OCP\EventDispatcher\IEventListener;
 use OCP\IUser;
 use OCP\User\Events\UserDeletedEvent;
 
+/**
+ * @template-implements IEventListener<Event>
+ */
 class UserDeleted implements IEventListener {
 	/** @var Data */
 	private $data;

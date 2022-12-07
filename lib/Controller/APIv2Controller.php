@@ -340,7 +340,7 @@ class APIv2Controller extends OCSController {
 			'mimeType' => 'application/octet-stream',
 			'isMimeTypeIcon' => true,
 			'fileId' => $fileId,
-			'view' => $info['view'] ?: 'files',
+			'view' => 'files',
 			'filename' => basename($filePath),
 		];
 
