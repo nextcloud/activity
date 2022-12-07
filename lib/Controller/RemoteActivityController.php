@@ -36,7 +36,6 @@ use OCP\IUser;
 use OCP\IUserManager;
 
 class RemoteActivityController extends OCSController {
-
 	/** @var IDBConnection */
 	protected $db;
 

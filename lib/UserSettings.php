@@ -107,14 +107,14 @@ class UserSettings {
 			return (bool) $this->config->getAppValue(
 				'activity',
 				'notify_' . $method . '_' . $type,
-				$defaultSetting
+				(string) $defaultSetting
 			);
 		}
 
 		return (int) $this->config->getAppValue(
 			'activity',
 			'notify_' . $method . '_' . $type,
-			$defaultSetting
+			(string) $defaultSetting
 		);
 	}
 
@@ -209,7 +209,7 @@ class UserSettings {
 	 *               Returns a "username => i:batchtime" Map for method = email
 	 */
 	public function filterUsersBySetting($users, $method, $type) {
-		if (empty($users) || !is_array($users)) {
+		if (empty($users)) {
 			return [];
 		}
 

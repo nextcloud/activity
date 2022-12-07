@@ -31,6 +31,9 @@ use OCP\IConfig;
 use OCP\IUser;
 use OCP\User\Events\PostLoginEvent;
 
+/**
+ * @template-implements IEventListener<Event>
+ */
 class SetUserDefaults implements IEventListener {
 	/** @var IConfig */
 	private $config;

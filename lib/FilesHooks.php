@@ -1156,7 +1156,7 @@ class FilesHooks {
 	 * @param int $fileId
 	 * @param string $path
 	 * @param bool $isFile If the item is a file, we link to the parent directory
-	 * @param int|bool $emailSetting
+	 * @param int|false $emailSetting
 	 * @param bool $notificationSetting
 	 * @param string $type
 	 */

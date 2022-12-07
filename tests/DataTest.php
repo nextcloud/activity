@@ -235,7 +235,7 @@ class DataTest extends TestCase {
 //					[$timestampWhere],
 //					[str_replace('{id}', $id, $idWhere)]
 //				)
-				;
+			;
 		} else {
 			$mock->expects($this->never())
 				->method('andWhere');

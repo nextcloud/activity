@@ -32,7 +32,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 class ActivitiesController extends Controller {
-
 	/** @var IConfig */
 	protected $config;
 

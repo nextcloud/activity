@@ -29,7 +29,6 @@ use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
 
 class CurrentUser {
-
 	/** @var IUserSession */
 	protected $userSession;
 	/** @var IRequest */

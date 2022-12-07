@@ -27,7 +27,6 @@ use OCP\Activity\IEvent;
 use OCP\Activity\IProvider;
 
 class Provider implements IProvider {
-
 	/**
 	 * @param string $language The language which should be used for translating, e.g. "en"
 	 * @param IEvent $event The current event which should be parsed

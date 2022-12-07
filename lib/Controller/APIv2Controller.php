@@ -43,7 +43,6 @@ use OCP\IUser;
 use OCP\IUserSession;
 
 class APIv2Controller extends OCSController {
-
 	/** @var string */
 	protected $filter;
 
@@ -340,7 +339,7 @@ class APIv2Controller extends OCSController {
 			'mimeType' => 'application/octet-stream',
 			'isMimeTypeIcon' => true,
 			'fileId' => $fileId,
-			'view' => $info['view'] ?: 'files',
+			'view' => 'files',
 			'filename' => basename($filePath),
 		];
 

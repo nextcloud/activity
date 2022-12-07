@@ -32,7 +32,6 @@ use OCA\Activity\MailQueueHandler;
  * @package OCA\Activity\BackgroundJob
  */
 class EmailNotification extends TimedJob {
-
 	/** @var MailQueueHandler */
 	protected $queueHandler;
 

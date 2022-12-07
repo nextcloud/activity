@@ -28,7 +28,6 @@ use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 
 class ViewInfoCache {
-
 	/** @var array */
 	protected $cachePath;
 	/** @var array */
