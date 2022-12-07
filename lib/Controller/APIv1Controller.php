@@ -30,7 +30,6 @@ use OCP\AppFramework\OCSController;
 use OCP\IRequest;
 
 class APIv1Controller extends OCSController {
-
 	/** @var Data */
 	protected $data;
 

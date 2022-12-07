@@ -29,7 +29,6 @@ use OCP\IURLGenerator;
 use OCP\Settings\IIconSection;
 
 class PersonalSection implements IIconSection {
-
 	/** @var IL10N */
 	private $l;
 

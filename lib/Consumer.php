@@ -28,7 +28,6 @@ use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 
 class Consumer implements IConsumer {
-
 	/** @var Data */
 	protected $data;
 	/** @var IManager */

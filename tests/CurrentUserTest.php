@@ -36,7 +36,6 @@ use OCP\Share\IManager;
  * @package OCA\Activity\Tests
  */
 class CurrentUserTest extends TestCase {
-
 	/** @var IRequest|MockObject */
 	protected $request;
 

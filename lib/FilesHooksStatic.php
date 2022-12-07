@@ -31,7 +31,6 @@ use Symfony\Component\EventDispatcher\GenericEvent;
  * The class to handle the filesystem hooks
  */
 class FilesHooksStatic {
-
 	/**
 	 * @return FilesHooks
 	 */

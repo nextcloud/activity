@@ -25,7 +25,6 @@ namespace OCA\Activity\Tests\Mock;
 use OCP\Activity\ISetting;
 
 class Setting2 implements ISetting {
-
 	/**
 	 * @return string Lowercase a-z and underscore only identifier
 	 * @since 11.0.0

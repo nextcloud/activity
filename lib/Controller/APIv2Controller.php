@@ -43,7 +43,6 @@ use OCP\IUser;
 use OCP\IUserSession;
 
 class APIv2Controller extends OCSController {
-
 	/** @var string */
 	protected $filter;
 

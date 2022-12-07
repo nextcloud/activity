@@ -31,7 +31,6 @@ use OCP\Capabilities\ICapability;
  * @package OCA\Activity
  */
 class Capabilities implements ICapability {
-
 	/**
 	 * Return this classes capabilities
 	 *

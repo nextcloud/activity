@@ -28,7 +28,6 @@ use OCA\Activity\DigestSender;
 use OCP\AppFramework\Utility\ITimeFactory;
 
 class DigestMail extends TimedJob {
-
 	/** @var DigestSender */
 	protected $digestSender;
 	/** @var ITimeFactory */

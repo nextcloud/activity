@@ -32,9 +32,9 @@ class GroupHelperDisabled extends GroupHelper {
 								IValidator $richObjectValidator,
 								ILogger $logger) {
 		parent::__construct($l,
-							$activityManager,
-							$richObjectValidator,
-							$logger);
+			$activityManager,
+			$richObjectValidator,
+			$logger);
 		$this->allowGrouping = false;
 	}
 }

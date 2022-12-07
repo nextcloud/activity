@@ -13,7 +13,6 @@ use OCP\Migration\IOutput;
  * Auto-generated migration step: Please modify to your needs!
  */
 class Version2010Date20190416112817 extends SimpleMigrationStep {
-
 	/**
 	 * @param IOutput $output
 	 * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`

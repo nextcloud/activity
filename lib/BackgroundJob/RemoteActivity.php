@@ -29,7 +29,6 @@ use OCP\Federation\ICloudIdManager;
 use OCP\Http\Client\IClientService;
 
 class RemoteActivity extends QueuedJob {
-
 	/** @var IClientService */
 	protected $clientService;
 
