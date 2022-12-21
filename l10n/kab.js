@@ -40,7 +40,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Ssermed asuddem RSS",
     "RSS feed" : "Asuddem RSS",
     "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
-    "Activity notification for %s" : "Talɣut n warmud i %s",
     "Settings" : "Iɣewwaṛen"
 },
 "nplurals=2; plural=(n != 1);");
