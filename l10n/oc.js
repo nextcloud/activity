@@ -46,8 +46,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Activar lo flux RSS",
     "RSS feed" : "Flux RSS",
     "No more events to load" : "Pas mai d’eveniment de cargar",
-    "Activity notification for %s" : "Notificacion d’activitat per %s",
-    "activities" : "activitats",
     "Settings" : "Paramètres"
 },
 "nplurals=2; plural=(n > 1);");

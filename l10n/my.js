@@ -26,7 +26,6 @@ OC.L10N.register(
     "Mail" : "စာ",
     "Activity" : "လုပ်ဆောင်မှု",
     "No activity yet" : "လုပ်ဆောင်မှုမရှိသေး",
-    "Activities" : "လုပ်ဆောင်မှုများ",
-    "Activity notification for %s" : "%sအတွက် လုပ်ဆောင်မှု အသိပေးချက်"
+    "Activities" : "လုပ်ဆောင်မှုများ"
 },
 "nplurals=1; plural=0;");
