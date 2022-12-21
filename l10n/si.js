@@ -32,8 +32,6 @@ OC.L10N.register(
     "No activities" : "ක්‍රියාකාරකම් නැත",
     "Default settings" : "සාමාන්‍ය සැකසුම්",
     "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත",
-    "Activity notification for %s" : "%s සඳහා ක්‍රියාකාරකම් දැනුම්දීම",
-    "activities" : "ක්‍රියාකාරකම්",
     "Settings" : "සැකසුම්"
 },
 "nplurals=2; plural=(n != 1);");
