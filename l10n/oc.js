@@ -51,6 +51,7 @@ OC.L10N.register(
     "Activity settings" : "Paramètres d'activitat",
     "Enable RSS feed" : "Activar lo flux RSS",
     "RSS feed" : "Flux RSS",
+    "Personal notification settings" : "Paramètres de notificacions personalas",
     "No more events to load" : "Pas mai d’eveniment de cargar",
     "Settings" : "Paramètres"
 },
