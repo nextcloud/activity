@@ -52,12 +52,12 @@ templates['file'] = template({"compiler":[8,">= 4.3.0"],"main":function(containe
         return undefined
     };
 
-  return "<a class=\"filename has-tooltip\" href=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"link") || (depth0 != null ? lookupProperty(depth0,"link") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"link","hash":{},"data":data,"loc":{"start":{"line":1,"column":38},"end":{"line":1,"column":46}}}) : helper)))
+  return "<a class=\"filename\" href=\""
+    + alias4(((helper = (helper = lookupProperty(helpers,"link") || (depth0 != null ? lookupProperty(depth0,"link") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"link","hash":{},"data":data,"loc":{"start":{"line":1,"column":26},"end":{"line":1,"column":34}}}) : helper)))
     + "\" title=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"title") || (depth0 != null ? lookupProperty(depth0,"title") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data,"loc":{"start":{"line":1,"column":55},"end":{"line":1,"column":64}}}) : helper)))
+    + alias4(((helper = (helper = lookupProperty(helpers,"title") || (depth0 != null ? lookupProperty(depth0,"title") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data,"loc":{"start":{"line":1,"column":43},"end":{"line":1,"column":52}}}) : helper)))
     + "\">"
-    + alias4(((helper = (helper = lookupProperty(helpers,"name") || (depth0 != null ? lookupProperty(depth0,"name") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data,"loc":{"start":{"line":1,"column":66},"end":{"line":1,"column":74}}}) : helper)))
+    + alias4(((helper = (helper = lookupProperty(helpers,"name") || (depth0 != null ? lookupProperty(depth0,"name") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data,"loc":{"start":{"line":1,"column":54},"end":{"line":1,"column":62}}}) : helper)))
     + "</a>\n";
 },"useData":true});
 templates['fileNoPath'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
@@ -82,10 +82,10 @@ templates['fileRoot'] = template({"compiler":[8,">= 4.3.0"],"main":function(cont
         return undefined
     };
 
-  return "<a class=\"filename has-tooltip\" href=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"link") || (depth0 != null ? lookupProperty(depth0,"link") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"link","hash":{},"data":data,"loc":{"start":{"line":1,"column":38},"end":{"line":1,"column":46}}}) : helper)))
+  return "<a class=\"filename\" href=\""
+    + alias4(((helper = (helper = lookupProperty(helpers,"link") || (depth0 != null ? lookupProperty(depth0,"link") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"link","hash":{},"data":data,"loc":{"start":{"line":1,"column":26},"end":{"line":1,"column":34}}}) : helper)))
     + "\" title=\""
-    + alias4(((helper = (helper = lookupProperty(helpers,"homeTXT") || (depth0 != null ? lookupProperty(depth0,"homeTXT") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"homeTXT","hash":{},"data":data,"loc":{"start":{"line":1,"column":55},"end":{"line":1,"column":66}}}) : helper)))
+    + alias4(((helper = (helper = lookupProperty(helpers,"homeTXT") || (depth0 != null ? lookupProperty(depth0,"homeTXT") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"homeTXT","hash":{},"data":data,"loc":{"start":{"line":1,"column":43},"end":{"line":1,"column":54}}}) : helper)))
     + "\"><span class=\"icon icon-home\"></span></a>\n";
 },"useData":true});
 templates['openGraph'] = template({"1":function(container,depth0,helpers,partials,data) {

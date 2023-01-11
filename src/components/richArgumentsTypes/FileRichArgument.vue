@@ -22,20 +22,16 @@
 <template>
 	<span class="rich-text-file">
 		<a v-if="!isRoot && parentPathIsRoot" :href="link">{{ name }}</a>
-		<a v-if="!isRoot && !parentPathIsRoot" v-tooltip.bottom="t('activity', 'in {path}', {path: parentFolder})" :href="link">{{ name }}</a>
-		<span v-if="isRoot" v-tooltip.bottom="t('activity', 'Home')" class="icon-home" />
+		<a v-if="!isRoot && !parentPathIsRoot" :title="t('activity', 'in {path}', {path: parentFolder})" :aria-label="t('activity', 'in {path}', {path: parentFolder})" :href="link">{{ name }}</a>
+		<span v-if="isRoot" :title="t('activity', 'Home')" aria-label="t('activity', 'Home')" class="icon-home" />
 	</span>
 </template>
 
 <script>
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 import { dirname, isSamePath } from '@nextcloud/paths'
 
 export default {
 	name: 'FileRichArgument',
-	directives: {
-		tooltip: Tooltip,
-	},
 	props: {
 		name: {
 			type: String,
