@@ -57,11 +57,7 @@ $(function() {
 	var clipboard = new Clipboard('#rssurl .icon-clippy');
 	clipboard.on('success', function(e) {
 		$input = $(e.trigger);
-		$input.tooltip({placement: 'top', trigger: 'manual', title: t('core', 'Copied!')});
-		$input.tooltip('show');
-		_.delay(function() {
-			$input.tooltip('hide');
-		}, 3000);
+		OC.Notification.show(t('core', 'Copied!'), {type: 'success'});
 	});
 	clipboard.on('error', function (e) {
 		$input = $(e.trigger);
@@ -73,16 +69,7 @@ $(function() {
 		} else {
 			actionMsg = t('core', 'Press Ctrl-C to copy.');
 		}
-
-		$input.tooltip({
-			placement: 'top',
-			trigger: 'manual',
-			title: actionMsg
-		});
-		$input.tooltip('show');
-		_.delay(function () {
-			$input.tooltip('hide');
-		}, 3000);
+		OC.Notification.show(actionMsg, {type: 'error'});
 	});
 
 	OCA.Activity.FeedSettings.init();

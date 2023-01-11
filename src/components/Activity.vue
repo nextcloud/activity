@@ -32,7 +32,7 @@
 			<RichText class="activity-entry__content__message" :text="messageText" :arguments="messageArguments" />
 		</div>
 
-		<span v-tooltip.bottom="activity.formattedDate" class="activity-entry__date">{{ dateFromNow }}</span>
+		<span :title="activity.formattedDate" :aria-label="activity.formattedDate" class="activity-entry__date">{{ dateFromNow }}</span>
 	</li>
 </template>
 
@@ -40,7 +40,6 @@
 import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
 import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble.js'
 import RichText from '@nextcloud/vue-richtext'
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip.js'
 
 import ActivityModel from '../models/ActivityModel.js'
 
@@ -62,9 +61,6 @@ export default {
 	components: {
 		NcAvatar,
 		RichText,
-	},
-	directives: {
-		tooltip: Tooltip,
 	},
 	props: {
 		/**
