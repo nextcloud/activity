@@ -23,9 +23,9 @@
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "stylelint": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue",
     "stylelint:fix": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue --fix",
-    "test": "NODE_ENV=test jest --passWithNoTests src/",
-    "test:coverage": "NODE_ENV=test jest --coverage src/",
-    "test:update-snapshots": "NODE_ENV=test jest --updateSnapshot"
+    "test": "TZ=CET NODE_ENV=test jest --passWithNoTests src/",
+    "test:coverage": "TZ=CET NODE_ENV=test jest --coverage src/",
+    "test:update-snapshots": "TZ=CET NODE_ENV=test jest --updateSnapshot"
   },
   "engines": {
     "node": "^16.0.0",
