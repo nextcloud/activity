@@ -9,7 +9,7 @@ OC.L10N.register(
     "{name} (restricted)" : "{name} (eingeschränkt)",
     "Home" : "Startseite",
     "in {path}" : "in {path}",
-    "This stream will show events like additions, changes & shares" : "Dieser Stream zeigt Ereignisse wie Hinzufügungen, Änderungen und Freigaben anFreigaben",
+    "This stream will show events like additions, changes & shares" : "Dieser Stream zeigt Ereignisse wie Hinzufügungen, Änderungen und Freigaben an",
     "There are no events for this filter" : "Keine Ereignisse für diesen Filter vorhanden",
     "Today" : "Heute",
     "Yesterday" : "Gestern",
