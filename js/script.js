@@ -203,7 +203,8 @@ $(function(){
 				}
 
 				var content = '<div class="section activity-section group" data-date="' + escapeHTML(dayOfYear) + '">' + "\n"
-					+'	<h2 aria-label="' + escapeHTML(dateOfDay) + '" title="' + escapeHTML(dateOfDay) + '">' + escapeHTML(displayDate) + '</h2>' + "\n"
+					+'	<h2 title="' + escapeHTML(dateOfDay) + '">' + escapeHTML(displayDate) + '</h2>' + "\n"
+					+'	<span class="hidden-visually">' + escapeHTML(dateOfDay) + '</span>' + "\n"
 					+'	<div class="boxcontainer">' + "\n"
 					+'	</div>' + "\n"
 					+'</div>';
@@ -243,8 +244,11 @@ $(function(){
 				+ ((activity.link) ? '			</a>' + "\n" : '')
 				+ '		</div>' + "\n"
 
-				+'		<span class="activitytime live-relative-timestamp" data-timestamp="' + activity.timestamp + '" aria-label="' + escapeHTML(OC.Util.formatDate(activity.timestamp)) + '"'
-				+			'title="' + escapeHTML(OC.Util.formatDate(activity.timestamp)) + '">' + "\n"
+				+'		<span class="hidden-visually">' + "\n"
+				+ '			' + escapeHTML(OC.Util.formatDate(activity.timestamp)) + "\n"
+				+'		</span>' + "\n"
+
+				+'		<span class="activitytime live-relative-timestamp" data-timestamp="' + activity.timestamp + '" title="' + escapeHTML(OC.Util.formatDate(activity.timestamp)) + '">' + "\n"
 				+ '			' + escapeHTML(OC.Util.relativeModifiedDate(activity.timestamp)) + "\n"
 				+'		</span>' + "\n";
 
