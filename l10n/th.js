@@ -33,7 +33,7 @@ OC.L10N.register(
     "Notifications" : "การแจ้งเตือน",
     "Send email" : "ส่งอีเมล",
     "You need to set up your email address before you can receive notification emails." : "คุณจะได้รับอีเมลแจ้งเตือนหลังจากที่คุณตั้งค่าที่อยู่อีเมลของคุณ",
-    "Send activity emails" : "ติดตามการส่งอีเมล์",
+    "Send activity emails" : "ส่งอีเมลกิจกรรม",
     "As soon as possible" : "เร็วที่สุดที่เป็นไปได้",
     "Hourly" : "รายชั่วโมง",
     "Daily" : "รายวัน",
