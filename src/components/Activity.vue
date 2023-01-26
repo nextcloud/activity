@@ -31,8 +31,8 @@
 			<RichText class="activity-entry__content__subject" :text="subjectText" :arguments="subjectArguments" />
 			<RichText class="activity-entry__content__message" :text="messageText" :arguments="messageArguments" />
 		</div>
-
-		<span :title="activity.formattedDate" :aria-label="activity.formattedDate" class="activity-entry__date">{{ dateFromNow }}</span>
+		<span class="hidden-visually">{{ activity.formattedDate }}</span>
+		<span :title="activity.formattedDate" class="activity-entry__date">{{ dateFromNow }}</span>
 	</li>
 </template>
 
