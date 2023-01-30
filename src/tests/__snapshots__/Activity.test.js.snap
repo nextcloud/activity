@@ -16,7 +16,7 @@ exports[`Display correct information for changes 1`] = `
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f=""></div>
       </div>
-    </div> <span title="April 29, 2021 10:51 AM" aria-label="April 29, 2021 10:51 AM" class="activity-entry__date">11 days ago</span>
+    </div> <span class="hidden-visually">April 29, 2021 10:51 AM</span> <span title="April 29, 2021 10:51 AM" class="activity-entry__date">11 days ago</span>
   </li>
 </div>
 `;
@@ -37,7 +37,7 @@ exports[`Display correct information for comments 1`] = `
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f="">A comment</div>
       </div>
-    </div> <span title="April 29, 2021 11:04 AM" aria-label="April 29, 2021 11:04 AM" class="activity-entry__date">11 days ago</span>
+    </div> <span class="hidden-visually">April 29, 2021 11:04 AM</span> <span title="April 29, 2021 11:04 AM" class="activity-entry__date">11 days ago</span>
   </li>
 </div>
 `;
@@ -58,7 +58,7 @@ exports[`Display correct information for creations 1`] = `
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f=""></div>
       </div>
-    </div> <span title="April 29, 2021 10:49 AM" aria-label="April 29, 2021 10:49 AM" class="activity-entry__date">11 days ago</span>
+    </div> <span class="hidden-visually">April 29, 2021 10:49 AM</span> <span title="April 29, 2021 10:49 AM" class="activity-entry__date">11 days ago</span>
   </li>
 </div>
 `;
@@ -79,7 +79,7 @@ exports[`Display correct information for favorites 1`] = `
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f=""></div>
       </div>
-    </div> <span title="April 29, 2021 10:52 AM" aria-label="April 29, 2021 10:52 AM" class="activity-entry__date">11 days ago</span>
+    </div> <span class="hidden-visually">April 29, 2021 10:52 AM</span> <span title="April 29, 2021 10:52 AM" class="activity-entry__date">11 days ago</span>
   </li>
 </div>
 `;
@@ -100,7 +100,7 @@ exports[`Display correct information for moves 1`] = `
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f=""></div>
       </div>
-    </div> <span title="April 29, 2021 10:49 AM" aria-label="April 29, 2021 10:49 AM" class="activity-entry__date">11 days ago</span>
+    </div> <span class="hidden-visually">April 29, 2021 10:49 AM</span> <span title="April 29, 2021 10:49 AM" class="activity-entry__date">11 days ago</span>
   </li>
 </div>
 `;
@@ -121,7 +121,7 @@ exports[`Display correct information for renames 1`] = `
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f=""></div>
       </div>
-    </div> <span title="April 29, 2021 11:12 AM" aria-label="April 29, 2021 11:12 AM" class="activity-entry__date">11 days ago</span>
+    </div> <span class="hidden-visually">April 29, 2021 11:12 AM</span> <span title="April 29, 2021 11:12 AM" class="activity-entry__date">11 days ago</span>
   </li>
 </div>
 `;
@@ -142,7 +142,7 @@ exports[`Display correct information for shares 1`] = `
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f=""></div>
       </div>
-    </div> <span title="April 29, 2021 10:49 AM" aria-label="April 29, 2021 10:49 AM" class="activity-entry__date">11 days ago</span>
+    </div> <span class="hidden-visually">April 29, 2021 10:49 AM</span> <span title="April 29, 2021 10:49 AM" class="activity-entry__date">11 days ago</span>
   </li>
 </div>
 `;
@@ -163,7 +163,7 @@ exports[`Display correct information for tags 1`] = `
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f=""></div>
       </div>
-    </div> <span title="April 29, 2021 10:50 AM" aria-label="April 29, 2021 10:50 AM" class="activity-entry__date">11 days ago</span>
+    </div> <span class="hidden-visually">April 29, 2021 10:50 AM</span> <span title="April 29, 2021 10:50 AM" class="activity-entry__date">11 days ago</span>
   </li>
 </div>
 `;
@@ -184,7 +184,7 @@ exports[`Display correct information for unfavorites 1`] = `
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f=""></div>
       </div>
-    </div> <span title="April 29, 2021 10:52 AM" aria-label="April 29, 2021 10:52 AM" class="activity-entry__date">11 days ago</span>
+    </div> <span class="hidden-visually">April 29, 2021 10:52 AM</span> <span title="April 29, 2021 10:52 AM" class="activity-entry__date">11 days ago</span>
   </li>
 </div>
 `;
