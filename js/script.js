@@ -202,12 +202,13 @@ $(function(){
 					}
 				}
 
-				var content = '<div class="section activity-section group" data-date="' + escapeHTML(dayOfYear) + '">' + "\n"
-					+'	<h2 title="' + escapeHTML(dateOfDay) + '">' + escapeHTML(displayDate) + '</h2>' + "\n"
-					+'	<span class="hidden-visually">' + escapeHTML(dateOfDay) + '</span>' + "\n"
-					+'	<div class="boxcontainer">' + "\n"
-					+'	</div>' + "\n"
-					+'</div>';
+				var header = '<h2 class="section-header" title="' + escapeHTML(dateOfDay) + '">' + escapeHTML(displayDate) + '</h2>'
+					+'	<span class="hidden-visually">' + escapeHTML(dateOfDay) + '</span>' + "\n";
+				var content = '<ul class="section activity-section group" data-date="' + escapeHTML(dayOfYear) + '">' + '</ul>';
+				var $header = $(header);
+				this.processElements($header);
+				this.$container.append($header);
+
 				var $content = $(content);
 				this.processElements($content);
 				this.$container.append($content);
@@ -231,7 +232,7 @@ $(function(){
 			var monochromeIcon = activity.type !== 'file_created' && activity.type !== 'file_deleted' && activity.type !== 'favorite' && !activity.icon.endsWith('-color.svg');
 
 			var content = ''
-				+ '<div class="activity box" data-activity-id="' + activity.activity_id + '">' + "\n"
+				+ '<li class="activity box" data-activity-id="' + activity.activity_id + '">' + "\n"
 				+ '	<div class="messagecontainer">' + "\n"
 
 				+ '		<div class="activity-icon' + ((monochromeIcon) ? ' monochrome' : '') +'">'
@@ -270,7 +271,7 @@ $(function(){
 			}
 
 			content += '	</div>' + "\n"
-				+'</div>';
+				+'</li>';
 
 			var $content = $(content);
 			this.processElements($content);
