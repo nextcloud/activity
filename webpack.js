@@ -9,4 +9,12 @@ webpackConfig.entry = {
 	adminSettings: path.join(__dirname, 'src', 'settings-admin.js'),
 }
 
+webpackConfig.optimization = {
+	splitChunks: {
+		cacheGroups: {
+			defaultVendors: false,
+		},
+	},
+}
+
 module.exports = webpackConfig
