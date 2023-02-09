@@ -20,19 +20,10 @@
  *
  */
 
-import Dashboard from './views/Dashboard.vue'
-// import store from './store/store.js'
-
-// import './css/dashboard.scss'
 
 import { generateFilePath } from '@nextcloud/router'
 import { getRequestToken } from '@nextcloud/auth'
 import { translate, translatePlural } from '@nextcloud/l10n'
-
-import Vue from 'vue'
-// import Vuex from 'vuex'
-
-// Vue.use(Vuex)
 
 // eslint-disable-next-line
 __webpack_nonce__ = btoa(getRequestToken())
@@ -40,13 +31,17 @@ __webpack_nonce__ = btoa(getRequestToken())
 // eslint-disable-next-line
 __webpack_public_path__ = generateFilePath(appName, '', 'js/')
 
-Vue.prototype.t = translate
-Vue.prototype.n = translatePlural
-Vue.prototype.OC = OC
-Vue.prototype.OCA = OCA
 
 document.addEventListener('DOMContentLoaded', () => {
-	OCA.Dashboard.register('activity', (el) => {
+	OCA.Dashboard.register('activity', async (el) => {
+		const { default: Vue } = await import(/* webpackChunkName: "dashboard-lazy" */'vue')
+		const { default: Dashboard } = await import(/* webpackChunkName: "dashboard-lazy" */'./views/Dashboard.vue')
+
+		Vue.prototype.t = translate
+		Vue.prototype.n = translatePlural
+		Vue.prototype.OC = OC
+		Vue.prototype.OCA = OCA
+
 		const View = Vue.extend(Dashboard)
 		const vm = new View({
 			propsData: {},
