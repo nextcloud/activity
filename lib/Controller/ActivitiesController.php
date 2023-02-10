@@ -27,6 +27,7 @@ use OCA\Activity\Navigation;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
+use OCP\IL10N;
 use OCP\IRequest;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -37,6 +38,9 @@ class ActivitiesController extends Controller {
 
 	/** @var Data */
 	protected $data;
+
+	/** @var IL10N */
+	private $l10n;
 
 	/** @var Navigation */
 	protected $navigation;
@@ -51,18 +55,21 @@ class ActivitiesController extends Controller {
 	 * @param Data $data
 	 * @param Navigation $navigation
 	 * @param EventDispatcherInterface $eventDispatcher
+	 * @param IL10N $l10n
 	 */
 	public function __construct($appName,
 								IRequest $request,
 								IConfig $config,
 								Data $data,
 								Navigation $navigation,
-								EventDispatcherInterface $eventDispatcher) {
+								EventDispatcherInterface $eventDispatcher,
+								IL10N $l10n) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
 		$this->config = $config;
 		$this->navigation = $navigation;
 		$this->eventDispatcher = $eventDispatcher;
+		$this->l10n = $l10n;
 	}
 
 	/**
@@ -82,6 +89,7 @@ class ActivitiesController extends Controller {
 			'appNavigation' => $this->navigation->getTemplate($filter),
 			'avatars' => $this->config->getSystemValue('enable_avatars', true) ? 'yes' : 'no',
 			'filter' => $filter,
+			'pageTitle' => $this->l10n->t('Activity')
 		]);
 	}
 }

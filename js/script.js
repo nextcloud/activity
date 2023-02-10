@@ -59,7 +59,7 @@ $(function(){
 			var navigationLink = this.$navigation.find('a[data-navigation=' + filter + ']');
 			navigationLink.parent().addClass('active').attr('aria-current', 'page');
 			window.document.title = navigationLink.text().trim() + ' - ' + this.defaultPageTitle;
-
+			OCP.Accessibility.setPageHeading(navigationLink.text().trim());
 			OCA.Activity.InfinitScrolling.prefill();
 		}
 	};
