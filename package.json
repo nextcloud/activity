@@ -84,7 +84,7 @@
     "@nextcloud/vue-dashboard": "^2.0.1",
     "@nextcloud/vue-richtext": "^2.0.4",
     "vue": "^2.7.14",
-    "vue-material-design-icons": "^5.1.2",
+    "vue-material-design-icons": "^5.2.0",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
