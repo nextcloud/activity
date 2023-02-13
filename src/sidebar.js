@@ -22,15 +22,17 @@
 import Vue from 'vue'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 
-import ActivityTab from './views/ActivityTab.vue'
-
 Vue.prototype.t = t
 Vue.prototype.n = n
 
-// Init Activity tab component
-const ActivityTabView = Vue.extend(ActivityTab)
+// eslint-disable-next-line
+__webpack_nonce__ = btoa(OC.requestToken);
+// eslint-disable-next-line
+__webpack_public_path__ = OC.linkTo('activity', 'js/');
 
 // Init Activity tab component
+let ActivityTab = null
+let ActivityTabView = null
 let ActivityTabInstance = null
 const activityTab = new OCA.Files.Sidebar.Tab({
 	id: 'activity',
@@ -38,6 +40,8 @@ const activityTab = new OCA.Files.Sidebar.Tab({
 	icon: 'icon-activity',
 
 	async mount(el, fileInfo, context) {
+		ActivityTab = await import(/* webpackPreload: true */ './views/ActivityTab.vue')
+		ActivityTabView = ActivityTabView ?? Vue.extend(ActivityTab)
 		if (ActivityTabInstance) {
 			ActivityTabInstance.$destroy()
 		}
@@ -58,8 +62,10 @@ const activityTab = new OCA.Files.Sidebar.Tab({
 	},
 })
 
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', async function() {
 	if (OCA.Files && OCA.Files.Sidebar) {
 		OCA.Files.Sidebar.registerTab(activityTab)
+		ActivityTab = await import(/* webpackPreload: true */ './views/ActivityTab.vue')
+		ActivityTabView = ActivityTabView ?? Vue.extend(ActivityTab)
 	}
 })
