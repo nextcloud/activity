@@ -29,7 +29,7 @@ As a quick summary, when the given event is known by the provider, the following
 Additionally the following methods *should* be called, in order to beautify the activity:
 
 * `setIcon()`: A full URL to an icon for the activity, e.g. `$this->url->getAbsoluteURL($this->url->imagePath('core', 'actions/starred.svg'))`
-* `setRichSubject()`:  String subject including placeholders and the array of placeholders. See [this issue](https://github.com/nextcloud/server/issues/1706) for more information. Available object types are bound to the server version and can be found in the [`OCP\RichObjectStrings\Definitions`](https://github.com/nextcloud/server/blob/01f4c7550538a30311597d4eb9b889fbb04c4d67/lib/public/RichObjectStrings/Definitions.php) class.
+* `setRichSubject()`:  String subject including placeholders and the array of placeholders. See [this issue](https://github.com/nextcloud/server/issues/1706) for more information. Available object types are bound to the server version and can be found in the [`OCP\RichObjectStrings\Definitions`](https://github.com/nextcloud/server/blob/01f4c7550538a30311597d4eb9b889fbb04c4d67/lib/public/RichObjectStrings/Definitions.php) class. Note that starting with Nextcloud 26, you do not need to call `setParsedSubject` if you call `setRichSubject`, a parsed version will be computed automatically.
 
 ### Check responsibility
 
