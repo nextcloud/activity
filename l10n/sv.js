@@ -9,7 +9,7 @@ OC.L10N.register(
     "{name} (restricted)" : "{name} (begränsad)",
     "Home" : "Hem",
     "in {path}" : "i {path}",
-    "This stream will show events like additions, changes & shares" : "Flödet visar aktiviteter så som tillägg, ändringar och delningar",
+    "This stream will show events like additions, changes & shares" : "Flödet visar händelser så som tillägg, ändringar och delningar",
     "There are no events for this filter" : "Det finns inga aktiviteter för detta filter",
     "Today" : "Idag",
     "Yesterday" : "Igår",
