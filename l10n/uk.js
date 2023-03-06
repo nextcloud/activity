@@ -51,7 +51,7 @@ OC.L10N.register(
     "Choose for which activities you want to get an email or push notification." : "Оберіть події щодо яких Ви бажаєте отримувати сповіщення електронною поштою або у вигляді push-сповіщень.",
     "Choose for which activities you want to get a push notification." : "Оберіть події щодо яких Ви бажаєте отримувати puch-сповіщеня.",
     "Daily activity summary" : "Щоденні підсумки про події",
-    "Send daily activity summary in the morning" : "Надсилати підсумки дня вранці",
+    "Send daily activity summary in the morning" : "Надсилати вранці щоденні зведення",
     "Activities" : "Події",
     "No activities" : "Активність відсутня",
     "Default settings" : "Типові налаштування",
