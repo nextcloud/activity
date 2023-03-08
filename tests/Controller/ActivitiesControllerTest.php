@@ -24,6 +24,7 @@ namespace OCA\Activity\Tests\Controller;
 
 use OCA\Activity\Controller\ActivitiesController;
 use OCA\Activity\Tests\TestCase;
+use OCP\IL10N;
 use OCP\ILogger;
 use OCP\Template;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -51,6 +52,8 @@ class ActivitiesControllerTest extends TestCase {
 	protected $eventDispatcher;
 	/** @var Navigation|MockObject */
 	protected $navigation;
+	/** @var IL10N */
+	protected $l10n;
 
 	/** @var ActivitiesController */
 	protected $controller;
@@ -63,6 +66,7 @@ class ActivitiesControllerTest extends TestCase {
 		$this->navigation = $this->createMock(Navigation::class);
 		$this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
 		$this->request = $this->createMock(IRequest::class);
+		$this->l10n = $this->createMock(IL10N::class);
 
 		$this->controller = $this->getController();
 	}
@@ -75,7 +79,8 @@ class ActivitiesControllerTest extends TestCase {
 				$this->config,
 				$this->data,
 				$this->navigation,
-				$this->eventDispatcher
+				$this->eventDispatcher,
+				$this->l10n,
 			);
 		}
 
@@ -87,6 +92,7 @@ class ActivitiesControllerTest extends TestCase {
 				$this->data,
 				$this->navigation,
 				$this->eventDispatcher,
+				$this->l10n,
 			])
 			->onlyMethods($methods)
 			->getMock();
