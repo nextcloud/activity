@@ -31,7 +31,6 @@ __webpack_nonce__ = btoa(OC.requestToken);
 __webpack_public_path__ = OC.linkTo('activity', 'js/');
 
 // Init Activity tab component
-let ActivityTab = null
 let ActivityTabView = null
 let ActivityTabInstance = null
 const activityTab = new OCA.Files.Sidebar.Tab({
@@ -40,7 +39,7 @@ const activityTab = new OCA.Files.Sidebar.Tab({
 	icon: 'icon-activity',
 
 	async mount(el, fileInfo, context) {
-		ActivityTab = await import(/* webpackPreload: true */ './views/ActivityTab.vue')
+		const { default: ActivityTab } = await import(/* webpackPreload: true */ './views/ActivityTab.vue')
 		ActivityTabView = ActivityTabView ?? Vue.extend(ActivityTab)
 		if (ActivityTabInstance) {
 			ActivityTabInstance.$destroy()
@@ -65,7 +64,7 @@ const activityTab = new OCA.Files.Sidebar.Tab({
 window.addEventListener('DOMContentLoaded', async function() {
 	if (OCA.Files && OCA.Files.Sidebar) {
 		OCA.Files.Sidebar.registerTab(activityTab)
-		ActivityTab = await import(/* webpackPreload: true */ './views/ActivityTab.vue')
+		const { default: ActivityTab } = await import(/* webpackPreload: true */ './views/ActivityTab.vue')
 		ActivityTabView = ActivityTabView ?? Vue.extend(ActivityTab)
 	}
 })
