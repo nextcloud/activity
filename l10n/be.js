@@ -14,6 +14,7 @@ OC.L10N.register(
     "Today" : "Сёння",
     "Yesterday" : "Учора",
     "Open {filename}" : "Адкрыць {filename}",
+    "Activity" : "Падзеі",
     "Personal activity feed for %s" : "Стужка асабістай актыўнасці для %s",
     "Your feed URL is invalid" : "URL вашай стужкі несапраўдны",
     "Your settings have been updated." : "Вашы налады былі абноўлены. ",
@@ -30,7 +31,6 @@ OC.L10N.register(
     "There was some activity at %s" : "Была нейкая актыўнасць на %s",
     "Mail" : "Пошта",
     "Push" : "Push-паведамлення",
-    "Activity" : "Падзеі",
     "Notifications" : "Апавяшчэнні",
     "No activities" : "Няма дзеянняў",
     "Settings" : "Налады"

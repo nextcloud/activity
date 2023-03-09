@@ -12,6 +12,7 @@ OC.L10N.register(
     "There are no events for this filter" : "ဤ စစ်ထုတ်မှုအတွက် ဖြစ်စဉ် တစ်ခုမှမရှိပါ။",
     "Today" : "ယနေ့",
     "Yesterday" : "မနေ့က",
+    "Activity" : "လုပ်ဆောင်မှု",
     "Personal activity feed for %s" : "%sအတွက် ကိုယ်ပိုင် လုပ်ဆောင်မှု ပေးပို့ချက်",
     "Your feed URL is invalid" : "သင်၏ ပေးပို့ချက် URL မှားယွင်းနေသည်။",
     "Your settings have been updated." : "သင်၏ ပြင်ဆင်ချက်များကို မွမ်းမံပြီးဖြစ်သည်။",
@@ -24,7 +25,6 @@ OC.L10N.register(
     "Hello %s," : "မင်္ဂလာပါ %s၊",
     "There was some activity at %s" : "%sက လုပ်ဆောင်မှု အချို့ ရှိခဲ့သည်။",
     "Mail" : "စာ",
-    "Activity" : "လုပ်ဆောင်မှု",
     "No activity yet" : "လုပ်ဆောင်မှုမရှိသေး",
     "Activities" : "လုပ်ဆောင်မှုများ"
 },
