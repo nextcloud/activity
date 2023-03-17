@@ -51,7 +51,7 @@
 			<span id="rssurl"<?php if (!$_['rssLink']): ?> class="hidden"<?php endif; ?>>
 				<label for="feed-link" class="hidden-visually"><?php p($l->t('RSS feed'));?></label>
 				<input id="feed-link" class="feed-link" type="text" readonly="readonly" value="<?php p($_['rssLink']); ?>" />
-				<a class="icon-clippy" data-clipboard-target="#rssurl input"></a>
+				<button aria-label="<?php p($l->t('Copy RSS feed link')); ?>" class="icon-clippy" data-clipboard-target="#rssurl input"></button>
 			</span>
 			<div id="activity-personal-settings-link">
 				<a href="<?php p($_['personalSettingsLink']); ?>">
