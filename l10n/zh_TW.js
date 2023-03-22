@@ -61,6 +61,7 @@ OC.L10N.register(
     "Activity settings" : "活動設定",
     "Enable RSS feed" : "啟用 RSS 摘要",
     "RSS feed" : "RSS 摘要",
+    "Copy RSS feed link" : "複製 RSS feed 連結",
     "Personal notification settings" : "個人通知設定",
     "No more events to load" : "已載入所有事件",
     "This application enables users to view a log of activities about them or about files." : "本應用程式可以讓使用者檢視有關自己或檔案的活動記錄。",

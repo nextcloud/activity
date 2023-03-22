@@ -56,6 +56,7 @@ OC.L10N.register(
     "Activity settings" : "Үйлдлийн тохиргоо",
     "Enable RSS feed" : "RSS feed идэвхжүүлэх",
     "RSS feed" : "RSS feed",
+    "Copy RSS feed link" : "RSS feed-ийн холбоосыг хуулах",
     "Personal notification settings" : "Хувийн мэдэгдлийн тохиргоо",
     "No more events to load" : "Өөр харуулах үйл явдал байхгүй байна",
     "This application enables users to view a log of activities about them or about files." : "Энэхүү аппликейшн нь хэрэглэгчдэд өөрийн үйлдлийн болон файлуудын бүртгэлээ хянах боломжийг олгоно. ",
