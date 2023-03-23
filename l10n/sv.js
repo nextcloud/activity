@@ -61,6 +61,7 @@ OC.L10N.register(
     "Activity settings" : "Aktivitetsinställningar",
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "RSS feed" : "RSS-flöde",
+    "Copy RSS feed link" : "Kopiera länk till RSS-flöde",
     "Personal notification settings" : "Egna aviseringsinställningar",
     "No more events to load" : "Inga fler aktiviteter.",
     "This application enables users to view a log of activities about them or about files." : "Denna applikation låter användare se en logg med aktiviteter om sig själva eller filer.",
