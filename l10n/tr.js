@@ -61,6 +61,7 @@ OC.L10N.register(
     "Activity settings" : "İşlem ayarları",
     "Enable RSS feed" : "RSS akışı kullanılsın",
     "RSS feed" : "RSS akışı",
+    "Copy RSS feed link" : "RSS akışı bağlantısını kopyala",
     "Personal notification settings" : "Kişisel bildirim ayarları",
     "No more events to load" : "Yüklenecek başka bir olay yok",
     "This application enables users to view a log of activities about them or about files." : "Bu uygulama, kullanıcıların dosyaları üzerinde yapılan işlemlerin kaydını görebilmesini sağlar.",

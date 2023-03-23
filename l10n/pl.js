@@ -61,6 +61,7 @@ OC.L10N.register(
     "Activity settings" : "Ustawienia Aktywności",
     "Enable RSS feed" : "Włącz kanał RSS",
     "RSS feed" : "Kanał RSS",
+    "Copy RSS feed link" : "Kopiuj link do kanału RSS",
     "Personal notification settings" : "Osobiste ustawienia powiadomień",
     "No more events to load" : "Brak wydarzeń do załadowania",
     "This application enables users to view a log of activities about them or about files." : "Aplikacja umożliwia użytkownikom przeglądanie dziennika aktywności dotyczących ich samych lub plików.",
