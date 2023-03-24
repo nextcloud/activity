@@ -61,6 +61,7 @@ OC.L10N.register(
     "Activity settings" : "Jardueraren ezarpenak",
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "RSS feed" : "RSS jarioa",
+    "Copy RSS feed link" : "Kopiatu RSS jario esteka",
     "Personal notification settings" : "Jakinarazpen pertsonalen ezarpenak",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
     "This application enables users to view a log of activities about them or about files." : "Aplikazio honek aukera ematen die erabiltzaileei beraiei edo fitxategiei buruzko jardueren erregistroa ikusteko.",
