@@ -61,6 +61,7 @@ OC.L10N.register(
     "Activity settings" : "Tevékenység beállításai",
     "Enable RSS feed" : "RSS-csatorna engedélyezése",
     "RSS feed" : "RSS-csatorna",
+    "Copy RSS feed link" : "RSS-hírcsatorna hivatkozásának másolása",
     "Personal notification settings" : "Személyes értesítési beállítások",
     "No more events to load" : "Nincs több esemény",
     "This application enables users to view a log of activities about them or about files." : "Ez az alkalmazás lehetővé teszi a felhasználók számára, hogy megtekinthessék a saját magukról vagy a fájlokról szóló tevékenységnaplót.",
