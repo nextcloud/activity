@@ -61,6 +61,7 @@ OC.L10N.register(
     "Activity settings" : "Настройки за активност",
     "Enable RSS feed" : "Разрешаване на RSS емисии",
     "RSS feed" : "RSS емисия",
+    "Copy RSS feed link" : "Копиране на връзка за RSS емисия",
     "Personal notification settings" : "Лични настройки за известие",
     "No more events to load" : "Няма повече известия за зареждане",
     "This application enables users to view a log of activities about them or about files." : "Това приложение позволява на потребителите да преглеждат журнал на техните активности или тази на файловете.",
