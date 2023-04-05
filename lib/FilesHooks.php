@@ -47,6 +47,7 @@ use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
+use Psr\Log\LoggerInterface;
 
 /**
  * The class to handle the filesystem hooks
@@ -1249,6 +1250,8 @@ class FilesHooks {
 	 * @return string[] list of unrelated userIds
 	 */
 	private function getUnrelatedUsers(int $fileId, array $cachedMounts): array {
+		$logger = \OC::$server->get(LoggerInterface::class);
+
 		/** @var \OCA\GroupFolders\ACL\RuleManager $ruleManager */
 		try {
 			$ruleManager = \OC::$server->get(\OCA\GroupFolders\ACL\RuleManager::class);
@@ -1272,7 +1275,15 @@ class FilesHooks {
 			if (!array_key_exists($cachedMount['visiblePath'], $knownRules[$storageId])) {
 				// we need mountPoint and folderId to generate the correct path
 				try {
-					$node = $this->rootFolder->get($fullPath);
+
+					// nc23 specific
+					[$userId, $str, $relativePath] = explode('/', ltrim($fullPath, '/'), 3);
+					$logger->debug('exploding fullPath', ['app' => 'activity', 'fullPath' => $fullPath, 'userId' => $userId, 'str' => $str, 'relativePath' => $relativePath]);
+					if ($str !== 'files') {
+						throw new NotFoundException();
+					}
+					$node = $this->rootFolder->getUserFolder($userId)->get($relativePath);
+
 					$mountPoint = $node->getMountPoint();
 
 					if (!$mountPoint instanceof \OCA\GroupFolders\Mount\GroupMountPoint) {
@@ -1282,6 +1293,7 @@ class FilesHooks {
 					$folderPath = trim($mountPoint->getSourcePath(), '/');
 					$path = substr($fullPath, strlen($mountPoint->getMountPoint()));
 				} catch (\Exception $e) {
+					$logger->debug('exception during First check', ['app' => 'activity', 'exception' => $e]);
 
 					// in case of issue during the process, we can imagine the user have no access to the file
 					$usersToCheck[] = $cachedMount['userId'];
@@ -1351,15 +1363,26 @@ class FilesHooks {
 			}
 		}
 
+		$logger->debug('users to check', ['app' => 'activity', 'users' => $usersToCheck]);
+
 		// now that we have a list of eventuals filtered users, we confirm they have no access to the file
 		$filteredUsers = [];
 		foreach ($usersToCheck as $userId) {
 			try {
-				$node = $this->rootFolder->get($cachedPath[$userId]);
+				$path = $cachedPath[$userId];
+				if (substr($path, 0, strlen($userId) + 8) !== '/' . $userId . '/files/') {
+					$logger->debug('wrong path format', ['app' => 'activity', 'userId' => $userId, 'prefix' => substr($path, 0, strlen($userId) + 8), 'path' => $path]);
+					throw new NotFoundException();
+				}
+
+				$path = substr($path, strlen($userId) + 7);
+				$logger->debug('getUserFolder', ['app' => 'activity', 'userId' => $userId, 'path' => $path]);
+				$node = $this->rootFolder->getUserFolder($userId)->get($path);
 				if ($node->isReadable()) {
 					continue; // overkill ? as rootFolder->get() would throw an exception if file is not available
 				}
 			} catch (\Exception $e) {
+				$logger->debug('exception while getUserFolder', ['app' => 'activity', 'exception' => $e]);
 			}
 
 			$filteredUsers[] = $userId;
