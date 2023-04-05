@@ -61,6 +61,7 @@ OC.L10N.register(
     "Activity settings" : "Настройка активности",
     "Enable RSS feed" : "Включить RSS-ленту",
     "RSS feed" : "RSS-лента",
+    "Copy RSS feed link" : "Скопировать ссылку на RSS-ленту",
     "Personal notification settings" : "Личные настройки уведомлений",
     "No more events to load" : "Больше нет событий для загрузки",
     "This application enables users to view a log of activities about them or about files." : "Это приложение позволяет пользователям просматривать историю событий своих действий и файлов.",
