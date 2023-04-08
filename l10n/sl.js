@@ -61,6 +61,7 @@ OC.L10N.register(
     "Activity settings" : "Nastavitve dejavnosti",
     "Enable RSS feed" : "Omogoči vire RSS",
     "RSS feed" : "Viri RSS",
+    "Copy RSS feed link" : "Kopiraj povezavo vira RSS",
     "Personal notification settings" : "Osebne nastavitve obveščanja",
     "No more events to load" : "Ni načrtovanih drugih dogodkov",
     "This application enables users to view a log of activities about them or about files." : "Program omogoča pregled dogodkov, dejavnosti in dela v okolju Nextcloud.",
