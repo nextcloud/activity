@@ -31,6 +31,7 @@
     "Mail" : "البريد",
     "Push" : "ارسل",
     "Notifications" : "الإشعارات",
+    "This application enables people to view a log of activities about them, their files or other data." : "هذا التطبيق يسمح للمستخدمين باستعراض سجل بحركاتهم أو حركات ملفاتهم أو بيانات أخرى لهم.",
     "Activity notification configuration" : "اعدادات تنبيهات النشاط",
     "Send email" : "إرسال بريد",
     "Send push notification" : "ارسال دفعة تنبيهات",
