@@ -87,6 +87,11 @@
 	height: 50px;
 }
 
+.activity.box .preview:not(.preview-mimetype-icon) {
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius-large);
+}
+
 .activity.box .user{
 	white-space: nowrap;
 	overflow: hidden;
