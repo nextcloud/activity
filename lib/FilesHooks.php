@@ -1288,7 +1288,7 @@ class FilesHooks {
 						continue; // acl are disable
 					}
 
-					$folderPath = $mountPoint->getSourcePath();
+					$folderPath = ltrim($mountPoint->getSourcePath(), '/');
 					$path = substr($fullPath, strlen($mountPoint->getMountPoint()));
 				} catch (\Exception $e) {
 					// in case of issue during the process, we can imagine the user have no access to the file
