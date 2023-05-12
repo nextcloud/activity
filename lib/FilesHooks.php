@@ -34,7 +34,6 @@ use OCP\Activity\IManager;
 use OCP\Constants;
 use OCP\Files\Config\IUserMountCache;
 use OCP\Files\IRootFolder;
-use OCP\Files\Mount\IMountPoint;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\IConfig;
@@ -1128,8 +1127,10 @@ class FilesHooks {
 		 * Get the sharee who shared the item with the currentUser
 		 */
 		$this->view->chroot('/' . $currentOwner . '/files');
-		$mount = $this->view->getMount($path);
-		if (!($mount instanceof IMountPoint)) {
+
+		try {
+			$mount = $this->view->getMount($path);
+		} catch (NotFoundException $ex) {
 			return;
 		}
 
