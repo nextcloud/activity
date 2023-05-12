@@ -922,7 +922,7 @@ class FilesHooksTest extends TestCase {
 			$this->view->expects($this->once())
 				->method('getMount')
 				->with('/path')
-				->willReturn(null);
+				->willThrowException(new \OCP\Files\NotFoundException());
 		}
 
 		self::invokePrivate($filesHooks, 'shareNotificationForOriginalOwners', ['current', 'subject', 'with', 42, 'type']);
