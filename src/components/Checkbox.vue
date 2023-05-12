@@ -242,12 +242,12 @@ $spacing: 4px;
 
 	&:not(&--disabled) &__input:hover + &__label,
 	&:not(&--disabled) &__input:focus + &__label {
-		background-color: var(--color-primary-light);
+		background-color: var(--color-primary-element-light);
 	}
 
 	// Increase focus effect
 	&:not(&--disabled) &__input:focus + &__label {
-		box-shadow: 0 0 0 2px var(--color-primary);
+		box-shadow: 0 0 0 2px var(--color-primary-element);
 	}
 
 	// Switch specific rules
