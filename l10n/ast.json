@@ -1,0 +1,7 @@
+{ "translations": {
+    "Today" : "Güei",
+    "Yesterday" : "Ayeri",
+    "Activity" : "Actividá",
+    "Settings" : "Configuración"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
