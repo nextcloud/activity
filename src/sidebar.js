@@ -21,6 +21,8 @@
  */
 import Vue from 'vue'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
+// eslint-disable-next-line n/no-missing-import, import/no-unresolved
+import LightningBolt from '@mdi/svg/svg/lightning-bolt.svg?raw'
 
 Vue.prototype.t = t
 Vue.prototype.n = n
@@ -36,7 +38,7 @@ let ActivityTabInstance = null
 const activityTab = new OCA.Files.Sidebar.Tab({
 	id: 'activity',
 	name: t('activity', 'Activity'),
-	icon: 'icon-activity',
+	iconSvg: LightningBolt,
 
 	async mount(el, fileInfo, context) {
 		const { default: ActivityTab } = await import(/* webpackPreload: true */ './views/ActivityTab.vue')
@@ -61,7 +63,7 @@ const activityTab = new OCA.Files.Sidebar.Tab({
 	},
 })
 
-window.addEventListener('DOMContentLoaded', async function() {
+window.addEventListener('DOMContentLoaded', async function () {
 	if (OCA.Files && OCA.Files.Sidebar) {
 		OCA.Files.Sidebar.registerTab(activityTab)
 		const { default: ActivityTab } = await import(/* webpackPreload: true */ './views/ActivityTab.vue')
