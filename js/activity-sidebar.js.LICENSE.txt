@@ -19,13 +19,6 @@ object-assign
  */
 
 /*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-/*!
  * Vue.js v2.6.14
  * (c) 2014-2021 Evan You
  * Released under the MIT License.
@@ -39,13 +32,6 @@ object-assign
  * MIT Licensed
  */
 
-/*!
- * repeat-string <https://github.com/jonschlinkert/repeat-string>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
 /*! For license information please see Avatar.js.LICENSE.txt */
 
 /*! For license information please see EmptyContent.js.LICENSE.txt */
@@ -53,8 +39,6 @@ object-assign
 /*! For license information please see Tooltip.js.LICENSE.txt */
 
 /*! For license information please see UserBubble.js.LICENSE.txt */
-
-/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
 /**
  * @copyright Copyright (c) 2021 Louis Chemineau <louis@chmn.me>

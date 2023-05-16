@@ -10,16 +10,8 @@ exports[`Display correct information for changes 1`] = `
       <!---->
     </div>
     <div class="activity-entry__content">
-      <div data-v-30428f72="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-30428f72="">
-          <p data-v-30428f72="">You changed <span data-v-30428f72="" class="rich-text-file rich-text--component" attrs="[object Object]" key="h-2"><!----> <a href="http://localhost:8080/index.php/f/776">Test file - renamed.md</a> <!----></span></p>
-        </div>
-      </div>
-      <div data-v-30428f72="" class="activity-entry__content__message rich-text--wrapper">
-        <div data-v-30428f72="">
-          <div data-v-30428f72=""></div>
-        </div>
-      </div>
+      <div data-v-252db2c7="" class="rich-text--wrapper">You changed <span class="rich-text-file rich-text--component" data-v-252db2c7=""><!----> <a href="http://localhost:8080/index.php/f/776">Test file - renamed.md</a> <!----></span></div>
+      <div data-v-252db2c7="" class="rich-text--wrapper"></div>
     </div> <span class="activity-entry__date has-tooltip" data-original-title="null">11 days ago</span>
   </li>
 </div>
@@ -35,16 +27,8 @@ exports[`Display correct information for comments 1`] = `
       <!---->
     </div>
     <div class="activity-entry__content">
-      <div data-v-30428f72="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-30428f72="">
-          <p data-v-30428f72="">You commented</p>
-        </div>
-      </div>
-      <div data-v-30428f72="" class="activity-entry__content__message rich-text--wrapper">
-        <div data-v-30428f72="">
-          <p data-v-30428f72="">A comment</p>
-        </div>
-      </div>
+      <div data-v-252db2c7="" class="rich-text--wrapper">You commented</div>
+      <div data-v-252db2c7="" class="rich-text--wrapper">A comment</div>
     </div> <span class="activity-entry__date has-tooltip" data-original-title="null">11 days ago</span>
   </li>
 </div>
@@ -60,16 +44,8 @@ exports[`Display correct information for creations 1`] = `
       <!---->
     </div>
     <div class="activity-entry__content">
-      <div data-v-30428f72="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-30428f72="">
-          <p data-v-30428f72="">You created <span data-v-30428f72="" class="rich-text-file rich-text--component" attrs="[object Object]" key="h-2"><!----> <a href="http://localhost:8080/index.php/f/776">Test file.md</a> <!----></span></p>
-        </div>
-      </div>
-      <div data-v-30428f72="" class="activity-entry__content__message rich-text--wrapper">
-        <div data-v-30428f72="">
-          <div data-v-30428f72=""></div>
-        </div>
-      </div>
+      <div data-v-252db2c7="" class="rich-text--wrapper">You created <span class="rich-text-file rich-text--component" data-v-252db2c7=""><!----> <a href="http://localhost:8080/index.php/f/776">Test file.md</a> <!----></span></div>
+      <div data-v-252db2c7="" class="rich-text--wrapper"></div>
     </div> <span class="activity-entry__date has-tooltip" data-original-title="null">11 days ago</span>
   </li>
 </div>
@@ -85,16 +61,8 @@ exports[`Display correct information for favorites 1`] = `
       <!---->
     </div>
     <div class="activity-entry__content">
-      <div data-v-30428f72="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-30428f72="">
-          <p data-v-30428f72="">Added to favorites</p>
-        </div>
-      </div>
-      <div data-v-30428f72="" class="activity-entry__content__message rich-text--wrapper">
-        <div data-v-30428f72="">
-          <div data-v-30428f72=""></div>
-        </div>
-      </div>
+      <div data-v-252db2c7="" class="rich-text--wrapper">Added to favorites</div>
+      <div data-v-252db2c7="" class="rich-text--wrapper"></div>
     </div> <span class="activity-entry__date has-tooltip" data-original-title="null">11 days ago</span>
   </li>
 </div>
@@ -110,16 +78,8 @@ exports[`Display correct information for moves 1`] = `
       <!---->
     </div>
     <div class="activity-entry__content">
-      <div data-v-30428f72="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-30428f72="">
-          <p data-v-30428f72="">You moved <span data-v-30428f72="" class="rich-text-file rich-text--component" attrs="[object Object]" key="h-2"><!----> <a href="http://localhost:8080/index.php/f/776">Test file.md</a> <!----></span> to <span data-v-30428f72="" class="rich-text-file rich-text--component" attrs="[object Object]" key="h-3"><!----> <a href="http://localhost:8080/index.php/f/753">Documents</a> <!----></span></p>
-        </div>
-      </div>
-      <div data-v-30428f72="" class="activity-entry__content__message rich-text--wrapper">
-        <div data-v-30428f72="">
-          <div data-v-30428f72=""></div>
-        </div>
-      </div>
+      <div data-v-252db2c7="" class="rich-text--wrapper">You moved <span class="rich-text-file rich-text--component" data-v-252db2c7=""><!----> <a href="http://localhost:8080/index.php/f/776">Test file.md</a> <!----></span> to <span class="rich-text-file rich-text--component" data-v-252db2c7=""><!----> <a href="http://localhost:8080/index.php/f/753">Documents</a> <!----></span></div>
+      <div data-v-252db2c7="" class="rich-text--wrapper"></div>
     </div> <span class="activity-entry__date has-tooltip" data-original-title="null">11 days ago</span>
   </li>
 </div>
@@ -135,16 +95,8 @@ exports[`Display correct information for renames 1`] = `
       <!---->
     </div>
     <div class="activity-entry__content">
-      <div data-v-30428f72="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-30428f72="">
-          <p data-v-30428f72="">You renamed <span data-v-30428f72="" class="rich-text-file rich-text--component" attrs="[object Object]" key="h-2"><!----> <a href="http://localhost:8080/index.php/f/776">Test file - renamed.md</a> <!----></span> to <span data-v-30428f72="" class="rich-text-file rich-text--component" attrs="[object Object]" key="h-3"><!----> <a href="http://localhost:8080/index.php/f/776">Test file - renamed - looooooooong.md</a> <!----></span></p>
-        </div>
-      </div>
-      <div data-v-30428f72="" class="activity-entry__content__message rich-text--wrapper">
-        <div data-v-30428f72="">
-          <div data-v-30428f72=""></div>
-        </div>
-      </div>
+      <div data-v-252db2c7="" class="rich-text--wrapper">You renamed <span class="rich-text-file rich-text--component" data-v-252db2c7=""><!----> <a href="http://localhost:8080/index.php/f/776">Test file - renamed.md</a> <!----></span> to <span class="rich-text-file rich-text--component" data-v-252db2c7=""><!----> <a href="http://localhost:8080/index.php/f/776">Test file - renamed - looooooooong.md</a> <!----></span></div>
+      <div data-v-252db2c7="" class="rich-text--wrapper"></div>
     </div> <span class="activity-entry__date has-tooltip" data-original-title="null">11 days ago</span>
   </li>
 </div>
@@ -160,16 +112,8 @@ exports[`Display correct information for shares 1`] = `
       <!---->
     </div>
     <div class="activity-entry__content">
-      <div data-v-30428f72="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-30428f72="">
-          <p data-v-30428f72="">Shared as public link</p>
-        </div>
-      </div>
-      <div data-v-30428f72="" class="activity-entry__content__message rich-text--wrapper">
-        <div data-v-30428f72="">
-          <div data-v-30428f72=""></div>
-        </div>
-      </div>
+      <div data-v-252db2c7="" class="rich-text--wrapper">Shared as public link</div>
+      <div data-v-252db2c7="" class="rich-text--wrapper"></div>
     </div> <span class="activity-entry__date has-tooltip" data-original-title="null">11 days ago</span>
   </li>
 </div>
@@ -185,16 +129,8 @@ exports[`Display correct information for tags 1`] = `
       <!---->
     </div>
     <div class="activity-entry__content">
-      <div data-v-30428f72="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-30428f72="">
-          <p data-v-30428f72="">Added system tag <strong data-v-30428f72="" attrs="[object Object]" key="h-2" class="rich-text--component">tag1</strong></p>
-        </div>
-      </div>
-      <div data-v-30428f72="" class="activity-entry__content__message rich-text--wrapper">
-        <div data-v-30428f72="">
-          <div data-v-30428f72=""></div>
-        </div>
-      </div>
+      <div data-v-252db2c7="" class="rich-text--wrapper">Added system tag <strong class="rich-text--component" data-v-252db2c7="">tag1</strong></div>
+      <div data-v-252db2c7="" class="rich-text--wrapper"></div>
     </div> <span class="activity-entry__date has-tooltip" data-original-title="null">11 days ago</span>
   </li>
 </div>
@@ -210,16 +146,8 @@ exports[`Display correct information for unfavorites 1`] = `
       <!---->
     </div>
     <div class="activity-entry__content">
-      <div data-v-30428f72="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-30428f72="">
-          <p data-v-30428f72="">Removed from favorites</p>
-        </div>
-      </div>
-      <div data-v-30428f72="" class="activity-entry__content__message rich-text--wrapper">
-        <div data-v-30428f72="">
-          <div data-v-30428f72=""></div>
-        </div>
-      </div>
+      <div data-v-252db2c7="" class="rich-text--wrapper">Removed from favorites</div>
+      <div data-v-252db2c7="" class="rich-text--wrapper"></div>
     </div> <span class="activity-entry__date has-tooltip" data-original-title="null">11 days ago</span>
   </li>
 </div>
