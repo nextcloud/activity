@@ -36,7 +36,7 @@ OC.L10N.register(
     "This application enables people to view a log of activities about them, their files or other data." : "Este aplicativo permite que as pessoas visualizem um registro de atividades sobre eles ou sobre arquivos.",
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Este aplicativo permite que as pessoas vejam ações relacionadas a seus arquivos e dados no Nextcloud.\n\t\tCada pessoa pode definir suas configurações de atividade individuais nas configurações pessoais,\n\t\tpara escolher qual atividade deve ser enviada para telefones celulares, enviada por e-mail\n\t\tou se um resumo diário é enviado todas as manhãs.\n\t\tMais informações estão disponíveis na documentação da atividade.",
     "Activity notification configuration" : "Configuração de notificação de atividade",
-    "Send email" : "Enviar email",
+    "Send email" : "Enviar e-mail",
     "Send push notification" : "Enviar notificação push",
     "You need to set up your email address before you can receive notification emails." : "Você precisa configurar o endereço de e-mail para receber mensagens de notificação.",
     "Send activity emails" : "Enviar e-mails de atividades",
