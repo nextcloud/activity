@@ -27,7 +27,7 @@ OC.L10N.register(
     "By others" : "其他来源",
     "By you" : "本地来源",
     "Activity at %s" : "%s 的动态",
-    "Hello %s" : "%s 你好",
+    "Hello %s" : "%s 您好",
     "Hello %s," : "%s 你好，",
     "There was some activity at %s" : "在 %s 里有一些动态",
     "Mail" : "邮件",
