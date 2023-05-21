@@ -4,6 +4,7 @@ OC.L10N.register(
     "Today" : "Güei",
     "Yesterday" : "Ayeri",
     "Activity" : "Actividá",
+    "Recent activity" : "Actividá recién",
     "All activities" : "Toles actividaes",
     "Settings" : "Configuración"
 },
