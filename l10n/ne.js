@@ -39,7 +39,6 @@ OC.L10N.register(
     "Activity feed" : "गतिविधि पाटि",
     "Enable RSS feed" : "RSS फिड सक्षम गर्नुहोस्",
     "RSS feed" : "RSS फिड",
-    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
-    "Settings" : "सेटिङ्हरू"
+    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्"
 },
 "nplurals=2; plural=(n != 1);");

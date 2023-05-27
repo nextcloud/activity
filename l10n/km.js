@@ -51,9 +51,6 @@ OC.L10N.register(
     "RSS feed" : "RSS feed",
     "Personal notification settings" : "ការកំណត់ផ្ទាល់ខ្លួនលើការជូនដំណឹង",
     "No more events to load" : "គ្មាន​ព្រឹត្តិការណ៍​ច្រើនទៀតសម្រាប់ទាញយកមកទេ",
-    "This application enables users to view a log of activities about them or about files." : "កម្មវិធីនេះអនុញ្ញាតឱ្យអ្នកប្រើប្រាស់មើលកំណត់ហេតុនៃសកម្មភាពអំពីពួកគេ ឬអំពីឯកសារផ្សេងៗ។",
-    "Configure the default notification settings." : "កែការកំណត់លំនាំដើមនៃការជូនដំណឹង",
-    "Send activity emails:" : "ផ្ញើអ៊ីម៉ែលអំពីសកម្មភាព",
-    "Settings" : "ការកំណត់"
+    "This application enables users to view a log of activities about them or about files." : "កម្មវិធីនេះអនុញ្ញាតឱ្យអ្នកប្រើប្រាស់មើលកំណត់ហេតុនៃសកម្មភាពអំពីពួកគេ ឬអំពីឯកសារផ្សេងៗ។"
 },
 "nplurals=1; plural=0;");

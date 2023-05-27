@@ -4,7 +4,7 @@ OC.L10N.register(
     "Today" : "Güei",
     "Yesterday" : "Ayeri",
     "Activity" : "Actividá",
-    "All activities" : "Toles actividaes",
-    "Settings" : "Configuración"
+    "Recent activity" : "Actividá recién",
+    "All activities" : "Toles actividaes"
 },
 "nplurals=2; plural=(n != 1);");
