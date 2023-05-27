@@ -5,7 +5,6 @@ OC.L10N.register(
     "Yesterday" : "Ayeri",
     "Activity" : "Actividá",
     "Recent activity" : "Actividá recién",
-    "All activities" : "Toles actividaes",
-    "Settings" : "Configuración"
+    "All activities" : "Toles actividaes"
 },
 "nplurals=2; plural=(n != 1);");

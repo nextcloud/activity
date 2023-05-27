@@ -60,9 +60,6 @@ OC.L10N.register(
     "Personal notification settings" : "Хувийн мэдэгдлийн тохиргоо",
     "No more events to load" : "Өөр харуулах үйл явдал байхгүй байна",
     "This application enables users to view a log of activities about them or about files." : "Энэхүү аппликейшн нь хэрэглэгчдэд өөрийн үйлдлийн болон файлуудын бүртгэлээ хянах боломжийг олгоно. ",
-    "Configure the default notification settings." : "Мэдэгдлийн анхдагч тохиргоог тохируулах",
-    "Send activity emails:" : "Үйлдлүүдийг мэйлээр илгээх.",
-    "Settings" : "Тохиргоо",
     "Configure the default notification settings for new users." : "Шинэ хэрэглэгчдийн мэдэгдлийн анхдагч тохиргоог тохируулах"
 },
 "nplurals=2; plural=(n != 1);");
