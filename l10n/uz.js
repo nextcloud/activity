@@ -12,7 +12,6 @@ OC.L10N.register(
     "Mail" : "Mail",
     "Notifications" : "Notifications",
     "Send email" : "Send email",
-    "Activities" : "Activities",
-    "Settings" : "Settings"
+    "Activities" : "Activities"
 },
 "nplurals=1; plural=0;");

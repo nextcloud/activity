@@ -30,7 +30,6 @@ OC.L10N.register(
     "Default settings" : "Tetapan lalai",
     "Activity feed" : "Suapan aktiviti",
     "RSS feed" : "Suapan RSS",
-    "No more events to load" : "Tiada aktiviti untuk memuat",
-    "Settings" : "Tetapan"
+    "No more events to load" : "Tiada aktiviti untuk memuat"
 },
 "nplurals=1; plural=0;");

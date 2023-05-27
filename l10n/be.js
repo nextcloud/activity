@@ -61,9 +61,6 @@ OC.L10N.register(
     "Copy RSS feed link" : "Скапіяваць спасылку да ленты RSS",
     "Personal notification settings" : "Асабістыя налады апавяшчэння",
     "No more events to load" : "Няма больш падзей для загрузкі",
-    "Configure the default notification settings." : "Наладзь прадвызначаныя налады абвяшчэння.",
-    "Send activity emails:" : "Дасылаць імэйлы пра дзеянні:",
-    "Settings" : "Налады",
     "Configure the default notification settings for new users." : "Наладзь прадвызначаныя налады абвяшчэння для новых карыстальнікаў."
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

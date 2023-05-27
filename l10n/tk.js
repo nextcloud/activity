@@ -8,7 +8,6 @@ OC.L10N.register(
     "Hello %s" : "Salam%s",
     "Notifications" : "Duýduryşlar",
     "No activity yet" : "Entek işjeňlik ýok",
-    "Activities" : "Çäreler",
-    "Settings" : "Sazlamalar"
+    "Activities" : "Çäreler"
 },
 "nplurals=2; plural=(n != 1);");
