@@ -36,7 +36,6 @@ OC.L10N.register(
     "Default settings" : "Configurationes predefinite",
     "Activity feed" : "Syndication de activitate",
     "Enable RSS feed" : "Habilita syndication RSS",
-    "No more events to load" : "Nulle altere eventos a cargar",
-    "Settings" : "Configurationes"
+    "No more events to load" : "Nulle altere eventos a cargar"
 },
 "nplurals=2; plural=(n != 1);");

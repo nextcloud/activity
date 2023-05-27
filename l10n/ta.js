@@ -13,7 +13,6 @@ OC.L10N.register(
     "By others" : "மற்றவர்களால்",
     "By you" : "உங்களால் ",
     "Hello %s" : "வணக்கம் %s",
-    "Hello %s," : "வணக்கம் %s,",
-    "Settings" : "அமைப்புகள்"
+    "Hello %s," : "வணக்கம் %s,"
 },
 "nplurals=2; plural=(n != 1);");

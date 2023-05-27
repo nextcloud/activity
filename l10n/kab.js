@@ -39,7 +39,6 @@ OC.L10N.register(
     "Activity feed" : "Asuddem n warmud",
     "Enable RSS feed" : "Ssermed asuddem RSS",
     "RSS feed" : "Asuddem RSS",
-    "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
-    "Settings" : "Iɣewwaṛen"
+    "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen"
 },
 "nplurals=2; plural=(n != 1);");

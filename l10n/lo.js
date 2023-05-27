@@ -8,7 +8,6 @@ OC.L10N.register(
     "Notifications" : "ການເເຈ້ງເຕືອນ",
     "No activity yet" : "ຍັງບໍ່ມີກິດຈະກໍາເທື່ອ",
     "Notification" : "ແຈ້ງການ",
-    "Activities" : "ບັນດາກິດຈະກຳ",
-    "Settings" : "ການຕັ້ງຄ່າ"
+    "Activities" : "ບັນດາກິດຈະກຳ"
 },
 "nplurals=1; plural=0;");

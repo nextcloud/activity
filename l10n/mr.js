@@ -39,8 +39,6 @@ OC.L10N.register(
     "Daily activity summary" : "दैनिक क्रिया सारांश",
     "No activities" : "कोणत्याही क्रिया नाहीत",
     "Default settings" : "मूळ सेटींग",
-    "Activity feed" : "क्रियेची फीड",
-    "Send activity emails:" : "क्रियेची ई-मेल पाठवा:",
-    "Settings" : "सेटिंग"
+    "Activity feed" : "क्रियेची फीड"
 },
 "nplurals=2; plural=(n != 1);");

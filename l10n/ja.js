@@ -65,9 +65,6 @@ OC.L10N.register(
     "No more events to load" : "これ以上読み込むイベントはありません",
     "This application enables users to view a log of activities about them or about files." : "このアプリケーションは、ユーザーのアクティビティやファイルのログを表示します。",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "このアプリケーションは、ユーザーが行ったファイル関連のアクションを表示します。\n\t\t有効にすると、アプリのメニューに「アクティビティ」アイコンが表示されます。\n\t\tこのアイコンをクリックすると、ファイルの追加/削除/更新/移動/名前の変更/共有、これらのファイルへのアクションの履歴を表示します。\n\t\t個人の設定メニューで記録するアクティビティ関連の設定ができます。\n\t\tこの設定メニューでは、記録するアクティビティタイプの選択と記録方法、通知方法の選択が可能です。\n\t\tまた、通知方法でメールを選択した場合には、通知間隔の選択ができます。\n\t\t詳細は、アクティビティのドキュメントを参照してください。",
-    "Configure the default notification settings." : "デフォルトの通知設定をする。",
-    "Send activity emails:" : "通知メールを送る頻度:",
-    "Settings" : "設定",
     "Configure the default notification settings for new users." : "新規ユーザーのデフォルトの通知設定を設定します。"
 },
 "nplurals=1; plural=0;");

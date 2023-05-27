@@ -31,7 +31,6 @@ OC.L10N.register(
     "Enable notification emails" : "දැනුම්දීම් විද්‍යුත් තැපෑල සබල කරන්න",
     "No activities" : "ක්‍රියාකාරකම් නැත",
     "Default settings" : "සාමාන්‍ය සැකසුම්",
-    "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත",
-    "Settings" : "සැකසුම්"
+    "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත"
 },
 "nplurals=2; plural=(n != 1);");

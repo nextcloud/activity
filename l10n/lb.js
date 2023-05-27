@@ -34,7 +34,6 @@ OC.L10N.register(
     "No activities" : "Keng Aktivitéiten",
     "Activity feed" : "Aktivitéits-Feed",
     "Enable RSS feed" : "RSS-Feed aktivéieren",
-    "No more events to load" : "Keng weider Evenementer fir ze lueden",
-    "Settings" : "Astellungen"
+    "No more events to load" : "Keng weider Evenementer fir ze lueden"
 },
 "nplurals=2; plural=(n != 1);");
