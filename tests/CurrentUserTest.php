@@ -30,6 +30,11 @@ use PHPUnit\Framework\MockObject\MockObject;
 use OCP\IUserSession;
 use OCP\Share\IManager;
 
+/* We have to use this to add a property to the mocked request and avoid warnings about dynamic properties on PHP>=8.2 */
+abstract class RequestMock implements IRequest {
+	public array $server = [];
+}
+
 /**
  * Class CurrentUserTest
  *
@@ -48,7 +53,7 @@ class CurrentUserTest extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->request = $this->createMock(IRequest::class);
+		$this->request = $this->createMock(RequestMock::class);
 		$this->userSession = $this->createMock(IUserSession::class);
 		$this->shareManager = $this->createMock(IManager::class);
 	}
