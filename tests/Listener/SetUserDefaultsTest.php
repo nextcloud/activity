@@ -42,6 +42,12 @@ class SetUserDefaultsTest extends TestCase {
 	 */
 	private $listener;
 
+	/** @var IUser|MockObject */
+	private $user;
+
+	/** @var PostLoginEvent */
+	private $event;
+
 	public const UID = 'myuser';
 
 	public function setUp(): void {
