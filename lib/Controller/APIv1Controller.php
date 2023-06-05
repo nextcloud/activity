@@ -51,11 +51,11 @@ class APIv1Controller extends OCSController {
 	 * @param CurrentUser $currentUser
 	 */
 	public function __construct($appName,
-								IRequest $request,
-								Data $data,
-								GroupHelper $groupHelper,
-								UserSettings $userSettings,
-								CurrentUser $currentUser) {
+		IRequest $request,
+		Data $data,
+		GroupHelper $groupHelper,
+		UserSettings $userSettings,
+		CurrentUser $currentUser) {
 		parent::__construct($appName, $request);
 
 		$this->data = $data;

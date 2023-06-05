@@ -48,11 +48,11 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget {
 	private IURLGenerator $urlGenerator;
 
 	public function __construct(IL10N $l10n,
-								Data $data,
-								GroupHelper $helper,
-								UserSettings $settings,
-								IURLGenerator $urlGenerator,
-								IDateTimeFormatter $dateTimeFormatter) {
+		Data $data,
+		GroupHelper $helper,
+		UserSettings $settings,
+		IURLGenerator $urlGenerator,
+		IDateTimeFormatter $dateTimeFormatter) {
 		$this->data = $data;
 		$this->l10n = $l10n;
 		$this->helper = $helper;

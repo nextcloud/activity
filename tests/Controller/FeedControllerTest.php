@@ -25,18 +25,18 @@ declare(strict_types=1);
 namespace OCA\Activity\Tests\Controller;
 
 use OCA\Activity\Controller\FeedController;
-use OCA\Activity\Tests\TestCase;
-use OCP\AppFramework\Http\TemplateResponse;
-use OCP\Util;
-use OCP\IURLGenerator;
-use OCP\Activity\IManager;
-use OCP\IUserSession;
-use OCP\IRequest;
-use OCP\IConfig;
-use OCA\Activity\UserSettings;
-use OCA\Activity\GroupHelper;
 use OCA\Activity\Data;
+use OCA\Activity\GroupHelper;
+use OCA\Activity\Tests\TestCase;
+use OCA\Activity\UserSettings;
+use OCP\Activity\IManager;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IConfig;
+use OCP\IRequest;
+use OCP\IURLGenerator;
 use OCP\IUser;
+use OCP\IUserSession;
+use OCP\Util;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class FeedControllerTest extends TestCase {

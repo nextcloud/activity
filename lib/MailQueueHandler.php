@@ -95,15 +95,15 @@ class MailQueueHandler {
 	protected $logger;
 
 	public function __construct(IDateTimeFormatter $dateFormatter,
-								IDBConnection $connection,
-								IMailer $mailer,
-								IURLGenerator $urlGenerator,
-								IUserManager $userManager,
-								IFactory $lFactory,
-								IManager $activityManager,
-								IValidator $richObjectValidator,
-								IConfig $config,
-								ILogger $logger) {
+		IDBConnection $connection,
+		IMailer $mailer,
+		IURLGenerator $urlGenerator,
+		IUserManager $userManager,
+		IFactory $lFactory,
+		IManager $activityManager,
+		IValidator $richObjectValidator,
+		IConfig $config,
+		ILogger $logger) {
 		$this->dateFormatter = $dateFormatter;
 		$this->connection = $connection;
 		$this->mailer = $mailer;

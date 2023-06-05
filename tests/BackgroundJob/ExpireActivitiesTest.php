@@ -29,8 +29,8 @@ use OCA\Activity\BackgroundJob\ExpireActivities;
 use OCA\Activity\Data;
 use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Utility\ITimeFactory;
-use OCP\IConfig;
 use OCP\BackgroundJob\IJobList;
+use OCP\IConfig;
 
 /**
  * Class ExpireActivitiesTest

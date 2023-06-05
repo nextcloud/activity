@@ -25,8 +25,8 @@ namespace OCA\Activity;
 
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager as ActivityManager;
-use OCP\Notification\IManager as NotificationManager;
 use OCP\IL10N;
+use OCP\Notification\IManager as NotificationManager;
 use OCP\Notification\INotification;
 use OCP\Notification\INotifier;
 

@@ -61,10 +61,10 @@ class Navigation {
 	 * @param CurrentUser $currentUser
 	 */
 	public function __construct(IL10N $l,
-								IManager $manager,
-								IURLGenerator $URLGenerator,
-								IConfig $config,
-								CurrentUser $currentUser) {
+		IManager $manager,
+		IURLGenerator $URLGenerator,
+		IConfig $config,
+		CurrentUser $currentUser) {
 		$this->l = $l;
 		$this->activityManager = $manager;
 		$this->URLGenerator = $URLGenerator;

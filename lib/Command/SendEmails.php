@@ -50,8 +50,8 @@ class SendEmails extends Base {
 	 * @param ILogger $logger
 	 */
 	public function __construct(MailQueueHandler $queueHandler,
-								IConfig $config,
-								ILogger $logger) {
+		IConfig $config,
+		ILogger $logger) {
 		parent::__construct();
 
 		$this->queueHandler = $queueHandler;

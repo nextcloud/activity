@@ -25,13 +25,13 @@ declare(strict_types=1);
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\Consumer;
-use OCA\Activity\NotificationGenerator;
-use OCP\Activity\IManager;
-use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Activity\Data;
+use OCA\Activity\NotificationGenerator;
 use OCA\Activity\UserSettings;
+use OCP\Activity\IManager;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class ConsumerTest

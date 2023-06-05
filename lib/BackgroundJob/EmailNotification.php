@@ -39,7 +39,7 @@ class EmailNotification extends TimedJob {
 	protected $isCLI;
 
 	public function __construct(MailQueueHandler $mailQueueHandler,
-								bool $isCLI) {
+		bool $isCLI) {
 		// Run everytime cron is executed, so the batching doesn't delay too much
 		$this->setInterval(1);
 

@@ -58,12 +58,12 @@ class ActivitiesController extends Controller {
 	 * @param IL10N $l10n
 	 */
 	public function __construct($appName,
-								IRequest $request,
-								IConfig $config,
-								Data $data,
-								Navigation $navigation,
-								EventDispatcherInterface $eventDispatcher,
-								IL10N $l10n) {
+		IRequest $request,
+		IConfig $config,
+		Data $data,
+		Navigation $navigation,
+		EventDispatcherInterface $eventDispatcher,
+		IL10N $l10n) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
 		$this->config = $config;

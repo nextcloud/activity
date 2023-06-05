@@ -22,6 +22,7 @@
 namespace OCA\Activity\Controller;
 
 use OCA\Activity\Extension\Files;
+use OCP\Activity\IManager as IActivityManager;
 use OCP\App\IAppManager;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
@@ -31,7 +32,6 @@ use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\IDBConnection;
 use OCP\IRequest;
-use OCP\Activity\IManager as IActivityManager;
 use OCP\IUser;
 use OCP\IUserManager;
 
@@ -52,12 +52,12 @@ class RemoteActivityController extends OCSController {
 	protected $activityManager;
 
 	public function __construct($appName,
-								IRequest $request,
-								IDBConnection $db,
-								IUserManager $userManager,
-								IAppManager $appManager,
-								IRootFolder $rootFolder,
-								IActivityManager $activityManager) {
+		IRequest $request,
+		IDBConnection $db,
+		IUserManager $userManager,
+		IAppManager $appManager,
+		IRootFolder $rootFolder,
+		IActivityManager $activityManager) {
 		parent::__construct($appName, $request);
 		$this->db = $db;
 		$this->userManager = $userManager;
