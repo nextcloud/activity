@@ -70,14 +70,14 @@ class SettingsController extends Controller {
 	 * @param CurrentUser $currentUser
 	 */
 	public function __construct($appName,
-								IRequest $request,
-								IConfig $config,
-								ISecureRandom $random,
-								IURLGenerator $urlGenerator,
-								IManager $manager,
-								UserSettings $userSettings,
-								IL10N $l10n,
-								CurrentUser $currentUser) {
+		IRequest $request,
+		IConfig $config,
+		ISecureRandom $random,
+		IURLGenerator $urlGenerator,
+		IManager $manager,
+		UserSettings $userSettings,
+		IL10N $l10n,
+		CurrentUser $currentUser) {
 		parent::__construct($appName, $request);
 		$this->config = $config;
 		$this->random = $random;
@@ -98,10 +98,10 @@ class SettingsController extends Controller {
 	 * @return DataResponse
 	 */
 	public function personal(
-			$notify_setting_batchtime = UserSettings::EMAIL_SEND_HOURLY,
-			$notify_setting_self = false,
-			$notify_setting_selfemail = false,
-			$activity_digest = false
+		$notify_setting_batchtime = UserSettings::EMAIL_SEND_HOURLY,
+		$notify_setting_self = false,
+		$notify_setting_selfemail = false,
+		$activity_digest = false
 	) {
 		$settings = $this->manager->getSettings();
 		foreach ($settings as $setting) {
@@ -164,9 +164,9 @@ class SettingsController extends Controller {
 	 * @return DataResponse
 	 */
 	public function admin(
-			$notify_setting_batchtime = UserSettings::EMAIL_SEND_HOURLY,
-			$notify_setting_self = false,
-			$notify_setting_selfemail = false) {
+		$notify_setting_batchtime = UserSettings::EMAIL_SEND_HOURLY,
+		$notify_setting_self = false,
+		$notify_setting_selfemail = false) {
 		$settings = $this->manager->getSettings();
 		foreach ($settings as $setting) {
 			$this->config->setAppValue(

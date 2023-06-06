@@ -51,9 +51,9 @@ class GroupHelper {
 	protected $logger;
 
 	public function __construct(IL10N $l,
-								IManager $activityManager,
-								IValidator $richObjectValidator,
-								ILogger $logger) {
+		IManager $activityManager,
+		IValidator $richObjectValidator,
+		ILogger $logger) {
 		$this->allowGrouping = true;
 
 		$this->l = $l;

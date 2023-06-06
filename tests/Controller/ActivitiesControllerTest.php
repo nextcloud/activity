@@ -23,17 +23,17 @@
 namespace OCA\Activity\Tests\Controller;
 
 use OCA\Activity\Controller\ActivitiesController;
+use OCA\Activity\Data;
+use OCA\Activity\Navigation;
 use OCA\Activity\Tests\TestCase;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IConfig;
 use OCP\IL10N;
 use OCP\ILogger;
+use OCP\IRequest;
 use OCP\Template;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use OCP\IRequest;
-use OCA\Activity\Data;
-use OCP\IConfig;
-use OCA\Activity\Navigation;
-use OCP\AppFramework\Http\TemplateResponse;
 
 /**
  * Class ActivitiesTest

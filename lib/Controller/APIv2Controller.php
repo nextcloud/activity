@@ -95,16 +95,16 @@ class APIv2Controller extends OCSController {
 	protected $infoCache;
 
 	public function __construct($appName,
-								IRequest $request,
-								IManager $activityManager,
-								Data $data,
-								GroupHelper $helper,
-								UserSettings $settings,
-								IURLGenerator $urlGenerator,
-								IUserSession $userSession,
-								IPreview $preview,
-								IMimeTypeDetector $mimeTypeDetector,
-								ViewInfoCache $infoCache) {
+		IRequest $request,
+		IManager $activityManager,
+		Data $data,
+		GroupHelper $helper,
+		UserSettings $settings,
+		IURLGenerator $urlGenerator,
+		IUserSession $userSession,
+		IPreview $preview,
+		IMimeTypeDetector $mimeTypeDetector,
+		ViewInfoCache $infoCache) {
 		parent::__construct($appName, $request);
 		$this->activityManager = $activityManager;
 		$this->data = $data;

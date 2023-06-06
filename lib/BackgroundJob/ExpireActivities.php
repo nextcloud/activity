@@ -36,8 +36,8 @@ class ExpireActivities extends TimedJob {
 	protected $config;
 
 	public function __construct(ITimeFactory $time,
-								Data $data,
-								IConfig $config) {
+		Data $data,
+		IConfig $config) {
 		parent::__construct($time);
 
 		// Run once per day

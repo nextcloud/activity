@@ -25,27 +25,27 @@ declare(strict_types=1);
 namespace OCA\Activity;
 
 use OC\Files\Config\CachedMountFileInfo;
+use OC\Files\View;
 use OC\TagManager;
 use OC\Tags;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\Tests\TestCase;
+use OCA\Files_Sharing\SharedStorage;
+use OCP\Activity\IEvent;
+use OCP\Activity\IManager;
 use OCP\Files\Config\IUserMountCache;
 use OCP\Files\IRootFolder;
+use OCP\Files\Mount\IMountPoint;
 use OCP\Files\NotFoundException;
 use OCP\IConfig;
+use OCP\IGroup;
+use OCP\IGroupManager;
 use OCP\ILogger;
+use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
-use OCP\Activity\IManager;
-use OCP\IGroupManager;
-use OC\Files\View;
-use OCP\IURLGenerator;
-use OCP\IGroup;
-use OCA\Files_Sharing\SharedStorage;
-use OCP\Files\Mount\IMountPoint;
-use OCP\Activity\IEvent;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**

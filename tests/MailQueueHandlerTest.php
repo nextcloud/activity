@@ -26,20 +26,20 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests;
 
+use OC\Mail\Message;
 use OCA\Activity\MailQueueHandler;
+use OCP\Activity\IEvent;
+use OCP\Activity\IManager;
 use OCP\IConfig;
+use OCP\IDateTimeFormatter;
 use OCP\IL10N;
 use OCP\ILogger;
-use OCP\L10N\IFactory;
-use OCP\Activity\IEvent;
+use OCP\IURLGenerator;
+use OCP\IUser;
 use OCP\IUserManager;
-use OCP\Activity\IManager;
+use OCP\L10N\IFactory;
 use OCP\Mail\IEMailTemplate;
 use OCP\Mail\IMailer;
-use OC\Mail\Message;
-use OCP\IURLGenerator;
-use OCP\IDateTimeFormatter;
-use OCP\IUser;
 use OCP\RichObjectStrings\IValidator;
 use PHPUnit\Framework\MockObject\MockObject;
 

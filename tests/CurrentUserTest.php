@@ -24,11 +24,11 @@ namespace OCA\Activity\Tests;
 use OCA\Activity\CurrentUser;
 use OCP\IRequest;
 use OCP\IUser;
+use OCP\IUserSession;
 use OCP\Share\Exceptions\ShareNotFound;
+use OCP\Share\IManager;
 use OCP\Share\IShare;
 use PHPUnit\Framework\MockObject\MockObject;
-use OCP\IUserSession;
-use OCP\Share\IManager;
 
 /* We have to use this to add a property to the mocked request and avoid warnings about dynamic properties on PHP>=8.2 */
 abstract class RequestMock implements IRequest {

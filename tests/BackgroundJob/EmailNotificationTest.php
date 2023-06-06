@@ -28,8 +28,8 @@ use OC\BackgroundJob\JobList;
 use OCA\Activity\BackgroundJob\EmailNotification;
 use OCA\Activity\MailQueueHandler;
 use OCA\Activity\Tests\TestCase;
-use OCP\ILogger;
 use OCP\BackgroundJob\IJobList;
+use OCP\ILogger;
 
 /**
  * Class EmailNotificationTest

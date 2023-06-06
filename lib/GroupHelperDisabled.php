@@ -28,9 +28,9 @@ use OCP\RichObjectStrings\IValidator;
 
 class GroupHelperDisabled extends GroupHelper {
 	public function __construct(IL10N $l,
-								IManager $activityManager,
-								IValidator $richObjectValidator,
-								ILogger $logger) {
+		IManager $activityManager,
+		IValidator $richObjectValidator,
+		ILogger $logger) {
 		parent::__construct($l,
 			$activityManager,
 			$richObjectValidator,

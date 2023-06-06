@@ -25,23 +25,23 @@ declare(strict_types=1);
 namespace OCA\Activity\Tests\Controller;
 
 use OCA\Activity\Controller\APIv2Controller;
+use OCA\Activity\Data;
 use OCA\Activity\Exception\InvalidFilterException;
+use OCA\Activity\GroupHelper;
 use OCA\Activity\Tests\TestCase;
+use OCA\Activity\UserSettings;
+use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\IL10N;
-use OCP\IUser;
-use OCP\IRequest;
-use OCA\Activity\ViewInfoCache;
 use OCP\Files\IMimeTypeDetector;
-use OCP\IUserSession;
-use OCP\IURLGenerator;
+use OCP\IL10N;
 use OCP\IPreview;
-use OCA\Activity\UserSettings;
-use OCA\Activity\GroupHelper;
-use OCA\Activity\Data;
+use OCP\IRequest;
+use OCP\IURLGenerator;
+use OCP\IUser;
+use OCP\IUserSession;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**

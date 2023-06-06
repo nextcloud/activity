@@ -75,14 +75,14 @@ class FeedController extends Controller {
 	 * @param IConfig $config
 	 */
 	public function __construct($appName,
-								IRequest $request,
-								Data $data,
-								GroupHelper $helper,
-								UserSettings $settings,
-								IURLGenerator $urlGenerator,
-								IManager $activityManager,
-								IFactory $l10nFactory,
-								IConfig $config) {
+		IRequest $request,
+		Data $data,
+		GroupHelper $helper,
+		UserSettings $settings,
+		IURLGenerator $urlGenerator,
+		IManager $activityManager,
+		IFactory $l10nFactory,
+		IConfig $config) {
 		parent::__construct($appName, $request);
 		$this->data = $data;
 		$this->helper = $helper;

@@ -31,5 +31,8 @@
 		"nextcloud/ocp": "dev-master",
 		"phpunit/phpunit": "^9.5",
 		"vimeo/psalm": "^5.1"
+	},
+	"require": {
+		"symfony/event-dispatcher": "^5.4"
 	}
 }
