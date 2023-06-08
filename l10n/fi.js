@@ -59,6 +59,7 @@ OC.L10N.register(
     "Activity settings" : "Tapahtumien asetukset",
     "Enable RSS feed" : "Ota RSS-syöte käyttöön",
     "RSS feed" : "RSS-syöte",
+    "Copy RSS feed link" : "Kopioi RSS-syötteen linkki",
     "Personal notification settings" : "Henkilökohtaisten ilmoitusten asetukset",
     "No more events to load" : "Ei enempää tapahtumia",
     "This application enables users to view a log of activities about them or about files." : "Tämän sovelluksen avulla käyttäjät voivat tarkastella tapahtumalokeja liittyen käyttäjään ja hänen tiedostoihinsa.",
