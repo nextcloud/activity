@@ -61,6 +61,7 @@ OC.L10N.register(
     "Activity settings" : "Ρυθμίσεις δραστηριότητας",
     "Enable RSS feed" : "Ενεργοποίηση ροής πληροφοριών RSS",
     "RSS feed" : "Ροή RSS",
+    "Copy RSS feed link" : "Αντιγραφή συνδέσμου ροής πληροφοριών RSS",
     "Personal notification settings" : "Ρυθμίσεις προσωπικών ειδοποιήσεων",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
     "This application enables users to view a log of activities about them or about files." : "Αυτή η εφαρμογή δίνει τη δυνατότητα στους χρήστες να προβάλλουν ένα αρχείο καταγραφής δραστηριοτήτων σχετικά με αυτούς ή σχετικά με αρχεία.",
