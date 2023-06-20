@@ -3,7 +3,7 @@
 exports[`Display correct information for changes 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-376f14da="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
+    <div data-v-f73be20c="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
       <!---->
       <!---->
       <!---->
@@ -24,7 +24,7 @@ exports[`Display correct information for changes 1`] = `
 exports[`Display correct information for comments 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-376f14da="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
+    <div data-v-f73be20c="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
       <!---->
       <!---->
       <!---->
@@ -45,7 +45,7 @@ exports[`Display correct information for comments 1`] = `
 exports[`Display correct information for creations 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-376f14da="" class="avatardiv popovermenu-wrapper activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
+    <div data-v-f73be20c="" class="avatardiv popovermenu-wrapper activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
       <!---->
       <!---->
       <!---->
@@ -66,7 +66,7 @@ exports[`Display correct information for creations 1`] = `
 exports[`Display correct information for favorites 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-376f14da="" class="avatardiv popovermenu-wrapper activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
+    <div data-v-f73be20c="" class="avatardiv popovermenu-wrapper activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
       <!---->
       <!---->
       <!---->
@@ -87,7 +87,7 @@ exports[`Display correct information for favorites 1`] = `
 exports[`Display correct information for moves 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-376f14da="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
+    <div data-v-f73be20c="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
       <!---->
       <!---->
       <!---->
@@ -108,7 +108,7 @@ exports[`Display correct information for moves 1`] = `
 exports[`Display correct information for renames 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-376f14da="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
+    <div data-v-f73be20c="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
       <!---->
       <!---->
       <!---->
@@ -129,7 +129,7 @@ exports[`Display correct information for renames 1`] = `
 exports[`Display correct information for shares 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-376f14da="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
+    <div data-v-f73be20c="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
       <!---->
       <!---->
       <!---->
@@ -150,7 +150,7 @@ exports[`Display correct information for shares 1`] = `
 exports[`Display correct information for tags 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-376f14da="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
+    <div data-v-f73be20c="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
       <!---->
       <!---->
       <!---->
@@ -171,7 +171,7 @@ exports[`Display correct information for tags 1`] = `
 exports[`Display correct information for unfavorites 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-376f14da="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
+    <div data-v-f73be20c="" class="avatardiv popovermenu-wrapper monochrome activity-entry__icon activity-icon" style="--size: 15px; line-height: 15px; font-size: 7px;">
       <!---->
       <!---->
       <!---->
