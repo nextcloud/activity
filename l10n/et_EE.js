@@ -34,6 +34,7 @@ OC.L10N.register(
     "Push" : "Vajuta",
     "Notifications" : "Teavitused",
     "This application enables people to view a log of activities about them, their files or other data." : "See rakendus võimaldab inimestel vaadata nende tegevust, nende faile või muid andmeid käsitlevat logi.",
+    "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "See rakendus võimaldab inimestel Nextcloudis näha nende failide ja andmetega seotud toiminguid.\n\t\tIga inimene saab isiklikes seadetes konfigureerida oma individuaalseid tegevussätteid,\n\t\tet valida, millised tegevused edastatakse mobiiltelefonidele, saadetakse e-postiga\n\t\tvõi saadetakse iga hommik päevane kokkuvõte.\n\t\tLisateavet leiate tegevuse dokumentatsioonist.",
     "Activity notification configuration" : "Tegevusest teavitamise konfiguratsioon",
     "Send email" : "Saada e-kiri",
     "Send push notification" : "Push-teate saatmine",
