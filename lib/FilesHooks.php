@@ -355,7 +355,16 @@ class FilesHooks {
 			$this->moveCase = false;
 			return;
 		}
-		$this->oldAccessList = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
+
+		$oldAccessList = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
+
+		// file can be shared using GroupFolders, including ACL check
+		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
+			[, , $oldFileId] = $this->getSourcePathAndOwner($oldPath);
+			$oldAccessList['users'] = array_merge($oldAccessList['users'], $this->getAffectedUsersFromCachedMounts($oldFileId));
+		}
+
+		$this->oldAccessList = $oldAccessList;
 	}
 
 
@@ -416,6 +425,12 @@ class FilesHooks {
 		$this->generateRemoteActivity($renameRemotes, Files::TYPE_FILE_CHANGED, time(), $this->currentUser->getCloudId());
 
 		$affectedUsers = $accessList['users'];
+
+		// file can be shared using GroupFolders, including ACL check
+		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
+			$affectedUsers = array_merge($affectedUsers, $this->getAffectedUsersFromCachedMounts($fileId));
+		}
+
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers));
 
 		foreach ($affectedUsers as $user => $path) {
@@ -464,6 +479,12 @@ class FilesHooks {
 		$accessList = $this->getUserPathsFromPath($parentPath, $parentOwner);
 		$affectedUsers = $accessList['users'];
 		$oldUsers = $this->oldAccessList['users'];
+
+		// file can be shared using GroupFolders, including ACL check
+		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
+			$this->userMountCache->clear(); // clear cache for new data
+			$affectedUsers = array_merge($affectedUsers, $this->getAffectedUsersFromCachedMounts($fileId));
+		}
 
 		$beforeUsers = array_keys($oldUsers);
 		$afterUsers = array_keys($affectedUsers);
