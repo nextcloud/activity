@@ -47,7 +47,7 @@ OC.L10N.register(
     "No activity yet" : "Поки що відсутні події",
     "Unable to load the activity list" : "Неможливо завантажити список дій",
     "Notification" : "Сповіщення",
-    "Enable notification emails" : "Увімкнути сповіщення електронною поштою",
+    "Enable notification emails" : "Надсилати сповіщення електронною поштою",
     "Choose for which activities you want to get an email or push notification." : "Оберіть події щодо яких Ви бажаєте отримувати сповіщення електронною поштою або у вигляді push-сповіщень.",
     "Choose for which activities you want to get a push notification." : "Оберіть події щодо яких Ви бажаєте отримувати puch-сповіщеня.",
     "Daily activity summary" : "Щоденні підсумки про події",
