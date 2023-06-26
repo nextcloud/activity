@@ -29,6 +29,7 @@ import { generateFilePath } from '@nextcloud/router'
 import { getRequestToken } from '@nextcloud/auth'
 import { translate, translatePlural } from '@nextcloud/l10n'
 
+// eslint-disable-next-line node/no-extraneous-import
 import Vue from 'vue'
 // import Vuex from 'vuex'
 
