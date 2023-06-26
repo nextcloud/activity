@@ -217,7 +217,7 @@ export default {
 			color: var(--color-text-lighter);
 		}
 
-		::v-deep a {
+		:deep(a) {
 			font-weight: bold;
 
 			&:hover {
