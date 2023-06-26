@@ -19,6 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+// eslint-disable-next-line node/no-extraneous-import
 import Vue from 'vue'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 
