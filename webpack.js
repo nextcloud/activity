@@ -1,5 +1,5 @@
 const path = require('path')
-
+const CopyPlugin = require('copy-webpack-plugin')
 const webpackConfig = require('@nextcloud/webpack-vue-config')
 
 webpackConfig.entry = {
@@ -21,5 +21,13 @@ webpackConfig.module.rules.push({
 	resourceQuery: /raw/,
 	type: 'asset/source',
 })
+
+webpackConfig.plugins.push(
+	new CopyPlugin({
+		patterns: [
+			{ from: 'src/legacy_scripts', to: '' },
+		],
+	})
+)
 
 module.exports = webpackConfig
