@@ -7,8 +7,7 @@ axios.get = function(url) {
 		if (url === 'http://localhost/ocs/v2.php/apps/activity/api/v2/activity/filter') {
 			resolve({ data: wsData })
 		} else {
-			// eslint-disable-next-line no-console
-			console.log(url)
+			reject(new Error(`URL not defined ${url}`))
 		}
 	})
 }
