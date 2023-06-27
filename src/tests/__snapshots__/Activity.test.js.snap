@@ -11,7 +11,7 @@ exports[`Display correct information for changes 1`] = `
     </div>
     <div class="activity-entry__content">
       <div data-v-a8ade67f="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-a8ade67f="">You changed <span data-v-a8ade67f="" class="rich-text-file rich-text--component"><!----> <a title="" aria-label="" href="http://localhost:8080/index.php/f/776">Test file - renamed.md</a> <!----></span></div>
+        <div data-v-a8ade67f="">You changed <span data-v-a8ade67f="" class="rich-text-file rich-text--component"><!----> <a title="in Test file - renamed.md" aria-label="in Test file - renamed.md" href="http://localhost:8080/index.php/f/776">Test file - renamed.md</a> <!----></span></div>
       </div>
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f=""></div>
@@ -53,7 +53,7 @@ exports[`Display correct information for creations 1`] = `
     </div>
     <div class="activity-entry__content">
       <div data-v-a8ade67f="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-a8ade67f="">You created <span data-v-a8ade67f="" class="rich-text-file rich-text--component"><!----> <a title="" aria-label="" href="http://localhost:8080/index.php/f/776">Test file.md</a> <!----></span></div>
+        <div data-v-a8ade67f="">You created <span data-v-a8ade67f="" class="rich-text-file rich-text--component"><!----> <a title="in Test file.md" aria-label="in Test file.md" href="http://localhost:8080/index.php/f/776">Test file.md</a> <!----></span></div>
       </div>
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f=""></div>
@@ -95,7 +95,7 @@ exports[`Display correct information for moves 1`] = `
     </div>
     <div class="activity-entry__content">
       <div data-v-a8ade67f="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-a8ade67f="">You moved <span data-v-a8ade67f="" class="rich-text-file rich-text--component"><!----> <a title="" aria-label="" href="http://localhost:8080/index.php/f/776">Test file.md</a> <!----></span> to <span data-v-a8ade67f="" class="rich-text-file rich-text--component"><!----> <a title="" aria-label="" href="http://localhost:8080/index.php/f/753">Documents</a> <!----></span></div>
+        <div data-v-a8ade67f="">You moved <span data-v-a8ade67f="" class="rich-text-file rich-text--component"><!----> <a title="in Test file.md" aria-label="in Test file.md" href="http://localhost:8080/index.php/f/776">Test file.md</a> <!----></span> to <span data-v-a8ade67f="" class="rich-text-file rich-text--component"><!----> <a title="in Documents" aria-label="in Documents" href="http://localhost:8080/index.php/f/753">Documents</a> <!----></span></div>
       </div>
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f=""></div>
@@ -116,7 +116,7 @@ exports[`Display correct information for renames 1`] = `
     </div>
     <div class="activity-entry__content">
       <div data-v-a8ade67f="" class="activity-entry__content__subject rich-text--wrapper">
-        <div data-v-a8ade67f="">You renamed <span data-v-a8ade67f="" class="rich-text-file rich-text--component"><!----> <a title="" aria-label="" href="http://localhost:8080/index.php/f/776">Test file - renamed.md</a> <!----></span> to <span data-v-a8ade67f="" class="rich-text-file rich-text--component"><!----> <a title="" aria-label="" href="http://localhost:8080/index.php/f/776">Test file - renamed - looooooooong.md</a> <!----></span></div>
+        <div data-v-a8ade67f="">You renamed <span data-v-a8ade67f="" class="rich-text-file rich-text--component"><!----> <a title="in Test file - renamed.md" aria-label="in Test file - renamed.md" href="http://localhost:8080/index.php/f/776">Test file - renamed.md</a> <!----></span> to <span data-v-a8ade67f="" class="rich-text-file rich-text--component"><!----> <a title="in Test file - renamed - looooooooong.md" aria-label="in Test file - renamed - looooooooong.md" href="http://localhost:8080/index.php/f/776">Test file - renamed - looooooooong.md</a> <!----></span></div>
       </div>
       <div data-v-a8ade67f="" class="activity-entry__content__message rich-text--wrapper">
         <div data-v-a8ade67f=""></div>
