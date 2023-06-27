@@ -56,7 +56,7 @@ OC.L10N.register(
     "No activities" : "활동 없음",
     "Default settings" : "기본 설정",
     "Configure the default notification settings for new accounts." : "알림에 관한 기본값을 설정하십시오.",
-    "Unable to save the settings" : "설정을 저장할 수 없습니다",
+    "Unable to save the settings" : "설정을 저장할 수 없습니다.",
     "Activity feed" : "활동 피드",
     "Activity settings" : "활동 설정",
     "Enable RSS feed" : "RSS 피드 사용",
