@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2021 Louis Chemineau <louis@chmn.me>
+ * @copyright Copyright (c) 2023 Louis Chemineau <louis@chmn.me>
  *
  * @author Louis Chemineau <louis@chmn.me>
  *
@@ -20,57 +20,38 @@
  *
  */
 
-/// <reference types="Cypress" />
-
-Cypress.Commands.add('createFolder', dirName => {
-	cy.get('.files-controls .actions > .button.new').click()
-	cy.get('.files-controls .actions .newFileMenu a[data-action="folder"]').click()
-	cy.get('.files-controls .actions .newFileMenu a[data-action="folder"] input[type="text"]').type(dirName)
-	cy.get('.files-controls .actions .newFileMenu a[data-action="folder"] input.icon-confirm').click()
-	cy.log('Created folder', dirName)
-	cy.wait(500)
-})
-
-Cypress.Commands.add('moveFile', (fileName, dirName) => {
+function showSidebarForFile(fileName: string) {
+	closeSidebar()
 	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
-	cy.get(`.files-fileList tr[data-file="${fileName}"] .action-movecopy`).click()
-	cy.get(`.oc-dialog tr[data-entryname="${dirName}"]`).click()
-	cy.contains(`Move to ${dirName}`).click()
-	cy.wait(500)
-})
-
-Cypress.Commands.add('showSidebarForFile', fileName => {
-	cy.hideSidebar('welcome.txt')
-	cy.get('.files-fileList tr[data-file="welcome.txt"] .icon-more').click()
 	cy.contains('Details').click()
 	cy.get('#app-sidebar-vue').contains('Activity').click()
-})
+}
 
-Cypress.Commands.add('hideSidebar', fileName => {
+function closeSidebar() {
 	cy.get('body')
 		.then(($body) => {
 			if ($body.find('.app-sidebar__close').length !== 0) {
 				cy.get('.app-sidebar__close').click()
 			}
 		})
-})
+}
 
-Cypress.Commands.add('showActivityTab', fileName => {
-	cy.showSidebarForFile()
+export function showActivityTab(fileName: string) {
+	showSidebarForFile(fileName)
 	cy.get('#app-sidebar-vue').contains('Activity').click()
-})
+}
 
-Cypress.Commands.add('addToFavorites', fileName => {
+export function addToFavorites(fileName: string) {
 	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
 	cy.contains('Add to favorites').click()
-})
+}
 
-Cypress.Commands.add('removeFromFavorites', fileName => {
+export function removeFromFavorites(fileName: string) {
 	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
 	cy.contains('Remove from favorites').click()
-})
+}
 
-Cypress.Commands.add('createPublicShare', fileName => {
+export function createPublicShare(fileName: string) {
 	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
 	cy.contains('Details').click()
 	cy.get('#app-sidebar-vue').contains('Sharing').click()
@@ -78,35 +59,23 @@ Cypress.Commands.add('createPublicShare', fileName => {
 	cy.get('#app-sidebar-vue a#sharing').trigger('click')
 	cy.get('#app-sidebar-vue button.new-share-link').trigger('click')
 	cy.get('#app-sidebar-vue a.sharing-entry__copy')
-})
+}
 
-Cypress.Commands.add('renameFile', (fileName, newName) => {
-	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
-	cy.get(`.files-fileList tr[data-file="${fileName}"] .action-rename`).click()
-	cy.get(`.files-fileList tr[data-file="${fileName}"] input.filename`).type(newName).parent().submit()
-	cy.wait(500)
-})
-
-Cypress.Commands.add('goToDir', (dirName) => {
-	cy.get(`.files-fileList tr[data-file="${dirName}"]`).click()
-	cy.wait(500)
-})
-
-Cypress.Commands.add('addTag', (fileName, tag) => {
-	cy.showSidebarForFile('welcome.txt')
+export function addTag(fileName: string, tag: string) {
+	showSidebarForFile(fileName)
 
 	cy.get('.app-sidebar-header__menu .action-item__menutoggle').click()
 	cy.get('.action-button__icon.icon-tag').click()
-	cy.get('.systemTagsInputField input').type('my_tag{enter}{esc}')
+	cy.get('input#system-tags-input').type(`${tag}{enter}{esc}`)
 
 	cy.wait(500)
-})
+}
 
-Cypress.Commands.add('addComment', (fileName, comment) => {
-	cy.showSidebarForFile('welcome.txt')
+export function addComment(fileName: string, comment: string) {
+	showSidebarForFile(fileName)
 	cy.get('#app-sidebar-vue').contains('Comments').click()
 	cy.get('.comment__editor .rich-contenteditable__input').type(comment)
 	cy.get('button.comment__submit').click()
 
 	cy.wait(500)
-})
+}
