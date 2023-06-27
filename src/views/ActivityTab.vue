@@ -25,7 +25,7 @@
 		<!-- error message -->
 		<NcEmptyContent v-if="error" :title="error">
 			<template #icon>
-				<span class="icon-error"></span>
+				<span class="icon-error" />
 			</template>
 		</NcEmptyContent>
 		<template v-else>
@@ -39,7 +39,7 @@
 			<NcEmptyContent v-if="activities.length === 0 && !loading"
 				:title="t('activity', 'No activity yet')">
 				<template #icon>
-					<span class="icon-activity"></span>
+					<span class="icon-activity" />
 				</template>
 			</NcEmptyContent>
 		</template>
@@ -48,6 +48,7 @@
 
 <script>
 import { generateOcsUrl } from '@nextcloud/router'
+import { translate } from '@nextcloud/l10n'
 import axios from '@nextcloud/axios'
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
 
@@ -107,7 +108,7 @@ export default {
 					this.loading = false
 					return
 				}
-				this.error = t('activity', 'Unable to load the activity list')
+				this.error = translate('activity', 'Unable to load the activity list')
 				this.loading = false
 				console.error('Error loading the activity list', error)
 			}
@@ -137,6 +138,8 @@ export default {
 				logger.debug(`Processed ${this.activities.length} activity(ies)`, { activities: this.activities, fileInfo: this.fileInfo })
 			}
 		},
+
+		t: translate,
 	},
 }
 </script>
