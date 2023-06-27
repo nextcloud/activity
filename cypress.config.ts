@@ -11,7 +11,7 @@ import browserify from '@cypress/browserify-preprocessor'
 import getCompareSnapshotsPlugin from 'cypress-visual-regression/dist/plugin'
 
 export default defineConfig({
-	projectId: 'hx9gqy',
+	projectId: '5bsgwk',
 
 	// 16/9 screen ratio
 	viewportWidth: 1280,
