@@ -32,14 +32,14 @@
 		 * @returns string E.g. "seconds ago"
 		 */
 		getRelativeDate: function () {
-			return OC.Util.relativeModifiedDate(this.getUnixMilliseconds());
+			return moment(this.getUnixMilliseconds()).fromNow();
 		},
 
 		/**
 		 * @returns string E.g. "April 26, 2016 10:53 AM"
 		 */
 		getFullDate: function () {
-			return OC.Util.formatDate(this.getUnixMilliseconds());
+			return moment(this.getUnixMilliseconds()).format('LLL');
 		},
 
 		/**
