@@ -43,7 +43,6 @@ OC.L10N.register(
     "Daily" : "יומי",
     "Weekly" : "שבועי",
     "No activity yet" : "אין עדיין פעילויות",
-    "Unable to load the activity list" : "לא ניתן לטעון את רשימת הפעילויות",
     "Notification" : "הוֹדָעָה",
     "Enable notification emails" : "הפעלת התראות בדוא״ל",
     "Choose for which activities you want to get an email or push notification." : "נא לבחור עבור אילו פעילויות מעניין אותך לקבל התראות בדוא״ל או בדחיפה.",
@@ -62,6 +61,7 @@ OC.L10N.register(
     "No more events to load" : "אין אירועים נוספים לטעינה",
     "This application enables users to view a log of activities about them or about files." : "יישום זה מאפשר למשתמשים לצפות בהיסטוריה של פעילויות הקשורות אליהם, או לקבצים.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "יישומון זה מאפשר למשתמשים לצפות בפעולות שבוצעו על הקבצים שלהם ב־Nextcloud.\n\t\tלאחר ההפעלה, המשתמשים יראו סמל „פעילות” חדש בתפריט היישומונים שלהם.\n\t\tלחיצה על הסמל, תוביל לעמוד חדש שיופיע בפני המשתמש לצורך מעקב אחר הפעילות שקשורה בקבצים - החל מיצירת קבצים חדשים, קבצים שנמחקו, העברות, שינויי שם, עדכונים ופעילות משותפת.\n\t\tכל משתמש יכול להגדיר את הפעילות העצמית בתפריט האישי שלו.\n\t\tדרך התפריט ניתן גם להגדיר את סוג הפעילות שתתועד לצד האם למשתמש תהיה אפשרות לראות את הפעילויות שלו עצמו,\n\t\tבין אם התיעוד הזה יהיה זמין באופן מקוון והאם תיעוד הפעילות יישלח כמקבץ בדוא״ל.\n\t\tניתן למצוא מידע נוסף בתיעוד של הפעילות.",
+    "Unable to load the activity list" : "לא ניתן לטעון את רשימת הפעילויות",
     "Configure the default notification settings for new users." : "הגדרת תצורת ההתראות כבררת מחדל למשתמשים חדשים."
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

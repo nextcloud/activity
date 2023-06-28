@@ -45,7 +45,6 @@ OC.L10N.register(
     "Daily" : "Ĉiutage",
     "Weekly" : "Ĉiusemajne",
     "No activity yet" : "Ankoraŭ neniu aktivaĵo",
-    "Unable to load the activity list" : "Ne eblis ŝargi la liston de aktivaĵoj",
     "Notification" : "Atentigo",
     "Enable notification emails" : "Ebligi atentigajn retmesaĝojn",
     "Choose for which activities you want to get an email or push notification." : "Elektu por kiuj aktivaĵoj vi volas ricevi retpoŝton aŭ puŝan sciigon.",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "No more events to load" : "Ne plu ŝargeblaj eventoj",
     "This application enables users to view a log of activities about them or about files." : "Tiu aplikaĵo ebligas uzantojn rigardi protokolon de aktivaĵoj pri ili aŭ pri dosieroj.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Tiu ĉi aplikaĵo ebligas uzantojn vidi kio okazas al iliaj dosieroj en Nextcloud..\n\t\tKiam ŝaltita, uzantoj vidos novan bildsimbolon „Aktivaĵoj“ en ilia aplikaĵa menuo.\n\t\tKiam oni alklakas ĝin, nova paĝo montriĝas kaj ebligas al oni sekvi la aktivaĵojn pri la dosieroj — dosieroj novaj, forigitaj, movitaj, alinomitaj, ĝisdatigitaj kaj kunhavigitaj —.\n\t\tLa uzanto povas agordi sian aktivecon en la persona menuo.\n\t\tTiu ebligas elekti lin/ŝin kian tipon de aktivaĵoj registri, kaj ankaŭ ĉu la uzanto volas vidi siajn aktivaĵojn,\n\t\tĉu tiuj disponeblas rete, ĉu ricevi mesaĝaran retmesaĝon regule.\n\t\tPli da informoj en la dokumentado pri Aktivaĵoj.",
+    "Unable to load the activity list" : "Ne eblis ŝargi la liston de aktivaĵoj",
     "Configure the default notification settings for new users." : "Agordi la defaŭltajn sciigajn agordojn por novaj uzantoj."
 },
 "nplurals=2; plural=(n != 1);");
