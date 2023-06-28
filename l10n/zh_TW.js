@@ -45,7 +45,6 @@ OC.L10N.register(
     "Daily" : "每日",
     "Weekly" : "每週",
     "No activity yet" : "尚無活動",
-    "Unable to load the activity list" : "無法載入活動清單",
     "Notification" : "通知",
     "Enable notification emails" : "啟用電子郵件通知",
     "Choose for which activities you want to get an email or push notification." : "選擇哪些活動是您要透過電子郵件或推送所接收的通知。",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "No more events to load" : "已載入所有事件",
     "This application enables users to view a log of activities about them or about files." : "本應用程式可以讓使用者檢視有關自己或檔案的活動記錄。",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "此應用程式讓使用者能夠在 Nextcloud 中查看與其檔案相關的操作。\n\t\t啟用後，使用者將在其選單中看到一個「活動」新圖示。\n\t\t點選後，將顯示一個新頁面，以供使用者追蹤與文件相關的活動 ─ 包含新增檔案、已刪除檔案、移動、重新命名、更新和分享活動。\n\t\t使用者可以在其個人選單中配置其各自的活動設定。\n\t\t此設定了想要記錄的活動類型，以及使用者是否可看到自己的活動，\n\t\t並是否僅為線上提供，以及是否定期收到電子郵件摘要。\n\t\t活動說明文件中提供了更多訊息。",
+    "Unable to load the activity list" : "無法載入活動清單",
     "Configure the default notification settings for new users." : "為新使用者設定預設的通知設定。"
 },
 "nplurals=1; plural=0;");

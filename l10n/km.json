@@ -35,7 +35,6 @@
     "Daily" : "រាល់ថ្ងៃ",
     "Weekly" : "រាល់​សប្ដាហ៍",
     "No activity yet" : "មិនទាន់មានសកម្មភាពអ្វីទេ",
-    "Unable to load the activity list" : "មិនអាចទាញយកបញ្ជីសកម្មភាពមកទេ",
     "Enable notification emails" : "អនុញ្ញាតការផ្ដល់ដំណឹងអំពីសារអេឡិចត្រូនិក",
     "Choose for which activities you want to get an email or push notification." : "ជ្រើសរើសថាតើអ្នកចង់ទទួលបានដំណឹងអំពីសកម្មភាពអ្វីខ្លះតាមរយៈអ៊ីម៉ែល ឬ Push Notification ។",
     "Choose for which activities you want to get a push notification." : "ជ្រើសរើសថាតើអ្នកចង់ទទួលបានដំណឹងអំពីសកម្មភាពអ្វីខ្លះតាមរយៈ Push Notification ។",
@@ -49,6 +48,7 @@
     "RSS feed" : "RSS feed",
     "Personal notification settings" : "ការកំណត់ផ្ទាល់ខ្លួនលើការជូនដំណឹង",
     "No more events to load" : "គ្មាន​ព្រឹត្តិការណ៍​ច្រើនទៀតសម្រាប់ទាញយកមកទេ",
-    "This application enables users to view a log of activities about them or about files." : "កម្មវិធីនេះអនុញ្ញាតឱ្យអ្នកប្រើប្រាស់មើលកំណត់ហេតុនៃសកម្មភាពអំពីពួកគេ ឬអំពីឯកសារផ្សេងៗ។"
+    "This application enables users to view a log of activities about them or about files." : "កម្មវិធីនេះអនុញ្ញាតឱ្យអ្នកប្រើប្រាស់មើលកំណត់ហេតុនៃសកម្មភាពអំពីពួកគេ ឬអំពីឯកសារផ្សេងៗ។",
+    "Unable to load the activity list" : "មិនអាចទាញយកបញ្ជីសកម្មភាពមកទេ"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
