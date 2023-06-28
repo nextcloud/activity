@@ -39,7 +39,6 @@ OC.L10N.register(
     "Daily" : "Quotidian",
     "Weekly" : "Setmanièr",
     "No activity yet" : "Cap d’activitat pel moment",
-    "Unable to load the activity list" : "Cargament impossible de la lista de las activitats",
     "Notification" : "Notificacion",
     "Enable notification emails" : "Activar las notificacions per corrièl",
     "Daily activity summary" : "Resumit d’activitat quotidian",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Activar lo flux RSS",
     "RSS feed" : "Flux RSS",
     "Personal notification settings" : "Paramètres de notificacions personalas",
-    "No more events to load" : "Pas mai d’eveniment de cargar"
+    "No more events to load" : "Pas mai d’eveniment de cargar",
+    "Unable to load the activity list" : "Cargament impossible de la lista de las activitats"
 },
 "nplurals=2; plural=(n > 1);");
