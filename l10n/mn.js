@@ -40,7 +40,6 @@ OC.L10N.register(
     "Daily" : "Өдөр бүр",
     "Weekly" : "Долоо хоног бүр",
     "No activity yet" : "Одоохондоо ямар ч үйлдэл алга",
-    "Unable to load the activity list" : "Үйлдлийн жагсаалтыг харуулах боломжгүй байна.",
     "Notification" : "Мэдэгдэл",
     "Enable notification emails" : "Имэйл мэдэгдлийг идэвхжүүлэх",
     "Choose for which activities you want to get an email or push notification." : "Аль үйлдлийг мэйлээр эсвэл мэдэгдлээр хүлээн авахыг шийдэх",
@@ -60,6 +59,7 @@ OC.L10N.register(
     "Personal notification settings" : "Хувийн мэдэгдлийн тохиргоо",
     "No more events to load" : "Өөр харуулах үйл явдал байхгүй байна",
     "This application enables users to view a log of activities about them or about files." : "Энэхүү аппликейшн нь хэрэглэгчдэд өөрийн үйлдлийн болон файлуудын бүртгэлээ хянах боломжийг олгоно. ",
+    "Unable to load the activity list" : "Үйлдлийн жагсаалтыг харуулах боломжгүй байна.",
     "Configure the default notification settings for new users." : "Шинэ хэрэглэгчдийн мэдэгдлийн анхдагч тохиргоог тохируулах"
 },
 "nplurals=2; plural=(n != 1);");
