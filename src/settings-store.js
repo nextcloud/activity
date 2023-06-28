@@ -28,7 +28,6 @@ import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
 import { showSuccess, showError } from '@nextcloud/dialogs'
-import '@nextcloud/dialogs/styles/toast.scss'
 
 import { isActivityEnabled, isOneInputUnChecked } from './helpers/settings.js'
 import logger from './logger.js'
