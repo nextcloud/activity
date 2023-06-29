@@ -41,7 +41,9 @@
 
 	<div id="app-settings">
 		<div id="app-settings-header">
-			<button class="settings-button" data-apps-slide-toggle="#app-settings-content"><?php p($l->t('Activity settings'));?></button>
+			<button class="settings-button" aria-expanded="false" aria-controls="app-settings-content" aria-label="Activity settings" data-apps-slide-toggle="#app-settings-content">
+				<?php p($l->t('Activity settings'));?>
+			</button>
 		</div>
 
 		<div id="app-settings-content">
