@@ -67,54 +67,20 @@ class APIv2Controller extends OCSController {
 	/** @var bool */
 	protected $loadPreviews;
 
-	/** @var IManager */
-	protected $activityManager;
-
-	/** @var Data */
-	protected $data;
-
-	/** @var GroupHelper */
-	protected $helper;
-
-	/** @var UserSettings */
-	protected $settings;
-
-	/** @var IURLGenerator */
-	protected $urlGenerator;
-
-	/** @var IUserSession */
-	protected $userSession;
-
-	/** @var IPreview */
-	protected $preview;
-
-	/** @var IMimeTypeDetector */
-	protected $mimeTypeDetector;
-
-	/** @var ViewInfoCache */
-	protected $infoCache;
-
 	public function __construct($appName,
 		IRequest $request,
-		IManager $activityManager,
-		Data $data,
-		GroupHelper $helper,
-		UserSettings $settings,
-		IURLGenerator $urlGenerator,
-		IUserSession $userSession,
-		IPreview $preview,
-		IMimeTypeDetector $mimeTypeDetector,
-		ViewInfoCache $infoCache) {
+		protected IManager $activityManager,
+		protected Data $data,
+		protected GroupHelper $helper,
+		protected UserSettings $settings,
+		protected IURLGenerator $urlGenerator,
+		protected IUserSession $userSession,
+		protected IPreview $preview,
+		protected IMimeTypeDetector $mimeTypeDetector,
+		protected ViewInfoCache $infoCache,
+		) {
 		parent::__construct($appName, $request);
 		$this->activityManager = $activityManager;
-		$this->data = $data;
-		$this->helper = $helper;
-		$this->settings = $settings;
-		$this->urlGenerator = $urlGenerator;
-		$this->userSession = $userSession;
-		$this->preview = $preview;
-		$this->mimeTypeDetector = $mimeTypeDetector;
-		$this->infoCache = $infoCache;
 	}
 
 	/**

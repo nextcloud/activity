@@ -36,34 +36,14 @@ use OCP\IUser;
 use OCP\IUserManager;
 
 class RemoteActivityController extends OCSController {
-	/** @var IDBConnection */
-	protected $db;
-
-	/** @var IUserManager */
-	protected $userManager;
-
-	/** @var IAppManager */
-	protected $appManager;
-
-	/** @var IRootFolder */
-	protected $rootFolder;
-
-	/** @var IActivityManager */
-	protected $activityManager;
-
 	public function __construct($appName,
 		IRequest $request,
-		IDBConnection $db,
-		IUserManager $userManager,
-		IAppManager $appManager,
-		IRootFolder $rootFolder,
-		IActivityManager $activityManager) {
+		protected IDBConnection $db,
+		protected IUserManager $userManager,
+		protected IAppManager $appManager,
+		protected IRootFolder $rootFolder,
+		protected IActivityManager $activityManager) {
 		parent::__construct($appName, $request);
-		$this->db = $db;
-		$this->userManager = $userManager;
-		$this->appManager = $appManager;
-		$this->rootFolder = $rootFolder;
-		$this->activityManager = $activityManager;
 	}
 
 	/**
