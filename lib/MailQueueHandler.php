@@ -31,7 +31,6 @@ use OCP\Defaults;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
-use OCP\ILogger;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserManager;
@@ -40,6 +39,7 @@ use OCP\Mail\IMailer;
 use OCP\RichObjectStrings\InvalidObjectExeption;
 use OCP\RichObjectStrings\IValidator;
 use OCP\Util;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class MailQueueHandler
@@ -67,53 +67,17 @@ class MailQueueHandler {
 	/** @var IDateTimeFormatter */
 	protected $dateFormatter;
 
-	/** @var IDBConnection */
-	protected $connection;
-
-	/** @var IMailer */
-	protected $mailer;
-
-	/** @var IURLGenerator */
-	protected $urlGenerator;
-
-	/** @var IUserManager */
-	protected $userManager;
-
-	/** @var IFactory */
-	protected $lFactory;
-
-	/** @var IManager */
-	protected $activityManager;
-
-	/** @var IValidator */
-	protected $richObjectValidator;
-
-	/** @var IConfig */
-	protected $config;
-
-	/** @var ILogger */
-	protected $logger;
-
 	public function __construct(IDateTimeFormatter $dateFormatter,
-		IDBConnection $connection,
-		IMailer $mailer,
-		IURLGenerator $urlGenerator,
-		IUserManager $userManager,
-		IFactory $lFactory,
-		IManager $activityManager,
-		IValidator $richObjectValidator,
-		IConfig $config,
-		ILogger $logger) {
+		protected IDBConnection $connection,
+		protected IMailer $mailer,
+		protected IURLGenerator $urlGenerator,
+		protected IUserManager $userManager,
+		protected IFactory $lFactory,
+		protected IManager $activityManager,
+		protected IValidator $richObjectValidator,
+		protected IConfig $config,
+		protected LoggerInterface $logger) {
 		$this->dateFormatter = $dateFormatter;
-		$this->connection = $connection;
-		$this->mailer = $mailer;
-		$this->urlGenerator = $urlGenerator;
-		$this->userManager = $userManager;
-		$this->lFactory = $lFactory;
-		$this->activityManager = $activityManager;
-		$this->richObjectValidator = $richObjectValidator;
-		$this->config = $config;
-		$this->logger = $logger;
 	}
 
 	/**
@@ -168,7 +132,7 @@ class MailQueueHandler {
 					$this->logger->warning("Failed sending activity email to user '{user}'.", ['user' => $user, 'app' => 'activity']);
 				}
 			} catch (\Exception $e) {
-				$this->logger->logException($e, [
+				$this->logger->error($e, [
 					'message' => 'Failed creating activity email for user "{user}"',
 					'user' => $user,
 					'app' => 'activity',
@@ -414,7 +378,7 @@ class MailQueueHandler {
 		try {
 			$this->mailer->send($message);
 		} catch (\Exception $e) {
-			$this->logger->logException($e, [
+			$this->logger->error($e, [
 				'message' => 'Failed sending activity email to user "{user}"',
 				'user' => $userName,
 				'app' => 'activity',
@@ -474,7 +438,13 @@ class MailQueueHandler {
 		try {
 			$this->richObjectValidator->validate($event->getRichSubject(), $event->getRichSubjectParameters());
 		} catch (InvalidObjectExeption $e) {
-			$this->logger->logException($e);
+			$this->logger->error(
+				$e->getMessage(),
+				[
+					'app' => 'activity',
+					'exception' => $e
+				],
+			);
 			$event->setRichSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed', []);
 			$event->setParsedSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed');
 		}
@@ -483,7 +453,13 @@ class MailQueueHandler {
 			try {
 				$this->richObjectValidator->validate($event->getRichMessage(), $event->getRichMessageParameters());
 			} catch (InvalidObjectExeption $e) {
-				$this->logger->logException($e);
+				$this->logger->error(
+					$e->getMessage(),
+					[
+						'app' => 'activity',
+						'exception' => $e
+					],
+				);
 				$event->setRichMessage('Rich message or a parameter is malformed', []);
 				$event->setParsedMessage('Rich message or a parameter is malformed');
 			}

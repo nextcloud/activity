@@ -26,7 +26,6 @@ namespace OCA\Activity;
 
 use OC\Files\Filesystem;
 use OC\Files\View;
-use OC\TagManager;
 use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
@@ -40,62 +39,18 @@ use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IGroup;
 use OCP\IGroupManager;
-use OCP\ILogger;
 use OCP\ITagManager;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
+use Psr\Log\LoggerInterface;
 
 /**
  * The class to handle the filesystem hooks
  */
 class FilesHooks {
 	public const USER_BATCH_SIZE = 50;
-
-	/** @var \OCP\Activity\IManager */
-	protected $manager;
-
-	/** @var \OCA\Activity\Data */
-	protected $activityData;
-
-	/** @var \OCA\Activity\UserSettings */
-	protected $userSettings;
-
-	/** @var \OCP\IGroupManager */
-	protected $groupManager;
-
-	/** @var \OCP\IDBConnection */
-	protected $connection;
-
-	/** @var \OC\Files\View */
-	protected $view;
-
-	/** @var IRootFolder */
-	protected $rootFolder;
-
-	/** @var IShareHelper */
-	protected $shareHelper;
-
-	/** @var IURLGenerator */
-	protected $urlGenerator;
-
-	/** @var ILogger */
-	protected $logger;
-
-	/**
-	 * @psalm-suppress UndefinedClass
-	 * @var ITagManager|TagManager
-	 */
-	protected $tagManager;
-
-
-	/** @var CurrentUser */
-	protected $currentUser;
-	/** @var IUserMountCache */
-	protected $userMountCache;
-	/** @var IConfig */
-	protected $config;
 
 	/** @var string|bool */
 	protected $moveCase = false;
@@ -107,41 +62,24 @@ class FilesHooks {
 	protected $oldParentOwner;
 	/** @var string */
 	protected $oldParentId;
-	/** @var NotificationGenerator */
-	protected $notificationGenerator;
 
 	public function __construct(
-		IManager $manager,
-		Data $activityData,
-		UserSettings $userSettings,
-		IGroupManager $groupManager,
-		View $view,
-		IRootFolder $rootFolder,
-		IShareHelper $shareHelper,
-		IDBConnection $connection,
-		IURLGenerator $urlGenerator,
-		ILogger $logger,
-		CurrentUser $currentUser,
-		IUserMountCache $userMountCache,
-		IConfig $config,
-		NotificationGenerator $notificationGenerator,
-		ITagManager $tagManager
+		protected IManager $manager,
+		protected Data $activityData,
+		protected UserSettings $userSettings,
+		protected IGroupManager $groupManager,
+		protected View $view,
+		protected IRootFolder $rootFolder,
+		protected IShareHelper $shareHelper,
+		protected IDBConnection $connection,
+		protected IURLGenerator $urlGenerator,
+		protected LoggerInterface $logger,
+		protected CurrentUser $currentUser,
+		protected IUserMountCache $userMountCache,
+		protected IConfig $config,
+		protected NotificationGenerator $notificationGenerator,
+		protected ITagManager $tagManager
 	) {
-		$this->manager = $manager;
-		$this->activityData = $activityData;
-		$this->userSettings = $userSettings;
-		$this->groupManager = $groupManager;
-		$this->view = $view;
-		$this->rootFolder = $rootFolder;
-		$this->shareHelper = $shareHelper;
-		$this->connection = $connection;
-		$this->urlGenerator = $urlGenerator;
-		$this->logger = $logger;
-		$this->currentUser = $currentUser;
-		$this->userMountCache = $userMountCache;
-		$this->config = $config;
-		$this->notificationGenerator = $notificationGenerator;
-		$this->tagManager = $tagManager;
 	}
 
 	/**
@@ -1207,7 +1145,13 @@ class FilesHooks {
 				$event->setAuthor($this->currentUser->getUID());
 			}
 		} catch (\InvalidArgumentException $e) {
-			$this->logger->logException($e);
+			$this->logger->error(
+				$e->getMessage(),
+				[
+					'app' => 'activity',
+					'exception' => $e
+				],
+			);
 		}
 
 		// Add activity to stream

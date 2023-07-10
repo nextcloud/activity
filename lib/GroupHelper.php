@@ -25,9 +25,9 @@ namespace OCA\Activity;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
-use OCP\ILogger;
 use OCP\RichObjectStrings\InvalidObjectExeption;
 use OCP\RichObjectStrings\IValidator;
+use Psr\Log\LoggerInterface;
 
 class GroupHelper {
 	/** @var IEvent[] */
@@ -38,28 +38,12 @@ class GroupHelper {
 	/** @var bool */
 	protected $allowGrouping;
 
-	/** @var IL10N */
-	protected $l;
-
-	/** @var \OCP\Activity\IManager */
-	protected $activityManager;
-
-	/** @var IValidator */
-	protected $richObjectValidator;
-
-	/** @var ILogger */
-	protected $logger;
-
-	public function __construct(IL10N $l,
-		IManager $activityManager,
-		IValidator $richObjectValidator,
-		ILogger $logger) {
+	public function __construct(
+		protected IL10N $l,
+		protected IManager $activityManager,
+		protected IValidator $richObjectValidator,
+		protected LoggerInterface $logger) {
 		$this->allowGrouping = true;
-
-		$this->l = $l;
-		$this->activityManager = $activityManager;
-		$this->richObjectValidator = $richObjectValidator;
-		$this->logger = $logger;
 	}
 
 	/**
@@ -90,7 +74,13 @@ class GroupHelper {
 				try {
 					$this->richObjectValidator->validate($event->getRichSubject(), $event->getRichSubjectParameters());
 				} catch (InvalidObjectExeption $e) {
-					$this->logger->logException($e);
+					$this->logger->error(
+						$e->getMessage(),
+						[
+							'app' => 'activity',
+							'exception' => $e
+						],
+					);
 					$event->setRichSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed', []);
 					$event->setParsedSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed');
 				}
@@ -99,7 +89,13 @@ class GroupHelper {
 					try {
 						$this->richObjectValidator->validate($event->getRichMessage(), $event->getRichMessageParameters());
 					} catch (InvalidObjectExeption $e) {
-						$this->logger->logException($e);
+						$this->logger->error(
+							$e->getMessage(),
+							[
+								'app' => 'activity',
+								'exception' => $e
+							],
+						);
 						$event->setRichMessage('Rich message or a parameter is malformed', []);
 						$event->setParsedMessage('Rich message or a parameter is malformed');
 					}
