@@ -25,7 +25,7 @@ OC.L10N.register(
     "_and %n more _::_and %n more _" : ["e %n máis","e %n máis"],
     "All activities" : "Todas as actividades",
     "By others" : "Por outros",
-    "By you" : "Por vostede",
+    "By you" : "Por Vde.",
     "Activity at %s" : "Actividade en %s",
     "Hello %s" : "Ola %s",
     "Hello %s," : "Ola %s,",
