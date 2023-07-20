@@ -148,13 +148,6 @@
 	opacity: .5;
 }
 
-.activity-section a:hover,
-.activity-section a:focus,
-.avatar-name-wrapper:hover,
-.avatar-name-wrapper:focus {
-	color: var(--color-text-maxcontrast);
-}
-
 .activitysubject strong.systemtag {
 	display: inline-block;
 	padding: 2px 5px;
