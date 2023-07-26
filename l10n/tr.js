@@ -26,7 +26,7 @@ OC.L10N.register(
     "All activities" : "Tüm işlemler",
     "By others" : "Diğerleri tarafından",
     "By you" : "Sizin tarafınızdan",
-    "Activity at %s" : "%s zamanındaki işlem",
+    "Activity at %s" : "%s sunucusundaki işlemler",
     "Hello %s" : "Merhaba %s",
     "Hello %s," : "Merhaba %s,",
     "There was some activity at %s" : "%s üzerinde bazı işlemler yapıldı",
