@@ -38,7 +38,7 @@ OC.L10N.register(
     "Activity notification configuration" : "Configuración das notificacións de actividade",
     "Send email" : "Enviar o correo",
     "Send push notification" : "Enviar unha notificación automática",
-    "You need to set up your email address before you can receive notification emails." : "É necesario estabelecer o enderezo de correo para poder recibir correos de notificación.",
+    "You need to set up your email address before you can receive notification emails." : "É necesario configurar o enderezo de correo para poder recibir correos de notificación.",
     "Send activity emails" : "Enviar correos de actividades",
     "As soon as possible" : "O antes posíbel",
     "Hourly" : "Cada hora",
