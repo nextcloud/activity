@@ -22,27 +22,39 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 <template>
-	<DashboardWidget id="activity_panel"
+	<NcDashboardWidget id="activity_panel"
 		:items="activities"
 		:show-more-text="t('activity', 'Activities')"
 		:show-more-url="showMoreUrl"
 		:loading="loading"
-		empty-content-icon="icon-activity"
 		:empty-content-message="t('activity', 'No activities')">
+		<template #emptyContentIcon>
+			<div class="icon-activity" />
+		</template>
 		<template #default="{ item }">
 			<!-- {{item._activity}} -->
-			<DashboardWidgetItem :id="item.activity_id"
+			<NcDashboardWidgetItem :id="item.activity_id"
 				:target-url="item.link"
-				:avatar-username="item.user"
 				:overlay-icon-url="item.icon"
 				:main-text="item.subject"
-				:sub-text="item.dateFromNow" />
+				:sub-text="item.dateFromNow">
+				<template #avatar>
+					<NcAvatar class="item-avatar"
+						:size="44"
+						:user="item.user"
+						:display-name="item.user"
+						:show-user-status="false"
+						:show-user-status-compact="false" />
+				</template>
+			</NcDashboardWidgetItem>
 		</template>
-	</DashboardWidget>
+	</NcDashboardWidget>
 </template>
 
 <script>
-import { DashboardWidget, DashboardWidgetItem } from '@nextcloud/vue-dashboard'
+import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
+import NcDashboardWidget from '@nextcloud/vue/dist/Components/NcDashboardWidget.js'
+import NcDashboardWidgetItem from '@nextcloud/vue/dist/Components/NcDashboardWidgetItem.js'
 import axios from '@nextcloud/axios'
 import ActivityModel from '../models/ActivityModel.js'
 import { generateUrl, generateOcsUrl } from '@nextcloud/router'
@@ -52,8 +64,9 @@ const POLLING_INTERVAL = 30
 export default {
 	name: 'Dashboard',
 	components: {
-		DashboardWidget,
-		DashboardWidgetItem,
+		NcAvatar,
+		NcDashboardWidget,
+		NcDashboardWidgetItem,
 	},
 	data() {
 		return {
