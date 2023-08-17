@@ -34,6 +34,7 @@ OC.L10N.register(
     "Push" : "プッシュ",
     "Notifications" : "通知",
     "This application enables people to view a log of activities about them, their files or other data." : "このアプリケーションは、アクティビティやファイル等のログの表示を有効にします。",
+    "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "このアプリはNextcloudにあるファイルやデータに関連する各種操作状況を確認ができます。\n\t\tユーザー毎に個人設定でそれらアクティビティを通知するかどうかを設定できます。\n\t\tさらに、どのアクティビティを携帯電話へ通知するのか、それともEメールでするのか、\n\t\t他にも日次サマリーを毎朝送信するのかどうかも選択できます。\n\t\tより詳しい情報は、アクティビティに関するドキュメントをご覧ください。",
     "Activity notification configuration" : "アクティビティ通知の設定",
     "Send email" : "メールを送信",
     "Send push notification" : "プッシュ通知を送信します",
