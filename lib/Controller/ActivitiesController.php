@@ -23,53 +23,26 @@
 namespace OCA\Activity\Controller;
 
 use OCA\Activity\Data;
+use OCA\Activity\Event\LoadAdditionalScriptsEvent;
 use OCA\Activity\Navigation;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
+use OCP\EventDispatcher\IEventDispatcher;
 
 class ActivitiesController extends Controller {
-	/** @var IConfig */
-	protected $config;
-
-	/** @var Data */
-	protected $data;
-
-	/** @var IL10N */
-	private $l10n;
-
-	/** @var Navigation */
-	protected $navigation;
-
-	/** @var EventDispatcherInterface */
-	protected $eventDispatcher;
-
-	/**
-	 * @param string $appName
-	 * @param IRequest $request
-	 * @param IConfig $config
-	 * @param Data $data
-	 * @param Navigation $navigation
-	 * @param EventDispatcherInterface $eventDispatcher
-	 * @param IL10N $l10n
-	 */
-	public function __construct($appName,
+	public function __construct(
+		string $appName,
 		IRequest $request,
-		IConfig $config,
-		Data $data,
-		Navigation $navigation,
-		EventDispatcherInterface $eventDispatcher,
-		IL10N $l10n) {
+		protected IConfig $config,
+		protected Data $data,
+		protected Navigation $navigation,
+		protected IEventDispatcher $eventDispatcher,
+		private IL10N $l10n
+	) {
 		parent::__construct($appName, $request);
-		$this->data = $data;
-		$this->config = $config;
-		$this->navigation = $navigation;
-		$this->eventDispatcher = $eventDispatcher;
-		$this->l10n = $l10n;
 	}
 
 	/**
@@ -82,8 +55,9 @@ class ActivitiesController extends Controller {
 	public function showList($filter = 'all') {
 		$filter = $this->data->validateFilter($filter);
 
-		$event = new GenericEvent($filter);
-		$this->eventDispatcher->dispatch('OCA\Activity::loadAdditionalScripts', $event);
+		$event = new LoadAdditionalScriptsEvent($filter);
+		$this->eventDispatcher->dispatchTyped($event);
+		$this->eventDispatcher->dispatch(LoadAdditionalScriptsEvent::EVENT_ENTITY, $event);
 
 		return new TemplateResponse('activity', 'stream.body', [
 			'appNavigation' => $this->navigation->getTemplate($filter),

@@ -33,7 +33,7 @@ use OCP\ILogger;
 use OCP\IRequest;
 use OCP\Template;
 use PHPUnit\Framework\MockObject\MockObject;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OCP\EventDispatcher\IEventDispatcher;
 
 /**
  * Class ActivitiesTest
@@ -48,7 +48,7 @@ class ActivitiesControllerTest extends TestCase {
 	protected $config;
 	/** @var Data|MockObject */
 	protected $data;
-	/** @var EventDispatcherInterface|MockObject */
+	/** @var IEventDispatcher|MockObject */
 	protected $eventDispatcher;
 	/** @var Navigation|MockObject */
 	protected $navigation;
@@ -64,7 +64,7 @@ class ActivitiesControllerTest extends TestCase {
 		$this->config = $this->createMock(IConfig::class);
 		$this->data = $this->createMock(Data::class);
 		$this->navigation = $this->createMock(Navigation::class);
-		$this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+		$this->eventDispatcher = $this->createMock(IEventDispatcher::class);
 		$this->request = $this->createMock(IRequest::class);
 		$this->l10n = $this->createMock(IL10N::class);
 

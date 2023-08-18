@@ -37,6 +37,7 @@ use OCA\Activity\Listener\SetUserDefaults;
 use OCA\Activity\Listener\UserDeleted;
 use OCA\Activity\MailQueueHandler;
 use OCA\Activity\NotificationGenerator;
+use OCA\Activity\ShareEventListener;
 use OCA\Files\Event\LoadSidebar;
 use OCP\Activity\IManager;
 use OCP\AppFramework\App;
@@ -52,6 +53,8 @@ use OCP\IUserManager;
 use OCP\L10N\IFactory;
 use OCP\Mail\IMailer;
 use OCP\RichObjectStrings\IValidator;
+use OCP\Share\Events\BeforeShareDeletedEvent;
+use OCP\Share\Events\ShareDeletedFromSelfEvent;
 use OCP\User\Events\PostLoginEvent;
 use OCP\User\Events\UserDeletedEvent;
 use OCP\Util;
@@ -136,11 +139,12 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(UserDeletedEvent::class, UserDeleted::class);
 		$context->registerEventListener(PostLoginEvent::class, SetUserDefaults::class);
 		$context->registerDashboardWidget(ActivityWidget::class);
+
+		$this->registerFilesActivity($context);
 	}
 
 	public function boot(IBootContext $context): void {
 		$this->registerActivityConsumer();
-		$this->registerFilesActivity();
 		$this->registerNotifier();
 	}
 
@@ -165,7 +169,7 @@ class Application extends App implements IBootstrap {
 	/**
 	 * Register the hooks for filesystem operations
 	 */
-	private function registerFilesActivity() {
+	private function registerFilesActivity(IRegistrationContext $context) {
 		// All other events from other apps have to be send via the Consumer
 		Util::connectHook('OC_Filesystem', 'post_create', FilesHooksStatic::class, 'fileCreate');
 		Util::connectHook('OC_Filesystem', 'post_update', FilesHooksStatic::class, 'fileUpdate');
@@ -175,8 +179,7 @@ class Application extends App implements IBootstrap {
 		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', FilesHooksStatic::class, 'fileRestore');
 		Util::connectHook('OCP\Share', 'post_shared', FilesHooksStatic::class, 'share');
 
-		$eventDispatcher = $this->getContainer()->getServer()->getEventDispatcher();
-		$eventDispatcher->addListener('OCP\Share::preUnshare', [FilesHooksStatic::class, 'unShare']);
-		$eventDispatcher->addListener('OCP\Share::postUnshareFromSelf', [FilesHooksStatic::class, 'unShareSelf']);
+		$context->registerEventListener(BeforeShareDeletedEvent::class, ShareEventListener::class);
+		$context->registerEventListener(ShareDeletedFromSelfEvent::class, ShareEventListener::class);
 	}
 }
