@@ -60,6 +60,7 @@ OC.L10N.register(
     "Activity settings" : "Setări ale activității",
     "Enable RSS feed" : "Activați flux RSS",
     "RSS feed" : "Flux RSS",
+    "Copy RSS feed link" : "Copie legatura fluxului RSS",
     "Personal notification settings" : "Setări personale de notificare",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
     "This application enables users to view a log of activities about them or about files." : "Această aplicație permite utilizatorilor să vizualizeze un jurnal al activităților personale sau asupra fișierelor.",
