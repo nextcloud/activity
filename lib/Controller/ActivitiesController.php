@@ -52,7 +52,7 @@ class ActivitiesController extends Controller {
 	 * @param string $filter
 	 * @return TemplateResponse
 	 */
-	public function showList($filter = 'all') {
+	public function showList(string $filter = 'all'): TemplateResponse {
 		$filter = $this->data->validateFilter($filter);
 
 		$event = new LoadAdditionalScriptsEvent($filter);

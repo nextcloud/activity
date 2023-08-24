@@ -112,6 +112,11 @@ class ActivitiesControllerTest extends TestCase {
 			->method('dispatch')
 			->with('OCA\Activity::loadAdditionalScripts', $this->anything());
 
+		$this->data->expects($this->any())
+			->method('validateFilter')
+			->with('all')
+			->willReturn('all');
+
 		$templateResponse = $this->controller->showList();
 		$this->assertInstanceOf(TemplateResponse::class, $templateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
