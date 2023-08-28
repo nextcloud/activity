@@ -27,13 +27,13 @@ use OCA\Activity\Data;
 use OCA\Activity\Navigation;
 use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\ILogger;
 use OCP\IRequest;
 use OCP\Template;
 use PHPUnit\Framework\MockObject\MockObject;
-use OCP\EventDispatcher\IEventDispatcher;
 
 /**
  * Class ActivitiesTest

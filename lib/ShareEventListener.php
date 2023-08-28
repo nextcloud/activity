@@ -32,9 +32,10 @@ use OCP\Share\Events\ShareDeletedFromSelfEvent;
  */
 class ShareEventListener implements IEventListener {
 
-	public function __construct (
+	public function __construct(
 		private FilesHooks $fileHooks,
-	) {}
+	) {
+	}
 
 	public function handle(Event $event): void {
 		if ($event instanceof BeforeShareDeletedEvent) {

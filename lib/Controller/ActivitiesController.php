@@ -27,10 +27,10 @@ use OCA\Activity\Event\LoadAdditionalScriptsEvent;
 use OCA\Activity\Navigation;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
-use OCP\EventDispatcher\IEventDispatcher;
 
 class ActivitiesController extends Controller {
 	public function __construct(
