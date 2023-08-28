@@ -22,8 +22,8 @@
 
 function showSidebarForFile(fileName: string) {
 	closeSidebar()
-	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
-	cy.contains('Details').click()
+	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-actions]`).click()
+	cy.contains('Open details').click()
 	cy.get('#app-sidebar-vue').contains('Activity').click()
 }
 
@@ -42,21 +42,23 @@ export function showActivityTab(fileName: string) {
 }
 
 export function addToFavorites(fileName: string) {
-	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
+	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-actions]`).click()
 	cy.contains('Add to favorites').click()
+	cy.get('.toast-close').click()
 }
 
 export function removeFromFavorites(fileName: string) {
-	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
+	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-actions]`).click()
 	cy.contains('Remove from favorites').click()
+	cy.get('.toast-close').click()
 }
 
 export function createPublicShare(fileName: string) {
-	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
-	cy.contains('Details').click()
+	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-actions]`).click()
+	cy.contains('Open details').click()
 	cy.get('#app-sidebar-vue').contains('Sharing').click()
 
-	cy.get('#app-sidebar-vue a#sharing').trigger('click')
+	cy.get('#app-sidebar-vue [data-id="sharing"]').trigger('click')
 	cy.get('#app-sidebar-vue button.new-share-link').trigger('click')
 	cy.get('#app-sidebar-vue a.sharing-entry__copy')
 }
@@ -64,7 +66,7 @@ export function createPublicShare(fileName: string) {
 export function addTag(fileName: string, tag: string) {
 	showSidebarForFile(fileName)
 
-	cy.get('.app-sidebar-header__menu .action-item__menutoggle').click()
+	cy.get('.app-sidebar-header__menu button').click()
 	cy.get('.action-button__icon.icon-tag').click()
 	cy.get('input#system-tags-input').type(`${tag}{enter}{esc}`)
 
