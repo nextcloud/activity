@@ -27,13 +27,13 @@ use OCA\Activity\Data;
 use OCA\Activity\Navigation;
 use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\ILogger;
 use OCP\IRequest;
 use OCP\Template;
 use PHPUnit\Framework\MockObject\MockObject;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class ActivitiesTest
@@ -48,7 +48,7 @@ class ActivitiesControllerTest extends TestCase {
 	protected $config;
 	/** @var Data|MockObject */
 	protected $data;
-	/** @var EventDispatcherInterface|MockObject */
+	/** @var IEventDispatcher|MockObject */
 	protected $eventDispatcher;
 	/** @var Navigation|MockObject */
 	protected $navigation;
@@ -64,7 +64,7 @@ class ActivitiesControllerTest extends TestCase {
 		$this->config = $this->createMock(IConfig::class);
 		$this->data = $this->createMock(Data::class);
 		$this->navigation = $this->createMock(Navigation::class);
-		$this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+		$this->eventDispatcher = $this->createMock(IEventDispatcher::class);
 		$this->request = $this->createMock(IRequest::class);
 		$this->l10n = $this->createMock(IL10N::class);
 
@@ -111,6 +111,11 @@ class ActivitiesControllerTest extends TestCase {
 		$this->eventDispatcher->expects($this->once())
 			->method('dispatch')
 			->with('OCA\Activity::loadAdditionalScripts', $this->anything());
+
+		$this->data->expects($this->any())
+			->method('validateFilter')
+			->with('all')
+			->willReturn('all');
 
 		$templateResponse = $this->controller->showList();
 		$this->assertInstanceOf(TemplateResponse::class, $templateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');

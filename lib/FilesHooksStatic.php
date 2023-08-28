@@ -24,9 +24,6 @@
 
 namespace OCA\Activity;
 
-use OCP\Share\IShare;
-use Symfony\Component\EventDispatcher\GenericEvent;
-
 /**
  * The class to handle the filesystem hooks
  */
@@ -92,27 +89,5 @@ class FilesHooksStatic {
 	 */
 	public static function share($params) {
 		self::getHooks()->share($params);
-	}
-
-	/**
-	 * Unsharing event
-	 * @param GenericEvent $event
-	 */
-	public static function unShare(GenericEvent $event) {
-		$share = $event->getSubject();
-		if ($share instanceof IShare) {
-			self::getHooks()->unShare($share);
-		}
-	}
-
-	/**
-	 * "Unsharing a share from self only" event
-	 * @param GenericEvent $event
-	 */
-	public static function unShareSelf(GenericEvent $event) {
-		$share = $event->getSubject();
-		if ($share instanceof IShare) {
-			self::getHooks()->unShareSelf($share);
-		}
 	}
 }
