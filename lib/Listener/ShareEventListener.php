@@ -20,8 +20,9 @@
  *
  */
 
-namespace OCA\Activity;
+namespace OCA\Activity\Listener;
 
+use OCA\Activity\FilesHooks;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Share\Events\BeforeShareDeletedEvent;
@@ -29,6 +30,7 @@ use OCP\Share\Events\ShareDeletedFromSelfEvent;
 
 /**
  * The class to handle the share events
+ * @template-implements IEventListener<Event>
  */
 class ShareEventListener implements IEventListener {
 
