@@ -18,6 +18,7 @@
     "Your settings have been updated." : "您的設定已更新。",
     "Settings have been updated." : "設定已更新。",
     "Recent activity" : "近期活動",
+    "No activities" : "無活動",
     "More activities" : "更多活動",
     "Daily activity summary for %s" : "%s 的每日活動摘要",
     "_and %n more _::_and %n more _" : ["以及其餘 %n 項"],
@@ -49,8 +50,6 @@
     "Choose for which activities you want to get a push notification." : "選擇你要推送哪些活動的通知。",
     "Daily activity summary" : "每日事件摘要",
     "Send daily activity summary in the morning" : "於早上傳送每日活動摘要",
-    "Activities" : "活動",
-    "No activities" : "無活動",
     "Default settings" : "預設設定",
     "Configure the default notification settings for new accounts." : "設定新帳號的預設通知設定。",
     "Unable to save the settings" : "無法儲存設定",
@@ -64,6 +63,7 @@
     "This application enables users to view a log of activities about them or about files." : "本應用程式可以讓使用者檢視有關自己或檔案的活動記錄。",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "此應用程式讓使用者能夠在 Nextcloud 中查看與其檔案相關的操作。\n\t\t啟用後，使用者將在其選單中看到一個「活動」新圖示。\n\t\t點選後，將顯示一個新頁面，以供使用者追蹤與文件相關的活動 ─ 包含新增檔案、已刪除檔案、移動、重新命名、更新和分享活動。\n\t\t使用者可以在其個人選單中配置其各自的活動設定。\n\t\t此設定了想要記錄的活動類型，以及使用者是否可看到自己的活動，\n\t\t並是否僅為線上提供，以及是否定期收到電子郵件摘要。\n\t\t活動說明文件中提供了更多訊息。",
     "Unable to load the activity list" : "無法載入活動清單",
+    "Activities" : "活動",
     "Configure the default notification settings for new users." : "為新使用者設定預設的通知設定。"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

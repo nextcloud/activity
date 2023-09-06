@@ -18,6 +18,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "D'Feed-Adress ass ongëlteg",
     "Your settings have been updated." : "Deng Astellunge goufen aktualiséiert.",
     "Settings have been updated." : "D'Astellunge goufen aktualiséiert.",
+    "No activities" : "Keng Aktivitéiten",
     "All activities" : "All Aktivitéiten",
     "By others" : "Vun aneren",
     "By you" : "Vun dir",
@@ -30,10 +31,9 @@ OC.L10N.register(
     "Daily" : "All Dag",
     "Weekly" : "All Woch",
     "No activity yet" : "Bis elo keng Aktivitéit",
-    "Activities" : "Aktivitéiten",
-    "No activities" : "Keng Aktivitéiten",
     "Activity feed" : "Aktivitéits-Feed",
     "Enable RSS feed" : "RSS-Feed aktivéieren",
-    "No more events to load" : "Keng weider Evenementer fir ze lueden"
+    "No more events to load" : "Keng weider Evenementer fir ze lueden",
+    "Activities" : "Aktivitéiten"
 },
 "nplurals=2; plural=(n != 1);");

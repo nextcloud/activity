@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Is impostatziones tuas sunt istadas agiornadas.",
     "Settings have been updated." : "Is impostatziones sunt istadas agiornadas.",
     "Recent activity" : "Atividade reghente",
+    "No activities" : "Peruna atividade",
     "Daily activity summary for %s" : "Resumu de is atividades de cada die pro %s",
     "_and %n more _::_and %n more _" : ["and %n more ","e %n in prus"],
     "All activities" : "Totu is atividades",
@@ -44,8 +45,6 @@ OC.L10N.register(
     "Choose for which activities you want to get an email or push notification." : "Sèbera pro cales atividades cheres retzire unu messàgiu o una notìfica automàtica.",
     "Choose for which activities you want to get a push notification." : "Sèbera pro cales atividades cheres retzire una notìfica automàtica.",
     "Send daily activity summary in the morning" : "Imbia unu resumu de is atividades de ogni die a mangianu",
-    "Activities" : "Atividades",
-    "No activities" : "Peruna atividade",
     "Default settings" : "Impostatziones predefinidas",
     "Activity feed" : "Flussu de atividade",
     "Enable RSS feed" : "Ativa su flussu RSS ",
@@ -54,6 +53,7 @@ OC.L10N.register(
     "This application enables users to view a log of activities about them or about files." : "Custa aplicatzione permitit a is utentes de visualizare unu registru de is atividades issoro o de is archìvios.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Custa aplicatzione abìlitat is utentes a bìdere atziones ligadas a is archìvios issoro in Nextcloud.\n\t\tA pustis abilitada, is utentes ant a bìdere un'icona noa “Activity” in su menu de is aplicatziones issoro.\n\t\tUna borta incarcada, a is utentes lis cumparit una pagina noa pro arrastare s'atividade ligada a is archìvios – archìvios noos, archìvios cantzellados, tràmudas, càmbiu de nùmene, agiornamentos e atividade cumpartzida.\n\t\tS'utente podet configurare is impostatziones individuales in su menu personalizadu.\n\t\tCustu impostat sa genia de atividades de registrare, pro esempru si s'utente bidet is atividades suas,\n\t\tsi ddas tènnere a disponimentu petzi in sa retza, e si ddas retzire cada tantu in unu messàgiu de posta eletrònica de servìtziu.\n\t\tÀteras informatziones sunt a disponimentu in sa documentatzione Activity.",
     "Unable to load the activity list" : "Non faghet a carrigare sa lista de atividades",
+    "Activities" : "Atividades",
     "Configure the default notification settings for new users." : "Configura is impostatziones de notìfica predefinidas pro is utentes noos."
 },
 "nplurals=2; plural=(n != 1);");

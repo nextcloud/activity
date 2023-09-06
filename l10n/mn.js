@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Таны тохиргоог шинэчлэв",
     "Settings have been updated." : "Тохиргоог шинэчлэв",
     "Recent activity" : "Хамгийн сүүлд хийсэн үйлдэл",
+    "No activities" : "Үйлдэл алга",
     "More activities" : "Дэлгэрэнгүй",
     "Daily activity summary for %s" : "%s-ийн өдөр тутмын үйлдлийн хураангуй",
     "_and %n more _::_and %n more _" : ["ба дахиад %n","ба дахиад %n"],
@@ -51,8 +52,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "аль үйлдлийг мэдэгдлээр хүлээн авахыг шийдэх",
     "Daily activity summary" : "Өдөр тутмын үйлдлийн хураангуй",
     "Send daily activity summary in the morning" : "Өдөр тутмын үйлдлийн хураангуйг өглөө илгээх",
-    "Activities" : "Үйлдлүүд",
-    "No activities" : "Үйлдэл алга",
     "Default settings" : "Анхдагч тохиргоо",
     "Configure the default notification settings for new accounts." : "Шинэ хэрэглэгчдийн \"Үйлдлүүд\" хэсгийн анхдагч тохиргоог тохируулах",
     "Unable to save the settings" : "Тохиргоог хадгалах боломжгүй байна",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "This application enables users to view a log of activities about them or about files." : "Энэхүү аппликейшн нь хэрэглэгчдэд өөрийн үйлдлийн болон файлуудын бүртгэлээ хянах боломжийг олгоно. ",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Энэ апп нь хэрэглэгч Nextcloud дээрх файлтай холбоотой мэдээллийг хянах боломжийг олгодог.\n\t\tИдэвхжүүлсний дараа хэрэглэгч өөрийн программын цэсэд \"Ажиллагаа\" гэсэн шинэ дүрсийг харах болно.\n\t\tТовшсон үед хэрэглэгч файл үүсгэх, устгах, зөөх, нэр өөрчлөх, шинэчлэх, хуваалцах зэрэг файлтай холбоотой ажиллагааг хянах шинэ хуудас гарч ирнэ.\n\t\tХэрэглэгч өөрийн хувийн цэсэд өөрийн ажиллагааны тохиргоог хийх боломжтой.\n\t\tЭнэ тохиргоог хийснээр хэрэглэгч өөрийн ажиллагааг харах эсэх, зөвхөн \t\tонлайнаар ашиглах эсэх, мөн тогтмол цахим шуудангаар хүлээн авах эсэх зэрэг бүртгэх ажиллагааны төрлийг тодорхойлдог. \n\t\tДэлгэрэнгүй мэдээллийг ашиглалтын заавраас унших боломжтой.",
     "Unable to load the activity list" : "Үйлдлийн жагсаалтыг харуулах боломжгүй байна.",
+    "Activities" : "Үйлдлүүд",
     "Configure the default notification settings for new users." : "Шинэ хэрэглэгчдийн мэдэгдлийн анхдагч тохиргоог тохируулах"
 },
 "nplurals=2; plural=(n != 1);");

@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Tus configuraciones se han actualizado.",
     "Settings have been updated." : "Las configuraciones han sido actualizadas",
     "Recent activity" : "Actividad reciente",
+    "No activities" : "No hay actividades",
     "More activities" : "Más actividades",
     "_and %n more _::_and %n more _" : ["y %n más","y %n más","y %n más"],
     "All activities" : "Todas las actividades",
@@ -39,12 +40,11 @@ OC.L10N.register(
     "Weekly" : "Semanalmente",
     "No activity yet" : "Aún no tiene actividad",
     "Notification" : "Notificación",
-    "Activities" : "Actividades",
-    "No activities" : "No hay actividades",
     "Default settings" : "Configuraciones predeterminadas",
     "Activity feed" : "Fuente de actividad",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
-    "No more events to load" : "No hay más eventos por cargar"
+    "No more events to load" : "No hay más eventos por cargar",
+    "Activities" : "Actividades"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

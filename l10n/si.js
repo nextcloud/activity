@@ -15,6 +15,7 @@ OC.L10N.register(
     "Your settings have been updated." : "ඔබගේ සැකසුම් යාවත්කාලීන කර ඇත.",
     "Settings have been updated." : "සැකසුම් යාවත්කාලීන කර ඇත.",
     "Recent activity" : "මෑත ක්‍රියාකාරකම",
+    "No activities" : "ක්‍රියාකාරකම් නැත",
     "_and %n more _::_and %n more _" : ["සහ තවත් %n","සහ තවත් %n"],
     "All activities" : "සියළුම ක්‍රියාකාරකම්",
     "By others" : "අන් අය විසින්",
@@ -29,7 +30,6 @@ OC.L10N.register(
     "Weekly" : "සතිපතා",
     "No activity yet" : "තවම ක්‍රියාකාරකමක් නොමැත",
     "Enable notification emails" : "දැනුම්දීම් විද්‍යුත් තැපෑල සබල කරන්න",
-    "No activities" : "ක්‍රියාකාරකම් නැත",
     "Default settings" : "සාමාන්‍ය සැකසුම්",
     "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත"
 },

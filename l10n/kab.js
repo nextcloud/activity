@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Iɣewwaren-innek ttwaleqqmen",
     "Settings have been updated." : "Iɣewwaren ttwaleqqmen",
     "Recent activity" : "Armud amiran",
+    "No activities" : "Ulac armud",
     "More activities" : "Ugar n yirmad",
     "Daily activity summary for %s" : "Agzul n urmud n yal ass i %s",
     "_and %n more _::_and %n more _" : ["akked %n nniḍen","akked %n nniḍen "],
@@ -42,8 +43,6 @@ OC.L10N.register(
     "No activity yet" : "Ulac armud yakan",
     "Notification" : "Ilɣa",
     "Daily activity summary" : "Agzul n urmud n wass",
-    "Activities" : "Irmuden",
-    "No activities" : "Ulac armud",
     "Default settings" : "Iɣewwaren n lexṣas",
     "Configure the default notification settings for new accounts." : "Sesteb iɣewwaren n yilɣa imezwer i yimiḍanen imaynuten.",
     "Unable to save the settings" : "D awezɣi ad ttwaskelsen yiɣewwaren",
@@ -53,6 +52,7 @@ OC.L10N.register(
     "RSS feed" : "Asuddem RSS",
     "Copy RSS feed link" : "Nɣel aseɣwen n usuddim RSS",
     "Personal notification settings" : "Iɣewwaren n yilɣa udmawanen",
-    "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen"
+    "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
+    "Activities" : "Irmuden"
 },
 "nplurals=2; plural=(n != 1);");

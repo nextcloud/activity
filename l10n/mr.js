@@ -18,6 +18,7 @@ OC.L10N.register(
     "Your settings have been updated." : "तुमच्या सेटिंग अद्ययावत करण्यात आल्या.",
     "Settings have been updated." : "सेटिंग अद्ययावत करण्यात आल्या.",
     "Recent activity" : "अलीकडील क्रिया",
+    "No activities" : "कोणत्याही क्रिया नाहीत",
     "Daily activity summary for %s" : " %s च्या दैनंदिन क्रियांचा सारांश",
     "_and %n more _::_and %n more _" : ["आणि इतर %n","आणि इतर %n"],
     "All activities" : "सर्व क्रिया",
@@ -36,7 +37,6 @@ OC.L10N.register(
     "No activity yet" : "अजुन कोणतीही क्रिया नाही",
     "Enable notification emails" : "अधिसूचना ई-मेल सुरु करा",
     "Daily activity summary" : "दैनिक क्रिया सारांश",
-    "No activities" : "कोणत्याही क्रिया नाहीत",
     "Default settings" : "मूळ सेटींग",
     "Activity feed" : "क्रियेची फीड",
     "Unable to load the activity list" : "क्रियेची यादी घेता आली नाही"
