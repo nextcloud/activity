@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "تنظیمات شما به روز رسانی شد",
     "Settings have been updated." : "تنظیمات به روز رسانی شد ",
     "Recent activity" : "فعّالیت‌های اخیر",
+    "No activities" : "بدون فعّالیت",
     "More activities" : "فعّالیت‌های بیش‌تر",
     "Daily activity summary for %s" : "خلاصهٔ فعّالیت‌های روزانه برای %s",
     "_and %n more _::_and %n more _" : ["و %n بیشتر","و %n بیشتر"],
@@ -51,8 +52,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "گزینش فعّالیت‌هایی که می‌خواهید برایشان آگاهی ارسالی بگیرید.",
     "Daily activity summary" : "خلاصهٔ فعّالیت‌های روزانه",
     "Send daily activity summary in the morning" : "فرستادن خلاصهٔ فعّالیت‌های روزانه در صبح",
-    "Activities" : "فعّالیت‌ها",
-    "No activities" : "بدون فعّالیت",
     "Default settings" : "تنظیمات پیش فرض",
     "Configure the default notification settings for new accounts." : "پیکربندی تنظیمات آگاهی پیش‌گزیده برای حساب‌های جدید.",
     "Unable to save the settings" : "ناتوان در ذخیرهٔ تنظیمات",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "This application enables users to view a log of activities about them or about files." : "این برنامه می‌گذارد کاربران گزارشی از فعّالیت‌های مربوط به خودشان یا پرونده‌ها را ببینند.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "این کاره می‌گذارد کاربران کنش‌های مربوط به پرونده‌هایشان را در نکست‌کلود ببینند.\nپس از به کار افتادنش کاربران نقشک جدید فعّالیت را در فهرست کاره‌هایشان خواهند دید. \nهنگام کلیک شدن، صفحه‌ای جدید برای کاربر ظاهر خواهد شد تا فعّالیت‌های مربوط به پرونده‌ها را ردیابی کنند – از پرونده‌های جدید تا پرونده‌های حذف شده و فعّالیت‌های جابه‌جایی،‌ تغییر، به‌روز شدن و هم‌رسانی \nکاربر می تواند تنظیمات فعّالیت جداگانه‌اش را در فهرست شخصیش پیکربندی کند\nاین کار گونهٔ فعّالیت برای ضبط یا نفس ضبط شدن را برای کاربری که فعّالیت‌هایش را می‌بیند به همراه\nاین که فقط برخط در دسترس باشند یا به صورت دوره‌ای رایانامه‌ای دریافت کنند تنظیم می‌کند.\nاطّلاعات بیش‌تر در مستندات فعّالیت موجود است.",
     "Unable to load the activity list" : "ناتوان در بار کردن سیاهه فعّالیت",
+    "Activities" : "فعّالیت‌ها",
     "Configure the default notification settings for new users." : "پیکربندی تنظیمات آگاهی پیش‌گزیده برای کاربران جدید."
 },
 "nplurals=2; plural=(n > 1);");

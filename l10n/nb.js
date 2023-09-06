@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Innstillingene dine ble oppdatert.",
     "Settings have been updated." : "Innstillinger oppdatert.",
     "Recent activity" : "Nylig aktivitet",
+    "No activities" : "Ingen aktiviteter",
     "More activities" : "Flere aktiviteter",
     "Daily activity summary for %s" : "Daglig aktivitetssammendrag for %s",
     "_and %n more _::_and %n more _" : ["og %n til","og %n til"],
@@ -51,8 +52,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Velg hvilke aktiviteter du vil motta et push-varsel for.",
     "Daily activity summary" : "Daglig oppsummering for aktiviteter",
     "Send daily activity summary in the morning" : "Send daglig aktivitetssammendrag om morgenen",
-    "Activities" : "Aktiviteter",
-    "No activities" : "Ingen aktiviteter",
     "Default settings" : "Standard innstillinger",
     "Configure the default notification settings for new accounts." : "Konfigurer standard varslingsinnstillinger for nye kontoer.",
     "Unable to save the settings" : "Klarte ikke å lagre innstillingene",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "This application enables users to view a log of activities about them or about files." : "Denne applikasjonen lar brukere se en logg over aktiviteter om dem eller om filer.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Denne applikasjonen lar brukerne vise handlinger relatert til deres filer i Nextcloud.\n\t\tNår det er aktivert, vil brukerne se et nytt ikon \"Aktivitet\" i deres app-meny.\n\t\tNår du klikker, vises en ny side for brukere å spore aktiviteten relatert til filer - fra nye filer, til slettede filer, flytte, endre navn, oppdateringer og delt aktivitet.\n\t\tBrukeren kan konfigurere sine individuelle aktivitetsinnstillinger i deres personlige meny.\n\t\tDette setter typen aktivitet som skal registreres, samt om brukeren ser sine egne aktiviteter,\n\t\tom disse bare er tilgjengelige online, og om de får en e-postfordeling med jevne mellomrom.\n\t\tMer informasjon er tilgjengelig i Aktivitetsdokumentasjonen.",
     "Unable to load the activity list" : "Kunne ikke laste aktivitetslisten",
+    "Activities" : "Aktiviteter",
     "Configure the default notification settings for new users." : "Konfigurer standard varslingsinnstillinger for nye brukere."
 },
 "nplurals=2; plural=(n != 1);");

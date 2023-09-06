@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Tus configuraciones se han actualizado.",
     "Settings have been updated." : "Las configuraciones han sido actualizadas",
     "Recent activity" : "Actividad resiente",
+    "No activities" : "No hay actividades",
     "More activities" : "Más actividades",
     "Daily activity summary for %s" : "Resumen de actividad diaria para 1%s",
     "_and %n more _::_and %n more _" : ["y %n más","y %n más","y %n más"],
@@ -51,8 +52,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Elija para qué actividades desea recibir una notificación automática.",
     "Daily activity summary" : "Resumen de actividad diaria",
     "Send daily activity summary in the morning" : "Enviar resumen de actividad diaria por la mañana",
-    "Activities" : "Actividades",
-    "No activities" : "No hay actividades",
     "Default settings" : "Configuraciones predeterminadas",
     "Configure the default notification settings for new accounts." : "Configure los ajustes de notificación predeterminados para nuevas cuentas de usuario.",
     "Unable to save the settings" : "No se ha podido guardar la configuración",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "This application enables users to view a log of activities about them or about files." : "Esta aplicación permite a los usuarios ver un registro de actividades acerca de ellos o acerca de los archivos.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Esta aplicación habilita los usuarios para gestionar sus archivos en NextCloud.\nUna vez habilitado, los usuarios verán el icono de \"Actividad\" en el menú de su aplicación.\nCuando sea clickeado, una nueva pagina aparecerá para que los usuarios puedan rastrear  los archivos de la actividad - para archivos nuevos, eliminados, movidos, renombrados, actualizados y compartidos.\nEl usuario podrá configurar cada actividad individualmente en la configuración del menú de su equipo.",
     "Unable to load the activity list" : "No se pudo cargar la lista de actividades",
+    "Activities" : "Actividades",
     "Configure the default notification settings for new users." : "Configure los ajustes de notificaciones por defecto para cada usuario nuevo"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

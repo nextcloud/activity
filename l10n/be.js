@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Вашы налады былі абноўлены. ",
     "Settings have been updated." : "Налады былі абноўлены. ",
     "Recent activity" : "Апошняя актыўнасць",
+    "No activities" : "Няма дзеянняў",
     "More activities" : "Больш актыўнасцей",
     "Daily activity summary for %s" : "Зводка штодзённай дзейнасці для %s",
     "_and %n more _::_and %n more _" : ["і яшчэ %n","і яшчэ %n","і яшчэ %n","і яшчэ %n"],
@@ -48,8 +49,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Абяры, на якія дзеянні ты хочаш атрымліваць ўсплывальныя абвесткі.",
     "Daily activity summary" : "Штодзённая справаздача пра дзеянні",
     "Send daily activity summary in the morning" : "Дасылай штодзень зранку справаздачу пра дзеянні",
-    "Activities" : "Дзеянні",
-    "No activities" : "Няма дзеянняў",
     "Default settings" : "Прадвызначаныя налады",
     "Configure the default notification settings for new accounts." : "Наладзь прадвызначаныя налады абвяшчэння для новых акаўнтаў.",
     "Unable to save the settings" : "Не магчыма захаваць налады",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Personal notification settings" : "Асабістыя налады апавяшчэння",
     "No more events to load" : "Няма больш падзей для загрузкі",
     "Unable to load the activity list" : "На магчыма загрузіць спіс дзеянняў",
+    "Activities" : "Дзеянні",
     "Configure the default notification settings for new users." : "Наладзь прадвызначаныя налады абвяшчэння для новых карыстальнікаў."
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");
