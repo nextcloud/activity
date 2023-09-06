@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "อัปเดตการตั้งค่าของคุณแล้ว",
     "Settings have been updated." : "อัปเดตการตั้งค่าแล้ว",
     "Recent activity" : "กิจกรรมล่าสุด",
+    "No activities" : "ไม่มีกิจกรรม",
     "Daily activity summary for %s" : "สรุปกิจกรรมประจำวันสำหรับ %s",
     "_and %n more _::_and %n more _" : ["และอีก %n"],
     "All activities" : "กิจกรรมทั้งหมด",
@@ -43,8 +44,6 @@ OC.L10N.register(
     "Choose for which activities you want to get an email or push notification." : "เลือกกิจกรรมที่คุณต้องการรับอีเมลหรือการแจ้งเตือนพุช",
     "Choose for which activities you want to get a push notification." : "เลือกกิจกรรมที่คุณต้องการรับการแจ้งเตือนพุช",
     "Send daily activity summary in the morning" : "ส่งสรุปกิจกรรมประจำวันในตอนเช้า",
-    "Activities" : "กิจกรรม",
-    "No activities" : "ไม่มีกิจกรรม",
     "Default settings" : "ค่าเริ่มต้น",
     "Activity feed" : "ฟีดกิจกรรม",
     "Enable RSS feed" : "เปิดใช้งานฟีด RSS",
@@ -53,6 +52,7 @@ OC.L10N.register(
     "This application enables users to view a log of activities about them or about files." : "แอปพลิเคชันนี้ทำให้ผู้ใช้มองเห็นบันทึกกิจกรรมที่เกี่ยวกับเขาหรือไฟล์ต่าง ๆ",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "แอปพลิเคชันนี้ช่วยให้ผู้ใช้สามารถดูการกระทำที่เกี่ยวข้องกับไฟล์ของผู้ใช้ใน Nextcloud\n\t\tเมื่อเปิดใช้งาน ผู้ใช้จะเห็นไอคอนใหม่ “กิจกรรม” ในเมนูแอปของผู้ใช้งาน\n\t\tเมื่อคลิกแล้วจะมีหน้าใหม่ปรากฏขึ้นให้ผู้ใช้ติดตามกิจกรรมที่เกี่ยวข้องกับไฟล์ ตั้งแต่ไฟล์ใหม่ ไปจนถึงไฟล์ที่ถูกลบ ย้าย เปลี่ยนชื่อ อัปเดต และกิจกรรมการแชร์\n\t\tผู้ใช้สามารถกำหนดการตั้งค่ากิจกรรมของผู้ใช้ได้ในเมนูส่วนตัว\n\t\tสิ่งนี้จะสามารถกำหนดประเภทของกิจกรรมที่จะบันทึก รวมถึงกิจกรรมของตนเองที่ผู้ใช้เห็น\n\t\tกิจกรรมเหล่านี้เป็นออนไลน์เท่านั้นหรือไม่ และผู้ใช้งานจะได้รับอีเมลสรุปเป็นประจำหรือไม่\n\t\tข้อมูลเพิ่มเติมมีอยู่ในเอกสารประกอบของกิจกรรม",
     "Unable to load the activity list" : "ไม่สามารถโหลดรายการกิจกรรม",
+    "Activities" : "กิจกรรม",
     "Configure the default notification settings for new users." : "กำหนดค่าเริ่มต้นของการแจ้งเตือนสำหรับผู้ใช้ใหม่"
 },
 "nplurals=1; plural=0;");

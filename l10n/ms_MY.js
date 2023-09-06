@@ -26,10 +26,10 @@ OC.L10N.register(
     "Daily" : "Setiap hari",
     "Weekly" : "Setiap minggu",
     "No activity yet" : "Tiada aktiviti",
-    "Activities" : "Aktiviti",
     "Default settings" : "Tetapan lalai",
     "Activity feed" : "Suapan aktiviti",
     "RSS feed" : "Suapan RSS",
-    "No more events to load" : "Tiada aktiviti untuk memuat"
+    "No more events to load" : "Tiada aktiviti untuk memuat",
+    "Activities" : "Aktiviti"
 },
 "nplurals=1; plural=0;");

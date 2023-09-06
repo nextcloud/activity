@@ -18,6 +18,7 @@ OC.L10N.register(
     "Your settings have been updated." : "ការ​កំណត់​របស់​អ្នក​ត្រូវ​បាន​ធ្វើ​បច្ចុប្បន្នភាព។",
     "Settings have been updated." : "ការកំណត់ត្រូវបានធ្វើបច្ចុប្បន្នភាព",
     "Recent activity" : "សកម្មភាពថ្មីៗ",
+    "No activities" : "គ្មានសកម្មភាពទេ",
     "Daily activity summary for %s" : "សកម្មភាពប្រចាំថ្ងៃសង្ខេបសម្រាប់ %s",
     "_and %n more _::_and %n more _" : ["និង %n ទៀត"],
     "All activities" : "សកម្មភាពទាំងអស់",
@@ -42,8 +43,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "ជ្រើសរើសថាតើអ្នកចង់ទទួលបានដំណឹងអំពីសកម្មភាពអ្វីខ្លះតាមរយៈ Push Notification ។",
     "Daily activity summary" : "សង្ខេបនៃសកម្មភាពប្រចាំថ្ងៃ",
     "Send daily activity summary in the morning" : "ផ្ញើសង្ខេបនៃសកម្មភាពប្រចាំថ្ងៃនៅពេលព្រឹក",
-    "Activities" : "សកម្មភាពផ្សេងៗ",
-    "No activities" : "គ្មានសកម្មភាពទេ",
     "Default settings" : "ការកំណត់លំនាំដើម",
     "Activity feed" : "សកម្មភាព feed",
     "Enable RSS feed" : "អនុញ្ញាត RSS feed",
@@ -51,6 +50,7 @@ OC.L10N.register(
     "Personal notification settings" : "ការកំណត់ផ្ទាល់ខ្លួនលើការជូនដំណឹង",
     "No more events to load" : "គ្មាន​ព្រឹត្តិការណ៍​ច្រើនទៀតសម្រាប់ទាញយកមកទេ",
     "This application enables users to view a log of activities about them or about files." : "កម្មវិធីនេះអនុញ្ញាតឱ្យអ្នកប្រើប្រាស់មើលកំណត់ហេតុនៃសកម្មភាពអំពីពួកគេ ឬអំពីឯកសារផ្សេងៗ។",
-    "Unable to load the activity list" : "មិនអាចទាញយកបញ្ជីសកម្មភាពមកទេ"
+    "Unable to load the activity list" : "មិនអាចទាញយកបញ្ជីសកម្មភាពមកទេ",
+    "Activities" : "សកម្មភាពផ្សេងៗ"
 },
 "nplurals=1; plural=0;");

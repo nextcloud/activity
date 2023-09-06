@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "설정이 업데이트되었습니다.",
     "Settings have been updated." : "설정이 업데이트되었습니다.",
     "Recent activity" : "최근 활동",
+    "No activities" : "활동 없음",
     "More activities" : "더 많은 활동",
     "Daily activity summary for %s" : "%s 의 일일 활동 요약",
     "_and %n more _::_and %n more _" : ["%n개 더"],
@@ -51,8 +52,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "푸시 알림을 받을 활동을 선택합니다.",
     "Daily activity summary" : "일간 활동 요약",
     "Send daily activity summary in the morning" : "매일 아침 일일 활동내역 전송",
-    "Activities" : "활동",
-    "No activities" : "활동 없음",
     "Default settings" : "기본 설정",
     "Configure the default notification settings for new accounts." : "알림에 관한 기본값을 설정하십시오.",
     "Unable to save the settings" : "설정을 저장할 수 없습니다.",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "This application enables users to view a log of activities about them or about files." : "이 응용 프로그램을 사용하면 사용자가 자신 또는 파일에 대한 활동 로그를 볼 수 있습니다.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "이 애플리케이션은 사용자들이 Nextcloud에서 파일 관련 활동을 볼 수 있도록 합니다. \n\t\t활성화되면 사용자는 앱 매뉴에서 새 아이콘 \"활동\"을 볼 수 있습니다.\n\t\t이 아이콘을 누르면 사용자의 새 파일 생성이나 파일 삭제, 이동, 이름 변경, 업데이트나 공유 활동 등의 파일 관련 활동을 보여 주는 새 페이지가 열립니다.\n\t\t사용자는 개인 메뉴에서 개별 활동 설정을 변경할 수 있습니다.\n\t\t이 메뉴는 활동의 종류나, 사용자 자신의 활동을 볼 것인지,\n\t\t또는 온라인 상태에서만 확인하거나 정기적으로 이메일 알림을 받을 것인지를 선택할 수 있습니다.\n\t\t더 자세한 설명은 Activity 문서를 참고하십시오.",
     "Unable to load the activity list" : "활동 목록을 로드할 수 없습니다.",
+    "Activities" : "활동",
     "Configure the default notification settings for new users." : "새 사용자의 기본 알림 설정을 변경합니다."
 },
 "nplurals=1; plural=0;");

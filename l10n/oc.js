@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Los paramètres son estats actualizats.",
     "Settings have been updated." : "Los paramètres son estats actualizats.",
     "Recent activity" : "Activitat recenta",
+    "No activities" : "Cap d’activitat",
     "More activities" : "Mai d’activitats",
     "Daily activity summary for %s" : "Resumit d’activitat quotidian per%s",
     "_and %n more _::_and %n more _" : ["e %n mai","e %n mai "],
@@ -43,8 +44,6 @@ OC.L10N.register(
     "Enable notification emails" : "Activar las notificacions per corrièl",
     "Daily activity summary" : "Resumit d’activitat quotidian",
     "Send daily activity summary in the morning" : "Envejar lo resumit d'activitat quotidian lo maitin",
-    "Activities" : "Activitats",
-    "No activities" : "Cap d’activitat",
     "Default settings" : "Paramètres par defaut",
     "Activity feed" : "Flux d’activitat",
     "Activity settings" : "Paramètres d'activitat",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "RSS feed" : "Flux RSS",
     "Personal notification settings" : "Paramètres de notificacions personalas",
     "No more events to load" : "Pas mai d’eveniment de cargar",
-    "Unable to load the activity list" : "Cargament impossible de la lista de las activitats"
+    "Unable to load the activity list" : "Cargament impossible de la lista de las activitats",
+    "Activities" : "Activitats"
 },
 "nplurals=2; plural=(n > 1);");

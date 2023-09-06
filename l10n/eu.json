@@ -18,6 +18,7 @@
     "Your settings have been updated." : "Zure ezarpenak ondo eguneratu dira.",
     "Settings have been updated." : "Ezarpenak eguneratu dira.",
     "Recent activity" : "Azken jarduerak",
+    "No activities" : "Ez da jarduerarik",
     "More activities" : "Jarduera gehiago",
     "Daily activity summary for %s" : "%s-(r)en eguneko jardueren laburpena",
     "_and %n more _::_and %n more _" : ["eta %n gehiago","eta %n gehiago"],
@@ -49,8 +50,6 @@
     "Choose for which activities you want to get a push notification." : "Aukeratu zein jardueratarako jaso nahi duzun push jakinarazpena.",
     "Daily activity summary" : "Jardueren eguneroko laburpena",
     "Send daily activity summary in the morning" : "Bidali goizez eguneroko jardueraren laburpena",
-    "Activities" : "Jarduerak",
-    "No activities" : "Ez da jarduerarik",
     "Default settings" : "Lehenetsitako ezarpenak",
     "Configure the default notification settings for new accounts." : "Konfiguratu jakinarazpen-ezarpen lehenetsiak kontu berrietarako.",
     "Unable to save the settings" : "Ezin izan dira ezarpenak gorde",
@@ -64,6 +63,7 @@
     "This application enables users to view a log of activities about them or about files." : "Aplikazio honek aukera ematen die erabiltzaileei beraiei edo fitxategiei buruzko jardueren erregistroa ikusteko.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Aplikazio honek aukera ematen die erabiltzaileei Nextclouden dauzkaten fitxategietan egindako ekintzak ikusteko.\n\t\tGaituz gero, erabiltzaileek \"Jarduera\" ikono berri bat ikusiko dute aplikazioen menuan.\n\t\tKlik egiterakoan, orri berri bat agertuko zaie beraien fitxategietan egindako aldaketa guztien jarraipena egin dezaten – fitxategi sortu berriak, ezabaketak, leku-aldatzeak, berrizendatzeak, eguneratzeak eta partekatzeak.\n\t\tErabiltzaileek haien jarduera ezarpenak konfiguratu ditzakete menu pertsonalean.\n\t\tHonek, gordeko den jarduera mota zehaztuko du, eta baita ere erabiltzaileak nola ikusiko dituen jarduera propioak:\n\t\tsarean bakarrik egongo diren eskuragarri, eta ea tarteka posta elektronikoz laburpen mezu bat jaso nahiko duen.\n\t\tInformazio gehiago dago eskuragarri Jarduerak (Activity) aplikazioaren dokumentazio biltegian.",
     "Unable to load the activity list" : "Ezin izan da jarduera-zerrenda kargatu",
+    "Activities" : "Jarduerak",
     "Configure the default notification settings for new users." : "Konfiguratu jakinarazpenen ezarpen lehenetsiak erabiltzaile berrientzat."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

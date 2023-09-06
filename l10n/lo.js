@@ -12,6 +12,7 @@ OC.L10N.register(
     "Your settings have been updated." : "ການຕັ້ງຄ່າຂອງທ່ານໄດ້ຮັບການອັບເດດ",
     "Settings have been updated." : "ອັບເດດການຕັ້ງຄ່າແລ້ວ",
     "Recent activity" : "ກິດຈະກຳລ່າສຸດ",
+    "No activities" : "ບໍ່ມີກິດຈະກຳ",
     "More activities" : "ກິດຈະກຳອື່ນໆ",
     "Daily activity summary for %s" : "ສະຫຼຸບກິດຈະກຳປະຈຳວັນ %s",
     "_and %n more _::_and %n more _" : ["ແລະ 1%n ອື່ນໆ "],
@@ -37,11 +38,10 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "ເລືອກກິດຈະກຳທີ່ທ່ານຕ້ອງການຮັບແຈ້ງເຕືອນ",
     "Daily activity summary" : "ສະຫຼຸບກິດຈະກຳປະຈຳວັນ",
     "Send daily activity summary in the morning" : "ສົ່ງສະຫຼຸບກິດຈະກຳປະຈຳວັນໃນຕອນເຊົ້າ",
-    "Activities" : "ບັນດາກິດຈະກຳ",
-    "No activities" : "ບໍ່ມີກິດຈະກຳ",
     "Default settings" : "ການຕັ້ງຄ່າເລີ່ມຕົ້ນ",
     "Unable to save the settings" : "ບໍ່ສາມາດບັນທຶກການຕັ້ງຄ່າ",
     "Personal notification settings" : "ການຕັ້ງຄ່າການແຈ້ງເຕືອນສ່ວນບຸກຄົນ",
-    "No more events to load" : "ບໍ່ມີເຫດການໃຫ້ໂຫລດອີກ"
+    "No more events to load" : "ບໍ່ມີເຫດການໃຫ້ໂຫລດອີກ",
+    "Activities" : "ບັນດາກິດຈະກຳ"
 },
 "nplurals=1; plural=0;");

@@ -18,6 +18,7 @@
     "Your settings have been updated." : "تم تحديث إعداداتك.",
     "Settings have been updated." : "تم تحديث الاعدادات.",
     "Recent activity" : "الأنشطة الأخيرة",
+    "No activities" : "لا توجد حركات",
     "More activities" : "نشاطات إضافية",
     "Daily activity summary for %s" : "ملخص الحركات اليومية لـ%s",
     "_and %n more _::_and %n more _" : [" و %n المزيد ","و %n آخر","و %n آخرين","و %n أنشطة أخرى","و %n أنشطة أخرى","و %n  أخرى"],
@@ -49,8 +50,6 @@
     "Choose for which activities you want to get a push notification." : "اختر الحركات التي تريد الحصول على إشعار بها.",
     "Daily activity summary" : "ملخص الأنشطة اليومي",
     "Send daily activity summary in the morning" : "أرسل خلاصة حركة اليوم في الصباح",
-    "Activities" : "الحركات",
-    "No activities" : "لا توجد حركات",
     "Default settings" : "الإعدادات الإفتراضية",
     "Configure the default notification settings for new accounts." : "قم بتهيئة الإعدادات الافتراضية لإشعارات الحساب الجديد ",
     "Unable to save the settings" : "تعذّر حفظ الإعدادات",
@@ -64,6 +63,7 @@
     "This application enables users to view a log of activities about them or about files." : "هذا التطبيق يُمكّن المستخدمين من عرض سجل الحركات حول أو عن الملفات .",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "هذا التطبيق يُمكن المستخدمين من رؤية الإجراءات المتعلقة بملفاتهم على نكست كلاود\n\t\t بعد تفعيله، ستظهر للمستخدمين أيقونة جديدة \"الحركات\" في قائمة برامجهم.\nبعد الضغط عليها، ستظهر للمستخدمين صفحة جديدة تمكنهم من تعقب الحركات و الأنشطة المتعلقة بملفاتهم - من ملفات جديدة، ملفات محذوفة، نقل، إعادة تسمية، التحديثات والأنشطة التي تمت مشاركتها.\n\t\tبإمكان المستخدم تعديل إعدادات نشاطاته الخاصة في قائمته الخاصة.\n\t\tهذا يضبط نوع الحركات المطلوب تسجيلها، وأيضاً إمكانية إختيار مايراه المستخدم من حركاته،\n\t\t إما أن يراهم على الموقع فقط أو من خلال ملخص يرسل على البريد الإلكتروني دورياً.\n\t\tالمزيد من التفاصيل متوفرة في المستندات المتعلقة بالحركات Activities.",
     "Unable to load the activity list" : "تعذّر تحميل قائمة الحركات",
+    "Activities" : "الحركات",
     "Configure the default notification settings for new users." : "إعداد الإشعارات الافتراضية للمستخدمين الجدد."
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"
 }

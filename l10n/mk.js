@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Вашите параметри се ажурирани.",
     "Settings have been updated." : "Параметрите се ажурирани.",
     "Recent activity" : "Неодамнешни активности",
+    "No activities" : "Нема активности",
     "More activities" : "Повеќе активности",
     "Daily activity summary for %s" : "Дневно резиме на активности за %s",
     "_and %n more _::_and %n more _" : ["и уште %n","и %n други"],
@@ -51,8 +52,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Изберете за кои активности сакате да добиете Пуш известување.",
     "Daily activity summary" : "Дневно резиме на активности",
     "Send daily activity summary in the morning" : "Испрати дневно резиме на активности наутро",
-    "Activities" : "Активности",
-    "No activities" : "Нема активности",
     "Default settings" : "Стандардни поставки",
     "Configure the default notification settings for new accounts." : "Конфигурирај ги стандардните поставки за известување за нови корисници.",
     "Unable to save the settings" : "Неуспешно зачувување на параметрите",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "This application enables users to view a log of activities about them or about files." : "Оваа апликација им овозможува на корисниците да ги следат промените на активностите или на датотеките.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Оваа апликација им овозможува на корисниците да ги проверат активностите поврзани со нивните датотеки во Nextcloud.\n\t\tОткако ќе биде овозможено, корисниците ќе видат нова икона „Активност” во менито за апликации.\n\t\tКога ќе се кликне на неа, се појавува нова страница за корисниците да ја следат активноста поврзана со датотеките - од нови датотеки, до избришани датотеки, преместување, преименување, надградби и споделена активност.\n\t\tКорисникот може да ги конфигурира неговите поединечни поставки за активност во неговото лично мени.\n\t\tОва ја поставува активноста за снимање, како и дали корисникот ги гледа своите активности,\n\t\tбез разлика дали тие се достапни само онлајн, односно дали тие се редовно сврзани како мејлови.\n\t\tПовеќе информации се достапни во документацијата за активноста.",
     "Unable to load the activity list" : "Неможе да се вчита листата на активности",
+    "Activities" : "Активности",
     "Configure the default notification settings for new users." : "Конфигурирај ги стандардните поставки за известување за нови корисници."
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

@@ -20,6 +20,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Rregullimet tuaja u përditësuan",
     "Settings have been updated." : "Konfigurimet u përditësuan.",
     "Recent activity" : "Aktivitetet e fundit",
+    "No activities" : "Asnjë aktivitet",
     "Daily activity summary for %s" : "Përmbledhje e aktivitetit ditor për %s",
     "_and %n more _::_and %n more _" : ["dhe %n më tepër ","* dhe %n më tepër"],
     "All activities" : "Të gjitha aktivitetet",
@@ -42,8 +43,6 @@ OC.L10N.register(
     "Choose for which activities you want to get an email or push notification." : "Zgjidhni për cilat aktivitete dëshironi të merrni një email ose njoftim.",
     "Choose for which activities you want to get a push notification." : "Zgjidhni për cilat aktivitete dëshironi të merrni një njoftim.",
     "Send daily activity summary in the morning" : "Dërgo përmbledhje të përditshme të aktiviteteve në mëngjes",
-    "Activities" : "Aktivitetet",
-    "No activities" : "Asnjë aktivitet",
     "Default settings" : "Konfigurime të paracaktuara",
     "Activity feed" : "Prurje veprimtarie",
     "Enable RSS feed" : "Aktivizoni Prurje RSS",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "This application enables users to view a log of activities about them or about files." : "Ky aplikacion u mundëson përdoruesve të shikojnë një regjistër të aktiviteteve rreth tyre ose rreth skedarëve.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ky aplikacion u mundëson përdorueve të shikojnë veprimet e tyre lidhur me skedarët e tyre në Nextcloud.\n\t\tPasi aktivizohet, përdoruesit shohin një ikonë të re \"Aktiviteti\" në menunë e aplikacionit të tyre.\n\t\tKur klikohet shfaqet një faqe e re në mënyrë që përdoruesit të ndjekin aktivitetin lidhur me skedarët - nga skedarët e rinj, skedarët e fshirë, lëvizjen, riemërtimin, përditësimet dhe aktivitetin e shpërdarë.\n\t\tPërdoruesi mund të konfigurojë parametrat individual të aktivitetit në menunë e tyre personale.\n\t\tKjo përcakton llojin e aktivitetit që do ruhet, si dhe nëse përdoruesi do të ruajë aktivitetin e vet,\n\t\tnëse këto do të jenë të disponueshme vetëm në webfaqje, apo ata do të marin një email përmbledhës rregullisht.\n\t\tMë shumë informacione mund të gjeni tek dokumentimi i Aktivitetit.",
     "Unable to load the activity list" : "Lista e aktiviteteve nuk mund të ngarkohet",
+    "Activities" : "Aktivitetet",
     "Configure the default notification settings for new users." : "Vendosni konfigurimet fillestare të aktiviteteve për përdoruesit e rinj."
 },
 "nplurals=2; plural=(n != 1);");
