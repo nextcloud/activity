@@ -18,6 +18,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "თქვენი ლენტის URL არასწორია",
     "Your settings have been updated." : "თქვენი პარამეტრები განახლდა.",
     "Settings have been updated." : "პარამეტრები განახლდა.",
+    "No activities" : "აქტივობები არაა",
     "_and %n more _::_and %n more _" : ["და კიდევ %n","და კიდევ %n"],
     "All activities" : "ყველა აქტივობა",
     "By others" : "სხვების მიერ",
@@ -36,13 +37,12 @@ OC.L10N.register(
     "Weekly" : "ყოველკვირეული",
     "No activity yet" : "ჯერ-ჯერობით აქტივობები არაა",
     "Notification" : "შეტყობინება",
-    "Activities" : "აქტივობები",
-    "No activities" : "აქტივობები არაა",
     "Default settings" : "საწყისი პარამეტრები",
     "Activity feed" : "აქტივობათა ლენტი",
     "Enable RSS feed" : "RSS ლენტის გააქტიურება",
     "RSS feed" : "RSS ლენტა",
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "ეს აპლიკაცია მომხმარებლებს აძლევს საშუალებას დაინახონ „Nextcloud“-ზე მათ ფაილებთან დაკავშირებული ქმედებები.\n\t\tგააქტირების შემთხვევაში მომხმარებლები დაინახავენ ახალ სიმბოლოს „აქტივობა“ თავიანთ აპლიკაციის მინიუში.\n\t\tდაჭერის შემთხვევაში მომხმარებლებისთვის გამოჩნდება ახალი გვერდი"
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "ეს აპლიკაცია მომხმარებლებს აძლევს საშუალებას დაინახონ „Nextcloud“-ზე მათ ფაილებთან დაკავშირებული ქმედებები.\n\t\tგააქტირების შემთხვევაში მომხმარებლები დაინახავენ ახალ სიმბოლოს „აქტივობა“ თავიანთ აპლიკაციის მინიუში.\n\t\tდაჭერის შემთხვევაში მომხმარებლებისთვის გამოჩნდება ახალი გვერდი",
+    "Activities" : "აქტივობები"
 },
 "nplurals=2; plural=(n!=1);");

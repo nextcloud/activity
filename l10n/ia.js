@@ -18,6 +18,7 @@ OC.L10N.register(
     "Your feed URL is invalid" : "Le URL del syndication es invalide",
     "Your settings have been updated." : "Tu configurationes ha essite actualisate.",
     "Settings have been updated." : "Configurationes actualisate",
+    "No activities" : "Nulle activitates",
     "All activities" : "Omne activitates",
     "By others" : "Per alteres",
     "By you" : "Per vos",
@@ -31,11 +32,10 @@ OC.L10N.register(
     "Daily" : "Cata die",
     "Weekly" : "Cata septimana",
     "No activity yet" : "Nulle activitate ancora",
-    "Activities" : "Activitates",
-    "No activities" : "Nulle activitates",
     "Default settings" : "Configurationes predefinite",
     "Activity feed" : "Syndication de activitate",
     "Enable RSS feed" : "Habilita syndication RSS",
-    "No more events to load" : "Nulle altere eventos a cargar"
+    "No more events to load" : "Nulle altere eventos a cargar",
+    "Activities" : "Activitates"
 },
 "nplurals=2; plural=(n != 1);");
