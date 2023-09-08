@@ -82,7 +82,6 @@
     "@nextcloud/paths": "^2.1.0",
     "@nextcloud/router": "^2.0.0",
     "@nextcloud/vue": "^7.11.4",
-    "@nextcloud/vue-dashboard": "^2.0.1",
     "@nextcloud/vue-richtext": "^2.0.4",
     "vue": "^2.7.14",
     "vue-material-design-icons": "^5.2.0",

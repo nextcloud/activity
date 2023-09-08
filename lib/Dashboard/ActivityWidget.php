@@ -5,6 +5,7 @@ declare(strict_types=1);
  * @copyright Copyright (c) 2021 Jakob Röhrl <jakob.roehrl@web.de>
  *
  * @author Jakob Röhrl <jakob.roehrl@web.de>
+ * @author Richard Steinmetz <richard@steinmetz.cloud>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -32,14 +33,15 @@ use OCA\Activity\UserSettings;
 use OCP\Dashboard\IAPIWidget;
 use OCP\Dashboard\IButtonWidget;
 use OCP\Dashboard\IIconWidget;
+use OCP\Dashboard\IReloadableWidget;
 use OCP\Dashboard\Model\WidgetButton;
 use OCP\Dashboard\Model\WidgetItem;
+use OCP\Dashboard\Model\WidgetItems;
 use OCP\IDateTimeFormatter;
 use OCP\IL10N;
 use OCP\IURLGenerator;
-use OCP\Util;
 
-class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget {
+class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloadableWidget {
 	private Data $data;
 	private IL10N $l10n;
 	private GroupHelper $helper;
@@ -111,7 +113,6 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget {
 	 * @inheritDoc
 	 */
 	public function load(): void {
-		Util::addScript('activity', 'activity-dashboard');
 	}
 
 	/**
@@ -145,6 +146,49 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget {
 	/**
 	 * @inheritDoc
 	 */
+	public function getItemsV2(string $userId, ?string $since = null, int $limit = 7): WidgetItems {
+		// we set the limit to 50 here because data->get might return less activity entries
+		// in the end we take the first 7 of'em
+		$activities = $this->data->get(
+			$this->helper,
+			$this->settings,
+			$userId,
+			$since ? (int) $since : 0,
+			50,
+			'desc',
+			'by',
+			'',
+			0
+		);
+		$items = array_map(function (array $activity) {
+			$userAvatarUrl = '';
+			if ($activity['user'] !== '') {
+				$userAvatarUrl = $this->urlGenerator->getAbsoluteURL(
+					$this->urlGenerator->linkToRoute('core.avatar.getAvatar', [
+						'userId' => $activity['user'],
+						'size' => 512,
+					])
+				);
+			}
+
+			return new WidgetItem(
+				$activity['subject'],
+				$this->dateTimeFormatter->formatTimeSpan($activity['timestamp']),
+				$activity['link'],
+				$userAvatarUrl,
+				(string) $activity['activity_id'],
+				$activity['icon'],
+			);
+		}, array_slice($activities['data'], 0, $limit));
+		return new WidgetItems(
+			$items,
+			empty($items) ? $this->l10n->t('No activities') : '',
+		);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function getWidgetButtons(string $userId): array {
 		return [
 			new WidgetButton(
@@ -155,5 +199,12 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget {
 				$this->l10n->t('More activities')
 			),
 		];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getReloadInterval(): int {
+		return 30;
 	}
 }
