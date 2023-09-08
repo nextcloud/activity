@@ -1,0 +1,14 @@
+{
+	"config": {
+		"platform": {
+			"php": "8.0"
+		}
+	},
+	"sort-packages": true,
+	"require": {
+		"php": ">=8.0 <=8.2"
+	},
+	"require-dev": {
+		"nextcloud/coding-standard": "1.0.0"
+	}
+}

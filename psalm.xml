@@ -28,6 +28,8 @@
 				<referencedClass name="OCA\Files\Event\LoadSidebar" />
 				<referencedClass name="OCA\Files_Sharing\External\Storage" />
 				<referencedClass name="OCA\Files_Sharing\SharedStorage" />
+				<referencedClass name="Symfony\Component\EventDispatcher\EventDispatcherInterface" />
+				<referencedClass name="Symfony\Component\EventDispatcher\GenericEvent" />
 			</errorLevel>
 		</UndefinedClass>
 		<UndefinedDocblockClass>
@@ -42,6 +44,7 @@
 				<referencedClass name="OC\Hooks\Emitter" />
 				<referencedClass name="OCA\GroupFolders\ACL\RuleManager" />
 				<referencedClass name="OCA\GroupFolders\Folder\FolderManager" />
+				<referencedClass name="Symfony\Component\EventDispatcher\EventDispatcherInterface" />
 			</errorLevel>
 		</UndefinedDocblockClass>
 	</issueHandlers>
