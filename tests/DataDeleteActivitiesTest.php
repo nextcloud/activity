@@ -27,12 +27,12 @@ namespace OCA\Activity\Tests;
 use OCA\Activity\BackgroundJob\ExpireActivities;
 use OCA\Activity\Data;
 use OCP\Activity\IExtension;
+use OCP\Activity\IManager;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\BackgroundJob\IJobList;
 use OCP\DB\IPreparedStatement;
 use OCP\IConfig;
-use OCP\IUserSession;
-use OCP\Activity\IManager;
-use OCP\BackgroundJob\IJobList;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class DataDeleteActivitiesTest
@@ -74,7 +74,7 @@ class DataDeleteActivitiesTest extends TestCase {
 		$this->data = new Data(
 			$this->createMock(IManager::class),
 			\OC::$server->getDatabaseConnection(),
-			$this->createMock(IUserSession::class)
+			$this->createMock(LoggerInterface::class)
 		);
 	}
 
