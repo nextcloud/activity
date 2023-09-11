@@ -41,6 +41,7 @@ use OCP\ILogger;
 use OCP\IRequest;
 use OCP\IUserSession;
 use OCP\RichObjectStrings\IValidator;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class APIv1Test
@@ -106,7 +107,8 @@ class APIv1ControllerTest extends TestCase {
 	protected function cleanUp(): void {
 		$data = new Data(
 			$this->createMock(IManager::class),
-			\OC::$server->getDatabaseConnection()
+			\OC::$server->getDatabaseConnection(),
+			$this->createMock(LoggerInterface::class)
 		);
 
 		$this->deleteUser($data, 'activity-api-user1');
@@ -220,7 +222,10 @@ class APIv1ControllerTest extends TestCase {
 			->method('getUID')
 			->willReturn($user);
 
-		$data = new Data($activityManager, \OC::$server->getDatabaseConnection());
+		$data = new Data($activityManager,
+			\OC::$server->getDatabaseConnection(),
+			$this->createMock(LoggerInterface::class)
+		);
 
 		$controller = new APIv1Controller(
 			'activity',

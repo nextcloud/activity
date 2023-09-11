@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -32,6 +34,7 @@ use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
+use Psr\Log\LoggerInterface;
 
 /**
  * @brief Class for managing the data in the activities
@@ -48,14 +51,16 @@ class Data {
 
 	/** @var ?IQueryBuilder */
 	protected $insertMail;
+	private LoggerInterface $logger;
 
 	/**
 	 * @param IManager $activityManager
 	 * @param IDBConnection $connection
 	 */
-	public function __construct(IManager $activityManager, IDBConnection $connection) {
+	public function __construct(IManager $activityManager, IDBConnection $connection, LoggerInterface $logger) {
 		$this->activityManager = $activityManager;
 		$this->connection = $connection;
+		$this->logger = $logger;
 	}
 
 	/**
@@ -368,9 +373,16 @@ class Data {
 	 *                      'field' => 'value'  => `field` = 'value'
 	 *    'field' => array('value', 'operator') => `field` operator 'value'
 	 */
-	public function deleteActivities($conditions) {
-		$delete = $this->connection->getQueryBuilder();
-		$delete->delete('activity');
+	public function deleteActivities($conditions): void {
+		$platform = $this->connection->getDatabasePlatform();
+		if($platform instanceof MySQLPlatform) {
+			$this->logger->debug('Choosing chunked activity delete for MySQL/MariaDB', ['app' => 'activity']);
+			$this->deleteActivitiesForMySQL($conditions);
+			return;
+		}
+		$this->logger->debug('Choosing regular activity delete', ['app' => 'activity']);
+		$deleteQuery = $this->connection->getQueryBuilder();
+		$deleteQuery->delete('activity');
 
 		foreach ($conditions as $column => $comparison) {
 			if (is_array($comparison)) {
@@ -381,22 +393,14 @@ class Data {
 				$value = $comparison;
 			}
 
-			$delete->andWhere($delete->expr()->comparison($column, $operation, $delete->createNamedParameter($value)));
+			$deleteQuery->andWhere($deleteQuery->expr()->comparison($column, $operation, $deleteQuery->createNamedParameter($value)));
 		}
 
-		// Add galera safe delete chunking if using mysql
-		// Stops us hitting wsrep_max_ws_rows when large row counts are deleted
-		if ($this->connection->getDatabasePlatform() instanceof MySQLPlatform) {
-			// Then use chunked delete
-			$max = 100000;
-			$delete->setMaxResults($max);
-			do {
-				$deleted = $delete->executeStatement();
-			} while ($deleted === $max);
-		} else {
-			// Dont use chunked delete - let the DB handle the large row count natively
-			$delete->executeStatement();
-		}
+
+
+
+		// Dont use chunked delete - let the DB handle the large row count natively
+		$deleteQuery->executeStatement();
 	}
 
 	public function getById(int $activityId): ?IEvent {
@@ -466,5 +470,49 @@ class Data {
 		}
 
 		return $query->execute()->fetch();
+	}
+
+	/**
+	 * Add galera safe delete chunking if using mysql
+	 * Stops us hitting wsrep_max_ws_rows when large row counts are deleted
+	 *
+	 * @param array $conditions
+	 * @return void
+	 */
+	private function deleteActivitiesForMySQL(array $conditions): void {
+		$query = $this->connection->getQueryBuilder();
+		$query->select('activity_id')
+			->from('activity');
+
+		foreach ($conditions as $column => $comparison) {
+			if (is_array($comparison)) {
+				$operation = $comparison[1] ?? '=';
+				$value = $comparison[0];
+			} else {
+				$operation = '=';
+				$value = $comparison;
+			}
+			$query->where($query->expr()->comparison($column, $operation, $query->createNamedParameter($value)));
+		}
+
+		$query->setMaxResults(10000);
+		$result = $query->executeQuery();
+		$count = $result->rowCount();
+		if($count === 0) {
+			return;
+		}
+		$ids = array_map(static function (array $id) {
+			return (int)$id[0];
+		}, $result->fetchAll(\PDO::FETCH_NUM));
+		$result->closeCursor();
+
+		$deleteQuery = $this->connection->getQueryBuilder();
+		$deleteQuery->delete('activity');
+		$deleteQuery->where($deleteQuery->expr()->in('activity_id', $deleteQuery->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY));
+		$deleteQuery->setParameter('ids', $ids, IQueryBuilder::PARAM_INT_ARRAY);
+		$queryResult = $deleteQuery->executeStatement();
+		if($queryResult === 10000) {
+			$this->deleteActivitiesForMySQL($conditions);
+		}
 	}
 }
