@@ -32,7 +32,7 @@ use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\IJobList;
 use OCP\DB\IPreparedStatement;
 use OCP\IConfig;
-use OCP\IUserSession;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class DataDeleteActivitiesTest
@@ -74,7 +74,7 @@ class DataDeleteActivitiesTest extends TestCase {
 		$this->data = new Data(
 			$this->createMock(IManager::class),
 			\OC::$server->getDatabaseConnection(),
-			$this->createMock(IUserSession::class)
+			$this->createMock(LoggerInterface::class)
 		);
 	}
 
