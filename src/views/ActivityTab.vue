@@ -48,7 +48,7 @@
 
 <script>
 import { generateOcsUrl } from '@nextcloud/router'
-import { translate } from '@nextcloud/l10n'
+import { translate as t } from '@nextcloud/l10n'
 import axios from '@nextcloud/axios'
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
 
@@ -108,7 +108,7 @@ export default {
 					this.loading = false
 					return
 				}
-				this.error = translate('activity', 'Unable to load the activity list')
+				this.error = t('activity', 'Unable to load the activity list')
 				this.loading = false
 				console.error('Error loading the activity list', error)
 			}
@@ -139,7 +139,7 @@ export default {
 			}
 		},
 
-		t: translate,
+		t,
 	},
 }
 </script>
