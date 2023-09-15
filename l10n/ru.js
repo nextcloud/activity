@@ -46,6 +46,7 @@ OC.L10N.register(
     "Daily" : "Ежедневно",
     "Weekly" : "Еженедельно",
     "No activity yet" : "Пока не произошло ни одного события",
+    "Unable to load the activity list" : "Не удалось загрузить список событий",
     "Notification" : "Уведомление",
     "Enable notification emails" : "Включить уведомления о событиях по эл. почте",
     "Choose for which activities you want to get an email or push notification." : "Выберите типы событий для получения уведомлений по эл.почте или с использованием push-технологии.",
@@ -64,7 +65,6 @@ OC.L10N.register(
     "No more events to load" : "Больше нет событий для загрузки",
     "This application enables users to view a log of activities about them or about files." : "Это приложение позволяет пользователям просматривать историю событий своих действий и файлов.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Это приложение позволяет пользователям просматривать действия, связанные с их файлами в Nextcloud.\n\t\tПосле включения в меню приложений появится значок «Действия».\n\t\tПри нажатии появляется новая страница для отслеживания действий, связанных с файлами, - от новых файлов, до удаленных файлов, перемещения, переименования, обновлений и совместного использования\t.\n\t\tПользователь может настроить свои индивидуальные настройки активности в своем личном кабинете..\n\t\tЗдесь устанавливается тип активности для записи в протокол действий, а также, видит ли пользователь свои действия,\n\t\tдоступны ли они только в режиме онлайн, и регулярно ли они получают электронную сводку.\n\t\tДополнительная информация доступна в документации по \"Действиям\".",
-    "Unable to load the activity list" : "Не удалось загрузить список событий",
     "Activities" : "События",
     "Configure the default notification settings for new users." : "Параметры способов отправки уведомлений, используемые по умолчанию для новых пользователей."
 },

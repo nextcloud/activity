@@ -46,6 +46,7 @@ OC.L10N.register(
     "Daily" : "Quotidiennement",
     "Weekly" : "Chaque semaine",
     "No activity yet" : "Pas encore d'activité",
+    "Unable to load the activity list" : "Impossible de charger la liste des activités",
     "Notification" : "Notification",
     "Enable notification emails" : "Activer les notifications par e-mail",
     "Choose for which activities you want to get an email or push notification." : "Sélectionnez les activités pour lesquelles vous souhaitez recevoir une notification par e-mail ou une notification push.",
@@ -64,7 +65,6 @@ OC.L10N.register(
     "No more events to load" : "Plus aucun événement à charger",
     "This application enables users to view a log of activities about them or about files." : "Cette application permet aux utilisateurs de visualiser un journal des activités les concernant ou concernant des fichiers.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Cette application permet aux utilisateurs de voir les actions concernant leurs fichiers dans Nextcloud.\n\t\tUne fois activée, les utilisateurs verront une nouvelle icône \"Activité\" dans leur menu d'applications.\n\t\tLorsque l'on clique dessus, une nouvelle page apparaît permettant aux utilisateurs de suivre l'activité concernant les fichiers – des nouveaux fichiers, à ceux supprimés, en passant par ceux déplacés, renommés, les mises à jour ou encore les partages.\n\t\tL'utilisateur peut configurer ses paramètres d'activité individuelle dans son menu personnel.\n\t\tLe type d'activité à enregistrer y est défini, ainsi que la possibilité pour l'utilisateur de voir ses propres activités,\n\t\tDe même, l'utilisateur peut choisir de rendre celles-ci visibles en ligne uniquement, ou si un résumé doit être envoyé régulièrement par E-mail.\n\t\tPlus d'informations peuvent être obtenues dans la documentation de l'application \"Activité\".",
-    "Unable to load the activity list" : "Impossible de charger la liste des activités",
     "Activities" : "Activités",
     "Configure the default notification settings for new users." : "Configurez les paramètres de notification par défaut pour les nouveaux utilisateurs."
 },

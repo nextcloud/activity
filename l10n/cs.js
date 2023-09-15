@@ -46,6 +46,7 @@ OC.L10N.register(
     "Daily" : "Každý den",
     "Weekly" : "Každý týden",
     "No activity yet" : "Zatím žádná aktivita",
+    "Unable to load the activity list" : "Nedaří se načíst seznam aktivit",
     "Notification" : "Upozornění",
     "Enable notification emails" : "Zapnout upozorňování e-mailem",
     "Choose for which activities you want to get an email or push notification." : "Zvolte pro které aktivity chcete dostávat upozornění e-mailem nebo přes službu push.",
@@ -64,7 +65,6 @@ OC.L10N.register(
     "No more events to load" : "Žádné další události k načtení",
     "This application enables users to view a log of activities about them or about files." : "Tato aplikace uživatelům umožňuje prohlížet záznamy aktivit vztahujících se k nim nebo s nimi souvisejícím souborům.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Tato aplikace umožní uživatelům sledovat události související s jejich soubory v Nextcloudu.\n\t\tJakmile je tato aplikace povolená, zobrazí se v menu nová ikona „Aktivita“\n\t\tPo kliknutí na ikonu se zobrazí nová stránka. Na této stránce uživatelé uvidí veškeré aktivity týkající se jejich souborů  – např. přidání a smazání, přesun, přejmenování, aktualizace, či sdílení.\n\t\tUživatel může nakonfigurovat aplikaci podle individuálních potřeb v osobním nastavení\n\t\tZde může zvolit, které jednotlivé události chce sledovat, zda chce sledovat vlastní aktivitu, nebo zda chce dostávat e-maily o zmíněných aktivitách\n\t\tVíce informací je dostupných v dokumentaci aplikace „Aktivita“",
-    "Unable to load the activity list" : "Nedaří se načíst seznam aktivit",
     "Activities" : "Aktivity",
     "Configure the default notification settings for new users." : "Nastavte výchozí volby ohledně upozorňování pro nově vytvářené uživatele."
 },

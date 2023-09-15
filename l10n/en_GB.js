@@ -46,6 +46,7 @@ OC.L10N.register(
     "Daily" : "Daily",
     "Weekly" : "Weekly",
     "No activity yet" : "No activity yet",
+    "Unable to load the activity list" : "Unable to load the activity list",
     "Notification" : "Notification",
     "Enable notification emails" : "Enable notification emails",
     "Choose for which activities you want to get an email or push notification." : "Choose for which activities you want to get an email or push notification.",
@@ -64,7 +65,6 @@ OC.L10N.register(
     "No more events to load" : "No more events to load",
     "This application enables users to view a log of activities about them or about files." : "This application enables users to view a log of activities about them or about files.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation.",
-    "Unable to load the activity list" : "Unable to load the activity list",
     "Activities" : "Activities",
     "Configure the default notification settings for new users." : "Configure the default notification settings for new users."
 },

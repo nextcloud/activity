@@ -46,6 +46,7 @@ OC.L10N.register(
     "Daily" : "Günlük",
     "Weekly" : "Haftalık",
     "No activity yet" : "Henüz bir işlem yok",
+    "Unable to load the activity list" : "İşlem listesi yüklenemedi",
     "Notification" : "Bildirimler",
     "Enable notification emails" : "Bildirim e-postaları kullanılsın",
     "Choose for which activities you want to get an email or push notification." : "E-posta ya da anında bildirim almak istediğiniz işlemleri seçin.",
@@ -64,7 +65,6 @@ OC.L10N.register(
     "No more events to load" : "Yüklenecek başka bir olay yok",
     "This application enables users to view a log of activities about them or about files." : "Bu uygulama, kullanıcıların dosyaları üzerinde yapılan işlemlerin kaydını görebilmesini sağlar.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Bu uygulama, kullanıcıların Nextcloud üzerindeki dosyaları üzerinde yapılan işlemleri görebilmesini sağlar.\n\t\tEtkinleştirildiğinde, kullanıcılar uygulama menülerinde \"İşlem\" simgesini görebilir.\n\t\tBu simgeye tıklandığında, kullanıcıya yeni dosya oluşturma, dosya silme, taşıma, yeniden adlandırma, güncelleme ve paylaşma gibi dosyalar üzerinde yapılan işlemleri izleyebileceği yeni bir sayfa görüntülenir.\n\t\tKullanıcı kendi menüsünden kendisine özel işlem ayarlarını yapabilir.\n\t\tBuradan, izlenecek işlem türü, yalnızca çevrim içi kullanılabilecek dosyalar,\n\t\tyalnızca kendi işlemlerini görüntüleme, otomatik e-posta bildirimi alma gibi ayarlar yapılabilir.\n\t\tAyrıntılı bilgi almak için İşlemler uygulamasının belgesine bakabilirsiniz.",
-    "Unable to load the activity list" : "İşlem listesi yüklenemedi",
     "Activities" : "Etkinlikler",
     "Configure the default notification settings for new users." : "Yeni kullanıcılar için varsayılan bildirim ayarlarını yapılandırın."
 },
