@@ -43,6 +43,7 @@ OC.L10N.register(
     "Daily" : "Daglega",
     "Weekly" : "Vikulega",
     "No activity yet" : "Engin virkni ennþá",
+    "Unable to load the activity list" : "Gat ekki hlaðið inn lista yfir virkni",
     "Notification" : "Tilkynning",
     "Enable notification emails" : "Virkja tilkynningapóst",
     "Choose for which activities you want to get an email or push notification." : "Ákvarðaðu fyrir hvaða virkniaðgerðir þú munt fá tölvupóst eða ýtitilkynningu.",
@@ -59,7 +60,6 @@ OC.L10N.register(
     "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
     "This application enables users to view a log of activities about them or about files." : "Þetta forrit veitir notendum heimild til að skoða virkniskrá um sig eða um skrár.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Þetta forrit gerir notendum kleift að skoða aðgerðir sem tengjast skránum þeirra í Nextcloud.\n\t\tÞegar það hefur verið virkjað sjá notendur nýja táknmynd; “Virkni” í forritavalmyndinni.\n\t\tÞegar smellt er á hana, birtist ný síða þar sem notendur geta fylgst með virkni sem tengist skrám – allt frá nýjum skrám, eyddum skrám, færslu, endurnefningu, til uppfærslna og sameiginlegra/deildra aðgerða.\n\t\tNotendur geta aðlagað stillingar fyrir virkni sína í sinni eigin valmynd.\n\t\tÞað getur verið hvaða tegundir aðgerða eigi að skrá, hvort notandinn sjái sínar eigin aðgerðir,\n\t\thvorð þær séu einungis til taks þegar nettenging er til staðar, og hvort þeir fái reglulega samantekt yfir aðgerðir í tölvupósti.\n\t\tNánari upplýsingar eru fáanlegar í hjálparskjölum Activity virkniforritsins.",
-    "Unable to load the activity list" : "Gat ekki hlaðið inn lista yfir virkni",
     "Activities" : "Aðgerðir",
     "Configure the default notification settings for new users." : "Ákvarðaðu sjálfgefnar tilkynningastillingar fyrir nýja notendur."
 },

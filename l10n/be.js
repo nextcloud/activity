@@ -43,6 +43,7 @@ OC.L10N.register(
     "Daily" : "Штодзень",
     "Weekly" : "Штотыдзень",
     "No activity yet" : "Пакуль няма дзеянняў",
+    "Unable to load the activity list" : "На магчыма загрузіць спіс дзеянняў",
     "Notification" : "Абвестка",
     "Enable notification emails" : "Уключыць імэйлы-абвесткі",
     "Choose for which activities you want to get an email or push notification." : "Абяры, на якія дзеянні ты хочаш атрымліваць імэйлы-абвесткі альбо ўсплывальныя абвесткі.",
@@ -59,7 +60,6 @@ OC.L10N.register(
     "Copy RSS feed link" : "Скапіяваць спасылку да ленты RSS",
     "Personal notification settings" : "Асабістыя налады апавяшчэння",
     "No more events to load" : "Няма больш падзей для загрузкі",
-    "Unable to load the activity list" : "На магчыма загрузіць спіс дзеянняў",
     "Activities" : "Дзеянні",
     "Configure the default notification settings for new users." : "Наладзь прадвызначаныя налады абвяшчэння для новых карыстальнікаў."
 },
