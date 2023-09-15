@@ -35,10 +35,10 @@ OC.L10N.register(
     "Daily" : "दैनिक",
     "Weekly" : "साप्ताहिक",
     "No activity yet" : "अजुन कोणतीही क्रिया नाही",
+    "Unable to load the activity list" : "क्रियेची यादी घेता आली नाही",
     "Enable notification emails" : "अधिसूचना ई-मेल सुरु करा",
     "Daily activity summary" : "दैनिक क्रिया सारांश",
     "Default settings" : "मूळ सेटींग",
-    "Activity feed" : "क्रियेची फीड",
-    "Unable to load the activity list" : "क्रियेची यादी घेता आली नाही"
+    "Activity feed" : "क्रियेची फीड"
 },
 "nplurals=2; plural=(n != 1);");

@@ -46,6 +46,7 @@ OC.L10N.register(
     "Daily" : "дневно",
     "Weekly" : "недељно",
     "No activity yet" : "Још нема активности",
+    "Unable to load the activity list" : "Учитавање листе активности није било успешно",
     "Notification" : "Обавештење",
     "Enable notification emails" : "Укључи обавештења е-поштом",
     "Choose for which activities you want to get an email or push notification." : "Одаберите за које активности желите да добијате е-пошту или брза обавештења.",
@@ -64,7 +65,6 @@ OC.L10N.register(
     "No more events to load" : "Нема више догађаја за приказ",
     "This application enables users to view a log of activities about them or about files." : "Ова апликација омогућава корисницима да погледају дневник активности у вези са њима и фајловима.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ова апликација омогућава корисницима да виде радње везане за њихове Некстклауд фајлове.\n\t\tКада се укључи, корисници ће видети нову иконицу \"Активности\" у главном менију.\n\t\tКада се она кликне, појављује се нова страна где корисник прати активности везане за фајлове – од нових фајлова, до брисања фајлова, премештања, преименовања, ажурирања и радњи дељења.\n\t\tКорисник може подесити појединачне поставке активности у личном менију.\n\t\tОвим се подешава које се активности бележе и да ли корисник види сопствене активности,\n\t\tда ли су активности доступне само на интернету и да ли се редовно добија е-пошта са сажетком.\n\t\tВише информација је доступно у документацији за Активности.",
-    "Unable to load the activity list" : "Учитавање листе активности није било успешно",
     "Activities" : "Активности",
     "Configure the default notification settings for new users." : "Подеси подразумеване поставке обавештавања за нове кориснике."
 },

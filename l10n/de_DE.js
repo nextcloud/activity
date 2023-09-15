@@ -46,6 +46,7 @@ OC.L10N.register(
     "Daily" : "täglich",
     "Weekly" : "wöchentlich",
     "No activity yet" : "Bislang keine Aktivitäten",
+    "Unable to load the activity list" : "Aktivitätenliste kann nicht geladen werden",
     "Notification" : "Benachrichtigung",
     "Enable notification emails" : "Benachrichtigungs-E-Mails einschalten",
     "Choose for which activities you want to get an email or push notification." : "Wählen Sie aus, für welche Aktivitäten Sie eine E-Mail oder eine Push-Benachrichtigung erhalten möchten.",
@@ -64,7 +65,6 @@ OC.L10N.register(
     "No more events to load" : "Keine weiteren Ereignisse zu laden",
     "This application enables users to view a log of activities about them or about files." : "Diese Anwendung ermöglicht es Benutzern, ein Protokoll der Aktivitäten über sie oder über Dateien anzuzeigen.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Diese App ermöglicht es Benutzern Ereignisse zu ihren Dateien zu sehen.\nSobald diese aktiviert ist, sehen die Benutzer ein neues Symbol \"Aktivitäten\" in Ihrem App-Menü.\nWenn darauf geklickt wird, erscheint eine neue Seite für die Benutzer, auf welcher diese die Aktivitäten in Bezug auf die Dateien verfolgen können - von erstellten und gelöschten Dateien, über Verschiebe -, Umbenennungs- , Aktualisier- und Teilaktionen.\nDer Benutzer kann seine individuelle Aktivitätseinstellung im persönlichen Menü vornehmen.\nDies setzt den Typ von Aktivität zur Aufzeichnung und ob der Benutzer seine eigenen Aktivitäten sieht,\nob diese nur Online verfügbar sind und ob E-Mail-Benachrichtigungen auf täglicher Basis verschickt werden.\nWeitere Informationen sind unter Aktivitäten in der Dokumentation verfügbar.",
-    "Unable to load the activity list" : "Aktivitätenliste kann nicht geladen werden",
     "Activities" : "Aktivitäten",
     "Configure the default notification settings for new users." : "Die Voreinstellungen der Benachrichtigungen für neue Benutzer einrichten."
 },

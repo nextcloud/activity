@@ -46,6 +46,7 @@ OC.L10N.register(
     "Daily" : "Hằng ngày",
     "Weekly" : "Hằng tuần",
     "No activity yet" : "Chưa có hoạt động nào",
+    "Unable to load the activity list" : "Không thể tải danh sách hoạt động",
     "Notification" : "Thông báo",
     "Enable notification emails" : "Bật email thông báo",
     "Choose for which activities you want to get an email or push notification." : "Chọn các hoạt động mà bạn muốn nhận email hoặc thông báo đẩy.",
@@ -64,7 +65,6 @@ OC.L10N.register(
     "No more events to load" : "Không có sự kiện nào",
     "This application enables users to view a log of activities about them or about files." : "Ứng dụng này cho phép những người dùng xem nhật ký các hoạt động về họ hoặc về các tệp.",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Ứng dụng này cho phép người dùng xem các hành động liên quan để dữ liệu của họ trên Hệ thống\n\t\tKhi cho phép, người dùng sẽ thấy một biểu tượng mới \"Hoạt động\" trong Danh mục ứng dụng của họ\n\t\tKhi nhấp vào, một trang mới sẽ cho phép người dùng theo dõi các thực hiện liên quan đến dữ liệu - từ tạo file, xóa file, di chuyển, đổi tên, tải lên và thực hiện chia sẽ.\n\t\tNgười dùng có thể cấu hình cài đặt hoạt động trong menu cá nhân của họ.\n\t\tĐiều này thiết đặt các loại hoạt động cần ghi lại, cũng như liệu người dùng có thấy hoạt động của riêng họ hay không,\n\t\tcho dù những điều này chỉ có sẵn trực tuyến và liệu chúng có nhận được email thông báo một cách thường xuyên hay không.\n\t\tĐể có thêm thông tin hãy vào mục tài liệu Hoạt động.",
-    "Unable to load the activity list" : "Không thể tải danh sách hoạt động",
     "Activities" : "Hoạt động",
     "Configure the default notification settings for new users." : "Thiết lập cài đặt thông báo mặc định cho những người dùng mới."
 },
