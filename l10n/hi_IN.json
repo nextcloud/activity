@@ -37,6 +37,7 @@
     "Daily" : "दैनिक",
     "Weekly" : "साप्ताहिक",
     "No activity yet" : "अभी तक कोई गतिविधि नहीं",
+    "Unable to load the activity list" : "गतिविधि सूची लोड करने में असमर्थ",
     "Notification" : "नोटिफ़िकेशन",
     "Enable notification emails" : "अधिसूचना ईमेल सक्षम करें",
     "Choose for which activities you want to get an email or push notification." : "चुनें कि आप किन गतिविधियों के लिए ईमेल या पुश नोटिफ़िकेशन प्राप्त करना चाहते हैं।",
@@ -54,7 +55,6 @@
     "Personal notification settings" : "व्यक्तिगत नोटिफ़िकेशन सेटिंग्स",
     "No more events to load" : "लोड करने के लिए और कोई ईवेंट नहीं",
     "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "यह एप्लिकेशन उपयोगकर्ताओं को नेक्स्टक्लाउड में उनकी फ़ाइलों से संबंधित गतिविधियों को देखने में सक्षम बनाता है।\n\t\t रिकॉर्ड करने के लिए गतिविधि के प्रकार को सेट करता है, \n\t\tसाथ ही यह भी निर्धारित करता है कि क्या उपयोगकर्ता अपनी गतिविधियों को देखता है,\n\t\tक्या ये केवल ऑनलाइन उपलब्ध हैं, और क्या उन्हें नियमित आधार पर ईमेल डाइजेस्ट मिलता है।\n\t\tअधिक जानकारी गतिविधि दस्तावेज़ में उपलब्ध है।",
-    "Unable to load the activity list" : "गतिविधि सूची लोड करने में असमर्थ",
     "Activities" : "गतिविधियाँ",
     "Configure the default notification settings for new users." : "नए उपयोगकर्ताओं के लिए डिफ़ॉल्ट अधिसूचना सेटिंग्स कॉन्फ़िगर करें।"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
