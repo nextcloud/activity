@@ -21,7 +21,7 @@
  */
 
 export function renameFile(fileName: string, newName: string) {
-	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-actions]`).click()
+	toggleMenuAction(fileName)
 	cy.get(`[data-cy-files-list] [data-cy-files-list-row-action="rename"]`).click()
 	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] .files-list__row-rename input`).clear()
 	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] .files-list__row-rename input`).type(`${newName}.txt`)
@@ -45,9 +45,13 @@ export function createFolder (dirName: string) {
 }
 
 export function moveFile (fileName: string, dirName: string) {
-	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-actions]`).click()
+	toggleMenuAction(fileName)
 	cy.get(`[data-cy-files-list] [data-cy-files-list-row-action="movecopy]"`).click()
 	cy.get(`.oc-dialog tr[data-entryname="${dirName}"]`).click()
 	cy.contains(`Move to ${dirName}`).click()
 	cy.wait(500)
+}
+
+export function toggleMenuAction(fileName: string) {
+	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-actions] .action-item__menutoggle`).click()
 }
