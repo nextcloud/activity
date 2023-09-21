@@ -20,9 +20,11 @@
  *
  */
 
+import { toggleMenuAction } from "./filesUtils"
+
 function showSidebarForFile(fileName: string) {
 	closeSidebar()
-	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-actions]`).click()
+	toggleMenuAction(fileName)
 	cy.contains('Open details').click()
 	cy.get('#app-sidebar-vue').contains('Activity').click()
 }
@@ -42,19 +44,19 @@ export function showActivityTab(fileName: string) {
 }
 
 export function addToFavorites(fileName: string) {
-	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-actions]`).click()
+	toggleMenuAction(fileName)
 	cy.contains('Add to favorites').click()
 	cy.get('.toast-close').click()
 }
 
 export function removeFromFavorites(fileName: string) {
-	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-actions]`).click()
+	toggleMenuAction(fileName)
 	cy.contains('Remove from favorites').click()
 	cy.get('.toast-close').click()
 }
 
 export function createPublicShare(fileName: string) {
-	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-actions]`).click()
+	toggleMenuAction(fileName)
 	cy.contains('Open details').click()
 	cy.get('#app-sidebar-vue').contains('Sharing').click()
 
