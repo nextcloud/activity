@@ -44,7 +44,9 @@ export function createFolder (dirName: string) {
 export function moveFile (fileName: string, dirName: string) {
 	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
 	cy.get(`.files-fileList tr[data-file="${fileName}"] .action-movecopy`).click()
-	cy.get(`.oc-dialog tr[data-entryname="${dirName}"]`).click()
-	cy.contains(`Move to ${dirName}`).click()
+	cy.get('.dialog__modal').within(() => {
+		cy.get(`tr[data-filename="${dirName}"]`).click()
+		cy.contains(`Move to ${dirName}`).click()
+	})
 	cy.wait(500)
 }
