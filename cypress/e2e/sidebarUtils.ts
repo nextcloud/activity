@@ -66,7 +66,7 @@ export function addTag(fileName: string, tag: string) {
 
 	cy.get('.app-sidebar-header__menu .action-item__menutoggle').click()
 	cy.get('.action-button__icon.icon-tag').click()
-	cy.get('.systemTagsInputField input').type(`${tag}{enter}{esc}`)
+	cy.get('input#system-tags-input').type(`${tag}{enter}{esc}`)
 
 	cy.wait(500)
 }
