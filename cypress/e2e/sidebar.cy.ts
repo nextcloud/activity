@@ -32,6 +32,10 @@ describe('Check activity listing in the sidebar', () => {
 			})
 	})
 
+	beforeEach(() => {
+		cy.reload()
+	})
+
 	it('Has creation activity', () => {
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').last().should('contains.text', 'You created')
