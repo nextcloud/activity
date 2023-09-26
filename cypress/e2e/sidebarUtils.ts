@@ -42,13 +42,21 @@ export function showActivityTab(fileName: string) {
 }
 
 export function addToFavorites(fileName: string) {
+	cy.intercept({ times: 1, method: 'POST', url: `/index.php/apps/files/api/v1/files/${fileName}` }).as('postFavorite')
+
 	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
 	cy.contains('Add to favorites').click()
+
+	cy.wait('@postFavorite')
 }
 
 export function removeFromFavorites(fileName: string) {
+	cy.intercept({ times: 1, method: 'POST', url: `/index.php/apps/files/api/v1/files/${fileName}` }).as('postFavorite')
+
 	cy.get(`.files-fileList tr[data-file="${fileName}"] .icon-more`).click()
 	cy.contains('Remove from favorites').click()
+
+	cy.wait('@postFavorite')
 }
 
 export function createPublicShare(fileName: string) {
@@ -62,20 +70,26 @@ export function createPublicShare(fileName: string) {
 }
 
 export function addTag(fileName: string, tag: string) {
+	cy.intercept({ times: 1, method: 'PUT', url: '/remote.php/dav/systemtags-relations/files/*/*' }).as('putTag')
+
 	showSidebarForFile(fileName)
 
 	cy.get('.app-sidebar-header__menu .action-item__menutoggle').click()
 	cy.get('.action-button__icon.icon-tag').click()
 	cy.get('.systemTagsInputField input').type(`${tag}{enter}{esc}`)
 
-	cy.wait(500)
+	cy.wait('@putTag')
 }
 
 export function addComment(fileName: string, comment: string) {
+	cy.intercept({ times: 1, method: 'POST', url: '/remote.php/dav/comments/files/*' }).as('postComment')
+
 	showSidebarForFile(fileName)
+
 	cy.get('#app-sidebar-vue').contains('Comments').click()
+	cy.get('.comment__editor .rich-contenteditable__input').focus()
 	cy.get('.comment__editor .rich-contenteditable__input').type(comment)
 	cy.get('button.comment__submit').click()
 
-	cy.wait(500)
+	cy.wait('@postComment')
 }
