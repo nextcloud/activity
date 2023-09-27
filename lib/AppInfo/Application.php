@@ -56,6 +56,7 @@ use OCP\User\Events\PostLoginEvent;
 use OCP\User\Events\UserDeletedEvent;
 use OCP\Util;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
 class Application extends App implements IBootstrap {
 	public const APP_ID = 'activity';
@@ -107,7 +108,8 @@ class Application extends App implements IBootstrap {
 		$context->registerService(Data::class, function (ContainerInterface $c) {
 			return new Data(
 				$c->get(IManager::class),
-				$c->get('ActivityConnectionAdapter')
+				$c->get('ActivityConnectionAdapter'),
+				$c->get(LoggerInterface::class),
 			);
 		});
 
