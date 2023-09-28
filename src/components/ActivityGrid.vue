@@ -38,7 +38,7 @@
 			<tr v-for="(activity, activityKey) in group.activities" :key="activityKey">
 				<th scope="row">
 					<!-- eslint-disable vue/no-v-html -->
-					<label @click="toggleMethodsForActivity({groupKey, activityKey})" v-html="activity.desc" />
+					<span v-html="activity.desc" />
 					<!-- eslint-enable vue/no-v-html -->
 				</th>
 				<td v-for="(methodName, methodKey) in methods" :key="methodKey">
@@ -82,7 +82,6 @@ export default {
 		...mapActions([
 			'toggleMethodForMethodAndActivity',
 			'toggleMethodForGroup',
-			'toggleMethodsForActivity',
 		]),
 		actionName(method) {
 			if (method === 'email') {
