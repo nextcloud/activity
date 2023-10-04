@@ -31,6 +31,7 @@ use OCP\IL10N;
 use OCP\IUserSession;
 use OCP\Util;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\NullLogger;
 
 /**
  * Class DataTest
@@ -54,6 +55,9 @@ class DataTest extends TestCase {
 	/** @var IManager */
 	protected $realActivityManager;
 
+	/** @var NullLogger */
+	protected $logger;
+
 	protected function setUp(): void {
 		parent::setUp();
 
@@ -61,10 +65,12 @@ class DataTest extends TestCase {
 		$activityManager = $this->createMock(IManager::class);
 		$this->dbConnection = \OC::$server->get(IDBConnection::class);
 		$this->realActivityManager = \OC::$server->get(IManager::class);
+		$this->logger = \OC::$server->get(NullLogger::class);
 
 		$this->data = new Data(
 			$activityManager,
-			$this->dbConnection
+			$this->dbConnection,
+			$this->logger
 		);
 	}
 
