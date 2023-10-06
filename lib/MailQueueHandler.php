@@ -132,8 +132,8 @@ class MailQueueHandler {
 					$this->logger->warning("Failed sending activity email to user '{user}'.", ['user' => $user, 'app' => 'activity']);
 				}
 			} catch (\Exception $e) {
-				$this->logger->error($e, [
-					'message' => 'Failed creating activity email for user "{user}"',
+				$this->logger->error('Failed creating activity email for user "{user}"', [
+					'exception' => $e,
 					'user' => $user,
 					'app' => 'activity',
 				]);
@@ -378,8 +378,8 @@ class MailQueueHandler {
 		try {
 			$this->mailer->send($message);
 		} catch (\Exception $e) {
-			$this->logger->error($e, [
-				'message' => 'Failed sending activity email to user "{user}"',
+			$this->logger->error('Failed sending activity email to user "{user}"', [
+				'exception' => $e,
 				'user' => $userName,
 				'app' => 'activity',
 			]);

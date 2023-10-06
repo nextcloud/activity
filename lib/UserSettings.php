@@ -32,15 +32,8 @@ use OCP\IConfig;
  * @package OCA\Activity
  */
 class UserSettings {
-	/** @var IManager */
-	protected $manager;
 
-	/** @var IConfig */
-	protected $config;
-
-	/** @var Data */
-	protected $data;
-
+	protected Data $data;
 	public const EMAIL_SEND_HOURLY = 0;
 	public const EMAIL_SEND_DAILY = 1;
 	public const EMAIL_SEND_WEEKLY = 2;
@@ -50,9 +43,7 @@ class UserSettings {
 	 * @param IManager $manager
 	 * @param IConfig $config
 	 */
-	public function __construct(IManager $manager, IConfig $config) {
-		$this->manager = $manager;
-		$this->config = $config;
+	public function __construct(protected IManager $manager, protected IConfig $config) {
 	}
 
 	/**

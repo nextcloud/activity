@@ -176,7 +176,10 @@ class RemoteActivityController extends OCSController {
 		return new DataResponse();
 	}
 
-	protected function getSubject($type, $path, $path2) {
+	/**
+	 * @param null|string $path2
+	 */
+	protected function getSubject(string $type, string $path, string|null $path2) {
 		switch ($type) {
 			case 'Create':
 				return 'created_by';

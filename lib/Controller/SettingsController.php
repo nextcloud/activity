@@ -35,56 +35,20 @@ use OCP\IURLGenerator;
 use OCP\Security\ISecureRandom;
 
 class SettingsController extends Controller {
-	/** @var \OCP\IConfig */
-	protected $config;
 
-	/** @var \OCP\Security\ISecureRandom */
-	protected $random;
+	protected string $user;
 
-	/** @var \OCP\IURLGenerator */
-	protected $urlGenerator;
-
-	/** @var IManager */
-	protected $manager;
-
-	/** @var \OCA\Activity\UserSettings */
-	protected $userSettings;
-
-	/** @var \OCP\IL10N */
-	protected $l10n;
-
-	/** @var string */
-	protected $user;
-
-	/**
-	 * constructor of the controller
-	 *
-	 * @param string $appName
-	 * @param IRequest $request
-	 * @param IConfig $config
-	 * @param ISecureRandom $random
-	 * @param IURLGenerator $urlGenerator
-	 * @param IManager $manager
-	 * @param UserSettings $userSettings
-	 * @param IL10N $l10n
-	 * @param CurrentUser $currentUser
-	 */
-	public function __construct($appName,
+	public function __construct(
+		string $appName,
 		IRequest $request,
-		IConfig $config,
-		ISecureRandom $random,
-		IURLGenerator $urlGenerator,
-		IManager $manager,
-		UserSettings $userSettings,
-		IL10N $l10n,
+		protected IConfig $config,
+		protected ISecureRandom $random,
+		protected IURLGenerator $urlGenerator,
+		protected IManager $manager,
+		protected UserSettings $userSettings,
+		protected IL10N $l10n,
 		CurrentUser $currentUser) {
 		parent::__construct($appName, $request);
-		$this->config = $config;
-		$this->random = $random;
-		$this->urlGenerator = $urlGenerator;
-		$this->manager = $manager;
-		$this->userSettings = $userSettings;
-		$this->l10n = $l10n;
 		$this->user = (string) $currentUser->getUID();
 	}
 

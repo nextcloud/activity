@@ -200,7 +200,7 @@ class FilesHooks {
 		}
 	}
 
-	protected function generateRemoteActivity(array $remoteUsers, $type, $time, $actor, $ownerPath = false) {
+	protected function generateRemoteActivity(array $remoteUsers, string $type, int $time, $actor, $ownerPath = false) {
 		foreach ($remoteUsers as $remoteUser => $info) {
 			if ($actor === $remoteUser) {
 				// Current user receives the notification on their own instance already

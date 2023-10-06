@@ -38,45 +38,20 @@ use Psr\Log\LoggerInterface;
 class DigestSender {
 	public const ACTIVITY_LIMIT = 20;
 
-	private $config;
-	private $data;
-	private $userSettings;
-	private $groupHelper;
-	private $mailer;
-	private $activityManager;
-	private $userManager;
-	private $urlGenerator;
-	private $defaults;
-	private $l10nFactory;
-	private $dateFormatter;
-	private $logger;
-
 	public function __construct(
-		IConfig $config,
-		Data $data,
-		UserSettings $userSettings,
-		GroupHelper $groupHelper,
-		IMailer $mailer,
-		IManager $activityManager,
-		IUserManager $userManager,
-		IURLGenerator $urlGenerator,
-		Defaults $defaults,
-		IFactory $l10nFactory,
-		IDateTimeFormatter $dateTimeFormatter,
-		LoggerInterface $logger
+		private IConfig $config,
+		private Data $data,
+		private UserSettings $userSettings,
+		private GroupHelper $groupHelper,
+		private IMailer $mailer,
+		private IManager $activityManager,
+		private IUserManager $userManager,
+		private IURLGenerator $urlGenerator,
+		private Defaults $defaults,
+		private IFactory $l10nFactory,
+		private IDateTimeFormatter $dateTimeFormatter,
+		private LoggerInterface $logger
 	) {
-		$this->config = $config;
-		$this->data = $data;
-		$this->userSettings = $userSettings;
-		$this->groupHelper = $groupHelper;
-		$this->mailer = $mailer;
-		$this->activityManager = $activityManager;
-		$this->userManager = $userManager;
-		$this->urlGenerator = $urlGenerator;
-		$this->defaults = $defaults;
-		$this->l10nFactory = $l10nFactory;
-		$this->dateFormatter = $dateTimeFormatter;
-		$this->logger = $logger;
 	}
 
 	public function sendDigests(int $now): void {
@@ -185,7 +160,7 @@ class DigestSender {
 		$template->addHeader();
 
 		foreach ($activities as $event) {
-			$relativeDateTime = $this->dateFormatter->formatDateTimeRelativeDay(
+			$relativeDateTime = $this->dateTimeFormatter->formatDateTimeRelativeDay(
 				$event->getTimestamp(),
 				'long',
 				'short',

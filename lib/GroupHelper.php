@@ -165,7 +165,11 @@ class GroupHelper {
 
 	/**
 	 * @param IEvent $event
+	 * @param (int|string) $id
+	 *
 	 * @return array
+	 *
+	 * @psalm-param array-key $id
 	 */
 	protected function eventToArray(IEvent $event, $id) {
 		return [

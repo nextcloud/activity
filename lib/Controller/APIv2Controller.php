@@ -78,7 +78,7 @@ class APIv2Controller extends OCSController {
 		protected IPreview $preview,
 		protected IMimeTypeDetector $mimeTypeDetector,
 		protected ViewInfoCache $infoCache,
-		) {
+	) {
 		parent::__construct($appName, $request);
 		$this->activityManager = $activityManager;
 	}

@@ -36,40 +36,14 @@ use OCP\Template;
  * @package OCA\Activity
  */
 class Navigation {
-	/** @var IL10N */
-	protected $l;
 
-	/** @var IManager */
-	protected $activityManager;
 
-	/** @var IURLGenerator */
-	protected $URLGenerator;
-
-	/** @var IConfig */
-	protected $config;
-
-	/** @var CurrentUser */
-	protected $currentUser;
-
-	/**
-	 * Construct
-	 *
-	 * @param IL10N $l
-	 * @param IManager $manager
-	 * @param IURLGenerator $URLGenerator
-	 * @param IConfig $config
-	 * @param CurrentUser $currentUser
-	 */
-	public function __construct(IL10N $l,
-		IManager $manager,
-		IURLGenerator $URLGenerator,
-		IConfig $config,
-		CurrentUser $currentUser) {
-		$this->l = $l;
-		$this->activityManager = $manager;
-		$this->URLGenerator = $URLGenerator;
-		$this->config = $config;
-		$this->currentUser = $currentUser;
+	public function __construct(
+		protected IL10N $l,
+		protected IManager $activityManager,
+		protected IURLGenerator $URLGenerator,
+		protected IConfig $config,
+		protected CurrentUser $currentUser) {
 	}
 
 	/**

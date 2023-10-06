@@ -33,7 +33,6 @@ use OCP\Activity\IManager;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IL10N;
-use OCP\ILogger;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserManager;
@@ -42,6 +41,7 @@ use OCP\Mail\IEMailTemplate;
 use OCP\Mail\IMailer;
 use OCP\RichObjectStrings\IValidator;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class MailQueueHandlerTest
@@ -77,7 +77,7 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var IConfig|MockObject */
 	protected $config;
 
-	/** @var ILogger|MockObject */
+	/** @var LoggerInterface|MockObject */
 	protected $logger;
 
 	/** @var IDateTimeFormatter|MockObject */
@@ -90,7 +90,7 @@ class MailQueueHandlerTest extends TestCase {
 		$this->userManager = $this->createMock(IUserManager::class);
 		$this->lFactory = $this->createMock(IFactory::class);
 		$this->config = $this->createMock(IConfig::class);
-		$this->logger = $this->createMock(ILogger::class);
+		$this->logger = $this->createMock(LoggerInterface::class);
 		$this->dateTimeFormatter = $this->createMock(IDateTimeFormatter::class);
 
 		$connection = \OC::$server->getDatabaseConnection();

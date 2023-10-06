@@ -29,16 +29,16 @@ use OCA\Activity\GroupHelperDisabled;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
-use OCP\ILogger;
 use OCP\RichObjectStrings\IValidator;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\LoggerInterface;
 
 class GroupHelperTest extends TestCase {
 	/** @var IManager|MockObject */
 	protected $activityManager;
 	/** @var IValidator|MockObject */
 	protected $validator;
-	/** @var ILogger|MockObject */
+	/** @var LoggerInterface|MockObject */
 	protected $logger;
 	/** @var IL10N|MockObject */
 	protected $l;
@@ -49,7 +49,7 @@ class GroupHelperTest extends TestCase {
 		$this->l = $this->createMock(IL10N::class);
 		$this->activityManager = $this->createMock(IManager::class);
 		$this->validator = $this->createMock(IValidator::class);
-		$this->logger = $this->createMock(ILogger::class);
+		$this->logger = $this->createMock(LoggerInterface::class);
 	}
 
 	/**

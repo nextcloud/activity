@@ -23,14 +23,14 @@ namespace OCA\Activity;
 
 use OCP\Activity\IManager;
 use OCP\IL10N;
-use OCP\ILogger;
 use OCP\RichObjectStrings\IValidator;
+use Psr\Log\LoggerInterface;
 
 class GroupHelperDisabled extends GroupHelper {
 	public function __construct(IL10N $l,
 		IManager $activityManager,
 		IValidator $richObjectValidator,
-		ILogger $logger) {
+		LoggerInterface $logger) {
 		parent::__construct($l,
 			$activityManager,
 			$richObjectValidator,
