@@ -1,12 +1,27 @@
 OC.L10N.register(
     "activity",
     {
+    "Copied!" : "¡Copióse!",
+    "Not supported!" : "¡Nun ye compatible!",
+    "Press ⌘-C to copy." : "Primi ⌘-C pa copiar.",
+    "Press Ctrl-C to copy." : "Primi Ctrl-C pa copiar.",
+    "{name} (invisible)" : "{name} (invisible)",
+    "Home" : "Aniciu",
     "Today" : "Güei",
     "Yesterday" : "Ayeri",
     "Activity" : "Actividá",
     "Recent activity" : "Actividá recién",
+    "More activities" : "Más actividaes",
+    "_and %n more _::_and %n more _" : ["y %n más","y %n más"],
     "All activities" : "Toles actividaes",
+    "Hello %s" : "Hola, %s",
+    "Hello %s," : "Hola, %s.",
+    "Notifications" : "Avisos",
+    "This application enables people to view a log of activities about them, their files or other data." : "Esta aplicación permite que les persones vean un rexistru de la so actividá, la de los sos ficheros y la d'otros datos.",
     "Default settings" : "Configuración predeterminada",
-    "Unable to save the settings" : "Nun ye posible guardar la configuración"
+    "Unable to save the settings" : "Nun ye posible guardar la configuración",
+    "This application enables users to view a log of activities about them or about files." : "Esta aplicación permite que los usuarios vean un rexistru de la so actividá o de la de los ficheros.",
+    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Esta aplicación permite que los usuarios vean les aiciones rellacionaes colos sos ficheros de Nextcloud.\n\t\tNamás que s'active, los usuarios van ver un iconu nuevu llamáu «Actividá» nel menú d'aplicaciones.\n\t\tAl calcar nesi iconu, va apaecer una páxina nueva pa que los usuarios faigan un siguimientu de l'actividá rellacionada colos ficheros nuevos, cambeos de llugar, ficheros desaniciaos, cambeos de nome, anovamientos y actividá compartida.\n\t\tL'usuariu pue configurar les opciones d'actividá individuales nel so menú personal.\n\t\tEsto tamién configura'l tipu d'actividá que se rexistra y si l'usuariu pue ver la so propia actividá,\n\t\tsi namás ta disponible en llinia o si recibe un resume per corréu electrónicu periódicamente.\n\t\tTienes más información disponible na documentación de l'aplicación «Actividá».",
+    "Activities" : "Actividaes"
 },
 "nplurals=2; plural=(n != 1);");
