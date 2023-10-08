@@ -58,7 +58,7 @@ OC.L10N.register(
     "Unable to save the settings" : "Не вдалося зберегти налаштування",
     "Activity feed" : "Стрічка дій",
     "Activity settings" : "Налаштування",
-    "Enable RSS feed" : "Активувати стрічку RSS",
+    "Enable RSS feed" : "Увімкнути стрічку RSS",
     "RSS feed" : "Стрічка RSS",
     "Copy RSS feed link" : "Скопіювати посилання на RSS-стрічку",
     "Personal notification settings" : "Налаштування персональних сповіщень",
