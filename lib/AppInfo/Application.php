@@ -47,7 +47,6 @@ use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
-use OCP\ILogger;
 use OCP\IURLGenerator;
 use OCP\IUserManager;
 use OCP\L10N\IFactory;
@@ -127,7 +126,7 @@ class Application extends App implements IBootstrap {
 				$c->get(IManager::class),
 				$c->get(IValidator::class),
 				$c->get(IConfig::class),
-				$c->get(ILogger::class)
+				$c->get(LoggerInterface::class),
 			);
 		});
 

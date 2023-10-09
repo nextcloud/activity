@@ -40,27 +40,15 @@ use Psr\Log\LoggerInterface;
  * @brief Class for managing the data in the activities
  */
 class Data {
-	/** @var IManager */
-	protected $activityManager;
 
-	/** @var IDBConnection */
-	protected $connection;
+	/** @var  */
+	protected ?IQueryBuilder $insertActivity = null;
+	protected ?IQueryBuilder $insertMail = null;
 
-	/** @var ?IQueryBuilder */
-	protected $insertActivity;
-
-	/** @var ?IQueryBuilder */
-	protected $insertMail;
-	private LoggerInterface $logger;
-
-	/**
-	 * @param IManager $activityManager
-	 * @param IDBConnection $connection
-	 */
-	public function __construct(IManager $activityManager, IDBConnection $connection, LoggerInterface $logger) {
-		$this->activityManager = $activityManager;
-		$this->connection = $connection;
-		$this->logger = $logger;
+	public function __construct(
+		protected IManager $activityManager,
+		protected IDBConnection $connection,
+		protected LoggerInterface $logger) {
 	}
 
 	/**

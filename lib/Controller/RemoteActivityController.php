@@ -36,34 +36,14 @@ use OCP\IUser;
 use OCP\IUserManager;
 
 class RemoteActivityController extends OCSController {
-	/** @var IDBConnection */
-	protected $db;
-
-	/** @var IUserManager */
-	protected $userManager;
-
-	/** @var IAppManager */
-	protected $appManager;
-
-	/** @var IRootFolder */
-	protected $rootFolder;
-
-	/** @var IActivityManager */
-	protected $activityManager;
-
 	public function __construct($appName,
 		IRequest $request,
-		IDBConnection $db,
-		IUserManager $userManager,
-		IAppManager $appManager,
-		IRootFolder $rootFolder,
-		IActivityManager $activityManager) {
+		protected IDBConnection $db,
+		protected IUserManager $userManager,
+		protected IAppManager $appManager,
+		protected IRootFolder $rootFolder,
+		protected IActivityManager $activityManager) {
 		parent::__construct($appName, $request);
-		$this->db = $db;
-		$this->userManager = $userManager;
-		$this->appManager = $appManager;
-		$this->rootFolder = $rootFolder;
-		$this->activityManager = $activityManager;
 	}
 
 	/**
@@ -196,7 +176,10 @@ class RemoteActivityController extends OCSController {
 		return new DataResponse();
 	}
 
-	protected function getSubject($type, $path, $path2) {
+	/**
+	 * @param null|string $path2
+	 */
+	protected function getSubject(string $type, string $path, string|null $path2) {
 		switch ($type) {
 			case 'Create':
 				return 'created_by';

@@ -33,6 +33,7 @@ use OCP\IL10N;
 use OCP\IRequest;
 
 class ActivitiesController extends Controller {
+
 	public function __construct(
 		string $appName,
 		IRequest $request,
@@ -40,8 +41,7 @@ class ActivitiesController extends Controller {
 		protected Data $data,
 		protected Navigation $navigation,
 		protected IEventDispatcher $eventDispatcher,
-		private IL10N $l10n
-	) {
+		private IL10N $l10n) {
 		parent::__construct($appName, $request);
 	}
 

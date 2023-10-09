@@ -28,36 +28,20 @@ use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 
 class Consumer implements IConsumer {
-	/** @var Data */
-	protected $data;
-	/** @var IManager */
-	protected $manager;
 
-	/** @var UserSettings */
-	protected $userSettings;
-	/** @var NotificationGenerator */
-	protected $notificationGenerator;
-
-	/**
-	 * Constructor
-	 *
-	 * @param Data $data
-	 * @param IManager $manager
-	 * @param UserSettings $userSettings
-	 * @param NotificationGenerator $notificationGenerator
-	 */
-	public function __construct(Data $data, IManager $manager, UserSettings $userSettings, NotificationGenerator $notificationGenerator) {
-		$this->data = $data;
-		$this->manager = $manager;
-		$this->userSettings = $userSettings;
-		$this->notificationGenerator = $notificationGenerator;
+	public function __construct(
+		protected Data $data,
+		protected IManager $manager,
+		protected UserSettings $userSettings,
+		protected NotificationGenerator $notificationGenerator) {
 	}
 
 	/**
 	 * Send an event to the notifications of a user
 	 *
 	 * @param IEvent $event
-	 * @return null
+	 *
+	 * @return void
 	 */
 	public function receive(IEvent $event) {
 		$selfAction = $event->getAffectedUser() === $event->getAuthor();

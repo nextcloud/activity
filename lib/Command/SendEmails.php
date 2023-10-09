@@ -27,7 +27,7 @@ use OC\Core\Command\Base;
 use OCA\Activity\MailQueueHandler;
 use OCA\Activity\UserSettings;
 use OCP\IConfig;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use Stecman\Component\Symfony\Console\BashCompletion\CompletionContext;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -35,23 +35,14 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class SendEmails extends Base {
-	/** @var MailQueueHandler */
-	protected $queueHandler;
-
-	/** @var IConfig */
-	protected $config;
-
-	/** @var ILogger */
-	protected $logger;
-
 	/**
 	 * @param MailQueueHandler $queueHandler
 	 * @param IConfig $config
-	 * @param ILogger $logger
+	 * @param LoggerInterface $logger
 	 */
-	public function __construct(MailQueueHandler $queueHandler,
-		IConfig $config,
-		ILogger $logger) {
+	public function __construct(protected MailQueueHandler $queueHandler,
+		protected IConfig $config,
+		protected LoggerInterface $logger) {
 		parent::__construct();
 
 		$this->queueHandler = $queueHandler;

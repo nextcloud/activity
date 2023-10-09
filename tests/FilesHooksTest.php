@@ -41,12 +41,12 @@ use OCP\Files\NotFoundException;
 use OCP\IConfig;
 use OCP\IGroup;
 use OCP\IGroupManager;
-use OCP\ILogger;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class FilesHooksTest
@@ -122,8 +122,8 @@ class FilesHooksTest extends TestCase {
 		$currentUser->expects($this->any())
 			->method('getUserIdentifier')
 			->willReturn($user);
-		/** @var ILogger $logger */
-		$logger = $this->createMock(ILogger::class);
+		/** @var LoggerInterface $logger */
+		$logger = $this->createMock(LoggerInterface::class);
 
 		if (!empty($mockedMethods)) {
 			return $this->getMockBuilder(FilesHooks::class)

@@ -33,11 +33,8 @@ class ViewInfoCache {
 	/** @var array */
 	protected $cacheId;
 
-	/** @var IRootFolder */
-	protected $rootFolder;
 
-	public function __construct(IRootFolder $rootFolder) {
-		$this->rootFolder = $rootFolder;
+	public function __construct(protected IRootFolder $rootFolder) {
 	}
 
 	/**

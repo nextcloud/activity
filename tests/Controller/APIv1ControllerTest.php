@@ -37,7 +37,6 @@ use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\IConfig;
 use OCP\IL10N;
-use OCP\ILogger;
 use OCP\IRequest;
 use OCP\IUserSession;
 use OCP\RichObjectStrings\IValidator;
@@ -231,7 +230,7 @@ class APIv1ControllerTest extends TestCase {
 			'activity',
 			$this->createMock(IRequest::class),
 			$data,
-			new GroupHelper($l, $activityManager, $this->createMock(IValidator::class), $this->createMock(ILogger::class)),
+			new GroupHelper($l, $activityManager, $this->createMock(IValidator::class), $this->createMock(LoggerInterface::class)),
 			new UserSettings($activityManager, $config),
 			$currentUser
 		);
