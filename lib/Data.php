@@ -383,10 +383,6 @@ class Data {
 
 			$deleteQuery->andWhere($deleteQuery->expr()->comparison($column, $operation, $deleteQuery->createNamedParameter($value)));
 		}
-
-
-
-
 		// Dont use chunked delete - let the DB handle the large row count natively
 		$deleteQuery->executeStatement();
 	}
@@ -483,7 +479,7 @@ class Data {
 			$query->where($query->expr()->comparison($column, $operation, $query->createNamedParameter($value)));
 		}
 
-		$query->setMaxResults(10000);
+		$query->setMaxResults(50000);
 		$result = $query->executeQuery();
 		$count = $result->rowCount();
 		if($count === 0) {
@@ -494,12 +490,15 @@ class Data {
 		}, $result->fetchAll(\PDO::FETCH_NUM));
 		$result->closeCursor();
 
+		$queryResult = 0;
 		$deleteQuery = $this->connection->getQueryBuilder();
 		$deleteQuery->delete('activity');
 		$deleteQuery->where($deleteQuery->expr()->in('activity_id', $deleteQuery->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY));
-		$deleteQuery->setParameter('ids', $ids, IQueryBuilder::PARAM_INT_ARRAY);
-		$queryResult = $deleteQuery->executeStatement();
-		if($queryResult === 10000) {
+		foreach(array_chunk($ids, 1000) as $chunk) {
+			$deleteQuery->setParameter('ids', $chunk, IQueryBuilder::PARAM_INT_ARRAY);
+			$queryResult += $deleteQuery->executeStatement();
+		}
+		if($queryResult === 50000) {
 			$this->deleteActivitiesForMySQL($conditions);
 		}
 	}
