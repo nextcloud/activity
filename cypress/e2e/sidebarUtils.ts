@@ -79,7 +79,7 @@ export function addComment(fileName: string, comment: string) {
 	showSidebarForFile(fileName)
 	cy.get('#app-sidebar-vue').contains('Comments').click()
 	cy.get('.comment__editor .rich-contenteditable__input').type(comment)
-	cy.get('button.comment__submit').click()
+	cy.get('.comment__submit button').click()
 
 	cy.wait(500)
 }
