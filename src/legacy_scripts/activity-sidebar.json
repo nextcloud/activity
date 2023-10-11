@@ -3,5 +3,5 @@
   "templates.js",
   "activitymodel.js",
   "activitycollection.js",
-  "activity-sidebar.js"
+  "activity-sidebar.mjs"
 ]

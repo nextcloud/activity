@@ -24,14 +24,10 @@ import Vuex from 'vuex'
 import UserSettings from './views/UserSettings.vue'
 import DailySummary from './views/DailySummary.vue'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
-import { generateFilePath } from '@nextcloud/router'
 import store from './settings-store.js'
 
 Vue.prototype.t = t
 Vue.prototype.n = n
-
-// eslint-disable-next-line no-undef, camelcase
-__webpack_public_path__ = generateFilePath(appName, '', 'js/')
 
 Vue.use(Vuex)
 

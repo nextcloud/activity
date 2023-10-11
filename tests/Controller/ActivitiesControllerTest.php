@@ -24,14 +24,16 @@ namespace OCA\Activity\Tests\Controller;
 
 use OCA\Activity\Controller\ActivitiesController;
 use OCA\Activity\Data;
-use OCA\Activity\Navigation;
 use OCA\Activity\Tests\TestCase;
+use OCP\Activity\IManager;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Services\IInitialState;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\ILogger;
 use OCP\IRequest;
+use OCP\IURLGenerator;
 use OCP\Template;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -50,10 +52,14 @@ class ActivitiesControllerTest extends TestCase {
 	protected $data;
 	/** @var IEventDispatcher|MockObject */
 	protected $eventDispatcher;
-	/** @var Navigation|MockObject */
-	protected $navigation;
-	/** @var IL10N */
+	/** @var IL10N|MockObject */
 	protected $l10n;
+	/** @var IInitialState|MockObject */
+	protected $initialState;
+	/** @var IURLGenerator|MockObject */
+	protected $urlGenerator;
+	/** @var IManager|MockObject */
+	protected $activityManager;
 
 	/** @var ActivitiesController */
 	protected $controller;
@@ -63,10 +69,12 @@ class ActivitiesControllerTest extends TestCase {
 
 		$this->config = $this->createMock(IConfig::class);
 		$this->data = $this->createMock(Data::class);
-		$this->navigation = $this->createMock(Navigation::class);
 		$this->eventDispatcher = $this->createMock(IEventDispatcher::class);
 		$this->request = $this->createMock(IRequest::class);
 		$this->l10n = $this->createMock(IL10N::class);
+		$this->initialState = $this->createMock(IInitialState::class);
+		$this->urlGenerator = $this->createMock(IURLGenerator::class);
+		$this->activityManager = $this->createMock(IManager::class);
 
 		$this->controller = $this->getController();
 	}
@@ -76,11 +84,14 @@ class ActivitiesControllerTest extends TestCase {
 			return new ActivitiesController(
 				'activity',
 				$this->request,
+				'some-user',
 				$this->config,
 				$this->data,
-				$this->navigation,
-				$this->eventDispatcher,
 				$this->l10n,
+				$this->eventDispatcher,
+				$this->initialState,
+				$this->urlGenerator,
+				$this->activityManager,
 			);
 		}
 
@@ -88,11 +99,14 @@ class ActivitiesControllerTest extends TestCase {
 			->setConstructorArgs([
 				'activity',
 				$this->request,
+				'some-user',
 				$this->config,
 				$this->data,
-				$this->navigation,
-				$this->eventDispatcher,
 				$this->l10n,
+				$this->eventDispatcher,
+				$this->initialState,
+				$this->urlGenerator,
+				$this->activityManager,
 			])
 			->onlyMethods($methods)
 			->getMock();
@@ -104,9 +118,6 @@ class ActivitiesControllerTest extends TestCase {
 		$template->assign('navigations', []);
 		$template->assign('rssLink', '');
 		$template->assign('personalSettingsLink', '');
-		$this->navigation->expects($this->any())
-			->method('getTemplate')
-			->willReturn($template);
 
 		$this->eventDispatcher->expects($this->once())
 			->method('dispatch')

@@ -1,5 +1,5 @@
 <template>
-	<NcSettingsSection :title="t('activity', 'Daily activity summary')">
+	<NcSettingsSection :name="t('activity', 'Daily activity summary')">
 		<NcCheckboxRadioSwitch data-cy-checkbox
 			:checked="activityDigestEnabled"
 			@update:checked="toggleActivityDigestEnabled({activityDigestEnabled: $event})">

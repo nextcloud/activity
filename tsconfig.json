@@ -1,22 +1,23 @@
 {
 	"extends": "@vue/tsconfig/tsconfig.json",
-	"include": ["./src/**/*.ts"],
+	"include": ["./src/**/*.ts", "./src/**/*.vue"],
 	"compilerOptions": {
-		"types": ["cypress", "node", "dockerode"],
+		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
-		"moduleResolution": "node",
-		"target": "ESNext",
-		"module": "esnext",
-		"declaration": false,
-		"strict": true,
+		"moduleResolution": "Bundler",
 		"noImplicitAny": false,
-		"resolveJsonModule": true
+		"outDir": "./js/",
+		"strict": true
 	},
+	// these options are overrides used only by ts-node (cypress)
 	"ts-node": {
-		// these options are overrides used only by ts-node
-		// same as our --compilerOptions flag and our TS_NODE_COMPILER_OPTIONS environment variable
+		// faster and no need for when running cypress
+		"transpileOnly": true,
 		"compilerOptions": {
-			"module": "commonjs"
+			"module": "ES2015"
 		}
+	},
+	"vueCompilerOptions": {
+		"target": 2.7
 	}
 }

@@ -1,13 +1,13 @@
-
 import {
 	configureNextcloud,
 	startNextcloud,
 	stopNextcloud,
 	waitOnNextcloud,
 } from './cypress/dockerNode'
+// eslint-disable-next-line n/no-extraneous-import
 import { defineConfig } from 'cypress'
 
-import browserify from '@cypress/browserify-preprocessor'
+import vitePreprocessor from 'cypress-vite'
 import getCompareSnapshotsPlugin from 'cypress-visual-regression/dist/plugin'
 
 export default defineConfig({
@@ -45,7 +45,7 @@ export default defineConfig({
 		// You may want to clean this up later by importing these.
 		async setupNodeEvents(on, config) {
 			// Fix browserslist extend https://github.com/cypress-io/cypress/issues/2983#issuecomment-570616682
-			on('file:preprocessor', browserify({ typescript: require.resolve('typescript') }))
+			on('file:preprocessor', vitePreprocessor({ configFile: false }))
 
 			// Enable the snapshot compare plugin
 			getCompareSnapshotsPlugin(on, config)

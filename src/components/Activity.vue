@@ -28,8 +28,8 @@
 			:size="15" />
 
 		<div class="activity-entry__content">
-			<RichText class="activity-entry__content__subject" :text="subjectText" :arguments="subjectArguments" />
-			<RichText class="activity-entry__content__message" :text="messageText" :arguments="messageArguments" />
+			<NcRichText class="activity-entry__content__subject" :text="subjectText" :arguments="subjectArguments" />
+			<NcRichText class="activity-entry__content__message" :text="messageText" :arguments="messageArguments" />
 		</div>
 		<span class="hidden-visually">{{ activity.formattedDate }}</span>
 		<span :title="activity.formattedDate" class="activity-entry__date">{{ dateFromNow }}</span>
@@ -37,9 +37,11 @@
 </template>
 
 <script>
-import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
-import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble.js'
-import RichText from '@nextcloud/vue-richtext'
+import {
+	NcAvatar,
+	NcUserBubble,
+	NcRichText,
+} from '@nextcloud/vue'
 
 import ActivityModel from '../models/ActivityModel.ts'
 
@@ -60,7 +62,7 @@ export default {
 	name: 'Activity',
 	components: {
 		NcAvatar,
-		RichText,
+		NcRichText,
 	},
 	props: {
 		/**

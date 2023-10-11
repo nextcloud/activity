@@ -25,35 +25,43 @@
 		<!-- error message -->
 		<NcEmptyContent v-if="error" :title="error">
 			<template #icon>
-				<span class="icon-error" />
+				<NcIconSvgWrapper :svg="lightningBoltSVG" />
 			</template>
 		</NcEmptyContent>
 		<template v-else>
 			<!-- activities content -->
-			<ul>
-				<Activity v-for="activity in activities"
-					:key="activity.id"
-					:activity="activity" />
-			</ul>
-
-			<NcEmptyContent v-if="activities.length === 0 && !loading"
-				:title="t('activity', 'No activity yet')">
+			<NcEmptyContent v-if="loading"
+				:name="t('activity', 'Loading activities')">
+				<template #icon>
+					<NcLoadingIcon />
+				</template>
+			</NcEmptyContent>
+			<NcEmptyContent v-else-if="activities.length === 0"
+				:name="t('activity', 'No activity yet')">
 				<template #icon>
 					<span class="icon-activity" />
 				</template>
 			</NcEmptyContent>
+			<ul v-else>
+				<Activity v-for="activity in activities"
+					:key="activity.id"
+					:activity="activity" />
+			</ul>
 		</template>
 	</div>
 </template>
 
 <script>
+import axios from '@nextcloud/axios'
+
 import { generateOcsUrl } from '@nextcloud/router'
 import { translate as t } from '@nextcloud/l10n'
-import axios from '@nextcloud/axios'
-import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
+import { NcEmptyContent, NcIconSvgWrapper, NcLoadingIcon } from '@nextcloud/vue'
 
 import Activity from '../components/Activity.vue'
 import ActivityModel from '../models/ActivityModel.ts'
+
+import lightningBoltSVG from '@mdi/svg/svg/lightning-bolt.svg?raw'
 
 import logger from '../logger.js'
 
@@ -62,6 +70,8 @@ export default {
 	components: {
 		Activity,
 		NcEmptyContent,
+		NcIconSvgWrapper,
+		NcLoadingIcon,
 	},
 	data() {
 		return {
@@ -69,6 +79,7 @@ export default {
 			loading: true,
 			fileInfo: null,
 			activities: [],
+			lightningBoltSVG,
 		}
 	},
 	methods: {
