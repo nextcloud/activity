@@ -25,4 +25,3 @@ import { addCommands } from '@nextcloud/cypress'
 // Add custom commands
 import 'cypress-wait-until'
 addCommands()
-

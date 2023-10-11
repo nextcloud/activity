@@ -46,6 +46,8 @@ export default defineConfig({
 		async setupNodeEvents(on, config) {
 			// Fix browserslist extend https://github.com/cypress-io/cypress/issues/2983#issuecomment-570616682
 			on('file:preprocessor', browserify({ typescript: require.resolve('typescript') }))
+
+			// Enable the snapshot compare plugin
 			getCompareSnapshotsPlugin(on, config)
 
 			// Disable spell checking to prevent rendering differences

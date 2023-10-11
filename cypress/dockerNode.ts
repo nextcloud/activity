@@ -92,7 +92,7 @@ export const startNextcloud = async function(branch: string = 'master'): Promise
 			HostConfig: {
 				Binds: [
 					// TODO: improve local app directory detection
-					`${APP_PATH}/:/var/www/html/apps/${APP_NAME}`,
+					`${APP_PATH}/:/var/www/html/apps/${APP_NAME}:ro`,
 				],
 			},
 			Env: [
