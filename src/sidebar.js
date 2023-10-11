@@ -41,8 +41,12 @@ const activityTab = new OCA.Files.Sidebar.Tab({
 	iconSvg: LightningBolt,
 
 	async mount(el, fileInfo, context) {
-		const { default: ActivityTab } = await import(/* webpackPreload: true */ './views/ActivityTab.vue')
-		ActivityTabView = ActivityTabView ?? Vue.extend(ActivityTab)
+		// only load if needed
+		if (ActivityTabView === null) {
+			const { default: ActivityTab } = await import('./views/ActivityTab.vue')
+			ActivityTabView = ActivityTabView ?? Vue.extend(ActivityTab)
+		}
+		// destroy previous instance if available
 		if (ActivityTabInstance) {
 			ActivityTabInstance.$destroy()
 		}
@@ -50,8 +54,8 @@ const activityTab = new OCA.Files.Sidebar.Tab({
 			// Better integration with vue parent component
 			parent: context,
 		})
-		// Only mount after we have all the info we need
-		await ActivityTabInstance.update(fileInfo)
+		// No need to await this, we will show a loading indicator instead
+		ActivityTabInstance.update(fileInfo)
 		ActivityTabInstance.$mount(el)
 	},
 	update(fileInfo) {
@@ -63,7 +67,7 @@ const activityTab = new OCA.Files.Sidebar.Tab({
 	},
 })
 
-window.addEventListener('DOMContentLoaded', async function () {
+window.addEventListener('DOMContentLoaded', async function() {
 	if (OCA.Files && OCA.Files.Sidebar) {
 		OCA.Files.Sidebar.registerTab(activityTab)
 		const { default: ActivityTab } = await import(/* webpackPreload: true */ './views/ActivityTab.vue')
