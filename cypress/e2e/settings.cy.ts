@@ -39,10 +39,12 @@ describe('Check that user\'s settings survive a reload', () => {
 		cy.get("#app-content input[type='checkbox']").should('not.be.checked')
 
 		cy.get('#file_changed_notification').check({ force: true })
-		cy.contains('A calendar was modified').click()
-		cy.contains('Comments for files').click()
-		cy.contains('Your password or email was modified').click()
-
+		cy.get('#comments_email').check({ force: true })
+		cy.get('#comments_notification').check({ force: true })
+		cy.get('#calendar_email').check({ force: true })
+		cy.get('#calendar_notification').check({ force: true })
+		cy.get('#personal_settings_email').check({ force: true })
+		cy.get('#personal_settings_notification').check({ force: true })
 		cy.reload()
 
 		cy.get('#file_changed_email').should('not.be.checked')
