@@ -52,7 +52,7 @@ OC.L10N.register(
     "Choose for which activities you want to get an email or push notification." : "Vyberte si, pre ktoré aktivity chcete dostávať e-maily alebo vyskakovacie oznámenia.",
     "Choose for which activities you want to get a push notification." : "Vyberte, pre ktoré aktivity chcete dostávať vyskakovacie upozornenia.",
     "Daily activity summary" : "Súhrn denných aktivít",
-    "Send daily activity summary in the morning" : "Ráno pošlite denný súhrn aktivít",
+    "Send daily activity summary in the morning" : "Ráno mi pošlite denný súhrn aktivít",
     "Default settings" : "Predvolená nastavenia",
     "Configure the default notification settings for new accounts." : "Nastavte predvolené nastavenia upozornení pre nové účty.",
     "Unable to save the settings" : "Nepodarilo sa uložiť nastavenia",
