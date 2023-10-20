@@ -43,7 +43,7 @@
 			<icon :is="checkboxRadioIconElement"
 				:size="size"
 				class="checkbox-radio-switch__icon"
-				title="" />
+				aria-hidden="true" />
 			<span class="sr-only">
 				<slot />
 			</span>
