@@ -222,6 +222,7 @@
 .activitysubject .avatar-name-wrapper {
 	position: relative;
 	cursor: pointer;
+	display: inline-block;
 }
 
 .opengraph {
