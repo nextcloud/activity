@@ -40,11 +40,10 @@
 			@change="onToggle">
 
 		<label :for="id" class="checkbox-radio-switch__label">
-			<icon :is="checkboxRadioIconElement"
+			<component :is="checkboxRadioIconElement"
 				:size="size"
 				class="checkbox-radio-switch__icon"
-				title=""
-				decorative />
+				aria-hidden="true" />
 			<span class="sr-only">
 				<slot />
 			</span>
