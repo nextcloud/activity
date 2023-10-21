@@ -25,8 +25,8 @@
 		</caption>
 		<tbody v-for="(group, groupKey) in activityGroups" :key="groupKey">
 			<tr class="group-header">
-				<th>
-					<h3>{{ group.name }}</h3>
+				<th class="group-header-section">
+					{{ group.name }}
 				</th>
 				<th v-for="(methodName, methodKey) in methods"
 					:key="methodKey"
@@ -99,10 +99,6 @@ export default {
 table.grid {
 	// Hack: align content of the table with the rest of the page
 	margin-left: -0.8em;
-
-	h3 {
-		font-weight: bold;
-	}
 }
 
 table.grid th {
@@ -114,10 +110,17 @@ table.grid .group-header {
 	th {
 		padding-top: 16px;
 		height: 60px;
+
 		&.activity_select_group {
 			padding-left: 20px;
 		}
 	}
+}
+
+table.grid th.group-header-section {
+	// Copy of core/apps.scss h3 styles
+	font-size: 16px;
+	font-weight: bold;
 }
 
 table.grid th.activity_select_group {
