@@ -60,6 +60,7 @@ OC.L10N.register(
     "Activity settings" : "Nastavenia aktivity",
     "Enable RSS feed" : "Povoliť RSS kanál",
     "RSS feed" : "RSS kanál",
+    "Copy RSS feed link" : "Kopírovať odkaz na RSS kanál",
     "Personal notification settings" : "Osobné nastavenia upozornení",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
     "This application enables users to view a log of activities about them or about files." : "Táto aplikácia umožní používateľom prezerať záznam ich aktivít alebo aktivít práce so súbormi.",
