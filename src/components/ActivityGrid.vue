@@ -30,8 +30,7 @@
 				</th>
 				<th v-for="(methodName, methodKey) in methods"
 					:key="methodKey"
-					class="activity_select_group"
-					aria-hidden="true">
+					class="activity_select_group">
 					{{ methodName }}
 				</th>
 			</tr>
