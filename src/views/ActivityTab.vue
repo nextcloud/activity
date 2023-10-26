@@ -22,6 +22,33 @@
 
 <template>
 	<div :class="{ 'icon-loading': loading }">
+		<form class="comment__editor" @submit.prevent>
+			<div class="comment__editor-group">
+				<NcRichContenteditable ref="editor"
+					:auto-complete="autoComplete"
+					:contenteditable="!loading"
+					:value="localMessage"
+					:user-data="userData"
+					aria-describedby="tab-comments__editor-description"
+					@update:value="updateLocalMessage"
+					@submit="onSubmit" />
+				<div class="comment__submit">
+					<NcButton type="tertiary-no-background"
+						native-type="submit"
+						:aria-label="t('comments', 'Post comment')"
+						:disabled="isEmptyMessage"
+						@click="onSubmit">
+						<template #icon>
+							<span v-if="loading" class="icon-loading-small" />
+							<ArrowRight v-else :size="20" />
+						</template>
+					</NcButton>
+				</div>
+			</div>
+			<div id="tab-comments__editor-description" class="comment__editor-description">
+				{{ t('comments', '"@" for mentions, ":" for emoji, "/" for smart picker') }}
+			</div>
+		</form>
 		<!-- error message -->
 		<NcEmptyContent v-if="error" :title="error">
 			<template #icon>
@@ -54,14 +81,59 @@ import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
 
 import Activity from '../components/Activity.vue'
 import ActivityModel from '../models/ActivityModel.js'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
 import logger from '../logger.js'
+import ArrowRight from 'vue-material-design-icons/ArrowRight.vue'
+import CommentMixin from '../mixins/CommentMixin.js'
+import RichEditorMixin from '@nextcloud/vue/dist/Mixins/richEditor.js'
+
+const NcRichContenteditable = () => import('@nextcloud/vue/dist/Components/NcRichContenteditable.js')
 
 export default {
 	name: 'ActivityTab',
 	components: {
+		ArrowRight,
 		Activity,
 		NcEmptyContent,
+		NcButton,
+		NcRichContenteditable,
+	},
+	mixins: [RichEditorMixin, CommentMixin],
+	props: {
+		actorDisplayName: {
+			type: String,
+			required: true,
+		},
+		actorId: {
+			type: String,
+			required: true,
+		},
+		creationDateTime: {
+			type: String,
+			default: null,
+		},
+
+		/**
+		 * Force the editor display
+		 */
+		editor: {
+			type: Boolean,
+			default: false,
+		},
+
+		/**
+		 * Provide the autocompletion data
+		 */
+		autoComplete: {
+			type: Function,
+			required: true,
+		},
+
+		tag: {
+			type: String,
+			default: 'div',
+		},
 	},
 	data() {
 		return {
@@ -69,7 +141,19 @@ export default {
 			loading: true,
 			fileInfo: null,
 			activities: [],
+			localMessage: '',
 		}
+	},
+	computed: {
+		isEmptyMessage() {
+			return !this.localMessage || this.localMessage.trim() === ''
+		},
+	},
+	watch: {
+		// If the data change, update the local value
+		message(message) {
+			this.updateLocalMessage(message)
+		},
 	},
 	methods: {
 		/**
@@ -140,6 +224,34 @@ export default {
 		},
 
 		t,
+
+		/**
+		 * Update local Message on outer change
+		 *
+		 * @param {string} message the message to set
+		 */
+		updateLocalMessage(message) {
+			this.localMessage = message.toString()
+		},
+
+		/**
+		 * Dispatch message between edit and create
+		 */
+		async onSubmit() {
+			// Do not submit if message is empty
+			if (this.localMessage.trim() === '') {
+				return
+			}
+
+			await this.onNewComment(this.localMessage.trim())
+			this.$nextTick(() => {
+				// Focus the editor again
+				this.$refs.editor.$el.focus()
+			})
+
+			this.resetState()
+			await this.getActivities()
+		},
 	},
 }
 </script>
