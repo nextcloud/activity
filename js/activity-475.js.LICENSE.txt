@@ -20,6 +20,10 @@
  * Copyright (C) 2018 Varun A P
  */
 
+/*! For license information please see NcActionSeparator.js.LICENSE.txt */
+
+/*! For license information please see NcActions.js.LICENSE.txt */
+
 /*! For license information please see richEditor.js.LICENSE.txt */
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */

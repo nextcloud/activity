@@ -2,6 +2,7 @@
   - @copyright Copyright (c) 2021 Louis Chemineau <louis@chmn.me>
   -
   - @author Louis Chemineau <louis@chmn.me>
+  - @author Stephan Orbaugh <stephan.orbaugh@nextcloud.com>
   -
   - @license AGPL-3.0-or-later
   -
@@ -29,7 +30,7 @@
 			:editor="true"
 			:ressource-id="fileInfo.id"
 			class="comments__writer"
-			@new="onSubmit" />
+			@new="getActivities" />
 
 		<!-- error message -->
 		<NcEmptyContent v-if="error" :title="error">
@@ -64,25 +65,18 @@ import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
 
 import Activity from '../components/Activity.vue'
 import ActivityModel from '../models/ActivityModel.js'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
 import Comment from '../components/Comment.vue'
 import logger from '../logger.js'
-import ArrowRight from 'vue-material-design-icons/ArrowRight.vue'
 import CommentMixin from '../mixins/CommentMixin.js'
 import RichEditorMixin from '@nextcloud/vue/dist/Mixins/richEditor.js'
 import { loadState } from '@nextcloud/initial-state'
 
-const NcRichContenteditable = () => import('@nextcloud/vue/dist/Components/NcRichContenteditable.js')
-
 export default {
 	name: 'ActivityTab',
 	components: {
-		ArrowRight,
 		Activity,
 		NcEmptyContent,
-		NcButton,
-		NcRichContenteditable,
 		Comment,
 	},
 	mixins: [RichEditorMixin, CommentMixin],
@@ -224,24 +218,6 @@ export default {
 		 */
 		updateLocalMessage(message) {
 			this.localMessage = message.toString()
-		},
-
-		/**
-		 * Dispatch message between edit and create
-		 */
-		async onSubmit() {
-			// Do not submit if message is empty
-			if (this.localMessage.trim() === '') {
-				return
-			}
-
-			await this.onNewComment(this.localMessage.trim())
-			this.$nextTick(() => {
-				// Focus the editor again
-				this.$refs.editor.$el.focus()
-			})
-
-			await this.getActivities()
 		},
 
 		/**
