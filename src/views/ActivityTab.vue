@@ -22,33 +22,15 @@
 
 <template>
 	<div :class="{ 'icon-loading': loading }">
-		<form class="comment__editor" @submit.prevent>
-			<div class="comment__editor-group">
-				<NcRichContenteditable ref="editor"
-					:auto-complete="autoComplete"
-					:contenteditable="!loading"
-					:value="localMessage"
-					:user-data="userData"
-					aria-describedby="tab-comments__editor-description"
-					@update:value="updateLocalMessage"
-					@submit="onSubmit" />
-				<div class="comment__submit">
-					<NcButton type="tertiary-no-background"
-						native-type="submit"
-						:aria-label="t('comments', 'Post comment')"
-						:disabled="isEmptyMessage"
-						@click="onSubmit">
-						<template #icon>
-							<span v-if="loading" class="icon-loading-small" />
-							<ArrowRight v-else :size="20" />
-						</template>
-					</NcButton>
-				</div>
-			</div>
-			<div id="tab-comments__editor-description" class="comment__editor-description">
-				{{ t('comments', '"@" for mentions, ":" for emoji, "/" for smart picker') }}
-			</div>
-		</form>
+		<!-- Editor -->
+		<Comment v-bind="editorData"
+			:auto-complete="autoComplete"
+			:user-data="userData"
+			:editor="true"
+			:ressource-id="fileInfo.id"
+			class="comments__writer"
+			@new="onSubmit" />
+
 		<!-- error message -->
 		<NcEmptyContent v-if="error" :title="error">
 			<template #icon>
@@ -75,6 +57,7 @@
 
 <script>
 import { generateOcsUrl } from '@nextcloud/router'
+import { getCurrentUser } from '@nextcloud/auth'
 import { translate as t } from '@nextcloud/l10n'
 import axios from '@nextcloud/axios'
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
@@ -83,10 +66,12 @@ import Activity from '../components/Activity.vue'
 import ActivityModel from '../models/ActivityModel.js'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
+import Comment from '../components/Comment.vue'
 import logger from '../logger.js'
 import ArrowRight from 'vue-material-design-icons/ArrowRight.vue'
 import CommentMixin from '../mixins/CommentMixin.js'
 import RichEditorMixin from '@nextcloud/vue/dist/Mixins/richEditor.js'
+import { loadState } from '@nextcloud/initial-state'
 
 const NcRichContenteditable = () => import('@nextcloud/vue/dist/Components/NcRichContenteditable.js')
 
@@ -98,6 +83,7 @@ export default {
 		NcEmptyContent,
 		NcButton,
 		NcRichContenteditable,
+		Comment,
 	},
 	mixins: [RichEditorMixin, CommentMixin],
 	props: {
@@ -142,6 +128,12 @@ export default {
 			fileInfo: null,
 			activities: [],
 			localMessage: '',
+			userData: {},
+			editorData: {
+				actorDisplayName: getCurrentUser().displayName,
+				actorId: getCurrentUser().uid,
+				key: 'editor',
+			},
 		}
 	},
 	computed: {
@@ -249,8 +241,28 @@ export default {
 				this.$refs.editor.$el.focus()
 			})
 
-			this.resetState()
 			await this.getActivities()
+		},
+
+		/**
+		 * Autocomplete @mentions
+		 *
+		 * @param {string} search the query
+		 * @param {Function} callback the callback to process the results with
+		 */
+		async autoComplete(search, callback) {
+			const results = await axios.get(generateOcsUrl('core/autocomplete/get'), {
+				params: {
+					search,
+					itemType: 'files',
+					itemId: this.fileInfo.id,
+					sorter: 'commenters|share-recipients',
+					limit: loadState('comments', 'maxAutoCompleteResults'),
+				},
+			})
+			// Save user data so it can be used by the editor to replace mentions
+			results.data.ocs.data.forEach(user => { this.userData[user.id] = user })
+			return callback(Object.values(this.userData))
 		},
 	},
 }

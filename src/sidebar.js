@@ -63,10 +63,12 @@ const activityTab = new OCA.Files.Sidebar.Tab({
 	},
 })
 
-window.addEventListener('DOMContentLoaded', async function () {
+window.addEventListener('DOMContentLoaded', async function() {
+	console.debug('OCA.Activity initializing')
 	if (OCA.Files && OCA.Files.Sidebar) {
 		OCA.Files.Sidebar.registerTab(activityTab)
 		const { default: ActivityTab } = await import(/* webpackPreload: true */ './views/ActivityTab.vue')
 		ActivityTabView = ActivityTabView ?? Vue.extend(ActivityTab)
+		console.debug('OCA.Activity initialized')
 	}
 })
