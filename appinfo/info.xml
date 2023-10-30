@@ -15,6 +15,7 @@
 	<licence>agpl</licence>
 	<author>Frank Karlitschek</author>
 	<author>Joas Schilling</author>
+	<author>Ferdinand Thiessen</author>
 
 	<default_enable />
 	<types>
@@ -64,7 +65,7 @@
 	<navigations>
 		<navigation>
 			<name>Activity</name>
-			<route>activity.Activities.showList</route>
+			<route>activity.Activities.index</route>
 			<icon>activity.svg</icon>
 			<order>1</order>
 		</navigation>

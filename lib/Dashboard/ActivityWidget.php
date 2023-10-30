@@ -105,7 +105,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	 */
 	public function getUrl(): ?string {
 		return $this->urlGenerator->getAbsoluteURL(
-			$this->urlGenerator->linkToRoute(Application::APP_ID . '.Activities.showList')
+			$this->urlGenerator->linkToRoute(Application::APP_ID . '.Activities.index')
 		);
 	}
 
@@ -194,7 +194,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 			new WidgetButton(
 				WidgetButton::TYPE_MORE,
 				$this->urlGenerator->getAbsoluteURL(
-					$this->urlGenerator->linkToRoute(Application::APP_ID . '.Activities.showList')
+					$this->urlGenerator->linkToRoute(Application::APP_ID . '.Activities.index')
 				),
 				$this->l10n->t('More activities')
 			),

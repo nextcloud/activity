@@ -60,6 +60,17 @@ class ActivitiesController extends Controller {
 	 * @param string $filter
 	 * @return TemplateResponse
 	 */
+	public function index(): TemplateResponse {
+		return $this->showList('all');
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 *
+	 * @param string $filter
+	 * @return TemplateResponse
+	 */
 	public function showList(string $filter = 'all'): TemplateResponse {
 		$filter = $this->data->validateFilter($filter);
 
