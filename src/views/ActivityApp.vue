@@ -1,9 +1,9 @@
 <template>
 	<NcContent app-name="activity">
-		<ActivityAppNavigation />
+		<router-view name="navigation" />
 		<NcAppContent v-if="hasNoActivity">
 			<NcEmptyContent style="height: 100%;"
-				:title="t('activity', 'No activity yet')"
+				:name="t('activity', 'No activity yet')"
 				:description="t('activity', 'This stream will show events like additions, changes & shares')">
 				<template #icon>
 					<NcIconSvgWrapper :svg="IconLogo" />
@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import ActivityAppNavigation from '../components/ActivityAppNavigation.vue'
 import NcAppContent from '@nextcloud/vue/dist/Components/NcAppContent.js'
 import NcContent from '@nextcloud/vue/dist/Components/NcContent.js'
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'

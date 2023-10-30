@@ -3,8 +3,6 @@
 		<template #list>
 			<NcAppNavigationItem v-for="navigationItem in navigationList"
 				:key="navigationItem.id"
-				:active="navigationItem.id === currentView"
-				:aria-current="navigationItem.id === currentView ? 'page' : null"
 				:data-navigation="navigationItem.id"
 				:to="navigationItem.id"
 				:name="navigationItem.name">
@@ -18,18 +16,19 @@
 		</template>
 		<template #footer>
 			<NcAppNavigationSettings :name="t('activity', 'Activity settings')">
-				<NcCheckboxRadioSwitch :checked="hasRSSLink">
+				<NcCheckboxRadioSwitch type="switch" :checked="hasRSSLink" @update:checked="toggleRSSLink">
 					{{ t('activity', 'Enable RSS feed') }}
 				</NcCheckboxRadioSwitch>
 				<NcInputField v-if="hasRSSLink"
+					v-model="rssLink"
 					:label="t('activity', 'RSS feed')"
 					:show-trailing-button="true"
 					:trailing-button-label="t('activity', 'Copy RSS feed link')"
-					readonly="readonly">
+					readonly="readonly"
+					@trailing-button-click="copyRSSLink">
 					<template #trailing-button-icon>
-						<IconClipboard :size="20" />
+						<IconContentCopy :size="20" />
 					</template>
-					{{ rssLink }}
 				</NcInputField>
 				<NcButton class="settings-link"
 					:href="personalSettingsLink"
@@ -43,9 +42,12 @@
 </template>
 
 <script setup lang="ts">
+import axios from '@nextcloud/axios'
+import { showError, showSuccess } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import { translate as t } from '@nextcloud/l10n'
-import { computed } from 'vue'
+import { generateUrl } from '@nextcloud/router'
+import { computed, ref } from 'vue'
 
 import {
 	NcAppNavigation,
@@ -56,7 +58,8 @@ import {
 } from '@nextcloud/vue'
 
 import NcInputField from '@nextcloud/vue/dist/Components/NcInputField.js'
-import IconClipboard from 'vue-material-design-icons/Clipboard.vue'
+import IconContentCopy from 'vue-material-design-icons/ContentCopy.vue'
+import logger from '../logger'
 
 // Types
 interface INavigationEntry {
@@ -74,14 +77,50 @@ interface IActivitySettings {
 
 // Variables and methods
 const {
-	rssLink,
+	rssLink: initialRSSLink,
 	personalSettingsLink,
 } = loadState<IActivitySettings>(appName, 'settings')
 
 const navigationList = loadState<INavigationEntry[]>(appName, 'navigationList')
 
-const hasRSSLink = computed(() => !!rssLink)
-const currentView = computed(() => 'all')
+/**
+ * The current rss link, either a valid URL or an empty string
+ */
+const rssLink = ref(initialRSSLink)
+
+/**
+ * True if a RSS link is configures / enabled. False otherwise.
+ */
+const hasRSSLink = computed(() => !!rssLink.value)
+
+/**
+ * Toggle the enabled state of the RSS link
+ */
+async function toggleRSSLink() {
+	try {
+		const { data } = await axios.post<{ data: { rsslink: string } }>(generateUrl('/apps/activity/settings/feed'), {
+			enable: !hasRSSLink.value,
+		})
+		rssLink.value = data.data.rsslink
+	} catch (e) {
+		showError(t('activity', 'Could not enable RSS link'))
+		logger.error(e as Error)
+	}
+}
+
+/**
+ * Copy the RSS link to the clipboard
+ */
+async function copyRSSLink() {
+	try {
+		window.navigator.clipboard.writeText(rssLink.value)
+		showSuccess(t('activity', 'RSS link copied to clipboard'))
+	} catch (e) {
+		logger.debug(e as Error)
+		// If the user is running Nextcloud in a non secure context (secure = HTTPS or HTTP on localhost) then Clipboard API fail and the user must copy manually
+		window.prompt(t('activity', 'Could not copy the RSS link, please copy manually:'), rssLink.value)
+	}
+}
 </script>
 
 <style lang="scss">
