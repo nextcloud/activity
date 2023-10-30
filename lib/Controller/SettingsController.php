@@ -183,13 +183,13 @@ class SettingsController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 *
-	 * @param string $enable	'true' if the feed is enabled
+	 * @param bool $enable true if the feed is enabled
 	 * @return DataResponse
 	 */
-	public function feed($enable) {
+	public function feed(bool $enable) {
 		$token = $tokenUrl = '';
 
-		if ($enable === 'true') {
+		if ($enable === true) {
 			$conflicts = true;
 
 			// Check for collisions
@@ -206,7 +206,7 @@ class SettingsController extends Controller {
 		return new DataResponse([
 			'data' => [
 				'message' => $this->l10n->t('Your settings have been updated.'),
-				'rsslink' => $tokenUrl,
+				'rsslink' => trim($tokenUrl),
 			],
 		]);
 	}
