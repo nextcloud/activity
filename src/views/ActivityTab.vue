@@ -2,6 +2,7 @@
   - @copyright Copyright (c) 2021 Louis Chemineau <louis@chmn.me>
   -
   - @author Louis Chemineau <louis@chmn.me>
+  - @author Stephan Orbaugh <stephan.orbaugh@nextcloud.com>
   -
   - @license AGPL-3.0-or-later
   -
@@ -22,6 +23,15 @@
 
 <template>
 	<div :class="{ 'icon-loading': loading }">
+		<!-- Editor -->
+		<Comment v-bind="editorData"
+			:auto-complete="autoComplete"
+			:user-data="userData"
+			:editor="true"
+			:ressource-id="fileInfo.id"
+			class="comments__writer"
+			@new="getActivities" />
+
 		<!-- error message -->
 		<NcEmptyContent v-if="error" :title="error">
 			<template #icon>
@@ -48,6 +58,7 @@
 
 <script>
 import { generateOcsUrl } from '@nextcloud/router'
+import { getCurrentUser } from '@nextcloud/auth'
 import { translate as t } from '@nextcloud/l10n'
 import axios from '@nextcloud/axios'
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
@@ -55,13 +66,54 @@ import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
 import Activity from '../components/Activity.vue'
 import ActivityModel from '../models/ActivityModel.js'
 
+import Comment from '../components/Comment.vue'
 import logger from '../logger.js'
+import CommentMixin from '../mixins/CommentMixin.js'
+import RichEditorMixin from '@nextcloud/vue/dist/Mixins/richEditor.js'
+import { loadState } from '@nextcloud/initial-state'
 
 export default {
 	name: 'ActivityTab',
 	components: {
 		Activity,
 		NcEmptyContent,
+		Comment,
+	},
+	mixins: [RichEditorMixin, CommentMixin],
+	props: {
+		actorDisplayName: {
+			type: String,
+			required: true,
+		},
+		actorId: {
+			type: String,
+			required: true,
+		},
+		creationDateTime: {
+			type: String,
+			default: null,
+		},
+
+		/**
+		 * Force the editor display
+		 */
+		editor: {
+			type: Boolean,
+			default: false,
+		},
+
+		/**
+		 * Provide the autocompletion data
+		 */
+		autoComplete: {
+			type: Function,
+			required: true,
+		},
+
+		tag: {
+			type: String,
+			default: 'div',
+		},
 	},
 	data() {
 		return {
@@ -69,7 +121,25 @@ export default {
 			loading: true,
 			fileInfo: null,
 			activities: [],
+			localMessage: '',
+			userData: {},
+			editorData: {
+				actorDisplayName: getCurrentUser().displayName,
+				actorId: getCurrentUser().uid,
+				key: 'editor',
+			},
 		}
+	},
+	computed: {
+		isEmptyMessage() {
+			return !this.localMessage || this.localMessage.trim() === ''
+		},
+	},
+	watch: {
+		// If the data change, update the local value
+		message(message) {
+			this.updateLocalMessage(message)
+		},
 	},
 	methods: {
 		/**
@@ -140,6 +210,36 @@ export default {
 		},
 
 		t,
+
+		/**
+		 * Update local Message on outer change
+		 *
+		 * @param {string} message the message to set
+		 */
+		updateLocalMessage(message) {
+			this.localMessage = message.toString()
+		},
+
+		/**
+		 * Autocomplete @mentions
+		 *
+		 * @param {string} search the query
+		 * @param {Function} callback the callback to process the results with
+		 */
+		async autoComplete(search, callback) {
+			const results = await axios.get(generateOcsUrl('core/autocomplete/get'), {
+				params: {
+					search,
+					itemType: 'files',
+					itemId: this.fileInfo.id,
+					sorter: 'commenters|share-recipients',
+					limit: loadState('comments', 'maxAutoCompleteResults'),
+				},
+			})
+			// Save user data so it can be used by the editor to replace mentions
+			results.data.ocs.data.forEach(user => { this.userData[user.id] = user })
+			return callback(Object.values(this.userData))
+		},
 	},
 }
 </script>
