@@ -119,7 +119,7 @@ async function loadActivities() {
 		const since = lastActivityLoaded.value ?? '0'
 		loading.value = true
 		const response = await ncAxios.get(
-			generateOcsUrl('apps/activity/api/v2/activity/{filter}?limit=3&format=json&since={since}', { filter: props.filter, since }),
+			generateOcsUrl('apps/activity/api/v2/activity/{filter}?format=json&previews=true&since={since}', { filter: props.filter, since }),
 		)
 		allActivities.value.push(...response.data.ocs.data.map((raw) => new ActivityModel(raw)))
 		lastActivityLoaded.value = response.headers['x-activity-last-given']

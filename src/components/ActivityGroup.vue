@@ -4,7 +4,10 @@
 			{{ dateText }}
 		</h3>
 		<ul>
-			<Activity v-for="activity in activities" :key="activity.id" :activity="activity" />
+			<Activity v-for="activity in activities"
+				:key="activity.id"
+				:activity="activity"
+				:show-previews="true" />
 		</ul>
 	</Fragment>
 </template>
