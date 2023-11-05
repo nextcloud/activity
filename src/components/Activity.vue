@@ -33,6 +33,20 @@
 		</div>
 		<span class="hidden-visually">{{ activity.formattedDate }}</span>
 		<span :title="activity.formattedDate" class="activity-entry__date">{{ dateFromNow }}</span>
+		<div v-if="showPreviews" class="activity-entry__preview-wrapper">
+			<component :is="preview.link ? 'a' : 'span'"
+				v-for="preview, index in activity.previews"
+				:key="preview.fileId ?? `preview-${index}`"
+				class="activity-entry__preview"
+				:href="preview.link">
+				<img class="activity-entry__preview-image"
+					:class="{
+						'activity-entry__preview-mimetype': preview.isMimeTypeIcon,
+					}"
+					:src="preview.source"
+					:alt="preview.link ? t('activity', 'Open {filename}', preview) : ''">
+			</component>
+		</div>
 	</li>
 </template>
 
@@ -71,6 +85,13 @@ export default {
 		activity: {
 			type: ActivityModel,
 			required: true,
+		},
+		/**
+		 * Whether to show previews
+		 */
+		showPreviews: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {
@@ -198,6 +219,7 @@ export default {
 <style lang="scss" scoped>
 .activity-entry {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: flex-start;
 	width: 100%;
 	height: var(--height);
@@ -241,6 +263,35 @@ export default {
 		color: var(--color-text-lighter);
 		margin-left: 5px;
 		flex-shrink: 0;
+	}
+
+	&__preview-wrapper {
+		// Force next line
+		flex: 0 0 100%;
+		// Proper spacing
+		gap: 12px;
+		// align with content
+		margin-inline-start: 24px;
+	}
+
+	&__preview:hover {
+		opacity: .75;
+	}
+
+	&__preview-image {
+		height: 50px;
+		width: 50px;
+
+		// Only add borders for images, not for MIME types
+		&:not(.activity-entry__preview-mimetype) {
+			border: 2px solid var(--color-border);
+			border-radius: var(--border-radius-large);
+
+			&:hover {
+				border-color: var(--color-main-text);
+				outline: 2px solid var(--color-main-background);
+			}
+		}
 	}
 }
 </style>

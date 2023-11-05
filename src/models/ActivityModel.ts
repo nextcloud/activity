@@ -20,7 +20,7 @@
  *
  */
 
-import type { IRawActivity, IRichObject } from './types'
+import type { IPreview, IRawActivity, IRichObject } from './types'
 import moment from '@nextcloud/moment'
 
 export default class ActivityModel {
@@ -273,6 +273,13 @@ export default class ActivityModel {
 	 */
 	get timestamp(): number {
 		return moment(this._activity.datetime).unix()
+	}
+
+	/**
+	 * Get previews of affected files
+	 */
+	get previews(): IPreview[] {
+		return this._activity.previews ?? []
 	}
 
 }
