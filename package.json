@@ -44,11 +44,12 @@
     "moduleFileExtensions": [
       "js",
       "json",
+      "ts",
       "vue"
     ],
     "testEnvironment": "jest-environment-jsdom",
     "transform": {
-      "^.+\\.js$": "babel-jest",
+      "^.+\\.m?(j|t)s$": "babel-jest",
       "^.+\\.vue$": "@vue/vue2-jest"
     },
     "transformIgnorePatterns": [
@@ -93,6 +94,7 @@
     "vuex": "^3.6.2"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.23.2",
     "@cypress/browserify-preprocessor": "^3.0.2",
     "@nextcloud/babel-config": "^1.0.0",
     "@nextcloud/browserslist-config": "^3.0.0",
