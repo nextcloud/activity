@@ -53,7 +53,7 @@ import axios from '@nextcloud/axios'
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
 
 import Activity from '../components/Activity.vue'
-import ActivityModel from '../models/ActivityModel.js'
+import ActivityModel from '../models/ActivityModel.ts'
 
 import logger from '../logger.js'
 
