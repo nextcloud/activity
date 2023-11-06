@@ -23,7 +23,7 @@ import { render } from '@testing-library/vue'
 import Vue from 'vue'
 
 import Activity from '../components/Activity.vue'
-import ActivityModel from '../models/ActivityModel.js'
+import ActivityModel from '../models/ActivityModel.ts'
 
 const wsData = require('../../__mocks__/@nextcloud/activity_ws.json')
 

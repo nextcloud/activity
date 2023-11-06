@@ -7,7 +7,7 @@
 		"moduleResolution": "node",
 		"target": "ESNext",
 		"module": "esnext",
-		"declaration": true,
+		"declaration": false,
 		"strict": true,
 		"noImplicitAny": false,
 		"resolveJsonModule": true

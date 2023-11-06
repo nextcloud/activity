@@ -41,7 +41,7 @@ import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
 import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble.js'
 import RichText from '@nextcloud/vue-richtext'
 
-import ActivityModel from '../models/ActivityModel.js'
+import ActivityModel from '../models/ActivityModel.ts'
 
 import FileRichArgument from './richArgumentsTypes/FileRichArgument.vue'
 import EmailRichArgument from './richArgumentsTypes/EmailRichArgument.vue'
