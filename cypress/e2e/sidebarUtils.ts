@@ -20,22 +20,23 @@
  *
  */
 
-import { toggleMenuAction } from "./filesUtils"
+import { toggleMenuAction } from './filesUtils'
 
 function showSidebarForFile(fileName: string) {
 	closeSidebar()
 	toggleMenuAction(fileName)
 	cy.get('[data-cy-files-list-row-action="details"]').click()
-	cy.get('#app-sidebar-vue').contains('Activity').click()
+	cy.get('#app-sidebar-vue').should('be.visible')
 }
 
 function closeSidebar() {
 	cy.get('body')
 		.then(($body) => {
 			if ($body.find('.app-sidebar__close').length !== 0) {
-				cy.get('.app-sidebar__close').click()
+				cy.get('.app-sidebar__close').click({ force: true })
 			}
 		})
+	cy.get('#app-sidebar-vue').should('not.exist')
 }
 
 export function showActivityTab(fileName: string) {
@@ -55,14 +56,19 @@ export function removeFromFavorites(fileName: string) {
 	cy.get('.toast-close').click()
 }
 
+/**
+ * Create a new public link share for a given file
+ *
+ * @param fileName Name of the file to share
+ */
 export function createPublicShare(fileName: string) {
-	toggleMenuAction(fileName)
-	cy.contains('Open details').click()
+	showSidebarForFile(fileName)
 	cy.get('#app-sidebar-vue').contains('Sharing').click()
 
-	cy.get('#app-sidebar-vue [data-id="sharing"]').trigger('click')
-	cy.get('#app-sidebar-vue button.new-share-link').trigger('click')
-	cy.get('#app-sidebar-vue a.sharing-entry__copy')
+	cy.get('#app-sidebar-vue #tab-sharing').should('be.visible')
+	cy.get('#app-sidebar-vue button.new-share-link').click({ force: true })
+	cy.get('#app-sidebar-vue a.sharing-entry__copy').should('be.visible')
+	closeSidebar()
 }
 
 export function addTag(fileName: string, tag: string) {

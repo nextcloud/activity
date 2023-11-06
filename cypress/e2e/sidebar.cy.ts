@@ -23,8 +23,8 @@
 import { createFolder, goToDir, moveFile, renameFile } from './filesUtils'
 import { addComment, addTag, addToFavorites, createPublicShare, removeFromFavorites, showActivityTab } from './sidebarUtils'
 
-describe('Check activity listing in the sidebar', () => {
-	before(function() {
+describe('Check activity listing in the sidebar', { testIsolation: true }, () => {
+	beforeEach(function() {
 		cy.createRandomUser()
 			.then((user) => {
 				cy.login(user)
