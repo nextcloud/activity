@@ -6,6 +6,7 @@ import { join } from 'path'
 declare const __dirname: string
 
 export default createAppConfig({
+	api: join(__dirname, 'src', 'api.ts'),
 	app: join(__dirname, 'src', 'app.ts'),
 	sidebar: join(__dirname, 'src', 'sidebar.js'),
 	personalSettings: join(__dirname, 'src', 'settings-personal.js'),

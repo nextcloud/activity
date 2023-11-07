@@ -32,6 +32,16 @@
 			<NcRichText class="activity-entry__content__subject" :text="subjectText" :arguments="subjectArguments" />
 			<NcRichText class="activity-entry__content__message" :text="messageText" :arguments="messageArguments" />
 		</div>
+		<NcActions v-if="actions.length > 0" class="activity-entry__actions" :force-menu="true">
+			<!-- This is required as otherwise no content is shown in the actions -->
+			<NcActionCaption :name="t('activity', 'Activity actions')" />
+			<NcActionButton v-for="action,index of actions" :key="index" @click="action.handler(activity)">
+				<template #icon>
+					<NcIconSvgWrapper :svg="action.icon" />
+				</template>
+				{{ action.label }}
+			</NcActionButton>
+		</NcActions>
 		<span class="hidden-visually">{{ activity.formattedDate }}</span>
 		<span :title="activity.formattedDate" class="activity-entry__date" data-testid="activity-date">{{ dateFromNow }}</span>
 		<div v-if="showPreviews" class="activity-entry__preview-wrapper">
@@ -57,11 +67,16 @@ import type { IPreview } from '../models/types'
 
 import { translate as t } from '@nextcloud/l10n'
 import {
+	NcActions,
+	NcActionButton,
+	NcActionCaption,
 	NcAvatar,
-	NcUserBubble,
+	NcIconSvgWrapper,
 	NcRichText,
+	NcUserBubble,
 } from '@nextcloud/vue'
 import { defineComponent } from 'vue'
+import { getActions } from '../api'
 
 import ActivityModel from '../models/ActivityModel'
 
@@ -74,17 +89,6 @@ import OpenGraphRichArgument from './richArgumentsTypes/OpenGraphRichArgument.vu
 import AddressBookRichArgument from './richArgumentsTypes/AddressBookRichArgument.vue'
 import logger from '../utils/logger'
 
-declare global {
-	interface Window {
-		OCA?: {
-			Viewer?: {
-				open(options: { path?: string, fileInfo?: unknown }): void
-				get mimetypes(): string[]
-			}
-		}
-	}
-}
-
 /**
  * @typedef RichObject
  * @type {object}
@@ -95,7 +99,11 @@ declare global {
 export default defineComponent({
 	name: 'Activity',
 	components: {
+		NcActions,
+		NcActionButton,
+		NcActionCaption,
 		NcAvatar,
+		NcIconSvgWrapper,
 		NcRichText,
 	},
 	props: {
@@ -121,6 +129,12 @@ export default defineComponent({
 		}
 	},
 	computed: {
+		/**
+		 * Get all actions registered for this activity type
+		 */
+		actions() {
+			return getActions(this.activity.type)
+		},
 		/**
 		 * @return {string} The activity's messageRichTemplate. Fallback to message if messageRichTemplate does not exists
 		 */
@@ -309,6 +323,10 @@ export default defineComponent({
 				text-decoration: underline;
 			}
 		}
+	}
+
+	&__actions {
+		inset-block: -8px;
 	}
 
 	&__date {
