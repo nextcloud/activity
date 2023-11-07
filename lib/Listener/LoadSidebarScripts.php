@@ -45,5 +45,6 @@ class LoadSidebarScripts implements IEventListener {
 		// we properly split it between files list and sidebar
 		Util::addStyle(Application::APP_ID, 'style');
 		Util::addScript(Application::APP_ID, 'activity-sidebar');
+		Util::addInitScript(Application::APP_ID, 'activity-api');
 	}
 }

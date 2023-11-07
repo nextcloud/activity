@@ -29,6 +29,15 @@
 			</template>
 		</NcEmptyContent>
 		<template v-else>
+			<!-- activities actions -->
+			<div v-if="sidebarPlugins.length > 0" class="activity__actions">
+				<ActivitySidebarPlugin v-for="plugin,index of sidebarPlugins"
+					:key="index"
+					:plugin="plugin"
+					:file-info="fileInfo"
+					@reload-activities="getActivities()" />
+			</div>
+
 			<!-- activities content -->
 			<NcEmptyContent v-if="loading"
 				:name="t('activity', 'Loading activities')">
@@ -45,7 +54,8 @@
 			<ul v-else>
 				<Activity v-for="activity in activities"
 					:key="activity.id"
-					:activity="activity" />
+					:activity="activity"
+					@reload="getActivities()" />
 			</ul>
 		</template>
 	</div>
@@ -57,13 +67,14 @@ import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
 import { translate as t } from '@nextcloud/l10n'
 import { NcEmptyContent, NcIconSvgWrapper, NcLoadingIcon } from '@nextcloud/vue'
-
-import Activity from '../components/Activity.vue'
-import ActivityModel from '../models/ActivityModel.ts'
-
-import lightningBoltSVG from '@mdi/svg/svg/lightning-bolt.svg?raw'
+import { getSidebarActions } from '../utils/ActivityAPI.ts'
 
 import logger from '../utils/logger.ts'
+import Activity from '../components/Activity.vue'
+import ActivityModel from '../models/ActivityModel.ts'
+import ActivitySidebarPlugin from '../components/ActivitySidebarPlugin.vue'
+
+import lightningBoltSVG from '@mdi/svg/svg/lightning-bolt.svg?raw'
 
 export default {
 	name: 'ActivityTab',
@@ -72,6 +83,7 @@ export default {
 		NcEmptyContent,
 		NcIconSvgWrapper,
 		NcLoadingIcon,
+		ActivitySidebarPlugin,
 	},
 	data() {
 		return {
@@ -80,7 +92,11 @@ export default {
 			fileInfo: null,
 			activities: [],
 			lightningBoltSVG,
+			sidebarPlugins: [],
 		}
+	},
+	mounted() {
+		this.sidebarPlugins = getSidebarActions()
 	},
 	methods: {
 		/**
@@ -160,5 +176,11 @@ export default {
 	background-size: 64px;
 	width: 64px;
 	height: 64px;
+}
+
+.activity__actions {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 }
 </style>

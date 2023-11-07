@@ -26,7 +26,6 @@ import ActivityApp from './views/ActivityApp.vue'
 
 import { translate, translatePlural } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
-
 import { routes } from './routes'
 
 // Set up Vue
