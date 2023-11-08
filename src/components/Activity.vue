@@ -25,7 +25,7 @@
 			:disable-menu="true"
 			:disable-tooltip="true"
 			:url="activity.icon"
-			:size="15" />
+			:size="20" />
 
 		<div class="activity-entry__content">
 			<NcRichText class="activity-entry__content__subject" :text="subjectText" :arguments="subjectArguments" />
@@ -228,7 +228,7 @@ export default {
 
 	&__icon {
 		opacity: 0.5;
-		margin-top: 4px;
+		margin-top: 2px;
 		margin-right: 8px;
 	}
 
