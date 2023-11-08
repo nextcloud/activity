@@ -1,6 +1,5 @@
 import { createAppConfig } from '@nextcloud/vite-config'
 import { join } from 'path'
-import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // replaced by vite
 declare const __dirname: string
@@ -21,18 +20,5 @@ export default createAppConfig({
 				}
 			},
 		},
-		plugins: [
-			// publicDir does not work because outDir is the root and not js/
-			// So we need this plugin to copy the legacy script into the destination folder
-			viteStaticCopy({
-				targets: [
-					{
-						src: 'src/legacy_scripts/*',
-						dest: 'js',
-						preserveTimestamps: true,
-					},
-				],
-			}),
-		],
 	},
 })

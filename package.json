@@ -16,7 +16,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vite --mode production build; ./compile-handlebars-templates.sh",
+    "build": "vite --mode production build",
     "dev": "vite --mode development build",
     "watch": "vite --mode development build --watch",
     "lint": "eslint --ext .js,.vue src",
@@ -88,7 +88,6 @@
     "@nextcloud/router": "^2.2.0",
     "@nextcloud/vue": "^8.0.0-beta.10",
     "@vueuse/core": "^10.5.0",
-    "handlebars": "^4.7.8",
     "vue": "^2.7.15",
     "vue-frag": "^1.4.3",
     "vue-material-design-icons": "^5.2.0",
@@ -119,7 +118,6 @@
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
     "vite": "^4.4.11",
-    "vite-plugin-static-copy": "^0.17.0",
     "vue-template-compiler": "^2.7.15",
     "wait-on": "^7.1.0"
   }
