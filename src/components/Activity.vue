@@ -238,6 +238,7 @@ export default {
 
 	&__content {
 		display: flex;
+		flex-basis: min-content;
 		flex-direction: column;
 		flex-grow: 1;
 		overflow-wrap: break-word;
