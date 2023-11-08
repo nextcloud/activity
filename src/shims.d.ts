@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2023 Nextcloud GmbH
+ * @copyright Copyright (c) 2023 Ferdinand Thiessen <opensource@fthiessen.de>
  *
  * @author Ferdinand Thiessen <opensource@fthiessen.de>
  *
