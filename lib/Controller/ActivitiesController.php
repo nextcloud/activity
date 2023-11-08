@@ -41,7 +41,7 @@ class ActivitiesController extends Controller {
 	public function __construct(
 		string $appName,
 		IRequest $request,
-		private string $userId,
+		private ?string $userId,
 		private IConfig $config,
 		private Data $data,
 		private IL10N $l10n,
@@ -49,7 +49,7 @@ class ActivitiesController extends Controller {
 		private IInitialState $initialState,
 		private IURLGenerator $urlGenerator,
 		private IManager $activityManager,
-		) {
+	) {
 		parent::__construct($appName, $request);
 	}
 
