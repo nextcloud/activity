@@ -3,7 +3,7 @@
 		<h2 :class="$style.heading">
 			{{ t('activity', 'Your cloud actvities') }}
 		</h2>
-		<NcEmptyContent v-if="loading && allActivities.length === 0"
+		<NcEmptyContent v-if="hasMoreActivites && allActivities.length === 0"
 			:class="$style['empty-content']"
 			:name="t('activity', 'Loading activities')"
 			:description="t('activity', 'This stream will show events like additions, changes & shares')">
@@ -21,6 +21,15 @@
 		</NcEmptyContent>
 		<div ref="container" :class="$style.container">
 			<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
+			<!-- Only show if not showing the inital empty content for loading -->
+			<div v-if="hasMoreActivites && allActivities.length > 0" :class="$style['loading-indicator']">
+				<NcLoadingIcon />
+				<span>{{ t('activity', 'Loading more activities') }}</span>
+			</div>
+			<div v-else-if="!hasMoreActivites" :class="$style['loading-indicator']">
+				<NcIconSvgWrapper :svg="appIconSVG" :size="20" />
+				<span>{{ t('activity', 'No more activities') }}</span>
+			</div>
 		</div>
 	</NcAppContent>
 </template>
@@ -166,6 +175,21 @@ watch(props, () => {
 	height: 100%;
 }
 
+.loading-indicator {
+	display: flex;
+	flex-direction: row;
+	justify-items: flex-start;
+	margin-top: 30px;
+
+	[class~="icon-vue"] {
+		margin-top: 2px;
+		margin-right: 8px;
+
+		min-width: fit-content;
+		min-height: fit-content;
+	}
+}
+
 .container {
 	display: flex;
 	flex-direction: column;
@@ -181,6 +205,6 @@ watch(props, () => {
 .heading {
 	line-height: 44px;
 	// Align with app navigation toggle
-	margin: var(--app-navigation-padding) 0 0 calc(2 * var(--app-navigation-padding) + 44px);
+	margin: var(--app-navigation-padding, 8px) 0 0 calc(2 * var(--app-navigation-padding, 8px) + 44px);
 }
 </style>

@@ -55,7 +55,7 @@ const fullDate = computed(() => {
 .heading {
 	font-weight: bold;
 	font-size: 20px;
-	margin-block: 20px 12px;
+	margin-block: 30px 12px;
 	line-height: 30px;
 }
 </style>
