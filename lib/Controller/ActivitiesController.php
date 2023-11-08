@@ -25,6 +25,7 @@ namespace OCA\Activity\Controller;
 
 use OCA\Activity\Data;
 use OCA\Activity\Event\LoadAdditionalScriptsEvent;
+use OCA\Viewer\Event\LoadViewer;
 use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Controller;
@@ -77,6 +78,11 @@ class ActivitiesController extends Controller {
 		$event = new LoadAdditionalScriptsEvent($filter);
 		$this->eventDispatcher->dispatchTyped($event);
 		$this->eventDispatcher->dispatch(LoadAdditionalScriptsEvent::EVENT_ENTITY, $event);
+
+		// Load the viewer
+		if (class_exists(LoadViewer::class)) {
+			$this->eventDispatcher->dispatchTyped(new LoadViewer());
+		}
 
 		$this->initialState->provideInitialState('settings', [
 			'enableAvatars' => $this->config->getSystemValue('enable_avatars', true),

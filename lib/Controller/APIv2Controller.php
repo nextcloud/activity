@@ -316,8 +316,11 @@ class APIv2Controller extends OCSController {
 		} else {
 			$fileInfo = $info['node'] ?? null;
 			if (!($fileInfo instanceof FileInfo)) {
-				$preview = $this->getPreviewFromPath($fileId, $filePath, $info);
-			} elseif ($this->preview->isAvailable($fileInfo)) {
+				return $this->getPreviewFromPath($fileId, $filePath, $info);
+			}
+
+			$preview['filePath'] = $fileInfo->getPath();
+			if ($this->preview->isAvailable($fileInfo)) {
 				$params = [
 					'forceIcon' => 0,
 					'a' => 0,

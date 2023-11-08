@@ -688,6 +688,9 @@ class APIv2ControllerTest extends TestCase {
 				->with($node)
 				->willReturn($isMimeSup);
 
+			$node->expects($this->atLeastOnce())
+				->method('getPath')
+				->willReturn($path);
 			if (!$isMimeSup) {
 				$node->expects($this->atLeastOnce())
 					->method('getMimetype')
@@ -730,7 +733,7 @@ class APIv2ControllerTest extends TestCase {
 				'node' => $node,
 			]);
 
-		$this->assertSame([
+		$this->assertSame(array_merge([
 			'link' => 'files.viewcontroller.showFile#' . $fileId,
 			'source' => $source,
 			'mimeType' => $mimeType,
@@ -738,7 +741,8 @@ class APIv2ControllerTest extends TestCase {
 			'fileId' => $fileId,
 			'view' => 'files',
 			'filename' => basename($path),
-		], self::invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
+		], $validFileInfo && !$isDir ? ['filePath' => $path ] : []),
+			self::invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
 	}
 
 	public function dataGetPreviewFromPath(): array {
