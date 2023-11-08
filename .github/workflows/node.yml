@@ -83,6 +83,13 @@ jobs:
           git --no-pager diff
           exit 1 # make it red to grab attention
 
+      - name: Upload assets for debugging
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        if: failure()
+        with:
+          name: assets
+          path: js/
+
   summary:
     permissions:
       contents: none

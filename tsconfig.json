@@ -9,14 +9,6 @@
 		"outDir": "./js/",
 		"strict": true
 	},
-	// these options are overrides used only by ts-node (cypress)
-	"ts-node": {
-		// faster and no need for when running cypress
-		"transpileOnly": true,
-		"compilerOptions": {
-			"module": "ES2015"
-		}
-	},
 	"vueCompilerOptions": {
 		"target": 2.7
 	}
