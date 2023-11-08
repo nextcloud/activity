@@ -20,10 +20,11 @@
  *
  */
 import { mount } from '@vue/test-utils'
-// eslint-disable-next-line n/no-unpublished-import
-import 'regenerator-runtime/runtime.js'
+import { expect, test, vi } from 'vitest'
 
 import ActivityTab from '../views/ActivityTab.vue'
+
+vi.mock('@nextcloud/axios')
 
 test('Create ActivityTab', async () => {
 	const wrapper = mount(ActivityTab, {})

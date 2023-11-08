@@ -32,7 +32,7 @@
 			<NcRichText class="activity-entry__content__message" :text="messageText" :arguments="messageArguments" />
 		</div>
 		<span class="hidden-visually">{{ activity.formattedDate }}</span>
-		<span :title="activity.formattedDate" class="activity-entry__date">{{ dateFromNow }}</span>
+		<span :title="activity.formattedDate" class="activity-entry__date" data-testid="activity-date">{{ dateFromNow }}</span>
 		<div v-if="showPreviews" class="activity-entry__preview-wrapper">
 			<component :is="preview.link ? 'a' : 'span'"
 				v-for="preview, index in activity.previews"

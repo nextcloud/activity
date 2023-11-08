@@ -20,5 +20,21 @@ export default createAppConfig({
 				}
 			},
 		},
+		// Setup for vitest unit tests
+		test: {
+			environment: 'happy-dom',
+			coverage: {
+				all: true,
+				clean: true,
+				extension: ['.js', '.ts', '.vue'],
+				provider: 'v8',
+			},
+			dir: 'src/',
+			server: {
+				deps: {
+					inline: [/@nextcloud\/vue/, /@mdi\/svg/],
+				},
+			},
+		},
 	},
 })
