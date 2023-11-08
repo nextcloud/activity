@@ -22,13 +22,13 @@
 		<div ref="container" class="activity-app__container">
 			<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
 			<!-- Only show if not showing the inital empty content for loading -->
-			<div v-if="hasMoreActivites && allActivities.length > 0" class="activity-app__loading-indicator">
-				<NcLoadingIcon />
-				<span>{{ t('activity', 'Loading more activities') }}</span>
-			</div>
-			<div v-else-if="!hasMoreActivites && allActivities.length > 0" class="activity-app__loading-indicator">
-				<NcIconSvgWrapper :svg="appIconSVG" :size="20" />
-				<span>{{ t('activity', 'No more activities') }}</span>
+			<NcLoadingIcon v-if="hasMoreActivites && allActivities.length > 0"
+				:name="t('activity', 'Loading more activities')"
+				:size="64"
+				class="activity-app__loading-indicator" />
+			<div v-else-if="!hasMoreActivites && allActivities.length > 0"
+				class="activity-app__loading-indicator">
+				{{ t('activity', 'No more activities.') }}
 			</div>
 		</div>
 	</NcAppContent>
@@ -175,19 +175,10 @@ watch(props, () => {
 	}
 
 	&__loading-indicator {
-		display: flex;
-		flex-direction: row;
-		justify-items: flex-start;
-		margin-top: 30px;
-
-		// Fix icons to not have padding around (fit content instead), see Activity component
-		:deep(.icon-vue) {
-			margin-top: 2px;
-			margin-right: 8px;
-
-			min-width: fit-content;
-			min-height: fit-content;
-		}
+		color: var(--color-text-maxcontrast);
+		justify-self: center;
+		margin-block: 30px 6px;
+		text-align: center;
 	}
 
 	&__container {
