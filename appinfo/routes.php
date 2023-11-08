@@ -31,7 +31,8 @@ return [
 		['name' => 'Settings#personal', 'url' => '/settings', 'verb' => 'POST'],
 		['name' => 'Settings#admin', 'url' => '/settings/admin', 'verb' => 'POST'],
 		['name' => 'Settings#feed', 'url' => '/settings/feed', 'verb' => 'POST'],
-		['name' => 'Activities#showList', 'url' => '/', 'verb' => 'GET'],
 		['name' => 'Feed#show', 'url' => '/rss.php', 'verb' => 'GET'],
+		['name' => 'Activities#index', 'url' => '/', 'verb' => 'GET'],
+		['name' => 'Activities#showList', 'url' => '/{filter}', 'verb' => 'GET'],
 	],
 ];

@@ -22,13 +22,20 @@
 <template>
 	<span class="rich-text-file">
 		<a v-if="!isRoot && parentPathIsRoot" :href="link">{{ name }}</a>
-		<a v-if="!isRoot && !parentPathIsRoot" :title="t('activity', 'in {path}', {path: parentFolder})" :aria-label="t('activity', 'in {path}', {path: parentFolder})" :href="link">{{ name }}</a>
-		<span v-if="isRoot" :title="t('activity', 'Home')" aria-label="t('activity', 'Home')" class="icon-home" />
+		<a v-if="!isRoot && !parentPathIsRoot"
+			:title="t('activity', 'in {path}', { path: parentFolder })"
+			:aria-label="t('activity', 'in {path}', { path: parentFolder })"
+			:href="link">{{ name }}</a>
+		<span v-if="isRoot"
+			:title="t('activity', 'Home')"
+			aria-label="t('activity', 'Home')"
+			class="icon-home" />
 	</span>
 </template>
 
 <script>
 import { dirname, isSamePath } from '@nextcloud/paths'
+import { translate as t } from '@nextcloud/l10n'
 
 export default {
 	name: 'FileRichArgument',
@@ -45,6 +52,9 @@ export default {
 			type: String,
 			required: true,
 		},
+	},
+	methods: {
+		t,
 	},
 	computed: {
 		/**

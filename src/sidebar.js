@@ -21,16 +21,12 @@
  */
 import Vue from 'vue'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
-// eslint-disable-next-line n/no-missing-import, import/no-unresolved
+
+// eslint-disable-next-line import/no-unresolved
 import LightningBolt from '@mdi/svg/svg/lightning-bolt.svg?raw'
 
 Vue.prototype.t = t
 Vue.prototype.n = n
-
-// eslint-disable-next-line
-__webpack_nonce__ = btoa(OC.requestToken);
-// eslint-disable-next-line
-__webpack_public_path__ = OC.linkTo('activity', 'js/');
 
 // Init Activity tab component
 let ActivityTabView = null

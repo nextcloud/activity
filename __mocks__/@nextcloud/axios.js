@@ -1,15 +1,18 @@
-const axios = jest.createMockFromModule('@nextcloud/axios')
+import wsData from './activity_ws.json'
 
-const wsData = require('./activity_ws.json')
-
-axios.get = function(url) {
-	return new Promise((resolve, reject) => {
-		if (url === 'http://localhost/ocs/v2.php/apps/activity/api/v2/activity/filter') {
-			resolve({ data: wsData })
-		} else {
-			reject(new Error(`URL not defined ${url}`))
-		}
-	})
+const axios = {
+	/**
+	 * @param {string} url URL to get
+	 */
+	get(url) {
+		return new Promise((resolve, reject) => {
+			if (url.endsWith('/ocs/v2.php/apps/activity/api/v2/activity/filter')) {
+				resolve({ data: wsData })
+			} else {
+				reject(new Error(`URL not defined ${url}`))
+			}
+		})
+	},
 }
 
 export default axios

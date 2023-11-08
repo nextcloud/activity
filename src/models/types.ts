@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2023 Nextcloud GmbH
+ * @copyright Copyright (c) 2023 Ferdinand Thiessen <opensource@fthiessen.de>
  *
  * @author Ferdinand Thiessen <opensource@fthiessen.de>
  *
@@ -43,6 +43,31 @@ export interface IRichObject {
 	[key: string]: unknown
 }
 
+export interface IPreview {
+	/**
+	 * The URL of the link target
+	 */
+	link?: string
+	/**
+	 * The URL of the preview image
+	 */
+	source: string
+	/**
+	 * MIME type of the file
+	 */
+	mimeType: string
+	/**
+	 * Whether this is a MIME type icon or a real preview of the file
+	 */
+	isMimeTypeIcon: boolean
+	/**
+	 * The file ID
+	 */
+	fileId: number
+	view: string
+	filename: string
+}
+
 export interface IRawActivity {
 	activity_id: number
 	app: string
@@ -68,5 +93,5 @@ export interface IRawActivity {
 	link: string
 	icon: string
 	datetime: string
-	previews: unknown[]
+	previews?: IPreview[]
 }

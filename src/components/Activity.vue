@@ -25,21 +25,37 @@
 			:disable-menu="true"
 			:disable-tooltip="true"
 			:url="activity.icon"
-			:size="15" />
+			:size="20" />
 
 		<div class="activity-entry__content">
-			<RichText class="activity-entry__content__subject" :text="subjectText" :arguments="subjectArguments" />
-			<RichText class="activity-entry__content__message" :text="messageText" :arguments="messageArguments" />
+			<NcRichText class="activity-entry__content__subject" :text="subjectText" :arguments="subjectArguments" />
+			<NcRichText class="activity-entry__content__message" :text="messageText" :arguments="messageArguments" />
 		</div>
 		<span class="hidden-visually">{{ activity.formattedDate }}</span>
-		<span :title="activity.formattedDate" class="activity-entry__date">{{ dateFromNow }}</span>
+		<span :title="activity.formattedDate" class="activity-entry__date" data-testid="activity-date">{{ dateFromNow }}</span>
+		<div v-if="showPreviews" class="activity-entry__preview-wrapper">
+			<component :is="preview.link ? 'a' : 'span'"
+				v-for="preview, index in activity.previews"
+				:key="preview.fileId ?? `preview-${index}`"
+				class="activity-entry__preview"
+				:href="preview.link">
+				<img class="activity-entry__preview-image"
+					:class="{
+						'activity-entry__preview-mimetype': preview.isMimeTypeIcon,
+					}"
+					:src="preview.source"
+					:alt="preview.link ? t('activity', 'Open {filename}', { filename: preview.filename }) : ''">
+			</component>
+		</div>
 	</li>
 </template>
 
 <script>
-import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
-import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble.js'
-import RichText from '@nextcloud/vue-richtext'
+import {
+	NcAvatar,
+	NcUserBubble,
+	NcRichText,
+} from '@nextcloud/vue'
 
 import ActivityModel from '../models/ActivityModel.ts'
 
@@ -60,7 +76,7 @@ export default {
 	name: 'Activity',
 	components: {
 		NcAvatar,
-		RichText,
+		NcRichText,
 	},
 	props: {
 		/**
@@ -69,6 +85,13 @@ export default {
 		activity: {
 			type: ActivityModel,
 			required: true,
+		},
+		/**
+		 * Whether to show previews
+		 */
+		showPreviews: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	data() {
@@ -196,6 +219,7 @@ export default {
 <style lang="scss" scoped>
 .activity-entry {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: flex-start;
 	width: 100%;
 	height: var(--height);
@@ -204,7 +228,7 @@ export default {
 
 	&__icon {
 		opacity: 0.5;
-		margin-top: 4px;
+		margin-top: 2px;
 		margin-right: 8px;
 	}
 
@@ -214,6 +238,7 @@ export default {
 
 	&__content {
 		display: flex;
+		flex-basis: min-content;
 		flex-direction: column;
 		flex-grow: 1;
 		overflow-wrap: break-word;
@@ -239,6 +264,35 @@ export default {
 		color: var(--color-text-lighter);
 		margin-left: 5px;
 		flex-shrink: 0;
+	}
+
+	&__preview-wrapper {
+		// Force next line
+		flex: 0 0 100%;
+		// Proper spacing
+		gap: 12px;
+		// align with content
+		margin-inline-start: 24px;
+	}
+
+	&__preview:hover {
+		opacity: .75;
+	}
+
+	&__preview-image {
+		height: 50px;
+		width: 50px;
+
+		// Only add borders for images, not for MIME types
+		&:not(.activity-entry__preview-mimetype) {
+			border: 2px solid var(--color-border);
+			border-radius: var(--border-radius-large);
+
+			&:hover {
+				border-color: var(--color-main-text);
+				outline: 2px solid var(--color-main-background);
+			}
+		}
 	}
 }
 </style>

@@ -43,7 +43,6 @@ use OCA\Activity\FilesHooks;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\GroupHelperDisabled;
 use OCA\Activity\MailQueueHandler;
-use OCA\Activity\Navigation;
 use OCA\Activity\Tests\TestCase;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
@@ -95,7 +94,6 @@ class ApplicationTest extends TestCase {
 			[GroupHelperDisabled::class],
 			[GroupHelperDisabled::class, GroupHelper::class],
 			[MailQueueHandler::class],
-			[Navigation::class],
 			[UserSettings::class],
 			[ViewInfoCache::class],
 

@@ -27,12 +27,13 @@ import Docker from 'dockerode'
 import path from 'path'
 import waitOn from 'wait-on'
 
-import pkg from '../package.json'
+import { fileURLToPath } from 'url';
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export const docker = new Docker()
 
 const APP_PATH = path.resolve(__dirname, '../')
-const APP_NAME = pkg.name
+const APP_NAME = 'activity'
 
 const CONTAINER_NAME = 'nextcloud-cypress-tests-' + APP_NAME
 const SERVER_IMAGE = 'ghcr.io/nextcloud/continuous-integration-shallow-server'
