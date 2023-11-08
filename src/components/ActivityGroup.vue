@@ -1,8 +1,8 @@
 <template>
 	<Fragment>
-		<h3 class="activity-group__heading" :title="fullDate">
+		<h2 class="activity-group__heading" :title="fullDate">
 			{{ dateText }}
-		</h3>
+		</h2>
 		<ul>
 			<Activity v-for="activity in activities"
 				:key="activity.id"
@@ -54,10 +54,13 @@ const fullDate = computed(() => {
 <style scoped lang="scss">
 .activity-group {
 	&__heading {
-		font-weight: bold;
-		font-size: 20px;
+		line-height: 1.5;
 		margin-block: 30px 12px;
-		line-height: 30px;
+
+		&:first-of-type {
+			// Already padding from h1
+			margin-block-start: 0;
+		}
 	}
 }
 </style>

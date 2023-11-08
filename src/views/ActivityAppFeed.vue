@@ -1,8 +1,8 @@
 <template>
 	<NcAppContent class="activity-app">
-		<h2 class="activity-app__heading">
-			{{ t('activity', 'Your cloud activities') }}
-		</h2>
+		<h1 class="activity-app__heading">
+			{{ t('activity', 'Your activities') }}
+		</h1>
 		<NcEmptyContent v-if="hasMoreActivites && allActivities.length === 0"
 			class="activity-app__empty-content"
 			:name="t('activity', 'Loading activities')"
@@ -197,7 +197,9 @@ watch(props, () => {
 	}
 
 	&__heading {
-		line-height: 44px;
+		font-weight: bold;
+		font-size: 20px;
+		line-height: 44px; // to align height with the app navigation toggle
 		// Align with app navigation toggle
 		margin: var(--app-navigation-padding, 8px) 0 0 calc(2 * var(--app-navigation-padding, 8px) + 44px);
 	}
