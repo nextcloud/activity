@@ -1,10 +1,10 @@
 <template>
-	<NcAppContent :class="$style['app-content']">
-		<h2 :class="$style.heading">
-			{{ t('activity', 'Your cloud actvities') }}
+	<NcAppContent class="activity-app">
+		<h2 class="activity-app__heading">
+			{{ t('activity', 'Your cloud activities') }}
 		</h2>
 		<NcEmptyContent v-if="hasMoreActivites && allActivities.length === 0"
-			:class="$style['empty-content']"
+			class="activity-app__empty-content"
 			:name="t('activity', 'Loading activities')"
 			:description="t('activity', 'This stream will show events like additions, changes & shares')">
 			<template #icon>
@@ -12,21 +12,21 @@
 			</template>
 		</NcEmptyContent>
 		<NcEmptyContent v-else-if="allActivities.length === 0"
-			:class="$style['empty-content']"
+			class="activity-app__empty-content"
 			:name="t('activity', 'No activity yet')"
 			:description="t('activity', 'This stream will show events like additions, changes & shares')">
 			<template #icon>
 				<NcIconSvgWrapper :svg="appIconSVG" :size="36" />
 			</template>
 		</NcEmptyContent>
-		<div ref="container" :class="$style.container">
+		<div ref="container" class="activity-app__container">
 			<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
 			<!-- Only show if not showing the inital empty content for loading -->
-			<div v-if="hasMoreActivites && allActivities.length > 0" :class="$style['loading-indicator']">
+			<div v-if="hasMoreActivites && allActivities.length > 0" class="activity-app__loading-indicator">
 				<NcLoadingIcon />
 				<span>{{ t('activity', 'Loading more activities') }}</span>
 			</div>
-			<div v-else-if="!hasMoreActivites" :class="$style['loading-indicator']">
+			<div v-else-if="!hasMoreActivites && allActivities.length > 0" class="activity-app__loading-indicator">
 				<NcIconSvgWrapper :svg="appIconSVG" :size="20" />
 				<span>{{ t('activity', 'No more activities') }}</span>
 			</div>
@@ -164,47 +164,48 @@ watch(props, () => {
 })
 </script>
 
-<style module lang="scss">
-.app-content {
+<style scoped lang="scss">
+.activity-app {
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
-}
 
-.empty-content {
-	height: 100%;
-}
-
-.loading-indicator {
-	display: flex;
-	flex-direction: row;
-	justify-items: flex-start;
-	margin-top: 30px;
-
-	[class~="icon-vue"] {
-		margin-top: 2px;
-		margin-right: 8px;
-
-		min-width: fit-content;
-		min-height: fit-content;
+	&__empty-content {
+		height: 100%;
 	}
-}
 
-.container {
-	display: flex;
-	flex-direction: column;
+	&__loading-indicator {
+		display: flex;
+		flex-direction: row;
+		justify-items: flex-start;
+		margin-top: 30px;
 
-	height: 100%;
-	width: min(100%, 924px);
-	max-width: 924px;
-	margin: 0 auto;
-	padding-inline: 12px;
-	overflow-y: scroll;
-}
+		// Fix icons to not have padding around (fit content instead), see Activity component
+		:deep(.icon-vue) {
+			margin-top: 2px;
+			margin-right: 8px;
 
-.heading {
-	line-height: 44px;
-	// Align with app navigation toggle
-	margin: var(--app-navigation-padding, 8px) 0 0 calc(2 * var(--app-navigation-padding, 8px) + 44px);
+			min-width: fit-content;
+			min-height: fit-content;
+		}
+	}
+
+	&__container {
+		display: flex;
+		flex-direction: column;
+
+		height: 100%;
+		width: min(100%, 924px);
+		max-width: 924px;
+		margin: 0 auto;
+		padding-inline: 12px;
+		overflow-y: scroll;
+	}
+
+	&__heading {
+		line-height: 44px;
+		// Align with app navigation toggle
+		margin: var(--app-navigation-padding, 8px) 0 0 calc(2 * var(--app-navigation-padding, 8px) + 44px);
+	}
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<Fragment>
-		<h3 :class="$style.heading" :title="fullDate">
+		<h3 class="activity-group__heading" :title="fullDate">
 			{{ dateText }}
 		</h3>
 		<ul>
@@ -51,11 +51,13 @@ const fullDate = computed(() => {
 })
 </script>
 
-<style module>
-.heading {
-	font-weight: bold;
-	font-size: 20px;
-	margin-block: 30px 12px;
-	line-height: 30px;
+<style scoped lang="scss">
+.activity-group {
+	&__heading {
+		font-weight: bold;
+		font-size: 20px;
+		margin-block: 30px 12px;
+		line-height: 30px;
+	}
 }
 </style>
