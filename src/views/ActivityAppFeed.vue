@@ -55,12 +55,15 @@ import { generateOcsUrl } from '@nextcloud/router'
 import { useInfiniteScroll } from '@vueuse/core'
 import { computed, onMounted, ref, watch } from 'vue'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
 	/**
 	 * The currently active activities filter
 	 */
 	filter: string
-}>()
+}>(), {
+	// default to 'all'
+	filter: 'all',
+})
 
 /**
  * Whether activities are currently being loaded

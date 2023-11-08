@@ -31,7 +31,7 @@ export const routes = [
 		redirect: { path: '/all' },
 	},
 	{
-		path: '/:filter',
+		path: '/:filter?',
 		components: {
 			default: ActivityAppFeed,
 			navigation: ActivityAppNavigation,
