@@ -2,6 +2,7 @@
   - @copyright 2021 Louis Chemineau <louis@chmn.me>
   -
   - @author Louis Chemineau <louis@chmn.me>
+  - @author Ferdinand Thiessen <opensource@fthiessen.de>
   -
   - @license AGPL-3.0-or-later
   -
@@ -38,7 +39,8 @@
 				v-for="preview, index in activity.previews"
 				:key="preview.fileId ?? `preview-${index}`"
 				class="activity-entry__preview"
-				:href="preview.link">
+				:href="preview.link"
+				@click="handlePreviewClick($event, preview)">
 				<img class="activity-entry__preview-image"
 					:class="{
 						'activity-entry__preview-mimetype': preview.isMimeTypeIcon,
@@ -50,20 +52,36 @@
 	</li>
 </template>
 
-<script>
+<script lang="ts">
+import type { IPreview } from '../models/types'
+
+import { translate as t } from '@nextcloud/l10n'
 import {
 	NcAvatar,
 	NcUserBubble,
 	NcRichText,
 } from '@nextcloud/vue'
+import { defineComponent } from 'vue'
 
-import ActivityModel from '../models/ActivityModel.ts'
+import ActivityModel from '../models/ActivityModel'
 
 import FileRichArgument from './richArgumentsTypes/FileRichArgument.vue'
 import EmailRichArgument from './richArgumentsTypes/EmailRichArgument.vue'
 import SystemTagRichArgument from './richArgumentsTypes/SystemTagRichArgument.vue'
 import CalendarEventRichArgument from './richArgumentsTypes/CalendarEventRichArgument.vue'
 import OpenGraphRichArgument from './richArgumentsTypes/OpenGraphRichArgument.vue'
+import logger from '../logger'
+
+declare global {
+	interface Window {
+		OCA?: {
+			Viewer?: {
+				open(options: { path?: string, fileInfo?: unknown }): void
+				get mimetypes(): string[]
+			}
+		}
+	}
+}
 
 /**
  * @typedef RichObject
@@ -72,7 +90,7 @@ import OpenGraphRichArgument from './richArgumentsTypes/OpenGraphRichArgument.vu
  * @property {string} type - The type of the file object.
  */
 
-export default {
+export default defineComponent({
 	name: 'Activity',
 	components: {
 		NcAvatar,
@@ -136,12 +154,32 @@ export default {
 	},
 	created() {
 		this.updateDateFromNow()
-		this.dateInterval = setInterval(this.updateDateFromNow, 60 * 1000)
+		this.dateInterval = window.setInterval(this.updateDateFromNow, 60 * 1000)
 	},
 	destroyed() {
 		clearInterval(this.dateInterval)
 	},
 	methods: {
+		t,
+
+		/**
+		 * Handle clicking a preview
+		 * Check if viewer is available and can open the file, if not navigate to it
+		 * @param event The click event
+		 * @param preview The preview to open
+		 */
+		handlePreviewClick(event: MouseEvent, preview: IPreview) {
+			if (preview.filePath && window?.OCA?.Viewer?.open !== undefined && window.OCA.Viewer.mimetypes.includes(preview.mimeType)) {
+				try {
+					window.OCA.Viewer.open({ path: preview.filePath.replace(/^\/[^/]+\/files/, '') })
+					event.preventDefault()
+					event.stopPropagation()
+				} catch (error) {
+					logger.debug(error as Error)
+				}
+			}
+		},
+
 		updateDateFromNow() {
 			this.dateFromNow = this.activity.dateFromNow
 		},
@@ -149,8 +187,8 @@ export default {
 		/**
 		 * Map an collection of rich text objects to rich arguments for the RichText component
 		 *
-		 * @param {Array.<Object<string, RichObject>>} richObjects - The rich text object
-		 * @return {Object<string, object>}
+		 * @param {Record<string, RichObject>[]} richObjects - The rich text object
+		 * @return {Record<string, object>}
 		 */
 		mapRichObjectsToRichArguments(richObjects) {
 			const args = {}
@@ -165,7 +203,7 @@ export default {
 		/**
 		 * Map rich text object to rich argument for the RichText component
 		 *
-		 * @param {Object<string, RichObject>} richObject - The rich text object
+		 * @param {Record<string, object>} richObject - The rich text object
 		 * @return {object}}
 		 */
 		mapRichObjectToRichArgument(richObject) {
@@ -214,8 +252,9 @@ export default {
 			}
 		},
 	},
-}
+})
 </script>
+
 <style lang="scss" scoped>
 .activity-entry {
 	display: flex;

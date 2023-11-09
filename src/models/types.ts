@@ -64,6 +64,7 @@ export interface IPreview {
 	 * The file ID
 	 */
 	fileId: number
+	filePath?: string,
 	view: string
 	filename: string
 }
