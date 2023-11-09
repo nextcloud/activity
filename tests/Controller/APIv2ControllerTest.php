@@ -234,6 +234,8 @@ class APIv2ControllerTest extends TestCase {
 			['sort', 'desc', 'sort', 'desc'],
 			['previews', false, 'loadPreviews', false],
 			['previews', true, 'loadPreviews', true],
+			['previews', 250, 'loadPreviews', true],
+			['previews', 64, 'loadPreviews', true],
 		];
 	}
 

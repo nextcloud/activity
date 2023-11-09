@@ -67,6 +67,8 @@ class APIv2Controller extends OCSController {
 	/** @var bool */
 	protected $loadPreviews;
 
+	protected int $previewSize;
+
 	public function __construct($appName,
 		IRequest $request,
 		protected IManager $activityManager,
@@ -87,7 +89,7 @@ class APIv2Controller extends OCSController {
 	 * @param string $filter
 	 * @param int $since
 	 * @param int $limit
-	 * @param bool $previews
+	 * @param int|bool $previews
 	 * @param string $objectType
 	 * @param int $objectId
 	 * @param string $sort
@@ -102,6 +104,7 @@ class APIv2Controller extends OCSController {
 		$this->since = (int) $since;
 		$this->limit = (int) $limit;
 		$this->loadPreviews = (bool) $previews;
+		$this->previewSize = \is_numeric($previews) ? (int) $previews : 250;
 		$this->objectType = (string) $objectType;
 		$this->objectId = (int) $objectId;
 		$this->sort = \in_array($sort, ['asc', 'desc'], true) ? $sort : 'desc';
@@ -126,13 +129,13 @@ class APIv2Controller extends OCSController {
 	 *
 	 * @param int $since
 	 * @param int $limit
-	 * @param bool $previews
+	 * @param bool|int $previews
 	 * @param string $object_type
 	 * @param int $object_id
 	 * @param string $sort
 	 * @return DataResponse
 	 */
-	public function getDefault($since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc'): DataResponse {
+	public function getDefault($since = 0, $limit = 50, $previews = 250, $object_type = '', $object_id = 0, $sort = 'desc'): DataResponse {
 		return $this->get('all', $since, $limit, $previews, $object_type, $object_id, $sort);
 	}
 
@@ -142,13 +145,13 @@ class APIv2Controller extends OCSController {
 	 * @param string $filter
 	 * @param int $since
 	 * @param int $limit
-	 * @param bool $previews
+	 * @param bool|int $previews
 	 * @param string $object_type
 	 * @param int $object_id
 	 * @param string $sort
 	 * @return DataResponse
 	 */
-	public function getFilter($filter, $since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc'): DataResponse {
+	public function getFilter($filter, $since = 0, $limit = 50, $previews = 250, $object_type = '', $object_id = 0, $sort = 'desc'): DataResponse {
 		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort);
 	}
 
@@ -185,13 +188,13 @@ class APIv2Controller extends OCSController {
 	 * @param string $filter
 	 * @param int $since
 	 * @param int $limit
-	 * @param bool $previews
+	 * @param int|bool $previews
 	 * @param string $filterObjectType
 	 * @param int $filterObjectId
 	 * @param string $sort
 	 * @return DataResponse
 	 */
-	protected function get($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort): DataResponse {
+	protected function get(string $filter, int $since, int $limit, int $previews, string $filterObjectType, int $filterObjectId, string $sort): DataResponse {
 		try {
 			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 		} catch (InvalidFilterException $e) {
@@ -321,8 +324,8 @@ class APIv2Controller extends OCSController {
 				$params = [
 					'forceIcon' => 0,
 					'a' => 0,
-					'x' => 250,
-					'y' => 250,
+					'x' => $this->previewSize,
+					'y' => $this->previewSize,
 					'fileId' => $fileId,
 					'c' => $fileInfo->getEtag(),
 				];
