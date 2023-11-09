@@ -29,6 +29,7 @@ use OCA\Activity\Data;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Tests\TestCase;
 use OCA\Activity\UserSettings;
+use OCA\Theming\ThemingDefaults;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
@@ -64,6 +65,9 @@ class FeedControllerTest extends TestCase {
 	/** @var \OCP\IL10N */
 	protected $l10n;
 
+	/** @var ThemingDefaults|MockObject */
+	protected $themingDefault;
+
 	/** @var FeedController */
 	protected $controller;
 
@@ -78,6 +82,7 @@ class FeedControllerTest extends TestCase {
 		$this->request = $this->createMock(IRequest::class);
 		$this->session = $this->createMock(IUserSession::class);
 		$this->manager = $this->createMock(IManager::class);
+		$this->themingDefault = $this->createMock(ThemingDefaults::class);
 
 		/** @var $urlGenerator IURLGenerator|MockObject */
 		$urlGenerator = $this->createMock(IURLGenerator::class);
@@ -91,7 +96,8 @@ class FeedControllerTest extends TestCase {
 			$urlGenerator,
 			$this->manager,
 			\OC::$server->getL10NFactory(),
-			$this->config
+			$this->config,
+			$this->themingDefault,
 		);
 	}
 
