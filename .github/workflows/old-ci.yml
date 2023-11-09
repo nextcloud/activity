@@ -1,0 +1,19 @@
+# This workflow is provided via the organization template repository
+#
+# https://github.com/nextcloud/.github
+# https://docs.github.com/en/actions/learn-github-actions/sharing-workflows-with-your-organization
+
+name: Mock required CI that is introduced only on newer branches
+
+on: pull_request
+
+permissions:
+  contents: none
+
+jobs:
+  summary:
+    name: cypress-summary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Result
+        run: exit 0
