@@ -24,9 +24,9 @@ import { afterAll, beforeAll, expect, test, vi } from 'vitest'
 import { nextTick } from 'vue'
 
 import Activity from '../components/Activity.vue'
-import ActivityModel from '../models/ActivityModel.ts'
+import ActivityModel from '../models/ActivityModel.js'
 
-import wsData from '../../__mocks__/@nextcloud/activity_ws.json'
+import wsData from '../__mocks__/@nextcloud/activity_ws.json'
 
 const currentDate = new Date('2021-05-10T12:00:00+00:00')
 const realDateNow = Date.now

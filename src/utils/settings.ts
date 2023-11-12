@@ -20,23 +20,25 @@
  *
  */
 
+import type { IActivityType } from '../models/ActivitySettings.js'
+
 /**
  * Return wether the notification method can be checked for the activity
  *
- * @param {ActivityType} activity - the concerned activity
- * @param {string} methodKey - the concerned method
+ * @param activity - the concerned activity
+ * @param methodKey - the concerned method
  * @return {boolean}
  */
-function isActivityEnabled(activity, methodKey) {
+export function isActivityEnabled(activity: IActivityType, methodKey: string) {
 	return activity.methods.includes(methodKey)
 }
 
 /**
- * @param {Array<ActivityType>} activities - List of the activities to check
- * @param {string} methodKey - the method key for which to verify the checked value
- * @return {boolean} wether at least one input is checked for the given set of activities
+ * @param activities - List of the activities to check
+ * @param methodKey - the method key for which to verify the checked value
+ * @return {boolean} Wether at least one input is checked for the given set of activities
  */
-function isOneInputUnChecked(activities, methodKey) {
+export function isOneInputUnChecked(activities: IActivityType[], methodKey: string) {
 	for (const activity of activities) {
 		if (isActivityEnabled(activity, methodKey) && !activity[methodKey]) {
 			return true
@@ -44,9 +46,4 @@ function isOneInputUnChecked(activities, methodKey) {
 	}
 
 	return false
-}
-
-export {
-	isActivityEnabled,
-	isOneInputUnChecked,
 }

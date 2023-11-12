@@ -63,7 +63,7 @@ import ActivityModel from '../models/ActivityModel.ts'
 
 import lightningBoltSVG from '@mdi/svg/svg/lightning-bolt.svg?raw'
 
-import logger from '../logger.js'
+import logger from '../utils/logger.ts'
 
 export default {
 	name: 'ActivityTab',

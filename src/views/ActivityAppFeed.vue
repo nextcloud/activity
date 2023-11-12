@@ -67,7 +67,7 @@ import ActivityModel from '../models/ActivityModel'
 import ActivityGroup from '../components/ActivityGroup.vue'
 
 import appIconSVG from '../../img/activity-dark.svg?raw'
-import logger from '../logger'
+import logger from '../utils/logger'
 
 import { showError } from '@nextcloud/dialogs'
 import { translate as t } from '@nextcloud/l10n'

@@ -57,7 +57,7 @@
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
 import Checkbox from './Checkbox.vue'
-import { isActivityEnabled } from '../helpers/settings.js'
+import { isActivityEnabled } from '../utils/settings.ts'
 
 export default {
 	name: 'ActivityGrid',

@@ -20,16 +20,18 @@
  *
  */
 
-/**
- *
- * @typedef {object} ActivityGroup
- * @property {string} name - The name of the activity group
- * @property {Object<string, ActivityType>} activities - List off activities
- */
+export interface IActivityType {
+	/** The activity's description */
+	desc: string
+	/** List of available methods to send a notification */
+	methods: string[]
+	/** Enabled state of a method */
+	[key: string]: boolean | string | string[]
+}
 
-/**
- *
- * @typedef {object} ActivityType
- * @property {string} desc - The activity's description
- * @property {Array<string>} methods - List of available methods to send a notification
- */
+export interface IActivityGroup {
+	/** The name of the activity group */
+	name: string
+	/** List of activities */
+	activities: IActivityType[]
+}

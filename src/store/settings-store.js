@@ -29,8 +29,8 @@ import { generateUrl } from '@nextcloud/router'
 import { loadState } from '@nextcloud/initial-state'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 
-import { isActivityEnabled, isOneInputUnChecked } from './helpers/settings.js'
-import logger from './logger.js'
+import { isActivityEnabled, isOneInputUnChecked } from '../utils/settings.ts'
+import logger from '../utils/logger.ts'
 
 Vue.use(Vuex)
 

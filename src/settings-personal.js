@@ -24,7 +24,7 @@ import Vuex from 'vuex'
 import UserSettings from './views/UserSettings.vue'
 import DailySummary from './views/DailySummary.vue'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
-import store from './settings-store.js'
+import store from './store/settings-store.js'
 
 Vue.prototype.t = t
 Vue.prototype.n = n
