@@ -156,7 +156,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-::v-deep .empty-content__icon span {
+:deep(.empty-content__icon span) {
 	background-size: 64px;
 	width: 64px;
 	height: 64px;
