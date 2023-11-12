@@ -30,8 +30,8 @@ use OCP\AppFramework\Http\TemplateResponse;
 class RssTest extends TestCase {
 	public function dataEmpty(): array {
 		return [
-			['de', 'http://localhost', 'description', 'Fri, 28 Aug 2015 11:47:14 +0000'],
-			['en', 'http://nextcloud.org', 'Desc', 'Fri, 28 Aug 2015 11:47:15 +0000'],
+			['de', 'http://localhost', 'title', 'description', 'Fri, 28 Aug 2015 11:47:14 +0000'],
+			['en', 'http://nextcloud.org', 'The title', 'Desc', 'Fri, 28 Aug 2015 11:47:15 +0000'],
 		];
 	}
 
@@ -43,12 +43,13 @@ class RssTest extends TestCase {
 	 * @param string $description
 	 * @param string $timeDate
 	 */
-	public function testEmpty(string $language, string $link, string $description, string $timeDate): void {
+	public function testEmpty(string $language, string $link, string $title, string $description, string $timeDate): void {
 		$template = new TemplateResponse('activity', 'rss', [
 			'rssLang' => $language,
 			'rssLink' => $link,
 			'rssPubDate' => $timeDate,
 			'description' => $description,
+			'title' => $title,
 			'activities' => [],
 		], '');
 
@@ -56,7 +57,7 @@ class RssTest extends TestCase {
 			'<?xml version="1.0" encoding="UTF-8"?>'
 			. "\n" . '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">'
 			. "\n" . '	<channel>'
-			. "\n" . '		<title>Activity feed</title>'
+			. "\n" . '		<title>' . $title . '</title>'
 			. "\n" . '		<language>' . $language . '</language>'
 			. "\n" . '		<link>' . $link . '</link>'
 			. "\n" . '		<description>' . $description . '</description>'
@@ -118,6 +119,7 @@ class RssTest extends TestCase {
 			'rssLink' => 'http://nextcloud.org',
 			'rssPubDate' => 'Fri, 28 Aug 2015 11:47:15 +0000',
 			'description' => 'Desc',
+			'title' => 'Activity feed',
 			'activities' => $activities,
 		], '');
 		$rendered = $template->render();

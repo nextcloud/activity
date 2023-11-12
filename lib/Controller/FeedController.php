@@ -25,6 +25,7 @@ namespace OCA\Activity\Controller;
 use OCA\Activity\Data;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\UserSettings;
+use OCA\Theming\ThemingDefaults;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
@@ -48,7 +49,9 @@ class FeedController extends Controller {
 		protected IURLGenerator $urlGenerator,
 		protected IManager $activityManager,
 		protected IFactory $l10nFactory,
-		protected IConfig $config) {
+		protected IConfig $config,
+		protected ThemingDefaults $themingDefaults,
+	) {
 		parent::__construct($appName, $request);
 	}
 
@@ -85,11 +88,13 @@ class FeedController extends Controller {
 			];
 		}
 
+		$title = $this->themingDefaults->getTitle();
 		$response = new TemplateResponse('activity', 'rss', [
 			'rssLang' => $this->l->getLanguageCode(),
 			'rssLink' => $this->urlGenerator->linkToRouteAbsolute('activity.Feed.show'),
 			'rssPubDate' => date('r'),
 			'description' => $description,
+			'title' => $title !== '' ? $this->l->t('Activity feed for %1$s', [$title]) : $this->l->t('Activity feed'),
 			'activities' => $activities,
 		], '');
 
