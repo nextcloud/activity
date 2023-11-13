@@ -71,6 +71,7 @@ import SystemTagRichArgument from './richArgumentsTypes/SystemTagRichArgument.vu
 import CalendarRichArgument from './richArgumentsTypes/CalendarRichArgument.vue'
 import CalendarEventRichArgument from './richArgumentsTypes/CalendarEventRichArgument.vue'
 import OpenGraphRichArgument from './richArgumentsTypes/OpenGraphRichArgument.vue'
+import AddressBookRichArgument from './richArgumentsTypes/AddressBookRichArgument.vue'
 import logger from '../logger'
 
 declare global {
@@ -251,6 +252,11 @@ export default defineComponent({
 			case 'calendar-event':
 				return {
 					component: CalendarEventRichArgument,
+					props: richObject,
+				}
+			case 'addressbook':
+				return {
+					component: AddressBookRichArgument,
 					props: richObject,
 				}
 			default:
