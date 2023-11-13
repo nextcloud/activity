@@ -3,8 +3,6 @@ OC.L10N.register(
     {
     "Home" : "அகம்",
     "Open {filename}" : "திற {கோப்பின் பெயர்}",
-    "Date" : "Date",
-    "File" : "File",
     "Your settings have been updated." : "உங்களின் அமைப்புகள் சேமிக்கப்பட்டன",
     "Settings have been updated." : "அமைப்புகள் சேமிக்கப்பட்டன.",
     "Recent activity" : "அண்மைச் செயல்பாடுகள்",
