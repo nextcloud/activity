@@ -68,6 +68,7 @@ import ActivityModel from '../models/ActivityModel'
 import FileRichArgument from './richArgumentsTypes/FileRichArgument.vue'
 import EmailRichArgument from './richArgumentsTypes/EmailRichArgument.vue'
 import SystemTagRichArgument from './richArgumentsTypes/SystemTagRichArgument.vue'
+import CalendarRichArgument from './richArgumentsTypes/CalendarRichArgument.vue'
 import CalendarEventRichArgument from './richArgumentsTypes/CalendarEventRichArgument.vue'
 import OpenGraphRichArgument from './richArgumentsTypes/OpenGraphRichArgument.vue'
 import logger from '../logger'
@@ -240,6 +241,11 @@ export default defineComponent({
 			case 'opengraph':
 				return {
 					component: OpenGraphRichArgument,
+					props: richObject,
+				}
+			case 'calendar':
+				return {
+					component: CalendarRichArgument,
 					props: richObject,
 				}
 			case 'calendar-event':
