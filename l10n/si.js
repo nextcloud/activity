@@ -11,8 +11,6 @@ OC.L10N.register(
     "Daily" : "දිනපතා",
     "Weekly" : "සතිපතා",
     "Activity" : "ක්‍රියාකාරකම",
-    "Date" : "දිනය",
-    "File" : "ගොනුව",
     "Your settings have been updated." : "ඔබගේ සැකසුම් යාවත්කාලීන කර ඇත.",
     "Settings have been updated." : "සැකසුම් යාවත්කාලීන කර ඇත.",
     "Recent activity" : "මෑත ක්‍රියාකාරකම",

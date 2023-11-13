@@ -16,7 +16,6 @@ OC.L10N.register(
     "Activity" : "ກິດຈະກໍາ",
     "Daily activity summary" : "ສະຫຼຸບກິດຈະກຳປະຈຳວັນ",
     "Send daily activity summary in the morning" : "ສົ່ງສະຫຼຸບກິດຈະກຳປະຈຳວັນໃນຕອນເຊົ້າ",
-    "File" : "ຟາຍ",
     "Send email" : "ສົ່ງອີເມວ",
     "Activity notification configuration" : "ການຕັ້ງຄ່າການແຈ້ງເຕືອນກິດຈະກຳ",
     "Your settings have been updated." : "ການຕັ້ງຄ່າຂອງທ່ານໄດ້ຮັບການອັບເດດ",
