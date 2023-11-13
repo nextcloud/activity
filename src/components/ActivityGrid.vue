@@ -95,11 +95,6 @@ export default {
 
 <style lang="scss" scoped>
 
-table.grid {
-	// Hack: align content of the table with the rest of the page
-	margin-left: -0.8em;
-}
-
 table.grid th {
 	color: var(--color-text-light);
 	height: 44px;
