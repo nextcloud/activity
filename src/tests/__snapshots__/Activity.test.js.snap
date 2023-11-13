@@ -3,7 +3,7 @@
 exports[`Display correct information for changes 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-41fc3610="" tabindex="-1" aria-label="Avatar of {displayName}" role="" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
+    <div data-v-27dcfb0b="" aria-label="Avatar of {displayName}" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
       <!---->
       <!---->
       <!---->
@@ -20,7 +20,7 @@ exports[`Display correct information for changes 1`] = `
 exports[`Display correct information for comments 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-41fc3610="" tabindex="-1" aria-label="Avatar of {displayName}" role="" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
+    <div data-v-27dcfb0b="" aria-label="Avatar of {displayName}" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
       <!---->
       <!---->
       <!---->
@@ -37,7 +37,7 @@ exports[`Display correct information for comments 1`] = `
 exports[`Display correct information for creations 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-41fc3610="" tabindex="-1" aria-label="Avatar of {displayName}" role="" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
+    <div data-v-27dcfb0b="" aria-label="Avatar of {displayName}" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
       <!---->
       <!---->
       <!---->
@@ -54,7 +54,7 @@ exports[`Display correct information for creations 1`] = `
 exports[`Display correct information for favorites 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-41fc3610="" tabindex="-1" aria-label="Avatar of {displayName}" role="" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
+    <div data-v-27dcfb0b="" aria-label="Avatar of {displayName}" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
       <!---->
       <!---->
       <!---->
@@ -71,7 +71,7 @@ exports[`Display correct information for favorites 1`] = `
 exports[`Display correct information for moves 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-41fc3610="" tabindex="-1" aria-label="Avatar of {displayName}" role="" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
+    <div data-v-27dcfb0b="" aria-label="Avatar of {displayName}" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
       <!---->
       <!---->
       <!---->
@@ -88,7 +88,7 @@ exports[`Display correct information for moves 1`] = `
 exports[`Display correct information for renames 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-41fc3610="" tabindex="-1" aria-label="Avatar of {displayName}" role="" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
+    <div data-v-27dcfb0b="" aria-label="Avatar of {displayName}" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
       <!---->
       <!---->
       <!---->
@@ -105,7 +105,7 @@ exports[`Display correct information for renames 1`] = `
 exports[`Display correct information for shares 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-41fc3610="" tabindex="-1" aria-label="Avatar of {displayName}" role="" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
+    <div data-v-27dcfb0b="" aria-label="Avatar of {displayName}" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
       <!---->
       <!---->
       <!---->
@@ -122,7 +122,7 @@ exports[`Display correct information for shares 1`] = `
 exports[`Display correct information for tags 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-41fc3610="" tabindex="-1" aria-label="Avatar of {displayName}" role="" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
+    <div data-v-27dcfb0b="" aria-label="Avatar of {displayName}" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
       <!---->
       <!---->
       <!---->
@@ -139,7 +139,7 @@ exports[`Display correct information for tags 1`] = `
 exports[`Display correct information for unfavorites 1`] = `
 <div>
   <li class="activity-entry">
-    <div data-v-41fc3610="" tabindex="-1" aria-label="Avatar of {displayName}" role="" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
+    <div data-v-27dcfb0b="" aria-label="Avatar of {displayName}" class="avatardiv popovermenu-wrapper activity-entry__icon" style="--size: 15px; line-height: 15px; font-size: 8px; background-color: rgb(0, 130, 201);">
       <!---->
       <!---->
       <!---->
