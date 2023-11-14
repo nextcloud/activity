@@ -226,6 +226,7 @@
     "checkbox-radio-switch__content" : "checkbox-radio-switch__content",
     "Personal activity feed for %s" : "Persönlicher Aktivitäten-Feed für %s",
     "Your feed URL is invalid" : "Ihre Feed-URL ist ungültig",
+    "Activity feed for %1$s" : "Aktivitätsfeed für %1$s",
     "Activity feed" : "Feed der Aktivitäten",
     "Your settings have been updated." : "Ihre Einstellungen wurden aktualisiert.",
     "Settings have been updated." : "Die Einstellungen wurden aktualisiert.",

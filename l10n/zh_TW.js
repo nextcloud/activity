@@ -228,6 +228,7 @@ OC.L10N.register(
     "checkbox-radio-switch__content" : "checkbox-radio-switch__content",
     "Personal activity feed for %s" : "%s 的個人動態摘要",
     "Your feed URL is invalid" : "您的 Feed URL 是無效的",
+    "Activity feed for %1$s" : "%1$s 的活動動態",
     "Activity feed" : "活動摘要",
     "Your settings have been updated." : "您的設定已更新。",
     "Settings have been updated." : "設定已更新。",
