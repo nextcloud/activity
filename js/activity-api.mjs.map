@@ -1,0 +1,1 @@
+{"version":3,"file":"activity-api.mjs","sources":["../src/api.ts"],"sourcesContent":["import { registerGlobalAPI } from './utils/ActivityAPI'\n\nregisterGlobalAPI()\n"],"names":["registerGlobalAPI"],"mappings":";0GAEAA,EAAkB"}
