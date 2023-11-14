@@ -33,6 +33,7 @@ const realDateNow = Date.now
 
 beforeAll(() => {
 	vi.useFakeTimers()
+	window.document.head.setAttribute('data-user', 'admin')
 	window.Date.now = vi.fn(() => currentDate.getTime())
 })
 
