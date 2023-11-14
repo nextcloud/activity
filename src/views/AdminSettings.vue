@@ -19,7 +19,7 @@
   -->
 
 <template>
-	<NcSettingsSection :title="t('activity', 'Notification')">
+	<NcSettingsSection :name="t('activity', 'Notification')">
 		<NcCheckboxRadioSwitch type="checkbox"
 			:checked="emailEnabled"
 			@update:checked="toggleEmailEnabled({emailEnabled: $event})">

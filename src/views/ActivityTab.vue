@@ -23,7 +23,7 @@
 <template>
 	<div :class="{ 'icon-loading': loading }">
 		<!-- error message -->
-		<NcEmptyContent v-if="error" :title="error">
+		<NcEmptyContent v-if="error" :name="error">
 			<template #icon>
 				<NcIconSvgWrapper :svg="lightningBoltSVG" />
 			</template>

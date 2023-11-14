@@ -19,7 +19,7 @@
   -->
 
 <template>
-	<NcSettingsSection :title="t('activity', 'Activity')"
+	<NcSettingsSection :name="t('activity', 'Activity')"
 		:description="settingDescription">
 		<ActivityGrid />
 		<EmailSettings />
