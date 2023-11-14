@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "seconds" : "sekunde",
+    "material-design-icon__svg" : "material-design-icon__svg",
     "in {path}" : "v {pot}",
     "Home" : "Začetni pogled",
     "Open {filename}" : "Odpri {filename}",

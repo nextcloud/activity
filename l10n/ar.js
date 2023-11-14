@@ -228,6 +228,7 @@ OC.L10N.register(
     "checkbox-radio-switch__content" : "checkbox-radio-switch__content",
     "Personal activity feed for %s" : "موجز الحركات الشخصية لـ %s",
     "Your feed URL is invalid" : "هذا الرابط غير صحيح",
+    "Activity feed for %1$s" : "خلاصة الحركات لـ %1$s",
     "Activity feed" : "موجز الحركات",
     "Your settings have been updated." : "تم تحديث إعداداتك.",
     "Settings have been updated." : "تم تحديث الاعدادات.",
