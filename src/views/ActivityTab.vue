@@ -63,7 +63,7 @@ import ActivityModel from '../models/ActivityModel.ts'
 
 import lightningBoltSVG from '@mdi/svg/svg/lightning-bolt.svg?raw'
 
-import logger from '../logger.js'
+import logger from '../utils/logger.ts'
 
 export default {
 	name: 'ActivityTab',
@@ -156,7 +156,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-::v-deep .empty-content__icon span {
+:deep(.empty-content__icon span) {
 	background-size: 64px;
 	width: 64px;
 	height: 64px;

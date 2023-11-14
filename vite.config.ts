@@ -1,3 +1,4 @@
+import type { UserConfig } from 'vitest'
 import { createAppConfig } from '@nextcloud/vite-config'
 import { join } from 'path'
 
@@ -29,12 +30,18 @@ export default createAppConfig({
 				extension: ['.js', '.ts', '.vue'],
 				provider: 'v8',
 			},
-			dir: 'src/',
+			root: 'src/',
+			deps: {
+				moduleDirectories: ['node_modules', '../node_modules'],
+			},
+			cache: {
+				dir: '../node_modules/.vitest',
+			},
 			server: {
 				deps: {
 					inline: [/@nextcloud\/vue/, /@mdi\/svg/],
 				},
 			},
-		},
+		} as UserConfig,
 	},
 })

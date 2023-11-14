@@ -24,7 +24,7 @@ import Vuex from 'vuex'
 import AdminSettings from './views/AdminSettings.vue'
 import DefaultActivitySettings from './views/DefaultActivitySettings.vue'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
-import store from './settings-store.js'
+import store from './store/settings-store.js'
 
 Vue.prototype.t = t
 Vue.prototype.n = n

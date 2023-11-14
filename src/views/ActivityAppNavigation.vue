@@ -59,7 +59,7 @@ import {
 
 import NcInputField from '@nextcloud/vue/dist/Components/NcInputField.js'
 import IconContentCopy from 'vue-material-design-icons/ContentCopy.vue'
-import logger from '../logger'
+import logger from '../utils/logger'
 
 // Types
 interface INavigationEntry {

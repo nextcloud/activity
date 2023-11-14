@@ -72,7 +72,7 @@ import CalendarRichArgument from './richArgumentsTypes/CalendarRichArgument.vue'
 import CalendarEventRichArgument from './richArgumentsTypes/CalendarEventRichArgument.vue'
 import OpenGraphRichArgument from './richArgumentsTypes/OpenGraphRichArgument.vue'
 import AddressBookRichArgument from './richArgumentsTypes/AddressBookRichArgument.vue'
-import logger from '../logger'
+import logger from '../utils/logger'
 
 declare global {
 	interface Window {
@@ -301,7 +301,7 @@ export default defineComponent({
 			color: var(--color-text-lighter);
 		}
 
-		::v-deep a {
+		:deep(a) {
 			font-weight: bold;
 
 			&:hover {
