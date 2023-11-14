@@ -226,6 +226,7 @@
     "checkbox-radio-switch__content" : "checkbox-radio-switch__content",
     "Personal activity feed for %s" : "%s kişisel işlem akışı",
     "Your feed URL is invalid" : "Akış adresiniz geçersiz",
+    "Activity feed for %1$s" : "%1$s için işlem akışı",
     "Activity feed" : "İşlem akışı",
     "Your settings have been updated." : "Ayarlarınız güncellendi.",
     "Settings have been updated." : "Ayarlar güncellendi",
