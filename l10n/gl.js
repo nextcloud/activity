@@ -228,6 +228,7 @@ OC.L10N.register(
     "checkbox-radio-switch__content" : "checkbox-radio-switch__content",
     "Personal activity feed for %s" : "Fonte da actividade persoal para %s",
     "Your feed URL is invalid" : "O URL da fonte é incorrecto",
+    "Activity feed for %1$s" : "Fonte da actividade para %1$s",
     "Activity feed" : "Fonte da actividade",
     "Your settings have been updated." : "Actualizaronse os axustes.",
     "Settings have been updated." : "Actualizáronse os axustes.",
