@@ -1,3 +1,3 @@
-import { registerGlobalAPI } from './models/ActivityAPI'
+import { registerGlobalAPI } from './utils/api.js'
 
 registerGlobalAPI()
