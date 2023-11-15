@@ -55,6 +55,7 @@
 				<Activity v-for="activity in activities"
 					:key="activity.id"
 					:activity="activity"
+					:show-previews="false"
 					@reload="getActivities()" />
 			</ul>
 		</template>
