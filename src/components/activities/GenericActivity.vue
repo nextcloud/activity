@@ -32,18 +32,11 @@
 			<NcRichText class="activity-entry__content__subject" :text="subjectText" :arguments="subjectArguments" />
 			<NcRichText class="activity-entry__content__message" :text="messageText" :arguments="messageArguments" />
 		</div>
-		<NcActions v-if="actions.length > 0" class="activity-entry__actions" :force-menu="true">
-			<!-- This is required as otherwise no content is shown in the actions -->
-			<NcActionCaption :name="t('activity', 'Activity actions')" />
-			<NcActionButton v-for="action,index of actions" :key="index" @click="action.handler(activity)">
-				<template #icon>
-					<NcIconSvgWrapper :svg="action.icon" />
-				</template>
-				{{ action.label }}
-			</NcActionButton>
-		</NcActions>
 		<span class="hidden-visually">{{ activity.formattedDate }}</span>
-		<span :title="activity.formattedDate" class="activity-entry__date" data-testid="activity-date">{{ dateFromNow }}</span>
+		<NcDateTime class="activity-entry__date"
+			:timestamp="timestamp"
+			:ignore-seconds="true"
+			data-testid="activity-date" />
 		<div v-if="showPreviews" class="activity-entry__preview-wrapper">
 			<component :is="preview.link ? 'a' : 'span'"
 				v-for="preview, index in activity.previews"
@@ -66,17 +59,12 @@
 import type { IPreview } from '../../models/types'
 
 import { translate as t } from '@nextcloud/l10n'
-import {
-	NcActions,
-	NcActionButton,
-	NcActionCaption,
-	NcAvatar,
-	NcIconSvgWrapper,
-	NcRichText,
-} from '@nextcloud/vue'
 import { defineComponent } from 'vue'
-import { getActions } from '../../utils/ActivityAPI.js'
 import { mapRichObjectsToRichArguments } from '../../utils/richObjects.js'
+
+import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
+import NcDateTime from '@nextcloud/vue/dist/Components/NcDateTime.js'
+import NcRichText from '@nextcloud/vue/dist/Components/NcRichText.js'
 
 import ActivityModel from '../../models/ActivityModel.js'
 import logger from '../../utils/logger.js'
@@ -91,11 +79,8 @@ import logger from '../../utils/logger.js'
 export default defineComponent({
 	name: 'GenericActivity',
 	components: {
-		NcActions,
-		NcActionButton,
-		NcActionCaption,
 		NcAvatar,
-		NcIconSvgWrapper,
+		NcDateTime,
 		NcRichText,
 	},
 	props: {
@@ -114,18 +99,12 @@ export default defineComponent({
 			default: false,
 		},
 	},
-	data() {
-		return {
-			dateFromNow: '',
-			dateInterval: 0,
-		}
-	},
 	computed: {
 		/**
-		 * Get all actions registered for this activity type
+		 * The timestamp of the activity as JS timestamp
 		 */
-		actions() {
-			return getActions(this.activity.type).map((factory) => factory({ activity: this.activity, reload: () => this.$emit('reload') })).flat()
+		timestamp() {
+			return this.activity.timestamp * 1000
 		},
 		/**
 		 * @return {string} The activity's messageRichTemplate. Fallback to message if messageRichTemplate does not exists
@@ -160,13 +139,6 @@ export default defineComponent({
 			return ''
 		},
 	},
-	created() {
-		this.updateDateFromNow()
-		this.dateInterval = window.setInterval(this.updateDateFromNow, 60 * 1000)
-	},
-	destroyed() {
-		clearInterval(this.dateInterval)
-	},
 	methods: {
 		t,
 
@@ -186,10 +158,6 @@ export default defineComponent({
 					logger.debug(error as Error)
 				}
 			}
-		},
-
-		updateDateFromNow() {
-			this.dateFromNow = this.activity.dateFromNow
 		},
 	},
 })
@@ -212,7 +180,8 @@ export default defineComponent({
 	}
 
 	.avatardiv  {
-		background-color: unset !important;
+		padding-inline: calc((32px - var(--size)) / 2);
+		box-sizing: content-box!important;
 	}
 
 	&__content {

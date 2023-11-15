@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IActivitySidebarAction } from '../utils/ActivityAPI'
+import type { IActivitySidebarAction } from '../models/ActivityAPI'
 import { getCurrentInstance, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const props = defineProps<{

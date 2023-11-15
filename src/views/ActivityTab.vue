@@ -67,7 +67,7 @@ import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
 import { translate as t } from '@nextcloud/l10n'
 import { NcEmptyContent, NcIconSvgWrapper, NcLoadingIcon } from '@nextcloud/vue'
-import { getSidebarActions } from '../utils/ActivityAPI.ts'
+import { getAdditionalEntries, getSidebarActions, getActivityFilters } from '../models/ActivityAPI.ts'
 
 import logger from '../utils/logger.ts'
 import Activity from '../components/Activity.vue'
@@ -116,7 +116,7 @@ export default {
 			try {
 				this.loading = true
 
-				const activities = await axios.get(
+				const activities = this.processActivities(await axios.get(
 					generateOcsUrl('apps/activity/api/v2/activity/filter'),
 					{
 						params: {
@@ -124,20 +124,19 @@ export default {
 							object_type: 'files',
 							object_id: this.fileInfo.id,
 						},
-					})
-
-				this.loading = false
-
-				this.processActivities(activities)
+					},
+				))
+				const other = await getAdditionalEntries({ fileInfo: this.fileInfo })
+				this.activities = [...activities, ...other].sort((a, b) => b.timestamp - a.timestamp)
 			} catch (error) {
 				// Status 304 is not an error.
 				if (error.response !== undefined && error.response.status === 304) {
-					this.loading = false
 					return
 				}
 				this.error = t('activity', 'Unable to load the activity list')
-				this.loading = false
 				console.error('Error loading the activity list', error)
+			} finally {
+				this.loading = false
 			}
 		},
 		/**
@@ -150,7 +149,6 @@ export default {
 		},
 		/**
 		 * Process the current activity data
-		 * and init activities[]
 		 *
 		 * @param {object} activity the activity ocs api request data
 		 * @param {object} activity.data the request data
@@ -158,11 +156,13 @@ export default {
 		processActivities({ data }) {
 			if (data.ocs && data.ocs.data && data.ocs.data.length > 0) {
 				// create Activity objects and sort by newest
-				this.activities = data.ocs.data
+				const activities = data.ocs.data
 					.map(activity => new ActivityModel(activity))
-					.sort((a, b) => b.timestamp - a.timestamp)
 
-				logger.debug(`Processed ${this.activities.length} activity(ies)`, { activities: this.activities, fileInfo: this.fileInfo })
+				logger.debug(`Processed ${activities.length} activity(ies)`, { activities, fileInfo: this.fileInfo })
+
+				const filters = getActivityFilters()
+				return activities.filter((activity) => !filters || filters.every((filter) => filter(activity)))
 			}
 		},
 

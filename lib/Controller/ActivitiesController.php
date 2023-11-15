@@ -92,7 +92,6 @@ class ActivitiesController extends Controller {
 		$this->initialState->provideInitialState('filter', $filter);
 		$this->initialState->provideInitialState('navigationList', $this->getLinkList());
 
-		\OCP\Util::addInitScript($this->appName, 'activity-api');
 		\OCP\Util::addScript($this->appName, 'activity-app');
 		\OCP\Util::addStyle($this->appName, 'style');
 
