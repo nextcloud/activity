@@ -53,6 +53,8 @@ OC.L10N.register(
     "This application enables people to view a log of activities about them, their files or other data." : "Ova aplikacija omogućuje korisnicima pregled aktivnosti o njima, njihovim datotekama ili ostalim podacima.",
     "Today" : "Danas",
     "Yesterday" : "Jučer",
+    "You commented" : "Vi ste komentirali",
+    "Message deleted by author" : "Autor je izbrisao poruku",
     "Unable to load the activity list" : "Nije moguće učitati popis aktivnosti",
     "Unable to save the settings" : "Nije moguće spremiti postavke",
     "No more events to load" : "Nema više događaja za učitavanje",

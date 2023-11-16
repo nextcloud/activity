@@ -52,6 +52,7 @@
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Энэ апп нь хэрэглэгч Nextcloud дээрх файлтай холбоотой мэдээллийг хянах боломжийг олгодог.\n\t\tХэрэглэгч бүр хувийн тохиргоондоо өөрийн хүссэн тохиргоог хийх боломжтой \t\tбөгөөд аль хэсгийг гар утас руу шилжүүлэх, имэйлээр илгээх эсвэл өглөө бүр \t\tөдөр тутмын хураангуйг илгээх эсэхийг сонгох боломжтой.\n\t\tДэлгэрэнгүй мэдээллийг ашиглалтын заавраас унших боломжтой.",
     "Today" : "Өнөөдөр",
     "Yesterday" : "Өчигдөр",
+    "You commented" : "Та сэтгэгдэл бичсэн байна",
     "Unable to load the activity list" : "Үйлдлийн жагсаалтыг харуулах боломжгүй байна.",
     "Unable to save the settings" : "Тохиргоог хадгалах боломжгүй байна",
     "No more events to load" : "Өөр харуулах үйл явдал байхгүй байна",

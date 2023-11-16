@@ -52,6 +52,8 @@
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Aplikazio honek, jendeari aukera ematen dio Nextclouden bere fitxategiekin eta datuekin erlazionatutako ekintzak ikusteko.\n\t\tPertsona bakoitzak bere jarduera-ezarpenak konfigura ditzake ezarpen pertsonaletan,\n\t\tmugikorretara zein jarduera eraman behar den aukeratzeko, posta elektroniko bidez bidalita\n\t\tedo goizero egunero laburpen bat bidaltzen den.\n\t\tInformazio gehiago Jardueren dokumentazioan dago eskuragarri.",
     "Today" : "Gaur",
     "Yesterday" : "Atzo",
+    "You commented" : "Iruzkindu duzu",
+    "Message deleted by author" : "Egileak mezua ezabatu du",
     "Unable to load the activity list" : "Ezin izan da jarduera-zerrenda kargatu",
     "Unable to save the settings" : "Ezin izan dira ezarpenak gorde",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
