@@ -52,6 +52,8 @@
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Deze applicatie laat mensen de veranderingen in hun data en bestanden zien.\n  Elke persoon kan individueel niveau kiezen welke veranderingsmeldingen naar de telefoon, \n  via email of als dagelijkse samenvatting in de ochtend verzonden moeten worden.\n  Meer informatie is verkrijgbaar in de Activiteiten documentatie",
     "Today" : "Vandaag",
     "Yesterday" : "Gisteren",
+    "You commented" : "Je reageerde",
+    "Message deleted by author" : "Bericht verwijderd door de schrijver",
     "Unable to load the activity list" : "Kan de activiteitenlijst niet laden",
     "Unable to save the settings" : "Kan instellingen niet opslaan",
     "No more events to load" : "Geen activiteiten meer beschikbaar",

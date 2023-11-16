@@ -52,6 +52,8 @@
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "این کاره می‌گذارد کاربران کنش‌های مربوط به پرونده‌ها و داده‌هایشان را در نکست‌کلود ببینند.\nهرکسی می‌تواند تنظیمات فعّالیت جداگانه‌اش را در تنظمیات شخصیش پیکربندی کرده\nیا برگزیند که کدام فعّالیت باید به تلفن همراه ارسال شده، با رایانامه فرستده شد\nیا این که باید خلاصهٔ روزانه‌ای در هر صبح فرستاده شود یا نه.\nاطّلاعات بیش‌تر در مستندات فعّالیت موجود است.",
     "Today" : "امروز",
     "Yesterday" : "دیروز",
+    "You commented" : "You commented",
+    "Message deleted by author" : "Message deleted by author",
     "Unable to load the activity list" : "ناتوان در بارگذاری سیاههٔ فعّالیت",
     "Unable to save the settings" : "ناتوان در ذخیرهٔ تنظیمات",
     "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",

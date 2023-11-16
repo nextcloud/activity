@@ -54,6 +54,8 @@ OC.L10N.register(
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Az alkalmazás lehetővé teszi, hogy emberek lássák a fájljaikra és adataikra vonatkozó műveleteket a Nextcloudban.\n\t\tMindenki beállítja az egyéni tevékenységbeállításait a személyes beállításokban,\n\t\tkiválaszthatja, hogy megy tevékenységek legyenek mobilra leküldve, levélben elküldve,\n\t\tvagy a napi összefoglalóba téve minden reggel.\nTovábbi információk érhetők el a Tevékenységek dokumentációjában.",
     "Today" : "Ma",
     "Yesterday" : "Tegnap",
+    "You commented" : "Hozzászólt",
+    "Message deleted by author" : "Az üzenetet a szerző törölte",
     "Unable to load the activity list" : "A tevékenységlista betöltése sikertelen",
     "Unable to save the settings" : "Nem sikerült menteni a beállításokat",
     "No more events to load" : "Nincs több esemény",

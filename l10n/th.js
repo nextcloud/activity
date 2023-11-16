@@ -49,6 +49,7 @@ OC.L10N.register(
     "Notifications" : "การแจ้งเตือน",
     "Today" : "วันนี้",
     "Yesterday" : "เมื่อวานนี้",
+    "You commented" : "คุณได้แสดงความคิดเห็น",
     "Unable to load the activity list" : "ไม่สามารถโหลดรายการกิจกรรม",
     "No more events to load" : "ไม่มีกิจกรรมเพิ่มเติมที่จะโหลด",
     "Copied!" : "คัดลอกแล้ว!",
