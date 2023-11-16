@@ -22,7 +22,7 @@
 
 <template>
 	<li class="activity-entry">
-		<NcAvatar :class="[applyMonochromeIconColor, 'activity-entry__icon', 'activity-icon']"
+		<NcAvatar :class="[applyMonochromeIconColor, 'activity-entry__icon', 'activity-icon', 'avatardiv--unknown']"
 			:disable-menu="true"
 			:disable-tooltip="true"
 			:url="activity.icon"
@@ -182,6 +182,11 @@ export default defineComponent({
 	.avatardiv  {
 		padding-inline: calc((32px - var(--size)) / 2);
 		box-sizing: content-box!important;
+		background-color: unset !important;
+
+		:deep(img) {
+			border-radius: 0 !important;
+		}
 	}
 
 	&__content {
