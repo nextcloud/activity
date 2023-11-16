@@ -41,6 +41,7 @@ OC.L10N.register(
     "Notifications" : "Njoftimet",
     "Today" : "Sot",
     "Yesterday" : "Dje",
+    "You commented" : "Komentuat",
     "Unable to load the activity list" : "Lista e aktiviteteve nuk mund të ngarkohet",
     "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
     "Copied!" : "U kopjua!",

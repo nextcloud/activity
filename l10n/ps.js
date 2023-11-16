@@ -30,6 +30,7 @@ OC.L10N.register(
     "Mail" : "ایمیل",
     "Today" : "نن",
     "Yesterday" : "پرون",
+    "You commented" : "تاسې تبصره کړې",
     "No more events to load" : "نورې کړنې نشته",
     "Copied!" : "کاپي شو!",
     "Not supported!" : "د کار نه کېږي",

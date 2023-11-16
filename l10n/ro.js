@@ -54,6 +54,7 @@ OC.L10N.register(
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Această aplicație permite oamenilor să vadă acțiuni legate de fișierele și datele lor în Nextcloud.\nFiecare persoană își poate configura setările individuale de activitate în setările personale,\npentru a alege ce activitații trebuie să fie transmise pe telefon mobil sau prin e-mail\nsau dacă un rezumat zilnic este trimis în fiecare dimineață.\nMai multe informații sunt disponibile în documentația activității.",
     "Today" : "Astăzi",
     "Yesterday" : "Ieri",
+    "You commented" : "Ai comentat",
     "Unable to load the activity list" : "Lista de activități nu poate fi încărcată",
     "Unable to save the settings" : "Nu se pot salva setările",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",

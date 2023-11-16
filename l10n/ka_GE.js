@@ -34,6 +34,7 @@ OC.L10N.register(
     "Notifications" : "შეტყობინებები",
     "Today" : "დღეს",
     "Yesterday" : "გუშინ",
+    "You commented" : "თქვენ გააეკეთეთ კომენტარი",
     "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
     "Copied!" : "კოპირებულია!",
     "Not supported!" : "არ არის მხარდაჭერილი!",

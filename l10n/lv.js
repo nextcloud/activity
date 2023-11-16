@@ -40,6 +40,7 @@ OC.L10N.register(
     "Notifications" : "Paziņojumi",
     "Today" : "Šodien",
     "Yesterday" : "Vakar",
+    "You commented" : "Tu komentēji",
     "No more events to load" : "Nav vairs notikumu, ko ielādēt",
     "Copied!" : "Nokopēts!",
     "Not supported!" : "Nav atbalstīts!",

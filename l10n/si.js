@@ -25,6 +25,7 @@ OC.L10N.register(
     "Notifications" : "දැනුම්දීම්",
     "Today" : "අද",
     "Yesterday" : "ඊයේ",
+    "You commented" : "ඔබ අදහස් දැක්වා ඇත ",
     "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත",
     "Copied!" : "පිටපත් කළා!",
     "Not supported!" : "සහාය නොදක්වයි!",

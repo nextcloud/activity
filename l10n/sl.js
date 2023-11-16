@@ -59,6 +59,8 @@ OC.L10N.register(
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Program omogoča pregled dejavnosti, povezanih z delom, datotekami in drugimi podatki v oblaku Nextcloud.\n\t\tVsak uporabnik lahko izbere in prilagodi nastavitve dejavnosti,\n\t\tvrsto in način obveščanja na napravah ali z elektronsko pošto,\n\t\tlahko tudi kot dnevni povzetek obvestil.\n\t\tVeč podrobnosti je zapisanih v dokumentaciji.",
     "Today" : "Danes",
     "Yesterday" : "Včeraj",
+    "You commented" : "Napišete opombo",
+    "Message deleted by author" : "Sporočilo je avtor izbrisal.",
     "Could not load activites" : "Dejavnosti ni mogoče naložiti.",
     "Could not enable RSS link" : "Ni mogoče odpreti povezave RSS",
     "RSS link copied to clipboard" : "Povezava RSS je kopirana v odložišče.",

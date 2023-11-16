@@ -54,6 +54,7 @@ OC.L10N.register(
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "See rakendus võimaldab inimestel Nextcloudis näha nende failide ja andmetega seotud toiminguid.\n\t\tIga inimene saab isiklikes seadetes konfigureerida oma individuaalseid tegevussätteid,\n\t\tet valida, millised tegevused edastatakse mobiiltelefonidele, saadetakse e-postiga\n\t\tvõi saadetakse iga hommik päevane kokkuvõte.\n\t\tLisateavet leiate tegevuse dokumentatsioonist.",
     "Today" : "Täna",
     "Yesterday" : "Eile",
+    "You commented" : "Sa kommenteerisid",
     "Unable to load the activity list" : "Tegevuste nimekirja ei ole võimalik laadida ",
     "Unable to save the settings" : "Seadeid ei saa salvestada",
     "No more events to load" : "Pole rohkem sündmusi, mida laadida",

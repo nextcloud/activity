@@ -43,6 +43,8 @@ OC.L10N.register(
     "Notifications" : "Notìficas",
     "Today" : "Oe",
     "Yesterday" : "Eris",
+    "You commented" : "As cummentadu",
+    "Message deleted by author" : "Messàgiu cantzelladu dae s'autore",
     "Unable to load the activity list" : "Non faghet a carrigare sa lista de atividades",
     "No more events to load" : "Perunu eventu de carrigare",
     "Copied!" : "Copiadu!",
