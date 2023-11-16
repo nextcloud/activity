@@ -44,6 +44,8 @@ OC.L10N.register(
     "Notifications" : "Notificacions",
     "Today" : "Uèi",
     "Yesterday" : "Ièr",
+    "You commented" : "Avètz comentat",
+    "Message deleted by author" : "Messatge suprimit per son autor",
     "Unable to load the activity list" : "Cargament impossible de la lista de las activitats",
     "No more events to load" : "Pas mai d’eveniment de cargar",
     "Copied!" : "Copiat !",

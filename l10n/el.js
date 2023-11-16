@@ -54,6 +54,7 @@ OC.L10N.register(
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Αυτή η εφαρμογή επιτρέπει στους χρήστες να βλέπουν ενέργειες που σχετίζονται με τα αρχεία και τα δεδομένα τους στο Nextcloud.\n\n\t\tΚάθε άτομο μπορεί να διαμορφώσει τις ατομικές ρυθμίσεις δραστηριότητάς του στις προσωπικές ρυθμίσεις,\n\t\tγια να επιλέξει ποια δραστηριότητα θα προωθηθεί σε κινητά τηλέφωνα, αποστέλλεται μέσω email\n\t\tή  εάν μια ημερήσια περίληψη αποστέλλεται κάθε πρωί.\n\t\tΠερισσότερες πληροφορίες είναι διαθέσιμες στην τεκμηρίωση Δραστηριότητας.",
     "Today" : "Σήμερα",
     "Yesterday" : "Χθες",
+    "Message deleted by author" : "Το μήνυμα διαγράφηκε από τον συντάκτη",
     "Unable to load the activity list" : "Δεν είναι δυνατή η φόρτωση της λίστας δραστηριοτήτων",
     "Unable to save the settings" : "Αδυναμία αποθήκευσης των ρυθμίσεων",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",

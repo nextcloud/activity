@@ -52,6 +52,7 @@ OC.L10N.register(
     "Notifications" : "Ilmoitukset",
     "Today" : "Tänään",
     "Yesterday" : "Eilen",
+    "You commented" : "Kommentoit",
     "Unable to load the activity list" : "Tapahtumalistan lataaminen ei onnistu",
     "Unable to save the settings" : "Asetusten tallentaminen epäonnistui",
     "No more events to load" : "Ei enempää tapahtumia",

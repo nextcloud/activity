@@ -29,6 +29,7 @@ OC.L10N.register(
     "Notifications" : "Notificationes",
     "Today" : "Hodie",
     "Yesterday" : "Heri",
+    "You commented" : "Tu commentava",
     "No more events to load" : "Nulle altere eventos a cargar",
     "Copied!" : "Copiate!",
     "Not supported!" : "Non supportate!",

@@ -52,6 +52,7 @@
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Esta aplicación posibilita a los usuario ver acciones relacionadas con sus archivos y datos en Nextcloud.\n\t\tCada persona puede configurar sus ajustes de actividad en las opciones personales,\n\t\tpara seleccionar que actividad debería ser transferida a su teléfono móvil, enviada por correo\n\t\to si un resumen diario se envía cada mañana.\n\t\tExiste más información disponible en la documentación de actividad.",
     "Today" : "Hoy",
     "Yesterday" : "Ayer",
+    "You commented" : "Comentaste",
     "Unable to load the activity list" : "No se puede cargar la lista de actividad.",
     "Unable to save the settings" : "No fue posible guardar las configuraciones.",
     "No more events to load" : "No hay más eventos por cargar",

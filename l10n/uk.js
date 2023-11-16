@@ -57,6 +57,8 @@ OC.L10N.register(
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "За допомогою застосунку ви зможете переглядати дії, які стосуються роботи з файлами та даними у Nextcloud.\n\t\tНа сторінці особистих налаштувань ви зможете зробити індивідуальні налаштування подій,\n\t\tщоби вибирати, яку подію потрібно надсилат на смартфон чи ел. листом\n\t\tабо надсилати щоденне ранкове зведення .\n\t\tДокладно на сторінці документаціі \"Події\".",
     "Today" : "Сьогодні",
     "Yesterday" : "Вчора",
+    "You commented" : "Ви прокоментували",
+    "Message deleted by author" : "Повідомлення видалено автором",
     "Could not load activites" : "Не вдалося завантажити дії",
     "Could not enable RSS link" : "Не вдалося увімкнути посилання на стрічку RSS",
     "RSS link copied to clipboard" : "Посилання на стрічку RSS скопійовано",

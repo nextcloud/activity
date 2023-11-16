@@ -50,6 +50,7 @@ OC.L10N.register(
     "Notifications" : "התראות",
     "Today" : "היום",
     "Yesterday" : "אתמול",
+    "You commented" : "הערות שלך",
     "Unable to load the activity list" : "לא ניתן לטעון את רשימת הפעילויות",
     "Unable to save the settings" : "שמירת ההגדרות נכשלה",
     "No more events to load" : "אין אירועים נוספים לטעינה",
