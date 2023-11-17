@@ -39,6 +39,7 @@ OC.L10N.register(
     "Notifications" : "Kemennadennoù",
     "Today" : "Hiziv",
     "Yesterday" : "Dec'h",
+    "You commented" : "Displeget ho peus",
     "No more events to load" : "Darvoud all ebet da gargañ",
     "Copied!" : "Eilet eo !",
     "Not supported!" : "N'eo ket skoret ! ",
