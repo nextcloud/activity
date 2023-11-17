@@ -69,6 +69,7 @@
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Tato aplikace lidem umožňuje zobrazit si akce související s jejich soubory a daty v Nextcloud.\n\t\tKaždá osoba si může vytvořit svá vlastní nastavení ohledně aktivit v osobních nastaveních,\n\t\tzvolit si, které aktivity posílat na mobilní telefony, posílat e-mailem\n\t\tnebo zda každé ráno posílat denní přehled.\n\t\tDalší informace jsou k dispozici v dokumentaci k Aktivitám.",
     "Today" : "Dnes",
     "Yesterday" : "Včera",
+    "You commented" : "Okomentovali jste",
     "Message deleted by author" : "Autor zprávu smazal",
     "Could not load activites" : "Nepodařilo se načíst aktivity",
     "Could not enable RSS link" : "Nepodařilo se zapnout RSS odkaz",

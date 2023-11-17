@@ -39,6 +39,7 @@ OC.L10N.register(
     "Notifications" : "Kennisgewings",
     "Today" : "Vandag",
     "Yesterday" : "Gister",
+    "You commented" : "U het kommentaar gelewer",
     "Unable to load the activity list" : "Kan nie die aktiwiteitslys laai nie",
     "No more events to load" : "Geen meer gebeure om te laai",
     "Copied!" : "Gekopieer!",
