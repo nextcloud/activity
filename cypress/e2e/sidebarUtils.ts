@@ -25,7 +25,7 @@ import { toggleMenuAction } from './filesUtils'
 function showSidebarForFile(fileName: string) {
 	closeSidebar()
 	toggleMenuAction(fileName)
-	cy.get('[data-cy-files-list-row-action="details"]').click()
+	cy.get('[data-cy-files-list-row-action="details"] button').click()
 	cy.get('#app-sidebar-vue').should('be.visible')
 }
 
@@ -67,7 +67,7 @@ export function createPublicShare(fileName: string) {
 
 	cy.get('#app-sidebar-vue #tab-sharing').should('be.visible')
 	cy.get('#app-sidebar-vue button.new-share-link').click({ force: true })
-	cy.get('#app-sidebar-vue a.sharing-entry__copy').should('be.visible')
+	cy.get('#app-sidebar-vue .sharing-entry__copy').should('be.visible')
 	closeSidebar()
 }
 
@@ -83,7 +83,7 @@ export function addTag(fileName: string, tag: string) {
 
 export function addComment(fileName: string, comment: string) {
 	showSidebarForFile(fileName)
-	cy.get('#app-sidebar-vue').contains('Comments').click()
+	cy.get('#app-sidebar-vue').contains('Activity').click()
 	cy.get('.comment__editor .rich-contenteditable__input').type(comment)
 	cy.get('.comment__submit button').click()
 
