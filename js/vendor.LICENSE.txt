@@ -101,7 +101,7 @@ version: 6.0.1
 license: MIT
 
 axios
-version: 0.27.2
+version: 1.6.2
 license: MIT
 
 bail
