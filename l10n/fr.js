@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Personal activity feed for %s" : "Fil d'activités personnelles de %s",
     "Your feed URL is invalid" : "Votre URL de fil d’activité n'est pas valide",
+    "Activity feed for %1$s" : "Flux d'activités pour %1$s",
     "Activity feed" : "Fil d'activité",
     "Your settings have been updated." : "Vos paramètres ont été mis à jour.",
     "Settings have been updated." : "Les paramètres ont été mis à jour.",
@@ -41,6 +42,7 @@ OC.L10N.register(
     "in {path}" : "dans {path}",
     "Home" : "Accueil",
     "Your activities" : "Vos activités",
+    "Loading activities" : "Chargement des activités",
     "This stream will show events like additions, changes & shares" : "Ce flux liste les événements tels que les ajouts, les modifications et les partages",
     "No activity yet" : "Pas encore d'activité",
     "Loading more activities" : "Chargement de plus d'activités",
