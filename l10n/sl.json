@@ -1,6 +1,7 @@
 { "translations": {
     "Personal activity feed for %s" : "Osebne dejavnosti za %s",
     "Your feed URL is invalid" : "Spletni naslov vira ni veljaven",
+    "Activity feed for %1$s" : "Vir dejavnosti za %1$s",
     "Activity feed" : "Objava dejavnosti z viri RSS",
     "Your settings have been updated." : "Nastavitve so posodobljene.",
     "Settings have been updated." : "Nastavitve so posodobljene.",
