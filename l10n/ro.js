@@ -36,6 +36,7 @@ OC.L10N.register(
     "Daily" : "Zilnic",
     "Weekly" : "Săptămânal",
     "You commented" : "Ai comentat",
+    "Message deleted by author" : "Mesaj șters de autor",
     "Open {filename}" : "Deschide {filename}",
     "in {path}" : "în {path}",
     "Home" : "Acasă",
