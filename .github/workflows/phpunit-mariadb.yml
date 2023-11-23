@@ -49,7 +49,7 @@ jobs:
       matrix:
         php-versions: ['8.2']
         mariadb-versions: ['10.6', '10.11']
-        server-versions: ['master']
+        server-versions: ['stable28']
 
     name: MariaDB ${{ matrix.mariadb-versions }} PHP ${{ matrix.php-versions }} Nextcloud ${{ matrix.server-versions }}
 
