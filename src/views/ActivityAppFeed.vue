@@ -164,7 +164,7 @@ async function loadActivities() {
 		}
 
 		logger.error(error as Error)
-		showError(t('activity', 'Could not load activites'))
+		showError(t('activity', 'Could not load activities'))
 	} finally {
 		loading.value = false
 	}
