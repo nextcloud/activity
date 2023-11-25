@@ -64,9 +64,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (restringido)",
     "There are no events for this filter" : "No hay eventos para este filtro",
-    "This application enables users to view a log of activities about them or about files." : "Esta aplicación permite a los usuarios ver un registro de sus actividades o de las actividades de sus archivos.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Esta aplicación le permite a los usuarios ver acciones relacionadas con sus archivos en Nextcloud.\n\t\tUna vez habilitada, los usuarios verán un ícono de \"Actividad\" en su menú de aplicaciones.\n\t\tAl hacer click, una página nueva aparecerá para que los usuarios sigan las actividades relacionadas a los archivos – desde archivos nuevos, archivos borrados, mover, renombrar, actualizaciones y actividad de compartir.\n\t\tEl usuario puede configurar su actividad individual en su menú personal.\n\t\tEsto establece el tipo de actividad a registrar, asi como si el usuario ve sus propias actividades,\n\t\tsi éstas están disponibles en línea y si reciben un correo electrónico de resumen regularmente.\n\t\tHay más información disponible en la documentación de Actividad.",
-    "Activities" : "Actividades",
-    "Configure the default notification settings for new users." : "Configure los ajustes de notificación predeterminados para nuevos usuarios."
+    "Activities" : "Actividades"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
