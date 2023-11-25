@@ -64,9 +64,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (restringido)",
     "There are no events for this filter" : "No hay eventos para este filtro",
-    "This application enables users to view a log of activities about them or about files." : "Esta aplicación permite a los usuarios ver un registro de actividades acerca de ellos o acerca de los archivos.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Esta aplicación habilita los usuarios para gestionar sus archivos en NextCloud.\nUna vez habilitado, los usuarios verán el icono de \"Actividad\" en el menú de su aplicación.\nCuando sea clickeado, una nueva pagina aparecerá para que los usuarios puedan rastrear  los archivos de la actividad - para archivos nuevos, eliminados, movidos, renombrados, actualizados y compartidos.\nEl usuario podrá configurar cada actividad individualmente en la configuración del menú de su equipo.",
-    "Activities" : "Actividades",
-    "Configure the default notification settings for new users." : "Configure los ajustes de notificaciones por defecto para cada usuario nuevo"
+    "Activities" : "Actividades"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
