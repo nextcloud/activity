@@ -49,9 +49,6 @@
     "{name} (invisible)" : "{namn} (usynleg)",
     "{name} (restricted)" : "{namn} (avgrensa)",
     "There are no events for this filter" : "Det er ikkje nokon hendingar for dette filteret",
-    "This application enables users to view a log of activities about them or about files." : "Denne applikasjonen lar brukarane sjå ein logg over eigne aktivitetar eller om filer.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Denne applikasjon viser hendingar for dine filer i Nextcloud.\n\t\tNår aktivert vil du sjå ikon \"Hendingar\" i program meny.\n\t\tVed klikk vil ny side visast for brukar for å spore hendingar relatert til fil. Hendingar kan vere ny fil, sletta fil, endra navn, flytta, oppdatert og delt..\n\t\tIndividuelle hendingar kan konfigurerast i personleg meny.\n\t\tDette bestemmer hva for hendingar som skal sporast så vel som om brukar ser sine eigne hendingar,\n\t\tom desse er tilgjengelege online og om får e-post med hendingar på regelmessig basis.\n\t\tMeir informasjon er tilgjengeleg i dokumentasjon for hendingar..",
-    "Activities" : "Aktivitetar",
-    "Configure the default notification settings for new users." : "Tilpass standard varselinnstillingar for nye brukarar."
+    "Activities" : "Aktivitetar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

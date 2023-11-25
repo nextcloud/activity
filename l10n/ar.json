@@ -72,9 +72,6 @@
     "{name} (invisible)" : "{name} (مخفي)",
     "{name} (restricted)" : "{name} (مقيّد)",
     "There are no events for this filter" : "لا توجد أحداث تنطبق عليها هذه الاشتراطات",
-    "This application enables users to view a log of activities about them or about files." : "هذا التطبيق يُمكّن المستخدمين من عرض سجل حركاتهم و حركات ملفاتهم.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "هذا التطبيق يُمكن المستخدمين من رؤية الحركات التي جرت على ملفاتهم في نكست كلاود\n\t\t بعد تفعيله، ستظهر للمستخدمين أيقونة جديدة \"الحركات\" في قائمة برامجهم.\nبعد الضغط عليها، ستظهر للمستخدمين صفحة جديدة تمكنهم من تعقب الحركات و الأنشطة المتعلقة بملفاتهم من ملفات جديدة، ملفات محذوفة، نقل، إعادة تسمية، التحديثات والأنشطة التي تمت مشاركتها.\n\t\tبإمكان المستخدم تعديل إعدادات نشاطاته الخاصة في قائمته الخاصة.\n\t\tيمكن ضبط نوع الحركات المطلوب تسجيلها، وأيضاً إمكانية إختيار مايراه المستخدم من حركاته،\n\t\t إما أن يراهم على الموقع فقط أو من خلال ملخص يُرسل على البريد الإلكتروني دورياً.\n\n\t\tالمزيد من التفاصيل متوفرة في المستندات المتعلقة بالحركات Activities.",
-    "Activities" : "سجل الحركات",
-    "Configure the default notification settings for new users." : "إعداد الإشعارات الافتراضية للمستخدمين الجدد."
+    "Activities" : "سجل الحركات"
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"
 }

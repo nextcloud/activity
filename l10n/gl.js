@@ -74,9 +74,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (invisíbel)",
     "{name} (restricted)" : "{name} (restrinxido)",
     "There are no events for this filter" : "Non hai eventos neste filtro",
-    "This application enables users to view a log of activities about them or about files." : "Esta aplicación permite que os usuarios vexan un rexistro da súa actividade ou  dos ficheiros.",
-    "This application enables users to view actions related to their files in Nextcloud.\n\t\tOnce enabled, users will see a new icon “Activity” in their apps menu.\n\t\tWhen clicked, a new page appears for users to track the activity related to files – from new files, to deleted files, move, rename, updates and shared activity.\n\t\tThe user can configure their individual activity settings in their personal menu.\n\t\tThis sets the type of activity to record, as well as whether to the user sees their own activities,\n\t\twhether these are only available online, and whether they get an email digest on a regular basis.\n\t\tMore information is available in the Activity documentation." : "Esta aplicación permítelle aos usuarios ver as accións relacionadas cos seus ficheiros en Nextcloud.\n\t\tUnha vez activada, os usuarios verán a nova icona «Actividade» no menú de aplicacións.\n\t\tAo premelo, aparece unha nova páxina para revisar a actividade relacionada cos ficheiros – novos ficheiros, ficheiros eliminados, movidos, renomeados, actualizacións e comparticións.\n\t\tO usuario pode configurar os axustes individuais de actividade no seu menú persoal.\n\t\tEstabelécese o tipo de actividade a rexistrar así como se o usuario ve as súas propias actividades,\n\t\tse estas actividades só están dispoñíbeis en liña, e se recibe un resumo por correo-e con regularidade.\n\t\tTen máis información na documentación de Actividade.",
-    "Activities" : "Actividades",
-    "Configure the default notification settings for new users." : "Configure os axustes predeterminados de notificación pra novos usuarios."
+    "Activities" : "Actividades"
 },
 "nplurals=2; plural=(n != 1);");
