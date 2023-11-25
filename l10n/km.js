@@ -50,7 +50,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (ដែលមើលមិនឃើញ)",
     "{name} (restricted)" : "{name} (ដែលហាមឃាត់)",
     "There are no events for this filter" : "គ្មានព្រឹត្តិការណ៍សម្រាប់ចម្រោះនេះ",
-    "This application enables users to view a log of activities about them or about files." : "កម្មវិធីនេះអនុញ្ញាតឱ្យអ្នកប្រើប្រាស់មើលកំណត់ហេតុនៃសកម្មភាពអំពីពួកគេ ឬអំពីឯកសារផ្សេងៗ។",
     "Activities" : "សកម្មភាពផ្សេងៗ"
 },
 "nplurals=1; plural=0;");
