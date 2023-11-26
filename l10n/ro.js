@@ -47,7 +47,6 @@ OC.L10N.register(
     "No activity yet" : "Nicio activitate încă.",
     "Loading more activities" : "Se încarcă mai multe activități",
     "No more activities." : "Nu mai sunt alte activități.",
-    "Could not load activites" : "Activitățile nu s-au putut încărca",
     "Activity settings" : "Setări ale activității",
     "Enable RSS feed" : "Activați flux RSS",
     "RSS feed" : "Flux RSS",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (invizibil)",
     "{name} (restricted)" : "{name} (restricționat)",
     "There are no events for this filter" : "Nu sunt evenimente pentru acest filtru",
-    "Activities" : "Activități"
+    "Activities" : "Activități",
+    "Could not load activites" : "Activitățile nu s-au putut încărca"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

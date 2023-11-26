@@ -47,7 +47,6 @@ OC.L10N.register(
     "No activity yet" : "Ninguna actividad aún",
     "Loading more activities" : "Cargando más actividad",
     "No more activities." : "No hay más actividad.",
-    "Could not load activites" : "No se pudo cargar la actividad",
     "Activity settings" : "Configuración de la actividad",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (restringido)",
     "There are no events for this filter" : "No hay eventos para este filtro",
-    "Activities" : "Actividades"
+    "Activities" : "Actividades",
+    "Could not load activites" : "No se pudo cargar la actividad"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
