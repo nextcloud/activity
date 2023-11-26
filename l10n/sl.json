@@ -45,7 +45,6 @@
     "No activity yet" : "Ni še zabeležene dejavnosti",
     "Loading more activities" : "Nalaganje več dejavnosti",
     "No more activities." : "Ni drugih  zabeleženih dejavnosti.",
-    "Could not load activites" : "Dejavnosti ni mogoče naložiti.",
     "Activity settings" : "Nastavitve dejavnosti",
     "Enable RSS feed" : "Omogoči vire RSS",
     "RSS feed" : "Viri RSS",
@@ -60,7 +59,7 @@
     "Choose for which activities you want to get an email or push notification." : "Za katere dejavnosti želite prejeti sporočilo na elektronski naslov ali pa potisno obvestilo na napravi.",
     "Choose for which activities you want to get a push notification." : "Za katere dejavnosti želite prejeti potisno obvestilo na napravi.",
     "Daily activity summary" : "Dnevni povzetek dejavnosti",
-    "Send daily activity summary in the morning" : "Pošiljaj povzetek dnevne dejavnosti zjutraj",
+    "Send daily activity summary in the morning" : "Povzetke dnevne dejavnosti pošiljaj zjutraj",
     "Default settings" : "Prevzete nastavitve",
     "Configure the default notification settings for new accounts." : "Prilagodi privzete nastavitve obveščanja za nove uporabnike.",
     "Unable to save the settings" : "Nastavitev ni mogoče shraniti",
@@ -72,6 +71,7 @@
     "{name} (invisible)" : "{ime} (nevidno)",
     "{name} (restricted)" : "{ime} (omejeno)",
     "There are no events for this filter" : "Ta filter ne pokaže nobenih dogodkov",
-    "Activities" : "Dejavnosti"
+    "Activities" : "Dejavnosti",
+    "Could not load activites" : "Dejavnosti ni mogoče naložiti."
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

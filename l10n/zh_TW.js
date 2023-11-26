@@ -47,7 +47,6 @@ OC.L10N.register(
     "No activity yet" : "尚無活動",
     "Loading more activities" : "正在載入更多活動",
     "No more activities." : "無更多活動",
-    "Could not load activites" : "無法載入活動",
     "Activity settings" : "活動設定",
     "Enable RSS feed" : "啟用 RSS 摘要",
     "RSS feed" : "RSS 摘要",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} （隱藏）",
     "{name} (restricted)" : "{name} （受限）",
     "There are no events for this filter" : "在此篩選器下沒有活動",
-    "Activities" : "活動"
+    "Activities" : "活動",
+    "Could not load activites" : "無法載入活動"
 },
 "nplurals=1; plural=0;");

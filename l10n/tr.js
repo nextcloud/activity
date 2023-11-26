@@ -47,7 +47,6 @@ OC.L10N.register(
     "No activity yet" : "Henüz bir işlem yok",
     "Loading more activities" : "Diğer işlemler yükleniyor",
     "No more activities." : "Başka bir işlem yok.",
-    "Could not load activites" : "İşlemler yüklenemedi",
     "Activity settings" : "İşlem ayarları",
     "Enable RSS feed" : "RSS akışı kullanılsın",
     "RSS feed" : "RSS akışı",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (görüntülenmez)",
     "{name} (restricted)" : "{name} (kısıtlanmış)",
     "There are no events for this filter" : "Bu süzgeçte herhangi bir olay yok",
-    "Activities" : "Etkinlikler"
+    "Activities" : "Etkinlikler",
+    "Could not load activites" : "İşlemler yüklenemedi"
 },
 "nplurals=2; plural=(n > 1);");

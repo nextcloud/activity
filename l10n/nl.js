@@ -47,7 +47,6 @@ OC.L10N.register(
     "No activity yet" : "Nog geen activiteiten",
     "Loading more activities" : "Meer activiteiten laden",
     "No more activities." : "Geen activiteiten meer.",
-    "Could not load activites" : "Kon activiteiten niet laden",
     "Activity settings" : "Activiteitsinstellingen",
     "Enable RSS feed" : "Zet RSS-kanaal aan",
     "RSS feed" : "RSS-kanaal",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (onzichtbaar)",
     "{name} (restricted)" : "{name} (beperkt)",
     "There are no events for this filter" : "Er zijn geen gebeurtenissen voor dit filter",
-    "Activities" : "Activiteiten"
+    "Activities" : "Activiteiten",
+    "Could not load activites" : "Kon activiteiten niet laden"
 },
 "nplurals=2; plural=(n != 1);");

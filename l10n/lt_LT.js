@@ -47,7 +47,6 @@ OC.L10N.register(
     "No activity yet" : "Kol kas nėra veiklos",
     "Loading more activities" : "Įkeliama daugiau veiklų",
     "No more activities." : "Daugiau nebėra veiklų.",
-    "Could not load activites" : "Nepavyko įkelti veiklų",
     "Activity settings" : "Veiklos nustatymai",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "RSS feed" : "RSS kanalas",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (nematomas)",
     "{name} (restricted)" : "{name} (apribotas)",
     "There are no events for this filter" : "Nėra įvykių pasirinktam filtrui",
-    "Activities" : "Veiklos"
+    "Activities" : "Veiklos",
+    "Could not load activites" : "Nepavyko įkelti veiklų"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

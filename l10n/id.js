@@ -47,7 +47,6 @@ OC.L10N.register(
     "No activity yet" : "Belum ada aktivitas",
     "Loading more activities" : "Memuat aktivitas lainnya",
     "No more activities." : "Tidak ada aktivitas lagi.",
-    "Could not load activites" : "Tidak dapat memuat aktivitas",
     "Activity settings" : "Pengaturan aktivitas",
     "Enable RSS feed" : "Aktifkan RSS feed",
     "RSS feed" : "RSS feed",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (tersembunyi)",
     "{name} (restricted)" : "{name} (terbatas)",
     "There are no events for this filter" : "Tidak ada peristiwa untuk filter ini",
-    "Activities" : "Aktivitas"
+    "Activities" : "Aktivitas",
+    "Could not load activites" : "Tidak dapat memuat aktivitas"
 },
 "nplurals=1; plural=0;");
