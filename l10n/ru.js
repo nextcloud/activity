@@ -47,7 +47,6 @@ OC.L10N.register(
     "No activity yet" : "Пока не произошло ни одного события",
     "Loading more activities" : "Загрузка следующих активностей",
     "No more activities." : "Больше нет активностей",
-    "Could not load activites" : "Не удалось загрузить активности",
     "Activity settings" : "Настройка активности",
     "Enable RSS feed" : "Включить RSS-ленту",
     "RSS feed" : "RSS-лента",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (невидимый)",
     "{name} (restricted)" : "{name} (ограничено)",
     "There are no events for this filter" : "Отсутствуют события, соответствующие фильтру",
-    "Activities" : "События"
+    "Activities" : "События",
+    "Could not load activites" : "Не удалось загрузить активности"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

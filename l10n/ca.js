@@ -47,7 +47,6 @@ OC.L10N.register(
     "No activity yet" : "Encara no hi ha activitat",
     "Loading more activities" : "S'està carregant més activitat",
     "No more activities." : "No hi ha més activitat.",
-    "Could not load activites" : "No s'ha pogut carregar l'activitat",
     "Activity settings" : "Paràmetres d'Activitat",
     "Enable RSS feed" : "Habilita el canal RSS",
     "RSS feed" : "Canal RSS",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (restringit)",
     "There are no events for this filter" : "No hi ha esdeveniments per a aquest filtre",
-    "Activities" : "Activitat"
+    "Activities" : "Activitat",
+    "Could not load activites" : "No s'ha pogut carregar l'activitat"
 },
 "nplurals=2; plural=(n != 1);");
