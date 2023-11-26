@@ -47,7 +47,6 @@ OC.L10N.register(
     "No activity yet" : "Inga aktiviteter ännu",
     "Loading more activities" : "Laddar fler aktiviteter",
     "No more activities." : "Inga fler aktiviteter.",
-    "Could not load activites" : "Kunde inte läsa in aktiviteter",
     "Activity settings" : "Aktivitetsinställningar",
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "RSS feed" : "RSS-flöde",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (osynlig)",
     "{name} (restricted)" : "{name} (begränsad)",
     "There are no events for this filter" : "Det finns inga aktiviteter för detta filter",
-    "Activities" : "Aktiviteter"
+    "Activities" : "Aktiviteter",
+    "Could not load activites" : "Kunde inte läsa in aktiviteter"
 },
 "nplurals=2; plural=(n != 1);");

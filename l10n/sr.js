@@ -47,7 +47,6 @@ OC.L10N.register(
     "No activity yet" : "Још нема активности",
     "Loading more activities" : "Учитава се још активности",
     "No more activities." : "Нема више активности.",
-    "Could not load activites" : "Није успело учитавање активности",
     "Activity settings" : "Подешавања активности",
     "Enable RSS feed" : "Укључи РСС довод",
     "RSS feed" : "РСС довод",
@@ -74,6 +73,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (невидљиво) ",
     "{name} (restricted)" : "{name} (ограничено)",
     "There are no events for this filter" : "Нема догађаја за овај филтер",
-    "Activities" : "Активности"
+    "Activities" : "Активности",
+    "Could not load activites" : "Није успело учитавање активности"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

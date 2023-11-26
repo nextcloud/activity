@@ -37,13 +37,19 @@ OC.L10N.register(
     "Open {filename}" : "Avaa {filename}",
     "in {path}" : "polussa {path}",
     "Home" : "Koti",
+    "Your activities" : "Omat tapahtumat",
+    "Loading activities" : "Ladataan tapahtumia",
     "This stream will show events like additions, changes & shares" : "Tähän ilmestyy tapahtumavirta, joka näyttää lisäys-, muutos- ja jakotapahtumia",
     "No activity yet" : "Ei vielä tapahtumia",
+    "Loading more activities" : "Ladataa lisää tapahtumia",
+    "No more activities." : "Ei enempää tapahtumia.",
     "Activity settings" : "Tapahtumien asetukset",
     "Enable RSS feed" : "Ota RSS-syöte käyttöön",
     "RSS feed" : "RSS-syöte",
     "Copy RSS feed link" : "Kopioi RSS-syötteen linkki",
     "Personal notification settings" : "Henkilökohtaisten ilmoitusten asetukset",
+    "Could not enable RSS link" : "RSS-linkkiä ei voitu ottaa käyttöön",
+    "RSS link copied to clipboard" : "RSS-linkki kopioitu leikepöydälle",
     "Unable to load the activity list" : "Tapahtumalistan lataaminen ei onnistu",
     "Notification" : "Ilmoitus",
     "Enable notification emails" : "Käytä ilmoitussähköposteja",
@@ -62,6 +68,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (näkymätön)",
     "{name} (restricted)" : "{name} (rajoitettu)",
     "There are no events for this filter" : "Tällä suodattimella ei löydy tapahtumia",
-    "Activities" : "Tapahtumat"
+    "Activities" : "Tapahtumat",
+    "Could not load activites" : "Tapahtumia ei voitu ladata"
 },
 "nplurals=2; plural=(n != 1);");
