@@ -45,6 +45,7 @@
     "No activity yet" : "Encara no hi ha activitat",
     "Loading more activities" : "S'està carregant més activitat",
     "No more activities." : "No hi ha més activitat.",
+    "Could not load activities" : "No s'ha pogut carregar l'activitat",
     "Activity settings" : "Paràmetres d'Activitat",
     "Enable RSS feed" : "Habilita el canal RSS",
     "RSS feed" : "Canal RSS",
