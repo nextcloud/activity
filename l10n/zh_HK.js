@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Personal activity feed for %s" : "%s 的個人系統事件摘要",
     "Your feed URL is invalid" : "您的 Feed URL 是無效的",
+    "Activity feed for %1$s" : "%1$s 的活動動態",
     "Activity feed" : "系統事件摘要",
     "Your settings have been updated." : "您的設定已更新。",
     "Settings have been updated." : "設定已更新。",
@@ -40,13 +41,21 @@ OC.L10N.register(
     "Open {filename}" : "打開  {filename}",
     "in {path}" : "在 {path}",
     "Home" : "主頁",
+    "Your activities" : "您的活動",
+    "Loading activities" : "正在載入活動",
     "This stream will show events like additions, changes & shares" : "這裡將顯示新增、更新、分享等系統事件",
     "No activity yet" : "尚無系統事件",
+    "Loading more activities" : "正在載入更多活動",
+    "No more activities." : "無更多活動。",
+    "Could not load activities" : "無法載入活動",
     "Activity settings" : "活動紀錄設定",
     "Enable RSS feed" : "啟用 RSS 摘要",
     "RSS feed" : "RSS 摘要",
     "Copy RSS feed link" : "複製 RSS feed 連結",
     "Personal notification settings" : "個人通告設定",
+    "Could not enable RSS link" : "無法啟用 RSS 連結",
+    "RSS link copied to clipboard" : "RSS 連結已複製到剪貼板",
+    "Could not copy the RSS link, please copy manually:" : "無法複製 RSS 連結，請手動複製：",
     "Unable to load the activity list" : "無法載入活動紀錄清單",
     "Notification" : "通告",
     "Enable notification emails" : "啟用電郵通告",
@@ -65,6 +74,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name}（隱藏）",
     "{name} (restricted)" : "{name}（受限）",
     "There are no events for this filter" : "在此篩選器下沒有系統事件",
-    "Activities" : "活動"
+    "Activities" : "活動",
+    "Could not load activites" : "無法載入活動"
 },
 "nplurals=1; plural=0;");

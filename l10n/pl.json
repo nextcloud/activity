@@ -1,6 +1,7 @@
 { "translations": {
     "Personal activity feed for %s" : "Osobisty zasób aktywności dla %s",
     "Your feed URL is invalid" : "Adres URL zasobu jest nieprawidłowy",
+    "Activity feed for %1$s" : "Kanał aktywności dla %1$s",
     "Activity feed" : "Zasób aktywności",
     "Your settings have been updated." : "Twoje ustawienia zostały zaktualizowane",
     "Settings have been updated." : "Ustawienia zostały zaktualizowane.",
@@ -44,6 +45,7 @@
     "No activity yet" : "Brak aktywności",
     "Loading more activities" : "Wczytywanie dodatkowych aktywności",
     "No more activities." : "Brak innych aktywności",
+    "Could not load activities" : "Nie można wczytać aktywności",
     "Activity settings" : "Ustawienia Aktywności",
     "Enable RSS feed" : "Włącz kanał RSS",
     "RSS feed" : "Kanał RSS",

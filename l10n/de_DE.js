@@ -47,6 +47,7 @@ OC.L10N.register(
     "No activity yet" : "Bislang keine Aktivitäten",
     "Loading more activities" : "Lade weitere Aktivitäten",
     "No more activities." : "Keine weiteren Aktivitäten.",
+    "Could not load activities" : "Aktivitäten konnten nicht geladen werden",
     "Activity settings" : "Aktivitätseinstellungen",
     "Enable RSS feed" : "RSS-Feed aktivieren",
     "RSS feed" : "RSS-Feed",
