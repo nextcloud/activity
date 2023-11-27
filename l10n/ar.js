@@ -47,6 +47,7 @@ OC.L10N.register(
     "No activity yet" : "لا توجد أيّ حركاتٍ حتى الأن",
     "Loading more activities" : "تحميل المزيد من الحركات",
     "No more activities." : "لا توجد أيّ حركات.",
+    "Could not load activities" : "تعذّر تحميل سجل الحركات",
     "Activity settings" : "إعدادات سجل الحركات",
     "Enable RSS feed" : "تفعيل إلقام RSS feed",
     "RSS feed" : "موجز RSS",
