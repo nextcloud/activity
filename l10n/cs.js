@@ -47,6 +47,7 @@ OC.L10N.register(
     "No activity yet" : "Zatím žádná aktivita",
     "Loading more activities" : "Načítání dalších aktivit",
     "No more activities." : "Žádné další aktivity",
+    "Could not load activities" : "Nepodařilo se načíst aktivity",
     "Activity settings" : "Nastavení pro Aktivity",
     "Enable RSS feed" : "Zapnout RSS kanál",
     "RSS feed" : "RSS kanál",
