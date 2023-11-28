@@ -47,6 +47,7 @@ OC.L10N.register(
     "No activity yet" : "Још нема активности",
     "Loading more activities" : "Учитава се још активности",
     "No more activities." : "Нема више активности.",
+    "Could not load activities" : "Није успело учитавање активности",
     "Activity settings" : "Подешавања активности",
     "Enable RSS feed" : "Укључи РСС довод",
     "RSS feed" : "РСС довод",

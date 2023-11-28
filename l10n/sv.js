@@ -47,6 +47,7 @@ OC.L10N.register(
     "No activity yet" : "Inga aktiviteter ännu",
     "Loading more activities" : "Laddar fler aktiviteter",
     "No more activities." : "Inga fler aktiviteter.",
+    "Could not load activities" : "Kunde inte läsa in aktiviteter",
     "Activity settings" : "Aktivitetsinställningar",
     "Enable RSS feed" : "Aktivera RSS-flöde",
     "RSS feed" : "RSS-flöde",
