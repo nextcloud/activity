@@ -45,6 +45,7 @@
     "No activity yet" : "暂无动态",
     "Loading more activities" : "正在加载更多动态",
     "No more activities." : "暂无更多动态。",
+    "Could not load activities" : "无法加载动态",
     "Activity settings" : "动态设置",
     "Enable RSS feed" : "启用 RSS 订阅源",
     "RSS feed" : "RSS 订阅源",
