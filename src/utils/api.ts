@@ -25,24 +25,8 @@ import logger from './logger'
 
 declare global {
 	interface Window {
+		OC: Nextcloud.v27.OC
 		OCA?: {
-			Activity?: {
-				/**
-				 * Register new actions for a given activity type
-				 */
-				registerSidebarEntries: (factory: IActivityFactory) => void
-				/**
-				 * Register an external action that should be shown in the Activity sidebar panel
-				 */
-				registerSidebarAction: (action: IActivitySidebarAction) => void
-				/**
-				 * Register an filter function to filter out activities on the sidebar, useful together with `registerSidebarEntries`
-				 */
-				registerSidebarFilter: (filter: IActivityFilter) => void
-				__sidebar_actions: IActivitySidebarAction[]
-				__sidebar_factories: IActivityFactory[]
-				__sidebar_filters: IActivityFilter[]
-			},
 			Viewer?: {
 				open(options: { path?: string, fileInfo?: unknown }): void
 				get mimetypes(): string[]
@@ -51,58 +35,101 @@ declare global {
 	}
 }
 
-/**
- * Register the global API
- */
-export function registerGlobalAPI() {
-	window.OCA = window.OCA ?? {}
-	window.OCA.Activity = {
-		...window.OCA.Activity,
-		__sidebar_actions: window.OCA.Activity?.__sidebar_actions ?? [],
-		__sidebar_factories: window.OCA.Activity?.__sidebar_factories ?? [],
-		__sidebar_filters: window.OCA.Activity?.__sidebar_filters ?? [],
+export class ActivityAPI {
 
-		registerSidebarAction(action: IActivitySidebarAction) {
-			window.OCA!.Activity!.__sidebar_actions.push(action)
-			logger.debug('Registered new sidebar action')
-		},
+	static pluginName = 'OCA.Activity.SidebarPlugin'
 
-		registerSidebarEntries(factory: IActivityFactory) {
-			window!.OCA!.Activity!.__sidebar_factories.push(factory)
-			logger.debug('Registered new sidebar actions factory')
-		},
+	#sidebar_actions = [] as IActivitySidebarAction[]
+	#sidebar_factories = [] as IActivityFactory[]
+	#sidebar_filters = [] as IActivityFilter[]
 
-		registerSidebarFilter(filter: IActivityFilter) {
-			window!.OCA!.Activity!.__sidebar_filters.push(filter)
-		},
+	constructor() {
+		window.OC.Plugins.attach(ActivityAPI.pluginName, this)
 	}
 
-	logger.info('Activity API registered')
-}
-
-/**
- * Get all external actions that should be showed in the Activity panel
- */
-export function getSidebarActions() {
-	return window.OCA?.Activity?.__sidebar_actions ?? []
-}
-
-/**
- * Get all additional activity stream entries for a given file object
- * @param options Filter options for the additonal entries
- */
-export async function getAdditionalEntries(options: ActivityFactoryQueryOptions) {
-	if (window.OCA?.Activity?.__sidebar_factories === undefined) {
-		return []
+	public destroy() {
+		window.OC.Plugins.detach(ActivityAPI.pluginName, this)
+		this.#sidebar_actions = []
+		this.#sidebar_factories = []
+		this.#sidebar_filters = []
 	}
 
-	const allPromises = window.OCA.Activity.__sidebar_factories.map(async (factory) => await factory(options))
-	return (await Promise.all(allPromises)).flat()
+	public reload() {
+		this.destroy()
+		window.OC.Plugins.attach(ActivityAPI.pluginName, this)
+	}
+
+	/**
+	 * Register an external action that should be shown in the Activity sidebar panel
+	 * @param action the action
+	 */
+	public registerSidebarAction(action: IActivitySidebarAction) {
+		this.#sidebar_actions.push(action)
+		logger.debug('Registered new sidebar action')
+	}
+
+	/**
+	 * Register a factory to provide activities not included in the stream
+	 * @param factory the factory
+	 */
+	public registerSidebarEntries(factory: IActivityFactory) {
+		this.#sidebar_factories.push(factory)
+		logger.debug('Registered new sidebar entry factory')
+	}
+
+	/**
+	 * Register an filter function to filter out activities on the sidebar, useful together with `registerSidebarEntries`
+	 * @param filter The filter to apply
+	 */
+	public registerSidebarFilter(filter: IActivityFilter) {
+		this.#sidebar_filters.push(filter)
+		logger.debug('Registered new sidebar filter')
+	}
+
+	/**
+	 * Get all external actions that should be showed in the Activity panel
+	 */
+	public getSidebarActions() {
+		return this.#sidebar_actions ?? []
+	}
+
+	/**
+	 * Get all additional activity stream entries for a given file object
+	 * @param options Filter options for the additonal entries
+	 */
+	public async getAdditionalEntries(options: ActivityFactoryQueryOptions) {
+		if (this.#sidebar_factories === undefined) {
+			return []
+		}
+
+		const allPromises = this.#sidebar_factories.map(async (factory) => await factory(options))
+		return (await Promise.all(allPromises)).flat()
+	}
+
+	/**
+	 * Get all sidebar entry filters
+	 */
+	public getActivityFilters() {
+		return this.#sidebar_filters ?? []
+	}
+
 }
 
+let api: ActivityAPI | undefined
+let numberKnownPlugins = 0
+
 /**
- * Get all sidebar entry filters
+ * Get cached sidebar api or reload on changes
  */
-export function getActivityFilters() {
-	return window.OCA?.Activity?.__sidebar_filters ?? []
+export const getSidebarApi = () => {
+	const numberPlugins = window.OC.Plugins.getPlugins(ActivityAPI.pluginName).length
+
+	if (!api) {
+		api = new ActivityAPI()
+	} else if (numberKnownPlugins !== numberPlugins) {
+		api.reload()
+	}
+
+	numberKnownPlugins = numberPlugins
+	return api
 }

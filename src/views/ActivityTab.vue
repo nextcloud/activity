@@ -68,7 +68,7 @@ import axios from '@nextcloud/axios'
 import { generateOcsUrl } from '@nextcloud/router'
 import { translate as t } from '@nextcloud/l10n'
 import { NcEmptyContent, NcIconSvgWrapper, NcLoadingIcon } from '@nextcloud/vue'
-import { getAdditionalEntries, getSidebarActions, getActivityFilters } from '../utils/api.ts'
+import { getSidebarApi } from '../utils/api.ts'
 
 import logger from '../utils/logger.ts'
 import Activity from '../components/Activity.vue'
@@ -97,7 +97,7 @@ export default {
 		}
 	},
 	mounted() {
-		this.sidebarPlugins = getSidebarActions()
+		this.sidebarPlugins = getSidebarApi().getSidebarActions()
 	},
 	methods: {
 		/**
@@ -127,7 +127,7 @@ export default {
 						},
 					},
 				))
-				const other = await getAdditionalEntries({ fileInfo: this.fileInfo })
+				const other = await getSidebarApi().getAdditionalEntries({ fileInfo: this.fileInfo })
 				this.activities = [...activities, ...other].sort((a, b) => b.timestamp - a.timestamp)
 			} catch (error) {
 				// Status 304 is not an error.
@@ -162,7 +162,7 @@ export default {
 
 				logger.debug(`Processed ${activities.length} activity(ies)`, { activities, fileInfo: this.fileInfo })
 
-				const filters = getActivityFilters()
+				const filters = getSidebarApi().getActivityFilters()
 				return activities.filter((activity) => !filters || filters.every((filter) => filter(activity)))
 			}
 		},

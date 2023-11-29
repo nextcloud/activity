@@ -28,6 +28,7 @@ namespace OCA\Activity\Listener;
 
 use OCA\Activity\AppInfo\Application;
 use OCA\Files\Event\LoadSidebar;
+use OCP\AppFramework\Services\IInitialState;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Util;
@@ -36,15 +37,21 @@ use OCP\Util;
  * @template-implements IEventListener<Event>
  */
 class LoadSidebarScripts implements IEventListener {
+	public function __construct(
+		private IInitialState $initialState,
+	) {
+	}
+
 	public function handle(Event $event): void {
 		if (!($event instanceof LoadSidebar)) {
 			return;
 		}
 
+		$this->initialState->provideInitialState('sidebar-api-version', 1);
+
 		// TODO: make sure to only include the sidebar script when
 		// we properly split it between files list and sidebar
 		Util::addStyle(Application::APP_ID, 'style');
 		Util::addScript(Application::APP_ID, 'activity-sidebar');
-		Util::addInitScript(Application::APP_ID, 'activity-api');
 	}
 }
