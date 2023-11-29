@@ -15,9 +15,14 @@ or whether a daily summary is sent each morning.
 
 ## API for other apps to interact with activities
 
-In Nextcloud 11 the old extension API was replaced by 3 new interfaces, to better split the functionality up. Documentation for each of those can be found in the `docs/` folder:
+In Nextcloud 11 the old extension API was replaced by 3 new interfaces (`Provider`, `Setting` and `Filter`), to better split the functionality up. Documentation for each of those can be found in the `docs/` folder.
 
 * [Create](docs/create.md) - an activity and store it in the app
 * [Provider](docs/provider.md) - translate and render activities
 * [Setting](docs/setting.md) - allow users to control what they want to see in their stream or mail
 * [Filter](docs/filter.md) - allow to reduce the stream in the web UI by app or setting
+* [API endpoint](docs/endpoint-v2.md) - interact with activity API from frontend
+
+Since Nextcloud 28 there is also a sidebar API:
+
+* [Sidebar](docs/sidebar.md) - Register custom elements
