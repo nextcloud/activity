@@ -117,23 +117,10 @@ export default {
 			try {
 				this.loading = true
 
-				const activities = this.processActivities(await axios.get(
-					generateOcsUrl('apps/activity/api/v2/activity/filter'),
-					{
-						params: {
-							format: 'json',
-							object_type: 'files',
-							object_id: this.fileInfo.id,
-						},
-					},
-				))
-				const other = await getAdditionalEntries({ fileInfo: this.fileInfo })
-				this.activities = [...activities, ...other].sort((a, b) => b.timestamp - a.timestamp)
+				const activities = await this.processActivities(await this.loadRealActivities())
+				const otherEntries = await getAdditionalEntries({ fileInfo: this.fileInfo })
+				this.activities = [...activities, ...otherEntries].sort((a, b) => b.timestamp - a.timestamp)
 			} catch (error) {
-				// Status 304 is not an error.
-				if (error.response !== undefined && error.response.status === 304) {
-					return
-				}
 				this.error = t('activity', 'Unable to load the activity list')
 				console.error('Error loading the activity list', error)
 			} finally {
@@ -148,23 +135,44 @@ export default {
 			this.error = ''
 			this.activities = []
 		},
+
 		/**
-		 * Process the current activity data
-		 *
-		 * @param {object} activity the activity ocs api request data
-		 * @param {object} activity.data the request data
+		 * Load activites from API
 		 */
-		processActivities({ data }) {
-			if (data.ocs && data.ocs.data && data.ocs.data.length > 0) {
-				// create Activity objects and sort by newest
-				const activities = data.ocs.data
-					.map(activity => new ActivityModel(activity))
-
-				logger.debug(`Processed ${activities.length} activity(ies)`, { activities, fileInfo: this.fileInfo })
-
-				const filters = getActivityFilters()
-				return activities.filter((activity) => !filters || filters.every((filter) => filter(activity)))
+		async loadRealActivities() {
+			try {
+				const { data } = await axios.get(
+					generateOcsUrl('apps/activity/api/v2/activity/filter'),
+					{
+						params: {
+							format: 'json',
+							object_type: 'files',
+							object_id: this.fileInfo.id,
+						},
+					},
+				)
+				return data.ocs.data
+			} catch (e) {
+				// Status 304 is not an error.
+				if (error.response !== undefined && error.response.status === 304) {
+					return []
+				}
+				throw e
 			}
+		},
+
+		/**
+		 * Process the API response activities and apply filter
+		 *
+		 * @param {any[]} activities the activites
+		 */
+		processActivities(activities) {
+			activities = activities.map(activity => new ActivityModel(activity))
+
+			logger.debug(`Processed ${activities.length} activity(ies)`, { activities, fileInfo: this.fileInfo })
+
+			const filters = getActivityFilters()
+			return activities.filter((activity) => !filters || filters.every((filter) => filter(activity)))
 		},
 
 		t,
