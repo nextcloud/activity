@@ -47,6 +47,7 @@ OC.L10N.register(
     "No activity yet" : "Henüz bir işlem yok",
     "Loading more activities" : "Diğer işlemler yükleniyor",
     "No more activities." : "Başka bir işlem yok.",
+    "Could not load activities" : "İşlemler yüklenemedi",
     "Activity settings" : "İşlem ayarları",
     "Enable RSS feed" : "RSS akışı kullanılsın",
     "RSS feed" : "RSS akışı",
