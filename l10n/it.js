@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Personal activity feed for %s" : "Fonte delle attività personali per %s",
     "Your feed URL is invalid" : "L'URL della fonte non è valido",
+    "Activity feed for %1$s" : "Flusso di attività per %1$s",
     "Activity feed" : "Fonte delle attività",
     "Your settings have been updated." : "Le tue impostazioni sono state aggiornate.",
     "Settings have been updated." : "Le impostazioni sono state aggiornate.",
@@ -40,13 +41,21 @@ OC.L10N.register(
     "Open {filename}" : "Apri {filename}",
     "in {path}" : "in {path}",
     "Home" : "Home",
+    "Your activities" : "Le tue attività",
+    "Loading activities" : "Caricamento delle attività",
     "This stream will show events like additions, changes & shares" : "Questo flusso mostrerà gli eventi come aggiunte, cambiamenti e condivisioni",
     "No activity yet" : "Ancora nessuna attività",
+    "Loading more activities" : "Caricamento di altre attività",
+    "No more activities." : "Nessun'altra attività.",
+    "Could not load activities" : "Impossibile caricare le attività",
     "Activity settings" : "Impostazioni attività",
     "Enable RSS feed" : "Abilita fonte RSS",
     "RSS feed" : "Fonte RSS",
     "Copy RSS feed link" : "Copia il link del feed RSS",
     "Personal notification settings" : "Impostazioni notifica personale",
+    "Could not enable RSS link" : "Impossibile attivare il collegamento RSS",
+    "RSS link copied to clipboard" : "Collegamento RSS copiato negli appunti",
+    "Could not copy the RSS link, please copy manually:" : "Impossibile copiare il collegamento RSS, copialo a mano.",
     "Unable to load the activity list" : "Impossibile caricare l'elenco delle attività",
     "Notification" : "Notifica",
     "Enable notification emails" : "Abilita notifica tramite email",
@@ -65,6 +74,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (invisibile)",
     "{name} (restricted)" : "{name} (limitato)",
     "There are no events for this filter" : "Non ci sono eventi per questo filtro",
-    "Activities" : "Attività"
+    "Activities" : "Attività",
+    "Could not load activites" : "Impossibile caricare le attività"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
