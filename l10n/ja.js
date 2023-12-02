@@ -47,6 +47,7 @@ OC.L10N.register(
     "No activity yet" : "まだアクティビティはありません",
     "Loading more activities" : "アクティビティをさらに読み込み中",
     "No more activities." : "アクティビティはこれ以上ありません。",
+    "Could not load activities" : "アクティビティを読み込めませんでした",
     "Activity settings" : "アクティビティの設定",
     "Enable RSS feed" : "RSSフィードを有効にする",
     "RSS feed" : "RSS フィード",
