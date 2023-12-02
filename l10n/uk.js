@@ -47,6 +47,7 @@ OC.L10N.register(
     "No activity yet" : "Поки що відсутні події",
     "Loading more activities" : "Більше дій",
     "No more activities." : "Відсутні інші дії.",
+    "Could not load activities" : "Не вдалося завантажити дії",
     "Activity settings" : "Налаштування",
     "Enable RSS feed" : "Увімкнути стрічку RSS",
     "RSS feed" : "Стрічка RSS",
