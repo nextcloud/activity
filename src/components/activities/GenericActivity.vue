@@ -37,21 +37,22 @@
 			:timestamp="timestamp"
 			:ignore-seconds="true"
 			data-testid="activity-date" />
-		<div v-if="showPreviews" class="activity-entry__preview-wrapper">
-			<component :is="preview.link ? 'a' : 'span'"
-				v-for="preview, index in activity.previews"
-				:key="preview.fileId ?? `preview-${index}`"
-				class="activity-entry__preview"
-				:href="preview.link"
-				@click="handlePreviewClick($event, preview)">
-				<img class="activity-entry__preview-image"
-					:class="{
-						'activity-entry__preview-mimetype': preview.isMimeTypeIcon,
-					}"
-					:src="preview.source"
-					:alt="preview.link ? t('activity', 'Open {filename}', { filename: preview.filename }) : ''">
-			</component>
-		</div>
+		<ul v-if="showPreviews" class="activity-entry__preview-wrapper">
+			<li v-for="preview, index in activity.previews"
+				:key="preview.fileId ?? `preview-${index}`">
+				<component :is="preview.link ? 'a' : 'span'"
+					class="activity-entry__preview"
+					:href="preview.link"
+					@click="handlePreviewClick($event, preview)">
+					<img class="activity-entry__preview-image"
+						:class="{
+							'activity-entry__preview-mimetype': preview.isMimeTypeIcon,
+						}"
+						:src="preview.source"
+						:alt="preview.link ? t('activity', 'Open {filename}', { filename: preview.filename }) : ''">
+				</component>
+			</li>
+		</ul>
 	</li>
 </template>
 
@@ -230,6 +231,7 @@ export default defineComponent({
 		gap: 12px;
 		// align with content
 		margin-inline-start: 24px;
+		display: flex;
 	}
 
 	&__preview:hover {
