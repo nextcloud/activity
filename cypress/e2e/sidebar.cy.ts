@@ -62,8 +62,7 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 		cy.get('.activity-entry').first().should('contains.text', 'You renamed')
 	})
 
-	// Re-enable when move action is implement in F2V
-	xit('Has move activity', () => {
+	it('Has move activity', () => {
 		createFolder('Test folder')
 		moveFile('welcome.txt', 'Test folder')
 		goToDir('Test folder')
