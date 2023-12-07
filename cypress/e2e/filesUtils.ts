@@ -31,24 +31,26 @@ export function renameFile(fileName: string, newName: string) {
 }
 
 export function goToDir(dirName: string) {
-	cy.get(`.files-fileList tr[data-file="${dirName}"]`).click()
+	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${dirName}"]`).click()
 	cy.wait(500)
 }
 
 export function createFolder (dirName: string) {
 	cy.get('.files-list__header .breadcrumb__actions button.action-item__menutoggle').click()
-	cy.get('v-popper__popper').contains('New folder').click()
-	cy.get('.files-list form.files-list__row-rename input[type="text"]').type(dirName)
+	cy.get('.v-popper__popper').contains('New folder').click()
+	cy.get('.files-list form.files-list__row-rename input[type="text"]').clear().type(`${dirName}{enter}`)
 	cy.log('Created folder', dirName)
 	cy.wait(500)
 }
 
 export function moveFile (fileName: string, dirName: string) {
 	toggleMenuAction(fileName)
-	cy.get(`[data-cy-files-list] [data-cy-files-list-row-action="movecopy]"`).click()
-	cy.get(`.oc-dialog tr[data-entryname="${dirName}"]`).click()
-	cy.contains(`Move to ${dirName}`).click()
-	cy.wait(500)
+	cy.get(`[data-cy-files-list] [data-cy-files-list-row-action="move-copy"]`).click()
+	cy.get('.file-picker').within(() => {
+		cy.get(`[data-filename="${dirName}"]`).click()
+		cy.contains(`Move to ${dirName}`).click()
+		cy.wait(500)
+	})
 }
 
 export function toggleMenuAction(fileName: string) {
