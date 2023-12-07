@@ -1,5 +1,5 @@
 <template>
-	<NcAppNavigation>
+	<NcAppNavigation :aria-label="t('activity', 'Activity')">
 		<template #list>
 			<NcAppNavigationItem v-for="navigationItem in navigationList"
 				:key="navigationItem.id"
