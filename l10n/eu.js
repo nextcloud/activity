@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Personal activity feed for %s" : "%s-(r)en jarduera jario pertsonala",
     "Your feed URL is invalid" : "Zure jarioaren URLa baliogabea da",
+    "Activity feed for %1$s" : "%1$s-ren jarduera jarioa",
     "Activity feed" : "Jardueren jarioa",
     "Your settings have been updated." : "Zure ezarpenak ondo eguneratu dira.",
     "Settings have been updated." : "Ezarpenak eguneratu dira.",
@@ -40,13 +41,21 @@ OC.L10N.register(
     "Open {filename}" : "Ireki {filename}",
     "in {path}" : "hemen {path}",
     "Home" : "Etxea",
+    "Your activities" : "Zure jarduerak",
+    "Loading activities" : "Jarduerak kargatzen",
     "This stream will show events like additions, changes & shares" : "Korronte honek gehiketak, aldaketak eta partekatzeak bezalako gertaerak erakusten ditu",
     "No activity yet" : "Oraindik ez dago jarduerarik",
+    "Loading more activities" : "Jarduera gehiago kargatzen",
+    "No more activities." : "Ez dago jarduera gehiago.",
+    "Could not load activities" : "Ezin izan dira jarduerak kargatu",
     "Activity settings" : "Jardueraren ezarpenak",
     "Enable RSS feed" : "Gaitu RSS jarioa",
     "RSS feed" : "RSS jarioa",
     "Copy RSS feed link" : "Kopiatu RSS jario esteka",
     "Personal notification settings" : "Jakinarazpen pertsonalen ezarpenak",
+    "Could not enable RSS link" : "Ezin izan da RSS esteka aktibatu",
+    "RSS link copied to clipboard" : "RSS esteka arbelean kopiatu da",
+    "Could not copy the RSS link, please copy manually:" : "Ezin izan da RSS esteka kopiatu, mesedez kopiatu eskuz:",
     "Unable to load the activity list" : "Ezin izan da jarduera-zerrenda kargatu",
     "Notification" : "Jakinarazpena",
     "Enable notification emails" : "Gaitu jakinarazpen emailak",
@@ -65,6 +74,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (ikusezina)",
     "{name} (restricted)" : "{name} (mugatua)",
     "There are no events for this filter" : "Ez dago gertaerarik iragazki honetarako",
-    "Activities" : "Jarduerak"
+    "Activities" : "Jarduerak",
+    "Could not load activites" : "Ezin izan dira jarduerak kargatu"
 },
 "nplurals=2; plural=(n != 1);");
