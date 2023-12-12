@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Personal activity feed for %s" : "Persönlicher Feed der Aktivitäten für %s",
     "Your feed URL is invalid" : "Deine Feed-URL ist ungültig",
+    "Activity feed for %1$s" : "Aktivitätsfeed für %1$s",
     "Activity feed" : "Feed der Aktivitäten",
     "Your settings have been updated." : "Deine Einstellungen wurden aktualisiert.",
     "Settings have been updated." : "Die Einstellungen wurden aktualisiert.",
@@ -52,7 +53,9 @@ OC.L10N.register(
     "RSS feed" : "RSS-Feed",
     "Copy RSS feed link" : "RSS-Feed-Link kopieren",
     "Personal notification settings" : "Persönliche Einstellungen zu Benachrichtigungen",
+    "Could not enable RSS link" : "RSS-Link konnte nicht aktiviert werden",
     "RSS link copied to clipboard" : "RSS Link wurde in die Zwischenablage kopiert",
+    "Could not copy the RSS link, please copy manually:" : "Der RSS-Link konnte nicht kopiert werden, bitte kopieren sie ihn manuell:",
     "Unable to load the activity list" : "Liste mit Aktivitäten konnte nicht geladen werden",
     "Notification" : "Benachrichtigung",
     "Enable notification emails" : "Benachrichtigungs-E-Mails einschalten",
@@ -71,6 +74,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (unsichtbar)",
     "{name} (restricted)" : "{name} (eingeschränkt)",
     "There are no events for this filter" : "Keine Ereignisse für diesen Filter vorhanden",
-    "Activities" : "Aktivitäten"
+    "Activities" : "Aktivitäten",
+    "Could not load activites" : "Aktivitäten konnten nicht geladen werden"
 },
 "nplurals=2; plural=(n != 1);");
