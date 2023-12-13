@@ -26,6 +26,7 @@ namespace OCA\Activity;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager as ActivityManager;
 use OCP\IL10N;
+use OCP\Notification\AlreadyProcessedException;
 use OCP\Notification\IManager as NotificationManager;
 use OCP\Notification\INotification;
 use OCP\Notification\INotifier;
@@ -111,7 +112,10 @@ class NotificationGenerator implements INotifier {
 		}
 
 		$event = $this->data->getById((int)$notification->getObjectId());
-		if (!$event || $event->getAffectedUser() !== $notification->getUser()) {
+		if (!$event) {
+			throw new AlreadyProcessedException();
+		}
+		if ($event->getAffectedUser() !== $notification->getUser()) {
 			throw new \InvalidArgumentException();
 		}
 		$this->activityManager->setCurrentUserId($notification->getUser());
