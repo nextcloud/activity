@@ -38,7 +38,7 @@ OC.L10N.register(
     "Weekly" : "недељно",
     "You commented" : "Коментарисали сте",
     "Message deleted by author" : "Аутор је обрисао поруку",
-    "Open {filename}" : "Отвори `{filename}",
+    "Open {filename}" : "Отвори {filename}",
     "in {path}" : "у {path}",
     "Home" : "Почетна",
     "Your activities" : "Ваше активности",
