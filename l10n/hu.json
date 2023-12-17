@@ -1,6 +1,7 @@
 { "translations": {
     "Personal activity feed for %s" : "Személyes tevékenységnapló ehhez: %s",
-    "Your feed URL is invalid" : "A hírfolyam URL érvénytelen",
+    "Your feed URL is invalid" : "A hírfolyam webcíme érvénytelen",
+    "Activity feed for %1$s" : "%1$s tevékenységfolyama",
     "Activity feed" : "Tevékenységi hírfolyam",
     "Your settings have been updated." : "Beállításai sikeresen frissítve.",
     "Settings have been updated." : "Beállítások frissítve.",
@@ -38,13 +39,21 @@
     "Open {filename}" : "{filename} megnyitása",
     "in {path}" : "itt: {path}",
     "Home" : "Kezdőlap",
+    "Your activities" : "Saját tevékenységek",
+    "Loading activities" : "Tevékenységek betöltése",
     "This stream will show events like additions, changes & shares" : "Ez a hírfolyam olyan eseményeket mutat mint a hozzáadások, változások és megosztások",
     "No activity yet" : "Nincs még tevékenység",
+    "Loading more activities" : "További tevékenységek betöltése",
+    "No more activities." : "Nincs több tevékenység.",
+    "Could not load activities" : "Nem sikerült betölteni a tevékenységeket",
     "Activity settings" : "Tevékenység beállításai",
     "Enable RSS feed" : "RSS-csatorna engedélyezése",
     "RSS feed" : "RSS-csatorna",
     "Copy RSS feed link" : "RSS-hírcsatorna hivatkozásának másolása",
     "Personal notification settings" : "Személyes értesítési beállítások",
+    "Could not enable RSS link" : "Nem sikerült engedélyezni az RSS-hivatkozást",
+    "RSS link copied to clipboard" : "Az RSS-hivatkozás a vágólapra másolva.",
+    "Could not copy the RSS link, please copy manually:" : "Nem sikerült az RSS-hivatkozás másolása, másolja kézileg:",
     "Unable to load the activity list" : "A tevékenységlista betöltése sikertelen",
     "Notification" : "Értesítés",
     "Enable notification emails" : "Értesítési e-mailek engedélyezése",
@@ -63,6 +72,7 @@
     "{name} (invisible)" : "{name} (láthatatlan)",
     "{name} (restricted)" : "{name} (korlátozott)",
     "There are no events for this filter" : "Ehhez a szűrőhöz nem található esemény",
-    "Activities" : "Tevékenységek"
+    "Activities" : "Tevékenységek",
+    "Could not load activites" : "Nem sikerült betölteni a tevékenységeket"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
