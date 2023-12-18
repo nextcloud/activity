@@ -67,7 +67,9 @@ import axios from '@nextcloud/axios'
 
 import { generateOcsUrl } from '@nextcloud/router'
 import { translate as t } from '@nextcloud/l10n'
-import { NcEmptyContent, NcIconSvgWrapper, NcLoadingIcon } from '@nextcloud/vue'
+import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
+import NcIconSvgWrapper from '@nextcloud/vue/dist/Components/NcIconSvgWrapper.js'
+import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js'
 import { getAdditionalEntries, getSidebarActions, getActivityFilters } from '../utils/api.ts'
 
 import logger from '../utils/logger.ts'

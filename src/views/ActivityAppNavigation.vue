@@ -49,14 +49,11 @@ import { translate as t } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
 import { computed, ref } from 'vue'
 
-import {
-	NcAppNavigation,
-	NcAppNavigationItem,
-	NcAppNavigationSettings,
-	NcButton,
-	NcCheckboxRadioSwitch,
-} from '@nextcloud/vue'
-
+import NcAppNavigation from '@nextcloud/vue/dist/Components/NcAppNavigation.js'
+import NcAppNavigationItem from '@nextcloud/vue/dist/Components/NcAppNavigationItem.js'
+import NcAppNavigationSettings from '@nextcloud/vue/dist/Components/NcAppNavigationSettings.js'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 import NcInputField from '@nextcloud/vue/dist/Components/NcInputField.js'
 import IconContentCopy from 'vue-material-design-icons/ContentCopy.vue'
 import logger from '../utils/logger'
