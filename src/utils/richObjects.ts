@@ -22,7 +22,7 @@
 
 import type { IRichObject } from '../models/types'
 
-import { NcUserBubble } from '@nextcloud/vue'
+import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble.js'
 import FileRichArgument from '../components/richArgumentsTypes/FileRichArgument.vue'
 import EmailRichArgument from '../components/richArgumentsTypes/EmailRichArgument.vue'
 import SystemTagRichArgument from '../components/richArgumentsTypes/SystemTagRichArgument.vue'
@@ -30,6 +30,8 @@ import CalendarRichArgument from '../components/richArgumentsTypes/CalendarRichA
 import CalendarEventRichArgument from '../components/richArgumentsTypes/CalendarEventRichArgument.vue'
 import OpenGraphRichArgument from '../components/richArgumentsTypes/OpenGraphRichArgument.vue'
 import AddressBookRichArgument from '../components/richArgumentsTypes/AddressBookRichArgument.vue'
+import UnknownArgument from '../components/richArgumentsTypes/UnknownArgument.vue'
+import UnknownLinkArgument from '../components/richArgumentsTypes/UnknownLinkArgument.vue'
 
 /**
  * Map an collection of rich text objects to rich arguments for the RichText component
@@ -105,6 +107,15 @@ export function mapRichObjectToRichArgument(richObject: IRichObject) {
 			props: richObject,
 		}
 	default:
-		return richObject
+		if (richObject.link) {
+			return {
+				component: UnknownLinkArgument,
+				props: richObject,
+			}
+		}
+		return {
+			component: UnknownArgument,
+			props: richObject,
+		}
 	}
 }
