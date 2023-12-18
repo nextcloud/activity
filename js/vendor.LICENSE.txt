@@ -32,10 +32,6 @@ license: GPL-3.0
 version: 0.3.0
 license: GPL-3.0-or-later
 
-@nextcloud/calendar-js
-version: 6.1.0
-license: AGPL-3.0-or-later
-
 @nextcloud/capabilities
 version: 1.1.0
 license: GPL-3.0-or-later
@@ -96,10 +92,6 @@ license: MIT
 version: 10.5.0
 license: MIT
 
-ansi-regex
-version: 6.0.1
-license: MIT
-
 axios
 version: 1.6.2
 license: MIT
@@ -114,10 +106,6 @@ license: MIT
 
 buffer
 version: 6.0.3
-license: MIT
-
-char-regex
-version: 2.0.1
 license: MIT
 
 charenc
@@ -136,14 +124,6 @@ crypt
 version: 0.0.2
 license: BSD-3-Clause
 
-date-format-parse
-version: 0.2.7
-license: MIT
-
-debounce
-version: 2.0.0
-license: MIT
-
 decode-named-character-reference
 version: 1.0.2
 license: MIT
@@ -151,10 +131,6 @@ license: MIT
 dompurify
 version: 3.0.6
 license: (MPL-2.0 OR Apache-2.0)
-
-emoji-mart-vue-fast
-version: 15.0.0
-license: BSD-3-Clause
 
 escape-html
 version: 1.0.3
@@ -187,10 +163,6 @@ license: MIT
 hast-util-whitespace
 version: 2.0.1
 license: MIT
-
-ical.js
-version: 1.5.0
-license: MPL-2.0
 
 ieee754
 version: 1.2.1
@@ -372,14 +344,6 @@ splitpanes
 version: 2.4.1
 license: MIT
 
-string-length
-version: 5.0.1
-license: MIT
-
-strip-ansi
-version: 7.1.0
-license: MIT
-
 striptags
 version: 3.2.0
 license: MIT
@@ -394,10 +358,6 @@ license: MIT
 
 toastify-js
 version: 1.12.0
-license: MIT
-
-tributejs
-version: 5.1.3
 license: MIT
 
 trim-lines
@@ -436,10 +396,6 @@ unist-util-visit-parents
 version: 6.0.1
 license: MIT
 
-uuid
-version: 9.0.1
-license: MIT
-
 vfile
 version: 6.0.1
 license: MIT
@@ -456,10 +412,6 @@ vue
 version: 2.7.15
 license: MIT
 
-vue-color
-version: 2.8.1
-license: MIT
-
 vue-demi
 version: 0.14.6
 license: MIT
@@ -474,10 +426,6 @@ license: MIT
 
 vue-router
 version: 3.6.5
-license: MIT
-
-vue2-datepicker
-version: 3.11.1
 license: MIT
 
 vuex
