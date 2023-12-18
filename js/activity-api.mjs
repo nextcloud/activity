@@ -1,2 +1,2 @@
 /*! third party licenses: js/vendor.LICENSE.txt */
-import{r as t}from"./api-57a0fd84.mjs";import"./logger-2ebf21a4.mjs";import"./index-65a5f423.mjs";t();
+import{r as t}from"./api-00dfc954.mjs";import"./logger-a53a57b5.mjs";import"./index-65a5f423.mjs";t();
