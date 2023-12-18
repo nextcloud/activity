@@ -22,7 +22,7 @@
 
 import type { IRichObject } from '../models/types'
 
-import { NcUserBubble } from '@nextcloud/vue'
+import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble.js'
 import FileRichArgument from '../components/richArgumentsTypes/FileRichArgument.vue'
 import EmailRichArgument from '../components/richArgumentsTypes/EmailRichArgument.vue'
 import SystemTagRichArgument from '../components/richArgumentsTypes/SystemTagRichArgument.vue'
