@@ -15,7 +15,9 @@
 			</NcAppNavigationItem>
 		</template>
 		<template #footer>
-			<NcAppNavigationSettings :name="t('activity', 'Activity settings')">
+			<NcAppNavigationSettings 
+				:name="t('activity', 'Activity settings')"
+				:inputAriaLabel="t('activity', 'Activity settings')">
 				<NcCheckboxRadioSwitch type="switch" :checked="hasRSSLink" @update:checked="toggleRSSLink">
 					{{ t('activity', 'Enable RSS feed') }}
 				</NcCheckboxRadioSwitch>
