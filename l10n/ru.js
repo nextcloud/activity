@@ -47,6 +47,7 @@ OC.L10N.register(
     "No activity yet" : "Пока не произошло ни одного события",
     "Loading more activities" : "Загрузка следующих активностей",
     "No more activities." : "Больше нет активностей",
+    "Could not load activities" : "Не удалось загрузить активности",
     "Activity settings" : "Настройка активности",
     "Enable RSS feed" : "Включить RSS-ленту",
     "RSS feed" : "RSS-лента",
