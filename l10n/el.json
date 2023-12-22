@@ -1,6 +1,7 @@
 { "translations": {
     "Personal activity feed for %s" : "Προσωπική δραστηριότητα ροής πληροφοριών για %s",
     "Your feed URL is invalid" : "Η διεύθυνση ροής πληροφοριών URL δεν είναι έγκυρη",
+    "Activity feed for %1$s" : "Ροή δραστηριότητας για %1$s",
     "Activity feed" : "Ροή Δραστηριότητας",
     "Your settings have been updated." : "Οι ρυθμίσεις σας έχουν ενημερωθεί.",
     "Settings have been updated." : "Οι ρυθμίσεις έχουν ενημερωθεί.",
@@ -38,13 +39,21 @@
     "Open {filename}" : "Άνοιγμα {filename}",
     "in {path}" : "στην {path}",
     "Home" : "Αρχική",
+    "Your activities" : "Οι δραστηριότητές σας",
+    "Loading activities" : "Φόρτωση δραστηριοτήτων",
     "This stream will show events like additions, changes & shares" : "Αυτή η ροή θα δείξει γεγονότα όπως προσθήκες, αλλαγές και διαμοιρασμούς",
     "No activity yet" : "Καμία δραστηριότητα ακόμα",
+    "Loading more activities" : "Φόρτωση περισσότερων δραστηριοτήτων",
+    "No more activities." : "Δεν υπάρχουν άλλες δραστηριότητες.",
+    "Could not load activities" : "Δεν ήταν δυνατή η φόρτωση των δραστηριοτήτων",
     "Activity settings" : "Ρυθμίσεις δραστηριότητας",
     "Enable RSS feed" : "Ενεργοποίηση ροής πληροφοριών RSS",
     "RSS feed" : "Ροή RSS",
     "Copy RSS feed link" : "Αντιγραφή συνδέσμου ροής πληροφοριών RSS",
     "Personal notification settings" : "Ρυθμίσεις προσωπικών ειδοποιήσεων",
+    "Could not enable RSS link" : "Δεν ήταν δυνατή η ενεργοποίηση του συνδέσμου RSS",
+    "RSS link copied to clipboard" : "Ο σύνδεσμος RSS αντιγράφηκε στο πρόχειρο",
+    "Could not copy the RSS link, please copy manually:" : "Δεν ήταν δυνατή η αντιγραφή του συνδέσμου RSS, παρακαλώ αντιγράψτε τον χειροκίνητα.",
     "Unable to load the activity list" : "Δεν είναι δυνατή η φόρτωση της λίστας δραστηριοτήτων",
     "Notification" : "Ειδοποίηση",
     "Enable notification emails" : "Ενεργοποίηση ειδοποιήσεων μέσω e-mail",
@@ -63,6 +72,7 @@
     "{name} (invisible)" : "{name} (αόρατος/η)",
     "{name} (restricted)" : "{name} (περιορισμένη πρόσβαση)",
     "There are no events for this filter" : "Δεν υπάρχουν γεγονότα για αυτό το φίλτρο",
-    "Activities" : "Δραστηριότητες"
+    "Activities" : "Δραστηριότητες",
+    "Could not load activites" : "Δεν ήταν δυνατή η φόρτωση των δραστηριοτήτων"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
