@@ -232,8 +232,9 @@ export default defineComponent({
 		// Proper spacing
 		gap: 12px;
 		// align with content
-		margin-inline-start: 24px;
+		padding-inline-start: 24px;
 		display: flex;
+		flex-wrap: wrap;
 	}
 
 	&__preview:hover {
