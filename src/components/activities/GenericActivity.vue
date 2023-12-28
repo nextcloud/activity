@@ -177,11 +177,9 @@ export default defineComponent({
 	&__icon {
 		opacity: 0.5;
 		margin-top: 2px;
-		margin-right: 8px;
 	}
 
 	.avatardiv  {
-		padding-inline: calc((32px - var(--size)) / 2);
 		box-sizing: content-box!important;
 		background-color: unset !important;
 
@@ -199,6 +197,10 @@ export default defineComponent({
 		white-space: pre-wrap;
 		word-break: break-word;
 		overflow: hidden;
+
+		&__subject {
+			padding: 0 5px;
+		}
 
 		&__message {
 			color: var(--color-text-lighter);
