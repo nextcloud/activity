@@ -49,7 +49,7 @@ jobs:
       matrix:
         php-versions: ['8.2']
         mariadb-versions: ['10.6', '10.11']
-        server-versions: ['stable28']
+        server-versions: ['master']
 
     name: MariaDB ${{ matrix.mariadb-versions }} PHP ${{ matrix.php-versions }} Nextcloud ${{ matrix.server-versions }}
 
@@ -81,7 +81,7 @@ jobs:
           path: apps/${{ env.APP_NAME }}
 
       - name: Set up php ${{ matrix.php-versions }}
-        uses: shivammathur/setup-php@81cd5ae0920b34eef300e1775313071038a53429 # v2
+        uses: shivammathur/setup-php@e6f75134d35752277f093989e72e140eaa222f35 # v2
         with:
           php-version: ${{ matrix.php-versions }}
           # https://docs.nextcloud.com/server/stable/admin_manual/installation/source_installation.html#prerequisites-for-manual-installation
