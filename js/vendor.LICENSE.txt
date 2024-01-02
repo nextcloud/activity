@@ -17,7 +17,7 @@ version: 0.2.1
 license: BSD-2-Clause
 
 @mdi/svg
-version: 7.3.67
+version: 7.4.47
 license: Apache-2.0
 
 @nextcloud/auth
