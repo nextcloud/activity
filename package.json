@@ -71,7 +71,7 @@
     "cypress-visual-regression": "^3.0.0",
     "cypress-vite": "^1.5.0",
     "cypress-wait-until": "^3.0.1",
-    "dockerode": "^4.0.0",
+    "dockerode": "^4.0.2",
     "eslint-plugin-cypress": "^2.15.1",
     "happy-dom": "^12.10.3",
     "typescript": "^5.2.2",
