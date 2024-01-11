@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Personal activity feed for %s" : "%s 님의 개인 활동 피드",
     "Your feed URL is invalid" : "피드 주소가 잘못되었습니다",
+    "Activity feed for %1$s" : "%1$s의 활동 피드",
     "Activity feed" : "활동 피드",
     "Your settings have been updated." : "설정이 업데이트되었습니다.",
     "Settings have been updated." : "설정이 업데이트되었습니다.",
@@ -45,7 +46,7 @@ OC.L10N.register(
     "This stream will show events like additions, changes & shares" : "스트림에는 추가, 변경, 공유와 같은 이벤트가 표시됩니다",
     "No activity yet" : "아직 활동 없음",
     "Loading more activities" : "더 많은 활동 불러오는 중",
-    "No more activities." : "더 이상 활동이 없습니다",
+    "No more activities." : "더 이상 활동이 없습니다.",
     "Could not load activities" : "활동을 불러올 수 없습니다",
     "Activity settings" : "활동 설정",
     "Enable RSS feed" : "RSS 피드 사용",
@@ -54,6 +55,7 @@ OC.L10N.register(
     "Personal notification settings" : "개인 알림 설정",
     "Could not enable RSS link" : "RSS 링크를 활성화할 수 없습니다",
     "RSS link copied to clipboard" : "RSS 링크가 클립보드에 복사되었습니다",
+    "Could not copy the RSS link, please copy manually:" : "RSS 링크를 복사할 수 없습니다. 직접 복사해 주세요:",
     "Unable to load the activity list" : "활동 목록을 로드할 수 없습니다.",
     "Notification" : "알림",
     "Enable notification emails" : "이메일 알림 활성화",
@@ -72,6 +74,7 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (숨겨짐)",
     "{name} (restricted)" : "{name} (제한됨)",
     "There are no events for this filter" : "이 필터를 만족하는 이벤트 없음",
-    "Activities" : "활동"
+    "Activities" : "활동",
+    "Could not load activites" : "활동을 불러올 수 없습니다"
 },
 "nplurals=1; plural=0;");
