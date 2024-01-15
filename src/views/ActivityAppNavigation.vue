@@ -126,8 +126,17 @@ async function copyRSSLink() {
 		max-width: 100%;
 	}
 
+	.app-navigation-entry {
+		&.active .navigation-icon {
+			filter: var(--primary-invert-if-dark);
+		}
+
+		&:not(.active) .navigation-icon {
+			filter: var(--background-invert-if-dark);
+		}
+	}
+
 	.navigation-icon {
-		filter: var(--background-invert-if-dark);
 		height: 16px;
 		width: 16px;
 	}
