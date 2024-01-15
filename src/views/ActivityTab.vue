@@ -154,7 +154,7 @@ export default {
 					},
 				)
 				return data.ocs.data
-			} catch (e) {
+			} catch (error) {
 				// Status 304 is not an error.
 				if (error.response !== undefined && error.response.status === 304) {
 					return []
