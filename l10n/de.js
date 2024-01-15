@@ -55,7 +55,7 @@ OC.L10N.register(
     "Personal notification settings" : "Persönliche Einstellungen zu Benachrichtigungen",
     "Could not enable RSS link" : "RSS-Link konnte nicht aktiviert werden",
     "RSS link copied to clipboard" : "RSS Link wurde in die Zwischenablage kopiert",
-    "Could not copy the RSS link, please copy manually:" : "Der RSS-Link konnte nicht kopiert werden, bitte kopieren sie ihn manuell:",
+    "Could not copy the RSS link, please copy manually:" : "Der RSS-Link konnte nicht kopiert werden, bitte kopiere ihn manuell:",
     "Unable to load the activity list" : "Liste mit Aktivitäten konnte nicht geladen werden",
     "Notification" : "Benachrichtigung",
     "Enable notification emails" : "Benachrichtigungs-E-Mails einschalten",
