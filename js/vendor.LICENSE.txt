@@ -409,7 +409,7 @@ version: 0.17.0
 license: MIT
 
 vue
-version: 2.7.15
+version: 2.7.16
 license: MIT
 
 vue-demi
