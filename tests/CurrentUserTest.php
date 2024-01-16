@@ -22,13 +22,14 @@
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\CurrentUser;
+use OCA\Activity\Tests\Mock\Request;
 use OCP\IRequest;
 use OCP\IUser;
+use OCP\IUserSession;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IShare;
-use PHPUnit\Framework\MockObject\MockObject;
-use OCP\IUserSession;
 use OCP\Share\IManager;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class CurrentUserTest
@@ -48,7 +49,7 @@ class CurrentUserTest extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->request = $this->createMock(IRequest::class);
+		$this->request = $this->createMock(Request::class);
 		$this->userSession = $this->createMock(IUserSession::class);
 		$this->shareManager = $this->createMock(IManager::class);
 	}
@@ -183,7 +184,10 @@ class CurrentUserTest extends TestCase {
 	public function testGetCloudIDFromToken(array $server, $share, ?string $expected): void {
 		$instance = $this->getInstance();
 
-		$this->request->server = $server;
+		$this->request->method('__get')->willReturnCallback(fn (string $prop) => match ($prop) {
+			'server' => $server,
+			default => null,
+		});
 
 		if ($share === null) {
 			$this->shareManager->expects($this->never())
