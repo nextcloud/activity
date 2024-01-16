@@ -21,7 +21,7 @@
 <template>
 	<NcAppContent class="activity-app">
 		<h1 class="activity-app__heading">
-			{{ t('activity', 'Your activities') }}
+			{{ headingTitle }}
 		</h1>
 		<NcEmptyContent v-if="hasMoreActivites && allActivities.length === 0"
 			class="activity-app__empty-content"
@@ -74,6 +74,19 @@ import { translate as t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
 import { useInfiniteScroll } from '@vueuse/core'
 import { computed, onMounted, ref, watch } from 'vue'
+import { loadState } from '@nextcloud/initial-state'
+import { useRoute } from 'vue-router/composables'
+
+interface INavigationEntry {
+	id: string
+	icon?: string
+	name: string
+	url: string
+}
+
+const navigationList = loadState<INavigationEntry[]>(appName, 'navigationList')
+
+const route = useRoute()
 
 const props = withDefaults(defineProps<{
 	/**
@@ -136,6 +149,10 @@ const groupedActivities = computed(() => {
 		}
 	}
 	return groups
+})
+
+const headingTitle = computed(() => {
+	return navigationList.find((navigationEl) => navigationEl.id === route.params.filter).name
 })
 
 /**
