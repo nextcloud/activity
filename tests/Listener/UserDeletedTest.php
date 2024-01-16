@@ -53,6 +53,11 @@ class UserDeletedTest extends TestCase {
 	 */
 	private $listener;
 
+	/**
+	 * @var IUser|MockObject
+	 */
+	private $user;
+
 	public const UID = 'myuser';
 
 	public function setUp(): void {
