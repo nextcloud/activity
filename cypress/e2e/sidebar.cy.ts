@@ -49,7 +49,8 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 
 	it('Has share activity', () => {
 		createPublicShare('welcome.txt')
-		cy.get('body').contains('Link share created').get('.toast-close').click()
+		cy.get('body').contains('Link share created').should('exist')
+		cy.get('.toast-close').click({ multiple: true })
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'Shared as public link')
 	})
@@ -65,6 +66,7 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	it('Has move activity', () => {
 		createFolder('Test folder')
 		moveFile('welcome.txt', 'Test folder')
+		cy.get('.toast-close').click({ multiple: true })
 		goToDir('Test folder')
 
 		showActivityTab('welcome.txt')
