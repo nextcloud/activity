@@ -1,108 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.3.2@57b53ff26237074fdf5cbcb034f7da5172be4524">
-  <file src="lib/BackgroundJob/DigestMail.php">
-    <UndefinedClass occurrences="1">
-      <code>TimedJob</code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/BackgroundJob/EmailNotification.php">
-    <UndefinedClass occurrences="1">
-      <code>TimedJob</code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/BackgroundJob/ExpireActivities.php">
-    <UndefinedClass occurrences="1">
-      <code>TimedJob</code>
-    </UndefinedClass>
-  </file>
+<files psalm-version="5.19.0@06b71be009a6bd6d81b9811855d6629b9fe90e1b">
   <file src="lib/BackgroundJob/RemoteActivity.php">
-    <UndefinedClass occurrences="1">
-      <code>QueuedJob</code>
+    <UndefinedClass>
+      <code>ClientException</code>
     </UndefinedClass>
-  </file>
-  <file src="lib/Controller/APIv2Controller.php">
-    <RedundantCondition occurrences="1">
-      <code>'files'</code>
-    </RedundantCondition>
-    <TypeDoesNotContainType occurrences="1">
-      <code>$info['view']</code>
-    </TypeDoesNotContainType>
-  </file>
-  <file src="lib/Controller/ActivitiesController.php">
-    <InvalidArgument occurrences="2">
-      <code>$event</code>
-      <code>'OCA\Activity::loadAdditionalScripts'</code>
-    </InvalidArgument>
-  </file>
-  <file src="lib/Controller/RemoteActivityController.php">
-    <MissingDependency occurrences="3">
-      <code>$this-&gt;rootFolder</code>
-      <code>IRootFolder</code>
-      <code>IRootFolder</code>
-    </MissingDependency>
   </file>
   <file src="lib/CurrentUser.php">
-    <MissingDependency occurrences="1">
-      <code>ShareNotFound</code>
-    </MissingDependency>
-    <NoInterfaceProperties occurrences="1">
-      <code>$this-&gt;request-&gt;server</code>
+    <NoInterfaceProperties>
+      <code><![CDATA[$this->request->server]]></code>
     </NoInterfaceProperties>
   </file>
   <file src="lib/Data.php">
-    <UndefinedDocblockClass occurrences="1">
-      <code>$favoriteFilter-&gt;filterFavorites($query);</code>
+    <UndefinedDocblockClass>
+      <code><![CDATA[$favoriteFilter->filterFavorites($query);]]></code>
     </UndefinedDocblockClass>
   </file>
   <file src="lib/DigestSender.php">
-    <InvalidArrayOffset occurrences="1">
-      <code>[$user-&gt;getEMailAddress() =&gt; $user-&gt;getDisplayName()]</code>
+    <InvalidArrayOffset>
+      <code><![CDATA[[$user->getEMailAddress() => $user->getDisplayName()]]]></code>
     </InvalidArrayOffset>
   </file>
   <file src="lib/FilesHooks.php">
-    <MissingDependency occurrences="3">
-      <code>$this-&gt;rootFolder</code>
-      <code>IRootFolder</code>
-      <code>IRootFolder</code>
-    </MissingDependency>
-    <UndefinedDocblockClass occurrences="4">
-      <code>$mount-&gt;getStorage()</code>
+    <InvalidArgument>
+      <code><![CDATA[$share->getId()]]></code>
+    </InvalidArgument>
+    <UndefinedDocblockClass>
       <code>$shareOwner</code>
-      <code>$storage</code>
       <code>$storage</code>
     </UndefinedDocblockClass>
   </file>
-  <file src="lib/Migration/Version2007Date20181107114613.php">
-    <UndefinedClass occurrences="2">
-      <code>Type</code>
-      <code>Type</code>
-    </UndefinedClass>
-  </file>
   <file src="lib/Migration/Version2008Date20181011095117.php">
-    <UndefinedClass occurrences="1">
+    <UndefinedClass>
       <code>SchemaException</code>
     </UndefinedClass>
   </file>
   <file src="lib/Migration/Version2011Date20201006132544.php">
-    <UndefinedClass occurrences="1">
+    <UndefinedClass>
       <code>Type</code>
     </UndefinedClass>
   </file>
   <file src="lib/Migration/Version2011Date20201006132545.php">
-    <UndefinedClass occurrences="1">
+    <UndefinedClass>
       <code>Type</code>
     </UndefinedClass>
-  </file>
-  <file src="lib/Navigation.php">
-    <MissingDependency occurrences="2">
-      <code>Template</code>
-      <code>\OCP\Template</code>
-    </MissingDependency>
-  </file>
-  <file src="lib/UserSettings.php">
-    <InvalidScalarArgument occurrences="2">
-      <code>$defaultSetting</code>
-      <code>$defaultSetting</code>
-    </InvalidScalarArgument>
   </file>
 </files>
