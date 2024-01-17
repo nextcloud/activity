@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "Abrir «{filename}»",
     "in {path}" : "en {path}",
     "Home" : "Aniciu",
-    "Your activities" : "La to actividá",
     "Loading activities" : "Cargando l'actividá",
     "This stream will show events like additions, changes & shares" : "Esti fluxu va amosar eventos como amiestos, cambeos y comparticiones",
     "No activity yet" : " Entá nun hai actividá",

@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "Atverti {filename}",
     "in {path}" : "ties {path}",
     "Home" : "Pagrindinis",
-    "Your activities" : "Jūsų veiklos",
     "Loading activities" : "Įkeliamos veiklos",
     "This stream will show events like additions, changes & shares" : "Srautas rodo papildymus, pakeitimus ir bendrinimus",
     "No activity yet" : "Kol kas nėra veiklos",

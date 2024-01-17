@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "Открыть {filename}",
     "in {path}" : "в {path}",
     "Home" : "Главная страница",
-    "Your activities" : "Ваши активности",
     "Loading activities" : "Загрузка активностей",
     "This stream will show events like additions, changes & shares" : "Этот поток будет содержать информацию событиях добавления и изменения файлов, а так же предоставления совместного доступа",
     "No activity yet" : "Пока не произошло ни одного события",
