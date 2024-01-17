@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "{filename} megnyitása",
     "in {path}" : "itt: {path}",
     "Home" : "Kezdőlap",
-    "Your activities" : "Saját tevékenységek",
     "Loading activities" : "Tevékenységek betöltése",
     "This stream will show events like additions, changes & shares" : "Ez a hírfolyam olyan eseményeket mutat mint a hozzáadások, változások és megosztások",
     "No activity yet" : "Nincs még tevékenység",

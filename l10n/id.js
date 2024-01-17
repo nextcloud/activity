@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "Buka {filename}",
     "in {path}" : "di {path}",
     "Home" : "Beranda",
-    "Your activities" : "Aktivitas Anda",
     "Loading activities" : "Memuat aktivitas",
     "This stream will show events like additions, changes & shares" : "Stream ini akan menampilkan peristiwa seperti penambahan, perubahan, dan berbagi",
     "No activity yet" : "Belum ada aktivitas",

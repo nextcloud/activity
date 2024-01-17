@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "開啟 {filename}",
     "in {path}" : "在 {path}",
     "Home" : "首頁",
-    "Your activities" : "您的活動",
     "Loading activities" : "正在載入活動",
     "This stream will show events like additions, changes & shares" : "這裡將顯示檔案的新增、更動、分享等動態",
     "No activity yet" : "尚無活動",

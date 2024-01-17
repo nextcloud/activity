@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "{filename} 열기",
     "in {path}" : "{path}에 있음",
     "Home" : "홈",
-    "Your activities" : "내 활동",
     "Loading activities" : "활동 불러오는 중",
     "This stream will show events like additions, changes & shares" : "스트림에는 추가, 변경, 공유와 같은 이벤트가 표시됩니다",
     "No activity yet" : "아직 활동 없음",

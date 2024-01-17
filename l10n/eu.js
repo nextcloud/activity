@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "Ireki {filename}",
     "in {path}" : "hemen {path}",
     "Home" : "Etxea",
-    "Your activities" : "Zure jarduerak",
     "Loading activities" : "Jarduerak kargatzen",
     "This stream will show events like additions, changes & shares" : "Korronte honek gehiketak, aldaketak eta partekatzeak bezalako gertaerak erakusten ditu",
     "No activity yet" : "Oraindik ez dago jarduerarik",

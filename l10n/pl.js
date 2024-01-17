@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "Otwórz {filename}",
     "in {path}" : "w {path}",
     "Home" : "Strona główna",
-    "Your activities" : "Twoja aktywność",
     "Loading activities" : "Wczytywanie aktywności",
     "This stream will show events like additions, changes & shares" : "Ten stream pokaże takie wydarzenia jak: dodatki, zmiany i udostępnienia",
     "No activity yet" : "Brak aktywności",

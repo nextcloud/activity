@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "Opna {filename}",
     "in {path}" : "í {path}",
     "Home" : "Heim",
-    "Your activities" : "Athafnir þínar",
     "Loading activities" : "Hleð inn athöfnum",
     "This stream will show events like additions, changes & shares" : "Streymið mun birta atburði á borð við viðbætur, breytingar og deilingar",
     "No activity yet" : "Engar athafnir ennþá",
