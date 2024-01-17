@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "Отвори {filename}",
     "in {path}" : "у {path}",
     "Home" : "Почетна",
-    "Your activities" : "Ваше активности",
     "Loading activities" : "Учитавају се активности",
     "This stream will show events like additions, changes & shares" : "Овде ће се приказати догађаји попут додавања, измена или дељења",
     "No activity yet" : "Још нема активности",

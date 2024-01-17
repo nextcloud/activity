@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "Otevřít {filename}",
     "in {path}" : "v {path}",
     "Home" : "Domů",
-    "Your activities" : "Vaše aktivity",
     "Loading activities" : "Načítání aktivit",
     "This stream will show events like additions, changes & shares" : "Tento proud bude zobrazovat události jako přidání, změny a sdílení",
     "No activity yet" : "Zatím žádná aktivita",

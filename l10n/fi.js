@@ -37,7 +37,6 @@ OC.L10N.register(
     "Open {filename}" : "Avaa {filename}",
     "in {path}" : "polussa {path}",
     "Home" : "Koti",
-    "Your activities" : "Omat tapahtumat",
     "Loading activities" : "Ladataan tapahtumia",
     "This stream will show events like additions, changes & shares" : "Tähän ilmestyy tapahtumavirta, joka näyttää lisäys-, muutos- ja jakotapahtumia",
     "No activity yet" : "Ei vielä tapahtumia",
