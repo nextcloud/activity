@@ -27,6 +27,7 @@ use OCA\Activity\GroupHelper;
 use OCA\Activity\UserSettings;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
+use OCP\IDBConnection;
 use OCP\IRequest;
 
 class APIv1Controller extends OCSController {
@@ -43,7 +44,9 @@ class APIv1Controller extends OCSController {
 		protected Data $data,
 		protected GroupHelper $groupHelper,
 		protected UserSettings $userSettings,
-		protected CurrentUser $currentUser) {
+		protected CurrentUser $currentUser,
+		protected IDBConnection $dbConnection,
+	) {
 		parent::__construct($appName, $request);
 	}
 
@@ -85,7 +88,7 @@ class APIv1Controller extends OCSController {
 	 * @return int
 	 */
 	protected function getSinceFromOffset($offset) {
-		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$query = $this->dbConnection->getQueryBuilder();
 		$query->select('activity_id')
 			->from('activity')
 			->where($query->expr()->eq('affecteduser', $query->createNamedParameter($this->currentUser->getUID())))
@@ -93,7 +96,7 @@ class APIv1Controller extends OCSController {
 			->setFirstResult($offset - 1)
 			->setMaxResults(1);
 
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$row = $result->fetch();
 		$result->closeCursor();
 

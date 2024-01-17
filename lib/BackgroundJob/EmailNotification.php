@@ -23,8 +23,9 @@
 
 namespace OCA\Activity\BackgroundJob;
 
-use OC\BackgroundJob\TimedJob;
 use OCA\Activity\MailQueueHandler;
+use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\BackgroundJob\TimedJob;
 
 /**
  * Class EmailNotification
@@ -32,19 +33,16 @@ use OCA\Activity\MailQueueHandler;
  * @package OCA\Activity\BackgroundJob
  */
 class EmailNotification extends TimedJob {
-	/** @var MailQueueHandler */
-	protected $queueHandler;
 
-	/** @var bool */
-	protected $isCLI;
+	public function __construct(
+		ITimeFactory $time,
+		protected MailQueueHandler $queueHandler,
+		protected bool $isCLI,
+	) {
+		parent::__construct($time);
 
-	public function __construct(MailQueueHandler $mailQueueHandler,
-		bool $isCLI) {
 		// Run everytime cron is executed, so the batching doesn't delay too much
 		$this->setInterval(1);
-
-		$this->queueHandler = $mailQueueHandler;
-		$this->isCLI = $isCLI;
 	}
 
 	protected function run($argument) {

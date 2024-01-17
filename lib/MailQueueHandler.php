@@ -188,7 +188,7 @@ class MailQueueHandler {
 			}
 		}
 
-		$result = $query->execute();
+		$result = $query->executeQuery();
 
 		$affectedUsers = [];
 		while ($row = $result->fetch()) {
@@ -215,7 +215,7 @@ class MailQueueHandler {
 			->andWhere($query->expr()->eq('amq_affecteduser', $query->createNamedParameter($affectedUser)))
 			->orderBy('amq_timestamp', 'ASC')
 			->setMaxResults($maxNumItems);
-		$result = $query->execute();
+		$result = $query->executeQuery();
 
 		$activities = [];
 		while ($row = $result->fetch()) {
@@ -230,7 +230,7 @@ class MailQueueHandler {
 				->from('activity_mq')
 				->where($query->expr()->lte('amq_timestamp', $query->createNamedParameter($maxTime)))
 				->andWhere($query->expr()->eq('amq_affecteduser', $query->createNamedParameter($affectedUser)));
-			$result = $query->execute();
+			$result = $query->executeQuery();
 			$row = $result->fetch();
 			$result->closeCursor();
 
@@ -492,6 +492,6 @@ class MailQueueHandler {
 		$query->delete('activity_mq')
 			->where($query->expr()->lte('amq_timestamp', $query->createNamedParameter($maxTime, IQueryBuilder::PARAM_INT)))
 			->andWhere($query->expr()->in('amq_affecteduser', $query->createNamedParameter($affectedUsers, IQueryBuilder::PARAM_STR_ARRAY), IQueryBuilder::PARAM_STR));
-		$query->execute();
+		$query->executeStatement();
 	}
 }

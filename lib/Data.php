@@ -237,7 +237,7 @@ class Data {
 
 		$query->setMaxResults($limit + 1);
 
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$hasMore = false;
 		while ($row = $result->fetch()) {
 			if ($limit === 0) {
@@ -273,7 +273,7 @@ class Data {
 			$queryBuilder->select(['affecteduser', 'timestamp'])
 				->from('activity')
 				->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter((int)$since)));
-			$result = $queryBuilder->execute();
+			$result = $queryBuilder->executeQuery();
 			$activity = $result->fetch();
 			$result->closeCursor();
 
@@ -303,7 +303,7 @@ class Data {
 			->where($fetchQuery->expr()->eq('affecteduser', $fetchQuery->createNamedParameter($user)))
 			->orderBy('timestamp', $sort)
 			->setMaxResults(1);
-		$result = $fetchQuery->execute();
+		$result = $fetchQuery->executeQuery();
 		$activity = $result->fetch();
 		$result->closeCursor();
 
@@ -393,7 +393,7 @@ class Data {
 			->from('activity')
 			->where($query->expr()->eq('activity_id', $query->createNamedParameter($activityId)));
 
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		if ($row = $result->fetch()) {
 			$event = $this->activityManager->generateEvent();
 			$event->setApp((string)$row['app'])
@@ -428,7 +428,7 @@ class Data {
 			->orderBy('timestamp', 'ASC')
 			->setMaxResults(1);
 
-		$res = $query->execute()->fetch(\PDO::FETCH_COLUMN);
+		$res = $query->executeQuery()->fetch(\PDO::FETCH_COLUMN);
 		return (int)$res;
 	}
 
@@ -453,7 +453,7 @@ class Data {
 			$query->andWhere($query->expr()->neq('user', $nameParam));
 		}
 
-		return $query->execute()->fetch();
+		return $query->executeQuery()->fetch();
 	}
 
 	/**

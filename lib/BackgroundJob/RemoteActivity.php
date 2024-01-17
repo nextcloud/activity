@@ -22,8 +22,8 @@
 namespace OCA\Activity\BackgroundJob;
 
 use GuzzleHttp\Exception\ClientException;
-use OC\BackgroundJob\QueuedJob;
 use OCA\Activity\Extension\Files;
+use OCP\BackgroundJob\QueuedJob;
 use OCP\Federation\ICloudId;
 use OCP\Federation\ICloudIdManager;
 use OCP\Http\Client\IClientService;
@@ -40,8 +40,8 @@ class RemoteActivity extends QueuedJob {
 		$this->cloudIdManager = $cloudIdManager;
 	}
 
-	protected function run($arguments) {
-		call_user_func_array([$this, 'sendActivity'], $arguments);
+	protected function run($argument) {
+		call_user_func_array([$this, 'sendActivity'], $argument);
 	}
 
 	protected function sendActivity($target, $token, $path, $internalType, $time, $actor, $secondPath = '') {
