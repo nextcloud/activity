@@ -25,7 +25,6 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests\AppInfo;
 
-use OC\BackgroundJob\TimedJob;
 use OC\Files\View;
 use OCA\Activity\AppInfo\Application;
 use OCA\Activity\BackgroundJob\EmailNotification;
@@ -50,6 +49,7 @@ use OCP\Activity\IConsumer;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\IAppContainer;
 use OCP\AppFramework\OCSController;
+use OCP\BackgroundJob\TimedJob;
 use OCP\Capabilities\ICapability;
 use OCP\IL10N;
 
@@ -101,7 +101,7 @@ class ApplicationTest extends TestCase {
 			[EmailNotification::class],
 			[EmailNotification::class, TimedJob::class],
 			[ExpireActivities::class,],
-			[ExpireActivities::class, \OCP\BackgroundJob\TimedJob::class],
+			[ExpireActivities::class, TimedJob::class],
 
 			// Controller
 			[ActivitiesController::class],

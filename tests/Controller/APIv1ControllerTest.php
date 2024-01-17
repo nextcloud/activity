@@ -232,7 +232,8 @@ class APIv1ControllerTest extends TestCase {
 			$data,
 			new GroupHelper($l, $activityManager, $this->createMock(IValidator::class), $this->createMock(LoggerInterface::class)),
 			new UserSettings($activityManager, $config),
-			$currentUser
+			$currentUser,
+			\OC::$server->getDatabaseConnection(),
 		);
 		$response = $controller->get($start, $count);
 

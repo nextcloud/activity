@@ -24,12 +24,11 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests\BackgroundJob;
 
-use OC\BackgroundJob\JobList;
 use OCA\Activity\BackgroundJob\EmailNotification;
 use OCA\Activity\MailQueueHandler;
 use OCA\Activity\Tests\TestCase;
+use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\IJobList;
-use OCP\ILogger;
 
 /**
  * Class EmailNotificationTest
@@ -51,15 +50,15 @@ class EmailNotificationTest extends TestCase {
 	 */
 	public function testConstructAndRun(bool $isCLI): void {
 		$backgroundJob = new EmailNotification(
+			$this->createMock(ITimeFactory::class),
 			$this->createMock(MailQueueHandler::class),
 			$isCLI
 		);
 
 		$jobList = $this->createMock(IJobList::class);
-		$logger = $this->createMock(ILogger::class);
 
-		/** @var JobList $jobList */
-		$backgroundJob->execute($jobList, $logger);
+		/** @var IJobList $jobList */
+		$backgroundJob->start($jobList);
 		$this->assertTrue(true);
 	}
 }
