@@ -94,7 +94,7 @@ class RemoteActivityController extends OCSController {
 			->where($query->expr()->eq('share_token', $query->createNamedParameter($token)))
 			->andWhere($query->expr()->eq('user', $query->createNamedParameter($user->getUID())));
 
-		$result = $query->execute();
+		$result = $query->executeQuery();
 		$share = $result->fetch();
 		$result->closeCursor();
 

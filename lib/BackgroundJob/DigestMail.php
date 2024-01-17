@@ -23,9 +23,9 @@ declare(strict_types=1);
 
 namespace OCA\Activity\BackgroundJob;
 
-use OC\BackgroundJob\TimedJob;
 use OCA\Activity\DigestSender;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\BackgroundJob\TimedJob;
 
 class DigestMail extends TimedJob {
 	/** @var DigestSender */
