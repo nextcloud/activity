@@ -661,17 +661,37 @@ class FilesHooks {
 	/**
 	 * Manage sharing events
 	 *
-	 * @param array $params The hook params
+	 * @param IShare $share the share from the event
 	 */
-	public function share($params) {
-		if ($params['itemType'] === 'file' || $params['itemType'] === 'folder') {
-			if ((int)$params['shareType'] === IShare::TYPE_USER) {
-				$this->shareWithUser($params['shareWith'], (int)$params['fileSource'], $params['itemType'], $params['fileTarget']);
-			} elseif ((int)$params['shareType'] === IShare::TYPE_GROUP) {
-				$this->shareWithGroup($params['shareWith'], (int)$params['fileSource'], $params['itemType'], $params['fileTarget'], (int)$params['id']);
-			} elseif ((int)$params['shareType'] === IShare::TYPE_LINK) {
-				$this->shareByLink((int)$params['fileSource'], $params['itemType'], $params['uidOwner']);
-			}
+	public function share($share) {
+		switch($share->getShareType()) {
+			case IShare::TYPE_USER:
+				$this->shareWithUser(
+					$share->getSharedWith(),
+					$share->getNodeId(),
+					$share->getNodeType(),
+					$share->getTarget()
+				);
+				break;
+			case IShare::TYPE_GROUP:
+				$this->shareWithGroup(
+					$share->getSharedWith(),
+					$share->getNodeId(),
+					$share->getNodeType(),
+					$share->getTarget(),
+					(int)$share->getId()
+				);
+				break;
+			case IShare::TYPE_LINK:
+				$this->shareByLink(
+					$share->getNodeId(),
+					$share->getNodeType(),
+					$share->getSharedBy()
+				);
+				break;
+			default:
+				// Currently not supported
+				break;
 		}
 	}
 
@@ -990,7 +1010,7 @@ class FilesHooks {
 			->from('share')
 			->where($queryBuilder->expr()->eq('parent', $queryBuilder->createParameter('parent')))
 			->setParameter('parent', (int)$shareId);
-		$query = $queryBuilder->execute();
+		$query = $queryBuilder->executeQuery();
 
 		while ($row = $query->fetch()) {
 			$affectedUsers[$row['share_with']] = $row['file_target'];
@@ -1222,7 +1242,7 @@ class FilesHooks {
 		try {
 			$ruleManager = \OC::$server->get(\OCA\GroupFolders\ACL\RuleManager::class);
 			$folderManager = \OC::$server->get(\OCA\GroupFolders\Folder\FolderManager::class);
-		} catch (\Exception $e) {
+		} catch (\Throwable $e) {
 			return []; // if we have no access to RuleManager, we cannot filter unrelated users
 		}
 
