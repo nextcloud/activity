@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "{filename} aç",
     "in {path}" : "{path} içinde",
     "Home" : "Giriş",
-    "Your activities" : "İşlemleriniz",
     "Loading activities" : "İşlemler yükleniyor",
     "This stream will show events like additions, changes & shares" : "Bu akışta ekleme, değiştirme ve paylaşım gibi olaylar görüntülenir",
     "No activity yet" : "Henüz bir işlem yok",

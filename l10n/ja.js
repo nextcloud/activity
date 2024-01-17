@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "{filename} を開く",
     "in {path}" : "場所： {path}",
     "Home" : "ホーム",
-    "Your activities" : "あなたのアクティビティ",
     "Loading activities" : "アクティビティを読み込み中",
     "This stream will show events like additions, changes & shares" : "このタイムラインには、追加、変更、共有が表示されます。",
     "No activity yet" : "まだアクティビティはありません",

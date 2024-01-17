@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "إفتح {filename}",
     "in {path}" : "في {path}",
     "Home" : "الرئيسية",
-    "Your activities" : "حركاتك",
     "Loading activities" : "تحميل الحركات",
     "This stream will show events like additions, changes & shares" : "هذا الجدول سيُظهر الأحداث، مثل الإضافات والتغييرات والمشاركات",
     "No activity yet" : "لا توجد أيّ حركاتٍ حتى الأن",

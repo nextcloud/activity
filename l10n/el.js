@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "Άνοιγμα {filename}",
     "in {path}" : "στην {path}",
     "Home" : "Αρχική",
-    "Your activities" : "Οι δραστηριότητές σας",
     "Loading activities" : "Φόρτωση δραστηριοτήτων",
     "This stream will show events like additions, changes & shares" : "Αυτή η ροή θα δείξει γεγονότα όπως προσθήκες, αλλαγές και διαμοιρασμούς",
     "No activity yet" : "Καμία δραστηριότητα ακόμα",

@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "گشودن {filename}",
     "in {path}" : "در { مسیر }",
     "Home" : "خانه",
-    "Your activities" : "فعالیت‌های شما",
     "Loading activities" : "در حال بارگیری فعالیت‌های",
     "This stream will show events like additions, changes & shares" : "این رسانه به شما رویدادهایی نظیر تغیرات و به اشتراک گذاشته ها را نشان می دهد ",
     "No activity yet" : "هنوز فعالیتی انجام نشده",

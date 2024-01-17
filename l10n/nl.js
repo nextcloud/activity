@@ -41,7 +41,6 @@ OC.L10N.register(
     "Open {filename}" : "Openen {bestandsnaam}",
     "in {path}" : "in {path}",
     "Home" : "Thuis",
-    "Your activities" : "Uw activiteiten",
     "Loading activities" : "Laden activiteiten",
     "This stream will show events like additions, changes & shares" : "Deze stream laat gebeurtenissen zoals toevoegingen, veranderingen en gedeelde bestanden zien",
     "No activity yet" : "Nog geen activiteiten",
