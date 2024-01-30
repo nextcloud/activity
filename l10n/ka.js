@@ -1,8 +1,8 @@
 OC.L10N.register(
     "activity",
     {
-    "Personal activity feed for %s" : "Personal activity feed for %s",
-    "Your feed URL is invalid" : "Your feed URL is invalid",
+    "Personal activity feed for %s" : "პირადო აქრივობის ნაკადი %s-სთვის",
+    "Your feed URL is invalid" : "თქვენი ნაკადის URL არასწორია",
     "Activity feed for %1$s" : "Activity feed for %1$s",
     "Activity feed" : "Activity feed",
     "Your settings have been updated." : "Your settings have been updated.",
