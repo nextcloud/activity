@@ -82,12 +82,4 @@ class FilesHooksStatic {
 	public static function fileRestore($params) {
 		self::getHooks()->fileRestore($params['filePath']);
 	}
-
-	/**
-	 * Manage sharing events
-	 * @param array $params The hook params
-	 */
-	public static function share($params) {
-		self::getHooks()->share($params);
-	}
 }

@@ -26,6 +26,7 @@ use OCA\Activity\FilesHooks;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\Share\Events\BeforeShareDeletedEvent;
+use OCP\Share\Events\ShareCreatedEvent;
 use OCP\Share\Events\ShareDeletedFromSelfEvent;
 
 /**
@@ -47,6 +48,18 @@ class ShareEventListener implements IEventListener {
 		if ($event instanceof ShareDeletedFromSelfEvent) {
 			$this->unShareSelf($event);
 		}
+
+		if ($event instanceof ShareCreatedEvent) {
+			$this->createShare($event);
+		}
+	}
+
+	/**
+	 * Node shared event
+	 */
+	public function createShare(ShareCreatedEvent $event): void {
+		$share = $event->getShare();
+		$this->fileHooks->share($share);
 	}
 
 	/**

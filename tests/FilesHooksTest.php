@@ -43,6 +43,7 @@ use OCP\IGroup;
 use OCP\IGroupManager;
 use OCP\IURLGenerator;
 use OCP\IUser;
+use OCP\Share\IManager as ShareIManager;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -485,13 +486,16 @@ class FilesHooksTest extends TestCase {
 			->method('shareWithUser')
 			->with('u1', 1337, 'file', 'path');
 
-		$filesHooks->share([
-			'fileSource' => 1337,
-			'shareType' => IShare::TYPE_USER,
-			'shareWith' => 'u1',
-			'itemType' => 'file',
-			'fileTarget' => 'path',
-		]);
+		/** @var ShareIManager */
+		$manager = \OC::$server->get(ShareIManager::class);
+		$share = $manager->newShare();
+		$share->setSharedWith('u1');
+		$share->setShareType(IShare::TYPE_USER);
+		$share->setTarget('path');
+		$share->setNodeType('file');
+		$share->setNodeId(1337);
+
+		$filesHooks->share($share);
 	}
 
 	public function testHookShareWithGroup(): void {
@@ -503,14 +507,17 @@ class FilesHooksTest extends TestCase {
 			->method('shareWithGroup')
 			->with('g1', 1337, 'file', 'path', 42);
 
-		$filesHooks->share([
-			'fileSource' => 1337,
-			'shareType' => IShare::TYPE_GROUP,
-			'shareWith' => 'g1',
-			'itemType' => 'file',
-			'fileTarget' => 'path',
-			'id' => '42',
-		]);
+		/** @var ShareIManager */
+		$manager = \OC::$server->get(ShareIManager::class);
+		$share = $manager->newShare();
+		$share->setId('42');
+		$share->setSharedWith('g1');
+		$share->setShareType(IShare::TYPE_GROUP);
+		$share->setTarget('path');
+		$share->setNodeType('file');
+		$share->setNodeId(1337);
+
+		$filesHooks->share($share);
 	}
 
 	public function testShareViaPublicLink(): void {
@@ -522,12 +529,15 @@ class FilesHooksTest extends TestCase {
 			->method('shareByLink')
 			->with(1337, 'file', 'admin');
 
-		$filesHooks->share([
-			'fileSource' => 1337,
-			'shareType' => IShare::TYPE_LINK,
-			'itemType' => 'file',
-			'uidOwner' => 'admin',
-		]);
+		/** @var ShareIManager */
+		$manager = \OC::$server->get(ShareIManager::class);
+		$share = $manager->newShare();
+		$share->setShareType(IShare::TYPE_LINK);
+		$share->setNodeType('file');
+		$share->setNodeId(1337);
+		$share->setSharedBy('admin');
+
+		$filesHooks->share($share);
 	}
 
 	public function dataShareWithUser(): array {
