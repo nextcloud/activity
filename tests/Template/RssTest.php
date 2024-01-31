@@ -78,7 +78,7 @@ class RssTest extends TestCase {
 					['activity_id' => 1337, 'subject' => '', 'link' => '', 'timestamp' => 0, 'message' => ''],
 				],
 				'		<item>'
-				. "\n" . '			<guid isPermaLink="false">1337</guid>'
+				. "\n" . '			<guid isPermaLink="false">http://nextcloud.org?id=1337</guid>'
 				. "\n" . '		</item>',
 			],
 			[
@@ -86,7 +86,7 @@ class RssTest extends TestCase {
 					['activity_id' => 42, 'subject' => 'text', 'link' => 'http://docs.nextcloud.org', 'timestamp' => 21, 'message' => 'text2'],
 				],
 				'		<item>'
-				. "\n" . '			<guid isPermaLink="false">42</guid>'
+				. "\n" . '			<guid isPermaLink="false">http://nextcloud.org?id=42</guid>'
 				. "\n" . '			<title>text</title>'
 				. "\n" . '			<link>http://docs.nextcloud.org</link>'
 				. "\n" . '			<pubDate>Thu, 01 Jan 1970 00:00:21 +0000</pubDate>'
@@ -98,7 +98,7 @@ class RssTest extends TestCase {
 					['activity_id' => 42, 'subject' => 'text', 'link' => 'http://docs.nextcloud.org', 'timestamp' => 21],
 				],
 				'		<item>'
-				. "\n" . '			<guid isPermaLink="false">42</guid>'
+				. "\n" . '			<guid isPermaLink="false">http://nextcloud.org?id=42</guid>'
 				. "\n" . '			<title>text</title>'
 				. "\n" . '			<link>http://docs.nextcloud.org</link>'
 				. "\n" . '			<pubDate>Thu, 01 Jan 1970 00:00:21 +0000</pubDate>'
