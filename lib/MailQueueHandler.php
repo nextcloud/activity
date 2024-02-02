@@ -466,7 +466,7 @@ class MailQueueHandler {
 		foreach ($this->activityManager->getProviders() as $provider) {
 			try {
 				$event = $provider->parse($lang, $event);
-			} catch (\InvalidArgumentException $e) {
+			} catch (\Throwable $e) {
 			}
 		}
 		$this->activityManager->setFormattingObject('', 0);
