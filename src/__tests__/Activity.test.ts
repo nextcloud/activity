@@ -33,8 +33,8 @@ const realDateNow = Date.now
 
 beforeAll(() => {
 	vi.useFakeTimers()
+	vi.setSystemTime(currentDate)
 	window.document.head.setAttribute('data-user', 'admin')
-	window.Date.now = vi.fn(() => currentDate.getTime())
 })
 
 afterAll(() => {
@@ -51,18 +51,16 @@ const expectLinkWithText = (wrapper, text) => {
 
 test('Display relative date gets updated every minutes', async () => {
 	const wrapper = mount(Activity, { propsData: { activity: new ActivityModel(wsData.ocs.data[1]), showPreviews: true } })
-	expect(wrapper.text()).toContain('You renamed Test file - renamed.md to Test file - renamed - looooooooong.md')
+	await nextTick()
 
+	expect(wrapper.text()).toContain('You renamed Test file - renamed.md to Test file - renamed - looooooooong.md')
 	expect(wrapper.find('[data-testid="activity-date"]').text()).toContain('3 days ago')
 
 	const currentDatePlusOneDay = new Date('2021-05-03T12:00:00+00:00')
-	window.Date.now = vi.fn(() => currentDatePlusOneDay.getTime())
-
+	vi.setSystemTime(currentDatePlusOneDay)
 	vi.advanceTimersByTime(60 * 1000)
 	await nextTick()
 	expect(wrapper.find('[data-testid="activity-date"]').text()).toContain('4 days ago')
-
-	window.Date.now = vi.fn(() => currentDate.getTime())
 })
 
 test('Display correct information for renames', async () => {
