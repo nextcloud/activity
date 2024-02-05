@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2020 Robin Appelman <robin@icewind.nl>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -28,20 +28,17 @@ use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
 
 class DigestMail extends TimedJob {
-	/** @var DigestSender */
-	protected $digestSender;
-	/** @var ITimeFactory */
-	protected $timeFactory;
 
-	public function __construct(DigestSender $digestSender, ITimeFactory $timeFactory) {
+	public function __construct(
+		ITimeFactory $timeFactory,
+		protected DigestSender $digestSender,
+	) {
+		parent::__construct($timeFactory);
 		// run hourly
 		$this->setInterval(60 * 60);
-
-		$this->digestSender = $digestSender;
-		$this->timeFactory = $timeFactory;
 	}
 
 	protected function run($argument) {
-		$this->digestSender->sendDigests($this->timeFactory->getTime());
+		$this->digestSender->sendDigests($this->time->getTime());
 	}
 }
