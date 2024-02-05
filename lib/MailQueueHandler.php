@@ -435,6 +435,7 @@ class MailQueueHandler {
 			try {
 				$event = $provider->parse($lang, $event);
 			} catch (\Throwable $e) {
+				$this->logger->error('Error while parsing activity event', ['exception' => $e]);
 			}
 		}
 		$this->activityManager->setFormattingObject('', 0);
