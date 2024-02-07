@@ -73,7 +73,7 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/vue
-version: 8.6.1
+version: 8.6.2
 license: AGPL-3.0
 
 @nextcloud/vue-select
