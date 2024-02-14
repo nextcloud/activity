@@ -1,6 +1,7 @@
 { "translations": {
     "Personal activity feed for %s" : "Prehľad aktivít pre používateľa %s",
     "Your feed URL is invalid" : "Váš kanál URL je neplatný",
+    "Activity feed for %1$s" : "Informačný kanál aktivity pre %1$s",
     "Activity feed" : "Prehľad aktivít",
     "Your settings have been updated." : "Vaše nastavenia boli aktualizované.",
     "Settings have been updated." : "Nastavenia boli aktualizované.",
@@ -38,13 +39,20 @@
     "Open {filename}" : "Otvoriť {filename}",
     "in {path}" : "v {path}",
     "Home" : "Domov",
+    "Loading activities" : "Načítavam aktivity",
     "This stream will show events like additions, changes & shares" : "Tento dátový prúd zobrazuje udalosti ako pridanie, zmeny a sprístupnenia",
     "No activity yet" : "Zatiaľ žiadne aktivity.",
+    "Loading more activities" : "Načítavam ďalšie aktivity",
+    "No more activities." : "Žiadne ďalšie aktivity.",
+    "Could not load activities" : "Aktivity sa nepodarilo načítať",
     "Activity settings" : "Nastavenia aktivity",
     "Enable RSS feed" : "Povoliť RSS kanál",
     "RSS feed" : "RSS kanál",
     "Copy RSS feed link" : "Kopírovať odkaz na RSS kanál",
     "Personal notification settings" : "Osobné nastavenia upozornení",
+    "Could not enable RSS link" : "Nepodarilo sa zapnúť RSS odkaz",
+    "RSS link copied to clipboard" : "RSS odkaz bol skopírovaný do schránky",
+    "Could not copy the RSS link, please copy manually:" : "Nepodarilo sa skopírovať RSS odkaz, skopírujte ho ručne:",
     "Unable to load the activity list" : "Nie je možné načítať zoznam aktivít.",
     "Notification" : "Oznámenie",
     "Enable notification emails" : "Zapnúť upozorňovanie e-mailom",
@@ -63,6 +71,7 @@
     "{name} (invisible)" : "{name} (neviditeľné)",
     "{name} (restricted)" : "{name} (obmedzené)",
     "There are no events for this filter" : "Pre tieto kritériá nie sú žiadne udalosti",
-    "Activities" : "Aktivity"
+    "Activities" : "Aktivity",
+    "Could not load activites" : "Nepodarilo sa načítať aktivity"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"
 }
