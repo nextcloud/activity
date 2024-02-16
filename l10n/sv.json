@@ -20,7 +20,7 @@
     "Mail" : "E-post",
     "Push" : "Push",
     "Activity" : "Aktiviteter",
-    "Notifications" : "Aviseringar",
+    "Notifications" : "Notiser",
     "This application enables people to view a log of activities about them, their files or other data." : "Denna applikation låter användare se en aktivitetslogg om sig själva, sina filer eller annan information.",
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Appen tillåter användare att se åtgärder relaterade till sina filer och data i Nextcloud.\n\t\tAlla användare kan välja egna inställningar,\n\t\tatt välja vilka aktiviteter som skall skickas vidare till mobiler, skickas med e-post\n\t\teller om dagliga sammanställningar skall skicka varje morgon.\n\t\tYtterligare information finns dokumentationen Aktivitet.",
     "Activity notification configuration" : "Inställningar för aktivitetsnotiser",
