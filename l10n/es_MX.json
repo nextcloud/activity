@@ -1,6 +1,7 @@
 { "translations": {
     "Personal activity feed for %s" : "Fuente de actividad personal para %s",
     "Your feed URL is invalid" : "La URL de tu fuente de es inválida",
+    "Activity feed for %1$s" : "Fuente de actividad para %1$s",
     "Activity feed" : "Fuente de actividad",
     "Your settings have been updated." : "Tus configuraciones se han actualizado.",
     "Settings have been updated." : "Las configuraciones han sido actualizadas",
