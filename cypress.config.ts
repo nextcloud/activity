@@ -8,7 +8,7 @@ import {
 import { defineConfig } from 'cypress'
 
 import vitePreprocessor from 'cypress-vite'
-import getCompareSnapshotsPlugin from 'cypress-visual-regression/dist/plugin'
+import { configureVisualRegression } from 'cypress-visual-regression/dist/plugin'
 
 export default defineConfig({
 	projectId: '5bsgwk',
@@ -32,8 +32,9 @@ export default defineConfig({
 
 	// Visual regression testing
 	env: {
-		failSilently: false,
-		type: 'actual',
+		visualRegressionFailSilently: false,
+		visualRegressionGenerateDiff: 'always',
+		visualRegressionType: 'regression',
 	},
 	screenshotsFolder: 'cypress/snapshots/actual',
 	trashAssetsBeforeRuns: true,
@@ -48,7 +49,7 @@ export default defineConfig({
 			on('file:preprocessor', vitePreprocessor({ configFile: false }))
 
 			// Enable the snapshot compare plugin
-			getCompareSnapshotsPlugin(on, config)
+			configureVisualRegression(on)
 
 			// Disable spell checking to prevent rendering differences
 			on('before:browser:launch', (browser, launchOptions) => {
@@ -69,23 +70,17 @@ export default defineConfig({
 			})
 
 			// Remove container after run
-			on('after:run', () => {
-				stopNextcloud()
+			on('after:run', async () => {
+				await stopNextcloud()
 			})
 
 			// Before the browser launches
 			// starting Nextcloud testing container
-			return startNextcloud(process.env.BRANCH)
-				.then((ip) => {
-					// Setting container's IP as base Url
-					config.baseUrl = `http://${ip}/index.php`
-					return ip
-				})
-				.then(waitOnNextcloud)
-				.then(() => configureNextcloud(process.env.BRANCH))
-				.then(() => {
-					return config
-				})
+			const ip = await startNextcloud(process.env.BRANCH)
+			config.baseUrl = `http://${ip}/index.php`
+			await waitOnNextcloud(ip)
+			await configureNextcloud(process.env.BRANCH)
+			return config
 		},
 	},
 })

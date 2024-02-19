@@ -4,6 +4,7 @@
 	"compilerOptions": {
 		"types": [
 			"cypress",
+			"cypress-visual-regression",
 			"dockerode",
 			"node"
 		]
