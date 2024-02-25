@@ -1,6 +1,7 @@
 { "translations": {
     "Personal activity feed for %s" : "Propra aktivaĵa fluo por %s",
     "Your feed URL is invalid" : "Via fluo-adreso ne validas",
+    "Activity feed for %1$s" : "Aktivaĵa fluo por %1$s",
     "Activity feed" : "Aktivaĵa fluo",
     "Your settings have been updated." : "Viaj agordoj ĝisdatiĝis.",
     "Settings have been updated." : "Agordoj estis ĝisdatigitaj.",
@@ -34,16 +35,21 @@
     "Daily" : "Ĉiutage",
     "Weekly" : "Ĉiusemajne",
     "You commented" : "Vi komentis",
+    "Message deleted by author" : "Mesaĝo estas forigita per aǔtoro",
     "Open {filename}" : "Malfermi {filename}",
     "in {path}" : "ene de {path}",
     "Home" : "Hejmo",
+    "Loading activities" : "Ŝargante aktivaĵojn",
     "This stream will show events like additions, changes & shares" : "Tiu ĉi fluo montros eventojn kiel aldonojn, ŝanĝojn kaj kunhavigojn",
     "No activity yet" : "Ankoraŭ neniu aktivaĵo",
+    "Loading more activities" : "Ŝargante pli da aktivaĵojn",
+    "No more activities." : "Ne estas pli da aktivecoj",
     "Activity settings" : "Agordoj de aktivaĵoj",
     "Enable RSS feed" : "Aktivigi RSS-fluon",
     "RSS feed" : "RSS-a fluo",
     "Copy RSS feed link" : "Kopii RSS-fluan ligilon",
     "Personal notification settings" : "Agordoj de persona sciigo",
+    "RSS link copied to clipboard" : "RSS ligilo estas kopiita en tondujo",
     "Unable to load the activity list" : "Ne eblis ŝargi la liston de aktivaĵoj",
     "Notification" : "Atentigo",
     "Enable notification emails" : "Ebligi atentigajn retmesaĝojn",
@@ -62,6 +68,7 @@
     "{name} (invisible)" : "{name} (nevidebla)",
     "{name} (restricted)" : "{name} (limigita)",
     "There are no events for this filter" : "Neniu evento kun tiu ĉi filtrilo",
-    "Activities" : "Aktivaĵoj"
+    "Activities" : "Aktivaĵoj",
+    "Could not load activites" : "Ne eblas ŝargi aktivaĵojn"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
