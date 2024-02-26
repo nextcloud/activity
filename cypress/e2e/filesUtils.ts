@@ -38,7 +38,8 @@ export function goToDir(dirName: string) {
 export function createFolder (dirName: string) {
 	cy.get('.files-list__header .breadcrumb__actions button.action-item__menutoggle').click()
 	cy.get('.v-popper__popper').contains('New folder').click()
-	cy.get('.files-list form.files-list__row-rename input[type="text"]').clear().type(`${dirName}{enter}`)
+	cy.contains('Folder name').siblings('input').clear()
+	cy.contains('Folder name').siblings('input').type(`${dirName}{enter}`)
 	cy.log('Created folder', dirName)
 	cy.wait(500)
 }
