@@ -10,7 +10,7 @@ OC.L10N.register(
     "No activities" : "אין פעילויות",
     "More activities" : "פעילויות נוספות",
     "Daily activity summary for %s" : "סיכום פעילות יומית עבור %s",
-    "_and %n more _::_and %n more _" : ["ו־%n נוסף","ו־%n נוספים","ו־%n נוספים","ו־%n נוספים"],
+    "_and %n more _::_and %n more _" : ["ו־%n נוסף","ו־%n נוספים","ו־%n נוספים"],
     "All activities" : "כל הפעילויות",
     "By others" : "על ידי אחרים",
     "By you" : "על ידך",
@@ -62,4 +62,4 @@ OC.L10N.register(
     "There are no events for this filter" : "אין אירועים לסינון זה",
     "Activities" : "פעילויות"
 },
-"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");
+"nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");
