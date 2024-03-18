@@ -434,6 +434,8 @@ class MailQueueHandler {
 		foreach ($this->activityManager->getProviders() as $provider) {
 			try {
 				$event = $provider->parse($lang, $event);
+			} catch (\InvalidArgumentException $e) {
+				/* Ignore */
 			} catch (\Throwable $e) {
 				$this->logger->error('Error while parsing activity event', ['exception' => $e]);
 			}
