@@ -36,7 +36,7 @@
 		]
 	},
 	"require-dev": {
-		"nextcloud/ocp": "dev-master",
+		"nextcloud/ocp": "dev-stable29",
 		"phpunit/phpunit": "^9.5",
 		"psalm/phar": "^5.15"
 	},
