@@ -1,7 +1,7 @@
 {
   "name": "activity",
   "description": "This application enables people to view a log of activities about them or about files.",
-  "version": "2.21.0",
+  "version": "3.0.0",
   "author": "Julius Härtl <jus@bitgrid.net",
   "contributors": [],
   "bugs": {
