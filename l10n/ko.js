@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (숨겨짐)",
     "{name} (restricted)" : "{name} (제한됨)",
     "There are no events for this filter" : "이 필터를 만족하는 이벤트 없음",
-    "Activities" : "활동",
     "Could not load activites" : "활동을 불러올 수 없습니다"
 },
 "nplurals=1; plural=0;");

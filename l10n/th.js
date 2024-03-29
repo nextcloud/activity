@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (ไม่แสดงสถานะ)",
     "{name} (restricted)" : "{name} (จำกัด)",
     "There are no events for this filter" : "ไม่มีกิจกรรมสำหรับตัวกรองนี้",
-    "Activities" : "กิจกรรม",
     "Could not load activites" : "ไม่สามารถโหลดกิจกรรมได้"
 },
 "nplurals=1; plural=0;");

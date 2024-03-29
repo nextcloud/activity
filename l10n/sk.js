@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (neviditeľné)",
     "{name} (restricted)" : "{name} (obmedzené)",
     "There are no events for this filter" : "Pre tieto kritériá nie sú žiadne udalosti",
-    "Activities" : "Aktivity",
     "Could not load activites" : "Nepodarilo sa načítať aktivity"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

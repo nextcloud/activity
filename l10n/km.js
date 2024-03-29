@@ -49,7 +49,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "ចុច Ctrl-C ដើម្បីចម្លង",
     "{name} (invisible)" : "{name} (ដែលមើលមិនឃើញ)",
     "{name} (restricted)" : "{name} (ដែលហាមឃាត់)",
-    "There are no events for this filter" : "គ្មានព្រឹត្តិការណ៍សម្រាប់ចម្រោះនេះ",
-    "Activities" : "សកម្មភាពផ្សេងៗ"
+    "There are no events for this filter" : "គ្មានព្រឹត្តិការណ៍សម្រាប់ចម្រោះនេះ"
 },
 "nplurals=1; plural=0;");

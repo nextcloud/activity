@@ -63,7 +63,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Pritisnite Ctrl-C za kopiranje.",
     "{name} (invisible)" : "{name} (nevidljivo)",
     "{name} (restricted)" : "{name} (ograničeno)",
-    "There are no events for this filter" : "Nema događaja koji odgovaraju ovom filtru",
-    "Activities" : "Aktivnosti"
+    "There are no events for this filter" : "Nema događaja koji odgovaraju ovom filtru"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

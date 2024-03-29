@@ -25,7 +25,6 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "ကူးယူရန်အတွက် ⌘-C ကိုနှိပ်ပါ။",
     "Press Ctrl-C to copy." : "ကူးယူရန်အတွက် Ctrl-C ကိုနှိပ်ပါ။",
     "{name} (restricted)" : "{name} (ကန့်သတ်ထား)",
-    "There are no events for this filter" : "ဤ စစ်ထုတ်မှုအတွက် ဖြစ်စဉ် တစ်ခုမှမရှိပါ။",
-    "Activities" : "လုပ်ဆောင်မှုများ"
+    "There are no events for this filter" : "ဤ စစ်ထုတ်မှုအတွက် ဖြစ်စဉ် တစ်ခုမှမရှိပါ။"
 },
 "nplurals=1; plural=0;");

@@ -63,7 +63,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Хуулахын тулд Ctrl-C дарна уу.",
     "{name} (invisible)" : "{name} (үл харагдах)",
     "{name} (restricted)" : "{name} (хязгаартай)",
-    "There are no events for this filter" : "Энд ямар нэг үйл явдал алга",
-    "Activities" : "Үйлдлүүд"
+    "There are no events for this filter" : "Энд ямар нэг үйл явдал алга"
 },
 "nplurals=2; plural=(n != 1);");

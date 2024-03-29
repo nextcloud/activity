@@ -33,7 +33,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Dréck CTRL-C fir ze kopéieren.",
     "{name} (invisible)" : "[Numm][verstoppt]",
     "{name} (restricted)" : "[Numm][verbueden]",
-    "There are no events for this filter" : "Et gi keng Evenenementer fir dëse Filter",
-    "Activities" : "Aktivitéiten"
+    "There are no events for this filter" : "Et gi keng Evenenementer fir dëse Filter"
 },
 "nplurals=2; plural=(n != 1);");

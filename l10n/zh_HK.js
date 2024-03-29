@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name}（隱藏）",
     "{name} (restricted)" : "{name}（受限）",
     "There are no events for this filter" : "在此篩選器下沒有系統事件",
-    "Activities" : "活動",
     "Could not load activites" : "無法載入活動"
 },
 "nplurals=1; plural=0;");

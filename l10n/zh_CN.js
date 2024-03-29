@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (不可见)",
     "{name} (restricted)" : "{name} (受限的)",
     "There are no events for this filter" : "没有符合当前筛选条件的事件。",
-    "Activities" : "动态",
     "Could not load activites" : "无法加载动态"
 },
 "nplurals=1; plural=0;");

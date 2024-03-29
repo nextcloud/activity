@@ -61,7 +61,6 @@
     "Press Ctrl-C to copy." : "Притиснете Ctrl-C за да копирате.",
     "{name} (invisible)" : "{name} (невидливо)",
     "{name} (restricted)" : "{name} (ограничено)",
-    "There are no events for this filter" : "Нема настани за овој филтер",
-    "Activities" : "Активности"
+    "There are no events for this filter" : "Нема настани за овој филтер"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }
