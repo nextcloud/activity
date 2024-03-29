@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (ósýnilegt)",
     "{name} (restricted)" : "{name} (takmarkað)",
     "There are no events for this filter" : "Engir atburðir finnast með síunni",
-    "Activities" : "Athafnir",
     "Could not load activites" : "Gat ekki hlaðið inn athöfnum"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

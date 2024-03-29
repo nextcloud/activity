@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (neviditelné)",
     "{name} (restricted)" : "{name} (omezeno)",
     "There are no events for this filter" : "Tato kritéria nesplňují žádné události",
-    "Activities" : "Aktivity",
     "Could not load activites" : "Nepodařilo se načíst aktivity"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

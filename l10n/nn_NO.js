@@ -50,7 +50,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Trykk Ctrl-C for å kopiere.",
     "{name} (invisible)" : "{namn} (usynleg)",
     "{name} (restricted)" : "{namn} (avgrensa)",
-    "There are no events for this filter" : "Det er ikkje nokon hendingar for dette filteret",
-    "Activities" : "Aktivitetar"
+    "There are no events for this filter" : "Det er ikkje nokon hendingar for dette filteret"
 },
 "nplurals=2; plural=(n != 1);");

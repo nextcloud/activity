@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (invizibil)",
     "{name} (restricted)" : "{name} (restricționat)",
     "There are no events for this filter" : "Nu sunt evenimente pentru acest filtru",
-    "Activities" : "Activități",
     "Could not load activites" : "Activitățile nu s-au putut încărca"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

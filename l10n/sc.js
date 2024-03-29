@@ -52,7 +52,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Incarca Ctrl-C pro copiare.",
     "{name} (invisible)" : "{name} (invisìbile)",
     "{name} (restricted)" : "{name} (limitadu)",
-    "There are no events for this filter" : "Non ddoe at eventos pro custu filtru",
-    "Activities" : "Atividades"
+    "There are no events for this filter" : "Non ddoe at eventos pro custu filtru"
 },
 "nplurals=2; plural=(n != 1);");

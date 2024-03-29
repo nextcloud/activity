@@ -52,7 +52,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Senned ɣef Ctrl-C akken ad tneɣleḍ.",
     "{name} (invisible)" : "{isem} (uffir)",
     "{name} (restricted)" : "{isem} (yegdel)",
-    "There are no events for this filter" : "Ulac ineḍruyen i testayt-agi",
-    "Activities" : "Irmuden"
+    "There are no events for this filter" : "Ulac ineḍruyen i testayt-agi"
 },
 "nplurals=2; plural=(n != 1);");

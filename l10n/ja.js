@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (非表示)",
     "{name} (restricted)" : "{name} (制限)",
     "There are no events for this filter" : "このフィルターで表示されるイベントはありません。",
-    "Activities" : "アクティビティ",
     "Could not load activites" : "アクティビティを読み込めませんでした"
 },
 "nplurals=1; plural=0;");

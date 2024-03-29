@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (ikusezina)",
     "{name} (restricted)" : "{name} (mugatua)",
     "There are no events for this filter" : "Ez dago gertaerarik iragazki honetarako",
-    "Activities" : "Jarduerak",
     "Could not load activites" : "Ezin izan dira jarduerak kargatu"
 },
 "nplurals=2; plural=(n != 1);");

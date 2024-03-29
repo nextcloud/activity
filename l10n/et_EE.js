@@ -63,7 +63,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Kopeerimiseks vajuta Ctrl + C.",
     "{name} (invisible)" : "{name} (nähtamatu)",
     "{name} (restricted)" : "{name} (piiratud)",
-    "There are no events for this filter" : "Selle filtri jaoks pole ühtegi sündmust",
-    "Activities" : "Tegevused"
+    "There are no events for this filter" : "Selle filtri jaoks pole ühtegi sündmust"
 },
 "nplurals=2; plural=(n != 1);");

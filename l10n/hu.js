@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (láthatatlan)",
     "{name} (restricted)" : "{name} (korlátozott)",
     "There are no events for this filter" : "Ehhez a szűrőhöz nem található esemény",
-    "Activities" : "Tevékenységek",
     "Could not load activites" : "Nem sikerült betölteni a tevékenységeket"
 },
 "nplurals=2; plural=(n != 1);");
