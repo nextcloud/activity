@@ -41,7 +41,6 @@ OC.L10N.register(
     "No more events to load" : "ບໍ່ມີເຫດການໃຫ້ໂຫລດອີກ",
     "Copied!" : "ກ໋ອບປີ້ແລ້ວ",
     "Not supported!" : "ບໍ່ຊັບຟອດ",
-    "Press Ctrl-C to copy." : "ກົດ Ctrl-C ເພື່ອ copy",
-    "Activities" : "ບັນດາກິດຈະກຳ"
+    "Press Ctrl-C to copy." : "ກົດ Ctrl-C ເພື່ອ copy"
 },
 "nplurals=1; plural=0;");

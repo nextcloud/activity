@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (უჩინარი)",
     "{name} (restricted)" : "{name} (შეზღუდული)",
     "There are no events for this filter" : "ამ ფილტრისთვის მოვლენა არ არის",
-    "Activities" : "აქტივობები",
     "Could not load activites" : "აქტივობების ჩატვირთვა ვერ ხერხდება"
 },
 "nplurals=2; plural=(n!=1);");

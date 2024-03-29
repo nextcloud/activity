@@ -47,7 +47,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Spied Ctrl-C lai kopētu.",
     "{name} (invisible)" : "{name} (neredzams)",
     "{name} (restricted)" : "{name} (ierobežots)",
-    "There are no events for this filter" : "Šim filtram nav notikumu",
-    "Activities" : "Darbības"
+    "There are no events for this filter" : "Šim filtram nav notikumu"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

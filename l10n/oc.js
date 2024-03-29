@@ -53,7 +53,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Quichar Ctrl-C per copiar.",
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (restricted)",
-    "There are no events for this filter" : "Cap d’eveniment per aqueste filtre",
-    "Activities" : "Activitats"
+    "There are no events for this filter" : "Cap d’eveniment per aqueste filtre"
 },
 "nplurals=2; plural=(n > 1);");

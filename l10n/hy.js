@@ -61,7 +61,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Սեղմել  Ctrl-C պատճենելու համար։",
     "{name} (invisible)" : "{անուն} (անտեսանելի)",
     "{name} (restricted)" : "{անուն} (սահմանափակ)",
-    "There are no events for this filter" : "Այս զտման համար իրադարձություն առկա չէ",
-    "Activities" : "Ակտիվություններ"
+    "There are no events for this filter" : "Այս զտման համար իրադարձություն առկա չէ"
 },
 "nplurals=2; plural=(n != 1);");

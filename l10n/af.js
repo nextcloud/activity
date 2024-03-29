@@ -47,7 +47,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Druk Ctrl-C om te kopieer.",
     "{name} (invisible)" : "{name} (onsigbaar)",
     "{name} (restricted)" : "{name} (beperk)",
-    "There are no events for this filter" : "Daar is geen gebeure vir hierdie filter",
-    "Activities" : "Aktiwiteite"
+    "There are no events for this filter" : "Daar is geen gebeure vir hierdie filter"
 },
 "nplurals=2; plural=(n != 1);");

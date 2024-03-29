@@ -70,7 +70,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (nevidebla)",
     "{name} (restricted)" : "{name} (limigita)",
     "There are no events for this filter" : "Neniu evento kun tiu ĉi filtrilo",
-    "Activities" : "Aktivaĵoj",
     "Could not load activites" : "Ne eblas ŝargi aktivaĵojn"
 },
 "nplurals=2; plural=(n != 1);");

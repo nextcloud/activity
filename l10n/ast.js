@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (torgóse)",
     "There are no events for this filter" : "Nun hai nengún eventu pa esta peñera",
-    "Activities" : "Actividaes",
     "Could not load activites" : "Nun se pudo cargar l'actividá"
 },
 "nplurals=2; plural=(n != 1);");

@@ -70,7 +70,6 @@
     "{name} (invisible)" : "{name} (tersembunyi)",
     "{name} (restricted)" : "{name} (terbatas)",
     "There are no events for this filter" : "Tidak ada peristiwa untuk filter ini",
-    "Activities" : "Aktivitas",
     "Could not load activites" : "Tidak dapat memuat aktivitas"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

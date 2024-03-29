@@ -64,7 +64,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "За копиране натиснете Ctrl-C",
     "{name} (invisible)" : "{name} (невидим)",
     "{name} (restricted)" : "{name} (ограничен)",
-    "There are no events for this filter" : "Няма събития от този филтър",
-    "Activities" : "Активности /дейности/"
+    "There are no events for this filter" : "Няма събития от този филтър"
 },
 "nplurals=2; plural=(n != 1);");

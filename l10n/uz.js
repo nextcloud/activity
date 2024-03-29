@@ -11,7 +11,6 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Press ⌘-C to copy.",
     "Press Ctrl-C to copy." : "Press Ctrl-C to copy.",
     "{name} (invisible)" : "{name} (invisible)",
-    "{name} (restricted)" : "{name} (restricted)",
-    "Activities" : "Activities"
+    "{name} (restricted)" : "{name} (restricted)"
 },
 "nplurals=1; plural=0;");

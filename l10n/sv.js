@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (osynlig)",
     "{name} (restricted)" : "{name} (begränsad)",
     "There are no events for this filter" : "Det finns inga aktiviteter för detta filter",
-    "Activities" : "Aktiviteter",
     "Could not load activites" : "Kunde inte läsa in aktiviteter"
 },
 "nplurals=2; plural=(n != 1);");

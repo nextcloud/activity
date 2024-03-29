@@ -59,7 +59,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "יש ללחוץ על Ctrl+C כדי להעתיק.",
     "{name} (invisible)" : "{name} (בלתי נראה)",
     "{name} (restricted)" : "{name} (מוגבל)",
-    "There are no events for this filter" : "אין אירועים לסינון זה",
-    "Activities" : "פעילויות"
+    "There are no events for this filter" : "אין אירועים לסינון זה"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");

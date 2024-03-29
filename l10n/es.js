@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (restringido)",
     "There are no events for this filter" : "No hay eventos para este filtro",
-    "Activities" : "Actividades",
     "Could not load activites" : "No se pudo cargar la actividad"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

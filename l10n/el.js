@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (αόρατος/η)",
     "{name} (restricted)" : "{name} (περιορισμένη πρόσβαση)",
     "There are no events for this filter" : "Δεν υπάρχουν γεγονότα για αυτό το φίλτρο",
-    "Activities" : "Δραστηριότητες",
     "Could not load activites" : "Δεν ήταν δυνατή η φόρτωση των δραστηριοτήτων"
 },
 "nplurals=2; plural=(n != 1);");

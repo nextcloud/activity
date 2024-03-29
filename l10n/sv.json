@@ -71,7 +71,6 @@
     "{name} (invisible)" : "{name} (osynlig)",
     "{name} (restricted)" : "{name} (begränsad)",
     "There are no events for this filter" : "Det finns inga aktiviteter för detta filter",
-    "Activities" : "Aktiviteter",
     "Could not load activites" : "Kunde inte läsa in aktiviteter"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

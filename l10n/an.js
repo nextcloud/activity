@@ -57,7 +57,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Pretar Ctrl-C pa copiar.",
     "{name} (invisible)" : "{nombre} (invisible)",
     "{name} (restricted)" : "{nombre} (restrinchiu)",
-    "There are no events for this filter" : "No i hai eventos pa iste filtro",
-    "Activities" : "Actividat"
+    "There are no events for this filter" : "No i hai eventos pa iste filtro"
 },
 "nplurals=2; plural=(n != 1);");

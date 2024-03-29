@@ -68,7 +68,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "برای کپی کردن از دکمه ctrl+c استفاده نمایید",
     "{name} (invisible)" : "{نام} (غیر قایل نمایش)",
     "{name} (restricted)" : "{نام } (دسترسی محدود) ",
-    "There are no events for this filter" : "هیچ رخدادی برای این فیلتر وجود ندارد",
-    "Activities" : "فعالیت‌ها"
+    "There are no events for this filter" : "هیچ رخدادی برای این فیلتر وجود ندارد"
 },
 "nplurals=2; plural=(n > 1);");
