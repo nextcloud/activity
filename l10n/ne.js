@@ -38,7 +38,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "प्रतिलिपि गर्न Ctrl-C थिच्नुहोस्।",
     "{name} (invisible)" : "{name} (invisible)",
     "{name} (restricted)" : "{name} (restricted)",
-    "There are no events for this filter" : "यस फिल्टरका लागि कुनै घटनाहरू छैनन्",
-    "Activities" : "क्रियाकलापहरू"
+    "There are no events for this filter" : "यस फिल्टरका लागि कुनै घटनाहरू छैनन्"
 },
 "nplurals=2; plural=(n != 1);");

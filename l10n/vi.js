@@ -64,7 +64,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Ấn Ctrl-C để sao chép",
     "{name} (invisible)" : "{name} (ẩn)",
     "{name} (restricted)" : "{name} (hạn chế)",
-    "There are no events for this filter" : "Không có sự kiện nào cho bộ lọc này",
-    "Activities" : "Hoạt động"
+    "There are no events for this filter" : "Không có sự kiện nào cho bộ lọc này"
 },
 "nplurals=1; plural=0;");

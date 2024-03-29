@@ -7,7 +7,6 @@ OC.L10N.register(
     "Today" : "Şu gün",
     "Yesterday" : "Düýn",
     "Home" : "Baş sahypa",
-    "No activity yet" : "Entek işjeňlik ýok",
-    "Activities" : "Çäreler"
+    "No activity yet" : "Entek işjeňlik ýok"
 },
 "nplurals=2; plural=(n != 1);");

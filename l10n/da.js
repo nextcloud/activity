@@ -63,7 +63,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Tryk Ctrl-C for at kopiere.",
     "{name} (invisible)" : "{navn} (usynlig)",
     "{name} (restricted)" : "{navn} (begrænset)",
-    "There are no events for this filter" : "Der er ingen aktiviteter for dette filter",
-    "Activities" : "Aktiviteter"
+    "There are no events for this filter" : "Der er ingen aktiviteter for dette filter"
 },
 "nplurals=2; plural=(n != 1);");

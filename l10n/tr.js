@@ -73,7 +73,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (görüntülenmez)",
     "{name} (restricted)" : "{name} (kısıtlanmış)",
     "There are no events for this filter" : "Bu süzgeçte herhangi bir olay yok",
-    "Activities" : "Etkinlikler",
     "Could not load activites" : "İşlemler yüklenemedi"
 },
 "nplurals=2; plural=(n > 1);");

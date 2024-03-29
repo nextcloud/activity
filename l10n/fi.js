@@ -67,7 +67,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (näkymätön)",
     "{name} (restricted)" : "{name} (rajoitettu)",
     "There are no events for this filter" : "Tällä suodattimella ei löydy tapahtumia",
-    "Activities" : "Tapahtumat",
     "Could not load activites" : "Tapahtumia ei voitu ladata"
 },
 "nplurals=2; plural=(n != 1);");

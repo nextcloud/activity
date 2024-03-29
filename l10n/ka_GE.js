@@ -42,7 +42,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "კოპირებისთვის დააჭირეთ Ctrl-C-ს.",
     "{name} (invisible)" : "{name} (უჩინარი)",
     "{name} (restricted)" : "{name} (აკრძალული)",
-    "There are no events for this filter" : "ამ ფილტრის შესაბამისი მოვლენები არაა",
-    "Activities" : "აქტივობები"
+    "There are no events for this filter" : "ამ ფილტრის შესაბამისი მოვლენები არაა"
 },
 "nplurals=2; plural=(n!=1);");

@@ -55,7 +55,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "कॉपी करने के लिए Ctrl-C दबाएँ.",
     "{name} (invisible)" : "{नाम} (अदृश्य)",
     "{name} (restricted)" : "{नाम} (प्रतिबंधित)",
-    "There are no events for this filter" : "इस फ़िल्टर के लिए कोई ईवेंट नहीं हैं",
-    "Activities" : "गतिविधियाँ"
+    "There are no events for this filter" : "इस फ़िल्टर के लिए कोई ईवेंट नहीं हैं"
 },
 "nplurals=2; plural=(n != 1);");

@@ -57,7 +57,6 @@
     "Press Ctrl-C to copy." : "Націсніце Ctrl-C для капіявання.",
     "{name} (invisible)" : "{name} (нябачны)",
     "{name} (restricted)" : "{name} (абмежаваны)",
-    "There are no events for this filter" : "Для гэтага фільтра няма падзей",
-    "Activities" : "Дзеянні"
+    "There are no events for this filter" : "Для гэтага фільтра няма падзей"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

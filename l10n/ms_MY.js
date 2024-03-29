@@ -29,7 +29,6 @@ OC.L10N.register(
     "Press ⌘-C to copy." : "Tekan ⌘-C untuk menyalin.",
     "Press Ctrl-C to copy." : "Tekan Ctrl-C untuk menyalin.",
     "{name} (invisible)" : "{nama} (halimunan)",
-    "{name} (restricted)" : "{nama} (disekat)",
-    "Activities" : "Aktiviti"
+    "{name} (restricted)" : "{nama} (disekat)"
 },
 "nplurals=1; plural=0;");

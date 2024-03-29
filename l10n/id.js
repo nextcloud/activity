@@ -72,7 +72,6 @@ OC.L10N.register(
     "{name} (invisible)" : "{name} (tersembunyi)",
     "{name} (restricted)" : "{name} (terbatas)",
     "There are no events for this filter" : "Tidak ada peristiwa untuk filter ini",
-    "Activities" : "Aktivitas",
     "Could not load activites" : "Tidak dapat memuat aktivitas"
 },
 "nplurals=1; plural=0;");

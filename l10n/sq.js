@@ -49,7 +49,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Shtyp Ctrl-C për të kopjuar.",
     "{name} (invisible)" : "{emri} (i padukshëm)",
     "{name} (restricted)" : "{emri} (i kufizuar)",
-    "There are no events for this filter" : "S’ka veprimtari për këtë filtër",
-    "Activities" : "Aktivitetet"
+    "There are no events for this filter" : "S’ka veprimtari për këtë filtër"
 },
 "nplurals=2; plural=(n != 1);");

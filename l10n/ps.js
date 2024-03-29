@@ -38,7 +38,6 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "د کاپي لپاره د Ctrl-C تڼۍ کېکاږئ.",
     "{name} (invisible)" : "{name} (پټ دی)",
     "{name} (restricted)" : "{name} (تړلی دی)",
-    "There are no events for this filter" : "دا ډول کړنې نشته",
-    "Activities" : "کړنې"
+    "There are no events for this filter" : "دا ډول کړنې نشته"
 },
 "nplurals=2; plural=(n != 1);");
