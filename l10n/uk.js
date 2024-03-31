@@ -37,7 +37,7 @@ OC.L10N.register(
     "Daily" : "Щоденно",
     "Weekly" : "Щотижня",
     "You commented" : "Ви прокоментували",
-    "Message deleted by author" : "Повідомлення видалено автором",
+    "Message deleted by author" : "Автор вилучив повідомлення",
     "Open {filename}" : "Відкрити {filename}",
     "in {path}" : "в {path}",
     "Home" : "Домівка",
