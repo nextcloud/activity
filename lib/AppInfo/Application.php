@@ -32,12 +32,14 @@ use OCA\Activity\Consumer;
 use OCA\Activity\Dashboard\ActivityWidget;
 use OCA\Activity\Data;
 use OCA\Activity\FilesHooksStatic;
+use OCA\Activity\GroupHelper;
 use OCA\Activity\Listener\LoadSidebarScripts;
 use OCA\Activity\Listener\SetUserDefaults;
 use OCA\Activity\Listener\ShareEventListener;
 use OCA\Activity\Listener\UserDeleted;
 use OCA\Activity\MailQueueHandler;
 use OCA\Activity\NotificationGenerator;
+use OCA\Activity\UserSettings;
 use OCA\Files\Event\LoadSidebar;
 use OCP\Activity\IManager;
 use OCP\AppFramework\App;
@@ -128,6 +130,9 @@ class Application extends App implements IBootstrap {
 				$c->get(IValidator::class),
 				$c->get(IConfig::class),
 				$c->get(LoggerInterface::class),
+				$c->get(Data::class),
+				$c->get(GroupHelper::class),
+				$c->get(UserSettings::class),
 			);
 		});
 
