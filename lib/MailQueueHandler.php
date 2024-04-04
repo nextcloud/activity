@@ -31,13 +31,13 @@ use OCP\Defaults;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
+use OCP\IL10N;
 use OCP\ILogger;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserManager;
 use OCP\L10N\IFactory;
 use OCP\Mail\IMailer;
-use OCP\RichObjectStrings\InvalidObjectExeption;
 use OCP\RichObjectStrings\IValidator;
 use OCP\Util;
 
@@ -49,20 +49,13 @@ use OCP\Util;
  */
 class MailQueueHandler {
 	public const CLI_EMAIL_BATCH_SIZE = 500;
-
 	public const WEB_EMAIL_BATCH_SIZE = 25;
-
 	/** Number of entries we want to list in the email */
 	public const ENTRY_LIMIT = 200;
 
-	/** @var array */
-	protected $languages;
-
-	/** @var string */
-	protected $senderAddress;
-
-	/** @var string */
-	protected $senderName;
+	protected array $languages;
+	protected string $senderAddress;
+	protected string $senderName;
 
 	/** @var IDateTimeFormatter */
 	protected $dateFormatter;
@@ -103,7 +96,11 @@ class MailQueueHandler {
 								IManager $activityManager,
 								IValidator $richObjectValidator,
 								IConfig $config,
-								ILogger $logger) {
+								ILogger $logger,
+								protected Data $data,
+								protected GroupHelper $groupHelper,
+								protected UserSettings $userSettings,
+	) {
 		$this->dateFormatter = $dateFormatter;
 		$this->connection = $connection;
 		$this->mailer = $mailer;
@@ -119,13 +116,13 @@ class MailQueueHandler {
 	/**
 	 * Send an email to {$limit} users
 	 *
-	 * @param int $limit Number of users we want to send an email to
-	 * @param int $sendTime The latest send time
-	 * @param bool $forceSending Ignores latest send and just sends all emails
-	 * @param null|int $restrictEmails null or one of UserSettings::EMAIL_SEND_*
+	 * @param $limit Number of users we want to send an email to
+	 * @param $sendTime The latest send time
+	 * @param $forceSending Ignores latest send and just sends all emails
+	 * @param $restrictEmails null or one of UserSettings::EMAIL_SEND_*
 	 * @return int Number of users we sent an email to
 	 */
-	public function sendEmails($limit, $sendTime, $forceSending = false, $restrictEmails = null) {
+	public function sendEmails(int $limit, int $sendTime, bool $forceSending = false, ?int $restrictEmails = null): int {
 		// Get all users which should receive an email
 		$affectedUsers = $this->getAffectedUsers($limit, $sendTime, $forceSending, $restrictEmails);
 		if (empty($affectedUsers)) {
@@ -186,14 +183,8 @@ class MailQueueHandler {
 
 	/**
 	 * Get the users we want to send an email to
-	 *
-	 * @param int|null $limit
-	 * @param int $latestSend
-	 * @param bool $forceSending
-	 * @param int|null $restrictEmails
-	 * @return array
 	 */
-	protected function getAffectedUsers($limit, $latestSend, $forceSending, $restrictEmails) {
+	protected function getAffectedUsers(?int $limit, int $latestSend, bool $forceSending, ?int $restrictEmails): array {
 		$query = $this->connection->getQueryBuilder();
 		$query->select('amq_affecteduser')
 			->selectAlias($query->createFunction('MIN(' . $query->getColumnName('amq_latest_send') . ')'), 'amq_trigger_time')
@@ -237,12 +228,9 @@ class MailQueueHandler {
 	/**
 	 * Get all items for the user we want to send an email to
 	 *
-	 * @param string $affectedUser
-	 * @param int $maxTime
-	 * @param int $maxNumItems
 	 * @return array [data of the first max. 200 entries, total number of entries]
 	 */
-	protected function getItemsForUser($affectedUser, $maxTime, $maxNumItems = self::ENTRY_LIMIT) {
+	protected function getItemsForUser(string $affectedUser, int $maxTime, int $maxNumItems = self::ENTRY_LIMIT): array {
 		$query = $this->connection->getQueryBuilder();
 		$query->select('*')
 			->from('activity_mq')
@@ -287,9 +275,9 @@ class MailQueueHandler {
 	 * Get a language object for a specific language
 	 *
 	 * @param string $lang Language identifier
-	 * @return \OCP\IL10N Language object of $lang
+	 * @return IL10N Language object of $lang
 	 */
-	protected function getLanguage($lang) {
+	protected function getLanguage(string $lang): IL10N {
 		if (!isset($this->languages[$lang])) {
 			$this->languages[$lang] = $this->lFactory->get('activity', $lang);
 		}
@@ -300,9 +288,8 @@ class MailQueueHandler {
 	/**
 	 * Get the sender data
 	 * @param string $setting Either `email` or `name`
-	 * @return string
 	 */
-	protected function getSenderData($setting) {
+	protected function getSenderData(string $setting): string {
 		if (empty($this->senderAddress)) {
 			$this->senderAddress = Util::getDefaultEmailAddress('no-reply');
 		}
@@ -320,15 +307,10 @@ class MailQueueHandler {
 	/**
 	 * Send a notification to one user
 	 *
-	 * @param string $userName Username of the recipient
-	 * @param string $email Email address of the recipient
-	 * @param string $lang Selected language of the recipient
-	 * @param string $timezone Selected timezone of the recipient
-	 * @param int $maxTime
 	 * @return bool True if the entries should be removed, false otherwise
 	 * @throws \UnexpectedValueException
 	 */
-	protected function sendEmailToUser($userName, $email, $lang, $timezone, $maxTime) {
+	protected function sendEmailToUser(string $userName, string $email, string $lang, string $timezone, int $maxTime): bool {
 		$user = $this->userManager->get($userName);
 		if (!$user instanceof IUser) {
 			return true;
@@ -344,7 +326,9 @@ class MailQueueHandler {
 		$l = $this->getLanguage($lang);
 		$this->activityManager->setCurrentUserId($userName);
 
-		$activityEvents = [];
+		$this->groupHelper->resetEvents();
+		$this->groupHelper->setL10n($l);
+
 		foreach ($mailData as $activity) {
 			$event = $this->activityManager->generateEvent();
 			try {
@@ -358,23 +342,22 @@ class MailQueueHandler {
 				continue;
 			}
 
-			$relativeDateTime = $this->dateFormatter->formatDateTimeRelativeDay(
-				(int) $activity['amq_timestamp'],
-				'long', 'short',
-				new \DateTimeZone($timezone), $l
-			);
-
-			try {
-				$event = $this->parseEvent($lang, $event);
-			} catch (\InvalidArgumentException $e) {
-				continue;
-			}
-
-			$activityEvents[] = [
-				'event' => $event,
-				'relativeDateTime' => $relativeDateTime
-			];
+			$this->groupHelper->addEvent($activity['mail_id'], $event);
 		}
+
+		$activityEvents = array_map(
+			function ($event) use ($timezone, $l) {
+				return [
+					'event' => $event,
+					'relativeDateTime' => $this->dateFormatter->formatDateTimeRelativeDay(
+						$event->getTimestamp(),
+						'long', 'short',
+						new \DateTimeZone($timezone), $l
+					)
+				];
+			},
+			$this->groupHelper->getEvents()
+		);
 
 		$template = $this->mailer->createEMailTemplate('activity.Notification', [
 			'displayname' => $user->getDisplayName(),
@@ -393,7 +376,6 @@ class MailQueueHandler {
 		);
 
 		foreach ($activityEvents as $activity) {
-			/** @var IEvent $event */
 			$event = $activity['event'];
 			$relativeDateTime = $activity['relativeDateTime'];
 
@@ -426,10 +408,6 @@ class MailQueueHandler {
 		return true;
 	}
 
-	/**
-	 * @param IEvent $event
-	 * @return string
-	 */
 	protected function getHTMLSubject(IEvent $event): string {
 		if ($event->getRichSubject() === '') {
 			return htmlspecialchars($event->getParsedSubject());
@@ -456,57 +434,9 @@ class MailQueueHandler {
 	}
 
 	/**
-	 * @param string $lang
-	 * @param IEvent $event
-	 * @return IEvent
-	 * @throws \InvalidArgumentException when the event could not be parsed
-	 */
-	protected function parseEvent($lang, IEvent $event) {
-		$this->activityManager->setFormattingObject($event->getObjectType(), $event->getObjectId());
-		foreach ($this->activityManager->getProviders() as $provider) {
-			try {
-				$event = $provider->parse($lang, $event);
-			} catch (\InvalidArgumentException $e) {
-				/* Ignore */
-			} catch (\Throwable $e) {
-				$this->logger->error('Error while parsing activity event', ['exception' => $e]);
-			}
-		}
-		$this->activityManager->setFormattingObject('', 0);
-
-		try {
-			$this->richObjectValidator->validate($event->getRichSubject(), $event->getRichSubjectParameters());
-		} catch (InvalidObjectExeption $e) {
-			$this->logger->logException($e);
-			$event->setRichSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed', []);
-			$event->setParsedSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed');
-		}
-
-		if ($event->getRichMessage()) {
-			try {
-				$this->richObjectValidator->validate($event->getRichMessage(), $event->getRichMessageParameters());
-			} catch (InvalidObjectExeption $e) {
-				$this->logger->logException($e);
-				$event->setRichMessage('Rich message or a parameter is malformed', []);
-				$event->setParsedMessage('Rich message or a parameter is malformed');
-			}
-		}
-
-		if (!$event->getParsedSubject()) {
-			$this->logger->debug('Activity "' . $event->getRichSubject() . '" was not parsed by any provider');
-			throw new \InvalidArgumentException('Activity "' . $event->getRichSubject() . '" was not parsed by any provider');
-		}
-
-		return $event;
-	}
-
-	/**
 	 * Delete all entries we dealt with
-	 *
-	 * @param array $affectedUsers
-	 * @param int $maxTime
 	 */
-	protected function deleteSentItems(array $affectedUsers, $maxTime) {
+	protected function deleteSentItems(array $affectedUsers, int $maxTime): void {
 		if (empty($affectedUsers)) {
 			return;
 		}

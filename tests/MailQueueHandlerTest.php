@@ -26,7 +26,10 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests;
 
+use OCA\Activity\Data;
+use OCA\Activity\GroupHelper;
 use OCA\Activity\MailQueueHandler;
+use OCA\Activity\UserSettings;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\ILogger;
@@ -83,6 +86,16 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var IDateTimeFormatter|MockObject */
 	protected $dateTimeFormatter;
 
+	/** @var MockObject|Data */
+	protected Data $data;
+
+	/** @var MockObject|GroupHelper */
+	protected GroupHelper $groupHelper;
+
+	/** @var MockObject|UserSettings */
+	protected UserSettings $userSettings;
+
+
 	protected function setUp(): void {
 		parent::setUp();
 
@@ -92,6 +105,9 @@ class MailQueueHandlerTest extends TestCase {
 		$this->config = $this->createMock(IConfig::class);
 		$this->logger = $this->createMock(ILogger::class);
 		$this->dateTimeFormatter = $this->createMock(IDateTimeFormatter::class);
+		$this->data = $this->createMock(Data::class);
+		$this->groupHelper = $this->createMock(GroupHelper::class);
+		$this->userSettings = $this->createMock(UserSettings::class);
 
 		$connection = \OC::$server->getDatabaseConnection();
 		$query = $connection->prepare('INSERT INTO `*PREFIX*activity_mq` '
@@ -158,7 +174,10 @@ class MailQueueHandlerTest extends TestCase {
 			$this->activityManager,
 			$this->richObjectValidator,
 			$this->config,
-			$this->logger
+			$this->logger,
+			$this->data,
+			$this->groupHelper,
+			$this->userSettings,
 		);
 	}
 
