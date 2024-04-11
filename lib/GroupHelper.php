@@ -31,36 +31,40 @@ use Psr\Log\LoggerInterface;
 
 class GroupHelper {
 	/** @var IEvent[] */
-	protected $event = [];
-	/** @var int */
-	protected $lastEvent = 0;
-
-	/** @var bool */
-	protected $allowGrouping;
+	protected array $event = [];
+	protected int $lastEvent = 0;
+	protected bool $allowGrouping = true;
 
 	public function __construct(
 		protected IL10N $l,
 		protected IManager $activityManager,
 		protected IValidator $richObjectValidator,
-		protected LoggerInterface $logger) {
-		$this->allowGrouping = true;
+		protected LoggerInterface $logger
+	) {
 	}
 
-	/**
-	 * @param IL10N $l
-	 */
-	public function setL10n(IL10N $l) {
+	public function resetEvents(): void {
+		$this->event = [];
+		$this->lastEvent = 0;
+	}
+
+	public function setL10n(IL10N $l): void {
 		$this->l = $l;
 	}
 
 	/**
 	 * Add an activity to the internal array
-	 *
-	 * @param array $activity
 	 */
-	public function addActivity($activity) {
+	public function addActivity(array $activity): void {
 		$id = (int) $activity['activity_id'];
 		$event = $this->arrayToEvent($activity);
+		$this->addEvent($id, $event);
+	}
+
+	/**
+	 * Add an event to the internal array
+	 */
+	public function addEvent(int $id, IEvent $event): void {
 		$language = $this->l->getLanguageCode();
 
 		foreach ($this->activityManager->getProviders() as $provider) {
@@ -71,44 +75,47 @@ class GroupHelper {
 				} else {
 					$event = $provider->parse($language, $event);
 				}
-				try {
-					$this->richObjectValidator->validate($event->getRichSubject(), $event->getRichSubjectParameters());
-				} catch (InvalidObjectExeption $e) {
-					$this->logger->error(
-						$e->getMessage(),
-						[
-							'app' => 'activity',
-							'exception' => $e
-						],
-					);
-					$event->setRichSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed', []);
-					$event->setParsedSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed');
-				}
-
-				if ($event->getRichMessage()) {
-					try {
-						$this->richObjectValidator->validate($event->getRichMessage(), $event->getRichMessageParameters());
-					} catch (InvalidObjectExeption $e) {
-						$this->logger->error(
-							$e->getMessage(),
-							[
-								'app' => 'activity',
-								'exception' => $e
-							],
-						);
-						$event->setRichMessage('Rich message or a parameter is malformed', []);
-						$event->setParsedMessage('Rich message or a parameter is malformed');
-					}
-				}
-
-				$this->activityManager->setFormattingObject('', 0);
-
-				$child = $event->getChildEvent();
-				if ($child instanceof IEvent) {
-					unset($this->event[$this->lastEvent]);
-				}
 			} catch (\InvalidArgumentException $e) {
+			} catch (\Throwable $e) {
+				$this->logger->error('Error while parsing activity event', ['exception' => $e]);
 			}
+		}
+
+		try {
+			$this->richObjectValidator->validate($event->getRichSubject(), $event->getRichSubjectParameters());
+		} catch (InvalidObjectExeption $e) {
+			$this->logger->error(
+				$e->getMessage(),
+				[
+					'app' => 'activity',
+					'exception' => $e
+				],
+			);
+			$event->setRichSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed', []);
+			$event->setParsedSubject('Rich subject or a parameter for "' . $event->getRichSubject() . '" is malformed');
+		}
+
+		if ($event->getRichMessage()) {
+			try {
+				$this->richObjectValidator->validate($event->getRichMessage(), $event->getRichMessageParameters());
+			} catch (InvalidObjectExeption $e) {
+				$this->logger->error(
+					$e->getMessage(),
+					[
+						'app' => 'activity',
+						'exception' => $e
+					],
+				);
+				$event->setRichMessage('Rich message or a parameter is malformed', []);
+				$event->setParsedMessage('Rich message or a parameter is malformed');
+			}
+		}
+
+		$this->activityManager->setFormattingObject('', 0);
+
+		$child = $event->getChildEvent();
+		if ($child instanceof IEvent) {
+			unset($this->event[$this->lastEvent]);
 		}
 
 		if (!$event->getParsedSubject()) {
@@ -125,7 +132,7 @@ class GroupHelper {
 	 *
 	 * @return array translated activities ready for use
 	 */
-	public function getActivities() {
+	public function getActivities(): array {
 		$return = [];
 		foreach ($this->event as $id => $event) {
 			$return[] = $this->eventToArray($event, $id);
@@ -144,11 +151,7 @@ class GroupHelper {
 		return $return;
 	}
 
-	/**
-	 * @param array $row
-	 * @return IEvent
-	 */
-	protected function arrayToEvent(array $row) {
+	protected function arrayToEvent(array $row): IEvent {
 		$event = $this->activityManager->generateEvent();
 		$event->setApp((string) $row['app'])
 			->setType((string) $row['type'])
@@ -164,14 +167,10 @@ class GroupHelper {
 	}
 
 	/**
-	 * @param IEvent $event
 	 * @param (int|string) $id
-	 *
-	 * @return array
-	 *
 	 * @psalm-param array-key $id
 	 */
-	protected function eventToArray(IEvent $event, $id) {
+	protected function eventToArray(IEvent $event, $id): array {
 		return [
 			'activity_id' => $id,
 			'app' => $event->getApp(),
@@ -198,10 +197,6 @@ class GroupHelper {
 		];
 	}
 
-	/**
-	 * @param IEvent $event
-	 * @return array
-	 */
 	protected function getObjectsFromChildren(IEvent $event): array {
 		$child = $event->getChildEvent();
 		$objects = [];
