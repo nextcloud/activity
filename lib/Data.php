@@ -33,6 +33,7 @@ use OCP\Activity\IExtension;
 use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\IConfig;
 use OCP\IDBConnection;
 use Psr\Log\LoggerInterface;
 
@@ -48,7 +49,9 @@ class Data {
 	public function __construct(
 		protected IManager $activityManager,
 		protected IDBConnection $connection,
-		protected LoggerInterface $logger) {
+		protected LoggerInterface $logger,
+		protected IConfig $config,
+	) {
 	}
 
 	/**
@@ -347,11 +350,21 @@ class Data {
 	 */
 	public function expire($expireDays = 365) {
 		$ttl = (60 * 60 * 24 * max(1, $expireDays));
-
 		$timelimit = time() - $ttl;
-		$this->deleteActivities([
+		$conditions = [
 			'timestamp' => [$timelimit, '<'],
-		]);
+		];
+
+		$excludedUsers = $this->config->getSystemValue('activity_expire_exclude_users', []);
+		if (!empty($excludedUsers)) {
+			foreach ($excludedUsers as $user) {
+				$conditions[] = [
+					'affecteduser' => [$user, '!=']
+				];
+			}
+		}
+		
+		$this->deleteActivities($conditions);
 	}
 
 	/**
