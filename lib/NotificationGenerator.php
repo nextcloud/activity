@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace OCA\Activity;
 
+use OCP\Activity\Exceptions\UnknownActivityException;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager as ActivityManager;
 use OCP\IL10N;
@@ -30,6 +31,7 @@ use OCP\Notification\AlreadyProcessedException;
 use OCP\Notification\IManager as NotificationManager;
 use OCP\Notification\INotification;
 use OCP\Notification\INotifier;
+use Psr\Log\LoggerInterface;
 
 class NotificationGenerator implements INotifier {
 
@@ -38,7 +40,9 @@ class NotificationGenerator implements INotifier {
 		protected ActivityManager $activityManager,
 		protected NotificationManager $notificationManager,
 		protected UserSettings $userSettings,
-		protected IL10N $l10n) {
+		protected IL10N $l10n,
+		protected LoggerInterface $logger,
+	) {
 	}
 
 	public function deferNotifications(): bool {
@@ -90,7 +94,11 @@ class NotificationGenerator implements INotifier {
 		foreach ($this->activityManager->getProviders() as $provider) {
 			try {
 				$event = $provider->parse($language, $event);
+			} catch (UnknownActivityException) {
 			} catch (\InvalidArgumentException $e) {
+				// todo 33.0.0 Log as warning
+				// todo 39.0.0 Log as error
+				$this->logger->debug(get_class($provider) . '::parse() threw \InvalidArgumentException which is deprecated. Throw \OCP\Activity\Exceptions\UnknownActivityException when the event is not known to your provider and otherwise handle all \InvalidArgumentException yourself.');
 			}
 		}
 		$this->activityManager->setFormattingObject('', 0);

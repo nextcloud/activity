@@ -37,11 +37,11 @@ The first thing the provider should do, is to check whether the `IEvent` is one 
 
 ```php
 		if ($event->getApp() !== 'files' || $event->getType() !== 'favorite') {
-			throw new \InvalidArgumentException();
+			throw new \OCP\Activity\Exceptions\UnknownActivityException();
 		}
 ```
 
-Whenever a provider throws an `\InvalidArgumentException` the activity app will continue and pass the event to the next provider, so this should always be thrown when the event is unknown.
+Whenever a provider throws an `UnknownActivityException` (*Added in Nextcloud 30, before throw `\InvalidArgumentException`*), the activity app will continue and pass the event to the next provider, so this should always be thrown when the event is unknown.
 
 ### Short translation
 

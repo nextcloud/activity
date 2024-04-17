@@ -24,6 +24,7 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\UserSettings;
 use OCP\Activity\ActivitySettings;
+use OCP\Activity\Exceptions\SettingNotFoundException;
 use OCP\Activity\IManager;
 use OCP\IConfig;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -65,7 +66,7 @@ class UserSettingsTest extends TestCase {
 				$this->activityManager->expects($this->once())
 					->method('getSettingById')
 					->with($type)
-					->willThrowException(new \InvalidArgumentException());
+					->willThrowException(new SettingNotFoundException($type));
 			} else {
 				$s = $this->createMock(ActivitySettings::class);
 				$s->expects($method === 'email' ? $this->once() : $this->never())

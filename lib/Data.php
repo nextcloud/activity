@@ -28,6 +28,7 @@ namespace OCA\Activity;
 
 use Doctrine\DBAL\Platforms\MySQLPlatform;
 use OCA\Activity\Filter\AllFilter;
+use OCP\Activity\Exceptions\FilterNotFoundException;
 use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
 use OCP\Activity\IFilter;
@@ -181,7 +182,7 @@ class Data {
 		$activeFilter = null;
 		try {
 			$activeFilter = $this->activityManager->getFilterById($filter);
-		} catch (\InvalidArgumentException $e) {
+		} catch (FilterNotFoundException) {
 			// Unknown filter => ignore and show all activities
 		}
 
@@ -223,7 +224,7 @@ class Data {
 				$favoriteFilter = $this->activityManager->getFilterById('files_favorites');
 				/** @var \OCA\Files\Activity\Filter\Favorites $favoriteFilter */
 				$favoriteFilter->filterFavorites($query);
-			} catch (\InvalidArgumentException $e) {
+			} catch (FilterNotFoundException) {
 			}
 		}
 
@@ -334,7 +335,7 @@ class Data {
 				try {
 					$this->activityManager->getFilterById($filterValue);
 					return $filterValue;
-				} catch (\InvalidArgumentException $e) {
+				} catch (FilterNotFoundException) {
 					return 'all';
 				}
 		}
