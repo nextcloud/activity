@@ -23,6 +23,7 @@
 namespace OCA\Activity;
 
 use OCP\Activity\ActivitySettings;
+use OCP\Activity\Exceptions\SettingNotFoundException;
 use OCP\Activity\IManager;
 use OCP\IConfig;
 
@@ -143,7 +144,7 @@ class UserSettings {
 				default:
 					return false;
 			}
-		} catch (\InvalidArgumentException $e) {
+		} catch (SettingNotFoundException) {
 			return false;
 		}
 	}
@@ -170,7 +171,7 @@ class UserSettings {
 				default:
 					return false;
 			}
-		} catch (\InvalidArgumentException $e) {
+		} catch (SettingNotFoundException) {
 			return false;
 		}
 	}

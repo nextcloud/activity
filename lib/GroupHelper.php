@@ -22,6 +22,7 @@
 
 namespace OCA\Activity;
 
+use OCP\Activity\Exceptions\UnknownActivityException;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
@@ -75,7 +76,11 @@ class GroupHelper {
 				} else {
 					$event = $provider->parse($language, $event);
 				}
-			} catch (\InvalidArgumentException $e) {
+			} catch (UnknownActivityException) {
+			} catch (\InvalidArgumentException) {
+				// todo 33.0.0 Log as warning
+				// todo 39.0.0 Log as error
+				$this->logger->debug(get_class($provider) . '::parse() threw \InvalidArgumentException which is deprecated. Throw \OCP\Activity\Exceptions\UnknownActivityException when the event is not known to your provider and otherwise handle all \InvalidArgumentException yourself.');
 			} catch (\Throwable $e) {
 				$this->logger->error('Error while parsing activity event', ['exception' => $e]);
 			}
