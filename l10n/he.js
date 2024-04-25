@@ -24,6 +24,7 @@ OC.L10N.register(
     "Activity" : "פעילות",
     "Notifications" : "התראות",
     "This application enables people to view a log of activities about them, their files or other data." : "היישום הזה מאפשר לאנשים לצפות ביומן פעילויות שלהם, הקבצים שלהם או נתונים אחרים.",
+    "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "היישום מאפשר לאנשים לראות פעולות שקשורות בקבצים ובנתונים שלהם ב־Nextcloud.\n\t\tכל אחד יכול להגדיר את הגדרות הפעילות האישיות לו בהגדרות האישיות.\n\t\tכדי לבחור איזו פעילות תידחף לטלפונים, תישלח דרך דוא״ל.\n\t\tאו האם לשלוח תקציר יומי כל בוקר.\n\t\tיש עוד מידע בתיעוד הפעילות.",
     "Activity notification configuration" : "הגדרת התראות פעילות",
     "Send email" : "שליחת דואר אלקטרוני",
     "Send push notification" : "שליחת הודעת פוש",
