@@ -2,7 +2,7 @@
   "name": "activity",
   "description": "This application enables people to view a log of activities about them or about files.",
   "version": "3.0.0",
-  "author": "Julius Härtl <jus@bitgrid.net",
+  "author": "Julius Härtl <jus@bitgrid.net>",
   "contributors": [],
   "bugs": {
     "url": "https://github.com/nextcloud/activity/issues"
