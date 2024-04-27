@@ -25,7 +25,7 @@ version: 7.4.47
 license: Apache-2.0
 
 @nextcloud/auth
-version: 2.2.1
+version: 2.3.0
 license: GPL-3.0-or-later
 
 @nextcloud/axios
@@ -45,7 +45,7 @@ version: 5.3.1
 license: GPL-3.0-or-later
 
 @nextcloud/event-bus
-version: 3.1.0
+version: 3.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/initial-state
@@ -57,7 +57,7 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/logger
-version: 2.7.0
+version: 3.0.1
 license: GPL-3.0-or-later
 
 @nextcloud/moment
@@ -401,7 +401,7 @@ version: 11.0.0
 license: MIT
 
 semver
-version: 7.5.3
+version: 7.6.0
 license: ISC
 
 space-separated-tokens
