@@ -104,14 +104,6 @@ bail
 version: 2.0.2
 license: MIT
 
-base64-js
-version: 1.5.1
-license: MIT
-
-buffer
-version: 6.0.3
-license: MIT
-
 ccount
 version: 2.0.1
 license: MIT
@@ -175,10 +167,6 @@ license: MIT
 hast-util-whitespace
 version: 2.0.1
 license: MIT
-
-ieee754
-version: 1.2.1
-license: BSD-3-Clause
 
 inline-style-parser
 version: 0.1.1
@@ -384,10 +372,6 @@ path-browserify
 version: 1.0.1
 license: MIT
 
-process
-version: 0.11.10
-license: MIT
-
 property-information
 version: 6.4.0
 license: MIT
@@ -489,7 +473,7 @@ version: 4.0.2
 license: MIT
 
 vite-plugin-node-polyfills
-version: 0.17.0
+version: 0.21.0
 license: MIT
 
 vue
