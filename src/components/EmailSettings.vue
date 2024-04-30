@@ -85,4 +85,9 @@ export default {
 	margin-top: 24px;
 	display: inline-block;
 }
+
+.notification-frequency__select {
+	margin-left: calc(var(--default-grid-baseline) * 2);
+}
+
 </style>

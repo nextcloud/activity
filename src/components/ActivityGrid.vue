@@ -104,10 +104,6 @@ table.grid .group-header {
 	th {
 		padding-top: 16px;
 		height: 60px;
-
-		&.activity_select_group {
-			padding-left: 20px;
-		}
 	}
 }
 
