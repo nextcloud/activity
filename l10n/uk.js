@@ -51,7 +51,7 @@ OC.L10N.register(
     "Enable RSS feed" : "Увімкнути стрічку RSS",
     "RSS feed" : "Стрічка RSS",
     "Copy RSS feed link" : "Скопіювати посилання на RSS-стрічку",
-    "Personal notification settings" : "Налаштування персональних сповіщень",
+    "Personal notification settings" : "Налаштування сповіщень",
     "Could not enable RSS link" : "Не вдалося увімкнути посилання на стрічку RSS",
     "RSS link copied to clipboard" : "Посилання на стрічку RSS скопійовано",
     "Could not copy the RSS link, please copy manually:" : "Не вдалося скопіювати посилання RSS. Скопіювати вручну:",
