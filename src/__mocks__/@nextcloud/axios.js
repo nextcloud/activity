@@ -1,4 +1,8 @@
 import wsData from './activity_ws.json'
+/**
+ * SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
 
 const axios = {
 	/**

@@ -1,3 +1,7 @@
+<!--
+  - SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: CC0-1.0
+-->
 # Adding a filter
 
 In order to add a new filter to the sidebar and allow to restrict the activity stream, the `OCP\Activity\IFilter` interface needs to be implemented and registered in `appinfo/info.xml`. An example can be seen in the [comments app](https://github.com/nextcloud/server/blob/8105ba99297222b7db97b556a55f306c3f7cabc0/apps/comments/appinfo/info.xml#L22-L24)

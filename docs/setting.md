@@ -1,3 +1,7 @@
+<!--
+  - SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: CC0-1.0
+-->
 # Adding a setting
 
 *Note:* settings are what types used to be in the old `OCP\Activity\IExtension` interface.

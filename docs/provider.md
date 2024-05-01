@@ -1,3 +1,7 @@
+<!--
+  - SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: CC0-1.0
+-->
 # Adding a provider
 
 Providers are used to parse, translate and beautify activities. They need to implement the `OCP\Activity\IProvider` interface and are registered in `appinfo/info.xml`. An example can be seen in the [files app](https://github.com/nextcloud/server/blob/8baf986d3bf6efb4d81fb18eac07592932467b8e/apps/files/appinfo/info.xml#L35-L38)
