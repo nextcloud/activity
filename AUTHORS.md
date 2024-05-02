@@ -13,6 +13,7 @@
 - Lukas Reschke <lukas@statuscode.ch>
 - Richard Steinmetz <richard@steinmetz.cloud>
 - Robin Appelman <robin@icewind.nl>
+- Thomas Citharel <nextcloud@tcit.fr>
 - Thomas Müller <thomas.mueller@tmit.eu>
 - Nextcloud GmbH
 - ownCloud, Inc.
