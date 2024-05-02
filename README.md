@@ -1,5 +1,7 @@
 # Nextcloud Activity App
 
+[![REUSE status](https://api.reuse.software/badge/github.com/nextcloud/activity)](https://api.reuse.software/info/github.com/nextcloud/activity)
+
 This app allows people to see actions related to their files and data in Nextcloud.
 Each person can configure their individual activity settings in the personal settings,
 to choose which activity should be pushed to mobile phones, send via email
