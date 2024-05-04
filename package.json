@@ -61,7 +61,7 @@
     "@nextcloud/browserslist-config": "^3.0.0",
     "@nextcloud/cypress": "^1.0.0-beta.8",
     "@nextcloud/eslint-config": "^8.3.0",
-    "@nextcloud/stylelint-config": "^2.4.0",
+    "@nextcloud/stylelint-config": "^3.0.0",
     "@nextcloud/vite-config": "^1.2.3",
     "@testing-library/vue": "^5.9.0",
     "@types/dockerode": "^3.3.28",
