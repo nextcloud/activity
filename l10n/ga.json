@@ -1,0 +1,24 @@
+{ "translations": {
+    "Personal activity feed for %s" : "Fotha gníomhaíochta pearsanta do %s",
+    "Your feed URL is invalid" : "Tá do URL fotha neamhbhailí",
+    "Activity feed for %1$s" : "Fotha gníomhaíochta le haghaidh%1$s",
+    "Activity feed" : "Fotha gníomhaíochta",
+    "Your settings have been updated." : "Nuashonraíodh do shocruithe.",
+    "Settings have been updated." : "Nuashonraíodh na socruithe.",
+    "Recent activity" : "Gníomhaíocht le déanaí",
+    "No activities" : "Gan gníomhaíochtaí",
+    "More activities" : "Tuilleadh gníomhaíochtaí",
+    "Daily activity summary for %s" : "Achoimre ar ghníomhaíocht laethúil le haghaidh %s",
+    "_and %n more _::_and %n more _" : ["agus %n níos mó","agus %n níos mó","agus %n níos mó","agus %n níos mó"," agus %n níos mó"],
+    "All activities" : "Gach gníomhaíocht",
+    "By others" : "Ag daoine eile",
+    "By you" : "Leat",
+    "Activity at %s" : "Gníomhaíocht ag%s",
+    "Hello %s" : "Dia duit %s",
+    "Hello %s," : "Dia duit %s,",
+    "There was some activity at %s" : "Bhí roinnt gníomhaíochta ag%s",
+    "Mail" : "Post",
+    "Push" : "Brúigh",
+    "Activity" : "Gníomhaíocht"
+},"pluralForm" :"nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);"
+}
