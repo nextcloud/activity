@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-FileCopyrightText: 2016 ownCloud, Inc.
+  - SPDX-License-Identifier: CC0-1.0
+-->
 # Endpoint documentation
 
 ## Capabilities

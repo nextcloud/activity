@@ -1,3 +1,7 @@
+<!--
+  - SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: CC0-1.0
+-->
 # Creating a new event
 
 To create and publish an event to the activity app, a new `IEvent` should be fetched from the activity manager and afterwards be passed to the `publish()` method:
@@ -35,4 +39,3 @@ The following values **should not** be set on publishing (are not saved), instea
 * `setParsedMessage()`
 * `setRichMessage()`
 * `setChildEvent()`
-

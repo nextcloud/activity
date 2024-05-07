@@ -1,3 +1,8 @@
+<!--
+  - SPDX-FileCopyrightText: 2022 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <template>
 	<NcSettingsSection :name="t('activity', 'Daily activity summary')">
 		<NcCheckboxRadioSwitch data-cy-checkbox
