@@ -46,6 +46,7 @@ OC.L10N.register(
     "No activity yet" : "Ni še zabeležene dejavnosti",
     "Loading more activities" : "Nalaganje več dejavnosti",
     "No more activities." : "Ni drugih  zabeleženih dejavnosti.",
+    "Could not load activities" : "Dejavnosti ni mogoče naložiti.",
     "Activity settings" : "Nastavitve dejavnosti",
     "Enable RSS feed" : "Omogoči vire RSS",
     "RSS feed" : "Viri RSS",
