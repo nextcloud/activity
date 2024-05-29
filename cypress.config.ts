@@ -8,7 +8,7 @@ import {
 import { defineConfig } from 'cypress'
 
 import vitePreprocessor from 'cypress-vite'
-import getCompareSnapshotsPlugin from 'cypress-visual-regression/dist/plugin'
+import { configureVisualRegression } from 'cypress-visual-regression/dist/plugin'
 
 export default defineConfig({
 	projectId: '5bsgwk',
@@ -32,9 +32,10 @@ export default defineConfig({
 
 	// Visual regression testing
 	env: {
-		failSilently: false,
-		type: 'actual',
+		visualRegressionType: 'regression',
+		visualRegressionFailSilently: false,
 	},
+
 	screenshotsFolder: 'cypress/snapshots/actual',
 	trashAssetsBeforeRuns: true,
 
@@ -48,7 +49,7 @@ export default defineConfig({
 			on('file:preprocessor', vitePreprocessor({ configFile: false }))
 
 			// Enable the snapshot compare plugin
-			getCompareSnapshotsPlugin(on, config)
+			configureVisualRegression(on)
 
 			// Disable spell checking to prevent rendering differences
 			on('before:browser:launch', (browser, launchOptions) => {
