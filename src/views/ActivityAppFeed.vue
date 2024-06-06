@@ -210,7 +210,7 @@ watch(props, () => {
 		flex-direction: column;
 		height: 100%;
 		// Align with app navigation toggle
-		margin: var(--app-navigation-padding, 8px) 0 0 calc(2 * var(--app-navigation-padding, 8px) + 44px)
+		margin: var(--app-navigation-padding, 8px) 0 0 calc(2 * var(--app-navigation-padding, 8px) + 44px);
 		padding-inline: 0 44px;
 		overflow-y: scroll;
 	}
