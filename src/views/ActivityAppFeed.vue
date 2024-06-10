@@ -24,7 +24,9 @@
 			</template>
 		</NcEmptyContent>
 		<div ref="container" class="activity-app__container">
-			<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
+			<div class="activity-app__groups-list">
+				<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
+			</div>
 			<!-- Only show if not showing the inital empty content for loading -->
 			<NcLoadingIcon v-if="hasMoreActivites && allActivities.length > 0"
 				:name="t('activity', 'Loading more activities')"
@@ -194,6 +196,8 @@ watch(props, () => {
 	flex-direction: column;
 	overflow: hidden;
 
+	--app-navigation-toggle-offset: calc(2 * var(--app-navigation-padding, 8px) + var(--default-clickable-area));
+
 	&__empty-content {
 		height: 100%;
 	}
@@ -209,18 +213,24 @@ watch(props, () => {
 		display: flex;
 		flex-direction: column;
 		height: 100%;
-		// Align with app navigation toggle
-		margin: var(--app-navigation-padding, 8px) 0 0 calc(2 * var(--app-navigation-padding, 8px) + 44px);
-		padding-inline: 0 44px;
+		// Inline by headings without 25px icon
+		margin-inline-start: calc(var(--app-navigation-toggle-offset) - 25px);
+		padding-inline: 0 var(--default-clickable-area);
 		overflow-y: scroll;
 	}
 
 	&__heading {
 		font-weight: bold;
 		font-size: 20px;
-		line-height: 44px; // to align height with the app navigation toggle
-		// Align with app navigation toggle
-		margin: var(--app-navigation-padding, 8px) 0 0 calc(2 * var(--app-navigation-padding, 8px) + 44px);
+		line-height: var(--default-clickable-area);
+		margin: calc(var(--default-grid-baseline) * 2) 0 0 var(--app-navigation-toggle-offset);
+	}
+
+	&__groups-list {
+		display: flex;
+		flex-direction: column;
+		gap: 30px;
+		max-width: 924px;
 	}
 }
 </style>
