@@ -7,6 +7,10 @@ Files: .gitattributes .github/* .editorconfig babel.config.js .php-cs-fixer.dist
 Copyright: none
 License: CC0-1.0
 
-Files: l10n/*.js l10n/*.json js/*.js.map js/*.js js/*.mjs js/*.mjs.map js/templates/*.handlebars img/activity-dark.svg img/activity.svg img/add-color.svg img/change.svg img/delete-color.svg img/notifications-dark.svg
+Files: l10n/*.js l10n/*.json js/*.js.map js/*.js js/*.mjs js/*.mjs.map js/templates/*.handlebars
 Copyright: 2016 Nextcloud GmbH and Nextcloud contributors
 License: AGPL-3.0-or-later
+
+Files: img/activity-dark.svg img/activity.svg img/add-color.svg img/change.svg img/delete-color.svg img/notifications-dark.svg
+Copyright: 2018-2024 Google LLC
+License: Apache-2.0
