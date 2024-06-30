@@ -49,6 +49,7 @@ OC.L10N.register(
     "Personal notification settings" : "Henkilökohtaisten ilmoitusten asetukset",
     "Could not enable RSS link" : "RSS-linkkiä ei voitu ottaa käyttöön",
     "RSS link copied to clipboard" : "RSS-linkki kopioitu leikepöydälle",
+    "Could not copy the RSS link, please copy manually:" : "RSS-linkkiä ei voitu kopioida, kopioi se manuaalisesti:",
     "Unable to load the activity list" : "Tapahtumalistan lataaminen ei onnistu",
     "Notification" : "Ilmoitus",
     "Enable notification emails" : "Käytä ilmoitussähköposteja",
