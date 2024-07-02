@@ -22,19 +22,19 @@ export default class ActivityModel {
 
 		// Sanity checks
 		if (typeof rawActivity.activity_id !== 'number') {
-			throw new Error('The activity_id argument is not a valid string')
+			throw new Error('The activity_id argument is not a number')
 		}
 		if (typeof rawActivity.type !== 'string' || rawActivity.type.trim() === '') {
-			throw new Error('The activity_id argument is not a valid string')
+			throw new Error('The type argument is not a valid string')
 		}
 		if (typeof rawActivity.subject !== 'string' || rawActivity.subject.trim() === '') {
-			throw new Error('The activity_id argument is not a valid string')
+			throw new Error('The subject argument is not a valid string')
 		}
 		if (typeof rawActivity.icon !== 'string' || rawActivity.icon.trim() === '') {
-			throw new Error('The activity_id argument is not a valid string')
+			throw new Error('The icon argument is not a valid string')
 		}
 		if (typeof rawActivity.datetime !== 'string' || rawActivity.datetime.trim() === '') {
-			throw new Error('The activity_id argument is not a valid string')
+			throw new Error('The datetime argument is not a valid string')
 		}
 
 		// store state
