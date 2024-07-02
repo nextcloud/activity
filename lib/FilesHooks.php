@@ -151,7 +151,7 @@ class FilesHooks {
 			$this->generateRemoteActivity($accessList['remotes'], $activityType, time(), $this->currentUser->getCloudId(), $accessList['ownerPath']);
 		}
 
-		$affectedUsers = $accessList['users'];
+		$affectedUsers = $accessList['users'] ?? [];
 
 		// file can be shared using GroupFolders, including ACL check
 		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
