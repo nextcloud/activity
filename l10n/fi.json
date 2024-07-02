@@ -1,6 +1,7 @@
 { "translations": {
     "Personal activity feed for %s" : "Käyttäjän %s henkilökohtainen tapahtumasyöte",
     "Your feed URL is invalid" : "Syötteen osoite on virheellinen",
+    "Activity feed for %1$s" : "%1$s:n tapahtumasyöte",
     "Activity feed" : "Tapahtumasyöte",
     "Your settings have been updated." : "Asetuksesi on päivitetty.",
     "Settings have been updated." : "Asetukset on päivitetty.",
