@@ -33,7 +33,7 @@ version: 2.4.0
 license: GPL-3.0
 
 @nextcloud/browser-storage
-version: 0.3.0
+version: 0.4.0
 license: GPL-3.0-or-later
 
 @nextcloud/capabilities
@@ -73,8 +73,8 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/vue
-version: 8.11.2
-license: AGPL-3.0
+version: 8.14.0
+license: AGPL-3.0-or-later
 
 @nextcloud/vue-select
 version: 3.25.0
@@ -117,7 +117,7 @@ version: 2.0.3
 license: MIT
 
 core-js
-version: 3.33.0
+version: 3.37.0
 license: MIT
 
 crypt
