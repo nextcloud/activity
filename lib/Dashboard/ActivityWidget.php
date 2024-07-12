@@ -22,6 +22,7 @@ use OCP\Dashboard\Model\WidgetItems;
 use OCP\IDateTimeFormatter;
 use OCP\IL10N;
 use OCP\IURLGenerator;
+use OCP\Util;
 
 class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloadableWidget {
 	private Data $data;
@@ -95,6 +96,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	 * @inheritDoc
 	 */
 	public function load(): void {
+		Util::addStyle('activity', 'style');
 	}
 
 	/**
