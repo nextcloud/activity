@@ -4,7 +4,6 @@
  */
 /* eslint-disable n/no-unpublished-import */
 import { addCommands } from '@nextcloud/cypress'
-import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/command'
 
 import 'cypress-wait-until'
 
@@ -12,4 +11,3 @@ import '@testing-library/cypress/add-commands'
 
 // Add custom commands
 addCommands()
-addCompareSnapshotCommand()
