@@ -157,7 +157,12 @@ class DigestSender {
 		}
 
 		if ($skippedCount) {
-			$template->addBodyListItem($l10n->n('and %n more ', 'and %n more ', $skippedCount));
+			$andMoreText = $l10n->n('and %n more…', 'and %n more…', $skippedCount);
+			$url = $this->urlGenerator->linkToRouteAbsolute('activity.Activities.showList', [ 'filter' => 'all' ]);
+			$template->addBodyListItem(
+				'<a href="' . $url . '">' . htmlspecialchars($andMoreText) . '</a>',
+				plainText: $andMoreText,
+			);
 		}
 
 		$template->addFooter('', $language);
