@@ -578,11 +578,17 @@ class FilesHooks {
 		try {
 			$node = $this->rootFolder->getUserFolder($uidOwner)->get($path);
 		} catch (NotFoundException $e) {
-			return [];
+			return [
+				'users' => [],
+				'remotes' => [],
+			];
 		}
 
 		if (!$node instanceof Node) {
-			return [];
+			return [
+				'users' => [],
+				'remotes' => [],
+			];
 		}
 
 		$accessList = $this->shareHelper->getPathsForAccessList($node);
