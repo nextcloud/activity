@@ -120,20 +120,26 @@ class DigestSender {
 			return;
 		}
 
+		$activitiesLimit = self::ACTIVITY_LIMIT;
+		if ($count === $activitiesLimit + 1) {
+			// it makes no sense to have a "and 1 more" entry as it takes exactly the same space as the one entry more
+			$activitiesLimit += 1;
+		}
+
 		/** @var IEvent[] $activities */
 		$activities = $this->data->get(
 			$this->groupHelper,
 			$this->userSettings,
 			$uid,
 			$lastSend,
-			self::ACTIVITY_LIMIT,
+			$activitiesLimit,
 			'asc',
 			'by',
 			'',
 			0,
 			true
 		);
-		$skippedCount = max(0, $count - self::ACTIVITY_LIMIT);
+		$skippedCount = max(0, $count - $activitiesLimit);
 
 		$template = $this->mailer->createEMailTemplate('activity.Notification', [
 			'displayname' => $user->getDisplayName(),
