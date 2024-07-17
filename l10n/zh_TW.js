@@ -11,6 +11,7 @@ OC.L10N.register(
     "No activities" : "無活動",
     "More activities" : "更多活動",
     "Daily activity summary for %s" : "%s 的每日活動摘要",
+    "_and %n more…_::_and %n more…_" : ["以及其餘 %n 項……"],
     "All activities" : "所有活動",
     "By others" : "由其他人",
     "By you" : "由您",

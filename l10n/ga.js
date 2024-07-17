@@ -11,6 +11,7 @@ OC.L10N.register(
     "No activities" : "Gan aon ghníomhaíochtaí",
     "More activities" : "Tuilleadh gníomhaíochtaí",
     "Daily activity summary for %s" : "Achoimre ar ghníomhaíocht laethúil le haghaidh %s",
+    "_and %n more…_::_and %n more…_" : ["agus %n eile…","agus %n eile…","agus %n eile…","agus %n eile…","agus %n eile…"],
     "All activities" : "Gach gníomhaíocht",
     "By others" : "Ag daoine eile",
     "By you" : "Leat",
