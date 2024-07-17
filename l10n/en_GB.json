@@ -9,6 +9,7 @@
     "No activities" : "No activities",
     "More activities" : "More activities",
     "Daily activity summary for %s" : "Daily activity summary for %s",
+    "_and %n more…_::_and %n more…_" : ["and %n more…","and %n more…"],
     "All activities" : "All activities",
     "By others" : "By others",
     "By you" : "By you",

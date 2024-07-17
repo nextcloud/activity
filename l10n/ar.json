@@ -9,6 +9,7 @@
     "No activities" : "لا توجد أيّ حركاتٍ",
     "More activities" : "المزيد من الحركات",
     "Daily activity summary for %s" : "ملخص الحركات اليومية لـ%s",
+    "_and %n more…_::_and %n more…_" : ["و %n أخرى …","و %n أخرى …","و %n أخرى …","و %n أخرى …","و %n أخرى …","و %n أخرى …"],
     "All activities" : "جميع الحركات",
     "By others" : "من قِبَل آخرين",
     "By you" : "من قِبَلك",
