@@ -11,6 +11,7 @@ OC.L10N.register(
     "No activities" : "Non hai actividades",
     "More activities" : "Máis actividades",
     "Daily activity summary for %s" : "Resumo diario de actividades para %s",
+    "_and %n more…_::_and %n more…_" : ["e %n máis…","e %n máis…"],
     "All activities" : "Todas as actividades",
     "By others" : "Por outros",
     "By you" : "Por Vde.",
