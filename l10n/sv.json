@@ -9,6 +9,7 @@
     "No activities" : "Inga händelser",
     "More activities" : "Fler aktiviteter",
     "Daily activity summary for %s" : "Sammanfattad daglig aktivitet för %s",
+    "_and %n more…_::_and %n more…_" : ["och %n till…","och %n till…"],
     "All activities" : "Alla aktiviteter",
     "By others" : "Andras aktivitet",
     "By you" : "Min aktivitet",
