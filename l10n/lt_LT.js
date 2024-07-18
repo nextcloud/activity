@@ -46,6 +46,7 @@ OC.L10N.register(
     "No activity yet" : "Kol kas nėra veiklos",
     "Loading more activities" : "Įkeliama daugiau veiklų",
     "No more activities." : "Daugiau nebėra veiklų.",
+    "Could not load activities" : "Nepavyko įkelti veiklų",
     "Activity settings" : "Veiklos nustatymai",
     "Enable RSS feed" : "Įjungti RSS sklaidos kanalą",
     "RSS feed" : "RSS kanalas",
