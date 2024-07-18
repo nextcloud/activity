@@ -11,6 +11,7 @@ OC.L10N.register(
     "No activities" : "Ni dejavnosti",
     "More activities" : "Več dejavnosti",
     "Daily activity summary for %s" : "Dnevni povzetek dejavnosti za račun %s",
+    "_and %n more…_::_and %n more…_" : ["in %n drugo ...","in %n drugi ...","in %n druge ...","in %n drugih ..."],
     "All activities" : "Vse dejavnosti",
     "By others" : "Dejavnosti drugih",
     "By you" : "Moje dejavnosti",
