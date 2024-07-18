@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<div :class="{ 'icon-loading': loading }">
+	<div :class="{ 'activity': true, 'icon-loading': loading }">
 		<!-- error message -->
 		<NcEmptyContent v-if="error" :name="error">
 			<template #icon>
@@ -23,12 +23,14 @@
 
 			<!-- activities content -->
 			<NcEmptyContent v-if="loading"
+				class="activity__empty-content"
 				:name="t('activity', 'Loading activities')">
 				<template #icon>
 					<NcLoadingIcon />
 				</template>
 			</NcEmptyContent>
 			<NcEmptyContent v-else-if="activities.length === 0"
+				class="activity__empty-content"
 				:name="t('activity', 'No activity yet')">
 				<template #icon>
 					<span class="icon-activity" />
@@ -166,15 +168,26 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.activity {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	height: 100%;
+
+	&__actions {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+
+	&__empty-content {
+		height: 100%;
+	}
+}
+
 :deep(.empty-content__icon span) {
 	background-size: 64px;
 	width: 64px;
 	height: 64px;
-}
-
-.activity__actions {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
 }
 </style>
