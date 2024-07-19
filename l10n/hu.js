@@ -11,6 +11,7 @@ OC.L10N.register(
     "No activities" : "Nincs tevékenység",
     "More activities" : "További tevékenységek",
     "Daily activity summary for %s" : "Napi tevékenység-összefoglaló ehhez: %s",
+    "_and %n more…_::_and %n more…_" : ["és %n további…","és %n további…"],
     "All activities" : "Minden tevékenység",
     "By others" : "Másoké",
     "By you" : "Az Öné",
