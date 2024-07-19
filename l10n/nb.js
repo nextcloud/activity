@@ -11,6 +11,7 @@ OC.L10N.register(
     "No activities" : "Ingen aktiviteter",
     "More activities" : "Flere aktiviteter",
     "Daily activity summary for %s" : "Daglig aktivitetssammendrag for %s",
+    "_and %n more…_::_and %n more…_" : ["og %n til…","og %n til…"],
     "All activities" : "All aktivitet",
     "By others" : "Av andre",
     "By you" : "Av deg",
