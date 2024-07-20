@@ -11,6 +11,7 @@ OC.L10N.register(
     "No activities" : "アクティビティがありません",
     "More activities" : "その他のアクティビティ",
     "Daily activity summary for %s" : "%s のデイリーアクティビティー概要",
+    "_and %n more…_::_and %n more…_" : ["%n その他　"],
     "All activities" : "すべてのアクティビティ",
     "By others" : "他ユーザー",
     "By you" : "自分",
