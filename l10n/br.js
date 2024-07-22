@@ -34,7 +34,7 @@ OC.L10N.register(
     "No activity yet" : "Tamm obererezh ebet",
     "Enable RSS feed" : "Aotren al lanvad RSS",
     "RSS feed" : "Lanvad RSS",
-    "Notification" : "Kemenadenn",
+    "Notification" : "Kemennadenn",
     "Enable notification emails" : "Aotren kas kemennadennoù dre bostel",
     "Choose for which activities you want to get an email or push notification." : "Dibabit evit peseurt oberiadennoù hoc'h eus c'hoant da resev ur gemennadenn dre bostel pe vountet.",
     "Choose for which activities you want to get a push notification." : "Dibabit evit peseurt oberiadenn hoc'h eus c'hoant da resev ur gemennadenn vountet",
