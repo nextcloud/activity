@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<div :class="{ 'activity': true, 'icon-loading': loading }">
+	<div :class="{ 'icon-loading': loading }"
+		class="activity">
 		<!-- error message -->
 		<NcEmptyContent v-if="error" :name="error">
 			<template #icon>
