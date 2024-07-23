@@ -242,6 +242,9 @@ class FilesHooks {
 			return;
 		}
 
+		// cache moveCase result until attributes are calculated for next stage (fileMovePost)
+		// moveCase has to be set as last part before return
+		$moveCase = $this->moveCase;
 		if (strpos($oldDir, $newDir) === 0) {
 			/**
 			 * a/b/c moved to a/c
@@ -251,7 +254,7 @@ class FilesHooks {
 			 * - a/b/ shared: delete
 			 * - a/ shared: move/rename
 			 */
-			$this->moveCase = 'moveUp';
+			$moveCase = 'moveUp';
 		} elseif (strpos($newDir, $oldDir) === 0) {
 			/**
 			 * a/b moved to a/c/b
@@ -261,7 +264,7 @@ class FilesHooks {
 			 * - a/c/ shared: add
 			 * - a/ shared: move/rename
 			 */
-			$this->moveCase = 'moveDown';
+			$moveCase = 'moveDown';
 		} else {
 			/**
 			 * a/b/c moved to a/d/c
@@ -272,7 +275,7 @@ class FilesHooks {
 			 * - a/d/ shared: add
 			 * - a/ shared: move/rename
 			 */
-			$this->moveCase = 'moveCross';
+			$moveCase = 'moveCross';
 		}
 
 		[$this->oldParentPath, $this->oldParentOwner, $this->oldParentId] = $this->getSourcePathAndOwner($oldDir);
@@ -291,6 +294,9 @@ class FilesHooks {
 		}
 
 		$this->oldAccessList = $oldAccessList;
+
+		// now its save to set moveCase
+		$this->moveCase = $moveCase;
 	}
 
 
