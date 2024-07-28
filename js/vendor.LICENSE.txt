@@ -53,7 +53,7 @@ version: 2.1.0
 license: GPL-3.0-or-later
 
 @nextcloud/l10n
-version: 2.2.0
+version: 3.1.0
 license: GPL-3.0-or-later
 
 @nextcloud/logger
@@ -473,7 +473,7 @@ version: 4.0.2
 license: MIT
 
 vite-plugin-node-polyfills
-version: 0.21.0
+version: 0.22.0
 license: MIT
 
 vue
