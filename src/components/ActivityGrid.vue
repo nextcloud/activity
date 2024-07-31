@@ -102,6 +102,10 @@ table.grid th.activity_select_group {
 	color: var(--color-main-text);
 }
 
+table.grid tr td span {
+  justify-content: center;
+}
+
 .sr-only {
 	position:absolute;
 	left:-10000px;
@@ -109,5 +113,9 @@ table.grid th.activity_select_group {
 	width:1px;
 	height:1px;
 	overflow:hidden;
+}
+
+.activity-frequency__label {
+	margin-right: 10px;
 }
 </style>
