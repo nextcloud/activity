@@ -46,6 +46,17 @@ export function mapRichObjectToRichArgument(richObject: IRichObject) {
 			props: richObject,
 		}
 	case 'user':
+		if (richObject.server) {
+			return {
+				component: NcUserBubble,
+				props: {
+					avatarImage: 'icon-user',
+					displayName: richObject.name,
+					user: richObject.id,
+					url: richObject.link,
+				},
+			}
+		}
 		return {
 			component: NcUserBubble,
 			props: { displayName: richObject.name, user: richObject.id, url: richObject.link },
