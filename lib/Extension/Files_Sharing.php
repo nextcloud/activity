@@ -8,4 +8,5 @@ namespace OCA\Activity\Extension;
 
 class Files_Sharing {
 	public const TYPE_SHARED = 'shared';
+	public const TYPE_PUBLIC_UPLOAD = 'public_links_upload';
 }
