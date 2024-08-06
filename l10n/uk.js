@@ -11,6 +11,7 @@ OC.L10N.register(
     "No activities" : "Активність відсутня",
     "More activities" : "Більше заходів",
     "Daily activity summary for %s" : "Підсумок за день для%s",
+    "_and %n more…_::_and %n more…_" : ["та ще %n ..."," та ще %n ...","та ще %n ...","та ще %n ..."],
     "All activities" : "Всі події",
     "By others" : "Дії інших користувачів",
     "By you" : "Мої дії",
