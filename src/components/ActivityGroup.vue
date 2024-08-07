@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<Fragment>
+	<div class="activity-group">
 		<h2 class="activity-group__heading" :title="fullDate">
 			{{ dateText }}
 		</h2>
@@ -14,7 +14,7 @@
 				:activity="activity"
 				:show-previews="true" />
 		</ul>
-	</Fragment>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -24,7 +24,6 @@ import moment from '@nextcloud/moment'
 import Activity from './Activity.vue'
 
 import { translate as t } from '@nextcloud/l10n'
-import { Fragment } from 'vue-frag'
 import { computed } from 'vue'
 
 const props = defineProps<{
@@ -60,12 +59,8 @@ const fullDate = computed(() => {
 .activity-group {
 	&__heading {
 		line-height: 1.5;
-		margin-block: 30px 12px;
-
-		&:first-of-type {
-			// Already padding from h1
-			margin-block-start: 0;
-		}
+		// Left margin in line with text position
+		margin: 0 0 calc(var(--default-grid-baseline) * 3) 25px;
 	}
 }
 </style>
