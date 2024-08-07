@@ -139,6 +139,11 @@ class FilesHooks {
 			return;
 		}
 
+		// don't add activities for files in the hidden folder
+		if (Filesystem::isPathHidden($filePath)) {
+			return;
+		}
+
 		[$filePath, $uidOwner, $fileId] = $this->getSourcePathAndOwner($filePath);
 		if ($fileId === 0) {
 			// Could not find the file for the owner ...
