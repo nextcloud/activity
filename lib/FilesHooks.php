@@ -77,7 +77,7 @@ class FilesHooks {
 		if ($this->currentUser->getUserIdentifier() !== '') {
 			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
 		} else {
-			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, '', 'created_public');
+			$this->addNotificationsForFileAction($path, Files_Sharing::TYPE_PUBLIC_UPLOAD, '', 'created_public');
 		}
 	}
 
@@ -108,9 +108,9 @@ class FilesHooks {
 		$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
 	}
 
-	private function getFileChangeActivitySettings(int $fileId, array $users): array {
-		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', Files::TYPE_FILE_CHANGED);
-		$filteredNotificationUsers = $this->userSettings->filterUsersBySetting($users, 'notification', Files::TYPE_FILE_CHANGED);
+	private function getFileChangeActivitySettings(int $fileId, array $users, $type = Files::TYPE_FILE_CHANGED): array {
+		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', $type);
+		$filteredNotificationUsers = $this->userSettings->filterUsersBySetting($users, 'notification', $type);
 
 		/** @psalm-suppress UndefinedMethod */
 		$favoriteUsers = $this->tagManager->getUsersFavoritingObject('files', $fileId);
@@ -159,7 +159,7 @@ class FilesHooks {
 		}
 
 		[$filteredEmailUsers, $filteredNotificationUsers] =
-			$this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers));
+			$this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers), $activityType);
 
 		foreach ($affectedUsers as $user => $path) {
 			$user = (string)$user;

@@ -178,8 +178,8 @@ class FilesHooksTest extends TestCase {
 
 	public function dataFileCreate(): array {
 		return [
-			['user', 'created_self', 'created_by'],
-			['', '', 'created_public'],
+			['user', 'created_self', 'created_by', Files::TYPE_SHARE_CREATED],
+			['', '', 'created_public', Files_Sharing::TYPE_PUBLIC_UPLOAD],
 		];
 	}
 
@@ -190,14 +190,14 @@ class FilesHooksTest extends TestCase {
 	 * @param string $selfSubject
 	 * @param string $othersSubject
 	 */
-	public function testFileCreate(string $currentUser, string $selfSubject, string $othersSubject): void {
+	public function testFileCreate(string $currentUser, string $selfSubject, string $othersSubject, string $type): void {
 		$filesHooks = $this->getFilesHooks([
 			'addNotificationsForFileAction',
 		], $currentUser);
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', Files::TYPE_SHARE_CREATED, $selfSubject, $othersSubject);
+			->with('path', $type, $selfSubject, $othersSubject);
 
 		$filesHooks->fileCreate('path');
 	}
