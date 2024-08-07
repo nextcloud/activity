@@ -73,7 +73,7 @@ version: 2.2.1
 license: GPL-3.0-or-later
 
 @nextcloud/vue
-version: 8.6.2
+version: 8.8.1
 license: AGPL-3.0
 
 @nextcloud/vue-select
@@ -85,15 +85,15 @@ version: 1.2.0
 license: ISC
 
 @vueuse/components
-version: 10.5.0
+version: 10.9.0
 license: MIT
 
 @vueuse/core
-version: 10.5.0
+version: 10.9.0
 license: MIT
 
 @vueuse/shared
-version: 10.5.0
+version: 10.9.0
 license: MIT
 
 axios
@@ -481,7 +481,7 @@ version: 2.7.16
 license: MIT
 
 vue-demi
-version: 0.14.6
+version: 0.14.7
 license: MIT
 
 vue-frag
