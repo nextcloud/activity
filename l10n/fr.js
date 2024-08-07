@@ -45,7 +45,7 @@ OC.L10N.register(
     "This stream will show events like additions, changes & shares" : "Ce flux liste les événements tels que les ajouts, les modifications et les partages",
     "No activity yet" : "Pas encore d’activité",
     "Loading more activities" : "Chargement de plus d’activités",
-    "No more activities." : "Plus aucune autres activités",
+    "No more activities." : "Plus aucune autre activité",
     "Could not load activities" : "Impossible de charger les activités",
     "Activity settings" : "Paramètres de Activité",
     "Enable RSS feed" : "Activer les flux RSS",
