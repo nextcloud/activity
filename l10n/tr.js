@@ -11,6 +11,7 @@ OC.L10N.register(
     "No activities" : "Herhangi bir işlem yok",
     "More activities" : "Diğer işlemler",
     "Daily activity summary for %s" : "%s için günlük işlem özeti",
+    "_and %n more…_::_and %n more…_" : ["ve %n diğer...","ve %n diğer..."],
     "All activities" : "Tüm işlemler",
     "By others" : "Diğerleri tarafından",
     "By you" : "Sizin tarafınızdan",
