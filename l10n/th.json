@@ -64,13 +64,6 @@
     "Configure the default notification settings for new accounts." : "กำหนดค่าการแจ้งเตือนเริ่มต้นสำหรับบัญชีใหม่",
     "Unable to save the settings" : "ไม่สามารถบันทึกการตั้งค่าได้",
     "No more events to load" : "ไม่มีกิจกรรมเพิ่มเติมที่จะโหลด",
-    "Copied!" : "คัดลอกแล้ว!",
-    "Not supported!" : "ไม่สนับสนุน!",
-    "Press ⌘-C to copy." : "กด ⌘-C เพื่อคัดลอก",
-    "Press Ctrl-C to copy." : "กด Ctrl-C เพื่อคัดลอก",
-    "{name} (invisible)" : "{name} (ไม่แสดงสถานะ)",
-    "{name} (restricted)" : "{name} (จำกัด)",
-    "There are no events for this filter" : "ไม่มีกิจกรรมสำหรับตัวกรองนี้",
     "Could not load activites" : "ไม่สามารถโหลดกิจกรรมได้"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

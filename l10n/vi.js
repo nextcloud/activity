@@ -67,13 +67,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Thiết lập cài đặt mặc định của phần thông báo cho những tài khoản mới.",
     "Unable to save the settings" : "Không thể lưu cài đặt",
     "No more events to load" : "Không có sự kiện nào",
-    "Copied!" : "Đã sao chép!",
-    "Not supported!" : "Không được hỗ trợ!",
-    "Press ⌘-C to copy." : "Ấn ⌘-C để sao chép",
-    "Press Ctrl-C to copy." : "Ấn Ctrl-C để sao chép",
-    "{name} (invisible)" : "{name} (ẩn)",
-    "{name} (restricted)" : "{name} (hạn chế)",
-    "There are no events for this filter" : "Không có sự kiện nào cho bộ lọc này",
     "Could not load activites" : "Không thể tải các hoạt động."
 },
 "nplurals=1; plural=0;");

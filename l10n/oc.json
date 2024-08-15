@@ -44,13 +44,6 @@
     "Daily activity summary" : "Resumit d’activitat quotidian",
     "Send daily activity summary in the morning" : "Envejar lo resumit d'activitat quotidian lo maitin",
     "Default settings" : "Paramètres par defaut",
-    "No more events to load" : "Pas mai d’eveniment de cargar",
-    "Copied!" : "Copiat !",
-    "Not supported!" : "Pas pres en carga !",
-    "Press ⌘-C to copy." : "Quichar ⌘-C per copiar.",
-    "Press Ctrl-C to copy." : "Quichar Ctrl-C per copiar.",
-    "{name} (invisible)" : "{name} (invisible)",
-    "{name} (restricted)" : "{name} (restricted)",
-    "There are no events for this filter" : "Cap d’eveniment per aqueste filtre"
+    "No more events to load" : "Pas mai d’eveniment de cargar"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

@@ -56,13 +56,6 @@ OC.L10N.register(
     "Default settings" : "Vaikeseaded",
     "Configure the default notification settings for new accounts." : "Seadista uute kontode vaikimisi teavituste seaded.",
     "Unable to save the settings" : "Seadeid ei saa salvestada",
-    "No more events to load" : "Pole rohkem sündmusi, mida laadida",
-    "Copied!" : "Kopeeritud!",
-    "Not supported!" : "Pole toetatud!",
-    "Press ⌘-C to copy." : "Kopeerimiseks vajuta ⌘ + C.",
-    "Press Ctrl-C to copy." : "Kopeerimiseks vajuta Ctrl + C.",
-    "{name} (invisible)" : "{name} (nähtamatu)",
-    "{name} (restricted)" : "{name} (piiratud)",
-    "There are no events for this filter" : "Selle filtri jaoks pole ühtegi sündmust"
+    "No more events to load" : "Pole rohkem sündmusi, mida laadida"
 },
 "nplurals=2; plural=(n != 1);");

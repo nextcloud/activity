@@ -25,12 +25,6 @@
     "in {path}" : "{path} daxilində",
     "Home" : "Ev",
     "Enable RSS feed" : "RSS ötürməsinin işə salinmaslı",
-    "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur",
-    "Copied!" : "Kopyalandı!",
-    "Not supported!" : "Dəstəklənmir!",
-    "Press ⌘-C to copy." : "Kopyalamaq üçün ⌘-C basın.",
-    "Press Ctrl-C to copy." : "Kopyalamaq üçün Ctrl-C basın.",
-    "{name} (invisible)" : "{name} (gizli)",
-    "{name} (restricted)" : "{name} (məhdudlaşmış)"
+    "No more events to load" : "Yüklənə biləcək digər səbəb yoxdur"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

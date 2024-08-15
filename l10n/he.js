@@ -66,13 +66,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "הגדרת תצורת ההתראות כברירת מחדל לחשבונות חדשים.",
     "Unable to save the settings" : "שמירת ההגדרות נכשלה",
     "No more events to load" : "אין אירועים נוספים לטעינה",
-    "Copied!" : "הועתק!",
-    "Not supported!" : "לא נתמך!",
-    "Press ⌘-C to copy." : "יש ללחוץ על ‎⌘+C כדי להעתיק.",
-    "Press Ctrl-C to copy." : "יש ללחוץ על Ctrl+C כדי להעתיק.",
-    "{name} (invisible)" : "{name} (בלתי נראה)",
-    "{name} (restricted)" : "{name} (מוגבל)",
-    "There are no events for this filter" : "אין אירועים לסינון זה",
     "Could not load activites" : "לא ניתן לטעון את הפעילויות"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");

@@ -66,13 +66,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Configura les opciones d'avisu predeterminaes pa les cuentes nueves.",
     "Unable to save the settings" : "Nun ye posible guardar la configuración",
     "No more events to load" : "Nun hai más eventos",
-    "Copied!" : "¡Copióse!",
-    "Not supported!" : "¡Nun ye compatible!",
-    "Press ⌘-C to copy." : "Primi ⌘-C pa copiar.",
-    "Press Ctrl-C to copy." : "Primi Ctrl-C pa copiar.",
-    "{name} (invisible)" : "{name} (invisible)",
-    "{name} (restricted)" : "{name} (torgóse)",
-    "There are no events for this filter" : "Nun hai nengún eventu pa esta peñera",
     "Could not load activites" : "Nun se pudo cargar l'actividá"
 },
 "nplurals=2; plural=(n != 1);");

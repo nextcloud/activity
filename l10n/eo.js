@@ -63,13 +63,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Agordi la defaŭltajn sciigajn agordojn por novaj kontoj.",
     "Unable to save the settings" : "Ne eblis konservi la agordojn",
     "No more events to load" : "Ne plu ŝargeblaj eventoj",
-    "Copied!" : "Kopiita!",
-    "Not supported!" : "Ne subtenite!",
-    "Press ⌘-C to copy." : "Premi ⌘-C por kopii.",
-    "Press Ctrl-C to copy." : "Premi Ctrl-C por kopii.",
-    "{name} (invisible)" : "{name} (nevidebla)",
-    "{name} (restricted)" : "{name} (limigita)",
-    "There are no events for this filter" : "Neniu evento kun tiu ĉi filtrilo",
     "Could not load activites" : "Ne eblas ŝargi aktivaĵojn"
 },
 "nplurals=2; plural=(n != 1);");

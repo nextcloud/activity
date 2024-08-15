@@ -48,13 +48,6 @@ OC.L10N.register(
     "Default settings" : "डिफ़ॉल्ट सेटिंग",
     "Configure the default notification settings for new accounts." : "नए खातों के लिए डिफ़ॉल्ट अधिसूचना सेटिंग्स कॉन्फ़िगर करें।",
     "Unable to save the settings" : "सेटिंग्स सहेजने में असमर्थ",
-    "No more events to load" : "लोड करने के लिए और कोई ईवेंट नहीं",
-    "Copied!" : "कॉपी कर लिया गया है!",
-    "Not supported!" : "समर्थित नहीं!",
-    "Press ⌘-C to copy." : "कॉपी करने के लिए ⌘-C दबाएँ.",
-    "Press Ctrl-C to copy." : "कॉपी करने के लिए Ctrl-C दबाएँ.",
-    "{name} (invisible)" : "{नाम} (अदृश्य)",
-    "{name} (restricted)" : "{नाम} (प्रतिबंधित)",
-    "There are no events for this filter" : "इस फ़िल्टर के लिए कोई ईवेंट नहीं हैं"
+    "No more events to load" : "लोड करने के लिए और कोई ईवेंट नहीं"
 },
 "nplurals=2; plural=(n != 1);");

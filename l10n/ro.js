@@ -66,13 +66,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Configurați setările implicite de notificare pentru conturile noi.",
     "Unable to save the settings" : "Nu se pot salva setările",
     "No more events to load" : "Nu mai sunt evenimente de încărcat",
-    "Copied!" : "S-a copiat!",
-    "Not supported!" : "Nu este suportat!",
-    "Press ⌘-C to copy." : "Apasă ⌘-C pentru a copia.",
-    "Press Ctrl-C to copy." : "Apasă Ctrl-C pentru a copia.",
-    "{name} (invisible)" : "{name} (invizibil)",
-    "{name} (restricted)" : "{name} (restricționat)",
-    "There are no events for this filter" : "Nu sunt evenimente pentru acest filtru",
     "Could not load activites" : "Activitățile nu s-au putut încărca"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

@@ -66,13 +66,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Καθορίστε τις προεπιλεγμένες ρυθμίσεις ειδοποιήσεων για νέους λογαριασμούς.",
     "Unable to save the settings" : "Αδυναμία αποθήκευσης των ρυθμίσεων",
     "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
-    "Copied!" : "Αντιγράφτηκε!",
-    "Not supported!" : "Δεν υποστηρίζεται!",
-    "Press ⌘-C to copy." : "Για αντιγραφή πατήστε ⌘-C.",
-    "Press Ctrl-C to copy." : "Για αντιγραφή πατήστε Ctrl-C",
-    "{name} (invisible)" : "{name} (αόρατος/η)",
-    "{name} (restricted)" : "{name} (περιορισμένη πρόσβαση)",
-    "There are no events for this filter" : "Δεν υπάρχουν γεγονότα για αυτό το φίλτρο",
     "Could not load activites" : "Δεν ήταν δυνατή η φόρτωση των δραστηριοτήτων"
 },
 "nplurals=2; plural=(n != 1);");

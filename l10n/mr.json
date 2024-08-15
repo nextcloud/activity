@@ -31,12 +31,6 @@
     "Unable to load the activity list" : "क्रियेची यादी घेता आली नाही",
     "Enable notification emails" : "अधिसूचना ई-मेल सुरु करा",
     "Daily activity summary" : "दैनिक क्रिया सारांश",
-    "Default settings" : "मूळ सेटींग",
-    "Copied!" : "कॉपी केले!",
-    "Not supported!" : "सपोर्ट करीत नाही!",
-    "Press ⌘-C to copy." : "कॉपी करायला ⌘-C दाबा.",
-    "Press Ctrl-C to copy." : "कॉपी करायला Ctrl-C दाबा.",
-    "{name} (invisible)" : "{name} (अदृश्य)",
-    "{name} (restricted)" : "{name} (प्रतिबंधित)"
+    "Default settings" : "मूळ सेटींग"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
