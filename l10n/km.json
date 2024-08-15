@@ -41,12 +41,6 @@
     "Daily activity summary" : "សង្ខេបនៃសកម្មភាពប្រចាំថ្ងៃ",
     "Send daily activity summary in the morning" : "ផ្ញើសង្ខេបនៃសកម្មភាពប្រចាំថ្ងៃនៅពេលព្រឹក",
     "Default settings" : "ការកំណត់លំនាំដើម",
-    "No more events to load" : "គ្មាន​ព្រឹត្តិការណ៍​ច្រើនទៀតសម្រាប់ទាញយកមកទេ",
-    "Copied!" : "បានចម្លង",
-    "Press ⌘-C to copy." : " ចុច ⌘-C ដើម្បីចម្លង",
-    "Press Ctrl-C to copy." : "ចុច Ctrl-C ដើម្បីចម្លង",
-    "{name} (invisible)" : "{name} (ដែលមើលមិនឃើញ)",
-    "{name} (restricted)" : "{name} (ដែលហាមឃាត់)",
-    "There are no events for this filter" : "គ្មានព្រឹត្តិការណ៍សម្រាប់ចម្រោះនេះ"
+    "No more events to load" : "គ្មាន​ព្រឹត្តិការណ៍​ច្រើនទៀតសម្រាប់ទាញយកមកទេ"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -31,13 +31,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RRS لړ فعال کړئ",
     "RSS feed" : "RRS لړ ",
     "Default settings" : "اصلي حالت",
-    "No more events to load" : "نورې کړنې نشته",
-    "Copied!" : "کاپي شو!",
-    "Not supported!" : "د کار نه کېږي",
-    "Press ⌘-C to copy." : "د کاپي لپاره د ⌘-C تڼۍ کېکاږئ.",
-    "Press Ctrl-C to copy." : "د کاپي لپاره د Ctrl-C تڼۍ کېکاږئ.",
-    "{name} (invisible)" : "{name} (پټ دی)",
-    "{name} (restricted)" : "{name} (تړلی دی)",
-    "There are no events for this filter" : "دا ډول کړنې نشته"
+    "No more events to load" : "نورې کړنې نشته"
 },
 "nplurals=2; plural=(n != 1);");

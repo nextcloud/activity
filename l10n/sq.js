@@ -42,13 +42,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Zgjidhni për cilat aktivitete dëshironi të merrni një njoftim.",
     "Send daily activity summary in the morning" : "Dërgo përmbledhje të përditshme të aktiviteteve në mëngjes",
     "Default settings" : "Konfigurime të paracaktuara",
-    "No more events to load" : "S’ka më veprimtari për t’u ngarkuar",
-    "Copied!" : "U kopjua!",
-    "Not supported!" : "Nuk suportohet!",
-    "Press ⌘-C to copy." : "Shtyp ⌘-C për të kopjuar.",
-    "Press Ctrl-C to copy." : "Shtyp Ctrl-C për të kopjuar.",
-    "{name} (invisible)" : "{emri} (i padukshëm)",
-    "{name} (restricted)" : "{emri} (i kufizuar)",
-    "There are no events for this filter" : "S’ka veprimtari për këtë filtër"
+    "No more events to load" : "S’ka më veprimtari për t’u ngarkuar"
 },
 "nplurals=2; plural=(n != 1);");

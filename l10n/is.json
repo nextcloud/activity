@@ -64,13 +64,6 @@
     "Configure the default notification settings for new accounts." : "Ákvarðaðu sjálfgefnar stillingar tilkynninga fyrir nýja aðganga.",
     "Unable to save the settings" : "Tókst ekki að vista stillingarnar",
     "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
-    "Copied!" : "Afritað!",
-    "Not supported!" : "Þessi aðgerð er óstudd.",
-    "Press ⌘-C to copy." : "Ýttu á ⌘-C til að afrita.",
-    "Press Ctrl-C to copy." : "Ýttu á Ctrl-C til að afrita.",
-    "{name} (invisible)" : "{name} (ósýnilegt)",
-    "{name} (restricted)" : "{name} (takmarkað)",
-    "There are no events for this filter" : "Engir atburðir finnast með síunni",
     "Could not load activites" : "Gat ekki hlaðið inn athöfnum"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

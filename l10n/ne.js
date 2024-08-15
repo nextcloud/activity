@@ -31,13 +31,6 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS फिड सक्षम गर्नुहोस्",
     "RSS feed" : "RSS फिड",
     "Default settings" : "पूर्वनिर्धारित सेटिङहरू",
-    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्",
-    "Copied!" : "प्रतिलिपि गरियो!",
-    "Not supported!" : "समर्थित छैन!",
-    "Press ⌘-C to copy." : "प्रतिलिपि गर्न ⌘-C थिच्नुहोस्।",
-    "Press Ctrl-C to copy." : "प्रतिलिपि गर्न Ctrl-C थिच्नुहोस्।",
-    "{name} (invisible)" : "{name} (invisible)",
-    "{name} (restricted)" : "{name} (restricted)",
-    "There are no events for this filter" : "यस फिल्टरका लागि कुनै घटनाहरू छैनन्"
+    "No more events to load" : "लोड गर्न थप घटनाहरू छैनन्"
 },
 "nplurals=2; plural=(n != 1);");

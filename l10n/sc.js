@@ -45,13 +45,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Sèbera pro cales atividades cheres retzire una notìfica automàtica.",
     "Send daily activity summary in the morning" : "Imbia unu resumu de is atividades de ogni die a mangianu",
     "Default settings" : "Cunfiguratzione predefinida",
-    "No more events to load" : "Perunu eventu de carrigare",
-    "Copied!" : "Copiadu!",
-    "Not supported!" : "Non suportadu!",
-    "Press ⌘-C to copy." : "Incarca ⌘-C pro copiare.",
-    "Press Ctrl-C to copy." : "Incarca Ctrl-C pro copiare.",
-    "{name} (invisible)" : "{name} (invisìbile)",
-    "{name} (restricted)" : "{name} (limitadu)",
-    "There are no events for this filter" : "Non ddoe at eventos pro custu filtru"
+    "No more events to load" : "Perunu eventu de carrigare"
 },
 "nplurals=2; plural=(n != 1);");

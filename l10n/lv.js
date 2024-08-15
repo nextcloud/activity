@@ -41,13 +41,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Izvēlieties, par kurām darbībām vēlaties saņemt paziņojumu.",
     "Send daily activity summary in the morning" : "Sūtīt dienas darbību kopsavilkumu no rīta",
     "Default settings" : "Noklusējuma iestatījumi",
-    "No more events to load" : "Nav vairs notikumu, ko ielādēt",
-    "Copied!" : "Nokopēts!",
-    "Not supported!" : "Nav atbalstīts!",
-    "Press ⌘-C to copy." : "Spied ⌘-C lai kopētu.",
-    "Press Ctrl-C to copy." : "Spied Ctrl-C lai kopētu.",
-    "{name} (invisible)" : "{name} (neredzams)",
-    "{name} (restricted)" : "{name} (ierobežots)",
-    "There are no events for this filter" : "Šim filtram nav notikumu"
+    "No more events to load" : "Nav vairs notikumu, ko ielādēt"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

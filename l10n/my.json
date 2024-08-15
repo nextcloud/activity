@@ -17,12 +17,6 @@
     "in {path}" : "{path} တွင်",
     "Home" : "ပင်မစာမျက်နှာ",
     "This stream will show events like additions, changes & shares" : "ဤ လမ်းကြောင်းသည်  ပေါင်းထည့်ခြင်း၊ ပြောင်းလဲခြင်းနှင့် မျှဝေခြင်း စသည့် အဖြစ်အပျက်များကို ပြသပေးပါမည်။",
-    "No activity yet" : "လုပ်ဆောင်မှုမရှိသေး",
-    "Copied!" : "ကူးယူပြီး!",
-    "Not supported!" : "အထောက်အပံ့ မပြု!",
-    "Press ⌘-C to copy." : "ကူးယူရန်အတွက် ⌘-C ကိုနှိပ်ပါ။",
-    "Press Ctrl-C to copy." : "ကူးယူရန်အတွက် Ctrl-C ကိုနှိပ်ပါ။",
-    "{name} (restricted)" : "{name} (ကန့်သတ်ထား)",
-    "There are no events for this filter" : "ဤ စစ်ထုတ်မှုအတွက် ဖြစ်စဉ် တစ်ခုမှမရှိပါ။"
+    "No activity yet" : "လုပ်ဆောင်မှုမရှိသေး"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

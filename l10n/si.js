@@ -26,12 +26,6 @@ OC.L10N.register(
     "No activity yet" : "තවම ක්‍රියාකාරකමක් නොමැත",
     "Enable notification emails" : "දැනුම්දීම් විද්‍යුත් තැපෑල සබල කරන්න",
     "Default settings" : "සාමාන්‍ය සැකසුම්",
-    "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත",
-    "Copied!" : "පිටපත් කළා!",
-    "Not supported!" : "සහාය නොදක්වයි!",
-    "Press ⌘-C to copy." : "පිටපත් කිරීමට ⌘-C ඔබන්න.",
-    "Press Ctrl-C to copy." : "පිටපත් කිරීමට Ctrl-C ඔබන්න.",
-    "{name} (invisible)" : "{name} (නොපෙනෙන)",
-    "{name} (restricted)" : "{name} (සීමිත)"
+    "No more events to load" : "පූරණය කිරීමට තවත් සිදුවීම් නොමැත"
 },
 "nplurals=2; plural=(n != 1);");

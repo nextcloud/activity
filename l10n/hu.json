@@ -65,13 +65,6 @@
     "Configure the default notification settings for new accounts." : "Adja meg az új fiókok alapértelmezett értesítési beállításait.",
     "Unable to save the settings" : "Nem sikerült menteni a beállításokat",
     "No more events to load" : "Nincs több esemény",
-    "Copied!" : "Másolva!",
-    "Not supported!" : "Nem támogatott!",
-    "Press ⌘-C to copy." : "A másoláshoz nyomjon ⌘-C-t.",
-    "Press Ctrl-C to copy." : "A másoláshoz nyomjon Ctrl-C-t.",
-    "{name} (invisible)" : "{name} (láthatatlan)",
-    "{name} (restricted)" : "{name} (korlátozott)",
-    "There are no events for this filter" : "Ehhez a szűrőhöz nem található esemény",
     "Could not load activites" : "Nem sikerült betölteni a tevékenységeket"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

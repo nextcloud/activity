@@ -65,13 +65,6 @@
     "Configure the default notification settings for new accounts." : "為新帳戶配置默認通知設置。",
     "Unable to save the settings" : "無法保存設定",
     "No more events to load" : "已載入所有事件",
-    "Copied!" : "已複製！",
-    "Not supported!" : "不支援！",
-    "Press ⌘-C to copy." : "請按【⌘-C】以複製。",
-    "Press Ctrl-C to copy." : "請按【Ctrl-C】以複製。",
-    "{name} (invisible)" : "{name}（隱藏）",
-    "{name} (restricted)" : "{name}（受限）",
-    "There are no events for this filter" : "在此篩選器下沒有系統事件",
     "Could not load activites" : "無法載入活動"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

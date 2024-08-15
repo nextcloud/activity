@@ -45,13 +45,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "আপনি কোন ধরণের বিজ্ঞপ্তি পেতে চান তা বেছে নিন।",
     "Send daily activity summary in the morning" : "সকালে প্রতিদিনের ক্রিয়াকলাপের সারাংশ পাঠান",
     "Default settings" : "ডিফল্ট সেটিংস",
-    "No more events to load" : "লোড করার কোন ইভেন্ট খুঁজে পাওয়া গেল না।",
-    "Copied!" : "অনুলিপি!",
-    "Not supported!" : "সমর্থিত নয়! ",
-    "Press ⌘-C to copy." : "অনুলিপি করতে ⌘-C টিপুন।",
-    "Press Ctrl-C to copy." : "অনুলিপি করতে Ctrl-C টিপুন।",
-    "{name} (invisible)" : "{নাম} (অদৃশ্য)",
-    "{name} (restricted)" : "{নাম} (সীমাবদ্ধ)",
-    "There are no events for this filter" : "এই ফিল্টারটির জন্য কোনও ইভেন্ট নেই"
+    "No more events to load" : "লোড করার কোন ইভেন্ট খুঁজে পাওয়া গেল না।"
 },
 "nplurals=2; plural=(n != 1);");

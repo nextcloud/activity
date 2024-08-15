@@ -38,9 +38,6 @@ OC.L10N.register(
     "Send daily activity summary in the morning" : "ສົ່ງສະຫຼຸບກິດຈະກຳປະຈຳວັນໃນຕອນເຊົ້າ",
     "Default settings" : "ການຕັ້ງຄ່າເລີ່ມຕົ້ນ",
     "Unable to save the settings" : "ບໍ່ສາມາດບັນທຶກການຕັ້ງຄ່າ",
-    "No more events to load" : "ບໍ່ມີເຫດການໃຫ້ໂຫລດອີກ",
-    "Copied!" : "ກ໋ອບປີ້ແລ້ວ",
-    "Not supported!" : "ບໍ່ຊັບຟອດ",
-    "Press Ctrl-C to copy." : "ກົດ Ctrl-C ເພື່ອ copy"
+    "No more events to load" : "ບໍ່ມີເຫດການໃຫ້ໂຫລດອີກ"
 },
 "nplurals=1; plural=0;");
