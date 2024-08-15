@@ -23,12 +23,6 @@ OC.L10N.register(
     "No activity yet" : "Tiada aktiviti",
     "RSS feed" : "Suapan RSS",
     "Default settings" : "Tetapan lalai",
-    "No more events to load" : "Tiada aktiviti untuk memuat",
-    "Copied!" : "Disalin!",
-    "Not supported!" : "Tidak menyokong!",
-    "Press ⌘-C to copy." : "Tekan ⌘-C untuk menyalin.",
-    "Press Ctrl-C to copy." : "Tekan Ctrl-C untuk menyalin.",
-    "{name} (invisible)" : "{nama} (halimunan)",
-    "{name} (restricted)" : "{nama} (disekat)"
+    "No more events to load" : "Tiada aktiviti untuk memuat"
 },
 "nplurals=1; plural=0;");

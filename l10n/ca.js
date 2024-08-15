@@ -66,13 +66,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Configureu els paràmetres de notificació per defecte per als comptes nous.",
     "Unable to save the settings" : "No s'han pogut desar els paràmetres",
     "No more events to load" : "No hi ha més esdeveniments",
-    "Copied!" : "S'ha copiat!",
-    "Not supported!" : "No s'admet l'acció!",
-    "Press ⌘-C to copy." : "Premeu ⌘+C per a copiar.",
-    "Press Ctrl-C to copy." : "Premeu Ctrl+C per a copiar.",
-    "{name} (invisible)" : "{name} (invisible)",
-    "{name} (restricted)" : "{name} (restringit)",
-    "There are no events for this filter" : "No hi ha esdeveniments per a aquest filtre",
     "Could not load activites" : "No s'ha pogut carregar l'activitat"
 },
 "nplurals=2; plural=(n != 1);");

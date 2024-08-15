@@ -65,13 +65,6 @@
     "Configure the default notification settings for new accounts." : "قم بتهيئة الإعدادات الافتراضية لإشعارات الحساب الجديد ",
     "Unable to save the settings" : "تعذّر حفظ الإعدادات",
     "No more events to load" : "لا مزيد من الأحداث لتحميلها",
-    "Copied!" : "تم النسخ!",
-    "Not supported!" : "غير مدعوم!",
-    "Press ⌘-C to copy." : "اضغط  C-⌘ للنسخ.",
-    "Press Ctrl-C to copy." : "اضغط Ctrl-C للنسخ.",
-    "{name} (invisible)" : "{name} (مخفي)",
-    "{name} (restricted)" : "{name} (مقيّد)",
-    "There are no events for this filter" : "لا توجد أحداث تنطبق عليها هذه الاشتراطات",
     "Could not load activites" : "تعذّر تحميل الحركات"
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"
 }

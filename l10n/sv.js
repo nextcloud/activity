@@ -67,13 +67,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Konfigurera standardinställningar av notifieringar för nya konton.",
     "Unable to save the settings" : "Kunde inte spara inställningarna",
     "No more events to load" : "Inga fler aktiviteter.",
-    "Copied!" : "Kopierad!",
-    "Not supported!" : "Stöds inte!",
-    "Press ⌘-C to copy." : "Tryck ⌘-C för att kopiera.",
-    "Press Ctrl-C to copy." : "Tryck Ctrl-C för att kopiera.",
-    "{name} (invisible)" : "{name} (osynlig)",
-    "{name} (restricted)" : "{name} (begränsad)",
-    "There are no events for this filter" : "Det finns inga aktiviteter för detta filter",
     "Could not load activites" : "Kunde inte läsa in aktiviteter"
 },
 "nplurals=2; plural=(n != 1);");

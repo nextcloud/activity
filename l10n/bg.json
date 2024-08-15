@@ -55,13 +55,6 @@
     "Default settings" : "Стандартни настройкки",
     "Configure the default notification settings for new accounts." : "Конфигуриране по подразбиране на настройките при известие за уведомяване за нови профили.",
     "Unable to save the settings" : "Настройките не могат да бъдат запазени",
-    "No more events to load" : "Няма повече известия за зареждане",
-    "Copied!" : "Копирано!",
-    "Not supported!" : "Не се поддържа!",
-    "Press ⌘-C to copy." : "За копиране натиснете ⌘-C",
-    "Press Ctrl-C to copy." : "За копиране натиснете Ctrl-C",
-    "{name} (invisible)" : "{name} (невидим)",
-    "{name} (restricted)" : "{name} (ограничен)",
-    "There are no events for this filter" : "Няма събития от този филтър"
+    "No more events to load" : "Няма повече известия за зареждане"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

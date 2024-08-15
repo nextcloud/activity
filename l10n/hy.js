@@ -54,13 +54,6 @@ OC.L10N.register(
     "Default settings" : "Լռելայն կարգավորումներ",
     "Configure the default notification settings for new accounts." : "Կարգաբերել ծանուցման լռելայն կարգավորումները նոր հաշիվների համար։",
     "Unable to save the settings" : "Չի ստացվում պահել կարգավորումները",
-    "No more events to load" : "Առկա չէ այլ իրադարձություններ բեռնելու համար",
-    "Copied!" : "Պատճենված է․",
-    "Not supported!" : "Չի՛ սպասարկվում։",
-    "Press ⌘-C to copy." : "Սեղմել ⌘-C պատճենելու համար։",
-    "Press Ctrl-C to copy." : "Սեղմել  Ctrl-C պատճենելու համար։",
-    "{name} (invisible)" : "{անուն} (անտեսանելի)",
-    "{name} (restricted)" : "{անուն} (սահմանափակ)",
-    "There are no events for this filter" : "Այս զտման համար իրադարձություն առկա չէ"
+    "No more events to load" : "Առկա չէ այլ իրադարձություններ բեռնելու համար"
 },
 "nplurals=2; plural=(n != 1);");

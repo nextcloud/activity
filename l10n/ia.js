@@ -29,13 +29,6 @@ OC.L10N.register(
     "No activity yet" : "Nulle activitate ancora",
     "Enable RSS feed" : "Habilita syndication RSS",
     "Default settings" : "Configurationes predefinite",
-    "No more events to load" : "Nulle altere eventos a cargar",
-    "Copied!" : "Copiate!",
-    "Not supported!" : "Non supportate!",
-    "Press ⌘-C to copy." : "Pulsa ⌘-C pro copiar.",
-    "Press Ctrl-C to copy." : "Pulsa Ctrl-C pro copiar.",
-    "{name} (invisible)" : "{name} (invisibile)",
-    "{name} (restricted)" : "{name} (restringite)",
-    "There are no events for this filter" : "Il non ha eventos pro iste filtro"
+    "No more events to load" : "Nulle altere eventos a cargar"
 },
 "nplurals=2; plural=(n != 1);");

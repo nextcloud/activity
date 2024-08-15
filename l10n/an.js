@@ -50,13 +50,6 @@ OC.L10N.register(
     "Send daily activity summary in the morning" : "Inviar resumen d'actividat diaria por o maitín.",
     "Default settings" : "Configurazión per defeuto",
     "Unable to save the settings" : "No se puede alzar a configurazión",
-    "No more events to load" : "No i hai más eventos que cargar",
-    "Copied!" : "Copiado!",
-    "Not supported!" : "No suportau!",
-    "Press ⌘-C to copy." : "Pretar ⌘-C pa copiar.",
-    "Press Ctrl-C to copy." : "Pretar Ctrl-C pa copiar.",
-    "{name} (invisible)" : "{nombre} (invisible)",
-    "{name} (restricted)" : "{nombre} (restrinchiu)",
-    "There are no events for this filter" : "No i hai eventos pa iste filtro"
+    "No more events to load" : "No i hai más eventos que cargar"
 },
 "nplurals=2; plural=(n != 1);");

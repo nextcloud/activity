@@ -45,13 +45,6 @@ OC.L10N.register(
     "Default settings" : "Iɣewwaren n lexṣas",
     "Configure the default notification settings for new accounts." : "Sesteb iɣewwaren n yilɣa imezwer i yimiḍanen imaynuten.",
     "Unable to save the settings" : "D awezɣi ad ttwaskelsen yiɣewwaren",
-    "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen",
-    "Copied!" : "Yenɣel!",
-    "Not supported!" : "Ur yettusefrak ara!",
-    "Press ⌘-C to copy." : "Senned ɣef ⌘-C akken ad tneɣleḍ.",
-    "Press Ctrl-C to copy." : "Senned ɣef Ctrl-C akken ad tneɣleḍ.",
-    "{name} (invisible)" : "{isem} (uffir)",
-    "{name} (restricted)" : "{isem} (yegdel)",
-    "There are no events for this filter" : "Ulac ineḍruyen i testayt-agi"
+    "No more events to load" : "Dayen ulac ineḍruyen ara yettwazedmen"
 },
 "nplurals=2; plural=(n != 1);");

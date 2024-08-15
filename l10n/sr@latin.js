@@ -36,13 +36,6 @@ OC.L10N.register(
     "Enable RSS feed" : "Укључи РСС довод",
     "RSS feed" : "РСС довод",
     "Default settings" : "Подразумеване поставке",
-    "No more events to load" : "Нема више догађаја за приказ",
-    "Copied!" : "Копирано!",
-    "Not supported!" : "Није подржано!",
-    "Press ⌘-C to copy." : "Притисни ⌘-C за копирање.",
-    "Press Ctrl-C to copy." : "Притисни Ctrl-C за копирање.",
-    "{name} (invisible)" : "{name} (невидљиво) ",
-    "{name} (restricted)" : "{name} (ограничено)",
-    "There are no events for this filter" : "Нема догађаја за овај филтер"
+    "No more events to load" : "Нема више догађаја за приказ"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

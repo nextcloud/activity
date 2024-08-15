@@ -66,13 +66,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Määritä uusien tilien oletusarvoiset ilmoitusasetukset.",
     "Unable to save the settings" : "Asetusten tallentaminen epäonnistui",
     "No more events to load" : "Ei enempää tapahtumia",
-    "Copied!" : "Kopioitu!",
-    "Not supported!" : "Ei tuettu!",
-    "Press ⌘-C to copy." : "Paina ⌘-C kopioidaksesi.",
-    "Press Ctrl-C to copy." : "Paina Ctrl-C kopioidaksesi.",
-    "{name} (invisible)" : "{name} (näkymätön)",
-    "{name} (restricted)" : "{name} (rajoitettu)",
-    "There are no events for this filter" : "Tällä suodattimella ei löydy tapahtumia",
     "Could not load activites" : "Tapahtumia ei voitu ladata"
 },
 "nplurals=2; plural=(n != 1);");

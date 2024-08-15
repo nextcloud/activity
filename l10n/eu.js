@@ -66,13 +66,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Konfiguratu jakinarazpen-ezarpen lehenetsiak kontu berrietarako.",
     "Unable to save the settings" : "Ezin izan dira ezarpenak gorde",
     "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
-    "Copied!" : "Kopiatuta!",
-    "Not supported!" : "Ez da onartzen!",
-    "Press ⌘-C to copy." : "Sakatu ⌘-C kopiatzeko.",
-    "Press Ctrl-C to copy." : "Sakatu Ctrl-C kopiatzeko.",
-    "{name} (invisible)" : "{name} (ikusezina)",
-    "{name} (restricted)" : "{name} (mugatua)",
-    "There are no events for this filter" : "Ez dago gertaerarik iragazki honetarako",
     "Could not load activites" : "Ezin izan dira jarduerak kargatu"
 },
 "nplurals=2; plural=(n != 1);");

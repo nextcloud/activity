@@ -64,13 +64,6 @@
     "Configure the default notification settings for new accounts." : "Configurer les paramètres de notification par défaut pour les nouveaux comptes.",
     "Unable to save the settings" : "Échec de l’enregistrement des paramètres",
     "No more events to load" : "Plus aucun événement à charger",
-    "Copied!" : "Copié !",
-    "Not supported!" : "Non pris en charge !",
-    "Press ⌘-C to copy." : "Appuyez sur ⌘-C pour copier.",
-    "Press Ctrl-C to copy." : "Appuyez sur Ctrl-C pour copier.",
-    "{name} (invisible)" : "{name} (invisible)",
-    "{name} (restricted)" : "{name} (restreint)",
-    "There are no events for this filter" : "Il n’y a aucun événement pour ce filtre",
     "Could not load activites" : "Impossible de charger les activités"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }
