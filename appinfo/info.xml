@@ -15,7 +15,7 @@
 		More information is available in the Activity documentation.
 	</description>
 
-	<version>3.0.0</version>
+	<version>4.0.0</version>
 	<licence>agpl</licence>
 	<author>Frank Karlitschek</author>
 	<author>Joas Schilling</author>
@@ -38,7 +38,7 @@
 	<repository>https://github.com/nextcloud/activity.git</repository>
 
 	<dependencies>
-		<nextcloud min-version="30" max-version="30" />
+		<nextcloud min-version="31" max-version="31" />
 	</dependencies>
 
 	<background-jobs>
