@@ -66,13 +66,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Konfigurer standardmeddelelsesindstillingerne for nye konti.",
     "Unable to save the settings" : "Kan ikke gemme indstillingerne",
     "No more events to load" : "Der er Ikke flere aktiviteter som kan indlæses",
-    "Copied!" : "Kopieret!",
-    "Not supported!" : "Ikke understøttet!",
-    "Press ⌘-C to copy." : "Tryk ⌘-C for at kopiere.",
-    "Press Ctrl-C to copy." : "Tryk Ctrl-C for at kopiere.",
-    "{name} (invisible)" : "{navn} (usynlig)",
-    "{name} (restricted)" : "{navn} (begrænset)",
-    "There are no events for this filter" : "Der er ingen aktiviteter for dette filter",
     "Could not load activites" : "Kunne ikke indlæse aktiviteter"
 },
 "nplurals=2; plural=(n != 1);");

@@ -55,13 +55,6 @@ OC.L10N.register(
     "Default settings" : "Gosodiadau rhagosodedig",
     "Configure the default notification settings for new accounts." : "Ffurfweddwch y gosodiadau hysbysu rhagosodedig ar gyfer cyfrifon newydd.",
     "Unable to save the settings" : "Methu cadw'r gosodiadau",
-    "No more events to load" : "Dim mwy o ddigwyddiadau i'w llwytho",
-    "Copied!" : "Wedi'i gopïo!",
-    "Not supported!" : "Heb ei gefnogi!",
-    "Press ⌘-C to copy." : "Pwyswch ⌘-C i gopïo.",
-    "Press Ctrl-C to copy." : "Pwyswch Ctrl-C i gopïo.",
-    "{name} (invisible)" : "{name} (anweledig)",
-    "{name} (restricted)" : "{name} (cyfyngedig)",
-    "There are no events for this filter" : "Nid oes unrhyw ddigwyddiadau ar gyfer yr hidlydd hwn"
+    "No more events to load" : "Dim mwy o ddigwyddiadau i'w llwytho"
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");

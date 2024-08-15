@@ -64,13 +64,6 @@
     "Configure the default notification settings for new accounts." : "Stel de standaard notificatie-instelling voor nieuwe gebruikers account in.",
     "Unable to save the settings" : "Kan instellingen niet opslaan",
     "No more events to load" : "Geen activiteiten meer beschikbaar",
-    "Copied!" : "Gekopieerd!",
-    "Not supported!" : "Niet ondersteund!",
-    "Press ⌘-C to copy." : "Druk op ⌘-C om te kopiëren.",
-    "Press Ctrl-C to copy." : "Druk op Ctrl-C om te kopiëren.",
-    "{name} (invisible)" : "{name} (onzichtbaar)",
-    "{name} (restricted)" : "{name} (beperkt)",
-    "There are no events for this filter" : "Er zijn geen gebeurtenissen voor dit filter",
     "Could not load activites" : "Kon activiteiten niet laden"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

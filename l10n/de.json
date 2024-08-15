@@ -65,13 +65,6 @@
     "Configure the default notification settings for new accounts." : "Konfiguriere die Standardbenachrichtigungseinstellungen für neue Konten.",
     "Unable to save the settings" : "Einstellungen können nicht gespeichert werden",
     "No more events to load" : "Keine weiteren Ereignisse zu laden",
-    "Copied!" : "Kopiert!",
-    "Not supported!" : "Nicht unterstützt!",
-    "Press ⌘-C to copy." : "Zum Kopieren ⌘-C drücken.",
-    "Press Ctrl-C to copy." : "Zum Kopieren Strg-C drücken.",
-    "{name} (invisible)" : "{name} (unsichtbar)",
-    "{name} (restricted)" : "{name} (eingeschränkt)",
-    "There are no events for this filter" : "Keine Ereignisse für diesen Filter vorhanden",
     "Could not load activites" : "Aktivitäten konnten nicht geladen werden"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

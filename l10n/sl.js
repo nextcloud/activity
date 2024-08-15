@@ -67,13 +67,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Prilagodi privzete nastavitve obveščanja za nove uporabnike.",
     "Unable to save the settings" : "Nastavitev ni mogoče shraniti",
     "No more events to load" : "Ni načrtovanih drugih dogodkov",
-    "Copied!" : "Kopirano!",
-    "Not supported!" : "Ni podprto!",
-    "Press ⌘-C to copy." : "Pritisni ⌘-C za kopiranje.",
-    "Press Ctrl-C to copy." : "Pritisni Ctrl-C za kopiranje",
-    "{name} (invisible)" : "{ime} (nevidno)",
-    "{name} (restricted)" : "{ime} (omejeno)",
-    "There are no events for this filter" : "Ta filter ne pokaže nobenih dogodkov",
     "Could not load activites" : "Dejavnosti ni mogoče naložiti."
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

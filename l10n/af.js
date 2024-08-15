@@ -40,13 +40,6 @@ OC.L10N.register(
     "Enable notification emails" : "Aktiveer e-poskennisgewings",
     "Send daily activity summary in the morning" : "Stuur soggens daaglikse aktiwiteit",
     "Default settings" : "Verstek instellings",
-    "No more events to load" : "Geen meer gebeure om te laai",
-    "Copied!" : "Gekopieer!",
-    "Not supported!" : "Nie ondersteun nie!",
-    "Press ⌘-C to copy." : "Druk ⌘-C om te kopieer.",
-    "Press Ctrl-C to copy." : "Druk Ctrl-C om te kopieer.",
-    "{name} (invisible)" : "{name} (onsigbaar)",
-    "{name} (restricted)" : "{name} (beperk)",
-    "There are no events for this filter" : "Daar is geen gebeure vir hierdie filter"
+    "No more events to load" : "Geen meer gebeure om te laai"
 },
 "nplurals=2; plural=(n != 1);");

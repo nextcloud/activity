@@ -66,13 +66,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Nastavte predvolené nastavenia upozornení pre nové účty.",
     "Unable to save the settings" : "Nepodarilo sa uložiť nastavenia",
     "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
-    "Copied!" : "Skopírované!",
-    "Not supported!" : "Nie je podporované!",
-    "Press ⌘-C to copy." : "Stlač ⌘-C pre skopírovanie.",
-    "Press Ctrl-C to copy." : "Stlač Ctrl-C pre skopírovanie.",
-    "{name} (invisible)" : "{name} (neviditeľné)",
-    "{name} (restricted)" : "{name} (obmedzené)",
-    "There are no events for this filter" : "Pre tieto kritériá nie sú žiadne udalosti",
     "Could not load activites" : "Nepodarilo sa načítať aktivity"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

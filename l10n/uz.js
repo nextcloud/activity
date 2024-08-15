@@ -5,12 +5,6 @@ OC.L10N.register(
     "Notifications" : "Notifications",
     "Send email" : "Send email",
     "Today" : "Today",
-    "Home" : "Home",
-    "Copied!" : "Copied!",
-    "Not supported!" : "Not supported!",
-    "Press ⌘-C to copy." : "Press ⌘-C to copy.",
-    "Press Ctrl-C to copy." : "Press Ctrl-C to copy.",
-    "{name} (invisible)" : "{name} (invisible)",
-    "{name} (restricted)" : "{name} (restricted)"
+    "Home" : "Home"
 },
 "nplurals=1; plural=0;");

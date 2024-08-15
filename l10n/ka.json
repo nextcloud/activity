@@ -64,13 +64,6 @@
     "Configure the default notification settings for new accounts." : "დააკონფიგურირეთ ნაგულისხმევი შეტყობინებების პარამეტრები ახალი ანგარიშებისთვის.",
     "Unable to save the settings" : "პარამეტრების შენახვა ვერ ხერხდება",
     "No more events to load" : "მეტი მოვლენა არ არის",
-    "Copied!" : "კოპირებულია!",
-    "Not supported!" : "არ არის მხარდაჭერილი!",
-    "Press ⌘-C to copy." : "დააჭირეთ ⌘-C-ს დასაკოპირებლად.",
-    "Press Ctrl-C to copy." : "დააჭირეთ Ctrl-C-ს დასაკოპირებლად.",
-    "{name} (invisible)" : "{name} (უჩინარი)",
-    "{name} (restricted)" : "{name} (შეზღუდული)",
-    "There are no events for this filter" : "ამ ფილტრისთვის მოვლენა არ არის",
     "Could not load activites" : "აქტივობების ჩატვირთვა ვერ ხერხდება"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

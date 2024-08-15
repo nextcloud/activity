@@ -56,13 +56,6 @@ OC.L10N.register(
     "Default settings" : "Анхдагч тохиргоо",
     "Configure the default notification settings for new accounts." : "Шинэ хэрэглэгчдийн \"Үйлдлүүд\" хэсгийн анхдагч тохиргоог тохируулах",
     "Unable to save the settings" : "Тохиргоог хадгалах боломжгүй байна",
-    "No more events to load" : "Өөр харуулах үйл явдал байхгүй байна",
-    "Copied!" : "Хуулав!",
-    "Not supported!" : "Дэмжихгүй!",
-    "Press ⌘-C to copy." : "Хуулахын тулд ⌘-C дарна уу.",
-    "Press Ctrl-C to copy." : "Хуулахын тулд Ctrl-C дарна уу.",
-    "{name} (invisible)" : "{name} (үл харагдах)",
-    "{name} (restricted)" : "{name} (хязгаартай)",
-    "There are no events for this filter" : "Энд ямар нэг үйл явдал алга"
+    "No more events to load" : "Өөр харуулах үйл явдал байхгүй байна"
 },
 "nplurals=2; plural=(n != 1);");

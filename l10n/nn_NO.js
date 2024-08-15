@@ -43,13 +43,6 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Vel aktiviter du ønskjer å få tilsendt ein push varsel.",
     "Send daily activity summary in the morning" : "Send dagleg aktivitetssamandrag om morgonen",
     "Default settings" : "Standard instillingar",
-    "No more events to load" : "Inga fleire hendingar å lasta",
-    "Copied!" : "Kopiert!",
-    "Not supported!" : "Ikkje støtta!",
-    "Press ⌘-C to copy." : "Trykk  ⌘-C for å kopiere.",
-    "Press Ctrl-C to copy." : "Trykk Ctrl-C for å kopiere.",
-    "{name} (invisible)" : "{namn} (usynleg)",
-    "{name} (restricted)" : "{namn} (avgrensa)",
-    "There are no events for this filter" : "Det er ikkje nokon hendingar for dette filteret"
+    "No more events to load" : "Inga fleire hendingar å lasta"
 },
 "nplurals=2; plural=(n != 1);");

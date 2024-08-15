@@ -54,13 +54,6 @@
     "Default settings" : "Zadane postavke",
     "Configure the default notification settings for new accounts." : "Konfiguriraj zadane postavke obavijesti za nove račune.",
     "Unable to save the settings" : "Nije moguće spremiti postavke",
-    "No more events to load" : "Nema više događaja za učitavanje",
-    "Copied!" : "Kopirano!",
-    "Not supported!" : "Nije podržano!",
-    "Press ⌘-C to copy." : "Pritisnite ⌘-C za kopiranje.",
-    "Press Ctrl-C to copy." : "Pritisnite Ctrl-C za kopiranje.",
-    "{name} (invisible)" : "{name} (nevidljivo)",
-    "{name} (restricted)" : "{name} (ograničeno)",
-    "There are no events for this filter" : "Nema događaja koji odgovaraju ovom filtru"
+    "No more events to load" : "Nema više događaja za učitavanje"
 },"pluralForm" :"nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;"
 }

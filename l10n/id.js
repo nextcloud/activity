@@ -65,13 +65,6 @@ OC.L10N.register(
     "Configure the default notification settings for new accounts." : "Konfigurasikan pengaturan notifikasi default untuk akun baru.",
     "Unable to save the settings" : "Tidak dapat menyimpan pengaturan",
     "No more events to load" : "Tidak ada lagi acara untuk dimuat",
-    "Copied!" : "Tersalin!",
-    "Not supported!" : "Tidak didukung!",
-    "Press ⌘-C to copy." : "Tekan ⌘-C untuk menyalin.",
-    "Press Ctrl-C to copy." : "Tekan Ctrl-C untuk menyalin.",
-    "{name} (invisible)" : "{name} (tersembunyi)",
-    "{name} (restricted)" : "{name} (terbatas)",
-    "There are no events for this filter" : "Tidak ada peristiwa untuk filter ini",
     "Could not load activites" : "Tidak dapat memuat aktivitas"
 },
 "nplurals=1; plural=0;");

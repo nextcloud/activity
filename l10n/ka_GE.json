@@ -33,13 +33,6 @@
     "RSS feed" : "RSS ლენტა",
     "Notification" : "შეტყობინება",
     "Default settings" : "საწყისი პარამეტრები",
-    "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია",
-    "Copied!" : "კოპირებულია!",
-    "Not supported!" : "არ არის მხარდაჭერილი!",
-    "Press ⌘-C to copy." : "კოპირებისთვის დააჭირეთ ⌘-C-ს.",
-    "Press Ctrl-C to copy." : "კოპირებისთვის დააჭირეთ Ctrl-C-ს.",
-    "{name} (invisible)" : "{name} (უჩინარი)",
-    "{name} (restricted)" : "{name} (აკრძალული)",
-    "There are no events for this filter" : "ამ ფილტრის შესაბამისი მოვლენები არაა"
+    "No more events to load" : "ყველა მოვლენა ჩამოტვირთულია"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }
