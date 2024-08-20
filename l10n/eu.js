@@ -11,6 +11,7 @@ OC.L10N.register(
     "No activities" : "Ez da jarduerarik",
     "More activities" : "Jarduera gehiago",
     "Daily activity summary for %s" : "%s-(r)en eguneko jardueren laburpena",
+    "_and %n more…_::_and %n more…_" : ["eta %n gehiago…","eta %n gehiago…"],
     "All activities" : "Jarduera guztiak",
     "By others" : "Besteenak",
     "By you" : "Zureak",
