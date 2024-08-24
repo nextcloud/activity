@@ -8,6 +8,8 @@ import { addCompareSnapshotCommand } from 'cypress-visual-regression/dist/comman
 
 import 'cypress-wait-until'
 
+import '@testing-library/cypress/add-commands'
+
 // Add custom commands
 addCommands()
 addCompareSnapshotCommand()
