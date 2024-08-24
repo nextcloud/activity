@@ -25,7 +25,7 @@ version: 7.4.47
 license: Apache-2.0
 
 @nextcloud/auth
-version: 2.2.1
+version: 2.4.0
 license: GPL-3.0-or-later
 
 @nextcloud/axios
@@ -33,7 +33,7 @@ version: 2.4.0
 license: GPL-3.0
 
 @nextcloud/browser-storage
-version: 0.3.0
+version: 0.4.0
 license: GPL-3.0-or-later
 
 @nextcloud/capabilities
@@ -45,11 +45,11 @@ version: 5.1.1
 license: GPL-3.0-or-later
 
 @nextcloud/event-bus
-version: 3.1.0
+version: 3.3.1
 license: GPL-3.0-or-later
 
 @nextcloud/initial-state
-version: 2.1.0
+version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/l10n
@@ -57,7 +57,7 @@ version: 2.2.0
 license: GPL-3.0-or-later
 
 @nextcloud/logger
-version: 2.7.0
+version: 3.0.2
 license: GPL-3.0-or-later
 
 @nextcloud/moment
@@ -65,16 +65,20 @@ version: 1.3.1
 license: GPL-3.0-or-later
 
 @nextcloud/paths
-version: 2.1.0
+version: 2.2.1
 license: GPL-3.0-or-later
 
 @nextcloud/router
 version: 2.2.1
 license: GPL-3.0-or-later
 
+@nextcloud/sharing
+version: 0.2.3
+license: GPL-3.0-or-later
+
 @nextcloud/vue
-version: 8.6.2
-license: AGPL-3.0
+version: 8.17.0
+license: AGPL-3.0-or-later
 
 @nextcloud/vue-select
 version: 3.25.0
@@ -85,15 +89,15 @@ version: 1.2.0
 license: ISC
 
 @vueuse/components
-version: 10.5.0
+version: 11.0.1
 license: MIT
 
 @vueuse/core
-version: 10.5.0
+version: 11.0.1
 license: MIT
 
 @vueuse/shared
-version: 10.5.0
+version: 11.0.1
 license: MIT
 
 axios
@@ -117,7 +121,7 @@ version: 2.0.3
 license: MIT
 
 core-js
-version: 3.33.0
+version: 3.37.0
 license: MIT
 
 crypt
@@ -133,7 +137,7 @@ version: 1.1.0
 license: MIT
 
 dompurify
-version: 3.0.6
+version: 3.1.6
 license: (MPL-2.0 OR Apache-2.0)
 
 escape-html
@@ -401,7 +405,7 @@ version: 11.0.0
 license: MIT
 
 semver
-version: 7.5.3
+version: 7.6.3
 license: ISC
 
 space-separated-tokens
@@ -473,7 +477,7 @@ version: 4.0.2
 license: MIT
 
 vite-plugin-node-polyfills
-version: 0.19.0
+version: 0.22.0
 license: MIT
 
 vue
@@ -481,7 +485,7 @@ version: 2.7.16
 license: MIT
 
 vue-demi
-version: 0.14.6
+version: 0.14.10
 license: MIT
 
 vue-frag
