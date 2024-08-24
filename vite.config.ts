@@ -1,4 +1,4 @@
-import type { UserConfig } from 'vitest'
+import type { UserConfig } from 'vitest/node'
 import { createAppConfig } from '@nextcloud/vite-config'
 import { join } from 'path'
 
@@ -13,15 +13,10 @@ export default createAppConfig({
 	adminSettings: join(__dirname, 'src', 'settings-admin.js'),
 }, {
 	inlineCSS: { relativeCSSInjection: true },
+	thirdPartyLicense: false,
+	// for REUSE we should enable:
+	// extractLicenseInformation: true,
 	config: {
-		experimental: {
-			renderBuiltUrl(filename) {
-				return {
-					// already contains the "js/" prefix as it is our output file configuration
-					runtime: `OC.filePath('activity', '', '${filename}')`,
-				}
-			},
-		},
 		// Setup for vitest unit tests
 		test: {
 			environment: 'happy-dom',
