@@ -11,6 +11,8 @@ use OC\Files\View;
 use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
+use OCA\Circles\CirclesManager;
+use OCA\Circles\Model\Member;
 use OCP\Activity\IManager;
 use OCP\Constants;
 use OCP\Files\Config\IUserMountCache;
@@ -60,7 +62,8 @@ class FilesHooks {
 		protected IUserMountCache $userMountCache,
 		protected IConfig $config,
 		protected NotificationGenerator $notificationGenerator,
-		protected ITagManager $tagManager
+		protected ITagManager $tagManager,
+		protected ?CirclesManager $teamManager,
 	) {
 	}
 
@@ -664,6 +667,16 @@ class FilesHooks {
 					(int)$share->getId()
 				);
 				break;
+			case IShare::TYPE_CIRCLE:
+				$this->shareWithTeam(
+					$share->getSharedWith(),
+					$share->getNodeId(),
+					$share->getNodeType(),
+					$share->getTarget(),
+					(int)$share->getId(),
+					$share->getSharedBy(),
+				);
+				break;
 			case IShare::TYPE_LINK:
 				$this->shareByLink(
 					$share->getNodeId(),
@@ -726,7 +739,8 @@ class FilesHooks {
 		$offset = 0;
 		$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		while (!empty($users)) {
-			$this->addNotificationsForGroupUsers($users, 'shared_with_by', $fileSource, $itemType, $fileTarget, $shareId);
+			$userIds = array_map(fn (IUser $user) => $user->getUID(), $users);
+			$this->addNotificationsForUsers($userIds, 'shared_with_by', $fileSource, $itemType, $fileTarget, $shareId);
 			$offset += self::USER_BATCH_SIZE;
 			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		}
@@ -756,6 +770,42 @@ class FilesHooks {
 			$this->userSettings->getUserSetting($linkOwner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($linkOwner, 'setting', 'batchtime') : false,
 			(bool)$this->userSettings->getUserSetting($linkOwner, 'notification', Files_Sharing::TYPE_SHARED)
 		);
+	}
+
+	/**
+	 * Sharing a file or folder with a team
+	 *
+	 * @param string $shareWith
+	 * @param int $fileSource File ID that is being shared
+	 * @param string $itemType File type that is being shared (file or folder)
+	 * @param string $fileTarget File path
+	 * @param int $shareId The Share ID of this share
+	 */
+	protected function shareWithTeam(string $shareWith, int $fileSource, string $itemType, string $fileTarget, int $shareId, string $sharer): void {
+		if ($this->teamManager === null) {
+			return;
+		}
+
+		try {
+			$this->teamManager->startSuperSession();
+			$team = $this->teamManager->getCircle($shareWith);
+			$members = $team->getInheritedMembers();
+			$members = array_filter($members, fn ($member) => $member->getUserType() === Member::TYPE_USER);
+			$userIds = array_map(fn ($member) => $member->getUserId(), $members);
+		} catch (\Throwable $e) {
+			$this->logger->debug('Fetching team members for share activity failed', ['exception' => $e]);
+			// error in teams app - setting users list to empty
+			$userIds = [];
+		}
+
+		// Activity for user performing the share
+		$this->shareNotificationForSharer('shared_team_self', $shareWith, $fileSource, $itemType);
+		// Activity for original owner of the file (re-sharing)
+		if ($this->currentUser->getUID() !== null) {
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 're-shared_team_by', $shareWith, $fileSource, $itemType);
+		}
+		// Activity for all affected users
+		$this->addNotificationsForUsers($userIds, 'shared_with_by', $fileSource, $itemType, $fileTarget, $shareId);
 	}
 
 	/**
@@ -878,9 +928,11 @@ class FilesHooks {
 
 		$offset = 0;
 		$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
+		$users = array_map(fn (IUser $user) => $user->getUID(), $users);
 		$shouldFlush = $this->startActivityTransaction();
 		while (!empty($users)) {
-			$this->addNotificationsForGroupUsers($users, $actionUser, $share->getNodeId(), $share->getNodeType(), $share->getTarget(), (int)$share->getId());
+			$userIds = array_map(fn (IUser $user) => $user->getUID(), $users);
+			$this->addNotificationsForUsers($userIds, $actionUser, $share->getNodeId(), $share->getNodeType(), $share->getTarget(), (int)$share->getId());
 			$offset += self::USER_BATCH_SIZE;
 			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		}
@@ -940,18 +992,18 @@ class FilesHooks {
 	}
 
 	/**
-	 * @param IUser[] $usersInGroup
+	 * @param string[] $usersIds
 	 * @param string $actionUser
 	 * @param int $fileSource File ID that is being shared
 	 * @param string $itemType File type that is being shared (file or folder)
 	 * @param string $fileTarget File path
 	 * @param int $shareId The Share ID of this share
 	 */
-	protected function addNotificationsForGroupUsers(array $usersInGroup, $actionUser, $fileSource, $itemType, $fileTarget, $shareId) {
+	protected function addNotificationsForUsers(array $usersIds, $actionUser, $fileSource, $itemType, $fileTarget, $shareId) {
 		$affectedUsers = [];
 
-		foreach ($usersInGroup as $user) {
-			$affectedUsers[$user->getUID()] = $fileTarget;
+		foreach ($usersIds as $user) {
+			$affectedUsers[$user] = $fileTarget;
 		}
 
 		// Remove the triggering user, we already managed his notifications
