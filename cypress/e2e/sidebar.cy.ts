@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createFolder, goToDir, moveFile, renameFile } from './filesUtils'
+import { createFolder, getFileListRow, goToDir, moveFile, renameFile } from './filesUtils'
 import { addComment, addTag, addToFavorites, createPublicShare, removeFromFavorites, showActivityTab } from './sidebarUtils'
 
 describe('Check activity listing in the sidebar', { testIsolation: true }, () => {
@@ -12,6 +12,9 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 			.then((user) => {
 				cy.login(user)
 				cy.visit('/apps/files')
+				// Wait for page loaded
+				getFileListRow('welcome.txt')
+					.should('be.visible')
 			})
 	})
 

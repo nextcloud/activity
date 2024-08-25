@@ -37,12 +37,18 @@ export function moveFile (fileName: string, dirName: string) {
 	})
 }
 
-export function toggleMenuAction(fileName: string) {
-	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${CSS.escape(fileName)}"] [data-cy-files-list-row-actions]`)
+export function getFileListRow(filename: string) {
+	return cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${CSS.escape(filename)}"]`)
+}
+
+export function toggleMenuAction(filename: string) {
+	getFileListRow(filename)
+		.find('[data-cy-files-list-row-actions]')
 		.should('be.visible')
 		.findByRole('button', { name: 'Actions' })
 		.should('be.visible')
 		.click()
+
 	cy.get('[data-cy-files-list-row-action]')
 		.should('be.visible')
 }
