@@ -9,6 +9,7 @@
     "No activities" : "Sem atividades",
     "More activities" : "Mais atividades",
     "Daily activity summary for %s" : "Relatório de atividade diária de %s",
+    "_and %n more…_::_and %n more…_" : ["e mais %n...","e mais %n...","e mais %n..."],
     "All activities" : "Todas as atividades",
     "By others" : "Por outros",
     "By you" : "Por si",
