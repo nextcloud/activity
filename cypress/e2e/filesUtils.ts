@@ -4,8 +4,7 @@
  */
 
 export function renameFile(fileName: string, newName: string) {
-	toggleMenuAction(fileName)
-	cy.get(`[data-cy-files-list] [data-cy-files-list-row-action="rename"]`).click()
+	toggleMenuAction(fileName, 'rename')
 	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] .files-list__row-rename input`).clear()
 	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] .files-list__row-rename input`).type(`${newName}.txt`)
 	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] .files-list__row-rename`).submit()
@@ -28,8 +27,7 @@ export function createFolder (dirName: string) {
 }
 
 export function moveFile (fileName: string, dirName: string) {
-	toggleMenuAction(fileName)
-	cy.get(`[data-cy-files-list] [data-cy-files-list-row-action="move-copy"]`).click()
+	toggleMenuAction(fileName, 'move-copy')
 	cy.get('.file-picker').within(() => {
 		cy.get(`[data-filename="${dirName}"]`).click()
 		cy.contains(`Move to ${dirName}`).click()
@@ -41,14 +39,19 @@ export function getFileListRow(filename: string) {
 	return cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${CSS.escape(filename)}"]`)
 }
 
-export function toggleMenuAction(filename: string) {
+export function toggleMenuAction(filename: string, action: 'details'|'favorite'|'move-copy'|'rename') {
 	getFileListRow(filename)
 		.find('[data-cy-files-list-row-actions]')
 		.should('be.visible')
+
+	getFileListRow(filename)
+		.find('[data-cy-files-list-row-actions]')
 		.findByRole('button', { name: 'Actions' })
 		.should('be.visible')
 		.click()
 
-	cy.get('[data-cy-files-list-row-action]')
+	cy.get(`[data-cy-files-list-row-action="${CSS.escape(action)}"]`)
 		.should('be.visible')
+		.findByRole('menuitem')
+		.click()
 }

@@ -7,15 +7,11 @@ import { toggleMenuAction } from './filesUtils'
 
 function showSidebarForFile(fileName: string) {
 	closeSidebar()
-	toggleMenuAction(fileName)
-	cy.get('[data-cy-files-list-row-action="details"]')
-		.should('be.visible')
-		.findByRole('menuitem')
-		.click()
+	toggleMenuAction(fileName, 'details')
 	cy.get('#app-sidebar-vue').should('be.visible')
 }
 
-function closeSidebar() {
+export function closeSidebar() {
 	cy.get('body')
 		.then(($body) => {
 			if ($body.find('.app-sidebar__close').length !== 0) {
@@ -27,18 +23,21 @@ function closeSidebar() {
 
 export function showActivityTab(fileName: string) {
 	showSidebarForFile(fileName)
-	cy.get('#app-sidebar-vue').contains('Activity').click()
+	cy.get('#app-sidebar-vue')
+		.findByRole('tab', { name: 'Activity' })
+		.click()
+
+	cy.get('#app-sidebar-vue')
+		.findByRole('tabpanel', { name: 'Activity' })
+		.should('be.visible')
 }
 
-export function addToFavorites(fileName: string) {
-	toggleMenuAction(fileName)
-	cy.get('[data-cy-files-list-row-action="favorite"]').should('contain', 'Add to favorites').click()
-	cy.get('.toast-close').click()
-}
+export function toggleFavorite(fileName: string) {
+	cy.intercept('POST', '**/index.php/apps/files/api/v1/files/*').as('setTags')
 
-export function removeFromFavorites(fileName: string) {
-	toggleMenuAction(fileName)
-	cy.get('[data-cy-files-list-row-action="favorite"]').should('contain', 'Remove from favorites').click()
+	toggleMenuAction(fileName, 'favorite')
+	cy.wait('@setTags')
+
 	cy.get('.toast-close').click()
 }
 
@@ -49,11 +48,19 @@ export function removeFromFavorites(fileName: string) {
  */
 export function createPublicShare(fileName: string) {
 	showSidebarForFile(fileName)
-	cy.get('#app-sidebar-vue').contains('Sharing').click()
+	cy.get('#app-sidebar-vue')
+		.findByRole('tab', { name: 'Sharing' })
+		.click()
 
-	cy.get('#app-sidebar-vue #tab-sharing').should('be.visible')
-	cy.get('#app-sidebar-vue button.new-share-link').click({ force: true })
-	cy.get('#app-sidebar-vue .sharing-entry__copy').should('be.visible')
+	cy.intercept('POST', '**/ocs/v2.php/apps/files_sharing/api/v1/shares').as('createShare')
+
+	cy.get('#app-sidebar-vue')
+		.findByRole('tabpanel', { name: 'Sharing' })
+		.should('be.visible')
+		.findByRole('button', { name: "Create a new share link" })
+		.click({ force: true })
+	
+	cy.wait('@createShare')
 	closeSidebar()
 }
 
