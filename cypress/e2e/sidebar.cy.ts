@@ -4,7 +4,7 @@
  */
 
 import { createFolder, getFileListRow, goToDir, moveFile, renameFile } from './filesUtils'
-import { addComment, addTag, addToFavorites, createPublicShare, removeFromFavorites, showActivityTab } from './sidebarUtils'
+import { addComment, addTag, createPublicShare, toggleFavorite, showActivityTab, closeSidebar } from './sidebarUtils'
 
 describe('Check activity listing in the sidebar', { testIsolation: true }, () => {
 	beforeEach(function() {
@@ -24,19 +24,22 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	})
 
 	it('Has favorite activity', () => {
-		addToFavorites('welcome.txt')
+		toggleFavorite('welcome.txt')
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'Added to favorites')
 
-		removeFromFavorites('welcome.txt')
+		cy.visit('/apps/files')
+		getFileListRow('welcome.txt').should('be.visible')
+
+		toggleFavorite('welcome.txt')
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'Removed from favorites')
 	})
 
 	it('Has share activity', () => {
 		createPublicShare('welcome.txt')
-		cy.get('body').contains('Link share created').should('exist')
-		cy.get('.toast-close').click({ multiple: true })
+		cy.visit('/apps/files')
+
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'Shared as public link')
 	})
@@ -61,6 +64,7 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 
 	it('Has tag activity', () => {
 		addTag('welcome.txt', 'my_tag')
+		cy.visit('/apps/files')
 
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'Added system tag')
