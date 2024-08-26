@@ -109,10 +109,10 @@ class ActivitiesController extends Controller {
 		$filters = $this->activityManager->getFilters();
 		usort($filters, static function (IFilter $a, IFilter $b) {
 			if ($a->getPriority() === $b->getPriority()) {
-				return (int) ($a->getIdentifier() > $b->getIdentifier());
+				return (int)($a->getIdentifier() > $b->getIdentifier());
 			}
 
-			return (int) ($a->getPriority() > $b->getPriority());
+			return (int)($a->getPriority() > $b->getPriority());
 		});
 
 		$entries = [];

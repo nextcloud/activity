@@ -341,8 +341,8 @@ class Data {
 	 * Delete activities that match certain conditions
 	 *
 	 * @param array $conditions Array with conditions that have to be met
-	 *                      'field' => 'value'  => `field` = 'value'
-	 *    'field' => array('value', 'operator') => `field` operator 'value'
+	 *                          'field' => 'value'  => `field` = 'value'
+	 *                          'field' => array('value', 'operator') => `field` operator 'value'
 	 */
 	public function deleteActivities($conditions): void {
 		$platform = $this->connection->getDatabasePlatform();

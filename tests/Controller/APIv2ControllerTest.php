@@ -546,7 +546,7 @@ class APIv2ControllerTest extends TestCase {
 
 		$this->request->expects($etag !== null ? $this->once() : $this->never())
 			->method('getHeader')
-			->willReturn((string) $etag);
+			->willReturn((string)$etag);
 
 		$this->data->expects($this->once())
 			->method('get')

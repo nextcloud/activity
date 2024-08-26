@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "29631ef900965e2ca760c33e75a459dc",
+    "content-hash": "70f2afb9bd1323f4225d93d6183f384f",
     "packages": [],
     "packages-dev": [
         {
             "name": "nextcloud/coding-standard",
-            "version": "v1.1.1",
+            "version": "v1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud/coding-standard.git",
-                "reference": "55def702fb9a37a219511e1d8c6fe8e37164c1fb"
+                "reference": "bc9c53a5306114b60c4363057aff9c2ed10a54da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextcloud/coding-standard/zipball/55def702fb9a37a219511e1d8c6fe8e37164c1fb",
-                "reference": "55def702fb9a37a219511e1d8c6fe8e37164c1fb",
+                "url": "https://api.github.com/repos/nextcloud/coding-standard/zipball/bc9c53a5306114b60c4363057aff9c2ed10a54da",
+                "reference": "bc9c53a5306114b60c4363057aff9c2ed10a54da",
                 "shasum": ""
             },
             "require": {
@@ -44,9 +44,9 @@
             "description": "Nextcloud coding standards for the php cs fixer",
             "support": {
                 "issues": "https://github.com/nextcloud/coding-standard/issues",
-                "source": "https://github.com/nextcloud/coding-standard/tree/v1.1.1"
+                "source": "https://github.com/nextcloud/coding-standard/tree/v1.2.3"
             },
-            "time": "2023-06-01T12:05:01+00:00"
+            "time": "2024-08-23T14:32:32+00:00"
         },
         {
             "name": "php-cs-fixer/shim",

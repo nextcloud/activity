@@ -53,7 +53,7 @@ class UserSettings {
 		}
 
 		if (is_bool($defaultSetting)) {
-			return (bool) $this->config->getUserValue(
+			return (bool)$this->config->getUserValue(
 				$user,
 				'activity',
 				'notify_' . $method . '_' . $type,
@@ -61,7 +61,7 @@ class UserSettings {
 			);
 		}
 
-		return (int) $this->config->getUserValue(
+		return (int)$this->config->getUserValue(
 			$user,
 			'activity',
 			'notify_' . $method . '_' . $type,
@@ -80,17 +80,17 @@ class UserSettings {
 	public function getAdminSetting($method, $type) {
 		$defaultSetting = $this->getDefaultSetting($method, $type);
 		if (is_bool($defaultSetting)) {
-			return (bool) $this->config->getAppValue(
+			return (bool)$this->config->getAppValue(
 				'activity',
 				'notify_' . $method . '_' . $type,
-				(string) $defaultSetting
+				(string)$defaultSetting
 			);
 		}
 
-		return (int) $this->config->getAppValue(
+		return (int)$this->config->getAppValue(
 			'activity',
 			'notify_' . $method . '_' . $type,
-			(string) $defaultSetting
+			(string)$defaultSetting
 		);
 	}
 
