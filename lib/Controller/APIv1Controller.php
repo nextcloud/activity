@@ -86,7 +86,7 @@ class APIv1Controller extends OCSController {
 		$result->closeCursor();
 
 		if ($row) {
-			return (int) $row['activity_id'];
+			return (int)$row['activity_id'];
 		}
 
 		return 0;

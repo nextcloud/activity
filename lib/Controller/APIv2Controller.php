@@ -83,11 +83,11 @@ class APIv2Controller extends OCSController {
 		if ($this->filter !== $this->data->validateFilter($this->filter)) {
 			throw new InvalidFilterException('Invalid filter');
 		}
-		$this->since = (int) $since;
-		$this->limit = (int) $limit;
-		$this->loadPreviews = (bool) $previews;
-		$this->objectType = (string) $objectType;
-		$this->objectId = (int) $objectId;
+		$this->since = (int)$since;
+		$this->limit = (int)$limit;
+		$this->loadPreviews = (bool)$previews;
+		$this->objectType = (string)$objectType;
+		$this->objectId = (int)$objectId;
 		$this->sort = \in_array($sort, ['asc', 'desc'], true) ? $sort : 'desc';
 
 		if (($this->objectType !== '' && $this->objectId === 0) || ($this->objectType === '' && $this->objectId !== 0)) {
@@ -223,15 +223,15 @@ class APIv2Controller extends OCSController {
 				if ($activity['object_type'] === 'files') {
 					if (!empty($activity['objects']) && \is_array($activity['objects'])) {
 						foreach ($activity['objects'] as $objectId => $objectName) {
-							if (((int) $objectId) === 0 || $objectName === '') {
+							if (((int)$objectId) === 0 || $objectName === '') {
 								// No file, no preview
 								continue;
 							}
 
-							$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $objectId, $objectName);
+							$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int)$objectId, $objectName);
 						}
 					} elseif ($activity['object_id']) {
-						$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int) $activity['object_id'], $activity['object_name']);
+						$activity['previews'][] = $this->getPreview($activity['affecteduser'], (int)$activity['object_id'], $activity['object_name']);
 					}
 				}
 			}

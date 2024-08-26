@@ -165,7 +165,7 @@ class CurrentUserTest extends TestCase {
 			->willReturn($type);
 		$share->expects($shareWith !== null  ? $this->once() : $this->never())
 			->method('getSharedWith')
-			->willReturn((string) $shareWith);
+			->willReturn((string)$shareWith);
 		return $share;
 	}
 
