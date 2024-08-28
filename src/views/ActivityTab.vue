@@ -37,7 +37,7 @@
 					<span class="icon-activity" />
 				</template>
 			</NcEmptyContent>
-			<ul v-else>
+			<ul v-else class="activity__list">
 				<Activity v-for="activity in activities"
 					:key="activity.id"
 					:activity="activity"
@@ -187,6 +187,11 @@ export default {
 		display: flex;
 		flex-direction: column;
 		width: 100%;
+	}
+
+	&__list {
+		flex-grow: 1;
+		overflow: scroll;
 	}
 
 	&__empty-content {
