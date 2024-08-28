@@ -88,7 +88,7 @@ export default defineComponent({
 		 * The timestamp of the activity as JS timestamp
 		 */
 		timestamp() {
-			return this.activity.timestamp * 1000
+			return this.activity.timestamp
 		},
 		/**
 		 * @return {string} The activity's messageRichTemplate. Fallback to message if messageRichTemplate does not exists
