@@ -58,7 +58,7 @@ const authorDisplayName = computed(() => {
 /**
  * Timestamp of the activity as JS timestamp (ms)
  */
-const timestamp = computed(() => props.activity.timestamp * 1000)
+const timestamp = computed(() => props.activity.timestamp)
 
 /**
  * The activity's messageRichTemplate. Fallback to message if messageRichTemplate does not exists
