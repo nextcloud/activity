@@ -255,7 +255,7 @@ export default class ActivityModel {
 	 * @memberof ActivityModel
 	 */
 	get timestamp(): number {
-		return moment(this._activity.datetime).unix()
+		return moment(this._activity.datetime).valueOf()
 	}
 
 	/**
