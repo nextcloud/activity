@@ -11,6 +11,7 @@ OC.L10N.register(
     "No activities" : "활동 없음",
     "More activities" : "더 많은 활동",
     "Daily activity summary for %s" : "%s 의 일일 활동 요약",
+    "_and %n more…_::_and %n more…_" : ["그 외 %n개 더 있음"],
     "All activities" : "모든 활동",
     "By others" : "다른 사람",
     "By you" : "나",
