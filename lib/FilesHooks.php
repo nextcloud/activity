@@ -1384,6 +1384,12 @@ class FilesHooks {
 		// now that we have a list of eventuals filtered users, we confirm they have no access to the file
 		$filteredUsers = [];
 		foreach ($usersToCheck as $userId) {
+			if (!array_key_exists($userId, $cachedPath) || $cachedPath[$userId] === null) {
+				$this->logger->notice('could not find user in list of cached path', ['cachePath' => $cachedPath, 'usersToCheck' => $usersToCheck, 'current' => $userId]);
+				$filteredUsers[] = $userId;
+				continue;
+			}
+
 			try {
 				$node = $this->rootFolder->get($cachedPath[$userId]);
 				if ($node->isReadable()) {
