@@ -646,7 +646,7 @@ class FilesHooks {
 	 * @param IShare $share the share from the event
 	 */
 	public function share($share) {
-		switch($share->getShareType()) {
+		switch ($share->getShareType()) {
 			case IShare::TYPE_USER:
 				$this->shareWithUser(
 					$share->getSharedWith(),
