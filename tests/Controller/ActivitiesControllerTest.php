@@ -31,7 +31,6 @@ use OCP\AppFramework\Services\IInitialState;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\IL10N;
-use OCP\ILogger;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\Template;
@@ -131,9 +130,7 @@ class ActivitiesControllerTest extends TestCase {
 		$templateResponse = $this->controller->showList();
 		$this->assertInstanceOf(TemplateResponse::class, $templateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
 
-		$this->overwriteService(ILogger::class, $this->createMock(ILogger::class));
 		$renderedResponse = $templateResponse->render();
-		$this->restoreService(ILogger::class);
 		$this->assertNotEmpty($renderedResponse);
 	}
 }
