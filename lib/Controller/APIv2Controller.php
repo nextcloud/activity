@@ -184,7 +184,7 @@ class APIv2Controller extends OCSController {
 			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
 
-		$this->activityManager->setRequirePNG($this->request->isUserAgent([IRequest::USER_AGENT_CLIENT_IOS]));
+		$this->activityManager->setRequirePNG(false);
 		try {
 			$response = $this->data->get(
 				$this->helper,
