@@ -208,7 +208,8 @@ class APIv1ControllerTest extends TestCase {
 			$this->createMock(IUserSession::class),
 			$config,
 			\OC::$server->query(IValidator::class),
-			$this->createMock(IL10N::class)
+			\OC::$server->query(\OCP\RichObjectStrings\IRichTextFormatter::class),
+			$this->createMock(IL10N::class),
 		);
 		$activityManager->registerProvider(Provider::class);
 		$activityManager->registerSetting(Setting1::class);
