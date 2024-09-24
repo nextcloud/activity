@@ -108,7 +108,7 @@ class DigestSender {
 		$this->groupHelper->setL10n($l10n);
 		$lastSend = $this->getLastSendActivity($uid, $now);
 		$user = $this->userManager->get($uid);
-		if ($lastSend === 0) {
+		if ($lastSend === 0 || !$user->isEnabled()) {
 			return;
 		}
 		$this->activityManager->setCurrentUserId($uid);
