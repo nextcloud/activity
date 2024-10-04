@@ -39,6 +39,7 @@ use OCP\Files\IRootFolder;
 use OCP\Files\Mount\IMountPoint;
 use OCP\Files\NotFoundException;
 use OCP\IConfig;
+use OCP\IDBConnection;
 use OCP\IGroup;
 use OCP\IGroupManager;
 use OCP\IURLGenerator;
@@ -57,33 +58,25 @@ use Psr\Log\LoggerInterface;
  * @package OCA\Activity
  */
 class FilesHooksTest extends TestCase {
-	/** @var FilesHooks */
-	protected $filesHooks;
-	/** @var IManager|MockObject */
-	protected $activityManager;
-	/** @var Data|MockObject */
-	protected $data;
-	/** @var UserSettings|MockObject */
-	protected $settings;
-	/** @var IGroupManager|MockObject */
-	protected $groupManager;
-	/** @var View|MockObject */
-	protected $view;
-	/** @var IRootFolder|MockObject */
-	protected $rootFolder;
-	/** @var IShareHelper|MockObject */
-	protected $shareHelper;
-	/** @var IURLGenerator|MockObject */
-	protected $urlGenerator;
-	/** @var IUserMountCache|MockObject */
-	protected $userMountCache;
-	/** @var IConfig|MockObject */
-	protected $config;
-	/** @var NotificationGenerator|MockObject */
-	protected $notificationGenerator;
-	/** @var TagManager|MockObject */
-	protected $tagManager;
+	protected FilesHooks $filesHooks;
+	protected IManager&MockObject $activityManager;
+	protected Data&MockObject $data;
+	protected UserSettings&MockObject $settings;
+	protected IGroupManager&MockObject $groupManager;
+	protected View&MockObject $view;
+	protected IRootFolder&MockObject $rootFolder;
+	protected IShareHelper&MockObject $shareHelper;
+	protected IURLGenerator&MockObject $urlGenerator;
+	protected IUserMountCache&MockObject $userMountCache;
+	protected IConfig&MockObject $config;
+	protected NotificationGenerator&MockObject $notificationGenerator;
+	protected TagManager&MockObject $tagManager;
 	protected $tags;
+	/**
+	 * @todo With PHP 8.2 we can put this directly on the declaration instead of a comment but 8.1 does not allow the parenthesis
+	 * @var (OCA\Circles\CirclesManager&MockObject)|null
+	 */
+	protected $teamManager;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -103,6 +96,7 @@ class FilesHooksTest extends TestCase {
 		$this->tags = $this->createMock(Tags::class);
 		$this->tagManager->method('getUsersFavoritingObject')
 			->willReturn([]);
+		$this->teamManager = null;
 
 		$this->tagManager->method('load')
 			->willReturn($this->tags);
@@ -113,7 +107,7 @@ class FilesHooksTest extends TestCase {
 	/**
 	 * @param array $mockedMethods
 	 * @param string $user
-	 * @return FilesHooks|MockObject
+	 * @return FilesHooks&MockObject
 	 */
 	protected function getFilesHooks(array $mockedMethods = [], string $user = 'user'): FilesHooks {
 		$currentUser = $this->createMock(CurrentUser::class);
@@ -136,14 +130,15 @@ class FilesHooksTest extends TestCase {
 					$this->view,
 					$this->rootFolder,
 					$this->shareHelper,
-					\OC::$server->getDatabaseConnection(),
+					\OCP\Server::get(IDBConnection::class),
 					$this->urlGenerator,
 					$logger,
 					$currentUser,
 					$this->userMountCache,
 					$this->config,
 					$this->notificationGenerator,
-					$this->tagManager
+					$this->tagManager,
+					$this->teamManager,
 				])
 				->onlyMethods($mockedMethods)
 				->getMock();
@@ -157,14 +152,15 @@ class FilesHooksTest extends TestCase {
 			$this->view,
 			$this->rootFolder,
 			$this->shareHelper,
-			\OC::$server->getDatabaseConnection(),
+			\OCP\Server::get(IDBConnection::class),
 			$this->urlGenerator,
 			$logger,
 			$currentUser,
 			$this->userMountCache,
 			$this->config,
 			$this->notificationGenerator,
-			$this->tagManager
+			$this->tagManager,
+			$this->teamManager,
 		);
 	}
 
