@@ -14,6 +14,7 @@ use OCP\Defaults;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IURLGenerator;
+use OCP\IUser;
 use OCP\IUserManager;
 use OCP\L10N\IFactory;
 use OCP\Mail\IMailer;
@@ -68,6 +69,12 @@ class DigestSender {
 				// User got todays digest already
 				continue;
 			}
+			$user = $this->userManager->get($user);
+			if(!$user->isEnabled()) {
+				// User is disabled so do not send the email but update last sent since after enabling avoid flooding
+				$this->updateLastSentForUser($user, $now);
+				continue;
+			}
 
 			try {
 				$this->sendDigestForUser($user, $now, $timezone, $language);
@@ -103,12 +110,22 @@ class DigestSender {
 		return $this->data->getFirstActivitySince($user, $now - (24 * 60 * 60));
 	}
 
-	public function sendDigestForUser(string $uid, int $now, string $timezone, string $language) {
+	public function updateLastSentForUser(IUser $user, int $now): void {
+		$uid = $user->getUID();
+		$lastSend = $this->getLastSendActivity($uid, $now);
+
+		['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
+		$lastActivityId = (int)$lastActivityId;
+
+		$this->config->setUserValue($uid, 'activity', 'activity_digest_last_send', (string)$lastActivityId);
+	}
+
+	public function sendDigestForUser(IUser $user, int $now, string $timezone, string $language) {
+		$uid = $user->getUID();
 		$l10n = $this->l10nFactory->get('activity', $language);
 		$this->groupHelper->setL10n($l10n);
 		$lastSend = $this->getLastSendActivity($uid, $now);
-		$user = $this->userManager->get($uid);
-		if ($lastSend === 0 || !$user->isEnabled()) {
+		if ($lastSend === 0) {
 			return;
 		}
 		$this->activityManager->setCurrentUserId($uid);
