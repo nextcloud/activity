@@ -11,7 +11,7 @@ OC.L10N.register(
     "No activities" : "Žádné aktivity",
     "More activities" : "Další aktivity",
     "Daily activity summary for %s" : "Denní souhrn aktivit pro %s",
-    "_and %n more…_::_and %n more…_" : ["a %n další...","a %n další...","a %n dalších...","a %n dalších..."],
+    "_and %n more…_::_and %n more…_" : ["a %n další…","a %n další…","a %n dalších…","a %n další…"],
     "All activities" : "Všechny aktivity",
     "By others" : "Ostatními",
     "By you" : "Vámi",
