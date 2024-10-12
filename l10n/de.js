@@ -48,7 +48,7 @@ OC.L10N.register(
     "Loading more activities" : "Lade weitere Aktivitäten",
     "No more activities." : "Keine weiteren Aktivitäten",
     "Could not load activities" : "Laden weiterer Aktivitäten nicht möglich",
-    "Activity settings" : "Aktivität-Einstellungen",
+    "Activity settings" : "Aktivitäts-Einstellungen",
     "Enable RSS feed" : "RSS-Feed aktivieren",
     "RSS feed" : "RSS-Feed",
     "Copy RSS feed link" : "RSS-Feed-Link kopieren",
@@ -65,7 +65,7 @@ OC.L10N.register(
     "Send daily activity summary in the morning" : "Morgens eine tägliche Aktivitätsübersicht senden",
     "Default settings" : "Standardeinstellungen",
     "Configure the default notification settings for new accounts." : "Konfiguriere die Standardbenachrichtigungseinstellungen für neue Konten.",
-    "Unable to save the settings" : "Einstellungen können nicht gespeichert werden",
+    "Unable to save the settings" : "Einstellungen konnten nicht gespeichert werden",
     "No more events to load" : "Keine weiteren Ereignisse zu laden",
     "Could not load activites" : "Aktivitäten konnten nicht geladen werden"
 },
