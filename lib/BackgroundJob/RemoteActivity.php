@@ -15,16 +15,12 @@ use OCP\Federation\ICloudIdManager;
 use OCP\Http\Client\IClientService;
 
 class RemoteActivity extends QueuedJob {
-	/** @var IClientService */
-	protected $clientService;
-
-	/** @var ICloudIdManager */
-	protected $cloudIdManager;
-
-	public function __construct(ITimeFactory $timeFactory, IClientService $clientService, ICloudIdManager $cloudIdManager) {
+	public function __construct(
+		ITimeFactory $timeFactory,
+		private readonly IClientService $clientService,
+		private readonly ICloudIdManager $cloudIdManager,
+	) {
 		parent::__construct($timeFactory);
-		$this->clientService = $clientService;
-		$this->cloudIdManager = $cloudIdManager;
 	}
 
 	protected function run($argument) {
