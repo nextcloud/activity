@@ -24,7 +24,7 @@ OC.L10N.register(
     "Push" : "Push",
     "Activity" : "Aktivitet",
     "Notifications" : "Varsler",
-    "This application enables people to view a log of activities about them, their files or other data." : "Denne applikasjonen gjør brukere istand til å se deres logg av aktiviteter, filer og annen data.",
+    "This application enables people to view a log of activities about them, their files or other data." : "Denne applikasjonen gjør brukere istand til å se deres logg om aktiviteter, filer og annen data.",
     "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Denne appen lar folk se handlinger relatert til filene og dataene deres i Nextcloud.\n\t\tHver person kan konfigurere sine individuelle aktivitetsinnstillinger i de personlige innstillingene,\n\t\tfor å velge hvilken aktivitet som skal sendes til mobiltelefoner, sendt via e-post\n\t\teller om en daglig oppsummering sendes hver morgen.\n\t\tMer informasjon er tilgjengelig i dokumentasjonen for Aktivitet.",
     "Activity notification configuration" : "Konfigurering av aktivitetsvarsling",
     "Send email" : "Send e-post",
