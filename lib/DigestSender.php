@@ -85,7 +85,7 @@ class DigestSender {
 				continue;
 			}
 			$user = $this->userManager->get($user);
-			if(!$user->isEnabled()) {
+			if (!$user->isEnabled()) {
 				// User is disabled so do not send the email but update last sent since after enabling avoid flooding
 				$this->updateLastSentForUser($user, $now);
 				continue;
@@ -100,7 +100,7 @@ class DigestSender {
 			}
 			// We still update the digest time after an failed email,
 			// so it hopefully works tomorrow
-			$this->config->setUserValue($user, 'activity', 'digest', $timezoneDigestDay[$timezone]);
+			$this->config->setUserValue($user->getUID(), 'activity', 'digest', $timezoneDigestDay[$timezone]);
 		}
 
 		$this->activityManager->setRequirePNG(false);
