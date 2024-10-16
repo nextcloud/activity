@@ -24,6 +24,7 @@ namespace OCA\Activity\BackgroundJob;
 use GuzzleHttp\Exception\ClientException;
 use OC\BackgroundJob\QueuedJob;
 use OCA\Activity\Extension\Files;
+use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Federation\ICloudId;
 use OCP\Federation\ICloudIdManager;
 use OCP\Http\Client\IClientService;
@@ -35,7 +36,8 @@ class RemoteActivity extends QueuedJob {
 	/** @var ICloudIdManager */
 	protected $cloudIdManager;
 
-	public function __construct(IClientService $clientService, ICloudIdManager $cloudIdManager) {
+	public function __construct(ITimeFactory $timeFactory, IClientService $clientService, ICloudIdManager $cloudIdManager) {
+		parent::__construct($timeFactory);
 		$this->clientService = $clientService;
 		$this->cloudIdManager = $cloudIdManager;
 	}
