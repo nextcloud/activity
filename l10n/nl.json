@@ -9,6 +9,7 @@
     "No activities" : "Geen activiteiten",
     "More activities" : "Meer activiteiten",
     "Daily activity summary for %s" : "Dagelijkse activiteitssamenvatting voor %s",
+    "_and %n more…_::_and %n more…_" : ["en %nmeer","en %n meer…"],
     "All activities" : "Alle activiteiten",
     "By others" : "Van anderen",
     "By you" : "Van jou",
