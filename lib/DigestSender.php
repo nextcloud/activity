@@ -125,11 +125,11 @@ class DigestSender {
 		return $this->data->getFirstActivitySince($user, $now - (24 * 60 * 60));
 	}
 
-	public function updateLastSentForUser(IUser $user, int $now): void {
+	private function updateLastSentForUser(IUser $user, int $now): void {
 		$uid = $user->getUID();
 		$lastSend = $this->getLastSendActivity($uid, $now);
 
-		['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
+		['max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
 		$lastActivityId = (int)$lastActivityId;
 
 		$this->config->setUserValue($uid, 'activity', 'activity_digest_last_send', (string)$lastActivityId);
