@@ -45,6 +45,7 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Sèbera pro cales atividades cheres retzire una notìfica automàtica.",
     "Send daily activity summary in the morning" : "Imbia unu resumu de is atividades de ogni die a mangianu",
     "Default settings" : "Cunfiguratzione predefinida",
+    "Configure the default notification settings for new accounts." : "Cunfigura is paràmetros de notìficas predefinidos pro is contos noos.",
     "No more events to load" : "Perunu eventu de carrigare"
 },
 "nplurals=2; plural=(n != 1);");
