@@ -84,15 +84,15 @@ class DigestSender {
 				// User got todays digest already
 				continue;
 			}
-			$user = $this->userManager->get($user);
-			if (!$user->isEnabled()) {
+			$userObject = $this->userManager->get($user);
+			if (!$userObject->isEnabled()) {
 				// User is disabled so do not send the email but update last sent since after enabling avoid flooding
-				$this->updateLastSentForUser($user, $now);
+				$this->updateLastSentForUser($userObject, $now);
 				continue;
 			}
 
 			try {
-				$this->sendDigestForUser($user, $now, $timezone, $language);
+				$this->sendDigestForUser($userObject, $now, $timezone, $language);
 			} catch (\Throwable $e) {
 				$this->logger->error('Exception occurred while sending user digest email', [
 					'exception' => $e,
@@ -100,7 +100,7 @@ class DigestSender {
 			}
 			// We still update the digest time after an failed email,
 			// so it hopefully works tomorrow
-			$this->config->setUserValue($user->getUID(), 'activity', 'digest', $timezoneDigestDay[$timezone]);
+			$this->config->setUserValue($userObject->getUID(), 'activity', 'digest', $timezoneDigestDay[$timezone]);
 		}
 
 		$this->activityManager->setRequirePNG(false);
