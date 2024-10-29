@@ -14,6 +14,7 @@ use OCP\Defaults;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IURLGenerator;
+use OCP\IUser;
 use OCP\IUserManager;
 use OCP\L10N\IFactory;
 use OCP\Mail\IMailer;
@@ -68,9 +69,15 @@ class DigestSender {
 				// User got todays digest already
 				continue;
 			}
+			$userObject = $this->userManager->get($user);
+			if (!$userObject->isEnabled()) {
+				// User is disabled so do not send the email but update last sent since after enabling avoid flooding
+				$this->updateLastSentForUser($userObject, $now);
+				continue;
+			}
 
 			try {
-				$this->sendDigestForUser($user, $now, $timezone, $language);
+				$this->sendDigestForUser($userObject, $now, $timezone, $language);
 			} catch (\Throwable $e) {
 				$this->logger->error('Exception occurred while sending user digest email', [
 					'exception' => $e,
@@ -78,7 +85,7 @@ class DigestSender {
 			}
 			// We still update the digest time after an failed email,
 			// so it hopefully works tomorrow
-			$this->config->setUserValue($user, 'activity', 'digest', $timezoneDigestDay[$timezone]);
+			$this->config->setUserValue($userObject->getUID(), 'activity', 'digest', $timezoneDigestDay[$timezone]);
 		}
 
 		$this->activityManager->setRequirePNG(false);
@@ -103,19 +110,29 @@ class DigestSender {
 		return $this->data->getFirstActivitySince($user, $now - (24 * 60 * 60));
 	}
 
-	public function sendDigestForUser(string $uid, int $now, string $timezone, string $language) {
+	private function updateLastSentForUser(IUser $user, int $now): void {
+		$uid = $user->getUID();
+		$lastSend = $this->getLastSendActivity($uid, $now);
+
+		['max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
+		$lastActivityId = (int)$lastActivityId;
+
+		$this->config->setUserValue($uid, 'activity', 'activity_digest_last_send', (string)$lastActivityId);
+	}
+
+	public function sendDigestForUser(IUser $user, int $now, string $timezone, string $language) {
+		$uid = $user->getUID();
 		$l10n = $this->l10nFactory->get('activity', $language);
 		$this->groupHelper->setL10n($l10n);
 		$lastSend = $this->getLastSendActivity($uid, $now);
-		$user = $this->userManager->get($uid);
 		if ($lastSend === 0) {
 			return;
 		}
 		$this->activityManager->setCurrentUserId($uid);
 
 		['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
-		$count = (int) $count;
-		$lastActivityId = (int) $lastActivityId;
+		$count = (int)$count;
+		$lastActivityId = (int)$lastActivityId;
 		if ($count === 0) {
 			return;
 		}
@@ -181,7 +198,7 @@ class DigestSender {
 		$this->activityManager->setCurrentUserId(null);
 		try {
 			$this->mailer->send($message);
-			$this->config->setUserValue($user->getUID(), 'activity', 'activity_digest_last_send', (string) $lastActivityId);
+			$this->config->setUserValue($uid, 'activity', 'activity_digest_last_send', (string)$lastActivityId);
 		} catch (\Exception $e) {
 			$this->logger->error($e->getMessage());
 			return;
@@ -202,9 +219,9 @@ class DigestSender {
 			$placeholders[] = '{' . $placeholder . '}';
 
 			if ($parameter['type'] === 'file') {
-				$replacement = (string) $parameter['path'];
+				$replacement = (string)$parameter['path'];
 			} else {
-				$replacement = (string) $parameter['name'];
+				$replacement = (string)$parameter['name'];
 			}
 
 			if (isset($parameter['link'])) {
