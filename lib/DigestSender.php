@@ -146,8 +146,8 @@ class DigestSender {
 		$this->activityManager->setCurrentUserId($uid);
 
 		['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
-		$count = (int) $count;
-		$lastActivityId = (int) $lastActivityId;
+		$count = (int)$count;
+		$lastActivityId = (int)$lastActivityId;
 		if ($count === 0) {
 			return;
 		}
@@ -202,7 +202,7 @@ class DigestSender {
 		$this->activityManager->setCurrentUserId(null);
 		try {
 			$this->mailer->send($message);
-			$this->config->setUserValue($user->getUID(), 'activity', 'activity_digest_last_send', (string) $lastActivityId);
+			$this->config->setUserValue($uid, 'activity', 'activity_digest_last_send', (string)$lastActivityId);
 		} catch (\Exception $e) {
 			$this->logger->error($e->getMessage());
 			return;
@@ -223,9 +223,9 @@ class DigestSender {
 			$placeholders[] = '{' . $placeholder . '}';
 
 			if ($parameter['type'] === 'file') {
-				$replacement = (string) $parameter['path'];
+				$replacement = (string)$parameter['path'];
 			} else {
-				$replacement = (string) $parameter['name'];
+				$replacement = (string)$parameter['name'];
 			}
 
 			if (isset($parameter['link'])) {
