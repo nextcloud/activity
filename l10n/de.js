@@ -52,7 +52,7 @@ OC.L10N.register(
     "Enable RSS feed" : "RSS-Feed aktivieren",
     "RSS feed" : "RSS-Feed",
     "Copy RSS feed link" : "RSS-Feed-Link kopieren",
-    "Personal notification settings" : "Persönliche Einstellungen zu Benachrichtigungen",
+    "Personal notification settings" : "Persönliche Benachrichtigungseinstellungen",
     "Could not enable RSS link" : "RSS-Link konnte nicht aktiviert werden",
     "RSS link copied to clipboard" : "RSS-Link wurde in die Zwischenablage kopiert",
     "Could not copy the RSS link, please copy manually:" : "Der RSS-Link konnte nicht kopiert werden, bitte kopiere ihn manuell:",
