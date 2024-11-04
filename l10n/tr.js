@@ -53,7 +53,7 @@ OC.L10N.register(
     "RSS feed" : "RSS akışı",
     "Copy RSS feed link" : "RSS akışı bağlantısını kopyala",
     "Personal notification settings" : "Kişisel bildirim ayarları",
-    "Could not enable RSS link" : "RSS bağlantısı etkinleştirilemedi",
+    "Could not enable RSS link" : "RSS bağlantısı kullanıma alınamadı",
     "RSS link copied to clipboard" : "RSS bağlantısı panoya kopyalandı",
     "Could not copy the RSS link, please copy manually:" : "RSS bağlantısı panoya kopyalanamadı. Lütfen el ile kopyalayın:",
     "Unable to load the activity list" : "İşlem listesi yüklenemedi",
