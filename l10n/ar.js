@@ -39,7 +39,7 @@ OC.L10N.register(
     "Weekly" : "أسبوعياً",
     "You commented" : "قمت بكتابة تعليق",
     "Message deleted by author" : "مٌسحت الرسالة بواسطة الكاتب ",
-    "Open {filename}" : "إفتح {filename}",
+    "Open {filename}" : "فتح {filename}",
     "in {path}" : "في {path}",
     "Home" : "الرئيسية",
     "Loading activities" : "تحميل الأنشطة",
