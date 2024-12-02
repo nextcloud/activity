@@ -222,7 +222,8 @@ watch(props, () => {
 		font-size: 20px;
 		line-height: 44px; // to align height with the app navigation toggle
 		// Align with app navigation toggle
-		margin: var(--app-navigation-padding, 8px) 0 0 calc(2 * var(--app-navigation-padding, 8px) + 44px);
+		margin-top: 1px;
+		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
 	}
 }
 </style>
