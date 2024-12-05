@@ -108,6 +108,14 @@ export default {
 		 * @param {object} fileInfo the current file FileInfo
 		 */
 		async update(fileInfo) {
+			this.sidebarPlugins = []
+			let sidebarPlugins = getSidebarActions()
+			if (sidebarPlugins.length > 0) {
+				this.$nextTick(() => {
+					this.sidebarPlugins = sidebarPlugins
+				})
+			}
+
 			this.fileInfo = fileInfo
 			this.resetState()
 			await this.getActivities()
