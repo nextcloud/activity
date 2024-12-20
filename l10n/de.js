@@ -31,7 +31,7 @@ OC.L10N.register(
     "Send push notification" : "Push-Benachrichtigung senden",
     "Today" : "Heute",
     "Yesterday" : "Gestern",
-    "You need to set up your email address before you can receive notification emails." : "Bevor Sie E-Mail-Benachrichtigungen empfangen können, müssen Sie Ihre E-Mail-Adresse einrichten.",
+    "You need to set up your email address before you can receive notification emails." : "Bevor du E-Mail-Benachrichtigungen empfangen kannst, musst du deine E-Mail-Adresse einrichten.",
     "Send activity emails" : "E-Mails zu Aktivitäten senden",
     "As soon as possible" : "So bald wie möglich",
     "Hourly" : "Stündlich",
