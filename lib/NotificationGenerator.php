@@ -16,6 +16,7 @@ use OCP\Notification\AlreadyProcessedException;
 use OCP\Notification\IManager as NotificationManager;
 use OCP\Notification\INotification;
 use OCP\Notification\INotifier;
+use OCP\Notification\UnknownNotificationException;
 use Psr\Log\LoggerInterface;
 
 class NotificationGenerator implements INotifier {
@@ -101,7 +102,7 @@ class NotificationGenerator implements INotifier {
 
 	public function prepare(INotification $notification, string $languageCode): INotification {
 		if ($notification->getObjectType() !== 'activity_notification') {
-			throw new \InvalidArgumentException();
+			throw new UnknownNotificationException();
 		}
 
 		$event = $this->data->getById((int)$notification->getObjectId());
@@ -109,7 +110,7 @@ class NotificationGenerator implements INotifier {
 			throw new AlreadyProcessedException();
 		}
 		if ($event->getAffectedUser() !== $notification->getUser()) {
-			throw new \InvalidArgumentException();
+			throw new AlreadyProcessedException();
 		}
 		$this->activityManager->setCurrentUserId($notification->getUser());
 		$event = $this->populateEvent($event, $languageCode);
