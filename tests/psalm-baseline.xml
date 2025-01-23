@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.19.0@06b71be009a6bd6d81b9811855d6629b9fe90e1b">
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
   <file src="lib/BackgroundJob/RemoteActivity.php">
     <UndefinedClass>
-      <code>ClientException</code>
+      <code><![CDATA[ClientException]]></code>
     </UndefinedClass>
   </file>
   <file src="lib/CurrentUser.php">
@@ -21,27 +21,30 @@
     </InvalidArrayOffset>
   </file>
   <file src="lib/FilesHooks.php">
-    <InvalidArgument>
-      <code><![CDATA[$share->getId()]]></code>
-    </InvalidArgument>
+    <UndefinedClass>
+      <code><![CDATA[$this->teamManager]]></code>
+      <code><![CDATA[$this->teamManager]]></code>
+      <code><![CDATA[Member]]></code>
+      <code><![CDATA[protected]]></code>
+    </UndefinedClass>
     <UndefinedDocblockClass>
-      <code>$shareOwner</code>
-      <code>$storage</code>
+      <code><![CDATA[$shareOwner]]></code>
+      <code><![CDATA[$storage]]></code>
     </UndefinedDocblockClass>
   </file>
   <file src="lib/Migration/Version2008Date20181011095117.php">
     <UndefinedClass>
-      <code>SchemaException</code>
+      <code><![CDATA[SchemaException]]></code>
     </UndefinedClass>
   </file>
   <file src="lib/Migration/Version2011Date20201006132544.php">
     <UndefinedClass>
-      <code>Type</code>
+      <code><![CDATA[Type]]></code>
     </UndefinedClass>
   </file>
   <file src="lib/Migration/Version2011Date20201006132545.php">
     <UndefinedClass>
-      <code>Type</code>
+      <code><![CDATA[Type]]></code>
     </UndefinedClass>
   </file>
 </files>
