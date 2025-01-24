@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Параметры по умолчанию",
     "Configure the default notification settings for new accounts." : "Параметры способов отправки уведомлений, используемые по умолчанию для новых учётных записей.",
     "Unable to save the settings" : "Невозможно сохранить настройки",
-    "No more events to load" : "Больше нет событий для загрузки",
-    "Could not load activites" : "Не удалось загрузить список событий"
+    "No more events to load" : "Больше нет событий для загрузки"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

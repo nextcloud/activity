@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Prevzete nastavitve",
     "Configure the default notification settings for new accounts." : "Prilagodi privzete nastavitve obveščanja za nove uporabnike.",
     "Unable to save the settings" : "Nastavitev ni mogoče shraniti",
-    "No more events to load" : "Ni načrtovanih drugih dogodkov",
-    "Could not load activites" : "Dejavnosti ni mogoče naložiti."
+    "No more events to load" : "Ni načrtovanih drugih dogodkov"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

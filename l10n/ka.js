@@ -65,7 +65,6 @@ OC.L10N.register(
     "Default settings" : "ნაგულისხმევი პარამეტრები",
     "Configure the default notification settings for new accounts." : "დააკონფიგურირეთ ნაგულისხმევი შეტყობინებების პარამეტრები ახალი ანგარიშებისთვის.",
     "Unable to save the settings" : "პარამეტრების შენახვა ვერ ხერხდება",
-    "No more events to load" : "მეტი მოვლენა არ არის",
-    "Could not load activites" : "აქტივობების ჩატვირთვა ვერ ხერხდება"
+    "No more events to load" : "მეტი მოვლენა არ არის"
 },
 "nplurals=2; plural=(n!=1);");

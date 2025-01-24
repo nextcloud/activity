@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Standaardinstellingen",
     "Configure the default notification settings for new accounts." : "Stel de standaard notificatie-instelling voor nieuwe gebruikers account in.",
     "Unable to save the settings" : "Kan instellingen niet opslaan",
-    "No more events to load" : "Geen activiteiten meer beschikbaar",
-    "Could not load activites" : "Kon activiteiten niet laden"
+    "No more events to load" : "Geen activiteiten meer beschikbaar"
 },
 "nplurals=2; plural=(n != 1);");

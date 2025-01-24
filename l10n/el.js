@@ -65,7 +65,6 @@ OC.L10N.register(
     "Default settings" : "Προεπιλεγμένες ρυθμίσεις",
     "Configure the default notification settings for new accounts." : "Καθορίστε τις προεπιλεγμένες ρυθμίσεις ειδοποιήσεων για νέους λογαριασμούς.",
     "Unable to save the settings" : "Αδυναμία αποθήκευσης των ρυθμίσεων",
-    "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση",
-    "Could not load activites" : "Δεν ήταν δυνατή η φόρτωση των δραστηριοτήτων"
+    "No more events to load" : "Δεν υπάρχουν άλλα γεγονότα προς φόρτωση"
 },
 "nplurals=2; plural=(n != 1);");

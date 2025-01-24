@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "تنظیمات پیش فرض",
     "Configure the default notification settings for new accounts." : "پیکربندی تنظیمات آگاهی پیش‌گزیده برای حساب‌های جدید.",
     "Unable to save the settings" : "ناتوان در ذخیرهٔ تنظیمات",
-    "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد",
-    "Could not load activites" : "فعالیت بارگیری نشد"
+    "No more events to load" : "رویداد دیگری برای بارگزاری وجود ندارد"
 },
 "nplurals=2; plural=(n > 1);");

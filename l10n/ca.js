@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Paràmetres per defecte",
     "Configure the default notification settings for new accounts." : "Configureu els paràmetres de notificació per defecte per als comptes nous.",
     "Unable to save the settings" : "No s'han pogut desar els paràmetres",
-    "No more events to load" : "No hi ha més esdeveniments",
-    "Could not load activites" : "No s'ha pogut carregar l'activitat"
+    "No more events to load" : "No hi ha més esdeveniments"
 },
 "nplurals=2; plural=(n != 1);");

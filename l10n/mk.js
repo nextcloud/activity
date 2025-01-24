@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Стандардни поставки",
     "Configure the default notification settings for new accounts." : "Конфигурирај ги стандардните поставки за известување за нови корисници.",
     "Unable to save the settings" : "Неуспешно зачувување на параметрите",
-    "No more events to load" : "Нема повеќе настани за вчитување",
-    "Could not load activites" : "Неможе да се вчитаат активностите"
+    "No more events to load" : "Нема повеќе настани за вчитување"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

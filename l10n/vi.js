@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Cài đặt mặc định",
     "Configure the default notification settings for new accounts." : "Thiết lập cài đặt mặc định của phần thông báo cho những tài khoản mới.",
     "Unable to save the settings" : "Không thể lưu cài đặt",
-    "No more events to load" : "Không có sự kiện nào",
-    "Could not load activites" : "Không thể tải các hoạt động."
+    "No more events to load" : "Không có sự kiện nào"
 },
 "nplurals=1; plural=0;");
