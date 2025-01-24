@@ -65,7 +65,6 @@ OC.L10N.register(
     "Default settings" : "Setări implicite",
     "Configure the default notification settings for new accounts." : "Configurați setările implicite de notificare pentru conturile noi.",
     "Unable to save the settings" : "Nu se pot salva setările",
-    "No more events to load" : "Nu mai sunt evenimente de încărcat",
-    "Could not load activites" : "Activitățile nu s-au putut încărca"
+    "No more events to load" : "Nu mai sunt evenimente de încărcat"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

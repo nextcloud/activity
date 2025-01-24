@@ -64,7 +64,6 @@
     "Default settings" : "Predvolená nastavenia",
     "Configure the default notification settings for new accounts." : "Nastavte predvolené nastavenia upozornení pre nové účty.",
     "Unable to save the settings" : "Nepodarilo sa uložiť nastavenia",
-    "No more events to load" : "Žiadne ďalšie udalosti na načítanie",
-    "Could not load activites" : "Nepodarilo sa načítať aktivity"
+    "No more events to load" : "Žiadne ďalšie udalosti na načítanie"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"
 }

@@ -60,7 +60,6 @@ OC.L10N.register(
     "Send daily activity summary in the morning" : "Sūtīt dienas darbību kopsavilkumu no rīta",
     "Default settings" : "Noklusējuma iestatījumi",
     "Unable to save the settings" : "Nevarēja saglabāt iestatījumus",
-    "No more events to load" : "Nav vairs notikumu, ko ielādēt",
-    "Could not load activites" : "Nevarēja ielādēt darbības"
+    "No more events to load" : "Nav vairs notikumu, ko ielādēt"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

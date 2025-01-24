@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Standard innstillinger",
     "Configure the default notification settings for new accounts." : "Konfigurer standard varslingsinnstillinger for nye kontoer.",
     "Unable to save the settings" : "Klarte ikke å lagre innstillingene",
-    "No more events to load" : "Ingen flere hendelser å laste inn",
-    "Could not load activites" : "Kunne ikke laste aktiviteter"
+    "No more events to load" : "Ingen flere hendelser å laste inn"
 },
 "nplurals=2; plural=(n != 1);");

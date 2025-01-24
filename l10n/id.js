@@ -64,7 +64,6 @@ OC.L10N.register(
     "Default settings" : "Pengaturan bawaan",
     "Configure the default notification settings for new accounts." : "Konfigurasikan pengaturan notifikasi default untuk akun baru.",
     "Unable to save the settings" : "Tidak dapat menyimpan pengaturan",
-    "No more events to load" : "Tidak ada lagi acara untuk dimuat",
-    "Could not load activites" : "Tidak dapat memuat aktivitas"
+    "No more events to load" : "Tidak ada lagi acara untuk dimuat"
 },
 "nplurals=1; plural=0;");

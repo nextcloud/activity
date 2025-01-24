@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Подразумеване поставке",
     "Configure the default notification settings for new accounts." : "Подешавање подразумеваних поставки обавештења за нове налоге.",
     "Unable to save the settings" : "Чување поставки није успело.",
-    "No more events to load" : "Нема више догађаја за приказ",
-    "Could not load activites" : "Није успело учитавање активности"
+    "No more events to load" : "Нема више догађаја за приказ"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

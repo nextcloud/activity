@@ -62,7 +62,6 @@
     "Default settings" : "كۆڭۈلدىكى تەڭشەكلەر",
     "Configure the default notification settings for new accounts." : "يېڭى ھېساباتلارنىڭ سۈكۈتتىكى ئۇقتۇرۇش تەڭشىكىنى سەپلەڭ.",
     "Unable to save the settings" : "تەڭشەكلەرنى ساقلىيالمىدى",
-    "No more events to load" : "يۈكلەيدىغان ئىشلار يوق",
-    "Could not load activites" : "ئاكتىپلىغۇچنى يۈكلىيەلمىدى"
+    "No more events to load" : "يۈكلەيدىغان ئىشلار يوق"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

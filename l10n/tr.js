@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Varsayılan ayarlar",
     "Configure the default notification settings for new accounts." : "Yeni hesaplar için varsayılan bildirim ayarlarını yapılandırın.",
     "Unable to save the settings" : "Ayarlar kaydedilemedi",
-    "No more events to load" : "Yüklenecek başka bir olay yok",
-    "Could not load activites" : "İşlemler yüklenemedi"
+    "No more events to load" : "Yüklenecek başka bir olay yok"
 },
 "nplurals=2; plural=(n > 1);");

@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Axustes predeterminados",
     "Configure the default notification settings for new accounts." : "Configure os axustes de notificación predeterminados para as contas novas.",
     "Unable to save the settings" : "Non é posíbel gardar os axustes",
-    "No more events to load" : "Non hai máis eventos para cargar",
-    "Could not load activites" : "Non foi posíbel cargar as actividades"
+    "No more events to load" : "Non hai máis eventos para cargar"
 },
 "nplurals=2; plural=(n != 1);");

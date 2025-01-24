@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Стандартни настройкки",
     "Configure the default notification settings for new accounts." : "Конфигуриране по подразбиране на настройките при известие за уведомяване за нови профили.",
     "Unable to save the settings" : "Настройките не могат да бъдат запазени",
-    "No more events to load" : "Няма повече известия за зареждане",
-    "Could not load activites" : "Не може да се зареди активност"
+    "No more events to load" : "Няма повече известия за зареждане"
 },
 "nplurals=2; plural=(n != 1);");
