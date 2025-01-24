@@ -65,7 +65,6 @@ OC.L10N.register(
     "Default settings" : "הגדרות ברירת מחדל",
     "Configure the default notification settings for new accounts." : "הגדרת תצורת ההתראות כברירת מחדל לחשבונות חדשים.",
     "Unable to save the settings" : "שמירת ההגדרות נכשלה",
-    "No more events to load" : "אין אירועים נוספים לטעינה",
-    "Could not load activites" : "לא ניתן לטעון את הפעילויות"
+    "No more events to load" : "אין אירועים נוספים לטעינה"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");

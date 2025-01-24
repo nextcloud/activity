@@ -64,7 +64,6 @@
     "Default settings" : "Výchozí nastavení",
     "Configure the default notification settings for new accounts." : "Nastavte výchozí volby ohledně upozorňování pro nově vytvářené účty.",
     "Unable to save the settings" : "Nastavení se nedaří uložit",
-    "No more events to load" : "Žádné další události k načtení",
-    "Could not load activites" : "Nepodařilo se načíst aktivity"
+    "No more events to load" : "Žádné další události k načtení"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }

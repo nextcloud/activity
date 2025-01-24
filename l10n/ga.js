@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Socruithe Réamhshocraithe",
     "Configure the default notification settings for new accounts." : "Cumraigh socruithe fógra réamhshocraithe do chuntais nua.",
     "Unable to save the settings" : "Ní féidir socruithe a shábháil",
-    "No more events to load" : "Níl níos mó imeachtaí le luchtú",
-    "Could not load activites" : "Níorbh fhéidir an ghníomhaíocht a lódáil"
+    "No more events to load" : "Níl níos mó imeachtaí le luchtú"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

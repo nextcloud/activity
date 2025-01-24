@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Oletusasetukset",
     "Configure the default notification settings for new accounts." : "Määritä uusien tilien oletusarvoiset ilmoitusasetukset.",
     "Unable to save the settings" : "Asetusten tallentaminen epäonnistui",
-    "No more events to load" : "Ei enempää tapahtumia",
-    "Could not load activites" : "Tapahtumia ei voitu ladata"
+    "No more events to load" : "Ei enempää tapahtumia"
 },
 "nplurals=2; plural=(n != 1);");

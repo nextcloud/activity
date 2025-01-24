@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Configuraciones por defecto",
     "Configure the default notification settings for new accounts." : "Configure los ajustes de notificación predeterminados para nuevas cuentas de usuario.",
     "Unable to save the settings" : "No fue posible guardar la configuración",
-    "No more events to load" : "No hay más eventos por cargar.",
-    "Could not load activites" : "No se pudieron cargar las actividades"
+    "No more events to load" : "No hay más eventos por cargar."
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

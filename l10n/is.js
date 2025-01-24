@@ -11,6 +11,7 @@ OC.L10N.register(
     "No activities" : "Engar athafnir",
     "More activities" : "Fleiri athafnir",
     "Daily activity summary for %s" : "Yfirlit um daglegar athafnir fyrir %s",
+    "_and %n more…_::_and %n more…_" : ["og %n til viðbótar…","og %n til viðbótar…"],
     "All activities" : "Allar athafnir",
     "By others" : "Virkni annarra",
     "By you" : "Virkni þín",
@@ -65,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Sjálfgefnar stillingar",
     "Configure the default notification settings for new accounts." : "Ákvarðaðu sjálfgefnar stillingar tilkynninga fyrir nýja aðganga.",
     "Unable to save the settings" : "Tókst ekki að vista stillingarnar",
-    "No more events to load" : "Ekki fleiri viðburðir til að hlaða",
-    "Could not load activites" : "Gat ekki hlaðið inn athöfnum"
+    "No more events to load" : "Ekki fleiri viðburðir til að hlaða"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

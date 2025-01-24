@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Tetapan lalai",
     "Configure the default notification settings for new accounts." : "Konfigurasikan tetapan pemberitahuan lalai untuk akaun baharu.",
     "Unable to save the settings" : "Tidak dapat menyimpan tetapan",
-    "No more events to load" : "Tiada aktiviti untuk memuat",
-    "Could not load activites" : "Tidak dapat memuatkan aktiviti"
+    "No more events to load" : "Tiada aktiviti untuk memuat"
 },
 "nplurals=1; plural=0;");

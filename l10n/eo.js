@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Defaŭltaj agordoj",
     "Configure the default notification settings for new accounts." : "Agordi la defaŭltajn sciigajn agordojn por novaj kontoj.",
     "Unable to save the settings" : "Ne eblis konservi la agordojn",
-    "No more events to load" : "Ne plu ŝargeblaj eventoj",
-    "Could not load activites" : "Ne eblas ŝargi aktivaĵojn"
+    "No more events to load" : "Ne plu ŝargeblaj eventoj"
 },
 "nplurals=2; plural=(n != 1);");

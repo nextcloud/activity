@@ -64,7 +64,6 @@
     "Default settings" : "デフォルト設定",
     "Configure the default notification settings for new accounts." : "新しいアカウントに対してデフォルトの通知設定を構成します。",
     "Unable to save the settings" : "設定を保存できません",
-    "No more events to load" : "これ以上読み込むイベントはありません",
-    "Could not load activites" : "アクティビティを読み込めませんでした"
+    "No more events to load" : "これ以上読み込むイベントはありません"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
