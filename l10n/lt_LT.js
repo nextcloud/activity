@@ -65,7 +65,6 @@ OC.L10N.register(
     "Default settings" : "Numatytieji nustatymai",
     "Configure the default notification settings for new accounts." : "Nustatyti numatytuosius pranešimų parametrus naujiems vartotojams.",
     "Unable to save the settings" : "Nepavyko įrašyti nustatymų",
-    "No more events to load" : "Nėra daugiau rodytinų įvykių",
-    "Could not load activites" : "Nepavyko įkelti veiklų"
+    "No more events to load" : "Nėra daugiau rodytinų įvykių"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Förvalda inställningar",
     "Configure the default notification settings for new accounts." : "Konfigurera standardinställningar av notifieringar för nya konton.",
     "Unable to save the settings" : "Kunde inte spara inställningarna",
-    "No more events to load" : "Inga fler aktiviteter.",
-    "Could not load activites" : "Kunde inte läsa in aktiviteter"
+    "No more events to load" : "Inga fler aktiviteter."
 },
 "nplurals=2; plural=(n != 1);");

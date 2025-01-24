@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "默认设置",
     "Configure the default notification settings for new accounts." : "为新帐号配置默认通知设置",
     "Unable to save the settings" : "无法保存设置",
-    "No more events to load" : "已无更多事件",
-    "Could not load activites" : "无法加载动态"
+    "No more events to load" : "已无更多事件"
 },
 "nplurals=1; plural=0;");

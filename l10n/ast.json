@@ -63,7 +63,6 @@
     "Default settings" : "Configuración predeterminada",
     "Configure the default notification settings for new accounts." : "Configura les opciones d'avisu predeterminaes pa les cuentes nueves.",
     "Unable to save the settings" : "Nun ye posible guardar la configuración",
-    "No more events to load" : "Nun hai más eventos",
-    "Could not load activites" : "Nun se pudo cargar l'actividá"
+    "No more events to load" : "Nun hai más eventos"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

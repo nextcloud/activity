@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "預設設定",
     "Configure the default notification settings for new accounts." : "設定新帳號的預設通知設定。",
     "Unable to save the settings" : "無法儲存設定",
-    "No more events to load" : "已載入所有事件",
-    "Could not load activites" : "無法載入活動"
+    "No more events to load" : "已載入所有事件"
 },
 "nplurals=1; plural=0;");

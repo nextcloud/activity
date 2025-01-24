@@ -64,7 +64,6 @@
     "Default settings" : "الإعدادات الإفتراضية",
     "Configure the default notification settings for new accounts." : "قم بتهيئة الإعدادات الافتراضية لإشعارات الحساب الجديد ",
     "Unable to save the settings" : "تعذّر حفظ الإعدادات",
-    "No more events to load" : "لا مزيد من الأحداث لتحميلها",
-    "Could not load activites" : "تعذّر تحميل الأنشطة"
+    "No more events to load" : "لا مزيد من الأحداث لتحميلها"
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"
 }

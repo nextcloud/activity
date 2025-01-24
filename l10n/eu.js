@@ -66,7 +66,6 @@ OC.L10N.register(
     "Default settings" : "Lehenetsitako ezarpenak",
     "Configure the default notification settings for new accounts." : "Konfiguratu jakinarazpen-ezarpen lehenetsiak kontu berrietarako.",
     "Unable to save the settings" : "Ezin izan dira ezarpenak gorde",
-    "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik",
-    "Could not load activites" : "Ezin izan dira jarduerak kargatu"
+    "No more events to load" : "Ez dago kargatzeko gertaera gehiagorik"
 },
 "nplurals=2; plural=(n != 1);");

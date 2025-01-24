@@ -65,7 +65,6 @@ OC.L10N.register(
     "Default settings" : "ค่าเริ่มต้น",
     "Configure the default notification settings for new accounts." : "กำหนดค่าการแจ้งเตือนเริ่มต้นสำหรับบัญชีใหม่",
     "Unable to save the settings" : "ไม่สามารถบันทึกการตั้งค่าได้",
-    "No more events to load" : "ไม่มีกิจกรรมเพิ่มเติมที่จะโหลด",
-    "Could not load activites" : "ไม่สามารถโหลดกิจกรรมได้"
+    "No more events to load" : "ไม่มีกิจกรรมเพิ่มเติมที่จะโหลด"
 },
 "nplurals=1; plural=0;");
