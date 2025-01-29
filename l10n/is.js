@@ -55,7 +55,7 @@ OC.L10N.register(
     "Personal notification settings" : "Persónulegar stillingar á tilkynningum",
     "Could not enable RSS link" : "Gat ekki virkjað tengil RSS-streymis",
     "RSS link copied to clipboard" : "RSS-tengill afritaður á klippispjald",
-    "Could not copy the RSS link, please copy manually:" : "Tókst ekki að afritað RSS-tengilinn, afritaðu hann handvirkt:",
+    "Could not copy the RSS link, please copy manually:" : "Tókst ekki að afrita RSS-tengilinn, afritaðu hann handvirkt:",
     "Unable to load the activity list" : "Gat ekki hlaðið inn lista yfir athafnir",
     "Notification" : "Tilkynning",
     "Enable notification emails" : "Virkja tilkynningapóst",
