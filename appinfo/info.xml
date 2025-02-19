@@ -27,7 +27,7 @@
 	</types>
 
 	<documentation>
-		<admin>https://docs.nextcloud.org/server/stable/admin_manual/configuration_server/activity_configuration.html</admin>
+		<admin>https://docs.nextcloud.com/server/stable/admin_manual/configuration_server/activity_configuration.html</admin>
 	</documentation>
 
 	<category>monitoring</category>
