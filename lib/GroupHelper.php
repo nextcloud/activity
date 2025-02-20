@@ -24,7 +24,7 @@ class GroupHelper {
 		protected IL10N $l,
 		protected IManager $activityManager,
 		protected IValidator $richObjectValidator,
-		protected LoggerInterface $logger
+		protected LoggerInterface $logger,
 	) {
 	}
 

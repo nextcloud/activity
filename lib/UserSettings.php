@@ -28,7 +28,10 @@ class UserSettings {
 	 * @param IManager $manager
 	 * @param IConfig $config
 	 */
-	public function __construct(protected IManager $manager, protected IConfig $config) {
+	public function __construct(
+		protected IManager $manager,
+		protected IConfig $config,
+	) {
 	}
 
 	/**

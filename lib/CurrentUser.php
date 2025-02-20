@@ -30,7 +30,8 @@ class CurrentUser {
 	public function __construct(
 		protected IUserSession $userSession,
 		protected IRequest $request,
-		protected IManager $shareManager) {
+		protected IManager $shareManager,
+	) {
 		$this->cloudId = false;
 		$this->sessionUser = false;
 	}

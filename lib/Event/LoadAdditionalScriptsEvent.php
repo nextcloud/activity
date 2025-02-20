@@ -16,7 +16,9 @@ class LoadAdditionalScriptsEvent extends Event {
 	 */
 	public const EVENT_ENTITY = 'OCA\Activity::loadAdditionalScripts';
 
-	public function __construct(public string $filter) {
+	public function __construct(
+		public string $filter,
+	) {
 		parent::__construct();
 	}
 }

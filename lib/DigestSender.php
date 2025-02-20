@@ -36,7 +36,7 @@ class DigestSender {
 		private Defaults $defaults,
 		private IFactory $l10nFactory,
 		private IDateTimeFormatter $dateTimeFormatter,
-		private LoggerInterface $logger
+		private LoggerInterface $logger,
 	) {
 	}
 

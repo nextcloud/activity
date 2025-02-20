@@ -18,7 +18,9 @@ class ViewInfoCache {
 	protected $cacheId;
 
 
-	public function __construct(protected IRootFolder $rootFolder) {
+	public function __construct(
+		protected IRootFolder $rootFolder,
+	) {
 	}
 
 	/**
