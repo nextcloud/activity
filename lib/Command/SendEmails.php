@@ -23,9 +23,11 @@ class SendEmails extends Base {
 	 * @param IConfig $config
 	 * @param LoggerInterface $logger
 	 */
-	public function __construct(protected MailQueueHandler $queueHandler,
+	public function __construct(
+		protected MailQueueHandler $queueHandler,
 		protected IConfig $config,
-		protected LoggerInterface $logger) {
+		protected LoggerInterface $logger,
+	) {
 		parent::__construct();
 
 		$this->queueHandler = $queueHandler;

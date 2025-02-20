@@ -33,7 +33,7 @@ class Personal implements ISettings {
 		UserSettings $userSettings,
 		IL10N $l10n,
 		CurrentUser $currentUser,
-		IInitialState $initialState
+		IInitialState $initialState,
 	) {
 		$this->config = $config;
 		$this->manager = $manager;

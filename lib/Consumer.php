@@ -16,7 +16,8 @@ class Consumer implements IConsumer {
 		protected Data $data,
 		protected IManager $manager,
 		protected UserSettings $userSettings,
-		protected NotificationGenerator $notificationGenerator) {
+		protected NotificationGenerator $notificationGenerator,
+	) {
 	}
 
 	/**

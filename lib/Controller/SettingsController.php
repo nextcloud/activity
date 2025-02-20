@@ -30,7 +30,8 @@ class SettingsController extends Controller {
 		protected IManager $manager,
 		protected UserSettings $userSettings,
 		protected IL10N $l10n,
-		CurrentUser $currentUser) {
+		CurrentUser $currentUser,
+	) {
 		parent::__construct($appName, $request);
 		$this->user = (string)$currentUser->getUID();
 	}
@@ -48,7 +49,7 @@ class SettingsController extends Controller {
 		$notify_setting_batchtime = UserSettings::EMAIL_SEND_HOURLY,
 		$notify_setting_self = false,
 		$notify_setting_selfemail = false,
-		$activity_digest = false
+		$activity_digest = false,
 	) {
 		$settings = $this->manager->getSettings();
 		foreach ($settings as $setting) {

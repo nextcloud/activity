@@ -24,7 +24,8 @@ class APIv1Controller extends OCSController {
 	 * @param UserSettings $userSettings
 	 * @param CurrentUser $currentUser
 	 */
-	public function __construct($appName,
+	public function __construct(
+		$appName,
 		IRequest $request,
 		protected Data $data,
 		protected GroupHelper $groupHelper,
