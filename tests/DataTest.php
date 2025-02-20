@@ -26,6 +26,8 @@ namespace OCA\Activity\Tests;
 use OCA\Activity\Data;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\IConfig;
+use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\IUserSession;
@@ -66,11 +68,13 @@ class DataTest extends TestCase {
 		$this->dbConnection = \OC::$server->get(IDBConnection::class);
 		$this->realActivityManager = \OC::$server->get(IManager::class);
 		$this->logger = \OC::$server->get(NullLogger::class);
+		$this->config = $this->createMock(IConfig::class);
 
 		$this->data = new Data(
 			$activityManager,
 			$this->dbConnection,
-			$this->logger
+			$this->logger,
+			$this->config
 		);
 	}
 
