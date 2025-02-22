@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2017 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -21,13 +22,15 @@ use OCP\IUser;
 use OCP\IUserManager;
 
 class RemoteActivityController extends OCSController {
-	public function __construct($appName,
+	public function __construct(
+		$appName,
 		IRequest $request,
 		protected IDBConnection $db,
 		protected IUserManager $userManager,
 		protected IAppManager $appManager,
 		protected IRootFolder $rootFolder,
-		protected IActivityManager $activityManager) {
+		protected IActivityManager $activityManager,
+	) {
 		parent::__construct($appName, $request);
 	}
 
@@ -164,7 +167,7 @@ class RemoteActivityController extends OCSController {
 	/**
 	 * @param null|string $path2
 	 */
-	protected function getSubject(string $type, string $path, string|null $path2) {
+	protected function getSubject(string $type, string $path, ?string $path2) {
 		switch ($type) {
 			case 'Create':
 				return 'created_by';

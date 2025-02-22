@@ -340,7 +340,7 @@ class MailQueueHandlerTest extends TestCase {
 			[$data,] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
 			$this->assertNotEmpty(
 				$data,
-				'Failed asserting that the remaining user ' . $user. ' still has mails in the queue ' . $explain
+				'Failed asserting that the remaining user ' . $user . ' still has mails in the queue ' . $explain
 			);
 		}
 	}
