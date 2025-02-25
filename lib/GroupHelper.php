@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2016-2024 Nextcloud GmbH and Nextcloud contributors
  * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
@@ -24,7 +25,7 @@ class GroupHelper {
 		protected IL10N $l,
 		protected IManager $activityManager,
 		protected IValidator $richObjectValidator,
-		protected LoggerInterface $logger
+		protected LoggerInterface $logger,
 	) {
 	}
 
