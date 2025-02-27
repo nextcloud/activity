@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2016 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -30,7 +31,8 @@ class CurrentUser {
 	public function __construct(
 		protected IUserSession $userSession,
 		protected IRequest $request,
-		protected IManager $shareManager) {
+		protected IManager $shareManager,
+	) {
 		$this->cloudId = false;
 		$this->sessionUser = false;
 	}

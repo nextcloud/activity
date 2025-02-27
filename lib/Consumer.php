@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2016-2024 Nextcloud GmbH and Nextcloud contributors
  * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
@@ -16,7 +17,8 @@ class Consumer implements IConsumer {
 		protected Data $data,
 		protected IManager $manager,
 		protected UserSettings $userSettings,
-		protected NotificationGenerator $notificationGenerator) {
+		protected NotificationGenerator $notificationGenerator,
+	) {
 	}
 
 	/**
