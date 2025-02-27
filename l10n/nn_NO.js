@@ -38,9 +38,9 @@ OC.L10N.register(
     "Enable RSS feed" : "Skru på RSS-straum",
     "RSS feed" : "RSS-straum",
     "Unable to load the activity list" : "Kan ikkje laste aktivitets lista ",
-    "Enable notification emails" : "Aktiver epost meldingar ",
     "Choose for which activities you want to get an email or push notification." : "Vel aktivitet du ønskjer å få tilsendt ein epost eller push varsel. ",
     "Choose for which activities you want to get a push notification." : "Vel aktiviter du ønskjer å få tilsendt ein push varsel.",
+    "Enable notification emails" : "Aktiver epost meldingar ",
     "Send daily activity summary in the morning" : "Send dagleg aktivitetssamandrag om morgonen",
     "Default settings" : "Standard instillingar",
     "No more events to load" : "Inga fleire hendingar å lasta"

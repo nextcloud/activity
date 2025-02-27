@@ -37,9 +37,9 @@ OC.L10N.register(
     "Enable RSS feed" : "Aktivizoni Prurje RSS",
     "RSS feed" : "Prurja RSS",
     "Unable to load the activity list" : "Lista e aktiviteteve nuk mund të ngarkohet",
-    "Notification" : "Njoftim",
     "Choose for which activities you want to get an email or push notification." : "Zgjidhni për cilat aktivitete dëshironi të merrni një email ose njoftim.",
     "Choose for which activities you want to get a push notification." : "Zgjidhni për cilat aktivitete dëshironi të merrni një njoftim.",
+    "Notification" : "Njoftim",
     "Send daily activity summary in the morning" : "Dërgo përmbledhje të përditshme të aktiviteteve në mëngjes",
     "Default settings" : "Konfigurime të paracaktuara",
     "No more events to load" : "S’ka më veprimtari për t’u ngarkuar"
