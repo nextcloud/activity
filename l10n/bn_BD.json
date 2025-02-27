@@ -37,10 +37,10 @@
     "Enable RSS feed" : "RSS feed উপযোগী ক኉ন",
     "RSS feed" : "আরএসএস ফিড ",
     "Personal notification settings" : "ব্যক্তিগত বিজ্ঞপ্তি অবস্থা",
-    "Notification" : "নোটিফিকেশন ",
-    "Enable notification emails" : "বিজ্ঞপ্তি ইমেলগুলি সক্ষম করুন",
     "Choose for which activities you want to get an email or push notification." : "আপনি কোন ক্রিয়াকলাপের জন্য ইমেল পেতে চান বা বিজ্ঞপ্তি চাপুন তা চয়ন করুন।",
     "Choose for which activities you want to get a push notification." : "আপনি কোন ধরণের বিজ্ঞপ্তি পেতে চান তা বেছে নিন।",
+    "Notification" : "নোটিফিকেশন ",
+    "Enable notification emails" : "বিজ্ঞপ্তি ইমেলগুলি সক্ষম করুন",
     "Send daily activity summary in the morning" : "সকালে প্রতিদিনের ক্রিয়াকলাপের সারাংশ পাঠান",
     "Default settings" : "ডিফল্ট সেটিংস",
     "No more events to load" : "লোড করার কোন ইভেন্ট খুঁজে পাওয়া গেল না।"

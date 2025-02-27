@@ -32,10 +32,10 @@
     "No activity yet" : "Aún no tiene actividad",
     "Enable RSS feed" : "Habilitar fuente RSS",
     "RSS feed" : "Fuente RSS",
-    "Notification" : "Notificación",
-    "Enable notification emails" : "Habilitar correos electrónicos de notificación",
     "Choose for which activities you want to get an email or push notification." : "Elija para qué actividades desea recibir un correo electrónico o una notificación automática.",
     "Choose for which activities you want to get a push notification." : "Elija para qué actividades desea recibir una notificación automática.",
+    "Notification" : "Notificación",
+    "Enable notification emails" : "Habilitar correos electrónicos de notificación",
     "Send daily activity summary in the morning" : "Enviar resumen de actividad diaria por la mañana.",
     "Default settings" : "Configuraciones predeterminadas",
     "No more events to load" : "No hay más eventos por cargar"
