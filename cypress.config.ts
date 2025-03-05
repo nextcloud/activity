@@ -1,9 +1,4 @@
-import {
-	configureNextcloud,
-	startNextcloud,
-	stopNextcloud,
-	waitOnNextcloud,
-} from './cypress/dockerNode'
+import { configureNextcloud, startNextcloud, stopNextcloud, waitOnNextcloud } from '@nextcloud/cypress/docker'
 // eslint-disable-next-line n/no-extraneous-import
 import { defineConfig } from 'cypress'
 
@@ -48,8 +43,18 @@ export default defineConfig({
 			// Fix browserslist extend https://github.com/cypress-io/cypress/issues/2983#issuecomment-570616682
 			on('file:preprocessor', vitePreprocessor({ configFile: false }))
 
-			// Enable the snapshot compare plugin
-			configureVisualRegression(on)
+			// This allows to store global data (e.g. the name of a snapshot)
+			// because Cypress.env() and other options are local to the current spec file.
+			const data = {}
+			on('task', {
+				setVariable({ key, value }) {
+					data[key] = value
+					return null
+				},
+				getVariable({ key }) {
+					return data[key] ?? null
+				},
+			})
 
 			// Disable spell checking to prevent rendering differences
 			on('before:browser:launch', (browser, launchOptions) => {
@@ -76,17 +81,12 @@ export default defineConfig({
 
 			// Before the browser launches
 			// starting Nextcloud testing container
-			return startNextcloud(process.env.BRANCH)
-				.then((ip) => {
-					// Setting container's IP as base Url
-					config.baseUrl = `http://${ip}/index.php`
-					return ip
-				})
-				.then(waitOnNextcloud)
-				.then(() => configureNextcloud(process.env.BRANCH))
-				.then(() => {
-					return config
-				})
+			const ip = await startNextcloud(process.env.BRANCH || 'master')
+			// Setting container's IP as base Url
+			config.baseUrl = `http://${ip}/index.php`
+			await waitOnNextcloud(ip)
+			await configureNextcloud(['viewer'])
+			return config
 		},
 	},
 
