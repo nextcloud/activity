@@ -51,7 +51,8 @@ class APIv2Controller extends OCSController {
 	/** @var bool */
 	protected $loadPreviews;
 
-	public function __construct($appName,
+	public function __construct(
+		$appName,
 		IRequest $request,
 		protected IManager $activityManager,
 		protected Data $data,

@@ -31,7 +31,8 @@ class Data {
 	public function __construct(
 		protected IManager $activityManager,
 		protected IDBConnection $connection,
-		protected LoggerInterface $logger) {
+		protected LoggerInterface $logger,
+	) {
 	}
 
 	/**
