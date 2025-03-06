@@ -3,6 +3,7 @@
 	"include": ["./**/*.ts"],
 	"compilerOptions": {
 		"types": [
+			"@testing-library/cypress",
 			"cypress",
 			"dockerode",
 			"node"
