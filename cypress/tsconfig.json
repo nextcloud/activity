@@ -9,7 +9,8 @@
 		"types": [
 			"cypress",
 			"dockerode",
-			"node"
+			"node",
+			"@testing-library/cypress"
 		]
 	}
 }
