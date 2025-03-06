@@ -15,13 +15,16 @@ export function closeSidebar() {
 	cy.get('body')
 		.then(($body) => {
 			if ($body.find('.app-sidebar__close').length !== 0) {
-				cy.get('.app-sidebar__close').click({ force: true })
+				// {force: true} as it might be hidden behind toasts
+				cy.get('[data-cy-sidebar] .app-sidebar__close').click({ force: true })
 			}
 		})
 	cy.get('#app-sidebar-vue').should('not.exist')
 }
 
 export function showActivityTab(fileName: string) {
+	cy.intercept('GET', '/ocs/v2.php/apps/activity/api/v2/activity/filter**').as('getActivities')
+
 	showSidebarForFile(fileName)
 	cy.get('#app-sidebar-vue')
 		.findByRole('tab', { name: 'Activity' })
@@ -30,6 +33,8 @@ export function showActivityTab(fileName: string) {
 	cy.get('#app-sidebar-vue')
 		.findByRole('tabpanel', { name: 'Activity' })
 		.should('be.visible')
+
+	cy.wait('@getActivities')
 }
 
 export function toggleFavorite(fileName: string) {
@@ -47,6 +52,8 @@ export function toggleFavorite(fileName: string) {
  * @param fileName Name of the file to share
  */
 export function createPublicShare(fileName: string) {
+	cy.intercept('POST', '/ocs/v2.php/apps/files_sharing/api/v1/shares').as('createPublicShare')
+
 	showSidebarForFile(fileName)
 	cy.get('#app-sidebar-vue')
 		.findByRole('tab', { name: 'Sharing' })
@@ -59,9 +66,11 @@ export function createPublicShare(fileName: string) {
 		.should('be.visible')
 		.findByRole('button', { name: "Create a new share link" })
 		.click({ force: true })
-	
+
 	cy.wait('@createShare')
 	closeSidebar()
+
+	cy.wait('@createPublicShare')
 }
 
 export function addTag(fileName: string, tag: string) {
@@ -76,7 +85,7 @@ export function addTag(fileName: string, tag: string) {
 		.should('be.visible')
 		.click()
 
-	cy.intercept('PUT', '**/remote.php/dav/systemtags-relations/files/**').as('tag')
+	cy.intercept('POST', '/remote.php/dav/systemtags').as('tag')
 
 	cy.findByLabelText('Search or create collaborative tags')
 		.type(`${tag}{enter}{esc}`)
