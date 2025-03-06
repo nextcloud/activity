@@ -38,6 +38,11 @@ export function moveFile (fileName: string, dirName: string) {
 }
 
 export function toggleMenuAction(fileName: string) {
-	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${fileName}"] [data-cy-files-list-row-actions] .action-item__menutoggle`).click()
-	cy.get('[data-cy-files-list-row-action]').should('be.visible')
+	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${CSS.escape(fileName)}"] [data-cy-files-list-row-actions]`)
+		.should('be.visible')
+		.findByRole('button', { name: 'Actions' })
+		.should('be.visible')
+		.click()
+	cy.get('[data-cy-files-list-row-action]')
+		.should('be.visible')
 }
