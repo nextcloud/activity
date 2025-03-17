@@ -33,15 +33,20 @@ function closeSidebar() {
 	cy.get('body')
 		.then(($body) => {
 			if ($body.find('.app-sidebar__close').length !== 0) {
-				cy.get('.app-sidebar__close').click({ force: true })
+				// {force: true} as it might be hidden behind toasts
+				cy.get('[data-cy-sidebar] .app-sidebar__close').click({ force: true })
 			}
 		})
 	cy.get('#app-sidebar-vue').should('not.exist')
 }
 
 export function showActivityTab(fileName: string) {
+	cy.intercept('GET', '/ocs/v2.php/apps/activity/api/v2/activity/filter**').as('getActivities')
+
 	showSidebarForFile(fileName)
 	cy.get('#app-sidebar-vue').contains('Activity').click()
+
+	cy.wait('@getActivities')
 }
 
 export function addToFavorites(fileName: string) {
@@ -62,6 +67,8 @@ export function removeFromFavorites(fileName: string) {
  * @param fileName Name of the file to share
  */
 export function createPublicShare(fileName: string) {
+	cy.intercept('POST', '/ocs/v2.php/apps/files_sharing/api/v1/shares').as('createPublicShare')
+
 	showSidebarForFile(fileName)
 	cy.get('#app-sidebar-vue').contains('Sharing').click()
 
@@ -69,6 +76,8 @@ export function createPublicShare(fileName: string) {
 	cy.get('#app-sidebar-vue button.new-share-link').click({ force: true })
 	cy.get('#app-sidebar-vue .sharing-entry__copy').should('be.visible')
 	closeSidebar()
+
+	cy.wait('@createPublicShare')
 }
 
 export function addTag(fileName: string, tag: string) {
