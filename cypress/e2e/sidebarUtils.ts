@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { toggleMenuAction } from './filesUtils'
+import { triggerActionForFile } from '../../../../cypress/e2e/files/FilesUtils'
 
 function showSidebarForFile(fileName: string) {
 	closeSidebar()
-	toggleMenuAction(fileName, 'details')
+	triggerActionForFile(fileName, 'details')
 	cy.get('#app-sidebar-vue').should('be.visible')
 }
 
@@ -35,7 +35,7 @@ export function showActivityTab(fileName: string) {
 export function toggleFavorite(fileName: string) {
 	cy.intercept('POST', '**/index.php/apps/files/api/v1/files/*').as('setTags')
 
-	toggleMenuAction(fileName, 'favorite')
+	triggerActionForFile(fileName, 'favorite')
 	cy.wait('@setTags')
 
 	cy.get('.toast-close').click()
@@ -59,7 +59,7 @@ export function createPublicShare(fileName: string) {
 		.should('be.visible')
 		.findByRole('button', { name: "Create a new share link" })
 		.click({ force: true })
-	
+
 	cy.wait('@createShare')
 	closeSidebar()
 }
