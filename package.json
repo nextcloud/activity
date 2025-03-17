@@ -63,6 +63,7 @@
     "@nextcloud/eslint-config": "^8.3.0",
     "@nextcloud/stylelint-config": "^2.4.0",
     "@nextcloud/vite-config": "^1.2.0",
+    "@testing-library/cypress": "^10.0.3",
     "@testing-library/vue": "^5.9.0",
     "@types/dockerode": "^3.3.26",
     "@vitest/coverage-v8": "^1.4.0",
