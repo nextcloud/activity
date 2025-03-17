@@ -8,7 +8,10 @@ import { toggleMenuAction } from './filesUtils'
 function showSidebarForFile(fileName: string) {
 	closeSidebar()
 	toggleMenuAction(fileName)
-	cy.get('[data-cy-files-list-row-action="details"] button').click()
+	cy.get('[data-cy-files-list-row-action="details"]')
+		.should('be.visible')
+		.findByRole('menuitem')
+		.click()
 	cy.get('#app-sidebar-vue').should('be.visible')
 }
 
@@ -16,15 +19,20 @@ function closeSidebar() {
 	cy.get('body')
 		.then(($body) => {
 			if ($body.find('.app-sidebar__close').length !== 0) {
-				cy.get('.app-sidebar__close').click({ force: true })
+				// {force: true} as it might be hidden behind toasts
+				cy.get('[data-cy-sidebar] .app-sidebar__close').click({ force: true })
 			}
 		})
 	cy.get('#app-sidebar-vue').should('not.exist')
 }
 
 export function showActivityTab(fileName: string) {
+	cy.intercept('GET', '/ocs/v2.php/apps/activity/api/v2/activity/filter**').as('getActivities')
+
 	showSidebarForFile(fileName)
 	cy.get('#app-sidebar-vue').contains('Activity').click()
+
+	cy.wait('@getActivities')
 }
 
 export function addToFavorites(fileName: string) {
@@ -45,6 +53,8 @@ export function removeFromFavorites(fileName: string) {
  * @param fileName Name of the file to share
  */
 export function createPublicShare(fileName: string) {
+	cy.intercept('POST', '/ocs/v2.php/apps/files_sharing/api/v1/shares').as('createPublicShare')
+
 	showSidebarForFile(fileName)
 	cy.get('#app-sidebar-vue').contains('Sharing').click()
 
@@ -52,23 +62,41 @@ export function createPublicShare(fileName: string) {
 	cy.get('#app-sidebar-vue button.new-share-link').click({ force: true })
 	cy.get('#app-sidebar-vue .sharing-entry__copy').should('be.visible')
 	closeSidebar()
+
+	cy.wait('@createPublicShare')
 }
 
 export function addTag(fileName: string, tag: string) {
 	showSidebarForFile(fileName)
 
-	cy.get('.app-sidebar-header__menu button').click()
-	cy.get('.action-button__icon.icon-tag').click()
-	cy.get('.system-tags input').type(`${tag}{enter}{esc}`)
+	cy.get('#app-sidebar-vue .app-sidebar-header')
+		.should('be.visible')
+		.findByRole('button', { name: 'Actions' })
+		.click()
 
-	cy.wait(500)
+	cy.findByRole('menuitem', { name: 'Tags' })
+		.should('be.visible')
+		.click()
+
+	cy.intercept('PUT', '**/remote.php/dav/systemtags-relations/files/**').as('tag')
+
+	cy.findByLabelText('Search or create collaborative tags')
+		.type(`${tag}{enter}{esc}`)
+
+	cy.wait('@tag')
 }
 
 export function addComment(fileName: string, comment: string) {
 	showSidebarForFile(fileName)
-	cy.get('#app-sidebar-vue').contains('Activity').click()
-	cy.get('.comment__editor .rich-contenteditable__input').type(comment)
-	cy.get('.comment__submit button').click()
+	cy.get('#app-sidebar-vue')
+		.findByRole('tab', { name: 'Activity' })
+		.click()
 
-	cy.wait(500)
+	cy.intercept('POST', '**/remote.php/dav/comments/files/*').as('comment')
+	cy.get('#app-sidebar-vue')
+		.findByRole('textbox', { name: 'New comment' })
+		.should('be.visible')
+		.type(`{selectAll}${comment}{enter}`)
+
+	cy.wait('@comment')
 }

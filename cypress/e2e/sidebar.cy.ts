@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createFolder, goToDir, moveFile, renameFile } from './filesUtils'
+import { createFolder, moveFile, navigateToFolder, renameFile } from './filesUtils'
 import { addComment, addTag, addToFavorites, createPublicShare, removeFromFavorites, showActivityTab } from './sidebarUtils'
 
 describe('Check activity listing in the sidebar', { testIsolation: true }, () => {
@@ -39,8 +39,8 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	})
 
 	it('Has rename activity', () => {
-		renameFile('welcome.txt', 'new name')
-		renameFile('new name.txt', 'welcome')
+		renameFile('welcome.txt', 'new name.txt')
+		renameFile('new name.txt', 'welcome.txt')
 
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'You renamed')
@@ -49,8 +49,7 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	it('Has move activity', () => {
 		createFolder('Test folder')
 		moveFile('welcome.txt', 'Test folder')
-		cy.get('.toast-close').click({ multiple: true })
-		goToDir('Test folder')
+		navigateToFolder('Test folder')
 
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'You moved')
