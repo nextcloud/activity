@@ -38,7 +38,8 @@ class NotificationGenerator implements INotifier {
 		protected ActivityManager $activityManager,
 		protected NotificationManager $notificationManager,
 		protected UserSettings $userSettings,
-		protected IL10N $l10n) {
+		protected IL10N $l10n,
+	) {
 	}
 
 	public function deferNotifications(): bool {

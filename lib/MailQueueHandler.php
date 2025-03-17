@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -294,12 +295,12 @@ class MailQueueHandler {
 		foreach ($mailData as $activity) {
 			$event = $this->activityManager->generateEvent();
 			try {
-				$event->setApp((string) $activity['amq_appid'])
-					->setType((string) $activity['amq_type'])
-					->setAffectedUser((string) $activity['amq_affecteduser'])
-					->setTimestamp((int) $activity['amq_timestamp'])
-					->setSubject((string) $activity['amq_subject'], (array) json_decode($activity['amq_subjectparams'], true))
-					->setObject((string) $activity['object_type'], (int) $activity['object_id']);
+				$event->setApp((string)$activity['amq_appid'])
+					->setType((string)$activity['amq_type'])
+					->setAffectedUser((string)$activity['amq_affecteduser'])
+					->setTimestamp((int)$activity['amq_timestamp'])
+					->setSubject((string)$activity['amq_subject'], (array)json_decode($activity['amq_subjectparams'], true))
+					->setObject((string)$activity['object_type'], (int)$activity['object_id']);
 			} catch (\InvalidArgumentException $e) {
 				continue;
 			}
@@ -383,9 +384,9 @@ class MailQueueHandler {
 			$placeholders[] = '{' . $placeholder . '}';
 
 			if ($parameter['type'] === 'file') {
-				$replacement = (string) $parameter['path'];
+				$replacement = (string)$parameter['path'];
 			} else {
-				$replacement = (string) $parameter['name'];
+				$replacement = (string)$parameter['name'];
 			}
 
 			if (isset($parameter['link'])) {

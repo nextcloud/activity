@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -50,13 +51,13 @@ class Personal implements ISettings {
 		UserSettings $userSettings,
 		IL10N $l10n,
 		CurrentUser $currentUser,
-		IInitialState $initialState
+		IInitialState $initialState,
 	) {
 		$this->config = $config;
 		$this->manager = $manager;
 		$this->userSettings = $userSettings;
 		$this->l10n = $l10n;
-		$this->userId = (string) $currentUser->getUID();
+		$this->userId = (string)$currentUser->getUID();
 		$this->user = $currentUser->getUser();
 		$this->initialState = $initialState;
 	}
@@ -65,10 +66,10 @@ class Personal implements ISettings {
 		$settings = $this->manager->getSettings();
 		usort($settings, static function (ActivitySettings $a, ActivitySettings $b): int {
 			if ($a->getPriority() === $b->getPriority()) {
-				return (int) ($a->getIdentifier() > $b->getIdentifier());
+				return (int)($a->getIdentifier() > $b->getIdentifier());
 			}
 
-			return (int) ($a->getPriority() > $b->getPriority());
+			return (int)($a->getPriority() > $b->getPriority());
 		});
 
 		$activityGroups = [];
@@ -112,7 +113,7 @@ class Personal implements ISettings {
 		}
 
 		$settingBatchTime = UserSettings::EMAIL_SEND_HOURLY;
-		$currentSetting = (int) $this->userSettings->getUserSetting($this->userId, 'setting', 'batchtime');
+		$currentSetting = (int)$this->userSettings->getUserSetting($this->userId, 'setting', 'batchtime');
 		if ($currentSetting === 3600 * 24 * 7) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_WEEKLY;
 		} elseif ($currentSetting === 3600 * 24) {
@@ -166,8 +167,8 @@ class Personal implements ISettings {
 
 	/**
 	 * @return int whether the form should be rather on the top or bottom of
-	 * the admin section. The forms are arranged in ascending order of the
-	 * priority values. It is required to return a value between 0 and 100.
+	 *             the admin section. The forms are arranged in ascending order of the
+	 *             priority values. It is required to return a value between 0 and 100.
 	 *
 	 * E.g.: 70
 	 */

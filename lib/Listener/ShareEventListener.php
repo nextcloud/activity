@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2023, Louis Chmn <louis@chmn.me>
  *
