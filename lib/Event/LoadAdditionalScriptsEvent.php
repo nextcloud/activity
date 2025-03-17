@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -16,7 +17,9 @@ class LoadAdditionalScriptsEvent extends Event {
 	 */
 	public const EVENT_ENTITY = 'OCA\Activity::loadAdditionalScripts';
 
-	public function __construct(public string $filter) {
+	public function __construct(
+		public string $filter,
+	) {
 		parent::__construct();
 	}
 }

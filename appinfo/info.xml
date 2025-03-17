@@ -21,7 +21,6 @@
 	<author>Joas Schilling</author>
 	<author>Ferdinand Thiessen</author>
 
-	<default_enable />
 	<types>
 		<filesystem />
 	</types>
