@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2016-2024 Nextcloud GmbH and Nextcloud contributors
  * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
@@ -109,10 +110,10 @@ class ActivitiesController extends Controller {
 		$filters = $this->activityManager->getFilters();
 		usort($filters, static function (IFilter $a, IFilter $b) {
 			if ($a->getPriority() === $b->getPriority()) {
-				return (int) ($a->getIdentifier() > $b->getIdentifier());
+				return (int)($a->getIdentifier() > $b->getIdentifier());
 			}
 
-			return (int) ($a->getPriority() > $b->getPriority());
+			return (int)($a->getPriority() > $b->getPriority());
 		});
 
 		$entries = [];

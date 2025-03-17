@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
  * SPDX-License-Identifier: AGPL-3.0-only
@@ -28,7 +29,10 @@ class UserSettings {
 	 * @param IManager $manager
 	 * @param IConfig $config
 	 */
-	public function __construct(protected IManager $manager, protected IConfig $config) {
+	public function __construct(
+		protected IManager $manager,
+		protected IConfig $config,
+	) {
 	}
 
 	/**
@@ -53,7 +57,7 @@ class UserSettings {
 		}
 
 		if (is_bool($defaultSetting)) {
-			return (bool) $this->config->getUserValue(
+			return (bool)$this->config->getUserValue(
 				$user,
 				'activity',
 				'notify_' . $method . '_' . $type,
@@ -61,7 +65,7 @@ class UserSettings {
 			);
 		}
 
-		return (int) $this->config->getUserValue(
+		return (int)$this->config->getUserValue(
 			$user,
 			'activity',
 			'notify_' . $method . '_' . $type,
@@ -80,17 +84,17 @@ class UserSettings {
 	public function getAdminSetting($method, $type) {
 		$defaultSetting = $this->getDefaultSetting($method, $type);
 		if (is_bool($defaultSetting)) {
-			return (bool) $this->config->getAppValue(
+			return (bool)$this->config->getAppValue(
 				'activity',
 				'notify_' . $method . '_' . $type,
-				(string) $defaultSetting
+				(string)$defaultSetting
 			);
 		}
 
-		return (int) $this->config->getAppValue(
+		return (int)$this->config->getAppValue(
 			'activity',
 			'notify_' . $method . '_' . $type,
-			(string) $defaultSetting
+			(string)$defaultSetting
 		);
 	}
 
