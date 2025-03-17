@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2017 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -35,10 +36,10 @@ class Admin implements ISettings {
 		$settings = $this->manager->getSettings();
 		usort($settings, static function (ActivitySettings $a, ActivitySettings $b): int {
 			if ($a->getPriority() === $b->getPriority()) {
-				return (int) ($a->getIdentifier() > $b->getIdentifier());
+				return (int)($a->getIdentifier() > $b->getIdentifier());
 			}
 
-			return (int) ($a->getPriority() > $b->getPriority());
+			return (int)($a->getPriority() > $b->getPriority());
 		});
 
 		$activityGroups = [];
@@ -82,7 +83,7 @@ class Admin implements ISettings {
 		}
 
 		$settingBatchTime = UserSettings::EMAIL_SEND_HOURLY;
-		$currentSetting = (int) $this->userSettings->getAdminSetting('setting', 'batchtime');
+		$currentSetting = (int)$this->userSettings->getAdminSetting('setting', 'batchtime');
 		if ($currentSetting === 3600 * 24 * 7) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_WEEKLY;
 		} elseif ($currentSetting === 3600 * 24) {

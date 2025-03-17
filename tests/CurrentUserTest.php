@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2016 Joas Schilling <coding@schilljs.com>
  *
@@ -165,7 +166,7 @@ class CurrentUserTest extends TestCase {
 			->willReturn($type);
 		$share->expects($shareWith !== null  ? $this->once() : $this->never())
 			->method('getSharedWith')
-			->willReturn((string) $shareWith);
+			->willReturn((string)$shareWith);
 		return $share;
 	}
 

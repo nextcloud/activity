@@ -31,7 +31,8 @@ class Data {
 	public function __construct(
 		protected IManager $activityManager,
 		protected IDBConnection $connection,
-		protected LoggerInterface $logger) {
+		protected LoggerInterface $logger,
+	) {
 	}
 
 	/**
@@ -341,12 +342,12 @@ class Data {
 	 * Delete activities that match certain conditions
 	 *
 	 * @param array $conditions Array with conditions that have to be met
-	 *                      'field' => 'value'  => `field` = 'value'
-	 *    'field' => array('value', 'operator') => `field` operator 'value'
+	 *                          'field' => 'value'  => `field` = 'value'
+	 *                          'field' => array('value', 'operator') => `field` operator 'value'
 	 */
 	public function deleteActivities($conditions): void {
 		$platform = $this->connection->getDatabasePlatform();
-		if($platform instanceof MySQLPlatform) {
+		if ($platform instanceof MySQLPlatform) {
 			$this->logger->debug('Choosing chunked activity delete for MySQL/MariaDB', ['app' => 'activity']);
 			$this->deleteActivitiesForMySQL($conditions);
 			return;
@@ -465,7 +466,7 @@ class Data {
 		$query->setMaxResults(50000);
 		$result = $query->executeQuery();
 		$count = $result->rowCount();
-		if($count === 0) {
+		if ($count === 0) {
 			return;
 		}
 		$ids = array_map(static function (array $id) {
@@ -477,11 +478,11 @@ class Data {
 		$deleteQuery = $this->connection->getQueryBuilder();
 		$deleteQuery->delete('activity');
 		$deleteQuery->where($deleteQuery->expr()->in('activity_id', $deleteQuery->createParameter('ids'), IQueryBuilder::PARAM_INT_ARRAY));
-		foreach(array_chunk($ids, 1000) as $chunk) {
+		foreach (array_chunk($ids, 1000) as $chunk) {
 			$deleteQuery->setParameter('ids', $chunk, IQueryBuilder::PARAM_INT_ARRAY);
 			$queryResult += $deleteQuery->executeStatement();
 		}
-		if($queryResult === 50000) {
+		if ($queryResult === 50000) {
 			$this->deleteActivitiesForMySQL($conditions);
 		}
 	}

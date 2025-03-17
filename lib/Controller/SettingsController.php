@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2016-2024 Nextcloud GmbH and Nextcloud contributors
  * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
@@ -30,9 +31,10 @@ class SettingsController extends Controller {
 		protected IManager $manager,
 		protected UserSettings $userSettings,
 		protected IL10N $l10n,
-		CurrentUser $currentUser) {
+		CurrentUser $currentUser,
+	) {
 		parent::__construct($appName, $request);
-		$this->user = (string) $currentUser->getUID();
+		$this->user = (string)$currentUser->getUID();
 	}
 
 	/**
@@ -48,21 +50,21 @@ class SettingsController extends Controller {
 		$notify_setting_batchtime = UserSettings::EMAIL_SEND_HOURLY,
 		$notify_setting_self = false,
 		$notify_setting_selfemail = false,
-		$activity_digest = false
+		$activity_digest = false,
 	) {
 		$settings = $this->manager->getSettings();
 		foreach ($settings as $setting) {
 			$this->config->setUserValue(
 				$this->user, 'activity',
 				'notify_notification_' . $setting->getIdentifier(),
-				(string)(int) $this->request->getParam($setting->getIdentifier() . '_notification', false)
+				(string)(int)$this->request->getParam($setting->getIdentifier() . '_notification', false)
 			);
 
 			if ($setting->canChangeMail()) {
 				$this->config->setUserValue(
 					$this->user, 'activity',
 					'notify_email_' . $setting->getIdentifier(),
-					(string)(int) $this->request->getParam($setting->getIdentifier() . '_email', false)
+					(string)(int)$this->request->getParam($setting->getIdentifier() . '_email', false)
 				);
 			}
 		}
@@ -84,17 +86,17 @@ class SettingsController extends Controller {
 		$this->config->setUserValue(
 			$this->user, 'activity',
 			'notify_setting_self',
-			(string)(int) $notify_setting_self
+			(string)(int)$notify_setting_self
 		);
 		$this->config->setUserValue(
 			$this->user, 'activity',
 			'notify_setting_selfemail',
-			(string)(int) $notify_setting_selfemail
+			(string)(int)$notify_setting_selfemail
 		);
 		$this->config->setUserValue(
 			$this->user, 'activity',
 			'notify_setting_activity_digest',
-			(string)(int) $activity_digest
+			(string)(int)$activity_digest
 		);
 
 		return new DataResponse([
@@ -126,7 +128,7 @@ class SettingsController extends Controller {
 				$this->config->setAppValue(
 					'activity',
 					'notify_email_' . $setting->getIdentifier(),
-					(string)(int) $this->request->getParam($setting->getIdentifier() . '_email', false)
+					(string)(int)$this->request->getParam($setting->getIdentifier() . '_email', false)
 				);
 			}
 		}
@@ -148,12 +150,12 @@ class SettingsController extends Controller {
 		$this->config->setAppValue(
 			'activity',
 			'notify_setting_self',
-			(string)(int) $notify_setting_self
+			(string)(int)$notify_setting_self
 		);
 		$this->config->setAppValue(
 			'activity',
 			'notify_setting_selfemail',
-			(string)(int) $notify_setting_selfemail
+			(string)(int)$notify_setting_selfemail
 		);
 
 		return new DataResponse([
