@@ -32,7 +32,7 @@
 			"@composer bin all install --ansi"
 		],
 		"post-update-cmd": [
-			"@composer bin all update --ansi"
+			"@composer bin all install --ansi"
 		]
 	},
 	"require-dev": {
