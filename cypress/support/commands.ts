@@ -22,6 +22,8 @@
 /* eslint-disable n/no-unpublished-import */
 import { addCommands } from '@nextcloud/cypress'
 
+import '@testing-library/cypress/add-commands'
+
 // Add custom commands
 import 'cypress-wait-until'
 addCommands()
