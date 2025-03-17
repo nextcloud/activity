@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -34,7 +35,9 @@ class ViewInfoCache {
 	protected $cacheId;
 
 
-	public function __construct(protected IRootFolder $rootFolder) {
+	public function __construct(
+		protected IRootFolder $rootFolder,
+	) {
 	}
 
 	/**

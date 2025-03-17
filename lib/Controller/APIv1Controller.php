@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2016 Joas Schilling <coding@schilljs.com>
  *
@@ -39,7 +40,8 @@ class APIv1Controller extends OCSController {
 	 * @param UserSettings $userSettings
 	 * @param CurrentUser $currentUser
 	 */
-	public function __construct($appName,
+	public function __construct(
+		$appName,
 		IRequest $request,
 		protected Data $data,
 		protected GroupHelper $groupHelper,
@@ -101,7 +103,7 @@ class APIv1Controller extends OCSController {
 		$result->closeCursor();
 
 		if ($row) {
-			return (int) $row['activity_id'];
+			return (int)$row['activity_id'];
 		}
 
 		return 0;

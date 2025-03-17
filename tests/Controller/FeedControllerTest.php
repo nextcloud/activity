@@ -84,7 +84,7 @@ class FeedControllerTest extends TestCase {
 		$this->manager = $this->createMock(IManager::class);
 		$this->themingDefault = $this->createMock(ThemingDefaults::class);
 
-		/** @var $urlGenerator IURLGenerator|MockObject */
+		/** @var IURLGenerator|MockObject $urlGenerator */
 		$urlGenerator = $this->createMock(IURLGenerator::class);
 
 		$this->controller = new FeedController(
@@ -168,7 +168,7 @@ class FeedControllerTest extends TestCase {
 		$this->assertNotEmpty($renderedResponse);
 
 		$l = Util::getL10N('activity');
-		$description = (string) $l->t('Your feed URL is invalid');
+		$description = (string)$l->t('Your feed URL is invalid');
 		$this->assertStringContainsString($description, $renderedResponse);
 	}
 

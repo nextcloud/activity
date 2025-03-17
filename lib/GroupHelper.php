@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -39,7 +40,7 @@ class GroupHelper {
 		protected IL10N $l,
 		protected IManager $activityManager,
 		protected IValidator $richObjectValidator,
-		protected LoggerInterface $logger
+		protected LoggerInterface $logger,
 	) {
 	}
 
@@ -56,7 +57,7 @@ class GroupHelper {
 	 * Add an activity to the internal array
 	 */
 	public function addActivity(array $activity): void {
-		$id = (int) $activity['activity_id'];
+		$id = (int)$activity['activity_id'];
 		$event = $this->arrayToEvent($activity);
 		$this->addEvent($id, $event);
 	}
@@ -153,15 +154,15 @@ class GroupHelper {
 
 	protected function arrayToEvent(array $row): IEvent {
 		$event = $this->activityManager->generateEvent();
-		$event->setApp((string) $row['app'])
-			->setType((string) $row['type'])
-			->setAffectedUser((string) $row['affecteduser'])
-			->setAuthor((string) $row['user'])
-			->setTimestamp((int) $row['timestamp'])
-			->setSubject((string) $row['subject'], (array) json_decode($row['subjectparams'], true))
-			->setMessage((string) $row['message'], (array) json_decode($row['messageparams'], true))
-			->setObject((string) $row['object_type'], (int) $row['object_id'], (string) $row['file'])
-			->setLink((string) $row['link']);
+		$event->setApp((string)$row['app'])
+			->setType((string)$row['type'])
+			->setAffectedUser((string)$row['affecteduser'])
+			->setAuthor((string)$row['user'])
+			->setTimestamp((int)$row['timestamp'])
+			->setSubject((string)$row['subject'], (array)json_decode($row['subjectparams'], true))
+			->setMessage((string)$row['message'], (array)json_decode($row['messageparams'], true))
+			->setObject((string)$row['object_type'], (int)$row['object_id'], (string)$row['file'])
+			->setLink((string)$row['link']);
 
 		return $event;
 	}

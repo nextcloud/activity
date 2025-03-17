@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2017 Joas Schilling <coding@schilljs.com>
  *
@@ -50,10 +51,10 @@ class Admin implements ISettings {
 		$settings = $this->manager->getSettings();
 		usort($settings, static function (ActivitySettings $a, ActivitySettings $b): int {
 			if ($a->getPriority() === $b->getPriority()) {
-				return (int) ($a->getIdentifier() > $b->getIdentifier());
+				return (int)($a->getIdentifier() > $b->getIdentifier());
 			}
 
-			return (int) ($a->getPriority() > $b->getPriority());
+			return (int)($a->getPriority() > $b->getPriority());
 		});
 
 		$activityGroups = [];
@@ -97,7 +98,7 @@ class Admin implements ISettings {
 		}
 
 		$settingBatchTime = UserSettings::EMAIL_SEND_HOURLY;
-		$currentSetting = (int) $this->userSettings->getAdminSetting('setting', 'batchtime');
+		$currentSetting = (int)$this->userSettings->getAdminSetting('setting', 'batchtime');
 		if ($currentSetting === 3600 * 24 * 7) {
 			$settingBatchTime = UserSettings::EMAIL_SEND_WEEKLY;
 		} elseif ($currentSetting === 3600 * 24) {

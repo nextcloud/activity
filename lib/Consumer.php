@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2016, ownCloud, Inc.
  *
@@ -33,7 +34,8 @@ class Consumer implements IConsumer {
 		protected Data $data,
 		protected IManager $manager,
 		protected UserSettings $userSettings,
-		protected NotificationGenerator $notificationGenerator) {
+		protected NotificationGenerator $notificationGenerator,
+	) {
 	}
 
 	/**
