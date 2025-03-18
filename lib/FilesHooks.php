@@ -929,10 +929,9 @@ class FilesHooks {
 
 		$offset = 0;
 		$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
-		$users = array_map(fn (IUser $user) => $user->getUID(), $users);
 		$shouldFlush = $this->startActivityTransaction();
 		while (!empty($users)) {
-			$userIds = array_map(fn (IUser $user) => $user->getUID(), $users);
+			$userIds = \array_map(fn (IUser $user) => $user->getUID(), $users);
 			$this->addNotificationsForUsers($userIds, $actionUser, $share->getNodeId(), $share->getNodeType(), $share->getTarget(), (int)$share->getId());
 			$offset += self::USER_BATCH_SIZE;
 			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
