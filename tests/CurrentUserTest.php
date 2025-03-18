@@ -26,6 +26,7 @@ use OCA\Activity\CurrentUser;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserSession;
+use OCP\L10N\IFactory;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
 use OCP\Share\IShare;
@@ -42,14 +43,10 @@ abstract class RequestMock implements IRequest {
  * @package OCA\Activity\Tests
  */
 class CurrentUserTest extends TestCase {
-	/** @var IRequest|MockObject */
-	protected $request;
-
-	/** @var IUserSession|MockObject */
-	protected $userSession;
-
-	/** @var IManager|MockObject */
-	protected $shareManager;
+	protected IRequest&MockObject $request;
+	protected IUserSession&MockObject $userSession;
+	protected IManager&MockObject $shareManager;
+	protected IFactory&MockObject $l10nFactory;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -57,18 +54,20 @@ class CurrentUserTest extends TestCase {
 		$this->request = $this->createMock(RequestMock::class);
 		$this->userSession = $this->createMock(IUserSession::class);
 		$this->shareManager = $this->createMock(IManager::class);
+		$this->l10nFactory = $this->createMock(IFactory::class);
 	}
 
 	/**
 	 * @param array $methods
-	 * @return CurrentUser|MockObject
+	 * @return CurrentUser&MockObject
 	 */
 	protected function getInstance(array $methods = []): CurrentUser {
 		if (empty($methods)) {
 			return new CurrentUser(
 				$this->userSession,
 				$this->request,
-				$this->shareManager
+				$this->shareManager,
+				$this->l10nFactory,
 			);
 		}
 
@@ -77,6 +76,7 @@ class CurrentUserTest extends TestCase {
 				$this->userSession,
 				$this->request,
 				$this->shareManager,
+				$this->l10nFactory,
 			])
 			->onlyMethods($methods)
 			->getMock();
