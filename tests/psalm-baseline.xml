@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
+<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
   <file src="lib/BackgroundJob/RemoteActivity.php">
     <UndefinedClass>
       <code><![CDATA[ClientException]]></code>
@@ -22,15 +22,29 @@
   </file>
   <file src="lib/FilesHooks.php">
     <UndefinedClass>
+      <code><![CDATA[$mountPoint]]></code>
+      <code><![CDATA[$mountPoint]]></code>
+      <code><![CDATA[$mountPoint]]></code>
       <code><![CDATA[$this->teamManager]]></code>
       <code><![CDATA[$this->teamManager]]></code>
       <code><![CDATA[Member]]></code>
+      <code><![CDATA[\OCA\GroupFolders\ACL\RuleManager]]></code>
+      <code><![CDATA[\OCA\GroupFolders\Folder\FolderManager]]></code>
+      <code><![CDATA[\OCA\GroupFolders\Mount\GroupMountPoint]]></code>
       <code><![CDATA[protected]]></code>
     </UndefinedClass>
     <UndefinedDocblockClass>
+      <code><![CDATA[$rule]]></code>
+      <code><![CDATA[$rule]]></code>
+      <code><![CDATA[$rule]]></code>
+      <code><![CDATA[$rules]]></code>
       <code><![CDATA[$shareOwner]]></code>
       <code><![CDATA[$storage]]></code>
     </UndefinedDocblockClass>
+    <UndefinedInterfaceMethod>
+      <code><![CDATA[getFolderId]]></code>
+      <code><![CDATA[getSourcePath]]></code>
+    </UndefinedInterfaceMethod>
   </file>
   <file src="lib/Migration/Version2008Date20181011095117.php">
     <UndefinedClass>

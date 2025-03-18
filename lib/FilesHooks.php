@@ -15,6 +15,7 @@ use OCA\Activity\Extension\Files_Sharing;
 use OCA\Circles\CirclesManager;
 use OCA\Circles\Model\Member;
 use OCP\Activity\IManager;
+use OCP\BackgroundJob\IJobList;
 use OCP\Constants;
 use OCP\Files\Config\IUserMountCache;
 use OCP\Files\IRootFolder;
@@ -206,7 +207,7 @@ class FilesHooks {
 				$arguments[] = $info['second_path'];
 			}
 
-			\OC::$server->getJobList()->add(RemoteActivity::class, $arguments);
+			\OCP\Server::get(IJobList::class)->add(RemoteActivity::class, $arguments);
 		}
 	}
 
@@ -1275,8 +1276,8 @@ class FilesHooks {
 		/** @var \OCA\GroupFolders\ACL\RuleManager $ruleManager */
 		/** @var \OCA\GroupFolders\Folder\FolderManager $folderManager */
 		try {
-			$ruleManager = \OC::$server->get(\OCA\GroupFolders\ACL\RuleManager::class);
-			$folderManager = \OC::$server->get(\OCA\GroupFolders\Folder\FolderManager::class);
+			$ruleManager = \OCP\Server::get(\OCA\GroupFolders\ACL\RuleManager::class);
+			$folderManager = \OCP\Server::get(\OCA\GroupFolders\Folder\FolderManager::class);
 		} catch (\Throwable $e) {
 			return []; // if we have no access to RuleManager, we cannot filter unrelated users
 		}
