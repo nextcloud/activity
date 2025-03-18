@@ -103,10 +103,6 @@ class CurrentUser {
 	protected function getCloudIDFromToken() {
 		if (!empty($this->request->server['PHP_AUTH_USER'])) {
 			$token = $this->request->server['PHP_AUTH_USER'];
-			/**
-			 * Until https://github.com/nextcloud/server/pull/26681 is merged
-			 * @psalm-suppress InvalidCatch
-			 */
 			try {
 				$share = $this->shareManager->getShareByToken($token);
 				if ($share->getShareType() === IShare::TYPE_REMOTE) {
