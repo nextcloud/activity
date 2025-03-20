@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createFolder, getFileListRow, goToDir, moveFile, renameFile } from './filesUtils'
-import { addComment, addTag, createPublicShare, toggleFavorite, showActivityTab, closeSidebar } from './sidebarUtils'
+import { createFolder, getFileListRow, navigateToFolder, moveFile, renameFile } from './filesUtils'
+import { addComment, addTag, createPublicShare, toggleFavorite, showActivityTab } from './sidebarUtils'
 
 describe('Check activity listing in the sidebar', { testIsolation: true }, () => {
 	beforeEach(function() {
@@ -45,8 +45,8 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	})
 
 	it('Has rename activity', () => {
-		renameFile('welcome.txt', 'new name')
-		renameFile('new name.txt', 'welcome')
+		renameFile('welcome.txt', 'new name.txt')
+		renameFile('new name.txt', 'welcome.txt')
 
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'You renamed')
@@ -55,8 +55,7 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	it('Has move activity', () => {
 		createFolder('Test folder')
 		moveFile('welcome.txt', 'Test folder')
-		cy.get('.toast-close').click({ multiple: true })
-		goToDir('Test folder')
+		navigateToFolder('Test folder')
 
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'You moved')
@@ -72,6 +71,7 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 
 	it('Has comment activity', () => {
 		addComment('welcome.txt', 'A comment')
+		cy.visit('/apps/files')
 
 		showActivityTab('welcome.txt')
 		cy.get('.comments-activity').first().should('contains.text', 'A comment')

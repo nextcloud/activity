@@ -6,7 +6,8 @@
 			"@testing-library/cypress",
 			"cypress",
 			"dockerode",
-			"node"
+			"node",
+			"@testing-library/cypress"
 		]
 	}
 }
