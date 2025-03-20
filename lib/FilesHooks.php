@@ -816,7 +816,7 @@ class FilesHooks {
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	public function unShare(IShare $share) {
-		if (in_array($share->getNodeType(), ['file', 'folder'], true)) {
+		if (in_array($share->getNodeType(), ['file', 'folder'], true) && !$this->isDeletedNode($share->getShareOwner(), $share->getNodeId())) {
 			if ($share->getShareType() === IShare::TYPE_USER) {
 				$this->unshareFromUser($share);
 			} elseif ($share->getShareType() === IShare::TYPE_GROUP) {
@@ -1395,5 +1395,15 @@ class FilesHooks {
 		}
 
 		return $filteredUsers;
+	}
+
+	private function isDeletedNode(string $owner, int $nodeId): bool {
+		try {
+			$userFolder = $this->rootFolder->getUserFolder($owner);
+			$node = $userFolder->getFirstNodeById($nodeId);
+			return $node === null;
+		} catch (NotFoundException $e) {
+			return true;
+		}
 	}
 }
