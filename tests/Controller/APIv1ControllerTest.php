@@ -107,7 +107,8 @@ class APIv1ControllerTest extends TestCase {
 		$data = new Data(
 			$this->createMock(IManager::class),
 			\OC::$server->getDatabaseConnection(),
-			$this->createMock(LoggerInterface::class)
+			$this->createMock(LoggerInterface::class),
+			$this->createMock(IConfig::class),
 		);
 
 		$this->deleteUser($data, 'activity-api-user1');
@@ -224,7 +225,8 @@ class APIv1ControllerTest extends TestCase {
 
 		$data = new Data($activityManager,
 			\OC::$server->getDatabaseConnection(),
-			$this->createMock(LoggerInterface::class)
+			$this->createMock(LoggerInterface::class),
+			$this->createMock(IConfig::class),
 		);
 
 		$controller = new APIv1Controller(

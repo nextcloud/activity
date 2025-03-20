@@ -98,6 +98,7 @@ class Application extends App implements IBootstrap {
 				$c->get(IManager::class),
 				$c->get('ActivityConnectionAdapter'),
 				$c->get(LoggerInterface::class),
+				$c->get(IConfig::class),
 			);
 		});
 

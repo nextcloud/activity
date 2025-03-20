@@ -74,7 +74,8 @@ class DataDeleteActivitiesTest extends TestCase {
 		$this->data = new Data(
 			$this->createMock(IManager::class),
 			\OC::$server->getDatabaseConnection(),
-			$this->createMock(LoggerInterface::class)
+			$this->createMock(LoggerInterface::class),
+			$this->createMock(IConfig::class),
 		);
 	}
 
