@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Activity feed",
     "Your settings have been updated." : "Your settings have been updated.",
     "Settings have been updated." : "Settings have been updated.",
+    "remote user" : "remote user",
     "Recent activity" : "Recent activity",
     "No activities" : "No activities",
     "More activities" : "More activities",
