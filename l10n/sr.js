@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Довод активности",
     "Your settings have been updated." : "Ваше поставке су ажуриране.",
     "Settings have been updated." : "Поставке су ажуриране.",
+    "remote user" : "удаљени корисник",
     "Recent activity" : "Скорашње активности",
     "No activities" : "Нема активности",
     "More activities" : "Још активности",
