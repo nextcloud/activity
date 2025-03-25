@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Flux de Activitate",
     "Your settings have been updated." : "Setările dvs. au fost actualizate.",
     "Settings have been updated." : "Setările au fost actualizate.",
+    "remote user" : "utilizator",
     "Recent activity" : "Activitate recentă",
     "No activities" : "Fără activități",
     "More activities" : "Mai multe acțiuni",
