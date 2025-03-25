@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Prehľad aktivít",
     "Your settings have been updated." : "Vaše nastavenia boli aktualizované.",
     "Settings have been updated." : "Nastavenia boli aktualizované.",
+    "remote user" : "vzdialený užívateľ",
     "Recent activity" : "Nedávna aktivita",
     "No activities" : "Žiadne aktivity",
     "More activities" : "Viac aktivít",
