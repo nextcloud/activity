@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "动态订阅源",
     "Your settings have been updated." : "您的设置已更新。",
     "Settings have been updated." : "设置已更新。",
+    "remote user" : "远程用户",
     "Recent activity" : "最近动态",
     "No activities" : "暂无动态",
     "More activities" : "更多动态",
