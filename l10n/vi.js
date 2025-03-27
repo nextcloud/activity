@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Nguồn cấp dữ liệu hoạt động",
     "Your settings have been updated." : "Các thiết lập của bạn vừa được cập nhật",
     "Settings have been updated." : "Các cài đặt đã được cập nhật.",
+    "remote user" : "người dùng từ xa",
     "Recent activity" : "Hoạt động gần đây",
     "No activities" : "Không có hoạt động",
     "More activities" : "Thêm hoạt động",

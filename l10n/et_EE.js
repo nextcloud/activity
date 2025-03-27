@@ -55,7 +55,7 @@ OC.L10N.register(
     "Activity settings" : "Tegevuste seaded",
     "Enable RSS feed" : "Luba RSS-voog",
     "RSS feed" : "RRS-voog",
-    "Copy RSS feed link" : "Kopeeri RSS-voo link",
+    "Copy RSS feed link" : "Kopeeri uudisvoo link",
     "Personal notification settings" : "Isiklikud teavitamise seaded ",
     "Unable to load the activity list" : "Tegevuste nimekirja ei ole võimalik laadida ",
     "Choose for which activities you want to get an email or push notification." : "Vali, milliste tegevuste kohta soovid saada e-kirja või push-teateid.",
