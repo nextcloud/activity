@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Стрічка дій",
     "Your settings have been updated." : "Налаштування успішно оновлено.",
     "Settings have been updated." : "Налаштування було оновлено.",
+    "remote user" : "віддалений користувач",
     "Recent activity" : "Нещодавна активність",
     "No activities" : "Активність відсутня",
     "More activities" : "Більше заходів",
