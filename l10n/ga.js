@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Fotha gníomhaíochta",
     "Your settings have been updated." : "Nuashonraíodh do shocruithe.",
     "Settings have been updated." : "Nuashonraíodh na socruithe.",
+    "remote user" : "cian úsáideoir",
     "Recent activity" : "Gníomhaíocht le déanaí",
     "No activities" : "Gan aon ghníomhaíochtaí",
     "More activities" : "Tuilleadh gníomhaíochtaí",
