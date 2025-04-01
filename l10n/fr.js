@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Fil d’activité",
     "Your settings have been updated." : "Vos paramètres ont été mis à jour.",
     "Settings have been updated." : "Les paramètres ont été mis à jour.",
+    "remote user" : "utilisateur distant",
     "Recent activity" : "Activités récentes",
     "No activities" : "Aucune activité",
     "More activities" : "Plus d’activités",
