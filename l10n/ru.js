@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Лента событий",
     "Your settings have been updated." : "Параметры обновлены.",
     "Settings have been updated." : "Параметры обновлены.",
+    "remote user" : "Удалённый пользователь",
     "Recent activity" : "Недавние события",
     "No activities" : "События отсуствуют",
     "More activities" : "Больше событий",
