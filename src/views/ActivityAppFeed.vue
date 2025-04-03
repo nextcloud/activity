@@ -156,10 +156,7 @@ async function loadActivities() {
 		)
 		allActivities.value.push(...response.data.ocs.data.map((raw) => new ActivityModel(raw)))
 		lastActivityLoaded.value = response.headers['x-activity-last-given']
-		// If less than the hardcoded limit, there are no more activities
-		if (response.data.ocs.data.length < 50) {
-			hasMoreActivites.value = false
-		}
+		hasMoreActivites.value = true
 	} catch (error) {
 		// Skip if no activites are available
 		if (axios.isAxiosError(error) && error.response?.status === 304) {
