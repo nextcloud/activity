@@ -77,6 +77,6 @@
     "vite": "^5.4.17",
     "vitest": "^2.1.9",
     "vue-template-compiler": "^2.7.16",
-    "wait-on": "^8.0.2"
+    "wait-on": "^8.0.3"
   }
 }
