@@ -73,7 +73,7 @@ import { showError } from '@nextcloud/dialogs'
 import { translate as t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
 import { useInfiniteScroll } from '@vueuse/core'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { loadState } from '@nextcloud/initial-state'
 import { useRoute } from 'vue-router/composables'
 
@@ -173,6 +173,14 @@ async function loadActivities() {
 		allActivities.value.push(...response.data.ocs.data.map((raw) => new ActivityModel(raw)))
 		lastActivityLoaded.value = response.headers['x-activity-last-given']
 		hasMoreActivites.value = true
+
+		nextTick(async () => {
+			if (container.value && container.value.clientHeight === container.value.scrollHeight) {
+				// Container is non-scrollable, thus useInfiniteScroll isn't triggered
+				// Do it manually to ensure there are no activities to fetch anymore
+				await loadActivities()
+			}
+		})
 	} catch (error) {
 		// Skip if no activites are available
 		if (axios.isAxiosError(error) && error.response?.status === 304) {
