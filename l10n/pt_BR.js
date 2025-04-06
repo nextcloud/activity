@@ -62,7 +62,7 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "Escolha para quais atividades você gostaria de receber uma notificação por push.",
     "Notification" : "Notificação",
     "Enable notification emails" : "Ativar e-mails de notificação",
-    "Daily activity summary" : "Resumo diário da atividades",
+    "Daily activity summary" : "Resumo diário de atividades",
     "Send daily activity summary in the morning" : "Enviar o resumo da atividade diária pela manhã",
     "Default settings" : "Configurações padrões",
     "Configure the default notification settings for new accounts." : "Configuras as definições de notificação padrão para novas contas.",
