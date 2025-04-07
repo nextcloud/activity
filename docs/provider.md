@@ -69,7 +69,7 @@ $event->setRichSubject(
 	$this->l->t('You added {file} to your favorites')
 	['file' => [
 		'type' => 'file',
-		'id' => $event->getObjectId(),
+		'id' => (string)$event->getObjectId(),
 		'name' => basename($event->getObjectName()),
 		'path' => $event->getObjectName(),
 	]]
