@@ -61,6 +61,10 @@ class GroupHelper {
 				} else {
 					$event = $provider->parse($language, $event);
 				}
+
+				if ($event->isValidParsed()) {
+					$this->logger->info('Activity event was claimed to be parsed, but was not fully parsed by ' . get_class($provider) . ' [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']');
+				}
 			} catch (UnknownActivityException) {
 			} catch (\InvalidArgumentException) {
 				// todo 33.0.0 Log as warning
@@ -71,11 +75,15 @@ class GroupHelper {
 			}
 		}
 
+		if ($event->isValidParsed()) {
+			$this->logger->info('Activity event was not parsed by any provider [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']');
+		}
+
 		try {
 			$this->richObjectValidator->validate($event->getRichSubject(), $event->getRichSubjectParameters());
 		} catch (InvalidObjectExeption $e) {
 			$this->logger->error(
-				$e->getMessage(),
+				'Activity event had invalid subject parameters provided [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']',
 				[
 					'app' => 'activity',
 					'exception' => $e
@@ -90,7 +98,7 @@ class GroupHelper {
 				$this->richObjectValidator->validate($event->getRichMessage(), $event->getRichMessageParameters());
 			} catch (InvalidObjectExeption $e) {
 				$this->logger->error(
-					$e->getMessage(),
+					'Activity event had invalid message parameters provided [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']',
 					[
 						'app' => 'activity',
 						'exception' => $e
