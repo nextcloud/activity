@@ -1282,6 +1282,8 @@ class FilesHooks {
 			return []; // if we have no access to RuleManager, we cannot filter unrelated users
 		}
 
+		$groupFolderAclStatus = [];
+
 		/** @var \OCA\GroupFolders\ACL\Rule[] $rules */
 		$rules = $knownRules = $knownGroupRules = $usersToCheck = $cachedPath = [];
 		foreach ($cachedMounts as $cachedMount) {
@@ -1308,7 +1310,10 @@ class FilesHooks {
 					}
 
 					$folderId = (int)basename($cachedMount['rootInternalPath']);
-					if (!$folderManager->getFolderAclEnabled($folderId)) {
+					if (!isset($groupFolderAclStatus[$folderId])) {
+						$groupFolderAclStatus[$folderId] = $folderManager->getFolderAclEnabled($folderId);
+					}
+					if (!$groupFolderAclStatus[$folderId]) {
 						continue; // acl are disable
 					}
 
