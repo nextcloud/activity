@@ -1,11 +1,13 @@
 { "translations": {
     "Personal activity feed for %s" : "Prurje veprimtarie personale për  %s",
     "Your feed URL is invalid" : "URL-ja për prurjen tuaj është e pavlefshme",
+    "Activity feed for %1$s" : "Prurje veprimtarie për %1$s",
     "Activity feed" : "Prurje veprimtarie",
     "Your settings have been updated." : "Rregullimet tuaja u përditësuan",
     "Settings have been updated." : "Konfigurimet u përditësuan.",
     "Recent activity" : "Aktivitetet e fundit",
     "No activities" : "Asnjë aktivitet",
+    "More activities" : "Më tepër aktivitete",
     "Daily activity summary for %s" : "Përmbledhje e aktivitetit ditor për %s",
     "All activities" : "Të gjitha aktivitetet",
     "By others" : "Nga të tjerët",
