@@ -63,20 +63,20 @@ class GroupHelper {
 				}
 
 				if ($event->isValidParsed()) {
-					$this->logger->info('Activity event was claimed to be parsed, but was not fully parsed by ' . get_class($provider) . ' [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']');
+					$this->logger->info('Activity event was claimed to be parsed, but was not fully parsed by ' . get_class($provider) . ' [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']', ['app' => $event->getApp()]);
 				}
 			} catch (UnknownActivityException) {
 			} catch (\InvalidArgumentException) {
 				// todo 33.0.0 Log as warning
 				// todo 39.0.0 Log as error
-				$this->logger->debug(get_class($provider) . '::parse() threw \InvalidArgumentException which is deprecated. Throw \OCP\Activity\Exceptions\UnknownActivityException when the event is not known to your provider and otherwise handle all \InvalidArgumentException yourself.');
+				$this->logger->debug(get_class($provider) . '::parse() threw \InvalidArgumentException which is deprecated. Throw \OCP\Activity\Exceptions\UnknownActivityException when the event is not known to your provider and otherwise handle all \InvalidArgumentException yourself.', ['app' => $event->getApp()]);
 			} catch (\Throwable $e) {
-				$this->logger->error('Error while parsing activity event', ['exception' => $e]);
+				$this->logger->error('Error while parsing activity event', ['exception' => $e, 'app' => $event->getApp()]);
 			}
 		}
 
 		if ($event->isValidParsed()) {
-			$this->logger->info('Activity event was not parsed by any provider [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']');
+			$this->logger->info('Activity event was not parsed by any provider [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']', ['app' => $event->getApp()]);
 		}
 
 		try {
@@ -85,7 +85,7 @@ class GroupHelper {
 			$this->logger->error(
 				'Activity event had invalid subject parameters provided [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']',
 				[
-					'app' => 'activity',
+					'app' => $event->getApp(),
 					'exception' => $e
 				],
 			);
@@ -100,7 +100,7 @@ class GroupHelper {
 				$this->logger->error(
 					'Activity event had invalid message parameters provided [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']',
 					[
-						'app' => 'activity',
+						'app' => $event->getApp(),
 						'exception' => $e
 					],
 				);
@@ -117,7 +117,7 @@ class GroupHelper {
 		}
 
 		if (!$event->getParsedSubject()) {
-			$this->logger->debug('Activity "' . $event->getRichSubject() . '" was not parsed by any provider');
+			$this->logger->debug('Activity "' . $event->getRichSubject() . '" was not parsed by any provider', ['app' => $event->getApp()]);
 			return;
 		}
 
