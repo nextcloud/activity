@@ -62,7 +62,7 @@ class GroupHelper {
 					$event = $provider->parse($language, $event);
 				}
 
-				if ($event->isValidParsed()) {
+				if (!$event->isValidParsed()) {
 					$this->logger->info('Activity event was claimed to be parsed, but was not fully parsed by ' . get_class($provider) . ' [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']', ['app' => $event->getApp()]);
 				}
 			} catch (UnknownActivityException) {
@@ -75,7 +75,7 @@ class GroupHelper {
 			}
 		}
 
-		if ($event->isValidParsed()) {
+		if (!$event->isValidParsed()) {
 			$this->logger->info('Activity event was not parsed by any provider [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']', ['app' => $event->getApp()]);
 		}
 
