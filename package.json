@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "@nextcloud/browserslist-config": "^3.0.0",
-    "@nextcloud/cypress": "^1.0.0-beta.7",
+    "@nextcloud/cypress": "^1.0.0-beta.14",
     "@nextcloud/eslint-config": "^8.3.0",
     "@nextcloud/stylelint-config": "^2.4.0",
     "@nextcloud/vite-config": "^1.2.0",

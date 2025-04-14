@@ -1,9 +1,4 @@
-import {
-	configureNextcloud,
-	startNextcloud,
-	stopNextcloud,
-	waitOnNextcloud,
-} from './cypress/dockerNode'
+import { configureNextcloud, startNextcloud, stopNextcloud, waitOnNextcloud } from '@nextcloud/cypress/docker'
 // eslint-disable-next-line n/no-extraneous-import
 import { defineConfig } from 'cypress'
 
