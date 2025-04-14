@@ -1,14 +1,8 @@
-import {
-	configureNextcloud,
-	startNextcloud,
-	stopNextcloud,
-	waitOnNextcloud,
-} from './cypress/dockerNode'
+import { configureNextcloud, startNextcloud, stopNextcloud, waitOnNextcloud } from '@nextcloud/cypress/docker'
 // eslint-disable-next-line n/no-extraneous-import
 import { defineConfig } from 'cypress'
 
 import vitePreprocessor from 'cypress-vite'
-import getCompareSnapshotsPlugin from 'cypress-visual-regression/dist/plugin'
 
 export default defineConfig({
 	projectId: '5bsgwk',
@@ -46,9 +40,6 @@ export default defineConfig({
 		async setupNodeEvents(on, config) {
 			// Fix browserslist extend https://github.com/cypress-io/cypress/issues/2983#issuecomment-570616682
 			on('file:preprocessor', vitePreprocessor({ configFile: false }))
-
-			// Enable the snapshot compare plugin
-			getCompareSnapshotsPlugin(on, config)
 
 			// Disable spell checking to prevent rendering differences
 			on('before:browser:launch', (browser, launchOptions) => {
