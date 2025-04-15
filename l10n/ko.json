@@ -5,6 +5,7 @@
     "Activity feed" : "활동 피드",
     "Your settings have been updated." : "설정이 업데이트되었습니다.",
     "Settings have been updated." : "설정이 업데이트되었습니다.",
+    "remote user" : "원격 사용자",
     "Recent activity" : "최근 활동",
     "No activities" : "활동 없음",
     "More activities" : "더 많은 활동",
@@ -62,7 +63,7 @@
     "Daily activity summary" : "일간 활동 요약",
     "Send daily activity summary in the morning" : "매일 아침 일일 활동내역 전송",
     "Default settings" : "기본 설정",
-    "Configure the default notification settings for new accounts." : "알림에 관한 기본값을 설정하십시오.",
+    "Configure the default notification settings for new accounts." : "새 사용자에 대한 알림 기본값을 설정하십시오.",
     "Unable to save the settings" : "설정을 저장할 수 없습니다.",
     "No more events to load" : "더 이상 불러올 이벤트 없음"
 },"pluralForm" :"nplurals=1; plural=0;"
