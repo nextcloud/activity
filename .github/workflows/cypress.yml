@@ -142,8 +142,10 @@ jobs:
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         if: always()
         with:
-          name: snapshots_${{ matrix.containers }}
-          path: cypress/snapshots
+          name: snapshots_videos_${{ matrix.containers }}
+          path: |
+            cypress/snapshots
+            cypress/videos
 
       - name: Extract NC logs
         if: failure() && matrix.containers != 'component'

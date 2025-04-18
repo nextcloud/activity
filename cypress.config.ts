@@ -21,6 +21,9 @@ export default defineConfig({
 	// Needed to trigger `after:run` events with cypress open
 	experimentalInteractiveRunEvents: true,
 
+	// disabled if running in CI but enabled in debug mode
+	video: !process.env.CI || !!process.env.RUNNER_DEBUG,
+
 	// faster video processing
 	videoCompression: false,
 
