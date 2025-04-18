@@ -26,9 +26,11 @@ export function showActivityTab(fileName: string) {
 	cy.intercept('GET', '/ocs/v2.php/apps/activity/api/v2/activity/filter**').as('getActivities')
 
 	showSidebarForFile(fileName)
+
+	// {force: true} as it might be hidden behind toasts
 	cy.get('#app-sidebar-vue')
 		.findByRole('tab', { name: 'Activity' })
-		.click()
+		.click({ force: true })
 
 	cy.get('#app-sidebar-vue')
 		.findByRole('tabpanel', { name: 'Activity' })
