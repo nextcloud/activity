@@ -57,7 +57,12 @@ export const triggerActionForFile = (filename: string, actionId: string) => {
 }
 
 export function renameFile(fileName: string, newName: string) {
+	// The file must exist and the preview loaded as it locks the file
 	getRowForFile(fileName)
+		.should('be.visible')
+		.find('.files-list__row-icon-preview--loaded')
+		.should('exist')
+
 	triggerActionForFile(fileName, 'rename')
 
 	// intercept the move so we can wait for it
