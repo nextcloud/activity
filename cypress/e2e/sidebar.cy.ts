@@ -71,6 +71,7 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 
 	it('Has comment activity', () => {
 		addComment('welcome.txt', 'A comment')
+		cy.visit('/apps/files')
 
 		showActivityTab('welcome.txt')
 		cy.get('.comments-activity').first().should('contains.text', 'A comment')
