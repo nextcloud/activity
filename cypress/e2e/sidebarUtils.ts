@@ -30,7 +30,7 @@ export function showActivityTab(fileName: string) {
 	cy.intercept('GET', '/ocs/v2.php/apps/activity/api/v2/activity/filter**').as('getActivities')
 
 	showSidebarForFile(fileName)
-	cy.get('#app-sidebar-vue').contains('Activity').click()
+	cy.get('#app-sidebar-vue').contains('Activity').click({ force: true })
 
 	cy.wait('@getActivities')
 }
