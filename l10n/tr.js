@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "İşlem akışı",
     "Your settings have been updated." : "Ayarlarınız güncellendi.",
     "Settings have been updated." : "Ayarlar güncellendi",
+    "remote user" : "uzak kullanıcı",
     "Recent activity" : "Son işlemler",
     "No activities" : "Herhangi bir işlem yok",
     "More activities" : "Diğer işlemler",
