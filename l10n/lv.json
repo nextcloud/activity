@@ -1,10 +1,10 @@
 { "translations": {
     "Personal activity feed for %s" : "%s personīgā darbību plūsma ",
-    "Your feed URL is invalid" : "Jūsu plūsmas URL nav derīgs.",
+    "Your feed URL is invalid" : "Plūsmas URL ir nederīgs.",
     "Activity feed for %1$s" : "%1$s darbību plūsma",
     "Activity feed" : "Darbību plūsma",
-    "Your settings have been updated." : "Jūsu uzstādījumi ir atjaunoti.",
-    "Settings have been updated." : "Iestādījumi ir atjaunoti.",
+    "Your settings have been updated." : "Iestatījumi tika atjaunināti.",
+    "Settings have been updated." : "Iestatījumi tika atjaunināti.",
     "Recent activity" : "Jaunākās darbības",
     "No activities" : "Nav darbību",
     "More activities" : "Vairāk darbību",
