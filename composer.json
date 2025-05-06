@@ -6,7 +6,7 @@
 		"optimize-autoloader": true,
 		"classmap-authoritative": true,
 		"platform": {
-			"php": "8.0"
+			"php": "8.1"
 		},
 		"sort-packages": true,
 		"allow-plugins": {
@@ -37,8 +37,8 @@
 	},
 	"require-dev": {
 		"nextcloud/ocp": "dev-stable30",
-		"phpunit/phpunit": "^9.5",
-		"psalm/phar": "^5.15"
+		"phpunit/phpunit": "^9.6",
+		"psalm/phar": "^5.25"
 	},
 	"extra": {
 		"bamarni-bin": {
