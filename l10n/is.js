@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Athafnastreymi",
     "Your settings have been updated." : "Stillingar þínar eru breyttar.",
     "Settings have been updated." : "Stillingar hafa uppfærst.",
+    "remote user" : "fjartengdur notandi",
     "Recent activity" : "Nýlegar athafnir",
     "No activities" : "Engar athafnir",
     "More activities" : "Fleiri athafnir",
