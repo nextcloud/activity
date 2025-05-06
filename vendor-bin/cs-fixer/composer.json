@@ -1,9 +1,9 @@
 {
 	"platform": {
-		"php": "8.0"
+		"php": "8.1"
 	},
 	"sort-packages": true,
 	"require-dev": {
-		"nextcloud/coding-standard": "^1.1"
+		"nextcloud/coding-standard": "v1.2.3"
 	}
 }
