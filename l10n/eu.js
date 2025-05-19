@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Jardueren jarioa",
     "Your settings have been updated." : "Zure ezarpenak ondo eguneratu dira.",
     "Settings have been updated." : "Ezarpenak eguneratu dira.",
+    "remote user" : "Urrutiko erabiltzailea",
     "Recent activity" : "Azken jarduerak",
     "No activities" : "Ez da jarduerarik",
     "More activities" : "Jarduera gehiago",
