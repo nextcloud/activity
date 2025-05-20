@@ -20,12 +20,6 @@ require_once __DIR__ . '/../../../tests/autoload.php';
 
 Server::get(IAppManager::class)->loadApp('activity');
 
-// Fix for "Autoload path not allowed: .../files/lib/activity.php"
-Server::get(IAppManager::class)->loadApp('files');
-
-// Fix for "Autoload path not allowed: .../files_sharing/lib/activity.php"
-Server::get(IAppManager::class)->loadApp('files_sharing');
-
 if (!class_exists(TestCase::class)) {
 	require_once('PHPUnit/Autoload.php');
 }
