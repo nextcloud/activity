@@ -62,7 +62,7 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	})
 
 	it('Has tag activity', () => {
-		addTag('welcome.txt', 'my_tag')
+		addTag('welcome.txt', `my_tag_${randHash()}`)
 		cy.visit('/apps/files')
 
 		showActivityTab('welcome.txt')
