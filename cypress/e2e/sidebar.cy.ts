@@ -20,7 +20,7 @@
  *
  */
 
-import { createFolder, moveFile, navigateToFolder, renameFile } from './filesUtils'
+import { createFolder, navigateToFolder, moveFile, renameFile } from './filesUtils'
 import { addComment, addTag, addToFavorites, createPublicShare, removeFromFavorites, showActivityTab } from './sidebarUtils'
 
 describe('Check activity listing in the sidebar', { testIsolation: true }, () => {

@@ -20,13 +20,19 @@
  *
  */
 
+import type { User } from "@nextcloud/cypress"
+
 describe('Check that user\'s settings survive a reload', () => {
+	let user: User
+
 	before(() => {
 		cy.createRandomUser()
-			.then((user) => {
-				cy.login(user)
-				cy.visit('/settings/user/notifications')
-			})
+			.then(_user => user = _user)
+	})
+
+	beforeEach(() => {
+		cy.login(user)
+		cy.visit('/settings/user/notifications')
 	})
 
 	it('Form survive a reload', () => {
