@@ -3,7 +3,6 @@ import { configureNextcloud, startNextcloud, stopNextcloud, waitOnNextcloud } fr
 import { defineConfig } from 'cypress'
 
 import vitePreprocessor from 'cypress-vite'
-import { configureVisualRegression } from 'cypress-visual-regression/dist/plugin'
 
 export default defineConfig({
 	projectId: '5bsgwk',
