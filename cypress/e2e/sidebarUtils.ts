@@ -117,3 +117,7 @@ export function addComment(fileName: string, comment: string) {
 
 	cy.wait('@comment')
 }
+
+export function randHash() {
+	return Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 10)
+}
