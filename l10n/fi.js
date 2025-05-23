@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Tapahtumasyöte",
     "Your settings have been updated." : "Asetuksesi on päivitetty.",
     "Settings have been updated." : "Asetukset on päivitetty.",
+    "remote user" : "etäkäyttäjä",
     "Recent activity" : "Viimeisimmät tapahtumat",
     "No activities" : "Ei tapahtumia",
     "More activities" : "Lisää tapahtumia",
