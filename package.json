@@ -72,7 +72,7 @@
     "cypress-wait-until": "^3.0.2",
     "dockerode": "^4.0.6",
     "eslint-plugin-cypress": "^3.5.0",
-    "happy-dom": "^17.4.6",
+    "happy-dom": "^17.4.7",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "vitest": "^2.1.9",
