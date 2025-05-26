@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createFolder, navigateToFolder, moveFile, renameFile } from './filesUtils'
+import { createFolder, navigateToFolder, moveFile, renameFile, getFileListRow } from './filesUtils'
 import { addComment, addTag, addToFavorites, createPublicShare, randHash, removeFromFavorites, showActivityTab } from './sidebarUtils'
 
 describe('Check activity listing in the sidebar', { testIsolation: true }, () => {
@@ -32,8 +32,9 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 
 	it('Has share activity', () => {
 		createPublicShare('welcome.txt')
-		cy.get('body').contains('Link share created').should('exist')
-		cy.get('.toast-close').click({ multiple: true })
+		cy.visit('/apps/files')
+		getFileListRow('welcome.txt').should('be.visible')
+
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'Shared as public link')
 	})
