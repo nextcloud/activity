@@ -11,15 +11,19 @@ export default defineConfig({
 	viewportWidth: 1280,
 	viewportHeight: 720,
 
-	// Tries again 2 more times on failure
+	requestTimeout: 20000,
+
 	retries: {
-		runMode: 2,
+		runMode: 0,
 		// do not retry in `cypress open`
 		openMode: 0,
 	},
 
 	// Needed to trigger `after:run` events with cypress open
 	experimentalInteractiveRunEvents: true,
+
+	// disabled if running in CI but enabled in debug mode
+	video: !process.env.CI || !!process.env.RUNNER_DEBUG,
 
 	// faster video processing
 	videoCompression: false,
@@ -33,13 +37,24 @@ export default defineConfig({
 	trashAssetsBeforeRuns: true,
 
 	e2e: {
-		testIsolation: false,
-
 		// We've imported your old cypress plugins here.
 		// You may want to clean this up later by importing these.
 		async setupNodeEvents(on, config) {
 			// Fix browserslist extend https://github.com/cypress-io/cypress/issues/2983#issuecomment-570616682
 			on('file:preprocessor', vitePreprocessor({ configFile: false }))
+
+			// This allows to store global data (e.g. the name of a snapshot)
+			// because Cypress.env() and other options are local to the current spec file.
+			const data = {}
+			on('task', {
+				setVariable({ key, value }) {
+					data[key] = value
+					return null
+				},
+				getVariable({ key }) {
+					return data[key] ?? null
+				},
+			})
 
 			// Disable spell checking to prevent rendering differences
 			on('before:browser:launch', (browser, launchOptions) => {
@@ -61,22 +76,19 @@ export default defineConfig({
 
 			// Remove container after run
 			on('after:run', () => {
-				stopNextcloud()
+				if (!process.env.CI) {
+					stopNextcloud()
+				}
 			})
 
 			// Before the browser launches
 			// starting Nextcloud testing container
-			return startNextcloud(process.env.BRANCH)
-				.then((ip) => {
-					// Setting container's IP as base Url
-					config.baseUrl = `http://${ip}/index.php`
-					return ip
-				})
-				.then(waitOnNextcloud)
-				.then(() => configureNextcloud(process.env.BRANCH))
-				.then(() => {
-					return config
-				})
+			const ip = await startNextcloud(process.env.BRANCH || 'master', undefined, { exposePort: 8080 })
+			// Setting container's IP as base Url
+			config.baseUrl = `http://${ip}/index.php`
+			await waitOnNextcloud(ip)
+			await configureNextcloud(['viewer'])
+			return config
 		},
 	},
 })

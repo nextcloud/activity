@@ -20,6 +20,8 @@
  *
  */
 
+import { closeSidebar } from "./sidebarUtils"
+
 export const getRowForFile = (filename: string) => cy.get(`[data-cy-files-list-row-name="${CSS.escape(filename)}"]`)
 export const getActionsForFile = (filename: string) => getRowForFile(filename).find('[data-cy-files-list-row-actions]')
 export const getActionButtonForFile = (filename: string) => getActionsForFile(filename).findByRole('button', { name: 'Actions' })
@@ -57,7 +59,12 @@ export const triggerActionForFile = (filename: string, actionId: string) => {
 }
 
 export function renameFile(fileName: string, newName: string) {
+	// The file must exist and the preview loaded as it locks the file
 	getRowForFile(fileName)
+		.should('be.visible')
+		.find('.files-list__row-icon-preview--loaded')
+		.should('exist')
+
 	triggerActionForFile(fileName, 'rename')
 
 	// intercept the move so we can wait for it
@@ -128,7 +135,17 @@ export function moveFile (fileName: string, dirName: string) {
 	})
 }
 
+export function getFileListRow(filename: string) {
+	return cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${CSS.escape(filename)}"]`)
+}
+
 export function toggleMenuAction(fileName: string) {
+	closeSidebar()
+
+	// Wait for the files actions to be loaded.
+	cy.get('.files-list__row-mtime')
+		.should('be.visible')
+
 	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${CSS.escape(fileName)}"] [data-cy-files-list-row-actions]`)
 		.should('be.visible')
 		.findByRole('button', { name: 'Actions' })

@@ -30,7 +30,7 @@ permissions:
 
 jobs:
   init:
-    runs-on: ubuntu-latest-low
+    runs-on: ubuntu-latest
     outputs:
       nodeVersion: ${{ steps.versions.outputs.nodeVersion }}
       npmVersion: ${{ steps.versions.outputs.npmVersion }}
@@ -116,7 +116,7 @@ jobs:
         run: npm i -g 'npm@${{ needs.init.outputs.npmVersion }}'
 
       - name: Run ${{ matrix.containers == 'component' && 'component' || 'E2E' }} cypress tests
-        uses: cypress-io/github-action@57b70560982e6a11d23d4b8bec7f8a487cdbb71b # v6.7.8
+        uses: cypress-io/github-action@108b8684ae52e735ff7891524cbffbcd4be5b19f # v6.7.16
         with:
           record: ${{ secrets.CYPRESS_RECORD_KEY && true }}
           parallel: ${{ secrets.CYPRESS_RECORD_KEY && true }}
@@ -139,18 +139,20 @@ jobs:
           CYPRESS_GROUP: Run ${{ matrix.containers == 'component' && 'component' || 'E2E' }}
 
       - name: Upload snapshots
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         if: always()
         with:
-          name: snapshots_${{ matrix.containers }}
-          path: cypress/snapshots
+          name: snapshots_videos_${{ matrix.containers }}
+          path: |
+            cypress/snapshots
+            cypress/videos
 
       - name: Extract NC logs
         if: failure() && matrix.containers != 'component'
-        run: docker logs nextcloud-cypress-tests-${{ env.APP_NAME }} > nextcloud.log
+        run: docker logs nextcloud-cypress-tests_${{ env.APP_NAME }} > nextcloud.log
 
       - name: Upload NC logs
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         if: failure() && matrix.containers != 'component'
         with:
           name: nc_logs_${{ matrix.containers }}

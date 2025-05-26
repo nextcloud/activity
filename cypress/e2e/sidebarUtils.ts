@@ -32,7 +32,7 @@ function showSidebarForFile(fileName: string) {
 	cy.get('#app-sidebar-vue').should('be.visible')
 }
 
-function closeSidebar() {
+export function closeSidebar() {
 	cy.get('body')
 		.then(($body) => {
 			if ($body.find('.app-sidebar__close').length !== 0) {
@@ -47,7 +47,7 @@ export function showActivityTab(fileName: string) {
 	cy.intercept('GET', '/ocs/v2.php/apps/activity/api/v2/activity/filter**').as('getActivities')
 
 	showSidebarForFile(fileName)
-	cy.get('#app-sidebar-vue').contains('Activity').click()
+	cy.get('#app-sidebar-vue').contains('Activity').click({ force: true })
 
 	cy.wait('@getActivities')
 }
@@ -116,4 +116,8 @@ export function addComment(fileName: string, comment: string) {
 		.type(`{selectAll}${comment}{enter}`)
 
 	cy.wait('@comment')
+}
+
+export function randHash() {
+	return Math.random().toString(36).replace(/[^a-z]+/g, '').slice(0, 10)
 }
