@@ -53,11 +53,12 @@
 	</div>
 </template>
 
-<script>
+<script lang='ts'>
 import lightningBoltSVG from '@mdi/svg/svg/lightning-bolt.svg?raw'
 import axios from '@nextcloud/axios'
 import { translate as t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
+import { nextTick } from 'vue'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
@@ -67,7 +68,7 @@ import ActivityModel from '../models/ActivityModel.ts'
 import { getActivityFilters, getAdditionalEntries, getSidebarActions } from '../utils/api.ts'
 import logger from '../utils/logger.ts'
 
-export default {
+const ActivityTab = {
 	name: 'ActivityTab',
 	components: {
 		ActivityComponent,
@@ -102,7 +103,7 @@ export default {
 			this.sidebarPlugins = []
 			const sidebarPlugins = getSidebarActions()
 			if (sidebarPlugins.length > 0) {
-				this.$nextTick(() => {
+				nextTick(() => {
 					this.sidebarPlugins = sidebarPlugins
 				})
 			}
@@ -181,6 +182,9 @@ export default {
 		t,
 	},
 }
+
+export default ActivityTab
+export type ActivityTabType = typeof ActivityTab
 </script>
 
 <style scoped lang="scss">

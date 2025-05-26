@@ -3,14 +3,16 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { ActivityTabType } from './views/ActivityTab.vue'
+
 import LightningBolt from '@mdi/svg/svg/lightning-bolt.svg?raw'
 import { translate as t } from '@nextcloud/l10n'
 import { type App } from 'vue'
 import { createApp } from 'vue'
 
 // Init Activity tab component
-let ActivityTab = null
-let ActivityTabInstance: App<Element> | null = null
+let LazyActivityTab: ActivityTabType | null = null
+let activityTabApp: App<Element> | null = null
 const activityTab = new OCA.Files.Sidebar.Tab({
 	id: 'activity',
 	name: t('activity', 'Activity'),
@@ -18,25 +20,25 @@ const activityTab = new OCA.Files.Sidebar.Tab({
 
 	async mount(el, fileInfo) {
 		// only load if needed
-		if (ActivityTab === null) {
+		if (LazyActivityTab === null) {
 			const { default: ActivityTabDef } = await import('./views/ActivityTab.vue')
-			ActivityTab = ActivityTabDef
+			LazyActivityTab = ActivityTabDef
 		}
 		// destroy previous instance if available
-		if (ActivityTabInstance) {
-			ActivityTabInstance.unmount()
+		if (activityTabApp) {
+			activityTabApp.unmount()
 		}
-		ActivityTabInstance = createApp({ extends: ActivityTab })
+		activityTabApp = createApp(LazyActivityTab)
 		// No need to await this, we will show a loading indicator instead
-		ActivityTabInstance.update(fileInfo)
-		ActivityTabInstance.mount(el)
+		activityTabApp._component.methods.update(fileInfo)
+		activityTabApp.mount(el)
 	},
 	update(fileInfo) {
-		ActivityTabInstance!.update(fileInfo)
+		activityTabApp!._component.methods.update(fileInfo)
 	},
-	unmount() {
-		ActivityTabInstance?.unmount()
-		ActivityTabInstance = null
+	destroy() {
+		activityTabApp?.unmount()
+		activityTabApp = null
 	},
 })
 
@@ -44,6 +46,6 @@ window.addEventListener('DOMContentLoaded', async function() {
 	if (OCA.Files && OCA.Files.Sidebar) {
 		OCA.Files.Sidebar.registerTab(activityTab)
 		const { default: ActivityTabDef } = await import('./views/ActivityTab.vue')
-		ActivityTab = ActivityTabDef
+		LazyActivityTab = ActivityTabDef
 	}
 })
