@@ -1,39 +1,35 @@
 {
   "name": "activity",
-  "description": "This application enables people to view a log of activities about them or about files.",
   "version": "5.0.0-dev.0",
-  "author": "Julius Härtl <jus@bitgrid.net>",
-  "contributors": [],
+  "private": true,
+  "description": "This application enables people to view a log of activities about them or about files.",
+  "homepage": "https://github.com/nextcloud/activity",
   "bugs": {
     "url": "https://github.com/nextcloud/activity/issues"
   },
   "repository": {
-    "url": "https://github.com/nextcloud/activity",
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/nextcloud/activity"
   },
-  "homepage": "https://github.com/nextcloud/activity",
   "license": "agpl",
-  "private": true,
+  "author": "Julius Härtl <jus@bitgrid.net>",
+  "contributors": [],
   "type": "module",
   "scripts": {
     "build": "vite --mode production build",
-    "dev": "vite --mode development build",
-    "watch": "vite --mode development build --watch",
-    "lint": "eslint --ext .js,.vue src",
-    "lint:fix": "eslint --ext .js,.vue src --fix",
-    "stylelint": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue",
-    "stylelint:fix": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue --fix",
-    "test": "TZ=CET NODE_ENV=test vitest run",
-    "test:coverage": "TZ=CET NODE_ENV=test vitest --coverage run",
     "cypress": "npm run cypress:component && npm run cypress:e2e",
     "cypress:component": "cypress run --component",
     "cypress:e2e": "cypress run --e2e",
     "cypress:gui": "cypress open",
-    "precypress:update-snapshots": "TESTING=true npm run dev"
-  },
-  "engines": {
-    "node": "^20.0.0",
-    "npm": "^10.0.0"
+    "dev": "vite --mode development build",
+    "lint": "eslint --ext .js,.vue src",
+    "lint:fix": "eslint --ext .js,.vue src --fix",
+    "precypress:update-snapshots": "TESTING=true npm run dev",
+    "stylelint": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue",
+    "stylelint:fix": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue --fix",
+    "test": "TZ=CET NODE_ENV=test vitest run",
+    "test:coverage": "TZ=CET NODE_ENV=test vitest --coverage run",
+    "watch": "vite --mode development build --watch"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
@@ -43,6 +39,7 @@
     "@nextcloud/auth": "^2.2.1",
     "@nextcloud/axios": "^2.5.0",
     "@nextcloud/dialogs": "^6.1.1",
+    "@nextcloud/eslint-config": "^9.0.0-rc.1",
     "@nextcloud/initial-state": "^2.2.0",
     "@nextcloud/l10n": "^3.1.0",
     "@nextcloud/logger": "^3.0.2",
@@ -60,7 +57,6 @@
   "devDependencies": {
     "@nextcloud/browserslist-config": "^3.0.1",
     "@nextcloud/cypress": "^1.0.0-beta.15",
-    "@nextcloud/eslint-config": "^8.4.2",
     "@nextcloud/stylelint-config": "^3.1.0",
     "@nextcloud/vite-config": "^1.4.0",
     "@testing-library/cypress": "^10.0.3",
@@ -78,5 +74,9 @@
     "vitest": "^2.1.9",
     "vue-template-compiler": "^2.7.16",
     "wait-on": "^8.0.3"
+  },
+  "engines": {
+    "node": "^20.0.0",
+    "npm": "^10.0.0"
   }
 }
