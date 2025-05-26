@@ -39,6 +39,7 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	it('Has share activity', () => {
 		createPublicShare('welcome.txt')
 		cy.visit('/apps/files')
+		getFileListRow('welcome.txt').should('be.visible')
 
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'Shared as public link')
