@@ -4,18 +4,16 @@
 -->
 
 <template>
-	<Fragment>
-		<h2 class="activity-group__heading" :title="fullDate">
-			{{ dateText }}
-		</h2>
-		<ul>
-			<ActivityComponent
-				v-for="activity in activities"
-				:key="activity.id"
-				:activity="activity"
-				:show-previews="true" />
-		</ul>
-	</Fragment>
+	<h2 class="activity-group__heading" :title="fullDate">
+		{{ dateText }}
+	</h2>
+	<ul>
+		<ActivityComponent
+			v-for="activity in activities"
+			:key="activity.id"
+			:activity="activity"
+			:show-previews="true" />
+	</ul>
 </template>
 
 <script setup lang="ts">
@@ -24,7 +22,6 @@ import type ActivityModel from '../models/ActivityModel.ts'
 import { translate as t } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import { computed } from 'vue'
-import { Fragment } from 'vue-frag'
 import ActivityComponent from './ActivityComponent.vue'
 
 const props = defineProps<{
