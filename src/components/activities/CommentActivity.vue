@@ -30,14 +30,15 @@
 
 <script setup lang="ts">
 
+import type ActivityModel from '../../models/ActivityModel.ts'
+
 import { getCurrentUser } from '@nextcloud/auth'
 import { translate as t } from '@nextcloud/l10n'
-import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
-import NcDateTime from '@nextcloud/vue/dist/Components/NcDateTime.js'
-import NcRichText from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { computed } from 'vue'
+import NcAvatar from '@nextcloud/vue/components/NcAvatar'
+import NcDateTime from '@nextcloud/vue/components/NcDateTime'
+import NcRichText from '@nextcloud/vue/components/NcRichText'
 import { mapRichObjectsToRichArguments } from '../../utils/richObjects.ts'
-import type ActivityModel from '../../models/ActivityModel.ts'
 
 const props = defineProps<{
 	activity: ActivityModel

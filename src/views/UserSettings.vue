@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import NcSettingsSection from '@nextcloud/vue/dist/Components/NcSettingsSection.js'
 import { mapActions, mapState } from 'vuex'
+import NcSettingsSection from '@nextcloud/vue/components/NcSettingsSection'
 import ActivityGrid from '../components/ActivityGrid.vue'
 import EmailSettings from '../components/EmailSettings.vue'
 
