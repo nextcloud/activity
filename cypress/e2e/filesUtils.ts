@@ -104,7 +104,8 @@ export function createFolder (dirName: string) {
 }
 
 export function moveFile (fileName: string, dirName: string) {
-	toggleMenuAction(fileName, 'move-copy')
+	toggleMenuAction(fileName)
+	cy.get(`[data-cy-files-list] [data-cy-files-list-row-action="move-copy"]`).click()
 	cy.get('.file-picker').within(() => {
 		// intercept the copy so we can wait for it
 		cy.intercept('MOVE', /\/(remote|public)\.php\/dav\/files\//).as('moveFile')
@@ -136,19 +137,12 @@ export function getFileListRow(filename: string) {
 	return cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${CSS.escape(filename)}"]`)
 }
 
-export function toggleMenuAction(fileName: string, action: 'details'|'favorite'|'move-copy'|'rename') {
-	getFileListRow(fileName)
-		.find('[data-cy-files-list-row-actions]')
+export function toggleMenuAction(fileName: string) {
+	cy.get(`[data-cy-files-list] [data-cy-files-list-row-name="${CSS.escape(fileName)}"] [data-cy-files-list-row-actions]`)
 		.should('be.visible')
-
-	getFileListRow(fileName)
-		.find('[data-cy-files-list-row-actions]')
 		.findByRole('button', { name: 'Actions' })
 		.should('be.visible')
 		.click()
-
-	cy.get(`[data-cy-files-list-row-action="${CSS.escape(action)}"]`)
+	cy.get('[data-cy-files-list-row-action]')
 		.should('be.visible')
-		.findByRole('menuitem')
-		.click()
 }
