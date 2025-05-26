@@ -106,6 +106,8 @@ export default {
 		},
 	},
 
+	emits: ['update:checked'],
+
 	computed: {
 		/**
 		 * Icon size
