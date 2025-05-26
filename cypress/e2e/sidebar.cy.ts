@@ -4,7 +4,7 @@
  */
 
 import { createFolder, getFileListRow, navigateToFolder, moveFile, renameFile } from './filesUtils'
-import { addComment, addTag, createPublicShare, toggleFavorite, showActivityTab } from './sidebarUtils'
+import { addComment, addTag, createPublicShare, toggleFavorite, showActivityTab, randHash } from './sidebarUtils'
 
 describe('Check activity listing in the sidebar', { testIsolation: true }, () => {
 	beforeEach(function() {
@@ -39,6 +39,7 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	it('Has share activity', () => {
 		createPublicShare('welcome.txt')
 		cy.visit('/apps/files')
+		getFileListRow('welcome.txt').should('be.visible')
 
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'Shared as public link')
@@ -62,7 +63,7 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	})
 
 	it('Has tag activity', () => {
-		addTag('welcome.txt', 'my_tag')
+		addTag('welcome.txt', `my_tag_${randHash()}`)
 		cy.visit('/apps/files')
 
 		showActivityTab('welcome.txt')

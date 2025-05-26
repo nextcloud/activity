@@ -11,8 +11,10 @@ export default defineConfig({
 	viewportWidth: 1280,
 	viewportHeight: 720,
 
+	requestTimeout: 20000,
+
 	retries: {
-		runMode: 5,
+		runMode: 0,
 		// do not retry in `cypress open`
 		openMode: 0,
 	},
@@ -36,8 +38,6 @@ export default defineConfig({
 	trashAssetsBeforeRuns: true,
 
 	e2e: {
-		testIsolation: false,
-
 		// We've imported your old cypress plugins here.
 		// You may want to clean this up later by importing these.
 		async setupNodeEvents(on, config) {
@@ -84,7 +84,7 @@ export default defineConfig({
 
 			// Before the browser launches
 			// starting Nextcloud testing container
-			const ip = await startNextcloud(process.env.BRANCH || 'master')
+			const ip = await startNextcloud(process.env.BRANCH || 'master', undefined, { exposePort: 8080 })
 			// Setting container's IP as base Url
 			config.baseUrl = `http://${ip}/index.php`
 			await waitOnNextcloud(ip)
