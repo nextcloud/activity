@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createFolder, moveFile, navigateToFolder, renameFile } from './filesUtils'
-import { addComment, addTag, addToFavorites, createPublicShare, removeFromFavorites, showActivityTab } from './sidebarUtils'
+import { createFolder, navigateToFolder, moveFile, renameFile, getFileListRow } from './filesUtils'
+import { addComment, addTag, addToFavorites, createPublicShare, randHash, removeFromFavorites, showActivityTab } from './sidebarUtils'
 
 describe('Check activity listing in the sidebar', { testIsolation: true }, () => {
 	beforeEach(function() {
@@ -32,8 +32,9 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 
 	it('Has share activity', () => {
 		createPublicShare('welcome.txt')
-		cy.get('body').contains('Link share created').should('exist')
-		cy.get('.toast-close').click({ multiple: true })
+		cy.visit('/apps/files')
+		getFileListRow('welcome.txt').should('be.visible')
+
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'Shared as public link')
 	})
@@ -56,7 +57,8 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	})
 
 	it('Has tag activity', () => {
-		addTag('welcome.txt', 'my_tag')
+		addTag('welcome.txt', `my_tag_${randHash()}`)
+		cy.visit('/apps/files')
 
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'Added system tag')
