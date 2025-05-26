@@ -2,11 +2,10 @@
  * SPDX-FileCopyrightText: 2021 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
-import Vue from 'vue'
-import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 
-// eslint-disable-next-line import/no-unresolved
 import LightningBolt from '@mdi/svg/svg/lightning-bolt.svg?raw'
+import { translatePlural as n, translate as t } from '@nextcloud/l10n'
+import Vue from 'vue'
 
 Vue.prototype.t = t
 Vue.prototype.n = n

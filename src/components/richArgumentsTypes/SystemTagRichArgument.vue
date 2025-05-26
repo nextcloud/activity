@@ -18,6 +18,7 @@ export default {
 	},
 }
 </script>
+
 <style scoped>
 strong {
 	padding: 2px 5px;

@@ -7,7 +7,8 @@
 		<h1 class="activity-app__heading">
 			{{ headingTitle }}
 		</h1>
-		<NcEmptyContent v-if="hasMoreActivites && allActivities.length === 0"
+		<NcEmptyContent
+			v-if="hasMoreActivites && allActivities.length === 0"
 			class="activity-app__empty-content"
 			:name="t('activity', 'Loading activities')"
 			:description="t('activity', 'This stream will show events like additions, changes & shares')">
@@ -15,7 +16,8 @@
 				<NcLoadingIcon :size="36" />
 			</template>
 		</NcEmptyContent>
-		<NcEmptyContent v-else-if="allActivities.length === 0"
+		<NcEmptyContent
+			v-else-if="allActivities.length === 0"
 			class="activity-app__empty-content"
 			:name="t('activity', 'No activity yet')"
 			:description="t('activity', 'This stream will show events like additions, changes & shares')">
@@ -26,11 +28,13 @@
 		<div ref="container" class="activity-app__container">
 			<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
 			<!-- Only show if not showing the inital empty content for loading -->
-			<NcLoadingIcon v-if="hasMoreActivites && allActivities.length > 0"
+			<NcLoadingIcon
+				v-if="hasMoreActivites && allActivities.length > 0"
 				:name="t('activity', 'Loading more activities')"
 				:size="64"
 				class="activity-app__loading-indicator" />
-			<div v-else-if="!hasMoreActivites && allActivities.length > 0"
+			<div
+				v-else-if="!hasMoreActivites && allActivities.length > 0"
 				class="activity-app__loading-indicator">
 				{{ t('activity', 'No more activities.') }}
 			</div>
@@ -39,27 +43,24 @@
 </template>
 
 <script setup lang="ts">
-// eslint-disable-next-line n/no-extraneous-import
-import axios from 'axios'
 import ncAxios from '@nextcloud/axios'
-import moment from '@nextcloud/moment'
-import NcAppContent from '@nextcloud/vue/dist/Components/NcAppContent.js'
-import NcIconSvgWrapper from '@nextcloud/vue/dist/Components/NcIconSvgWrapper.js'
-import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
-import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js'
-import ActivityModel from '../models/ActivityModel'
-import ActivityGroup from '../components/ActivityGroup.vue'
-
-import appIconSVG from '../../img/activity-dark.svg?raw'
-import logger from '../utils/logger'
-
 import { showError } from '@nextcloud/dialogs'
-import { translate as t } from '@nextcloud/l10n'
-import { generateOcsUrl } from '@nextcloud/router'
-import { useInfiniteScroll } from '@vueuse/core'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { loadState } from '@nextcloud/initial-state'
+import { translate as t } from '@nextcloud/l10n'
+import moment from '@nextcloud/moment'
+import { generateOcsUrl } from '@nextcloud/router'
+import NcAppContent from '@nextcloud/vue/dist/Components/NcAppContent.js'
+import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
+import NcIconSvgWrapper from '@nextcloud/vue/dist/Components/NcIconSvgWrapper.js'
+import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js'
+import { useInfiniteScroll } from '@vueuse/core'
+import axios from 'axios'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router/composables'
+import ActivityGroup from '../components/ActivityGroup.vue'
+import appIconSVG from '../../img/activity-dark.svg?raw'
+import ActivityModel from '../models/ActivityModel.ts'
+import logger from '../utils/logger.ts'
 
 interface INavigationEntry {
 	id: string
@@ -76,7 +77,7 @@ const props = withDefaults(defineProps<{
 	/**
 	 * The currently active activities filter
 	 */
-	filter: string
+	filter?: string
 }>(), {
 	// default to 'all'
 	filter: 'all',
@@ -151,9 +152,7 @@ async function loadActivities() {
 	try {
 		const since = lastActivityLoaded.value ?? '0'
 		loading.value = true
-		const response = await ncAxios.get(
-			generateOcsUrl('apps/activity/api/v2/activity/{filter}?format=json&previews=true&since={since}', { filter: props.filter, since }),
-		)
+		const response = await ncAxios.get(generateOcsUrl('apps/activity/api/v2/activity/{filter}?format=json&previews=true&since={since}', { filter: props.filter, since }))
 		allActivities.value.push(...response.data.ocs.data.map((raw) => new ActivityModel(raw)))
 		lastActivityLoaded.value = response.headers['x-activity-last-given']
 		hasMoreActivites.value = true

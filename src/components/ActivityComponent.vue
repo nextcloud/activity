@@ -7,12 +7,14 @@
 </template>
 
 <script setup lang="ts">
-import type { IActivitySidebarEntry } from '../models/ActivityAPI'
+import type { IActivitySidebarEntry } from '../models/ActivityAPI.ts'
+
 import { computed } from 'vue'
-import ActivityModel from '../models/ActivityModel'
 import CommentActivity from './activities/CommentActivity.vue'
 import GenericActivity from './activities/GenericActivity.vue'
 import PluginActivity from './activities/PluginActivity.vue'
+import ActivityModel from '../models/ActivityModel.ts'
+import logger from '../utils/logger.ts'
 
 const props = defineProps<{
 	/**
@@ -30,15 +32,15 @@ const activityOptions = computed(() => props)
 
 const activityComponent = computed(() => {
 	if (!(props.activity instanceof ActivityModel)) {
-		console.warn(props.activity)
+		logger.warn('Activity is not an instance of ActivityModel', { activity: props.activity })
 		return PluginActivity
 	}
 
 	switch (props.activity.type) {
-	case 'comments':
-		return CommentActivity
-	default:
-		return GenericActivity
+		case 'comments':
+			return CommentActivity
+		default:
+			return GenericActivity
 	}
 })
 </script>

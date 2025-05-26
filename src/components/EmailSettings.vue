@@ -12,23 +12,28 @@
 			<label for="activity_setting_batchtime" class="activity-frequency__label">
 				{{ t('activity', 'Send activity emails') }}
 			</label>
-			<select id="activity_setting_batchtime"
+			<select
+				id="activity_setting_batchtime"
 				class="notification-frequency__select"
 				name="activity_setting_batchtime"
-				@change="setSettingBatchtime({settingBatchtime: $event.target.value})">
-				<option :value="EmailFrequency.EMAIL_SEND_ASAP"
+				@change="setSettingBatchtime({ settingBatchtime: $event.target.value })">
+				<option
+					:value="EmailFrequency.EMAIL_SEND_ASAP"
 					:selected="settingBatchtime === EmailFrequency.EMAIL_SEND_ASAP">
 					{{ t('activity', 'As soon as possible') }}
 				</option>
-				<option :value="EmailFrequency.EMAIL_SEND_HOURLY"
+				<option
+					:value="EmailFrequency.EMAIL_SEND_HOURLY"
 					:selected="settingBatchtime === EmailFrequency.EMAIL_SEND_HOURLY">
 					{{ t('activity', 'Hourly') }}
 				</option>
-				<option :value="EmailFrequency.EMAIL_SEND_DAILY"
+				<option
+					:value="EmailFrequency.EMAIL_SEND_DAILY"
 					:selected="settingBatchtime === EmailFrequency.EMAIL_SEND_DAILY">
 					{{ t('activity', 'Daily') }}
 				</option>
-				<option :value="EmailFrequency.EMAIL_SEND_WEEKLY"
+				<option
+					:value="EmailFrequency.EMAIL_SEND_WEEKLY"
 					:selected="settingBatchtime === EmailFrequency.EMAIL_SEND_WEEKLY">
 					{{ t('activity', 'Weekly') }}
 				</option>
@@ -49,6 +54,7 @@ export default {
 			EmailFrequency: EmailFrequency.EmailFrequency,
 		}
 	},
+
 	computed: {
 		...mapState([
 			'emailEnabled',
@@ -56,10 +62,9 @@ export default {
 			'settingBatchtime',
 		]),
 	},
+
 	methods: {
-		...mapActions([
-			'setSettingBatchtime',
-		]),
+		...mapActions(['setSettingBatchtime']),
 	},
 }
 

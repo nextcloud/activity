@@ -5,11 +5,9 @@
 import { mount } from '@vue/test-utils'
 import { afterAll, beforeAll, expect, test, vi } from 'vitest'
 import { nextTick } from 'vue'
-
-import Activity from '../components/Activity.vue'
-import ActivityModel from '../models/ActivityModel.js'
-
+import ActivityComponent from '../components/ActivityComponent.vue'
 import wsData from '../__mocks__/@nextcloud/activity_ws.json'
+import ActivityModel from '../models/ActivityModel.js'
 
 const currentDate = new Date('2021-05-02T12:00:00+00:00')
 const realDateNow = Date.now
@@ -33,7 +31,7 @@ const expectLinkWithText = (wrapper, text) => {
 }
 
 test('Display relative date gets updated every minutes', async () => {
-	const wrapper = mount(Activity, { propsData: { activity: new ActivityModel(wsData.ocs.data[1]), showPreviews: true } })
+	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[1]), showPreviews: true } })
 	await nextTick()
 
 	expect(wrapper.text()).toContain('You renamed Test file - renamed.md to Test file - renamed - looooooooong.md')
@@ -47,7 +45,7 @@ test('Display relative date gets updated every minutes', async () => {
 })
 
 test('Display correct information for renames', async () => {
-	const wrapper = mount(Activity, { propsData: { activity: new ActivityModel(wsData.ocs.data[1]), showPreviews: true } })
+	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[1]), showPreviews: true } })
 
 	expect(wrapper.text()).toContain('You renamed Test file - renamed.md to Test file - renamed - looooooooong.md')
 
@@ -56,7 +54,7 @@ test('Display correct information for renames', async () => {
 })
 
 test('Display correct information for comments', async () => {
-	const wrapper = mount(Activity, { propsData: { activity: new ActivityModel(wsData.ocs.data[4]), showPreviews: true } })
+	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[4]), showPreviews: true } })
 
 	expect(wrapper.text()).toContain('You commented')
 
@@ -64,19 +62,19 @@ test('Display correct information for comments', async () => {
 })
 
 test('Display correct information for favorites', async () => {
-	const wrapper = mount(Activity, { propsData: { activity: new ActivityModel(wsData.ocs.data[5]), showPreviews: true } })
+	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[5]), showPreviews: true } })
 
 	expect(wrapper.text()).toContain('Added to favorites')
 })
 
 test('Display correct information for unfavorites', async () => {
-	const wrapper = mount(Activity, { propsData: { activity: new ActivityModel(wsData.ocs.data[6]), showPreviews: true } })
+	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[6]), showPreviews: true } })
 
 	expect(wrapper.text()).toContain('Removed from favorites')
 })
 
 test('Display correct information for changes', async () => {
-	const wrapper = mount(Activity, { propsData: { activity: new ActivityModel(wsData.ocs.data[7]), showPreviews: true } })
+	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[7]), showPreviews: true } })
 
 	expect(wrapper.text()).toContain('You changed Test file - renamed.md')
 
@@ -84,18 +82,18 @@ test('Display correct information for changes', async () => {
 })
 
 test('Display correct information for tags', async () => {
-	const wrapper = mount(Activity, { propsData: { activity: new ActivityModel(wsData.ocs.data[9]), showPreviews: true } })
+	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[9]), showPreviews: true } })
 
 	expect(wrapper.text()).toContain('Added system tag tag1')
 })
 
 test('Display correct information for shares', async () => {
-	const wrapper = mount(Activity, { propsData: { activity: new ActivityModel(wsData.ocs.data[10]), showPreviews: true } })
+	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[10]), showPreviews: true } })
 	expect(wrapper.text()).toContain('Shared as public link')
 })
 
 test('Display correct information for moves', async () => {
-	const wrapper = mount(Activity, { propsData: { activity: new ActivityModel(wsData.ocs.data[14]), showPreviews: true } })
+	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[14]), showPreviews: true } })
 
 	expect(wrapper.text()).toContain('You moved Test file.md to Documents')
 
@@ -104,7 +102,7 @@ test('Display correct information for moves', async () => {
 })
 
 test('Display correct information for creations', async () => {
-	const wrapper = mount(Activity, { propsData: { activity: new ActivityModel(wsData.ocs.data[17]), showPreviews: true } })
+	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[17]), showPreviews: true } })
 
 	expect(wrapper.text()).toContain('You created Test file.md')
 

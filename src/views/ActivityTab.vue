@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<div :class="{ 'icon-loading': loading }"
+	<div
+		:class="{ 'icon-loading': loading }"
 		class="activity">
 		<!-- error message -->
 		<NcEmptyContent v-if="error" :name="error">
@@ -15,7 +16,8 @@
 		<template v-else>
 			<!-- activities actions -->
 			<div v-if="sidebarPlugins.length > 0" class="activity__actions">
-				<ActivitySidebarPlugin v-for="plugin,index of sidebarPlugins"
+				<ActivitySidebarPlugin
+					v-for="plugin, index of sidebarPlugins"
 					:key="index"
 					:plugin="plugin"
 					:file-info="fileInfo"
@@ -23,14 +25,16 @@
 			</div>
 
 			<!-- activities content -->
-			<NcEmptyContent v-if="loading"
+			<NcEmptyContent
+				v-if="loading"
 				class="activity__empty-content"
 				:name="t('activity', 'Loading activities')">
 				<template #icon>
 					<NcLoadingIcon />
 				</template>
 			</NcEmptyContent>
-			<NcEmptyContent v-else-if="activities.length === 0"
+			<NcEmptyContent
+				v-else-if="activities.length === 0"
 				class="activity__empty-content"
 				:name="t('activity', 'No activity yet')">
 				<template #icon>
@@ -38,7 +42,8 @@
 				</template>
 			</NcEmptyContent>
 			<ul v-else class="activity__list">
-				<Activity v-for="activity in activities"
+				<ActivityComponent
+					v-for="activity in activities"
 					:key="activity.id"
 					:activity="activity"
 					:show-previews="false"
@@ -49,31 +54,29 @@
 </template>
 
 <script>
+import lightningBoltSVG from '@mdi/svg/svg/lightning-bolt.svg?raw'
 import axios from '@nextcloud/axios'
-
-import { generateOcsUrl } from '@nextcloud/router'
 import { translate as t } from '@nextcloud/l10n'
+import { generateOcsUrl } from '@nextcloud/router'
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
 import NcIconSvgWrapper from '@nextcloud/vue/dist/Components/NcIconSvgWrapper.js'
 import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js'
-import { getAdditionalEntries, getSidebarActions, getActivityFilters } from '../utils/api.ts'
-
-import logger from '../utils/logger.ts'
-import Activity from '../components/Activity.vue'
-import ActivityModel from '../models/ActivityModel.ts'
+import ActivityComponent from '../components/ActivityComponent.vue'
 import ActivitySidebarPlugin from '../components/ActivitySidebarPlugin.vue'
-
-import lightningBoltSVG from '@mdi/svg/svg/lightning-bolt.svg?raw'
+import ActivityModel from '../models/ActivityModel.ts'
+import { getActivityFilters, getAdditionalEntries, getSidebarActions } from '../utils/api.ts'
+import logger from '../utils/logger.ts'
 
 export default {
 	name: 'ActivityTab',
 	components: {
-		Activity,
+		ActivityComponent,
 		NcEmptyContent,
 		NcIconSvgWrapper,
 		NcLoadingIcon,
 		ActivitySidebarPlugin,
 	},
+
 	data() {
 		return {
 			error: '',
@@ -84,18 +87,20 @@ export default {
 			sidebarPlugins: [],
 		}
 	},
+
 	mounted() {
 		this.sidebarPlugins = getSidebarActions()
 	},
+
 	methods: {
 		/**
 		 * Update current fileInfo and fetch new activities
 		 *
-		 * @param {object} fileInfo the current file FileInfo
+		 * @param fileInfo the current file FileInfo
 		 */
 		async update(fileInfo) {
 			this.sidebarPlugins = []
-			let sidebarPlugins = getSidebarActions()
+			const sidebarPlugins = getSidebarActions()
 			if (sidebarPlugins.length > 0) {
 				this.$nextTick(() => {
 					this.sidebarPlugins = sidebarPlugins
@@ -106,6 +111,7 @@ export default {
 			this.resetState()
 			await this.getActivities()
 		},
+
 		/**
 		 * Get the existing activities
 		 */
@@ -118,11 +124,12 @@ export default {
 				this.activities = [...activities, ...otherEntries].sort((a, b) => b.timestamp - a.timestamp)
 			} catch (error) {
 				this.error = t('activity', 'Unable to load the activity list')
-				console.error('Error loading the activity list', error)
+				logger.error('Error loading the activity list', { error })
 			} finally {
 				this.loading = false
 			}
 		},
+
 		/**
 		 * Reset the current view to its default state
 		 */
@@ -160,10 +167,10 @@ export default {
 		/**
 		 * Process the API response activities and apply filter
 		 *
-		 * @param {any[]} activities the activites
+		 * @param activities the activites
 		 */
 		processActivities(activities) {
-			activities = activities.map(activity => new ActivityModel(activity))
+			activities = activities.map((activity) => new ActivityModel(activity))
 
 			logger.debug(`Processed ${activities.length} activity(ies)`, { activities, fileInfo: this.fileInfo })
 

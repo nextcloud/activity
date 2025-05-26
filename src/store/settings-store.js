@@ -3,17 +3,15 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import axios from '@nextcloud/axios'
+import { showError, showSuccess } from '@nextcloud/dialogs'
+import { loadState } from '@nextcloud/initial-state'
+import { translate as t } from '@nextcloud/l10n'
+import { generateUrl } from '@nextcloud/router'
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { translate as t } from '@nextcloud/l10n'
-
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
-import { loadState } from '@nextcloud/initial-state'
-import { showSuccess, showError } from '@nextcloud/dialogs'
-
-import { isActivityEnabled, isOneInputUnChecked } from '../utils/settings.ts'
 import logger from '../utils/logger.ts'
+import { isActivityEnabled, isOneInputUnChecked } from '../utils/settings.ts'
 
 Vue.use(Vuex)
 
@@ -62,7 +60,7 @@ const store = new Vuex.Store({
 			}
 
 			return Object.values(state.activityGroups)
-				.map(group => Object.entries(group.activities)) // [[[activityKey, activity], ...], [[activityKey, activity], ...]]
+				.map((group) => Object.entries(group.activities)) // [[[activityKey, activity], ...], [[activityKey, activity], ...]]
 				.reduce((acc, val) => acc.concat(val), []) // [[activityKey, activity], ...]
 				.map(([activityKey, activity]) => methodsEnabled(activityKey, activity)) // [[{activityKey, method, activity}, ...], ...]
 				.reduce((acc, val) => acc.concat(val), [])
@@ -166,7 +164,8 @@ const store = new Vuex.Store({
 					activityKey,
 					methodKey,
 					value: oneInputIsChecked,
-				})
+				},
+			)
 
 			dispatch('saveSettings')
 		},
@@ -194,7 +193,8 @@ const store = new Vuex.Store({
 						activityKey,
 						methodKey,
 						value: oneInputIsChecked,
-					})
+					},
+				)
 			}
 
 			dispatch('saveSettings')
@@ -213,7 +213,7 @@ const store = new Vuex.Store({
 		 */
 		toggleMethodsForActivity({ commit, state, dispatch }, { groupKey, activityKey }) {
 			const activity = state.activityGroups[groupKey].activities[activityKey]
-			const oneInputIsChecked = activity.methods.map(method => isOneInputUnChecked([activity], method)).includes(true)
+			const oneInputIsChecked = activity.methods.map((method) => isOneInputUnChecked([activity], method)).includes(true)
 
 			for (const methodKey of activity.methods) {
 				commit(
@@ -223,7 +223,8 @@ const store = new Vuex.Store({
 						activityKey,
 						methodKey,
 						value: oneInputIsChecked,
-					})
+					},
+				)
 			}
 
 			dispatch('saveSettings')
@@ -243,7 +244,8 @@ const store = new Vuex.Store({
 				'SET_SETTING_BATCHTIME',
 				{
 					settingBatchtime,
-				})
+				},
+			)
 
 			dispatch('saveSettings')
 		},
@@ -262,7 +264,8 @@ const store = new Vuex.Store({
 				'TOGGLE_ACTIVITY_DIGEST',
 				{
 					activityDigestEnabled,
-				})
+				},
+			)
 
 			dispatch('saveSettings')
 		},
@@ -280,14 +283,11 @@ const store = new Vuex.Store({
 				'TOGGLE_EMAIL_ENABLED',
 				{
 					emailEnabled,
-				})
+				},
+			)
 
 			try {
-
-				OCP.AppConfig.setValue(
-					'activity', 'enable_email',
-					emailEnabled ? 'yes' : 'no'
-				)
+				OCP.AppConfig.setValue('activity', 'enable_email', emailEnabled ? 'yes' : 'no')
 
 				showSuccess(t('activity', 'Your settings have been updated.'))
 			} catch (error) {
@@ -306,7 +306,7 @@ const store = new Vuex.Store({
 		async saveSettings({ state, getters }) {
 			try {
 				const form = new FormData()
-				getters.checkedActivities.forEach(activity => {
+				getters.checkedActivities.forEach((activity) => {
 					form.append(activity, '1')
 				})
 

@@ -10,18 +10,17 @@ import type { IActivityType } from '../models/ActivitySettings.js'
  *
  * @param activity - the concerned activity
  * @param methodKey - the concerned method
- * @return {boolean}
  */
-export function isActivityEnabled(activity: IActivityType, methodKey: string) {
+export function isActivityEnabled(activity: IActivityType, methodKey: string): boolean {
 	return activity.methods.includes(methodKey)
 }
 
 /**
  * @param activities - List of the activities to check
  * @param methodKey - the method key for which to verify the checked value
- * @return {boolean} Wether at least one input is checked for the given set of activities
+ * @return Wether at least one input is checked for the given set of activities
  */
-export function isOneInputUnChecked(activities: IActivityType[], methodKey: string) {
+export function isOneInputUnChecked(activities: IActivityType[], methodKey: string): boolean {
 	for (const activity of activities) {
 		if (isActivityEnabled(activity, methodKey) && !activity[methodKey]) {
 			return true

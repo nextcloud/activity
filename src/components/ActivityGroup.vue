@@ -9,7 +9,8 @@
 			{{ dateText }}
 		</h2>
 		<ul>
-			<Activity v-for="activity in activities"
+			<ActivityComponent
+				v-for="activity in activities"
 				:key="activity.id"
 				:activity="activity"
 				:show-previews="true" />
@@ -18,14 +19,13 @@
 </template>
 
 <script setup lang="ts">
-import type ActivityModel from '../models/ActivityModel'
-
-import moment from '@nextcloud/moment'
-import Activity from './Activity.vue'
+import type ActivityModel from '../models/ActivityModel.ts'
 
 import { translate as t } from '@nextcloud/l10n'
-import { Fragment } from 'vue-frag'
+import moment from '@nextcloud/moment'
 import { computed } from 'vue'
+import { Fragment } from 'vue-frag'
+import ActivityComponent from './ActivityComponent.vue'
 
 const props = defineProps<{
 	activities: ActivityModel[]

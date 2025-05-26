@@ -4,6 +4,7 @@
  */
 
 import type { RouteConfig } from 'vue-router'
+
 import ActivityAppFeed from './views/ActivityAppFeed.vue'
 import ActivityAppNavigation from './views/ActivityAppNavigation.vue'
 

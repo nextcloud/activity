@@ -6,10 +6,11 @@
 	"compilerOptions": {
 		"lib": [
 			"DOM",
-			"ES2015"
+			"ESNext"
 		],
 		"rootDir": "src",
 		"noImplicitAny": false,
+		"allowImportingTsExtensions": true,
 	},
 	"vueCompilerOptions": {
 		"target": 2.7
