@@ -4,11 +4,13 @@
 -->
 <template>
 	<li class="activity-entry comments-activity">
-		<NcAvatar class="comments-activity__icon"
+		<NcAvatar
+			class="comments-activity__icon"
 			:disable-menu="false"
 			:user="authorId" />
 		<div class="comments-activity__content">
-			<NcRichText v-if="showPreviews"
+			<NcRichText
+				v-if="showPreviews"
 				class="comments-activity__title"
 				:text="subjectText"
 				:arguments="subjectArguments" />
@@ -18,7 +20,8 @@
 			<NcRichText class="comments-activity__subline" :text="messageText" :arguments="activity.messageRichObjects" />
 		</div>
 		<span class="hidden-visually">{{ activity.formattedDate }}</span>
-		<NcDateTime class="comments-activity__date"
+		<NcDateTime
+			class="comments-activity__date"
 			data-testid="activity-date"
 			:timestamp="timestamp"
 			:ignore-seconds="true" />
@@ -26,14 +29,15 @@
 </template>
 
 <script setup lang="ts">
-import type ActivityModel from '../../models/ActivityModel'
+
+import { getCurrentUser } from '@nextcloud/auth'
+import { translate as t } from '@nextcloud/l10n'
 import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
 import NcDateTime from '@nextcloud/vue/dist/Components/NcDateTime.js'
 import NcRichText from '@nextcloud/vue/dist/Components/NcRichText.js'
-import { getCurrentUser } from '@nextcloud/auth'
 import { computed } from 'vue'
-import { translate as t } from '@nextcloud/l10n'
-import { mapRichObjectsToRichArguments } from '../../utils/richObjects'
+import { mapRichObjectsToRichArguments } from '../../utils/richObjects.ts'
+import type ActivityModel from '../../models/ActivityModel.ts'
 
 const props = defineProps<{
 	activity: ActivityModel

@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<element :is="wrapperElement"
+	<component
+		:is="wrapperElement"
 		:class="{
 			'checkbox-radio-switch--checked': isChecked,
 			'checkbox-radio-switch--disabled': disabled,
@@ -12,7 +13,8 @@
 		}"
 		:style="cssVars"
 		class="checkbox-radio-switch checkbox-radio-switch-checkbox">
-		<input :id="id"
+		<input
+			:id="id"
 			:checked="isChecked"
 			:disabled="disabled"
 			:indeterminate="indeterminate"
@@ -23,7 +25,8 @@
 			@change="onToggle">
 
 		<label :for="id" class="checkbox-radio-switch__label">
-			<component :is="checkboxRadioIconElement"
+			<component
+				:is="checkboxRadioIconElement"
 				:size="size"
 				class="checkbox-radio-switch__icon"
 				aria-hidden="true" />
@@ -31,17 +34,17 @@
 				<slot />
 			</span>
 		</label>
-	</element>
+	</component>
 </template>
 
 <script>
-import CheckboxBlankOutline from 'vue-material-design-icons/CheckboxBlankOutline.vue'
 import CheckboxBlank from 'vue-material-design-icons/CheckboxBlank.vue'
-import MinusBox from 'vue-material-design-icons/MinusBox.vue'
+import CheckboxBlankOutline from 'vue-material-design-icons/CheckboxBlankOutline.vue'
 import CheckboxMarked from 'vue-material-design-icons/CheckboxMarked.vue'
+import MinusBox from 'vue-material-design-icons/MinusBox.vue'
 
 export default {
-	name: 'Checkbox',
+	name: 'CheckboxInput',
 
 	props: {
 
@@ -51,7 +54,7 @@ export default {
 		id: {
 			type: String,
 			required: true,
-			validator: id => id.trim() !== '',
+			validator: (id) => id.trim() !== '',
 		},
 
 		/**
@@ -106,8 +109,6 @@ export default {
 	computed: {
 		/**
 		 * Icon size
-		 *
-		 @return {number}
 		 */
 		size() {
 			return 24
@@ -115,8 +116,6 @@ export default {
 
 		/**
 		 * Css local variables for this component
-		 *
-		 * @return {object}
 		 */
 		cssVars() {
 			return {
@@ -130,8 +129,6 @@ export default {
 
 		/**
 		 * Returns the proper Material icon depending on the select case
-		 *
-		 * @return {Component}
 		 */
 		checkboxRadioIconElement() {
 			if (this.indeterminate) {
@@ -161,15 +158,13 @@ export default {
 
 			// Dispatch the checked values as an array if multiple, or single value otherwise
 			const values = this.getInputsSet()
-				.filter(input => input.checked)
-				.map(input => input.value)
+				.filter((input) => input.checked)
+				.map((input) => input.value)
 			this.$emit('update:checked', values)
 		},
 
 		/**
 		 * Get the input set based on this name
-		 *
-		 * @return {Node[]}
 		 */
 		getInputsSet() {
 			return [...document.getElementsByName(this.name)]

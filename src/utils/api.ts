@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { ActivityFactoryQueryOptions, IActivityFactory, IActivityFilter, IActivitySidebarAction } from '../models/ActivityAPI'
-import logger from './logger'
+import type { ActivityFactoryQueryOptions, IActivityFactory, IActivityFilter, IActivitySidebarAction } from '../models/ActivityAPI.ts'
+
+import logger from './logger.ts'
 
 declare global {
 	interface Window {
@@ -25,7 +26,7 @@ declare global {
 				__sidebar_actions: IActivitySidebarAction[]
 				__sidebar_factories: IActivityFactory[]
 				__sidebar_filters: IActivityFilter[]
-			},
+			}
 			Viewer?: {
 				open(options: { path?: string, fileInfo?: unknown }): void
 				get mimetypes(): string[]
@@ -72,6 +73,7 @@ export function getSidebarActions() {
 
 /**
  * Get all additional activity stream entries for a given file object
+ *
  * @param options Filter options for the additonal entries
  */
 export async function getAdditionalEntries(options: ActivityFactoryQueryOptions) {

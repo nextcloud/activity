@@ -6,13 +6,15 @@
 <template>
 	<NcAppNavigation :aria-label="t('activity', 'Activity')">
 		<template #list>
-			<NcAppNavigationItem v-for="navigationItem in navigationList"
+			<NcAppNavigationItem
+				v-for="navigationItem in navigationList"
 				:key="navigationItem.id"
 				:data-navigation="navigationItem.id"
 				:to="navigationItem.id"
 				:name="navigationItem.name">
 				<template v-if="navigationItem.icon" #icon>
-					<img alt=""
+					<img
+						alt=""
 						:src="navigationItem.icon"
 						class="navigation-icon"
 						role="presentation">
@@ -24,7 +26,8 @@
 				<NcCheckboxRadioSwitch type="switch" :checked="hasRSSLink" @update:checked="toggleRSSLink">
 					{{ t('activity', 'Enable RSS feed') }}
 				</NcCheckboxRadioSwitch>
-				<NcInputField v-if="hasRSSLink"
+				<NcInputField
+					v-if="hasRSSLink"
 					v-model="rssLink"
 					:label="t('activity', 'RSS feed')"
 					:show-trailing-button="true"
@@ -35,7 +38,8 @@
 						<IconContentCopy :size="20" />
 					</template>
 				</NcInputField>
-				<NcButton class="settings-link"
+				<NcButton
+					class="settings-link"
 					:href="personalSettingsLink"
 					:title="t('activity', 'Personal notification settings')"
 					type="tertiary">
@@ -52,16 +56,15 @@ import { showError, showSuccess } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import { translate as t } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
-import { computed, ref } from 'vue'
-
 import NcAppNavigation from '@nextcloud/vue/dist/Components/NcAppNavigation.js'
 import NcAppNavigationItem from '@nextcloud/vue/dist/Components/NcAppNavigationItem.js'
 import NcAppNavigationSettings from '@nextcloud/vue/dist/Components/NcAppNavigationSettings.js'
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 import NcInputField from '@nextcloud/vue/dist/Components/NcInputField.js'
+import { computed, ref } from 'vue'
 import IconContentCopy from 'vue-material-design-icons/ContentCopy.vue'
-import logger from '../utils/logger'
+import logger from '../utils/logger.ts'
 
 // Types
 interface INavigationEntry {

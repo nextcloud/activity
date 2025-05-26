@@ -47,7 +47,7 @@ export interface IPreview {
 	 * The file ID
 	 */
 	fileId: number
-	filePath?: string,
+	filePath?: string
 	view: string
 	filename: string
 }
@@ -55,24 +55,24 @@ export interface IPreview {
 export interface IRawActivity {
 	activity_id: number
 	app: string
-	type: string,
-	user: string,
+	type: string
+	user: string
 	subject: string
 	/**
 	 * The subject as sting with placeholders and rich object for formatting.
 	 *
 	 * The rich object might be an empty array due to php associative array to json object conversion
 	 */
-	subject_rich: [string, Record<string, IRichObject> | readonly never[] ],
-	message: string,
+	subject_rich: [string, Record<string, IRichObject> | readonly never[] ]
+	message: string
 	/**
 	 * The message as sting with placeholders and rich object for formatting.
 	 *
 	 * The rich object might be an empty array due to php associative array to json object conversion
 	 */
-	message_rich: [string, Record<string, IRichObject> | readonly never[]],
+	message_rich: [string, Record<string, IRichObject> | readonly never[]]
 	object_type: string
-	object_id: number,
+	object_id: number
 	object_name: string
 	link: string
 	icon: string

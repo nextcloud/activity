@@ -13,7 +13,8 @@
 				<th class="group-header-section">
 					{{ group.name }}
 				</th>
-				<th v-for="(methodName, methodKey) in methods"
+				<th
+					v-for="(methodName, methodKey) in methods"
 					:key="methodKey"
 					class="activity_select_group">
 					{{ methodName }}
@@ -26,13 +27,14 @@
 					<!-- eslint-enable vue/no-v-html -->
 				</th>
 				<td v-for="(methodName, methodKey) in methods" :key="methodKey">
-					<Checkbox :id="`${activityKey}_${methodKey}`"
+					<CheckboxInput
+						:id="`${activityKey}_${methodKey}`"
 						:disabled="!isActivityEnabled(activity, methodKey)"
 						:checked="checkedActivities"
 						:value="`${activityKey}_${methodKey}`"
-						@update:checked="toggleMethodForMethodAndActivity({groupKey, activityKey, methodKey})">
+						@update:checked="toggleMethodForMethodAndActivity({ groupKey, activityKey, methodKey })">
 						{{ actionName(methodKey) }}
-					</Checkbox>
+					</CheckboxInput>
 				</td>
 			</tr>
 		</tbody>
@@ -41,32 +43,28 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
-import Checkbox from './Checkbox.vue'
+import CheckboxInput from './CheckboxInput.vue'
 import { isActivityEnabled } from '../utils/settings.ts'
 
 export default {
 	name: 'ActivityGrid',
 	components: {
-		Checkbox,
+		CheckboxInput,
 	},
+
 	computed: {
-		...mapGetters([
-			'checkedActivities',
-		]),
+		...mapGetters(['checkedActivities']),
+
 		...mapState([
 			'methods',
 			'activityGroups',
-			'emailEnabled',
-			'isEmailSet',
-			'settingBatchtime',
 		]),
 	},
+
 	methods: {
 		isActivityEnabled,
-		...mapActions([
-			'toggleMethodForMethodAndActivity',
-			'toggleMethodForGroup',
-		]),
+		...mapActions(['toggleMethodForMethodAndActivity']),
+
 		actionName(method) {
 			if (method === 'email') {
 				return t('activity', 'Send email')

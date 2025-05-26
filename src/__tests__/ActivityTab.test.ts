@@ -4,7 +4,6 @@
  */
 import { mount } from '@vue/test-utils'
 import { expect, test, vi } from 'vitest'
-
 import ActivityTab from '../views/ActivityTab.vue'
 
 vi.mock('@nextcloud/axios')

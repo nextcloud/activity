@@ -3,17 +3,17 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { IPreview, IRawActivity, IRichObject } from './types'
+import type { IPreview, IRawActivity, IRichObject } from './types.ts'
+
 import moment from '@nextcloud/moment'
 
 export default class ActivityModel {
-
 	_activity: IRawActivity
 
 	/**
 	 * Create the activity object
 	 *
-	 * @param {IRawActivity} rawActivity the activity object from the ocs response
+	 * @param rawActivity the activity object from the ocs response
 	 */
 	constructor(rawActivity: IRawActivity) {
 		if (typeof rawActivity !== 'object') {
@@ -43,10 +43,6 @@ export default class ActivityModel {
 
 	/**
 	 * get the activity id
-	 *
-	 * @return {number}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get id(): number {
 		return this._activity.activity_id
@@ -54,10 +50,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the app causing the activity
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get app(): string {
 		return this._activity.app
@@ -65,10 +57,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity type
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get type(): string {
 		return this._activity.type
@@ -76,10 +64,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the user ID of the user causing the activity or affected by the activity
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get user(): string {
 		return this._activity.user
@@ -87,10 +71,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity subject
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get subject(): string {
 		return this._activity.subject
@@ -98,10 +78,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity subject_rich template
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get subjectRichTemplate(): string {
 		return this._activity.subject_rich[0]
@@ -109,10 +85,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity subject_rich objects
-	 *
-	 * @return {Record<string, IRichObject>}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get subjectRichObjects(): Record<string, IRichObject> {
 		if (Array.isArray(this._activity.subject_rich[1])) {
@@ -124,10 +96,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity message
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get message(): string {
 		return this._activity.message
@@ -135,10 +103,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity message_rich template
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get messageRichTemplate(): string {
 		return this._activity.message_rich[0]
@@ -146,10 +110,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity message_rich objects
-	 *
-	 * @return {Record<string, IRichObject>}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get messageRichObjects(): Record<string, IRichObject> {
 		if (!Array.isArray(this._activity.message_rich[1])) {
@@ -161,10 +121,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the object_type
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get objectType(): string {
 		return this._activity.object_type
@@ -172,10 +128,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity object_id
-	 *
-	 * @return {number}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get objectId(): number {
 		return this._activity.object_id
@@ -183,10 +135,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity object_name
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get objectName(): string {
 		return this._activity.object_name
@@ -194,10 +142,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity link
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get link(): string {
 		return this._activity.link
@@ -205,10 +149,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity icon
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get icon(): string {
 		return this._activity.icon
@@ -216,10 +156,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity datetime
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get datetime(): string {
 		return this._activity.datetime
@@ -227,10 +163,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity formatted date from the current date
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get dateFromNow(): string {
 		return moment(this._activity.datetime).fromNow()
@@ -238,10 +170,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity formatted datetime
-	 *
-	 * @return {string}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get formattedDate(): string {
 		return moment(this._activity.datetime).format('LLL')
@@ -249,10 +177,6 @@ export default class ActivityModel {
 
 	/**
 	 * Get the activity timestamp
-	 *
-	 * @return {number}
-	 * @readonly
-	 * @memberof ActivityModel
 	 */
 	get timestamp(): number {
 		return moment(this._activity.datetime).valueOf()
@@ -264,5 +188,4 @@ export default class ActivityModel {
 	get previews(): IPreview[] {
 		return this._activity.previews ?? []
 	}
-
 }

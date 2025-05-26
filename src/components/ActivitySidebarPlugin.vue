@@ -8,13 +8,14 @@
 </template>
 
 <script setup lang="ts">
-import type { IActivitySidebarAction } from '../models/ActivityAPI'
+import type { IActivitySidebarAction } from '../models/ActivityAPI.ts'
+
 import { getCurrentInstance, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const props = defineProps<{
 	/** The sidebar plugin */
 	plugin: IActivitySidebarAction
-  fileInfo: object | null
+	fileInfo: object | null
 }>()
 
 const emit = defineEmits<{

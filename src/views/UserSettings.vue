@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<NcSettingsSection :name="t('activity', 'Activity')"
+	<NcSettingsSection
+		:name="t('activity', 'Activity')"
 		:description="settingDescription">
 		<ActivityGrid />
 		<EmailSettings />
@@ -12,10 +13,10 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
 import NcSettingsSection from '@nextcloud/vue/dist/Components/NcSettingsSection.js'
-import EmailSettings from '../components/EmailSettings.vue'
+import { mapActions, mapState } from 'vuex'
 import ActivityGrid from '../components/ActivityGrid.vue'
+import EmailSettings from '../components/EmailSettings.vue'
 
 export default {
 	name: 'UserSettings',
@@ -29,6 +30,7 @@ export default {
 		...mapState({
 			emailEnabled: 'emailEnabled',
 		}),
+
 		settingDescription() {
 			if (this.emailEnabled) {
 				return t('activity', 'Choose for which activities you want to get an email or push notification.')
@@ -43,10 +45,7 @@ export default {
 	},
 
 	methods: {
-		...mapActions([
-			'setEndpoint',
-			'toggleEmailEnabled',
-		]),
+		...mapActions(['setEndpoint']),
 	},
 }
 

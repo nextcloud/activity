@@ -3,14 +3,12 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { translate, translatePlural } from '@nextcloud/l10n'
+import { generateUrl } from '@nextcloud/router'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ActivityApp from './views/ActivityApp.vue'
-
-import { translate, translatePlural } from '@nextcloud/l10n'
-import { generateUrl } from '@nextcloud/router'
-
-import { routes } from './routes'
+import { routes } from './routes.ts'
 
 // Set up Vue
 Vue.prototype.t = translate
@@ -27,8 +25,7 @@ const router = new VueRouter({
 
 export default new Vue({
 	el: '#content',
-	// eslint-disable-next-line vue/match-component-file-name
 	name: 'ActivityRoot',
 	router,
-	render: h => h(ActivityApp),
+	render: (h) => h(ActivityApp),
 })

@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<a :href="link"
+	<a
+		:href="link"
 		:title="title">
 		<strong>{{ name }}</strong>
 	</a>
@@ -19,10 +20,12 @@ export default {
 			type: String,
 			required: true,
 		},
+
 		title: {
 			type: String,
 			required: true,
 		},
+
 		link: {
 			type: String,
 			required: true,

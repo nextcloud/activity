@@ -5,7 +5,8 @@
 
 <template>
 	<li class="activity-entry">
-		<NcAvatar :class="[applyMonochromeIconColor, 'activity-entry__icon', 'activity-icon', 'avatardiv--unknown']"
+		<NcAvatar
+			:class="[applyMonochromeIconColor, 'activity-entry__icon', 'activity-icon', 'avatardiv--unknown']"
 			:disable-menu="true"
 			:disable-tooltip="true"
 			:url="activity.icon"
@@ -16,18 +17,22 @@
 			<NcRichText class="activity-entry__content__message" :text="messageText" :arguments="messageArguments" />
 		</div>
 		<span class="hidden-visually">{{ activity.formattedDate }}</span>
-		<NcDateTime class="activity-entry__date"
+		<NcDateTime
+			class="activity-entry__date"
 			:timestamp="timestamp"
 			:ignore-seconds="true"
 			data-testid="activity-date" />
 		<ul v-if="showPreviews" class="activity-entry__preview-wrapper">
-			<li v-for="preview, index in activity.previews"
+			<li
+				v-for="preview, index in activity.previews"
 				:key="preview.fileId ?? `preview-${index}`">
-				<component :is="preview.link ? 'a' : 'span'"
+				<component
+					:is="preview.link ? 'a' : 'span'"
 					class="activity-entry__preview"
 					:href="preview.link"
 					@click="handlePreviewClick($event, preview)">
-					<img class="activity-entry__preview-image"
+					<img
+						class="activity-entry__preview-image"
 						:class="{
 							'activity-entry__preview-mimetype': preview.isMimeTypeIcon,
 						}"
@@ -40,25 +45,16 @@
 </template>
 
 <script lang="ts">
-import type { IPreview } from '../../models/types'
+import type { IPreview } from '../../models/types.ts'
 
 import { translate as t } from '@nextcloud/l10n'
-import { defineComponent } from 'vue'
-import { mapRichObjectsToRichArguments } from '../../utils/richObjects.js'
-
 import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
 import NcDateTime from '@nextcloud/vue/dist/Components/NcDateTime.js'
 import NcRichText from '@nextcloud/vue/dist/Components/NcRichText.js'
-
+import { defineComponent } from 'vue'
 import ActivityModel from '../../models/ActivityModel.js'
 import logger from '../../utils/logger.js'
-
-/**
- * @typedef RichObject
- * @type {object}
- * @property {string} id - The id of the riche object.
- * @property {string} type - The type of the file object.
- */
+import { mapRichObjectsToRichArguments } from '../../utils/richObjects.js'
 
 export default defineComponent({
 	name: 'GenericActivity',
@@ -67,6 +63,7 @@ export default defineComponent({
 		NcDateTime,
 		NcRichText,
 	},
+
 	props: {
 		/**
 		 * The activity to render.
@@ -75,6 +72,7 @@ export default defineComponent({
 			type: ActivityModel,
 			required: true,
 		},
+
 		/**
 		 * Whether to show previews
 		 */
@@ -83,6 +81,7 @@ export default defineComponent({
 			default: false,
 		},
 	},
+
 	computed: {
 		/**
 		 * The timestamp of the activity as JS timestamp
@@ -90,30 +89,35 @@ export default defineComponent({
 		timestamp() {
 			return this.activity.timestamp
 		},
+
 		/**
-		 * @return {string} The activity's messageRichTemplate. Fallback to message if messageRichTemplate does not exists
+		 * @return The activity's messageRichTemplate. Fallback to message if messageRichTemplate does not exists
 		 */
 		messageText() {
 			return this.activity.messageRichTemplate || this.activity.message
 		},
+
 		/**
-		 * @return {object} A map of rich arguments with a Component to build them.
+		 * @return A map of rich arguments with a Component to build them.
 		 */
 		messageArguments() {
 			return mapRichObjectsToRichArguments(this.activity.messageRichObjects)
 		},
+
 		/**
-		 * @return {string} The activity's subjectRichTemplate. Fallback to subject if subjectRichTemplate does not exists
+		 * @return The activity's subjectRichTemplate. Fallback to subject if subjectRichTemplate does not exists
 		 */
 		subjectText() {
 			return this.activity.subjectRichTemplate || this.activity.subject
 		},
+
 		/**
-		 * @return {object} A map of rich arguments with a Component to build them.
+		 * @return A map of rich arguments with a Component to build them.
 		 */
 		subjectArguments() {
 			return mapRichObjectsToRichArguments(this.activity.subjectRichObjects)
 		},
+
 		applyMonochromeIconColor() {
 			// copied from https://github.com/nextcloud/activity/blob/db919d45c45356082b17104614018e2c7e691996/js/script.js#L225
 			const monochromeIcon = this.activity.type !== 'file_created' && this.activity.type !== 'file_deleted' && this.activity.type !== 'favorite' && !this.activity.icon.endsWith('-color.svg')
@@ -123,12 +127,14 @@ export default defineComponent({
 			return ''
 		},
 	},
+
 	methods: {
 		t,
 
 		/**
 		 * Handle clicking a preview
 		 * Check if viewer is available and can open the file, if not navigate to it
+		 *
 		 * @param event The click event
 		 * @param preview The preview to open
 		 */

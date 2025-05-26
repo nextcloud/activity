@@ -4,15 +4,16 @@
 -->
 
 <template>
-	<NcSettingsSection :name="t('activity', 'Default settings')"
+	<NcSettingsSection
+		:name="t('activity', 'Default settings')"
 		:description="t('activity', 'Configure the default notification settings for new accounts.')">
 		<ActivityGrid />
 	</NcSettingsSection>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
 import NcSettingsSection from '@nextcloud/vue/dist/Components/NcSettingsSection.js'
+import { mapActions } from 'vuex'
 import ActivityGrid from '../components/ActivityGrid.vue'
 
 export default {
@@ -22,21 +23,12 @@ export default {
 		NcSettingsSection,
 	},
 
-	computed: {
-		...mapState({
-			emailEnabled: 'emailEnabled',
-		}),
-	},
-
 	mounted() {
 		this.setEndpoint({ endpoint: '/apps/activity/settings/admin' })
 	},
 
 	methods: {
-		...mapActions([
-			'setEndpoint',
-			'toggleEmailEnabled',
-		]),
+		...mapActions(['setEndpoint']),
 	},
 }
 

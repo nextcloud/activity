@@ -5,18 +5,19 @@
 
 <template>
 	<NcSettingsSection :name="t('activity', 'Notification')">
-		<NcCheckboxRadioSwitch type="checkbox"
+		<NcCheckboxRadioSwitch
+			type="checkbox"
 			:checked="emailEnabled"
-			@update:checked="toggleEmailEnabled({emailEnabled: $event})">
+			@update:checked="toggleEmailEnabled({ emailEnabled: $event })">
 			{{ t('activity', 'Enable notification emails') }}
 		</NcCheckboxRadioSwitch>
 	</NcSettingsSection>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 import NcSettingsSection from '@nextcloud/vue/dist/Components/NcSettingsSection.js'
+import { mapActions, mapState } from 'vuex'
 
 export default {
 	name: 'AdminSettings',
@@ -29,6 +30,7 @@ export default {
 		...mapState({
 			emailEnabled: 'emailEnabled',
 		}),
+
 		settingDescription() {
 			if (this.emailEnabled) {
 				return t('activity', 'Choose for which activities you want to get an email or push notification.')

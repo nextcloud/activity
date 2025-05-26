@@ -2,7 +2,7 @@
  * SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
-import ActivityModel from './ActivityModel.js'
+import type ActivityModel from './ActivityModel.js'
 
 interface MountOptions {
 	/**

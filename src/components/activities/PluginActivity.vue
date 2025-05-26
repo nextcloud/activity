@@ -7,12 +7,12 @@
 </template>
 
 <script setup lang="ts">
-import type { IActivitySidebarEntry } from '../../models/ActivityAPI'
+import type { IActivitySidebarEntry } from '../../models/ActivityAPI.ts'
+
 import { getCurrentInstance, onMounted, onUnmounted, ref } from 'vue'
 
 const props = defineProps<{
 	activity: IActivitySidebarEntry
-	showPreviews: boolean
 }>()
 
 const emit = defineEmits<{
