@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "feed فعالیت",
     "Your settings have been updated." : "تنظیمات شما به روز رسانی شد",
     "Settings have been updated." : "تنظیمات به روز رسانی شد ",
+    "remote user" : "کاربر راه دور",
     "Recent activity" : "فعالیت‌های اخیر",
     "No activities" : "بدون فعالیت",
     "More activities" : "فعالیت‌های بیش‌تر",
