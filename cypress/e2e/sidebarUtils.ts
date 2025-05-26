@@ -7,11 +7,7 @@ import { toggleMenuAction } from './filesUtils'
 
 function showSidebarForFile(fileName: string) {
 	closeSidebar()
-	toggleMenuAction(fileName)
-	cy.get('[data-cy-files-list-row-action="details"]')
-		.should('be.visible')
-		.findByRole('menuitem')
-		.click()
+	toggleMenuAction(fileName, 'details')
 	cy.get('#app-sidebar-vue').should('be.visible')
 }
 
@@ -36,14 +32,12 @@ export function showActivityTab(fileName: string) {
 }
 
 export function addToFavorites(fileName: string) {
-	toggleMenuAction(fileName)
-	cy.get('[data-cy-files-list-row-action="favorite"]').should('contain', 'Add to favorites').click()
+	toggleMenuAction(fileName, 'favorite')
 	cy.get('.toast-close').click()
 }
 
 export function removeFromFavorites(fileName: string) {
-	toggleMenuAction(fileName)
-	cy.get('[data-cy-files-list-row-action="favorite"]').should('contain', 'Remove from favorites').click()
+	toggleMenuAction(fileName, 'favorite')
 	cy.get('.toast-close').click()
 }
 
