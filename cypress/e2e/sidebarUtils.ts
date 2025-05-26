@@ -32,7 +32,7 @@ function showSidebarForFile(fileName: string) {
 	cy.get('#app-sidebar-vue').should('be.visible')
 }
 
-function closeSidebar() {
+export function closeSidebar() {
 	cy.get('body')
 		.then(($body) => {
 			if ($body.find('.app-sidebar__close').length !== 0) {
