@@ -42,7 +42,7 @@
 					class="settings-link"
 					:href="personalSettingsLink"
 					:title="t('activity', 'Personal notification settings')"
-					type="tertiary">
+					variant="tertiary">
 					{{ t('activity', 'Personal notification settings') }}
 				</NcButton>
 			</NcAppNavigationSettings>
