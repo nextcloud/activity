@@ -57,7 +57,7 @@ version: 2.7.0
 license: GPL-3.0-or-later
 
 @nextcloud/moment
-version: 1.3.2
+version: 1.3.4
 license: GPL-3.0-or-later
 
 @nextcloud/paths
@@ -73,7 +73,7 @@ version: 0.2.4
 license: GPL-3.0-or-later
 
 @nextcloud/vue
-version: 8.24.0
+version: 8.26.1
 license: AGPL-3.0-or-later
 
 @nextcloud/vue-select
@@ -196,10 +196,6 @@ is-plain-obj
 version: 4.1.0
 license: MIT
 
-lodash.get
-version: 4.4.2
-license: MIT
-
 lowlight
 version: 3.3.0
 license: MIT
@@ -307,10 +303,6 @@ license: MIT
 nanoid
 version: 3.3.11
 license: MIT
-
-node-gettext
-version: 3.0.0
-license: (MIT)
 
 path-browserify
 version: 1.0.1
