@@ -1213,7 +1213,7 @@ class FilesHooks {
 		$activityId = $this->activityData->send($event);
 
 		if ($activityId && !$selfAction && $notificationSetting) {
-			$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
+			$this->notificationGenerator->sendNotificationForEvent($event, $activityId, $notificationSetting);
 		}
 
 		// Add activity to mail queue
