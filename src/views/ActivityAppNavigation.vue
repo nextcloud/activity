@@ -23,7 +23,7 @@
 		</template>
 		<template #footer>
 			<NcAppNavigationSettings :name="t('activity', 'Activity settings')">
-				<NcCheckboxRadioSwitch type="switch" :checked="hasRSSLink" @update:checked="toggleRSSLink">
+				<NcCheckboxRadioSwitch type="switch" v-model="hasRSSLink" @update:model-value="toggleRSSLink">
 					{{ t('activity', 'Enable RSS feed') }}
 				</NcCheckboxRadioSwitch>
 				<NcInputField
