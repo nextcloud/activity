@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { t } from '@nextcloud/l10n'
 import { mapActions, mapState } from 'vuex'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import NcSettingsSection from '@nextcloud/vue/components/NcSettingsSection'
@@ -49,6 +50,8 @@ export default {
 			'setEndpoint',
 			'toggleEmailEnabled',
 		]),
+
+		t,
 	},
 }
 
