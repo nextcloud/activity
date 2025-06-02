@@ -3,14 +3,18 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { App, Component, ComponentPublicInstance } from 'vue'
+import type { ActivityTabType } from './views/ActivityTab.vue'
+
 import LightningBolt from '@mdi/svg/svg/lightning-bolt.svg?raw'
 import { translate as t } from '@nextcloud/l10n'
-import { type App } from 'vue'
 import { createApp } from 'vue'
 
 // Init Activity tab component
-let ActivityTab = null
-let ActivityTabInstance: App<Element> | null = null
+let LazyActivityTab: Component | null = null
+let activityTabApp: App<Element> | null = null
+let activityTabInstance: ComponentPublicInstance<ActivityTabType> | null = null
+
 const activityTab = new OCA.Files.Sidebar.Tab({
 	id: 'activity',
 	name: t('activity', 'Activity'),
@@ -18,32 +22,32 @@ const activityTab = new OCA.Files.Sidebar.Tab({
 
 	async mount(el, fileInfo) {
 		// only load if needed
-		if (ActivityTab === null) {
-			const { default: ActivityTabDef } = await import('./views/ActivityTab.vue')
-			ActivityTab = ActivityTabDef
+		if (LazyActivityTab === null) {
+			const { default: ActivityTab } = await import('./views/ActivityTab.vue')
+			LazyActivityTab = ActivityTab
 		}
 		// destroy previous instance if available
-		if (ActivityTabInstance) {
-			ActivityTabInstance.unmount()
+		if (activityTabApp) {
+			activityTabApp.unmount()
 		}
-		ActivityTabInstance = createApp({ extends: ActivityTab })
+		activityTabApp = createApp(LazyActivityTab)
 		// No need to await this, we will show a loading indicator instead
-		ActivityTabInstance.update(fileInfo)
-		ActivityTabInstance.mount(el)
+		activityTabInstance = activityTabApp.mount(el)
+		activityTabInstance.update(fileInfo)
 	},
 	update(fileInfo) {
-		ActivityTabInstance!.update(fileInfo)
+		activityTabInstance!.update(fileInfo)
 	},
-	unmount() {
-		ActivityTabInstance?.unmount()
-		ActivityTabInstance = null
+	destroy() {
+		activityTabApp?.unmount()
+		activityTabApp = null
 	},
 })
 
 window.addEventListener('DOMContentLoaded', async function() {
 	if (OCA.Files && OCA.Files.Sidebar) {
 		OCA.Files.Sidebar.registerTab(activityTab)
-		const { default: ActivityTabDef } = await import('./views/ActivityTab.vue')
-		ActivityTab = ActivityTabDef
+		const { default: ActivityTab } = await import('./views/ActivityTab.vue')
+		LazyActivityTab = ActivityTab
 	}
 })

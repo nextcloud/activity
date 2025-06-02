@@ -79,3 +79,19 @@ export interface IRawActivity {
 	datetime: string
 	previews?: IPreview[]
 }
+
+export type FileInfo = {
+	id: number
+	name: string
+	path: string
+	mimetype: string
+	icon: string
+	type: string
+	permissions: number
+	mtime: number
+	etag: string
+	mountType: string
+	hasPreview: boolean
+	sharePermissions: number
+	shareAttributes: object[]
+}

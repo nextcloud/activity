@@ -8,7 +8,7 @@
 		:class="{ 'icon-loading': loading }"
 		class="activity">
 		<!-- error message -->
-		<NcEmptyContent v-if="error" :name="error">
+		<NcEmptyContent v-if="error || fileInfo === null" :name="error">
 			<template #icon>
 				<NcIconSvgWrapper :svg="lightningBoltSVG" />
 			</template>
@@ -53,11 +53,14 @@
 	</div>
 </template>
 
-<script>
+<script lang='ts'>
+import type { IActivitySidebarAction, IActivitySidebarEntry } from '../models/ActivityAPI.ts'
+
 import lightningBoltSVG from '@mdi/svg/svg/lightning-bolt.svg?raw'
 import axios from '@nextcloud/axios'
 import { translate as t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
+import { defineComponent, nextTick } from 'vue'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
@@ -67,7 +70,7 @@ import ActivityModel from '../models/ActivityModel.ts'
 import { getActivityFilters, getAdditionalEntries, getSidebarActions } from '../utils/api.ts'
 import logger from '../utils/logger.ts'
 
-export default {
+const ActivityTab = defineComponent({
 	name: 'ActivityTab',
 	components: {
 		ActivityComponent,
@@ -77,14 +80,16 @@ export default {
 		ActivitySidebarPlugin,
 	},
 
+	expose: ['update'],
+
 	data() {
 		return {
 			error: '',
 			loading: true,
 			fileInfo: null,
-			activities: [],
+			activities: [] as (IActivitySidebarEntry | ActivityModel)[],
 			lightningBoltSVG,
-			sidebarPlugins: [],
+			sidebarPlugins: [] as IActivitySidebarAction[],
 		}
 	},
 
@@ -102,7 +107,7 @@ export default {
 			this.sidebarPlugins = []
 			const sidebarPlugins = getSidebarActions()
 			if (sidebarPlugins.length > 0) {
-				this.$nextTick(() => {
+				nextTick(() => {
 					this.sidebarPlugins = sidebarPlugins
 				})
 			}
@@ -160,7 +165,7 @@ export default {
 				if (error.response !== undefined && error.response.status === 304) {
 					return []
 				}
-				throw e
+				throw error
 			}
 		},
 
@@ -169,7 +174,7 @@ export default {
 		 *
 		 * @param activities the activites
 		 */
-		processActivities(activities) {
+		processActivities(activities): ActivityModel[] {
 			activities = activities.map((activity) => new ActivityModel(activity))
 
 			logger.debug(`Processed ${activities.length} activity(ies)`, { activities, fileInfo: this.fileInfo })
@@ -180,7 +185,10 @@ export default {
 
 		t,
 	},
-}
+})
+
+export default ActivityTab
+export type ActivityTabType = typeof ActivityTab
 </script>
 
 <style scoped lang="scss">
