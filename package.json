@@ -21,7 +21,7 @@
     "cypress:component": "cypress run --component",
     "cypress:e2e": "cypress run --e2e",
     "cypress:gui": "cypress open",
-    "dev": "vite --mode development build",
+    "dev": "export NODE_ENV=development; vite --mode development build",
     "lint": "eslint --ext .js,.vue src",
     "lint:fix": "eslint --ext .js,.vue src --fix",
     "precypress:update-snapshots": "TESTING=true npm run dev",
@@ -29,7 +29,7 @@
     "stylelint:fix": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue --fix",
     "test": "TZ=CET NODE_ENV=test vitest run",
     "test:coverage": "TZ=CET NODE_ENV=test vitest --coverage run",
-    "watch": "vite --mode development build --watch"
+    "watch": "export NODE_ENV=development; vite --mode development build --watch"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
