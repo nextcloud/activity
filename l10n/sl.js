@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Objava dejavnosti z viri RSS",
     "Your settings have been updated." : "Nastavitve so posodobljene.",
     "Settings have been updated." : "Nastavitve so posodobljene.",
+    "remote user" : "oddaljeni uporabnik",
     "Recent activity" : "Nedavna dejavnost",
     "No activities" : "Ni dejavnosti",
     "More activities" : "Več dejavnosti",
