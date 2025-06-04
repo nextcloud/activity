@@ -1397,7 +1397,7 @@ class FilesHooks {
 				if ($node->isReadable()) {
 					continue; // overkill ? as rootFolder->get() would throw an exception if file is not available
 				}
-			} catch (\Exception $e) {
+			} catch (\Throwable $e) {
 			}
 
 			$filteredUsers[] = $userId;
