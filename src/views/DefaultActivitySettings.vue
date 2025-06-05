@@ -12,8 +12,9 @@
 </template>
 
 <script>
-import NcSettingsSection from '@nextcloud/vue/dist/Components/NcSettingsSection.js'
+import { t } from '@nextcloud/l10n'
 import { mapActions } from 'vuex'
+import NcSettingsSection from '@nextcloud/vue/components/NcSettingsSection'
 import ActivityGrid from '../components/ActivityGrid.vue'
 
 export default {
@@ -29,6 +30,8 @@ export default {
 
 	methods: {
 		...mapActions(['setEndpoint']),
+
+		t,
 	},
 }
 

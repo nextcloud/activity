@@ -3,33 +3,30 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import type { IActivityGroup } from '../models/ActivitySettings.ts'
+
 import axios from '@nextcloud/axios'
 import { showError, showSuccess } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import { translate as t } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { createStore } from 'vuex'
 import logger from '../utils/logger.ts'
 import { isActivityEnabled, isOneInputUnChecked } from '../utils/settings.ts'
 
-Vue.use(Vuex)
+export type SettingsState = {
+	setting: object
+	activityGroups: IActivityGroup[] // Activity setting groups that should be shown (Files, Calendar, ...)
+	isEmailSet: boolean // Whether the user has a valid email address set
+	emailEnabled: boolean // Whether activity emails should be sent
+	activityDigestEnabled: boolean // Whether the daily digest should be sent
+	settingBatchtime: 0 | 1 | 2 | 3 // How to group the activity emails
+	methods: Array<string> // Available methods for activity (push, mail, ...)
+	endpoint: string // API endpoint to talk to (user or admin settings)
+}
 
-/**
- * @typedef {object} SettingsState
- * @property {object} setting .
- * @property {Object<string, ActivityGroup>} activityGroups Activity setting groups that should be shown (Files, Calendar, ...)
- * @property {boolean} isEmailSet Whether the user has a valid email address set
- * @property {boolean} emailEnabled Whether activity emails should be sent
- * @property {boolean} activityDigestEnabled Whether the daily digest should be sent
- * @property {0|1|2|3} settingBatchtime How to group the activity emails
- * @property {Array<string>} methods Available methods for activity (push, mail, ...)
- * @property {string} endpoint API endpoint to talk to (user or admin settings)
- */
-
-const store = new Vuex.Store({
+const store = new createStore({
 	strict: true,
-	/** @type {SettingsState} */
 	state: {
 		setting: loadState('activity', 'setting'),
 		activityGroups: loadState('activity', 'activity_groups'),
@@ -39,17 +36,16 @@ const store = new Vuex.Store({
 		settingBatchtime: loadState('activity', 'setting_batchtime'),
 		methods: loadState('activity', 'methods'),
 		endpoint: '',
-	},
+	} as SettingsState,
 	getters: {
 		/**
 		 * Return an array of checked activities.
 		 *
-		 * @param {SettingsState} state - The current state.
-		 * @return {Array<string>}
+		 * @param state - The current state.
 		 */
-		checkedActivities(state) {
+		checkedActivities(state: SettingsState) {
 			const methodsEnabled = (activityKey, activity) => {
-				const methods = []
+				const methods = [] as { activityKey: string, method: string, activity: object }[]
 				if (activity.email) {
 					methods.push({ activityKey, method: 'email', activity })
 				}
@@ -72,14 +68,14 @@ const store = new Vuex.Store({
 		/**
 		 * Update the 'enabled' state of a notification method for a given group/activity/method tuple
 		 *
-		 * @param {SettingsState} state - The current state.
-		 * @param {object} payload - The payload.
-		 * @param {string} payload.groupKey - The targeted group
-		 * @param {string} payload.activityKey - The targeted activity
-		 * @param {string} payload.methodKey - The targeted method
-		 * @param {string} payload.value - The value to set
+		 * @param state - The current state.
+		 * @param payload - The payload.
+		 * @param payload.groupKey - The targeted group
+		 * @param payload.activityKey - The targeted activity
+		 * @param payload.methodKey - The targeted method
+		 * @param payload.value - The value to set
 		 */
-		SET_METHOD_FOR_METHOD_AND_ACTIVITY(state, { groupKey, activityKey, methodKey, value }) {
+		SET_METHOD_FOR_METHOD_AND_ACTIVITY(state: SettingsState, { groupKey, activityKey, methodKey, value }) {
 			const group = state.activityGroups[groupKey]
 			const activity = group.activities[activityKey]
 
@@ -90,41 +86,41 @@ const store = new Vuex.Store({
 		/**
 		 * Set the endpoint used to save the settings.
 		 *
-		 * @param {SettingsState} state - The current state.
-		 * @param {object} payload - The payload.
-		 * @param {string} payload.endpoint - Where to POST the saveSettings request.
+		 * @param state - The current state.
+		 * @param payload - The payload.
+		 * @param payload.endpoint - Where to POST the saveSettings request.
 		 */
-		SET_ENDPOINT(state, { endpoint }) {
+		SET_ENDPOINT(state: SettingsState, { endpoint }) {
 			state.endpoint = endpoint
 		},
 		/**
 		 * Set the batch time.
 		 *
-		 * @param {SettingsState} state - The current state.
-		 * @param {object} payload - The payload.
-		 * @param {0|1|2|3} payload.settingBatchtime - The selected batch time.
+		 * @param state - The current state.
+		 * @param payload - The payload.
+		 * @param payload.settingBatchtime - The selected batch time.
 		 */
-		SET_SETTING_BATCHTIME(state, { settingBatchtime }) {
+		SET_SETTING_BATCHTIME(state: SettingsState, { settingBatchtime }) {
 			state.settingBatchtime = settingBatchtime
 		},
 		/**
 		 * Toggle activity digest.
 		 *
-		 * @param {SettingsState} state - The current state.
-		 * @param {object} payload - The payload.
-		 * @param {boolean} payload.activityDigestEnabled - Enabled status of the activity digest.
+		 * @param state - The current state.
+		 * @param payload - The payload.
+		 * @param payload.activityDigestEnabled - Enabled status of the activity digest.
 		 */
-		TOGGLE_ACTIVITY_DIGEST(state, { activityDigestEnabled }) {
+		TOGGLE_ACTIVITY_DIGEST(state: SettingsState, { activityDigestEnabled }) {
 			state.activityDigestEnabled = activityDigestEnabled
 		},
 		/**
 		 * Toggle the availability of mail notifications
 		 *
-		 * @param {SettingsState} state - The current state.
-		 * @param {object} payload - The payload.
-		 * @param {boolean} payload.emailEnabled - Enabled status of the email notifications.
+		 * @param state - The current state.
+		 * @param payload - The payload.
+		 * @param payload.emailEnabled - Enabled status of the email notifications.
 		 */
-		TOGGLE_EMAIL_ENABLED(state, { emailEnabled }) {
+		TOGGLE_EMAIL_ENABLED(state: SettingsState, { emailEnabled }) {
 			state.emailEnabled = emailEnabled
 		},
 	},
@@ -132,10 +128,10 @@ const store = new Vuex.Store({
 		/**
 		 * Set the endpoint used to save the settings.
 		 *
-		 * @param {object} _ - Action context
-		 * @param {Function} _.commit - State modifying function
-		 * @param {object} payload - The payload.
-		 * @param {string} payload.endpoint - Where to POST the saveSettings request.
+		 * @param _ - Action context
+		 * @param _.commit - State modifying function
+		 * @param payload - The payload.
+		 * @param payload.endpoint - Where to POST the saveSettings request.
 		 */
 		setEndpoint({ commit }, { endpoint }) {
 			commit('SET_ENDPOINT', { endpoint })
@@ -144,14 +140,14 @@ const store = new Vuex.Store({
 		/**
 		 * Toggle the 'enabled' state of a notification method for a given group/activity/method tuple
 		 *
-		 * @param {object} _ - Action context
-		 * @param {Function} _.commit - State modifying function
-		 * @param {Function} _.dispatch - Function to dispatch another action
-		 * @param {object} _.state - Current state
-		 * @param {object} payload - The payload.
-		 * @param {string} payload.groupKey - The targeted group
-		 * @param {string} payload.activityKey - The targeted activity
-		 * @param {string} payload.methodKey - The targeted method
+		 * @param _ - Action context
+		 * @param _.commit - State modifying function
+		 * @param _.dispatch - Function to dispatch another action
+		 * @param _.state - Current state
+		 * @param payload - The payload.
+		 * @param payload.groupKey - The targeted group
+		 * @param payload.activityKey - The targeted activity
+		 * @param payload.methodKey - The targeted method
 		 */
 		toggleMethodForMethodAndActivity({ commit, state, dispatch }, { groupKey, activityKey, methodKey }) {
 			const activity = state.activityGroups[groupKey].activities[activityKey]
@@ -173,13 +169,13 @@ const store = new Vuex.Store({
 		/**
 		 * Toggle the 'enabled' state of a notification method for a given group/method tuple
 		 *
-		 * @param {object} _ - Action context
-		 * @param {Function} _.commit - State modifying function
-		 * @param {Function} _.dispatch - Function to dispatch another action
-		 * @param {object} _.state - Current state
-		 * @param {object} payload - The payload.
-		 * @param {string} payload.groupKey - The targeted group
-		 * @param {string} payload.methodKey - The targeted method
+		 * @param _ - Action context
+		 * @param _.commit - State modifying function
+		 * @param _.dispatch - Function to dispatch another action
+		 * @param _.state - Current state
+		 * @param payload - The payload.
+		 * @param payload.groupKey - The targeted group
+		 * @param payload.methodKey - The targeted method
 		 */
 		toggleMethodForGroup({ commit, state, dispatch }, { groupKey, methodKey }) {
 			const activities = Object.values(state.activityGroups[groupKey].activities)
@@ -203,13 +199,13 @@ const store = new Vuex.Store({
 		/**
 		 * Toggle the 'enabled' state of a notification method for a given group/activity tuple
 		 *
-		 * @param {object} _ - Action context
-		 * @param {Function} _.commit - State modifying function
-		 * @param {Function} _.dispatch - Function to dispatch another action
-		 * @param {object} _.state - Current state
-		 * @param {object} payload - The payload.
-		 * @param {string} payload.groupKey - The targeted group
-		 * @param {string} payload.activityKey - The targeted activity
+		 * @param _ - Action context
+		 * @param _.commit - State modifying function
+		 * @param _.dispatch - Function to dispatch another action
+		 * @param _.state - Current state
+		 * @param payload - The payload.
+		 * @param payload.groupKey - The targeted group
+		 * @param payload.activityKey - The targeted activity
 		 */
 		toggleMethodsForActivity({ commit, state, dispatch }, { groupKey, activityKey }) {
 			const activity = state.activityGroups[groupKey].activities[activityKey]
@@ -233,11 +229,11 @@ const store = new Vuex.Store({
 		/**
 		 * Set the batch time.
 		 *
-		 * @param {object} _ - Action context
-		 * @param {Function} _.commit - State modifying function
-		 * @param {Function} _.dispatch - Function to dispatch another action
-		 * @param {object} payload - The payload.
-		 * @param {0|1|2|3} payload.settingBatchtime - The selected batch time.
+		 * @param _ - Action context
+		 * @param _.commit - State modifying function
+		 * @param _.dispatch - Function to dispatch another action
+		 * @param payload - The payload.
+		 * @param payload.settingBatchtime - The selected batch time.
 		 */
 		setSettingBatchtime({ commit, dispatch }, { settingBatchtime }) {
 			commit(
@@ -253,11 +249,11 @@ const store = new Vuex.Store({
 		/**
 		 * Toggle the activity digest.
 		 *
-		 * @param {object} _ - Action context
-		 * @param {Function} _.commit - State modifying function
-		 * @param {Function} _.dispatch - Function to dispatch another action
-		 * @param {object} payload - The payload.
-		 * @param {boolean} payload.activityDigestEnabled - Enabled status of the activity digest.
+		 * @param _ - Action context
+		 * @param _.commit - State modifying function
+		 * @param _.dispatch - Function to dispatch another action
+		 * @param payload - The payload.
+		 * @param payload.activityDigestEnabled - Enabled status of the activity digest.
 		 */
 		toggleActivityDigestEnabled({ commit, dispatch }, { activityDigestEnabled }) {
 			commit(
@@ -273,10 +269,10 @@ const store = new Vuex.Store({
 		/**
 		 * Toggle the availability of mail notifications
 		 *
-		 * @param {object} _ - Action context
-		 * @param {Function} _.commit - State modifying function
-		 * @param {object} payload - The payload.
-		 * @param {boolean} payload.emailEnabled - Enabled status of the email notifications.
+		 * @param _ - Action context
+		 * @param _.commit - State modifying function
+		 * @param payload - The payload.
+		 * @param payload.emailEnabled - Enabled status of the email notifications.
 		 */
 		toggleEmailEnabled({ commit }, { emailEnabled }) {
 			commit(
@@ -292,16 +288,16 @@ const store = new Vuex.Store({
 				showSuccess(t('activity', 'Your settings have been updated.'))
 			} catch (error) {
 				showError(t('activity', 'Unable to save the settings'))
-				logger.error('An error occurred while saving the activity settings', error)
+				logger.error('An error occurred while saving the activity settings', { error })
 			}
 		},
 
 		/**
 		 * Save the currently displayed settings
 		 *
-		 * @param {object} _ - Action context
-		 * @param {object} _.state - Current state
-		 * @param {object} _.getters - Getter functions for the state
+		 * @param _ - Action context
+		 * @param _.state - Current state
+		 * @param _.getters - Getter functions for the state
 		 */
 		async saveSettings({ state, getters }) {
 			try {
@@ -318,7 +314,7 @@ const store = new Vuex.Store({
 				showSuccess(response.data.data.message)
 			} catch (error) {
 				showError(t('activity', 'Unable to save the settings'))
-				logger.error('An error occurred while saving the activity settings', error)
+				logger.error('An error occurred while saving the activity settings', { error })
 			}
 		},
 	},

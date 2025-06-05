@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { t } from '@nextcloud/l10n'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import CheckboxInput from './CheckboxInput.vue'
 import { isActivityEnabled } from '../utils/settings.ts'
@@ -72,6 +73,8 @@ export default {
 				return t('activity', 'Send push notification')
 			}
 		},
+
+		t,
 	},
 }
 </script>

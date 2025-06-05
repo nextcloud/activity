@@ -84,27 +84,27 @@ describe('Check that user\'s settings survive a reload', () => {
 	it('Activity summary survive a reload', () => {
 		cy.intercept({ method: 'POST', url: '**/activity/settings' }).as('apiCall')
 
-		cy.contains('[data-cy-checkbox]', 'Send daily activity summary in the morning')
+		cy.contains('.checkbox-radio-switch-checkbox', 'Send daily activity summary in the morning')
 			.find('input')
 			.check({ force: true })
-		cy.contains('[data-cy-checkbox]', 'Send daily activity summary in the morning')
+		cy.contains('.checkbox-radio-switch-checkbox', 'Send daily activity summary in the morning')
 			.find('input')
 			.should('be.checked')
 		cy.wait('@apiCall')
 			.reload()
 
-		cy.contains('[data-cy-checkbox]', 'Send daily activity summary in the morning')
+		cy.contains('.checkbox-radio-switch-checkbox', 'Send daily activity summary in the morning')
 			.scrollIntoView()
 			.find('input')
 			.should('be.checked')
 
-		cy.contains('[data-cy-checkbox]', 'Send daily activity summary in the morning')
+		cy.contains('.checkbox-radio-switch-checkbox', 'Send daily activity summary in the morning')
 			.find('input')
 			.uncheck({ force: true })
 		cy.wait('@apiCall')
 			.reload()
 
-		cy.contains('[data-cy-checkbox]', 'Send daily activity summary in the morning')
+		cy.contains('.checkbox-radio-switch-checkbox', 'Send daily activity summary in the morning')
 			.scrollIntoView()
 			.find('input')
 			.should('not.be.checked')
