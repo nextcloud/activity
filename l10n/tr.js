@@ -49,7 +49,7 @@ OC.L10N.register(
     "No activity yet" : "Henüz bir işlem yok",
     "Loading more activities" : "Diğer işlemler yükleniyor",
     "No more activities." : "Başka bir işlem yok.",
-    "Could not enable RSS link" : "RSS bağlantısı kullanıma alınamadı",
+    "Could not enable RSS link" : "RSS bağlantısı etkinleştirilemedi",
     "RSS link copied to clipboard" : "RSS bağlantısı panoya kopyalandı",
     "Could not copy the RSS link, please copy manually:" : "RSS bağlantısı panoya kopyalanamadı. Lütfen el ile kopyalayın:",
     "Activity settings" : "İşlem ayarları",
