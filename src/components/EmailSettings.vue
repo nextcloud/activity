@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { t } from '@nextcloud/l10n'
 import { mapActions, mapState } from 'vuex'
 import EmailFrequency from '../models/EmailFrequency.js'
 
@@ -65,6 +66,8 @@ export default {
 
 	methods: {
 		...mapActions(['setSettingBatchtime']),
+
+		t,
 	},
 }
 

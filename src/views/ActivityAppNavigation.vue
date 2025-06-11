@@ -23,7 +23,7 @@
 		</template>
 		<template #footer>
 			<NcAppNavigationSettings :name="t('activity', 'Activity settings')">
-				<NcCheckboxRadioSwitch type="switch" :checked="hasRSSLink" @update:checked="toggleRSSLink">
+				<NcCheckboxRadioSwitch type="switch" v-model="hasRSSLink" @update:model-value="toggleRSSLink">
 					{{ t('activity', 'Enable RSS feed') }}
 				</NcCheckboxRadioSwitch>
 				<NcInputField
@@ -56,13 +56,13 @@ import { showError, showSuccess } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import { translate as t } from '@nextcloud/l10n'
 import { generateUrl } from '@nextcloud/router'
-import NcAppNavigation from '@nextcloud/vue/dist/Components/NcAppNavigation.js'
-import NcAppNavigationItem from '@nextcloud/vue/dist/Components/NcAppNavigationItem.js'
-import NcAppNavigationSettings from '@nextcloud/vue/dist/Components/NcAppNavigationSettings.js'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
-import NcInputField from '@nextcloud/vue/dist/Components/NcInputField.js'
 import { computed, ref } from 'vue'
+import NcAppNavigation from '@nextcloud/vue/components/NcAppNavigation'
+import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
+import NcAppNavigationSettings from '@nextcloud/vue/components/NcAppNavigationSettings'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcInputField from '@nextcloud/vue/components/NcInputField'
 import IconContentCopy from 'vue-material-design-icons/ContentCopy.vue'
 import logger from '../utils/logger.ts'
 

@@ -28,6 +28,8 @@ const props = defineProps<{
 	showPreviews: boolean
 }>()
 
+defineEmits(['reload'])
+
 const activityOptions = computed(() => props)
 
 const activityComponent = computed(() => {
