@@ -70,6 +70,11 @@ class DigestSender {
 				continue;
 			}
 			$userObject = $this->userManager->get($user);
+			if (is_null($userObject)) {
+				// User is not existing
+				$this->logger->info('Exception occurred while retreiving the user object for sending user digest email');
+				continue;
+			}
 			if (!$userObject->isEnabled()) {
 				// User is disabled so do not send the email but update last sent since after enabling avoid flooding
 				$this->updateLastSentForUser($userObject, $now);
