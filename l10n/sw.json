@@ -3,6 +3,8 @@
     "Today" : "Leo",
     "Daily" : "Kila siku",
     "Weekly" : "Kwa kila mwezi",
+    "in {path}" : "Katika {path}",
+    "Home" : "Nyumbani",
     "Notification" : "Taarifa"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
