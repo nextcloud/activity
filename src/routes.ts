@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { RouteConfig } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 
 import ActivityAppFeed from './views/ActivityAppFeed.vue'
 import ActivityAppNavigation from './views/ActivityAppNavigation.vue'
@@ -24,4 +24,4 @@ export const routes = [
 			default: true,
 		},
 	},
-] as RouteConfig[]
+] as RouteRecordRaw[]

@@ -5,7 +5,7 @@
 
 import type { IRichObject } from '../models/types.ts'
 
-import NcUserBubble from '@nextcloud/vue/dist/Components/NcUserBubble.js'
+import NcUserBubble from '@nextcloud/vue/components/NcUserBubble'
 import AddressBookRichArgument from '../components/richArgumentsTypes/AddressBookRichArgument.vue'
 import CalendarEventRichArgument from '../components/richArgumentsTypes/CalendarEventRichArgument.vue'
 import CalendarRichArgument from '../components/richArgumentsTypes/CalendarRichArgument.vue'
