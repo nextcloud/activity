@@ -1,6 +1,7 @@
 OC.L10N.register(
     "activity",
     {
+    "Hello %s" : "Halo %s",
     "Activity" : "Shughuli",
     "Today" : "Leo",
     "Daily" : "Kila siku",
