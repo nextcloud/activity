@@ -4,6 +4,7 @@ OC.L10N.register(
     "Hello %s" : "Halo %s",
     "Activity" : "Shughuli",
     "Today" : "Leo",
+    "Yesterday" : "Jana",
     "Daily" : "Kila siku",
     "Weekly" : "Kwa kila mwezi",
     "in {path}" : "Katika {path}",
