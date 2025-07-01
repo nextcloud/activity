@@ -44,7 +44,7 @@ OC.L10N.register(
     "Choose for which activities you want to get a push notification." : "चुनें कि आप किन गतिविधियों के लिए पुश नोटिफ़िकेशन प्राप्त करना चाहते हैं।",
     "Notification" : "नोटिफ़िकेशन",
     "Enable notification emails" : "अधिसूचना ईमेल सक्षम करें",
-    "Daily activity summary" : "दैनिक गतिविधि सारांश |",
+    "Daily activity summary" : "दैनिक गतिविधि सारांश",
     "Send daily activity summary in the morning" : "सुबह दैनिक गतिविधि सारांश भेजें",
     "Default settings" : "डिफ़ॉल्ट सेटिंग",
     "Configure the default notification settings for new accounts." : "नए खातों के लिए डिफ़ॉल्ट अधिसूचना सेटिंग्स कॉन्फ़िगर करें।",
