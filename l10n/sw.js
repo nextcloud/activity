@@ -2,6 +2,7 @@ OC.L10N.register(
     "activity",
     {
     "Hello %s" : "Halo %s",
+    "Hello %s," : "Hello %s,",
     "Activity" : "Shughuli",
     "Notifications" : "Arifa",
     "Send email" : "Tuma barua pepe",
