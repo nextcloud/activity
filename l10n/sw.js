@@ -10,6 +10,7 @@ OC.L10N.register(
     "Yesterday" : "Jana",
     "Daily" : "Kila siku",
     "Weekly" : "Kwa kila mwezi",
+    "You commented" : "Ulitoa maoni",
     "in {path}" : "Katika {path}",
     "Home" : "Nyumbani",
     "Notification" : "Taarifa"
