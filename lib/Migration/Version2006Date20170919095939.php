@@ -17,6 +17,7 @@ class Version2006Date20170919095939 extends BigIntMigration {
 	 *               ['table1' => ['column1', 'column2'], ...]
 	 * @since 13.0.0
 	 */
+	#[\Override]
 	protected function getColumnsByTable() {
 		return [
 			'activity' => ['activity_id', 'object_id'],
@@ -31,6 +32,7 @@ class Version2006Date20170919095939 extends BigIntMigration {
 	 * @return null|ISchemaWrapper
 	 * @since 13.0.0
 	 */
+	#[\Override]
 	public function changeSchema(IOutput $output, \Closure $schemaClosure, array $options) {
 		/**
 		 * FIXME To prevent slowness on update we don't change the schema.

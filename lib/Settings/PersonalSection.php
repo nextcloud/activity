@@ -36,6 +36,7 @@ class PersonalSection implements IIconSection {
 	 * @returns string
 	 * @since 12
 	 */
+	#[\Override]
 	public function getIcon() {
 		return $this->url->imagePath('activity', 'notifications-dark.svg');
 	}
@@ -47,6 +48,7 @@ class PersonalSection implements IIconSection {
 	 * @returns string
 	 * @since 9.1
 	 */
+	#[\Override]
 	public function getID() {
 		return 'notifications';
 	}
@@ -58,6 +60,7 @@ class PersonalSection implements IIconSection {
 	 * @return string
 	 * @since 9.1
 	 */
+	#[\Override]
 	public function getName() {
 		return $this->l->t('Notifications');
 	}
@@ -70,6 +73,7 @@ class PersonalSection implements IIconSection {
 	 * E.g.: 70
 	 * @since 9.1
 	 */
+	#[\Override]
 	public function getPriority() {
 		return 10;
 	}

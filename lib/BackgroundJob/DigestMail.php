@@ -23,6 +23,7 @@ class DigestMail extends TimedJob {
 		$this->setInterval(60 * 60);
 	}
 
+	#[\Override]
 	protected function run($argument) {
 		$this->digestSender->sendDigests($this->time->getTime());
 	}

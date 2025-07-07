@@ -32,6 +32,7 @@ class ExpireActivities extends TimedJob {
 		$this->config = $config;
 	}
 
+	#[\Override]
 	protected function run($argument): void {
 		// Remove activities that are older then one year
 		$expireDays = $this->config->getSystemValue('activity_expire_days', 365);

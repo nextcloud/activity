@@ -34,6 +34,7 @@ class AdminSection implements IIconSection {
 	 * @returns string
 	 * @since 12
 	 */
+	#[\Override]
 	public function getIcon() {
 		return $this->url->imagePath('activity', 'activity-dark.svg');
 	}
@@ -45,6 +46,7 @@ class AdminSection implements IIconSection {
 	 * @returns string
 	 * @since 9.1
 	 */
+	#[\Override]
 	public function getID() {
 		return 'activity';
 	}
@@ -56,6 +58,7 @@ class AdminSection implements IIconSection {
 	 * @return string
 	 * @since 9.1
 	 */
+	#[\Override]
 	public function getName() {
 		return $this->l->t('Activity');
 	}
@@ -68,6 +71,7 @@ class AdminSection implements IIconSection {
 	 * E.g.: 70
 	 * @since 9.1
 	 */
+	#[\Override]
 	public function getPriority() {
 		return 55;
 	}
