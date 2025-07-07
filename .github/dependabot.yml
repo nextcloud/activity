@@ -12,7 +12,10 @@ updates:
   - 3. to review
   - dependencies
 - package-ecosystem: composer
-  directory: "/vendor-bin/cs-fixer"
+  directories:
+    - "/vendor-bin/cs-fixer"
+    - "/vendor-bin/phpunit"
+    - "/vendor-bin/psalm"
   schedule:
     interval: weekly
     day: saturday
