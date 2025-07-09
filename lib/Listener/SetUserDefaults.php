@@ -25,6 +25,7 @@ class SetUserDefaults implements IEventListener {
 		$this->config = $config;
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!($event instanceof PostLoginEvent)) {
 			return;

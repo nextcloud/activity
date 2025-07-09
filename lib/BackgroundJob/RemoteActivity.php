@@ -24,6 +24,7 @@ class RemoteActivity extends QueuedJob {
 		parent::__construct($timeFactory);
 	}
 
+	#[\Override]
 	protected function run($argument) {
 		call_user_func_array([$this, 'sendActivity'], $argument);
 	}

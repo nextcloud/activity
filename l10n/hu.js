@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Tevékenységi hírfolyam",
     "Your settings have been updated." : "Beállításai sikeresen frissítve.",
     "Settings have been updated." : "Beállítások frissítve.",
+    "remote user" : "távoli felhasználó",
     "Recent activity" : "Legutóbbi tevékenységek",
     "No activities" : "Nincs tevékenység",
     "More activities" : "További tevékenységek",

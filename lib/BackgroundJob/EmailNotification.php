@@ -29,6 +29,7 @@ class EmailNotification extends TimedJob {
 		$this->setInterval(1);
 	}
 
+	#[\Override]
 	protected function run($argument) {
 		// We don't use time() but "time() - 1" here, so we don't run into
 		// runtime issues later and delete emails, which were created in the

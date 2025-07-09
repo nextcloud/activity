@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Canal d'activitat",
     "Your settings have been updated." : "S'han actualitzat els vostres paràmetres.",
     "Settings have been updated." : "S'han actualitzat els paràmetres.",
+    "remote user" : "Usuari remot",
     "Recent activity" : "Activitat recent",
     "No activities" : "No hi ha cap activitat",
     "More activities" : "Més activitat",

@@ -92,14 +92,17 @@ class NotificationGenerator implements INotifier {
 		return $event;
 	}
 
+	#[\Override]
 	public function getID(): string {
 		return 'activity';
 	}
 
+	#[\Override]
 	public function getName(): string {
 		return 'Activity';
 	}
 
+	#[\Override]
 	public function prepare(INotification $notification, string $languageCode): INotification {
 		if ($notification->getObjectType() !== 'activity_notification') {
 			throw new UnknownNotificationException();

@@ -48,10 +48,10 @@
 import type { IPreview } from '../../models/types.ts'
 
 import { translate as t } from '@nextcloud/l10n'
-import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar.js'
-import NcDateTime from '@nextcloud/vue/dist/Components/NcDateTime.js'
-import NcRichText from '@nextcloud/vue/dist/Components/NcRichText.js'
 import { defineComponent } from 'vue'
+import NcAvatar from '@nextcloud/vue/components/NcAvatar'
+import NcDateTime from '@nextcloud/vue/components/NcDateTime'
+import NcRichText from '@nextcloud/vue/components/NcRichText'
 import ActivityModel from '../../models/ActivityModel.js'
 import logger from '../../utils/logger.js'
 import { mapRichObjectsToRichArguments } from '../../utils/richObjects.js'

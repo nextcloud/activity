@@ -20,6 +20,7 @@ class Version2006Date20170808155040 extends SimpleMigrationStep {
 	 * @throws \Doctrine\DBAL\Schema\SchemaException
 	 * @since 13.0.0
 	 */
+	#[\Override]
 	public function changeSchema(IOutput $output, \Closure $schemaClosure, array $options) {
 		/** @var ISchemaWrapper $schema */
 		/**

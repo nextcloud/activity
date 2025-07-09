@@ -45,6 +45,7 @@ class Personal implements ISettings {
 		$this->initialState = $initialState;
 	}
 
+	#[\Override]
 	public function getForm(): TemplateResponse {
 		$settings = $this->manager->getSettings();
 		usort($settings, static function (ActivitySettings $a, ActivitySettings $b): int {
@@ -144,6 +145,7 @@ class Personal implements ISettings {
 	/**
 	 * @return string the section ID, e.g. 'sharing'
 	 */
+	#[\Override]
 	public function getSection() {
 		return 'notifications';
 	}
@@ -155,6 +157,7 @@ class Personal implements ISettings {
 	 *
 	 * E.g.: 70
 	 */
+	#[\Override]
 	public function getPriority() {
 		return 55;
 	}

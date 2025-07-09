@@ -56,6 +56,7 @@ class Application extends App implements IBootstrap {
 	/**
 	 * @psalm-suppress UndefinedClass
 	 */
+	#[\Override]
 	public function register(IRegistrationContext $context): void {
 		$context->registerService('ActivityDBConnection', function (ContainerInterface $c) {
 			$systemConfig = $c->get(SystemConfig::class);
@@ -134,6 +135,7 @@ class Application extends App implements IBootstrap {
 		$this->registerFilesActivity($context);
 	}
 
+	#[\Override]
 	public function boot(IBootContext $context): void {
 		$this->registerActivityConsumer();
 		$this->registerNotifier();

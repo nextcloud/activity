@@ -49,6 +49,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getId(): string {
 		return Application::APP_ID;
 	}
@@ -56,6 +57,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getTitle(): string {
 		return $this->l10n->t('Recent activity');
 	}
@@ -63,6 +65,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getOrder(): int {
 		return 20;
 	}
@@ -70,6 +73,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getIconClass(): string {
 		return 'icon-activity';
 	}
@@ -77,6 +81,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getIconUrl(): string {
 		return $this->urlGenerator->getAbsoluteURL(
 			$this->urlGenerator->imagePath(Application::APP_ID, 'activity-dark.svg')
@@ -86,6 +91,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getUrl(): ?string {
 		return $this->urlGenerator->getAbsoluteURL(
 			$this->urlGenerator->linkToRoute(Application::APP_ID . '.Activities.index')
@@ -95,6 +101,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function load(): void {
 		Util::addStyle('activity', 'style');
 	}
@@ -102,6 +109,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getItems(string $userId, ?string $since = null, int $limit = 7): array {
 		// we set the limit to 50 here because data->get might return less activity entries
 		// in the end we take the first 7 of'em
@@ -130,6 +138,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getItemsV2(string $userId, ?string $since = null, int $limit = 7): WidgetItems {
 		// we set the limit to 50 here because data->get might return less activity entries
 		// in the end we take the first 7 of'em
@@ -173,6 +182,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getWidgetButtons(string $userId): array {
 		return [
 			new WidgetButton(
@@ -188,6 +198,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	/**
 	 * @inheritDoc
 	 */
+	#[\Override]
 	public function getReloadInterval(): int {
 		return 30;
 	}

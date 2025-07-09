@@ -25,6 +25,7 @@ class ShareEventListener implements IEventListener {
 	) {
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if ($event instanceof BeforeShareDeletedEvent) {
 			$this->unShare($event);

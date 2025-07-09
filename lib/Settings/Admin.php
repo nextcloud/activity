@@ -32,6 +32,7 @@ class Admin implements ISettings {
 		$this->initialState = $initialState;
 	}
 
+	#[\Override]
 	public function getForm(): TemplateResponse {
 		$settings = $this->manager->getSettings();
 		usort($settings, static function (ActivitySettings $a, ActivitySettings $b): int {
@@ -107,10 +108,12 @@ class Admin implements ISettings {
 		return new TemplateResponse('activity', 'settings/admin', [], 'blank');
 	}
 
+	#[\Override]
 	public function getSection(): string {
 		return 'activity';
 	}
 
+	#[\Override]
 	public function getPriority(): int {
 		return 55;
 	}

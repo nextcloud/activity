@@ -7,17 +7,18 @@
 	<NcSettingsSection :name="t('activity', 'Daily activity summary')">
 		<NcCheckboxRadioSwitch
 			data-cy-checkbox
-			:checked="activityDigestEnabled"
-			@update:checked="toggleActivityDigestEnabled({ activityDigestEnabled: $event })">
+			v-model="activityDigestEnabled"
+			@update:model-value="toggleActivityDigestEnabled({ activityDigestEnabled: $event })">
 			{{ t('activity', 'Send daily activity summary in the morning') }}
 		</NcCheckboxRadioSwitch>
 	</NcSettingsSection>
 </template>
 
 <script>
-import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
-import NcSettingsSection from '@nextcloud/vue/dist/Components/NcSettingsSection.js'
+import { t } from '@nextcloud/l10n'
 import { mapActions, mapState } from 'vuex'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcSettingsSection from '@nextcloud/vue/components/NcSettingsSection'
 
 export default {
 	name: 'DailySummary',
@@ -39,6 +40,8 @@ export default {
 			'setEndpoint',
 			'toggleActivityDigestEnabled',
 		]),
+
+		t,
 	},
 }
 </script>
