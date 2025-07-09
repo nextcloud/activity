@@ -7,7 +7,8 @@
 	xsi:schemaLocation="https://getpsalm.org/schema/config https://getpsalm.org/schema/config"
 	errorBaseline="tests/psalm-baseline.xml"
 	autoloader="vendor-bin/psalm/vendor/autoload.php"
-	phpVersion="8.1">
+	phpVersion="8.1"
+	findUnusedCode="false">
 	<projectFiles>
 		<directory name="lib" />
 		<ignoreFiles>
@@ -22,19 +23,21 @@
 	<issueHandlers>
 		<UndefinedClass>
 			<errorLevel type="suppress">
-				<referencedClass name="Doctrine\DBAL\Platforms\MySQLPlatform" />
 				<referencedClass name="Doctrine\DBAL\Platforms\AbstractMySQLPlatform" />
+				<referencedClass name="Doctrine\DBAL\Platforms\MySQLPlatform" />
+				<referencedClass name="Doctrine\DBAL\Schema\SchemaException" />
+				<referencedClass name="Doctrine\DBAL\Types\Type" />
 				<referencedClass name="Doctrine\DBAL\Types\Types" />
 				<referencedClass name="OC" />
+				<referencedClass name="OCA\Files\Event\LoadSidebar" />
+				<referencedClass name="OCA\Files_Sharing\External\Storage" />
+				<referencedClass name="OCA\Files_Sharing\SharedStorage" />
 				<referencedClass name="OC\Core\Command\Base" />
 				<referencedClass name="OC\Files\Filesystem" />
 				<referencedClass name="OC\Files\View" />
 				<referencedClass name="OC\Hooks\Emitter" />
 				<referencedClass name="OC\TagManager" />
 				<referencedClass name="OC_Template" />
-				<referencedClass name="OCA\Files\Event\LoadSidebar" />
-				<referencedClass name="OCA\Files_Sharing\External\Storage" />
-				<referencedClass name="OCA\Files_Sharing\SharedStorage" />
 			</errorLevel>
 		</UndefinedClass>
 		<UndefinedDocblockClass>

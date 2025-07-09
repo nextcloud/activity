@@ -28,6 +28,7 @@ class Consumer implements IConsumer {
 	 *
 	 * @return void
 	 */
+	#[\Override]
 	public function receive(IEvent $event) {
 		$selfAction = $event->getAffectedUser() === $event->getAuthor();
 		$notificationSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'notification', $event->getType());

@@ -31,6 +31,7 @@ class ByFilter implements IFilter {
 	 * @return string Lowercase a-z only identifier
 	 * @since 9.2.0
 	 */
+	#[\Override]
 	public function getIdentifier() {
 		return 'by';
 	}
@@ -39,6 +40,7 @@ class ByFilter implements IFilter {
 	 * @return string A translated string
 	 * @since 9.2.0
 	 */
+	#[\Override]
 	public function getName() {
 		return $this->l->t('By others');
 	}
@@ -47,6 +49,7 @@ class ByFilter implements IFilter {
 	 * @return int
 	 * @since 9.2.0
 	 */
+	#[\Override]
 	public function getPriority() {
 		return 2;
 	}
@@ -55,6 +58,7 @@ class ByFilter implements IFilter {
 	 * @return string Full URL to an icon, empty string when none is given
 	 * @since 9.2.0
 	 */
+	#[\Override]
 	public function getIcon() {
 		return $this->url->getAbsoluteURL($this->url->imagePath('core', 'places/contacts.svg'));
 	}
@@ -64,6 +68,7 @@ class ByFilter implements IFilter {
 	 * @return string[] An array of allowed apps from which activities should be displayed
 	 * @since 9.2.0
 	 */
+	#[\Override]
 	public function filterTypes(array $types) {
 		return $types;
 	}
@@ -72,6 +77,7 @@ class ByFilter implements IFilter {
 	 * @return string[] An array of allowed apps from which activities should be displayed
 	 * @since 9.2.0
 	 */
+	#[\Override]
 	public function allowedApps() {
 		return [];
 	}

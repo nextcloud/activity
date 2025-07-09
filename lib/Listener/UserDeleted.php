@@ -31,6 +31,7 @@ class UserDeleted implements IEventListener {
 		$this->mailQueueHandler = $mailQueueHandler;
 	}
 
+	#[\Override]
 	public function handle(Event $event): void {
 		if (!($event instanceof UserDeletedEvent)) {
 			return;

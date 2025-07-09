@@ -25,6 +25,7 @@ class RemoveFormerActivitySettings extends TimedJob {
 		$this->setInterval(24 * 60 * 60);
 	}
 
+	#[\Override]
 	protected function run($argument): void {
 		$preferencesToKeep = [
 			'notify_setting_activity_digest',
