@@ -1,9 +1,9 @@
 OC.L10N.register(
     "activity",
     {
-    "Personal activity feed for %s" : "Стужка асабістай актыўнасці для %s",
-    "Your feed URL is invalid" : "URL вашай стужкі несапраўдны",
-    "Activity feed" : "Стужка актыўнасці",
+    "Personal activity feed for %s" : "Лента асабістай актыўнасці для %s",
+    "Your feed URL is invalid" : "URL-адрас вашай ленты несапраўдны",
+    "Activity feed" : "Лента актыўнасці",
     "Your settings have been updated." : "Вашы налады былі абноўлены. ",
     "Settings have been updated." : "Налады былі абноўлены. ",
     "Recent activity" : "Апошняя актыўнасць",
