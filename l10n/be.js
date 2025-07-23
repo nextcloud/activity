@@ -42,7 +42,7 @@ OC.L10N.register(
     "RSS feed" : "Лента RSS",
     "Copy RSS feed link" : "Скапіяваць спасылку да ленты RSS",
     "Personal notification settings" : "Асабістыя налады апавяшчэння",
-    "Unable to load the activity list" : "Не ўдалося загрузіць спіс актыўнасці",
+    "Unable to load the activity list" : "Немагчыма загрузіць спіс актыўнасці",
     "Choose for which activities you want to get an email or push notification." : "Выберыце, для якой актыўнасці вы хочаце атрымліваць электронныя лісты або push-апавяшчэнні.",
     "Choose for which activities you want to get a push notification." : "Выберыце, для якой актыўнасці вы хочаце атрымліваць push-апавяшчэнні.",
     "Notification" : "Апавяшчэнне",
@@ -51,7 +51,7 @@ OC.L10N.register(
     "Send daily activity summary in the morning" : "Адпраўляць штодня зранку зводку актыўнасці",
     "Default settings" : "Прадвызначаныя налады",
     "Configure the default notification settings for new accounts." : "Задайце прадвызначаныя налады апавяшчэнняў для новых уліковых запісаў.",
-    "Unable to save the settings" : "Не ўдалося захаваць налады",
+    "Unable to save the settings" : "Немагчыма захаваць налады",
     "No more events to load" : "Няма больш падзей для загрузкі"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");
