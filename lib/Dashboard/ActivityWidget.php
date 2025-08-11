@@ -15,16 +15,18 @@ use OCA\Activity\UserSettings;
 use OCP\Dashboard\IAPIWidget;
 use OCP\Dashboard\IButtonWidget;
 use OCP\Dashboard\IIconWidget;
+use OCP\Dashboard\IOptionWidget;
 use OCP\Dashboard\IReloadableWidget;
 use OCP\Dashboard\Model\WidgetButton;
 use OCP\Dashboard\Model\WidgetItem;
 use OCP\Dashboard\Model\WidgetItems;
+use OCP\Dashboard\Model\WidgetOptions;
 use OCP\IDateTimeFormatter;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\Util;
 
-class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloadableWidget {
+class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloadableWidget, IOptionWidget {
 	private Data $data;
 	private IL10N $l10n;
 	private GroupHelper $helper;
@@ -190,5 +192,13 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 	 */
 	public function getReloadInterval(): int {
 		return 30;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	#[\Override]
+	public function getWidgetOptions(): WidgetOptions {
+		return new WidgetOptions(true);
 	}
 }
