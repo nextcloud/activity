@@ -31,13 +31,14 @@ use OC\Tags;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCA\Activity\Tests\TestCase;
-use OCA\Files_Sharing\SharedStorage;
+use OCA\Files_Sharing\SharedMount;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\Files\Config\IUserMountCache;
+use OCP\Files\File;
+use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
-use OCP\Files\Mount\IMountPoint;
-use OCP\Files\NotFoundException;
+use OCP\Files\Node;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IGroup;
@@ -172,7 +173,7 @@ class FilesHooksTest extends TestCase {
 		return $user;
 	}
 
-	public function dataFileCreate(): array {
+	public static function dataFileCreate(): array {
 		return [
 			['user', 'created_self', 'created_by', Files::TYPE_SHARE_CREATED],
 			['', '', 'created_public', Files_Sharing::TYPE_PUBLIC_UPLOAD],
@@ -261,16 +262,16 @@ class FilesHooksTest extends TestCase {
 		$this->invokePrivate($filesHooks, 'addNotificationsForFileAction', ['/test.txt.part', '', '', '']);
 	}
 
-	public function dataAddNotificationsForFileAction(): array {
+	public static function dataAddNotificationsForFileAction(): array {
 		return [
 			[
 				[
 					'email' => ['user' => 42],
 					'notification' => ['user' => true],
 				],
-				'mountcache_used' => false,
+				'mountCacheUsed' => false,
 				'isFavorite' => true,
-				[
+				'addNotifications' => [
 					'user' => [
 						'subject' => 'restored_self',
 						'subject_params' => [[1337 => '/user/files/path']],
@@ -292,9 +293,9 @@ class FilesHooksTest extends TestCase {
 					'email' => [],
 					'notification' => ['user1' => false],
 				],
-				'mountcache_used' => false,
+				'mountCacheUsed' => false,
 				'isFavorite' => true,
-				[
+				'addNotifications' => [
 					'user' => [
 						'subject' => 'restored_self',
 						'subject_params' => [[1337 => '/user/files/path']],
@@ -316,9 +317,9 @@ class FilesHooksTest extends TestCase {
 					'email' => ['user' => 42],
 					'notification' => ['user' => false],
 				],
-				'mountcache_used' => true,
+				'mountCacheUsed' => true,
 				'isFavorite' => true,
-				[
+				'addNotifications' => [
 					'user' => [
 						'subject' => 'restored_self',
 						'subject_params' => [[1337 => '/path']],
@@ -340,9 +341,9 @@ class FilesHooksTest extends TestCase {
 					'email' => [],
 					'notification' => ['user1' => true],
 				],
-				'mountcache_used' => true,
+				'mountCacheUsed' => true,
 				'isFavorite' => true,
-				[
+				'addNotifications' => [
 					'user' => [
 						'subject' => 'restored_self',
 						'subject_params' => [[1337 => '/path']],
@@ -464,13 +465,29 @@ class FilesHooksTest extends TestCase {
 				Files::TYPE_SHARE_RESTORED,
 			];
 		}
+		$receivedActivities = [];
 		$filesHooks->expects($this->any())
 			->method('addNotificationsForUser')
-			->withConsecutive(
-				...$addCalls
-			);
+			->willReturnCallback(function (...$params) use (&$receivedActivities) {
+				$receivedActivities[] = $params;
+			});
 
 		self::invokePrivate($filesHooks, 'addNotificationsForFileAction', ['path', Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by']);
+
+		$this->assertEquals($addCalls, array_slice($receivedActivities, 0, count($addCalls)));
+	}
+
+	private function getNodeMock(int $fileId = 1337, string $path = 'path', bool $isFile = true): Node&MockObject {
+		if ($isFile) {
+			$node = $this->createMock(File::class);
+		} else {
+			$node = $this->createMock(Folder::class);
+		}
+		$node->method('getId')
+			->willReturn($fileId);
+		$node->method('getPath')
+			->willReturn($path);
+		return $node;
 	}
 
 	public function testHookShareWithUser(): void {
@@ -478,9 +495,11 @@ class FilesHooksTest extends TestCase {
 			'shareWithUser',
 		]);
 
+		$node = $this->getNodeMock();
+
 		$filesHooks->expects($this->once())
 			->method('shareWithUser')
-			->with('u1', 1337, 'file', 'path');
+			->with('u1', $node, 'path');
 
 		/** @var ShareIManager */
 		$manager = \OC::$server->get(ShareIManager::class);
@@ -488,8 +507,7 @@ class FilesHooksTest extends TestCase {
 		$share->setSharedWith('u1');
 		$share->setShareType(IShare::TYPE_USER);
 		$share->setTarget('path');
-		$share->setNodeType('file');
-		$share->setNodeId(1337);
+		$share->setNode($node);
 
 		$filesHooks->share($share);
 	}
@@ -499,9 +517,11 @@ class FilesHooksTest extends TestCase {
 			'shareWithGroup',
 		]);
 
+		$node = $this->getNodeMock();
+
 		$filesHooks->expects($this->once())
 			->method('shareWithGroup')
-			->with('g1', 1337, 'file', 'path', 42);
+			->with('g1', $node, 'path', 42);
 
 		/** @var ShareIManager */
 		$manager = \OC::$server->get(ShareIManager::class);
@@ -510,8 +530,7 @@ class FilesHooksTest extends TestCase {
 		$share->setSharedWith('g1');
 		$share->setShareType(IShare::TYPE_GROUP);
 		$share->setTarget('path');
-		$share->setNodeType('file');
-		$share->setNodeId(1337);
+		$share->setNode($node);
 
 		$filesHooks->share($share);
 	}
@@ -521,25 +540,27 @@ class FilesHooksTest extends TestCase {
 			'shareByLink',
 		]);
 
+		$node = $this->getNodeMock(1337, 'thepath');
+
 		$filesHooks->expects($this->once())
 			->method('shareByLink')
-			->with(1337, 'file', 'admin');
+			->with($node, 'admin');
 
 		/** @var ShareIManager */
 		$manager = \OC::$server->get(ShareIManager::class);
 		$share = $manager->newShare();
 		$share->setShareType(IShare::TYPE_LINK);
 		$share->setNodeType('file');
-		$share->setNodeId(1337);
+		$share->setNode($node);
 		$share->setSharedBy('admin');
 
 		$filesHooks->share($share);
 	}
 
-	public function dataShareWithUser(): array {
+	public static function dataShareWithUser(): array {
 		return [
-			['file', '/path.txt', true],
-			['folder', '/path.txt', false],
+			['file', '/path.txt'],
+			['folder', '/path.txt'],
 		];
 	}
 
@@ -550,7 +571,8 @@ class FilesHooksTest extends TestCase {
 	 * @param string $fileTarget
 	 * @param bool $isFile
 	 */
-	public function testShareWithUser(string $itemType, string $fileTarget, bool $isFile): void {
+	public function testShareWithUser(string $itemType, string $fileTarget): void {
+		$isFile = $itemType === 'file';
 		$filesHooks = $this->getFilesHooks([
 			'shareNotificationForSharer',
 			'addNotificationsForUser',
@@ -567,9 +589,10 @@ class FilesHooksTest extends TestCase {
 				]
 			);
 
+		$node = $this->getNodeMock(1337, 'path.txt', $isFile);
 		$filesHooks->expects($this->once())
 			->method('shareNotificationForSharer')
-			->with('shared_user_self', 'recipient', 1337, $itemType);
+			->with('shared_user_self', 'recipient', $node);
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForUser')
 			->with(
@@ -584,7 +607,7 @@ class FilesHooksTest extends TestCase {
 			);
 
 		self::invokePrivate($filesHooks, 'shareWithUser', [
-			'recipient', 1337, $itemType, $fileTarget, true
+			'recipient', $node, $fileTarget, true
 		]);
 	}
 
@@ -602,11 +625,11 @@ class FilesHooksTest extends TestCase {
 			->method('shareNotificationForSharer');
 
 		self::invokePrivate($filesHooks, 'shareWithGroup', [
-			'no-group', 0, '', '', 0, true
+			'no-group', $this->getNodeMock(), '', 0, true
 		]);
 	}
 
-	public function dataShareWithGroup(): array {
+	public static function dataShareWithGroup(): array {
 		return [
 			[
 				[
@@ -615,13 +638,13 @@ class FilesHooksTest extends TestCase {
 			],
 			[
 				[
-					[$this->getUserMock('user1')],
+					['user1'],
 					[],
 				], 2, 1, [], [], []
 			],
 			[
 				[
-					[$this->getUserMock('user1')],
+					['user1'],
 					[],
 				],
 				2, 1,
@@ -642,7 +665,7 @@ class FilesHooksTest extends TestCase {
 			],
 			[
 				[
-					[$this->getUserMock('user1')],
+					['user1'],
 					[],
 				],
 				2, 1,
@@ -655,7 +678,7 @@ class FilesHooksTest extends TestCase {
 			],
 			[
 				[
-					[$this->getUserMock('user')],
+					['user'],
 					[],
 				],
 				0, 0,
@@ -676,6 +699,12 @@ class FilesHooksTest extends TestCase {
 	 * @param array $addNotifications
 	 */
 	public function testShareWithGroup(array $usersInGroup, int $settingCalls, int $fixCalls, array $settingUsers, array $settingsReturn, array $addNotifications): void {
+		foreach ($usersInGroup as &$users) {
+			$users = array_map($this->getUserMock(...), $users);
+		}
+
+		$node = $this->getNodeMock(42);
+
 		$filesHooks = $this->getFilesHooks([
 			'shareNotificationForSharer',
 			'addNotificationsForUser',
@@ -701,14 +730,14 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('shareNotificationForSharer')
-			->with('shared_group_self', 'group1', 42, 'file');
+			->with('shared_group_self', 'group1', $node);
 		$filesHooks->expects($this->exactly($fixCalls))
 			->method('fixPathsForShareExceptions')
 			->with($this->anything(), 1337)
 			->willReturnArgument(0);
 		$filesHooks->expects($this->once())
 			->method('shareNotificationForOriginalOwners')
-			->with('user', 'reshared_group_by', 'group1', 42, 'file')
+			->with('user', 'reshared_group_by', 'group1', $node)
 			->willReturnArgument(0);
 
 		$addCalls = [];
@@ -725,47 +754,25 @@ class FilesHooksTest extends TestCase {
 				Files_Sharing::TYPE_SHARED,
 			];
 		}
+		$receivedActivities = [];
 		$filesHooks->expects($this->any())
 			->method('addNotificationsForUser')
-			->withConsecutive(
-				...$addCalls
-			);
+			->willReturnCallback(function (...$params) use (&$receivedActivities) {
+				$receivedActivities[] = $params;
+			});
 
 		self::invokePrivate($filesHooks, 'shareWithGroup', [
-			'group1', 42, 'file', '/file', 1337, true
+			'group1', $node, '/file', 1337
 		]);
+		$this->assertEquals($addCalls, $receivedActivities);
 	}
 
-	public function dataReshareNotificationForSharer(): array {
-		return [
-			[null],
-			['/path'],
-		];
-	}
-
-	/**
-	 * @dataProvider dataReshareNotificationForSharer
-	 * @param string $path
-	 */
-	public function testReshareNotificationForSharer(?string $path): void {
+	public function testReshareNotificationForSharer(): void {
 		$filesHooks = $this->getFilesHooks([
 			'addNotificationsForUser',
 		]);
 
-		$this->view->expects($this->once())
-			->method('chroot')
-			->with('/owner/files');
-		if ($path === null) {
-			$this->view->expects($this->once())
-				->method('getPath')
-				->willThrowException(new NotFoundException());
-		} else {
-			$this->view->expects($this->once())
-				->method('getPath')
-				->willReturn($path);
-		}
-
-		$this->settings->expects(($path !== null) ? $this->exactly(3) : $this->never())
+		$this->settings->expects($this->exactly(3))
 			->method('getUserSetting')
 			->willReturnMap([
 				['owner', 'notification', Files_Sharing::TYPE_SHARED, true],
@@ -773,7 +780,7 @@ class FilesHooksTest extends TestCase {
 				['owner', 'setting', 'batchtime', 21],
 			]);
 
-		$filesHooks->expects(($path !== null) ? $this->once() : $this->never())
+		$filesHooks->expects($this->once())
 			->method('addNotificationsForUser')
 			->with(
 				'owner',
@@ -786,37 +793,18 @@ class FilesHooksTest extends TestCase {
 				21
 			);
 
-		self::invokePrivate($filesHooks, 'reshareNotificationForSharer', ['owner', 'reshared_link_by', '', 42, 'file']);
+		self::invokePrivate($filesHooks, 'reshareNotificationForSharer', ['owner', 'reshared_link_by', '', 42, '/path', true]);
 	}
 
-	public function dataShareNotificationForSharer(): array {
-		return [
-			[null],
-			['/path'],
-		];
-	}
-
-	/**
-	 * @dataProvider dataShareNotificationForSharer
-	 * @param string $path
-	 */
-	public function testShare(?string $path): void {
+	public function testShare(): void {
 		$filesHooks = $this->getFilesHooks([
 			'addNotificationsForUser',
 			'shareNotificationForOriginalOwners',
 		]);
 
-		if ($path === null) {
-			$this->view->expects($this->once())
-				->method('getPath')
-				->willThrowException(new NotFoundException());
-		} else {
-			$this->view->expects($this->once())
-				->method('getPath')
-				->willReturn($path);
-		}
+		$node = $this->getNodeMock(42, '/user/files/path');
 
-		$this->settings->expects(($path !== null) ? $this->exactly(3) : $this->never())
+		$this->settings->expects($this->exactly(3))
 			->method('getUserSetting')
 			->willReturnMap([
 				['user', 'notification', Files_Sharing::TYPE_SHARED, true],
@@ -824,7 +812,7 @@ class FilesHooksTest extends TestCase {
 				['user', 'setting', 'batchtime', 21],
 			]);
 
-		$filesHooks->expects(($path !== null) ? $this->once() : $this->never())
+		$filesHooks->expects($this->once())
 			->method('addNotificationsForUser')
 			->with(
 				'user',
@@ -836,32 +824,16 @@ class FilesHooksTest extends TestCase {
 				true,
 				21
 			);
-		$filesHooks->expects(($path !== null) ? $this->once() : $this->never())
+		$filesHooks->expects($this->once())
 			->method('shareNotificationForOriginalOwners')
-			->with('user', 'reshared_link_by', '', 42, 'file');
+			->with('user', 'reshared_link_by', '', $node);
 
-		self::invokePrivate($filesHooks, 'shareByLink', [42, 'file', 'user']);
+		self::invokePrivate($filesHooks, 'shareByLink', [$node, 'user']);
 	}
 
-	public function testShareNotificationForOriginalOwnersNoPath(): void {
-		$filesHooks = $this->getFilesHooks([
-			'reshareNotificationForSharer',
-		]);
-
-		$this->view->expects($this->once())
-			->method('getPath')
-			->with(42)
-			->willThrowException(new NotFoundException());
-
-		$filesHooks->expects($this->never())
-			->method('reshareNotificationForSharer');
-
-		self::invokePrivate($filesHooks, 'shareNotificationForOriginalOwners', ['', '', '', 42, '', '']);
-	}
-
-	public function dataShareNotificationForOriginalOwners(): array {
+	public static function dataShareNotificationForOriginalOwners(): array {
 		return [
-			[false, false, 'owner', '', 1],
+			[false, false, 'owner', '', 0],
 			[true, false, 'owner', '', 1],
 			[true, true, 'owner', '', 1],
 			[true, true, 'owner', 'owner', 1],
@@ -881,77 +853,47 @@ class FilesHooksTest extends TestCase {
 	 * @param string $shareeUser
 	 * @param int $numReshareNotification
 	 */
-	public function testShareNotificationForOriginalOwners(bool $validMountPoint, bool $validSharedStorage, string $pathOwner, ?string $shareeUser, int $numReshareNotification): void {
+	public function testShareNotificationForOriginalOwners(bool $validMountPoint, bool $validSharedStorage, string $pathOwner, string $shareeUser, int $numReshareNotification): void {
 		$filesHooks = $this->getFilesHooks([
 			'reshareNotificationForSharer',
 		]);
 
-		$this->view->expects($this->atLeastOnce())
-			->method('getPath')
-			->willReturn('/path');
-
-		$this->view->expects($this->once())
-			->method('getOwner')
-			->with('/path')
+		$node = $this->getNodeMock(42, '/path');
+		$mount = $this->createMock(SharedMount::class);
+		$node->method('getMountPoint')
+			->willReturn($mount);
+		$sourceShare = $this->createMock(IShare::class);
+		$sourceShare->method('getShareOwner')
 			->willReturn($pathOwner);
+		$sourceShare->method('getSharedBy')
+			->willReturn($shareeUser);
+		$sourceShare->method('getTarget')
+			->willReturn('/source-path');
+		$mount->method('getShare')
+			->willReturn($sourceShare);
 
 		$filesHooks->expects($this->exactly($numReshareNotification))
 			->method('reshareNotificationForSharer')
-			->with($this->anything(), 'subject', 'with', 42, 'type');
+			->with($this->anything(), 'subject', 'with', 42, '/source-path', 'file');
 
 		if ($validMountPoint) {
-			$storage = $this->getMockBuilder(SharedStorage::class)
-				->disableOriginalConstructor()
-				->onlyMethods([
-					'instanceOfStorage',
-					'getSharedFrom',
-				])
-				->getMock();
-			$storage->expects($this->once())
-				->method('instanceOfStorage')
-				->with(SharedStorage::class)
-				->willReturn($validSharedStorage);
-			$storage->expects($validSharedStorage ? $this->once() : $this->never())
-				->method('getSharedFrom')
-				->willReturn($shareeUser);
-
-			$mount = $this->createMock(IMountPoint::class);
-			$mount->expects($this->once())
-				->method('getStorage')
-				->willReturn($storage);
-
-			$this->view->expects($this->once())
-				->method('getMount')
-				->with('/path')
-				->willReturn($mount);
+			$sourceNode = $this->getNodeMock(42, "/$pathOwner/files/source-path");
+			$sourceShare->method('getNode')
+				->willReturn($sourceNode);
 		} else {
-			$this->view->expects($this->once())
-				->method('getMount')
-				->with('/path')
+			$sourceShare->method('getNode')
 				->willThrowException(new \OCP\Files\NotFoundException());
 		}
 
-		self::invokePrivate($filesHooks, 'shareNotificationForOriginalOwners', ['current', 'subject', 'with', 42, 'type']);
+		self::invokePrivate($filesHooks, 'shareNotificationForOriginalOwners', ['current', 'subject', 'with', $node]);
 	}
 
-	/**
-	 * @dataProvider dataShareNotificationForSharer
-	 * @param string $path
-	 */
-	public function testShareNotificationForSharer(?string $path): void {
+	public function testShareNotificationForSharer(): void {
 		$filesHooks = $this->getFilesHooks(['addNotificationsForUser']);
 
-		if ($path === null) {
-			$this->view->expects($this->once())
-				->method('getPath')
-				->willThrowException(new NotFoundException());
-		} else {
-			$this->view->expects($this->once())
-				->method('getPath')
-				->willReturn($path);
-		}
+		$node = $this->getNodeMock(42, '/user/files/path');
 
-		$this->settings->expects(($path !== null) ? $this->exactly(3) : $this->never())
+		$this->settings->expects($this->exactly(3))
 			->method('getUserSetting')
 			->willReturnMap([
 				['user', 'notification', Files_Sharing::TYPE_SHARED, true],
@@ -959,7 +901,7 @@ class FilesHooksTest extends TestCase {
 				['user', 'setting', 'batchtime', 21],
 			]);
 
-		$filesHooks->expects(($path !== null) ? $this->once() : $this->never())
+		$filesHooks->expects($this->once())
 			->method('addNotificationsForUser')
 			->with(
 				'user',
@@ -972,10 +914,10 @@ class FilesHooksTest extends TestCase {
 				21
 			);
 
-		self::invokePrivate($filesHooks, 'shareNotificationForSharer', ['subject', 'target', 42, 'file']);
+		self::invokePrivate($filesHooks, 'shareNotificationForSharer', ['subject', 'target', $node]);
 	}
 
-	public function dataAddNotificationsForUser(): array {
+	public static function dataAddNotificationsForUser(): array {
 		return [
 			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files_Sharing::TYPE_SHARED, 'files_sharing', false],
 			['user', 'subject', ['parameter'], 42, 'path/subpath', 'path', true, true, false, Files_Sharing::TYPE_SHARED, 'files_sharing', false],
