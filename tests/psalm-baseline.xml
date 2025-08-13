@@ -27,10 +27,6 @@
       <code><![CDATA[Member]]></code>
       <code><![CDATA[protected]]></code>
     </UndefinedClass>
-    <UndefinedDocblockClass>
-      <code><![CDATA[$shareOwner]]></code>
-      <code><![CDATA[$storage]]></code>
-    </UndefinedDocblockClass>
   </file>
   <file src="lib/Migration/Version2008Date20181011095117.php">
     <UndefinedClass>
