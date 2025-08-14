@@ -5,6 +5,7 @@
  * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+
 namespace OCA\Activity;
 
 use OC\Files\Filesystem;
@@ -14,9 +15,11 @@ use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
 use OCA\Circles\CirclesManager;
 use OCA\Circles\Model\Member;
+use OCA\Files_Sharing\SharedMount;
 use OCP\Activity\IManager;
 use OCP\Constants;
 use OCP\Files\Config\IUserMountCache;
+use OCP\Files\File;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
@@ -181,7 +184,7 @@ class FilesHooks {
 				$fileId, $path, true,
 				$filteredEmailUsers[$user] ?? false,
 				$filteredNotificationUsers[$user] ?? false,
-				$activityType
+				$activityType,
 			);
 		}
 	}
@@ -376,7 +379,7 @@ class FilesHooks {
 				$fileId, $path . '/' . $fileName, true,
 				$filteredEmailUsers[$user] ?? false,
 				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_FILE_CHANGED
+				Files::TYPE_FILE_CHANGED,
 			);
 		}
 	}
@@ -478,7 +481,7 @@ class FilesHooks {
 				$fileId, $path . '/' . $oldFileName, true,
 				$filteredEmailUsers[$user] ?? false,
 				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_SHARE_DELETED
+				Files::TYPE_SHARE_DELETED,
 			);
 		}
 		$this->commitActivityTransaction($shouldFlush);
@@ -514,7 +517,7 @@ class FilesHooks {
 				$fileId, $path . '/' . $fileName, true,
 				$filteredEmailUsers[$user] ?? false,
 				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_FILE_CHANGED
+				Files::TYPE_FILE_CHANGED,
 			);
 		}
 		$this->commitActivityTransaction($shouldFlush);
@@ -557,7 +560,7 @@ class FilesHooks {
 				$fileId, $afterPathMap[$user] . '/' . $fileName, true,
 				$filteredEmailUsers[$user] ?? false,
 				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_FILE_CHANGED
+				Files::TYPE_FILE_CHANGED,
 			);
 		}
 		$this->commitActivityTransaction($shouldFlush);
@@ -654,25 +657,22 @@ class FilesHooks {
 			case IShare::TYPE_USER:
 				$this->shareWithUser(
 					$share->getSharedWith(),
-					$share->getNodeId(),
-					$share->getNodeType(),
-					$share->getTarget()
+					$share->getNode(),
+					$share->getTarget(),
 				);
 				break;
 			case IShare::TYPE_GROUP:
 				$this->shareWithGroup(
 					$share->getSharedWith(),
-					$share->getNodeId(),
-					$share->getNodeType(),
+					$share->getNode(),
 					$share->getTarget(),
-					(int)$share->getId()
+					(int)$share->getId(),
 				);
 				break;
 			case IShare::TYPE_CIRCLE:
 				$this->shareWithTeam(
 					$share->getSharedWith(),
-					$share->getNodeId(),
-					$share->getNodeType(),
+					$share->getNode(),
 					$share->getTarget(),
 					(int)$share->getId(),
 					$share->getSharedBy(),
@@ -680,9 +680,8 @@ class FilesHooks {
 				break;
 			case IShare::TYPE_LINK:
 				$this->shareByLink(
-					$share->getNodeId(),
-					$share->getNodeType(),
-					$share->getSharedBy()
+					$share->getNode(),
+					$share->getSharedBy(),
 				);
 				break;
 			default:
@@ -695,23 +694,22 @@ class FilesHooks {
 	 * Sharing a file or folder with a user
 	 *
 	 * @param string $shareWith
-	 * @param int $fileSource File ID that is being shared
-	 * @param string $itemType File type that is being shared (file or folder)
+	 * @param Node $fileSource File that is being shared
 	 * @param string $fileTarget File path
 	 */
-	protected function shareWithUser($shareWith, $fileSource, $itemType, $fileTarget) {
+	protected function shareWithUser(string $shareWith, Node $fileSource, string $fileTarget) {
 		// User performing the share
-		$this->shareNotificationForSharer('shared_user_self', $shareWith, $fileSource, $itemType);
+		$this->shareNotificationForSharer('shared_user_self', $shareWith, $fileSource);
 		if ($this->currentUser->getUID() !== null) {
-			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'reshared_user_by', $shareWith, $fileSource, $itemType);
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'reshared_user_by', $shareWith, $fileSource);
 		}
 
 		// New shared user
 		$this->addNotificationsForUser(
-			$shareWith, 'shared_with_by', [[$fileSource => $fileTarget], $this->currentUser->getUserIdentifier()],
-			(int)$fileSource, $fileTarget, $itemType === 'file',
+			$shareWith, 'shared_with_by', [[$fileSource->getId() => $fileTarget], $this->currentUser->getUserIdentifier()],
+			$fileSource->getId(), $fileTarget, $fileSource instanceof File,
 			$this->userSettings->getUserSetting($shareWith, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($shareWith, 'setting', 'batchtime') : false,
-			(bool)$this->userSettings->getUserSetting($shareWith, 'notification', Files_Sharing::TYPE_SHARED)
+			(bool)$this->userSettings->getUserSetting($shareWith, 'notification', Files_Sharing::TYPE_SHARED),
 		);
 	}
 
@@ -719,12 +717,11 @@ class FilesHooks {
 	 * Sharing a file or folder with a group
 	 *
 	 * @param string $shareWith
-	 * @param int $fileSource File ID that is being shared
-	 * @param string $itemType File type that is being shared (file or folder)
+	 * @param Node $fileSource File that is being shared
 	 * @param string $fileTarget File path
 	 * @param int $shareId The Share ID of this share
 	 */
-	protected function shareWithGroup($shareWith, $fileSource, $itemType, $fileTarget, $shareId) {
+	protected function shareWithGroup(string $shareWith, Node $fileSource, string $fileTarget, int $shareId) {
 		// Members of the new group
 		$group = $this->groupManager->get($shareWith);
 		if (!($group instanceof IGroup)) {
@@ -732,16 +729,16 @@ class FilesHooks {
 		}
 
 		// User performing the share
-		$this->shareNotificationForSharer('shared_group_self', $shareWith, $fileSource, $itemType);
+		$this->shareNotificationForSharer('shared_group_self', $shareWith, $fileSource);
 		if ($this->currentUser->getUID() !== null) {
-			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'reshared_group_by', $shareWith, $fileSource, $itemType);
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'reshared_group_by', $shareWith, $fileSource);
 		}
 
 		$offset = 0;
 		$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		while (!empty($users)) {
 			$userIds = array_map(fn (IUser $user) => $user->getUID(), $users);
-			$this->addNotificationsForUsers($userIds, 'shared_with_by', $fileSource, $itemType, $fileTarget, $shareId);
+			$this->addNotificationsForUsers($userIds, 'shared_with_by', $fileSource, $fileTarget, $shareId);
 			$offset += self::USER_BATCH_SIZE;
 			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		}
@@ -750,26 +747,18 @@ class FilesHooks {
 	/**
 	 * Sharing a file or folder via link/public
 	 *
-	 * @param int $fileSource File ID that is being shared
-	 * @param string $itemType File type that is being shared (file or folder)
-	 * @param string $linkOwner
+	 * @param Node $fileSource File that is being shared
+	 * @param string $sharedBy
 	 */
-	protected function shareByLink($fileSource, $itemType, $linkOwner) {
-		$this->view->chroot('/' . $linkOwner . '/files');
-
-		try {
-			$path = $this->view->getPath($fileSource);
-		} catch (NotFoundException $e) {
-			return;
-		}
-
-		$this->shareNotificationForOriginalOwners($linkOwner, 'reshared_link_by', '', $fileSource, $itemType);
+	protected function shareByLink(Node $fileSource, string $sharedBy) {
+		$relativePath = $this->getUserRelativePath($sharedBy, $fileSource->getPath());
+		$this->shareNotificationForOriginalOwners($sharedBy, 'reshared_link_by', '', $fileSource);
 
 		$this->addNotificationsForUser(
-			$linkOwner, 'shared_link_self', [[$fileSource => $path]],
-			(int)$fileSource, $path, $itemType === 'file',
-			$this->userSettings->getUserSetting($linkOwner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($linkOwner, 'setting', 'batchtime') : false,
-			(bool)$this->userSettings->getUserSetting($linkOwner, 'notification', Files_Sharing::TYPE_SHARED)
+			$sharedBy, 'shared_link_self', [[$fileSource->getId() => $relativePath]],
+			$fileSource->getId(), $relativePath, $fileSource instanceof File,
+			$this->userSettings->getUserSetting($sharedBy, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($sharedBy, 'setting', 'batchtime') : false,
+			(bool)$this->userSettings->getUserSetting($sharedBy, 'notification', Files_Sharing::TYPE_SHARED),
 		);
 	}
 
@@ -777,12 +766,11 @@ class FilesHooks {
 	 * Sharing a file or folder with a team
 	 *
 	 * @param string $shareWith
-	 * @param int $fileSource File ID that is being shared
-	 * @param string $itemType File type that is being shared (file or folder)
+	 * @param Node $fileSource File that is being shared
 	 * @param string $fileTarget File path
 	 * @param int $shareId The Share ID of this share
 	 */
-	protected function shareWithTeam(string $shareWith, int $fileSource, string $itemType, string $fileTarget, int $shareId, string $sharer): void {
+	protected function shareWithTeam(string $shareWith, Node $fileSource, string $fileTarget, int $shareId, string $sharer): void {
 		if ($this->teamManager === null) {
 			return;
 		}
@@ -800,13 +788,13 @@ class FilesHooks {
 		}
 
 		// Activity for user performing the share
-		$this->shareNotificationForSharer('shared_team_self', $shareWith, $fileSource, $itemType);
+		$this->shareNotificationForSharer('shared_team_self', $shareWith, $fileSource);
 		// Activity for original owner of the file (re-sharing)
 		if ($this->currentUser->getUID() !== null) {
-			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 're-shared_team_by', $shareWith, $fileSource, $itemType);
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 're-shared_team_by', $shareWith, $fileSource);
 		}
 		// Activity for all affected users
-		$this->addNotificationsForUsers($userIds, 'shared_with_by', $fileSource, $itemType, $fileTarget, $shareId);
+		$this->addNotificationsForUsers($userIds, 'shared_with_by', $fileSource, $fileTarget, $shareId);
 	}
 
 	/**
@@ -838,7 +826,7 @@ class FilesHooks {
 			if ($share->getShareType() === IShare::TYPE_GROUP) {
 				$this->unshareFromSelfGroup($share);
 			} else {
-				$this->unShare($share);
+				$this->unshareFromUser($share);
 			}
 		}
 	}
@@ -866,11 +854,11 @@ class FilesHooks {
 		}
 
 		// User performing the share
-		$this->shareNotificationForSharer($actionSharer, $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+		$this->shareNotificationForSharer($actionSharer, $share->getSharedWith(), $share->getNode());
 
 		// Owner
 		if ($this->currentUser->getUID() !== null) {
-			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), $actionOwner, $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), $actionOwner, $share->getSharedWith(), $share->getNode());
 		}
 
 		// Recipient
@@ -878,7 +866,7 @@ class FilesHooks {
 			$share->getSharedWith(), $actionUser, [[$share->getNodeId() => $share->getTarget()], $this->currentUser->getUserIdentifier()],
 			$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
 			$this->userSettings->getUserSetting($share->getSharedWith(), 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($share->getSharedWith(), 'setting', 'batchtime') : false,
-			(bool)$this->userSettings->getUserSetting($share->getSharedWith(), 'notification', Files_Sharing::TYPE_SHARED)
+			(bool)$this->userSettings->getUserSetting($share->getSharedWith(), 'notification', Files_Sharing::TYPE_SHARED),
 		);
 	}
 
@@ -890,11 +878,11 @@ class FilesHooks {
 	 */
 	protected function selfUnshareFromUser(IShare $share) {
 		// User performing the share
-		$this->shareNotificationForSharer('self_unshared', $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+		$this->shareNotificationForSharer('self_unshared', $share->getSharedWith(), $share->getNode(), $share->getTarget());
 
 		// Owner
 		if ($this->currentUser->getUID() !== null) {
-			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'self_unshared_by', $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'self_unshared_by', $share->getSharedWith(), $share->getNode());
 		}
 	}
 
@@ -922,9 +910,9 @@ class FilesHooks {
 		}
 
 		// User performing the share
-		$this->shareNotificationForSharer($actionSharer, $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+		$this->shareNotificationForSharer($actionSharer, $share->getSharedWith(), $share->getNode());
 		if ($this->currentUser->getUID() !== null) {
-			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), $actionOwner, $share->getSharedWith(), $share->getNodeId(), $share->getNodeType());
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), $actionOwner, $share->getSharedWith(), $share->getNode());
 		}
 
 		$offset = 0;
@@ -932,7 +920,7 @@ class FilesHooks {
 		$shouldFlush = $this->startActivityTransaction();
 		while (!empty($users)) {
 			$userIds = \array_map(fn (IUser $user) => $user->getUID(), $users);
-			$this->addNotificationsForUsers($userIds, $actionUser, $share->getNodeId(), $share->getNodeType(), $share->getTarget(), (int)$share->getId());
+			$this->addNotificationsForUsers($userIds, $actionUser, $share->getNode(), $share->getTarget(), (int)$share->getId());
 			$offset += self::USER_BATCH_SIZE;
 			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		}
@@ -947,11 +935,11 @@ class FilesHooks {
 	 */
 	protected function unshareFromSelfGroup(IShare $share) {
 		// User performing the unshare
-		$this->shareNotificationForSharer('self_unshared', $this->currentUser->getUID(), $share->getNodeId(), $share->getNodeType());
+		$this->shareNotificationForSharer('self_unshared', $this->currentUser->getUID(), $share->getNode(), $share->getTarget());
 
 		// Owner
 		if ($this->currentUser->getUID() !== null) {
-			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'self_unshared_by', $this->currentUser->getUID(), $share->getNodeId(), $share->getNodeType());
+			$this->shareNotificationForOriginalOwners($this->currentUser->getUID(), 'self_unshared_by', $this->currentUser->getUID(), $share->getNode());
 		}
 	}
 
@@ -977,7 +965,7 @@ class FilesHooks {
 			$owner, $actionSharer, [[$share->getNodeId() => $share->getTarget()]],
 			$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
 			$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false,
-			(bool)$this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED)
+			(bool)$this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED),
 		);
 
 		if ($share->getSharedBy() !== $share->getShareOwner()) {
@@ -986,7 +974,7 @@ class FilesHooks {
 				$owner, $actionOwner, [[$share->getNodeId() => $share->getTarget()], $share->getSharedBy()],
 				$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
 				$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false,
-				(bool)$this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED)
+				(bool)$this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED),
 			);
 		}
 	}
@@ -994,12 +982,11 @@ class FilesHooks {
 	/**
 	 * @param string[] $usersIds
 	 * @param string $actionUser
-	 * @param int $fileSource File ID that is being shared
-	 * @param string $itemType File type that is being shared (file or folder)
+	 * @param Node $fileSource File that is being shared
 	 * @param string $fileTarget File path
 	 * @param int $shareId The Share ID of this share
 	 */
-	protected function addNotificationsForUsers(array $usersIds, $actionUser, $fileSource, $itemType, $fileTarget, $shareId) {
+	protected function addNotificationsForUsers(array $usersIds, string $actionUser, Node $fileSource, string $fileTarget, int $shareId) {
 		$affectedUsers = [];
 
 		foreach ($usersIds as $user) {
@@ -1020,12 +1007,20 @@ class FilesHooks {
 		$affectedUsers = $this->fixPathsForShareExceptions($affectedUsers, $shareId);
 		$shouldFlush = $this->startActivityTransaction();
 		foreach ($affectedUsers as $user => $path) {
-			$this->addNotificationsForUser(
-				$user, $actionUser, [[$fileSource => $path], $this->currentUser->getUserIdentifier()],
-				$fileSource, $path, ($itemType === 'file'),
-				$filteredEmailUsersInGroup[$user] ?? false,
-				$filteredNotificationUsers[$user] ?? false
-			);
+			$emailSetting = $filteredEmailUsersInGroup[$user] ?? false;
+			$notificationSetting = $filteredNotificationUsers[$user] ?? false;
+			if ($emailSetting || $notificationSetting) {
+				$this->addNotificationsForUser(
+					$user,
+					$actionUser,
+					[[$fileSource->getId() => $path], $this->currentUser->getUserIdentifier()],
+					$fileSource->getId(),
+					$path,
+					$fileSource instanceof File,
+					$emailSetting,
+					$notificationSetting,
+				);
+			}
 		}
 		$this->commitActivityTransaction($shouldFlush);
 	}
@@ -1058,107 +1053,78 @@ class FilesHooks {
 	 *
 	 * @param string $subject
 	 * @param string $shareWith
-	 * @param int $fileSource
-	 * @param string $itemType
+	 * @param Node $fileSource
 	 */
-	protected function shareNotificationForSharer($subject, $shareWith, $fileSource, $itemType) {
+	protected function shareNotificationForSharer(string $subject, string $shareWith, Node $fileSource, ?string $path = null) {
 		$sharer = $this->currentUser->getUID();
 		if ($sharer === null) {
 			return;
 		}
-
-		$this->view->chroot('/' . $sharer . '/files');
-
-		try {
-			$path = $this->view->getPath($fileSource);
-		} catch (NotFoundException $e) {
-			return;
+		if (!$path) {
+			$path = $this->getUserRelativePath($sharer, $fileSource->getPath());
 		}
 
 		$this->addNotificationsForUser(
-			$sharer, $subject, [[$fileSource => $path], $shareWith],
-			$fileSource, $path, ($itemType === 'file'),
+			$sharer, $subject, [[$fileSource->getId() => $path], $shareWith],
+			$fileSource->getId(), $path, $fileSource instanceof File,
 			$this->userSettings->getUserSetting($sharer, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($sharer, 'setting', 'batchtime') : false,
-			(bool)$this->userSettings->getUserSetting($sharer, 'notification', Files_Sharing::TYPE_SHARED)
+			(bool)$this->userSettings->getUserSetting($sharer, 'notification', Files_Sharing::TYPE_SHARED),
 		);
 	}
 
 	/**
 	 * Add notifications for the user that shares a file/folder
-	 *
-	 * @param string $owner
-	 * @param string $subject
-	 * @param string $shareWith
-	 * @param int $fileSource
-	 * @param string $itemType
 	 */
-	protected function reshareNotificationForSharer($owner, $subject, $shareWith, $fileSource, $itemType) {
-		$this->view->chroot('/' . $owner . '/files');
-
-		try {
-			$path = $this->view->getPath($fileSource);
-		} catch (NotFoundException $e) {
-			return;
-		}
-
+	protected function reshareNotificationForSharer(string $owner, string $subject, string $shareWith, int $sourceId, string $sourcePath, bool $isFile) {
 		$this->addNotificationsForUser(
-			$owner, $subject, [[$fileSource => $path], $this->currentUser->getUserIdentifier(), $shareWith],
-			$fileSource, $path, ($itemType === 'file'),
+			$owner, $subject, [[$sourceId => $sourcePath], $this->currentUser->getUserIdentifier(), $shareWith],
+			$sourceId, $sourcePath, $isFile,
 			$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false,
-			(bool)$this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED)
+			(bool)$this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED),
 		);
 	}
 
 	/**
 	 * Add notifications for the owners whose files have been reshared
 	 *
-	 * @param string $currentOwner
+	 * @param string $sharedBy
 	 * @param string $subject
 	 * @param string $shareWith
-	 * @param int $fileSource
-	 * @param string $itemType
+	 * @param Node $fileSource
 	 */
-	protected function shareNotificationForOriginalOwners($currentOwner, $subject, $shareWith, $fileSource, $itemType) {
-		// Get the full path of the current user
-		$this->view->chroot('/' . $currentOwner . '/files');
+	protected function shareNotificationForOriginalOwners(string $sharedBy, string $subject, string $shareWith, Node $fileSource) {
+		$mount = $fileSource->getMountPoint();
+		if ($mount instanceof SharedMount) {
+			$sourceShare = $mount->getShare();
+			try {
+				$sourceNode = $sourceShare->getNode();
+			} catch (NotFoundException) {
+				return;
+			}
 
-		try {
-			$path = $this->view->getPath($fileSource);
-		} catch (NotFoundException $e) {
-			return;
+			if ($sourceShare->getShareOwner() !== $sharedBy) {
+				$this->reshareNotificationForSharer(
+					$sourceShare->getShareOwner(),
+					$subject,
+					$shareWith,
+					$sourceNode->getId(),
+					$this->getUserRelativePath($sourceShare->getShareOwner(), $sourceNode->getPath()),
+					$sourceNode instanceof File,
+				);
+			}
+
+
+			if ($sourceShare->getSharedBy() && $sourceShare->getSharedBy() !== $sharedBy && $sourceShare->getShareOwner() !== $sourceShare->getSharedBy()) {
+				$this->reshareNotificationForSharer(
+					$sourceShare->getSharedBy(),
+					$subject,
+					$shareWith,
+					$sourceNode->getId(),
+					$sourceShare->getTarget(),
+					$sourceNode instanceof File,
+				);
+			}
 		}
-
-		/**
-		 * Get the original owner and his path
-		 */
-		$owner = $this->view->getOwner($path);
-		if ($owner !== $currentOwner) {
-			$this->reshareNotificationForSharer($owner, $subject, $shareWith, $fileSource, $itemType);
-		}
-
-		/**
-		 * Get the sharee who shared the item with the currentUser
-		 */
-		$this->view->chroot('/' . $currentOwner . '/files');
-
-		try {
-			$mount = $this->view->getMount($path);
-		} catch (NotFoundException $ex) {
-			return;
-		}
-
-		$storage = $mount->getStorage();
-		if (!$storage->instanceOfStorage('OCA\Files_Sharing\SharedStorage')) {
-			return;
-		}
-
-		/** @var \OCA\Files_Sharing\SharedStorage $storage */
-		$shareOwner = $storage->getSharedFrom();
-		if ($shareOwner === '' || $shareOwner === null || $shareOwner === $owner || $shareOwner === $currentOwner) {
-			return;
-		}
-
-		$this->reshareNotificationForSharer($shareOwner, $subject, $shareWith, $fileSource, $itemType);
 	}
 
 	/**
@@ -1203,7 +1169,7 @@ class FilesHooks {
 				$e->getMessage(),
 				[
 					'app' => 'activity',
-					'exception' => $e
+					'exception' => $e,
 				],
 			);
 		}
@@ -1413,6 +1379,14 @@ class FilesHooks {
 			return $node === null;
 		} catch (NotFoundException $e) {
 			return true;
+		}
+	}
+
+	private function getUserRelativePath(string $userId, string $path): string {
+		if (str_starts_with($path, '/' . $userId . '/files')) {
+			return substr($path, strlen('/' . $userId . '/files'));
+		} else {
+			throw new NotFoundException("$path is not a path for $userId");
 		}
 	}
 }
