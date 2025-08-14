@@ -1007,4 +1007,48 @@ class FilesHooksTest extends TestCase {
 
 		self::invokePrivate($this->filesHooks, 'addNotificationsForUser', [$user, $subject, $parameter, $fileId, $path, $isFile, $email, $notification, $type]);
 	}
+
+	public function testLeaveShare(): void {
+		$filesHooks = $this->getFilesHooks([
+			'addNotificationsForUser',
+			'shareNotificationForOriginalOwners',
+		], 'with');
+
+		$node = $this->getNodeMock(42, '/user/files/path');
+		$share = $this->createMock(IShare::class);
+		$share->method('getNode')
+			->willReturn($node);
+		$share->method('getTarget')
+			->willReturn('/target');
+		$share->method('getNodeType')
+			->willReturn('file');
+		$share->method('getSharedWith')
+			->willReturn('with');
+
+		$this->settings->expects($this->exactly(3))
+			->method('getUserSetting')
+			->willReturnMap([
+				['with', 'notification', Files_Sharing::TYPE_SHARED, true],
+				['with', 'email', Files_Sharing::TYPE_SHARED, true],
+				['with', 'setting', 'batchtime', 21],
+			]);
+
+		$filesHooks->expects($this->once())
+			->method('addNotificationsForUser')
+			->with(
+				'with',
+				'self_unshared',
+				[[42 => '/target'], 'with'],
+				42,
+				'/target',
+				true,
+				true,
+				21
+			);
+		$filesHooks->expects($this->once())
+			->method('shareNotificationForOriginalOwners')
+			->with('with', 'self_unshared_by', 'with', $node);
+
+		self::invokePrivate($filesHooks, 'unShareSelf', [$share]);
+	}
 }
