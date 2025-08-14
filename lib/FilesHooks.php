@@ -826,7 +826,7 @@ class FilesHooks {
 			if ($share->getShareType() === IShare::TYPE_GROUP) {
 				$this->unshareFromSelfGroup($share);
 			} else {
-				$this->unShare($share);
+				$this->unshareFromUser($share);
 			}
 		}
 	}
@@ -878,7 +878,7 @@ class FilesHooks {
 	 */
 	protected function selfUnshareFromUser(IShare $share) {
 		// User performing the share
-		$this->shareNotificationForSharer('self_unshared', $share->getSharedWith(), $share->getNode());
+		$this->shareNotificationForSharer('self_unshared', $share->getSharedWith(), $share->getNode(), $share->getTarget());
 
 		// Owner
 		if ($this->currentUser->getUID() !== null) {
@@ -935,7 +935,7 @@ class FilesHooks {
 	 */
 	protected function unshareFromSelfGroup(IShare $share) {
 		// User performing the unshare
-		$this->shareNotificationForSharer('self_unshared', $this->currentUser->getUID(), $share->getNode());
+		$this->shareNotificationForSharer('self_unshared', $this->currentUser->getUID(), $share->getNode(), $share->getTarget());
 
 		// Owner
 		if ($this->currentUser->getUID() !== null) {
@@ -1055,12 +1055,14 @@ class FilesHooks {
 	 * @param string $shareWith
 	 * @param Node $fileSource
 	 */
-	protected function shareNotificationForSharer(string $subject, string $shareWith, Node $fileSource) {
+	protected function shareNotificationForSharer(string $subject, string $shareWith, Node $fileSource, ?string $path = null) {
 		$sharer = $this->currentUser->getUID();
 		if ($sharer === null) {
 			return;
 		}
-		$path = $this->getUserRelativePath($sharer, $fileSource->getPath());
+		if (!$path) {
+			$path = $this->getUserRelativePath($sharer, $fileSource->getPath());
+		}
 
 		$this->addNotificationsForUser(
 			$sharer, $subject, [[$fileSource->getId() => $path], $shareWith],
