@@ -35,6 +35,7 @@ use OCA\Activity\Tests\TestCase;
 use OCA\Activity\UserSettings;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
+use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
@@ -211,6 +212,7 @@ class APIv1ControllerTest extends TestCase {
 			\OC::$server->query(IValidator::class),
 			\OC::$server->query(\OCP\RichObjectStrings\IRichTextFormatter::class),
 			$this->createMock(IL10N::class),
+			$this->createMock(ITimeFactory::class),
 		);
 		$activityManager->registerProvider(Provider::class);
 		$activityManager->registerSetting(Setting1::class);
