@@ -7,6 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Faoliyat tasmasi",
     "Your settings have been updated." : "Sozlamalaringiz yangilandi.",
     "Settings have been updated." : "Sozlamalar yangilandi.",
+    "remote user" : "masofaviy foydalanuvchi",
     "Recent activity" : "Oxirgi faollik",
     "No activities" : "Hech qanday faollik yo'q",
     "More activities" : "Ko`proq faollik",
