@@ -331,6 +331,11 @@ class MailQueueHandler {
 			$template->addBodyListItem($l->n('and %n more ', 'and %n more ', $skippedCount));
 		}
 
+		$template->addBodyText(
+			$l->t('You can change the frequency of these emails or disable them in the <a href="%s">settings</a>.', $this->urlGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications'])),
+			$l->t('You can change the frequency of these emails or disable them in the settings: %s', $this->urlGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications']))
+		);
+
 		$template->addFooter('', $lang);
 
 		$message = $this->mailer->createMessage();
