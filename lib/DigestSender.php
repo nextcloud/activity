@@ -188,6 +188,11 @@ class DigestSender {
 			);
 		}
 
+		$template->addBodyText(
+			$l10n->t('You can disable daily digest emails in the <a href="%s">settings</a>.', $this->urlGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications'])),
+			$l10n->t('You can disable daily digest emails in the settings: %s', $this->urlGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications']))
+		);
+
 		$template->addFooter('', $language);
 
 		$message = $this->mailer->createMessage();

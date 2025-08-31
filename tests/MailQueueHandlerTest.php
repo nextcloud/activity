@@ -284,7 +284,7 @@ class MailQueueHandlerTest extends TestCase {
 			->method('addHeader');
 		$template->expects($this->once())
 			->method('addHeading');
-		$template->expects($this->once())
+		$template->expects($this->exactly(2))
 			->method('addBodyText');
 		$template->expects($this->once())
 			->method('addFooter');
