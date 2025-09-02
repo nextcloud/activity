@@ -21,6 +21,8 @@ OC.L10N.register(
     "Hello %s," : "哈囉 %s ，",
     "There was some activity at %s" : "%s 有一些活動",
     "_and %n more _::_and %n more _" : ["以及其餘 %n 項"],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "您可以變更這些電子郵寄的頻率或在<a href=\"%s\">設定</a>中停用。",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "您可以變更這些電子郵寄的頻率或在設定中停用：%s",
     "Mail" : "電子郵件",
     "Push" : "推送",
     "Activity" : "活動",

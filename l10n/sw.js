@@ -21,6 +21,8 @@ OC.L10N.register(
     "Hello %s," : "Hello %s,",
     "There was some activity at %s" : "Kulikuwa na shughuli kadhaa katika %s",
     "_and %n more _::_and %n more _" : ["and %n more ","na %n zaidi "],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "Unaweza kubadilisha mara kwa mara barua pepe hizi au kuzizima katika <a href=\"%s\">mipangilio</a>.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "Unaweza kubadilisha mara kwa mara barua pepe hizi au kuzizima katika mipangilio: %s",
     "Mail" : " Barua",
     "Push" : "Bofya",
     "Activity" : "Shughuli",

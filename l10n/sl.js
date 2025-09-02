@@ -21,6 +21,8 @@ OC.L10N.register(
     "Hello %s," : "Pozdravljeni, %s,",
     "There was some activity at %s" : "V oblaku %s se je nekaj dogajalo ...",
     "_and %n more _::_and %n more _" : ["- in še %n","- in še %n","- in še %n","– in še %n"],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "Spremeniti je mogoče pogostost prejemanja teh sporočil oziroma jih v celoti onemogočiti. Možnosti so med <a href=\"%s\">nastavitvami</a>.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "Spremeniti je mogoče pogostost prejemanja teh sporočil oziroma jih v celoti onemogočiti. Možnosti so med nastavitvami: %s",
     "Mail" : "Elektronska pošta",
     "Push" : "Potisno",
     "Activity" : "Dejavnosti",
