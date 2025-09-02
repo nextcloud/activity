@@ -21,6 +21,8 @@ OC.L10N.register(
     "Hello %s," : "Hola %s,",
     "There was some activity at %s" : "Ha habido actividad en %s",
     "_and %n more _::_and %n more _" : ["y 1%n más","y %n más ","y %n más "],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "Puedes cambiar la frecuencia de estos emails o deshabilitarlos en los <a href=\"%s\">Ajustes</a>.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "Puedes cambiar la frecuencia de estos emails o deshabilitarlos en los Ajustes: %s",
     "Mail" : "Correo electrónico",
     "Push" : "Push",
     "Activity" : "Actividad",

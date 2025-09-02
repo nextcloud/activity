@@ -19,6 +19,8 @@
     "Hello %s," : "Hei %s,",
     "There was some activity at %s" : "Det har vært aktivitet ved %s",
     "_and %n more _::_and %n more _" : ["og %n til","og %n til"],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "Du kan endre hyppigheten på disse e-postene eller deaktivere dem i <a href=\"%s\">innstillinger</a>.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "Du kan endre hyppigheten på disse e-postene eller deaktivere dem i innstillingene: %s",
     "Mail" : "E-post",
     "Push" : "Push",
     "Activity" : "Aktivitet",

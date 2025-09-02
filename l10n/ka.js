@@ -19,6 +19,8 @@ OC.L10N.register(
     "Hello %s," : "გამარჯობა, %s,",
     "There was some activity at %s" : "%s-ზე იყო რაღაც აქტივობა",
     "_and %n more _::_and %n more _" : ["and %n more ","და კიდევ %n"],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "You can change the frequency of these emails or disable them in the settings: %s",
     "Mail" : "წერილი",
     "Push" : "Push",
     "Activity" : "აქტივობა",

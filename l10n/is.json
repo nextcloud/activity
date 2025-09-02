@@ -19,6 +19,8 @@
     "Hello %s," : "Halló %s,",
     "There was some activity at %s" : "Það voru einhverjar athafnir í %s",
     "_and %n more _::_and %n more _" : ["og %n til viðbótar","og %n til viðbótar"],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "Þú getur breytt tíðni þessara tölvupósta eða gert þá óvirka í <a href=\"%s\">stillingunum</a>.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "Þú getur breytt tíðni þessara tölvupósta eða gert þá óvirka í stillingunum: %s",
     "Mail" : "Póstur",
     "Push" : "Ýtitilkynning",
     "Activity" : "Athafnir",
