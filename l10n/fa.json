@@ -19,6 +19,8 @@
     "Hello %s," : "سلام %s",
     "There was some activity at %s" : "تعدادی فعالیت در %s وجود دارد",
     "_and %n more _::_and %n more _" : ["و %n بیشتر","و %n بیشتر"],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "You can change the frequency of these emails or disable them in the settings: %s",
     "Mail" : "ایمیل",
     "Push" : "فرستادن",
     "Activity" : "فعالیت",

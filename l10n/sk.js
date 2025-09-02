@@ -21,6 +21,8 @@ OC.L10N.register(
     "Hello %s," : "Ahoj %s,",
     "There was some activity at %s" : "Bola zaznamenaná aktivita u používateľa %s",
     "_and %n more _::_and %n more _" : ["a %n ďalší","a %n ďalšie","a %n ďalších","a %n ďalších"],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "Frekvenciu týchto e-mailov môžete zmeniť alebo ich zakázať v <a href=\"%s\"> nastaveniach </a>.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "Frekvenciu týchto e-mailov môžete zmeniť alebo ich zakázať v nastaveniach: %s",
     "Mail" : "Pošta",
     "Push" : "Vyskakovacie oznámenie",
     "Activity" : "Aktivita",

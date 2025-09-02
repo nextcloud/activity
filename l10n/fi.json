@@ -19,6 +19,8 @@
     "Hello %s," : "Hei %s,",
     "There was some activity at %s" : "%s sisältää joitain uusia tapahtumia",
     "_and %n more _::_and %n more _" : ["ja %n lisää","ja %n lisää"],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "Voit muuttaa näiden sähköpostien lähetystiheyttä tai ottaa ne pois käytöstä <a href=\"%s\">asetuksissa</a>.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "Voit muuttaa näiden sähköpostien lähetystiheyttä tai ottaa ne pois käytöstä asetuksissa:%s",
     "Mail" : "Sähköposti",
     "Push" : "Push",
     "Activity" : "Tapahtumat",

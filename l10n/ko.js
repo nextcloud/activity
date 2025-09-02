@@ -21,6 +21,8 @@ OC.L10N.register(
     "Hello %s," : "%s 님 안녕하세요,",
     "There was some activity at %s" : "%s에 새로운 활동이 있었습니다",
     "_and %n more _::_and %n more _" : ["%n개 더"],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "<a href=\"%s\">설정</a>에서 이메일 발송 주기를 설정하거나 발송을 비활성화할 수 있습니다.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "설정에서 이메일 발송 주기를 설정하거나 발송을 비활성화할 수 있습니다: %s",
     "Mail" : "메일",
     "Push" : "푸시",
     "Activity" : "활동",

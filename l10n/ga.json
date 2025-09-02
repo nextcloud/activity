@@ -19,6 +19,8 @@
     "Hello %s," : "Dia duit %s,",
     "There was some activity at %s" : "Bhí roinnt gníomhaíochta ag %s",
     "_and %n more _::_and %n more _" : ["agus %n níos mó","agus %n níos mó","agus %n níos mó","agus %n níos mó","agus %n níos mó"],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "Is féidir leat minicíocht na ríomhphost seo a athrú nó iad a dhíchumasú sna <a href=\"%s\">socruithe</a>.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "Is féidir leat minicíocht na ríomhphost seo a athrú nó iad a dhíchumasú sna socruithe: %s",
     "Mail" : "Post",
     "Push" : "Brú",
     "Activity" : "Gníomhaíocht",
