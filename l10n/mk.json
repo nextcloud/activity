@@ -11,6 +11,8 @@
     "More activities" : "Повеќе активности",
     "Daily activity summary for %s" : "Дневно резиме на активности за %s",
     "_and %n more…_::_and %n more…_" : ["и %n ","и %n други…"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Можете да ги оневозможите дневните е-пораки во <a href=\"%s\">поставките</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Можете да ги оневозможите дневните е-пораки во поставките: %s",
     "All activities" : "Сите активности",
     "By others" : "Од други",
     "By you" : "Од вас",
