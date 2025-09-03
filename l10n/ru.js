@@ -13,6 +13,8 @@ OC.L10N.register(
     "More activities" : "Больше событий",
     "Daily activity summary for %s" : "Сводка событий за день %s",
     "_and %n more…_::_and %n more…_" : ["и ещё %n…","и ещё  %n…","и ещё %n…","и ещё %n…"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Вы можете отключить ежедневную дайджест-почту в <a href=\"%s\">настройках</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Вы можете отключить ежедневную дайджест-почту в настройках.: %s",
     "All activities" : "Все события",
     "By others" : "Других пользователей",
     "By you" : "Собственные",

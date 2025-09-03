@@ -11,6 +11,8 @@
     "More activities" : "Flere aktiviteter",
     "Daily activity summary for %s" : "Daglig aktivitetsoversigt for %s",
     "_and %n more…_::_and %n more…_" : ["og %n mere...","og %n mere..."],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Du kan deaktivere de daglige resumé e-mails under <a href=\"%s\">indstillingerne</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Du kan deaktivere daglige resumé e-mails under indstillinger: %s",
     "All activities" : "Alle aktiviteter",
     "By others" : "Af andre",
     "By you" : "Af dig",

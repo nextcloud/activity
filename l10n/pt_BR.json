@@ -11,6 +11,8 @@
     "More activities" : "Mais atividades",
     "Daily activity summary for %s" : "Resumo de atividade diária para %s",
     "_and %n more…_::_and %n more…_" : ["e mais %n…","e mais %n…","e mais %n…"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Você pode desativar os e-mails diários com resumos nas <a href=\"%s\">configurações</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Você pode desativar os e-mails diários com resumos nas configurações: %s",
     "All activities" : "Todas as atividades",
     "By others" : "Por outros",
     "By you" : "Por você",

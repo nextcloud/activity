@@ -11,6 +11,8 @@
     "More activities" : "更多活動",
     "Daily activity summary for %s" : "%s 的每日活動摘要",
     "_and %n more…_::_and %n more…_" : ["以及其餘 %n 項……"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "您可以在<a href=\"%s\">設定</a>中停用每日摘要電子郵件。",
+    "You can disable daily digest emails in the settings: %s" : "您可以在設定中停用每日摘要電子郵件：%s",
     "All activities" : "所有活動",
     "By others" : "由其他人",
     "By you" : "由您",

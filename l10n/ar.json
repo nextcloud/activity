@@ -19,6 +19,8 @@
     "Hello %s," : "أهلاً %s،",
     "There was some activity at %s" : "كانت هنالك بعض الأنشطة عند %s",
     "_and %n more _::_and %n more _" : [" و %n المزيد ","و %n آخر","و %n آخرين","و %n أنشطة أخرى","و %n أنشطة أخرى","و %n  أخرى"],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "يٌمكنك تغيير مُعدّل تردُّد هذه الإيميلات؛ أو إيقافها من  <a href=\"%s\"> الإعدادات </a>.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "يٌمكنك تغيير مُعدّل تردُّد هذه الإيميلات؛ أو إيقافها من الإعدادات: %s",
     "Mail" : "البريد",
     "Push" : "إرسال إشعار",
     "Activity" : "الأنشطة",

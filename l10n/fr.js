@@ -13,6 +13,8 @@ OC.L10N.register(
     "More activities" : "Plus d’activités",
     "Daily activity summary for %s" : "Résumé de l’activité du jour pour %s",
     "_and %n more…_::_and %n more…_" : ["et %n de plus…","et %n en plus…","et %n de plus…"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Vous pouvez désactiver les e-mails quotidiens récapitulatifs dans les <a href=\"%s\">paramètres.</a>",
+    "You can disable daily digest emails in the settings: %s" : "Vous pouvez désactiver les e-mails quotidiens récapitulatifs dans les paramètres: %s",
     "All activities" : "Toutes les activités",
     "By others" : "Des autres",
     "By you" : "De vous",
