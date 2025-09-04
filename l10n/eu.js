@@ -13,6 +13,8 @@ OC.L10N.register(
     "More activities" : "Jarduera gehiago",
     "Daily activity summary for %s" : "%s-(r)en eguneko jardueren laburpena",
     "_and %n more…_::_and %n more…_" : ["eta %n gehiago…","eta %n gehiago…"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Eguneroko mezu digitalak desaktiba ditzakezu <a href=\"%s\">ezarpenetan</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Eguneroko mezu digitalak desaktiba ditzakezu ezarpenetan: %s",
     "All activities" : "Jarduera guztiak",
     "By others" : "Besteenak",
     "By you" : "Zureak",

@@ -11,6 +11,8 @@
     "More activities" : "Більше заходів",
     "Daily activity summary for %s" : "Підсумок за день для%s",
     "_and %n more…_::_and %n more…_" : ["та ще %n ..."," та ще %n ...","та ще %n ...","та ще %n ..."],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Ви можете вимкнути щоденну розсилку ел. поштою у <a href=\"%s\">налаштуваннях</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Ви можете вимкнути щоденну розсилку ел. поштою у налаштуваннях: %s",
     "All activities" : "Всі події",
     "By others" : "Дії інших користувачів",
     "By you" : "Мої дії",
