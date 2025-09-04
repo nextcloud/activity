@@ -1,6 +1,6 @@
 {
   "name": "activity",
-  "version": "5.0.0-dev.0",
+  "version": "6.0.0-dev.0",
   "private": true,
   "description": "This application enables people to view a log of activities about them or about files.",
   "homepage": "https://github.com/nextcloud/activity",
