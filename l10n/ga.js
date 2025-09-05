@@ -13,6 +13,8 @@ OC.L10N.register(
     "More activities" : "Tuilleadh gníomhaíochtaí",
     "Daily activity summary for %s" : "Achoimre ar ghníomhaíocht laethúil le haghaidh %s",
     "_and %n more…_::_and %n more…_" : ["agus %n eile…","agus %n eile…","agus %n eile…","agus %n eile…","agus %n eile…"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Is féidir leat ríomhphoist achoimre laethúla a dhíchumasú sna <a href=\"%s\">socruithe</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Is féidir leat ríomhphoist achoimre laethúla a dhíchumasú sna socruithe: %s",
     "All activities" : "Gach gníomhaíocht",
     "By others" : "Ag daoine eile",
     "By you" : "Leat",
