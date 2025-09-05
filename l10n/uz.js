@@ -13,6 +13,8 @@ OC.L10N.register(
     "More activities" : "Ko`proq faollik",
     "Daily activity summary for %s" : " %s uchun kundalik faoliyat xulosasi",
     "_and %n more…_::_and %n more…_" : ["va %n dan ko`proq..."],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Siz <a href=\"%s\">sozlamalarida</a>da kundalik dayjest e-pochtalarini o'chirib qo'yishingiz mumkin.",
+    "You can disable daily digest emails in the settings: %s" : "Sozlamalarda kundalik dayjest e-pochtalarini o‘chirib qo‘yishingiz mumkin: %s",
     "All activities" : "Barcha faolliklar",
     "By others" : "Boshqalar uchun",
     "By you" : "Siz uchun",
