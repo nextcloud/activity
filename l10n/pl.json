@@ -11,6 +11,8 @@
     "More activities" : "Więcej aktywności",
     "Daily activity summary for %s" : "Podsumowanie dziennej aktywności dla %s",
     "_and %n more…_::_and %n more…_" : ["i jeszcze %n…","i jeszcze %n…","i jeszcze %n…","i jeszcze %n…"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Możesz wyłączyć codzienne e-maile podsumowujące w <a href=\"%s\">ustawieniach</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Możesz wyłączyć codzienne e-maile podsumowujące w ustawieniach: %s",
     "All activities" : "Wszystkie aktywności",
     "By others" : "Przez innych",
     "By you" : "Przez Ciebie",
