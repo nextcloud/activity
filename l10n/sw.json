@@ -11,6 +11,8 @@
     "More activities" : "Hakuna shughuli",
     "Daily activity summary for %s" : " Muhtasari wa shughuli za kila siku kwa %s",
     "_and %n more…_::_and %n more…_" : ["and %n more…","na %n zaidi"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Unaweza kuzima muhtasari wa barua pepe za kila siku katika <a href=\"%s\">mipangilio</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Unaweza kuzima muhtasari wa barua pepe za kila siku katika mipangilio: %s",
     "All activities" : "Shughuli zote",
     "By others" : "Na wengine",
     "By you" : "Na wewe",
