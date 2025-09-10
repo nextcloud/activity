@@ -11,6 +11,8 @@
     "More activities" : "Lisää tapahtumia",
     "Daily activity summary for %s" : "Päivittäisten tapahtumien yhteenveto%s lle",
     "_and %n more…_::_and %n more…_" : ["ja vielä %n...","ja vielä %n..."],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Voi poistaa käytöstä sähköpostitse lähetettävät päivittäiset yhteenvetoviestit <a href=\"%s\">asetuksista</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Voi poistaa käytöstä sähköpostitse lähetettävät päivittäiset yhteenvetoviestit asetuksista: %s",
     "All activities" : "Kaikki tapahtumat",
     "By others" : "Muiden tapahtumat",
     "By you" : "Omat tapahtumat",
