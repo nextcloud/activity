@@ -13,6 +13,8 @@ OC.L10N.register(
     "More activities" : "その他のアクティビティ",
     "Daily activity summary for %s" : "%s のデイリーアクティビティー概要",
     "_and %n more…_::_and %n more…_" : ["%n その他　"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "<a href=\"%s\">設定</a>で毎日のダイジェストメールを無効にすることができます。",
+    "You can disable daily digest emails in the settings: %s" : "設定で毎日のダイジェストメールを無効にすることができます: %s",
     "All activities" : "すべてのアクティビティ",
     "By others" : "他ユーザー",
     "By you" : "自分",
