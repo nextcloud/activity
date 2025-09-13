@@ -77,7 +77,7 @@
     "vite": "^6.3.6",
     "vitest": "^3.1.4",
     "vue-template-compiler": "^2.7.16",
-    "wait-on": "^8.0.3"
+    "wait-on": "^8.0.5"
   },
   "engines": {
     "node": "^22.0.0",
