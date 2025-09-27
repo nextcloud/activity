@@ -11,6 +11,8 @@
     "More activities" : "További tevékenységek",
     "Daily activity summary for %s" : "Napi tevékenység-összefoglaló ehhez: %s",
     "_and %n more…_::_and %n more…_" : ["és %n további…","és %n további…"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "A napi összefoglaló leveleket letilthatja a <a href=\"%s\">beállításokban</a>.",
+    "You can disable daily digest emails in the settings: %s" : "A napi összefoglaló leveleket letilthatja a beállításokban: %s",
     "All activities" : "Minden tevékenység",
     "By others" : "Másoké",
     "By you" : "Az Öné",
