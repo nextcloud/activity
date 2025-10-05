@@ -11,6 +11,8 @@
     "More activities" : "Fleiri athafnir",
     "Daily activity summary for %s" : "Yfirlit um daglegar athafnir fyrir %s",
     "_and %n more…_::_and %n more…_" : ["og %n til viðbótar…","og %n til viðbótar…"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Þú getur getr tölvupósta með daglegri samantekt óvirka í <a href=\"%s\">stillingunum</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Þú getur getr tölvupósta með daglegri samantekt óvirka í stillingunum: %s",
     "All activities" : "Allar athafnir",
     "By others" : "Virkni annarra",
     "By you" : "Virkni þín",
