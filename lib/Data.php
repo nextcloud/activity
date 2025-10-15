@@ -15,10 +15,12 @@ use OCP\Activity\IEvent;
 use OCP\Activity\IExtension;
 use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
+use OCP\DB\Exception;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use Psr\Log\LoggerInterface;
+use Throwable;
 
 /**
  * @brief Class for managing the data in the activities
@@ -89,6 +91,72 @@ class Data {
 		$this->insertActivity->executeStatement();
 
 		return $this->insertActivity->getLastInsertId();
+	}
+
+	/**
+	 * Bulk sends an event into the activity stream
+	 * for a batch of users that are affected by the same event
+	 * (ex. Call Started, Call ended)
+	 *
+	 * @param IEvent $event
+	 * @param array $affectedUsers
+	 * @return array<int, string>
+	 * @throws Exception
+	 */
+	public function bulkSend(IEvent $event, array $affectedUsers): array {
+		$this->connection->beginTransaction();
+
+		$activityIds = [];
+		try {
+			$qb = $this->connection->getQueryBuilder();
+			$qb->insert('activity')
+				->values([
+					'app' => $this->insertActivity->createParameter('app'),
+					'subject' => $this->insertActivity->createParameter('subject'),
+					'subjectparams' => $this->insertActivity->createParameter('subjectparams'),
+					'message' => $this->insertActivity->createParameter('message'),
+					'messageparams' => $this->insertActivity->createParameter('messageparams'),
+					'file' => $this->insertActivity->createParameter('object_name'),
+					'link' => $this->insertActivity->createParameter('link'),
+					'user' => $this->insertActivity->createParameter('user'),
+					'affecteduser' => $this->insertActivity->createParameter('affecteduser'),
+					'timestamp' => $this->insertActivity->createParameter('timestamp'),
+					'priority' => $this->insertActivity->createParameter('priority'),
+					'type' => $this->insertActivity->createParameter('type'),
+					'object_type' => $this->insertActivity->createParameter('object_type'),
+					'object_id' => $this->insertActivity->createParameter('object_id'),
+				]);
+
+			$qb->setParameters([
+				'app' => $event->getApp(),
+				'type' => $event->getType(),
+				'user' => $event->getAuthor(),
+				'timestamp' => $event->getTimestamp(),
+				'subject' => $event->getSubject(),
+				'subjectparams' => json_encode($event->getSubjectParameters()),
+				'message' => $event->getMessage(),
+				'messageparams' => json_encode($event->getMessageParameters()),
+				'priority' => IExtension::PRIORITY_MEDIUM,
+				'object_type' => $event->getObjectType(),
+				'object_id' => $event->getObjectId(),
+				'object_name' => $event->getObjectName(),
+				'link' => $event->getLink(),
+			]);
+
+			foreach ($affectedUsers as $affectedUser) {
+				$qb->setParameter('affecteduser', $affectedUser);
+				$qb->executeStatement();
+				$activityIds[$qb->getLastInsertId()] = (string)$affectedUser;
+			}
+
+			$this->connection->commit();
+		} catch (Throwable) {
+			// Make sure to always roll back, otherwise the outer code runs in a failed transaction
+			$this->connection->rollBack();
+			return [];
+		}
+
+		return $activityIds;
 	}
 
 	/**
