@@ -68,6 +68,6 @@ class Version2011Date20201006132544 extends SimpleMigrationStep {
 		$query = $this->connection->getQueryBuilder();
 		$query->update('activity_mq')
 			->set('amq_subjectparams2', 'amq_subjectparams');
-		$query->execute();
+		$query->executeStatement();
 	}
 }

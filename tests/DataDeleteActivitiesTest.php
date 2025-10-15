@@ -118,7 +118,7 @@ class DataDeleteActivitiesTest extends TestCase {
 		$backgroundjob->setId(1);
 		$this->assertUserActivities(['delete', 'otherUser']);
 		$jobList = $this->createMock(IJobList::class);
-		$backgroundjob->execute($jobList);
+		$backgroundjob->start($jobList);
 		$this->assertUserActivities(['otherUser']);
 	}
 

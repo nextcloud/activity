@@ -49,7 +49,7 @@ class ExpireActivitiesTest extends TestCase {
 		$jobList = $this->createMock(IJobList::class);
 
 		/** @var JobList $jobList */
-		$backgroundJob->execute($jobList);
+		$backgroundJob->start($jobList);
 		$this->assertTrue(true);
 
 		// NOTE: the result of execute() is further tested in

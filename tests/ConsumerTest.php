@@ -105,14 +105,14 @@ class ConsumerTest extends TestCase {
 			->where($query->expr()->eq(
 				'app', $query->createNamedParameter('test')
 			));
-		$query->execute();
+		$query->executeStatement();
 
 		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
 		$query->delete('activity_mq')
 			->where($query->expr()->eq(
 				'amq_appid', $query->createNamedParameter('test')
 			));
-		$query->execute();
+		$query->executeStatement();
 	}
 
 	public function receiveData(): array {
