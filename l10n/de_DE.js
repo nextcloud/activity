@@ -69,7 +69,7 @@ OC.L10N.register(
     "Daily activity summary" : "Tägliche Aktivitätsübersicht",
     "Send daily activity summary in the morning" : "Morgens eine tägliche Aktivitätsübersicht senden",
     "Default settings" : "Standardeinstellungen",
-    "Configure the default notification settings for new accounts." : "Konfigurieren Sie die Standardbenachrichtigungseinstellungen für neue Konten.",
+    "Configure the default notification settings for new accounts." : "Standardbenachrichtigungseinstellungen für neue Konten konfigurieren.",
     "Unable to save the settings" : "Einstellungen konnten nicht gespeichert werden",
     "No more events to load" : "Keine weiteren Ereignisse zu laden"
 },
