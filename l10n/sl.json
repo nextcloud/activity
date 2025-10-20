@@ -11,6 +11,8 @@
     "More activities" : "Več dejavnosti",
     "Daily activity summary for %s" : "Dnevni povzetek dejavnosti za račun %s",
     "_and %n more…_::_and %n more…_" : ["in %n drugo ...","in %n drugi ...","in %n druge ...","in %n drugih ..."],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Pošiljanje sporočil s povzetki dneva je mogoče prilagoditi med <a href=\"%s\">nastavitvami</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Pošiljanje sporočil s povzetki dneva je mogoče prilagoditi med nastavitvami: %s",
     "All activities" : "Vse dejavnosti",
     "By others" : "Dejavnosti drugih",
     "By you" : "Moje dejavnosti",
