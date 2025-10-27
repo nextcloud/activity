@@ -1,0 +1,21 @@
+SPDX-License-Identifier: AGPL-3.0-or-later
+SPDX-License-Identifier: MIT
+SPDX-License-Identifier: agpl
+SPDX-FileCopyrightText: Antoni Andre <antoniandre.web@gmail.com>
+SPDX-FileCopyrightText: Julius Härtl <jus@bitgrid.net>
+SPDX-FileCopyrightText: Nextcloud GmbH and Nextcloud contributors
+SPDX-FileCopyrightText: Rob Cresswell <robcresswell@pm.me>
+
+This file is generated from multiple sources. Included packages:
+- @nextcloud/vue
+	- version: 9.0.0-rc.2
+	- license: AGPL-3.0-or-later
+- activity
+	- version: 6.0.0-dev.0
+	- license: agpl
+- splitpanes
+	- version: 4.0.4
+	- license: MIT
+- vue-material-design-icons
+	- version: 5.3.1
+	- license: MIT
