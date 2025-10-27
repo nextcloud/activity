@@ -70,6 +70,11 @@ class DigestSender {
 				continue;
 			}
 			$userObject = $this->userManager->get($user);
+			if (is_null($userObject)) {
+				// User does not exist
+				$this->logger->info("User $user could not be found when sending user digest emails");
+				continue;
+			}
 			if (!$userObject->isEnabled()) {
 				// User is disabled so do not send the email but update last sent since after enabling avoid flooding
 				$this->updateLastSentForUser($userObject, $now);
