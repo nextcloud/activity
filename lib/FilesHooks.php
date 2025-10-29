@@ -166,8 +166,8 @@ class FilesHooks {
 			$affectedUsers = array_merge($affectedUsers, $this->getAffectedUsersFromCachedMounts($fileId));
 		}
 
-		[$filteredEmailUsers, $filteredNotificationUsers] =
-			$this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers), $activityType);
+		[$filteredEmailUsers, $filteredNotificationUsers]
+			= $this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers), $activityType);
 
 		foreach ($affectedUsers as $user => $path) {
 			$user = (string)$user;
