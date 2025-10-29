@@ -11,7 +11,7 @@
     "type": "git",
     "url": "https://github.com/nextcloud/activity"
   },
-  "license": "agpl",
+  "license": "AGPL-3.0-or-later",
   "author": "Julius Härtl <jus@bitgrid.net>",
   "contributors": [],
   "type": "module",
@@ -62,7 +62,7 @@
     "@nextcloud/browserslist-config": "^3.0.1",
     "@nextcloud/cypress": "^1.0.0-beta.15",
     "@nextcloud/stylelint-config": "^3.1.0",
-    "@nextcloud/vite-config": "^2.3.5",
+    "@nextcloud/vite-config": "^2.5.2",
     "@testing-library/cypress": "^10.1.0",
     "@types/dockerode": "^3.3.39",
     "@vitest/coverage-v8": "^3.1.4",
@@ -74,7 +74,7 @@
     "eslint-plugin-cypress": "^5.1.1",
     "happy-dom": "^20.0.8",
     "typescript": "^5.8.3",
-    "vite": "^6.4.1",
+    "vite": "^7.1.12",
     "vitest": "^3.1.4",
     "vue-template-compiler": "^2.7.16",
     "wait-on": "^8.0.3"
