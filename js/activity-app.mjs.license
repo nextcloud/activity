@@ -1,6 +1,5 @@
 SPDX-License-Identifier: AGPL-3.0-or-later
 SPDX-License-Identifier: MIT
-SPDX-License-Identifier: agpl
 SPDX-FileCopyrightText: Antoni Andre <antoniandre.web@gmail.com>
 SPDX-FileCopyrightText: Julius Härtl <jus@bitgrid.net>
 SPDX-FileCopyrightText: Nextcloud GmbH and Nextcloud contributors
@@ -12,7 +11,7 @@ This file is generated from multiple sources. Included packages:
 	- license: AGPL-3.0-or-later
 - activity
 	- version: 6.0.0-dev.0
-	- license: agpl
+	- license: AGPL-3.0-or-later
 - splitpanes
 	- version: 4.0.4
 	- license: MIT

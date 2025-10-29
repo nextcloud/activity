@@ -16,7 +16,7 @@
 	</description>
 
 	<version>6.0.0-dev.0</version>
-	<licence>agpl</licence>
+	<licence>AGPL-3.0-or-later</licence>
 	<author>Frank Karlitschek</author>
 	<author>Joas Schilling</author>
 	<author>Ferdinand Thiessen</author>

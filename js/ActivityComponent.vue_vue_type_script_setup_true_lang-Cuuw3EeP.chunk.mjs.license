@@ -2,7 +2,6 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 SPDX-License-Identifier: GPL-3.0-or-later
 SPDX-License-Identifier: ISC
 SPDX-License-Identifier: MIT
-SPDX-License-Identifier: agpl
 SPDX-FileCopyrightText: Andrea Giammarchi
 SPDX-FileCopyrightText: Christoph Wurst
 SPDX-FileCopyrightText: Eric Norris (https://github.com/ericnorris)
@@ -52,7 +51,7 @@ This file is generated from multiple sources. Included packages:
 	- license: MIT
 - activity
 	- version: 6.0.0-dev.0
-	- license: agpl
+	- license: AGPL-3.0-or-later
 - bail
 	- version: 2.0.2
 	- license: MIT
