@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@mdi/svg": "^7.4.47",
-    "@nextcloud/auth": "^2.2.1",
+    "@nextcloud/auth": "^2.5.3",
     "@nextcloud/axios": "^2.5.0",
     "@nextcloud/dialogs": "^7.0.0-rc.0",
     "@nextcloud/eslint-config": "^9.0.0-rc.5",
