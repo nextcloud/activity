@@ -24,7 +24,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        branches: ['main', 'master', 'stable32', 'stable31', 'stable30']
+        branches:
+          - ${{ github.event.repository.default_branch }}
+          - 'stable32'
+          - 'stable31'
 
     name: update-nextcloud-ocp-${{ matrix.branches }}
 
@@ -39,7 +42,7 @@ jobs:
 
       - name: Set up php8.2
         if: steps.checkout.outcome == 'success'
-        uses: shivammathur/setup-php@0f7f1d08e3e32076e51cae65eb0b0c871405b16e # v2.34.1
+        uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # v2.35.5
         with:
           php-version: 8.2
           # https://docs.nextcloud.com/server/stable/admin_manual/installation/source_installation.html#prerequisites-for-manual-installation
@@ -59,7 +62,7 @@ jobs:
         if: steps.checkout.outcome == 'success'
         run: composer install
 
-      - name: Composer update nextcloud/ocp
+      - name: Composer update nextcloud/ocp # zizmor: ignore[template-injection]
         id: update_branch
         if: ${{ steps.checkout.outcome == 'success' && matrix.branches != 'main' }}
         run: composer require --dev 'nextcloud/ocp:dev-${{ matrix.branches }}'
