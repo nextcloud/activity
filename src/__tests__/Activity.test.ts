@@ -37,10 +37,9 @@ test('Display relative date gets updated every minutes', async () => {
 	expect(wrapper.text()).toContain('You renamed Test file - renamed.md to Test file - renamed - looooooooong.md')
 	expect(wrapper.find('[data-testid="activity-date"]').text()).toContain('3 days ago')
 
-	const currentDatePlusOneDay = new Date('2021-05-03T12:00:00+00:00')
-	vi.setSystemTime(currentDatePlusOneDay)
-	vi.advanceTimersByTime(60 * 1000)
+	vi.advanceTimersByTime(24 * 60 * 60 * 1000)
 	await nextTick()
+
 	expect(wrapper.find('[data-testid="activity-date"]').text()).toContain('4 days ago')
 })
 
