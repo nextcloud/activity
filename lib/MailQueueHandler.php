@@ -20,6 +20,7 @@ use OCP\IUser;
 use OCP\IUserManager;
 use OCP\L10N\IFactory;
 use OCP\Mail\Headers\AutoSubmitted;
+use OCP\Mail\IEmailValidator;
 use OCP\Mail\IMailer;
 use OCP\RichObjectStrings\IValidator;
 use OCP\Util;
@@ -55,6 +56,7 @@ class MailQueueHandler {
 		protected Data $data,
 		protected GroupHelper $groupHelper,
 		protected UserSettings $userSettings,
+		protected IEmailValidator $emailValidator,
 	) {
 	}
 
@@ -271,7 +273,7 @@ class MailQueueHandler {
 			return true;
 		}
 
-		if (!$this->mailer->validateMailAddress($email)) {
+		if (!$this->emailValidator->isValid($email)) {
 			$this->logger->warning('Notification for user "{user}" not sent because the email address "{email}" is invalid.', ['user' => $userName, 'email' => $email]);
 			return true;
 		}

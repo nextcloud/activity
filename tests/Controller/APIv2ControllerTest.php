@@ -24,6 +24,7 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests\Controller;
 
+use DateTimeInterface;
 use OCA\Activity\Controller\APIv2Controller;
 use OCA\Activity\Data;
 use OCA\Activity\Exception\InvalidFilterException;
@@ -42,50 +43,28 @@ use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserSession;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class APIv2Test
- *
- * @group DB
  * @package OCA\Activity\Tests\Controller
  */
+#[Group('DB')]
 class APIv2ControllerTest extends TestCase {
-	/** @var IRequest|MockObject */
-	protected $request;
-
-	/** @var IManager|MockObject */
-	protected $activityManager;
-
-	/** @var Data|MockObject */
-	protected $data;
-
-	/** @var GroupHelper|MockObject */
-	protected $helper;
-
-	/** @var UserSettings|MockObject */
-	protected $userSettings;
-
-	/** @var IPreview|MockObject */
-	protected $preview;
-
-	/** @var IURLGenerator|MockObject */
-	protected $urlGenerator;
-
-	/** @var IUserSession|MockObject */
-	protected $userSession;
-
-	/** @var IMimeTypeDetector|MockObject */
-	protected $mimeTypeDetector;
-
-	/** @var ViewInfoCache|MockObject */
-	protected $infoCache;
-
-	/** @var IL10N */
-	protected $l10n;
-
-	/** @var APIv2Controller */
-	protected $controller;
+	protected MockObject&IRequest $request;
+	protected IManager&MockObject $activityManager;
+	protected Data&MockObject $data;
+	protected GroupHelper&MockObject $helper;
+	protected UserSettings&MockObject $userSettings;
+	protected IPreview&MockObject $preview;
+	protected MockObject&IURLGenerator $urlGenerator;
+	protected IUserSession&MockObject $userSession;
+	protected IMimeTypeDetector&MockObject $mimeTypeDetector;
+	protected ViewInfoCache&MockObject $infoCache;
+	protected IL10N $l10n;
+	protected APIv2Controller $controller;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -104,11 +83,7 @@ class APIv2ControllerTest extends TestCase {
 		$this->controller = $this->getController();
 	}
 
-	protected function tearDown(): void {
-		parent::tearDown();
-	}
-
-	protected function getController(array $methods = []): APIv2Controller {
+	protected function getController(array $methods = []): APIv2Controller|MockObject {
 		if (empty($methods)) {
 			return new APIv2Controller(
 				'activity',
@@ -143,18 +118,14 @@ class APIv2ControllerTest extends TestCase {
 			->getMock();
 	}
 
-	public function dataValidateParametersFilter(): array {
+	public static function dataValidateParametersFilter(): array {
 		return [
 			['valid1', 'valid1'],
 			['all', 'all'],
 		];
 	}
 
-	/**
-	 * @dataProvider dataValidateParametersFilter
-	 * @param string $param
-	 * @param string $filter
-	 */
+	#[DataProvider('dataValidateParametersFilter')]
 	public function testValidateParametersFilter(string $param, string $filter): void {
 		$this->data->expects($this->once())
 			->method('validateFilter')
@@ -168,17 +139,14 @@ class APIv2ControllerTest extends TestCase {
 		$this->assertSame($filter, self::invokePrivate($this->controller, 'filter'));
 	}
 
-	public function dataValidateParametersFilterInvalid(): array {
+	public static function dataValidateParametersFilterInvalid(): array {
 		return [
 			['invalid1'],
 			['invalid2'],
 		];
 	}
 
-	/**
-	 * @dataProvider dataValidateParametersFilterInvalid
-	 * @param string $filter
-	 */
+	#[DataProvider('dataValidateParametersFilterInvalid')]
 	public function testValidateParametersFilterInvalid(string $filter): void {
 		$this->data->expects($this->once())
 			->method('validateFilter')
@@ -192,7 +160,7 @@ class APIv2ControllerTest extends TestCase {
 		$this->assertSame($filter, self::invokePrivate($this->controller, 'filter'));
 	}
 
-	public function dataValidateParametersObject(): array {
+	public static function dataValidateParametersObject(): array {
 		return [
 			['type', 42, 'type', 42],
 			['type', '42', 'type', 42],
@@ -201,14 +169,8 @@ class APIv2ControllerTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataValidateParametersObject
-	 * @param mixed $type
-	 * @param mixed $id
-	 * @param string $expectedType
-	 * @param int $expectedId
-	 */
-	public function testValidateParametersObject(?string $type, $id, string $expectedType, int $expectedId): void {
+	#[DataProvider('dataValidateParametersObject')]
+	public function testValidateParametersObject(?string $type, mixed $id, string $expectedType, int $expectedId): void {
 		$this->data->expects($this->once())
 			->method('validateFilter')
 			->willReturnArgument(0);
@@ -221,7 +183,7 @@ class APIv2ControllerTest extends TestCase {
 		$this->assertSame($expectedId, self::invokePrivate($this->controller, 'objectId'));
 	}
 
-	public function dataValidateParameters(): array {
+	public static function dataValidateParameters(): array {
 		return [
 			['since', 0, 'since', 0],
 			['since', 20, 'since', 20],
@@ -237,14 +199,8 @@ class APIv2ControllerTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataValidateParameters
-	 * @param string $param
-	 * @param string $value
-	 * @param mixed $memberName
-	 * @param mixed $expectedValue
-	 */
-	public function testValidateParameters(string $param, $value, string $memberName, $expectedValue): void {
+	#[DataProvider('dataValidateParameters')]
+	public function testValidateParameters(string $param, mixed $value, string $memberName, mixed $expectedValue): void {
 		$params = ['all', 0, 0, false, '', 0, 'desc'];
 		switch ($param) {
 			case 'since':
@@ -272,17 +228,14 @@ class APIv2ControllerTest extends TestCase {
 		$this->assertSame($expectedValue, self::invokePrivate($this->controller, $memberName));
 	}
 
-	public function dataValidateParametersUser(): array {
+	public static function dataValidateParametersUser(): array {
 		return [
 			['uid1'],
 			['uid2'],
 		];
 	}
 
-	/**
-	 * @dataProvider dataValidateParametersUser
-	 * @param string $uid
-	 */
+	#[DataProvider('dataValidateParametersUser')]
 	public function testValidateParametersUser(string $uid): void {
 		$user = $this->createMock(IUser::class);
 		$user->expects($this->once())
@@ -313,24 +266,14 @@ class APIv2ControllerTest extends TestCase {
 		$this->assertNull(self::invokePrivate($this->controller, 'user'));
 	}
 
-	public function dataParameters(): array {
+	public static function dataParameters(): array {
 		return [
 			['all', 0, 0, false, '', 0, 'desc'],
 			['filter', 1, 25, true, 'files', 42, 'asc'],
 		];
 	}
 
-	/**
-	 * @dataProvider dataParameters
-	 *
-	 * @param string $filter
-	 * @param int $since
-	 * @param int $limit
-	 * @param bool $previews
-	 * @param string $filterObjectType
-	 * @param int $filterObjectId
-	 * @param string $sort
-	 */
+	#[DataProvider('dataParameters')]
 	public function testGetDefault(string $filter, int $since, int $limit, bool $previews, string $filterObjectType, int $filterObjectId, string $sort): void {
 		$controller = $this->getController([
 			'get'
@@ -343,17 +286,7 @@ class APIv2ControllerTest extends TestCase {
 		$controller->getDefault($since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 	}
 
-	/**
-	 * @dataProvider dataParameters
-	 *
-	 * @param string $filter
-	 * @param int $since
-	 * @param int $limit
-	 * @param bool $previews
-	 * @param string $filterObjectType
-	 * @param int $filterObjectId
-	 * @param string $sort
-	 */
+	#[DataProvider('dataParameters')]
 	public function testGetFilter(string $filter, int $since, int $limit, bool $previews, string $filterObjectType, int $filterObjectId, string $sort): void {
 		$controller = $this->getController([
 			'get'
@@ -366,7 +299,7 @@ class APIv2ControllerTest extends TestCase {
 		$controller->getFilter($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 	}
 
-	public function dataGetInvalid(): array {
+	public static function dataGetInvalid(): array {
 		return [
 			[new InvalidFilterException(), null, Http::STATUS_NOT_FOUND],
 			[new \OutOfBoundsException(), null, Http::STATUS_FORBIDDEN],
@@ -376,15 +309,10 @@ class APIv2ControllerTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataGetInvalid
-	 * @param \Exception $readParamsThrows
-	 * @param bool|\Exception $dataGetThrows
-	 * @param int $expected
-	 */
-	public function testGetInvalid(?\Exception $readParamsThrows, $dataGetThrows, int $expected): void {
+	#[DataProvider('dataGetInvalid')]
+	public function testGetInvalid(?\Exception $readParamsThrows, bool|\Exception|null $dataGetThrows, int $expected): void {
 		$controller = $this->getController(['validateParameters', 'generateHeaders']);
-		$controller->expects($this->any())
+		$controller
 			->method('generateHeaders')
 			->willReturnArgument(0);
 
@@ -434,7 +362,6 @@ class APIv2ControllerTest extends TestCase {
 		$controller = $this->getController();
 		$response = $controller->listFilters();
 
-		$this->assertInstanceOf(DataResponse::class, $response);
 		$this->assertSame(Http::STATUS_OK, $response->getStatus());
 		$this->assertSame([
 			['id' => 'id3', 'name' => 'Filter 1', 'icon' => 'id35', 'priority' => 5],
@@ -445,52 +372,43 @@ class APIv2ControllerTest extends TestCase {
 
 	protected function createFilterMock(int $priority, string $id, string $name): IFilter {
 		$filter = $this->createMock(IFilter::class);
-		$filter->expects($this->any())
+		$filter
 			->method('getPriority')
 			->willReturn($priority);
-		$filter->expects($this->any())
+		$filter
 			->method('getIdentifier')
 			->willReturn($id);
-		$filter->expects($this->any())
+		$filter
 			->method('getName')
 			->willReturn($name);
-		$filter->expects($this->any())
+		$filter
 			->method('getIcon')
 			->willReturn($id . $priority);
 
 		return $filter;
 	}
 
-	public function dataGet(): array {
+	public static function dataGet(): array {
 		return [
-			[123456789, 'files', 42, [], false, 0, ['object_type' => 'files', 'object_id' => 42, 'datetime' => date(\DateTime::ATOM, 123456789)]],
-			[12345678, 'calendar', 23, [], true, 0, ['object_type' => 'calendar', 'object_id' => 23, 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => []]],
+			[123456789, 'files', 42, [], false, 0, ['object_type' => 'files', 'object_id' => 42, 'datetime' => date(DateTimeInterface::ATOM, 123456789)]],
+			[12345678, 'calendar', 23, [], true, 0, ['object_type' => 'calendar', 'object_id' => 23, 'datetime' => date(DateTimeInterface::ATOM, 12345678), 'previews' => []]],
 			[
 				12345678, 'files', 23, ['objects' => [], 'affecteduser' => 'user1', 'object_name' => 'file.txt'],
 				true, 1,
-				['object_type' => 'files', 'object_id' => 23, 'objects' => [], 'object_name' => 'file.txt', 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => [['preview']]]
+				['object_type' => 'files', 'object_id' => 23, 'objects' => [], 'object_name' => 'file.txt', 'datetime' => date(DateTimeInterface::ATOM, 12345678), 'previews' => [['preview']]]
 			],
 			[
 				12345678, 'files', 23, ['objects' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'affecteduser' => 'user1'],
 				true, 2,
-				['object_type' => 'files', 'object_id' => 23, 'objects' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'datetime' => date(\DateTime::ATOM, 12345678), 'previews' => [['preview'], ['preview']]]
+				['object_type' => 'files', 'object_id' => 23, 'objects' => [12 => '12.png', 23 => '23.txt', 0 => '0.txt', 123 => ''], 'datetime' => date(DateTimeInterface::ATOM, 12345678), 'previews' => [['preview'], ['preview']]]
 			],
 		];
 	}
 
-	/**
-	 * @dataProvider dataGet
-	 * @param int $time
-	 * @param string $objectType
-	 * @param int $objectId
-	 * @param array $additionalArgs
-	 * @param bool $loadPreviews
-	 * @param int $numGetPreviewCalls
-	 * @param array $expected
-	 */
+	#[DataProvider('dataGet')]
 	public function testGet(int $time, string $objectType, int $objectId, array $additionalArgs, bool $loadPreviews, int $numGetPreviewCalls, array $expected): void {
 		$controller = $this->getController(['validateParameters', 'generateHeaders', 'getPreview']);
-		$controller->expects($this->any())
+		$controller
 			->method('generateHeaders')
 			->willReturnArgument(0);
 
@@ -523,21 +441,17 @@ class APIv2ControllerTest extends TestCase {
 		], $result->getData());
 	}
 
-	public function dataGetNotModified(): array {
+	public static function dataGetNotModified(): array {
 		return [
 			[[], null],
 			[[[]], md5('foobar')],
 		];
 	}
 
-	/**
-	 * @dataProvider dataGetNotModified
-	 * @param array $data
-	 * @param string|null $etag
-	 */
+	#[DataProvider('dataGetNotModified')]
 	public function testGetNotModified(array $data, ?string $etag): void {
 		$controller = $this->getController(['validateParameters', 'generateHeaders']);
-		$controller->expects($this->any())
+		$controller
 			->method('generateHeaders')
 			->willReturnArgument(0);
 
@@ -564,7 +478,7 @@ class APIv2ControllerTest extends TestCase {
 		$this->assertSame([], $result->getData());
 	}
 
-	public function dataGenerateHeaders(): array {
+	public static function dataGenerateHeaders(): array {
 		return [
 			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], false, [], ['X-Activity-Last-Given' => 23, 'ETag' => 'd751713988987e9331980363e24189ce']],
 			['asc', 25, '', 0, null, ['X-Activity-Last-Given' => 23], false, [['activity_id' => 23]], ['X-Activity-Last-Given' => 23, 'ETag' => 'b37e127599eef3cfeceac50e34cd5037']],
@@ -575,25 +489,13 @@ class APIv2ControllerTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataGenerateHeaders
-	 *
-	 * @param string $sort
-	 * @param int $limit
-	 * @param string $objectType
-	 * @param int $objectId
-	 * @param string $format
-	 * @param array $headersIn
-	 * @param bool $hasMoreActivities
-	 * @param array $data
-	 * @param array $expected
-	 */
+	#[DataProvider('dataGenerateHeaders')]
 	public function testGenerateHeaders(string $sort, int $limit, string $objectType, int $objectId, ?string $format, array $headersIn, bool $hasMoreActivities, array $data, array $expected): void {
 		self::invokePrivate($this->controller, 'sort', [$sort]);
 		self::invokePrivate($this->controller, 'limit', [$limit]);
 		self::invokePrivate($this->controller, 'objectType', [$objectType]);
 		self::invokePrivate($this->controller, 'objectId', [$objectId]);
-		$this->request->expects($this->any())
+		$this->request
 			->method('getParam')
 			->with('format')
 			->willReturn($format);
@@ -602,7 +504,7 @@ class APIv2ControllerTest extends TestCase {
 		$this->assertEquals($expected, $headers);
 	}
 
-	public function dataGetPreviewInvalidPaths(): array {
+	public static function dataGetPreviewInvalidPaths(): array {
 		return [
 			['author', 42, '/path', null, null],
 			['author', 42, '/path', '', null],
@@ -610,15 +512,7 @@ class APIv2ControllerTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataGetPreviewInvalidPaths
-	 *
-	 * @param string $author
-	 * @param int $fileId
-	 * @param string $path
-	 * @param string $returnedPath
-	 * @param null|bool $exists
-	 */
+	#[DataProvider('dataGetPreviewInvalidPaths')]
 	public function testGetPreviewInvalidPaths(string $author, int $fileId, string $path, ?string $returnedPath, ?bool $exists): void {
 		$this->infoCache->expects($this->once())
 			->method('getInfoById')
@@ -633,7 +527,7 @@ class APIv2ControllerTest extends TestCase {
 		$controller = $this->getController([
 			'getPreviewFromPath'
 		]);
-		$controller->expects($this->any())
+		$controller
 			->method('getPreviewFromPath')
 			->with($fileId, $path)
 			->willReturn(['getPreviewFromPath']);
@@ -641,7 +535,7 @@ class APIv2ControllerTest extends TestCase {
 		$this->assertSame(['getPreviewFromPath'], self::invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
 	}
 
-	public function dataGetPreview(): array {
+	public static function dataGetPreview(): array {
 		return [
 			['author', 42, '/path', '/currentPath', true, true, false, '/preview/dir', true, 'dir'],
 			['author', 42, '/file.txt', '/currentFile.txt', false, true, false, '/preview/mpeg', true, 'audio/mp3'],
@@ -650,20 +544,7 @@ class APIv2ControllerTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataGetPreview
-	 *
-	 * @param string $author
-	 * @param int $fileId
-	 * @param string $path
-	 * @param string $returnedPath
-	 * @param bool $isDir
-	 * @param bool $validFileInfo
-	 * @param bool $isMimeSup
-	 * @param string $source
-	 * @param bool $isMimeTypeIcon
-	 * @param string $mimeType
-	 */
+	#[DataProvider('dataGetPreview')]
 	public function testGetPreview(string $author, int $fileId, string $path, string $returnedPath, bool $isDir, bool $validFileInfo, bool $isMimeSup, string $source, bool $isMimeTypeIcon, string $mimeType): void {
 		$controller = $this->getController([
 			'getPreviewFromPath',
@@ -671,7 +552,7 @@ class APIv2ControllerTest extends TestCase {
 		]);
 
 		$node = $this->createMock(\OCP\Files\File::class);
-		$this->urlGenerator->expects($this->any())
+		$this->urlGenerator
 			->method('linkToRouteAbsolute')
 			->willReturnCallback(function ($url, $params) {
 				return $url . '#' . ($params['fileid'] ?? $params['fileId']);
@@ -745,7 +626,7 @@ class APIv2ControllerTest extends TestCase {
 			self::invokePrivate($controller, 'getPreview', [$author, $fileId, $path]));
 	}
 
-	public function dataGetPreviewFromPath(): array {
+	public static function dataGetPreviewFromPath(): array {
 		return [
 			[23, 'dir', 'dir', true, ''],
 			[42, 'test.txt', 'text/plain', false, 'trashbin'],
@@ -753,14 +634,7 @@ class APIv2ControllerTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataGetPreviewFromPath
-	 * @param int $fileId
-	 * @param string $filePath
-	 * @param string $mimeType
-	 * @param bool $isDir
-	 * @param string $view
-	 */
+	#[DataProvider('dataGetPreviewFromPath')]
 	public function testGetPreviewFromPath(int $fileId, string $filePath, string $mimeType, bool $isDir, string $view): void {
 		$controller = $this->getController([
 			'getPreviewPathFromMimeType',
@@ -770,7 +644,7 @@ class APIv2ControllerTest extends TestCase {
 			->method('getPreviewPathFromMimeType')
 			->with($mimeType)
 			->willReturn('mime-type-icon');
-		$this->urlGenerator->expects($this->any())
+		$this->urlGenerator
 			->method('linkToRouteAbsolute')
 			->willReturnCallback(function ($url, $params) {
 				return $url . '#' . ($params['fileid'] ?? $params['fileId']);
@@ -793,7 +667,7 @@ class APIv2ControllerTest extends TestCase {
 		);
 	}
 
-	public function dataGetPreviewPathFromMimeType(): array {
+	public static function dataGetPreviewPathFromMimeType(): array {
 		return [
 			['dir', 'folder.png', 'absolute-folder.svg'],
 			['text/plain', 'text.svg', 'absolute-text.svg'],
@@ -801,12 +675,7 @@ class APIv2ControllerTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataGetPreviewPathFromMimeType
-	 * @param string $mimeType
-	 * @param string $icon
-	 * @param string $expected
-	 */
+	#[DataProvider('dataGetPreviewPathFromMimeType')]
 	public function testGetPreviewPathFromMimeType(string $mimeType, string $icon, string $expected): void {
 		$this->mimeTypeDetector->expects($this->once())
 			->method('mimeTypeIcon')

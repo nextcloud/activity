@@ -13,6 +13,8 @@ use OCA\Activity\UserSettings;
 use OCA\Theming\ThemingDefaults;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
+use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -40,13 +42,9 @@ class FeedController extends Controller {
 		parent::__construct($appName, $request);
 	}
 
-	/**
-	 * @PublicPage
-	 * @NoCSRFRequired
-	 *
-	 * @return TemplateResponse
-	 */
-	public function show() {
+	#[PublicPage]
+	#[NoCSRFRequired]
+	public function show(): TemplateResponse {
 		try {
 			$user = $this->activityManager->getCurrentUserId();
 
@@ -83,7 +81,7 @@ class FeedController extends Controller {
 			'activities' => $activities,
 		], '');
 
-		if (stristr($this->request->getHeader('accept'), 'application/rss+xml')) {
+		if (stripos($this->request->getHeader('accept'), 'application/rss+xml') !== false) {
 			$response->addHeader('Content-Type', 'application/rss+xml');
 		} else {
 			$response->addHeader('Content-Type', 'text/xml; charset=UTF-8');

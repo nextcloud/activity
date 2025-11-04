@@ -47,11 +47,12 @@ use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IConsumer;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\IAppContainer;
 use OCP\AppFramework\OCSController;
 use OCP\BackgroundJob\TimedJob;
 use OCP\Capabilities\ICapability;
 use OCP\IL10N;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class ApplicationTest
@@ -59,11 +60,9 @@ use OCP\IL10N;
  * @group DB
  * @package OCA\Activity\Tests\AppInfo
  */
+#[Group('DB')]
 class ApplicationTest extends TestCase {
-	/** @var Application */
-	protected $app;
-
-	/** @var IAppContainer */
+	protected Application $app;
 	protected $container;
 
 	protected function setUp(): void {
@@ -74,10 +73,10 @@ class ApplicationTest extends TestCase {
 
 	public function testContainerAppName(): void {
 		$this->app = new Application();
-		$this->assertEquals('activity', $this->container->getAppName());
+		$this->assertEquals($this->app::APP_ID, $this->container->getAppName());
 	}
 
-	public function queryData(): array {
+	public static function queryData(): array {
 		return [
 			[IL10N::class],
 			[View::class],
@@ -119,11 +118,7 @@ class ApplicationTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider queryData
-	 * @param string $service
-	 * @param string $expected
-	 */
+	#[DataProvider('queryData')]
 	public function testContainerQuery(string $service, ?string $expected = null): void {
 		if ($expected === null) {
 			$expected = $service;

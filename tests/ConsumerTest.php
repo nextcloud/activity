@@ -29,33 +29,25 @@ use OCA\Activity\Data;
 use OCA\Activity\NotificationGenerator;
 use OCA\Activity\UserSettings;
 use OCP\Activity\IManager;
+use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
+use OCP\Server;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class ConsumerTest
- *
- * @group DB
  * @package OCA\Activity\Tests
  */
+#[Group('DB')]
 class ConsumerTest extends TestCase {
-	/** @var Consumer */
-	protected $consumer;
-
-	/** @var Data|MockObject */
-	protected $data;
-
-	/** @var IFactory|MockObject */
-	protected $l10nFactory;
-	/** @var IManager|MockObject */
-	protected $activityManager;
-
-	/** @var \OCA\Activity\UserSettings */
-	protected $userSettings;
-
-	/** @var NotificationGenerator|MockObject */
-	protected $notificationGenerator;
+	protected Data&MockObject $data;
+	protected MockObject&IFactory $l10nFactory;
+	protected IManager&MockObject $activityManager;
+	protected NotificationGenerator&MockObject $notificationGenerator;
+	protected UserSettings $userSettings;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -63,25 +55,21 @@ class ConsumerTest extends TestCase {
 
 		$this->activityManager = $this->createMock(IManager::class);
 		$this->data = $this->createMock(Data::class);
-		$this->data->method('send')
-			->willReturn(1);
-
 		$this->userSettings = $this->getMockBuilder(UserSettings::class)
 			->onlyMethods(['getUserSetting'])
 			->disableOriginalConstructor()
 			->getMock();
-
 		$l10n = $this->createMock(IL10N::class);
-
 		$this->notificationGenerator = $this->createMock(NotificationGenerator::class);
-
 		$this->l10nFactory = $this->createMock(IFactory::class);
-		$this->l10nFactory->expects($this->any())
+
+		$this->data->method('send')
+			->willReturn(1);
+		$this->l10nFactory
 			->method('get')
 			->with('activity')
 			->willReturn($l10n);
-
-		$this->userSettings->expects($this->any())
+		$this->userSettings
 			->method('getUserSetting')
 			->with($this->stringContains('affectedUser'), $this->anything(), $this->anything())
 			->willReturnMap([
@@ -100,14 +88,14 @@ class ConsumerTest extends TestCase {
 	}
 
 	protected function deleteTestActivities(): void {
-		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$query = Server::get(IDBConnection::class)->getQueryBuilder();
 		$query->delete('activity')
 			->where($query->expr()->eq(
 				'app', $query->createNamedParameter('test')
 			));
 		$query->executeStatement();
 
-		$query = \OC::$server->getDatabaseConnection()->getQueryBuilder();
+		$query = Server::get(IDBConnection::class)->getQueryBuilder();
 		$query->delete('activity_mq')
 			->where($query->expr()->eq(
 				'amq_appid', $query->createNamedParameter('test')
@@ -115,16 +103,14 @@ class ConsumerTest extends TestCase {
 		$query->executeStatement();
 	}
 
-	public function receiveData(): array {
+	public static function receiveData(): array {
 		return [
 			['type', 'author', 'affectedUser', 'subject', 'affectedUser'],
 			['type2', 'author', 'affectedUser', 'subject', false],
-
 			['type', 'author', 'affectedUser', 'subject_self', 'affectedUser'],
 			['type', 'author', 'affectedUser2', 'subject_self', 'affectedUser2'],
 			['type', 'author', 'affectedUser', 'subject2', 'affectedUser'],
 			['type', 'author', 'affectedUser2', 'subject2', 'affectedUser2'],
-
 			['type', 'affectedUser', 'affectedUser', 'subject_self', 'affectedUser'],
 			['type', 'affectedUser2', 'affectedUser2', 'subject_self', false],
 			['type', 'affectedUser', 'affectedUser', 'subject2', 'affectedUser'],
@@ -132,18 +118,10 @@ class ConsumerTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider receiveData
-	 *
-	 * @param string $type
-	 * @param string $author
-	 * @param string $affectedUser
-	 * @param string $subject
-	 * @param array|false $expected
-	 */
+	#[DataProvider('receiveData')]
 	public function testReceiveStream(string $type, string $author, string $affectedUser, string $subject): void {
 		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
-		$event = \OC::$server->getActivityManager()->generateEvent();
+		$event = Server::get(IManager::class)->generateEvent();
 		$event->setApp('test')
 			->setType($type)
 			->setAffectedUser($affectedUser)
@@ -161,19 +139,11 @@ class ConsumerTest extends TestCase {
 		$consumer->receive($event);
 	}
 
-	/**
-	 * @dataProvider receiveData
-	 *
-	 * @param string $type
-	 * @param string $author
-	 * @param string $affectedUser
-	 * @param string $subject
-	 * @param array|false $expected
-	 */
+	#[DataProvider('receiveData')]
 	public function testReceiveEmail(string $type, string $author, string $affectedUser, string $subject, $expected): void {
 		$time = time();
 		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
-		$event = \OC::$server->getActivityManager()->generateEvent();
+		$event = Server::get(IManager::class)->generateEvent();
 		$event->setApp('test')
 			->setType($type)
 			->setAffectedUser($affectedUser)
@@ -196,18 +166,10 @@ class ConsumerTest extends TestCase {
 		$consumer->receive($event);
 	}
 
-	/**
-	 * @dataProvider receiveData
-	 *
-	 * @param string $type
-	 * @param string $author
-	 * @param string $affectedUser
-	 * @param string $subject
-	 * @param array|false $expected
-	 */
+	#[DataProvider('receiveData')]
 	public function testReceiveNotification(string $type, string $author, string $affectedUser, string $subject, $expected): void {
 		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
-		$event = \OC::$server->getActivityManager()->generateEvent();
+		$event = Server::get(IManager::class)->generateEvent();
 		$event->setApp('test')
 			->setType($type)
 			->setAffectedUser($affectedUser)

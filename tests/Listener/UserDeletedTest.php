@@ -33,45 +33,34 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class UserDeletedTest extends TestCase {
-	/**
-	 * @var Data|MockObject
-	 */
-	private $data;
-
-	/**
-	 * @var MailQueueHandler|MockObject
-	 */
-	private $mailQueueHandler;
-
-	/**
-	 * @var UserDeletedEvent
-	 */
-	private $event;
-
-	/**
-	 * @var UserDeleted
-	 */
-	private $listener;
-
-	/** @var IUser|MockObject */
-	private $user;
+	private Data&MockObject $data;
+	private MailQueueHandler&MockObject $mailQueueHandler;
+	private UserDeletedEvent $event;
+	private UserDeleted $listener;
 
 	public const UID = 'myuser';
 
 	public function setUp(): void {
 		parent::setUp();
+
+		$user = $this->createMock(IUser::class);
+		$user->expects($this->exactly(2))->method('getUID')->with()->willReturn(self::UID);
+
 		$this->data = $this->createMock(Data::class);
 		$this->mailQueueHandler = $this->createMock(MailQueueHandler::class);
-		$this->user = $this->createMock(IUser::class);
-		$this->user->expects($this->exactly(2))->method('getUID')->with()->willReturn(self::UID);
-		$this->event = new UserDeletedEvent($this->user);
+		$this->event = new UserDeletedEvent($user);
 
 		$this->listener = new UserDeleted($this->data, $this->mailQueueHandler);
 	}
 
 	public function testUserDeleted(): void {
-		$this->data->expects($this->once())->method('deleteActivities')->with(['affecteduser' => self::UID]);
-		$this->mailQueueHandler->expects($this->once())->method('purgeItemsForUser')->with(self::UID);
+		$this->data->expects($this->once())
+			->method('deleteActivities')
+			->with(['affecteduser' => self::UID]);
+		$this->mailQueueHandler->expects($this->once())
+			->method('purgeItemsForUser')
+			->with(self::UID);
+
 		$this->listener->handle($this->event);
 	}
 }
