@@ -78,6 +78,7 @@ class FilesHooksTest extends TestCase {
 	 * @var (OCA\Circles\CirclesManager&MockObject)|null
 	 */
 	protected $teamManager;
+	private LoggerInterface&MockObject $logger;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -98,6 +99,7 @@ class FilesHooksTest extends TestCase {
 		$this->tagManager->method('getUsersFavoritingObject')
 			->willReturn([]);
 		$this->teamManager = null;
+		$this->logger = $this->createMock(LoggerInterface::class);
 
 		$this->tagManager->method('load')
 			->willReturn($this->tags);
@@ -118,8 +120,6 @@ class FilesHooksTest extends TestCase {
 		$currentUser->expects($this->any())
 			->method('getUserIdentifier')
 			->willReturn($user);
-		/** @var LoggerInterface $logger */
-		$logger = $this->createMock(LoggerInterface::class);
 
 		if (!empty($mockedMethods)) {
 			return $this->getMockBuilder(FilesHooks::class)
@@ -133,7 +133,7 @@ class FilesHooksTest extends TestCase {
 					$this->shareHelper,
 					\OCP\Server::get(IDBConnection::class),
 					$this->urlGenerator,
-					$logger,
+					$this->logger,
 					$currentUser,
 					$this->userMountCache,
 					$this->config,
@@ -155,7 +155,7 @@ class FilesHooksTest extends TestCase {
 			$this->shareHelper,
 			\OCP\Server::get(IDBConnection::class),
 			$this->urlGenerator,
-			$logger,
+			$this->logger,
 			$currentUser,
 			$this->userMountCache,
 			$this->config,
@@ -913,6 +913,20 @@ class FilesHooksTest extends TestCase {
 				true,
 				21
 			);
+
+		self::invokePrivate($filesHooks, 'shareNotificationForSharer', ['subject', 'target', $node]);
+	}
+
+	public function testShareNotificationForSharerException(): void {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser']);
+		$node = $this->getNodeMock(42, '/admin/files/path');
+
+		$this->settings->expects($this->never())
+			->method('getUserSetting');
+		$filesHooks->expects($this->never())
+			->method('addNotificationsForUser');
+		$this->logger->expects($this->once())
+			->method('warning');
 
 		self::invokePrivate($filesHooks, 'shareNotificationForSharer', ['subject', 'target', $node]);
 	}

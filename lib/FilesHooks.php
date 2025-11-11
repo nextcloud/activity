@@ -1061,7 +1061,12 @@ class FilesHooks {
 			return;
 		}
 		if (!$path) {
-			$path = $this->getUserRelativePath($sharer, $fileSource->getPath());
+			try {
+				$path = $this->getUserRelativePath($sharer, $fileSource->getPath());
+			} catch (NotFoundException $e) {
+				$this->logger->warning('Could not create unsharing notification for user ' . $sharer . ' :' . $e->getMessage(), ['exception' => $e]);
+				return;
+			}
 		}
 
 		$this->addNotificationsForUser(
