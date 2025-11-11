@@ -20,7 +20,6 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use Psr\Log\LoggerInterface;
-use Throwable;
 
 /**
  * @brief Class for managing the data in the activities
@@ -108,8 +107,10 @@ class Data {
 
 		$activityIds = [];
 		try {
-			$qb = $this->connection->getQueryBuilder();
-			$qb->insert('activity')
+			if ($this->insertActivity === null) {
+				$this->insertActivity = $this->connection->getQueryBuilder();
+			}
+			$this->insertActivity->insert('activity')
 				->values([
 					'app' => $this->insertActivity->createParameter('app'),
 					'subject' => $this->insertActivity->createParameter('subject'),
@@ -127,7 +128,7 @@ class Data {
 					'object_id' => $this->insertActivity->createParameter('object_id'),
 				]);
 
-			$qb->setParameters([
+			$this->insertActivity->setParameters([
 				'app' => $event->getApp(),
 				'type' => $event->getType(),
 				'user' => $event->getAuthor(),
@@ -144,14 +145,15 @@ class Data {
 			]);
 
 			foreach ($affectedUsers as $affectedUser) {
-				$qb->setParameter('affecteduser', $affectedUser);
-				$qb->executeStatement();
-				$activityIds[$qb->getLastInsertId()] = (string)$affectedUser;
+				$this->insertActivity->setParameter('affecteduser', $affectedUser);
+				$this->insertActivity->executeStatement();
+				$activityIds[$this->insertActivity->getLastInsertId()] = (string)$affectedUser;
 			}
 
 			$this->connection->commit();
-		} catch (Throwable) {
+		} catch (Exception $e) {
 			// Make sure to always roll back, otherwise the outer code runs in a failed transaction
+			$this->logger->error('Could not create bulk activities', ['exception' => $e]);
 			$this->connection->rollBack();
 			return [];
 		}
