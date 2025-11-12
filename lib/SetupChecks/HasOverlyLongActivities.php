@@ -21,16 +21,19 @@ class HasOverlyLongActivities implements ISetupCheck {
 		private IAppConfig $appConfig,
 		private IL10N $l10n,
 	) {
-
 	}
+
+	#[\Override]
 	public function getCategory(): string {
 		return 'activity';
 	}
 
+	#[\Override]
 	public function getName(): string {
 		return $this->l10n->t('Check for overly long activities');
 	}
 
+	#[\Override]
 	public function run(): SetupResult {
 		$activities = $this->appConfig->getValueInt(Application::APP_ID, 'overly_long_activities', 0);
 		if ($activities === 0) {
