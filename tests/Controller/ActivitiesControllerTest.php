@@ -27,42 +27,32 @@ use OCA\Activity\Controller\ActivitiesController;
 use OCA\Activity\Data;
 use OCA\Activity\Tests\TestCase;
 use OCP\Activity\IManager;
-use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
+use OCP\Server;
 use OCP\Template;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Class ActivitiesTest
- *
- * @group DB
  * @package OCA\Activity\Tests\Controller
  */
+#[Group('DB')]
 class ActivitiesControllerTest extends TestCase {
-	/** @var IRequest|MockObject */
-	protected $request;
-	/** @var IConfig|MockObject */
-	protected $config;
-	/** @var Data|MockObject */
-	protected $data;
-	/** @var IEventDispatcher|MockObject */
-	protected $eventDispatcher;
-	/** @var IL10N|MockObject */
-	protected $l10n;
-	/** @var IInitialState|MockObject */
-	protected $initialState;
-	/** @var IURLGenerator|MockObject */
-	protected $urlGenerator;
-	/** @var IManager|MockObject */
-	protected $activityManager;
-
-	/** @var ActivitiesController */
-	protected $controller;
+	protected MockObject&IRequest $request;
+	protected IConfig&MockObject $config;
+	protected Data&MockObject $data;
+	protected IEventDispatcher&MockObject $eventDispatcher;
+	protected MockObject&IL10N $l10n;
+	protected IInitialState&MockObject $initialState;
+	protected MockObject&IURLGenerator $urlGenerator;
+	protected IManager&MockObject $activityManager;
+	protected ActivitiesController $controller;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -113,7 +103,8 @@ class ActivitiesControllerTest extends TestCase {
 	}
 
 	public function testShowList(): void {
-		$template = new Template('activity', 'stream.app.navigation', '');
+		$manager = Server::get(Template\ITemplateManager::class);
+		$template = $manager->getTemplate('activity', 'stream.app.navigation', '');
 		$template->assign('activeNavigation', 'all');
 		$template->assign('navigations', []);
 		$template->assign('rssLink', '');
@@ -123,14 +114,12 @@ class ActivitiesControllerTest extends TestCase {
 			->method('dispatch')
 			->with('OCA\Activity::loadAdditionalScripts', $this->anything());
 
-		$this->data->expects($this->any())
+		$this->data
 			->method('validateFilter')
 			->with('all')
 			->willReturn('all');
 
 		$templateResponse = $this->controller->showList();
-		$this->assertInstanceOf(TemplateResponse::class, $templateResponse, 'Asserting type of return is \OCP\AppFramework\Http\TemplateResponse');
-
 		$renderedResponse = $templateResponse->render();
 		$this->assertNotEmpty($renderedResponse);
 	}

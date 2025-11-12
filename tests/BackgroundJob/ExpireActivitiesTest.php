@@ -31,13 +31,13 @@ use OCA\Activity\Tests\TestCase;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\IJobList;
 use OCP\IConfig;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Class ExpireActivitiesTest
- *
- * @group DB
  * @package OCA\Activity\Tests\BackgroundJob
  */
+#[Group('DB')]
 class ExpireActivitiesTest extends TestCase {
 	public function testExecute(): void {
 		$backgroundJob = new ExpireActivities(

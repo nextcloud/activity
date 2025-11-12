@@ -22,6 +22,7 @@
 
 namespace OCA\Activity\Tests;
 
+use Exception;
 use OCA\Activity\CurrentUser;
 use OCP\IRequest;
 use OCP\IUser;
@@ -30,6 +31,7 @@ use OCP\L10N\IFactory;
 use OCP\Share\Exceptions\ShareNotFound;
 use OCP\Share\IManager;
 use OCP\Share\IShare;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /* We have to use this to add a property to the mocked request and avoid warnings about dynamic properties on PHP>=8.2 */
@@ -57,11 +59,7 @@ class CurrentUserTest extends TestCase {
 		$this->l10nFactory = $this->createMock(IFactory::class);
 	}
 
-	/**
-	 * @param array $methods
-	 * @return CurrentUser&MockObject
-	 */
-	protected function getInstance(array $methods = []): CurrentUser {
+	protected function getInstance(array $methods = []): CurrentUser|MockObject {
 		if (empty($methods)) {
 			return new CurrentUser(
 				$this->userSession,
@@ -82,7 +80,7 @@ class CurrentUserTest extends TestCase {
 			->getMock();
 	}
 
-	public function dataGetUserIdentifier(): array {
+	public static function dataGetUserIdentifier(): array {
 		return [
 			[null, null, null, ''],
 			[null, 'uid', -1, 'uid'],
@@ -91,15 +89,8 @@ class CurrentUserTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataGetUserIdentifier
-	 *
-	 * @param string|null $cachedIdentifier
-	 * @param string|int|null $uidResult
-	 * @param string|int|null $tokenResult
-	 * @param string $expected
-	 */
-	public function testGetUserIdentifier(?string $cachedIdentifier, $uidResult, $tokenResult, string $expected): void {
+	#[DataProvider('dataGetUserIdentifier')]
+	public function testGetUserIdentifier(?string $cachedIdentifier, string|int|null $uidResult, string|int|null $tokenResult, string $expected): void {
 		$instance = $this->getInstance([
 			'getUID',
 			'getCloudIDFromToken',
@@ -118,10 +109,6 @@ class CurrentUserTest extends TestCase {
 		$this->assertSame($expected, $instance->getUserIdentifier());
 	}
 
-	/**
-	 * @param string $uid
-	 * @return IUser
-	 */
 	protected function getUserMock(string $uid): IUser {
 		$user = $this->createMock(IUser::class);
 		$user->expects($this->once())
@@ -130,23 +117,24 @@ class CurrentUserTest extends TestCase {
 		return $user;
 	}
 
-	public function dataGetUID(): array {
+	public static function dataGetUID(): array {
 		return [
 			[null, null],
-			[$this->getUserMock('uid'), 'uid'],
-			[$this->getUserMock('test'), 'test'],
+			['uid', 'uid'],
+			['test', 'test'],
 		];
 	}
 
-	/**
-	 * @dataProvider dataGetUID
-	 *
-	 * @param IUser|null $user
-	 * @param string|null $expected
-	 */
-	public function testGetUID(?IUser $user, ?string $expected): void {
-		$instance = $this->getInstance();
+	#[DataProvider('dataGetUID')]
+	public function testGetUID(?string $uid, ?string $expected): void {
+		if ($uid === null) {
+			$this->userSession->expects($this->never())
+				->method('getUser');
+			return;
+		}
 
+		$user = $this->getUserMock($uid);
+		$instance = $this->getInstance();
 		$this->userSession->expects($this->once())
 			->method('getUser')
 			->willReturn($user);
@@ -154,12 +142,16 @@ class CurrentUserTest extends TestCase {
 		$this->assertSame($expected, $instance->getUID());
 	}
 
-	/**
-	 * @param int $type
-	 * @param string $shareWith
-	 * @return IShare
-	 */
-	protected function getShareMock(int $type, ?string $shareWith): IShare {
+	protected function getShareMock(array $share): IShare|Exception|null {
+		if (empty($share)) {
+			return null;
+		}
+		if ($share[0] instanceof ShareNotFound) {
+			return $share[0];
+		}
+		[$type, $shareWith] = $share;
+
+
 		$share = $this->createMock(IShare::class);
 		$share->expects($this->once())
 			->method('getShareType')
@@ -170,31 +162,25 @@ class CurrentUserTest extends TestCase {
 		return $share;
 	}
 
-	public function dataGetCloudIDFromToken(): array {
+	public static function dataGetCloudIDFromToken(): array {
 		return [
-			[[], null, null],
-			[['PHP_AUTH_USER' => 'token23'], $this->getShareMock(IShare::TYPE_LINK, null), null],
-			[['PHP_AUTH_USER' => 'token32'], new ShareNotFound(), null],
-			[['PHP_AUTH_USER' => 'token42'], $this->getShareMock(IShare::TYPE_REMOTE, 'test@localhost'), 'test@localhost'],
+			[[], [], null],
+			[['PHP_AUTH_USER' => 'token23'], [IShare::TYPE_LINK, null], null],
+			[['PHP_AUTH_USER' => 'token32'], [new ShareNotFound()], null],
+			[['PHP_AUTH_USER' => 'token42'], [IShare::TYPE_REMOTE, 'test@localhost'], 'test@localhost'],
 		];
 	}
 
-	/**
-	 * @dataProvider dataGetCloudIDFromToken
-	 *
-	 * @param array $server
-	 * @param IShare|\Exception|null $share
-	 * @param string|null $expected
-	 */
-	public function testGetCloudIDFromToken(array $server, $share, ?string $expected): void {
+	#[DataProvider('dataGetCloudIDFromToken')]
+	public function testGetCloudIDFromToken(array $server, array $shareData, ?string $expected): void {
 		$instance = $this->getInstance();
-
 		$this->request->server = $server;
+		$share = $this->getShareMock($shareData);
 
 		if ($share === null) {
 			$this->shareManager->expects($this->never())
 				->method('getShareByToken');
-		} elseif ($share instanceof \Exception) {
+		} elseif ($share instanceof Exception) {
 			$this->shareManager->expects($this->once())
 				->method('getShareByToken')
 				->with($server['PHP_AUTH_USER'])

@@ -27,6 +27,7 @@ declare(strict_types=1);
 namespace OCA\Activity\Tests;
 
 use OC\Mail\Message;
+use OCA\Activity\AppInfo\Application;
 use OCA\Activity\Data;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\MailQueueHandler;
@@ -35,65 +36,43 @@ use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
+use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserManager;
 use OCP\L10N\IFactory;
 use OCP\Mail\IEMailTemplate;
+use OCP\Mail\IEmailValidator;
 use OCP\Mail\IMailer;
 use OCP\RichObjectStrings\IValidator;
+use OCP\Server;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 
 /**
  * Class MailQueueHandlerTest
- *
- * @group DB
  * @package OCA\Activity\Tests
  */
+#[Group('DB')]
 class MailQueueHandlerTest extends TestCase {
-	/** @var MailQueueHandler */
-	protected $mailQueueHandler;
+	protected MailQueueHandler $mailQueueHandler;
+	protected IMailer&MockObject $mailer;
+	protected MockObject $message;
+	protected IUserManager&MockObject $userManager;
+	protected IFactory&MockObject $lFactory;
+	protected IManager&MockObject $activityManager;
+	protected IValidator&MockObject $richObjectValidator;
+	protected IConfig&MockObject $config;
+	protected MockObject&LoggerInterface $logger;
 
-	/** @var MockObject|IMailer */
-	protected $mailer;
-
-	/** @var MockObject */
-	protected $message;
-
-	/** @var IUserManager */
-	protected $oldUserManager;
-
-	/** @var MockObject|IUserManager */
-	protected $userManager;
-
-	/** @var MockObject|IFactory */
-	protected $lFactory;
-
-	/** @var MockObject|IManager */
-	protected $activityManager;
-
-	/** @var IValidator|MockObject */
-	protected $richObjectValidator;
-
-	/** @var IConfig|MockObject */
-	protected $config;
-
-	/** @var LoggerInterface|MockObject */
-	protected $logger;
-
-	/** @var IDateTimeFormatter|MockObject */
-	protected $dateTimeFormatter;
-
-	/** @var MockObject|Data */
-	protected Data $data;
-
-	/** @var MockObject|GroupHelper */
-	protected GroupHelper $groupHelper;
-
-	/** @var MockObject|UserSettings */
-	protected UserSettings $userSettings;
+	protected IDateTimeFormatter&MockObject $dateTimeFormatter;
+	protected Data&MockObject $data;
+	protected GroupHelper&MockObject $groupHelper;
+	protected UserSettings&MockObject $userSettings;
+	protected IEmailValidator&MockObject $emailValidator;
 
 
 	protected function setUp(): void {
@@ -108,8 +87,9 @@ class MailQueueHandlerTest extends TestCase {
 		$this->data = $this->createMock(Data::class);
 		$this->groupHelper = $this->createMock(GroupHelper::class);
 		$this->userSettings = $this->createMock(UserSettings::class);
+		$this->emailValidator = $this->createMock(IEmailValidator::class);
 
-		$connection = \OC::$server->getDatabaseConnection();
+		$connection = Server::get(IDBConnection::class);
 		$query = $connection->prepare('INSERT INTO `*PREFIX*activity_mq` '
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
@@ -122,47 +102,35 @@ class MailQueueHandlerTest extends TestCase {
 		$query->execute([$app, 'Test data', json_encode(['Param1']), 'user3', 150, 'phpunit', 155]);
 
 		$event = $this->createMock(IEvent::class);
-		$event->expects($this->any())
-			->method('setApp')
+		$event->method('setApp')
 			->willReturnSelf();
-		$event->expects($this->any())
-			->method('setType')
+		$event->method('setType')
 			->willReturnSelf();
-		$event->expects($this->any())
-			->method('setAffectedUser')
+		$event->method('setAffectedUser')
 			->willReturnSelf();
-		$event->expects($this->any())
-			->method('setTimestamp')
+		$event->method('setTimestamp')
 			->willReturnSelf();
-		$event->expects($this->any())
-			->method('setSubject')
+		$event->method('setSubject')
 			->willReturnSelf();
-		$event->expects($this->any())
-			->method('getIcon')
+		$event->method('getIcon')
 			->willReturn('');
-		$event->expects($this->any())
-			->method('getParsedSubject')
+		$event->method('getParsedSubject')
 			->willReturn('');
-		$event->expects($this->any())
-			->method('getRichSubject')
+		$event->method('getRichSubject')
 			->willReturn('');
-		$event->expects($this->any())
-			->method('getRichSubjectParameters')
+		$event->method('getRichSubjectParameters')
 			->willReturn([]);
 
 		$this->activityManager = $this->createMock(IManager::class);
-		$this->activityManager->expects($this->any())
-			->method('generateEvent')
+		$this->activityManager->method('generateEvent')
 			->willReturn($event);
-		$this->activityManager->expects($this->any())
-			->method('getProviders')
+		$this->activityManager->method('getProviders')
 			->willReturn([]);
 
 		$this->message = $this->createMock(Message::class);
 		$this->richObjectValidator = $this->createMock(IValidator::class);
 		$this->mailer = $this->createMock(IMailer::class);
-		$this->mailer->expects($this->any())
-			->method('createMessage')
+		$this->mailer->method('createMessage')
 			->willReturn($this->message);
 		$this->mailQueueHandler = new MailQueueHandler(
 			$this->dateTimeFormatter,
@@ -178,17 +146,19 @@ class MailQueueHandlerTest extends TestCase {
 			$this->data,
 			$this->groupHelper,
 			$this->userSettings,
+			$this->emailValidator,
 		);
 	}
 
 	protected function tearDown(): void {
-		$query = \OC::$server->getDatabaseConnection()->prepare('DELETE FROM `*PREFIX*activity_mq` WHERE `amq_timestamp` < 500');
+		$query = Server::get(IDBConnection::class)
+			->prepare('DELETE FROM `*PREFIX*activity_mq` WHERE `amq_timestamp` < 500');
 		$query->execute();
 
 		parent::tearDown();
 	}
 
-	public function getAffectedUsersData(): array {
+	public static function getAffectedUsersData(): array {
 		return [
 			[null, ['user2', 'user1', 'user3'], []],
 			[5, ['user2', 'user1', 'user3'], []],
@@ -201,10 +171,11 @@ class MailQueueHandlerTest extends TestCase {
 	/**
 	 * @dataProvider getAffectedUsersData
 	 *
-	 * @param int $limit
+	 * @param int|null $limit
 	 * @param array $affected
 	 * @param array $untouched
 	 */
+	#[DataProvider('getAffectedUsersData')]
 	public function testGetAffectedUsers(?int $limit, array $affected, array $untouched): void {
 		$maxTime = 200;
 
@@ -235,7 +206,7 @@ class MailQueueHandlerTest extends TestCase {
 		$this->assertCount(2, $data, 'Failed to assert the user has 2 entries');
 		$this->assertSame(0, $skipped);
 
-		$connection = \OC::$server->getDatabaseConnection();
+		$connection = Server::get(IDBConnection::class);
 		$query = $connection->prepare('INSERT INTO `*PREFIX*activity_mq` '
 			. ' (`amq_appid`, `amq_subject`, `amq_subjectparams`, `amq_affecteduser`, `amq_timestamp`, `amq_type`, `amq_latest_send`) '
 			. ' VALUES(?, ?, ?, ?, ?, ?, ?)');
@@ -275,8 +246,8 @@ class MailQueueHandlerTest extends TestCase {
 		$this->mailer->expects($this->once())
 			->method('createEMailTemplate')
 			->willReturn($template);
-		$this->mailer->expects($this->once())
-			->method('validateMailAddress')
+		$this->emailValidator->expects($this->once())
+			->method('isValid')
 			->with($email)
 			->willReturn(true);
 
@@ -297,10 +268,10 @@ class MailQueueHandlerTest extends TestCase {
 			->with($template);
 
 		$userObject = $this->createMock(IUser::class);
-		$userObject->expects($this->any())
+		$userObject
 			->method('getDisplayName')
 			->willReturn($userDisplayName);
-		$this->userManager->expects($this->any())
+		$this->userManager
 			->method('get')
 			->willReturnMap([
 				[$user, $userObject],
@@ -308,17 +279,13 @@ class MailQueueHandlerTest extends TestCase {
 			]);
 		$this->lFactory->expects($this->once())
 			->method('get')
-			->with('activity', 'en')
+			->with(Application::APP_ID, 'en')
 			->willReturn($this->getMockBuilder(IL10N::class)->getMock());
 
 		$this->activityManager->expects($this->exactly(2))
-			->method('setCurrentUserId')
-			->withConsecutive(
-				[$user],
-				[null]
-			);
+			->method('setCurrentUserId');
 
-		$this->dateTimeFormatter->expects($this->any())
+		$this->dateTimeFormatter
 			->method('formatDateTimeRelativeDay')
 			->willReturn('relative');
 

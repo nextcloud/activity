@@ -24,52 +24,42 @@
 
 namespace OCA\Activity\Tests;
 
+use OCA\Activity\AppInfo\Application;
 use OCA\Activity\Data;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IL10N;
-use OCP\IUserSession;
+use OCP\Server;
 use OCP\Util;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\NullLogger;
 
 /**
  * Class DataTest
- *
- * @group DB
  * @package OCA\Activity\Tests
  */
+#[Group('DB')]
 class DataTest extends TestCase {
-	/** @var Data */
-	protected $data;
-
-	/** @var IL10N */
-	protected $activityLanguage;
-
-	/** @var IUserSession|MockObject */
-	protected $session;
-
-	/** @var IDBConnection */
-	protected $dbConnection;
-
-	/** @var IManager */
-	protected $realActivityManager;
-
-	/** @var NullLogger */
-	protected $logger;
-
+	protected Data $data;
+	protected IL10N $activityLanguage;
+	protected IDBConnection $dbConnection;
+	protected IManager $realActivityManager;
+	protected NullLogger $logger;
 	protected IConfig&MockObject $config;
 
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->activityLanguage = Util::getL10N('activity', 'en');
+		$this->activityLanguage = Util::getL10N(Application::APP_ID, 'en');
+		$this->dbConnection = Server::get(IDBConnection::class);
+		$this->realActivityManager = Server::get(IManager::class);
+		$this->logger = Server::get(NullLogger::class);
+
 		$activityManager = $this->createMock(IManager::class);
-		$this->dbConnection = \OC::$server->get(IDBConnection::class);
-		$this->realActivityManager = \OC::$server->get(IManager::class);
-		$this->logger = \OC::$server->get(NullLogger::class);
 		$this->config = $this->createMock(IConfig::class);
 
 		$this->data = new Data(
@@ -80,11 +70,7 @@ class DataTest extends TestCase {
 		);
 	}
 
-	protected function tearDown(): void {
-		parent::tearDown();
-	}
-
-	public function dataSend(): array {
+	public static function dataSend(): array {
 		return [
 			// Default case
 			['author', 'affectedUser', 'author', 'affectedUser', true],
@@ -97,22 +83,14 @@ class DataTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataSend
-	 *
-	 * @param string $actionUser
-	 * @param string $affectedUser
-	 * @param string $expectedAuthor
-	 * @param string $expectedAffected
-	 * @param bool $expectedActivity
-	 */
+	#[DataProvider('dataSend')]
 	public function testSend(string $actionUser, string $affectedUser, string $expectedAuthor, string $expectedAffected, bool $expectedActivity): void {
 		$this->deleteTestActivities();
 
 		$event = $this->realActivityManager->generateEvent();
 		$event->setApp('test')
 			->setType('type')
-			->setSubject('subject', []);
+			->setSubject('subject');
 
 		if ($affectedUser !== '') {
 			$event->setAffectedUser($affectedUser);
@@ -141,15 +119,7 @@ class DataTest extends TestCase {
 		$this->deleteTestActivities();
 	}
 
-	/**
-	 * @dataProvider dataSend
-	 *
-	 * @param string $actionUser
-	 * @param string $affectedUser
-	 * @param string $expectedAuthor
-	 * @param string $expectedAffected
-	 * @param bool $expectedActivity
-	 */
+	#[DataProvider('dataSend')]
 	public function testStoreMail(string $actionUser, string $affectedUser, string $expectedAuthor, string $expectedAffected, bool $expectedActivity): void {
 		$this->deleteTestMails();
 
@@ -158,7 +128,7 @@ class DataTest extends TestCase {
 		$event = $this->realActivityManager->generateEvent();
 		$event->setApp('test')
 			->setType('type')
-			->setSubject('subject', [])
+			->setSubject('subject')
 			->setTimestamp($time);
 
 		if ($affectedUser !== '') {
@@ -184,7 +154,7 @@ class DataTest extends TestCase {
 		$this->deleteTestMails();
 	}
 
-	public function dataSetOffsetFromSince(): array {
+	public static function dataSetOffsetFromSince(): array {
 		return [
 			['ASC', '`timestamp` >= \'123465789\'', '`activity_id` > \'{id}\'', null, null, null],
 			['DESC', '`timestamp` <= \'123465789\'', '`activity_id` < \'{id}\'', null, null, null],
@@ -194,17 +164,7 @@ class DataTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataSetOffsetFromSince
-	 *
-	 * @param string $sort
-	 * @param string|null $timestampWhere
-	 * @param string|null $idWhere
-	 * @param string|null $offsetUser
-	 * @param int|bool|null $offsetId
-	 * @param string|null $expectedHeader
-	 * @throws \OCP\DB\Exception
-	 */
+	#[DataProvider('dataSetOffsetFromSince')]
 	public function testSetOffsetFromSince(string $sort, ?string $timestampWhere, ?string $idWhere, ?string $offsetUser, $offsetId, ?string $expectedHeader): void {
 		$this->deleteTestActivities();
 		$user = self::getUniqueID('testing');
@@ -232,22 +192,17 @@ class DataTest extends TestCase {
 		$mock = $this->getMockBuilder(IQueryBuilder::class)
 			->disableOriginalConstructor()
 			->getMock();
-		$mock->expects($this->any())
+		$mock
 			->method('expr')
 			->willReturn($query->expr());
-		$mock->expects($this->any())
+		$mock
 			->method('createNamedParameter')
 			->willReturnCallback(function ($arg) use ($query) {
 				return $query->expr()->literal($arg);
 			});
 		if ($timestampWhere !== null && $idWhere !== null) {
 			$mock->expects($this->exactly(2))
-				->method('andWhere')
-//				->withConsecutive(
-//					[$timestampWhere],
-//					[str_replace('{id}', $id, $idWhere)]
-//				)
-			;
+				->method('andWhere');
 		} else {
 			$mock->expects($this->never())
 				->method('andWhere');

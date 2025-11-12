@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace OCA\Activity\Tests\Controller;
 
 use OC\Activity\Manager;
+use OCA\Activity\AppInfo\Application;
 use OCA\Activity\Controller\APIv1Controller;
 use OCA\Activity\CurrentUser;
 use OCA\Activity\Data;
@@ -37,20 +38,25 @@ use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\IConfig;
+use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\IRequest;
+use OCP\IUserManager;
 use OCP\IUserSession;
+use OCP\RichObjectStrings\IRichTextFormatter;
 use OCP\RichObjectStrings\IValidator;
+use OCP\Server;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Psr\Log\LoggerInterface;
 
 /**
  * Class APIv1Test
- *
- * @group DB
  * @package OCA\Activity\Tests\Controller
  */
+#[Group('DB')]
 class APIv1ControllerTest extends TestCase {
-	protected $originalWEBROOT;
+	protected string $originalWEBROOT;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -58,8 +64,9 @@ class APIv1ControllerTest extends TestCase {
 
 		$this->originalWEBROOT = \OC::$WEBROOT;
 		\OC::$WEBROOT = '';
-		\OC::$server->getUserManager()->createUser('activity-api-user1', 'activity-api-user1');
-		\OC::$server->getUserManager()->createUser('activity-api-user2', 'activity-api-user2');
+		$manager = Server::get(IUserManager::class);
+		$manager->createUser('activity-api-user1', 'activity-api-user1');
+		$manager->createUser('activity-api-user2', 'activity-api-user2');
 
 		$activities = [
 			[
@@ -76,7 +83,7 @@ class APIv1ControllerTest extends TestCase {
 			],
 		];
 
-		$queryActivity = \OC::$server->getDatabaseConnection()->prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
+		$queryActivity = Server::get(IDBConnection::class)->prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
 		$loop = 0;
 		foreach ($activities as $activity) {
 			$queryActivity->execute([
@@ -107,7 +114,7 @@ class APIv1ControllerTest extends TestCase {
 	protected function cleanUp(): void {
 		$data = new Data(
 			$this->createMock(IManager::class),
-			\OC::$server->getDatabaseConnection(),
+			Server::get(IDBConnection::class),
 			$this->createMock(LoggerInterface::class),
 			$this->createMock(IConfig::class),
 		);
@@ -124,13 +131,11 @@ class APIv1ControllerTest extends TestCase {
 		$data->deleteActivities([
 			'affecteduser' => $uid,
 		]);
-		$user = \OC::$server->getUserManager()->get($uid);
-		if ($user) {
-			$user->delete();
-		}
+		$user = Server::get(IUserManager::class)->get($uid);
+		$user?->delete();
 	}
 
-	public function getData(): array {
+	public static function getData(): array {
 		return [
 			['activity-api-user2', 0, 30, []],
 			['activity-api-user1', 0, 30, [
@@ -184,33 +189,26 @@ class APIv1ControllerTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider getData
-	 *
-	 * @param string $user
-	 * @param int $start
-	 * @param int $count
-	 * @param array $expected
-	 */
+	#[DataProvider('getData')]
 	public function testGet(string $user, int $start, int $count, array $expected): void {
 		$config = $this->createMock(IConfig::class);
-		$config->expects($this->any())
+		$config
 			->method('getUserValue')
 			->willReturnArgument(3);
 
 		$l = $this->createMock(IL10N::class);
-		$l->expects($this->any())
+		$l
 			->method('t')
-			->will($this->returnCallback(function ($text, $parameters = []) {
+			->willReturnCallback(function ($text, $parameters = []) {
 				return vsprintf($text, $parameters);
-			}));
+			});
 
 		$activityManager = new Manager(
 			$this->createMock(IRequest::class),
 			$this->createMock(IUserSession::class),
 			$config,
-			\OC::$server->query(IValidator::class),
-			\OC::$server->query(\OCP\RichObjectStrings\IRichTextFormatter::class),
+			Server::get(IValidator::class),
+			Server::get(IRichTextFormatter::class),
 			$this->createMock(IL10N::class),
 			$this->createMock(ITimeFactory::class),
 		);
@@ -221,24 +219,24 @@ class APIv1ControllerTest extends TestCase {
 		$currentUser = $this->getMockBuilder(CurrentUser::class)
 			->disableOriginalConstructor()
 			->getMock();
-		$currentUser->expects($this->any())
+		$currentUser
 			->method('getUID')
 			->willReturn($user);
 
 		$data = new Data($activityManager,
-			\OC::$server->getDatabaseConnection(),
+			Server::get(IDBConnection::class),
 			$this->createMock(LoggerInterface::class),
 			$this->createMock(IConfig::class),
 		);
 
 		$controller = new APIv1Controller(
-			'activity',
+			Application::APP_ID,
 			$this->createMock(IRequest::class),
 			$data,
 			new GroupHelper($l, $activityManager, $this->createMock(IValidator::class), $this->createMock(LoggerInterface::class)),
 			new UserSettings($activityManager, $config),
 			$currentUser,
-			\OC::$server->getDatabaseConnection(),
+			Server::get(IDBConnection::class),
 		);
 		$response = $controller->get($start, $count);
 

@@ -24,24 +24,23 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests;
 
+use OCA\Activity\AppInfo\Application;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\GroupHelperDisabled;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\IL10N;
+use OCP\L10N\IFactory;
 use OCP\RichObjectStrings\IValidator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 
 class GroupHelperTest extends TestCase {
-	/** @var IManager|MockObject */
-	protected $activityManager;
-	/** @var IValidator|MockObject */
-	protected $validator;
-	/** @var LoggerInterface|MockObject */
-	protected $logger;
-	/** @var IL10N|MockObject */
-	protected $l;
+	protected IManager&MockObject $activityManager;
+	protected IValidator&MockObject $validator;
+	protected MockObject&LoggerInterface $logger;
+	protected MockObject&IL10N $l;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -52,12 +51,7 @@ class GroupHelperTest extends TestCase {
 		$this->logger = $this->createMock(LoggerInterface::class);
 	}
 
-	/**
-	 * @param array $methods
-	 * @param bool $grouping
-	 * @return GroupHelper|MockObject
-	 */
-	protected function getHelper(array $methods = [], $grouping = false): GroupHelper {
+	protected function getHelper(array $methods = [], bool $grouping = false): GroupHelper|MockObject {
 		if (empty($methods)) {
 			if ($grouping) {
 				return new GroupHelper(
@@ -88,14 +82,13 @@ class GroupHelperTest extends TestCase {
 
 	public function testSetL10n(): void {
 		$helper = $this->getHelper();
-
-		$l = \OC::$server->getL10NFactory()->get('activity', 'de');
-
+		$l = \OCP\Server::get(IFactory::class)->get(Application::APP_ID, 'de');
 		$helper->setL10n($l);
+
 		$this->assertTrue(true);
 	}
 
-	public function dataGetEventFromArray(): array {
+	public static function dataGetEventFromArray(): array {
 		return [
 			[
 				[
@@ -134,10 +127,7 @@ class GroupHelperTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataGetEventFromArray
-	 * @param array $activity
-	 */
+	#[DataProvider('dataGetEventFromArray')]
 	public function testGetEventFromArray(array $activity): void {
 		$event = $this->createMock(IEvent::class);
 		$event->expects($this->once())
@@ -206,7 +196,7 @@ class GroupHelperTest extends TestCase {
 		return $event;
 	}
 
-	public function dataGetObjectsFromChildren(): array {
+	public static function dataGetObjectsFromChildren(): array {
 		return [
 			[['id' => 0, 'name' => ''], []],
 			[['id' => 12, 'name' => ''], [12 => '']],
@@ -216,11 +206,7 @@ class GroupHelperTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dataGetObjectsFromChildren
-	 * @param array $data
-	 * @param array $expected
-	 */
+	#[DataProvider('dataGetObjectsFromChildren')]
 	public function testGetObjectsFromChildren(array $data, array $expected): void {
 		$event = $this->createEvent($data);
 		$helper = $this->getHelper();
