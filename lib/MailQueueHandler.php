@@ -91,7 +91,13 @@ class MailQueueHandler {
 				continue;
 			}
 
-			$userObject = $this->userManager->get($user);
+			try {
+				$userObject = $this->userManager->get($user);
+			} catch (\Exception $e) {
+				$this->logger->error('An error happened while trying to find ' . $user . ', skipping', ['exception' => $e]);
+				continue;
+			}
+
 			$email = $userObject ? $userObject->getEMailAddress() : '';
 			if (empty($email)) {
 				// The user did not setup an email address
