@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97498d7c5ff9939005eacc0c66e54424",
+    "content-hash": "2ff693fe935f4a753a44cb5a6e29823b",
     "packages": [],
     "packages-dev": [
         {
             "name": "nextcloud/ocp",
-            "version": "dev-master",
+            "version": "dev-stable31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud-deps/ocp.git",
-                "reference": "eada3e3df8ed0951d305d144d019adba8ff44b7b"
+                "reference": "71dbb3e722587688018a01f72add5b7472532184"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/eada3e3df8ed0951d305d144d019adba8ff44b7b",
-                "reference": "eada3e3df8ed0951d305d144d019adba8ff44b7b",
+                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/71dbb3e722587688018a01f72add5b7472532184",
+                "reference": "71dbb3e722587688018a01f72add5b7472532184",
                 "shasum": ""
             },
             "require": {
@@ -28,11 +28,10 @@
                 "psr/event-dispatcher": "^1.0",
                 "psr/log": "^3.0.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "32.0.0-dev"
+                    "dev-stable31": "31.0.0-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -52,9 +51,9 @@
             "description": "Composer package containing Nextcloud's public OCP API and the unstable NCU API",
             "support": {
                 "issues": "https://github.com/nextcloud-deps/ocp/issues",
-                "source": "https://github.com/nextcloud-deps/ocp/tree/master"
+                "source": "https://github.com/nextcloud-deps/ocp/tree/stable31"
             },
-            "time": "2025-02-18T00:43:23+00:00"
+            "time": "2025-11-16T00:55:54+00:00"
         },
         {
             "name": "psalm/phar",
@@ -300,7 +299,10 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
+    "platform": [],
+    "platform-dev": [],
+    "platform-overrides": {
+        "php": "8.1"
+    },
     "plugin-api-version": "2.6.0"
 }
