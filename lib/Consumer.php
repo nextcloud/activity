@@ -86,7 +86,7 @@ class Consumer implements IConsumer, IBulkConsumer {
 
 		if ($canChangeMail === true || $setting->isDefaultEnabledMail() === true) {
 			$userEmailSettings = $this->userConfig->getValuesByUsers('activity', 'notify_email_ ' . $event->getType(), ValueType::BOOL, $affectedUserIds);
-			$batchTimeSettings = $this->userConfig->getValuesByUsers('activity', 'setting_batchtime', ValueType::INT, $affectedUserIds);
+			$batchTimeSettings = $this->userConfig->getValuesByUsers('activity', 'notify_setting_batchtime', ValueType::INT, $affectedUserIds);
 		}
 
 		$shouldFlush = $this->notificationGenerator->deferNotifications();
@@ -96,7 +96,8 @@ class Consumer implements IConsumer, IBulkConsumer {
 			}
 			$event->setAffectedUser($affectedUser);
 			$notificationSetting = $userPushSettings[$affectedUser] ?? false;
-			$emailSetting = $userEmailSettings[$affectedUser] ?? $batchTimeSettings[$affectedUser] ?? false;
+			$emailSetting = $userEmailSettings[$affectedUser] ?? false;
+			$$batchTimeSettings[$affectedUser] ?? false;
 
 			if ($notificationSetting !== false) {
 				$this->notificationGenerator->sendNotificationForEvent($event, $activityId, $notificationSetting);

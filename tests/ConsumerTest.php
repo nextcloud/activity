@@ -28,7 +28,9 @@ use OCA\Activity\Consumer;
 use OCA\Activity\Data;
 use OCA\Activity\NotificationGenerator;
 use OCA\Activity\UserSettings;
+use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
+use OCP\Activity\ISetting;
 use OCP\Config\IUserConfig;
 use OCP\IDBConnection;
 use OCP\IL10N;
@@ -50,6 +52,8 @@ class ConsumerTest extends TestCase {
 	protected NotificationGenerator&MockObject $notificationGenerator;
 	protected UserSettings $userSettings;
 	private IUserConfig&MockObject $userConfig;
+	private IEvent $event;
+	private Consumer $consumer;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -83,6 +87,16 @@ class ConsumerTest extends TestCase {
 				['affectedUser', 'setting', 'batchtime', 10],
 				['affectedUser2', 'setting', 'batchtime', 10],
 			]);
+
+		$this->consumer = new Consumer(
+			$this->data,
+			$this->activityManager,
+			$this->userSettings,
+			$this->notificationGenerator,
+			$this->userConfig,
+		);
+
+		$this->event = Server::get(IManager::class)->generateEvent();
 	}
 
 	protected function tearDown(): void {
@@ -123,9 +137,7 @@ class ConsumerTest extends TestCase {
 
 	#[DataProvider('receiveData')]
 	public function testReceiveStream(string $type, string $author, string $affectedUser, string $subject): void {
-		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
-		$event = Server::get(IManager::class)->generateEvent();
-		$event->setApp('test')
+		$this->event->setApp('test')
 			->setType($type)
 			->setAffectedUser($affectedUser)
 			->setAuthor($author)
@@ -139,21 +151,13 @@ class ConsumerTest extends TestCase {
 		$this->data->expects($this->once())
 			->method('send');
 
-		$consumer->receive($event);
+		$this->consumer->receive($this->event);
 	}
 
 	#[DataProvider('receiveData')]
 	public function testReceiveEmail(string $type, string $author, string $affectedUser, string $subject, $expected): void {
 		$time = time();
-		$consumer = new Consumer(
-			$this->data,
-			$this->activityManager,
-			$this->userSettings,
-			$this->notificationGenerator,
-			$this->userConfig,
-		);
-		$event = Server::get(IManager::class)->generateEvent();
-		$event->setApp('test')
+		$this->event->setApp('test')
 			->setType($type)
 			->setAffectedUser($affectedUser)
 			->setAuthor($author)
@@ -169,23 +173,15 @@ class ConsumerTest extends TestCase {
 		} else {
 			$this->data->expects($this->once())
 				->method('storeMail')
-				->with($event, $time + 10);
+				->with($this->event, $time + 10);
 		}
 
-		$consumer->receive($event);
+		$this->consumer->receive($this->event);
 	}
 
 	#[DataProvider('receiveData')]
 	public function testReceiveNotification(string $type, string $author, string $affectedUser, string $subject, $expected): void {
-		$consumer = new Consumer(
-			$this->data,
-			$this->activityManager,
-			$this->userSettings,
-			$this->notificationGenerator,
-			$this->userConfig,
-		);
-		$event = Server::get(IManager::class)->generateEvent();
-		$event->setApp('test')
+		$this->event->setApp('test')
 			->setType($type)
 			->setAffectedUser($affectedUser)
 			->setAuthor($author)
@@ -204,6 +200,84 @@ class ConsumerTest extends TestCase {
 				->method('sendNotificationForEvent');
 		}
 
-		$consumer->receive($event);
+		$this->consumer->receive($this->event);
 	}
+
+	public static function receiveBulkData(): array {
+		/**
+		 * type
+		 * author
+		 * subject
+		 * affectedUsers
+		 * activityIds
+		 * ISettings canChangeEmail, canChangePush
+		 * IUserConfig notify_notification_type notify_email_type notify_setting_batchtime
+		 *
+		 */
+
+		return [
+			// Empty affected users
+			['type', 'author','subject',
+				[],
+				[],
+				[],
+				[]
+			],
+			// Empty activity IDs
+			['type', 'author','subject',
+				['affectedUser', 'affectedUser1'],
+				[],
+				[],
+				[]
+			],
+			['type', 'author','subject', ['affectedUser', 'affectedUser2', 'affectedUser3'], [true, true], [false, false, false]],
+			['type2', 'author', 'subject', false, ['affectedUser', 'affectedUser2', 'affectedUser3']],
+			['type', 'author','subject_self', 'affectedUser', ['affectedUser', 'affectedUser2', 'affectedUser3']],
+			['type', 'author',  'subject_self', 'affectedUser2', ['affectedUser', 'affectedUser2', 'affectedUser3']],
+			['type', 'author', 'subject2', 'affectedUser', ['affectedUser', 'affectedUser2', 'affectedUser3']],
+			['type', 'author',  'subject2', 'affectedUser2', ['affectedUser', 'affectedUser2', 'affectedUser3']],
+			['type', 'affectedUser', 'subject_self', 'affectedUser', ['affectedUser', 'affectedUser2', 'affectedUser3']],
+			['type', 'affectedUser2', 'subject_self', false, ['affectedUser', 'affectedUser2', 'affectedUser3']],
+			['type', 'affectedUser', 'subject2', 'affectedUser', ['affectedUser', 'affectedUser2', 'affectedUser3']],
+			['type', 'affectedUser2','subject2', false, ['affectedUser', 'affectedUser2', 'affectedUser3']],
+		];
+	}
+
+	#[DataProvider('receiveBulkData')]
+	public function testBulkReceiveNotification(string $type, string $author, string $subject, $expected, array $affectedUsers): void {
+		$this->event->setApp('activity')
+			->setType($type)
+			->setAuthor($author)
+			->setTimestamp(time())
+			->setSubject($subject, ['subjectParam1', 'subjectParam2'])
+			->setMessage('message', ['messageParam1', 'messageParam2'])
+			->setObject('', 0, 'file')
+			->setLink('link');
+		$this->deleteTestActivities();
+
+		$settings = $this->createMock(ISetting::class);
+		$settings->expects($this->any())
+			->method('getValuesByUsers')
+			->with($affectedUsers)
+			->willReturn($affectedUsers);
+		if (empty($affectedUsers)) {
+			$this->data->expects($this->never())
+				->method('bulkSend');
+			$this->data->expects($this->never())
+				->method('storeMail');
+			$this->notificationGenerator->expects($this->never())
+				->method('sendNotificationForEvent');
+		}
+
+		if ($expected === false || $author === $affectedUser) {
+			$this->notificationGenerator->expects($this->never())
+				->method('sendNotificationForEvent');
+		} else {
+			$this->notificationGenerator->expects($this->once())
+				->method('sendNotificationForEvent');
+		}
+
+		$this->consumer->bulkReceive($this->event, $affectedUsers, );
+	}
+
 }
