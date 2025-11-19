@@ -15,7 +15,7 @@ use OCP\Activity\IManager;
 use OCP\Activity\ISetting;
 use OCP\Config\IUserConfig;
 use OCP\Config\ValueType;
-use Throwable;
+use OCP\DB\Exception;
 
 class Consumer implements IConsumer, IBulkConsumer {
 
@@ -56,18 +56,20 @@ class Consumer implements IConsumer, IBulkConsumer {
 	}
 
 	/**
-	 * Send an event to the notifications of a user
+	 * Send an event to the notifications of a bulk of users
 	 *
 	 * @param IEvent $event
-	 * @throws Throwable
-	 *
+	 * @param array $affectedUserIds
+	 * @param ISetting $setting
 	 * @return void
+	 * @throws Exception
 	 */
 	#[\Override]
 	public function bulkReceive(IEvent $event, array $affectedUserIds, ISetting $setting): void {
 		if (empty($affectedUserIds)) {
 			return;
 		}
+
 		$activityIds = $this->data->bulkSend($event, $affectedUserIds);
 
 		if (empty($activityIds)) {
@@ -86,7 +88,6 @@ class Consumer implements IConsumer, IBulkConsumer {
 			$userEmailSettings = $this->userConfig->getValuesByUsers('activity', 'notify_email_ ' . $event->getType(), ValueType::BOOL, $affectedUserIds);
 			$batchTimeSettings = $this->userConfig->getValuesByUsers('activity', 'setting_batchtime', ValueType::INT, $affectedUserIds);
 		}
-
 
 		$shouldFlush = $this->notificationGenerator->deferNotifications();
 		foreach ($activityIds as $activityId => $affectedUser) {

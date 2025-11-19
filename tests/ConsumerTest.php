@@ -29,6 +29,7 @@ use OCA\Activity\Data;
 use OCA\Activity\NotificationGenerator;
 use OCA\Activity\UserSettings;
 use OCP\Activity\IManager;
+use OCP\Config\IUserConfig;
 use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
@@ -48,6 +49,7 @@ class ConsumerTest extends TestCase {
 	protected IManager&MockObject $activityManager;
 	protected NotificationGenerator&MockObject $notificationGenerator;
 	protected UserSettings $userSettings;
+	private IUserConfig&MockObject $userConfig;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -62,6 +64,7 @@ class ConsumerTest extends TestCase {
 		$l10n = $this->createMock(IL10N::class);
 		$this->notificationGenerator = $this->createMock(NotificationGenerator::class);
 		$this->l10nFactory = $this->createMock(IFactory::class);
+		$this->userConfig = $this->createMock(IUserConfig::class);
 
 		$this->data->method('send')
 			->willReturn(1);
@@ -142,7 +145,13 @@ class ConsumerTest extends TestCase {
 	#[DataProvider('receiveData')]
 	public function testReceiveEmail(string $type, string $author, string $affectedUser, string $subject, $expected): void {
 		$time = time();
-		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
+		$consumer = new Consumer(
+			$this->data,
+			$this->activityManager,
+			$this->userSettings,
+			$this->notificationGenerator,
+			$this->userConfig,
+		);
 		$event = Server::get(IManager::class)->generateEvent();
 		$event->setApp('test')
 			->setType($type)
@@ -168,7 +177,13 @@ class ConsumerTest extends TestCase {
 
 	#[DataProvider('receiveData')]
 	public function testReceiveNotification(string $type, string $author, string $affectedUser, string $subject, $expected): void {
-		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
+		$consumer = new Consumer(
+			$this->data,
+			$this->activityManager,
+			$this->userSettings,
+			$this->notificationGenerator,
+			$this->userConfig,
+		);
 		$event = Server::get(IManager::class)->generateEvent();
 		$event->setApp('test')
 			->setType($type)
