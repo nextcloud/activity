@@ -9,6 +9,7 @@
 			:class="[applyMonochromeIconColor, 'activity-entry__icon', 'activity-icon', 'avatardiv--unknown']"
 			:disable-menu="true"
 			:disable-tooltip="true"
+			:hideStatus="true"
 			:url="activity.icon"
 			:size="20" />
 

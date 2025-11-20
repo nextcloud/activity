@@ -7,6 +7,7 @@
 		<NcAvatar
 			class="comments-activity__icon"
 			:disable-menu="false"
+			:hideStatus="true"
 			:user="authorId" />
 		<div class="comments-activity__content">
 			<NcRichText
