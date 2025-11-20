@@ -1,6 +1,12 @@
 {
+	"config": {
+		"platform": {
+			"php": "8.1"
+		},
+		"sort-packages": true
+	},
     "require-dev": {
         "psalm/phar": "^5.26",
-        "nextcloud/ocp": "dev-master"
+        "nextcloud/ocp": "dev-stable31"
     }
 }
