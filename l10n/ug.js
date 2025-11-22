@@ -26,7 +26,7 @@ OC.L10N.register(
     "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "بۇ ئېلېكترونلۇق خەتلەرنىڭ چاستوتىنى ئۆزگەرتەلەيسىز ياكى <a href=\"%s\"> تەڭشەك </a> دە چەكلىيەلەيسىز.",
     "You can change the frequency of these emails or disable them in the settings: %s" : "بۇ ئېلېكترونلۇق خەتلەرنىڭ چاستوتىنى ئۆزگەرتەلەيسىز ياكى تەڭشەكلەردە چەكلىيەلەيسىز:%s",
     "Mail" : "خەت",
-    "Push" : "Push",
+    "Push" : "ئىتتىرىش",
     "Activity" : "پائالىيەت",
     "Notifications" : "ئۇقتۇرۇش",
     "This application enables people to view a log of activities about them, their files or other data." : "بۇ پروگرامما كىشىلەرگە مۇناسىۋەتلىك ھۆججەتلەرنى ، ھۆججەتلىرىنى ياكى باشقا سانلىق مەلۇماتلارنى كۆرەلەيدۇ.",
