@@ -65,7 +65,7 @@
     "@nextcloud/vite-config": "^2.5.2",
     "@testing-library/cypress": "^10.1.0",
     "@types/dockerode": "^3.3.46",
-    "@vitest/coverage-v8": "^4.0.10",
+    "@vitest/coverage-v8": "^4.0.13",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.8.1",
     "cypress-vite": "^1.8.0",
