@@ -13,6 +13,8 @@ OC.L10N.register(
     "More activities" : "Flere aktiviteter",
     "Daily activity summary for %s" : "Daglig aktivitetssammendrag for %s",
     "_and %n more…_::_and %n more…_" : ["og %n til…","og %n til…"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Du kan skru av daglige oppsummeringseposter i <a href=\"%s\">innstillinger</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Du kan skru av daglige oppsummeringseposter i innstillinger: %s",
     "All activities" : "All aktivitet",
     "By others" : "Av andre",
     "By you" : "Av deg",
