@@ -44,7 +44,7 @@
     "@nextcloud/auth": "^2.5.3",
     "@nextcloud/axios": "^2.5.0",
     "@nextcloud/dialogs": "^7.1.0",
-    "@nextcloud/eslint-config": "^9.0.0-rc.5",
+    "@nextcloud/eslint-config": "^9.0.0-rc.6",
     "@nextcloud/initial-state": "^3.0.0",
     "@nextcloud/l10n": "^3.4.1",
     "@nextcloud/logger": "^3.0.2",
