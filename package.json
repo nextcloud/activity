@@ -74,7 +74,7 @@
     "eslint-plugin-cypress": "^5.2.0",
     "happy-dom": "^20.0.11",
     "typescript": "^5.9.3",
-    "vite": "^7.2.6",
+    "vite": "^7.2.7",
     "vitest": "^4.0.13",
     "vue-template-compiler": "^2.7.16",
     "wait-on": "^9.0.3"
