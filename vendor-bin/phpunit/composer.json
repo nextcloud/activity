@@ -4,6 +4,6 @@
 	},
 	"sort-packages": true,
     "require-dev": {
-        "phpunit/phpunit": "^11.5.43"
+        "phpunit/phpunit": "^12.5.3"
     }
 }
