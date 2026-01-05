@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { ActivityFactoryQueryOptions, IActivityFactory, IActivityFilter, IActivitySidebarAction } from '../models/ActivityAPI.ts'
+import type { ActivityFactoryQueryOptions, IActivityFactory, IActivityFilter, IActivitySidebarAction, IActivitySidebarEntry } from '../models/ActivityAPI.ts'
 
 import logger from './logger.ts'
 
@@ -28,7 +28,7 @@ declare global {
 				__sidebar_filters: IActivityFilter[]
 			}
 			Viewer?: {
-				open(options: { path?: string, fileInfo?: unknown }): void
+				open(options: { path?: string }): void
 				get mimetypes(): string[]
 			}
 		}
@@ -74,15 +74,22 @@ export function getSidebarActions() {
 /**
  * Get all additional activity stream entries for a given file object
  *
- * @param options Filter options for the additonal entries
+ * @param options Filter options for the additional entries
  */
 export async function getAdditionalEntries(options: ActivityFactoryQueryOptions) {
 	if (window.OCA?.Activity?.__sidebar_factories === undefined) {
 		return []
 	}
 
-	const allPromises = window.OCA.Activity.__sidebar_factories.map(async (factory) => await factory(options))
-	return (await Promise.all(allPromises)).flat()
+	const entries: IActivitySidebarEntry[] = []
+	for (const factory of window.OCA.Activity.__sidebar_factories) {
+		try {
+			entries.push(...(await factory(options)))
+		} catch (error) {
+			logger.error('Error loading additional activity entries', { error })
+		}
+	}
+	return entries
 }
 
 /**

@@ -6,7 +6,7 @@
 import { createFolder, getFileListRow, moveFile, navigateToFolder, renameFile } from './filesUtils.ts'
 import { addComment, addTag, createPublicShare, randHash, showActivityTab, toggleFavorite } from './sidebarUtils.ts'
 
-describe.skip('Check activity listing in the sidebar', { testIsolation: true }, () => {
+describe('Check activity listing in the sidebar', { testIsolation: true }, () => {
 	beforeEach(function() {
 		cy.createRandomUser()
 			.then((user) => {
@@ -70,7 +70,8 @@ describe.skip('Check activity listing in the sidebar', { testIsolation: true }, 
 		cy.get('.activity-entry').first().should('contains.text', 'Added system tag')
 	})
 
-	it('Has comment activity', () => {
+	// TODO: re-enable when comments app is fixed
+	it.skip('Has comment activity', () => {
 		addComment('welcome.txt', 'A comment')
 		cy.visit('/apps/files')
 

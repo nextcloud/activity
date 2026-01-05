@@ -8,7 +8,7 @@
 		:class="{ 'icon-loading': loading }"
 		class="activity">
 		<!-- error message -->
-		<NcEmptyContent v-if="error || fileInfo === null" :name="error">
+		<NcEmptyContent v-if="error || !node" :name="error">
 			<template #icon>
 				<NcIconSvgWrapper :svg="lightningBoltSVG" />
 			</template>
@@ -17,10 +17,10 @@
 			<!-- activities actions -->
 			<div v-if="sidebarPlugins.length > 0" class="activity__actions">
 				<ActivitySidebarPlugin
-					v-for="plugin, index of sidebarPlugins"
+					v-for="(plugin, index) of sidebarPlugins"
 					:key="index"
 					:plugin="plugin"
-					:file-info="fileInfo"
+					:node="node"
 					@reload-activities="getActivities()" />
 			</div>
 
@@ -38,7 +38,7 @@
 				class="activity__empty-content"
 				:name="t('activity', 'No activity yet')">
 				<template #icon>
-					<span class="icon-activity" />
+					<NcIconSvgWrapper :svg="lightningBoltSVG" />
 				</template>
 			</NcEmptyContent>
 			<ul v-else class="activity__list">
@@ -54,6 +54,8 @@
 </template>
 
 <script lang='ts'>
+import type { IFolder, INode, IView } from '@nextcloud/files'
+import type { PropType } from 'vue'
 import type { IActivitySidebarAction, IActivitySidebarEntry } from '../models/ActivityAPI.ts'
 
 import lightningBoltSVG from '@mdi/svg/svg/lightning-bolt.svg?raw'
@@ -72,6 +74,7 @@ import logger from '../utils/logger.ts'
 
 const ActivityTab = defineComponent({
 	name: 'ActivityTab',
+
 	components: {
 		ActivityComponent,
 		NcEmptyContent,
@@ -80,30 +83,68 @@ const ActivityTab = defineComponent({
 		ActivitySidebarPlugin,
 	},
 
+	props: {
+		/**
+		 * The node currently displayed in the sidebar
+		 */
+		node: {
+			type: Object as PropType<INode>,
+			required: true,
+		},
+
+		/**
+		 * The folder shown in the files app
+		 */
+		// eslint-disable-next-line vue/no-unused-properties
+		folder: {
+			type: Object as PropType<IFolder | undefined>,
+			required: false,
+			default: undefined,
+		},
+
+		/**
+		 * The view shown in the files app
+		 */
+		// eslint-disable-next-line vue/no-unused-properties
+		view: {
+			type: Object as PropType<IView | undefined>,
+			required: false,
+			default: undefined,
+		},
+	},
+
 	expose: ['update'],
 
 	data() {
 		return {
 			error: '',
 			loading: true,
-			fileInfo: null,
 			activities: [] as (IActivitySidebarEntry | ActivityModel)[],
 			lightningBoltSVG,
 			sidebarPlugins: [] as IActivitySidebarAction[],
 		}
 	},
 
-	mounted() {
-		this.sidebarPlugins = getSidebarActions()
+	watch: {
+		node: {
+			immediate: true,
+			async handler() {
+				await this.update()
+			},
+		},
+	},
+
+	async mounted() {
+		if (this.node) {
+			await this.update()
+		}
 	},
 
 	methods: {
 		/**
-		 * Update current fileInfo and fetch new activities
-		 *
-		 * @param fileInfo the current file FileInfo
+		 * Update current view and fetch new activities
 		 */
-		async update(fileInfo) {
+		async update() {
 			this.sidebarPlugins = []
 			const sidebarPlugins = getSidebarActions()
 			if (sidebarPlugins.length > 0) {
@@ -112,7 +153,6 @@ const ActivityTab = defineComponent({
 				})
 			}
 
-			this.fileInfo = fileInfo
 			this.resetState()
 			await this.getActivities()
 		},
@@ -125,7 +165,7 @@ const ActivityTab = defineComponent({
 				this.loading = true
 
 				const activities = await this.processActivities(await this.loadRealActivities())
-				const otherEntries = await getAdditionalEntries({ fileInfo: this.fileInfo })
+				const otherEntries = await getAdditionalEntries({ node: this.node })
 				this.activities = [...activities, ...otherEntries].sort((a, b) => b.timestamp - a.timestamp)
 			} catch (error) {
 				this.error = t('activity', 'Unable to load the activity list')
@@ -155,7 +195,7 @@ const ActivityTab = defineComponent({
 						params: {
 							format: 'json',
 							object_type: 'files',
-							object_id: this.fileInfo.id,
+							object_id: this.node.fileid,
 						},
 					},
 				)
@@ -177,7 +217,9 @@ const ActivityTab = defineComponent({
 		processActivities(activities): ActivityModel[] {
 			activities = activities.map((activity) => new ActivityModel(activity))
 
-			logger.debug(`Processed ${activities.length} activity(ies)`, { activities, fileInfo: this.fileInfo })
+			logger.debug(`Processed ${activities.length} activity(ies)`, {
+				activities, node: this.node,
+			})
 
 			const filters = getActivityFilters()
 			return activities.filter((activity) => !filters || filters.every((filter) => filter(activity)))

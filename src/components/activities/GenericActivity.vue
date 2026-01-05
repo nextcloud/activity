@@ -6,7 +6,8 @@
 <template>
 	<li class="activity-entry">
 		<NcAvatar
-			:class="[applyMonochromeIconColor, 'activity-entry__icon', 'activity-icon', 'avatardiv--unknown']"
+			class="activity-entry__icon activity-icon avatardiv--unknown"
+			:class="[applyMonochromeIconColor]"
 			:disable-menu="true"
 			:disable-tooltip="true"
 			:url="activity.icon"
