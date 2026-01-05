@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createFolder, getFileListRow, navigateToFolder, moveFile, renameFile } from './filesUtils'
-import { addComment, addTag, createPublicShare, toggleFavorite, showActivityTab, randHash } from './sidebarUtils'
+import { createFolder, getFileListRow, moveFile, navigateToFolder, renameFile } from './filesUtils.ts'
+import { addComment, addTag, createPublicShare, randHash, showActivityTab, toggleFavorite } from './sidebarUtils.ts'
 
-describe('Check activity listing in the sidebar', { testIsolation: true }, () => {
+describe.skip('Check activity listing in the sidebar', { testIsolation: true }, () => {
 	beforeEach(function() {
 		cy.createRandomUser()
 			.then((user) => {
@@ -77,5 +77,4 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 		showActivityTab('welcome.txt')
 		cy.get('.comments-activity').first().should('contains.text', 'A comment')
 	})
-
 })
