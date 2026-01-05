@@ -2,6 +2,9 @@
  * SPDX-FileCopyrightText: 2023 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+
+import type { INode } from '@nextcloud/files'
+import type { ComponentPublicInstance } from 'vue'
 import type ActivityModel from './ActivityModel.js'
 
 interface MountOptions {
@@ -9,16 +12,19 @@ interface MountOptions {
 	 * Trigger reloading the activities
 	 */
 	reload: () => void
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	fileInfo: any
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	context: any
+	/**
+	 * The current file or folder context
+	 */
+	node: INode
+	/**
+	 * The current Vue component instance context
+	 */
+	context?: ComponentPublicInstance
 }
 
 export interface ActivityFactoryQueryOptions {
-	/** File to show entries for */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	fileInfo: any
+	/** File or folder to show entries for */
+	node: INode
 	/** Limit the number of entries */
 	limit?: number
 	/** Offset for the entries queried */
@@ -52,7 +58,7 @@ export interface IActivitySidebarEntry {
 	/**
 	 * The action is called with the HTML element where is should be mounted
 	 */
-	mount: (element: HTMLElement, options: Omit<MountOptions, 'fileInfo'>) => void
+	mount: (element: HTMLElement, options: Omit<MountOptions, 'node'>) => void
 
 	/**
 	 * Called just before the sidebar is destroyed to allow plugins to cleanup

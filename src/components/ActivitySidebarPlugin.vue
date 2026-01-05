@@ -8,6 +8,7 @@
 </template>
 
 <script setup lang="ts">
+import type { INode } from '@nextcloud/files'
 import type { IActivitySidebarAction } from '../models/ActivityAPI.ts'
 
 import { getCurrentInstance, onBeforeUnmount, onMounted, ref } from 'vue'
@@ -15,7 +16,10 @@ import { getCurrentInstance, onBeforeUnmount, onMounted, ref } from 'vue'
 const props = defineProps<{
 	/** The sidebar plugin */
 	plugin: IActivitySidebarAction
-	fileInfo: object | null
+	/**
+	 * The current node (file or folder)
+	 */
+	node: INode
 }>()
 
 const emit = defineEmits<{
@@ -25,8 +29,8 @@ const emit = defineEmits<{
 const attachTarget = ref<HTMLDivElement>()
 
 onMounted(() => props.plugin.mount(attachTarget.value as HTMLDivElement, {
-	context: getCurrentInstance()?.proxy,
-	fileInfo: props.fileInfo,
+	node: props.node,
+	context: getCurrentInstance()?.proxy ?? undefined,
 	reload: () => emit('reload-activities'),
 }))
 onBeforeUnmount(() => props.plugin.unmount())

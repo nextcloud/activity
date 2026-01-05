@@ -3,23 +3,25 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { toggleMenuAction } from './filesUtils'
+import { toggleMenuAction, triggerActionForFile } from './filesUtils.ts'
 
 function showSidebarForFile(fileName: string) {
-	closeSidebar()
 	toggleMenuAction(fileName, 'details')
 	cy.get('#app-sidebar-vue').should('be.visible')
 }
 
+/**
+ * Close the sidebar
+ */
 export function closeSidebar() {
-	cy.get('body')
-		.then(($body) => {
-			if ($body.find('.app-sidebar__close').length !== 0) {
-				// {force: true} as it might be hidden behind toasts
-				cy.get('[data-cy-sidebar] .app-sidebar__close').click({ force: true })
-			}
-		})
-	cy.get('#app-sidebar-vue').should('not.exist')
+	// {force: true} as it might be hidden behind toasts
+	cy.get('[data-cy-sidebar] .app-sidebar__close')
+		.click({ force: true })
+	cy.get('[data-cy-sidebar]')
+		.should('not.be.visible')
+	cy.wait(500)
+	cy.url()
+		.should('not.contain', 'opendetails')
 }
 
 export function showActivityTab(fileName: string) {
@@ -75,24 +77,36 @@ export function createPublicShare(fileName: string) {
 	cy.wait('@createPublicShare')
 }
 
-export function addTag(fileName: string, tag: string) {
-	showSidebarForFile(fileName)
+/**
+ * Add a system tag to a file
+ *
+ * @param fileName - The filename to asign the tag
+ * @param newTag - The new tag
+ */
+export function addTag(fileName: string, newTag: string) {
+	triggerActionForFile(fileName, 'systemtags:bulk')
 
-	cy.get('#app-sidebar-vue .app-sidebar-header')
-		.should('be.visible')
-		.findByRole('button', { name: 'Actions' })
-		.click()
+	cy.intercept('POST', '/remote.php/dav/systemtags').as('createTag')
+	cy.intercept('PROPFIND', '/remote.php/dav/systemtags/*/files').as('getTagData')
+	cy.intercept('PROPPATCH', '/remote.php/dav/systemtags/*/files').as('assignTagData')
 
-	cy.findByRole('menuitem', { name: 'Tags' })
-		.should('be.visible')
-		.click()
+	cy.get('[data-cy-systemtags-picker-input]').type(newTag)
 
-	cy.intercept('POST', '/remote.php/dav/systemtags').as('tag')
+	cy.get('[data-cy-systemtags-picker-tag]').should('have.length', 0)
+	cy.get('[data-cy-systemtags-picker-button-create]').should('be.visible')
+	cy.get('[data-cy-systemtags-picker-button-create]').click()
 
-	cy.findByLabelText('Search or create collaborative tags')
-		.type(`${tag}{enter}{esc}`)
+	cy.wait('@createTag')
+	// Verify the new tag is selected by default
+	cy.get('[data-cy-systemtags-picker-tag]').contains(newTag)
+		.parents('[data-cy-systemtags-picker-tag]')
+		.findByRole('checkbox', { hidden: true }).should('be.checked')
 
-	cy.wait('@tag')
+	// Apply changes
+	cy.get('[data-cy-systemtags-picker-button-submit]').click()
+
+	cy.wait('@assignTagData')
+	cy.get('[data-cy-systemtags-picker]').should('not.exist')
 }
 
 export function addComment(fileName: string, comment: string) {
