@@ -825,7 +825,7 @@ class FilesHooks {
 		if (in_array($share->getNodeType(), ['file', 'folder'], true)) {
 			if ($share->getShareType() === IShare::TYPE_GROUP) {
 				$this->unshareFromSelfGroup($share);
-			} else {
+			} elseif ($share->getShareType() === IShare::TYPE_USER) {
 				$this->unshareFromUser($share);
 			}
 		}

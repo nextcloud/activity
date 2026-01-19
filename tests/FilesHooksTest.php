@@ -1038,6 +1038,8 @@ class FilesHooksTest extends TestCase {
 			->willReturn('file');
 		$share->method('getSharedWith')
 			->willReturn('with');
+		$share->method('getShareType')
+			->willReturn(IShare::TYPE_USER);
 
 		$this->settings->expects($this->exactly(3))
 			->method('getUserSetting')
