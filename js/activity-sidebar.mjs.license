@@ -33,7 +33,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 4.0.0-beta.8
 	- license: AGPL-3.0-or-later
 - activity
-	- version: 6.0.0-dev.0
+	- version: 7.0.0-dev.0
 	- license: AGPL-3.0-or-later
 - available-typed-arrays
 	- version: 1.0.7

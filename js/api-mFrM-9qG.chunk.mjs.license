@@ -3,5 +3,5 @@ SPDX-FileCopyrightText: Julius Härtl <jus@bitgrid.net>
 
 This file is generated from multiple sources. Included packages:
 - activity
-	- version: 6.0.0-dev.0
+	- version: 7.0.0-dev.0
 	- license: AGPL-3.0-or-later
