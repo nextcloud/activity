@@ -56,8 +56,8 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	it('Has move activity', () => {
 		createFolder('Test folder')
 		moveFile('welcome.txt', 'Test folder')
+		cy.get('button.toast-close').click({ multiple: true })
 		navigateToFolder('Test folder')
-
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'You moved')
 	})
