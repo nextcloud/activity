@@ -53,7 +53,6 @@ export function renameFile(fileName: string, newName: string) {
 
 	getRowForFile(fileName).find('[data-cy-files-list-row-name] input').clear()
 	getRowForFile(fileName).find('[data-cy-files-list-row-name] input').type(`${newName}{enter}`)
-	cy.get('.toast-close').click()
 	cy.wait('@moveFile')
 }
 
