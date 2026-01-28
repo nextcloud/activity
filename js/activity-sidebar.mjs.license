@@ -1,5 +1,6 @@
 SPDX-License-Identifier: AGPL-3.0-or-later
 SPDX-License-Identifier: Apache-2.0
+SPDX-License-Identifier: BlueOak-1.0.0
 SPDX-License-Identifier: ISC
 SPDX-License-Identifier: MIT
 SPDX-FileCopyrightText: Austin Andrews
@@ -30,7 +31,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 7.4.47
 	- license: Apache-2.0
 - @nextcloud/files
-	- version: 4.0.0-beta.8
+	- version: 4.0.0-rc.0
 	- license: AGPL-3.0-or-later
 - activity
 	- version: 7.0.0-dev.0
@@ -132,8 +133,8 @@ This file is generated from multiple sources. Included packages:
 	- version: 1.1.0
 	- license: MIT
 - sax
-	- version: 1.4.1
-	- license: ISC
+	- version: 1.4.4
+	- license: BlueOak-1.0.0
 - set-function-length
 	- version: 1.2.2
 	- license: MIT
@@ -153,5 +154,5 @@ This file is generated from multiple sources. Included packages:
 	- version: 0.24.0
 	- license: MIT
 - which-typed-array
-	- version: 1.1.19
+	- version: 1.1.20
 	- license: MIT

@@ -1,17 +1,30 @@
 version: 2
 updates:
-- package-ecosystem: composer
+- package-ecosystem: "composer"
   directory: "/"
   schedule:
     interval: weekly
     day: saturday
     time: "03:00"
     timezone: Europe/Paris
+  cooldown:
+    default-days: 6
   open-pull-requests-limit: 10
   labels:
-  - 3. to review
-  - dependencies
-- package-ecosystem: composer
+    - 3. to review
+    - dependencies
+  groups:
+    prod:
+      dependency-type: "production"
+      update-types:
+        - "minor"
+        - "patch"
+    dev:
+      dependency-type: "development"
+      update-types:
+        - "minor"
+        - "patch"
+- package-ecosystem: "composer"
   directories:
     - "/vendor-bin/cs-fixer"
     - "/vendor-bin/phpunit"
@@ -21,23 +34,42 @@ updates:
     day: saturday
     time: "03:00"
     timezone: Europe/Paris
+  cooldown:
+    default-days: 6
   open-pull-requests-limit: 10
   labels:
     - 3. to review
     - dependencies
-- package-ecosystem: npm
+- package-ecosystem: "npm"
   directory: "/"
   schedule:
     interval: weekly
     day: saturday
     time: "03:00"
     timezone: Europe/Paris
+  cooldown:
+    default-days: 6
   open-pull-requests-limit: 10
   # Disable automatic rebasing because without a build CI will likely fail anyway
   rebase-strategy: "disabled"
   labels:
-  - 3. to review
-  - dependencies
+    - 3. to review
+    - dependencies
+  groups:
+    vue:
+      patterns:
+        - "*vue*"
+        - "*vite*"
+    prod:
+      dependency-type: "production"
+      update-types:
+        - "minor"
+        - "patch"
+    dev:
+      dependency-type: "development"
+      update-types:
+        - "minor"
+        - "patch"
   # GitHub Actions
 - package-ecosystem: "github-actions"
   directory: ".github/workflows"
@@ -49,3 +81,12 @@ updates:
     day: saturday
     time: "03:00"
     timezone: Europe/Berlin
+  cooldown:
+    default-days: 6
+  labels:
+    - 3. to review
+    - github_actions
+  groups:
+    github-actions:
+      patterns:
+        - "*"
