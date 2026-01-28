@@ -109,8 +109,8 @@ export function moveFile (fileName: string, dirName: string) {
 			// click move
 			cy.contains('button', `Move to ${directories.at(-1)}`).should('be.visible').click()
 		}
-		cy.get('.toast-close').click()
 		cy.wait('@moveFile')
+		cy.get('.toast-close').click()
 	})
 }
 
