@@ -59,7 +59,7 @@ updates:
     vue:
       patterns:
         - "*vue*"
-        - "*vitest*"
+        - "*vite*"
     prod:
       dependency-type: "production"
       update-types:
