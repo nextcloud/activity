@@ -4,15 +4,7 @@
  */
 
 import { createFolder, getFileListRow, moveFile, navigateToFolder, renameFile } from './filesUtils.ts'
-import {
-	addComment,
-	addTag,
-	closeToasts,
-	createPublicShare,
-	randHash,
-	showActivityTab,
-	toggleFavorite
-} from './sidebarUtils.ts'
+import { addComment, addTag, closeToasts, createPublicShare, randHash, showActivityTab, toggleFavorite } from './sidebarUtils.ts'
 
 describe('Check activity listing in the sidebar', { testIsolation: true }, () => {
 	beforeEach(function() {
