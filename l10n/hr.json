@@ -10,6 +10,7 @@
     "No activities" : "Nema aktivnosti",
     "More activities" : "Više aktivnosti",
     "Daily activity summary for %s" : "Dnevni sažetak aktivnosti za %s",
+    "_and %n more…_::_and %n more…_" : ["i još %n …","i još %n …","i još %n …"],
     "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Dnevne sažetke e-pošte možete onemogućiti u <a href=\"%s\">postavkama</a>.",
     "You can disable daily digest emails in the settings: %s" : "Dnevne sažetke e-pošte možete onemogućiti u postavkama: %s",
     "All activities" : "Sve aktivnosti",
