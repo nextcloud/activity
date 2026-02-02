@@ -4,7 +4,7 @@
  */
 
 import { createFolder, getFileListRow, moveFile, navigateToFolder, renameFile } from './filesUtils.ts'
-import { addComment, addTag, createPublicShare, randHash, showActivityTab, toggleFavorite } from './sidebarUtils.ts'
+import { addComment, addTag, closeToasts, createPublicShare, randHash, showActivityTab, toggleFavorite } from './sidebarUtils.ts'
 
 describe('Check activity listing in the sidebar', { testIsolation: true }, () => {
 	beforeEach(function() {
@@ -56,8 +56,8 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 	it('Has move activity', () => {
 		createFolder('Test folder')
 		moveFile('welcome.txt', 'Test folder')
+		closeToasts()
 		navigateToFolder('Test folder')
-
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'You moved')
 	})

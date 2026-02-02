@@ -24,6 +24,10 @@ export function closeSidebar() {
 		.should('not.contain', 'opendetails')
 }
 
+export function closeToasts() {
+	cy.get('button.toast-close').click({ multiple: true })
+}
+
 export function showActivityTab(fileName: string) {
 	cy.intercept('GET', '/ocs/v2.php/apps/activity/api/v2/activity/filter**').as('getActivities')
 

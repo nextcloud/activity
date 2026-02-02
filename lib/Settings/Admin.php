@@ -105,7 +105,7 @@ class Admin implements ISettings {
 			IExtension::METHOD_NOTIFICATION => $this->l10n->t('Push'),
 		]);
 
-		return new TemplateResponse('activity', 'settings/admin', [], 'blank');
+		return new TemplateResponse('activity', 'settings/admin', [], TemplateResponse::RENDER_AS_BLANK);
 	}
 
 	#[\Override]
