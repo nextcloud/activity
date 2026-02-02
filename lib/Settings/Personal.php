@@ -139,7 +139,7 @@ class Personal implements ISettings {
 			'methods' => $methods,
 
 			'activity_digest_enabled' => $this->userSettings->getUserSetting($this->userId, 'setting', 'activity_digest')
-		], 'blank');
+		], TemplateResponse::RENDER_AS_BLANK);
 	}
 
 	/**
