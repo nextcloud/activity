@@ -15,7 +15,7 @@
 		More information is available in the Activity documentation.
 	</description>
 
-	<version>5.0.0-dev.0</version>
+	<version>5.0.0</version>
 	<licence>AGPL-3.0-or-later</licence>
 	<author>Frank Karlitschek</author>
 	<author>Joas Schilling</author>
