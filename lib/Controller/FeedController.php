@@ -13,6 +13,9 @@ use OCA\Activity\UserSettings;
 use OCA\Theming\ThemingDefaults;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\Attribute\BruteForceProtection;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
+use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -40,16 +43,13 @@ class FeedController extends Controller {
 		parent::__construct($appName, $request);
 	}
 
-	/**
-	 * @PublicPage
-	 * @NoCSRFRequired
-	 *
-	 * @return TemplateResponse
-	 */
-	public function show() {
+	#[PublicPage]
+	#[NoCSRFRequired]
+	#[BruteForceProtection('activityRssFeed')]
+	public function show(): TemplateResponse {
+		$response = new TemplateResponse('activity', 'rss', [], '');
 		try {
 			$user = $this->activityManager->getCurrentUserId();
-
 			$userLang = $this->config->getUserValue($user, 'core', 'lang');
 
 			// Overwrite user and language in the helper
@@ -57,12 +57,11 @@ class FeedController extends Controller {
 			$this->helper->setL10n($this->l);
 
 			$description = $this->l->t('Personal activity feed for %s', $user);
-			$response = $this->data->get($this->helper, $this->settings, $user, 0, self::DEFAULT_PAGE_SIZE, 'desc', 'all');
-			$activities = $response['data'];
+			$data = $this->data->get($this->helper, $this->settings, $user, 0, self::DEFAULT_PAGE_SIZE, 'desc', 'all');
+			$activities = $data['data'];
 		} catch (\UnexpectedValueException $e) {
 			$this->l = $this->l10nFactory->get('activity');
 			$description = $this->l->t('Your feed URL is invalid');
-
 			$activities = [
 				[
 					'activity_id' => -1,
@@ -71,19 +70,21 @@ class FeedController extends Controller {
 					'subject_prepared' => $description,
 				]
 			];
+			$response->throttle();
 		}
 
 		$title = $this->themingDefaults->getTitle();
-		$response = new TemplateResponse('activity', 'rss', [
+
+		$response->setParams([
 			'rssLang' => $this->l->getLanguageCode(),
 			'rssLink' => $this->urlGenerator->linkToRouteAbsolute('activity.Feed.show'),
 			'rssPubDate' => date('r'),
-			'description' => $description,
 			'title' => $title !== '' ? $this->l->t('Activity feed for %1$s', [$title]) : $this->l->t('Activity feed'),
+			'description' => $description,
 			'activities' => $activities,
-		], '');
+		]);
 
-		if (stristr($this->request->getHeader('accept'), 'application/rss+xml')) {
+		if (stripos($this->request->getHeader('accept'), 'application/rss+xml') !== false) {
 			$response->addHeader('Content-Type', 'application/rss+xml');
 		} else {
 			$response->addHeader('Content-Type', 'text/xml; charset=UTF-8');
