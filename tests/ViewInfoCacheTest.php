@@ -27,7 +27,6 @@ use OCA\Activity\ViewInfoCache;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
-use OCP\Files\NotFoundException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -57,7 +56,7 @@ class ViewInfoCacheTest extends TestCase {
 	public static function dataGetInfoById(): array {
 		return [
 			[
-				'user', 23, 'path', [], true, 'findInfoById',
+				'user', 23, 'path', [], true, ['findInfoById'],
 			],
 			[
 				'user',
@@ -69,7 +68,7 @@ class ViewInfoCacheTest extends TestCase {
 					]
 				],
 				true,
-				'findInfoById',
+				['findInfoById'],
 			],
 			[
 				'user',
@@ -81,7 +80,7 @@ class ViewInfoCacheTest extends TestCase {
 					]
 				],
 				true,
-				'findInfoById',
+				['findInfoById'],
 			],
 			[
 				'user',
@@ -111,7 +110,7 @@ class ViewInfoCacheTest extends TestCase {
 	}
 
 	#[DataProvider('dataGetInfoById')]
-	public function testGetInfoById(string $user, int $id, string|array $path, array $cache, bool $callsFind, string|array $expected): void {
+	public function testGetInfoById(string $user, int $id, string|array $path, array $cache, bool $callsFind, array $expected): void {
 		$infoCache = $this->getCache([
 			'findInfoById',
 		]);
@@ -119,7 +118,7 @@ class ViewInfoCacheTest extends TestCase {
 		if ($callsFind) {
 			$infoCache->expects($this->once())
 				->method('findInfoById')
-				->willReturn('findInfoById');
+				->willReturn(['findInfoById']);
 		} else {
 			$infoCache->expects($this->never())
 				->method('findInfoById');
