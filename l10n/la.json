@@ -1,0 +1,24 @@
+{ "translations": {
+    "Personal activity feed for %s" : "Flumen actionum personalium pro %s",
+    "Your feed URL is invalid" : "URL tuum fluminis non validum est",
+    "Activity feed for %1$s" : "Flumen actionum pro %1$s",
+    "Activity feed" : "Flumen actionum",
+    "Your settings have been updated." : "Configurationes tuae renovatae sunt.",
+    "Settings have been updated." : "Configurationes renovatae sunt.",
+    "remote user" : "Usor remotus",
+    "Recent activity" : "Acta recentia",
+    "No activities" : "Nullae actiones",
+    "More activities" : "Plures actiones",
+    "Daily activity summary for %s" : "Summarium actionum cotidianarum pro %s",
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "Potes epistulas digestas cotidianas inactivare in <a href=\"%s\">configurationes</a>.",
+    "You can disable daily digest emails in the settings: %s" : "Epistulas digestas cotidianas in configurationibus exstinguere potes: %s",
+    "All activities" : "Omnes actiones",
+    "By others" : "Ab aliis",
+    "By you" : "A te",
+    "Hello %s" : "Salve %s",
+    "Hello %s," : "Salve %s,",
+    "There was some activity at %s" : "Aliqua actio apud %s",
+    "Today" : "Hodie",
+    "Yesterday" : "Heri"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
