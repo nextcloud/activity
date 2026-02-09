@@ -5,6 +5,12 @@
       <code><![CDATA[ClientException]]></code>
     </UndefinedClass>
   </file>
+  <file src="lib/Controller/RemoteActivityController.php">
+    <UndefinedClass>
+      <code><![CDATA[$storage]]></code>
+      <code><![CDATA[Wrapper]]></code>
+    </UndefinedClass>
+  </file>
   <file src="lib/Data.php">
     <UndefinedDocblockClass>
       <code><![CDATA[$favoriteFilter->filterFavorites($query);]]></code>
