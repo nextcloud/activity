@@ -67,7 +67,7 @@ OC.L10N.register(
     "Notification" : "Сповіщення",
     "Enable notification emails" : "Надсилати сповіщення електронною поштою",
     "Daily activity summary" : "Щоденні підсумки про події",
-    "Send daily activity summary in the morning" : "Надсилати вранці щоденні зведення",
+    "Send daily activity summary in the morning" : "Надсилати вранці щоденні підсумки про дії з ресурсами, до яких я маю доступ",
     "Default settings" : "Типові налаштування",
     "Configure the default notification settings for new accounts." : "Налаштуйте типові налаштування сповіщення для нових облікових записів.",
     "Unable to save the settings" : "Не вдалося зберегти налаштування",
