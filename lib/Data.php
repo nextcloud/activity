@@ -437,7 +437,7 @@ class Data {
 			$query->andWhere($query->expr()->neq('user', $nameParam));
 		}
 
-		return $query->executeQuery()->fetch();
+		return $query->executeQuery()->fetch() ?: [];
 	}
 
 	/**
