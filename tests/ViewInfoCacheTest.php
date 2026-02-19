@@ -27,7 +27,6 @@ use OCA\Activity\ViewInfoCache;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
-use OCP\Files\NotFoundException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -57,7 +56,7 @@ class ViewInfoCacheTest extends TestCase {
 	public static function dataGetInfoById(): array {
 		return [
 			[
-				'user', 23, 'path', [], true, 'findInfoById',
+				'user', 23, 'path', [], true, ['findInfoById'],
 			],
 			[
 				'user',
@@ -69,7 +68,7 @@ class ViewInfoCacheTest extends TestCase {
 					]
 				],
 				true,
-				'findInfoById',
+				['findInfoById'],
 			],
 			[
 				'user',
@@ -81,7 +80,7 @@ class ViewInfoCacheTest extends TestCase {
 					]
 				],
 				true,
-				'findInfoById',
+				['findInfoById'],
 			],
 			[
 				'user',
@@ -111,7 +110,7 @@ class ViewInfoCacheTest extends TestCase {
 	}
 
 	#[DataProvider('dataGetInfoById')]
-	public function testGetInfoById(string $user, int $id, string|array $path, array $cache, bool $callsFind, string|array $expected): void {
+	public function testGetInfoById(string $user, int $id, string|array $path, array $cache, bool $callsFind, array $expected): void {
 		$infoCache = $this->getCache([
 			'findInfoById',
 		]);
@@ -119,7 +118,7 @@ class ViewInfoCacheTest extends TestCase {
 		if ($callsFind) {
 			$infoCache->expects($this->once())
 				->method('findInfoById')
-				->willReturn('findInfoById');
+				->willReturn(['findInfoById']);
 		} else {
 			$infoCache->expects($this->never())
 				->method('findInfoById');
@@ -239,9 +238,9 @@ class ViewInfoCacheTest extends TestCase {
 			->willReturn($userFolder);
 		if ($path === null) {
 			$userFolder->expects($this->once())
-				->method('getById')
+				->method('getFirstNodeById')
 				->with($fileId)
-				->willThrowException(new NotFoundException());
+				->willReturn(null);
 
 			$userTrashBin = $this->createMock(Folder::class);
 			$this->rootFolder->expects($this->once())
@@ -250,9 +249,9 @@ class ViewInfoCacheTest extends TestCase {
 				->willReturn($userTrashBin);
 			if ($pathTrash === null) {
 				$userTrashBin->expects($this->once())
-					->method('getById')
+					->method('getFirstNodeById')
 					->with($fileId)
-					->willThrowException(new NotFoundException());
+					->willReturn(null);
 			} else {
 				$node = $this->createMock($isDir ? Folder::class : File::class);
 				$node
@@ -264,9 +263,9 @@ class ViewInfoCacheTest extends TestCase {
 					->willReturn($pathTrash);
 
 				$userTrashBin->expects($this->once())
-					->method('getById')
+					->method('getFirstNodeById')
 					->with($fileId)
-					->willReturn([2 => $node]);
+					->willReturn($node);
 				$expected['node'] = $node;
 				$expectedCache[$user][$fileId]['node'] = $node;
 			}
@@ -281,9 +280,9 @@ class ViewInfoCacheTest extends TestCase {
 				->willReturn($path);
 
 			$userFolder->expects($this->once())
-				->method('getById')
+				->method('getFirstNodeById')
 				->with($fileId)
-				->willReturn([3 => $node]);
+				->willReturn($node);
 			$expected['node'] = $node;
 			$expectedCache[$user][$fileId]['node'] = $node;
 		}
