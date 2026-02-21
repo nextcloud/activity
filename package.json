@@ -72,13 +72,13 @@
     "cypress-vite": "^1.8.0",
     "cypress-wait-until": "^3.0.2",
     "dockerode": "^4.0.9",
-    "eslint-plugin-cypress": "^5.2.1",
-    "happy-dom": "^20.5.0",
+    "eslint-plugin-cypress": "^5.3.0",
+    "happy-dom": "^20.6.1",
     "stylelint": "^17.1.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vitest": "^4.0.18",
-    "wait-on": "^9.0.3"
+    "wait-on": "^9.0.4"
   },
   "engines": {
     "node": "^24.0.0",
