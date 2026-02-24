@@ -23,6 +23,8 @@ OC.L10N.register(
     "Hello %s," : "Сайн байна уу, %s,",
     "There was some activity at %s" : "%s дээр үйлдэл хийсэн байна.",
     "_and %n more _::_and %n more _" : ["ба дахиад %n","ба дахиад %n"],
+    "You can change the frequency of these emails or disable them in the <a href=\"%s\">settings</a>." : "Эдгээр имэйлийн давтамжийг өөрчлөх эсвэл <a href=\"%s\">тохиргоо</a>-нд идэвхгүй болгож болно.",
+    "You can change the frequency of these emails or disable them in the settings: %s" : "Эдгээр имэйлийн давтамжийг өөрчлөх эсвэл тохиргоонд идэвхгүй болгож болно: %s",
     "Mail" : "Цахим шуудан",
     "Push" : "Дарах",
     "Activity" : "Үйлдлүүд",
