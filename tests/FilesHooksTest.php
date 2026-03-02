@@ -185,7 +185,14 @@ class FilesHooksTest extends TestCase {
 		$filesHooks->fileCreate('path');
 	}
 
-	#[DataProvider('dataFileCreate')]
+	public static function dataFileCreateUser(): array {
+		return [
+			['user'],
+			[''],
+		];
+	}
+
+	#[DataProvider('dataFileCreateUser')]
 	public function testFileCreateRoot(string $currentUser): void {
 		$filesHooks = $this->getFilesHooks([
 			'addNotificationsForFileAction',
