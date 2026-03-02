@@ -119,7 +119,7 @@ class ConsumerTest extends TestCase {
 	}
 
 	#[DataProvider('receiveData')]
-	public function testReceiveStream(string $type, string $author, string $affectedUser, string $subject): void {
+	public function testReceiveStream(string $type, string $author, string $affectedUser, string $subject, $expected): void {
 		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
 		$event = Server::get(IManager::class)->generateEvent();
 		$event->setApp('test')
