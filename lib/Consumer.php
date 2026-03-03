@@ -95,7 +95,7 @@ class Consumer implements IConsumer, IBulkConsumer {
 				continue;
 			}
 			$event->setAffectedUser($affectedUser);
-			$notificationSetting = $userPushSettings[$affectedUser];
+			$notificationSetting = $userPushSettings[$affectedUser] ?? null;
 			if ($notificationSetting !== null) {
 				$notificationSetting = (bool)$notificationSetting;
 			}
