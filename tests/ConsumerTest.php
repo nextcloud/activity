@@ -28,7 +28,10 @@ use OCA\Activity\Consumer;
 use OCA\Activity\Data;
 use OCA\Activity\NotificationGenerator;
 use OCA\Activity\UserSettings;
+use OCP\Activity\ActivitySettings;
+use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
+use OCP\Config\IUserConfig;
 use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
@@ -48,6 +51,9 @@ class ConsumerTest extends TestCase {
 	protected IManager&MockObject $activityManager;
 	protected NotificationGenerator&MockObject $notificationGenerator;
 	protected UserSettings $userSettings;
+	private IUserConfig&MockObject $userConfig;
+	private IEvent $event;
+	private Consumer $consumer;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -62,6 +68,7 @@ class ConsumerTest extends TestCase {
 		$l10n = $this->createMock(IL10N::class);
 		$this->notificationGenerator = $this->createMock(NotificationGenerator::class);
 		$this->l10nFactory = $this->createMock(IFactory::class);
+		$this->userConfig = $this->createMock(IUserConfig::class);
 
 		$this->data->method('send')
 			->willReturn(1);
@@ -80,6 +87,16 @@ class ConsumerTest extends TestCase {
 				['affectedUser', 'setting', 'batchtime', 10],
 				['affectedUser2', 'setting', 'batchtime', 10],
 			]);
+
+		$this->consumer = new Consumer(
+			$this->data,
+			$this->activityManager,
+			$this->userSettings,
+			$this->notificationGenerator,
+			$this->userConfig,
+		);
+
+		$this->event = Server::get(IManager::class)->generateEvent();
 	}
 
 	protected function tearDown(): void {
@@ -119,8 +136,13 @@ class ConsumerTest extends TestCase {
 	}
 
 	#[DataProvider('receiveData')]
-	public function testReceiveStream(string $type, string $author, string $affectedUser, string $subject): void {
-		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
+	public function testReceiveStream(string $type, string $author, string $affectedUser, string $subject, $expected): void {
+		$consumer = new Consumer($this->data,
+			$this->activityManager,
+			$this->userSettings,
+			$this->notificationGenerator,
+			$this->userConfig,
+		);
 		$event = Server::get(IManager::class)->generateEvent();
 		$event->setApp('test')
 			->setType($type)
@@ -142,9 +164,7 @@ class ConsumerTest extends TestCase {
 	#[DataProvider('receiveData')]
 	public function testReceiveEmail(string $type, string $author, string $affectedUser, string $subject, $expected): void {
 		$time = time();
-		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
-		$event = Server::get(IManager::class)->generateEvent();
-		$event->setApp('test')
+		$this->event->setApp('test')
 			->setType($type)
 			->setAffectedUser($affectedUser)
 			->setAuthor($author)
@@ -160,17 +180,15 @@ class ConsumerTest extends TestCase {
 		} else {
 			$this->data->expects($this->once())
 				->method('storeMail')
-				->with($event, $time + 10);
+				->with($this->event, $time + 10);
 		}
 
-		$consumer->receive($event);
+		$this->consumer->receive($this->event);
 	}
 
 	#[DataProvider('receiveData')]
 	public function testReceiveNotification(string $type, string $author, string $affectedUser, string $subject, $expected): void {
-		$consumer = new Consumer($this->data, $this->activityManager, $this->userSettings, $this->notificationGenerator);
-		$event = Server::get(IManager::class)->generateEvent();
-		$event->setApp('test')
+		$this->event->setApp('test')
 			->setType($type)
 			->setAffectedUser($affectedUser)
 			->setAuthor($author)
@@ -189,6 +207,60 @@ class ConsumerTest extends TestCase {
 				->method('sendNotificationForEvent');
 		}
 
-		$consumer->receive($event);
+		$this->consumer->receive($this->event);
 	}
+
+	public static function receiveBulkData(): array {
+		return [
+			'empty affected users' => ['type', 'author', 'subject', [], null, false],
+			'empty activity ids' => ['type', 'author', 'subject', ['affectedUser', 'affectedUser1'], [], false],
+			'notification for non-author user' => ['type', 'author', 'subject', ['affectedUser'], [1 => 'affectedUser'], true],
+			'no notification when author is the affected user' => ['type', 'author', 'subject', ['author'], [1 => 'author'], false],
+		];
+	}
+
+	#[DataProvider('receiveBulkData')]
+	public function testBulkReceiveNotification(string $type, string $author, string $subject, array $affectedUsers, ?array $activityIds, bool $expectNotification): void {
+		$this->event->setApp('activity')
+			->setType($type)
+			->setAuthor($author)
+			->setTimestamp(time())
+			->setSubject($subject, ['subjectParam1', 'subjectParam2'])
+			->setMessage('message', ['messageParam1', 'messageParam2'])
+			->setObject('', 0, 'file')
+			->setLink('link');
+
+		$settings = $this->createMock(ActivitySettings::class);
+		$settings->method('canChangeMail')->willReturn(false);
+		$settings->method('isDefaultEnabledMail')->willReturn(false);
+		$settings->method('canChangeNotification')->willReturn(true);
+
+		if (empty($affectedUsers)) {
+			$this->data->expects($this->never())
+				->method('bulkSend');
+			$this->data->expects($this->never())
+				->method('storeMail');
+			$this->notificationGenerator->expects($this->never())
+				->method('sendNotificationForEvent');
+		} else {
+			$this->data->expects($this->once())
+				->method('bulkSend')
+				->willReturn($activityIds ?? []);
+
+			if ($expectNotification) {
+				$this->userConfig->method('getValuesByUsers')
+					->willReturnCallback(function (string $app, string $key, mixed $type, array $users): array {
+						return array_fill_keys($users, true);
+					});
+				$this->notificationGenerator->expects($this->atLeastOnce())
+					->method('sendNotificationForEvent');
+			} else {
+				$this->notificationGenerator->expects($this->never())
+					->method('sendNotificationForEvent');
+			}
+		}
+
+		$this->consumer->bulkReceive($this->event, $affectedUsers, $settings);
+	}
+
 }
