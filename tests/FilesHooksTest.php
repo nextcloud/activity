@@ -834,14 +834,13 @@ class FilesHooksTest extends TestCase {
 
 	public static function dataShareNotificationForOriginalOwners(): array {
 		return [
-			[false, false, 'owner', '', 0],
-			[true, false, 'owner', '', 1],
-			[true, true, 'owner', '', 1],
-			[true, true, 'owner', 'owner', 1],
-			[true, true, 'owner', 'sharee', 2],
-			[true, true, 'current', 'sharee', 1],
-			[true, true, 'owner', 'current', 1],
-			[true, true, 'current', 'current', 0],
+			[true, 'owner', '', 1],
+			[true, 'owner', 'owner', 1],
+			[true, 'owner', 'sharee', 2],
+			[true, 'current', 'sharee', 1],
+			[true, 'owner', 'current', 1],
+			[true, 'current', 'current', 0],
+			[false, 'owner', '', 0],
 		];
 	}
 
@@ -875,18 +874,73 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->exactly($numReshareNotification))
 			->method('reshareNotificationForSharer')
-			->with($this->anything(), 'subject', 'with', 42, '/source-path', 'file');
+			->with($this->anything(), 'subject', 'with', 42, '/source-path', true);
 
-		if ($validMountPoint) {
-			$sourceNode = $this->getNodeMock(42, "/$pathOwner/files/source-path");
-			$sourceShare->method('getNode')
-				->willReturn($sourceNode);
+		// Mock rootFolder->getUserFolder()->getById() for each relevant user
+		if ($nodeFound) {
+			$this->rootFolder->method('getUserFolder')
+				->willReturnCallback(function (string $userId) {
+					$userFolder = $this->createMock(Folder::class);
+					$resolvedNode = $this->getNodeMock(42, "/$userId/files/source-path");
+					$userFolder->method('getById')
+						->with(42)
+						->willReturn([$resolvedNode]);
+					$userFolder->method('getFirstNodeById')
+						->with(42)
+						->willReturn($resolvedNode);
+					return $userFolder;
+				});
 		} else {
-			$sourceShare->method('getNode')
+			$this->rootFolder->method('getUserFolder')
 				->willThrowException(new \OCP\Files\NotFoundException());
 		}
 
 		self::invokePrivate($filesHooks, 'shareNotificationForOriginalOwners', ['current', 'subject', 'with', $node]);
+	}
+
+	/**
+	 * Test that resharing a subfolder notifies the owner about the subfolder,
+	 * not the parent folder (issue #2277).
+	 */
+	public function testShareNotificationForOriginalOwnersUsesActualFileNotShareRoot(): void {
+		$filesHooks = $this->getFilesHooks([
+			'reshareNotificationForSharer',
+		]);
+
+		// The actual subfolder being reshared (file ID 99, inside a shared parent)
+		$subfolder = $this->getNodeMock(99, '/userA/files/ParentFolder/Subfolder', false);
+		$mount = $this->createMock(SharedMount::class);
+		$subfolder->method('getMountPoint')
+			->willReturn($mount);
+
+		// The original share is for the parent folder (file ID 50)
+		$sourceShare = $this->createMock(IShare::class);
+		$sourceShare->method('getShareOwner')
+			->willReturn('admin');
+		$sourceShare->method('getSharedBy')
+			->willReturn('');
+		$mount->method('getShare')
+			->willReturn($sourceShare);
+
+		// The owner's view of the subfolder (resolved by file ID 99)
+		$ownerSubfolder = $this->getNodeMock(99, '/admin/files/ParentFolder/Subfolder', false);
+		$userFolder = $this->createMock(Folder::class);
+		$userFolder->method('getById')
+			->with(99)
+			->willReturn([$ownerSubfolder]);
+		$userFolder->method('getFirstNodeById')
+			->with(99)
+			->willReturn($ownerSubfolder);
+		$this->rootFolder->method('getUserFolder')
+			->with('admin')
+			->willReturn($userFolder);
+
+		// The notification must reference file ID 99 and /ParentFolder/Subfolder, NOT the parent
+		$filesHooks->expects($this->once())
+			->method('reshareNotificationForSharer')
+			->with('admin', 'reshared_user_by', 'userB', 99, '/ParentFolder/Subfolder', false);
+
+		self::invokePrivate($filesHooks, 'shareNotificationForOriginalOwners', ['userA', 'reshared_user_by', 'userB', $subfolder]);
 	}
 
 	public function testShareNotificationForSharer(): void {
