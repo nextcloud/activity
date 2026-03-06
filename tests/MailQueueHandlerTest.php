@@ -330,6 +330,79 @@ class MailQueueHandlerTest extends TestCase {
 		self::invokePrivate($this->mailQueueHandler, 'sendEmailToUser', [$user . $user, $email, 'en', 'UTC', $maxTime]);
 	}
 
+	public function testSendEmailsDeletesQueueOnMailerFailure(): void {
+		$maxTime = 200;
+
+		$template = $this->createMock(IEMailTemplate::class);
+		$this->mailer->method('createEMailTemplate')
+			->willReturn($template);
+		$this->mailer->method('send')
+			->willThrowException(new \Exception('SMTP timeout'));
+		$this->mailer->method('validateMailAddress')
+			->willReturn(true);
+
+		$userObject = $this->createMock(IUser::class);
+		$userObject->method('getDisplayName')
+			->willReturn('Test User');
+		$userObject->method('getEMailAddress')
+			->willReturn('test@localhost');
+		$this->userManager->method('get')
+			->willReturn($userObject);
+
+		$this->lFactory->method('get')
+			->willReturn($this->createMock(IL10N::class));
+
+		$this->config->method('getUserValueForUsers')
+			->willReturn([]);
+		$this->config->method('getSystemValue')
+			->willReturn('en');
+
+		$this->logger->expects($this->atLeastOnce())
+			->method('error');
+
+		// Send all 3 users, all will fail due to SMTP timeout
+		$this->mailQueueHandler->sendEmails(3, $maxTime);
+
+		// Queue entries should be deleted for all users even though sending failed
+		foreach (['user1', 'user2', 'user3'] as $user) {
+			[$data,] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			$this->assertEmpty($data, "Queue entries for $user should be removed after failed send to prevent duplicate notifications");
+		}
+	}
+
+	public function testSendEmailsDeletesQueueOnSendReturnFalse(): void {
+		$maxTime = 200;
+
+		$template = $this->createMock(IEMailTemplate::class);
+		$this->mailer->method('createEMailTemplate')
+			->willReturn($template);
+		// sendEmailToUser returns false when email is invalid
+		$this->mailer->method('validateMailAddress')
+			->willReturn(false);
+
+		$userObject = $this->createMock(IUser::class);
+		$userObject->method('getDisplayName')
+			->willReturn('Test User');
+		$userObject->method('getEMailAddress')
+			->willReturn('test@localhost');
+		$this->userManager->method('get')
+			->willReturn($userObject);
+
+		$this->config->method('getUserValueForUsers')
+			->willReturn([]);
+		$this->config->method('getSystemValue')
+			->willReturn('en');
+
+		// Send all 3 users, all will fail due to invalid email
+		$this->mailQueueHandler->sendEmails(3, $maxTime);
+
+		// Queue entries should be deleted for all users even though sendEmailToUser returned false
+		foreach (['user1', 'user2', 'user3'] as $user) {
+			[$data,] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			$this->assertEmpty($data, "Queue entries for $user should be removed after sendEmailToUser returns false to prevent duplicate notifications");
+		}
+	}
+
 	/**
 	 * @param array $users
 	 * @param int $maxTime
