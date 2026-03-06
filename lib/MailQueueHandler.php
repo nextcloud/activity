@@ -112,19 +112,18 @@ class MailQueueHandler {
 			$language = (!empty($userLanguages[$user])) ? $userLanguages[$user] : $default_lang;
 			$timezone = (!empty($userTimezones[$user])) ? $userTimezones[$user] : $defaultTimeZone;
 			try {
-				if ($this->sendEmailToUser($user, $email, $language, $timezone, $sendTime)) {
-					$deleteItemsForUsers[] = $user;
-				} else {
-					$this->logger->warning("Failed sending activity email to user '{user}'.", ['user' => $user, 'app' => 'activity']);
+				if (!$this->sendEmailToUser($user, $email, $language, $timezone, $sendTime)) {
+					$this->logger->error('Failed sending activity email to user "{user}", removing queue entries to prevent duplicate notifications.', ['user' => $user, 'email' => $email, 'app' => 'activity']);
 				}
 			} catch (\Exception $e) {
-				$this->logger->error('Failed creating activity email for user "{user}"', [
+				$this->logger->error('Failed creating activity email for user "{user}", removing queue entries to prevent duplicate notifications.', [
 					'exception' => $e,
 					'user' => $user,
+					'email' => $email,
 					'app' => 'activity',
 				]);
-				// continue;
 			}
+			$deleteItemsForUsers[] = $user;
 		}
 		$this->activityManager->setRequirePNG(false);
 
