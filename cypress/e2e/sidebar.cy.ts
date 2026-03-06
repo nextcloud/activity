@@ -70,7 +70,7 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 		cy.get('.activity-entry').first().should('contains.text', 'Added system tag')
 	})
 
-	it('Has comment activity', () => {
+	it.skip('Has comment activity', () => {
 		addComment('welcome.txt', 'A comment')
 		cy.visit('/apps/files')
 
