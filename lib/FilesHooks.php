@@ -572,17 +572,19 @@ class FilesHooks {
 	 *
 	 * @param string $path
 	 * @param string $uidOwner
-	 * @return array
+	 * @return array{ownerPath?: string, remotes: array<string, array{node_path: string, token: string}>, users: array<string, string>}
 	 */
 	protected function getUserPathsFromPath($path, $uidOwner) {
+		$emptyResult = ['users' => [], 'remotes' => []];
+
 		try {
 			$node = $this->rootFolder->getUserFolder($uidOwner)->get($path);
 		} catch (NotFoundException $e) {
-			return [];
+			return $emptyResult;
 		}
 
 		if (!$node instanceof Node) {
-			return [];
+			return $emptyResult;
 		}
 
 		$accessList = $this->shareHelper->getPathsForAccessList($node);
