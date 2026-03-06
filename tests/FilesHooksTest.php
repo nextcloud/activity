@@ -184,15 +184,36 @@ class FilesHooksTest extends TestCase {
 
 	/**
 	 * @dataProvider dataFileCreate
-	 *
-	 * @param mixed $currentUser
-	 * @param string $selfSubject
-	 * @param string $othersSubject
 	 */
-	public function testFileCreate(string $currentUser, string $selfSubject, string $othersSubject, string $type): void {
-		$filesHooks = $this->getFilesHooks([
-			'addNotificationsForFileAction',
-		], $currentUser);
+	public function testFileCreate(string $currentUser, bool $isPublicShare, string $selfSubject, string $othersSubject, string $type): void {
+		$currentUserMock = $this->createMock(CurrentUser::class);
+		$currentUserMock->method('getUID')->willReturn($currentUser);
+		$currentUserMock->method('getUserIdentifier')->willReturn($currentUser);
+		$currentUserMock->method('isPublicShareToken')->willReturn($isPublicShare);
+
+		$logger = $this->createMock(LoggerInterface::class);
+
+		$filesHooks = $this->getMockBuilder(FilesHooks::class)
+			->setConstructorArgs([
+				$this->activityManager,
+				$this->data,
+				$this->settings,
+				$this->groupManager,
+				$this->view,
+				$this->rootFolder,
+				$this->shareHelper,
+				\OCP\Server::get(IDBConnection::class),
+				$this->urlGenerator,
+				$logger,
+				$currentUserMock,
+				$this->userMountCache,
+				$this->config,
+				$this->notificationGenerator,
+				$this->tagManager,
+				$this->teamManager,
+			])
+			->onlyMethods(['addNotificationsForFileAction'])
+			->getMock();
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
