@@ -176,8 +176,9 @@ class FilesHooksTest extends TestCase {
 
 	public static function dataFileCreate(): array {
 		return [
-			['user', 'created_self', 'created_by', Files::TYPE_SHARE_CREATED],
-			['', '', 'created_public', Files_Sharing::TYPE_PUBLIC_UPLOAD],
+			['user', false, 'created_self', 'created_by', Files::TYPE_SHARE_CREATED],
+			['', true, '', 'created_public', Files_Sharing::TYPE_PUBLIC_UPLOAD],
+			['', false, 'created_self', 'created_by', Files::TYPE_SHARE_CREATED],
 		];
 	}
 
