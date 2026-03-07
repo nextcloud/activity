@@ -74,7 +74,7 @@
     "dockerode": "^4.0.9",
     "eslint-plugin-cypress": "^6.1.0",
     "happy-dom": "^20.7.0",
-    "stylelint": "^17.1.0",
+    "stylelint": "^17.4.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vitest": "^4.0.18",
