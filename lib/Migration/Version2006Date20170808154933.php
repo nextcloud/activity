@@ -95,6 +95,7 @@ class Version2006Date20170808154933 extends SimpleMigrationStep {
 			// FIXME Fixed install, see Version2006Date20170808155040: $table->addIndex(['affecteduser', 'app', 'timestamp'], 'activity_filter_app');
 			$table->addIndex(['affecteduser', 'type', 'app', 'timestamp'], 'activity_filter');
 			$table->addIndex(['object_type', 'object_id'], 'activity_object');
+			$table->addIndex(['affecteduser', 'object_type', 'object_id', 'timestamp'], 'activity_object_user');
 		}
 
 		if (!$schema->hasTable('activity_mq')) {
