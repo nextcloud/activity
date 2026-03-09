@@ -33,8 +33,6 @@ use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
-use OCP\Server;
-use OCP\Template;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -103,13 +101,6 @@ class ActivitiesControllerTest extends TestCase {
 	}
 
 	public function testShowList(): void {
-		$manager = Server::get(Template\ITemplateManager::class);
-		$template = $manager->getTemplate('activity', 'stream.app.navigation', '');
-		$template->assign('activeNavigation', 'all');
-		$template->assign('navigations', []);
-		$template->assign('rssLink', '');
-		$template->assign('personalSettingsLink', '');
-
 		$this->eventDispatcher->expects($this->once())
 			->method('dispatch')
 			->with('OCA\Activity::loadAdditionalScripts', $this->anything());
@@ -120,7 +111,6 @@ class ActivitiesControllerTest extends TestCase {
 			->willReturn('all');
 
 		$templateResponse = $this->controller->showList();
-		$renderedResponse = $templateResponse->render();
-		$this->assertNotEmpty($renderedResponse);
+		$this->assertEquals('app-main', $templateResponse->getTemplateName());
 	}
 }
