@@ -16,6 +16,7 @@ use OCA\Activity\Dashboard\ActivityWidget;
 use OCA\Activity\Data;
 use OCA\Activity\FilesHooksStatic;
 use OCA\Activity\GroupHelper;
+use OCA\Activity\Listener\AddMissingIndicesListener;
 use OCA\Activity\Listener\LoadSidebarScripts;
 use OCA\Activity\Listener\SetUserDefaults;
 use OCA\Activity\Listener\ShareEventListener;
@@ -29,6 +30,7 @@ use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\DB\Events\AddMissingIndicesEvent;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
@@ -127,6 +129,7 @@ class Application extends App implements IBootstrap {
 		}, false);
 
 		$context->registerCapability(Capabilities::class);
+		$context->registerEventListener(AddMissingIndicesEvent::class, AddMissingIndicesListener::class);
 		$context->registerEventListener(LoadSidebar::class, LoadSidebarScripts::class);
 		$context->registerEventListener(UserDeletedEvent::class, UserDeleted::class);
 		$context->registerEventListener(PostLoginEvent::class, SetUserDefaults::class);
