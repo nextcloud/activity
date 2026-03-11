@@ -154,6 +154,68 @@ class DataTest extends TestCase {
 		$this->deleteTestMails();
 	}
 
+	public function testBulkSend(): void {
+		$this->deleteTestActivities();
+
+		$event = $this->realActivityManager->generateEvent();
+		$event->setApp('test')
+			->setType('type')
+			->setAuthor('author')
+			->setTimestamp(time())
+			->setSubject('subject', ['param1'])
+			->setMessage('message', ['msgParam1'])
+			->setObject('files', 42, 'file.txt')
+			->setLink('https://example.com');
+
+		$affectedUsers = ['user1', 'user2', 'user3'];
+		$activityIds = $this->data->bulkSend($event, $affectedUsers);
+
+		$this->assertCount(3, $activityIds);
+		// Values should be the affected user strings
+		$this->assertEqualsCanonicalizing($affectedUsers, array_values($activityIds));
+		// Keys should be positive integer IDs
+		foreach (array_keys($activityIds) as $id) {
+			$this->assertGreaterThan(0, $id);
+		}
+
+		// Verify rows in DB
+		$qb = $this->dbConnection->getQueryBuilder();
+		$query = $qb->select('user', 'affecteduser', 'app', 'subject', 'object_type', 'object_id')
+			->from('activity')
+			->where($qb->expr()->eq('app', $qb->createNamedParameter('test')))
+			->orderBy('activity_id', 'ASC');
+		$result = $query->executeQuery();
+		$rows = $result->fetchAll();
+
+		$this->assertCount(3, $rows);
+		foreach ($rows as $i => $row) {
+			$this->assertSame('author', $row['user']);
+			$this->assertSame($affectedUsers[$i], $row['affecteduser']);
+			$this->assertSame('test', $row['app']);
+			$this->assertSame('subject', $row['subject']);
+			$this->assertSame('files', $row['object_type']);
+			$this->assertEquals(42, $row['object_id']);
+		}
+
+		$this->deleteTestActivities();
+	}
+
+	public function testBulkSendEmptyUsers(): void {
+		$this->deleteTestActivities();
+
+		$event = $this->realActivityManager->generateEvent();
+		$event->setApp('test')
+			->setType('type')
+			->setAuthor('author')
+			->setTimestamp(time())
+			->setSubject('subject');
+
+		$activityIds = $this->data->bulkSend($event, []);
+		$this->assertEmpty($activityIds);
+
+		$this->deleteTestActivities();
+	}
+
 	public static function dataSetOffsetFromSince(): array {
 		return [
 			['ASC', '`timestamp` >= \'123465789\'', '`activity_id` > \'{id}\'', null, null, null],
