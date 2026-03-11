@@ -61,7 +61,7 @@ export default {
 		 * Remove the file name from the path.
 		 */
 		parentFolder() {
-			return dirname(this.name)
+			return dirname(this.path)
 		},
 	},
 
