@@ -39,6 +39,7 @@ use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
+use OCP\Files\NotFoundException;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IGroup;
@@ -997,5 +998,65 @@ class FilesHooksTest extends TestCase {
 			->with('with', 'self_unshared_by', 'with', $node);
 
 		self::invokePrivate($filesHooks, 'unShareSelf', [$share]);
+	}
+
+	public function testGetUserPathsFromPathFileNotFound(): void {
+		$userFolder = $this->createMock(Folder::class);
+		$userFolder->method('get')
+			->with('/test/path')
+			->willThrowException(new NotFoundException());
+
+		$this->rootFolder->method('getUserFolder')
+			->with('owner')
+			->willReturn($userFolder);
+
+		$result = self::invokePrivate($this->filesHooks, 'getUserPathsFromPath', ['/test/path', 'owner']);
+
+		$this->assertSame([], $result['users']);
+		$this->assertSame([], $result['remotes']);
+	}
+
+	public function testGetUserPathsFromPathNotANode(): void {
+		$userFolder = $this->createMock(Folder::class);
+		$userFolder->method('get')
+			->with('/test/path')
+			->willReturn(null);
+
+		$this->rootFolder->method('getUserFolder')
+			->with('owner')
+			->willReturn($userFolder);
+
+		$result = self::invokePrivate($this->filesHooks, 'getUserPathsFromPath', ['/test/path', 'owner']);
+
+		$this->assertSame([], $result['users']);
+		$this->assertSame([], $result['remotes']);
+	}
+
+	public function testGetUserPathsFromPathSuccess(): void {
+		$node = $this->createMock(File::class);
+		$node->method('getPath')
+			->willReturn('/owner/files/test/path');
+
+		$userFolder = $this->createMock(Folder::class);
+		$userFolder->method('get')
+			->with('/test/path')
+			->willReturn($node);
+
+		$this->rootFolder->method('getUserFolder')
+			->with('owner')
+			->willReturn($userFolder);
+
+		$this->shareHelper->method('getPathsForAccessList')
+			->with($node)
+			->willReturn([
+				'users' => ['user1' => '/path1'],
+				'remotes' => ['remote1' => ['token' => 'abc']],
+			]);
+
+		$result = self::invokePrivate($this->filesHooks, 'getUserPathsFromPath', ['/test/path', 'owner']);
+
+		$this->assertSame(['user1' => '/path1'], $result['users']);
+		$this->assertSame(['remote1' => ['token' => 'abc']], $result['remotes']);
+		$this->assertSame('/test/path', $result['ownerPath']);
 	}
 }
