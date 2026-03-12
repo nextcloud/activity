@@ -25,7 +25,7 @@
 				<NcIconSvgWrapper :svg="appIconSVG" :size="36" />
 			</template>
 		</NcEmptyContent>
-		<div ref="container" class="activity-app__container">
+		<div ref="container" class="activity-app__container" aria-live="polite" :aria-busy="loading">
 			<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
 			<!-- Only show if not showing the inital empty content for loading -->
 			<NcLoadingIcon
