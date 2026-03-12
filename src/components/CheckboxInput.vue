@@ -220,13 +220,20 @@ $spacing: 4px;
 	}
 
 	&:not(&--disabled) &__input:hover + &__label,
-	&:not(&--disabled) &__input:focus + &__label {
+	&:not(&--disabled) &__input:focus + &__label,
+	&:not(&--disabled) &__input:focus-visible + &__label {
 		background-color: var(--color-primary-element-light);
 	}
 
-	// Increase focus effect
-	&:not(&--disabled) &__input:focus + &__label {
+	// Increase focus effect for keyboard navigation
+	&:not(&--disabled) &__input:focus + &__label,
+	&:not(&--disabled) &__input:focus-visible + &__label {
 		box-shadow: 0 0 0 2px var(--color-primary-element);
+	}
+
+	// Suppress focus ring for mouse users in browsers that support :focus-visible
+	&:not(&--disabled) &__input:focus:not(:focus-visible) + &__label {
+		box-shadow: none;
 	}
 
 	// Switch specific rules
