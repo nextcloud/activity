@@ -6,7 +6,7 @@
 <template>
 	<a :href="link">
 		<div :id="`opengraph-${id}`" class="opengraph">
-			<div v-if="thumbIsDefined" class="opengraph-thumb" :style="`background-image: url('${thumb}')`" />
+			<div v-if="thumbIsDefined" class="opengraph-thumb" :style="`background-image: url('${thumb}')`" aria-hidden="true" />
 			<div class="opengraph-name" :class="{ 'opengraph-with-thumb': thumbIsDefined }">{{ name }}</div>
 			<div class="opengraph-description" :class="{ 'opengraph-with-thumb': thumbIsDefined }">{{ description }}</div>
 			<span class="opengraph-website">{{ website }}</span>
