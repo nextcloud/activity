@@ -26,6 +26,13 @@
 			</template>
 		</NcEmptyContent>
 		<div ref="container" class="activity-app__container">
+			<button
+				v-if="pendingNewActivities.length > 0"
+				class="activity-app__new-activities-indicator"
+				type="button"
+				@click="loadPendingActivities">
+				{{ n('activity', 'Load {count} new activity', 'Load {count} new activities', pendingNewActivities.length, { count: pendingNewActivities.length }) }}
+			</button>
 			<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
 			<!-- Only show if not showing the inital empty content for loading -->
 			<NcLoadingIcon
@@ -46,12 +53,12 @@
 import ncAxios from '@nextcloud/axios'
 import { showError } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
-import { translate as t } from '@nextcloud/l10n'
+import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import { generateOcsUrl } from '@nextcloud/router'
-import { useInfiniteScroll } from '@vueuse/core'
+import { useDocumentVisibility, useInfiniteScroll } from '@vueuse/core'
 import axios from 'axios'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
@@ -60,6 +67,7 @@ import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import ActivityGroup from '../components/ActivityGroup.vue'
 import appIconSVG from '../../img/activity-dark.svg?raw'
 import ActivityModel from '../models/ActivityModel.ts'
+import type { IRawActivity } from '../models/types.ts'
 import logger from '../utils/logger.ts'
 
 interface INavigationEntry {
@@ -99,10 +107,43 @@ const hasMoreActivites = ref(true)
 const allActivities = ref<ActivityModel[]>([])
 
 /**
- * Last loaded activity
+ * Last loaded activity (oldest) for backward pagination
  * This is set by the backend in the API result as a header value for pagination
  */
 const lastActivityLoaded = ref<string>()
+
+/**
+ * First loaded activity ID (newest) for polling new activities
+ */
+const newestActivityId = ref<number>()
+
+/**
+ * Activities fetched by polling that haven't been prepended yet because
+ * the user is not near the top of the scroll container
+ */
+const pendingNewActivities = ref<ActivityModel[]>([])
+
+/**
+ * Polling interval in milliseconds
+ */
+const POLL_INTERVAL = 30000
+
+/**
+ * Polling timer reference (setTimeout-based for self-scheduling)
+ */
+let pollTimer: ReturnType<typeof setTimeout> | undefined
+
+/**
+ * AbortController for in-flight load and poll requests.
+ * Replaced on filter change and aborted on unmount so stale responses
+ * are never applied to the wrong filter's state.
+ */
+let requestController = new AbortController()
+
+/**
+ * Document visibility for pausing polling when tab is hidden
+ */
+const visibility = useDocumentVisibility()
 
 /**
  * Container element for the activites
@@ -141,7 +182,7 @@ const headingTitle = computed(() => {
 })
 
 /**
- * Load activites for current filter or load more if already loaded
+ * Load activities for current filter or load more if already loaded
  */
 async function loadActivities() {
 	// Skip if already loading
@@ -149,13 +190,23 @@ async function loadActivities() {
 		return
 	}
 
+	const { signal } = requestController
 	try {
 		const since = lastActivityLoaded.value ?? '0'
 		loading.value = true
-		const response = await ncAxios.get(generateOcsUrl('apps/activity/api/v2/activity/{filter}?format=json&previews=true&since={since}', { filter: props.filter, since }))
-		allActivities.value.push(...response.data.ocs.data.map((raw) => new ActivityModel(raw)))
+		const response = await ncAxios.get(generateOcsUrl('apps/activity/api/v2/activity/{filter}?format=json&previews=true&since={since}', { filter: props.filter, since }), { signal })
+		if (signal.aborted) {
+			return
+		}
+		const newActivities = response.data.ocs.data.map((raw: IRawActivity) => new ActivityModel(raw))
+		allActivities.value.push(...newActivities)
 		lastActivityLoaded.value = response.headers['x-activity-last-given']
 		hasMoreActivites.value = true
+
+		// Track the newest activity ID for polling
+		if (newestActivityId.value === undefined && newActivities.length > 0) {
+			newestActivityId.value = newActivities[0].id
+		}
 
 		nextTick(async () => {
 			if (container.value && container.value.clientHeight === container.value.scrollHeight) {
@@ -165,6 +216,9 @@ async function loadActivities() {
 			}
 		})
 	} catch (error) {
+		if (axios.isCancel(error)) {
+			return
+		}
 		// Skip if no activites are available
 		if (axios.isAxiosError(error) && error.response?.status === 304) {
 			hasMoreActivites.value = false
@@ -174,23 +228,105 @@ async function loadActivities() {
 		logger.error(error as Error)
 		showError(t('activity', 'Could not load activities'))
 	} finally {
-		loading.value = false
+		// Don't clear the loading flag if this request was superseded — the
+		// replacement loadActivities() call has already set it to true.
+		if (!signal.aborted) {
+			loading.value = false
+		}
 	}
 }
 
 /**
- * Load activites when mounted
+ * Poll for new activities and either prepend them directly (when near top)
+ * or queue them so the user can load them without disrupting their scroll position
+ */
+async function pollNewActivities() {
+	const { signal } = requestController
+	try {
+		const since = String(newestActivityId.value ?? 0)
+		const response = await ncAxios.get(generateOcsUrl('apps/activity/api/v2/activity/{filter}?format=json&previews=true&since={since}&sort=asc', { filter: props.filter, since }), { signal })
+		if (!signal.aborted && response.data.ocs.data.length > 0) {
+			const newActivities: ActivityModel[] = response.data.ocs.data.map((raw: IRawActivity) => new ActivityModel(raw))
+			// Sort newest first for prepending
+			newActivities.sort((a: ActivityModel, b: ActivityModel) => b.id - a.id)
+			newestActivityId.value = newActivities[0]!.id
+
+			const isNearTop = !container.value || container.value.scrollTop < 50
+			if (isNearTop && pendingNewActivities.value.length === 0) {
+				allActivities.value.unshift(...newActivities)
+			} else {
+				// Queue for the indicator so reading position is not disrupted
+				pendingNewActivities.value.unshift(...newActivities)
+			}
+		}
+	} catch (error) {
+		// Silently ignore cancellations and polling errors (304 = no new activities)
+		if (!axios.isCancel(error) && (!axios.isAxiosError(error) || error.response?.status !== 304)) {
+			logger.error(error as Error)
+		}
+	}
+
+	// Self-schedule only if polling wasn't stopped while the request was in flight
+	if (pollTimer !== undefined) {
+		pollTimer = setTimeout(pollNewActivities, POLL_INTERVAL)
+	}
+}
+
+/**
+ * Prepend all queued activities and scroll back to the top
+ */
+function loadPendingActivities() {
+	allActivities.value.unshift(...pendingNewActivities.value)
+	pendingNewActivities.value = []
+	container.value?.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+function startPolling() {
+	stopPolling()
+	// Use a sentinel value so the self-scheduling logic in pollNewActivities
+	// knows polling is active even before the first tick fires
+	pollTimer = setTimeout(pollNewActivities, POLL_INTERVAL)
+}
+
+function stopPolling() {
+	if (pollTimer !== undefined) {
+		clearTimeout(pollTimer)
+		pollTimer = undefined
+	}
+}
+
+/**
+ * Load activities when mounted and start polling
  */
 onMounted(() => {
 	loadActivities()
+	startPolling()
+})
+
+onUnmounted(() => {
+	stopPolling()
+	requestController.abort()
+})
+
+watch(visibility, (value) => {
+	if (value === 'hidden') {
+		stopPolling()
+	} else {
+		startPolling()
+	}
 })
 
 /**
  * Reload activities when filter changed
  */
 watch(props, () => {
+	requestController.abort()
+	requestController = new AbortController()
 	allActivities.value = []
+	pendingNewActivities.value = []
 	lastActivityLoaded.value = undefined
+	newestActivityId.value = undefined
+	hasMoreActivites.value = true
 	loadActivities()
 })
 </script>
@@ -222,6 +358,25 @@ watch(props, () => {
 		margin: 0 auto;
 		padding-inline: 12px;
 		overflow-y: scroll;
+	}
+
+	&__new-activities-indicator {
+		position: sticky;
+		top: 8px;
+		align-self: center;
+		z-index: 10;
+		padding: 6px 16px;
+		border-radius: var(--border-radius-pill);
+		border: none;
+		background-color: var(--color-primary-element);
+		color: var(--color-primary-element-text);
+		font-weight: bold;
+		cursor: pointer;
+		box-shadow: 0 2px 8px var(--color-box-shadow);
+
+		&:hover {
+			background-color: var(--color-primary-element-hover);
+		}
 	}
 
 	&__heading {
