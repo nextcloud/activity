@@ -1,0 +1,50 @@
+[changelog]
+header = """<!--
+  - SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-License-Identifier: CC0-1.0
+-->
+# Changelog\n
+"""
+body = """
+{% if version %}\
+## {{ version }} — {{ timestamp | date(format="%Y-%m-%d") }}\n
+{% else %}\
+## Unreleased\n
+{% endif %}\
+{% set ns = namespace(has_commits=false) %}\
+{% for group, commits in commits | group_by(attribute="group") %}\
+{% set ns.has_commits = true %}\
+### {{ group }}\n
+{% for commit in commits %}\
+- {{ commit.message | split(pat="\n") | first | trim }}\
+{% if commit.remote.pr_number %} (#{{ commit.remote.pr_number }}){% endif %}\n\
+{% endfor %}\n\
+{% endfor %}\
+{% if not ns.has_commits %}No user-facing changes.\n{% endif %}\
+"""
+trim = true
+footer = ""
+
+[git]
+conventional_commits = true
+filter_unconventional = true
+filter_commits = false
+commit_parsers = [
+  { message = "^feat",     group = "Added" },
+  { message = "^enh",      group = "Added" },
+  { message = "^fix",      group = "Fixed" },
+  { message = "^refactor", group = "Changed" },
+  { message = "^perf",     group = "Changed" },
+  { message = "^docs",     group = "Changed" },
+  { message = "^test",     skip = true },
+  { message = "^chore",    skip = true },
+  { message = "^build",    skip = true },
+  { message = "^ci",       skip = true },
+  { message = "^l10n",     skip = true },
+  { message = "^style",    skip = true },
+]
+tag_pattern = "v[0-9]+\\.[0-9]+\\.[0-9]+$"
+
+[remote.github]
+owner = "nextcloud"
+repo = "activity"
