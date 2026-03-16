@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.12.1@e71404b0465be25cf7f8a631b298c01c5ddd864f">
+<files psalm-version="6.15.1@28dc127af1b5aecd52314f6f645bafc10d0e11f9">
   <file src="lib/BackgroundJob/RemoteActivity.php">
     <UndefinedClass>
       <code><![CDATA[ClientException]]></code>
     </UndefinedClass>
-  </file>
-  <file src="lib/CurrentUser.php">
-    <NoInterfaceProperties>
-      <code><![CDATA[$this->request->server]]></code>
-    </NoInterfaceProperties>
   </file>
   <file src="lib/Data.php">
     <UndefinedDocblockClass>
