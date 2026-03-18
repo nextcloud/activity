@@ -103,30 +103,10 @@ class CurrentUser {
 	}
 
 	/**
-	 * Check if the current request is via a public share link
-	 */
-	public function isPublicShareToken(): bool {
-		/** @psalm-suppress NoInterfaceProperties */
-		if (!empty($this->request->server['PHP_AUTH_USER'])) {
-			$token = $this->request->server['PHP_AUTH_USER'];
-			try {
-				$share = $this->shareManager->getShareByToken($token);
-				return $share->getShareType() === IShare::TYPE_LINK
-					|| $share->getShareType() === IShare::TYPE_EMAIL;
-			} catch (ShareNotFound $e) {
-				// No share found for this token
-			}
-		}
-
-		return false;
-	}
-
-	/**
 	 * Get the cloud ID from the sharing token
 	 * @return string|null
 	 */
 	protected function getCloudIDFromToken() {
-		/** @psalm-suppress NoInterfaceProperties */
 		if (!empty($this->request->server['PHP_AUTH_USER'])) {
 			$token = $this->request->server['PHP_AUTH_USER'];
 			/**
