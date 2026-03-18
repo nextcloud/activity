@@ -41,7 +41,7 @@
 					<NcIconSvgWrapper :svg="lightningBoltSVG" />
 				</template>
 			</NcEmptyContent>
-			<ul v-else class="activity__list" aria-live="polite" aria-relevant="additions">
+			<ul v-else class="activity__list">
 				<ActivityComponent
 					v-for="activity in activities"
 					:key="activity.id"

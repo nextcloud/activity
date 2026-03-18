@@ -82,7 +82,7 @@ class FilesHooks {
 			return;
 		}
 
-		if ($this->currentUser->getUserIdentifier() !== '' || !$this->currentUser->isPublicShareToken()) {
+		if ($this->currentUser->getUserIdentifier() !== '') {
 			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
 		} else {
 			$this->addNotificationsForFileAction($path, Files_Sharing::TYPE_PUBLIC_UPLOAD, '', 'created_public');

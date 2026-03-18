@@ -7,18 +7,12 @@
 
 namespace OCA\Activity\Controller;
 
-use DateTimeInterface;
-use OC\Files\Storage\Wrapper\Wrapper;
 use OCA\Activity\Extension\Files;
-use OCA\Files_Sharing\External\Storage as ExternalStorage;
 use OCP\Activity\IManager as IActivityManager;
 use OCP\App\IAppManager;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\Attribute\BruteForceProtection;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
-use OCP\AppFramework\Utility\ITimeFactory;
-use OCP\Federation\ICloudIdManager;
 use OCP\Files\InvalidPathException;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
@@ -36,8 +30,6 @@ class RemoteActivityController extends OCSController {
 		protected IAppManager $appManager,
 		protected IRootFolder $rootFolder,
 		protected IActivityManager $activityManager,
-		protected ICloudIdManager $cloudIdManager,
-		protected ITimeFactory $timeFactory,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -56,16 +48,12 @@ class RemoteActivityController extends OCSController {
 	 * @param string[] $origin
 	 * @return DataResponse
 	 */
-	#[BruteForceProtection(action: 'receiveActivity')]
-	public function receiveActivity($token, array $to, array $actor, $type, $updated, array $object = [], array $target = [], array $origin = []): DataResponse {
-		if (!$this->appManager->isEnabledForAnyone('federatedfilesharing')) {
-			return new DataResponse([], Http::STATUS_NOT_FOUND);
-		}
-
-		$date = \DateTime::createFromFormat(DateTimeInterface::W3C, $updated);
-		if ($date === false || abs($date->getTimestamp() - $this->timeFactory->getTime()) > 600) {
+	public function receiveActivity($token, array $to, array $actor, $type, $updated, array $object = [], array $target = [], array $origin = []) {
+		$date = \DateTime::createFromFormat(\DateTime::W3C, $updated);
+		if ($date === false) {
 			return new DataResponse([], Http::STATUS_BAD_REQUEST);
 		}
+		$time = $date->getTimestamp();
 
 		if (!isset($to['type'], $to['name']) || $to['type'] !== 'Person') {
 			return new DataResponse([], Http::STATUS_BAD_REQUEST);
@@ -73,9 +61,7 @@ class RemoteActivityController extends OCSController {
 
 		$user = $this->userManager->get($to['name']);
 		if (!$user instanceof IUser) {
-			$response = new DataResponse([], Http::STATUS_NOT_FOUND);
-			$response->throttle();
-			return $response;
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
 		if (!isset($actor['type'], $actor['name']) || $actor['type'] !== 'Person') {
@@ -86,44 +72,27 @@ class RemoteActivityController extends OCSController {
 			return new DataResponse([], Http::STATUS_BAD_REQUEST);
 		}
 
-		if (isset($object['name']) && preg_match('/(^|\/)\.\.(\/|$)/', $object['name'])) {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
-		}
-
-		try {
-			$resolved = $this->cloudIdManager->resolveCloudId($actor['name']);
-			$actorServer = $resolved->getRemote();
-			$actorUser = $resolved->getUser();
-		} catch (\InvalidArgumentException) {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
-		}
-
-		$internalType = $this->translateType($type);
-		if ($internalType === '') {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+		if (!$this->appManager->isInstalled('federatedfilesharing')) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
 		$query = $this->db->getQueryBuilder();
 		$query->select('*')
 			->from('share_external')
 			->where($query->expr()->eq('share_token', $query->createNamedParameter($token)))
-			->andWhere($query->expr()->eq('user', $query->createNamedParameter($user->getUID())))
-			->andWhere($query->expr()->eq('owner', $query->createNamedParameter($actorUser)));
+			->andWhere($query->expr()->eq('user', $query->createNamedParameter($user->getUID())));
 
 		$result = $query->executeQuery();
 		$share = $result->fetch();
 		$result->closeCursor();
 
-		if (!is_array($share) || str_starts_with($share['mountpoint'], '{{TemporaryMountPointName#')) {
-			$response = new DataResponse([], Http::STATUS_NOT_FOUND);
-			$response->throttle();
-			return $response;
+		if (!is_array($share) || strpos($share['mountpoint'], '{{TemporaryMountPointName#') === 0) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
-		$normalizedActorServer = rtrim(strtolower(preg_replace('/^https?:\/\//', '', $actorServer)), '/');
-		$normalizedShareRemote = rtrim(strtolower(preg_replace('/^https?:\/\//', '', $share['remote'])), '/');
-		if ($normalizedActorServer !== $normalizedShareRemote) {
-			return new DataResponse([], Http::STATUS_FORBIDDEN);
+		$internalType = $this->translateType($type);
+		if ($internalType === '') {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
 		}
 
 		$path2 = null;
@@ -142,6 +111,7 @@ class RemoteActivityController extends OCSController {
 			if (!isset($object['type'], $object['name']) || $object['type'] !== 'Document') {
 				return new DataResponse([], Http::STATUS_BAD_REQUEST);
 			}
+
 			$path = $share['mountpoint'] . $object['name'];
 		}
 
@@ -154,25 +124,10 @@ class RemoteActivityController extends OCSController {
 		try {
 			$node = $userFolder->get($path);
 			$fileId = $node->getId();
-
-			$storage = $node->getStorage();
-			if (!$storage->instanceOfStorage(ExternalStorage::class)) {
-				$response = new DataResponse([], Http::STATUS_FORBIDDEN);
-				$response->throttle();
-				return $response;
-			}
-			while ($storage instanceof Wrapper) {
-				$storage = $storage->getWrapperStorage();
-			}
-			if (!($storage instanceof ExternalStorage) || $storage->getToken() !== $token) {
-				$response = new DataResponse([], Http::STATUS_FORBIDDEN);
-				$response->throttle();
-				return $response;
-			}
-		} catch (NotFoundException|InvalidPathException) {
-			$response = new DataResponse([], Http::STATUS_NOT_FOUND);
-			$response->throttle();
-			return $response;
+		} catch (NotFoundException $e) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		} catch (InvalidPathException $e) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
 		if ($path2 !== null) {
@@ -181,7 +136,8 @@ class RemoteActivityController extends OCSController {
 				try {
 					$parent = $node->getParent();
 					$secondPath = [$parent->getId() => dirname($path2)];
-				} catch (NotFoundException|InvalidPathException) {
+				} catch (NotFoundException $e) {
+				} catch (InvalidPathException $e) {
 				}
 			}
 			$subjectParams = [$secondPath, $actor['name'], [$fileId => $path]];
@@ -197,11 +153,11 @@ class RemoteActivityController extends OCSController {
 				->setAuthor($actor['name'])
 				->setObject('files', $fileId, $path)
 				->setSubject($subject, $subjectParams)
-				->setTimestamp($date->getTimestamp());
+				->setTimestamp($time);
 			$this->activityManager->publish($event);
-		} catch (\InvalidArgumentException) {
+		} catch (\InvalidArgumentException $e) {
 			return new DataResponse(['activity'], Http::STATUS_BAD_REQUEST);
-		} catch (\BadMethodCallException) {
+		} catch (\BadMethodCallException $e) {
 			return new DataResponse(['sending'], Http::STATUS_BAD_REQUEST);
 		}
 
