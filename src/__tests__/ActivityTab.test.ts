@@ -25,6 +25,22 @@ test('Create ActivityTab', async () => {
 	expect(wrapper.vm.$data.activities.length).toBe(18)
 })
 
+test('Activity list has aria-live and aria-relevant attributes', async () => {
+	const wrapper = mount(ActivityTab, {
+		props: {
+			node: { id: 'test' } as any,
+		},
+	})
+
+	await new Promise<void>((resolve) => waitFor('ul', wrapper, resolve))
+	await nextTick()
+
+	const list = wrapper.find('ul.activity__list')
+	expect(list.exists()).toBe(true)
+	expect(list.attributes('aria-live')).toBe('polite')
+	expect(list.attributes('aria-relevant')).toBe('additions')
+})
+
 function waitFor(query: string, wrapper: VueWrapper, callback: () => void) {
 	if (wrapper.find(query).exists()) {
 		return callback()

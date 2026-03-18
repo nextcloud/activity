@@ -38,7 +38,7 @@
 							'activity-entry__preview-mimetype': preview.isMimeTypeIcon,
 						}"
 						:src="preview.source"
-						:alt="preview.link ? t('activity', 'Open {filename}', { filename: preview.filename }) : ''">
+						:alt="preview.link ? t('activity', 'Open {filename}', { filename: preview.filename }) : preview.filename">
 				</component>
 			</li>
 		</ul>
