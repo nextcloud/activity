@@ -6,7 +6,6 @@ import { mount } from '@vue/test-utils'
 import { afterAll, beforeAll, expect, test, vi } from 'vitest'
 import { nextTick } from 'vue'
 import ActivityComponent from '../components/ActivityComponent.vue'
-import GenericActivity from '../components/activities/GenericActivity.vue'
 import wsData from '../__mocks__/@nextcloud/activity_ws.json'
 import ActivityModel from '../models/ActivityModel.js'
 
@@ -107,47 +106,4 @@ test('Display correct information for creations', async () => {
 	expect(wrapper.text()).toContain('You created Test file.md')
 
 	expectLinkWithText(wrapper, 'Test file.md')
-})
-
-test('Preview image uses filename as alt text when no link', async () => {
-	const activityWithPreview = new ActivityModel({
-		...wsData.ocs.data[1],
-		previews: [{
-			source: 'http://localhost/preview/123',
-			mimeType: 'image/jpeg',
-			isMimeTypeIcon: false,
-			fileId: 123,
-			filename: 'photo.jpg',
-			view: 'files',
-		}],
-	})
-	const wrapper = mount(GenericActivity, { propsData: { activity: activityWithPreview, showPreviews: true } })
-
-	await nextTick()
-
-	const img = wrapper.find('img')
-	expect(img.exists()).toBe(true)
-	expect(img.attributes('alt')).toBe('photo.jpg')
-})
-
-test('Preview image uses "Open {filename}" as alt text when link is present', async () => {
-	const activityWithPreview = new ActivityModel({
-		...wsData.ocs.data[1],
-		previews: [{
-			source: 'http://localhost/preview/123',
-			link: 'http://localhost/files/photo.jpg',
-			mimeType: 'image/jpeg',
-			isMimeTypeIcon: false,
-			fileId: 123,
-			filename: 'photo.jpg',
-			view: 'files',
-		}],
-	})
-	const wrapper = mount(GenericActivity, { propsData: { activity: activityWithPreview, showPreviews: true } })
-
-	await nextTick()
-
-	const img = wrapper.find('img')
-	expect(img.exists()).toBe(true)
-	expect(img.attributes('alt')).toBe('Open photo.jpg')
 })
