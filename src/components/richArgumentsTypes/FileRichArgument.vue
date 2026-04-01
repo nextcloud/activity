@@ -14,8 +14,7 @@
 		<span
 			v-if="isRoot"
 			:title="t('activity', 'Home')"
-			:aria-label="t('activity', 'Home')"
-			role="img"
+			aria-label="t('activity', 'Home')"
 			class="icon-home" />
 	</span>
 </template>
