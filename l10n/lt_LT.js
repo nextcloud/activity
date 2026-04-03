@@ -51,6 +51,7 @@ OC.L10N.register(
     "Loading activities" : "Įkeliamos veiklos",
     "This stream will show events like additions, changes & shares" : "Srautas rodo papildymus, pakeitimus ir bendrinimus",
     "No activity yet" : "Kol kas nėra veiklos",
+    "New activities" : "Naujos veiklos",
     "Loading more activities" : "Įkeliama daugiau veiklų",
     "No more activities." : "Daugiau nebėra veiklų.",
     "Could not enable RSS link" : "Nepavyko įjungti RSS nuorodos",
