@@ -51,6 +51,7 @@ OC.L10N.register(
     "Loading activities" : "Gníomhaíochtaí á lódáil",
     "This stream will show events like additions, changes & shares" : "Taispeánfaidh an sruth seo imeachtaí cosúil le breisithe, athruithe agus roinnt scairteanna.",
     "No activity yet" : "Níl aon ghníomhaíocht fós",
+    "New activities" : "Gníomhaíochtaí nua",
     "Loading more activities" : "Tuilleadh gníomhaíochtaí á lódáil",
     "No more activities." : "Níl gníomhaíochtaí eile ann.",
     "Could not enable RSS link" : "Níorbh fhéidir an nasc RSS a chumasú",
