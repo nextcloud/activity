@@ -8,7 +8,7 @@ OC.L10N.register(
     "Your settings have been updated." : "Налаштування успішно оновлено.",
     "Settings have been updated." : "Налаштування було оновлено.",
     "remote user" : "віддалений користувач",
-    "Recent activity" : "Нещодавна активність",
+    "Recent activity" : "Нещодавня активність",
     "No activities" : "Відсутні події",
     "More activities" : "Більше подій",
     "Daily activity summary for %s" : "Підсумок за день для%s",

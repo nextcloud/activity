@@ -51,6 +51,7 @@ OC.L10N.register(
     "Loading activities" : "Načítavam aktivity",
     "This stream will show events like additions, changes & shares" : "Tento dátový prúd zobrazuje udalosti ako pridanie, zmeny a sprístupnenia",
     "No activity yet" : "Zatiaľ žiadne aktivity.",
+    "New activities" : "Nové aktivity",
     "Loading more activities" : "Načítavam ďalšie aktivity",
     "No more activities." : "Žiadne ďalšie aktivity.",
     "Could not enable RSS link" : "Nepodarilo sa zapnúť RSS odkaz",
