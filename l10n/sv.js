@@ -51,6 +51,7 @@ OC.L10N.register(
     "Loading activities" : "Laddar aktiviteter",
     "This stream will show events like additions, changes & shares" : "Flödet visar händelser så som tillägg, ändringar och delningar",
     "No activity yet" : "Inga aktiviteter ännu",
+    "New activities" : "Nya aktiviteter",
     "Loading more activities" : "Laddar fler aktiviteter",
     "No more activities." : "Inga fler aktiviteter.",
     "Could not enable RSS link" : "Kunde inte aktivera RSS-länk",

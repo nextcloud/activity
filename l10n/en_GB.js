@@ -51,6 +51,7 @@ OC.L10N.register(
     "Loading activities" : "Loading activities",
     "This stream will show events like additions, changes & shares" : "This stream will show events like additions, changes & shares",
     "No activity yet" : "No activity yet",
+    "New activities" : "New activities",
     "Loading more activities" : "Loading more activities",
     "No more activities." : "No more activities.",
     "Could not enable RSS link" : "Could not enable RSS link",
