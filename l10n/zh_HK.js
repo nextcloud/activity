@@ -51,6 +51,7 @@ OC.L10N.register(
     "Loading activities" : "正在載入活動",
     "This stream will show events like additions, changes & shares" : "這裡將顯示新增、更新、分享等系統事件",
     "No activity yet" : "尚無系統事件",
+    "New activities" : "新活動",
     "Loading more activities" : "正在載入更多活動",
     "No more activities." : "無更多活動。",
     "Could not enable RSS link" : "無法啟用 RSS 連結",
