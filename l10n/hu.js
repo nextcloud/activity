@@ -51,6 +51,7 @@ OC.L10N.register(
     "Loading activities" : "Tevékenységek betöltése",
     "This stream will show events like additions, changes & shares" : "Ez a hírfolyam olyan eseményeket mutat mint a hozzáadások, változások és megosztások",
     "No activity yet" : "Nincs még tevékenység",
+    "New activities" : "Új tevékenységek",
     "Loading more activities" : "További tevékenységek betöltése",
     "No more activities." : "Nincs több tevékenység.",
     "Could not enable RSS link" : "Nem sikerült engedélyezni az RSS-hivatkozást",
