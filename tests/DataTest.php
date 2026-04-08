@@ -228,6 +228,48 @@ class DataTest extends TestCase {
 		$this->deleteTestActivities();
 	}
 
+	public function testCountDownloads(): void {
+		$this->deleteTestActivities();
+		$user = self::getUniqueID('testing');
+		$objectId = 12345;
+		$now = time();
+
+		$insertRow = function (string $affectedUser, int $objectId, int $timestamp) {
+			$query = $this->dbConnection->getQueryBuilder();
+			$query->insert('activity')
+				->values([
+					'app' => $query->createNamedParameter('files_sharing'),
+					'type' => $query->createNamedParameter('public_links'),
+					'affecteduser' => $query->createNamedParameter($affectedUser),
+					'user' => $query->createNamedParameter(''),
+					'timestamp' => $query->createNamedParameter($timestamp, IQueryBuilder::PARAM_INT),
+					'subject' => $query->createNamedParameter('public_shared_file_downloaded'),
+					'subjectparams' => $query->createNamedParameter('[]'),
+					'message' => $query->createNamedParameter(''),
+					'messageparams' => $query->createNamedParameter('[]'),
+					'priority' => $query->createNamedParameter(30, IQueryBuilder::PARAM_INT),
+					'object_type' => $query->createNamedParameter('files'),
+					'object_id' => $query->createNamedParameter($objectId, IQueryBuilder::PARAM_INT),
+				])
+				->executeStatement();
+		};
+
+		// 3 downloads: 2 recent (within 30 days), 1 old
+		$insertRow($user, $objectId, $now - 5 * 24 * 3600);
+		$insertRow($user, $objectId, $now - 15 * 24 * 3600);
+		$insertRow($user, $objectId, $now - 60 * 24 * 3600);
+		// Download for a different file — should not be counted
+		$insertRow($user, 99999, $now);
+		// Download for a different user — should not be counted
+		$insertRow('other_user', $objectId, $now);
+
+		$this->assertSame(3, $this->data->countDownloads($user, $objectId));
+		$this->assertSame(2, $this->data->countDownloads($user, $objectId, $now - 30 * 24 * 3600));
+		$this->assertSame(0, $this->data->countDownloads($user, $objectId, $now + 1));
+
+		$this->deleteTestActivities();
+	}
+
 	public function testDeleteAffectedUserActivities(): void {
 		$this->deleteTestActivities();
 		$user1 = self::getUniqueID('testing');

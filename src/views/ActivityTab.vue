@@ -24,6 +24,11 @@
 					@reload-activities="getActivities()" />
 			</div>
 
+			<!-- download summary -->
+			<DownloadSummary
+				v-if="hasPublicLink && node.fileid"
+				:file-id="node.fileid" />
+
 			<!-- activities content -->
 			<NcEmptyContent
 				v-if="loading"
@@ -62,12 +67,14 @@ import lightningBoltSVG from '@mdi/svg/svg/lightning-bolt.svg?raw'
 import axios from '@nextcloud/axios'
 import { translate as t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
+import { ShareType } from '@nextcloud/sharing'
 import { defineComponent, nextTick } from 'vue'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import ActivityComponent from '../components/ActivityComponent.vue'
 import ActivitySidebarPlugin from '../components/ActivitySidebarPlugin.vue'
+import DownloadSummary from '../components/DownloadSummary.vue'
 import ActivityModel from '../models/ActivityModel.ts'
 import { getActivityFilters, getAdditionalEntries, getSidebarActions } from '../utils/api.ts'
 import logger from '../utils/logger.ts'
@@ -77,6 +84,7 @@ const ActivityTab = defineComponent({
 
 	components: {
 		ActivityComponent,
+		DownloadSummary,
 		NcEmptyContent,
 		NcIconSvgWrapper,
 		NcLoadingIcon,
@@ -123,6 +131,13 @@ const ActivityTab = defineComponent({
 			lightningBoltSVG,
 			sidebarPlugins: [] as IActivitySidebarAction[],
 		}
+	},
+
+	computed: {
+		hasPublicLink(): boolean {
+			const shareTypes = Object.values(this.node?.attributes?.['share-types'] ?? {}).flat() as number[]
+			return shareTypes.includes(ShareType.Link)
+		},
 	},
 
 	watch: {
