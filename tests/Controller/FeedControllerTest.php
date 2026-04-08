@@ -144,6 +144,54 @@ class FeedControllerTest extends TestCase {
 		$this->assertStringContainsString($description, $renderedResponse);
 	}
 
+	public function testShowWithFilter(): void {
+		$this->mockUserSession('test');
+		$this->data
+			->method('validateFilter')
+			->with('files')
+			->willReturn('files');
+		$this->data
+			->expects($this->once())
+			->method('get')
+			->with($this->helper, $this->userSettings, 'test', 0, FeedController::DEFAULT_PAGE_SIZE, 'desc', 'files')
+			->willReturn(['data' => []]);
+
+		$templateResponse = $this->controller->show('files');
+		$this->assertInstanceOf(TemplateResponse::class, $templateResponse);
+	}
+
+	public function testShowWithInvalidFilter(): void {
+		$this->mockUserSession('test');
+		$this->data
+			->method('validateFilter')
+			->with('invalid_filter')
+			->willReturn('all');
+		$this->data
+			->expects($this->once())
+			->method('get')
+			->with($this->helper, $this->userSettings, 'test', 0, FeedController::DEFAULT_PAGE_SIZE, 'desc', 'all')
+			->willReturn(['data' => []]);
+
+		$templateResponse = $this->controller->show('invalid_filter');
+		$this->assertInstanceOf(TemplateResponse::class, $templateResponse);
+	}
+
+	public function testShowDefaultsToAllFilter(): void {
+		$this->mockUserSession('test');
+		$this->data
+			->method('validateFilter')
+			->with('all')
+			->willReturn('all');
+		$this->data
+			->expects($this->once())
+			->method('get')
+			->with($this->helper, $this->userSettings, 'test', 0, FeedController::DEFAULT_PAGE_SIZE, 'desc', 'all')
+			->willReturn(['data' => []]);
+
+		$templateResponse = $this->controller->show();
+		$this->assertInstanceOf(TemplateResponse::class, $templateResponse);
+	}
+
 	protected function mockUserSession(string $user): void {
 		$mockUser = $this->createMock(IUser::class);
 		$mockUser
