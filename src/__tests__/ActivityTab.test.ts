@@ -25,6 +25,26 @@ test('Create ActivityTab', async () => {
 	expect(wrapper.vm.$data.activities.length).toBe(18)
 })
 
+test('DownloadSummary is hidden when node has no public link', async () => {
+	const wrapper = mount(ActivityTab, {
+		props: {
+			node: { id: 'test', fileid: 42 } as any,
+		},
+	})
+	await nextTick()
+	expect(wrapper.findComponent({ name: 'DownloadSummary' }).exists()).toBe(false)
+})
+
+test('DownloadSummary is shown when node has a public link share', async () => {
+	const wrapper = mount(ActivityTab, {
+		props: {
+			node: { id: 'test', fileid: 42, attributes: { 'share-types': [3] } } as any,
+		},
+	})
+	await nextTick()
+	expect(wrapper.findComponent({ name: 'DownloadSummary' }).exists()).toBe(true)
+})
+
 function waitFor(query: string, wrapper: VueWrapper, callback: () => void) {
 	if (wrapper.find(query).exists()) {
 		return callback()

@@ -11,6 +11,7 @@ return [
 		['name' => 'APIv1#get', 'url' => '/activity', 'verb' => 'GET', 'root' => '/cloud'],
 		['name' => 'APIv2#getDefault', 'url' => '/api/v2/activity', 'verb' => 'GET'],
 		['name' => 'APIv2#listFilters', 'url' => '/api/v2/activity/filters', 'verb' => 'GET'],
+		['name' => 'APIv2#getDownloadCount', 'url' => '/api/v2/activity/downloads/count', 'verb' => 'GET'],
 		['name' => 'APIv2#getFilter', 'url' => '/api/v2/activity/{filter}', 'verb' => 'GET'],
 	],
 	'routes' => [
