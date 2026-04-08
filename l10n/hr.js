@@ -51,6 +51,7 @@ OC.L10N.register(
     "Loading activities" : "Učitavanje aktivnosti",
     "This stream will show events like additions, changes & shares" : "Ova lista će prikazati događaje poput dodavanja, promjena i dijeljenja",
     "No activity yet" : "Trenutno nema aktivnosti",
+    "New activities" : "Nove aktivnosti",
     "Loading more activities" : "Učitavanje više aktivnosti",
     "No more activities." : "Nema više aktivnosti.",
     "Could not enable RSS link" : "Nije moguće omogućiti RSS poveznicu",
