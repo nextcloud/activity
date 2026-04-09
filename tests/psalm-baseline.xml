@@ -11,11 +11,6 @@
       <code><![CDATA[Wrapper]]></code>
     </UndefinedClass>
   </file>
-  <file src="lib/CurrentUser.php">
-    <NoInterfaceProperties>
-      <code><![CDATA[$this->request->server]]></code>
-    </NoInterfaceProperties>
-  </file>
   <file src="lib/Data.php">
     <UndefinedDocblockClass>
       <code><![CDATA[$favoriteFilter->filterFavorites($query);]]></code>
