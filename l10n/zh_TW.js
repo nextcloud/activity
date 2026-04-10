@@ -36,6 +36,8 @@ OC.L10N.register(
     "Activity notification configuration" : "活動通知設定",
     "Today" : "今天",
     "Yesterday" : "昨天",
+    "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["已下載 %n 次（過去 30 天內有 %s）"],
+    "_Downloaded %n time_::_Downloaded %n times_" : ["已下載 %n 次"],
     "You need to set up your email address before you can receive notification emails." : "您必須先設定電子郵件，才能接收通知。",
     "Send activity emails" : "寄送有關活動的郵件",
     "As soon as possible" : "盡快",
