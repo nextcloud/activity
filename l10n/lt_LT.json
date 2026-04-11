@@ -34,6 +34,8 @@
     "Activity notification configuration" : "Veiklos pranešimų nustatymai",
     "Today" : "Šiandien",
     "Yesterday" : "Vakar",
+    "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["Atiųsta %n kartą (%s per pastarąsias 30 dienų)","Atsiųsta %n kartus (%s per pastarąsias 30 dienų)","Atsiųsta %n kartų (%s per pastarąsias 30 dienų)","Atsiųsta %n kartų (%s per pastarąsias 30 dienų)"],
+    "_Downloaded %n time_::_Downloaded %n times_" : ["Atsiųsta %n kartą","Atsiųsta %n kartus","Atsiųsta %n kartų","Atsiųsta %n kartų"],
     "You need to set up your email address before you can receive notification emails." : "Jums turite nurodyti elektroninio pašto adresą norėdami gauti pranešimus.",
     "Send activity emails" : "Siųsti el. laiškus apie veiklą",
     "As soon as possible" : "Kuo greičiau",

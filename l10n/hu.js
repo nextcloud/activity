@@ -36,6 +36,8 @@ OC.L10N.register(
     "Activity notification configuration" : "Alkalmazásértesítési beállítások",
     "Today" : "Ma",
     "Yesterday" : "Tegnap",
+    "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["%n alkalommal letöltve (%s× az elmúlt 30 napban)","%n alkalommal letöltve (%s× az elmúlt 30 napban)"],
+    "_Downloaded %n time_::_Downloaded %n times_" : ["%n alkalommal letöltve","%n alkalommal letöltve"],
     "You need to set up your email address before you can receive notification emails." : "Az értesítő üzenetek fogadásához meg kell adnia az e-mail-címét.",
     "Send activity emails" : "Tevékenységi e-mailek küldése",
     "As soon as possible" : "A lehető leghamarabb",
