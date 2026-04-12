@@ -36,6 +36,8 @@ OC.L10N.register(
     "Activity notification configuration" : "Cumraíocht fógra gníomhaíochta",
     "Today" : "Inniu",
     "Yesterday" : "Inné",
+    "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["Íoslódáilte %n uair (%s sna 30 lá seo caite)","Íoslódáilte %n uair (%s le 30 lá anuas)","Íoslódáilte %n uair (%s le 30 lá anuas)","Íoslódáilte %n uair (%s le 30 lá anuas)","Íoslódáilte %n uair (%s le 30 lá anuas)"],
+    "_Downloaded %n time_::_Downloaded %n times_" : ["Íoslódáilte %n uair","Íoslódáilte %n uair","Íoslódáilte %n uair","Íoslódáilte %n uair","Íoslódáilte %n uair"],
     "You need to set up your email address before you can receive notification emails." : "Ní mór duit do sheoladh ríomhphoist a shocrú sula mbeidh tú in ann ríomhphoist fógra a fháil.",
     "Send activity emails" : "Seol ríomhphoist ghníomhaíochta",
     "As soon as possible" : "Chomh luath agus is féidir",
