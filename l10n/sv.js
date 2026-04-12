@@ -36,6 +36,8 @@ OC.L10N.register(
     "Activity notification configuration" : "Inställningar för aktivitetsnotiser",
     "Today" : "Idag",
     "Yesterday" : "Igår",
+    "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["Nedladdad %n gång (%s de senaste 30 dagarna)","Nedladdad %n gånger (%s de senaste 30 dagarna)"],
+    "_Downloaded %n time_::_Downloaded %n times_" : ["Nedladdad %n gång","Nedladdad %n gånger"],
     "You need to set up your email address before you can receive notification emails." : "Du måste ställa in din e-postadress innan du kan ta emot e-postmeddelanden.",
     "Send activity emails" : "Skicka aktivitets-epost",
     "As soon as possible" : "Så snart som möjligt",
