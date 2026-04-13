@@ -67,9 +67,8 @@ class GroupHelper {
 				}
 			} catch (UnknownActivityException) {
 			} catch (\InvalidArgumentException) {
-				// todo 33.0.0 Log as warning
 				// todo 39.0.0 Log as error
-				$this->logger->debug(get_class($provider) . '::parse() threw \InvalidArgumentException which is deprecated. Throw \OCP\Activity\Exceptions\UnknownActivityException when the event is not known to your provider and otherwise handle all \InvalidArgumentException yourself.', ['app' => $event->getApp()]);
+				$this->logger->warning(get_class($provider) . '::parse() threw \InvalidArgumentException which is deprecated. Throw \OCP\Activity\Exceptions\UnknownActivityException when the event is not known to your provider and otherwise handle all \InvalidArgumentException yourself.', ['app' => $event->getApp()]);
 			} catch (\Throwable $e) {
 				$this->logger->error('Error while parsing activity event', ['exception' => $e, 'app' => $event->getApp()]);
 			}
