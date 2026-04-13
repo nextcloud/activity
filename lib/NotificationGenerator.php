@@ -82,9 +82,8 @@ class NotificationGenerator implements INotifier {
 				$event = $provider->parse($language, $event);
 			} catch (UnknownActivityException) {
 			} catch (\InvalidArgumentException $e) {
-				// todo 33.0.0 Log as warning
 				// todo 39.0.0 Log as error
-				$this->logger->debug(get_class($provider) . '::parse() threw \InvalidArgumentException which is deprecated. Throw \OCP\Activity\Exceptions\UnknownActivityException when the event is not known to your provider and otherwise handle all \InvalidArgumentException yourself.');
+				$this->logger->warning(get_class($provider) . '::parse() threw \InvalidArgumentException which is deprecated. Throw \OCP\Activity\Exceptions\UnknownActivityException when the event is not known to your provider and otherwise handle all \InvalidArgumentException yourself.');
 			}
 		}
 		$this->activityManager->setFormattingObject('', 0);
