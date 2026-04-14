@@ -35,9 +35,7 @@
     "extends @nextcloud/browserslist-config"
   ],
   "overrides": {
-    "vite": {
-      "rollup": "v4.40.1"
-    }
+    "picomatch@2": "^2.3.2"
   },
   "dependencies": {
     "@mdi/svg": "^7.4.47",
