@@ -1,0 +1,203 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+# SPDX-License-Identifier: MIT
+
+name: Documentation Screenshots
+
+on:
+  workflow_dispatch:
+    inputs:
+      server-branch:
+        description: 'Server branch to screenshot against (e.g. master, stable30)'
+        required: false
+        default: 'master'
+      open-docs-pr:
+        description: 'Open a PR against nextcloud/documentation with the screenshots'
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: read
+
+env:
+  APP_NAME: ${{ github.event.repository.name }}
+  BRANCH: ${{ inputs.server-branch || 'master' }}
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    name: Capture documentation screenshots
+
+    steps:
+      - name: Checkout app
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Check composer.json
+        id: check_composer
+        uses: andstor/file-existence-action@558493d6c74bf472d87c84eab196434afc2fa029 # v3.1.0
+        with:
+          files: 'composer.json'
+
+      - name: Install composer dependencies
+        if: steps.check_composer.outputs.files_exists == 'true'
+        run: composer install --no-dev
+
+      - name: Read package.json node and npm engines version
+        uses: skjnldsv/read-package-engines-version-actions@06d6baf7d8f41934ab630e97d9e6c0bc9c9ac5e4 # v3
+        id: versions
+        with:
+          fallbackNode: '^24'
+          fallbackNpm: '^11.3'
+
+      - name: Set up node ${{ steps.versions.outputs.nodeVersion }}
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: ${{ steps.versions.outputs.nodeVersion }}
+
+      - name: Set up npm ${{ steps.versions.outputs.npmVersion }}
+        run: npm i -g 'npm@${{ steps.versions.outputs.npmVersion }}'
+
+      - name: Install node dependencies & build app
+        run: |
+          npm ci
+          TESTING=true npm run build --if-present
+
+      - name: Run screenshot specs
+        uses: cypress-io/github-action@783cb3f07983868532cabaedaa1e6c00ff4786a8 # v7.1.9
+        with:
+          component: false
+          spec: cypress/e2e/screenshots.cy.ts
+        env:
+          CYPRESS_BRANCH: ${{ env.BRANCH }}
+          TESTING: true
+
+      - name: Upload user screenshots
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        if: always()
+        with:
+          name: screenshots-user
+          path: cypress/snapshots/actual/screenshots.cy.ts/user/
+          if-no-files-found: warn
+          retention-days: 5
+
+      - name: Upload admin screenshots
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        if: always()
+        with:
+          name: screenshots-admin
+          path: cypress/snapshots/actual/screenshots.cy.ts/admin/
+          if-no-files-found: warn
+          retention-days: 5
+
+      # Opens a PR against nextcloud/documentation with updated screenshots.
+      # Uses the org-wide COMMAND_BOT_PAT secret.
+      # The step is skipped gracefully if the secret is not configured.
+      - name: Check if docs PR should be created
+        id: docs-pr-check
+        env:
+          COMMAND_BOT_PAT: ${{ secrets.COMMAND_BOT_PAT }}
+          OPEN_DOCS_PR: ${{ inputs.open-docs-pr }}
+        run: |
+          echo "::group::Debug info"
+          echo "inputs.open-docs-pr = '${OPEN_DOCS_PR}'"
+          echo "COMMAND_BOT_PAT is set = $([ -n "$COMMAND_BOT_PAT" ] && echo 'yes' || echo 'no')"
+          echo "event_name = ${{ github.event_name }}"
+          echo "::endgroup::"
+
+          if [ -z "$COMMAND_BOT_PAT" ]; then
+            echo "COMMAND_BOT_PAT is not set, skipping docs PR."
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+          elif [ "$OPEN_DOCS_PR" = "false" ]; then
+            echo "open-docs-pr is false, skipping docs PR."
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Will attempt to create docs PR."
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open PR against nextcloud/documentation
+        if: steps.docs-pr-check.outputs.should_run == 'true'
+        env:
+          COMMAND_BOT_PAT: ${{ secrets.COMMAND_BOT_PAT }}
+        run: |
+          set -e
+          DOCS_BRANCH="chore/activity-screenshots-$(date +%Y%m%d-%H%M%S)"
+          SCREENSHOT_DIR="cypress/snapshots/actual/screenshots.cy.ts"
+
+          git clone --depth 1 "https://x-access-token:${COMMAND_BOT_PAT}@github.com/nextcloud/documentation.git" /tmp/documentation
+          cd /tmp/documentation
+
+          git config user.name "nextcloud-command"
+          git config user.email "nextcloud-command@users.noreply.github.com"
+          git checkout -b "$DOCS_BRANCH"
+
+          # Copy user screenshots
+          if [ -d "$GITHUB_WORKSPACE/$SCREENSHOT_DIR/user" ]; then
+            cp "$GITHUB_WORKSPACE/$SCREENSHOT_DIR/user/"*.png user_manual/images/
+            echo "Copied user screenshots"
+          else
+            echo "WARNING: No user screenshot directory at $SCREENSHOT_DIR/user"
+          fi
+
+          # Copy admin screenshots
+          if [ -d "$GITHUB_WORKSPACE/$SCREENSHOT_DIR/admin" ]; then
+            cp "$GITHUB_WORKSPACE/$SCREENSHOT_DIR/admin/"*.png admin_manual/images/
+            echo "Copied admin screenshots"
+          else
+            echo "WARNING: No admin screenshot directory at $SCREENSHOT_DIR/admin"
+          fi
+
+          # Check if there are changes to commit
+          if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+            echo "No screenshot changes detected, skipping PR."
+            exit 0
+          fi
+
+          # Build PR title with branch prefix for stable branches
+          if [ "$BRANCH" != "master" ]; then
+            PR_TITLE="[$BRANCH] chore: update activity app screenshots"
+          else
+            PR_TITLE="chore: update activity app screenshots"
+          fi
+
+          git add user_manual/images/activity-*.png admin_manual/images/activity-*.png
+          git diff --cached --stat
+          git commit -s -m "$PR_TITLE"
+          git push origin "$DOCS_BRANCH"
+          echo "Pushed branch $DOCS_BRANCH"
+
+          GH_TOKEN="${COMMAND_BOT_PAT}" gh pr create \
+            --repo nextcloud/documentation \
+            --base master \
+            --head "$DOCS_BRANCH" \
+            --title "$PR_TITLE" \
+            --body "$(cat <<EOF
+          ## Summary
+          - Automated screenshot update from the [Activity app](https://github.com/nextcloud/activity) CI
+          - Screenshots captured against server branch \`${BRANCH}\`
+
+          ### User manual images
+          $(cd "$GITHUB_WORKSPACE" && ls $SCREENSHOT_DIR/user/*.png 2>/dev/null | xargs -I{} basename {} | sed 's/^/- /' || echo "- (none)")
+
+          ### Admin manual images
+          $(cd "$GITHUB_WORKSPACE" && ls $SCREENSHOT_DIR/admin/*.png 2>/dev/null | xargs -I{} basename {} | sed 's/^/- /' || echo "- (none)")
+
+          ---
+          Generated automatically by the Activity app [screenshot workflow](https://github.com/nextcloud/activity/actions/workflows/screenshots.yml).
+          EOF
+          )"
+
+          echo "PR created successfully"
+
+      - name: Extract NC logs
+        if: failure()
+        run: docker logs nextcloud-cypress-tests-${{ env.APP_NAME }} > nextcloud.log 2>&1
+
+      - name: Upload NC logs
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        if: failure()
+        with:
+          name: nc-logs
+          path: nextcloud.log
