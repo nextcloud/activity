@@ -348,6 +348,59 @@ class APIv2ControllerTest extends TestCase {
 		$this->assertSame($expected, $result->getStatus());
 	}
 
+	public function testGetDownloadCountForbidden(): void {
+		$this->userSession->expects($this->once())
+			->method('getUser')
+			->willReturn(null);
+
+		$result = $this->controller->getDownloadCount('files', 42);
+
+		$this->assertSame(Http::STATUS_FORBIDDEN, $result->getStatus());
+	}
+
+	public static function dataGetDownloadCountBadRequest(): array {
+		return [
+			// invalid object_type
+			['images', 42],
+			// object_id <= 0
+			['files', 0],
+			['files', -1],
+		];
+	}
+
+	#[DataProvider('dataGetDownloadCountBadRequest')]
+	public function testGetDownloadCountBadRequest(string $objectType, int $objectId): void {
+		$user = $this->createMock(IUser::class);
+		$this->userSession->method('getUser')->willReturn($user);
+
+		$result = $this->controller->getDownloadCount($objectType, $objectId);
+
+		$this->assertSame(Http::STATUS_BAD_REQUEST, $result->getStatus());
+	}
+
+	public function testGetDownloadCountSuccess(): void {
+		$user = $this->createMock(IUser::class);
+		$user->method('getUID')->willReturn('testuser');
+		$this->userSession->method('getUser')->willReturn($user);
+
+		$this->data->expects($this->exactly(2))
+			->method('countDownloads')
+			->willReturnCallback(function (string $uid, int $objectId, ?int $since): int {
+				$this->assertSame('testuser', $uid);
+				$this->assertSame(42, $objectId);
+				if ($since === null) {
+					return 10;
+				}
+				$this->assertGreaterThan(time() - 30 * 24 * 3600 - 2, $since);
+				return 3;
+			});
+
+		$result = $this->controller->getDownloadCount('files', 42);
+
+		$this->assertSame(Http::STATUS_OK, $result->getStatus());
+		$this->assertSame(['total' => 10, 'last30d' => 3], $result->getData());
+	}
+
 	public function testListFilters(): void {
 		$filters = [
 			$this->createFilterMock(10, 'id1', 'Filter 3'),

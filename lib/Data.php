@@ -373,6 +373,35 @@ class Data {
 	}
 
 	/**
+	 * Count the number of download activities for a given file
+	 *
+	 * @param string $user The affected user (file owner)
+	 * @param int $objectId The file ID
+	 * @param int|null $since Optional Unix timestamp; only count activities at or after this time
+	 * @return int
+	 */
+	public function countDownloads(string $user, int $objectId, ?int $since = null): int {
+		$query = $this->connection->getQueryBuilder();
+		$query->select($query->func()->count('activity_id', 'count'))
+			->from('activity')
+			->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)))
+			->andWhere($query->expr()->eq('app', $query->createNamedParameter('files_sharing')))
+			->andWhere($query->expr()->eq('type', $query->createNamedParameter('public_links')))
+			->andWhere($query->expr()->eq('object_type', $query->createNamedParameter('files')))
+			->andWhere($query->expr()->eq('object_id', $query->createNamedParameter($objectId, IQueryBuilder::PARAM_INT)));
+
+		if ($since !== null) {
+			$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($since, IQueryBuilder::PARAM_INT)));
+		}
+
+		$result = $query->executeQuery();
+		$row = $result->fetch();
+		$result->closeCursor();
+
+		return (int)($row['count'] ?? 0);
+	}
+
+	/**
 	 * Verify that the filter is valid
 	 *
 	 * @param string $filterValue

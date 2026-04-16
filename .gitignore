@@ -53,6 +53,7 @@ nbproject
 # Tests - auto-generated files
 /PhantomJS_*
 /tests/.phpunit.result.cache
+/tests/.phpunit.cache/
 /tests/coverage*
 /tests/clover.xml
 /tests/js/node_modules

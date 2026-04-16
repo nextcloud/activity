@@ -1,0 +1,17 @@
+SPDX-License-Identifier: AGPL-3.0-or-later
+SPDX-License-Identifier: Apache-2.0
+SPDX-License-Identifier: GPL-3.0-or-later
+SPDX-FileCopyrightText: Austin Andrews
+SPDX-FileCopyrightText: Julius Härtl <jus@bitgrid.net>
+SPDX-FileCopyrightText: Nextcloud GmbH and Nextcloud contributors
+
+This file is generated from multiple sources. Included packages:
+- @mdi/svg
+	- version: 7.4.47
+	- license: Apache-2.0
+- @nextcloud/sharing
+	- version: 0.3.0
+	- license: GPL-3.0-or-later
+- activity
+	- version: 6.0.0-dev.0
+	- license: AGPL-3.0-or-later

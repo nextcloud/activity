@@ -140,6 +140,29 @@ class APIv2Controller extends OCSController {
 	/**
 	 * @NoAdminRequired
 	 *
+	 * @param string $object_type Object type to count downloads for (must be 'files')
+	 * @param int $object_id File ID
+	 * @return DataResponse
+	 */
+	public function getDownloadCount(string $object_type = 'files', int $object_id = 0): DataResponse {
+		$user = $this->userSession->getUser();
+		if (!$user instanceof IUser) {
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
+		}
+
+		if ($object_type !== 'files' || $object_id <= 0) {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+		}
+
+		$total = $this->data->countDownloads($user->getUID(), $object_id);
+		$last30d = $this->data->countDownloads($user->getUID(), $object_id, time() - 30 * 24 * 3600);
+
+		return new DataResponse(['total' => $total, 'last30d' => $last30d]);
+	}
+
+	/**
+	 * @NoAdminRequired
+	 *
 	 * @return DataResponse
 	 */
 	public function listFilters(): DataResponse {
