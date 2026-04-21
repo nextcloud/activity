@@ -43,6 +43,8 @@ use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserSession;
+use OCP\Notification\IManager as INotificationManager;
+use OCP\Notification\INotification;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -63,6 +65,7 @@ class APIv2ControllerTest extends TestCase {
 	protected IUserSession&MockObject $userSession;
 	protected IMimeTypeDetector&MockObject $mimeTypeDetector;
 	protected ViewInfoCache&MockObject $infoCache;
+	protected INotificationManager&MockObject $notificationManager;
 	protected IL10N $l10n;
 	protected APIv2Controller $controller;
 
@@ -78,6 +81,10 @@ class APIv2ControllerTest extends TestCase {
 		$this->userSession = $this->createMock(IUserSession::class);
 		$this->mimeTypeDetector = $this->createMock(IMimeTypeDetector::class);
 		$this->infoCache = $this->createMock(ViewInfoCache::class);
+		$this->notificationManager = $this->createMock(INotificationManager::class);
+		$notification = $this->createMock(INotification::class);
+		$notification->method($this->anything())->willReturnSelf();
+		$this->notificationManager->method('createNotification')->willReturn($notification);
 		$this->request = $this->createMock(IRequest::class);
 
 		$this->controller = $this->getController();
@@ -96,7 +103,8 @@ class APIv2ControllerTest extends TestCase {
 				$this->userSession,
 				$this->preview,
 				$this->mimeTypeDetector,
-				$this->infoCache
+				$this->infoCache,
+				$this->notificationManager,
 			);
 		}
 
@@ -113,6 +121,7 @@ class APIv2ControllerTest extends TestCase {
 				$this->preview,
 				$this->mimeTypeDetector,
 				$this->infoCache,
+				$this->notificationManager,
 			])
 			->onlyMethods($methods)
 			->getMock();
@@ -492,6 +501,116 @@ class APIv2ControllerTest extends TestCase {
 		$this->assertSame([
 			$expected,
 		], $result->getData());
+	}
+
+	public function testGetMarksActivityNotificationsProcessedForFile(): void {
+		$controller = $this->getController(['validateParameters', 'generateHeaders']);
+		$controller->method('generateHeaders')->willReturnArgument(0);
+		$controller->method('validateParameters');
+
+		self::invokePrivate($controller, 'objectType', ['files']);
+		self::invokePrivate($controller, 'objectId', [42]);
+		self::invokePrivate($controller, 'user', ['user1']);
+
+		$this->data->expects($this->once())
+			->method('get')
+			->willReturn([
+				'data' => [
+					['activity_id' => 11, 'app' => 'files', 'timestamp' => 1234567890, 'object_type' => 'files', 'object_id' => 42],
+					['activity_id' => 22, 'app' => 'comments', 'timestamp' => 1234567891, 'object_type' => 'files', 'object_id' => 42],
+				],
+				'headers' => ['ETag' => 'abc'],
+				'has_more' => false,
+			]);
+
+		$notification = $this->createMock(INotification::class);
+		$notification->method($this->anything())->willReturnSelf();
+
+		$this->notificationManager->expects($this->once())
+			->method('defer')
+			->willReturn(true);
+		$this->notificationManager->expects($this->exactly(2))
+			->method('createNotification')
+			->willReturn($notification);
+		$this->notificationManager->expects($this->exactly(2))
+			->method('markProcessed')
+			->with($notification);
+		$this->notificationManager->expects($this->once())
+			->method('flush');
+
+		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, 'files', 42, 'desc']);
+		$this->assertSame(Http::STATUS_OK, $result->getStatus());
+	}
+
+	public function testGetSkipsFlushWhenAlreadyDeferred(): void {
+		$controller = $this->getController(['validateParameters', 'generateHeaders']);
+		$controller->method('generateHeaders')->willReturnArgument(0);
+		$controller->method('validateParameters');
+
+		self::invokePrivate($controller, 'objectType', ['files']);
+		self::invokePrivate($controller, 'objectId', [42]);
+		self::invokePrivate($controller, 'user', ['user1']);
+
+		$this->data->expects($this->once())
+			->method('get')
+			->willReturn([
+				'data' => [
+					['activity_id' => 11, 'app' => 'files', 'timestamp' => 1234567890, 'object_type' => 'files', 'object_id' => 42],
+				],
+				'headers' => ['ETag' => 'abc'],
+				'has_more' => false,
+			]);
+
+		$notification = $this->createMock(INotification::class);
+		$notification->method($this->anything())->willReturnSelf();
+
+		$this->notificationManager->expects($this->once())
+			->method('defer')
+			->willReturn(false);
+		$this->notificationManager->expects($this->once())
+			->method('createNotification')
+			->willReturn($notification);
+		$this->notificationManager->expects($this->once())
+			->method('markProcessed')
+			->with($notification);
+		$this->notificationManager->expects($this->never())
+			->method('flush');
+
+		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, 'files', 42, 'desc']);
+		$this->assertSame(Http::STATUS_OK, $result->getStatus());
+	}
+
+	public function testGetDoesNotMarkNotificationsForGlobalStream(): void {
+		$controller = $this->getController(['validateParameters', 'generateHeaders']);
+		$controller->method('generateHeaders')->willReturnArgument(0);
+		$controller->method('validateParameters');
+
+		// No objectType/objectId set — global stream
+		self::invokePrivate($controller, 'objectType', ['']);
+		self::invokePrivate($controller, 'objectId', [0]);
+		self::invokePrivate($controller, 'user', ['user1']);
+
+		$this->data->expects($this->once())
+			->method('get')
+			->willReturn([
+				'data' => [
+					['activity_id' => 11, 'app' => 'files', 'timestamp' => 1234567890, 'object_type' => 'files', 'object_id' => 42],
+				],
+				'headers' => ['ETag' => 'abc'],
+				'has_more' => false,
+			]);
+
+		$this->notificationManager->expects($this->never())
+			->method('defer');
+		$this->notificationManager->expects($this->never())
+			->method('createNotification');
+		$this->notificationManager->expects($this->never())
+			->method('markProcessed');
+		$this->notificationManager->expects($this->never())
+			->method('flush');
+
+		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, '', 0, 'desc']);
+		$this->assertSame(Http::STATUS_OK, $result->getStatus());
 	}
 
 	public static function dataGetNotModified(): array {
