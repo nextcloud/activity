@@ -7,6 +7,24 @@
 		<h1 class="activity-app__heading">
 			{{ headingTitle }}
 		</h1>
+		<div v-if="savedViews.length > 0" class="activity-app__saved-views">
+			<span class="activity-app__saved-views-label">{{ t('activity', 'Saved views') }}</span>
+			<button
+				v-for="view in savedViews"
+				:key="view.id"
+				type="button"
+				class="activity-app__saved-view-chip"
+				:title="describeSavedView(view)"
+				@click="applySavedView(view)">
+				{{ view.name }}
+				<span
+					class="activity-app__saved-view-remove"
+					role="button"
+					:aria-label="t('activity', 'Remove saved view')"
+					:title="t('activity', 'Remove saved view')"
+					@click.stop="removeSavedView(view.id)">×</span>
+			</button>
+		</div>
 		<form
 			class="activity-app__filters"
 			role="search"
@@ -43,6 +61,13 @@
 				type="tertiary"
 				@click="resetFilters">
 				{{ t('activity', 'Reset') }}
+			</NcButton>
+			<NcButton
+				v-if="anyFilterActive"
+				type="secondary"
+				:title="t('activity', 'Save the current filter combination as a one-click view')"
+				@click="saveCurrentView">
+				{{ t('activity', 'Save view') }}
 			</NcButton>
 			<span v-if="anyFilterActive" class="activity-app__filters-count">
 				{{ filterMatchCount }}
@@ -107,6 +132,8 @@ import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
+import { useSavedViews, type SavedView } from '../utils/savedViews.ts'
+import { useRouter } from 'vue-router'
 import ActivityGroup from '../components/ActivityGroup.vue'
 import appIconSVG from '../../img/activity-dark.svg?raw'
 import ActivityModel from '../models/ActivityModel.ts'
@@ -257,6 +284,62 @@ const filteredActivities = computed<ActivityModel[]>(() => {
 const filterMatchCount = computed(() =>
 	t('activity', '{n} matching', { n: filteredActivities.value.length }),
 )
+
+/**
+ * Saved-views composable — list lives in localStorage so users can keep
+ * favourite filter combinations without backend changes.
+ */
+const router = useRouter()
+const { views: savedViews, add: addSavedView, remove: removeSavedView } = useSavedViews()
+
+function suggestSavedViewName(): string {
+	const bits: string[] = []
+	if (filterText.value)   bits.push('"' + filterText.value + '"')
+	if (filterPerson.value) bits.push('@' + filterPerson.value)
+	if (filterFrom.value || filterTo.value) {
+		bits.push((filterFrom.value || '…') + '–' + (filterTo.value || '…'))
+	}
+	bits.push(props.filter)
+	return bits.join(' ')
+}
+
+function describeSavedView(view: SavedView): string {
+	const parts: string[] = []
+	parts.push(t('activity', 'Filter') + ': ' + view.filter)
+	if (view.search) parts.push(t('activity', 'Search') + ': ' + view.search)
+	if (view.person) parts.push(t('activity', 'Person') + ': ' + view.person)
+	if (view.from)   parts.push(t('activity', 'From') + ': ' + view.from)
+	if (view.to)     parts.push(t('activity', 'To') + ': ' + view.to)
+	return parts.join(' • ')
+}
+
+function saveCurrentView(): void {
+	const suggested = suggestSavedViewName()
+	// eslint-disable-next-line no-alert
+	const name = window.prompt(t('activity', 'Name this view'), suggested)
+	if (name === null) return
+	const trimmed = name.trim()
+	if (trimmed === '') return
+	addSavedView({
+		name: trimmed,
+		filter: props.filter,
+		search: filterText.value,
+		person: filterPerson.value,
+		from: filterFrom.value,
+		to: filterTo.value,
+	})
+}
+
+function applySavedView(view: SavedView): void {
+	filterText.value = view.search
+	filterPerson.value = view.person
+	filterFrom.value = view.from
+	filterTo.value = view.to
+	if (view.filter && view.filter !== props.filter) {
+		// vue-router will re-trigger the props watcher and reload activities
+		router.push({ params: { filter: view.filter } })
+	}
+}
 
 /**
  * Activities grouped by date (post-filter).
@@ -491,6 +574,57 @@ watch(props, () => {
 		// Align with app navigation toggle
 		margin-top: 1px;
 		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
+	}
+
+	&__saved-views {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 6px;
+		padding: 4px 12px;
+		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
+	}
+
+	&__saved-views-label {
+		margin-inline-end: 4px;
+		color: var(--color-text-maxcontrast);
+		font-size: 13px;
+	}
+
+	&__saved-view-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		padding: 4px 10px;
+		border: 1px solid var(--color-border);
+		border-radius: var(--border-radius-pill);
+		background: var(--color-background-hover);
+		color: var(--color-main-text);
+		font-size: 13px;
+		cursor: pointer;
+		transition: background-color 120ms ease, border-color 120ms ease;
+
+		&:hover, &:focus-visible {
+			background: var(--color-primary-element-light, var(--color-background-darker));
+			border-color: var(--color-primary-element);
+		}
+	}
+
+	&__saved-view-remove {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 16px;
+		height: 16px;
+		border-radius: 50%;
+		color: var(--color-text-maxcontrast);
+		font-size: 14px;
+		line-height: 1;
+
+		&:hover {
+			background: var(--color-background-darker);
+			color: var(--color-error);
+		}
 	}
 
 	&__filters {
