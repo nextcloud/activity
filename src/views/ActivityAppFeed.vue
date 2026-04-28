@@ -8,6 +8,15 @@
 			<h1 class="activity-app__heading">
 				{{ headingTitle }}
 			</h1>
+			<button
+				type="button"
+				class="activity-app__refresh"
+				:class="{ 'activity-app__refresh--spinning': refreshing }"
+				:title="t('activity', 'Check for new activities now')"
+				:aria-label="t('activity', 'Refresh')"
+				@click="manualRefresh">
+				<IconRefresh :size="18" />
+			</button>
 			<form
 				class="activity-app__filters"
 				role="search"
@@ -140,7 +149,7 @@ import { loadState } from '@nextcloud/initial-state'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import { generateOcsUrl } from '@nextcloud/router'
-import { useDocumentVisibility, useInfiniteScroll, useDebounceFn } from '@vueuse/core'
+import { useDebounce, useDocumentVisibility, useInfiniteScroll, useDebounceFn } from '@vueuse/core'
 import axios from 'axios'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -149,6 +158,8 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
+import IconRefresh from 'vue-material-design-icons/Refresh.vue'
+import { useMutedTypes } from '../utils/mutedTypes.ts'
 import { useSavedViews, type SavedView } from '../utils/savedViews.ts'
 import { useRouter } from 'vue-router'
 import ActivityGroup from '../components/ActivityGroup.vue'
@@ -251,15 +262,20 @@ useInfiniteScroll(container, async () => {
 /**
  * Client-side filter state.
  *
- * These narrow the already-loaded activity list — the OCS endpoint does not
- * yet accept search/date/actor parameters, so filtering happens in the
- * browser over whatever has been paginated in.  Infinite scroll keeps
- * pulling more under the same filter, so the user can dial in by scrolling.
+ * Free-text search is applied server-side via a `q=` parameter on the
+ * OCS endpoint (debounced 300ms to avoid hammering the database while
+ * the user is typing) — see watch() further down which resets and
+ * refetches when activeSearch changes.  Person and date filters stay
+ * client-side over whatever the infinite scroll has paginated in.
  */
 const filterText = ref('')
 const filterPerson = ref('')
 const filterFrom = ref('')   // YYYY-MM-DD, inclusive
 const filterTo = ref('')     // YYYY-MM-DD, inclusive
+
+// Debounced version of the text filter — driven into the OCS request
+// 300ms after the user stops typing.
+const activeSearch = useDebounce(filterText, 300)
 
 const anyFilterActive = computed(() =>
 	filterText.value.trim() !== ''
@@ -276,24 +292,49 @@ function resetFilters() {
 }
 
 /**
- * Activities matching the current filters, before grouping.
+ * "Refreshing" flag used to drive the spin animation on the refresh
+ * button.  Held true for at least 600ms even on a fast poll so the spin
+ * is always visible — instant completion would feel like the click did
+ * nothing.
  */
-const filteredActivities = computed<ActivityModel[]>(() => {
-	if (!anyFilterActive.value) return allActivities.value
+const refreshing = ref(false)
 
-	const text = filterText.value.trim().toLowerCase()
+async function manualRefresh() {
+	if (refreshing.value) return
+	refreshing.value = true
+	const minSpin = new Promise((resolve) => setTimeout(resolve, 600))
+	try {
+		await Promise.all([pollNewActivities(), minSpin])
+	} finally {
+		refreshing.value = false
+	}
+}
+
+/**
+ * Activities matching the current filters, before grouping.  Text search
+ * already happened server-side, so this only narrows by person + date,
+ * and drops any activity whose type the user has muted via the row
+ * context menu.
+ */
+const { muted: mutedTypes } = useMutedTypes()
+
+const filteredActivities = computed<ActivityModel[]>(() => {
+	const personActive = filterPerson.value.trim() !== ''
+	const dateActive = filterFrom.value !== '' || filterTo.value !== ''
+	const muteActive = mutedTypes.value.length > 0
+
+	if (!personActive && !dateActive && !muteActive) return allActivities.value
+
 	const person = filterPerson.value.trim().toLowerCase()
 	const fromTs = filterFrom.value ? moment(filterFrom.value).startOf('day').valueOf() : undefined
 	const toTs = filterTo.value ? moment(filterTo.value).endOf('day').valueOf() : undefined
+	const muteSet = new Set(mutedTypes.value)
 
 	return allActivities.value.filter((a) => {
+		if (muteSet.has(a.type)) return false
 		if (fromTs !== undefined && a.timestamp < fromTs) return false
 		if (toTs !== undefined && a.timestamp > toTs) return false
 		if (person !== '' && !a.user.toLowerCase().includes(person)) return false
-		if (text !== '') {
-			const hay = (a.subject + ' ' + a.message).toLowerCase()
-			if (!hay.includes(text)) return false
-		}
 		return true
 	})
 })
@@ -464,8 +505,11 @@ async function loadActivities() {
 	const { signal } = requestController
 	try {
 		const since = lastActivityLoaded.value ?? '0'
+		const q = activeSearch.value.trim()
 		loading.value = true
-		const response = await ncAxios.get(generateOcsUrl('apps/activity/api/v2/activity/{filter}?format=json&previews=true&since={since}', { filter: props.filter, since }), { signal })
+		const url = generateOcsUrl('apps/activity/api/v2/activity/{filter}?format=json&previews=true&since={since}', { filter: props.filter, since })
+			+ (q !== '' ? '&q=' + encodeURIComponent(q) : '')
+		const response = await ncAxios.get(url, { signal })
 		if (signal.aborted) {
 			return
 		}
@@ -485,6 +529,10 @@ async function loadActivities() {
 				// Do it manually to ensure there are no activities to fetch anymore
 				await loadActivities()
 			}
+			// If the page was opened with a permalink, retry the scroll
+			// after each load — the target may not have appeared in the
+			// first batch and infinite scroll keeps pulling more.
+			maybeScrollToPermalink()
 		})
 	} catch (error) {
 		if (axios.isCancel(error)) {
@@ -515,7 +563,10 @@ async function pollNewActivities() {
 	const { signal } = requestController
 	try {
 		const since = String(newestActivityId.value ?? 0)
-		const response = await ncAxios.get(generateOcsUrl('apps/activity/api/v2/activity/{filter}?format=json&previews=true&since={since}&sort=asc', { filter: props.filter, since }), { signal })
+		const q = activeSearch.value.trim()
+		const url = generateOcsUrl('apps/activity/api/v2/activity/{filter}?format=json&previews=true&since={since}&sort=asc', { filter: props.filter, since })
+			+ (q !== '' ? '&q=' + encodeURIComponent(q) : '')
+		const response = await ncAxios.get(url, { signal })
 		if (!signal.aborted && response.data.ocs.data.length > 0) {
 			const newActivities: ActivityModel[] = response.data.ocs.data.map((raw: IRawActivity) => new ActivityModel(raw))
 			// Sort newest first for prepending
@@ -577,8 +628,49 @@ function stopPolling() {
 /**
  * Load activities when mounted and start polling
  */
+/**
+ * Read `id=…` from the current hash query — used to deep-link to a
+ * specific activity (set by the row's "Copy link" button) and scroll
+ * to it once it has loaded.
+ */
+function permalinkTargetId(): number | null {
+	try {
+		const hash = window.location.hash || ''
+		const q = hash.split('?')[1]
+		if (!q) return null
+		const id = Number(new URLSearchParams(q).get('id'))
+		return Number.isFinite(id) && id > 0 ? id : null
+	} catch {
+		return null
+	}
+}
+
+/**
+ * Once any new activities arrive, see if the page was opened with a
+ * permalink and the target row is now in the DOM; if so, scroll to it
+ * and disarm so we don't re-jump on subsequent loads.
+ */
+let permalinkArmed = true
+function maybeScrollToPermalink() {
+	if (!permalinkArmed) return
+	const id = permalinkTargetId()
+	if (id === null) {
+		permalinkArmed = false
+		return
+	}
+	nextTick(() => {
+		const row = document.querySelector(
+			'.activity-entry[data-activity-id="' + String(id) + '"]',
+		) as HTMLElement | null
+		if (row) {
+			row.scrollIntoView({ behavior: 'smooth', block: 'center' })
+			permalinkArmed = false
+		}
+	})
+}
+
 onMounted(() => {
-	loadActivities()
+	loadActivities().then(maybeScrollToPermalink)
 	startPolling()
 })
 
@@ -596,9 +688,11 @@ watch(visibility, (value) => {
 })
 
 /**
- * Reload activities when filter changed
+ * Reload activities when filter or (debounced) free-text search changes —
+ * both reset the paginated state and re-pull from the top of the stream
+ * so we never mix matches from before/after a query change.
  */
-watch(props, () => {
+function reloadActivities() {
 	requestController.abort()
 	requestController = new AbortController()
 	allActivities.value = []
@@ -607,7 +701,10 @@ watch(props, () => {
 	newestActivityId.value = undefined
 	hasMoreActivites.value = true
 	loadActivities()
-})
+}
+
+watch(props, reloadActivities)
+watch(activeSearch, reloadActivities)
 </script>
 
 <style scoped lang="scss">
@@ -709,7 +806,9 @@ watch(props, () => {
 		flex-wrap: wrap;
 		gap: 12px;
 		margin-top: 1px;
+		padding-block: 8px;
 		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
+		border-bottom: 1px solid transparent;
 	}
 
 	&__heading {
@@ -720,12 +819,47 @@ watch(props, () => {
 		line-height: 44px; // to align height with the app navigation toggle
 	}
 
+	&__refresh {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 32px;
+		height: 32px;
+		padding: 0;
+		border: 1px solid var(--color-border);
+		border-radius: 50%;
+		background: var(--color-main-background);
+		color: var(--color-text-maxcontrast);
+		cursor: pointer;
+		transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+
+		&:hover {
+			background: var(--color-background-hover);
+			color: var(--color-main-text);
+			border-color: var(--color-primary-element);
+		}
+
+		&--spinning :deep(svg) {
+			animation: activity-refresh-spin 600ms ease-in-out;
+		}
+	}
+
 	&__today-summary {
 		color: var(--color-text-maxcontrast);
 		font-size: 13px;
-		margin-top: -4px;
+		font-weight: 500;
+		margin-top: 4px;
 		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
 		margin-bottom: 12px;
+		padding: 4px 0;
+
+		// A tiny bullet before the text gives the line some character
+		&::before {
+			content: '✨';
+			margin-inline-end: 6px;
+			opacity: 0.7;
+		}
 	}
 
 	&__saved-views {
@@ -885,6 +1019,11 @@ watch(props, () => {
 	0%   { transform: scale(0.6); opacity: 0.25; }
 	70%  { transform: scale(1.4); opacity: 0;    }
 	100% { transform: scale(1.4); opacity: 0;    }
+}
+
+@keyframes activity-refresh-spin {
+	from { transform: rotate(0deg); }
+	to   { transform: rotate(360deg); }
 }
 
 </style>

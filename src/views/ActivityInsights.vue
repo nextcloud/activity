@@ -13,6 +13,67 @@
 		<NcLoadingIcon v-if="loading" :size="32" class="insights__loading" />
 
 		<template v-else>
+			<!-- ── Top stats row: streak + raw counts ── -->
+			<div class="insights__stats">
+				<section class="insights-stat insights-stat--streak">
+					<span class="insights-stat__value">{{ streak.value }}</span>
+					<span class="insights-stat__label">
+						<span class="insights-stat__flame" :class="{ 'is-on': streak.value > 0 }">🔥</span>
+						{{ streakLabel }}
+					</span>
+				</section>
+				<section class="insights-stat">
+					<span class="insights-stat__value">{{ activities.length }}</span>
+					<span class="insights-stat__label">{{ t('activity', 'recent activities') }}</span>
+				</section>
+				<section class="insights-stat">
+					<span class="insights-stat__value">{{ todayCount }}</span>
+					<span class="insights-stat__label">{{ t('activity', 'today') }}</span>
+				</section>
+				<section class="insights-stat">
+					<span class="insights-stat__value">{{ topCollaborators.length }}</span>
+					<span class="insights-stat__label">{{ t('activity', 'people involved') }}</span>
+				</section>
+			</div>
+
+			<!-- ── 12-week heatmap calendar ── -->
+			<section class="insights-card">
+				<h2>{{ t('activity', 'Activity over the last {weeks} weeks', { weeks: heatmapWeeks }) }}</h2>
+				<div class="insights-heatmap" role="img" :aria-label="t('activity', 'Activity heatmap')">
+					<div class="insights-heatmap__weekday-labels" aria-hidden="true">
+						<span>{{ t('activity', 'Mon') }}</span>
+						<span></span>
+						<span>{{ t('activity', 'Wed') }}</span>
+						<span></span>
+						<span>{{ t('activity', 'Fri') }}</span>
+						<span></span>
+						<span>{{ t('activity', 'Sun') }}</span>
+					</div>
+					<div class="insights-heatmap__grid">
+						<div
+							v-for="(week, wi) in heatmap"
+							:key="wi"
+							class="insights-heatmap__week">
+							<div
+								v-for="(cell, di) in week"
+								:key="di"
+								class="insights-heatmap__cell"
+								:class="`level-${cell.level}`"
+								:title="cell.iso ? cell.iso + ' — ' + cell.count : ''" />
+						</div>
+					</div>
+					<div class="insights-heatmap__legend">
+						<span>{{ t('activity', 'Less') }}</span>
+						<span class="insights-heatmap__cell level-0" />
+						<span class="insights-heatmap__cell level-1" />
+						<span class="insights-heatmap__cell level-2" />
+						<span class="insights-heatmap__cell level-3" />
+						<span class="insights-heatmap__cell level-4" />
+						<span>{{ t('activity', 'More') }}</span>
+					</div>
+				</div>
+			</section>
+
 			<section class="insights-card">
 				<h2>{{ t('activity', 'Last 7 days') }}</h2>
 				<div class="insights-card__sparkline-wrapper">
@@ -99,6 +160,7 @@ import logger from '../utils/logger.ts'
 const sampleSize = 200
 const sparklineWidth = 280
 const sparklineHeight = 60
+const heatmapWeeks = 12
 
 const loading = ref(true)
 const activities = ref<ActivityModel[]>([])
@@ -125,6 +187,93 @@ const familyLabels: Record<Family, () => string> = {
 	other:    () => t('activity', 'Other'),
 }
 function familyLabel(f: Family) { return familyLabels[f]() }
+
+/**
+ * Map of YYYY-MM-DD → activity count for every day in the loaded sample.
+ * Computed once and reused by streak + heatmap so we don't iterate the
+ * activity list multiple times.
+ */
+const dayCounts = computed<Map<string, number>>(() => {
+	const map = new Map<string, number>()
+	for (const a of activities.value) {
+		const iso = moment(a.datetime).format('YYYY-MM-DD')
+		map.set(iso, (map.get(iso) ?? 0) + 1)
+	}
+	return map
+})
+
+/**
+ * Consecutive days ending today (or yesterday) with at least one activity.
+ * Today has not yet ended, so a missing today doesn't break the streak —
+ * we just start counting from yesterday.
+ */
+const streak = computed(() => {
+	const counts = dayCounts.value
+	let day = moment().startOf('day')
+	if (!counts.has(day.format('YYYY-MM-DD'))) {
+		// Today not active yet — try yesterday as the streak's tail.
+		day = day.subtract(1, 'day')
+		if (!counts.has(day.format('YYYY-MM-DD'))) {
+			return { value: 0 }
+		}
+	}
+	let n = 0
+	while (counts.has(day.format('YYYY-MM-DD'))) {
+		n++
+		day = day.subtract(1, 'day')
+	}
+	return { value: n }
+})
+
+const streakLabel = computed(() => {
+	const v = streak.value.value
+	if (v === 0) return t('activity', 'Start a streak')
+	return t('activity', '{n}-day streak', { n: v })
+})
+
+const todayCount = computed(() => dayCounts.value.get(moment().format('YYYY-MM-DD')) ?? 0)
+
+type HeatmapCell = { iso: string, count: number, level: 0 | 1 | 2 | 3 | 4 }
+
+/**
+ * `heatmapWeeks` × 7 grid of (week, weekday) cells, oldest week first.
+ * Each cell carries a level 0-4 used by the CSS to pick a tint, so the
+ * style sheet has the colour palette and the JS only buckets counts.
+ */
+const heatmap = computed<HeatmapCell[][]>(() => {
+	// Establish the bucket boundaries from the loaded sample's max so
+	// the four "active" levels actually distribute meaningfully.
+	const counts = dayCounts.value
+	const max = Math.max(1, ...Array.from(counts.values()))
+	const step = max / 4
+
+	const weeks: HeatmapCell[][] = []
+	// Start from the Monday of the week that begins (heatmapWeeks - 1) weeks ago
+	const start = moment().startOf('isoWeek').subtract(heatmapWeeks - 1, 'weeks')
+	for (let w = 0; w < heatmapWeeks; w++) {
+		const week: HeatmapCell[] = []
+		for (let d = 0; d < 7; d++) {
+			const date = start.clone().add(w, 'weeks').add(d, 'days')
+			// Don't paint future days
+			if (date.isAfter(moment(), 'day')) {
+				week.push({ iso: '', count: 0, level: 0 })
+				continue
+			}
+			const iso = date.format('YYYY-MM-DD')
+			const count = counts.get(iso) ?? 0
+			let level: HeatmapCell['level'] = 0
+			if (count > 0) {
+				if (count <= step)        level = 1
+				else if (count <= step*2) level = 2
+				else if (count <= step*3) level = 3
+				else                      level = 4
+			}
+			week.push({ iso, count, level })
+		}
+		weeks.push(week)
+	}
+	return weeks
+})
 
 /**
  * 7-day rolling activity buckets, oldest day first, used to drive both the
@@ -250,6 +399,126 @@ onMounted(async () => {
 		@media (max-width: 720px) {
 			grid-template-columns: 1fr;
 		}
+	}
+
+	&__stats {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+		gap: 12px;
+		margin-bottom: 20px;
+	}
+}
+
+// Big number + caption used at the top of the page.  The streak variant
+// adds a flame emoji that animates softly when it is non-zero so users
+// have a visible reward for consistency.
+.insights-stat {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 14px 18px;
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius-large);
+	background: var(--color-main-background);
+
+	&__value {
+		font-size: 28px;
+		font-weight: 700;
+		color: var(--color-main-text);
+		line-height: 1.1;
+	}
+
+	&__label {
+		display: inline-flex;
+		gap: 4px;
+		align-items: center;
+		font-size: 13px;
+		color: var(--color-text-maxcontrast);
+	}
+
+	&__flame {
+		display: inline-block;
+		filter: grayscale(1);
+		opacity: 0.5;
+
+		&.is-on {
+			filter: none;
+			opacity: 1;
+			animation: insights-flame 1.6s ease-in-out infinite alternate;
+		}
+	}
+
+	&--streak {
+		background: linear-gradient(140deg, var(--color-primary-element-light, var(--color-background-hover)) 0%, var(--color-main-background) 80%);
+	}
+}
+
+@keyframes insights-flame {
+	from { transform: scale(1)    rotate(-3deg); }
+	to   { transform: scale(1.15) rotate(3deg); }
+}
+
+// 12-week × 7-day heatmap calendar.  Layout mirrors GitHub: weekdays
+// down the left, weeks across the right.  Levels 0-4 map to a stepped
+// tint of the primary colour for a familiar aesthetic.
+.insights-heatmap {
+	display: grid;
+	grid-template-columns: 24px 1fr;
+	grid-template-rows: 1fr auto;
+	gap: 6px;
+
+	&__weekday-labels {
+		display: grid;
+		grid-template-rows: repeat(7, 1fr);
+		font-size: 10px;
+		color: var(--color-text-maxcontrast);
+
+		span {
+			line-height: 14px;
+		}
+	}
+
+	&__grid {
+		display: flex;
+		gap: 3px;
+		min-height: 7 * 14px + 6 * 3px;
+	}
+
+	&__week {
+		display: grid;
+		grid-template-rows: repeat(7, 14px);
+		gap: 3px;
+		flex: 1;
+	}
+
+	&__cell {
+		display: inline-block;
+		width: 14px;
+		height: 14px;
+		border-radius: 3px;
+		background: var(--color-background-darker);
+		transition: transform 120ms ease;
+
+		&:hover {
+			transform: scale(1.15);
+		}
+
+		&.level-0 { background: var(--color-background-darker); }
+		&.level-1 { background: color-mix(in srgb, var(--color-primary-element) 25%, var(--color-background-darker)); }
+		&.level-2 { background: color-mix(in srgb, var(--color-primary-element) 50%, var(--color-background-darker)); }
+		&.level-3 { background: color-mix(in srgb, var(--color-primary-element) 75%, var(--color-background-darker)); }
+		&.level-4 { background: var(--color-primary-element); }
+	}
+
+	&__legend {
+		grid-column: 1 / -1;
+		display: flex;
+		gap: 4px;
+		align-items: center;
+		justify-content: flex-end;
+		font-size: 11px;
+		color: var(--color-text-maxcontrast);
+		margin-top: 4px;
 	}
 }
 

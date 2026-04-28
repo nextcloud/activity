@@ -4,7 +4,11 @@
 -->
 
 <template>
-	<li class="activity-entry" :class="`activity-entry--type-${typeFamily}`">
+	<li
+		class="activity-entry"
+		:class="[`activity-entry--type-${typeFamily}`, { 'activity-entry--highlighted': isHighlighted }]"
+		:data-activity-id="activity.id"
+		@contextmenu.prevent="onContextMenu">
 		<div class="activity-entry__avatar">
 			<NcAvatar
 				v-if="hasActor"
@@ -39,6 +43,43 @@
 			:timestamp="timestamp"
 			:ignore-seconds="true"
 			data-testid="activity-date" />
+		<div class="activity-entry__row-actions">
+			<button
+				type="button"
+				class="activity-entry__row-action"
+				:title="t('activity', 'Copy link to this activity')"
+				:aria-label="t('activity', 'Copy link to this activity')"
+				@click.stop="copyPermalink">
+				<IconLink :size="16" />
+			</button>
+			<button
+				type="button"
+				class="activity-entry__row-action"
+				:title="t('activity', 'More actions')"
+				:aria-label="t('activity', 'More actions')"
+				@click.stop="onActionsClick">
+				<IconDotsHorizontal :size="16" />
+			</button>
+		</div>
+		<div
+			v-if="contextMenuOpen"
+			ref="contextMenuEl"
+			class="activity-entry__context-menu"
+			:style="{ left: contextMenuX + 'px', top: contextMenuY + 'px' }"
+			role="menu">
+			<button v-if="hasFileTarget" type="button" role="menuitem" @click="contextOpenInFiles">
+				<IconFolder :size="16" />
+				<span>{{ t('activity', 'Open in Files') }}</span>
+			</button>
+			<button type="button" role="menuitem" @click="copyPermalink">
+				<IconLink :size="16" />
+				<span>{{ t('activity', 'Copy link') }}</span>
+			</button>
+			<button type="button" role="menuitem" @click="contextMuteType">
+				<IconBellOff :size="16" />
+				<span>{{ t('activity', 'Mute "{type}"', { type: activity.type }) }}</span>
+			</button>
+		</div>
 		<ul v-if="showPreviews" class="activity-entry__preview-wrapper">
 			<li
 				v-for="preview, index in activity.previews"
@@ -79,14 +120,21 @@
 <script lang="ts">
 import type { IPreview } from '../../models/types.ts'
 
+import { showSuccess, showError } from '@nextcloud/dialogs'
 import { translate as t } from '@nextcloud/l10n'
+import { generateUrl } from '@nextcloud/router'
 import { defineComponent } from 'vue'
 import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
 import NcRichText from '@nextcloud/vue/components/NcRichText'
+import IconLink from 'vue-material-design-icons/LinkVariant.vue'
+import IconDotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
+import IconFolder from 'vue-material-design-icons/FolderOpen.vue'
+import IconBellOff from 'vue-material-design-icons/BellOff.vue'
 import ActivityModel from '../../models/ActivityModel.js'
 import logger from '../../utils/logger.js'
 import { mapRichObjectsToRichArguments } from '../../utils/richObjects.js'
+import { addMutedType, isTypeMuted } from '../../utils/mutedTypes.ts'
 
 export default defineComponent({
 	name: 'GenericActivity',
@@ -94,6 +142,10 @@ export default defineComponent({
 		NcAvatar,
 		NcDateTime,
 		NcRichText,
+		IconLink,
+		IconDotsHorizontal,
+		IconFolder,
+		IconBellOff,
 	},
 
 	props: {
@@ -124,7 +176,21 @@ export default defineComponent({
 			// sync with the cursor by onPreviewMove.
 			popupX: 0,
 			popupY: 0,
+			// Right-click / actions menu state.  Single instance per row.
+			contextMenuOpen: false,
+			contextMenuX: 0,
+			contextMenuY: 0,
 		}
+	},
+
+	mounted() {
+		document.addEventListener('click', this.closeContextMenuOnDocClick)
+		document.addEventListener('keydown', this.closeContextMenuOnEsc)
+	},
+
+	beforeUnmount() {
+		document.removeEventListener('click', this.closeContextMenuOnDocClick)
+		document.removeEventListener('keydown', this.closeContextMenuOnEsc)
 	},
 
 	computed: {
@@ -180,6 +246,29 @@ export default defineComponent({
 		hasActor() {
 			const uid = this.activity.user
 			return typeof uid === 'string' && uid !== '' && uid !== 'system'
+		},
+
+		/**
+		 * True when the URL hash contains `id=<this row's id>`.  Used to
+		 * paint a soft highlight on a row deep-linked via permalink.
+		 */
+		isHighlighted() {
+			try {
+				// Hash format example: "#/all?id=42"
+				const hash = window.location.hash || ''
+				const q = hash.split('?')[1]
+				if (!q) return false
+				const params = new URLSearchParams(q)
+				return Number(params.get('id')) === this.activity.id
+			} catch {
+				return false
+			}
+		},
+
+		/** True when the activity targets a file we know how to deep-link to. */
+		hasFileTarget() {
+			return this.activity.objectType === 'files'
+				&& Number(this.activity.objectId) > 0
 		},
 
 		/**
@@ -257,6 +346,86 @@ export default defineComponent({
 		onPreviewLeave() {
 			this.hoveredPreviewIndex = -1
 		},
+
+		/**
+		 * Build a permalink to this activity in the form
+		 *   /apps/activity/#/<filter>?id=<activityId>
+		 * The current URL is parsed so we keep whichever filter the user
+		 * is on; the activity id is appended as a query param under the
+		 * hash so the SPA router doesn't need to change to support it.
+		 */
+		buildPermalink(): string {
+			const hash = window.location.hash || '#/all'
+			const [path] = hash.split('?')
+			const id = String(this.activity.id)
+			const url = new URL(window.location.href)
+			url.hash = path + '?id=' + encodeURIComponent(id)
+			// generateUrl gives us the activity-app prefix correctly
+			// even when the page is on a different filter URL.
+			return url.toString()
+		},
+
+		async copyPermalink() {
+			this.closeContextMenu()
+			const link = this.buildPermalink()
+			try {
+				await window.navigator.clipboard.writeText(link)
+				showSuccess(t('activity', 'Link copied'))
+			} catch (e) {
+				logger.debug(e as Error)
+				// Non-secure context: surface a copy-prompt fallback
+				window.prompt(t('activity', 'Copy this link:'), link)
+			}
+		},
+
+		onContextMenu(event: MouseEvent) {
+			this.contextMenuX = event.clientX
+			this.contextMenuY = event.clientY
+			this.contextMenuOpen = true
+		},
+
+		onActionsClick(event: MouseEvent) {
+			const rect = (event.currentTarget as HTMLElement).getBoundingClientRect()
+			this.contextMenuX = rect.left
+			this.contextMenuY = rect.bottom + 4
+			this.contextMenuOpen = !this.contextMenuOpen
+		},
+
+		closeContextMenu() {
+			this.contextMenuOpen = false
+		},
+
+		closeContextMenuOnDocClick(event: MouseEvent) {
+			if (!this.contextMenuOpen) return
+			const menu = this.$refs.contextMenuEl as HTMLElement | undefined
+			if (menu && !menu.contains(event.target as Node)) {
+				this.contextMenuOpen = false
+			}
+		},
+
+		closeContextMenuOnEsc(event: KeyboardEvent) {
+			if (event.key === 'Escape') this.contextMenuOpen = false
+		},
+
+		contextOpenInFiles() {
+			this.closeContextMenu()
+			if (this.activity.link) {
+				window.open(this.activity.link, '_blank', 'noopener')
+				return
+			}
+			const id = Number(this.activity.objectId)
+			if (id > 0) {
+				window.open(generateUrl('/f/{id}', { id }), '_blank', 'noopener')
+			}
+		},
+
+		contextMuteType() {
+			this.closeContextMenu()
+			addMutedType(this.activity.type)
+			showSuccess(t('activity', 'Muted activity type "{type}"', { type: this.activity.type }))
+			// Notify the feed so it can hide already-loaded rows of this type
+			window.dispatchEvent(new CustomEvent('activity:muted-types-changed'))
+		},
 	},
 })
 </script>
@@ -273,6 +442,12 @@ export default defineComponent({
 	border-inline-start: 3px solid transparent;
 	border-radius: var(--border-radius);
 	transition: background-color 150ms ease, border-color 150ms ease;
+	// Browser-level virtualization: skip layout / paint for rows
+	// outside the viewport.  contain-intrinsic-size reserves a
+	// reasonable placeholder height so the scrollbar stays accurate
+	// without requiring real layout for thousands of rows.
+	content-visibility: auto;
+	contain-intrinsic-size: 80px 100%;
 
 	&--type-created     { border-inline-start-color: var(--color-success, #46ba61); }
 	&--type-deleted     { border-inline-start-color: var(--color-error,   #e9322d); }
@@ -284,6 +459,8 @@ export default defineComponent({
 
 	&:hover {
 		background-color: var(--color-background-hover);
+		// Subtle inset shadow on hover for that "lift" feel
+		box-shadow: inset 0 0 0 1px var(--color-border);
 	}
 
 	&__avatar {
@@ -360,6 +537,77 @@ export default defineComponent({
 		flex-shrink: 0;
 	}
 
+	// Hover-revealed row actions (copy link + more menu).  Hidden by
+	// default so they don't crowd the row; appear on hover or when the
+	// menu is open.
+	&__row-actions {
+		display: flex;
+		gap: 2px;
+		margin-inline-start: 4px;
+		opacity: 0;
+		transition: opacity 120ms ease;
+	}
+
+	&:hover &__row-actions,
+	&:focus-within &__row-actions {
+		opacity: 1;
+	}
+
+	&__row-action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 24px;
+		height: 24px;
+		padding: 0;
+		border: none;
+		border-radius: 50%;
+		background: transparent;
+		color: var(--color-text-maxcontrast);
+		cursor: pointer;
+		transition: background-color 120ms ease, color 120ms ease;
+
+		&:hover, &:focus-visible {
+			background: var(--color-background-hover);
+			color: var(--color-main-text);
+		}
+	}
+
+	&__context-menu {
+		position: fixed;
+		min-width: 180px;
+		padding: 4px;
+		border: 1px solid var(--color-border);
+		border-radius: var(--border-radius-large);
+		background: var(--color-main-background);
+		box-shadow: 0 8px 24px var(--color-box-shadow);
+		z-index: 1000;
+
+		button {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			width: 100%;
+			padding: 6px 10px;
+			border: none;
+			border-radius: var(--border-radius);
+			background: transparent;
+			color: var(--color-main-text);
+			font: inherit;
+			text-align: start;
+			cursor: pointer;
+
+			&:hover, &:focus-visible {
+				background: var(--color-background-hover);
+			}
+		}
+	}
+
+	// Soft yellow flash + persistent left-rail when a row was deep-linked.
+	&--highlighted {
+		animation: activity-permalink-flash 1.6s ease-out;
+	}
+
 	&__preview-wrapper {
 		// Force next line
 		flex: 0 0 100%;
@@ -411,5 +659,10 @@ export default defineComponent({
 		pointer-events: none;
 		z-index: 1000;
 	}
+}
+
+@keyframes activity-permalink-flash {
+	0%   { background-color: var(--color-warning, #f4a261); }
+	100% { background-color: transparent; }
 }
 </style>

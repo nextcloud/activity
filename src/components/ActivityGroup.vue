@@ -119,6 +119,23 @@ const fullDate = computed(() => {
 	&__heading {
 		line-height: 1.5;
 		margin-block: 30px 12px;
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--color-text-maxcontrast);
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+
+		// Subtle hairline that extends from the heading text to the right
+		// edge of the column — gives each day a visual "shelf"
+		&::after {
+			content: '';
+			flex: 1;
+			height: 1px;
+			background: linear-gradient(to right, var(--color-border) 0%, transparent 100%);
+		}
 
 		&:first-of-type {
 			// Already padding from h1
