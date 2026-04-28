@@ -7,6 +7,12 @@
 		<h1 class="activity-app__heading">
 			{{ headingTitle }}
 		</h1>
+		<p
+			v-if="todaySummary"
+			class="activity-app__today-summary"
+			:title="t('activity', 'Summary of activities recorded today')">
+			{{ todaySummary }}
+		</p>
 		<NcEmptyContent
 			v-if="hasMoreActivites && allActivities.length === 0"
 			class="activity-app__empty-content"
@@ -53,7 +59,7 @@
 import ncAxios from '@nextcloud/axios'
 import { showError } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
-import { translate as t } from '@nextcloud/l10n'
+import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import { generateOcsUrl } from '@nextcloud/router'
 import { useDocumentVisibility, useInfiniteScroll, useDebounceFn } from '@vueuse/core'
@@ -180,6 +186,53 @@ const groupedActivities = computed(() => {
 
 const headingTitle = computed(() => {
 	return navigationList.find((navigationEl) => navigationEl.id === route.params.filter).name
+})
+
+/**
+ * Bucket an activity into the same families used by the visual type-accent
+ * styling.  Kept in sync with GenericActivity.typeFamily so the summary header
+ * and the rows tell the same story.
+ */
+function typeFamily(type: string): 'created' | 'changed' | 'deleted' | 'share' | 'comment' | 'favorite' | 'other' {
+	if (type === 'file_created') return 'created'
+	if (type === 'file_deleted') return 'deleted'
+	if (type === 'file_changed' || type === 'file_restored') return 'changed'
+	if (type === 'favorite') return 'favorite'
+	if (type === 'comments') return 'comment'
+	if (type.startsWith('shared') || type.startsWith('share') || type.startsWith('unshare') || type === 'remote_share' || type.includes('_share')) return 'share'
+	return 'other'
+}
+
+/**
+ * One-line "Today: 12 changes, 3 shares, 1 deletion" summary built from the
+ * already-loaded activities.  Returns an empty string when nothing has loaded
+ * yet or nothing happened today, so the line collapses cleanly.
+ */
+const todaySummary = computed<string>(() => {
+	if (allActivities.value.length === 0) return ''
+
+	const today = moment().startOf('day')
+	const counts: Record<ReturnType<typeof typeFamily>, number> = {
+		created: 0, changed: 0, deleted: 0, share: 0, comment: 0, favorite: 0, other: 0,
+	}
+	let total = 0
+	for (const activity of allActivities.value) {
+		if (!moment(activity.datetime).isSame(today, 'day')) continue
+		counts[typeFamily(activity.type)]++
+		total++
+	}
+	if (total === 0) return ''
+
+	const parts: string[] = []
+	if (counts.changed)  parts.push(n('activity', '%n change',     '%n changes',     counts.changed))
+	if (counts.created)  parts.push(n('activity', '%n addition',   '%n additions',   counts.created))
+	if (counts.deleted)  parts.push(n('activity', '%n deletion',   '%n deletions',   counts.deleted))
+	if (counts.share)    parts.push(n('activity', '%n share',      '%n shares',      counts.share))
+	if (counts.comment)  parts.push(n('activity', '%n comment',    '%n comments',    counts.comment))
+	if (counts.favorite) parts.push(n('activity', '%n favorite',   '%n favorites',   counts.favorite))
+	if (counts.other)    parts.push(n('activity', '%n other event','%n other events',counts.other))
+
+	return t('activity', 'Today: {summary}', { summary: parts.join(', ') })
 })
 
 /**
@@ -395,6 +448,14 @@ watch(props, () => {
 		// Align with app navigation toggle
 		margin-top: 1px;
 		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
+	}
+
+	&__today-summary {
+		color: var(--color-text-maxcontrast);
+		font-size: 13px;
+		margin-top: -4px;
+		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
+		margin-bottom: 12px;
 	}
 }
 </style>
