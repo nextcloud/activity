@@ -55,12 +55,13 @@
 						}"
 						:src="preview.source"
 						:alt="preview.link ? t('activity', 'Open {filename}', { filename: preview.filename }) : ''"
-						@mouseenter="!preview.isMimeTypeIcon && onPreviewEnter($event, index)"
+						@mousemove="!preview.isMimeTypeIcon && onPreviewMove($event, index)"
 						@mouseleave="onPreviewLeave">
 					<!--
-						Mirror image rendered as a floating popup anchored
-						beneath the small thumbnail.  Only for real previews —
-						MIME-type icons stay 80px and don't pop up.
+						Mirror image rendered as a floating popup that follows
+						the cursor (lower-right of the pointer).  Only for
+						real previews — MIME-type icons stay 80px and don't
+						pop up.
 					-->
 					<img
 						v-if="!preview.isMimeTypeIcon && hoveredPreviewIndex === index"
@@ -223,31 +224,29 @@ export default defineComponent({
 		},
 
 		/**
-		 * Anchor the popup just below the thumbnail the cursor entered,
-		 * left-aligned with it.  If the popup would overflow the viewport
-		 * to the right we shift it left so it stays fully on-screen; if
-		 * there is not enough room below the thumbnail we flip it above.
+		 * Place the popup to the lower-right of the cursor so it tracks
+		 * the pointer as the user moves over the small thumbnail.  If the
+		 * popup would overflow the viewport's right or bottom edge it is
+		 * flipped to the other side of the cursor so it stays fully
+		 * visible.
 		 *
 		 * Edge detection uses the popup's CSS max-width / max-height as
 		 * an upper-bound fudge — close enough without having to wait for
 		 * the image to load and report its real natural size.
 		 */
-		onPreviewEnter(event: MouseEvent, index: number) {
-			const target = event.currentTarget as HTMLElement | null
-			if (!target) return
-			const rect = target.getBoundingClientRect()
-			const offset = 8
+		onPreviewMove(event: MouseEvent, index: number) {
+			const offset = 16
 			const margin = 8
 			const fudgeW = Math.min(window.innerWidth * 0.6, 700)
 			const fudgeH = window.innerHeight * 0.7
 
-			let x = rect.left
-			let y = rect.bottom + offset
+			let x = event.clientX + offset
+			let y = event.clientY + offset
 			if (x + fudgeW + margin > window.innerWidth) {
-				x = Math.max(margin, window.innerWidth - margin - fudgeW)
+				x = Math.max(margin, event.clientX - offset - fudgeW)
 			}
 			if (y + fudgeH + margin > window.innerHeight) {
-				y = Math.max(margin, rect.top - offset - fudgeH)
+				y = Math.max(margin, event.clientY - offset - fudgeH)
 			}
 
 			this.popupX = x
