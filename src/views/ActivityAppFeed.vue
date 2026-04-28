@@ -18,11 +18,23 @@
 		</NcEmptyContent>
 		<NcEmptyContent
 			v-else-if="allActivities.length === 0"
-			class="activity-app__empty-content"
-			:name="t('activity', 'No activity yet')"
-			:description="t('activity', 'This stream will show events like additions, changes & shares')">
+			class="activity-app__empty-content activity-app__empty-content--decorated"
+			:name="t('activity', 'Nothing has happened here yet')"
+			:description="emptyDescription">
 			<template #icon>
-				<NcIconSvgWrapper :svg="appIconSVG" :size="36" />
+				<div class="activity-app__empty-icon-stage">
+					<span class="activity-app__empty-pulse activity-app__empty-pulse--1" />
+					<span class="activity-app__empty-pulse activity-app__empty-pulse--2" />
+					<NcIconSvgWrapper :svg="appIconSVG" :size="64" class="activity-app__empty-icon" />
+				</div>
+			</template>
+			<template #action>
+				<NcButton type="primary" :href="filesLink">
+					{{ t('activity', 'Open Files') }}
+				</NcButton>
+				<NcButton type="secondary" :href="personalSettingsLink">
+					{{ t('activity', 'Notification settings') }}
+				</NcButton>
 			</template>
 		</NcEmptyContent>
 		<div ref="container" class="activity-app__container" @scroll="onScroll">
@@ -55,7 +67,7 @@ import { showError } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import { translate as t } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
-import { generateOcsUrl } from '@nextcloud/router'
+import { generateOcsUrl, generateUrl } from '@nextcloud/router'
 import { useDocumentVisibility, useInfiniteScroll, useDebounceFn } from '@vueuse/core'
 import axios from 'axios'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
@@ -181,6 +193,36 @@ const groupedActivities = computed(() => {
 const headingTitle = computed(() => {
 	return navigationList.find((navigationEl) => navigationEl.id === route.params.filter).name
 })
+
+/**
+ * One of a small set of friendly, situation-aware messages for the empty
+ * state.  Picked deterministically from the current filter so reloads on
+ * the same page show the same line — randomness here would be jarring.
+ */
+const emptyDescription = computed<string>(() => {
+	const filter = String(route.params.filter ?? 'all')
+	const messages = filter === 'self'
+		? [
+			t('activity', 'When you upload, edit or share a file, it will appear here.'),
+			t('activity', 'Your own actions will show up in this stream once you start working.'),
+		]
+		: filter === 'by'
+			? [
+				t('activity', 'When someone shares with you or comments on a file you own, it will appear here.'),
+				t('activity', 'Activity from collaborators will land here as soon as it happens.'),
+			]
+			: [
+				t('activity', 'Upload a file, share something, or favourite a folder — events will start appearing here as soon as you do.'),
+				t('activity', 'This is where your Nextcloud activity lives. Add some files or shares to get started.'),
+			]
+	// Pick one deterministically by hashing the filter id, so the empty
+	// state is stable per page across reloads.
+	const idx = filter.split('').reduce((s, c) => (s + c.charCodeAt(0)) % messages.length, 0)
+	return messages[idx]
+})
+
+const filesLink = generateUrl('/apps/files/')
+const personalSettingsLink = generateUrl('/settings/user/notifications')
 
 /**
  * Load activities for current filter or load more if already loaded
@@ -350,6 +392,43 @@ watch(props, () => {
 		height: 100%;
 	}
 
+	&__empty-content--decorated {
+		// Soft radial backdrop behind the icon to make the page feel
+		// composed instead of "loading screen with text".
+		background:
+			radial-gradient(circle at 50% 38%, var(--color-primary-element-light, var(--color-background-hover)) 0%, transparent 60%),
+			transparent;
+	}
+
+	&__empty-icon-stage {
+		position: relative;
+		width: 96px;
+		height: 96px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__empty-icon {
+		position: relative;
+		z-index: 2;
+		opacity: 0.85;
+	}
+
+	&__empty-pulse {
+		position: absolute;
+		inset: 0;
+		border-radius: 50%;
+		background: var(--color-primary-element);
+		opacity: 0.18;
+		transform: scale(0.6);
+		animation: activity-empty-pulse 2.4s ease-out infinite;
+
+		&--2 {
+			animation-delay: 1.2s;
+		}
+	}
+
 	&__loading-indicator {
 		color: var(--color-text-maxcontrast);
 		justify-self: center;
@@ -396,5 +475,11 @@ watch(props, () => {
 		margin-top: 1px;
 		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
 	}
+}
+
+@keyframes activity-empty-pulse {
+	0%   { transform: scale(0.6); opacity: 0.25; }
+	70%  { transform: scale(1.4); opacity: 0;    }
+	100% { transform: scale(1.4); opacity: 0;    }
 }
 </style>
