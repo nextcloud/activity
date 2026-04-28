@@ -47,19 +47,19 @@
 					:is="preview.link ? 'a' : 'span'"
 					class="activity-entry__preview"
 					:href="preview.link"
-					@click="handlePreviewClick($event, preview)"
-					@mouseenter="!preview.isMimeTypeIcon && onPreviewEnter($event, index)"
-					@mouseleave="onPreviewLeave">
+					@click="handlePreviewClick($event, preview)">
 					<img
 						class="activity-entry__preview-image"
 						:class="{
 							'activity-entry__preview-mimetype': preview.isMimeTypeIcon,
 						}"
 						:src="preview.source"
-						:alt="preview.link ? t('activity', 'Open {filename}', { filename: preview.filename }) : ''">
+						:alt="preview.link ? t('activity', 'Open {filename}', { filename: preview.filename }) : ''"
+						@mouseenter="!preview.isMimeTypeIcon && onPreviewEnter($event, index)"
+						@mouseleave="onPreviewLeave">
 					<!--
-						Mirror image rendered as a floating popup that follows
-						the cursor (right + below).  Only for real previews —
+						Mirror image rendered as a floating popup anchored
+						beneath the small thumbnail.  Only for real previews —
 						MIME-type icons stay 80px and don't pop up.
 					-->
 					<img

@@ -7,7 +7,7 @@
 	<h2 class="activity-group__heading" :title="fullDate">
 		{{ dateText }}
 	</h2>
-	<ul class="activity-group__list">
+	<ul>
 		<template v-for="(item, index) in threadedActivities" :key="itemKey(item, index)">
 			<CommentThread
 				v-if="item.thread"
