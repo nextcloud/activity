@@ -20,6 +20,14 @@
 						role="presentation">
 				</template>
 			</NcAppNavigationItem>
+			<NcAppNavigationItem
+				:to="{ name: 'insights' }"
+				:name="t('activity', 'Insights')"
+				data-navigation="insights">
+				<template #icon>
+					<IconChartBar :size="20" />
+				</template>
+			</NcAppNavigationItem>
 		</template>
 		<template #footer>
 			<NcAppNavigationSettings :name="t('activity', 'Activity settings')">
@@ -77,6 +85,7 @@ import NcButton from '@nextcloud/vue/components/NcButton'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import NcInputField from '@nextcloud/vue/components/NcInputField'
 import IconContentCopy from 'vue-material-design-icons/ContentCopy.vue'
+import IconChartBar from 'vue-material-design-icons/ChartBar.vue'
 import logger from '../utils/logger.ts'
 import { useDensity } from '../utils/density.ts'
 
