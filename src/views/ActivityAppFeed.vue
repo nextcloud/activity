@@ -13,6 +13,72 @@
 			:title="t('activity', 'Summary of activities recorded today')">
 			{{ todaySummary }}
 		</p>
+		<div v-if="savedViews.length > 0" class="activity-app__saved-views">
+			<span class="activity-app__saved-views-label">{{ t('activity', 'Saved views') }}</span>
+			<button
+				v-for="view in savedViews"
+				:key="view.id"
+				type="button"
+				class="activity-app__saved-view-chip"
+				:title="describeSavedView(view)"
+				@click="applySavedView(view)">
+				{{ view.name }}
+				<span
+					class="activity-app__saved-view-remove"
+					role="button"
+					:aria-label="t('activity', 'Remove saved view')"
+					:title="t('activity', 'Remove saved view')"
+					@click.stop="removeSavedView(view.id)">×</span>
+			</button>
+		</div>
+		<form
+			class="activity-app__filters"
+			role="search"
+			:aria-label="t('activity', 'Filter activities')"
+			@submit.prevent>
+			<NcTextField
+				v-model="filterText"
+				class="activity-app__filters-search"
+				:label="t('activity', 'Search')"
+				:placeholder="t('activity', 'Search subject or message…')"
+				trailing-button-icon="close"
+				:show-trailing-button="filterText.length > 0"
+				:trailing-button-label="t('activity', 'Clear search')"
+				@trailing-button-click="filterText = ''" />
+			<NcTextField
+				v-model="filterPerson"
+				class="activity-app__filters-person"
+				:label="t('activity', 'Person')"
+				:placeholder="t('activity', 'User ID')"
+				trailing-button-icon="close"
+				:show-trailing-button="filterPerson.length > 0"
+				:trailing-button-label="t('activity', 'Clear person filter')"
+				@trailing-button-click="filterPerson = ''" />
+			<label class="activity-app__filters-date">
+				<span class="activity-app__filters-label">{{ t('activity', 'From') }}</span>
+				<input v-model="filterFrom" type="date" :max="filterTo || undefined">
+			</label>
+			<label class="activity-app__filters-date">
+				<span class="activity-app__filters-label">{{ t('activity', 'To') }}</span>
+				<input v-model="filterTo" type="date" :min="filterFrom || undefined">
+			</label>
+			<NcButton
+				v-if="anyFilterActive"
+				type="tertiary"
+				@click="resetFilters">
+				{{ t('activity', 'Reset') }}
+			</NcButton>
+			<NcButton
+				v-if="anyFilterActive"
+				type="secondary"
+				:title="t('activity', 'Save the current filter combination as a one-click view')"
+				@click="saveCurrentView">
+				{{ t('activity', 'Save view') }}
+			</NcButton>
+			<span v-if="anyFilterActive" class="activity-app__filters-count">
+				{{ filterMatchCount }}
+			</span>
+		</form>
 		<ul
 			v-if="hasMoreActivites && allActivities.length === 0"
 			class="activity-app__skeletons"
@@ -77,6 +143,9 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
+import NcTextField from '@nextcloud/vue/components/NcTextField'
+import { useSavedViews, type SavedView } from '../utils/savedViews.ts'
+import { useRouter } from 'vue-router'
 import ActivityGroup from '../components/ActivityGroup.vue'
 import appIconSVG from '../../img/activity-dark.svg?raw'
 import ActivityModel from '../models/ActivityModel.ts'
@@ -175,11 +244,121 @@ useInfiniteScroll(container, async () => {
 })
 
 /**
- * Activities grouped by date
+ * Client-side filter state.
+ *
+ * These narrow the already-loaded activity list — the OCS endpoint does not
+ * yet accept search/date/actor parameters, so filtering happens in the
+ * browser over whatever has been paginated in.  Infinite scroll keeps
+ * pulling more under the same filter, so the user can dial in by scrolling.
+ */
+const filterText = ref('')
+const filterPerson = ref('')
+const filterFrom = ref('')   // YYYY-MM-DD, inclusive
+const filterTo = ref('')     // YYYY-MM-DD, inclusive
+
+const anyFilterActive = computed(() =>
+	filterText.value.trim() !== ''
+		|| filterPerson.value.trim() !== ''
+		|| filterFrom.value !== ''
+		|| filterTo.value !== '',
+)
+
+function resetFilters() {
+	filterText.value = ''
+	filterPerson.value = ''
+	filterFrom.value = ''
+	filterTo.value = ''
+}
+
+/**
+ * Activities matching the current filters, before grouping.
+ */
+const filteredActivities = computed<ActivityModel[]>(() => {
+	if (!anyFilterActive.value) return allActivities.value
+
+	const text = filterText.value.trim().toLowerCase()
+	const person = filterPerson.value.trim().toLowerCase()
+	const fromTs = filterFrom.value ? moment(filterFrom.value).startOf('day').valueOf() : undefined
+	const toTs = filterTo.value ? moment(filterTo.value).endOf('day').valueOf() : undefined
+
+	return allActivities.value.filter((a) => {
+		if (fromTs !== undefined && a.timestamp < fromTs) return false
+		if (toTs !== undefined && a.timestamp > toTs) return false
+		if (person !== '' && !a.user.toLowerCase().includes(person)) return false
+		if (text !== '') {
+			const hay = (a.subject + ' ' + a.message).toLowerCase()
+			if (!hay.includes(text)) return false
+		}
+		return true
+	})
+})
+
+const filterMatchCount = computed(() =>
+	t('activity', '{n} matching', { n: filteredActivities.value.length }),
+)
+
+/**
+ * Saved-views composable — list lives in localStorage so users can keep
+ * favourite filter combinations without backend changes.
+ */
+const router = useRouter()
+const { views: savedViews, add: addSavedView, remove: removeSavedView } = useSavedViews()
+
+function suggestSavedViewName(): string {
+	const bits: string[] = []
+	if (filterText.value)   bits.push('"' + filterText.value + '"')
+	if (filterPerson.value) bits.push('@' + filterPerson.value)
+	if (filterFrom.value || filterTo.value) {
+		bits.push((filterFrom.value || '…') + '–' + (filterTo.value || '…'))
+	}
+	bits.push(props.filter)
+	return bits.join(' ')
+}
+
+function describeSavedView(view: SavedView): string {
+	const parts: string[] = []
+	parts.push(t('activity', 'Filter') + ': ' + view.filter)
+	if (view.search) parts.push(t('activity', 'Search') + ': ' + view.search)
+	if (view.person) parts.push(t('activity', 'Person') + ': ' + view.person)
+	if (view.from)   parts.push(t('activity', 'From') + ': ' + view.from)
+	if (view.to)     parts.push(t('activity', 'To') + ': ' + view.to)
+	return parts.join(' • ')
+}
+
+function saveCurrentView(): void {
+	const suggested = suggestSavedViewName()
+	// eslint-disable-next-line no-alert
+	const name = window.prompt(t('activity', 'Name this view'), suggested)
+	if (name === null) return
+	const trimmed = name.trim()
+	if (trimmed === '') return
+	addSavedView({
+		name: trimmed,
+		filter: props.filter,
+		search: filterText.value,
+		person: filterPerson.value,
+		from: filterFrom.value,
+		to: filterTo.value,
+	})
+}
+
+function applySavedView(view: SavedView): void {
+	filterText.value = view.search
+	filterPerson.value = view.person
+	filterFrom.value = view.from
+	filterTo.value = view.to
+	if (view.filter && view.filter !== props.filter) {
+		// vue-router will re-trigger the props watcher and reload activities
+		router.push({ params: { filter: view.filter } })
+	}
+}
+
+/**
+ * Activities grouped by date (post-filter).
  */
 const groupedActivities = computed(() => {
 	const groups = {} as Record<string, ActivityModel[]>
-	for (const activity of allActivities.value) {
+	for (const activity of filteredActivities.value) {
 		const date = moment(activity.datetime).format('LL')
 		if (groups[date] === undefined) {
 			groups[date] = [activity]
@@ -470,6 +649,104 @@ watch(props, () => {
 		margin-top: -4px;
 		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
 		margin-bottom: 12px;
+	}
+
+	&__saved-views {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 6px;
+		padding: 4px 12px;
+		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
+	}
+
+	&__saved-views-label {
+		margin-inline-end: 4px;
+		color: var(--color-text-maxcontrast);
+		font-size: 13px;
+	}
+
+	&__saved-view-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		padding: 4px 10px;
+		border: 1px solid var(--color-border);
+		border-radius: var(--border-radius-pill);
+		background: var(--color-background-hover);
+		color: var(--color-main-text);
+		font-size: 13px;
+		cursor: pointer;
+		transition: background-color 120ms ease, border-color 120ms ease;
+
+		&:hover, &:focus-visible {
+			background: var(--color-primary-element-light, var(--color-background-darker));
+			border-color: var(--color-primary-element);
+		}
+	}
+
+	&__saved-view-remove {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 16px;
+		height: 16px;
+		border-radius: 50%;
+		color: var(--color-text-maxcontrast);
+		font-size: 14px;
+		line-height: 1;
+
+		&:hover {
+			background: var(--color-background-darker);
+			color: var(--color-error);
+		}
+	}
+
+	&__filters {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: end;
+		gap: 8px;
+		padding: 8px 12px 12px;
+		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
+	}
+
+	&__filters-search {
+		flex-grow: 2;
+		min-width: 200px;
+	}
+
+	&__filters-person {
+		flex-grow: 1;
+		min-width: 140px;
+	}
+
+	&__filters-date {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		font-size: 13px;
+		color: var(--color-text-maxcontrast);
+
+		input[type="date"] {
+			height: 36px;
+			padding: 0 8px;
+			border: 2px solid var(--color-border);
+			border-radius: var(--border-radius-large);
+			background: var(--color-main-background);
+			color: var(--color-main-text);
+			font-size: inherit;
+		}
+	}
+
+	&__filters-label {
+		padding-inline-start: 8px;
+	}
+
+	&__filters-count {
+		align-self: center;
+		color: var(--color-text-maxcontrast);
+		font-size: 13px;
 	}
 }
 
