@@ -3,11 +3,31 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<NcAppContent class="activity-app">
+	<NcAppContent class="activity-app" :class="`activity-app--${viewMode}`">
 		<div class="activity-app__topbar">
 			<h1 class="activity-app__heading">
 				{{ headingTitle }}
 			</h1>
+			<div class="activity-app__view-toggle" role="group" :aria-label="t('activity', 'View mode')">
+				<button
+					type="button"
+					class="activity-app__view-toggle-btn"
+					:class="{ 'is-active': viewMode === 'list' }"
+					:aria-pressed="viewMode === 'list' ? 'true' : 'false'"
+					:title="t('activity', 'List view')"
+					@click="viewMode = 'list'">
+					<IconViewList :size="18" />
+				</button>
+				<button
+					type="button"
+					class="activity-app__view-toggle-btn"
+					:class="{ 'is-active': viewMode === 'grid' }"
+					:aria-pressed="viewMode === 'grid' ? 'true' : 'false'"
+					:title="t('activity', 'Grid view')"
+					@click="viewMode = 'grid'">
+					<IconViewGrid :size="18" />
+				</button>
+			</div>
 			<form
 				class="activity-app__filters"
 				role="search"
@@ -149,6 +169,8 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
+import IconViewList from 'vue-material-design-icons/ViewList.vue'
+import IconViewGrid from 'vue-material-design-icons/ViewGrid.vue'
 import { useSavedViews, type SavedView } from '../utils/savedViews.ts'
 import { useRouter } from 'vue-router'
 import ActivityGroup from '../components/ActivityGroup.vue'
@@ -167,6 +189,33 @@ interface INavigationEntry {
 const navigationList = loadState<INavigationEntry[]>(appName, 'navigationList')
 
 const route = useRoute()
+
+/**
+ * "list" (default — current dense rows) or "grid" (cards in a responsive
+ * grid).  Persisted to localStorage so the user's preference sticks across
+ * reloads without needing a backend setting.
+ */
+type ViewMode = 'list' | 'grid'
+const VIEW_MODE_KEY = 'activity:view-mode'
+const viewMode = ref<ViewMode>(loadViewMode())
+
+function loadViewMode(): ViewMode {
+	try {
+		const v = window.localStorage.getItem(VIEW_MODE_KEY)
+		if (v === 'grid' || v === 'list') return v
+	} catch (e) {
+		logger.debug('Could not read view-mode preference', e as Error)
+	}
+	return 'list'
+}
+
+watch(viewMode, (value) => {
+	try {
+		window.localStorage.setItem(VIEW_MODE_KEY, value)
+	} catch (e) {
+		logger.warn('Could not persist view-mode preference', e as Error)
+	}
+})
 
 const props = withDefaults(defineProps<{
 	/**
@@ -720,6 +769,46 @@ watch(props, () => {
 		line-height: 44px; // to align height with the app navigation toggle
 	}
 
+	// Two-button list/grid toggle group sitting in the topbar.  Buttons
+	// share a rounded outer shape and only show a fill on the active
+	// option — the inactive one is a subtle outline so the pair reads
+	// as a single segmented control.
+	&__view-toggle {
+		display: inline-flex;
+		flex-shrink: 0;
+		border: 1px solid var(--color-border);
+		border-radius: var(--border-radius);
+		overflow: hidden;
+	}
+
+	&__view-toggle-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 30px;
+		padding: 0;
+		border: none;
+		background: var(--color-main-background);
+		color: var(--color-text-maxcontrast);
+		cursor: pointer;
+		transition: background-color 120ms ease, color 120ms ease;
+
+		& + & {
+			border-inline-start: 1px solid var(--color-border);
+		}
+
+		&:hover {
+			background: var(--color-background-hover);
+			color: var(--color-main-text);
+		}
+
+		&.is-active {
+			background: var(--color-primary-element);
+			color: var(--color-primary-element-text);
+		}
+	}
+
 	&__today-summary {
 		color: var(--color-text-maxcontrast);
 		font-size: 13px;
@@ -885,5 +974,72 @@ watch(props, () => {
 	0%   { transform: scale(0.6); opacity: 0.25; }
 	70%  { transform: scale(1.4); opacity: 0;    }
 	100% { transform: scale(1.4); opacity: 0;    }
+}
+
+// Grid view: replace the per-day vertical list with a responsive grid of
+// card-shaped activity rows.  Uses :deep() to break the scoped-CSS barrier
+// since the markup we're styling lives in ActivityGroup and GenericActivity.
+//
+// The day heading (h2 inside ActivityGroup) sits above its grid as a
+// full-width row, and each activity becomes a card with the avatar /
+// content / preview stacked vertically.  Type-accent left borders are
+// preserved.
+.activity-app--grid {
+	:deep(.activity-group__list) {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 12px;
+		list-style: none;
+		padding: 0;
+		margin: 0 0 24px;
+	}
+
+	:deep(.activity-entry) {
+		flex-direction: column;
+		align-items: stretch;
+		height: auto;
+		padding: 12px 12px 12px 15px;
+		border: 1px solid var(--color-border);
+		border-inline-start-width: 3px; // keep the type-family accent
+		border-radius: var(--border-radius-large);
+		background: var(--color-main-background);
+	}
+
+	:deep(.activity-entry__avatar) {
+		margin-inline-end: 0;
+		margin-bottom: 6px;
+	}
+
+	:deep(.activity-entry__content) {
+		flex-basis: auto;
+		width: 100%;
+	}
+
+	:deep(.activity-entry__date) {
+		margin-left: 0;
+		margin-top: 4px;
+	}
+
+	:deep(.activity-entry__preview-wrapper) {
+		flex: 0 0 auto;
+		margin-top: 8px;
+		padding-inline-start: 0;
+		gap: 8px;
+	}
+
+	:deep(.activity-entry__preview-image) {
+		width: 100%;
+		height: auto;
+		max-height: 200px;
+		object-fit: cover;
+	}
+
+	// Comment threads render their own button + nested list — they read
+	// fine as cards too, just give the nested list some room to breathe.
+	:deep(.comment-thread) {
+		background: var(--color-main-background);
+		border: 1px solid var(--color-border);
+		border-radius: var(--border-radius-large);
+	}
 }
 </style>
