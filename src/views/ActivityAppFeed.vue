@@ -13,15 +13,19 @@
 			:title="t('activity', 'Summary of activities recorded today')">
 			{{ todaySummary }}
 		</p>
-		<NcEmptyContent
+		<ul
 			v-if="hasMoreActivites && allActivities.length === 0"
-			class="activity-app__empty-content"
-			:name="t('activity', 'Loading activities')"
-			:description="t('activity', 'This stream will show events like additions, changes & shares')">
-			<template #icon>
-				<NcLoadingIcon :size="36" />
-			</template>
-		</NcEmptyContent>
+			class="activity-app__skeletons"
+			aria-hidden="true">
+			<li v-for="n in 6" :key="n" class="activity-skeleton">
+				<span class="activity-skeleton__avatar" />
+				<span class="activity-skeleton__lines">
+					<span class="activity-skeleton__line activity-skeleton__line--subject" />
+					<span class="activity-skeleton__line activity-skeleton__line--message" />
+				</span>
+				<span class="activity-skeleton__date" />
+			</li>
+		</ul>
 		<NcEmptyContent
 			v-else-if="allActivities.length === 0"
 			class="activity-app__empty-content"
@@ -39,7 +43,9 @@
 				@click="scrollToTop">
 				{{ t('activity', 'New activities') }}
 			</NcButton>
-			<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
+			<TransitionGroup name="activity-fade" tag="div" class="activity-app__groups">
+				<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
+			</TransitionGroup>
 			<!-- Only show if not showing the inital empty content for loading -->
 			<NcLoadingIcon
 				v-if="hasMoreActivites && allActivities.length > 0"
@@ -422,6 +428,14 @@ watch(props, () => {
 		overflow-y: scroll;
 	}
 
+	&__skeletons {
+		list-style: none;
+		padding-inline: 12px;
+		width: min(100%, 924px);
+		max-width: 924px;
+		margin: 16px auto 0;
+	}
+
 	&__new-activities-indicator {
 		position: sticky;
 		top: 8px;
@@ -457,5 +471,66 @@ watch(props, () => {
 		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
 		margin-bottom: 12px;
 	}
+}
+
+// Fade newly-arriving activity groups in over a short window so polled
+// items don't pop into existence — the user sees them animate in instead.
+.activity-fade-enter-active {
+	transition: opacity 220ms ease, transform 220ms ease;
+}
+.activity-fade-enter-from {
+	opacity: 0;
+	transform: translateY(-4px);
+}
+
+.activity-skeleton {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	padding: 10px 0;
+	border-bottom: 1px solid var(--color-border);
+
+	&__avatar {
+		flex-shrink: 0;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		background: var(--color-background-darker);
+		animation: activity-skeleton-pulse 1.4s ease-in-out infinite;
+	}
+
+	&__lines {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		flex-grow: 1;
+		padding-top: 2px;
+	}
+
+	&__line {
+		display: block;
+		height: 10px;
+		border-radius: var(--border-radius);
+		background: var(--color-background-darker);
+		animation: activity-skeleton-pulse 1.4s ease-in-out infinite;
+
+		&--subject { width: 55%; }
+		&--message { width: 80%; opacity: 0.6; }
+	}
+
+	&__date {
+		flex-shrink: 0;
+		width: 56px;
+		height: 10px;
+		margin-top: 4px;
+		border-radius: var(--border-radius);
+		background: var(--color-background-darker);
+		animation: activity-skeleton-pulse 1.4s ease-in-out infinite;
+	}
+}
+
+@keyframes activity-skeleton-pulse {
+	0%, 100% { opacity: 1; }
+	50%      { opacity: 0.5; }
 }
 </style>
