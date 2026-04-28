@@ -5,13 +5,29 @@
 
 <template>
 	<li class="activity-entry">
-		<NcAvatar
-			class="activity-entry__icon activity-icon avatardiv--unknown"
-			:class="[applyMonochromeIconColor]"
-			:disable-menu="true"
-			:disable-tooltip="true"
-			:url="activity.icon"
-			:size="20" />
+		<div class="activity-entry__avatar">
+			<NcAvatar
+				v-if="hasActor"
+				class="activity-entry__avatar-actor"
+				:user="activity.user"
+				:size="32"
+				:disable-menu="false"
+				:show-user-status="false" />
+			<NcAvatar
+				v-else
+				class="activity-entry__avatar-event activity-icon avatardiv--unknown"
+				:class="[applyMonochromeIconColor]"
+				:disable-menu="true"
+				:disable-tooltip="true"
+				:url="activity.icon"
+				:size="32" />
+			<img
+				v-if="hasActor"
+				class="activity-entry__avatar-badge"
+				:src="activity.icon"
+				:alt="''"
+				role="presentation">
+		</div>
 
 		<div class="activity-entry__content">
 			<NcRichText class="activity-entry__content__subject" :text="subjectText" :arguments="subjectArguments" />
@@ -127,6 +143,16 @@ export default defineComponent({
 			}
 			return ''
 		},
+
+		/**
+		 * Whether the activity has a known actor whose user avatar can be rendered.
+		 * "system" / empty user IDs fall back to the legacy event-type icon so we
+		 * don't mis-attribute automated events to a real person.
+		 */
+		hasActor() {
+			const uid = this.activity.user
+			return typeof uid === 'string' && uid !== '' && uid !== 'system'
+		},
 	},
 
 	methods: {
@@ -164,9 +190,31 @@ export default defineComponent({
 	min-height: 32px;
 	padding: 8px 0;
 
-	&__icon {
-		opacity: 0.5;
+	&__avatar {
+		position: relative;
+		flex-shrink: 0;
 		margin-top: 2px;
+		margin-inline-end: 8px;
+		width: 32px;
+		height: 32px;
+	}
+
+	&__avatar-event {
+		opacity: 0.5;
+	}
+
+	&__avatar-badge {
+		position: absolute;
+		right: -2px;
+		bottom: -2px;
+		width: 16px;
+		height: 16px;
+		padding: 2px;
+		border-radius: 50%;
+		background: var(--color-main-background);
+		box-shadow: 0 0 0 1px var(--color-border);
+		// Most event icons are monochrome SVGs that read better tinted
+		filter: var(--background-invert-if-dark);
 	}
 
 	.avatardiv  {
