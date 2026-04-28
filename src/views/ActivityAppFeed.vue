@@ -106,14 +106,6 @@
 					<NcIconSvgWrapper :svg="appIconSVG" :size="64" class="activity-app__empty-icon" />
 				</div>
 			</template>
-			<template #action>
-				<NcButton type="primary" :href="filesLink">
-					{{ t('activity', 'Open Files') }}
-				</NcButton>
-				<NcButton type="secondary" :href="personalSettingsLink">
-					{{ t('activity', 'Notification settings') }}
-				</NcButton>
-			</template>
 		</NcEmptyContent>
 		<div ref="container" class="activity-app__container" @scroll="onScroll">
 			<NcButton
@@ -147,7 +139,7 @@ import { showError } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import { translate as t, translatePlural as n } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
-import { generateOcsUrl, generateUrl } from '@nextcloud/router'
+import { generateOcsUrl } from '@nextcloud/router'
 import { useDocumentVisibility, useInfiniteScroll, useDebounceFn } from '@vueuse/core'
 import axios from 'axios'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
@@ -459,10 +451,6 @@ const emptyDescription = computed<string>(() => {
 	const idx = filter.split('').reduce((s, c) => (s + c.charCodeAt(0)) % messages.length, 0)
 	return messages[idx]
 })
-
-const filesLink = generateUrl('/apps/files/')
-const personalSettingsLink = generateUrl('/settings/user/notifications')
-
 
 /**
  * Load activities for current filter or load more if already loaded
