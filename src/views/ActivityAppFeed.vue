@@ -4,9 +4,59 @@
 -->
 <template>
 	<NcAppContent class="activity-app">
-		<h1 class="activity-app__heading">
-			{{ headingTitle }}
-		</h1>
+		<div class="activity-app__topbar">
+			<h1 class="activity-app__heading">
+				{{ headingTitle }}
+			</h1>
+			<form
+				class="activity-app__filters"
+				role="search"
+				:aria-label="t('activity', 'Filter activities')"
+				@submit.prevent>
+				<input
+					v-model="filterText"
+					type="search"
+					class="activity-app__filters-input activity-app__filters-search"
+					:placeholder="t('activity', 'Search…')"
+					:aria-label="t('activity', 'Search subject or message')">
+				<input
+					v-model="filterPerson"
+					type="search"
+					class="activity-app__filters-input activity-app__filters-person"
+					:placeholder="t('activity', 'Person')"
+					:aria-label="t('activity', 'Filter by user ID')">
+				<input
+					v-model="filterFrom"
+					type="date"
+					class="activity-app__filters-input activity-app__filters-date"
+					:max="filterTo || undefined"
+					:title="t('activity', 'From date')"
+					:aria-label="t('activity', 'From date')">
+				<input
+					v-model="filterTo"
+					type="date"
+					class="activity-app__filters-input activity-app__filters-date"
+					:min="filterFrom || undefined"
+					:title="t('activity', 'To date')"
+					:aria-label="t('activity', 'To date')">
+				<NcButton
+					v-if="anyFilterActive"
+					type="tertiary"
+					@click="resetFilters">
+					{{ t('activity', 'Reset') }}
+				</NcButton>
+				<NcButton
+					v-if="anyFilterActive"
+					type="secondary"
+					:title="t('activity', 'Save the current filter combination as a one-click view')"
+					@click="saveCurrentView">
+					{{ t('activity', 'Save view') }}
+				</NcButton>
+				<span v-if="anyFilterActive" class="activity-app__filters-count">
+					{{ filterMatchCount }}
+				</span>
+			</form>
+		</div>
 		<p
 			v-if="todaySummary"
 			class="activity-app__today-summary"
@@ -31,54 +81,6 @@
 					@click.stop="removeSavedView(view.id)">×</span>
 			</button>
 		</div>
-		<form
-			class="activity-app__filters"
-			role="search"
-			:aria-label="t('activity', 'Filter activities')"
-			@submit.prevent>
-			<NcTextField
-				v-model="filterText"
-				class="activity-app__filters-search"
-				:label="t('activity', 'Search')"
-				:placeholder="t('activity', 'Search subject or message…')"
-				trailing-button-icon="close"
-				:show-trailing-button="filterText.length > 0"
-				:trailing-button-label="t('activity', 'Clear search')"
-				@trailing-button-click="filterText = ''" />
-			<NcTextField
-				v-model="filterPerson"
-				class="activity-app__filters-person"
-				:label="t('activity', 'Person')"
-				:placeholder="t('activity', 'User ID')"
-				trailing-button-icon="close"
-				:show-trailing-button="filterPerson.length > 0"
-				:trailing-button-label="t('activity', 'Clear person filter')"
-				@trailing-button-click="filterPerson = ''" />
-			<label class="activity-app__filters-date">
-				<span class="activity-app__filters-label">{{ t('activity', 'From') }}</span>
-				<input v-model="filterFrom" type="date" :max="filterTo || undefined">
-			</label>
-			<label class="activity-app__filters-date">
-				<span class="activity-app__filters-label">{{ t('activity', 'To') }}</span>
-				<input v-model="filterTo" type="date" :min="filterFrom || undefined">
-			</label>
-			<NcButton
-				v-if="anyFilterActive"
-				type="tertiary"
-				@click="resetFilters">
-				{{ t('activity', 'Reset') }}
-			</NcButton>
-			<NcButton
-				v-if="anyFilterActive"
-				type="secondary"
-				:title="t('activity', 'Save the current filter combination as a one-click view')"
-				@click="saveCurrentView">
-				{{ t('activity', 'Save view') }}
-			</NcButton>
-			<span v-if="anyFilterActive" class="activity-app__filters-count">
-				{{ filterMatchCount }}
-			</span>
-		</form>
 		<ul
 			v-if="hasMoreActivites && allActivities.length === 0"
 			class="activity-app__skeletons"
@@ -155,7 +157,6 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
-import NcTextField from '@nextcloud/vue/components/NcTextField'
 import { useSavedViews, type SavedView } from '../utils/savedViews.ts'
 import { useRouter } from 'vue-router'
 import ActivityGroup from '../components/ActivityGroup.vue'
@@ -714,13 +715,21 @@ watch(props, () => {
 		}
 	}
 
+	&__topbar {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin-top: 1px;
+		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
+	}
+
 	&__heading {
+		flex-shrink: 0;
+		margin: 0;
 		font-weight: bold;
 		font-size: 20px;
 		line-height: 44px; // to align height with the app navigation toggle
-		// Align with app navigation toggle
-		margin-top: 1px;
-		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
 	}
 
 	&__today-summary {
@@ -782,46 +791,39 @@ watch(props, () => {
 		}
 	}
 
+	// Compact inline filter row that lives inside __topbar next to the
+	// heading.  Heights match the heading line-height so the bar reads as a
+	// single row.  All inputs share a base style; widths are tuned per field.
 	&__filters {
 		display: flex;
 		flex-wrap: wrap;
-		align-items: end;
-		gap: 8px;
-		padding: 8px 12px 12px;
-		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
-	}
-
-	&__filters-search {
-		flex-grow: 2;
-		min-width: 200px;
-	}
-
-	&__filters-person {
+		align-items: center;
+		gap: 6px;
 		flex-grow: 1;
-		min-width: 140px;
+		justify-content: flex-end;
+		margin: 0;
+		padding: 0;
 	}
 
-	&__filters-date {
-		display: flex;
-		flex-direction: column;
-		gap: 4px;
+	&__filters-input {
+		height: 30px;
+		padding: 0 8px;
+		border: 1px solid var(--color-border);
+		border-radius: var(--border-radius);
+		background: var(--color-main-background);
+		color: var(--color-main-text);
+		font: inherit;
 		font-size: 13px;
-		color: var(--color-text-maxcontrast);
 
-		input[type="date"] {
-			height: 36px;
-			padding: 0 8px;
-			border: 2px solid var(--color-border);
-			border-radius: var(--border-radius-large);
-			background: var(--color-main-background);
-			color: var(--color-main-text);
-			font-size: inherit;
+		&:focus {
+			outline: none;
+			border-color: var(--color-primary-element);
 		}
 	}
 
-	&__filters-label {
-		padding-inline-start: 8px;
-	}
+	&__filters-search { width: 160px; }
+	&__filters-person { width: 110px; }
+	&__filters-date   { width: 130px; }
 
 	&__filters-count {
 		align-self: center;

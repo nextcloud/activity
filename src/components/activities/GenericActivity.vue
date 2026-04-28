@@ -55,6 +55,17 @@
 						}"
 						:src="preview.source"
 						:alt="preview.link ? t('activity', 'Open {filename}', { filename: preview.filename }) : ''">
+					<!--
+						Mirror image rendered as a floating popup at the bottom
+						of the viewport on hover. Only for real previews —
+						MIME-type icons stay 80px and don't pop up.
+					-->
+					<img
+						v-if="!preview.isMimeTypeIcon"
+						class="activity-entry__preview-popup"
+						:src="preview.source"
+						alt=""
+						aria-hidden="true">
 				</component>
 			</li>
 		</ul>
@@ -316,24 +327,45 @@ export default defineComponent({
 		height: 80px;
 		width: 80px;
 		object-fit: cover;
-		transform-origin: top left;
-		transition: transform 200ms ease, box-shadow 200ms ease, border-color 150ms ease;
+		transition: border-color 150ms ease;
 
-		// Only add borders and the hover-zoom effect for actual previews —
-		// MIME-type icons stay untouched so they don't get blurry-scaled.
 		&:not(.activity-entry__preview-mimetype) {
 			border: 2px solid var(--color-border);
 			border-radius: var(--border-radius-large);
 
 			&:hover {
-				border-color: var(--color-main-text);
-				outline: 2px solid var(--color-main-background);
-				transform: scale(1.6);
-				box-shadow: 0 8px 24px var(--color-box-shadow);
-				z-index: 5;
-				position: relative;
+				border-color: var(--color-primary-element);
 			}
 		}
+	}
+
+	// Floating preview popup: renders out of flow at the bottom of the
+	// viewport, anchored centrally, when the user hovers the small
+	// thumbnail.  Position fixed so it always opens at the bottom of the
+	// document regardless of scroll position; max-height/-width keep it
+	// within the viewport for big images.  No border or outline — the
+	// shadow alone separates it from the page underneath.
+	&__preview-popup {
+		display: none;
+		position: fixed;
+		left: 50%;
+		bottom: 16px;
+		transform: translateX(-50%);
+		max-width: min(80vw, 900px);
+		max-height: 70vh;
+		width: auto;
+		height: auto;
+		border: none;
+		outline: none;
+		border-radius: var(--border-radius-large);
+		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+		background: var(--color-main-background);
+		pointer-events: none;
+		z-index: 1000;
+	}
+
+	&__preview:hover .activity-entry__preview-popup {
+		display: block;
 	}
 }
 </style>
