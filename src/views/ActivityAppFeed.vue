@@ -7,6 +7,47 @@
 		<h1 class="activity-app__heading">
 			{{ headingTitle }}
 		</h1>
+		<form
+			class="activity-app__filters"
+			role="search"
+			:aria-label="t('activity', 'Filter activities')"
+			@submit.prevent>
+			<NcTextField
+				v-model="filterText"
+				class="activity-app__filters-search"
+				:label="t('activity', 'Search')"
+				:placeholder="t('activity', 'Search subject or message…')"
+				trailing-button-icon="close"
+				:show-trailing-button="filterText.length > 0"
+				:trailing-button-label="t('activity', 'Clear search')"
+				@trailing-button-click="filterText = ''" />
+			<NcTextField
+				v-model="filterPerson"
+				class="activity-app__filters-person"
+				:label="t('activity', 'Person')"
+				:placeholder="t('activity', 'User ID')"
+				trailing-button-icon="close"
+				:show-trailing-button="filterPerson.length > 0"
+				:trailing-button-label="t('activity', 'Clear person filter')"
+				@trailing-button-click="filterPerson = ''" />
+			<label class="activity-app__filters-date">
+				<span class="activity-app__filters-label">{{ t('activity', 'From') }}</span>
+				<input v-model="filterFrom" type="date" :max="filterTo || undefined">
+			</label>
+			<label class="activity-app__filters-date">
+				<span class="activity-app__filters-label">{{ t('activity', 'To') }}</span>
+				<input v-model="filterTo" type="date" :min="filterFrom || undefined">
+			</label>
+			<NcButton
+				v-if="anyFilterActive"
+				type="tertiary"
+				@click="resetFilters">
+				{{ t('activity', 'Reset') }}
+			</NcButton>
+			<span v-if="anyFilterActive" class="activity-app__filters-count">
+				{{ filterMatchCount }}
+			</span>
+		</form>
 		<NcEmptyContent
 			v-if="hasMoreActivites && allActivities.length === 0"
 			class="activity-app__empty-content"
@@ -65,6 +106,7 @@ import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
+import NcTextField from '@nextcloud/vue/components/NcTextField'
 import ActivityGroup from '../components/ActivityGroup.vue'
 import appIconSVG from '../../img/activity-dark.svg?raw'
 import ActivityModel from '../models/ActivityModel.ts'
@@ -163,11 +205,65 @@ useInfiniteScroll(container, async () => {
 })
 
 /**
- * Activities grouped by date
+ * Client-side filter state.
+ *
+ * These narrow the already-loaded activity list — the OCS endpoint does not
+ * yet accept search/date/actor parameters, so filtering happens in the
+ * browser over whatever has been paginated in.  Infinite scroll keeps
+ * pulling more under the same filter, so the user can dial in by scrolling.
+ */
+const filterText = ref('')
+const filterPerson = ref('')
+const filterFrom = ref('')   // YYYY-MM-DD, inclusive
+const filterTo = ref('')     // YYYY-MM-DD, inclusive
+
+const anyFilterActive = computed(() =>
+	filterText.value.trim() !== ''
+		|| filterPerson.value.trim() !== ''
+		|| filterFrom.value !== ''
+		|| filterTo.value !== '',
+)
+
+function resetFilters() {
+	filterText.value = ''
+	filterPerson.value = ''
+	filterFrom.value = ''
+	filterTo.value = ''
+}
+
+/**
+ * Activities matching the current filters, before grouping.
+ */
+const filteredActivities = computed<ActivityModel[]>(() => {
+	if (!anyFilterActive.value) return allActivities.value
+
+	const text = filterText.value.trim().toLowerCase()
+	const person = filterPerson.value.trim().toLowerCase()
+	const fromTs = filterFrom.value ? moment(filterFrom.value).startOf('day').valueOf() : undefined
+	const toTs = filterTo.value ? moment(filterTo.value).endOf('day').valueOf() : undefined
+
+	return allActivities.value.filter((a) => {
+		if (fromTs !== undefined && a.timestamp < fromTs) return false
+		if (toTs !== undefined && a.timestamp > toTs) return false
+		if (person !== '' && !a.user.toLowerCase().includes(person)) return false
+		if (text !== '') {
+			const hay = (a.subject + ' ' + a.message).toLowerCase()
+			if (!hay.includes(text)) return false
+		}
+		return true
+	})
+})
+
+const filterMatchCount = computed(() =>
+	t('activity', '{n} matching', { n: filteredActivities.value.length }),
+)
+
+/**
+ * Activities grouped by date (post-filter).
  */
 const groupedActivities = computed(() => {
 	const groups = {} as Record<string, ActivityModel[]>
-	for (const activity of allActivities.value) {
+	for (const activity of filteredActivities.value) {
 		const date = moment(activity.datetime).format('LL')
 		if (groups[date] === undefined) {
 			groups[date] = [activity]
@@ -395,6 +491,53 @@ watch(props, () => {
 		// Align with app navigation toggle
 		margin-top: 1px;
 		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
+	}
+
+	&__filters {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: end;
+		gap: 8px;
+		padding: 8px 12px 12px;
+		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
+	}
+
+	&__filters-search {
+		flex-grow: 2;
+		min-width: 200px;
+	}
+
+	&__filters-person {
+		flex-grow: 1;
+		min-width: 140px;
+	}
+
+	&__filters-date {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		font-size: 13px;
+		color: var(--color-text-maxcontrast);
+
+		input[type="date"] {
+			height: 36px;
+			padding: 0 8px;
+			border: 2px solid var(--color-border);
+			border-radius: var(--border-radius-large);
+			background: var(--color-main-background);
+			color: var(--color-main-text);
+			font-size: inherit;
+		}
+	}
+
+	&__filters-label {
+		padding-inline-start: 8px;
+	}
+
+	&__filters-count {
+		align-self: center;
+		color: var(--color-text-maxcontrast);
+		font-size: 13px;
 	}
 }
 </style>
