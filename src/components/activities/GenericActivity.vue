@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<li class="activity-entry">
+	<li class="activity-entry" :class="`activity-entry--type-${typeFamily}`">
 		<NcAvatar
 			class="activity-entry__icon activity-icon avatardiv--unknown"
 			:class="[applyMonochromeIconColor]"
@@ -127,6 +127,24 @@ export default defineComponent({
 			}
 			return ''
 		},
+
+		/**
+		 * Bucket the activity into a small set of visual families used for the
+		 * left-edge type accent.  Activities not matched here fall through to
+		 * the "neutral" bucket and render without an accent so unknown types
+		 * never get a misleading colour.
+		 */
+		typeFamily() {
+			const type = this.activity.type
+			if (type === 'file_created') return 'created'
+			if (type === 'file_deleted') return 'deleted'
+			if (type === 'file_changed' || type === 'file_restored') return 'changed'
+			if (type === 'favorite') return 'favorite'
+			if (type === 'comments') return 'comment'
+			if (type.startsWith('shared') || type.startsWith('share') || type.startsWith('unshare') || type.includes('_share')) return 'share'
+			if (type === 'remote_share') return 'share'
+			return 'neutral'
+		},
 	},
 
 	methods: {
@@ -162,7 +180,22 @@ export default defineComponent({
 	width: 100%;
 	height: var(--height);
 	min-height: 32px;
-	padding: 8px 0;
+	padding: 8px 0 8px 12px;
+	border-inline-start: 3px solid transparent;
+	border-radius: var(--border-radius);
+	transition: background-color 150ms ease, border-color 150ms ease;
+
+	&--type-created     { border-inline-start-color: var(--color-success, #46ba61); }
+	&--type-deleted     { border-inline-start-color: var(--color-error,   #e9322d); }
+	&--type-changed     { border-inline-start-color: var(--color-primary, #0082c9); }
+	&--type-share       { border-inline-start-color: #8e44ad; }
+	&--type-comment     { border-inline-start-color: #1abc9c; }
+	&--type-favorite    { border-inline-start-color: var(--color-warning, #f4a261); }
+	&--type-neutral     { border-inline-start-color: var(--color-border-dark, #d0d0d0); }
+
+	&:hover {
+		background-color: var(--color-background-hover);
+	}
 
 	&__icon {
 		opacity: 0.5;
