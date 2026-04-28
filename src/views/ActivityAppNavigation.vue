@@ -23,6 +23,19 @@
 		</template>
 		<template #footer>
 			<NcAppNavigationSettings :name="t('activity', 'Activity settings')">
+				<fieldset class="density-fieldset">
+					<legend>{{ t('activity', 'Density') }}</legend>
+					<NcCheckboxRadioSwitch
+						v-for="opt in densityOptions"
+						:key="opt.value"
+						type="radio"
+						name="activity-density"
+						:value="opt.value"
+						:checked="density === opt.value"
+						@update:checked="density = opt.value">
+						{{ opt.label }}
+					</NcCheckboxRadioSwitch>
+				</fieldset>
 				<NcCheckboxRadioSwitch type="switch" v-model="hasRSSLink" @update:model-value="toggleRSSLink">
 					{{ t('activity', 'Enable RSS feed') }}
 				</NcCheckboxRadioSwitch>
@@ -65,6 +78,14 @@ import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwit
 import NcInputField from '@nextcloud/vue/components/NcInputField'
 import IconContentCopy from 'vue-material-design-icons/ContentCopy.vue'
 import logger from '../utils/logger.ts'
+import { useDensity } from '../utils/density.ts'
+
+const { density } = useDensity()
+const densityOptions = [
+	{ value: 'compact'    as const, label: t('activity', 'Compact') },
+	{ value: 'cozy'       as const, label: t('activity', 'Cozy') },
+	{ value: 'comfortable' as const, label: t('activity', 'Comfortable') },
+]
 
 // Types
 interface INavigationEntry {
@@ -148,5 +169,34 @@ async function copyRSSLink() {
 		height: 16px;
 		width: 16px;
 	}
+}
+
+.density-fieldset {
+	border: none;
+	margin: 0 0 8px 0;
+	padding: 0;
+
+	legend {
+		padding: 0;
+		font-size: 13px;
+		color: var(--color-text-maxcontrast);
+		margin-bottom: 4px;
+	}
+}
+
+// Density tokens applied to the <html> element by the density composable.
+// Using attribute selectors here (instead of scoped classes on the activity
+// component) lets row CSS pick up the change without prop-drilling.
+html[data-activity-density="compact"] .activity-entry {
+	min-height: 24px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	font-size: 13px;
+}
+html[data-activity-density="comfortable"] .activity-entry {
+	min-height: 44px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	font-size: 15px;
 }
 </style>
