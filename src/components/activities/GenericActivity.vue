@@ -47,7 +47,9 @@
 					:is="preview.link ? 'a' : 'span'"
 					class="activity-entry__preview"
 					:href="preview.link"
-					@click="handlePreviewClick($event, preview)">
+					@click="handlePreviewClick($event, preview)"
+					@mousemove="!preview.isMimeTypeIcon && onPreviewMove($event, index)"
+					@mouseleave="onPreviewLeave">
 					<img
 						class="activity-entry__preview-image"
 						:class="{
@@ -56,13 +58,14 @@
 						:src="preview.source"
 						:alt="preview.link ? t('activity', 'Open {filename}', { filename: preview.filename }) : ''">
 					<!--
-						Mirror image rendered as a floating popup at the bottom
-						of the viewport on hover. Only for real previews —
+						Mirror image rendered as a floating popup that follows
+						the cursor (right + below).  Only for real previews —
 						MIME-type icons stay 80px and don't pop up.
 					-->
 					<img
-						v-if="!preview.isMimeTypeIcon"
+						v-if="!preview.isMimeTypeIcon && hoveredPreviewIndex === index"
 						class="activity-entry__preview-popup"
+						:style="{ left: popupX + 'px', top: popupY + 'px' }"
 						:src="preview.source"
 						alt=""
 						aria-hidden="true">
@@ -108,6 +111,19 @@ export default defineComponent({
 			type: Boolean,
 			default: false,
 		},
+	},
+
+	data() {
+		return {
+			// Index of the preview the cursor is currently over (or -1 when
+			// no preview is hovered).  Only one popup is visible per row at
+			// a time, which is what the v-if on the popup binds against.
+			hoveredPreviewIndex: -1 as number,
+			// Viewport coordinates of the popup's top-left corner, kept in
+			// sync with the cursor by onPreviewMove.
+			popupX: 0,
+			popupY: 0,
+		}
 	},
 
 	computed: {
@@ -204,6 +220,41 @@ export default defineComponent({
 					logger.debug(error as Error)
 				}
 			}
+		},
+
+		/**
+		 * Track the cursor over a preview thumbnail and place the popup
+		 * just to the lower-right of the pointer.  If the cursor is close
+		 * enough to the viewport's right or bottom edge that the popup
+		 * would overflow, flip it to the other side of the cursor instead
+		 * so it stays fully visible.
+		 *
+		 * The flip uses generous fudge dimensions (the popup's CSS
+		 * max-width / max-height) — close enough for edge detection
+		 * without needing to wait for the image to load.
+		 */
+		onPreviewMove(event: MouseEvent, index: number) {
+			const offset = 16
+			const margin = 8
+			const fudgeW = Math.min(window.innerWidth * 0.6, 700)
+			const fudgeH = window.innerHeight * 0.7
+
+			let x = event.clientX + offset
+			let y = event.clientY + offset
+			if (x + fudgeW + margin > window.innerWidth) {
+				x = Math.max(margin, event.clientX - offset - fudgeW)
+			}
+			if (y + fudgeH + margin > window.innerHeight) {
+				y = Math.max(margin, event.clientY - offset - fudgeH)
+			}
+
+			this.popupX = x
+			this.popupY = y
+			this.hoveredPreviewIndex = index
+		},
+
+		onPreviewLeave() {
+			this.hoveredPreviewIndex = -1
 		},
 	},
 })
@@ -339,19 +390,15 @@ export default defineComponent({
 		}
 	}
 
-	// Floating preview popup: renders out of flow at the bottom of the
-	// viewport, anchored centrally, when the user hovers the small
-	// thumbnail.  Position fixed so it always opens at the bottom of the
-	// document regardless of scroll position; max-height/-width keep it
-	// within the viewport for big images.  No border or outline — the
-	// shadow alone separates it from the page underneath.
+	// Floating preview popup that follows the cursor (lower-right of
+	// the pointer).  `top` and `left` are written as inline styles by
+	// the component on every mousemove; the rules here only handle
+	// presentation.  No border or outline — the shadow alone separates
+	// it from the page underneath.  pointer-events: none keeps the
+	// cursor on the thumbnail so click + hover stay on the same target.
 	&__preview-popup {
-		display: none;
 		position: fixed;
-		left: 50%;
-		bottom: 16px;
-		transform: translateX(-50%);
-		max-width: min(80vw, 900px);
+		max-width: min(60vw, 700px);
 		max-height: 70vh;
 		width: auto;
 		height: auto;
@@ -362,10 +409,6 @@ export default defineComponent({
 		background: var(--color-main-background);
 		pointer-events: none;
 		z-index: 1000;
-	}
-
-	&__preview:hover .activity-entry__preview-popup {
-		display: block;
 	}
 }
 </style>
