@@ -232,10 +232,14 @@ export default defineComponent({
 	}
 
 	&__preview-image {
-		height: 50px;
-		width: 50px;
+		height: 80px;
+		width: 80px;
+		object-fit: cover;
+		transform-origin: top left;
+		transition: transform 200ms ease, box-shadow 200ms ease, border-color 150ms ease;
 
-		// Only add borders for images, not for MIME types
+		// Only add borders and the hover-zoom effect for actual previews —
+		// MIME-type icons stay untouched so they don't get blurry-scaled.
 		&:not(.activity-entry__preview-mimetype) {
 			border: 2px solid var(--color-border);
 			border-radius: var(--border-radius-large);
@@ -243,6 +247,10 @@ export default defineComponent({
 			&:hover {
 				border-color: var(--color-main-text);
 				outline: 2px solid var(--color-main-background);
+				transform: scale(1.6);
+				box-shadow: 0 8px 24px var(--color-box-shadow);
+				z-index: 5;
+				position: relative;
 			}
 		}
 	}
