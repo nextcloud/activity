@@ -26,6 +26,12 @@ const props = defineProps<{
 	 * Whether to show previews
 	 */
 	showPreviews: boolean
+
+	/**
+	 * Whether this activity arrived via polling (vs. initial load) and
+	 * should briefly pulse to draw attention.
+	 */
+	fresh?: boolean
 }>()
 
 defineEmits(['reload'])

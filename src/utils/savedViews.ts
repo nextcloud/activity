@@ -12,8 +12,11 @@ export interface SavedView {
 	filter: string       // OCP filter id ('all' | 'self' | 'by' | …)
 	search: string
 	person: string
+	path: string         // file-path substring filter
 	from: string         // YYYY-MM-DD or empty
 	to: string
+	alerts: boolean      // whether to notify on new matches
+	lastSeenId: number   // highest activity id this view has notified about
 }
 
 const STORAGE_KEY = 'activity:saved-views'
@@ -21,7 +24,9 @@ const STORAGE_KEY = 'activity:saved-views'
 /**
  * Load the user's saved views from localStorage.  Defensive: any parse error
  * or shape mismatch resets to an empty list rather than throwing, so a
- * corrupt entry can't lock the user out of the app.
+ * corrupt entry can't lock the user out of the app.  Newer fields default
+ * to falsy so older persisted views (from before the field existed) keep
+ * working without a migration.
  */
 function load(): SavedView[] {
 	try {
@@ -37,8 +42,11 @@ function load(): SavedView[] {
 				filter: String(v.filter ?? 'all'),
 				search: String(v.search ?? ''),
 				person: String(v.person ?? ''),
+				path: String(v.path ?? ''),
 				from: String(v.from ?? ''),
 				to: String(v.to ?? ''),
+				alerts: Boolean(v.alerts ?? false),
+				lastSeenId: Number(v.lastSeenId ?? 0),
 			}))
 	} catch (e) {
 		logger.debug('Failed to load saved views', e as Error)
@@ -73,6 +81,14 @@ export function useSavedViews() {
 		rename(id: string, name: string): void {
 			const v = views.value.find((x) => x.id === id)
 			if (v) v.name = name
+		},
+		setAlerts(id: string, on: boolean): void {
+			const v = views.value.find((x) => x.id === id)
+			if (v) v.alerts = on
+		},
+		setLastSeenId(id: string, lastSeenId: number): void {
+			const v = views.value.find((x) => x.id === id)
+			if (v) v.lastSeenId = lastSeenId
 		},
 	}
 }

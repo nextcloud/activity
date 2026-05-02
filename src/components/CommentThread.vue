@@ -75,18 +75,37 @@ const relativeLatest = computed<string>(() => {
 
 <style lang="scss" scoped>
 .comment-thread {
-	border-inline-start: 3px solid #1abc9c;
+	position: relative;
 	border-radius: var(--border-radius);
 	margin-block: 4px;
+	padding-inline-start: 32px;
+
+	// Marker dot anchored to the day-group's vertical rail.  Uses the
+	// "comment" type colour to stay consistent with individual comment
+	// rows.  See ActivityGroup.scss / GenericActivity.scss for rail
+	// geometry — left/top values must match.
+	&::before {
+		content: '';
+		position: absolute;
+		left: 8px;
+		top: 14px;
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		background: #1abc9c;
+		box-shadow: 0 0 0 3px var(--color-main-background);
+		z-index: 1;
+	}
 
 	&__toggle {
 		display: flex;
 		align-items: center;
 		gap: 8px;
 		width: 100%;
-		padding: 8px 12px;
+		padding: 6px 10px;
 		background: transparent;
 		border: none;
+		border-radius: var(--border-radius);
 		text-align: start;
 		color: var(--color-main-text);
 		cursor: pointer;
@@ -112,6 +131,7 @@ const relativeLatest = computed<string>(() => {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		font-weight: 500;
 	}
 
 	&__date {
@@ -122,8 +142,15 @@ const relativeLatest = computed<string>(() => {
 
 	&__list {
 		list-style: none;
-		padding: 4px 0 8px 24px;
+		padding: 4px 0 8px 0;
 		margin: 0;
+
+		// Nested rows already sit visually under the parent thread's
+		// dot; their own marker dots would land off the rail and read
+		// as noise.  Hide them here, but keep the parent thread's dot.
+		:deep(.activity-entry::before) {
+			display: none;
+		}
 	}
 }
 </style>

@@ -5,7 +5,12 @@
 
 <template>
 	<NcAppContent class="insights">
-		<h1 class="insights__heading">{{ t('activity', 'Insights') }}</h1>
+		<div class="insights__topbar">
+			<h1 class="insights__heading">
+				<IconChartBar :size="22" class="insights__heading-icon" />
+				<span>{{ t('activity', 'Insights') }}</span>
+			</h1>
+		</div>
 		<p class="insights__subheading">
 			{{ t('activity', 'A look at your recent activity, computed from the {n} most-recent events.', { n: sampleSize }) }}
 		</p>
@@ -153,6 +158,7 @@ import { computed, onMounted, ref } from 'vue'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
 import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
+import IconChartBar from 'vue-material-design-icons/ChartBar.vue'
 import ActivityModel from '../models/ActivityModel.ts'
 import type { IRawActivity } from '../models/types.ts'
 import logger from '../utils/logger.ts'
@@ -373,18 +379,45 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .insights {
-	padding: 16px 24px 32px;
+	// Inline padding leaves room on the left for the app-navigation
+	// toggle (44px wide) — mirrors ActivityAppFeed.vue's topbar /
+	// content column offset so the heading aligns with the toggle
+	// instead of overlapping it.
+	padding-inline-start: calc(2 * var(--app-navigation-padding, 8px) + 44px);
+	padding-inline-end: var(--app-navigation-padding, 8px);
+	padding-block: 0 32px;
 	overflow-y: auto;
 
+	&__topbar {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding-block: 0 8px;
+	}
+
 	&__heading {
-		font-size: 24px;
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		margin: 0;
+		font-size: 20px;
 		font-weight: bold;
-		margin-bottom: 4px;
+		// 44px matches the app-navigation toggle so the heading's
+		// vertical centre lines up with the toggle on the same row.
+		height: 44px;
+		line-height: 44px;
+	}
+
+	&__heading-icon {
+		display: inline-flex;
+		align-items: center;
+		color: var(--color-primary-element);
+		flex-shrink: 0;
 	}
 
 	&__subheading {
 		color: var(--color-text-maxcontrast);
-		margin-bottom: 24px;
+		margin-block: 4px 24px;
 	}
 
 	&__loading {

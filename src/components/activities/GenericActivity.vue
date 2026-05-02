@@ -6,10 +6,16 @@
 <template>
 	<li
 		class="activity-entry"
-		:class="[`activity-entry--type-${typeFamily}`, { 'activity-entry--highlighted': isHighlighted }]"
+		:class="[
+			`activity-entry--type-${typeFamily}`,
+			{
+				'activity-entry--highlighted': isHighlighted,
+				'activity-entry--fresh': fresh,
+			},
+		]"
 		:data-activity-id="activity.id"
 		@contextmenu.prevent="onContextMenu">
-		<div class="activity-entry__avatar">
+		<div class="activity-entry__avatar" :class="{ 'activity-entry__avatar--stacked': hasSecondaryUser }">
 			<NcAvatar
 				v-if="hasActor"
 				class="activity-entry__avatar-actor"
@@ -25,8 +31,15 @@
 				:disable-tooltip="true"
 				:url="activity.icon"
 				:size="32" />
+			<NcAvatar
+				v-if="hasSecondaryUser"
+				class="activity-entry__avatar-secondary"
+				:user="secondaryUser"
+				:size="20"
+				:disable-menu="true"
+				:show-user-status="false" />
 			<img
-				v-if="hasActor"
+				v-if="hasActor && !hasSecondaryUser"
 				class="activity-entry__avatar-badge"
 				:src="activity.icon"
 				:alt="''"
@@ -61,25 +74,44 @@
 				<IconDotsHorizontal :size="16" />
 			</button>
 		</div>
-		<div
-			v-if="contextMenuOpen"
-			ref="contextMenuEl"
-			class="activity-entry__context-menu"
-			:style="{ left: contextMenuX + 'px', top: contextMenuY + 'px' }"
-			role="menu">
-			<button v-if="hasFileTarget" type="button" role="menuitem" @click="contextOpenInFiles">
-				<IconFolder :size="16" />
-				<span>{{ t('activity', 'Open in Files') }}</span>
-			</button>
-			<button type="button" role="menuitem" @click="copyPermalink">
-				<IconLink :size="16" />
-				<span>{{ t('activity', 'Copy link') }}</span>
-			</button>
-			<button type="button" role="menuitem" @click="contextMuteType">
-				<IconBellOff :size="16" />
-				<span>{{ t('activity', 'Mute "{type}"', { type: activity.type }) }}</span>
-			</button>
-		</div>
+		<Teleport to="body">
+			<div
+				v-if="contextMenuOpen"
+				ref="contextMenuEl"
+				class="activity-entry__context-menu"
+				:style="{ left: contextMenuX + 'px', top: contextMenuY + 'px' }"
+				role="menu">
+				<button v-if="hasFileTarget" type="button" role="menuitem" @click="contextOpenInFiles">
+					<IconFolder :size="16" />
+					<span>{{ t('activity', 'Open in Files') }}</span>
+				</button>
+				<button v-if="isComment" type="button" role="menuitem" @click="contextReply">
+					<IconReply :size="16" />
+					<span>{{ t('activity', 'Reply') }}</span>
+				</button>
+				<button v-if="isDeleted" type="button" role="menuitem" @click="contextRestore">
+					<IconRestore :size="16" />
+					<span>{{ t('activity', 'Open trash bin') }}</span>
+				</button>
+				<button type="button" role="menuitem" @click="contextTogglePin">
+					<IconPin v-if="!isPinnedRow" :size="16" />
+					<IconPinOff v-else :size="16" />
+					<span>{{ isPinnedRow ? t('activity', 'Unpin') : t('activity', 'Pin to top') }}</span>
+				</button>
+				<button type="button" role="menuitem" @click="copyPermalink">
+					<IconLink :size="16" />
+					<span>{{ t('activity', 'Copy link') }}</span>
+				</button>
+				<button type="button" role="menuitem" @click="contextMuteType">
+					<IconBellOff :size="16" />
+					<span>{{ t('activity', 'Mute "{type}"', { type: activity.type }) }}</span>
+				</button>
+				<button v-if="hasActor" type="button" role="menuitem" @click="contextMuteUser">
+					<IconAccountOff :size="16" />
+					<span>{{ t('activity', 'Mute user "{user}"', { user: activity.user }) }}</span>
+				</button>
+			</div>
+		</Teleport>
 		<ul v-if="showPreviews" class="activity-entry__preview-wrapper">
 			<li
 				v-for="preview, index in activity.previews"
@@ -103,14 +135,23 @@
 						the cursor (lower-right of the pointer).  Only for
 						real previews — MIME-type icons stay 80px and don't
 						pop up.
+
+						Teleported to <body> because .activity-entry has
+						content-visibility: auto (which implies contain:
+						layout) — that would otherwise turn this `position:
+						fixed` element into one positioned relative to the
+						row instead of the viewport.
 					-->
-					<img
-						v-if="!preview.isMimeTypeIcon && hoveredPreviewIndex === index"
-						class="activity-entry__preview-popup"
-						:style="{ left: popupX + 'px', top: popupY + 'px' }"
-						:src="preview.source"
-						alt=""
-						aria-hidden="true">
+					<Teleport to="body">
+						<img
+							v-if="!preview.isMimeTypeIcon && hoveredPreviewIndex === index"
+							ref="previewPopup"
+							class="activity-entry__preview-popup"
+							:style="{ left: popupX + 'px', top: popupY + 'px' }"
+							:src="preview.source"
+							alt=""
+							aria-hidden="true">
+					</Teleport>
 				</component>
 			</li>
 		</ul>
@@ -131,10 +172,17 @@ import IconLink from 'vue-material-design-icons/LinkVariant.vue'
 import IconDotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
 import IconFolder from 'vue-material-design-icons/FolderOpen.vue'
 import IconBellOff from 'vue-material-design-icons/BellOff.vue'
+import IconReply from 'vue-material-design-icons/Reply.vue'
+import IconRestore from 'vue-material-design-icons/Restore.vue'
+import IconPin from 'vue-material-design-icons/Pin.vue'
+import IconPinOff from 'vue-material-design-icons/PinOff.vue'
+import IconAccountOff from 'vue-material-design-icons/AccountOff.vue'
 import ActivityModel from '../../models/ActivityModel.js'
 import logger from '../../utils/logger.js'
 import { mapRichObjectsToRichArguments } from '../../utils/richObjects.js'
 import { addMutedType, isTypeMuted } from '../../utils/mutedTypes.ts'
+import { addMutedUser } from '../../utils/mutedUsers.ts'
+import { isPinned, togglePinned } from '../../utils/pinnedActivities.ts'
 
 export default defineComponent({
 	name: 'GenericActivity',
@@ -146,6 +194,11 @@ export default defineComponent({
 		IconDotsHorizontal,
 		IconFolder,
 		IconBellOff,
+		IconReply,
+		IconRestore,
+		IconPin,
+		IconPinOff,
+		IconAccountOff,
 	},
 
 	props: {
@@ -161,6 +214,16 @@ export default defineComponent({
 		 * Whether to show previews
 		 */
 		showPreviews: {
+			type: Boolean,
+			default: false,
+		},
+
+		/**
+		 * Whether this row arrived via polling (vs. initial load).  Drives a
+		 * one-shot pulse animation so the user sees fresh content arrive
+		 * instead of having it silently appear.
+		 */
+		fresh: {
 			type: Boolean,
 			default: false,
 		},
@@ -249,6 +312,34 @@ export default defineComponent({
 		},
 
 		/**
+		 * The "other" user involved in the activity — typically a share
+		 * recipient or comment target — extracted from the subject's
+		 * rich-object map.  Returns the first user-typed rich object that
+		 * isn't the actor itself, or an empty string when none exists.
+		 *
+		 * Used to render an avatar stack (actor + secondary) for two-party
+		 * events like shares and comments, without faking participants for
+		 * one-party events like file uploads.
+		 */
+		secondaryUser() {
+			if (!this.hasActor) return ''
+			const objs = this.activity.subjectRichObjects
+			const actor = this.activity.user
+			for (const key of Object.keys(objs)) {
+				const obj = objs[key]
+				if (!obj || obj.type !== 'user') continue
+				const id = String(obj.id ?? '')
+				if (id === '' || id === actor || id === 'system') continue
+				return id
+			}
+			return ''
+		},
+
+		hasSecondaryUser() {
+			return this.secondaryUser !== ''
+		},
+
+		/**
 		 * True when the URL hash contains `id=<this row's id>`.  Used to
 		 * paint a soft highlight on a row deep-linked via permalink.
 		 */
@@ -269,6 +360,21 @@ export default defineComponent({
 		hasFileTarget() {
 			return this.activity.objectType === 'files'
 				&& Number(this.activity.objectId) > 0
+		},
+
+		/** True when this row represents a comment on a file. */
+		isComment() {
+			return this.activity.type === 'comments'
+		},
+
+		/** True when this row represents a deletion the user can restore from trash. */
+		isDeleted() {
+			return this.activity.type === 'file_deleted'
+		},
+
+		/** Reactive pin state for this row. */
+		isPinnedRow() {
+			return isPinned(this.activity.id)
 		},
 
 		/**
@@ -326,21 +432,38 @@ export default defineComponent({
 		onPreviewMove(event: MouseEvent, index: number) {
 			const offset = 16
 			const margin = 8
-			const fudgeW = Math.min(window.innerWidth * 0.6, 700)
-			const fudgeH = window.innerHeight * 0.7
 
+			// Show the popup so the next paint mounts the <img>; from the
+			// second mousemove onwards the ref is populated and we can
+			// measure the real rendered size. On the very first frame we
+			// fall back to a small approximation — clamping keeps it sane
+			// either way.
+			this.hoveredPreviewIndex = index
+
+			const popupEl = (Array.isArray(this.$refs.previewPopup)
+				? this.$refs.previewPopup[0]
+				: this.$refs.previewPopup) as HTMLElement | undefined
+			const rect = popupEl?.getBoundingClientRect()
+			const popupW = rect?.width || 240
+			const popupH = rect?.height || 240
+
+			// Anchor lower-right of the cursor; if there's no room on that
+			// side, slide back into view rather than flipping. The popup is
+			// pointer-events:none so a small overlap with the source thumb
+			// is fine.
 			let x = event.clientX + offset
 			let y = event.clientY + offset
-			if (x + fudgeW + margin > window.innerWidth) {
-				x = Math.max(margin, event.clientX - offset - fudgeW)
+			if (x + popupW + margin > window.innerWidth) {
+				x = window.innerWidth - popupW - margin
 			}
-			if (y + fudgeH + margin > window.innerHeight) {
-				y = Math.max(margin, event.clientY - offset - fudgeH)
+			if (y + popupH + margin > window.innerHeight) {
+				y = window.innerHeight - popupH - margin
 			}
+			x = Math.max(margin, x)
+			y = Math.max(margin, y)
 
 			this.popupX = x
 			this.popupY = y
-			this.hoveredPreviewIndex = index
 		},
 
 		onPreviewLeave() {
@@ -426,41 +549,107 @@ export default defineComponent({
 			// Notify the feed so it can hide already-loaded rows of this type
 			window.dispatchEvent(new CustomEvent('activity:muted-types-changed'))
 		},
+
+		contextMuteUser() {
+			this.closeContextMenu()
+			const uid = this.activity.user
+			if (!uid) return
+			addMutedUser(uid)
+			showSuccess(t('activity', 'Muted user "{user}"', { user: uid }))
+			window.dispatchEvent(new CustomEvent('activity:muted-users-changed'))
+		},
+
+		contextTogglePin() {
+			this.closeContextMenu()
+			togglePinned(this.activity.id)
+		},
+
+		/**
+		 * Reply to a comment.  We don't have a true inline composer, so the
+		 * pragmatic action is to open the file in Files with the comments
+		 * tab focused — that's where the user's reply will live.
+		 */
+		contextReply() {
+			this.closeContextMenu()
+			const id = Number(this.activity.objectId)
+			if (id > 0) {
+				// /f/{id} opens Files and routes to the file; the
+				// comments app reads ?tab=comments-tab from the URL to
+				// auto-select the right sidebar tab.
+				const target = generateUrl('/f/{id}', { id }) + '?tab=comments-tab'
+				window.open(target, '_blank', 'noopener')
+				return
+			}
+			if (this.activity.link) {
+				window.open(this.activity.link, '_blank', 'noopener')
+			}
+		},
+
+		/**
+		 * For deletions: open the user's trash bin in Files.  The activity
+		 * itself doesn't carry a trash item id, so we open the trashbin
+		 * view rather than deep-linking to a specific entry.
+		 */
+		contextRestore() {
+			this.closeContextMenu()
+			window.open(generateUrl('/apps/files/trashbin'), '_blank', 'noopener')
+		},
 	},
 })
 </script>
 
 <style lang="scss" scoped>
 .activity-entry {
+	position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: flex-start;
 	width: 100%;
 	height: var(--height);
 	min-height: 32px;
-	padding: 8px 0 8px 12px;
-	border-inline-start: 3px solid transparent;
+	// Extra inline-start padding leaves room for the day-group's vertical
+	// rail (drawn by .activity-group__list::before) and the per-row
+	// marker dot (drawn below as &::before).
+	padding: 8px 0 8px 32px;
 	border-radius: var(--border-radius);
-	transition: background-color 150ms ease, border-color 150ms ease;
+	transition: background-color 150ms ease;
 	// Browser-level virtualization: skip layout / paint for rows
 	// outside the viewport.  contain-intrinsic-size reserves a
 	// reasonable placeholder height so the scrollbar stays accurate
-	// without requiring real layout for thousands of rows.
+	// without requiring real layout for thousands of rows.  The
+	// overlays (preview popup + context menu) are teleported to
+	// <body>, so the implied containment doesn't affect them.
 	content-visibility: auto;
 	contain-intrinsic-size: 80px 100%;
 
-	&--type-created     { border-inline-start-color: var(--color-success, #46ba61); }
-	&--type-deleted     { border-inline-start-color: var(--color-error,   #e9322d); }
-	&--type-changed     { border-inline-start-color: var(--color-primary, #0082c9); }
-	&--type-share       { border-inline-start-color: #8e44ad; }
-	&--type-comment     { border-inline-start-color: #1abc9c; }
-	&--type-favorite    { border-inline-start-color: var(--color-warning, #f4a261); }
-	&--type-neutral     { border-inline-start-color: var(--color-border-dark, #d0d0d0); }
+	// Marker dot anchored to the day-group's vertical rail.  Coloured
+	// via --rail-dot-color, which the type modifiers below set.  The
+	// background-coloured ring punches the dot through the rail line
+	// underneath so the rail visually breaks at each event.
+	&::before {
+		content: '';
+		position: absolute;
+		left: 8px;
+		top: 16px;
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		background: var(--rail-dot-color, var(--color-border-dark));
+		box-shadow: 0 0 0 3px var(--color-main-background);
+		z-index: 1;
+		transition: background-color 150ms ease;
+	}
+
+	&--type-created   { --rail-dot-color: var(--color-success, #46ba61); }
+	&--type-deleted   { --rail-dot-color: var(--color-error,   #e9322d); }
+	&--type-changed   { --rail-dot-color: var(--color-primary, #0082c9); }
+	&--type-share     { --rail-dot-color: #8e44ad; }
+	&--type-comment   { --rail-dot-color: #1abc9c; }
+	&--type-favorite  { --rail-dot-color: var(--color-warning, #f4a261); }
+	&--type-neutral   { --rail-dot-color: var(--color-border-dark, #d0d0d0); }
 
 	&:hover {
 		background-color: var(--color-background-hover);
-		// Subtle inset shadow on hover for that "lift" feel
-		box-shadow: inset 0 0 0 1px var(--color-border);
 	}
 
 	&__avatar {
@@ -488,6 +677,26 @@ export default defineComponent({
 		box-shadow: 0 0 0 1px var(--color-border);
 		// Most event icons are monochrome SVGs that read better tinted
 		filter: var(--background-invert-if-dark);
+	}
+
+	// Secondary avatar overlapped onto the bottom-right of the primary
+	// for two-party events (shares, comments).  Replaces the event-type
+	// badge in those cases since the relationship between the two users
+	// is the more interesting signal.
+	&__avatar-secondary {
+		position: absolute;
+		right: -4px;
+		bottom: -4px;
+		// Crisp ring so the smaller avatar reads as overlapping the
+		// larger one rather than touching it.
+		box-shadow: 0 0 0 2px var(--color-main-background);
+		border-radius: 50%;
+	}
+
+	&__avatar--stacked {
+		// Slight extra inline-end to prevent the secondary avatar's
+		// overhang from overlapping the subject text on narrow rows.
+		margin-inline-end: 12px;
 	}
 
 	.avatardiv  {
@@ -553,6 +762,34 @@ export default defineComponent({
 		opacity: 1;
 	}
 
+	// Touch / no-hover devices can't trigger :hover, so always reveal
+	// the row actions there — otherwise the menu is unreachable on
+	// phones and tablets.
+	@media (hover: none) {
+		&__row-actions {
+			opacity: 1;
+		}
+	}
+
+	// ── Narrow screens: tighter rows, smaller previews ──
+	@media (max-width: 720px) {
+		padding-inline-start: 28px;
+		min-height: 28px;
+
+		&__date {
+			font-size: 12px;
+		}
+
+		&__preview-image {
+			height: 64px;
+			width: 64px;
+		}
+
+		&::before {
+			top: 14px;
+		}
+	}
+
 	&__row-action {
 		display: inline-flex;
 		align-items: center;
@@ -573,39 +810,20 @@ export default defineComponent({
 		}
 	}
 
-	&__context-menu {
-		position: fixed;
-		min-width: 180px;
-		padding: 4px;
-		border: 1px solid var(--color-border);
-		border-radius: var(--border-radius-large);
-		background: var(--color-main-background);
-		box-shadow: 0 8px 24px var(--color-box-shadow);
-		z-index: 1000;
-
-		button {
-			display: flex;
-			align-items: center;
-			gap: 8px;
-			width: 100%;
-			padding: 6px 10px;
-			border: none;
-			border-radius: var(--border-radius);
-			background: transparent;
-			color: var(--color-main-text);
-			font: inherit;
-			text-align: start;
-			cursor: pointer;
-
-			&:hover, &:focus-visible {
-				background: var(--color-background-hover);
-			}
-		}
-	}
-
 	// Soft yellow flash + persistent left-rail when a row was deep-linked.
 	&--highlighted {
 		animation: activity-permalink-flash 1.6s ease-out;
+	}
+
+	// One-shot primary-tinted pulse when a row arrives via polling.
+	// Uses background + a subtle dot-scale combo so the eye is drawn to
+	// the new entry without a jarring full-row flash.
+	&--fresh {
+		animation: activity-fresh-pulse 1.4s ease-out;
+	}
+
+	&--fresh::before {
+		animation: activity-fresh-dot 1.4s ease-out;
 	}
 
 	&__preview-wrapper {
@@ -639,30 +857,78 @@ export default defineComponent({
 		}
 	}
 
-	// Floating preview popup that follows the cursor (lower-right of
-	// the pointer).  `top` and `left` are written as inline styles by
-	// the component on every mousemove; the rules here only handle
-	// presentation.  No border or outline — the shadow alone separates
-	// it from the page underneath.  pointer-events: none keeps the
-	// cursor on the thumbnail so click + hover stay on the same target.
-	&__preview-popup {
-		position: fixed;
-		max-width: min(60vw, 700px);
-		max-height: 70vh;
-		width: auto;
-		height: auto;
+}
+
+// Floating preview popup that follows the cursor (lower-right of
+// the pointer).  `top` and `left` are written as inline styles by
+// the component on every mousemove; the rules here only handle
+// presentation.  No border or outline — the shadow alone separates
+// it from the page underneath.  pointer-events: none keeps the
+// cursor on the thumbnail so click + hover stay on the same target.
+//
+// Lives at the top level (not nested under .activity-entry) because
+// the popup is teleported to <body> to escape the row's
+// content-visibility containment, so it's no longer a descendant of
+// .activity-entry at runtime.
+.activity-entry__preview-popup {
+	position: fixed;
+	max-width: min(60vw, 700px);
+	max-height: 70vh;
+	width: auto;
+	height: auto;
+	border: none;
+	outline: none;
+	border-radius: var(--border-radius-large);
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+	background: var(--color-main-background);
+	pointer-events: none;
+	z-index: 1000;
+}
+
+// Right-click / actions menu.  Also teleported to <body>, so kept at
+// the top level for the same reason as the preview popup above.
+.activity-entry__context-menu {
+	position: fixed;
+	min-width: 180px;
+	padding: 4px;
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius-large);
+	background: var(--color-main-background);
+	box-shadow: 0 8px 24px var(--color-box-shadow);
+	z-index: 1000;
+
+	button {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		width: 100%;
+		padding: 6px 10px;
 		border: none;
-		outline: none;
-		border-radius: var(--border-radius-large);
-		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-		background: var(--color-main-background);
-		pointer-events: none;
-		z-index: 1000;
+		border-radius: var(--border-radius);
+		background: transparent;
+		color: var(--color-main-text);
+		font: inherit;
+		text-align: start;
+		cursor: pointer;
+
+		&:hover, &:focus-visible {
+			background: var(--color-background-hover);
+		}
 	}
 }
 
 @keyframes activity-permalink-flash {
 	0%   { background-color: var(--color-warning, #f4a261); }
 	100% { background-color: transparent; }
+}
+
+@keyframes activity-fresh-pulse {
+	0%   { background-color: var(--color-primary-element-light, var(--color-background-hover)); }
+	100% { background-color: transparent; }
+}
+
+@keyframes activity-fresh-dot {
+	0%   { box-shadow: 0 0 0 3px var(--color-main-background), 0 0 0 6px var(--color-primary-element); transform: scale(1.2); }
+	100% { box-shadow: 0 0 0 3px var(--color-main-background); transform: scale(1); }
 }
 </style>

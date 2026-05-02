@@ -6,19 +6,35 @@
 	<NcAppContent class="activity-app">
 		<div class="activity-app__topbar">
 			<h1 class="activity-app__heading">
-				{{ headingTitle }}
+				<component :is="headingIcon" :size="22" class="activity-app__heading-icon" />
+				<span>{{ headingTitle }}</span>
 			</h1>
 			<button
 				type="button"
 				class="activity-app__refresh"
 				:class="{ 'activity-app__refresh--spinning': refreshing }"
-				:title="t('activity', 'Check for new activities now')"
+				:title="liveTooltip"
 				:aria-label="t('activity', 'Refresh')"
 				@click="manualRefresh">
 				<IconRefresh :size="18" />
+				<span
+					v-if="!refreshing"
+					class="activity-app__live-dot"
+					:title="liveTooltip"
+					aria-hidden="true" />
+			</button>
+			<button
+				type="button"
+				class="activity-app__filters-toggle"
+				:aria-expanded="filtersOpenMobile ? 'true' : 'false'"
+				:aria-label="t('activity', 'Toggle filters')"
+				@click="filtersOpenMobile = !filtersOpenMobile">
+				<IconFilter :size="18" />
+				<span v-if="anyFilterActive" class="activity-app__filters-toggle-dot" aria-hidden="true" />
 			</button>
 			<form
 				class="activity-app__filters"
+				:class="{ 'activity-app__filters--mobile-open': filtersOpenMobile }"
 				role="search"
 				:aria-label="t('activity', 'Filter activities')"
 				@submit.prevent>
@@ -34,6 +50,13 @@
 					class="activity-app__filters-input activity-app__filters-person"
 					:placeholder="t('activity', 'Person')"
 					:aria-label="t('activity', 'Filter by user ID')">
+				<input
+					v-model="filterPath"
+					type="search"
+					class="activity-app__filters-input activity-app__filters-path"
+					:placeholder="t('activity', 'Path / folder')"
+					:aria-label="t('activity', 'Filter by file path or folder')"
+					:title="t('activity', 'Match a substring of the file path, e.g. /Photos or .pdf')">
 				<input
 					v-model="filterFrom"
 					type="date"
@@ -74,37 +97,53 @@
 		</p>
 		<div v-if="savedViews.length > 0" class="activity-app__saved-views">
 			<span class="activity-app__saved-views-label">{{ t('activity', 'Saved views') }}</span>
-			<button
+			<span
 				v-for="view in savedViews"
 				:key="view.id"
-				type="button"
 				class="activity-app__saved-view-chip"
-				:title="describeSavedView(view)"
-				@click="applySavedView(view)">
-				{{ view.name }}
-				<span
+				:class="{ 'activity-app__saved-view-chip--alerts': view.alerts }"
+				:title="describeSavedView(view)">
+				<button
+					type="button"
+					class="activity-app__saved-view-name"
+					@click="applySavedView(view)">
+					{{ view.name }}
+				</button>
+				<button
+					type="button"
+					class="activity-app__saved-view-bell"
+					:title="view.alerts ? t('activity', 'Stop alerting on new matches') : t('activity', 'Alert me about new matches')"
+					:aria-pressed="view.alerts ? 'true' : 'false'"
+					:aria-label="t('activity', 'Toggle alerts for {name}', { name: view.name })"
+					@click.stop="toggleSavedViewAlerts(view)">
+					<IconBell v-if="view.alerts" :size="14" />
+					<IconBellOutline v-else :size="14" />
+				</button>
+				<button
+					type="button"
 					class="activity-app__saved-view-remove"
-					role="button"
 					:aria-label="t('activity', 'Remove saved view')"
 					:title="t('activity', 'Remove saved view')"
-					@click.stop="removeSavedView(view.id)">×</span>
-			</button>
+					@click.stop="removeSavedView(view.id)">×</button>
+			</span>
 		</div>
-		<ul
-			v-if="hasMoreActivites && allActivities.length === 0"
-			class="activity-app__skeletons"
-			aria-hidden="true">
-			<li v-for="n in 6" :key="n" class="activity-skeleton">
-				<span class="activity-skeleton__avatar" />
-				<span class="activity-skeleton__lines">
-					<span class="activity-skeleton__line activity-skeleton__line--subject" />
-					<span class="activity-skeleton__line activity-skeleton__line--message" />
-				</span>
-				<span class="activity-skeleton__date" />
-			</li>
-		</ul>
+		<Transition name="activity-app__skeleton-fade">
+			<ul
+				v-if="hasMoreActivites && allActivities.length === 0"
+				class="activity-app__skeletons"
+				aria-hidden="true">
+				<li v-for="n in 6" :key="n" class="activity-skeleton">
+					<span class="activity-skeleton__avatar" />
+					<span class="activity-skeleton__lines">
+						<span class="activity-skeleton__line activity-skeleton__line--subject" />
+						<span class="activity-skeleton__line activity-skeleton__line--message" />
+					</span>
+					<span class="activity-skeleton__date" />
+				</li>
+			</ul>
+		</Transition>
 		<NcEmptyContent
-			v-else-if="allActivities.length === 0"
+			v-if="!hasMoreActivites && allActivities.length === 0"
 			class="activity-app__empty-content activity-app__empty-content--decorated"
 			:name="t('activity', 'Nothing has happened here yet')"
 			:description="emptyDescription">
@@ -124,8 +163,25 @@
 				@click="scrollToTop">
 				{{ t('activity', 'New activities') }}
 			</NcButton>
+			<section v-if="pinnedActivities.length > 0" class="activity-app__pinned">
+				<h2 class="activity-app__pinned-heading">
+					<IconPin :size="16" />
+					{{ t('activity', 'Pinned') }}
+				</h2>
+				<ul class="activity-app__pinned-list">
+					<ActivityComponent
+						v-for="activity in pinnedActivities"
+						:key="'pinned-' + activity.id"
+						:activity="activity"
+						:show-previews="true" />
+				</ul>
+			</section>
 			<TransitionGroup name="activity-fade" tag="div" class="activity-app__groups">
-				<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
+				<ActivityGroup
+					v-for="activities, date of groupedActivities"
+					:key="date"
+					:activities="activities"
+					:fresh-ids="freshIds" />
 			</TransitionGroup>
 			<!-- Only show if not showing the inital empty content for loading -->
 			<NcLoadingIcon
@@ -159,10 +215,28 @@ import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import IconRefresh from 'vue-material-design-icons/Refresh.vue'
+import IconFilter from 'vue-material-design-icons/FilterVariant.vue'
+import IconPin from 'vue-material-design-icons/Pin.vue'
+import IconBell from 'vue-material-design-icons/Bell.vue'
+import IconBellOutline from 'vue-material-design-icons/BellOutline.vue'
+import IconViewList from 'vue-material-design-icons/ViewList.vue'
+import IconAccount from 'vue-material-design-icons/Account.vue'
+import IconAccountGroup from 'vue-material-design-icons/AccountGroup.vue'
+import IconFolder from 'vue-material-design-icons/Folder.vue'
+import IconStar from 'vue-material-design-icons/Star.vue'
+import IconShareVariant from 'vue-material-design-icons/ShareVariant.vue'
+import IconCommentText from 'vue-material-design-icons/CommentText.vue'
+import IconCalendar from 'vue-material-design-icons/Calendar.vue'
+import IconCheckboxMarkedCircle from 'vue-material-design-icons/CheckboxMarkedCircle.vue'
+import IconCardAccountDetails from 'vue-material-design-icons/CardAccountDetails.vue'
+import IconHistory from 'vue-material-design-icons/History.vue'
 import { useMutedTypes } from '../utils/mutedTypes.ts'
+import { useMutedUsers } from '../utils/mutedUsers.ts'
+import { usePinnedActivities } from '../utils/pinnedActivities.ts'
 import { useSavedViews, type SavedView } from '../utils/savedViews.ts'
 import { useRouter } from 'vue-router'
 import ActivityGroup from '../components/ActivityGroup.vue'
+import ActivityComponent from '../components/ActivityComponent.vue'
 import appIconSVG from '../../img/activity-dark.svg?raw'
 import ActivityModel from '../models/ActivityModel.ts'
 import type { IRawActivity } from '../models/types.ts'
@@ -222,9 +296,41 @@ const newestActivityId = ref<number>()
 const newActivitiesAvailable = ref(false)
 
 /**
- * Polling interval in milliseconds
+ * Set of activity IDs that arrived via polling (not the initial load).
+ * Each row checks against this set and renders a one-shot highlight
+ * pulse animation to draw the eye to fresh content.  Entries auto-expire
+ * after FRESH_TTL_MS so the pulse only fires once per arrival.
  */
-const POLL_INTERVAL = 30000
+const freshIds = ref<Set<number>>(new Set())
+const FRESH_TTL_MS = 1600
+
+function markFresh(ids: number[]): void {
+	if (ids.length === 0) return
+	const next = new Set(freshIds.value)
+	for (const id of ids) next.add(id)
+	freshIds.value = next
+	// Schedule cleanup so the set doesn't grow unbounded and the
+	// animation only plays once per row.
+	setTimeout(() => {
+		const after = new Set(freshIds.value)
+		for (const id of ids) after.delete(id)
+		freshIds.value = after
+	}, FRESH_TTL_MS)
+}
+
+/**
+ * Adaptive polling: the next-poll delay shortens when recent polls have
+ * brought in fresh content (the user is in an active session, near other
+ * collaborators) and lengthens when they've been idle (long stretches
+ * with no matches mean we're paying server cost for nothing).
+ *
+ * Bounds are deliberately wide so the feed feels almost-live during
+ * collaboration sessions but doesn't hammer the server when quiet.
+ */
+const POLL_MIN_MS = 8000
+const POLL_MAX_MS = 60000
+const POLL_INITIAL_MS = 20000
+const pollDelayMs = ref(POLL_INITIAL_MS)
 
 /**
  * Polling timer reference (setTimeout-based for self-scheduling)
@@ -270,8 +376,16 @@ useInfiniteScroll(container, async () => {
  */
 const filterText = ref('')
 const filterPerson = ref('')
+const filterPath = ref('')   // substring match on objectName / file path
 const filterFrom = ref('')   // YYYY-MM-DD, inclusive
 const filterTo = ref('')     // YYYY-MM-DD, inclusive
+
+/**
+ * Mobile-only: whether the filters panel is open.  On wide screens the
+ * filters always show inline; the toggle button is hidden via CSS so this
+ * value is irrelevant there.
+ */
+const filtersOpenMobile = ref(false)
 
 // Debounced version of the text filter — driven into the OCS request
 // 300ms after the user stops typing.
@@ -280,6 +394,7 @@ const activeSearch = useDebounce(filterText, 300)
 const anyFilterActive = computed(() =>
 	filterText.value.trim() !== ''
 		|| filterPerson.value.trim() !== ''
+		|| filterPath.value.trim() !== ''
 		|| filterFrom.value !== ''
 		|| filterTo.value !== '',
 )
@@ -287,6 +402,7 @@ const anyFilterActive = computed(() =>
 function resetFilters() {
 	filterText.value = ''
 	filterPerson.value = ''
+	filterPath.value = ''
 	filterFrom.value = ''
 	filterTo.value = ''
 }
@@ -298,6 +414,16 @@ function resetFilters() {
  * nothing.
  */
 const refreshing = ref(false)
+
+/**
+ * Friendly tooltip that doubles as a status read-out: tells the user
+ * the app is live-polling and how often.  Updates whenever the
+ * adaptive delay changes.
+ */
+const liveTooltip = computed<string>(() => {
+	const seconds = Math.round(pollDelayMs.value / 1000)
+	return t('activity', 'Live — checking every ~{n}s. Click to refresh now.', { n: seconds })
+})
 
 async function manualRefresh() {
 	if (refreshing.value) return
@@ -317,24 +443,53 @@ async function manualRefresh() {
  * context menu.
  */
 const { muted: mutedTypes } = useMutedTypes()
+const { muted: mutedUsers } = useMutedUsers()
+const { pinned: pinnedIds } = usePinnedActivities()
+
+/**
+ * Best-effort path string for an activity, used by the path filter.
+ * Tries the rich subject objects first (these carry a `path` for "file"
+ * rich objects), then falls back to objectName / link.  Returns lower-
+ * cased so the caller can do a case-insensitive substring compare.
+ */
+function activityPath(a: ActivityModel): string {
+	const objs = a.subjectRichObjects
+	for (const key of Object.keys(objs)) {
+		const obj = objs[key]
+		if (obj && obj.type === 'file') {
+			const p = (obj as { path?: unknown }).path
+			if (typeof p === 'string' && p !== '') return p.toLowerCase()
+			if (typeof obj.name === 'string' && obj.name !== '') return obj.name.toLowerCase()
+		}
+	}
+	if (a.objectName) return a.objectName.toLowerCase()
+	if (a.link) return a.link.toLowerCase()
+	return ''
+}
 
 const filteredActivities = computed<ActivityModel[]>(() => {
 	const personActive = filterPerson.value.trim() !== ''
+	const pathActive = filterPath.value.trim() !== ''
 	const dateActive = filterFrom.value !== '' || filterTo.value !== ''
-	const muteActive = mutedTypes.value.length > 0
+	const muteTypeActive = mutedTypes.value.length > 0
+	const muteUserActive = mutedUsers.value.length > 0
 
-	if (!personActive && !dateActive && !muteActive) return allActivities.value
+	if (!personActive && !pathActive && !dateActive && !muteTypeActive && !muteUserActive) return allActivities.value
 
 	const person = filterPerson.value.trim().toLowerCase()
+	const path = filterPath.value.trim().toLowerCase()
 	const fromTs = filterFrom.value ? moment(filterFrom.value).startOf('day').valueOf() : undefined
 	const toTs = filterTo.value ? moment(filterTo.value).endOf('day').valueOf() : undefined
-	const muteSet = new Set(mutedTypes.value)
+	const muteTypeSet = new Set(mutedTypes.value)
+	const muteUserSet = new Set(mutedUsers.value)
 
 	return allActivities.value.filter((a) => {
-		if (muteSet.has(a.type)) return false
+		if (muteTypeSet.has(a.type)) return false
+		if (muteUserSet.has(a.user)) return false
 		if (fromTs !== undefined && a.timestamp < fromTs) return false
 		if (toTs !== undefined && a.timestamp > toTs) return false
 		if (person !== '' && !a.user.toLowerCase().includes(person)) return false
+		if (path !== '' && !activityPath(a).includes(path)) return false
 		return true
 	})
 })
@@ -348,12 +503,19 @@ const filterMatchCount = computed(() =>
  * favourite filter combinations without backend changes.
  */
 const router = useRouter()
-const { views: savedViews, add: addSavedView, remove: removeSavedView } = useSavedViews()
+const {
+	views: savedViews,
+	add: addSavedView,
+	remove: removeSavedView,
+	setAlerts: setSavedViewAlerts,
+	setLastSeenId: setSavedViewLastSeenId,
+} = useSavedViews()
 
 function suggestSavedViewName(): string {
 	const bits: string[] = []
 	if (filterText.value)   bits.push('"' + filterText.value + '"')
 	if (filterPerson.value) bits.push('@' + filterPerson.value)
+	if (filterPath.value)   bits.push('📁' + filterPath.value)
 	if (filterFrom.value || filterTo.value) {
 		bits.push((filterFrom.value || '…') + '–' + (filterTo.value || '…'))
 	}
@@ -366,6 +528,7 @@ function describeSavedView(view: SavedView): string {
 	parts.push(t('activity', 'Filter') + ': ' + view.filter)
 	if (view.search) parts.push(t('activity', 'Search') + ': ' + view.search)
 	if (view.person) parts.push(t('activity', 'Person') + ': ' + view.person)
+	if (view.path)   parts.push(t('activity', 'Path') + ': ' + view.path)
 	if (view.from)   parts.push(t('activity', 'From') + ': ' + view.from)
 	if (view.to)     parts.push(t('activity', 'To') + ': ' + view.to)
 	return parts.join(' • ')
@@ -383,14 +546,18 @@ function saveCurrentView(): void {
 		filter: props.filter,
 		search: filterText.value,
 		person: filterPerson.value,
+		path: filterPath.value,
 		from: filterFrom.value,
 		to: filterTo.value,
+		alerts: false,
+		lastSeenId: 0,
 	})
 }
 
 function applySavedView(view: SavedView): void {
 	filterText.value = view.search
 	filterPerson.value = view.person
+	filterPath.value = view.path ?? ''
 	filterFrom.value = view.from
 	filterTo.value = view.to
 	if (view.filter && view.filter !== props.filter) {
@@ -400,11 +567,134 @@ function applySavedView(view: SavedView): void {
 }
 
 /**
- * Activities grouped by date (post-filter).
+ * Toggle desktop notifications for a saved view.  First time the user
+ * enables alerts on any view we ask the browser for Notification
+ * permission; after that the answer is cached by the browser and we
+ * just respect it.
+ */
+async function toggleSavedViewAlerts(view: SavedView): Promise<void> {
+	const turningOn = !view.alerts
+	if (turningOn && typeof window.Notification !== 'undefined') {
+		if (window.Notification.permission === 'default') {
+			try {
+				await window.Notification.requestPermission()
+			} catch (e) {
+				logger.debug('Notification permission request failed', e as Error)
+			}
+		}
+		if (window.Notification.permission === 'denied') {
+			showError(t('activity', 'Browser notifications are blocked. Enable them in your browser settings.'))
+			return
+		}
+	}
+	setSavedViewAlerts(view.id, turningOn)
+	// Seed lastSeenId with the newest currently-loaded id so the user
+	// doesn't get spammed with backfill notifications on first enable.
+	if (turningOn && newestActivityId.value !== undefined) {
+		setSavedViewLastSeenId(view.id, newestActivityId.value)
+	}
+}
+
+/**
+ * True when an activity matches a saved view's filters.  Mirrors the
+ * client-side parts of filteredActivities — server-side text search is
+ * skipped here because polling doesn't carry a search query through.
+ */
+function activityMatchesSavedView(a: ActivityModel, view: SavedView): boolean {
+	const person = view.person.trim().toLowerCase()
+	if (person !== '' && !a.user.toLowerCase().includes(person)) return false
+	const path = (view.path ?? '').trim().toLowerCase()
+	if (path !== '' && !activityPath(a).includes(path)) return false
+	if (view.from !== '') {
+		const fromTs = moment(view.from).startOf('day').valueOf()
+		if (a.timestamp < fromTs) return false
+	}
+	if (view.to !== '') {
+		const toTs = moment(view.to).endOf('day').valueOf()
+		if (a.timestamp > toTs) return false
+	}
+	const search = view.search.trim().toLowerCase()
+	if (search !== '') {
+		const haystack = (a.subject + ' ' + a.message).toLowerCase()
+		if (!haystack.includes(search)) return false
+	}
+	// view.filter is the OCP filter id ('all' | 'self' | 'by' | …) and
+	// is enforced server-side; we don't try to recreate that bucketing
+	// here.  Alerts on a saved view are best-effort within the
+	// currently-active OCP filter.
+	return true
+}
+
+/**
+ * For each alert-subscribed saved view, count newly-arrived activities
+ * (id > view.lastSeenId) that match the view's filters and fire one
+ * notification per view.  Updates lastSeenId so we don't re-notify on
+ * subsequent polls.
+ */
+function notifyForSavedViews(newlyArrived: ActivityModel[]): void {
+	if (newlyArrived.length === 0) return
+	if (typeof window.Notification === 'undefined') return
+	if (window.Notification.permission !== 'granted') return
+
+	for (const view of savedViews.value) {
+		if (!view.alerts) continue
+		const fresh = newlyArrived.filter((a) => a.id > view.lastSeenId && activityMatchesSavedView(a, view))
+		if (fresh.length === 0) continue
+		const newestId = fresh.reduce((m, a) => Math.max(m, a.id), view.lastSeenId)
+		setSavedViewLastSeenId(view.id, newestId)
+		try {
+			const note = new window.Notification(
+				n('activity', '{n} new match in "{name}"', '{n} new matches in "{name}"', fresh.length, { name: view.name }),
+				{
+					body: fresh[0].subject || t('activity', 'Open Activity for details'),
+					tag: 'activity-saved-view-' + view.id,
+					silent: false,
+				},
+			)
+			note.onclick = () => {
+				window.focus()
+				applySavedView(view)
+				note.close()
+			}
+		} catch (e) {
+			logger.debug('Could not display saved-view notification', e as Error)
+		}
+	}
+}
+
+/**
+ * Pinned activities (subset of filteredActivities whose ids are in
+ * pinnedIds), preserving the order of pinnedIds (most recently pinned
+ * first).  Rendered above the per-day groups so they're always visible
+ * regardless of how far the user has scrolled.
+ */
+const pinnedActivities = computed<ActivityModel[]>(() => {
+	if (pinnedIds.value.length === 0) return []
+	const pinSet = new Set(pinnedIds.value)
+	const byId = new Map<number, ActivityModel>()
+	for (const a of filteredActivities.value) {
+		if (pinSet.has(a.id)) byId.set(a.id, a)
+	}
+	const list: ActivityModel[] = []
+	for (const id of pinnedIds.value) {
+		const a = byId.get(id)
+		if (a) list.push(a)
+	}
+	return list
+})
+
+const pinnedSet = computed<Set<number>>(() => new Set(pinnedIds.value))
+
+/**
+ * Activities grouped by date (post-filter).  Pinned activities are
+ * filtered OUT of the day groups since they render in their own
+ * always-visible section at the top — duplicating them would be noise.
  */
 const groupedActivities = computed(() => {
 	const groups = {} as Record<string, ActivityModel[]>
+	const pins = pinnedSet.value
 	for (const activity of filteredActivities.value) {
+		if (pins.has(activity.id)) continue
 		const date = moment(activity.datetime).format('LL')
 		if (groups[date] === undefined) {
 			groups[date] = [activity]
@@ -417,6 +707,29 @@ const groupedActivities = computed(() => {
 
 const headingTitle = computed(() => {
 	return navigationList.find((navigationEl) => navigationEl.id === route.params.filter).name
+})
+
+// Map filter ids to a Material Design icon component.  IDs come from
+// server-side IFilter::getIdentifier() implementations across apps —
+// this list covers the bundled filters; unknown ids fall back to a
+// generic history icon so newly-registered filters still render
+// something reasonable.
+const filterIcons: Record<string, unknown> = {
+	all: IconViewList,
+	self: IconAccount,
+	by: IconAccountGroup,
+	files: IconFolder,
+	files_favorites: IconStar,
+	files_sharing: IconShareVariant,
+	comments: IconCommentText,
+	calendar: IconCalendar,
+	calendar_todo: IconCheckboxMarkedCircle,
+	contacts: IconCardAccountDetails,
+}
+
+const headingIcon = computed(() => {
+	const id = String(route.params.filter ?? 'all')
+	return filterIcons[id] ?? IconHistory
 })
 
 /**
@@ -561,6 +874,7 @@ async function loadActivities() {
  */
 async function pollNewActivities() {
 	const { signal } = requestController
+	let gotResults = false
 	try {
 		const since = String(newestActivityId.value ?? 0)
 		const q = activeSearch.value.trim()
@@ -568,11 +882,14 @@ async function pollNewActivities() {
 			+ (q !== '' ? '&q=' + encodeURIComponent(q) : '')
 		const response = await ncAxios.get(url, { signal })
 		if (!signal.aborted && response.data.ocs.data.length > 0) {
+			gotResults = true
 			const newActivities: ActivityModel[] = response.data.ocs.data.map((raw: IRawActivity) => new ActivityModel(raw))
 			// Sort newest first for prepending
 			newActivities.sort((a: ActivityModel, b: ActivityModel) => b.id - a.id)
 			newestActivityId.value = newActivities[0]!.id
 			allActivities.value.unshift(...newActivities)
+			markFresh(newActivities.map((a) => a.id))
+			notifyForSavedViews(newActivities)
 
 			// Show the navigation button only when the user is not already at the top
 			// (browser scroll anchoring keeps their reading position stable on prepend)
@@ -588,9 +905,20 @@ async function pollNewActivities() {
 		}
 	}
 
+	// Adapt the next interval to recent traffic: halve it on a hit
+	// (down to POLL_MIN_MS), grow by 25% on a miss (up to POLL_MAX_MS).
+	// This keeps the feed feeling near-live during active sessions but
+	// pulls back on a quiet day so the server isn't asked uselessly
+	// every few seconds.
+	if (gotResults) {
+		pollDelayMs.value = Math.max(POLL_MIN_MS, Math.floor(pollDelayMs.value / 2))
+	} else {
+		pollDelayMs.value = Math.min(POLL_MAX_MS, Math.floor(pollDelayMs.value * 1.25))
+	}
+
 	// Self-schedule only if polling wasn't stopped while the request was in flight
 	if (pollTimer !== undefined) {
-		pollTimer = setTimeout(pollNewActivities, POLL_INTERVAL)
+		pollTimer = setTimeout(pollNewActivities, pollDelayMs.value)
 	}
 }
 
@@ -614,8 +942,11 @@ const onScroll = useDebounceFn(() => {
 function startPolling() {
 	stopPolling()
 	// Use a sentinel value so the self-scheduling logic in pollNewActivities
-	// knows polling is active even before the first tick fires
-	pollTimer = setTimeout(pollNewActivities, POLL_INTERVAL)
+	// knows polling is active even before the first tick fires.  Reset the
+	// adaptive delay back to the initial mid-range so a long-tab-idle
+	// session resumes responsively when the tab regains focus.
+	pollDelayMs.value = POLL_INITIAL_MS
+	pollTimer = setTimeout(pollNewActivities, pollDelayMs.value)
 }
 
 function stopPolling() {
@@ -781,6 +1112,51 @@ watch(activeSearch, reloadActivities)
 		margin: 16px auto 0;
 	}
 
+	// Pinned section sits above the day-grouped feed.  Subtle highlight
+	// background + a "PINNED" header so it's obvious these aren't part
+	// of today's normal activity stream.
+	&__pinned {
+		margin-block: 4px 12px;
+		padding: 6px 8px 8px;
+		border: 1px dashed var(--color-border);
+		border-radius: var(--border-radius-large);
+		background: linear-gradient(180deg, var(--color-primary-element-light, var(--color-background-hover)) 0%, transparent 60%);
+	}
+
+	&__pinned-heading {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		margin: 0 0 4px;
+		font-size: 12px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--color-primary-element);
+	}
+
+	&__pinned-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		// Pinned rows reuse .activity-entry styling but live outside a
+		// day-group, so suppress the rail line that would otherwise
+		// dangle in the middle of the section.
+		position: relative;
+
+		&::before {
+			content: '';
+			position: absolute;
+			left: 14px;
+			top: 4px;
+			bottom: 4px;
+			width: 2px;
+			background: var(--color-primary-element);
+			opacity: 0.35;
+			pointer-events: none;
+		}
+	}
+
 	&__new-activities-indicator {
 		position: sticky;
 		top: 8px;
@@ -805,21 +1181,38 @@ watch(activeSearch, reloadActivities)
 		align-items: center;
 		flex-wrap: wrap;
 		gap: 12px;
-		margin-top: 1px;
-		padding-block: 8px;
+		// No top padding / margin so the heading's 44px line-box sits
+		// flush with the app-navigation toggle (44px square at y=0).
+		// Bottom padding gives visual breathing room before the
+		// today-summary / saved-views row underneath.
+		padding-block: 0 8px;
 		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
 		border-bottom: 1px solid transparent;
 	}
 
 	&__heading {
 		flex-shrink: 0;
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
 		margin: 0;
 		font-weight: bold;
 		font-size: 20px;
-		line-height: 44px; // to align height with the app navigation toggle
+		// 44px matches the app-navigation toggle so the heading
+		// vertically centres on the same row as the toggle button.
+		height: 44px;
+		line-height: 44px;
+	}
+
+	&__heading-icon {
+		display: inline-flex;
+		align-items: center;
+		color: var(--color-primary-element);
+		flex-shrink: 0;
 	}
 
 	&__refresh {
+		position: relative;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -843,6 +1236,21 @@ watch(activeSearch, reloadActivities)
 		&--spinning :deep(svg) {
 			animation: activity-refresh-spin 600ms ease-in-out;
 		}
+	}
+
+	// "Live" pulse dot pinned to the bottom-right of the refresh
+	// button.  Constant slow pulse signals that polling is active
+	// without distracting the eye away from the feed itself.
+	&__live-dot {
+		position: absolute;
+		bottom: 2px;
+		right: 2px;
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: var(--color-success, #46ba61);
+		box-shadow: 0 0 0 2px var(--color-main-background);
+		animation: activity-live-pulse 2s ease-in-out infinite;
 	}
 
 	&__today-summary {
@@ -881,18 +1289,54 @@ watch(activeSearch, reloadActivities)
 		display: inline-flex;
 		align-items: center;
 		gap: 4px;
-		padding: 4px 10px;
+		padding: 2px 4px 2px 0;
 		border: 1px solid var(--color-border);
 		border-radius: var(--border-radius-pill);
 		background: var(--color-background-hover);
 		color: var(--color-main-text);
 		font-size: 13px;
-		cursor: pointer;
 		transition: background-color 120ms ease, border-color 120ms ease;
 
-		&:hover, &:focus-visible {
-			background: var(--color-primary-element-light, var(--color-background-darker));
+		&--alerts {
 			border-color: var(--color-primary-element);
+			background: var(--color-primary-element-light, var(--color-background-hover));
+		}
+	}
+
+	&__saved-view-name {
+		appearance: none;
+		background: transparent;
+		border: none;
+		color: inherit;
+		font: inherit;
+		padding: 4px 8px 4px 10px;
+		cursor: pointer;
+		border-radius: var(--border-radius-pill);
+
+		&:hover, &:focus-visible {
+			background: var(--color-background-darker);
+		}
+	}
+
+	&__saved-view-bell {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 20px;
+		height: 20px;
+		padding: 0;
+		border: none;
+		border-radius: 50%;
+		background: transparent;
+		color: var(--color-text-maxcontrast);
+		cursor: pointer;
+
+		&[aria-pressed='true'] {
+			color: var(--color-primary-element);
+		}
+
+		&:hover, &:focus-visible {
+			background: var(--color-background-darker);
 		}
 	}
 
@@ -900,14 +1344,18 @@ watch(activeSearch, reloadActivities)
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 16px;
-		height: 16px;
+		width: 18px;
+		height: 18px;
+		padding: 0;
+		border: none;
 		border-radius: 50%;
+		background: transparent;
 		color: var(--color-text-maxcontrast);
 		font-size: 14px;
 		line-height: 1;
+		cursor: pointer;
 
-		&:hover {
+		&:hover, &:focus-visible {
 			background: var(--color-background-darker);
 			color: var(--color-error);
 		}
@@ -945,12 +1393,113 @@ watch(activeSearch, reloadActivities)
 
 	&__filters-search { width: 160px; }
 	&__filters-person { width: 110px; }
+	&__filters-path   { width: 140px; }
 	&__filters-date   { width: 130px; }
 
 	&__filters-count {
 		align-self: center;
 		color: var(--color-text-maxcontrast);
 		font-size: 13px;
+	}
+
+	// Mobile-only filter toggle.  Hidden on wide screens — the filter
+	// row always shows inline there.  On narrow screens the inputs
+	// would consume too much horizontal space and force-wrap into a
+	// multi-row mess, so we collapse them behind this button instead.
+	&__filters-toggle {
+		display: none;
+		position: relative;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 32px;
+		height: 32px;
+		padding: 0;
+		border: 1px solid var(--color-border);
+		border-radius: 50%;
+		background: var(--color-main-background);
+		color: var(--color-text-maxcontrast);
+		cursor: pointer;
+
+		&:hover {
+			background: var(--color-background-hover);
+			color: var(--color-main-text);
+			border-color: var(--color-primary-element);
+		}
+
+		&[aria-expanded='true'] {
+			background: var(--color-primary-element-light, var(--color-background-hover));
+			border-color: var(--color-primary-element);
+			color: var(--color-primary-element);
+		}
+	}
+
+	&__filters-toggle-dot {
+		position: absolute;
+		top: 4px;
+		right: 4px;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: var(--color-primary-element);
+		box-shadow: 0 0 0 2px var(--color-main-background);
+	}
+
+	// ── Mobile (≤ 720px): tighten everything ──────────────────────
+	@media (max-width: 720px) {
+		&__topbar {
+			gap: 6px;
+			// Less left clearance — the navigation toggle is still 44px
+			// but the side margins shrink so the heading has more room.
+			margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) 4px;
+		}
+
+		&__heading {
+			font-size: 17px;
+			gap: 6px;
+		}
+
+		&__filters-toggle {
+			display: inline-flex;
+			margin-inline-start: auto;
+		}
+
+		&__filters {
+			// Drop to a column under the topbar when the toggle is open;
+			// hide entirely otherwise.  flex-basis: 100% breaks the row
+			// so the filter inputs occupy the full width below the
+			// heading instead of squeezing in beside it.
+			display: none;
+			flex-basis: 100%;
+			flex-direction: column;
+			align-items: stretch;
+			gap: 8px;
+			padding-block: 4px 8px;
+
+			&--mobile-open {
+				display: flex;
+			}
+		}
+
+		&__filters-input {
+			width: 100% !important;
+			height: 36px;
+		}
+
+		&__filters-search,
+		&__filters-person,
+		&__filters-date {
+			width: 100%;
+		}
+
+		&__today-summary,
+		&__saved-views {
+			margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) 4px;
+		}
+
+		&__container {
+			padding-inline: 4px;
+		}
 	}
 }
 
@@ -962,6 +1511,16 @@ watch(activeSearch, reloadActivities)
 .activity-fade-enter-from {
 	opacity: 0;
 	transform: translateY(-4px);
+}
+
+// Skeleton-list fades out as the real feed fades in, instead of cutting
+// abruptly.  Both states overlap briefly via position: absolute on the
+// leaving skeleton.
+.activity-app__skeleton-fade-leave-active {
+	transition: opacity 320ms ease;
+}
+.activity-app__skeleton-fade-leave-to {
+	opacity: 0;
 }
 
 .activity-skeleton {
@@ -1024,6 +1583,11 @@ watch(activeSearch, reloadActivities)
 @keyframes activity-refresh-spin {
 	from { transform: rotate(0deg); }
 	to   { transform: rotate(360deg); }
+}
+
+@keyframes activity-live-pulse {
+	0%, 100% { transform: scale(1);   opacity: 0.85; }
+	50%      { transform: scale(1.4); opacity: 0.35; }
 }
 
 </style>
