@@ -11,8 +11,13 @@ namespace OCA\Activity;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\Defaults;
+use OCP\Files\File;
+use OCP\Files\IRootFolder;
+use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
+use OCP\IPreview;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\IUserManager;
@@ -23,6 +28,14 @@ use Psr\Log\LoggerInterface;
 
 class DigestSender {
 	public const ACTIVITY_LIMIT = 20;
+
+	/**
+	 * Maximum size in pixels for embedded preview thumbnails. Kept small so that
+	 * the resulting base64-encoded payload doesn't bloat the email — a 96px PNG
+	 * is typically a few KB, and 20 of them stay well under common message-size
+	 * limits.
+	 */
+	private const PREVIEW_PIXELS = 96;
 
 	public function __construct(
 		private IConfig $config,
@@ -37,6 +50,8 @@ class DigestSender {
 		private IFactory $l10nFactory,
 		private IDateTimeFormatter $dateTimeFormatter,
 		private LoggerInterface $logger,
+		private IRootFolder $rootFolder,
+		private IPreview $previewManager,
 	) {
 	}
 
@@ -181,7 +196,8 @@ class DigestSender {
 				$l10n
 			);
 
-			$template->addBodyListItem($this->getHTMLSubject($event), $relativeDateTime, $event->getIcon(), $event->getParsedSubject());
+			$icon = $this->getPreviewDataUri($event, $uid) ?? $event->getIcon();
+			$template->addBodyListItem($this->getHTMLSubject($event), $relativeDateTime, $icon, $event->getParsedSubject());
 		}
 
 		if ($skippedCount) {
@@ -212,6 +228,50 @@ class DigestSender {
 		} catch (\Exception $e) {
 			$this->logger->error($e->getMessage());
 			return;
+		}
+	}
+
+	/**
+	 * Returns a data: URI with a base64-encoded PNG preview of the file the
+	 * activity is about, or null if no preview is available — for any reason
+	 * (not a file event, file deleted, no read permission, preview generation
+	 * unsupported, etc.). The caller falls back to the regular event icon.
+	 *
+	 * Resolved as the affected user, so the resulting access mirrors what the
+	 * recipient could see in the web UI.
+	 */
+	private function getPreviewDataUri(IEvent $event, string $uid): ?string {
+		if ($event->getObjectType() !== 'files' || $event->getObjectId() <= 0) {
+			return null;
+		}
+
+		try {
+			$userFolder = $this->rootFolder->getUserFolder($uid);
+			$node = $userFolder->getFirstNodeById($event->getObjectId());
+			if (!$node instanceof File) {
+				return null;
+			}
+
+			if (!$this->previewManager->isAvailable($node)) {
+				return null;
+			}
+
+			$preview = $this->previewManager->getPreview($node, self::PREVIEW_PIXELS, self::PREVIEW_PIXELS, true);
+			$content = $preview->getContent();
+			if ($content === '') {
+				return null;
+			}
+			$mime = $preview->getMimeType() ?: 'image/png';
+			return 'data:' . $mime . ';base64,' . base64_encode($content);
+		} catch (NotFoundException|NotPermittedException) {
+			return null;
+		} catch (\Throwable $e) {
+			$this->logger->debug('Could not generate digest preview', [
+				'app' => 'activity',
+				'exception' => $e,
+				'object_id' => $event->getObjectId(),
+			]);
+			return null;
 		}
 	}
 
