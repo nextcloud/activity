@@ -32,6 +32,9 @@ export default createAppConfig({
 			cache: {
 				dir: '../node_modules/.vitest',
 			},
+			// Ignore CSS imports in tests — NcVue components pull in sidecar .css
+			// assets that Node can't load as ESM modules.
+			css: false,
 			server: {
 				deps: {
 					inline: [/@nextcloud\/vue/, /@mdi\/svg/],

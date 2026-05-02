@@ -107,6 +107,14 @@ class Application extends App implements IBootstrap {
 			);
 		});
 
+		$context->registerService(\OCA\Activity\DatabaseStats::class, function (ContainerInterface $c) {
+			return new \OCA\Activity\DatabaseStats(
+				$c->get('ActivityConnectionAdapter'),
+				$c->get(IConfig::class),
+				$c->get(LoggerInterface::class),
+			);
+		});
+
 		$context->registerService(MailQueueHandler::class, function (ContainerInterface $c) {
 			return new MailQueueHandler(
 				$c->get(IDateTimeFormatter::class),
