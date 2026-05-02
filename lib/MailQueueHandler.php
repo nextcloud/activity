@@ -331,7 +331,7 @@ class MailQueueHandler {
 		$template->addHeader();
 		$template->addHeading($l->t('Hello %s', [$user->getDisplayName()]), $l->t('Hello %s,', [$user->getDisplayName()]));
 
-		$homeLink = '<a href="' . $this->urlGenerator->getAbsoluteURL('/') . '">' . htmlspecialchars($this->getSenderData('name')) . '</a>';
+		$homeLink = '<a href="' . htmlspecialchars($this->urlGenerator->getAbsoluteURL('/')) . '">' . htmlspecialchars($this->getSenderData('name')) . '</a>';
 		$template->addBodyText(
 			$l->t('There was some activity at %s', [$homeLink]),
 			$l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')])
@@ -394,7 +394,7 @@ class MailQueueHandler {
 			}
 
 			if (isset($parameter['link'])) {
-				$replacements[] = '<a href="' . $parameter['link'] . '">' . htmlspecialchars($replacement) . '</a>';
+				$replacements[] = '<a href="' . htmlspecialchars((string)$parameter['link']) . '">' . htmlspecialchars($replacement) . '</a>';
 			} else {
 				$replacements[] = '<strong>' . htmlspecialchars($replacement) . '</strong>';
 			}
