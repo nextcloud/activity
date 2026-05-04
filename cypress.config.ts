@@ -38,6 +38,10 @@ export default defineConfig({
 	trashAssetsBeforeRuns: true,
 
 	e2e: {
+		// Exclude the documentation screenshot spec from regular CI runs.
+		// It is run explicitly by the screenshots.yml workflow_dispatch workflow.
+		excludeSpecPattern: '**/screenshots.cy.ts',
+
 		// We've imported your old cypress plugins here.
 		// You may want to clean this up later by importing these.
 		async setupNodeEvents(on, config) {
