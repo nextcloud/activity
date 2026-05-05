@@ -1,2 +1,2 @@
-import{r as t}from"./api-BvEKvrnu.chunk.mjs";import"./logger-DSQS5IuL.chunk.mjs";import"./index-C9jrmhjE.chunk.mjs";t();
+import{r as t}from"./api-Ece4zLIo.chunk.mjs";import"./logger-BgVM16Kc.chunk.mjs";import"./index-DxSbrVwz.chunk.mjs";t();
 //# sourceMappingURL=activity-api.mjs.map
