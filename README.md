@@ -23,3 +23,7 @@ In Nextcloud 11 the old extension API was replaced by 3 new interfaces, to bette
 * [Provider](docs/provider.md) - translate and render activities
 * [Setting](docs/setting.md) - allow users to control what they want to see in their stream or mail
 * [Filter](docs/filter.md) - allow to reduce the stream in the web UI by app or setting
+
+## Administration
+
+* [Database configuration](docs/database.md) - using a dedicated database for activity events
