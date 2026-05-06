@@ -27,8 +27,6 @@ describe('Check that user\'s settings survive a reload', () => {
 		cy.wait('@apiCall')
 		cy.reload()
 
-		cy.intercept({ method: 'POST', url: '**/activity/settings' }).as('apiCall')
-
 		cy.get("#app-content input[type='checkbox']").uncheck({ force: true })
 		cy.get("#app-content input[type='checkbox']").should('not.be.checked')
 

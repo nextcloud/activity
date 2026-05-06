@@ -38,11 +38,9 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 
 	it('Has share activity', () => {
 		createPublicShare('welcome.txt')
-		cy.intercept('PROPFIND', /\/remote\.php\/dav\/files\//).as('loadFiles')
-		cy.visit('/apps/files')
-		cy.wait('@loadFiles')
-		getFileListRow('welcome.txt').should('be.visible')
-
+		// No re-navigation needed — createPublicShare already waits for the share API
+		// and closes the sidebar, so the activity is recorded and the page is stable.
+		// Re-navigating triggers an async share-badge update that closes the Actions menu.
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'Shared as public link')
 	})
