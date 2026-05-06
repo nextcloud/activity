@@ -38,7 +38,9 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 
 	it('Has share activity', () => {
 		createPublicShare('welcome.txt')
+		cy.intercept('PROPFIND', /\/remote.php\/dav\/files\//).as('loadFiles')
 		cy.visit('/apps/files')
+		cy.wait('@loadFiles')
 		getFileListRow('welcome.txt').should('be.visible')
 
 		showActivityTab('welcome.txt')

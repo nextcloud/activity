@@ -19,10 +19,15 @@ describe('Check that user\'s settings survive a reload', () => {
 	})
 
 	it('Form survive a reload', () => {
+		cy.intercept({ method: 'POST', url: '**/activity/settings' }).as('apiCall')
+
 		cy.get("#app-content input[type='checkbox']").uncheck({ force: true })
 		cy.get("#app-content input[type='checkbox']").should('not.be.checked')
 
+		cy.wait('@apiCall')
 		cy.reload()
+
+		cy.intercept({ method: 'POST', url: '**/activity/settings' }).as('apiCall')
 
 		cy.get("#app-content input[type='checkbox']").uncheck({ force: true })
 		cy.get("#app-content input[type='checkbox']").should('not.be.checked')
@@ -34,6 +39,7 @@ describe('Check that user\'s settings survive a reload', () => {
 		cy.get('#calendar_notification').check({ force: true })
 		cy.get('#personal_settings_email').check({ force: true })
 		cy.get('#personal_settings_notification').check({ force: true })
+		cy.wait('@apiCall')
 		cy.reload()
 
 		cy.get('#file_changed_email').should('not.be.checked')

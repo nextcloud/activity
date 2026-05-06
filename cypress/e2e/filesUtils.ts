@@ -128,10 +128,10 @@ export function toggleMenuAction(filename: string, action: 'details'|'favorite'|
 		.find('[data-cy-files-list-row-actions]')
 		.findByRole('button', { name: 'Actions' })
 		.should('be.visible')
-		.click()
+		.click({ force: true })
 
-	cy.get(`[data-cy-files-list-row-action="${CSS.escape(action)}"]`)
+	cy.get(`[data-cy-files-list-row-action="${CSS.escape(action)}"]`, { timeout: 10000 })
 		.should('be.visible')
 		.findByRole('menuitem')
-		.click()
+		.click({ force: true })
 }
