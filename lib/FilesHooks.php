@@ -807,14 +807,15 @@ class FilesHooks {
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	public function unShare(IShare $share) {
-		if (in_array($share->getNodeType(), ['file', 'folder'], true) && !$this->isDeletedNode($share->getShareOwner(), $share->getNodeId())) {
-			if ($share->getShareType() === IShare::TYPE_USER) {
-				$this->unshareFromUser($share);
-			} elseif ($share->getShareType() === IShare::TYPE_GROUP) {
-				$this->unshareFromGroup($share);
-			} elseif ($share->getShareType() === IShare::TYPE_LINK) {
-				$this->unshareLink($share);
-			}
+		if (!in_array($share->getNodeType(), ['file', 'folder'], true) || $this->isDeletedNode($share->getShareOwner(), $share->getNodeId())) {
+			return;
+		}
+		if ($share->getShareType() === IShare::TYPE_USER) {
+			$this->unshareFromUser($share);
+		} elseif ($share->getShareType() === IShare::TYPE_GROUP) {
+			$this->unshareFromGroup($share);
+		} elseif ($share->getShareType() === IShare::TYPE_LINK) {
+			$this->unshareLink($share);
 		}
 	}
 
@@ -825,12 +826,13 @@ class FilesHooks {
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	public function unShareSelf(IShare $share) {
-		if (in_array($share->getNodeType(), ['file', 'folder'], true)) {
-			if ($share->getShareType() === IShare::TYPE_GROUP) {
-				$this->unshareFromSelfGroup($share);
-			} elseif ($share->getShareType() === IShare::TYPE_USER) {
-				$this->unshareFromUser($share);
-			}
+		if (!in_array($share->getNodeType(), ['file', 'folder'], true)) {
+			return;
+		}
+		if ($share->getShareType() === IShare::TYPE_GROUP) {
+			$this->unshareFromSelfGroup($share);
+		} elseif ($share->getShareType() === IShare::TYPE_USER) {
+			$this->unshareFromUser($share);
 		}
 	}
 
@@ -1097,51 +1099,51 @@ class FilesHooks {
 	 */
 	protected function shareNotificationForOriginalOwners(string $sharedBy, string $subject, string $shareWith, Node $fileSource) {
 		$mount = $fileSource->getMountPoint();
-		if ($mount instanceof SharedMount) {
-			$sourceShare = $mount->getShare();
+		if (!$mount instanceof SharedMount) {
+			return;
+		}
 
-			$fileId = $fileSource->getId();
+		$sourceShare = $mount->getShare();
+		$fileId = $fileSource->getId();
 
-			if ($sourceShare->getShareOwner() !== $sharedBy) {
-				$owner = $sourceShare->getShareOwner();
-				try {
-					$ownerNode = $this->rootFolder->getUserFolder($owner)->getFirstNodeById($fileId);
-				} catch (NotFoundException) {
-					return;
-				}
-				if ($ownerNode === null) {
-					return;
-				}
-				$this->reshareNotificationForSharer(
-					$owner,
-					$subject,
-					$shareWith,
-					$fileId,
-					$this->getUserRelativePath($owner, $ownerNode->getPath()),
-					$fileSource instanceof File,
-				);
+		if ($sourceShare->getShareOwner() !== $sharedBy) {
+			$owner = $sourceShare->getShareOwner();
+			try {
+				$ownerNode = $this->rootFolder->getUserFolder($owner)->getFirstNodeById($fileId);
+			} catch (NotFoundException) {
+				return;
 			}
-
-			if ($sourceShare->getSharedBy() && $sourceShare->getSharedBy() !== $sharedBy && $sourceShare->getShareOwner() !== $sourceShare->getSharedBy()) {
-				$sharer = $sourceShare->getSharedBy();
-				try {
-					$sharerNode = $this->rootFolder->getUserFolder($sharer)->getFirstNodeById($fileId);
-				} catch (NotFoundException) {
-					return;
-				}
-				if ($sharerNode === null) {
-					return;
-				}
-
-				$this->reshareNotificationForSharer(
-					$sharer,
-					$subject,
-					$shareWith,
-					$fileId,
-					$this->getUserRelativePath($sharer, $sharerNode->getPath()),
-					$fileSource instanceof File,
-				);
+			if ($ownerNode === null) {
+				return;
 			}
+			$this->reshareNotificationForSharer(
+				$owner,
+				$subject,
+				$shareWith,
+				$fileId,
+				$this->getUserRelativePath($owner, $ownerNode->getPath()),
+				$fileSource instanceof File,
+			);
+		}
+
+		if ($sourceShare->getSharedBy() && $sourceShare->getSharedBy() !== $sharedBy && $sourceShare->getShareOwner() !== $sourceShare->getSharedBy()) {
+			$sharer = $sourceShare->getSharedBy();
+			try {
+				$sharerNode = $this->rootFolder->getUserFolder($sharer)->getFirstNodeById($fileId);
+			} catch (NotFoundException) {
+				return;
+			}
+			if ($sharerNode === null) {
+				return;
+			}
+			$this->reshareNotificationForSharer(
+				$sharer,
+				$subject,
+				$shareWith,
+				$fileId,
+				$this->getUserRelativePath($sharer, $sharerNode->getPath()),
+				$fileSource instanceof File,
+			);
 		}
 	}
 
