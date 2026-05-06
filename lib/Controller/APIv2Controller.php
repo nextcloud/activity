@@ -28,29 +28,14 @@ use OCP\IUserSession;
 use OCP\Notification\IManager as INotificationManager;
 
 class APIv2Controller extends OCSController {
-	/** @var string */
-	protected $filter;
-
-	/** @var int */
-	protected $since;
-
-	/** @var int */
-	protected $limit;
-
-	/** @var string */
-	protected $sort;
-
-	/** @var string */
-	protected $objectType;
-
-	/** @var int */
-	protected $objectId;
-
-	/** @var string */
-	protected $user;
-
-	/** @var bool */
-	protected $loadPreviews;
+	protected string $filter = 'all';
+	protected int $since = 0;
+	protected int $limit = 50;
+	protected string $sort = 'desc';
+	protected string $objectType = '';
+	protected int $objectId = 0;
+	protected string $user = '';
+	protected bool $loadPreviews = false;
 
 	public function __construct(
 		$appName,

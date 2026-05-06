@@ -140,9 +140,11 @@ class APIv2ControllerTest extends TestCase {
 			->method('validateFilter')
 			->with($param)
 			->willReturn($filter);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
 		$this->userSession->expects($this->once())
 			->method('getUser')
-			->willReturn($this->createMock(IUser::class));
+			->willReturn($userMock);
 
 		self::invokePrivate($this->controller, 'validateParameters', [$param, 0, 0, false, '', 0, 'desc']);
 		$this->assertSame($filter, self::invokePrivate($this->controller, 'filter'));
@@ -183,9 +185,11 @@ class APIv2ControllerTest extends TestCase {
 		$this->data->expects($this->once())
 			->method('validateFilter')
 			->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
 		$this->userSession->expects($this->once())
 			->method('getUser')
-			->willReturn($this->createMock(IUser::class));
+			->willReturn($userMock);
 
 		self::invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, $type, $id, 'desc']);
 		$this->assertSame($expectedType, self::invokePrivate($this->controller, 'objectType'));
@@ -229,9 +233,11 @@ class APIv2ControllerTest extends TestCase {
 		$this->data->expects($this->once())
 			->method('validateFilter')
 			->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
 		$this->userSession->expects($this->once())
 			->method('getUser')
-			->willReturn($this->createMock(IUser::class));
+			->willReturn($userMock);
 
 		self::invokePrivate($this->controller, 'validateParameters', $params);
 		$this->assertSame($expectedValue, self::invokePrivate($this->controller, $memberName));
