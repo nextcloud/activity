@@ -37,6 +37,17 @@ class UserSettings {
 	}
 
 	/**
+	 * Returns the batch time for email notifications if email is enabled for
+	 * the given user and activity type, or false if email is disabled.
+	 */
+	public function getEmailBatchTimeSetting(string $user, string $type): int|false {
+		if (!$this->getUserSetting($user, 'email', $type)) {
+			return false;
+		}
+		return (int)$this->getUserSetting($user, 'setting', 'batchtime');
+	}
+
+	/**
 	 * Get the user setting
 	 * Falling back to the admin default if not set for the user
 	 *
