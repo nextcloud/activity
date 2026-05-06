@@ -69,6 +69,9 @@ export function createPublicShare(fileName: string) {
 
 	cy.wait('@createShare')
 	closeSidebar()
+	// NC32 updates the file-row share badge asynchronously after the sidebar closes;
+	// give Vue time to settle before the caller interacts with the file list.
+	cy.wait(500)
 }
 
 export function addTag(fileName: string, tag: string) {
