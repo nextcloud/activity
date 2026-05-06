@@ -1,4 +1,4 @@
-import { configureNextcloud, startNextcloud, stopNextcloud, waitOnNextcloud } from '@nextcloud/cypress/docker'
+import { configureNextcloud, runOcc, startNextcloud, stopNextcloud, waitOnNextcloud } from '@nextcloud/cypress/docker'
 // eslint-disable-next-line n/no-extraneous-import
 import { defineConfig } from 'cypress'
 
@@ -89,6 +89,8 @@ export default defineConfig({
 			config.baseUrl = `http://${ip}/index.php`
 			await waitOnNextcloud(ip)
 			await configureNextcloud(['viewer'])
+			// Cypress uses Electron 118 which NC32 considers unsupported — disable the check
+			await runOcc(['config:system:set', 'no_unsupported_browser_warning', '--value', 'true', '--type', 'boolean'])
 			return config
 		},
 	},
