@@ -194,4 +194,33 @@ class CurrentUserTest extends TestCase {
 
 		$this->assertSame($expected, self::invokePrivate($instance, 'getCloudIDFromToken'));
 	}
+
+	public function testGetCloudIdCached(): void {
+		$instance = $this->getInstance();
+		self::invokePrivate($instance, 'cloudId', ['cached-cloud-id']);
+
+		$this->userSession->expects($this->never())->method('getUser');
+
+		$this->assertSame('cached-cloud-id', $instance->getCloudId());
+	}
+
+	public function testGetCloudIdFromUser(): void {
+		$user = $this->createMock(IUser::class);
+		$user->method('getCloudId')->willReturn('user@cloud.example.com');
+		$this->userSession->method('getUser')->willReturn($user);
+
+		$instance = $this->getInstance();
+
+		$this->assertSame('user@cloud.example.com', $instance->getCloudId());
+		$this->assertSame('user@cloud.example.com', $instance->getCloudId(), 'second call returns cached value');
+	}
+
+	public function testGetCloudIdFallsBackToToken(): void {
+		$this->userSession->method('getUser')->willReturn(null);
+
+		$instance = $this->getInstance(['getCloudIDFromToken']);
+		$instance->method('getCloudIDFromToken')->willReturn('token-cloud-id');
+
+		$this->assertSame('token-cloud-id', $instance->getCloudId());
+	}
 }
