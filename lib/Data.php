@@ -324,35 +324,38 @@ class Data {
 	 * @throws \OutOfBoundsException If $since is not owned by $user
 	 */
 	protected function setOffsetFromSince(IQueryBuilder $query, $user, $since, $sort) {
-		if ($since) {
-			$queryBuilder = $this->connection->getQueryBuilder();
-			$queryBuilder->select(['affecteduser', 'timestamp'])
-				->from('activity')
-				->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter((int)$since)));
-			$result = $queryBuilder->executeQuery();
-			$activity = $result->fetch();
-			$result->closeCursor();
-
-			if ($activity) {
-				if ($activity['affecteduser'] !== $user) {
-					throw new \OutOfBoundsException('Invalid since', 2);
-				}
-				$timestamp = (int)$activity['timestamp'];
-
-				if ($sort === 'DESC') {
-					$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($timestamp)));
-					$query->andWhere($query->expr()->lt('activity_id', $query->createNamedParameter($since)));
-				} else {
-					$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($timestamp)));
-					$query->andWhere($query->expr()->gt('activity_id', $query->createNamedParameter($since)));
-				}
-				return [];
-			}
+		if (!$since) {
+			return $this->getFirstKnownActivityHeader($user, $sort);
 		}
 
-		/**
-		 * Couldn't find the since, so find the oldest one and set the header
-		 */
+		$queryBuilder = $this->connection->getQueryBuilder();
+		$queryBuilder->select(['affecteduser', 'timestamp'])
+			->from('activity')
+			->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter((int)$since)));
+		$result = $queryBuilder->executeQuery();
+		$activity = $result->fetch();
+		$result->closeCursor();
+
+		if (!$activity) {
+			return $this->getFirstKnownActivityHeader($user, $sort);
+		}
+
+		if ($activity['affecteduser'] !== $user) {
+			throw new \OutOfBoundsException('Invalid since', 2);
+		}
+
+		$timestamp = (int)$activity['timestamp'];
+		if ($sort === 'DESC') {
+			$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($timestamp)));
+			$query->andWhere($query->expr()->lt('activity_id', $query->createNamedParameter($since)));
+		} else {
+			$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($timestamp)));
+			$query->andWhere($query->expr()->gt('activity_id', $query->createNamedParameter($since)));
+		}
+		return [];
+	}
+
+	private function getFirstKnownActivityHeader(string $user, string $sort): array {
 		$fetchQuery = $this->connection->getQueryBuilder();
 		$fetchQuery->select('activity_id')
 			->from('activity')
@@ -364,11 +367,8 @@ class Data {
 		$result->closeCursor();
 
 		if ($activity !== false) {
-			return [
-				'X-Activity-First-Known' => (int)$activity['activity_id'],
-			];
+			return ['X-Activity-First-Known' => (int)$activity['activity_id']];
 		}
-
 		return [];
 	}
 

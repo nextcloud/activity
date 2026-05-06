@@ -156,16 +156,7 @@ class MailQueueHandler {
 			} elseif ($restrictEmails === UserSettings::EMAIL_SEND_ASAP) {
 				$query->where($query->expr()->eq('amq_timestamp', 'amq_latest_send'));
 			}
-
-			$result = $query->executeQuery();
-
-			$affectedUsers = [];
-			while ($row = $result->fetch()) {
-				$affectedUsers[] = $row['amq_affecteduser'];
-			}
-			$result->closeCursor();
-
-			return $affectedUsers;
+			return $this->fetchAffectedUsers($query);
 		}
 
 		if ($forceSending) {
@@ -174,14 +165,16 @@ class MailQueueHandler {
 			$query->where($query->expr()->lt('amq_latest_send', $query->createNamedParameter($latestSend)));
 		}
 
-		$result = $query->executeQuery();
+		return $this->fetchAffectedUsers($query);
+	}
 
+	private function fetchAffectedUsers(IQueryBuilder $query): array {
+		$result = $query->executeQuery();
 		$affectedUsers = [];
 		while ($row = $result->fetch()) {
 			$affectedUsers[] = $row['amq_affecteduser'];
 		}
 		$result->closeCursor();
-
 		return $affectedUsers;
 	}
 
