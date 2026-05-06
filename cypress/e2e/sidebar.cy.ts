@@ -11,8 +11,11 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 		cy.createRandomUser()
 			.then((user) => {
 				cy.login(user)
+				cy.intercept('PROPFIND', /\/remote\.php\/dav\/files\//).as('initialFiles')
 				cy.visit('/apps/files')
-				// Wait for page loaded
+				// Wait for the PROPFIND to complete before asserting the file row —
+				// NC32/33 Docker containers can be slow and exceed the default 4s timeout.
+				cy.wait('@initialFiles')
 				getFileListRow('welcome.txt')
 					.should('be.visible')
 			})

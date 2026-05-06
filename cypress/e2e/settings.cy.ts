@@ -16,6 +16,10 @@ describe('Check that user\'s settings survive a reload', () => {
 	beforeEach(() => {
 		cy.login(user)
 		cy.visit('/settings/user/notifications')
+		// The notification settings are rendered by a Vue component after page load.
+		// On slow CI runners for older NC versions this can exceed the default 4s timeout.
+		cy.get("#app-content input[type='checkbox']", { timeout: 10000 })
+			.should('have.length.at.least', 1)
 	})
 
 	it('Form survive a reload', () => {
