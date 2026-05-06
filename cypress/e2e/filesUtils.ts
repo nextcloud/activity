@@ -119,6 +119,12 @@ export function getFileListRow(filename: string) {
 }
 
 export function toggleMenuAction(filename: string, action: 'details'|'favorite'|'move-copy'|'rename') {
+	// Wait for the thumbnail to finish loading before opening the Actions menu;
+	// an in-flight preview response re-renders the file row and closes the menu.
+	getFileListRow(filename)
+		.find('.files-list__row-icon-preview--loaded')
+		.should('exist')
+
 	getFileListRow(filename)
 		.find('[data-cy-files-list-row-actions]')
 		.should('be.visible')
