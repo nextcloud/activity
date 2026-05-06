@@ -26,6 +26,10 @@ class UserSettings {
 	public const EMAIL_SEND_WEEKLY = 2;
 	public const EMAIL_SEND_ASAP = 3;
 
+	public const BATCH_TIME_HOURLY = 3600;
+	public const BATCH_TIME_DAILY = 3600 * 24;
+	public const BATCH_TIME_WEEKLY = 3600 * 24 * 7;
+
 	/**
 	 * @param IManager $manager
 	 * @param IConfig $config
@@ -109,7 +113,7 @@ class UserSettings {
 	protected function getDefaultSetting($method, $type) {
 		if ($method === 'setting') {
 			if ($type === 'batchtime') {
-				return 3600;
+				return self::BATCH_TIME_HOURLY;
 			}
 
 			if ($type === 'self') {
