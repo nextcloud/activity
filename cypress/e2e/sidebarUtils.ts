@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { toggleMenuAction, triggerActionForFile } from './filesUtils.ts'
+import { getRowForFile, toggleMenuAction, triggerActionForFile } from './filesUtils.ts'
 
 function showSidebarForFile(fileName: string) {
 	toggleMenuAction(fileName, 'details')
@@ -60,8 +60,6 @@ export function toggleFavorite(fileName: string) {
  * @param fileName Name of the file to share
  */
 export function createPublicShare(fileName: string) {
-	cy.intercept('POST', '/ocs/v2.php/apps/files_sharing/api/v1/shares').as('createPublicShare')
-
 	showSidebarForFile(fileName)
 	cy.get('#app-sidebar-vue')
 		.findByRole('tab', { name: 'Sharing' })
@@ -77,8 +75,6 @@ export function createPublicShare(fileName: string) {
 
 	cy.wait('@createShare')
 	closeSidebar()
-
-	cy.wait('@createPublicShare')
 }
 
 /**
@@ -88,6 +84,11 @@ export function createPublicShare(fileName: string) {
  * @param newTag - The new tag
  */
 export function addTag(fileName: string, newTag: string) {
+	getRowForFile(fileName)
+		.should('be.visible')
+		.find('.files-list__row-icon-preview--loaded')
+		.should('exist')
+
 	triggerActionForFile(fileName, 'systemtags:bulk')
 
 	cy.intercept('POST', '/remote.php/dav/systemtags').as('createTag')
