@@ -77,17 +77,25 @@ class ConsumerTest extends TestCase {
 			->method('get')
 			->with('activity')
 			->willReturn($l10n);
+		$map = [
+			['affectedUser', 'notification', 'type', true],
+			['affectedUser2', 'notification', 'type', true],
+			['affectedUser', 'email', 'type', true],
+			['affectedUser2', 'email', 'type', true],
+			['affectedUser', 'setting', 'batchtime', 10],
+			['affectedUser2', 'setting', 'batchtime', 10],
+		];
 		$this->userSettings
 			->method('getUserSetting')
 			->with($this->stringContains('affectedUser'), $this->anything(), $this->anything())
-			->willReturnMap([
-				['affectedUser', 'notification', 'type', true],
-				['affectedUser2', 'notification', 'type', true],
-				['affectedUser', 'email', 'type', true],
-				['affectedUser2', 'email', 'type', true],
-				['affectedUser', 'setting', 'batchtime', 10],
-				['affectedUser2', 'setting', 'batchtime', 10],
-			]);
+			->willReturnCallback(function ($user, $method, $type) use ($map): bool|int {
+				foreach ($map as [$u, $m, $t, $v]) {
+					if ($u === $user && $m === $method && $t === $type) {
+						return $v;
+					}
+				}
+				return false;
+			});
 
 		$this->consumer = new Consumer(
 			$this->data,

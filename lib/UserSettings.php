@@ -47,7 +47,7 @@ class UserSettings {
 	 * @param string $type One of the activity types, 'batchtime' or 'self'
 	 * @return bool|int
 	 */
-	public function getUserSetting($user, $method, $type) {
+	public function getUserSetting(string $user, string $method, string $type): bool|int {
 		if ($method === 'email' && $this->config->getAppValue('activity', 'enable_email', 'yes') === 'no') {
 			return false;
 		}
@@ -82,7 +82,7 @@ class UserSettings {
 	 * @param string $type
 	 * @return bool|int
 	 */
-	public function getAdminSetting($method, $type) {
+	public function getAdminSetting(string $method, string $type): bool|int {
 		$defaultSetting = $this->getDefaultSetting($method, $type);
 		if (is_bool($defaultSetting)) {
 			return (bool)$this->config->getAppValue(
@@ -106,7 +106,7 @@ class UserSettings {
 	 * @param string $type One of the activity types, 'batchtime', 'self' or 'selfemail'
 	 * @return bool|int
 	 */
-	protected function getDefaultSetting($method, $type) {
+	protected function getDefaultSetting(string $method, string $type): bool|int {
 		if ($method === 'setting') {
 			if ($type === 'batchtime') {
 				return 3600;
@@ -145,7 +145,7 @@ class UserSettings {
 	 * @param string $type One of the activity types, 'batchtime', 'self' or 'selfemail'
 	 * @return bool
 	 */
-	protected function canModifySetting($method, $type) {
+	protected function canModifySetting(string $method, string $type): bool {
 		if ($method === 'setting') {
 			return true;
 		}
@@ -168,7 +168,7 @@ class UserSettings {
 	/**
 	 * Get a list with all notification types
 	 */
-	public function getNotificationTypes() {
+	public function getNotificationTypes(): array {
 		$settings = $this->manager->getSettings();
 
 		$return = array_map(function (ActivitySettings $setting) {
@@ -194,7 +194,7 @@ class UserSettings {
 	 * @return array Returns a "username => b:true" Map for method = notification
 	 *               Returns a "username => i:batchtime" Map for method = email
 	 */
-	public function filterUsersBySetting($users, $method, $type) {
+	public function filterUsersBySetting(array $users, string $method, string $type): array {
 		if (empty($users)) {
 			return [];
 		}
