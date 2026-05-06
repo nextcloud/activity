@@ -11,8 +11,11 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 		cy.createRandomUser()
 			.then((user) => {
 				cy.login(user)
+				cy.intercept('PROPFIND', /\/remote\.php\/dav\/files\//).as('initialFiles')
 				cy.visit('/apps/files')
-				// Wait for page loaded
+				// Wait for the PROPFIND to complete before asserting the file row —
+				// NC32/33 Docker containers can be slow and exceed the default 4s timeout.
+				cy.wait('@initialFiles')
 				getFileListRow('welcome.txt')
 					.should('be.visible')
 			})
@@ -38,9 +41,9 @@ describe('Check activity listing in the sidebar', { testIsolation: true }, () =>
 
 	it('Has share activity', () => {
 		createPublicShare('welcome.txt')
-		cy.visit('/apps/files')
-		getFileListRow('welcome.txt').should('be.visible')
-
+		// No re-navigation needed — createPublicShare already waits for the share API
+		// and closes the sidebar, so the activity is recorded and the page is stable.
+		// Re-navigating triggers an async share-badge update that closes the Actions menu.
 		showActivityTab('welcome.txt')
 		cy.get('.activity-entry').first().should('contains.text', 'Shared as public link')
 	})

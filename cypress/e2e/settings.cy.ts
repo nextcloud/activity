@@ -16,12 +16,19 @@ describe('Check that user\'s settings survive a reload', () => {
 	beforeEach(() => {
 		cy.login(user)
 		cy.visit('/settings/user/notifications')
+		// The notification settings are rendered by a Vue component after page load.
+		// On slow CI runners for older NC versions this can exceed the default 4s timeout.
+		cy.get("#app-content input[type='checkbox']", { timeout: 10000 })
+			.should('have.length.at.least', 1)
 	})
 
 	it('Form survive a reload', () => {
+		cy.intercept({ method: 'POST', url: '**/activity/settings' }).as('apiCall')
+
 		cy.get("#app-content input[type='checkbox']").uncheck({ force: true })
 		cy.get("#app-content input[type='checkbox']").should('not.be.checked')
 
+		cy.wait('@apiCall')
 		cy.reload()
 
 		cy.get("#app-content input[type='checkbox']").uncheck({ force: true })
@@ -34,6 +41,7 @@ describe('Check that user\'s settings survive a reload', () => {
 		cy.get('#calendar_notification').check({ force: true })
 		cy.get('#personal_settings_email').check({ force: true })
 		cy.get('#personal_settings_notification').check({ force: true })
+		cy.wait('@apiCall')
 		cy.reload()
 
 		cy.get('#file_changed_email').should('not.be.checked')
