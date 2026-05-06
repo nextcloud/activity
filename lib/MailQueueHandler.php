@@ -150,11 +150,11 @@ class MailQueueHandler {
 
 		if ($restrictEmails !== null) {
 			if ($restrictEmails === UserSettings::EMAIL_SEND_HOURLY) {
-				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(3600))));
+				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(UserSettings::BATCH_TIME_HOURLY))));
 			} elseif ($restrictEmails === UserSettings::EMAIL_SEND_DAILY) {
-				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(3600 * 24))));
+				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(UserSettings::BATCH_TIME_DAILY))));
 			} elseif ($restrictEmails === UserSettings::EMAIL_SEND_WEEKLY) {
-				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(3600 * 24 * 7))));
+				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(UserSettings::BATCH_TIME_WEEKLY))));
 			} elseif ($restrictEmails === UserSettings::EMAIL_SEND_ASAP) {
 				$query->where($query->expr()->eq('amq_timestamp', 'amq_latest_send'));
 			}
