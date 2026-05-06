@@ -54,8 +54,6 @@ export function toggleFavorite(fileName: string) {
  * @param fileName Name of the file to share
  */
 export function createPublicShare(fileName: string) {
-	cy.intercept('POST', '/ocs/v2.php/apps/files_sharing/api/v1/shares').as('createPublicShare')
-
 	showSidebarForFile(fileName)
 	cy.get('#app-sidebar-vue')
 		.findByRole('tab', { name: 'Sharing' })
@@ -71,11 +69,16 @@ export function createPublicShare(fileName: string) {
 
 	cy.wait('@createShare')
 	closeSidebar()
-
-	cy.wait('@createPublicShare')
+	// NC32 updates the file-row share badge asynchronously after the sidebar closes;
+	// give Vue time to settle before the caller interacts with the file list.
+	cy.wait(500)
 }
 
 export function addTag(fileName: string, tag: string) {
+	cy.get(`[data-cy-files-list-row-name="${CSS.escape(fileName)}"]`)
+		.find('.files-list__row-icon-preview--loaded')
+		.should('exist')
+
 	showSidebarForFile(fileName)
 
 	cy.get('#app-sidebar-vue .app-sidebar-header')
