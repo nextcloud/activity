@@ -82,10 +82,10 @@ class FilesHooks {
 			return;
 		}
 
-		if ($this->currentUser->getUserIdentifier() !== '' || !$this->currentUser->isPublicShareToken()) {
-			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
-		} else {
+		if ($this->currentUser->getUserIdentifier() === '' && $this->currentUser->isPublicShareToken()) {
 			$this->addNotificationsForFileAction($path, Files_Sharing::TYPE_PUBLIC_UPLOAD, '', 'created_public');
+		} else {
+			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
 		}
 	}
 
@@ -807,14 +807,15 @@ class FilesHooks {
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	public function unShare(IShare $share) {
-		if (in_array($share->getNodeType(), ['file', 'folder'], true) && !$this->isDeletedNode($share->getShareOwner(), $share->getNodeId())) {
-			if ($share->getShareType() === IShare::TYPE_USER) {
-				$this->unshareFromUser($share);
-			} elseif ($share->getShareType() === IShare::TYPE_GROUP) {
-				$this->unshareFromGroup($share);
-			} elseif ($share->getShareType() === IShare::TYPE_LINK) {
-				$this->unshareLink($share);
-			}
+		if (!in_array($share->getNodeType(), ['file', 'folder'], true) || $this->isDeletedNode($share->getShareOwner(), $share->getNodeId())) {
+			return;
+		}
+		if ($share->getShareType() === IShare::TYPE_USER) {
+			$this->unshareFromUser($share);
+		} elseif ($share->getShareType() === IShare::TYPE_GROUP) {
+			$this->unshareFromGroup($share);
+		} elseif ($share->getShareType() === IShare::TYPE_LINK) {
+			$this->unshareLink($share);
 		}
 	}
 
@@ -825,12 +826,13 @@ class FilesHooks {
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	public function unShareSelf(IShare $share) {
-		if (in_array($share->getNodeType(), ['file', 'folder'], true)) {
-			if ($share->getShareType() === IShare::TYPE_GROUP) {
-				$this->unshareFromSelfGroup($share);
-			} elseif ($share->getShareType() === IShare::TYPE_USER) {
-				$this->unshareFromUser($share);
-			}
+		if (!in_array($share->getNodeType(), ['file', 'folder'], true)) {
+			return;
+		}
+		if ($share->getShareType() === IShare::TYPE_GROUP) {
+			$this->unshareFromSelfGroup($share);
+		} elseif ($share->getShareType() === IShare::TYPE_USER) {
+			$this->unshareFromUser($share);
 		}
 	}
 
