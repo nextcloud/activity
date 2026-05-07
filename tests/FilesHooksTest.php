@@ -171,6 +171,8 @@ class FilesHooksTest extends TestCase {
 			['user', false, 'created_self', 'created_by', Files::TYPE_SHARE_CREATED],
 			['', true, '', 'created_public', Files_Sharing::TYPE_PUBLIC_UPLOAD],
 			['', false, 'created_self', 'created_by', Files::TYPE_SHARE_CREATED],
+			// logged-in user uploading to a public share link → treated as regular upload
+			['user', true, 'created_self', 'created_by', Files::TYPE_SHARE_CREATED],
 		];
 	}
 
