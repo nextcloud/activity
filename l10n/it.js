@@ -51,6 +51,7 @@ OC.L10N.register(
     "Loading activities" : "Caricamento delle attività",
     "This stream will show events like additions, changes & shares" : "Questo flusso mostrerà gli eventi come aggiunte, cambiamenti e condivisioni",
     "No activity yet" : "Ancora nessuna attività",
+    "New activities" : "Nuove attività",
     "Loading more activities" : "Caricamento di altre attività",
     "No more activities." : "Nessun'altra attività.",
     "Could not enable RSS link" : "Impossibile attivare il collegamento RSS",
