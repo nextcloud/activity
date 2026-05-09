@@ -135,11 +135,11 @@ async function copyRSSLink() {
 	}
 
 	.app-navigation-entry {
-		&.active .navigation-icon {
+		&.app-navigation-entry--legacy.active .navigation-icon {
 			filter: var(--primary-invert-if-dark);
 		}
 
-		&:not(.active) .navigation-icon {
+		&:not(.app-navigation-entry--legacy.active) .navigation-icon {
 			filter: var(--background-invert-if-dark);
 		}
 	}
