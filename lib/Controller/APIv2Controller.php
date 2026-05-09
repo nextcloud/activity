@@ -52,6 +52,9 @@ class APIv2Controller extends OCSController {
 	/** @var bool */
 	protected $loadPreviews;
 
+	/** @var string */
+	protected $search = '';
+
 	public function __construct(
 		$appName,
 		IRequest $request,
@@ -81,7 +84,7 @@ class APIv2Controller extends OCSController {
 	 * @throws InvalidFilterException when the filter is invalid
 	 * @throws \OutOfBoundsException when no user is given
 	 */
-	protected function validateParameters($filter, $since, $limit, $previews, $objectType, $objectId, $sort) {
+	protected function validateParameters($filter, $since, $limit, $previews, $objectType, $objectId, $sort, $search = '') {
 		$this->filter = \is_string($filter) ? $filter : 'all';
 		if ($this->filter !== $this->data->validateFilter($this->filter)) {
 			throw new InvalidFilterException('Invalid filter');
@@ -92,6 +95,7 @@ class APIv2Controller extends OCSController {
 		$this->objectType = (string)$objectType;
 		$this->objectId = (int)$objectId;
 		$this->sort = \in_array($sort, ['asc', 'desc'], true) ? $sort : 'desc';
+		$this->search = \is_string($search) ? trim($search) : '';
 
 		if (($this->objectType !== '' && $this->objectId === 0) || ($this->objectType === '' && $this->objectId !== 0)) {
 			// Only allowed together
@@ -119,8 +123,8 @@ class APIv2Controller extends OCSController {
 	 * @param string $sort
 	 * @return DataResponse
 	 */
-	public function getDefault($since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc'): DataResponse {
-		return $this->get('all', $since, $limit, $previews, $object_type, $object_id, $sort);
+	public function getDefault($since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc', $q = ''): DataResponse {
+		return $this->get('all', $since, $limit, $previews, $object_type, $object_id, $sort, $q);
 	}
 
 	/**
@@ -133,10 +137,11 @@ class APIv2Controller extends OCSController {
 	 * @param string $object_type
 	 * @param int $object_id
 	 * @param string $sort
+	 * @param string $q Free-text query — filters subject + message server-side
 	 * @return DataResponse
 	 */
-	public function getFilter($filter, $since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc'): DataResponse {
-		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort);
+	public function getFilter($filter, $since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc', $q = ''): DataResponse {
+		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort, $q);
 	}
 
 	/**
@@ -201,9 +206,9 @@ class APIv2Controller extends OCSController {
 	 * @param string $sort
 	 * @return DataResponse
 	 */
-	protected function get($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort): DataResponse {
+	protected function get($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort, $search = ''): DataResponse {
 		try {
-			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
+			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort, $search);
 		} catch (InvalidFilterException $e) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		} catch (\OutOfBoundsException $e) {
@@ -223,7 +228,9 @@ class APIv2Controller extends OCSController {
 
 				$this->filter,
 				$this->objectType,
-				$this->objectId
+				$this->objectId,
+				false,
+				$this->search,
 			);
 		} catch (\OutOfBoundsException $e) {
 			// Invalid since argument
@@ -296,6 +303,9 @@ class APIv2Controller extends OCSController {
 			if ($this->objectType && $this->objectId) {
 				$nextPageParameters['object_type'] = $this->objectType;
 				$nextPageParameters['object_id'] = $this->objectId;
+			}
+			if ($this->search !== '') {
+				$nextPageParameters['q'] = $this->search;
 			}
 			if ($this->request->getParam('format') !== null) {
 				$nextPageParameters['format'] = $this->request->getParam('format');

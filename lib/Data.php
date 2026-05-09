@@ -223,10 +223,13 @@ class Data {
 	 * @param int $objectId Allows to filter the activities to a given object. May only appear together with $objectType
 	 *
 	 * @param bool $returnEvents return only the events
+	 * @param string $search Free-text query — when non-empty, only activities whose subject or message contains
+	 *                       this substring (case-insensitive) are returned.  Used for the server-side search box
+	 *                       in the activity stream UI.
 	 * @return array
 	 *
 	 */
-	public function get(GroupHelper $groupHelper, UserSettings $userSettings, $user, $since, $limit, $sort, $filter, $objectType = '', $objectId = 0, bool $returnEvents = false) {
+	public function get(GroupHelper $groupHelper, UserSettings $userSettings, $user, $since, $limit, $sort, $filter, $objectType = '', $objectId = 0, bool $returnEvents = false, string $search = '') {
 		// get current user
 		if ($user === '') {
 			throw new \OutOfBoundsException('Invalid user', 1);
@@ -281,6 +284,21 @@ class Data {
 				$favoriteFilter->filterFavorites($query);
 			} catch (FilterNotFoundException) {
 			}
+		}
+
+		// Free-text search: match against subject and message columns.
+		// Trim + length-cap defensively so a pathological query can't blow up
+		// the SQL or pull every row through a LIKE on a giant string.
+		$search = trim($search);
+		if ($search !== '') {
+			$needle = '%' . $this->connection->escapeLikeParameter(mb_substr($search, 0, 200)) . '%';
+			$param = $query->createNamedParameter($needle);
+			$query->andWhere(
+				$query->expr()->orX(
+					$query->expr()->iLike('subject', $param),
+					$query->expr()->iLike('message', $param),
+				),
+			);
 		}
 
 		/**
