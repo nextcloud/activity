@@ -331,7 +331,7 @@ class Data {
 		$queryBuilder = $this->connection->getQueryBuilder();
 		$queryBuilder->select(['affecteduser', 'timestamp'])
 			->from('activity')
-			->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter((int)$since)));
+			->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter($since)));
 		$result = $queryBuilder->executeQuery();
 		$activity = $result->fetch();
 		$result->closeCursor();

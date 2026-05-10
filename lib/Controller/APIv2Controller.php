@@ -60,15 +60,15 @@ class APIv2Controller extends OCSController {
 	 * @throws \OutOfBoundsException when no user is given
 	 */
 	protected function validateParameters(string $filter, int $since, int $limit, bool $previews, string $objectType, int $objectId, string $sort): void {
-		$this->filter = \is_string($filter) ? $filter : 'all';
+		$this->filter = $filter;
 		if ($this->filter !== $this->data->validateFilter($this->filter)) {
 			throw new InvalidFilterException('Invalid filter');
 		}
-		$this->since = (int)$since;
-		$this->limit = (int)$limit;
-		$this->loadPreviews = (bool)$previews;
-		$this->objectType = (string)$objectType;
-		$this->objectId = (int)$objectId;
+		$this->since = $since;
+		$this->limit = $limit;
+		$this->loadPreviews = $previews;
+		$this->objectType = $objectType;
+		$this->objectId = $objectId;
 		$this->sort = \in_array($sort, ['asc', 'desc'], true) ? $sort : 'desc';
 
 		if (($this->objectType !== '' && $this->objectId === 0) || ($this->objectType === '' && $this->objectId !== 0)) {
