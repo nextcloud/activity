@@ -175,13 +175,13 @@ class APIv2ControllerTest extends TestCase {
 		return [
 			['type', 42, 'type', 42],
 			['type', '42', 'type', 42],
-			[null, '42', '', 0],
-			['type', null, '', 0],
+			['', 42, '', 0],
+			['type', 0, '', 0],
 		];
 	}
 
 	#[DataProvider('dataValidateParametersObject')]
-	public function testValidateParametersObject(?string $type, mixed $id, string $expectedType, int $expectedId): void {
+	public function testValidateParametersObject(string $type, mixed $id, string $expectedType, int $expectedId): void {
 		$this->data->expects($this->once())
 			->method('validateFilter')
 			->willReturnArgument(0);
