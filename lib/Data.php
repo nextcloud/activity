@@ -226,7 +226,7 @@ class Data {
 	 * @return array
 	 *
 	 */
-	public function get(GroupHelper $groupHelper, UserSettings $userSettings, $user, $since, $limit, $sort, $filter, $objectType = '', $objectId = 0, bool $returnEvents = false) {
+	public function get(GroupHelper $groupHelper, UserSettings $userSettings, string $user, int $since, int $limit, string $sort, string $filter, string $objectType = '', int $objectId = 0, bool $returnEvents = false): array {
 		// get current user
 		if ($user === '') {
 			throw new \OutOfBoundsException('Invalid user', 1);
@@ -323,7 +323,7 @@ class Data {
 	 *
 	 * @throws \OutOfBoundsException If $since is not owned by $user
 	 */
-	protected function setOffsetFromSince(IQueryBuilder $query, $user, $since, $sort) {
+	protected function setOffsetFromSince(IQueryBuilder $query, string $user, int $since, string $sort): array {
 		if (!$since) {
 			return $this->getFirstKnownActivityHeader($user, $sort);
 		}
@@ -331,7 +331,7 @@ class Data {
 		$queryBuilder = $this->connection->getQueryBuilder();
 		$queryBuilder->select(['affecteduser', 'timestamp'])
 			->from('activity')
-			->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter((int)$since)));
+			->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter($since)));
 		$result = $queryBuilder->executeQuery();
 		$activity = $result->fetch();
 		$result->closeCursor();

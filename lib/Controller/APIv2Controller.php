@@ -28,29 +28,14 @@ use OCP\IUserSession;
 use OCP\Notification\IManager as INotificationManager;
 
 class APIv2Controller extends OCSController {
-	/** @var string */
-	protected $filter;
-
-	/** @var int */
-	protected $since;
-
-	/** @var int */
-	protected $limit;
-
-	/** @var string */
-	protected $sort;
-
-	/** @var string */
-	protected $objectType;
-
-	/** @var int */
-	protected $objectId;
-
-	/** @var string */
-	protected $user;
-
-	/** @var bool */
-	protected $loadPreviews;
+	protected string $filter = 'all';
+	protected int $since = 0;
+	protected int $limit = 50;
+	protected string $sort = 'desc';
+	protected string $objectType = '';
+	protected int $objectId = 0;
+	protected string $user = '';
+	protected bool $loadPreviews = false;
 
 	public function __construct(
 		$appName,
@@ -71,26 +56,19 @@ class APIv2Controller extends OCSController {
 	}
 
 	/**
-	 * @param string $filter
-	 * @param int $since
-	 * @param int $limit
-	 * @param bool $previews
-	 * @param string $objectType
-	 * @param int $objectId
-	 * @param string $sort
 	 * @throws InvalidFilterException when the filter is invalid
 	 * @throws \OutOfBoundsException when no user is given
 	 */
-	protected function validateParameters($filter, $since, $limit, $previews, $objectType, $objectId, $sort) {
-		$this->filter = \is_string($filter) ? $filter : 'all';
+	protected function validateParameters(string $filter, int $since, int $limit, bool $previews, string $objectType, int $objectId, string $sort): void {
+		$this->filter = $filter;
 		if ($this->filter !== $this->data->validateFilter($this->filter)) {
 			throw new InvalidFilterException('Invalid filter');
 		}
-		$this->since = (int)$since;
-		$this->limit = (int)$limit;
-		$this->loadPreviews = (bool)$previews;
-		$this->objectType = (string)$objectType;
-		$this->objectId = (int)$objectId;
+		$this->since = $since;
+		$this->limit = $limit;
+		$this->loadPreviews = $previews;
+		$this->objectType = $objectType;
+		$this->objectId = $objectId;
 		$this->sort = \in_array($sort, ['asc', 'desc'], true) ? $sort : 'desc';
 
 		if (($this->objectType !== '' && $this->objectId === 0) || ($this->objectType === '' && $this->objectId !== 0)) {
@@ -110,32 +88,15 @@ class APIv2Controller extends OCSController {
 
 	/**
 	 * @NoAdminRequired
-	 *
-	 * @param int $since
-	 * @param int $limit
-	 * @param bool $previews
-	 * @param string $object_type
-	 * @param int $object_id
-	 * @param string $sort
-	 * @return DataResponse
 	 */
-	public function getDefault($since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc'): DataResponse {
+	public function getDefault(int $since = 0, int $limit = 50, bool $previews = false, string $object_type = '', int $object_id = 0, string $sort = 'desc'): DataResponse {
 		return $this->get('all', $since, $limit, $previews, $object_type, $object_id, $sort);
 	}
 
 	/**
 	 * @NoAdminRequired
-	 *
-	 * @param string $filter
-	 * @param int $since
-	 * @param int $limit
-	 * @param bool $previews
-	 * @param string $object_type
-	 * @param int $object_id
-	 * @param string $sort
-	 * @return DataResponse
 	 */
-	public function getFilter($filter, $since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc'): DataResponse {
+	public function getFilter(string $filter, int $since = 0, int $limit = 50, bool $previews = false, string $object_type = '', int $object_id = 0, string $sort = 'desc'): DataResponse {
 		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort);
 	}
 
@@ -191,17 +152,7 @@ class APIv2Controller extends OCSController {
 		return new DataResponse($filters);
 	}
 
-	/**
-	 * @param string $filter
-	 * @param int $since
-	 * @param int $limit
-	 * @param bool $previews
-	 * @param string $filterObjectType
-	 * @param int $filterObjectId
-	 * @param string $sort
-	 * @return DataResponse
-	 */
-	protected function get($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort): DataResponse {
+	protected function get(string $filter, int $since, int $limit, bool $previews, string $filterObjectType, int $filterObjectId, string $sort): DataResponse {
 		try {
 			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
 		} catch (InvalidFilterException $e) {
