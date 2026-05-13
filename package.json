@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@nextcloud/browserslist-config": "^3.1.2",
-    "@nextcloud/cypress": "^1.0.0-beta.15",
+    "@nextcloud/e2e-test-server": "^0.4.0",
     "@nextcloud/stylelint-config": "^3.2.1",
     "@nextcloud/vite-config": "^2.5.2",
     "@testing-library/cypress": "^10.1.3",
@@ -65,6 +65,7 @@
     "@vitest/coverage-v8": "^4.1.5",
     "@vue/test-utils": "^2.4.10",
     "@vue/tsconfig": "^0.9.1",
+    "cypress": "^15.15.0",
     "cypress-vite": "^1.9.1",
     "cypress-wait-until": "^3.0.2",
     "dockerode": "^5.0.0",

@@ -1,7 +1,5 @@
-import { configureNextcloud, runOcc, startNextcloud, stopNextcloud, waitOnNextcloud } from '@nextcloud/cypress/docker'
-// eslint-disable-next-line n/no-extraneous-import
+import { configureNextcloud, runOcc, startNextcloud, stopNextcloud, waitOnNextcloud } from '@nextcloud/e2e-test-server'
 import { defineConfig } from 'cypress'
-
 import vitePreprocessor from 'cypress-vite'
 
 export default defineConfig({

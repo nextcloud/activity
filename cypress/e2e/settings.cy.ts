@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import type { User } from "@nextcloud/cypress"
+import type { User } from "@nextcloud/e2e-test-server"
 
 describe('Check that user\'s settings survive a reload', () => {
 	let user: User
