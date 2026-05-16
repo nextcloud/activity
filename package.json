@@ -72,7 +72,7 @@
     "happy-dom": "^20.9.0",
     "stylelint": "^17.9.1",
     "typescript": "^6.0.3",
-    "vite": "^7.3.2",
+    "vite": "^8.0.11",
     "vitest": "^4.0.18",
     "wait-on": "^9.0.5"
   },
