@@ -5,6 +5,7 @@
 
 import {
 	configureNextcloud,
+	runExec,
 	runOcc,
 	startNextcloud,
 	stopNextcloud,
@@ -28,6 +29,9 @@ const ip = await startNextcloud(process.env.BRANCH ?? 'master', undefined, { exp
 await waitOnNextcloud(ip)
 await configureNextcloud(['viewer', 'activity'])
 await runOcc(['config:system:set', 'no_unsupported_browser_warning', '--value', 'true', '--type', 'boolean'])
+await runOcc(['config:system:set', 'appstoreenabled', '--value', 'false', '--type', 'boolean'])
+await runExec(['php', '-r', '$db = new SQLite3("data/owncloud.db");$db->busyTimeout(5000);$db->exec("PRAGMA journal_mode = wal;");'])
+await runExec(['php', 'cron.php'])
 
 process.stdout.write('Nextcloud ready at http://localhost:8081\n')
 
