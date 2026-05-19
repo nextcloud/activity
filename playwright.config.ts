@@ -37,7 +37,15 @@ export default defineConfig({
 
 	webServer: {
 		command: 'node playwright/start-server.mjs',
-		url: baseURL,
+		// Wait for the ready log line instead of polling the URL — avoids false
+		// positives where the HTTP port opens before Nextcloud finishes booting.
+		wait: {
+			stdout: /Nextcloud ready at/,
+		},
+		gracefulShutdown: {
+			signal: 'SIGTERM',
+			timeout: 10000,
+		},
 		// Reuse a container left running from a previous local run.
 		// In CI the container won't exist yet, so start-server.mjs will create it.
 		reuseExistingServer: !process.env.CI,
