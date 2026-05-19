@@ -37,7 +37,7 @@ test('Has favorite activity', async ({ page }) => {
 test('Has share activity', async ({ page }) => {
 	await createPublicShare(page, 'welcome.txt')
 	await showActivityTab(page, 'welcome.txt')
-	await expect(page.locator('.activity-entry').first()).toContainText('Shared as public link')
+	await expect(page.locator('.activity-entry').filter({ hasText: 'Shared as public link' }).first()).toBeVisible()
 })
 
 test('Has rename activity', async ({ page }) => {
