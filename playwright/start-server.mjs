@@ -7,16 +7,31 @@ import {
 	configureNextcloud,
 	runOcc,
 	startNextcloud,
+	stopNextcloud,
 	waitOnNextcloud,
 } from '@nextcloud/e2e-test-server/docker'
+
+async function stop() {
+	process.stderr.write('Stopping Nextcloud server…\n')
+	// Only tear down the container in CI; locally we leave it running so the
+	// next test run can reuse it without a slow cold start.
+	if (process.env.CI) {
+		await stopNextcloud()
+	}
+	process.exit(0)
+}
+
+process.on('SIGTERM', stop)
+process.on('SIGINT', stop)
 
 const ip = await startNextcloud(process.env.BRANCH ?? 'master', undefined, { exposePort: 8081 })
 await waitOnNextcloud(ip)
 await configureNextcloud(['viewer', 'activity'])
 await runOcc(['config:system:set', 'no_unsupported_browser_warning', '--value', 'true', '--type', 'boolean'])
 
-console.log(`Nextcloud ready at http://localhost:8081`)
+process.stdout.write('Nextcloud ready at http://localhost:8081\n')
 
-// Keep the process alive so Playwright knows the server is managed.
-// The Docker container runs independently and outlives this process.
-process.stdin.resume()
+// Keep the process alive so Playwright's gracefulShutdown can signal us.
+while (true) {
+	await new Promise((resolve) => setTimeout(resolve, 5000))
+}
