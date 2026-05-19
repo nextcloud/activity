@@ -33,6 +33,7 @@ use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\Activity\ISetting;
 use OCP\Config\IUserConfig;
+use OCP\IAppConfig;
 use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
@@ -53,6 +54,7 @@ class ConsumerTest extends TestCase {
 	protected NotificationGenerator&MockObject $notificationGenerator;
 	protected UserSettings $userSettings;
 	private IUserConfig&MockObject $userConfig;
+	private IAppConfig&MockObject $appConfig;
 	private IEvent $event;
 	private Consumer $consumer;
 
@@ -70,7 +72,10 @@ class ConsumerTest extends TestCase {
 		$this->notificationGenerator = $this->createMock(NotificationGenerator::class);
 		$this->l10nFactory = $this->createMock(IFactory::class);
 		$this->userConfig = $this->createMock(IUserConfig::class);
-
+		$this->appConfig = $this->createMock(IAppConfig::class);
+		$this->appConfig->method('getValueString')
+			->with('activity', 'enable_email', 'yes')
+			->willReturn('yes');
 		$this->data->method('send')
 			->willReturn(1);
 		$this->l10nFactory
@@ -95,6 +100,7 @@ class ConsumerTest extends TestCase {
 			$this->userSettings,
 			$this->notificationGenerator,
 			$this->userConfig,
+			$this->appConfig,
 		);
 
 		$this->event = Server::get(IManager::class)->generateEvent();
@@ -143,6 +149,7 @@ class ConsumerTest extends TestCase {
 			$this->userSettings,
 			$this->notificationGenerator,
 			$this->userConfig,
+			$this->appConfig,
 		);
 		$event = Server::get(IManager::class)->generateEvent();
 		$event->setApp('test')
@@ -322,9 +329,7 @@ class ConsumerTest extends TestCase {
 
 		$this->data->expects($this->never())
 			->method('storeMail');
-		// Notification is still sent because $notificationSetting defaults to null
-		// and null !== false, so the default is to send notifications
-		$this->notificationGenerator->expects($this->once())
+		$this->notificationGenerator->expects($this->never())
 			->method('sendNotificationForEvent');
 
 		$this->consumer->bulkReceive($this->event, ['affectedUser'], $settings);
@@ -434,8 +439,8 @@ class ConsumerTest extends TestCase {
 				return [];
 			});
 
-		// user1 and user2 get notifications (user2 has null setting which defaults to send), author is skipped
-		$this->notificationGenerator->expects($this->exactly(2))
+		// only user1 has an explicit notification=true in DB; user2 has no entry so falls back to isDefaultEnabledNotification()=false
+		$this->notificationGenerator->expects($this->once())
 			->method('sendNotificationForEvent');
 		// user2 gets email, author is skipped
 		$this->data->expects($this->once())
@@ -443,6 +448,50 @@ class ConsumerTest extends TestCase {
 			->with($this->event, $time + 15);
 
 		$this->consumer->bulkReceive($this->event, ['user1', 'user2', 'author'], $settings);
+	}
+
+	public function testBulkReceiveNoMailWhenAdminEmailDisabled(): void {
+		$time = time();
+		$this->event->setApp('activity')
+			->setType('type')
+			->setAuthor('author')
+			->setTimestamp($time)
+			->setSubject('subject', ['subjectParam1'])
+			->setMessage('message', ['messageParam1'])
+			->setObject('', 0, 'file')
+			->setLink('link');
+
+		$appConfig = $this->createMock(IAppConfig::class);
+		$appConfig->method('getValueString')
+			->with('activity', 'enable_email', 'yes')
+			->willReturn('no');
+
+		$consumer = new Consumer(
+			$this->data,
+			$this->activityManager,
+			$this->userSettings,
+			$this->notificationGenerator,
+			$this->userConfig,
+			$appConfig,
+		);
+
+		$settings = $this->createMock(ActivitySettings::class);
+		$settings->method('canChangeMail')->willReturn(true);
+		$settings->method('isDefaultEnabledMail')->willReturn(true);
+		$settings->method('canChangeNotification')->willReturn(false);
+		$settings->method('isDefaultEnabledNotification')->willReturn(false);
+
+		$this->data->expects($this->once())
+			->method('bulkSend')
+			->willReturn([1 => 'affectedUser']);
+
+		$this->userConfig->expects($this->never())
+			->method('getValuesByUsers');
+
+		$this->data->expects($this->never())
+			->method('storeMail');
+
+		$consumer->bulkReceive($this->event, ['affectedUser'], $settings);
 	}
 
 	public function testBulkReceiveWithISetting(): void {
@@ -463,9 +512,8 @@ class ConsumerTest extends TestCase {
 			->method('bulkSend')
 			->willReturn([1 => 'affectedUser']);
 
-		// Notification is still sent because $notificationSetting defaults to null (not false)
-		// when ISetting is used (canChangeNotification not available), and null !== false
-		$this->notificationGenerator->expects($this->once())
+		// ISetting is not ActivitySettings so $defaultPushEnabled is false — no notification sent
+		$this->notificationGenerator->expects($this->never())
 			->method('sendNotificationForEvent');
 		$this->data->expects($this->never())
 			->method('storeMail');

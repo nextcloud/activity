@@ -16,6 +16,7 @@ use OCP\Activity\ISetting;
 use OCP\Config\IUserConfig;
 use OCP\Config\ValueType;
 use OCP\DB\Exception;
+use OCP\IAppConfig;
 
 class Consumer implements IConsumer, IBulkConsumer {
 
@@ -25,6 +26,7 @@ class Consumer implements IConsumer, IBulkConsumer {
 		protected UserSettings $userSettings,
 		protected NotificationGenerator $notificationGenerator,
 		protected IUserConfig $userConfig,
+		protected IAppConfig $appConfig,
 	) {
 	}
 
@@ -78,13 +80,16 @@ class Consumer implements IConsumer, IBulkConsumer {
 
 		$canChangeMail = $setting->canChangeMail();
 		$canChangePush = $setting instanceof ActivitySettings && $setting->canChangeNotification() === true;
+		$defaultPushEnabled = $setting instanceof ActivitySettings && $setting->isDefaultEnabledNotification();
 
-		$userPushSettings = $userEmailSettings = $batchTimeSettings = null;
+		$userPushSettings = null;
 		if ($canChangePush === true) {
 			$userPushSettings = $this->userConfig->getValuesByUsers('activity', 'notify_notification_' . $event->getType(), ValueType::BOOL, $affectedUserIds);
 		}
 
-		if ($canChangeMail === true || $setting->isDefaultEnabledMail() === true) {
+		$userEmailSettings = $batchTimeSettings = null;
+		$emailEnabled = $this->appConfig->getValueString('activity', 'enable_email', 'yes') !== 'no';
+		if ($emailEnabled && ($canChangeMail === true || $setting->isDefaultEnabledMail() === true)) {
 			$userEmailSettings = $this->userConfig->getValuesByUsers('activity', 'notify_email_' . $event->getType(), ValueType::BOOL, $affectedUserIds);
 			$batchTimeSettings = $this->userConfig->getValuesByUsers('activity', 'notify_setting_batchtime', ValueType::INT, $affectedUserIds);
 		}
@@ -95,14 +100,17 @@ class Consumer implements IConsumer, IBulkConsumer {
 				continue;
 			}
 			$event->setAffectedUser($affectedUser);
-			$notificationSetting = $userPushSettings[$affectedUser] ?? null;
-			if ($notificationSetting !== null) {
-				$notificationSetting = (bool)$notificationSetting;
+
+			if ($canChangePush === true) {
+				$notificationSetting = isset($userPushSettings[$affectedUser]) ? (bool)$userPushSettings[$affectedUser] : $defaultPushEnabled;
+			} else {
+				$notificationSetting = $defaultPushEnabled;
 			}
+
 			$emailSetting = $userEmailSettings[$affectedUser] ?? false;
 			$emailSetting = ($emailSetting) ? ($batchTimeSettings[$affectedUser] ?? false) : false;
 
-			if ($notificationSetting !== false) {
+			if ($notificationSetting === true) {
 				$this->notificationGenerator->sendNotificationForEvent($event, $activityId, $notificationSetting);
 			}
 
