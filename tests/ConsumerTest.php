@@ -31,7 +31,9 @@ use OCA\Activity\UserSettings;
 use OCP\Activity\ActivitySettings;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
+use OCP\Activity\ISetting;
 use OCP\Config\IUserConfig;
+use OCP\IAppConfig;
 use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
@@ -52,6 +54,7 @@ class ConsumerTest extends TestCase {
 	protected NotificationGenerator&MockObject $notificationGenerator;
 	protected UserSettings $userSettings;
 	private IUserConfig&MockObject $userConfig;
+	private IAppConfig&MockObject $appConfig;
 	private IEvent $event;
 	private Consumer $consumer;
 
@@ -69,7 +72,10 @@ class ConsumerTest extends TestCase {
 		$this->notificationGenerator = $this->createMock(NotificationGenerator::class);
 		$this->l10nFactory = $this->createMock(IFactory::class);
 		$this->userConfig = $this->createMock(IUserConfig::class);
-
+		$this->appConfig = $this->createMock(IAppConfig::class);
+		$this->appConfig->method('getValueString')
+			->with('activity', 'enable_email', 'yes')
+			->willReturn('yes');
 		$this->data->method('send')
 			->willReturn(1);
 		$this->l10nFactory
@@ -94,6 +100,7 @@ class ConsumerTest extends TestCase {
 			$this->userSettings,
 			$this->notificationGenerator,
 			$this->userConfig,
+			$this->appConfig,
 		);
 
 		$this->event = Server::get(IManager::class)->generateEvent();
@@ -142,6 +149,7 @@ class ConsumerTest extends TestCase {
 			$this->userSettings,
 			$this->notificationGenerator,
 			$this->userConfig,
+			$this->appConfig,
 		);
 		$event = Server::get(IManager::class)->generateEvent();
 		$event->setApp('test')
@@ -261,6 +269,256 @@ class ConsumerTest extends TestCase {
 		}
 
 		$this->consumer->bulkReceive($this->event, $affectedUsers, $settings);
+	}
+
+	public function testBulkReceiveEmail(): void {
+		$time = time();
+		$this->event->setApp('activity')
+			->setType('type')
+			->setAuthor('author')
+			->setTimestamp($time)
+			->setSubject('subject', ['subjectParam1'])
+			->setMessage('message', ['messageParam1'])
+			->setObject('', 0, 'file')
+			->setLink('link');
+
+		$settings = $this->createMock(ActivitySettings::class);
+		$settings->method('canChangeMail')->willReturn(true);
+		$settings->method('isDefaultEnabledMail')->willReturn(true);
+		$settings->method('canChangeNotification')->willReturn(false);
+
+		$this->data->expects($this->once())
+			->method('bulkSend')
+			->willReturn([1 => 'affectedUser', 2 => 'affectedUser2']);
+
+		$this->userConfig->method('getValuesByUsers')
+			->willReturnCallback(function (string $app, string $key, mixed $type, array $users): array {
+				if (str_contains($key, 'email')) {
+					return array_fill_keys($users, true);
+				}
+				if (str_contains($key, 'batchtime')) {
+					return array_fill_keys($users, 10);
+				}
+				return [];
+			});
+
+		$this->data->expects($this->exactly(2))
+			->method('storeMail');
+
+		$this->consumer->bulkReceive($this->event, ['affectedUser', 'affectedUser2'], $settings);
+	}
+
+	public function testBulkReceiveNoMailWhenSettingDisabled(): void {
+		$this->event->setApp('activity')
+			->setType('type')
+			->setAuthor('author')
+			->setTimestamp(time())
+			->setSubject('subject', ['subjectParam1'])
+			->setMessage('message', ['messageParam1'])
+			->setObject('', 0, 'file')
+			->setLink('link');
+
+		$settings = $this->createMock(ActivitySettings::class);
+		$settings->method('canChangeMail')->willReturn(false);
+		$settings->method('isDefaultEnabledMail')->willReturn(false);
+		$settings->method('canChangeNotification')->willReturn(false);
+
+		$this->data->expects($this->once())
+			->method('bulkSend')
+			->willReturn([1 => 'affectedUser']);
+
+		$this->data->expects($this->never())
+			->method('storeMail');
+		$this->notificationGenerator->expects($this->never())
+			->method('sendNotificationForEvent');
+
+		$this->consumer->bulkReceive($this->event, ['affectedUser'], $settings);
+	}
+
+	public function testBulkReceiveDeferAndFlushNotifications(): void {
+		$this->event->setApp('activity')
+			->setType('type')
+			->setAuthor('author')
+			->setTimestamp(time())
+			->setSubject('subject', ['subjectParam1'])
+			->setMessage('message', ['messageParam1'])
+			->setObject('', 0, 'file')
+			->setLink('link');
+
+		$settings = $this->createMock(ActivitySettings::class);
+		$settings->method('canChangeMail')->willReturn(false);
+		$settings->method('isDefaultEnabledMail')->willReturn(false);
+		$settings->method('canChangeNotification')->willReturn(true);
+
+		$this->data->expects($this->once())
+			->method('bulkSend')
+			->willReturn([1 => 'affectedUser']);
+
+		$this->userConfig->method('getValuesByUsers')
+			->willReturnCallback(function (string $app, string $key, mixed $type, array $users): array {
+				return array_fill_keys($users, true);
+			});
+
+		$this->notificationGenerator->expects($this->once())
+			->method('deferNotifications')
+			->willReturn(true);
+		$this->notificationGenerator->expects($this->once())
+			->method('flushNotifications');
+		$this->notificationGenerator->expects($this->once())
+			->method('sendNotificationForEvent');
+
+		$this->consumer->bulkReceive($this->event, ['affectedUser'], $settings);
+	}
+
+	public function testBulkReceiveNoFlushWhenDeferReturnsFalse(): void {
+		$this->event->setApp('activity')
+			->setType('type')
+			->setAuthor('author')
+			->setTimestamp(time())
+			->setSubject('subject', ['subjectParam1'])
+			->setMessage('message', ['messageParam1'])
+			->setObject('', 0, 'file')
+			->setLink('link');
+
+		$settings = $this->createMock(ActivitySettings::class);
+		$settings->method('canChangeMail')->willReturn(false);
+		$settings->method('isDefaultEnabledMail')->willReturn(false);
+		$settings->method('canChangeNotification')->willReturn(true);
+
+		$this->data->expects($this->once())
+			->method('bulkSend')
+			->willReturn([1 => 'affectedUser']);
+
+		$this->userConfig->method('getValuesByUsers')
+			->willReturnCallback(function (string $app, string $key, mixed $type, array $users): array {
+				return array_fill_keys($users, true);
+			});
+
+		$this->notificationGenerator->expects($this->once())
+			->method('deferNotifications')
+			->willReturn(false);
+		$this->notificationGenerator->expects($this->never())
+			->method('flushNotifications');
+
+		$this->consumer->bulkReceive($this->event, ['affectedUser'], $settings);
+	}
+
+	public function testBulkReceiveMultipleUsersWithMixedSettings(): void {
+		$time = time();
+		$this->event->setApp('activity')
+			->setType('type')
+			->setAuthor('author')
+			->setTimestamp($time)
+			->setSubject('subject', ['subjectParam1'])
+			->setMessage('message', ['messageParam1'])
+			->setObject('', 0, 'file')
+			->setLink('link');
+
+		$settings = $this->createMock(ActivitySettings::class);
+		$settings->method('canChangeMail')->willReturn(true);
+		$settings->method('isDefaultEnabledMail')->willReturn(true);
+		$settings->method('canChangeNotification')->willReturn(true);
+
+		$this->data->expects($this->once())
+			->method('bulkSend')
+			->willReturn([1 => 'user1', 2 => 'user2', 3 => 'author']);
+
+		$this->userConfig->method('getValuesByUsers')
+			->willReturnCallback(function (string $app, string $key, mixed $type, array $users): array {
+				if (str_contains($key, 'notification')) {
+					// Only user1 has notifications enabled
+					return ['user1' => true];
+				}
+				if (str_contains($key, 'email')) {
+					// Only user2 has email enabled
+					return ['user2' => true];
+				}
+				if (str_contains($key, 'batchtime')) {
+					return ['user2' => 15];
+				}
+				return [];
+			});
+
+		// only user1 has an explicit notification=true in DB; user2 has no entry so falls back to isDefaultEnabledNotification()=false
+		$this->notificationGenerator->expects($this->once())
+			->method('sendNotificationForEvent');
+		// user2 gets email, author is skipped
+		$this->data->expects($this->once())
+			->method('storeMail')
+			->with($this->event, $time + 15);
+
+		$this->consumer->bulkReceive($this->event, ['user1', 'user2', 'author'], $settings);
+	}
+
+	public function testBulkReceiveNoMailWhenAdminEmailDisabled(): void {
+		$time = time();
+		$this->event->setApp('activity')
+			->setType('type')
+			->setAuthor('author')
+			->setTimestamp($time)
+			->setSubject('subject', ['subjectParam1'])
+			->setMessage('message', ['messageParam1'])
+			->setObject('', 0, 'file')
+			->setLink('link');
+
+		$appConfig = $this->createMock(IAppConfig::class);
+		$appConfig->method('getValueString')
+			->with('activity', 'enable_email', 'yes')
+			->willReturn('no');
+
+		$consumer = new Consumer(
+			$this->data,
+			$this->activityManager,
+			$this->userSettings,
+			$this->notificationGenerator,
+			$this->userConfig,
+			$appConfig,
+		);
+
+		$settings = $this->createMock(ActivitySettings::class);
+		$settings->method('canChangeMail')->willReturn(true);
+		$settings->method('isDefaultEnabledMail')->willReturn(true);
+		$settings->method('canChangeNotification')->willReturn(false);
+		$settings->method('isDefaultEnabledNotification')->willReturn(false);
+
+		$this->data->expects($this->once())
+			->method('bulkSend')
+			->willReturn([1 => 'affectedUser']);
+
+		$this->userConfig->expects($this->never())
+			->method('getValuesByUsers');
+
+		$this->data->expects($this->never())
+			->method('storeMail');
+
+		$consumer->bulkReceive($this->event, ['affectedUser'], $settings);
+	}
+
+	public function testBulkReceiveWithISetting(): void {
+		$this->event->setApp('activity')
+			->setType('type')
+			->setAuthor('author')
+			->setTimestamp(time())
+			->setSubject('subject', ['subjectParam1'])
+			->setMessage('message', ['messageParam1'])
+			->setObject('', 0, 'file')
+			->setLink('link');
+
+		// ISetting (not ActivitySettings) — canChangeNotification is not available
+		$settings = $this->createMock(ISetting::class);
+		$settings->method('canChangeMail')->willReturn(false);
+
+		$this->data->expects($this->once())
+			->method('bulkSend')
+			->willReturn([1 => 'affectedUser']);
+
+		// ISetting is not ActivitySettings so $defaultPushEnabled is false — no notification sent
+		$this->notificationGenerator->expects($this->never())
+			->method('sendNotificationForEvent');
+		$this->data->expects($this->never())
+			->method('storeMail');
+
+		$this->consumer->bulkReceive($this->event, ['affectedUser'], $settings);
 	}
 
 }
