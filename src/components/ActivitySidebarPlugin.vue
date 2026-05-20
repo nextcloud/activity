@@ -23,7 +23,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-	(e: 'reload-activities'): void
+	(e: 'reloadActivities'): void
 }>()
 
 const attachTarget = ref<HTMLDivElement>()
@@ -31,7 +31,7 @@ const attachTarget = ref<HTMLDivElement>()
 onMounted(() => props.plugin.mount(attachTarget.value as HTMLDivElement, {
 	node: props.node,
 	context: getCurrentInstance()?.proxy ?? undefined,
-	reload: () => emit('reload-activities'),
+	reload: () => emit('reloadActivities'),
 }))
 onBeforeUnmount(() => props.plugin.unmount())
 </script>

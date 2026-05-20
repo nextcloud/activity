@@ -6,9 +6,9 @@
 <template>
 	<NcSettingsSection :name="t('activity', 'Notification')">
 		<NcCheckboxRadioSwitch
-			type="checkbox"
 			v-model="emailEnabled"
-			@update:model-value="toggleEmailEnabled({ emailEnabled: $event })">
+			type="checkbox"
+			@update:modelValue="toggleEmailEnabled({ emailEnabled: $event })">
 			{{ t('activity', 'Enable notification emails') }}
 		</NcCheckboxRadioSwitch>
 	</NcSettingsSection>

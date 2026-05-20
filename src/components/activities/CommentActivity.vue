@@ -6,7 +6,7 @@
 	<li class="activity-entry comments-activity">
 		<NcAvatar
 			class="comments-activity__icon"
-			:disable-menu="false"
+			:disableMenu="false"
 			:user="authorId" />
 		<div class="comments-activity__content">
 			<NcRichText
@@ -24,7 +24,7 @@
 			class="comments-activity__date"
 			data-testid="activity-date"
 			:timestamp="timestamp"
-			:ignore-seconds="true" />
+			:ignoreSeconds="true" />
 	</li>
 </template>
 

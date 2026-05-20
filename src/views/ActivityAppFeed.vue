@@ -50,25 +50,26 @@
 </template>
 
 <script setup lang="ts">
+import type { IRawActivity } from '../models/types.ts'
+
 import ncAxios from '@nextcloud/axios'
 import { showError } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import { translate as t } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import { generateOcsUrl } from '@nextcloud/router'
-import { useDocumentVisibility, useInfiniteScroll, useDebounceFn } from '@vueuse/core'
+import { useDebounceFn, useDocumentVisibility, useInfiniteScroll } from '@vueuse/core'
 import axios from 'axios'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
-import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
 import ActivityGroup from '../components/ActivityGroup.vue'
 import appIconSVG from '../../img/activity-dark.svg?raw'
 import ActivityModel from '../models/ActivityModel.ts'
-import type { IRawActivity } from '../models/types.ts'
 import logger from '../utils/logger.ts'
 
 interface INavigationEntry {
@@ -77,10 +78,6 @@ interface INavigationEntry {
 	name: string
 	url: string
 }
-
-const navigationList = loadState<INavigationEntry[]>(appName, 'navigationList')
-
-const route = useRoute()
 
 const props = withDefaults(defineProps<{
 	/**
@@ -91,6 +88,10 @@ const props = withDefaults(defineProps<{
 	// default to 'all'
 	filter: 'all',
 })
+
+const navigationList = loadState<INavigationEntry[]>(appName, 'navigationList')
+
+const route = useRoute()
 
 /**
  * Whether activities are currently being loaded
@@ -290,6 +291,9 @@ const onScroll = useDebounceFn(() => {
 	}
 }, 100)
 
+/**
+ *
+ */
 function startPolling() {
 	stopPolling()
 	// Use a sentinel value so the self-scheduling logic in pollNewActivities
@@ -297,6 +301,9 @@ function startPolling() {
 	pollTimer = setTimeout(pollNewActivities, POLL_INTERVAL)
 }
 
+/**
+ *
+ */
 function stopPolling() {
 	if (pollTimer !== undefined) {
 		clearTimeout(pollTimer)

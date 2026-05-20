@@ -63,7 +63,7 @@ export interface IRawActivity {
 	 *
 	 * The rich object might be an empty array due to php associative array to json object conversion
 	 */
-	subject_rich: [string, Record<string, IRichObject> | readonly never[] ]
+	subject_rich: [string, Record<string, IRichObject> | readonly never[]]
 	message: string
 	/**
 	 * The message as sting with placeholders and rich object for formatting.
