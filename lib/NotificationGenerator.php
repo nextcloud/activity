@@ -118,7 +118,12 @@ class NotificationGenerator implements INotifier {
 		$event = $this->populateEvent($event, $languageCode);
 		$this->activityManager->setCurrentUserId(null);
 
-		return $this->getDisplayNotificationForEvent($event, $event->getObjectId());
+		try {
+			return $this->getDisplayNotificationForEvent($event, $event->getObjectId());
+		} catch (\InvalidArgumentException $e) {
+			$this->logger->error('Failed to format activity notification', ['exception' => $e]);
+			throw new AlreadyProcessedException();
+		}
 	}
 
 	private function getDisplayNotificationForEvent(IEvent $event, int $activityId): INotification {
