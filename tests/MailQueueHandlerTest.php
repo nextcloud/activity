@@ -34,6 +34,7 @@ use OCA\Activity\MailQueueHandler;
 use OCA\Activity\UserSettings;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
+use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
@@ -65,6 +66,7 @@ class MailQueueHandlerTest extends TestCase {
 	protected IFactory&MockObject $lFactory;
 	protected IManager&MockObject $activityManager;
 	protected IValidator&MockObject $richObjectValidator;
+	protected IAppConfig&MockObject $appConfig;
 	protected IConfig&MockObject $config;
 	protected MockObject&LoggerInterface $logger;
 
@@ -81,6 +83,7 @@ class MailQueueHandlerTest extends TestCase {
 		$app = self::getUniqueID('MailQueueHandlerTest', 10);
 		$this->userManager = $this->createMock(IUserManager::class);
 		$this->lFactory = $this->createMock(IFactory::class);
+		$this->appConfig = $this->createMock(IAppConfig::class);
 		$this->config = $this->createMock(IConfig::class);
 		$this->logger = $this->createMock(LoggerInterface::class);
 		$this->dateTimeFormatter = $this->createMock(IDateTimeFormatter::class);
@@ -141,6 +144,7 @@ class MailQueueHandlerTest extends TestCase {
 			$this->lFactory,
 			$this->activityManager,
 			$this->richObjectValidator,
+			$this->appConfig,
 			$this->config,
 			$this->logger,
 			$this->data,
@@ -300,6 +304,10 @@ class MailQueueHandlerTest extends TestCase {
 	public function testSendEmailsDeletesQueueOnMailerFailure(): void {
 		$maxTime = 200;
 
+		$this->appConfig->method('getValueBool')
+			->with('activity', 'enable_email', true)
+			->willReturn(true);
+
 		$template = $this->createMock(IEMailTemplate::class);
 		$this->mailer->method('createEMailTemplate')
 			->willReturn($template);
@@ -340,6 +348,10 @@ class MailQueueHandlerTest extends TestCase {
 	public function testSendEmailsDeletesQueueOnSendReturnFalse(): void {
 		$maxTime = 200;
 
+		$this->appConfig->method('getValueBool')
+			->with('activity', 'enable_email', true)
+			->willReturn(true);
+
 		$template = $this->createMock(IEMailTemplate::class);
 		$this->mailer->method('createEMailTemplate')
 			->willReturn($template);
@@ -367,6 +379,27 @@ class MailQueueHandlerTest extends TestCase {
 		foreach (['user1', 'user2', 'user3'] as $user) {
 			[$data,] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
 			$this->assertEmpty($data, "Queue entries for $user should be removed after sendEmailToUser returns false to prevent duplicate notifications");
+		}
+	}
+
+	public function testSendEmailsSkipsWhenAdminEmailDisabled(): void {
+		$maxTime = 200;
+
+		$this->appConfig->method('getValueBool')
+			->with('activity', 'enable_email', true)
+			->willReturn(false);
+
+		$this->mailer->expects($this->never())
+			->method('send');
+
+		$result = $this->mailQueueHandler->sendEmails(3, $maxTime);
+
+		$this->assertSame(0, $result);
+
+		// Queue must be untouched so emails can be sent if admin re-enables the toggle
+		foreach (['user1', 'user2', 'user3'] as $user) {
+			[$data,] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			$this->assertNotEmpty($data, "Queue entries for $user must survive when email is globally disabled");
 		}
 	}
 
