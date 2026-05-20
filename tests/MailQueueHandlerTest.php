@@ -78,6 +78,9 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var IValidator|MockObject */
 	protected $richObjectValidator;
 
+	/** @var IAppConfig|MockObject */
+	protected $appConfig;
+
 	/** @var IConfig|MockObject */
 	protected $config;
 
