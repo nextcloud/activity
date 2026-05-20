@@ -722,8 +722,14 @@ class FilesHooksTest extends TestCase {
 
 		$this->settings->expects($this->exactly($settingCalls))
 			->method('filterUsersBySetting')
-			#->with($settingUsers, $this->anything(), Files_Sharing::TYPE_SHARED)
-			->willReturnMap($settingsReturn);
+			->willReturnCallback(function ($users, $method, $type) use ($settingsReturn): array {
+				foreach ($settingsReturn as [$u, $m, $t, $v]) {
+					if ($u === $users && $m === $method && $t === $type) {
+						return $v;
+					}
+				}
+				return [];
+			});
 
 		$filesHooks->expects($this->once())
 			->method('shareNotificationForSharer')
