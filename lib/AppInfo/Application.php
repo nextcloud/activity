@@ -31,6 +31,7 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\DB\Events\AddMissingIndicesEvent;
+use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
@@ -117,6 +118,7 @@ class Application extends App implements IBootstrap {
 				$c->get(IFactory::class),
 				$c->get(IManager::class),
 				$c->get(IValidator::class),
+				$c->get(IAppConfig::class),
 				$c->get(IConfig::class),
 				$c->get(LoggerInterface::class),
 				$c->get(Data::class),

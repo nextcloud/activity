@@ -11,6 +11,7 @@ use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\Defaults;
+use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
@@ -51,6 +52,7 @@ class MailQueueHandler {
 		protected IFactory $lFactory,
 		protected IManager $activityManager,
 		protected IValidator $richObjectValidator,
+		protected IAppConfig $appConfig,
 		protected IConfig $config,
 		protected LoggerInterface $logger,
 		protected Data $data,
@@ -70,6 +72,10 @@ class MailQueueHandler {
 	 * @return int Number of users we sent an email to
 	 */
 	public function sendEmails(int $limit, int $sendTime, bool $forceSending = false, ?int $restrictEmails = null): int {
+		if (!$this->appConfig->getValueBool('activity', 'enable_email', true)) {
+			return 0;
+		}
+
 		// Get all users which should receive an email
 		$affectedUsers = $this->getAffectedUsers($limit, $sendTime, $forceSending, $restrictEmails);
 		if (empty($affectedUsers)) {
