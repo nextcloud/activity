@@ -7,6 +7,7 @@
 
 namespace OCA\Activity\Settings;
 
+use OCA\Activity\DatabaseStats;
 use OCA\Activity\UserSettings;
 use OCP\Activity\ActivitySettings;
 use OCP\Activity\IExtension;
@@ -18,18 +19,14 @@ use OCP\IL10N;
 use OCP\Settings\ISettings;
 
 class Admin implements ISettings {
-	private IConfig $config;
-	private IL10N $l10n;
-	private IManager $manager;
-	private UserSettings $userSettings;
-	private IInitialState $initialState;
-
-	public function __construct(IConfig $config, IL10N $l10n, UserSettings $userSettings, IManager $manager, IInitialState $initialState) {
-		$this->config = $config;
-		$this->l10n = $l10n;
-		$this->manager = $manager;
-		$this->userSettings = $userSettings;
-		$this->initialState = $initialState;
+	public function __construct(
+		private IConfig $config,
+		private IL10N $l10n,
+		private UserSettings $userSettings,
+		private IManager $manager,
+		private IInitialState $initialState,
+		private DatabaseStats $databaseStats,
+	) {
 	}
 
 	#[\Override]
@@ -103,6 +100,13 @@ class Admin implements ISettings {
 		$this->initialState->provideInitialState('methods', [
 			IExtension::METHOD_MAIL => $this->l10n->t('Mail'),
 			IExtension::METHOD_NOTIFICATION => $this->l10n->t('Push'),
+		]);
+
+		$tableSizes = $this->databaseStats->getTableSizesInBytes();
+		$this->initialState->provideInitialState('database_stats', [
+			'dedicated_connection' => $this->databaseStats->isDedicatedConnection(),
+			'tables' => $tableSizes,
+			'retention_suggestion' => $this->databaseStats->getRetentionSuggestion($tableSizes),
 		]);
 
 		return new TemplateResponse('activity', 'settings/admin', [], TemplateResponse::RENDER_AS_BLANK);
