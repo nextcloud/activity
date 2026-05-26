@@ -8,9 +8,8 @@ import wsData from './activity_ws.json' with { type: 'json' }
 const axios = {
 	/**
 	 * @param {string} url URL to get
-	 * @param {object} [config] Axios config
 	 */
-	get(url, config) {
+	get(url) {
 		return new Promise((resolve, reject) => {
 			if (url.endsWith('/ocs/v2.php/apps/activity/api/v2/activity/filter')) {
 				resolve({ data: wsData })

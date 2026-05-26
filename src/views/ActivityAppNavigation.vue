@@ -23,17 +23,17 @@
 		</template>
 		<template #footer>
 			<NcAppNavigationSettings :name="t('activity', 'Activity settings')">
-				<NcCheckboxRadioSwitch type="switch" v-model="hasRSSLink" @update:model-value="toggleRSSLink">
+				<NcCheckboxRadioSwitch v-model="hasRSSLink" type="switch" @update:modelValue="toggleRSSLink">
 					{{ t('activity', 'Enable RSS feed') }}
 				</NcCheckboxRadioSwitch>
 				<NcInputField
 					v-if="hasRSSLink"
 					v-model="rssLink"
 					:label="t('activity', 'RSS feed')"
-					:show-trailing-button="true"
-					:trailing-button-label="t('activity', 'Copy RSS feed link')"
+					:showTrailingButton="true"
+					:trailingButtonLabel="t('activity', 'Copy RSS feed link')"
 					readonly="readonly"
-					@trailing-button-click="copyRSSLink">
+					@trailingButtonClick="copyRSSLink">
 					<template #trailing-button-icon>
 						<IconContentCopy :size="20" />
 					</template>

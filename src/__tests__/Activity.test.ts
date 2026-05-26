@@ -23,7 +23,7 @@ afterAll(() => {
 	vi.useRealTimers()
 })
 
-const expectLinkWithText = (wrapper, text) => {
+function expectLinkWithText(wrapper, text) {
 	const filtered = wrapper.findAll('a').filter((element) => element.text().includes(text))
 	expect(filtered.length).toBe(1)
 

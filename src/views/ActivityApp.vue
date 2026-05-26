@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<NcContent app-name="activity">
+	<NcContent appName="activity">
 		<router-view name="navigation" />
 		<router-view />
 	</NcContent>

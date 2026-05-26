@@ -15,7 +15,7 @@ import wsData from '../__mocks__/@nextcloud/activity_ws.json'
 
 // vi.hoisted runs before any vi.mock factory, so this ref is available in the
 // @vueuse/core factory below without vitest's hoisting causing a TDZ error.
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const visibilityRef = vi.hoisted(() => require('vue').ref('visible'))
 
 vi.mock('@nextcloud/axios', () => ({
@@ -35,12 +35,10 @@ vi.mock(import('@nextcloud/router'), async (importOriginal) => {
 	const actual = await importOriginal()
 	return {
 		...actual,
-		generateOcsUrl: vi.fn((template: string, params: Record<string, string>) =>
-			Object.entries(params).reduce(
-				(url, [k, v]) => url.replace(`{${k}}`, String(v)),
-				`/ocs/${template}`,
-			),
-		),
+		generateOcsUrl: vi.fn((template: string, params: Record<string, string>) => Object.entries(params).reduce(
+			(url, [k, v]) => url.replace(`{${k}}`, String(v)),
+			`/ocs/${template}`,
+		)),
 	}
 })
 
@@ -204,9 +202,7 @@ describe('ActivityAppFeed', () => {
 			const wrapper = await mountFeed()
 			const countBefore = wrapper.findAll('.activity-group').length
 
-			vi.mocked(ncAxios.get).mockResolvedValueOnce(
-				makeResponse([makeActivityEntry(100)], '100'),
-			)
+			vi.mocked(ncAxios.get).mockResolvedValueOnce(makeResponse([makeActivityEntry(100)], '100'))
 			vi.advanceTimersByTime(POLL_INTERVAL)
 			await flushPromises()
 
@@ -235,9 +231,9 @@ describe('ActivityAppFeed', () => {
 
 			// Slow poll that never resolves during this test
 			let resolvePoll!: (v: unknown) => void
-			vi.mocked(ncAxios.get).mockReturnValueOnce(
-				new Promise((resolve) => { resolvePoll = resolve }),
-			)
+			vi.mocked(ncAxios.get).mockReturnValueOnce(new Promise((resolve) => {
+				resolvePoll = resolve
+			}))
 
 			vi.advanceTimersByTime(POLL_INTERVAL)
 			// pollNewActivities is now suspended at await ncAxios.get.
@@ -261,9 +257,7 @@ describe('ActivityAppFeed', () => {
 				{ value: 200, configurable: true },
 			)
 
-			vi.mocked(ncAxios.get).mockResolvedValueOnce(
-				makeResponse([makeActivityEntry(100)], '100'),
-			)
+			vi.mocked(ncAxios.get).mockResolvedValueOnce(makeResponse([makeActivityEntry(100)], '100'))
 			vi.advanceTimersByTime(POLL_INTERVAL)
 			await flushPromises()
 
@@ -279,9 +273,7 @@ describe('ActivityAppFeed', () => {
 				{ value: 0, configurable: true },
 			)
 
-			vi.mocked(ncAxios.get).mockResolvedValueOnce(
-				makeResponse([makeActivityEntry(100)], '100'),
-			)
+			vi.mocked(ncAxios.get).mockResolvedValueOnce(makeResponse([makeActivityEntry(100)], '100'))
 			vi.advanceTimersByTime(POLL_INTERVAL)
 			await flushPromises()
 
@@ -321,9 +313,7 @@ describe('ActivityAppFeed', () => {
 				'scrollTop',
 				{ value: 200, configurable: true },
 			)
-			vi.mocked(ncAxios.get).mockResolvedValueOnce(
-				makeResponse([makeActivityEntry(100)], '100'),
-			)
+			vi.mocked(ncAxios.get).mockResolvedValueOnce(makeResponse([makeActivityEntry(100)], '100'))
 			vi.advanceTimersByTime(POLL_INTERVAL)
 			await flushPromises()
 			return wrapper

@@ -12,7 +12,7 @@
 			v-for="activity in activities"
 			:key="activity.id"
 			:activity="activity"
-			:show-previews="true" />
+			:showPreviews="true" />
 	</ul>
 </template>
 

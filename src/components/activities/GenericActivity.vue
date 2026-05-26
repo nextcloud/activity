@@ -8,8 +8,8 @@
 		<NcAvatar
 			class="activity-entry__icon activity-icon avatardiv--unknown"
 			:class="[applyMonochromeIconColor]"
-			:disable-menu="true"
-			:disable-tooltip="true"
+			:disableMenu="true"
+			:disableTooltip="true"
 			:url="activity.icon"
 			:size="20" />
 
@@ -21,7 +21,7 @@
 		<NcDateTime
 			class="activity-entry__date"
 			:timestamp="timestamp"
-			:ignore-seconds="true"
+			:ignoreSeconds="true"
 			data-testid="activity-date" />
 		<ul v-if="showPreviews" class="activity-entry__preview-wrapper">
 			<li

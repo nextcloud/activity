@@ -21,13 +21,13 @@
 					:key="index"
 					:plugin="plugin"
 					:node="node"
-					@reload-activities="getActivities()" />
+					@reloadActivities="getActivities()" />
 			</div>
 
 			<!-- download summary -->
 			<DownloadSummary
 				v-if="hasPublicLink && node.fileid"
-				:file-id="node.fileid" />
+				:fileId="node.fileid" />
 
 			<!-- activities content -->
 			<NcEmptyContent
@@ -51,7 +51,7 @@
 					v-for="activity in activities"
 					:key="activity.id"
 					:activity="activity"
-					:show-previews="false"
+					:showPreviews="false"
 					@reload="getActivities()" />
 			</ul>
 		</template>
@@ -233,7 +233,8 @@ const ActivityTab = defineComponent({
 			activities = activities.map((activity) => new ActivityModel(activity))
 
 			logger.debug(`Processed ${activities.length} activity(ies)`, {
-				activities, node: this.node,
+				activities,
+				node: this.node,
 			})
 
 			const filters = getActivityFilters()

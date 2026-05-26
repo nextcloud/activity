@@ -6,9 +6,9 @@
 <template>
 	<NcSettingsSection :name="t('activity', 'Daily activity summary')">
 		<NcCheckboxRadioSwitch
-			data-cy-checkbox
 			v-model="activityDigestEnabled"
-			@update:model-value="toggleActivityDigestEnabled({ activityDigestEnabled: $event })">
+			data-cy-checkbox
+			@update:modelValue="toggleActivityDigestEnabled({ activityDigestEnabled: $event })">
 			{{ t('activity', 'Send daily activity summary in the morning') }}
 		</NcCheckboxRadioSwitch>
 	</NcSettingsSection>
