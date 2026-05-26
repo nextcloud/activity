@@ -285,6 +285,129 @@ class DataTest extends TestCase {
 		$this->deleteTestActivities();
 	}
 
+	public static function dataExcludedAuthor(): array {
+		return [
+			// author+type match → blocked
+			['alice', 'target', 'file_created', ['alice' => ['file_created']], false],
+			// type mismatch → allowed
+			['alice', 'target', 'file_created', ['alice' => ['file_deleted']], true],
+			// different user → allowed
+			['bob', 'target', 'file_created', ['alice' => ['file_created']], true],
+			// empty config → allowed
+			['alice', 'target', 'file_created', [], true],
+			// non-array rule → allowed
+			['alice', 'target', 'file_created', ['alice' => 'file_created'], true],
+		];
+	}
+
+	#[DataProvider('dataExcludedAuthor')]
+	public function testSendWithExcludedAuthor(string $author, string $affectedUser, string $type, array $excludedUsers, bool $expectedInsert): void {
+		$this->deleteTestActivities();
+
+		$this->config->method('getSystemValue')
+			->with('activity_log_exclude_users', [])
+			->willReturn($excludedUsers);
+
+		$event = $this->realActivityManager->generateEvent();
+		$event->setApp('test')
+			->setType($type)
+			->setAuthor($author)
+			->setAffectedUser($affectedUser)
+			->setSubject('subject');
+
+		$result = $this->data->send($event);
+		$this->assertSame($expectedInsert, $result !== 0);
+
+		$qb = $this->dbConnection->getQueryBuilder();
+		$row = $qb->select('user', 'affecteduser')
+			->from('activity')
+			->where($qb->expr()->eq('app', $qb->createNamedParameter('test')))
+			->orderBy('activity_id', 'DESC')
+			->executeQuery()
+			->fetch();
+
+		if ($expectedInsert) {
+			$this->assertEquals(['user' => $author, 'affecteduser' => $affectedUser], $row);
+		} else {
+			$this->assertFalse($row);
+		}
+
+		$this->deleteTestActivities();
+	}
+
+	#[DataProvider('dataExcludedAuthor')]
+	public function testStoreMailWithExcludedAuthor(string $author, string $affectedUser, string $type, array $excludedUsers, bool $expectedInsert): void {
+		$this->deleteTestMails();
+
+		$this->config->method('getSystemValue')
+			->with('activity_log_exclude_users', [])
+			->willReturn($excludedUsers);
+
+		$time = time();
+		$event = $this->realActivityManager->generateEvent();
+		$event->setApp('test')
+			->setType($type)
+			->setAuthor($author)
+			->setAffectedUser($affectedUser)
+			->setSubject('subject')
+			->setTimestamp($time);
+
+		$this->assertSame($expectedInsert, $this->data->storeMail($event, $time + 10));
+
+		$qb = $this->dbConnection->getQueryBuilder();
+		$row = $qb->select('amq_latest_send', 'amq_affecteduser')
+			->from('activity_mq')
+			->where($qb->expr()->eq('amq_appid', $qb->createNamedParameter('test')))
+			->orderBy('mail_id', 'DESC')
+			->executeQuery()
+			->fetch();
+
+		if ($expectedInsert) {
+			$this->assertEquals(['amq_latest_send' => $time + 10, 'amq_affecteduser' => $affectedUser], $row);
+		} else {
+			$this->assertFalse($row);
+		}
+
+		$this->deleteTestMails();
+	}
+
+	#[DataProvider('dataExcludedAuthor')]
+	public function testBulkSendWithExcludedAuthor(string $author, string $_affectedUser, string $type, array $excludedUsers, bool $expectedInsert): void {
+		$this->deleteTestActivities();
+
+		$this->config->method('getSystemValue')
+			->with('activity_log_exclude_users', [])
+			->willReturn($excludedUsers);
+
+		$event = $this->realActivityManager->generateEvent();
+		$event->setApp('test')
+			->setType($type)
+			->setAuthor($author)
+			->setSubject('subject')
+			->setTimestamp(time());
+
+		$bulkUsers = ['user1', 'user2'];
+		$result = $this->data->bulkSend($event, $bulkUsers);
+
+		if ($expectedInsert) {
+			$this->assertCount(2, $result);
+			$this->assertEqualsCanonicalizing($bulkUsers, array_values($result));
+		} else {
+			$this->assertEmpty($result);
+		}
+
+		$qb = $this->dbConnection->getQueryBuilder();
+		$count = (int)$qb->select($qb->func()->count('activity_id', 'count'))
+			->from('activity')
+			->where($qb->expr()->eq('app', $qb->createNamedParameter('test')))
+			->executeQuery()
+			->fetch()['count'];
+
+		$this->assertSame($expectedInsert ? 2 : 0, $count);
+
+		$this->deleteTestActivities();
+	}
+
 	/**
 	 * Delete all testing activities
 	 */
