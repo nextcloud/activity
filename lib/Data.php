@@ -40,13 +40,51 @@ class Data {
 	}
 
 	/**
+	 * Check if the event should be processed (not excluded and has valid target)
+	 *
+	 * @param IEvent $event
+	 * @return bool
+	 */
+	private function shouldSend(IEvent $event): bool {
+		return $event->getAffectedUser() !== '' && !$this->isExcludedAuthor($event);
+	}
+
+	/**
+	 * Check if the event's author is excluded from activity logging
+	 *
+	 * @param IEvent $event
+	 * @return bool
+	 */
+	private function isExcludedAuthor(IEvent $event): bool {
+		$excludedUsers = $this->config->getSystemValue('activity_log_exclude_users', []);
+		if (empty($excludedUsers)) {
+			return false;
+		}
+		$author = $event->getAuthor();
+		if ($author === null || $author === '') {
+			return false;
+		}
+		if (!isset($excludedUsers[$author])) {
+			return false;
+		}
+		$rule = $excludedUsers[$author];
+		if ($rule === 'all') {
+			return true;
+		}
+		if (is_array($rule)) {
+			return in_array($event->getType(), $rule, true);
+		}
+		return false;
+	}
+
+	/**
 	 * Send an event into the activity stream
 	 *
 	 * @param IEvent $event
 	 * @return int
 	 */
 	public function send(IEvent $event): int {
-		if ($event->getAffectedUser() === '') {
+		if (!$this->shouldSend($event)) {
 			return 0;
 		}
 
@@ -104,6 +142,10 @@ class Data {
 	 * @throws Exception
 	 */
 	public function bulkSend(IEvent $event, array $affectedUsers): array {
+		if ($this->isExcludedAuthor($event)) {
+			return [];
+		}
+
 		$this->connection->beginTransaction();
 
 		$activityIds = [];
@@ -170,8 +212,7 @@ class Data {
 	 * @return bool
 	 */
 	public function storeMail(IEvent $event, int $latestSendTime): bool {
-		$affectedUser = $event->getAffectedUser();
-		if ($affectedUser === '') {
+		if (!$this->shouldSend($event)) {
 			return false;
 		}
 
