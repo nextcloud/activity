@@ -61,16 +61,10 @@ class Data {
 			return false;
 		}
 		$author = $event->getAuthor();
-		if ($author === null || $author === '') {
-			return false;
-		}
-		if (!isset($excludedUsers[$author])) {
+		if ($author === null || $author === '' || !isset($excludedUsers[$author])) {
 			return false;
 		}
 		$rule = $excludedUsers[$author];
-		if ($rule === 'all') {
-			return true;
-		}
 		if (is_array($rule)) {
 			return in_array($event->getType(), $rule, true);
 		}
