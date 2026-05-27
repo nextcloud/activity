@@ -236,7 +236,7 @@ class Data {
 			'amq_appid' => $event->getApp(),
 			'amq_subject' => $event->getSubject(),
 			'amq_subjectparams' => json_encode($event->getSubjectParameters()),
-			'amq_affecteduser' => $affectedUser,
+			'amq_affecteduser' => $event->getAffectedUser(),
 			'amq_timestamp' => $event->getTimestamp(),
 			'amq_type' => $event->getType(),
 			'amq_latest_send' => $latestSendTime,
