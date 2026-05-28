@@ -135,10 +135,14 @@ async function copyRSSLink() {
 	}
 
 	.app-navigation-entry {
-		&.active .navigation-icon {
+		// NC34+ active design uses --color-primary-element-light background
+		// with --color-main-text, so icons follow the same invert logic as non-active items.
+		// Legacy NC<34 used the full primary color background, requiring --primary-invert-if-dark.
+		&.active.app-navigation-entry--legacy .navigation-icon {
 			filter: var(--primary-invert-if-dark);
 		}
 
+		&.active:not(.app-navigation-entry--legacy) .navigation-icon,
 		&:not(.active) .navigation-icon {
 			filter: var(--background-invert-if-dark);
 		}
