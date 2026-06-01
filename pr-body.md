@@ -1,18 +1,5 @@
 # Audit report
-
-This audit fix resolves 1 of the total 18 vulnerabilities found in your project.
-
-## Updated dependencies
-* [@nextcloud/cypress](#user-content-\\@nextcloud\\/cypress)
-## Fixed vulnerabilities
-
-### `@nextcloud/cypress` <a href="#user-content-\@nextcloud\/cypress" id="\@nextcloud\/cypress">#</a>
-* Caused by vulnerable dependency:
-  * [cypress](#user-content-cypress)
-* Affected versions: 
-* Package usage:
-  * `node_modules/@nextcloud/cypress`
-
+No fixable problems found (7 unfixable, 3 only fixable manually using --force)
 
 ## Full `npm audit` report
 
@@ -43,33 +30,16 @@ node_modules/elliptic
   Depends on vulnerable versions of elliptic
   node_modules/create-ecdh
 
-qs  6.11.1 - 6.15.1
-Severity: moderate
-qs has a remotely triggerable DoS: qs.stringify crashes with TypeError on null/undefined entries in comma-format arrays when encodeValuesOnly is set - https://github.com/advisories/GHSA-q8mj-m7cp-5q26
-fix available via `npm audit fix`
-node_modules/qs
-  @cypress/request  *
-  Depends on vulnerable versions of qs
-  Depends on vulnerable versions of uuid
-  node_modules/@cypress/request
-    cypress  4.3.0 - 15.14.2
-    Depends on vulnerable versions of @cypress/request
-    node_modules/cypress
-      @nextcloud/cypress  
-      Depends on vulnerable versions of cypress
-      node_modules/@nextcloud/cypress
-
 uuid  <11.1.1
 Severity: moderate
 uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided - https://github.com/advisories/GHSA-w5hq-g745-h8pq
 fix available via `npm audit fix`
-node_modules/@nextcloud/cypress/node_modules/uuid
 node_modules/uuid
   dockerode  4.0.3 - 4.0.12
   Depends on vulnerable versions of uuid
-  node_modules/@nextcloud/cypress/node_modules/dockerode
+  node_modules/@nextcloud/e2e-test-server/node_modules/dockerode
 
-13 vulnerabilities (7 low, 6 moderate)
+9 vulnerabilities (7 low, 2 moderate)
 
 To address issues that do not require attention, run:
   npm audit fix
@@ -78,4 +48,4 @@ Some issues need review, and may require choosing
 a different dependency.
 ```
 
-**Node.js:** v24.16.0 | **npm:** 11.15.0 | **Branch:** master
+**Node.js:** v24.16.0 | **npm:** 11.16.0 | **Branch:** master
