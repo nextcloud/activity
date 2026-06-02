@@ -352,11 +352,15 @@ watch(props, () => {
 
 <style scoped lang="scss">
 .activity-app {
-	// Max width of the readable content column
+	// Max width of the readable content column. Shared with the date heading indent
+	// calc in ActivityGroup.vue (inherited), so both stay in sync from one source.
 	--activity-feed-max-width: 924px;
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	// Query container so the date headings can respond to the actual content-area
+	// width (which the open app navigation shrinks), rather than the raw viewport
+	container: activity-feed / inline-size;
 
 	&__empty-content {
 		height: 100%;
