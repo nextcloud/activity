@@ -44,7 +44,7 @@
 					class="activity-app__loading-indicator" />
 				<div
 					v-else-if="!hasMoreActivites && allActivities.length > 0"
-					class="activity-app__loading-indicator">
+					class="activity-app__end-of-feed">
 					{{ t('activity', 'No more activities.') }}
 				</div>
 			</div>
@@ -370,6 +370,13 @@ watch(props, () => {
 		justify-self: center;
 		margin-block: 30px 6px;
 		text-align: center;
+	}
+
+	&__end-of-feed {
+		color: var(--color-text-maxcontrast);
+		text-align: center;
+		// Large bottom margin so the message isn't stuck to the viewport bottom
+		margin-block: 30px 30vh;
 	}
 
 	&__container {
