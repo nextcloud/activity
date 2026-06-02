@@ -27,24 +27,26 @@
 			</template>
 		</NcEmptyContent>
 		<div ref="container" class="activity-app__container" @scroll="onScroll">
-			<NcButton
-				v-if="newActivitiesAvailable"
-				class="activity-app__new-activities-indicator"
-				type="button"
-				@click="scrollToTop">
-				{{ t('activity', 'New activities') }}
-			</NcButton>
-			<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
-			<!-- Only show if not showing the inital empty content for loading -->
-			<NcLoadingIcon
-				v-if="hasMoreActivites && allActivities.length > 0"
-				:name="t('activity', 'Loading more activities')"
-				:size="64"
-				class="activity-app__loading-indicator" />
-			<div
-				v-else-if="!hasMoreActivites && allActivities.length > 0"
-				class="activity-app__loading-indicator">
-				{{ t('activity', 'No more activities.') }}
+			<div class="activity-app__content">
+				<NcButton
+					v-if="newActivitiesAvailable"
+					class="activity-app__new-activities-indicator"
+					type="button"
+					@click="scrollToTop">
+					{{ t('activity', 'New activities') }}
+				</NcButton>
+				<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
+				<!-- Only show if not showing the inital empty content for loading -->
+				<NcLoadingIcon
+					v-if="hasMoreActivites && allActivities.length > 0"
+					:name="t('activity', 'Loading more activities')"
+					:size="64"
+					class="activity-app__loading-indicator" />
+				<div
+					v-else-if="!hasMoreActivites && allActivities.length > 0"
+					class="activity-app__loading-indicator">
+					{{ t('activity', 'No more activities.') }}
+				</div>
 			</div>
 		</div>
 	</NcAppContent>
@@ -350,6 +352,8 @@ watch(props, () => {
 
 <style scoped lang="scss">
 .activity-app {
+	// Max width of the readable content column
+	--activity-feed-max-width: 924px;
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
@@ -366,15 +370,20 @@ watch(props, () => {
 	}
 
 	&__container {
+		// Full width so the scrollbar sits at the edge of app-content
+		height: 100%;
+		overflow-y: scroll;
+	}
+
+	&__content {
+		// Clamp the readable column and centre it within the full-width scroller
 		display: flex;
 		flex-direction: column;
 
-		height: 100%;
-		width: min(100%, 924px);
-		max-width: 924px;
+		width: min(100%, var(--activity-feed-max-width));
+		max-width: var(--activity-feed-max-width);
 		margin: 0 auto;
 		padding-inline: 12px;
-		overflow-y: scroll;
 	}
 
 	&__new-activities-indicator {
