@@ -4,16 +4,18 @@
 -->
 
 <template>
-	<h2 class="activity-group__heading" :title="fullDate">
-		{{ dateText }}
-	</h2>
-	<ul>
-		<ActivityComponent
-			v-for="activity in activities"
-			:key="activity.id"
-			:activity="activity"
-			:showPreviews="true" />
-	</ul>
+	<section class="activity-group">
+		<h2 class="activity-group__heading" :title="fullDate">
+			{{ dateText }}
+		</h2>
+		<ul>
+			<ActivityComponent
+				v-for="activity in activities"
+				:key="activity.id"
+				:activity="activity"
+				:showPreviews="true" />
+		</ul>
+	</section>
 </template>
 
 <script setup lang="ts">
@@ -55,14 +57,32 @@ const fullDate = computed(() => {
 
 <style scoped lang="scss">
 .activity-group {
-	&__heading {
-		line-height: 1.5;
-		margin-block: 30px 12px;
+	// Gap between groups, as padding inside the <section> so the sticky heading stays
+	// pinned across it and the next date takes over as its group reaches the top
+	padding-block-end: 24px;
 
-		&:first-of-type {
-			// Already padding from h1
-			margin-block-start: 0;
-		}
+	&__heading {
+		position: sticky;
+		top: 0;
+		z-index: 1;
+		margin-block: 0;
+		// Bottom padding gives the background fade room to complete below the text
+		padding-block: 8px 20px;
+		// Match the settings-section__name heading size
+		font-size: 20px;
+		line-height: var(--default-clickable-area);
+		// Fade out so entries dissolve as they scroll under the heading
+		background: linear-gradient(to bottom, var(--color-main-background) 44%, transparent);
+
+		// Indent the heading to clear the app-navigation toggle, but only by the amount
+		// the centring gutter ((100cqi - column width) / 2) doesn't already cover.
+		// Clamped to 0 so wide layouts keep it aligned with the entries.
+		padding-inline-start: calc(max(
+			0px,
+			var(--app-navigation-padding) + var(--default-clickable-area)
+				- var(--default-grid-baseline)
+				- max(0px, (100cqi - var(--activity-feed-max-width)) / 2)
+		));
 	}
 }
 </style>
