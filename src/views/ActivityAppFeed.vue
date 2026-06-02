@@ -4,7 +4,8 @@
 -->
 <template>
 	<NcAppContent class="activity-app">
-		<h1 class="activity-app__heading">
+		<!-- Kept for document semantics / screen readers, but visually hidden -->
+		<h1 class="activity-app__heading hidden-visually">
 			{{ headingTitle }}
 		</h1>
 		<NcEmptyContent
@@ -393,15 +394,6 @@ watch(props, () => {
 		&:hover {
 			background-color: var(--color-primary-element-hover);
 		}
-	}
-
-	&__heading {
-		font-weight: bold;
-		font-size: 20px;
-		line-height: 44px; // to align height with the app navigation toggle
-		// Align with app navigation toggle
-		margin-top: 1px;
-		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
 	}
 }
 </style>
