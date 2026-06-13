@@ -279,7 +279,7 @@ class DataTest extends TestCase {
 
 		$this->assertEquals(1, $this->countActivitiesForAffectedUser($user1));
 		$this->assertEquals(1, $this->countActivitiesForAffectedUser($user2));
-		$this->data->deleteActivities(['affecteduser' => $user1]);
+		$this->data->deleteActivities([['affecteduser', $user1]]);
 		$this->assertEquals(0, $this->countActivitiesForAffectedUser($user1));
 		$this->assertEquals(1, $this->countActivitiesForAffectedUser($user2));
 		$this->deleteTestActivities();
