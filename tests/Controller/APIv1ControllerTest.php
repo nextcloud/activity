@@ -123,13 +123,13 @@ class APIv1ControllerTest extends TestCase {
 		$this->deleteUser($data, 'activity-api-user2');
 
 		$data->deleteActivities([
-			'app' => 'app1',
+			['app', 'app1'],
 		]);
 	}
 
 	protected function deleteUser(Data $data, string $uid): void {
 		$data->deleteActivities([
-			'affecteduser' => $uid,
+			['affecteduser', $uid],
 		]);
 		$user = Server::get(IUserManager::class)->get($uid);
 		$user?->delete();
