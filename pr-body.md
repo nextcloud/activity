@@ -1,5 +1,19 @@
 # Audit report
-No fixable problems found (7 unfixable, 3 only fixable manually using --force)
+
+This audit fix resolves 1 of the total 16 vulnerabilities found in your project.
+
+## Updated dependencies
+* [vite](#user-content-vite)
+## Fixed vulnerabilities
+
+### `vite` <a href="#user-content-vite" id="vite">#</a>
+* launch-editor: NTLMv2 hash disclosure via UNC path handling on Windows
+* Severity: **moderate**
+* Reference: [https://github.com/advisories/GHSA-v6wh-96g9-6wx3](https://github.com/advisories/GHSA-v6wh-96g9-6wx3)
+* Affected versions: 7.0.0 - 7.3.3
+* Package usage:
+  * `node_modules/vite`
+
 
 ## Full `npm audit` report
 
@@ -48,4 +62,4 @@ Some issues need review, and may require choosing
 a different dependency.
 ```
 
-**Node.js:** v24.16.0 | **npm:** 11.16.0 | **Branch:** master
+**Node.js:** v24.16.0 | **npm:** 11.17.0 | **Branch:** master
