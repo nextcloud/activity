@@ -402,6 +402,26 @@ class MailQueueHandlerTest extends TestCase {
 		}
 	}
 
+	public function testGetMailMaxItemsReturnsCapWhenValueExceedsCap(): void {
+		$this->appConfig->method('getValueInt')
+			->with('activity', 'mail_max_items', $this->mailQueueHandler::MAIL_MAX_ITEMS_DEFAULT)
+			->willReturn(9999);
+
+		$result = self::invokePrivate($this->mailQueueHandler, 'getMailMaxItems', []);
+
+		$this->assertSame(MailQueueHandler::MAIL_MAX_ITEMS_CAP, $result);
+	}
+
+	public function testGetMailMaxItemsReturnsOneWhenValueIsBelowOne(): void {
+		$this->appConfig->method('getValueInt')
+			->with('activity', 'mail_max_items', $this->mailQueueHandler::MAIL_MAX_ITEMS_DEFAULT)
+			->willReturn(0);
+
+		$result = self::invokePrivate($this->mailQueueHandler, 'getMailMaxItems', []);
+
+		$this->assertSame(1, $result);
+	}
+
 	/**
 	 * @param array $users
 	 * @param int $maxTime
