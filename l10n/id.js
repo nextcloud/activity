@@ -51,6 +51,7 @@ OC.L10N.register(
     "Loading activities" : "Memuat aktivitas",
     "This stream will show events like additions, changes & shares" : "Stream ini akan menampilkan peristiwa seperti penambahan, perubahan, dan berbagi",
     "No activity yet" : "Belum ada aktivitas",
+    "New activities" : "Aktivitas baru",
     "Loading more activities" : "Memuat aktivitas lainnya",
     "No more activities." : "Tidak ada aktivitas lagi.",
     "Could not enable RSS link" : "Tidak dapat mengaktifkan tautan RSS",
