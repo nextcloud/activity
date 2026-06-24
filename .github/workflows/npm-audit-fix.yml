@@ -35,7 +35,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
           ref: ${{ matrix.branches }}
@@ -68,22 +68,6 @@ jobs:
           npm ci
           npm run build --if-present
 
-      - name: Generate PR body
-        if: steps.checkout.outcome == 'success'
-        run: |
-          {
-            printf '%s\n\n' "$NPM_AUDIT_MARKDOWN"
-            echo '## Full `npm audit` report'
-            echo ''
-            echo '```'
-            npm audit 2>&1 || true
-            echo '```'
-            echo ''
-            echo "**Node.js:** $(node --version) | **npm:** $(npm --version) | **Branch:** ${{ matrix.branches }}"
-          } > pr-body.md
-        env:
-          NPM_AUDIT_MARKDOWN: ${{ steps.npm-audit.outputs.markdown }}
-
       - name: Create Pull Request
         if: steps.checkout.outcome == 'success'
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
@@ -95,7 +79,7 @@ jobs:
           signoff: true
           branch: automated/noid/${{ matrix.branches }}-fix-npm-audit
           title: '[${{ matrix.branches }}] Fix npm audit'
-          body-path: pr-body.md
+          body: ${{ steps.npm-audit.outputs.markdown }}
           labels: |
             dependencies
             3. to review

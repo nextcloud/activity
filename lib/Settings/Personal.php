@@ -127,7 +127,6 @@ class Personal implements ISettings {
 		$this->initialState->provideInitialState('methods', $methods);
 		$this->initialState->provideInitialState('activity_digest_enabled', $this->userSettings->getUserSetting($this->userId, 'setting', 'activity_digest'));
 
-
 		return new TemplateResponse('activity', 'settings/personal', [
 			'setting' => 'personal',
 			'activityGroups' => $activityGroups,

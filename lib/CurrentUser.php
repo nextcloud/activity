@@ -76,7 +76,7 @@ class CurrentUser {
 		if ($this->sessionUser === false) {
 			$user = $this->userSession->getUser();
 			if ($user instanceof IUser) {
-				$this->sessionUser = (string)$user->getUID();
+				$this->sessionUser = $user->getUID();
 			} else {
 				$this->sessionUser = null;
 			}
