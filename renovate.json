@@ -1,0 +1,65 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "helpers:pinGitHubActionDigests",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":gitSignOff"
+  ],
+  "assigneesFromCodeOwners": true,
+  "expandCodeOwnersGroups": true,
+  "timezone": "Europe/Berlin",
+  "schedule": ["before 5am on saturday"],
+  "labels": ["dependencies", "3. to review"],
+  "rangeStrategy": "bump",
+  "rebaseWhen": "conflicted",
+  "ignoreUnstable": false,
+  "baseBranchPatterns": ["master"],
+  "enabledManagers": ["composer", "github-actions", "npm"],
+  "ignoreDeps": ["node", "npm", "php"],
+  "packageRules": [
+    {
+      "description": "Automerge non-major npm and composer minor/patch updates",
+      "matchManagers": ["npm", "composer"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true,
+      "labels": ["dependencies", "4. to release"],
+      "reviewers": []
+    },
+    {
+      "description": "Do not automerge @nextcloud/vue — requires UI testing after updates",
+      "matchPackageNames": ["@nextcloud/vue"],
+      "automerge": false,
+      "labels": ["dependencies", "3. to review"]
+    },
+    {
+      "description": "Update GitHub Actions monthly and group into one PR",
+      "matchManagers": ["github-actions"],
+      "extends": ["schedule:monthly"],
+      "groupName": "GitHub Actions"
+    },
+    {
+      "description": "Update npm dev dependencies monthly to reduce noise",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["devDependencies"],
+      "extends": ["schedule:monthly"]
+    },
+    {
+      "description": "Disable all updates on stable branches",
+      "matchBaseBranches": ["/^stable/"],
+      "enabled": false
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "semanticCommitType": "fix",
+    "schedule": "before 7am every weekday",
+    "dependencyDashboardApproval": false,
+    "commitMessageSuffix": ""
+  },
+  "osvVulnerabilityAlerts": true
+}
