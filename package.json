@@ -61,7 +61,7 @@
     "@vitest/coverage-v8": "^4.1.7",
     "@vue/test-utils": "^2.4.11",
     "@vue/tsconfig": "^0.9.1",
-    "happy-dom": "^20.9.0",
+    "happy-dom": "^20.10.6",
     "stylelint": "^17.13.0",
     "typescript": "^6.0.3",
     "vite": "^7.3.2",
