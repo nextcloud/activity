@@ -8,7 +8,6 @@
     ":gitSignOff"
   ],
   "assigneesFromCodeOwners": true,
-  "expandCodeOwnersGroups": true,
   "timezone": "Europe/Berlin",
   "schedule": ["before 5am on saturday"],
   "labels": ["dependencies", "3. to review"],
