@@ -36,8 +36,8 @@ use Psr\Log\LoggerInterface;
 class MailQueueHandler {
 	public const CLI_EMAIL_BATCH_SIZE = 500;
 	public const WEB_EMAIL_BATCH_SIZE = 25;
-	/** Number of entries we want to list in the email */
-	public const ENTRY_LIMIT = 200;
+	public const MAIL_MAX_ITEMS_DEFAULT = 200;
+	public const MAIL_MAX_ITEMS_CAP = 1000;
 
 	protected array $languages;
 	protected string $senderAddress;
@@ -191,7 +191,7 @@ class MailQueueHandler {
 	 *
 	 * @return array [data of the first max. 200 entries, total number of entries]
 	 */
-	protected function getItemsForUser(string $affectedUser, int $maxTime, int $maxNumItems = self::ENTRY_LIMIT): array {
+	protected function getItemsForUser(string $affectedUser, int $maxTime, int $maxNumItems = self::MAIL_MAX_ITEMS_DEFAULT): array {
 		$query = $this->connection->getQueryBuilder();
 		$query->select('*')
 			->from('activity_mq')
@@ -282,7 +282,7 @@ class MailQueueHandler {
 			return true;
 		}
 
-		[$mailData, $skippedCount] = $this->getItemsForUser($userName, $maxTime);
+		[$mailData, $skippedCount] = $this->getItemsForUser($userName, $maxTime, $this->getMailMaxItems());
 
 		$l = $this->getLanguage($lang);
 		$this->activityManager->setCurrentUserId($userName);
@@ -415,5 +415,16 @@ class MailQueueHandler {
 			->where($query->expr()->lte('amq_timestamp', $query->createNamedParameter($maxTime, IQueryBuilder::PARAM_INT)))
 			->andWhere($query->expr()->in('amq_affecteduser', $query->createNamedParameter($affectedUsers, IQueryBuilder::PARAM_STR_ARRAY), IQueryBuilder::PARAM_STR));
 		$query->executeStatement();
+	}
+
+	private function getMailMaxItems(): int {
+		$maxItems = $this->appConfig->getValueInt('activity', 'mail_max_items', self::MAIL_MAX_ITEMS_DEFAULT);
+		if ($maxItems < 1) {
+			return 1;
+		}
+		if ($maxItems > self::MAIL_MAX_ITEMS_CAP) {
+			return self::MAIL_MAX_ITEMS_CAP;
+		}
+		return $maxItems;
 	}
 }
