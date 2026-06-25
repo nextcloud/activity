@@ -1,17 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.15.1@28dc127af1b5aecd52314f6f645bafc10d0e11f9">
+<files psalm-version="7.0.0-beta19@7e751c06a756fa64dc4c759c09fe4a173afcb433">
   <file src="lib/BackgroundJob/RemoteActivity.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[run]]></code>
+      <code><![CDATA[translateType]]></code>
+    </MissingPureAnnotation>
     <UndefinedClass>
       <code><![CDATA[ClientException]]></code>
     </UndefinedClass>
   </file>
+  <file src="lib/Capabilities.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[getCapabilities]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Command/SendEmails.php">
+    <MissingImmutableAnnotation>
+      <code><![CDATA[SendEmails]]></code>
+    </MissingImmutableAnnotation>
+  </file>
+  <file src="lib/Consumer.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+    </MissingPureAnnotation>
+  </file>
   <file src="lib/Controller/RemoteActivityController.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[getSubject]]></code>
+      <code><![CDATA[translateType]]></code>
+    </MissingPureAnnotation>
     <UndefinedClass>
       <code><![CDATA[$storage]]></code>
       <code><![CDATA[Wrapper]]></code>
     </UndefinedClass>
   </file>
+  <file src="lib/CurrentUser.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Dashboard/ActivityWidget.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[getIconClass]]></code>
+      <code><![CDATA[getId]]></code>
+      <code><![CDATA[getOrder]]></code>
+      <code><![CDATA[getReloadInterval]]></code>
+    </MissingPureAnnotation>
+  </file>
   <file src="lib/Data.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+    </MissingPureAnnotation>
     <UndefinedDocblockClass>
       <code><![CDATA[$favoriteFilter->filterFavorites($query);]]></code>
     </UndefinedDocblockClass>
@@ -20,8 +60,26 @@
     <InvalidArrayOffset>
       <code><![CDATA[[$user->getEMailAddress() => $user->getDisplayName()]]]></code>
     </InvalidArrayOffset>
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Extension/Files.php">
+    <MissingImmutableAnnotation>
+      <code><![CDATA[Files]]></code>
+    </MissingImmutableAnnotation>
+  </file>
+  <file src="lib/Extension/Files_Sharing.php">
+    <MissingImmutableAnnotation>
+      <code><![CDATA[Files_Sharing]]></code>
+    </MissingImmutableAnnotation>
   </file>
   <file src="lib/FilesHooks.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[getUserRelativePath]]></code>
+      <code><![CDATA[getVisiblePath]]></code>
+    </MissingPureAnnotation>
     <UndefinedClass>
       <code><![CDATA[$this->teamManager]]></code>
       <code><![CDATA[$this->teamManager]]></code>
@@ -36,5 +94,130 @@
       <code><![CDATA[$rule]]></code>
       <code><![CDATA[$rules]]></code>
     </UndefinedDocblockClass>
+  </file>
+  <file src="lib/FilesHooksStatic.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[getHooks]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Filter/AllFilter.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[allowedApps]]></code>
+      <code><![CDATA[filterTypes]]></code>
+      <code><![CDATA[getIdentifier]]></code>
+      <code><![CDATA[getPriority]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Filter/ByFilter.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[allowedApps]]></code>
+      <code><![CDATA[filterTypes]]></code>
+      <code><![CDATA[getIdentifier]]></code>
+      <code><![CDATA[getPriority]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Filter/SelfFilter.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[allowedApps]]></code>
+      <code><![CDATA[filterTypes]]></code>
+      <code><![CDATA[getIdentifier]]></code>
+      <code><![CDATA[getPriority]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/GroupHelper.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[getEvents]]></code>
+      <code><![CDATA[resetEvents]]></code>
+      <code><![CDATA[setL10n]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Listener/SetUserDefaults.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Listener/ShareEventListener.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Listener/UserDeleted.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/MailQueueHandler.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Migration/Version2006Date20170808155040.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[changeSchema]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Migration/Version2006Date20170919095939.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[changeSchema]]></code>
+      <code><![CDATA[getColumnsByTable]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Migration/Version2011Date20201006132544.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Migration/Version2011Date20201006132546.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/NotificationGenerator.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[getID]]></code>
+      <code><![CDATA[getName]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Settings/Admin.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[getPriority]]></code>
+      <code><![CDATA[getSection]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Settings/AdminSection.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[getID]]></code>
+      <code><![CDATA[getPriority]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Settings/Personal.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[getPriority]]></code>
+      <code><![CDATA[getSection]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/Settings/PersonalSection.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+      <code><![CDATA[getID]]></code>
+      <code><![CDATA[getPriority]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/UserSettings.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+    </MissingPureAnnotation>
+  </file>
+  <file src="lib/ViewInfoCache.php">
+    <MissingPureAnnotation>
+      <code><![CDATA[__construct]]></code>
+    </MissingPureAnnotation>
   </file>
 </files>
