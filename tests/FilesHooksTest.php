@@ -584,15 +584,14 @@ class FilesHooksTest extends TestCase {
 			'shareNotificationForOriginalOwners',
 		]);
 
-		$this->settings->expects($this->exactly(3))
+		$this->settings->expects($this->once())
 			->method('getUserSetting')
-			->willReturnMap(
-				[
-					['recipient', 'notification', Files_Sharing::TYPE_SHARED, true],
-					['recipient', 'email', Files_Sharing::TYPE_SHARED, true],
-					['recipient', 'setting', 'batchtime', 42],
-				]
-			);
+			->with('recipient', 'notification', Files_Sharing::TYPE_SHARED)
+			->willReturn(true);
+		$this->settings->expects($this->once())
+			->method('getEmailBatchTimeSetting')
+			->with('recipient', Files_Sharing::TYPE_SHARED)
+			->willReturn(42);
 
 		$node = $this->getNodeMock(1337, 'path.txt', $isFile);
 		$filesHooks->expects($this->once())
@@ -775,13 +774,14 @@ class FilesHooksTest extends TestCase {
 			'addNotificationsForUser',
 		]);
 
-		$this->settings->expects($this->exactly(3))
+		$this->settings->expects($this->once())
 			->method('getUserSetting')
-			->willReturnMap([
-				['owner', 'notification', Files_Sharing::TYPE_SHARED, true],
-				['owner', 'email', Files_Sharing::TYPE_SHARED, true],
-				['owner', 'setting', 'batchtime', 21],
-			]);
+			->with('owner', 'notification', Files_Sharing::TYPE_SHARED)
+			->willReturn(true);
+		$this->settings->expects($this->once())
+			->method('getEmailBatchTimeSetting')
+			->with('owner', Files_Sharing::TYPE_SHARED)
+			->willReturn(21);
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForUser')
@@ -807,13 +807,14 @@ class FilesHooksTest extends TestCase {
 
 		$node = $this->getNodeMock(42, '/user/files/path');
 
-		$this->settings->expects($this->exactly(3))
+		$this->settings->expects($this->once())
 			->method('getUserSetting')
-			->willReturnMap([
-				['user', 'notification', Files_Sharing::TYPE_SHARED, true],
-				['user', 'email', Files_Sharing::TYPE_SHARED, true],
-				['user', 'setting', 'batchtime', 21],
-			]);
+			->with('user', 'notification', Files_Sharing::TYPE_SHARED)
+			->willReturn(true);
+		$this->settings->expects($this->once())
+			->method('getEmailBatchTimeSetting')
+			->with('user', Files_Sharing::TYPE_SHARED)
+			->willReturn(21);
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForUser')
@@ -942,13 +943,14 @@ class FilesHooksTest extends TestCase {
 
 		$node = $this->getNodeMock(42, '/user/files/path');
 
-		$this->settings->expects($this->exactly(3))
+		$this->settings->expects($this->once())
 			->method('getUserSetting')
-			->willReturnMap([
-				['user', 'notification', Files_Sharing::TYPE_SHARED, true],
-				['user', 'email', Files_Sharing::TYPE_SHARED, true],
-				['user', 'setting', 'batchtime', 21],
-			]);
+			->with('user', 'notification', Files_Sharing::TYPE_SHARED)
+			->willReturn(true);
+		$this->settings->expects($this->once())
+			->method('getEmailBatchTimeSetting')
+			->with('user', Files_Sharing::TYPE_SHARED)
+			->willReturn(21);
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForUser')
@@ -1061,13 +1063,14 @@ class FilesHooksTest extends TestCase {
 		$share->method('getShareType')
 			->willReturn(IShare::TYPE_USER);
 
-		$this->settings->expects($this->exactly(3))
+		$this->settings->expects($this->once())
 			->method('getUserSetting')
-			->willReturnMap([
-				['with', 'notification', Files_Sharing::TYPE_SHARED, true],
-				['with', 'email', Files_Sharing::TYPE_SHARED, true],
-				['with', 'setting', 'batchtime', 21],
-			]);
+			->with('with', 'notification', Files_Sharing::TYPE_SHARED)
+			->willReturn(true);
+		$this->settings->expects($this->once())
+			->method('getEmailBatchTimeSetting')
+			->with('with', Files_Sharing::TYPE_SHARED)
+			->willReturn(21);
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForUser')

@@ -72,4 +72,31 @@ class UserSettingsTest extends TestCase {
 		}
 		$this->assertEquals($expected, self::invokePrivate($this->userSettings, 'getDefaultSetting', [$method, $type]));
 	}
+
+	public function testGetEmailBatchTimeSettingEmailDisabled(): void {
+		$this->config->method('getAppValue')
+			->with('activity', 'enable_email', 'yes')
+			->willReturn('no');
+
+		$this->assertFalse($this->userSettings->getEmailBatchTimeSetting('user', 'some_type'));
+	}
+
+	public function testGetEmailBatchTimeSettingEmailEnabled(): void {
+		$this->config->method('getAppValue')
+			->willReturn('yes');
+		$this->config->method('getUserValue')
+			->willReturnCallback(function (string $user, string $app, string $key, $default) {
+				if (str_contains($key, 'batchtime')) {
+					return 7200;
+				}
+				return true;
+			});
+
+		$setting = $this->createMock(ActivitySettings::class);
+		$setting->method('isDefaultEnabledMail')->willReturn(true);
+		$setting->method('canChangeMail')->willReturn(true);
+		$this->activityManager->method('getSettingById')->willReturn($setting);
+
+		$this->assertSame(7200, $this->userSettings->getEmailBatchTimeSetting('user', 'some_type'));
+	}
 }
