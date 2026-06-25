@@ -61,7 +61,7 @@ class Data {
 			return false;
 		}
 		$author = $event->getAuthor();
-		if ($author === null || $author === '' || !isset($excludedUsers[$author])) {
+		if ($author === '' || !isset($excludedUsers[$author])) {
 			return false;
 		}
 		$rule = $excludedUsers[$author];
