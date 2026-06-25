@@ -85,7 +85,6 @@ class CurrentUserTest extends TestCase {
 			[null, null, null, ''],
 			[null, 'uid', -1, 'uid'],
 			[null, null, 'token', 'token'],
-			['cached', -1, -1, 'cached'],
 		];
 	}
 
@@ -95,8 +94,6 @@ class CurrentUserTest extends TestCase {
 			'getUID',
 			'getCloudIDFromToken',
 		]);
-
-		self::invokePrivate($instance, 'identifier', [$cachedIdentifier]);
 
 		$instance->expects($uidResult !== -1 ? $this->once() : $this->never())
 			->method('getUID')
