@@ -1,9 +1,12 @@
 # Audit report
 
-This audit fix resolves 1 of the total 24 vulnerabilities found in your project.
+This audit fix resolves 4 of the total 22 vulnerabilities found in your project.
 
 ## Updated dependencies
 * [@nextcloud/cypress](#user-content-\\@nextcloud\\/cypress)
+* [@vitest/coverage-v8](#user-content-\\@vitest\\/coverage-v8)
+* [vite](#user-content-vite)
+* [vitest](#user-content-vitest)
 ## Fixed vulnerabilities
 
 ### `@nextcloud/cypress` <a href="#user-content-\@nextcloud\/cypress" id="\@nextcloud\/cypress">#</a>
@@ -12,6 +15,29 @@ This audit fix resolves 1 of the total 24 vulnerabilities found in your project.
 * Affected versions: 
 * Package usage:
   * `node_modules/@nextcloud/cypress`
+
+### `@vitest/coverage-v8` <a href="#user-content-\@vitest\/coverage-v8" id="\@vitest\/coverage-v8">#</a>
+* Caused by vulnerable dependency:
+  * [vitest](#user-content-vitest)
+* Affected versions: 4.0.0-beta.1 - 4.1.0-beta.6
+* Package usage:
+  * `node_modules/@vitest/coverage-v8`
+
+### `vite` <a href="#user-content-vite" id="vite">#</a>
+* launch-editor: NTLMv2 hash disclosure via UNC path handling on Windows
+* Severity: **moderate**
+* Reference: [https://github.com/advisories/GHSA-v6wh-96g9-6wx3](https://github.com/advisories/GHSA-v6wh-96g9-6wx3)
+* Affected versions: 7.0.0 - 7.3.3
+* Package usage:
+  * `node_modules/vite`
+
+### `vitest` <a href="#user-content-vitest" id="vitest">#</a>
+* When Vitest UI server is listening, arbitrary file can be read and executed
+* Severity: **critical** 🚨 (CVSS 9.8)
+* Reference: [https://github.com/advisories/GHSA-5xrq-8626-4rwp](https://github.com/advisories/GHSA-5xrq-8626-4rwp)
+* Affected versions: >=4.0.0 <4.1.0
+* Package usage:
+  * `node_modules/vitest`
 
 
 ## Full `npm audit` report
@@ -82,4 +108,4 @@ Some issues need review, and may require choosing
 a different dependency.
 ```
 
-**Node.js:** v24.16.0 | **npm:** 11.16.0 | **Branch:** stable33
+**Node.js:** v24.17.0 | **npm:** 11.17.0 | **Branch:** stable33
