@@ -220,27 +220,6 @@ class DigestSender {
 	 * @return string
 	 */
 	protected function getHTMLSubject(IEvent $event): string {
-		if ($event->getRichSubject() === '') {
-			return htmlspecialchars($event->getParsedSubject());
-		}
-
-		$placeholders = $replacements = [];
-		foreach ($event->getRichSubjectParameters() as $placeholder => $parameter) {
-			$placeholders[] = '{' . $placeholder . '}';
-
-			if ($parameter['type'] === 'file') {
-				$replacement = (string)$parameter['path'];
-			} else {
-				$replacement = (string)$parameter['name'];
-			}
-
-			if (isset($parameter['link'])) {
-				$replacements[] = '<a href="' . $parameter['link'] . '">' . htmlspecialchars($replacement) . '</a>';
-			} else {
-				$replacements[] = '<strong>' . htmlspecialchars($replacement) . '</strong>';
-			}
-		}
-
-		return str_replace($placeholders, $replacements, $event->getRichSubject());
+		return HTMLSubjectFormatter::format($event);
 	}
 }
