@@ -188,7 +188,7 @@ class DigestSender {
 			$andMoreText = $l10n->n('and %n more…', 'and %n more…', $skippedCount);
 			$url = $this->urlGenerator->linkToRouteAbsolute('activity.Activities.showList', [ 'filter' => 'all' ]);
 			$template->addBodyListItem(
-				'<a href="' . $url . '">' . htmlspecialchars($andMoreText) . '</a>',
+				'<a href="' . htmlspecialchars($url) . '">' . htmlspecialchars($andMoreText) . '</a>',
 				plainText: $andMoreText,
 			);
 		}
@@ -235,7 +235,7 @@ class DigestSender {
 			}
 
 			if (isset($parameter['link'])) {
-				$replacements[] = '<a href="' . $parameter['link'] . '">' . htmlspecialchars($replacement) . '</a>';
+				$replacements[] = '<a href="' . htmlspecialchars((string)$parameter['link']) . '">' . htmlspecialchars($replacement) . '</a>';
 			} else {
 				$replacements[] = '<strong>' . htmlspecialchars($replacement) . '</strong>';
 			}
