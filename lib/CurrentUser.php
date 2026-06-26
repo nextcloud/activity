@@ -60,7 +60,7 @@ class CurrentUser {
 	public function getUID() {
 		$user = $this->userSession->getUser();
 		if ($user instanceof IUser) {
-			return (string)$user->getUID();
+			return $user->getUID();
 		}
 		return null;
 	}
@@ -72,7 +72,7 @@ class CurrentUser {
 	public function getCloudId() {
 		$user = $this->userSession->getUser();
 		if ($user instanceof IUser) {
-			return (string)$user->getCloudId();
+			return $user->getCloudId();
 		} else {
 			return $this->getCloudIDFromToken();
 		}
