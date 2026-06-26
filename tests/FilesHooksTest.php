@@ -1228,4 +1228,223 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->unShare($share);
 	}
+
+	// -----------------------------------------------------------------------
+	// fileMove / fileMovePost
+	// -----------------------------------------------------------------------
+
+	public function testFileMoveIgnoresPartFiles(): void {
+		$filesHooks = $this->getFilesHooks(['getSourcePathAndOwner']);
+		$filesHooks->expects($this->never())->method('getSourcePathAndOwner');
+
+		$filesHooks->fileMove('/foo/bar.part', '/foo/bar.txt');
+		$this->assertSame(false, self::invokePrivate($filesHooks, 'moveCase'));
+
+		$filesHooks->fileMove('/foo/bar.txt', '/foo/bar.part');
+		$this->assertSame(false, self::invokePrivate($filesHooks, 'moveCase'));
+	}
+
+	public function testFileMoveSetsCaseRename(): void {
+		// Same dir → rename; no file lookups needed
+		$filesHooks = $this->getFilesHooks(['getSourcePathAndOwner']);
+		$filesHooks->expects($this->never())->method('getSourcePathAndOwner');
+
+		$filesHooks->fileMove('/a/b', '/a/c');
+		$this->assertSame('rename', self::invokePrivate($filesHooks, 'moveCase'));
+	}
+
+	public function testFileMoveSetsCaseMoveUp(): void {
+		$filesHooks = $this->getFilesHooks(['getSourcePathAndOwner', 'getUserPathsFromPath', 'getAffectedUsersFromCachedMounts']);
+		$filesHooks->method('getSourcePathAndOwner')->willReturn(['/a', 'owner', 1]);
+		$filesHooks->method('getUserPathsFromPath')->willReturn(['users' => ['user' => '/a'], 'remotes' => []]);
+
+		$filesHooks->fileMove('/a/b/c', '/a/c');
+		$this->assertSame('moveUp', self::invokePrivate($filesHooks, 'moveCase'));
+	}
+
+	public function testFileMoveSetsCaseMoveDown(): void {
+		$filesHooks = $this->getFilesHooks(['getSourcePathAndOwner', 'getUserPathsFromPath', 'getAffectedUsersFromCachedMounts']);
+		$filesHooks->method('getSourcePathAndOwner')->willReturn(['/a', 'owner', 1]);
+		$filesHooks->method('getUserPathsFromPath')->willReturn(['users' => ['user' => '/a'], 'remotes' => []]);
+
+		$filesHooks->fileMove('/a/b', '/a/c/b');
+		$this->assertSame('moveDown', self::invokePrivate($filesHooks, 'moveCase'));
+	}
+
+	public function testFileMoveSetsCaseMoveCross(): void {
+		$filesHooks = $this->getFilesHooks(['getSourcePathAndOwner', 'getUserPathsFromPath', 'getAffectedUsersFromCachedMounts']);
+		$filesHooks->method('getSourcePathAndOwner')->willReturn(['/a', 'owner', 1]);
+		$filesHooks->method('getUserPathsFromPath')->willReturn(['users' => ['user' => '/a'], 'remotes' => []]);
+
+		$filesHooks->fileMove('/a/b/c', '/a/d/c');
+		$this->assertSame('moveCross', self::invokePrivate($filesHooks, 'moveCase'));
+	}
+
+	public function testFileMoveAbortsWhenParentNotFound(): void {
+		$filesHooks = $this->getFilesHooks(['getSourcePathAndOwner', 'getUserPathsFromPath']);
+		$filesHooks->method('getSourcePathAndOwner')->willReturn(['/a', 'owner', 0]);
+		$filesHooks->expects($this->never())->method('getUserPathsFromPath');
+
+		$filesHooks->fileMove('/a/b/c', '/a/d/c');
+		$this->assertSame(false, self::invokePrivate($filesHooks, 'moveCase'));
+	}
+
+	public function testFileMovePostDoesNothingWhenMoveCaseFalse(): void {
+		$filesHooks = $this->getFilesHooks(['fileRenaming', 'fileMoving']);
+		self::invokePrivate($filesHooks, 'moveCase', [false]);
+
+		$filesHooks->expects($this->never())->method('fileRenaming');
+		$filesHooks->expects($this->never())->method('fileMoving');
+
+		$filesHooks->fileMovePost('/old', '/new');
+		$this->assertSame(false, self::invokePrivate($filesHooks, 'moveCase'));
+	}
+
+	public function testFileMovePostDispatchesRenaming(): void {
+		$filesHooks = $this->getFilesHooks(['fileRenaming', 'fileMoving']);
+		self::invokePrivate($filesHooks, 'moveCase', ['rename']);
+
+		$filesHooks->expects($this->once())->method('fileRenaming')->with('/a/old', '/a/new');
+		$filesHooks->expects($this->never())->method('fileMoving');
+
+		$filesHooks->fileMovePost('/a/old', '/a/new');
+		$this->assertSame(false, self::invokePrivate($filesHooks, 'moveCase'));
+	}
+
+	public static function dataFileMovePostMoveCases(): array {
+		return [
+			['moveUp'],
+			['moveDown'],
+			['moveCross'],
+		];
+	}
+
+	#[DataProvider('dataFileMovePostMoveCases')]
+	public function testFileMovePostDispatchesMoving(string $case): void {
+		$filesHooks = $this->getFilesHooks(['fileRenaming', 'fileMoving']);
+		self::invokePrivate($filesHooks, 'moveCase', [$case]);
+
+		$filesHooks->expects($this->never())->method('fileRenaming');
+		$filesHooks->expects($this->once())->method('fileMoving')->with('/old/path', '/new/path');
+
+		$filesHooks->fileMovePost('/old/path', '/new/path');
+		$this->assertSame(false, self::invokePrivate($filesHooks, 'moveCase'));
+	}
+
+	// -----------------------------------------------------------------------
+	// generateDeleteActivities / generateAddActivities / generateMoveActivities
+	// -----------------------------------------------------------------------
+
+	public function testGenerateDeleteActivitiesNoOp(): void {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser']);
+		$filesHooks->expects($this->never())->method('addNotificationsForUser');
+
+		self::invokePrivate($filesHooks, 'generateDeleteActivities', [[], [], 1, 'old.txt']);
+	}
+
+	public function testGenerateDeleteActivitiesCurrentUserGetsSelfSubject(): void {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser', 'startActivityTransaction', 'commitActivityTransaction']);
+		$filesHooks->method('startActivityTransaction')->willReturn(false);
+		$this->settings->method('filterUsersBySetting')
+			->willReturnCallback(fn ($users, $method) => $method === 'email' ? ['user' => false] : ['user' => true]);
+
+		$filesHooks->expects($this->once())
+			->method('addNotificationsForUser')
+			->with('user', 'deleted_self', $this->anything(), 1, '/home/old.txt', true, false, true, Files::TYPE_SHARE_DELETED);
+
+		self::invokePrivate($filesHooks, 'generateDeleteActivities', [['user'], ['user' => '/home'], 1, 'old.txt']);
+	}
+
+	public function testGenerateDeleteActivitiesOtherUserGetsBySubject(): void {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser', 'startActivityTransaction', 'commitActivityTransaction']);
+		$filesHooks->method('startActivityTransaction')->willReturn(false);
+		$this->settings->method('filterUsersBySetting')
+			->willReturnCallback(fn ($users, $method) => $method === 'email' ? ['other' => false] : ['other' => true]);
+
+		$filesHooks->expects($this->once())
+			->method('addNotificationsForUser')
+			->with('other', 'deleted_by', $this->anything(), 1, '/home/old.txt', true, false, true, Files::TYPE_SHARE_DELETED);
+
+		self::invokePrivate($filesHooks, 'generateDeleteActivities', [['other'], ['other' => '/home'], 1, 'old.txt']);
+	}
+
+	public function testGenerateAddActivitiesNoOp(): void {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser']);
+		$filesHooks->expects($this->never())->method('addNotificationsForUser');
+
+		self::invokePrivate($filesHooks, 'generateAddActivities', [[], [], 1, 'new.txt']);
+	}
+
+	public function testGenerateAddActivitiesCurrentUserGetsSelfSubject(): void {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser', 'startActivityTransaction', 'commitActivityTransaction']);
+		$filesHooks->method('startActivityTransaction')->willReturn(false);
+		$this->settings->method('filterUsersBySetting')
+			->willReturnCallback(fn ($users, $method) => $method === 'email' ? ['user' => false] : ['user' => true]);
+
+		$filesHooks->expects($this->once())
+			->method('addNotificationsForUser')
+			->with('user', 'created_self', $this->anything(), 1, '/home/new.txt', true, false, true, Files::TYPE_FILE_CHANGED);
+
+		self::invokePrivate($filesHooks, 'generateAddActivities', [['user'], ['user' => '/home'], 1, 'new.txt']);
+	}
+
+	public function testGenerateAddActivitiesOtherUserGetsBySubject(): void {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser', 'startActivityTransaction', 'commitActivityTransaction']);
+		$filesHooks->method('startActivityTransaction')->willReturn(false);
+		$this->settings->method('filterUsersBySetting')
+			->willReturnCallback(fn ($users, $method) => $method === 'email' ? ['other' => false] : ['other' => true]);
+
+		$filesHooks->expects($this->once())
+			->method('addNotificationsForUser')
+			->with('other', 'created_by', $this->anything(), 1, '/home/new.txt', true, false, true, Files::TYPE_FILE_CHANGED);
+
+		self::invokePrivate($filesHooks, 'generateAddActivities', [['other'], ['other' => '/home'], 1, 'new.txt']);
+	}
+
+	public function testGenerateMoveActivitiesNoOp(): void {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser']);
+		$filesHooks->expects($this->never())->method('addNotificationsForUser');
+
+		self::invokePrivate($filesHooks, 'generateMoveActivities', [[], [], [], 1, 'old.txt', 2, 'new.txt']);
+	}
+
+	public function testGenerateMoveActivitiesCurrentUserGetsSelfSubject(): void {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser', 'startActivityTransaction', 'commitActivityTransaction']);
+		$filesHooks->method('startActivityTransaction')->willReturn(false);
+		$this->settings->method('filterUsersBySetting')
+			->willReturnCallback(fn ($users, $method) => $method === 'email' ? ['user' => false] : ['user' => true]);
+
+		$filesHooks->expects($this->once())
+			->method('addNotificationsForUser')
+			->with('user', 'moved_self', $this->anything(), 1, '/new/new.txt', true, false, true, Files::TYPE_FILE_CHANGED);
+
+		self::invokePrivate($filesHooks, 'generateMoveActivities', [['user'], ['user' => '/old'], ['user' => '/new'], 1, 'old.txt', 2, 'new.txt']);
+	}
+
+	public function testGenerateMoveActivitiesOtherUserGetsBySubject(): void {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser', 'startActivityTransaction', 'commitActivityTransaction']);
+		$filesHooks->method('startActivityTransaction')->willReturn(false);
+		$this->settings->method('filterUsersBySetting')
+			->willReturnCallback(fn ($users, $method) => $method === 'email' ? ['other' => false] : ['other' => true]);
+
+		$filesHooks->expects($this->once())
+			->method('addNotificationsForUser')
+			->with('other', 'moved_by', $this->anything(), 1, '/new/new.txt', true, false, true, Files::TYPE_FILE_CHANGED);
+
+		self::invokePrivate($filesHooks, 'generateMoveActivities', [['other'], ['other' => '/old'], ['other' => '/new'], 1, 'old.txt', 2, 'new.txt']);
+	}
+
+	public function testGenerateMoveActivitiesUsesParentIdWhenNamesMatch(): void {
+		$filesHooks = $this->getFilesHooks(['addNotificationsForUser', 'startActivityTransaction', 'commitActivityTransaction']);
+		$filesHooks->method('startActivityTransaction')->willReturn(false);
+		$this->settings->method('filterUsersBySetting')
+			->willReturnCallback(fn ($users, $method) => $method === 'email' ? ['user' => false] : ['user' => true]);
+
+		// When old and new filename are the same, the first path param uses parentId, not fileId
+		$filesHooks->expects($this->once())
+			->method('addNotificationsForUser')
+			->with('user', 'moved_self', [[2 => '/new/'], [1 => '/old/same.txt']], 1, '/new/same.txt', true, false, true, Files::TYPE_FILE_CHANGED);
+
+		self::invokePrivate($filesHooks, 'generateMoveActivities', [['user'], ['user' => '/old'], ['user' => '/new'], 1, 'same.txt', 2, 'same.txt']);
+	}
 }
