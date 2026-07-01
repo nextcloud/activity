@@ -4,7 +4,8 @@
 -->
 <template>
 	<NcAppContent class="activity-app">
-		<h1 class="activity-app__heading">
+		<!-- Kept for document semantics / screen readers, but visually hidden -->
+		<h1 class="activity-app__heading hidden-visually">
 			{{ headingTitle }}
 		</h1>
 		<NcEmptyContent
@@ -26,24 +27,26 @@
 			</template>
 		</NcEmptyContent>
 		<div ref="container" class="activity-app__container" @scroll="onScroll">
-			<NcButton
-				v-if="newActivitiesAvailable"
-				class="activity-app__new-activities-indicator"
-				type="button"
-				@click="scrollToTop">
-				{{ t('activity', 'New activities') }}
-			</NcButton>
-			<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
-			<!-- Only show if not showing the inital empty content for loading -->
-			<NcLoadingIcon
-				v-if="hasMoreActivites && allActivities.length > 0"
-				:name="t('activity', 'Loading more activities')"
-				:size="64"
-				class="activity-app__loading-indicator" />
-			<div
-				v-else-if="!hasMoreActivites && allActivities.length > 0"
-				class="activity-app__loading-indicator">
-				{{ t('activity', 'No more activities.') }}
+			<div class="activity-app__content">
+				<NcButton
+					v-if="newActivitiesAvailable"
+					class="activity-app__new-activities-indicator"
+					type="button"
+					@click="scrollToTop">
+					{{ t('activity', 'New activities') }}
+				</NcButton>
+				<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
+				<!-- Only show if not showing the inital empty content for loading -->
+				<NcLoadingIcon
+					v-if="hasMoreActivites && allActivities.length > 0"
+					:name="t('activity', 'Loading more activities')"
+					:size="64"
+					class="activity-app__loading-indicator" />
+				<div
+					v-else-if="!hasMoreActivites && allActivities.length > 0"
+					class="activity-app__end-of-feed">
+					{{ t('activity', 'No more activities.') }}
+				</div>
 			</div>
 		</div>
 	</NcAppContent>
@@ -349,9 +352,14 @@ watch(props, () => {
 
 <style scoped lang="scss">
 .activity-app {
+	// Max width of the readable column, also read by the heading indent in ActivityGroup.vue
+	--activity-feed-max-width: 924px;
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	// Query container so the date headings track the content-area width (shrunk by the
+	// open app navigation), not the raw viewport
+	container: activity-feed / inline-size;
 
 	&__empty-content {
 		height: 100%;
@@ -364,16 +372,29 @@ watch(props, () => {
 		text-align: center;
 	}
 
+	&__end-of-feed {
+		color: var(--color-text-maxcontrast);
+		text-align: center;
+		// Large bottom margin so the message isn't stuck to the viewport bottom
+		margin-block: 30px 30vh;
+	}
+
 	&__container {
+		// Scroll container, so the scrollbar sits at the edge of app-content
+		// rather than beside the narrower content column
+		height: 100%;
+		overflow-y: scroll;
+	}
+
+	&__content {
+		// Clamp the readable column and centre it within the full-width scroller
 		display: flex;
 		flex-direction: column;
 
-		height: 100%;
-		width: min(100%, 924px);
-		max-width: 924px;
+		width: min(100%, var(--activity-feed-max-width));
+		max-width: var(--activity-feed-max-width);
 		margin: 0 auto;
 		padding-inline: 12px;
-		overflow-y: scroll;
 	}
 
 	&__new-activities-indicator {
@@ -393,15 +414,6 @@ watch(props, () => {
 		&:hover {
 			background-color: var(--color-primary-element-hover);
 		}
-	}
-
-	&__heading {
-		font-weight: bold;
-		font-size: 20px;
-		line-height: 44px; // to align height with the app navigation toggle
-		// Align with app navigation toggle
-		margin-top: 1px;
-		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
 	}
 }
 </style>
