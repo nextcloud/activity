@@ -56,7 +56,7 @@ class UserDeletedTest extends TestCase {
 	public function testUserDeleted(): void {
 		$this->data->expects($this->once())
 			->method('deleteActivities')
-			->with(['affecteduser' => self::UID]);
+			->with([['affecteduser', self::UID]]);
 		$this->mailQueueHandler->expects($this->once())
 			->method('purgeItemsForUser')
 			->with(self::UID);
