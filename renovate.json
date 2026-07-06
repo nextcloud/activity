@@ -14,7 +14,7 @@
   "rangeStrategy": "bump",
   "rebaseWhen": "conflicted",
   "ignoreUnstable": false,
-  "baseBranchPatterns": ["master"],
+  "baseBranchPatterns": ["master", "stable34", "stable33", "stable32"],
   "enabledManagers": ["composer", "github-actions", "npm"],
   "ignoreDeps": ["node", "npm", "php"],
   "packageRules": [
@@ -48,8 +48,9 @@
       "extends": ["schedule:monthly"]
     },
     {
-      "description": "Disable all updates on stable branches",
+      "description": "Only allow patch-level updates on stable branches",
       "matchBaseBranches": ["/^stable/"],
+      "matchUpdateTypes": ["major", "minor"],
       "enabled": false
     }
   ],
