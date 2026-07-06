@@ -68,7 +68,7 @@
     "@vue/tsconfig": "^0.7.0",
     "cypress-vite": "^1.8.0",
     "cypress-wait-until": "^3.0.2",
-    "dockerode": "^4.0.6",
+    "dockerode": "^4.0.12",
     "eslint-plugin-cypress": "^5.0.1",
     "happy-dom": "^20.8.9",
     "typescript": "^5.9.3",
