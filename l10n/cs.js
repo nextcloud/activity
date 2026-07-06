@@ -36,6 +36,8 @@ OC.L10N.register(
     "Activity notification configuration" : "Nastavení upozorňování ohledně aktivit",
     "Today" : "Dnes",
     "Yesterday" : "Včera",
+    "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["Staženo %nkrát (%skrát v posledních 30 dnech)","Staženo %nkrát (%skrát v posledních 30 dnech)","Staženo %nkrát (%skrát v posledních 30 dnech)","Staženo %nkrát (%skrát v posledních 30 dnech)"],
+    "_Downloaded %n time_::_Downloaded %n times_" : ["Staženo %nkrát","Staženo %nkrát","Staženo %nkrát","Staženo %nkrát"],
     "You need to set up your email address before you can receive notification emails." : "Pokud chcete dostávat upozornění e-mailem, je nejprve třeba si v profilu zadat svou e-mailovou adresu.",
     "Send activity emails" : "Posílat e-maily ohledně aktivity",
     "As soon as possible" : "Co možná nejdříve",
