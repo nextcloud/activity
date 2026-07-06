@@ -64,7 +64,7 @@
     "@testing-library/cypress": "^10.0.3",
     "@types/dockerode": "^3.3.39",
     "@vitest/coverage-v8": "^4.0.15",
-    "@vue/test-utils": "^2.4.6",
+    "@vue/test-utils": "^2.4.11",
     "@vue/tsconfig": "^0.7.0",
     "cypress-vite": "^1.8.0",
     "cypress-wait-until": "^3.0.2",
