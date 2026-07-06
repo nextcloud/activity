@@ -35,7 +35,7 @@
     "extends @nextcloud/browserslist-config"
   ],
   "overrides": {
-    "immutable": "^5.1.5"
+    "immutable": "^5.1.9"
   },
   "dependencies": {
     "@mdi/svg": "^7.4.47",
