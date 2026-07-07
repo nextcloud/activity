@@ -14,6 +14,7 @@
   "rangeStrategy": "bump",
   "rebaseWhen": "conflicted",
   "ignoreUnstable": false,
+  "minimumReleaseAge": "4 days",
   "baseBranchPatterns": ["master", "stable34", "stable33", "stable32"],
   "enabledManagers": ["composer", "github-actions", "npm"],
   "ignoreDeps": ["node", "npm", "php"],
@@ -36,16 +37,9 @@
       "labels": ["dependencies", "3. to review"]
     },
     {
-      "description": "Update GitHub Actions monthly and group into one PR",
+      "description": "Group GitHub Actions updates into one PR",
       "matchManagers": ["github-actions"],
-      "extends": ["schedule:monthly"],
       "groupName": "GitHub Actions"
-    },
-    {
-      "description": "Update npm dev dependencies monthly to reduce noise",
-      "matchManagers": ["npm"],
-      "matchDepTypes": ["devDependencies"],
-      "extends": ["schedule:monthly"]
     },
     {
       "description": "Only allow patch-level updates on stable branches",
