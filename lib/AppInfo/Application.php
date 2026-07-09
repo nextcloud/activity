@@ -15,10 +15,10 @@ use OCA\Activity\Capabilities;
 use OCA\Activity\Consumer;
 use OCA\Activity\Dashboard\ActivityWidget;
 use OCA\Activity\Data;
-use OCA\Activity\FilesHooksStatic;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Listener\AddMissingIndicesListener;
 use OCA\Activity\Listener\LoadSidebarScripts;
+use OCA\Activity\Listener\NodeEventListener;
 use OCA\Activity\Listener\SetUserDefaults;
 use OCA\Activity\Listener\ShareEventListener;
 use OCA\Activity\Listener\UserDeleted;
@@ -26,12 +26,17 @@ use OCA\Activity\MailQueueHandler;
 use OCA\Activity\NotificationGenerator;
 use OCA\Activity\UserSettings;
 use OCA\Files\Event\LoadSidebar;
+use OCA\Files_Trashbin\Events\BeforeNodeRestoredEvent;
 use OCP\Activity\IManager;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\DB\Events\AddMissingIndicesEvent;
+use OCP\Files\Events\Node\NodeCreatedEvent;
+use OCP\Files\Events\Node\NodeDeletedEvent;
+use OCP\Files\Events\Node\NodeRenamedEvent;
+use OCP\Files\Events\Node\NodeWrittenEvent;
 use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
@@ -48,7 +53,6 @@ use OCP\Share\Events\ShareCreatedEvent;
 use OCP\Share\Events\ShareDeletedFromSelfEvent;
 use OCP\User\Events\PostLoginEvent;
 use OCP\User\Events\UserDeletedEvent;
-use OCP\Util;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -155,32 +159,31 @@ class Application extends App implements IBootstrap {
 	 */
 	private function registerActivityConsumer(): void {
 		$c = $this->getContainer();
-		$server = $c->getServer();
 
-		$server->get(IManager::class)->registerConsumer(function () use ($c) {
+		$c->get(INotificationManager::class)->registerConsumer(function () use ($c) {
 			return $c->get(Consumer::class);
 		});
 	}
 
 	public function registerNotifier(): void {
-		$server = $this->getContainer()->getServer();
-		$server->get(INotificationManager::class)->registerNotifierService(NotificationGenerator::class);
+		$this->getContainer()->get(INotificationManager::class)->registerNotifierService(NotificationGenerator::class);
 	}
 
 	/**
 	 * Register the hooks for filesystem operations
 	 */
 	private function registerFilesActivity(IRegistrationContext $context): void {
-		// All other events from other apps have to be send via the Consumer
-		Util::connectHook('OC_Filesystem', 'post_create', FilesHooksStatic::class, 'fileCreate');
-		Util::connectHook('OC_Filesystem', 'post_update', FilesHooksStatic::class, 'fileUpdate');
-		Util::connectHook('OC_Filesystem', 'delete', FilesHooksStatic::class, 'fileDelete');
-		Util::connectHook('OC_Filesystem', 'rename', FilesHooksStatic::class, 'fileMove');
-		Util::connectHook('OC_Filesystem', 'post_rename', FilesHooksStatic::class, 'fileMovePost');
-		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', FilesHooksStatic::class, 'fileRestore');
+		// Node events
+		$context->registerEventListener(NodeCreatedEvent::class, NodeEventListener::class);
+		$context->registerEventListener(NodeWrittenEvent::class, NodeEventListener::class);
+		$context->registerEventListener(NodeDeletedEvent::class, NodeEventListener::class);
+		$context->registerEventListener(BeforeNodeRenamedEvent::class, NodeEventListener::class);
+		$context->registerEventListener(NodeRenamedEvent::class, NodeEventListener::class);
+		$context->registerEventListener(BeforeNodeRestoredEvent::class, NodeEventListener::class);
 
 		$context->registerEventListener(ShareCreatedEvent::class, ShareEventListener::class);
 		$context->registerEventListener(BeforeShareDeletedEvent::class, ShareEventListener::class);
 		$context->registerEventListener(ShareDeletedFromSelfEvent::class, ShareEventListener::class);
+
 	}
 }
