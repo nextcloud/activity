@@ -43,7 +43,7 @@ class FilesHooks {
 
 	/** @var string|bool */
 	protected $moveCase = false;
-	/** @var array */
+	/** @var array|null */
 	protected $oldAccessList;
 	/** @var string */
 	protected $oldParentPath;
@@ -275,22 +275,30 @@ class FilesHooks {
 			$this->moveCase = 'moveCross';
 		}
 
-		[$this->oldParentPath, $this->oldParentOwner, $this->oldParentId] = $this->getSourcePathAndOwner($oldDir);
-		if ($this->oldParentId === 0) {
-			// Could not find the file for the owner ...
+		try {
+			[$this->oldParentPath, $this->oldParentOwner, $this->oldParentId] = $this->getSourcePathAndOwner($oldDir);
+			if ($this->oldParentId === 0) {
+				// Could not find the file for the owner ...
+				$this->moveCase = false;
+				return;
+			}
+
+			$oldAccessList = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
+
+			// file can be shared using GroupFolders, including ACL check
+			if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
+				[, , $oldFileId] = $this->getSourcePathAndOwner($oldPath);
+				$oldAccessList['users'] = array_merge($oldAccessList['users'], $this->getAffectedUsersFromCachedMounts($oldFileId));
+			}
+
+			$this->oldAccessList = $oldAccessList;
+		} catch (NotFoundException $e) {
+			// The old location cannot be resolved (e.g. inconsistent mount or file
+			// cache state), so fileMovePost() would have no valid data to build
+			// activities from. Skip it instead of failing the move half-way.
+			$this->logger->warning('Could not resolve the old location of "' . $oldPath . '", no move activities will be created', ['exception' => $e]);
 			$this->moveCase = false;
-			return;
 		}
-
-		$oldAccessList = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
-
-		// file can be shared using GroupFolders, including ACL check
-		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
-			[, , $oldFileId] = $this->getSourcePathAndOwner($oldPath);
-			$oldAccessList['users'] = array_merge($oldAccessList['users'], $this->getAffectedUsersFromCachedMounts($oldFileId));
-		}
-
-		$this->oldAccessList = $oldAccessList;
 	}
 
 
@@ -392,6 +400,12 @@ class FilesHooks {
 	 * @param string $newPath
 	 */
 	protected function fileMoving($oldPath, $newPath) {
+		if (!is_array($this->oldAccessList)) {
+			// fileMove() could not collect the old access list, so there is no
+			// base to compute the activities from
+			return;
+		}
+
 		$dirName = dirname($newPath);
 		$fileName = basename($newPath);
 		$oldFileName = basename($oldPath);
