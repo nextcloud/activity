@@ -74,7 +74,7 @@
     "typescript": "^6.0.3",
     "vite": "^7.3.6",
     "vitest": "^4.1.9",
-    "wait-on": "^9.0.5"
+    "wait-on": "^9.0.10"
   },
   "engines": {
     "node": "^24.0.0",
