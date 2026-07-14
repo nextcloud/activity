@@ -56,7 +56,6 @@ class ViewInfoCache {
 			'view' => '',
 		];
 
-		$notFound = false;
 		try {
 			$userFolder = $this->rootFolder->getUserFolder($user);
 			$entries = $userFolder->getById($fileId);
@@ -94,13 +93,24 @@ class ViewInfoCache {
 			} catch (NotFoundException $e) {
 				$notFound = true;
 			}
+			$entry = $userTrashBin->getFirstNodeById($fileId);
+			if ($entry === null) {
+				throw new NotFoundException('No entries returned');
+			}
+			$cache = [
+				'path' => $userTrashBin->getRelativePath($entry->getPath()),
+				'exists' => true,
+				'is_dir' => $entry instanceof Folder,
+				'view' => 'trashbin',
+				'node' => $entry,
+			];
+		} catch (NotFoundException) {
+			// Not found anywhere — cache path as null but return original filePath
+			$this->cacheId[$user][$fileId] = array_merge($cache, ['path' => null]);
+			return $cache;
 		}
 
 		$this->cacheId[$user][$fileId] = $cache;
-		if ($notFound) {
-			$this->cacheId[$user][$fileId]['path'] = null;
-		}
-
 		return $cache;
 	}
 }
