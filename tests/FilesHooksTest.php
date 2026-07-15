@@ -481,6 +481,65 @@ class FilesHooksTest extends TestCase {
 		$this->assertEquals($addCalls, array_slice($receivedActivities, 0, count($addCalls)));
 	}
 
+	public function testFileMoveCollectsOldAccessList(): void {
+		$filesHooks = $this->getFilesHooks([
+			'getSourcePathAndOwner',
+			'getUserPathsFromPath',
+		]);
+
+		$filesHooks->expects($this->once())
+			->method('getSourcePathAndOwner')
+			->with('/folder')
+			->willReturn(['/folder', 'owner', 23]);
+		$filesHooks->expects($this->once())
+			->method('getUserPathsFromPath')
+			->with('/folder', 'owner')
+			->willReturn(['users' => ['user' => '/folder'], 'remotes' => []]);
+
+		$filesHooks->fileMove('/folder/file.txt', '/target/file.txt');
+
+		$this->assertSame('moveCross', self::invokePrivate($filesHooks, 'moveCase'));
+		$this->assertSame(['users' => ['user' => '/folder'], 'remotes' => []], self::invokePrivate($filesHooks, 'oldAccessList'));
+	}
+
+	public function testFileMoveOldPathNotResolvable(): void {
+		$filesHooks = $this->getFilesHooks([
+			'getSourcePathAndOwner',
+			'getUserPathsFromPath',
+			'fileRenaming',
+			'fileMoving',
+		]);
+
+		$filesHooks->expects($this->once())
+			->method('getSourcePathAndOwner')
+			->with('/folder')
+			->willThrowException(new NotFoundException('File with id "1337" has not been found.'));
+		$filesHooks->expects($this->never())
+			->method('getUserPathsFromPath');
+		$filesHooks->expects($this->never())
+			->method('fileRenaming');
+		$filesHooks->expects($this->never())
+			->method('fileMoving');
+
+		$filesHooks->fileMove('/folder/file.txt', '/target/file.txt');
+
+		$this->assertFalse(self::invokePrivate($filesHooks, 'moveCase'));
+
+		// the post hook must be a no-op instead of failing on the missing state
+		$filesHooks->fileMovePost('/folder/file.txt', '/target/file.txt');
+	}
+
+	public function testFileMovingWithoutOldAccessList(): void {
+		$filesHooks = $this->getFilesHooks([
+			'getSourcePathAndOwner',
+		]);
+
+		$filesHooks->expects($this->never())
+			->method('getSourcePathAndOwner');
+
+		self::invokePrivate($filesHooks, 'fileMoving', ['/folder/file.txt', '/target/file.txt']);
+	}
+
 	private function getNodeMock(int $fileId = 1337, string $path = 'path', bool $isFile = true): Node&MockObject {
 		if ($isFile) {
 			$node = $this->createMock(File::class);
