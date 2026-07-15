@@ -413,14 +413,23 @@ class FilesHooks {
 		$beforeUsers = array_keys($oldUsers);
 		$afterUsers = array_keys($affectedUsers);
 
+		// Resolve notification/email settings (and favorites) once for every user involved
+		// in the move, instead of recomputing them for each delete/add/move subset of the
+		// same file. The maps are keyed by user and each subset only reads its own keys.
+		$allUsers = array_values(array_unique(array_merge($beforeUsers, $afterUsers)));
+		$filteredEmailUsers = $filteredNotificationUsers = [];
+		if (!empty($allUsers)) {
+			[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $allUsers);
+		}
+
 		$deleteUsers = array_diff($beforeUsers, $afterUsers);
-		$this->generateDeleteActivities($deleteUsers, $oldUsers, $fileId, $oldFileName);
+		$this->generateDeleteActivities($deleteUsers, $oldUsers, $fileId, $oldFileName, $filteredEmailUsers, $filteredNotificationUsers);
 
 		$addUsers = array_diff($afterUsers, $beforeUsers);
-		$this->generateAddActivities($addUsers, $affectedUsers, $fileId, $fileName);
+		$this->generateAddActivities($addUsers, $affectedUsers, $fileId, $fileName, $filteredEmailUsers, $filteredNotificationUsers);
 
 		$moveUsers = array_intersect($beforeUsers, $afterUsers);
-		$this->generateMoveActivities($moveUsers, $oldUsers, $affectedUsers, $fileId, $oldFileName, $parentId, $fileName);
+		$this->generateMoveActivities($moveUsers, $oldUsers, $affectedUsers, $fileId, $oldFileName, $parentId, $fileName, $filteredEmailUsers, $filteredNotificationUsers);
 
 		$beforeRemotes = $this->oldAccessList['remotes'];
 		$afterRemotes = $accessList['remotes'];
@@ -455,13 +464,13 @@ class FilesHooks {
 	 * @param string[] $pathMap
 	 * @param int $fileId
 	 * @param string $oldFileName
+	 * @param array $filteredEmailUsers
+	 * @param array $filteredNotificationUsers
 	 */
-	protected function generateDeleteActivities($users, $pathMap, $fileId, $oldFileName) {
+	protected function generateDeleteActivities($users, $pathMap, $fileId, $oldFileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
 		if (empty($users)) {
 			return;
 		}
-
-		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
 
 		$shouldFlush = $this->startActivityTransaction();
 		foreach ($users as $user) {
@@ -491,13 +500,13 @@ class FilesHooks {
 	 * @param string[] $pathMap
 	 * @param int $fileId
 	 * @param string $fileName
+	 * @param array $filteredEmailUsers
+	 * @param array $filteredNotificationUsers
 	 */
-	protected function generateAddActivities($users, $pathMap, $fileId, $fileName) {
+	protected function generateAddActivities($users, $pathMap, $fileId, $fileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
 		if (empty($users)) {
 			return;
 		}
-
-		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
 
 		$shouldFlush = $this->startActivityTransaction();
 		foreach ($users as $user) {
@@ -530,13 +539,13 @@ class FilesHooks {
 	 * @param string $oldFileName
 	 * @param int $newParentId
 	 * @param string $fileName
+	 * @param array $filteredEmailUsers
+	 * @param array $filteredNotificationUsers
 	 */
-	protected function generateMoveActivities($users, $beforePathMap, $afterPathMap, $fileId, $oldFileName, $newParentId, $fileName) {
+	protected function generateMoveActivities($users, $beforePathMap, $afterPathMap, $fileId, $oldFileName, $newParentId, $fileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
 		if (empty($users)) {
 			return;
 		}
-
-		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
 
 		$shouldFlush = $this->startActivityTransaction();
 		foreach ($users as $user) {
