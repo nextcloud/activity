@@ -475,15 +475,13 @@ class Data {
 		$ttl = (60 * 60 * 24 * max(1, $expireDays));
 		$timelimit = time() - $ttl;
 		$conditions = [
-			'timestamp' => [$timelimit, '<'],
+			['timestamp', $timelimit, '<'],
 		];
 
 		$excludedUsers = $this->config->getSystemValue('activity_expire_exclude_users', []);
-		if (!empty($excludedUsers)) {
+		if (is_array($excludedUsers)) {
 			foreach ($excludedUsers as $user) {
-				$conditions[] = [
-					'affecteduser' => [$user, '!=']
-				];
+				$conditions[] = ['affecteduser', $user, '!='];
 			}
 		}
 
@@ -493,11 +491,14 @@ class Data {
 	/**
 	 * Delete activities that match certain conditions
 	 *
-	 * @param array $conditions Array with conditions that have to be met
-	 *                          'field' => 'value'  => `field` = 'value'
-	 *                          'field' => array('value', 'operator') => `field` operator 'value'
+	 * @param array $conditions List of conditions that all have to be met (combined with AND).
+	 *                          Each condition is a [column, value, operator] tuple, where the
+	 *                          operator is optional and defaults to '=':
+	 *                          ['field', 'value']        => `field` = 'value'
+	 *                          ['field', 'value', '!=']  => `field` != 'value'
+	 * @psalm-param list<array{0: string, 1: mixed, 2?: string}> $conditions
 	 */
-	public function deleteActivities($conditions): void {
+	public function deleteActivities(array $conditions): void {
 		$platform = $this->connection->getDatabasePlatform();
 		if ($platform instanceof MySQLPlatform) {
 			$this->logger->debug('Choosing chunked activity delete for MySQL/MariaDB', ['app' => 'activity']);
@@ -508,19 +509,28 @@ class Data {
 		$deleteQuery = $this->connection->getQueryBuilder();
 		$deleteQuery->delete('activity');
 
-		foreach ($conditions as $column => $comparison) {
-			if (is_array($comparison)) {
-				$operation = $comparison[1] ?? '=';
-				$value = $comparison[0];
-			} else {
-				$operation = '=';
-				$value = $comparison;
-			}
-
-			$deleteQuery->andWhere($deleteQuery->expr()->comparison($column, $operation, $deleteQuery->createNamedParameter($value)));
-		}
+		$this->applyConditions($deleteQuery, $conditions);
 		// Dont use chunked delete - let the DB handle the large row count natively
 		$deleteQuery->executeStatement();
+	}
+
+	/**
+	 * Apply a list of conditions to a query, combined with AND.
+	 *
+	 * Using andWhere() for every condition is required: where() would replace any
+	 * previously set restriction, silently dropping all but the last condition.
+	 *
+	 * @param IQueryBuilder $query
+	 * @param array $conditions List of [column, value, operator] tuples; operator defaults to '='
+	 * @psalm-param list<array{0: string, 1: mixed, 2?: string}> $conditions
+	 */
+	private function applyConditions(IQueryBuilder $query, array $conditions): void {
+		foreach ($conditions as $condition) {
+			$column = $condition[0];
+			$value = $condition[1];
+			$operation = $condition[2] ?? '=';
+			$query->andWhere($query->expr()->comparison($column, $operation, $query->createNamedParameter($value)));
+		}
 	}
 
 	public function getById(int $activityId): ?IEvent {
@@ -604,16 +614,7 @@ class Data {
 		$query->select('activity_id')
 			->from('activity');
 
-		foreach ($conditions as $column => $comparison) {
-			if (is_array($comparison)) {
-				$operation = $comparison[1] ?? '=';
-				$value = $comparison[0];
-			} else {
-				$operation = '=';
-				$value = $comparison;
-			}
-			$query->where($query->expr()->comparison($column, $operation, $query->createNamedParameter($value)));
-		}
+		$this->applyConditions($query, $conditions);
 
 		$query->setMaxResults(50000);
 		$result = $query->executeQuery();
