@@ -155,16 +155,14 @@ class Application extends App implements IBootstrap {
 	 */
 	private function registerActivityConsumer(): void {
 		$c = $this->getContainer();
-		$server = $c->getServer();
 
-		$server->get(IManager::class)->registerConsumer(function () use ($c) {
+		$c->get(IManager::class)->registerConsumer(function () use ($c) {
 			return $c->get(Consumer::class);
 		});
 	}
 
 	public function registerNotifier(): void {
-		$server = $this->getContainer()->getServer();
-		$server->get(INotificationManager::class)->registerNotifierService(NotificationGenerator::class);
+		$this->getContainer()->get(INotificationManager::class)->registerNotifierService(NotificationGenerator::class);
 	}
 
 	/**
