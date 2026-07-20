@@ -31,6 +31,7 @@ use OCP\Activity\IManager;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\IJobList;
 use OCP\DB\IPreparedStatement;
+use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\Server;
@@ -51,31 +52,11 @@ class DataDeleteActivitiesTest extends TestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$activities = [
-			['affectedUser' => 'delete', 'subject' => 'subject', 'time' => 0],
-			['affectedUser' => 'delete', 'subject' => 'subject2', 'time' => time() - 2 * 365 * 24 * 3600],
-			['affectedUser' => 'otherUser', 'subject' => 'subject', 'time' => time()],
-			['affectedUser' => 'otherUser', 'subject' => 'subject2', 'time' => time()],
-		];
+		$this->insertActivity('delete', 0, 'subject');
+		$this->insertActivity('delete', time() - 2 * 365 * 24 * 3600, 'subject2');
+		$this->insertActivity('otherUser', time(), 'subject');
+		$this->insertActivity('otherUser', time(), 'subject2');
 
-		$queryActivity = Server::get(IDBConnection::class)
-			->prepare('INSERT INTO `*PREFIX*activity`(`app`, `subject`, `subjectparams`, `message`, `messageparams`, `file`, `link`, `user`, `affecteduser`, `timestamp`, `priority`, `type`)' . ' VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )');
-		foreach ($activities as $activity) {
-			$queryActivity->execute([
-				'app',
-				$activity['subject'],
-				json_encode([]),
-				'',
-				json_encode([]),
-				'file',
-				'link',
-				'user',
-				$activity['affectedUser'],
-				$activity['time'],
-				IExtension::PRIORITY_MEDIUM,
-				'test',
-			]);
-		}
 		$this->data = new Data(
 			$this->createMock(IManager::class),
 			Server::get(IDBConnection::class),
@@ -84,9 +65,29 @@ class DataDeleteActivitiesTest extends TestCase {
 		);
 	}
 
+	private function insertActivity(string $affectedUser, int $time, string $subject = 'subject'): void {
+		$query = Server::get(IDBConnection::class)->getQueryBuilder();
+		$query->insert('activity')
+			->values([
+				'app' => $query->createNamedParameter('app'),
+				'subject' => $query->createNamedParameter($subject),
+				'subjectparams' => $query->createNamedParameter(json_encode([])),
+				'message' => $query->createNamedParameter(''),
+				'messageparams' => $query->createNamedParameter(json_encode([])),
+				'file' => $query->createNamedParameter('file'),
+				'link' => $query->createNamedParameter('link'),
+				'user' => $query->createNamedParameter('user'),
+				'affecteduser' => $query->createNamedParameter($affectedUser),
+				'timestamp' => $query->createNamedParameter($time, IQueryBuilder::PARAM_INT),
+				'priority' => $query->createNamedParameter(IExtension::PRIORITY_MEDIUM, IQueryBuilder::PARAM_INT),
+				'type' => $query->createNamedParameter('test'),
+			]);
+		$query->executeStatement();
+	}
+
 	protected function tearDown(): void {
 		$this->data->deleteActivities([
-			'type' => 'test',
+			['type', 'test'],
 		]);
 
 		parent::tearDown();
@@ -94,10 +95,10 @@ class DataDeleteActivitiesTest extends TestCase {
 
 	public static function deleteActivitiesData(): array {
 		return [
-			[['affecteduser' => 'delete'], ['otherUser']],
-			[['affecteduser' => ['delete', '=']], ['otherUser']],
-			[['timestamp' => [time() - 10, '<']], ['otherUser']],
-			[['timestamp' => [time() - 10, '>']], ['delete']],
+			[[['affecteduser', 'delete']], ['otherUser']],
+			[[['affecteduser', 'delete', '=']], ['otherUser']],
+			[[['timestamp', time() - 10, '<']], ['otherUser']],
+			[[['timestamp', time() - 10, '>']], ['delete']],
 		];
 	}
 
@@ -123,6 +124,50 @@ class DataDeleteActivitiesTest extends TestCase {
 		$jobList = $this->createMock(IJobList::class);
 		$backgroundjob->start($jobList);
 		$this->assertUserActivities(['otherUser']);
+	}
+
+	/**
+	 * Regression test for https://github.com/nextcloud/activity/issues/2647
+	 *
+	 * With 'activity_expire_exclude_users' set, expire() builds more than one
+	 * condition. This must:
+	 *  - not crash (the excluded users used to be added in a shape the delete
+	 *    query could not parse), and
+	 *  - keep ANDing every condition together. On MySQL/MariaDB the chunked
+	 *    delete used where() in a loop, which dropped all but the last condition
+	 *    and would have deleted recent, non-expired activity.
+	 */
+	public function testExpireActivitiesWithExcludedUsers(): void {
+		// Old activity for a user that is NOT excluded -> must still be deleted.
+		$this->insertActivity('expired', 0, 'subject');
+
+		$config = $this->createMock(IConfig::class);
+		$config->method('getSystemValue')
+			->willReturnCallback(static function ($key, $default) {
+				if ($key === 'activity_expire_exclude_users') {
+					return ['delete', 'otherUser'];
+				}
+				return $default;
+			});
+		$data = new Data(
+			$this->createMock(IManager::class),
+			Server::get(IDBConnection::class),
+			$this->createMock(LoggerInterface::class),
+			$config,
+		);
+
+		$time = $this->createMock(ITimeFactory::class);
+		$time->method('getTime')
+			->willReturn(time());
+		$backgroundjob = new ExpireActivities($time, $data, $config);
+		$backgroundjob->setId('1');
+
+		$this->assertUserActivities(['delete', 'expired', 'otherUser']);
+		$backgroundjob->start($this->createMock(IJobList::class));
+
+		// 'delete' (old) survives because it is excluded; 'otherUser' (recent)
+		// survives; 'expired' (old, not excluded) is the only one deleted.
+		$this->assertUserActivities(['delete', 'otherUser']);
 	}
 
 	protected function assertUserActivities(array $expected): void {
