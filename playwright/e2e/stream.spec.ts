@@ -39,13 +39,17 @@ test('Shows activity entries on load', async ({ page }) => {
 
 test('Heading reflects the active filter', async ({ page }) => {
 	await page.goto(STREAM_URL)
-	await expect(page.locator('.activity-app__heading')).toBeVisible({ timeout: 30000 })
-	await expect(page.locator('.activity-app__heading')).toContainText('All activities')
+	// The <h1> is kept for semantics but visually hidden, so assert its content
+	// rather than its visibility.
+	await expect(page.locator('.activity-app__heading'))
+		.toContainText('All activities', { timeout: 30000 })
 })
 
 test('Navigation filter loads filtered stream', async ({ page }) => {
 	await page.goto(STREAM_URL)
-	await expect(page.locator('.activity-app__heading')).toBeVisible({ timeout: 30000 })
+	await expect(
+		page.locator('.activity-entry, .activity-app__empty-content').first(),
+	).toBeVisible({ timeout: 30000 })
 
 	await expect(page.locator('[data-navigation="all"]')).toBeVisible()
 
@@ -58,7 +62,9 @@ test('Navigation filter loads filtered stream', async ({ page }) => {
 
 test('RSS feed toggle shows and hides the feed URL', async ({ page }) => {
 	await page.goto(STREAM_URL)
-	await expect(page.locator('.activity-app__heading')).toBeVisible({ timeout: 30000 })
+	await expect(
+		page.locator('.activity-entry, .activity-app__empty-content').first(),
+	).toBeVisible({ timeout: 30000 })
 
 	await expect(page.getByRole('textbox', { name: 'RSS feed' })).not.toBeVisible()
 
