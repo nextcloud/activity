@@ -136,7 +136,10 @@ class MailQueueHandler {
 		// Delete all entries we dealt with
 		$this->deleteSentItems($deleteItemsForUsers, $sendTime);
 
-		return count($affectedUsers);
+		// Only count the users that were actually dealt with, so a batch of
+		// users whose lookup failed does not keep the CLI loops of the
+		// callers spinning on the same batch forever.
+		return count($deleteItemsForUsers);
 	}
 
 	/**
