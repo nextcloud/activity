@@ -1213,6 +1213,8 @@ class FilesHooks {
 					'exception' => $e,
 				],
 			);
+			// Do not publish the incompletely built event
+			return;
 		}
 
 		// Add activity to stream
