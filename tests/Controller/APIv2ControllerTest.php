@@ -522,8 +522,8 @@ class APIv2ControllerTest extends TestCase {
 			->method('get')
 			->willReturn([
 				'data' => [
-					['activity_id' => 11, 'app' => 'files', 'timestamp' => 1234567890, 'object_type' => 'files', 'object_id' => 42],
-					['activity_id' => 22, 'app' => 'comments', 'timestamp' => 1234567891, 'object_type' => 'files', 'object_id' => 42],
+					['activity_id' => 11, 'app' => 'files', 'user' => 'user2', 'timestamp' => 1234567890, 'object_type' => 'files', 'object_id' => 42],
+					['activity_id' => 22, 'app' => 'comments', 'user' => 'user2', 'timestamp' => 1234567891, 'object_type' => 'files', 'object_id' => 42],
 				],
 				'headers' => ['ETag' => 'abc'],
 				'has_more' => false,
@@ -533,15 +533,91 @@ class APIv2ControllerTest extends TestCase {
 		$notification->method($this->anything())->willReturnSelf();
 
 		$this->notificationManager->expects($this->once())
+			->method('getCount')
+			->willReturn(5);
+		$this->notificationManager->expects($this->once())
 			->method('defer')
 			->willReturn(true);
-		$this->notificationManager->expects($this->exactly(2))
+		$this->notificationManager->expects($this->exactly(3))
 			->method('createNotification')
 			->willReturn($notification);
 		$this->notificationManager->expects($this->exactly(2))
 			->method('markProcessed')
 			->with($notification);
 		$this->notificationManager->expects($this->once())
+			->method('flush');
+
+		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, 'files', 42, 'desc']);
+		$this->assertSame(Http::STATUS_OK, $result->getStatus());
+	}
+
+	public function testGetSkipsMarkingWhenUserHasNoNotifications(): void {
+		$controller = $this->getController(['validateParameters', 'generateHeaders']);
+		$controller->method('generateHeaders')->willReturnArgument(0);
+		$controller->method('validateParameters');
+
+		self::invokePrivate($controller, 'objectType', ['files']);
+		self::invokePrivate($controller, 'objectId', [42]);
+		self::invokePrivate($controller, 'user', ['user1']);
+
+		$this->data->expects($this->once())
+			->method('get')
+			->willReturn([
+				'data' => [
+					['activity_id' => 11, 'app' => 'files', 'user' => 'user2', 'timestamp' => 1234567890, 'object_type' => 'files', 'object_id' => 42],
+				],
+				'headers' => ['ETag' => 'abc'],
+				'has_more' => false,
+			]);
+
+		$notification = $this->createMock(INotification::class);
+		$notification->method($this->anything())->willReturnSelf();
+
+		$this->notificationManager->expects($this->once())
+			->method('getCount')
+			->willReturn(0);
+		$this->notificationManager->expects($this->once())
+			->method('createNotification')
+			->willReturn($notification);
+		$this->notificationManager->expects($this->never())
+			->method('defer');
+		$this->notificationManager->expects($this->never())
+			->method('markProcessed');
+		$this->notificationManager->expects($this->never())
+			->method('flush');
+
+		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, 'files', 42, 'desc']);
+		$this->assertSame(Http::STATUS_OK, $result->getStatus());
+	}
+
+	public function testGetSkipsMarkingForOwnActivities(): void {
+		$controller = $this->getController(['validateParameters', 'generateHeaders']);
+		$controller->method('generateHeaders')->willReturnArgument(0);
+		$controller->method('validateParameters');
+
+		self::invokePrivate($controller, 'objectType', ['files']);
+		self::invokePrivate($controller, 'objectId', [42]);
+		self::invokePrivate($controller, 'user', ['user1']);
+
+		$this->data->expects($this->once())
+			->method('get')
+			->willReturn([
+				'data' => [
+					['activity_id' => 11, 'app' => 'files', 'user' => 'user1', 'timestamp' => 1234567890, 'object_type' => 'files', 'object_id' => 42],
+				],
+				'headers' => ['ETag' => 'abc'],
+				'has_more' => false,
+			]);
+
+		$this->notificationManager->expects($this->never())
+			->method('getCount');
+		$this->notificationManager->expects($this->never())
+			->method('createNotification');
+		$this->notificationManager->expects($this->never())
+			->method('defer');
+		$this->notificationManager->expects($this->never())
+			->method('markProcessed');
+		$this->notificationManager->expects($this->never())
 			->method('flush');
 
 		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, 'files', 42, 'desc']);
@@ -561,7 +637,7 @@ class APIv2ControllerTest extends TestCase {
 			->method('get')
 			->willReturn([
 				'data' => [
-					['activity_id' => 11, 'app' => 'files', 'timestamp' => 1234567890, 'object_type' => 'files', 'object_id' => 42],
+					['activity_id' => 11, 'app' => 'files', 'user' => 'user2', 'timestamp' => 1234567890, 'object_type' => 'files', 'object_id' => 42],
 				],
 				'headers' => ['ETag' => 'abc'],
 				'has_more' => false,
@@ -571,9 +647,12 @@ class APIv2ControllerTest extends TestCase {
 		$notification->method($this->anything())->willReturnSelf();
 
 		$this->notificationManager->expects($this->once())
+			->method('getCount')
+			->willReturn(1);
+		$this->notificationManager->expects($this->once())
 			->method('defer')
 			->willReturn(false);
-		$this->notificationManager->expects($this->once())
+		$this->notificationManager->expects($this->exactly(2))
 			->method('createNotification')
 			->willReturn($notification);
 		$this->notificationManager->expects($this->once())
@@ -606,6 +685,8 @@ class APIv2ControllerTest extends TestCase {
 				'has_more' => false,
 			]);
 
+		$this->notificationManager->expects($this->never())
+			->method('getCount');
 		$this->notificationManager->expects($this->never())
 			->method('defer');
 		$this->notificationManager->expects($this->never())
