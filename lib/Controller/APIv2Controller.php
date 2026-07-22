@@ -221,20 +221,44 @@ class APIv2Controller extends OCSController {
 		// When viewing activities for a specific file, mark corresponding activity
 		// notifications as processed so they clear from the notification bell
 		if ($this->objectType !== '' && $this->objectId !== 0 && !empty($this->user)) {
-			$deferred = $this->notificationManager->defer();
-			foreach ($preparedActivities as $activity) {
-				$notification = $this->notificationManager->createNotification();
-				$notification->setApp($activity['app'] ?? 'activity')
-					->setUser($this->user)
-					->setObject('activity_notification', (string)$activity['activity_id']);
-				$this->notificationManager->markProcessed($notification);
-			}
-			if ($deferred) {
-				$this->notificationManager->flush();
-			}
+			$this->markActivityNotificationsProcessed($preparedActivities);
 		}
 
 		return new DataResponse($preparedActivities, Http::STATUS_OK, $headers);
+	}
+
+	/**
+	 * Mark the activity notifications of the given activities as processed
+	 * so they clear from the notification bell.
+	 *
+	 * @param array[] $activities
+	 */
+	protected function markActivityNotificationsProcessed(array $activities): void {
+		// Notifications are never generated for one's own actions
+		$activities = array_filter($activities, fn (array $activity): bool => ($activity['user'] ?? '') !== $this->user);
+		if (empty($activities)) {
+			return;
+		}
+
+		// Every markProcessed() call queries the notification storage, so
+		// bail out with a single query when the user has no notifications
+		$anyNotification = $this->notificationManager->createNotification();
+		$anyNotification->setUser($this->user);
+		if ($this->notificationManager->getCount($anyNotification) === 0) {
+			return;
+		}
+
+		$deferred = $this->notificationManager->defer();
+		foreach ($activities as $activity) {
+			$notification = $this->notificationManager->createNotification();
+			$notification->setApp($activity['app'] ?? 'activity')
+				->setUser($this->user)
+				->setObject('activity_notification', (string)$activity['activity_id']);
+			$this->notificationManager->markProcessed($notification);
+		}
+		if ($deferred) {
+			$this->notificationManager->flush();
+		}
 	}
 
 	protected function generateHeaders(array $headers, bool $hasMoreActivities, array $data): array {
