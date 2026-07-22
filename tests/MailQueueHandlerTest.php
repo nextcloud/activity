@@ -427,6 +427,41 @@ class MailQueueHandlerTest extends TestCase {
 	 * @param int $maxTime
 	 * @param string $explain
 	 */
+	public static function provideGetHTMLSubjectData(): array {
+		return [
+			'no rich subject escapes parsed subject' => [
+				'', 'Hello <World>', [],
+				'Hello &lt;World&gt;',
+			],
+			'linked parameter renders anchor' => [
+				'File {file} was shared', '',
+				['file' => ['type' => 'file', 'path' => 'photo.jpg', 'name' => 'photo.jpg', 'link' => 'https://cloud.example.com/f/123']],
+				'File <a href="https://cloud.example.com/f/123">photo.jpg</a> was shared',
+			],
+			'double-quote in link is escaped' => [
+				'File {file} was shared', '',
+				['file' => ['type' => 'file', 'path' => 'photo.jpg', 'name' => 'photo.jpg', 'link' => 'https://cloud.example.com/f/123"onmouseover="alert(1)']],
+				'File <a href="https://cloud.example.com/f/123&quot;onmouseover=&quot;alert(1)">photo.jpg</a> was shared',
+			],
+			'parameter without link uses strong tag' => [
+				'File {file} was shared', '',
+				['file' => ['type' => 'file', 'path' => 'photo.jpg', 'name' => 'photo.jpg']],
+				'File <strong>photo.jpg</strong> was shared',
+			],
+		];
+	}
+
+	#[DataProvider('provideGetHTMLSubjectData')]
+	public function testGetHTMLSubject(string $richSubject, string $parsedSubject, array $richParams, string $expected): void {
+		$event = $this->createMock(IEvent::class);
+		$event->method('getRichSubject')->willReturn($richSubject);
+		$event->method('getParsedSubject')->willReturn($parsedSubject);
+		$event->method('getRichSubjectParameters')->willReturn($richParams);
+
+		$result = self::invokePrivate($this->mailQueueHandler, 'getHTMLSubject', [$event]);
+		$this->assertSame($expected, $result);
+	}
+
 	protected function assertRemainingMailEntries(array $users, int $maxTime, string $explain): void {
 		foreach ($users as $user) {
 			[$data,] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
