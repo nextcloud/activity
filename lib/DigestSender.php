@@ -235,7 +235,7 @@ class DigestSender {
 			}
 
 			if (isset($parameter['link'])) {
-				$replacements[] = '<a href="' . $parameter['link'] . '">' . htmlspecialchars($replacement) . '</a>';
+				$replacements[] = '<a href="' . htmlspecialchars((string)$parameter['link'], ENT_QUOTES) . '">' . htmlspecialchars($replacement) . '</a>';
 			} else {
 				$replacements[] = '<strong>' . htmlspecialchars($replacement) . '</strong>';
 			}
