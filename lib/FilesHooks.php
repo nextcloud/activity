@@ -732,7 +732,7 @@ class FilesHooks {
 		$this->addNotificationsForUser(
 			$shareWith, 'shared_with_by', [[$fileSource->getId() => $fileTarget], $this->currentUser->getUserIdentifier()],
 			$fileSource->getId(), $fileTarget, $fileSource instanceof File,
-			$this->userSettings->getUserSetting($shareWith, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($shareWith, 'setting', 'batchtime') : false,
+			$this->userSettings->getEmailBatchTimeSetting($shareWith, Files_Sharing::TYPE_SHARED),
 			(bool)$this->userSettings->getUserSetting($shareWith, 'notification', Files_Sharing::TYPE_SHARED),
 		);
 	}
@@ -781,7 +781,7 @@ class FilesHooks {
 		$this->addNotificationsForUser(
 			$sharedBy, 'shared_link_self', [[$fileSource->getId() => $relativePath]],
 			$fileSource->getId(), $relativePath, $fileSource instanceof File,
-			$this->userSettings->getUserSetting($sharedBy, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($sharedBy, 'setting', 'batchtime') : false,
+			$this->userSettings->getEmailBatchTimeSetting($sharedBy, Files_Sharing::TYPE_SHARED),
 			(bool)$this->userSettings->getUserSetting($sharedBy, 'notification', Files_Sharing::TYPE_SHARED),
 		);
 	}
@@ -891,7 +891,7 @@ class FilesHooks {
 		$this->addNotificationsForUser(
 			$share->getSharedWith(), $actionUser, [[$share->getNodeId() => $share->getTarget()], $this->currentUser->getUserIdentifier()],
 			$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
-			$this->userSettings->getUserSetting($share->getSharedWith(), 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($share->getSharedWith(), 'setting', 'batchtime') : false,
+			$this->userSettings->getEmailBatchTimeSetting($share->getSharedWith(), Files_Sharing::TYPE_SHARED),
 			(bool)$this->userSettings->getUserSetting($share->getSharedWith(), 'notification', Files_Sharing::TYPE_SHARED),
 		);
 	}
@@ -990,7 +990,7 @@ class FilesHooks {
 		$this->addNotificationsForUser(
 			$owner, $actionSharer, [[$share->getNodeId() => $share->getTarget()]],
 			$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
-			$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false,
+			$this->userSettings->getEmailBatchTimeSetting($owner, Files_Sharing::TYPE_SHARED),
 			(bool)$this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED),
 		);
 
@@ -999,7 +999,7 @@ class FilesHooks {
 			$this->addNotificationsForUser(
 				$owner, $actionOwner, [[$share->getNodeId() => $share->getTarget()], $share->getSharedBy()],
 				$share->getNodeId(), $share->getTarget(), $share->getNodeType() === 'file',
-				$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false,
+				$this->userSettings->getEmailBatchTimeSetting($owner, Files_Sharing::TYPE_SHARED),
 				(bool)$this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED),
 			);
 		}
@@ -1093,7 +1093,7 @@ class FilesHooks {
 		$this->addNotificationsForUser(
 			$sharer, $subject, [[$fileSource->getId() => $path], $shareWith],
 			$fileSource->getId(), $path, $fileSource instanceof File,
-			$this->userSettings->getUserSetting($sharer, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($sharer, 'setting', 'batchtime') : false,
+			$this->userSettings->getEmailBatchTimeSetting($sharer, Files_Sharing::TYPE_SHARED),
 			(bool)$this->userSettings->getUserSetting($sharer, 'notification', Files_Sharing::TYPE_SHARED),
 		);
 	}
@@ -1105,7 +1105,7 @@ class FilesHooks {
 		$this->addNotificationsForUser(
 			$owner, $subject, [[$sourceId => $sourcePath], $this->currentUser->getUserIdentifier(), $shareWith],
 			$sourceId, $sourcePath, $isFile,
-			$this->userSettings->getUserSetting($owner, 'email', Files_Sharing::TYPE_SHARED) ? $this->userSettings->getUserSetting($owner, 'setting', 'batchtime') : false,
+			$this->userSettings->getEmailBatchTimeSetting($owner, Files_Sharing::TYPE_SHARED),
 			(bool)$this->userSettings->getUserSetting($owner, 'notification', Files_Sharing::TYPE_SHARED),
 		);
 	}
