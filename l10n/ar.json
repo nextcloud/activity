@@ -11,6 +11,8 @@
     "More activities" : "المزيد من الأنشطة",
     "Daily activity summary for %s" : "ملخص الأنشطة اليومية لـ%s",
     "_and %n more…_::_and %n more…_" : ["و %n أخرى …","و %n أخرى …","و %n أخرى …","و %n أخرى …","و %n أخرى …","و %n أخرى …"],
+    "You can disable daily digest emails in the <a href=\"%s\">settings</a>." : "يمكنك تعطيل رسائل البريد الإلكتروني اليومية الموجزة في </a> الإعدادات <a href=\"%s\">",
+    "You can disable daily digest emails in the settings: %s" : "يمكنك تعطيل رسائل البريد الإلكتروني اليومية الموجزة في الإعدادات: %s",
     "All activities" : "جميع الأنشطة",
     "By others" : "بواسطة آخرين",
     "By you" : "بواسطتك",
