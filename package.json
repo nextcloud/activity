@@ -47,6 +47,7 @@
     "@nextcloud/router": "^3.1.0",
     "@nextcloud/vue": "^9.8.2",
     "@vueuse/core": "^14.3.0",
+    "brace-expansion": "^2.1.2",
     "vue": "^3.5.40",
     "vue-material-design-icons": "^5.3.1",
     "vue-router": "^5.1.0",
