@@ -487,26 +487,31 @@ class FilesHooks {
 		}
 
 		$shouldFlush = $this->startActivityTransaction();
-		foreach ($users as $user) {
-			$path = $pathMap[$user];
+		try {
+			foreach ($users as $user) {
+				$path = $pathMap[$user];
 
-			if ($user === $this->currentUser->getUID()) {
-				$userSubject = 'deleted_self';
-				$userParams = [[$fileId => $path . '/' . $oldFileName]];
-			} else {
-				$userSubject = 'deleted_by';
-				$userParams = [[$fileId => $path . '/' . $oldFileName], $this->currentUser->getUserIdentifier()];
+				if ($user === $this->currentUser->getUID()) {
+					$userSubject = 'deleted_self';
+					$userParams = [[$fileId => $path . '/' . $oldFileName]];
+				} else {
+					$userSubject = 'deleted_by';
+					$userParams = [[$fileId => $path . '/' . $oldFileName], $this->currentUser->getUserIdentifier()];
+				}
+
+				$this->addNotificationsForUser(
+					$user, $userSubject, $userParams,
+					$fileId, $path . '/' . $oldFileName, true,
+					$filteredEmailUsers[$user] ?? false,
+					$filteredNotificationUsers[$user] ?? false,
+					Files::TYPE_SHARE_DELETED,
+				);
 			}
-
-			$this->addNotificationsForUser(
-				$user, $userSubject, $userParams,
-				$fileId, $path . '/' . $oldFileName, true,
-				$filteredEmailUsers[$user] ?? false,
-				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_SHARE_DELETED,
-			);
+			$this->commitActivityTransaction($shouldFlush);
+		} catch (\Throwable $e) {
+			$this->rollbackActivityTransaction($shouldFlush);
+			throw $e;
 		}
-		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -523,26 +528,31 @@ class FilesHooks {
 		}
 
 		$shouldFlush = $this->startActivityTransaction();
-		foreach ($users as $user) {
-			$path = $pathMap[$user];
+		try {
+			foreach ($users as $user) {
+				$path = $pathMap[$user];
 
-			if ($user === $this->currentUser->getUID()) {
-				$userSubject = 'created_self';
-				$userParams = [[$fileId => $path . '/' . $fileName]];
-			} else {
-				$userSubject = 'created_by';
-				$userParams = [[$fileId => $path . '/' . $fileName], $this->currentUser->getUserIdentifier()];
+				if ($user === $this->currentUser->getUID()) {
+					$userSubject = 'created_self';
+					$userParams = [[$fileId => $path . '/' . $fileName]];
+				} else {
+					$userSubject = 'created_by';
+					$userParams = [[$fileId => $path . '/' . $fileName], $this->currentUser->getUserIdentifier()];
+				}
+
+				$this->addNotificationsForUser(
+					$user, $userSubject, $userParams,
+					$fileId, $path . '/' . $fileName, true,
+					$filteredEmailUsers[$user] ?? false,
+					$filteredNotificationUsers[$user] ?? false,
+					Files::TYPE_FILE_CHANGED,
+				);
 			}
-
-			$this->addNotificationsForUser(
-				$user, $userSubject, $userParams,
-				$fileId, $path . '/' . $fileName, true,
-				$filteredEmailUsers[$user] ?? false,
-				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_FILE_CHANGED,
-			);
+			$this->commitActivityTransaction($shouldFlush);
+		} catch (\Throwable $e) {
+			$this->rollbackActivityTransaction($shouldFlush);
+			throw $e;
 		}
-		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -562,30 +572,35 @@ class FilesHooks {
 		}
 
 		$shouldFlush = $this->startActivityTransaction();
-		foreach ($users as $user) {
-			if ($oldFileName === $fileName) {
-				$userParams = [[$newParentId => $afterPathMap[$user] . '/']];
-			} else {
-				$userParams = [[$fileId => $afterPathMap[$user] . '/' . $fileName]];
-			}
+		try {
+			foreach ($users as $user) {
+				if ($oldFileName === $fileName) {
+					$userParams = [[$newParentId => $afterPathMap[$user] . '/']];
+				} else {
+					$userParams = [[$fileId => $afterPathMap[$user] . '/' . $fileName]];
+				}
 
-			if ($user === $this->currentUser->getUID()) {
-				$userSubject = 'moved_self';
-			} else {
-				$userSubject = 'moved_by';
-				$userParams[] = $this->currentUser->getUserIdentifier();
-			}
-			$userParams[] = [$fileId => $beforePathMap[$user] . '/' . $oldFileName];
+				if ($user === $this->currentUser->getUID()) {
+					$userSubject = 'moved_self';
+				} else {
+					$userSubject = 'moved_by';
+					$userParams[] = $this->currentUser->getUserIdentifier();
+				}
+				$userParams[] = [$fileId => $beforePathMap[$user] . '/' . $oldFileName];
 
-			$this->addNotificationsForUser(
-				$user, $userSubject, $userParams,
-				$fileId, $afterPathMap[$user] . '/' . $fileName, true,
-				$filteredEmailUsers[$user] ?? false,
-				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_FILE_CHANGED,
-			);
+				$this->addNotificationsForUser(
+					$user, $userSubject, $userParams,
+					$fileId, $afterPathMap[$user] . '/' . $fileName, true,
+					$filteredEmailUsers[$user] ?? false,
+					$filteredNotificationUsers[$user] ?? false,
+					Files::TYPE_FILE_CHANGED,
+				);
+			}
+			$this->commitActivityTransaction($shouldFlush);
+		} catch (\Throwable $e) {
+			$this->rollbackActivityTransaction($shouldFlush);
+			throw $e;
 		}
-		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -944,13 +959,18 @@ class FilesHooks {
 		$offset = 0;
 		$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		$shouldFlush = $this->startActivityTransaction();
-		while (!empty($users)) {
-			$userIds = \array_map(fn (IUser $user) => $user->getUID(), $users);
-			$this->addNotificationsForUsers($userIds, $actionUser, $share->getNode(), $share->getTarget(), (int)$share->getId());
-			$offset += self::USER_BATCH_SIZE;
-			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
+		try {
+			while (!empty($users)) {
+				$userIds = \array_map(fn (IUser $user) => $user->getUID(), $users);
+				$this->addNotificationsForUsers($userIds, $actionUser, $share->getNode(), $share->getTarget(), (int)$share->getId());
+				$offset += self::USER_BATCH_SIZE;
+				$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
+			}
+			$this->commitActivityTransaction($shouldFlush);
+		} catch (\Throwable $e) {
+			$this->rollbackActivityTransaction($shouldFlush);
+			throw $e;
 		}
-		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -1032,23 +1052,28 @@ class FilesHooks {
 
 		$affectedUsers = $this->fixPathsForShareExceptions($affectedUsers, $shareId);
 		$shouldFlush = $this->startActivityTransaction();
-		foreach ($affectedUsers as $user => $path) {
-			$emailSetting = $filteredEmailUsersInGroup[$user] ?? false;
-			$notificationSetting = $filteredNotificationUsers[$user] ?? false;
-			if ($emailSetting || $notificationSetting) {
-				$this->addNotificationsForUser(
-					$user,
-					$actionUser,
-					[[$fileSource->getId() => $path], $this->currentUser->getUserIdentifier()],
-					$fileSource->getId(),
-					$path,
-					$fileSource instanceof File,
-					$emailSetting,
-					$notificationSetting,
-				);
+		try {
+			foreach ($affectedUsers as $user => $path) {
+				$emailSetting = $filteredEmailUsersInGroup[$user] ?? false;
+				$notificationSetting = $filteredNotificationUsers[$user] ?? false;
+				if ($emailSetting || $notificationSetting) {
+					$this->addNotificationsForUser(
+						$user,
+						$actionUser,
+						[[$fileSource->getId() => $path], $this->currentUser->getUserIdentifier()],
+						$fileSource->getId(),
+						$path,
+						$fileSource instanceof File,
+						$emailSetting,
+						$notificationSetting,
+					);
+				}
 			}
+			$this->commitActivityTransaction($shouldFlush);
+		} catch (\Throwable $e) {
+			$this->rollbackActivityTransaction($shouldFlush);
+			throw $e;
 		}
-		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -1239,6 +1264,16 @@ class FilesHooks {
 			$this->notificationGenerator->flushNotifications();
 		}
 		$this->connection->commit();
+	}
+
+	protected function rollbackActivityTransaction(bool $shouldFlush): void {
+		$this->connection->rollBack();
+		if ($shouldFlush) {
+			// The notification manager has no way to discard deferred
+			// notifications, so flush to reset its deferred state. Notifications
+			// of rolled back activities are dropped when they are prepared.
+			$this->notificationGenerator->flushNotifications();
+		}
 	}
 
 	/**
