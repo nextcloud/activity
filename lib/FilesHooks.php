@@ -301,7 +301,6 @@ class FilesHooks {
 		}
 	}
 
-
 	/**
 	 * Store the move hook events
 	 *
@@ -327,7 +326,6 @@ class FilesHooks {
 
 		$this->moveCase = false;
 	}
-
 
 	/**
 	 * Renaming a file inside the same folder (a/b to a/c)
@@ -1246,7 +1244,6 @@ class FilesHooks {
 		$this->connection->commit();
 	}
 
-
 	/**
 	 * @param int $fileId
 	 *
@@ -1274,7 +1271,6 @@ class FilesHooks {
 			return !in_array($userId, $unrelatedUsers);
 		}, ARRAY_FILTER_USE_KEY);
 	}
-
 
 	/**
 	 * returns an array of users that have confirmed no access to fileId
@@ -1399,7 +1395,6 @@ class FilesHooks {
 				$usersToCheck = array_values(array_unique(array_merge($usersToCheck, $userIds)));
 			}
 		}
-
 
 		// now that we have a list of eventuals filtered users, we confirm they have no access to the file
 		$filteredUsers = [];
