@@ -76,7 +76,6 @@ class MailQueueHandlerTest extends TestCase {
 	protected UserSettings&MockObject $userSettings;
 	protected IEmailValidator&MockObject $emailValidator;
 
-
 	protected function setUp(): void {
 		parent::setUp();
 
