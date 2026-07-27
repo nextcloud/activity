@@ -99,7 +99,6 @@ class MailQueueHandlerTest extends TestCase {
 	/** @var MockObject|UserSettings */
 	protected UserSettings $userSettings;
 
-
 	protected function setUp(): void {
 		parent::setUp();
 
