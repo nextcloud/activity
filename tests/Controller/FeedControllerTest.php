@@ -101,7 +101,6 @@ class FeedControllerTest extends TestCase {
 		);
 	}
 
-
 	public function showData(): array {
 		return [
 			['application/rss+xml', 'application/rss+xml'],

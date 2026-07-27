@@ -5,6 +5,7 @@
  * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+
 namespace OCA\Activity\AppInfo;
 
 use OC\DB\ConnectionAdapter;
@@ -83,12 +84,12 @@ class Application extends App implements IBootstrap {
 			$systemConfig = $c->get(SystemConfig::class);
 			$configPrefix = 'activity_';
 
-			if ($systemConfig->getValue($configPrefix . 'dbuser', null) === null &&
-				$systemConfig->getValue($configPrefix . 'dbpassword', null) === null &&
-				$systemConfig->getValue($configPrefix . 'dbname', null) === null &&
-				$systemConfig->getValue($configPrefix . 'dbhost', null) === null &&
-				$systemConfig->getValue($configPrefix . 'dbport', null) === null &&
-				$systemConfig->getValue($configPrefix . 'dbdriveroptions', null) === null) {
+			if ($systemConfig->getValue($configPrefix . 'dbuser', null) === null
+				&& $systemConfig->getValue($configPrefix . 'dbpassword', null) === null
+				&& $systemConfig->getValue($configPrefix . 'dbname', null) === null
+				&& $systemConfig->getValue($configPrefix . 'dbhost', null) === null
+				&& $systemConfig->getValue($configPrefix . 'dbport', null) === null
+				&& $systemConfig->getValue($configPrefix . 'dbdriveroptions', null) === null) {
 				return $c->get(IDBConnection::class);
 			}
 

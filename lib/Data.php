@@ -6,6 +6,7 @@ declare(strict_types=1);
  * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+
 namespace OCA\Activity;
 
 use Doctrine\DBAL\Platforms\MySQLPlatform;
@@ -272,8 +273,8 @@ class Data {
 		}
 
 		if (
-			$filter === 'files_favorites' ||
-			(in_array($filter, ['all', 'by', 'self']) && $userSettings->getUserSetting($user, 'stream', 'files_favorites'))
+			$filter === 'files_favorites'
+			|| (in_array($filter, ['all', 'by', 'self']) && $userSettings->getUserSetting($user, 'stream', 'files_favorites'))
 		) {
 			try {
 				$favoriteFilter = $this->activityManager->getFilterById('files_favorites');
