@@ -32,7 +32,8 @@
     "watch": "export NODE_ENV=development; vite --mode development build --watch"
   },
   "browserslist": [
-    "extends @nextcloud/browserslist-config"
+    "extends @nextcloud/browserslist-config",
+    "not ios_saf < 12"
   ],
   "overrides": {
     "immutable": "^5.1.9"
