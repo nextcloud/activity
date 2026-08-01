@@ -26,6 +26,8 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\AppInfo\Application;
 use OCA\Activity\Data;
+use OCA\Activity\UserSettings;
+use OCP\Activity\Exceptions\FilterNotFoundException;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IConfig;
@@ -502,6 +504,139 @@ class DataTest extends TestCase {
 				'priority' => 1,
 			])
 			->executeStatement();
+	}
+
+	/**
+	 * A Data whose filter lookup always misses, so only the user and the date
+	 * window restrict the query. Keeps these tests about the day bucketing
+	 * rather than about the filter plumbing, which the stream tests cover.
+	 */
+	private function getUnfilteredData(): Data {
+		$activityManager = $this->createMock(IManager::class);
+		$activityManager->method('getFilterById')
+			->willThrowException(new FilterNotFoundException('all'));
+
+		return new Data($activityManager, $this->dbConnection, $this->logger, $this->config);
+	}
+
+	private function getHistogramUserSettings(): UserSettings&MockObject {
+		$userSettings = $this->createMock(UserSettings::class);
+		$userSettings->method('getUserSetting')->willReturn(false);
+		return $userSettings;
+	}
+
+	/**
+	 * Insert one activity for the given user at the given moment.
+	 */
+	private function insertActivityAt(string $affectedUser, int $timestamp): void {
+		$query = $this->dbConnection->getQueryBuilder();
+		$query->insert('activity')
+			->values([
+				'app' => $query->createNamedParameter('test'),
+				'type' => $query->createNamedParameter('file_changed'),
+				'affecteduser' => $query->createNamedParameter($affectedUser),
+				'user' => $query->createNamedParameter('author'),
+				'timestamp' => $query->createNamedParameter($timestamp, IQueryBuilder::PARAM_INT),
+				'subject' => $query->createNamedParameter('subject'),
+				'subjectparams' => $query->createNamedParameter('[]'),
+				'message' => $query->createNamedParameter(''),
+				'messageparams' => $query->createNamedParameter('[]'),
+				'priority' => $query->createNamedParameter(30, IQueryBuilder::PARAM_INT),
+				'object_type' => $query->createNamedParameter('files'),
+				'object_id' => $query->createNamedParameter(1, IQueryBuilder::PARAM_INT),
+			])
+			->executeStatement();
+	}
+
+	public function testGetDailyCountsGroupsByDayAndSkipsEmptyDays(): void {
+		$this->deleteTestActivities();
+		$user = self::getUniqueID('histogram');
+		$timezone = new \DateTimeZone('UTC');
+
+		$day = static fn (string $date, string $time = '12:00:00'): int
+			=> (new \DateTimeImmutable($date . ' ' . $time, new \DateTimeZone('UTC')))->getTimestamp();
+
+		$this->insertActivityAt($user, $day('2024-03-01', '00:00:00'));
+		$this->insertActivityAt($user, $day('2024-03-01', '23:59:59'));
+		$this->insertActivityAt($user, $day('2024-03-03'));
+		// Another account's activity must not be counted
+		$this->insertActivityAt(self::getUniqueID('other'), $day('2024-03-01'));
+
+		$result = $this->getUnfilteredData()->getDailyCounts(
+			$this->getHistogramUserSettings(),
+			$user,
+			'all',
+			$day('2024-03-01', '00:00:00'),
+			$day('2024-03-05', '23:59:59'),
+			$timezone,
+		);
+
+		// 2024-03-02 is absent rather than zero: the client fills the gaps, so
+		// the payload stays proportional to real activity
+		$counts = $result['counts'];
+		ksort($counts);
+		$this->assertSame(['2024-03-01' => 2, '2024-03-03' => 1], $counts);
+		$this->assertNull($result['partialBefore']);
+
+		$this->deleteTestActivities();
+	}
+
+	public function testGetDailyCountsResolvesDaysInTheGivenTimezone(): void {
+		$this->deleteTestActivities();
+		$user = self::getUniqueID('histogram');
+
+		// 23:30 UTC on 1 March is already 00:30 on 2 March in Berlin (UTC+1)
+		$moment = (new \DateTimeImmutable('2024-03-01 23:30:00', new \DateTimeZone('UTC')))->getTimestamp();
+		$this->insertActivityAt($user, $moment);
+
+		$from = $moment - 86400;
+		$to = $moment + 86400;
+		$data = $this->getUnfilteredData();
+
+		$utc = $data->getDailyCounts($this->getHistogramUserSettings(), $user, 'all', $from, $to, new \DateTimeZone('UTC'));
+		$berlin = $data->getDailyCounts($this->getHistogramUserSettings(), $user, 'all', $from, $to, new \DateTimeZone('Europe/Berlin'));
+
+		$this->assertSame(['2024-03-01' => 1], $utc['counts']);
+		$this->assertSame(['2024-03-02' => 1], $berlin['counts']);
+
+		$this->deleteTestActivities();
+	}
+
+	public function testGetDailyCountsExcludesActivityOutsideTheWindow(): void {
+		$this->deleteTestActivities();
+		$user = self::getUniqueID('histogram');
+		$timezone = new \DateTimeZone('UTC');
+
+		$at = static fn (string $date): int
+			=> (new \DateTimeImmutable($date . ' 12:00:00', new \DateTimeZone('UTC')))->getTimestamp();
+
+		$this->insertActivityAt($user, $at('2024-03-10'));
+		$this->insertActivityAt($user, $at('2024-03-20'));
+
+		$result = $this->getUnfilteredData()->getDailyCounts(
+			$this->getHistogramUserSettings(),
+			$user,
+			'all',
+			$at('2024-03-15'),
+			$at('2024-03-25'),
+			$timezone,
+		);
+
+		$this->assertSame(['2024-03-20' => 1], $result['counts']);
+
+		$this->deleteTestActivities();
+	}
+
+	public function testGetDailyCountsRejectsAnEmptyUser(): void {
+		$this->expectException(\OutOfBoundsException::class);
+		$this->getUnfilteredData()->getDailyCounts(
+			$this->getHistogramUserSettings(),
+			'',
+			'all',
+			0,
+			1,
+			new \DateTimeZone('UTC'),
+		);
 	}
 
 	private function countActivitiesForAffectedUser(string $user): int {
