@@ -330,7 +330,7 @@ function select(from: string, to: string): void {
 }
 
 /**
- *
+ * Clear the current selection, emitting null for both bounds.
  */
 function clearSelection(): void {
 	emit('update:from', null)
@@ -462,7 +462,7 @@ async function loadHistogram(): Promise<void> {
 		// the grid to exist before scrolling it.
 		await nextTick()
 		const element = scroller.value
-		if (element !== undefined) {
+		if (element) {
 			element.scrollLeft = element.scrollWidth
 		}
 	} catch (error) {

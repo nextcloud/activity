@@ -404,12 +404,14 @@ class Data {
 	 * `affecteduser` and a timestamp range, which is exactly the
 	 * `activity_user_time` index.
 	 *
+	 * `counts` is keyed by `Y-m-d` and omits days with no activity, so its size
+	 * tracks real activity rather than the length of the window. `partialBefore`
+	 * is the date from which counts are known to be incomplete, or null.
+	 *
 	 * @param int $from Start of the window as a Unix timestamp, inclusive
 	 * @param int $to End of the window as a Unix timestamp, inclusive
 	 *
-	 * @return array{counts: array<string, int>, partialBefore: ?string} Counts
-	 *         keyed by `Y-m-d`, omitting days with no activity, plus the date
-	 *         from which counts are known to be incomplete, if any
+	 * @return array{counts: array<string, int>, partialBefore: ?string}
 	 */
 	public function getDailyCounts(
 		UserSettings $userSettings,

@@ -479,9 +479,9 @@ class APIv2ControllerTest extends TestCase {
 				return ['counts' => [], 'partialBefore' => null];
 			});
 
+		$today = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 		$data = $this->controller->getHistogram('all', 7)->getData();
 
-		$today = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
 		$this->assertSame($today->format('Y-m-d'), $data['to']);
 		$this->assertSame($today->modify('-6 days')->format('Y-m-d'), $data['from']);
 		// 7 days inclusive, from the first second to the last
