@@ -30,14 +30,33 @@ function expectLinkWithText(wrapper, text) {
 	return filtered
 }
 
-test('Entries carry an actions menu', async () => {
-	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[1]), showPreviews: true } })
+test('Every thumbnail carries its own actions menu', async () => {
+	// The captured fixture was taken without previews=true, so the previews are
+	// added here; the stream itself always requests them
+	const activity = new ActivityModel({
+		...wsData.ocs.data[1],
+		previews: [
+			{ fileId: 1, filePath: '/admin/files/a.png', mimeType: 'image/png', source: 's', isMimeTypeIcon: false, view: 'files', filename: 'a.png' },
+			{ fileId: 2, filePath: '/admin/files/b.png', mimeType: 'image/png', source: 's', isMimeTypeIcon: false, view: 'files', filename: 'b.png' },
+		],
+	})
+	const wrapper = mount(ActivityComponent, { propsData: { activity, showPreviews: true } })
 	await nextTick()
 
-	// Guards the wiring; what the menu offers is covered by
-	// ActivityEntryActions.test.ts
-	expect(wrapper.findComponent({ name: 'ActivityEntryActions' }).exists()).toBe(true)
-	expect(wrapper.find('.action-item__menutoggle').exists()).toBe(true)
+	// One menu per file, not one per row: guards the wiring, while what each menu
+	// offers is covered by ActivityEntryActions.test.ts
+	const previews = wrapper.findAll('.activity-entry__preview-item')
+	expect(previews.length).toBe(2)
+	for (const preview of previews) {
+		expect(preview.find('.action-item__menutoggle').exists()).toBe(true)
+	}
+})
+
+test('No actions menu without thumbnails to hang it on', async () => {
+	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[1]), showPreviews: false } })
+	await nextTick()
+
+	expect(wrapper.find('.action-item__menutoggle').exists()).toBe(false)
 })
 
 test('Display relative date gets updated every minutes', async () => {

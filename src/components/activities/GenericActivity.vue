@@ -23,11 +23,11 @@
 			:timestamp="timestamp"
 			:ignoreSeconds="true"
 			data-testid="activity-date" />
-		<ActivityEntryActions class="activity-entry__actions" :activity="activity" />
 		<ul v-if="showPreviews" class="activity-entry__preview-wrapper">
 			<li
 				v-for="preview, index in activity.previews"
-				:key="preview.fileId ?? `preview-${index}`">
+				:key="preview.fileId ?? `preview-${index}`"
+				class="activity-entry__preview-item">
 				<component
 					:is="preview.link ? 'a' : 'span'"
 					class="activity-entry__preview"
@@ -41,6 +41,7 @@
 						:src="preview.source"
 						:alt="preview.link ? t('activity', 'Open {filename}', { filename: preview.filename }) : ''">
 				</component>
+				<ActivityEntryActions :preview="preview" />
 			</li>
 		</ul>
 	</li>
@@ -209,18 +210,6 @@ export default defineComponent({
 		}
 	}
 
-	&__actions {
-		inset-block: -8px;
-	}
-
-	// Reveal the entry's action menu while the row is hovered. The menu fades
-	// itself back out and stays keyboard reachable regardless of hover.
-	@media (hover: hover) {
-		&:hover :deep(.activity-entry-actions) {
-			opacity: 1;
-		}
-	}
-
 	&__date {
 		color: var(--color-text-lighter);
 		margin-left: 5px;
@@ -236,6 +225,24 @@ export default defineComponent({
 		padding-inline-start: 24px;
 		display: flex;
 		flex-wrap: wrap;
+	}
+
+	&__preview-item {
+		// Anchors the overlaid action menu to this thumbnail
+		position: relative;
+		// The link inside is inline by default, so the item's box would be taller
+		// than the image it wraps and the overlay would anchor above the
+		// thumbnail's real top edge
+		display: flex;
+		line-height: 0;
+
+		// Reveal that thumbnail's menu while it is hovered. The menu fades itself
+		// back out, and stays keyboard reachable regardless of hover.
+		@media (hover: hover) {
+			&:hover :deep(.activity-entry-actions) {
+				opacity: 1;
+			}
+		}
 	}
 
 	&__preview:hover {

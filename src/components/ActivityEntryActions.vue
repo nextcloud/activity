@@ -6,7 +6,8 @@
 	<NcActions
 		v-if="hasActions"
 		class="activity-entry-actions"
-		:ariaLabel="t('activity', 'Actions for this activity')">
+		size="small"
+		:ariaLabel="menuLabel">
 		<NcActionButton
 			v-if="canOpenInViewer"
 			closeAfterClick
@@ -38,7 +39,6 @@
 </template>
 
 <script setup lang="ts">
-import type ActivityModel from '../models/ActivityModel.ts'
 import type { IPreview } from '../models/types.ts'
 
 import { showError, showSuccess } from '@nextcloud/dialogs'
@@ -55,28 +55,24 @@ import logger from '../utils/logger.ts'
 
 const props = defineProps<{
 	/**
-	 * The activity the actions apply to
+	 * The previewed file the actions apply to.
+	 *
+	 * Scoped to one preview rather than to the activity, because an activity can
+	 * carry several files — a bulk upload arrives as one grouped entry with a
+	 * thumbnail each — and a single menu per row could only ever act on one of
+	 * them, silently picking the first.
 	 */
-	activity: ActivityModel
+	preview: IPreview
 }>()
 
 /**
- * The file this activity is about, as far as it can be determined.
- *
- * Previews are the richer source because they carry the path and MIME type, but
- * they are only requested by the stream, not by the sidebar. The activity's own
- * object is the fallback, and is enough to build a link.
+ * The file id to resolve, or null when the preview carries none.
  */
-const fileTarget = computed<{ fileId: number, preview?: IPreview } | null>(() => {
-	const preview = props.activity.previews.find((candidate) => candidate.fileId > 0)
-	if (preview !== undefined) {
-		return { fileId: preview.fileId, preview }
-	}
-	if (props.activity.objectType === 'files' && props.activity.objectId > 0) {
-		return { fileId: props.activity.objectId }
-	}
-	return null
-})
+const fileId = computed(() => props.preview.fileId > 0 ? props.preview.fileId : null)
+
+const menuLabel = computed(() => props.preview.filename === ''
+	? t('activity', 'Actions for this file')
+	: t('activity', 'Actions for {filename}', { filename: props.preview.filename }))
 
 /**
  * Re-anchor a URL onto the host this session is actually using.
@@ -114,10 +110,10 @@ function toCurrentOrigin(url: string): string {
  * file id to resolve.
  */
 const fileRoute = computed(() => {
-	if (fileTarget.value !== null) {
-		return generateUrl('/f/{fileId}', { fileId: fileTarget.value.fileId })
+	if (fileId.value !== null) {
+		return generateUrl('/f/{fileId}', { fileId: fileId.value })
 	}
-	return toCurrentOrigin(props.activity.link)
+	return toCurrentOrigin(props.preview.link ?? '')
 })
 
 /**
@@ -129,7 +125,7 @@ const fileRoute = computed(() => {
  * and doing both from one menu entry is just surprising.
  */
 const filesLink = computed(() => {
-	if (fileTarget.value === null) {
+	if (fileId.value === null) {
 		return fileRoute.value
 	}
 	return `${fileRoute.value}?openfile=false`
@@ -145,15 +141,12 @@ const shareableLink = computed(() => toCurrentOrigin(fileRoute.value))
 
 /**
  * Whether the Viewer is loaded and able to display this file.
- *
- * Needs the MIME type, so this is only ever true where previews were requested.
  */
 const canOpenInViewer = computed(() => {
-	const preview = fileTarget.value?.preview
-	if (preview?.filePath === undefined || window?.OCA?.Viewer?.open === undefined) {
+	if (props.preview.filePath === undefined || window?.OCA?.Viewer?.open === undefined) {
 		return false
 	}
-	return window.OCA.Viewer.mimetypes.includes(preview.mimeType)
+	return window.OCA.Viewer.mimetypes.includes(props.preview.mimeType)
 })
 
 const hasActions = computed(() => canOpenInViewer.value || filesLink.value !== '' || shareableLink.value !== '')
@@ -162,21 +155,21 @@ const hasActions = computed(() => canOpenInViewer.value || filesLink.value !== '
  * Open the file in the Viewer overlay rather than navigating away
  */
 function openInViewer(): void {
-	const preview = fileTarget.value?.preview
-	if (preview?.filePath === undefined) {
+	const filePath = props.preview.filePath
+	if (filePath === undefined) {
 		return
 	}
 	try {
 		// The stored path is absolute within the instance; the Viewer wants it
 		// relative to the user's files root
-		window.OCA!.Viewer!.open({ path: preview.filePath.replace(/^\/[^/]+\/files/, '') })
+		window.OCA!.Viewer!.open({ path: filePath.replace(/^\/[^/]+\/files/, '') })
 	} catch (error) {
 		logger.debug('Could not open the activity target in the viewer', { error })
 	}
 }
 
 /**
- * Copy a link to the activity's file onto the clipboard
+ * Copy a link to this file onto the clipboard
  */
 async function copyLink(): Promise<void> {
 	// Absent on insecure origins, where copying is not permitted at all
@@ -196,13 +189,30 @@ async function copyLink(): Promise<void> {
 
 <style scoped lang="scss">
 .activity-entry-actions {
-	flex-shrink: 0;
+	// Sits over the thumbnail's top corner. Absolute rather than laid out, so
+	// adding the menu does not change the size or spacing of the grid of
+	// thumbnails it sits on.
+	position: absolute;
+	inset-block-start: 2px;
+	inset-inline-end: 2px;
+	z-index: 1;
 
-	// Keep the list uncluttered: the menu is faded out until the row is hovered
-	// or something inside it takes focus. Faded rather than removed so it stays
-	// keyboard reachable, and only on devices with a real pointer so a touch
-	// user is never asked to hover something in order to discover it.
-	// Revealing on row hover belongs to the row, so each entry component does
+	// A thumbnail can be any colour, so the toggle carries its own surface
+	// instead of relying on the image behind it for contrast
+	:deep(.button-vue) {
+		background-color: var(--color-main-background);
+		box-shadow: 0 0 4px var(--color-box-shadow);
+
+		&:hover {
+			background-color: var(--color-background-hover);
+		}
+	}
+
+	// Keep the grid of thumbnails uncluttered: the menu is faded out until its
+	// thumbnail is hovered or something inside it takes focus. Faded rather than
+	// removed so it stays keyboard reachable, and only on devices with a real
+	// pointer so a touch user is never asked to hover to discover it.
+	// Revealing on hover belongs to the thumbnail, so the entry component does
 	// that part for its own layout.
 	@media (hover: hover) {
 		opacity: 0;
