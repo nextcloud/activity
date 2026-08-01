@@ -28,7 +28,9 @@ use DateTimeInterface;
 use OCA\Activity\Controller\APIv2Controller;
 use OCA\Activity\Data;
 use OCA\Activity\Exception\InvalidFilterException;
+use OCA\Activity\Exception\InvalidSearchCriteriaException;
 use OCA\Activity\GroupHelper;
+use OCA\Activity\SearchCriteria;
 use OCA\Activity\Tests\TestCase;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
@@ -279,6 +281,144 @@ class APIv2ControllerTest extends TestCase {
 		$this->expectException(\OutOfBoundsException::class);
 		self::invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, '', 0, 'desc']);
 		$this->assertNull(self::invokePrivate($this->controller, 'user'));
+	}
+
+	public static function dataValidateParametersSearchCriteria(): array {
+		return [
+			'nothing set' => ['', 0, 0, '', null, null, null, null],
+			'term is trimmed' => ['  report  ', 0, 0, '', 'report', null, null, null],
+			'lower bound only' => ['', 1000, 0, '', null, 1000, null, null],
+			'upper bound only' => ['', 0, 2000, '', null, null, 2000, null],
+			'actor only' => ['', 0, 0, 'alice', null, null, null, 'alice'],
+			'everything combined' => ['report', 1000, 2000, 'alice', 'report', 1000, 2000, 'alice'],
+		];
+	}
+
+	#[DataProvider('dataValidateParametersSearchCriteria')]
+	public function testValidateParametersSearchCriteria(string $search, int $from, int $to, string $actor, ?string $expectedTerm, ?int $expectedFrom, ?int $expectedTo, ?string $expectedActor): void {
+		$this->data->expects($this->once())
+			->method('validateFilter')
+			->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
+		$this->userSession->expects($this->once())
+			->method('getUser')
+			->willReturn($userMock);
+
+		self::invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, '', 0, 'desc', $search, $from, $to, $actor]);
+
+		$criteria = self::invokePrivate($this->controller, 'searchCriteria');
+		$this->assertInstanceOf(SearchCriteria::class, $criteria);
+		$this->assertSame($expectedTerm, $criteria->term);
+		$this->assertSame($expectedFrom, $criteria->from);
+		$this->assertSame($expectedTo, $criteria->to);
+		$this->assertSame($expectedActor, $criteria->actor);
+	}
+
+	public static function dataValidateParametersSearchCriteriaInvalid(): array {
+		return [
+			'term below the minimum length' => ['a', 0, 0, ''],
+			'term above the maximum length' => [str_repeat('x', 256), 0, 0, ''],
+			'range ends before it starts' => ['', 2000, 1000, ''],
+			'account name above the maximum length' => ['', 0, 0, str_repeat('u', 65)],
+		];
+	}
+
+	#[DataProvider('dataValidateParametersSearchCriteriaInvalid')]
+	public function testValidateParametersSearchCriteriaInvalid(string $search, int $from, int $to, string $actor): void {
+		$this->data->expects($this->once())
+			->method('validateFilter')
+			->willReturnArgument(0);
+		// The criteria are rejected before the session is consulted
+		$this->userSession->expects($this->never())
+			->method('getUser');
+
+		$this->expectException(InvalidSearchCriteriaException::class);
+		self::invokePrivate($this->controller, 'validateParameters', ['all', 0, 0, false, '', 0, 'desc', $search, $from, $to, $actor]);
+	}
+
+	public function testGetDefaultForwardsSearchCriteria(): void {
+		$controller = $this->getController(['get']);
+
+		$controller->expects($this->once())
+			->method('get')
+			->with('all', 0, 50, false, '', 0, 'desc', 'report', 1000, 2000, 'alice');
+
+		$controller->getDefault(0, 50, false, '', 0, 'desc', 'report', 1000, 2000, 'alice');
+	}
+
+	public function testGetFilterForwardsSearchCriteria(): void {
+		$controller = $this->getController(['get']);
+
+		$controller->expects($this->once())
+			->method('get')
+			->with('files', 0, 50, false, '', 0, 'desc', 'report', 1000, 2000, 'alice');
+
+		$controller->getFilter('files', 0, 50, false, '', 0, 'desc', 'report', 1000, 2000, 'alice');
+	}
+
+	public function testGetPassesSearchCriteriaToData(): void {
+		$controller = $this->getController(['validateParameters', 'generateHeaders']);
+		$controller->method('validateParameters');
+		$controller->method('generateHeaders')->willReturn([]);
+
+		$criteria = SearchCriteria::create('report', 1000, 2000, 'alice');
+		self::invokePrivate($controller, 'searchCriteria', [$criteria]);
+
+		$this->data->expects($this->once())
+			->method('get')
+			->with(
+				$this->anything(),
+				$this->anything(),
+				$this->anything(),
+				$this->anything(),
+				$this->anything(),
+				$this->anything(),
+				$this->anything(),
+				$this->anything(),
+				$this->anything(),
+				false,
+				$criteria,
+			)
+			->willReturn(['data' => [], 'has_more' => false, 'headers' => []]);
+
+		self::invokePrivate($controller, 'get', ['all', 0, 50, false, '', 0, 'desc', 'report', 1000, 2000]);
+	}
+
+	public function testGetReturnsBadRequestForInvalidSearchCriteria(): void {
+		$controller = $this->getController(['validateParameters']);
+		$controller->expects($this->once())
+			->method('validateParameters')
+			->willThrowException(new InvalidSearchCriteriaException('Search term is too short'));
+
+		$this->data->expects($this->never())
+			->method('get');
+
+		$result = self::invokePrivate($controller, 'get', ['all', 0, 50, false, '', 0, 'desc', 'a', 0, 0]);
+
+		$this->assertInstanceOf(DataResponse::class, $result);
+		$this->assertSame(Http::STATUS_BAD_REQUEST, $result->getStatus());
+		$this->assertSame(['message' => 'Search term is too short'], $result->getData());
+	}
+
+	public function testGenerateHeadersCarriesSearchCriteriaIntoTheNextPage(): void {
+		self::invokePrivate($this->controller, 'sort', ['desc']);
+		self::invokePrivate($this->controller, 'limit', [25]);
+		self::invokePrivate($this->controller, 'objectType', ['']);
+		self::invokePrivate($this->controller, 'objectId', [0]);
+		self::invokePrivate($this->controller, 'searchCriteria', [SearchCriteria::create('quarterly report', 1000, 2000, 'alice')]);
+		$this->request->method('getParam')
+			->with('format')
+			->willReturn(null);
+
+		$headers = self::invokePrivate($this->controller, 'generateHeaders', [['X-Activity-Last-Given' => 23], true, []]);
+
+		$this->assertArrayHasKey('Link', $headers);
+		// http_build_query encodes the space so the URL stays parsable
+		$this->assertStringContainsString('search=quarterly+report', $headers['Link']);
+		$this->assertStringContainsString('from=1000', $headers['Link']);
+		$this->assertStringContainsString('to=2000', $headers['Link']);
+		$this->assertStringContainsString('actor=alice', $headers['Link']);
 	}
 
 	public static function dataParameters(): array {
