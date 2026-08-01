@@ -130,6 +130,10 @@ const ActivityTab = defineComponent({
 			activities: [] as (IActivitySidebarEntry | ActivityModel)[],
 			lightningBoltSVG,
 			sidebarPlugins: [] as IActivitySidebarAction[],
+			// Only ever read inside methods, never from the template. Vue 3
+			// leaves class instances it does not recognise unproxied, so the
+			// controller keeps working: abort() needs its original receiver.
+			requestController: null as AbortController | null,
 		}
 	},
 
@@ -141,6 +145,9 @@ const ActivityTab = defineComponent({
 	},
 
 	watch: {
+		// `immediate` covers the initial load as well, so there is deliberately
+		// no mounted() hook doing the same thing: having both meant every
+		// sidebar open fired two identical requests
 		node: {
 			immediate: true,
 			async handler() {
@@ -149,10 +156,8 @@ const ActivityTab = defineComponent({
 		},
 	},
 
-	async mounted() {
-		if (this.node) {
-			await this.update()
-		}
+	beforeUnmount() {
+		this.requestController?.abort()
 	},
 
 	methods: {
@@ -174,19 +179,43 @@ const ActivityTab = defineComponent({
 
 		/**
 		 * Get the existing activities
+		 *
+		 * Any request still in flight is superseded first. Without that, moving
+		 * between files faster than the server answers would let an earlier
+		 * response arrive last and leave the panel showing another file's
+		 * activity, since the responses are applied in arrival order rather
+		 * than request order.
 		 */
 		async getActivities() {
+			this.requestController?.abort()
+			const controller = new AbortController()
+			this.requestController = controller
+			const { signal } = controller
+
 			try {
 				this.loading = true
 
-				const activities = await this.processActivities(await this.loadRealActivities())
+				const activities = await this.processActivities(await this.loadRealActivities(signal))
+				// Plugin supplied entries cannot be aborted, so their result is
+				// discarded below instead
 				const otherEntries = await getAdditionalEntries({ node: this.node })
+				if (signal.aborted) {
+					return
+				}
 				this.activities = [...activities, ...otherEntries].sort((a, b) => b.timestamp - a.timestamp)
 			} catch (error) {
+				if (signal.aborted) {
+					// Cancelled in favour of a newer request, which owns the
+					// state from here on
+					return
+				}
 				this.error = t('activity', 'Unable to load the activity list')
 				logger.error('Error loading the activity list', { error })
 			} finally {
-				this.loading = false
+				// A newer request has already set this back to true
+				if (!signal.aborted) {
+					this.loading = false
+				}
 			}
 		},
 
@@ -201,12 +230,15 @@ const ActivityTab = defineComponent({
 
 		/**
 		 * Load activites from API
+		 *
+		 * @param signal - Aborted when a newer request supersedes this one
 		 */
-		async loadRealActivities() {
+		async loadRealActivities(signal?: AbortSignal) {
 			try {
 				const { data } = await axios.get(
 					generateOcsUrl('apps/activity/api/v2/activity/filter'),
 					{
+						signal,
 						params: {
 							format: 'json',
 							object_type: 'files',
