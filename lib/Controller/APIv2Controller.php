@@ -11,7 +11,9 @@ namespace OCA\Activity\Controller;
 
 use OCA\Activity\Data;
 use OCA\Activity\Exception\InvalidFilterException;
+use OCA\Activity\Exception\InvalidSearchCriteriaException;
 use OCA\Activity\GroupHelper;
+use OCA\Activity\SearchCriteria;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IFilter;
@@ -37,6 +39,7 @@ class APIv2Controller extends OCSController {
 	protected int $objectId = 0;
 	protected string $user = '';
 	protected bool $loadPreviews = false;
+	protected SearchCriteria $searchCriteria;
 
 	public function __construct(
 		$appName,
@@ -54,13 +57,15 @@ class APIv2Controller extends OCSController {
 	) {
 		parent::__construct($appName, $request);
 		$this->activityManager = $activityManager;
+		$this->searchCriteria = SearchCriteria::empty();
 	}
 
 	/**
 	 * @throws InvalidFilterException when the filter is invalid
+	 * @throws InvalidSearchCriteriaException when the search term or date range is invalid
 	 * @throws \OutOfBoundsException when no user is given
 	 */
-	protected function validateParameters(string $filter, int $since, int $limit, bool $previews, string $objectType, int $objectId, string $sort): void {
+	protected function validateParameters(string $filter, int $since, int $limit, bool $previews, string $objectType, int $objectId, string $sort, string $search = '', int $from = 0, int $to = 0, string $actor = ''): void {
 		$this->filter = $filter;
 		if ($this->filter !== $this->data->validateFilter($this->filter)) {
 			throw new InvalidFilterException('Invalid filter');
@@ -71,6 +76,7 @@ class APIv2Controller extends OCSController {
 		$this->objectType = $objectType;
 		$this->objectId = $objectId;
 		$this->sort = \in_array($sort, ['asc', 'desc'], true) ? $sort : 'desc';
+		$this->searchCriteria = SearchCriteria::create($search, $from, $to, $actor);
 
 		if (($this->objectType !== '' && $this->objectId === 0) || ($this->objectType === '' && $this->objectId !== 0)) {
 			// Only allowed together
@@ -89,16 +95,26 @@ class APIv2Controller extends OCSController {
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * @param string $search Only return activities whose file path contains this substring
+	 * @param int $from Only return activities at or after this Unix timestamp
+	 * @param int $to Only return activities at or before this Unix timestamp
+	 * @param string $actor Only return activities authored by this account
 	 */
-	public function getDefault(int $since = 0, int $limit = 50, bool $previews = false, string $object_type = '', int $object_id = 0, string $sort = 'desc'): DataResponse {
-		return $this->get('all', $since, $limit, $previews, $object_type, $object_id, $sort);
+	public function getDefault(int $since = 0, int $limit = 50, bool $previews = false, string $object_type = '', int $object_id = 0, string $sort = 'desc', string $search = '', int $from = 0, int $to = 0, string $actor = ''): DataResponse {
+		return $this->get('all', $since, $limit, $previews, $object_type, $object_id, $sort, $search, $from, $to, $actor);
 	}
 
 	/**
 	 * @NoAdminRequired
+	 *
+	 * @param string $search Only return activities whose file path contains this substring
+	 * @param int $from Only return activities at or after this Unix timestamp
+	 * @param int $to Only return activities at or before this Unix timestamp
+	 * @param string $actor Only return activities authored by this account
 	 */
-	public function getFilter(string $filter, int $since = 0, int $limit = 50, bool $previews = false, string $object_type = '', int $object_id = 0, string $sort = 'desc'): DataResponse {
-		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort);
+	public function getFilter(string $filter, int $since = 0, int $limit = 50, bool $previews = false, string $object_type = '', int $object_id = 0, string $sort = 'desc', string $search = '', int $from = 0, int $to = 0, string $actor = ''): DataResponse {
+		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort, $search, $from, $to, $actor);
 	}
 
 	/**
@@ -153,11 +169,13 @@ class APIv2Controller extends OCSController {
 		return new DataResponse($filters);
 	}
 
-	protected function get(string $filter, int $since, int $limit, bool $previews, string $filterObjectType, int $filterObjectId, string $sort): DataResponse {
+	protected function get(string $filter, int $since, int $limit, bool $previews, string $filterObjectType, int $filterObjectId, string $sort, string $search = '', int $from = 0, int $to = 0, string $actor = ''): DataResponse {
 		try {
-			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
+			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort, $search, $from, $to, $actor);
 		} catch (InvalidFilterException $e) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		} catch (InvalidSearchCriteriaException $e) {
+			return new DataResponse(['message' => $e->getMessage()], Http::STATUS_BAD_REQUEST);
 		} catch (\OutOfBoundsException $e) {
 			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
@@ -175,7 +193,9 @@ class APIv2Controller extends OCSController {
 
 				$this->filter,
 				$this->objectType,
-				$this->objectId
+				$this->objectId,
+				false,
+				$this->searchCriteria
 			);
 		} catch (\OutOfBoundsException $e) {
 			// Invalid since argument
@@ -249,6 +269,9 @@ class APIv2Controller extends OCSController {
 				$nextPageParameters['object_type'] = $this->objectType;
 				$nextPageParameters['object_id'] = $this->objectId;
 			}
+			// Without these the next page would silently widen back to the
+			// unfiltered stream
+			$nextPageParameters += $this->searchCriteria->toParameters();
 			if ($this->request->getParam('format') !== null) {
 				$nextPageParameters['format'] = $this->request->getParam('format');
 			}

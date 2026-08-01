@@ -49,7 +49,43 @@ Name | Type | Description
 `object_type` | string (Optional) | Allows to filter the activities to a given object. May only appear together with `object_id` and the `filter` type filter
 `object_id` | string (Optional) | Allows to filter the activities to a given object. May only appear together with `object_type` and the `filter` type filter
 `sort` | string - `asc` or `desc` | Should activities be given ascending or descending (from the `since`) (Default: `desc`)
+`search` | string (Optional) | Only return activities whose file path contains this substring, matched case insensitively. Must be between 2 and 255 characters
+`from` | int (Optional) | Only return activities with a timestamp at or after this Unix timestamp
+`to` | int (Optional) | Only return activities with a timestamp at or before this Unix timestamp
+`actor` | string (Optional) | Only return activities authored by this account. At most 64 characters
 
+### Searching and filtering by date
+
+`search` matches against the activity's file path, so it finds activities by file
+or folder name. It does not match the rendered subject, because subjects are
+stored as untranslated template keys with their data held separately.
+
+`from` and `to` are inclusive and independent: either may be given on its own for
+an open ended range. Both are Unix timestamps in seconds, so the client decides
+which timezone a calendar day maps onto. Values above `2147483647` are clamped to
+that maximum, which is the largest value the `timestamp` column can hold.
+
+### Filtering by account
+
+`actor` restricts the stream to activities authored by one account, given as its
+account name (user id), not its display name.
+
+It composes with the type filter rather than replacing it: `by` combined with an
+`actor` yields everyone else's activity narrowed to that one account, and `self`
+combined with a different account yields nothing, since the two restrict the same
+column.
+
+### Cost
+
+A date range is served by the `activity_user_time` index and an `actor` by
+`activity_filter_by`, so both stay index-ordered and get cheaper the narrower
+they are. A `search` is a substring match that no index can serve; it stays
+bounded because every query is already restricted to a single user, and
+combining it with a date range or an actor narrows the scan further. Terms
+shorter than 2 characters are rejected rather than run, since they would scan
+the user's whole stream to return a useless result.
+
+All four parameters are carried over into the `Link` header for the next page.
 
 ## HTTP Status
 
@@ -58,6 +94,7 @@ Status Code | Description
 `200 OK` |  Activities
 `204 No Content` |  The user has selected no activities to be listed in the stream
 `304 Not Modified` | ETag/If-None-Match are the same or the end of the activity list was reached
+`400 Bad Request` | The search term is too short or too long, or `from` is after `to`
 `403 Forbidden` | The offset activity belongs to a different user
 `403 Forbidden` | The user is not logged in
 `404 Not Found` | The filter is unknown
