@@ -203,3 +203,65 @@ In case the endpoint returns more fields, they should be ignored and are depreca
     ]
   }
 ```
+
+# Daily activity counts
+
+`GET /ocs/v2.php/apps/activity/api/v2/activity/{filter}/histogram`
+
+Number of activities per calendar day, for the stream's heatmap.
+
+Name | Type | Description
+---|---|---
+`days` | int (Optional) | Length of the window, ending today. Clamped to 1–366 (Default: `364`)
+`search` | string (Optional) | Only count activities whose file path contains this substring
+`actor` | string (Optional) | Only count activities authored by this account
+`object_type` / `object_id` | (Optional) | As on the stream endpoint, and only together
+
+The window deliberately takes no `from`/`to`. The histogram is the control a
+reader picks a date range *with*, so it has to keep reporting the days outside
+the current selection. Every other restriction is honoured, which is what keeps
+the counts equal to the number of activities the stream itself would list — the
+two share one query builder internally for exactly that reason.
+
+Days are bucketed in the account's own timezone (the `core`/`timezone` user
+setting), not in UTC, so an activity at 01:00 local time belongs to that local
+day. A real timezone rather than a fixed offset is used, so a window spanning a
+DST change still groups correctly.
+
+## Response
+
+```json
+{
+  "from": "2025-08-03",
+  "to": "2026-08-01",
+  "counts": { "2025-08-04": 12, "2025-08-06": 3 },
+  "max": 12,
+  "total": 15,
+  "partial_before": null
+}
+```
+
+Name | Description
+---|---
+`from` / `to` | Inclusive window boundaries as local dates
+`counts` | Activities per day, keyed by date. **Days with no activity are omitted**, so the payload stays proportional to real activity rather than to the window length; a client fills the gaps with zero
+`max` | Busiest day in the window, for scaling a colour ramp. `0` when the window is empty
+`total` | Sum over the window
+`partial_before` | Normally `null`. Set to a date when the query hit its row guard, meaning counts before that date are incomplete — a client should mark those days rather than draw understated values
+
+## HTTP Status
+
+Status Code | Description
+---|---
+`200 OK` | Counts
+`400 Bad Request` | The search term is too short or too long, or the account name is too long
+`403 Forbidden` | The user is not logged in
+`404 Not Found` | The filter is unknown
+
+## Cost
+
+The query selects one column, restricted to a single `affecteduser` and a
+timestamp range, which is exactly the `activity_user_time` index. Bucketing into
+days happens in PHP rather than in SQL: grouping by day needs integer division or
+a modulo, neither of which `IQueryBuilder` can express, and a raw expression
+would have to be written four different ways for the databases this app supports.
