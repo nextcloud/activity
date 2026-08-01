@@ -53,6 +53,18 @@
 					:activity="activity"
 					:showPreviews="false"
 					@reload="getActivities()" />
+				<li v-if="hasMore" class="activity__load-more">
+					<NcButton
+						variant="tertiary"
+						wide
+						:disabled="loadingMore"
+						@click="loadMoreActivities()">
+						<template v-if="loadingMore" #icon>
+							<NcLoadingIcon :size="20" />
+						</template>
+						{{ loadingMore ? t('activity', 'Loading older activities…') : t('activity', 'Load older activities') }}
+					</NcButton>
+				</li>
 			</ul>
 		</template>
 	</div>
@@ -69,6 +81,7 @@ import { translate as t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
 import { ShareType } from '@nextcloud/sharing'
 import { defineComponent, nextTick } from 'vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
@@ -79,12 +92,21 @@ import ActivityModel from '../models/ActivityModel.ts'
 import { getActivityFilters, getAdditionalEntries, getSidebarActions } from '../utils/api.ts'
 import logger from '../utils/logger.ts'
 
+/**
+ * How many activities to ask for per page.
+ *
+ * Sent explicitly rather than relying on the API default, so the page size the
+ * panel gets is the one it asks for.
+ */
+const ACTIVITY_PAGE_SIZE = 50
+
 const ActivityTab = defineComponent({
 	name: 'ActivityTab',
 
 	components: {
 		ActivityComponent,
 		DownloadSummary,
+		NcButton,
 		NcEmptyContent,
 		NcIconSvgWrapper,
 		NcLoadingIcon,
@@ -127,6 +149,7 @@ const ActivityTab = defineComponent({
 		return {
 			error: '',
 			loading: true,
+			loadingMore: false,
 			activities: [] as (IActivitySidebarEntry | ActivityModel)[],
 			lightningBoltSVG,
 			sidebarPlugins: [] as IActivitySidebarAction[],
@@ -134,6 +157,17 @@ const ActivityTab = defineComponent({
 			// leaves class instances it does not recognise unproxied, so the
 			// controller keeps working: abort() needs its original receiver.
 			requestController: null as AbortController | null,
+			// The pages loaded so far, kept apart from `activities` because the
+			// rendered list is those merged with the plugin entries below
+			realActivities: [] as ActivityModel[],
+			// Belong to the node rather than to a page, so they are fetched once
+			// per file and re-merged into every page
+			otherEntries: [] as IActivitySidebarEntry[],
+			// Id of the last activity the server returned, the cursor for the
+			// next page
+			lastGiven: undefined as string | undefined,
+			// Whether the server offered a next page
+			hasMore: false,
 		}
 	},
 
@@ -178,31 +212,63 @@ const ActivityTab = defineComponent({
 		},
 
 		/**
-		 * Get the existing activities
+		 * Load the newest activities, replacing whatever is shown
+		 */
+		async getActivities() {
+			await this.fetchPage(true)
+		},
+
+		/**
+		 * Append the next, older page of activities
+		 */
+		async loadMoreActivities() {
+			await this.fetchPage(false)
+		},
+
+		/**
+		 * Load one page of activities and merge it into the list
 		 *
 		 * Any request still in flight is superseded first. Without that, moving
 		 * between files faster than the server answers would let an earlier
 		 * response arrive last and leave the panel showing another file's
 		 * activity, since the responses are applied in arrival order rather
 		 * than request order.
+		 *
+		 * @param reset - Start from the newest activity instead of appending
 		 */
-		async getActivities() {
+		async fetchPage(reset: boolean) {
 			this.requestController?.abort()
 			const controller = new AbortController()
 			this.requestController = controller
 			const { signal } = controller
 
 			try {
-				this.loading = true
+				if (reset) {
+					this.loading = true
+				} else {
+					this.loadingMore = true
+				}
 
-				const activities = await this.processActivities(await this.loadRealActivities(signal))
+				const page = await this.loadRealActivities(signal, reset ? undefined : this.lastGiven)
+				const activities = this.processActivities(page.activities)
 				// Plugin supplied entries cannot be aborted, so their result is
-				// discarded below instead
-				const otherEntries = await getAdditionalEntries({ node: this.node })
+				// discarded below instead. They describe the node rather than a
+				// page, so they are only re-collected when starting over.
+				const otherEntries = reset
+					? await getAdditionalEntries({ node: this.node })
+					: this.otherEntries
 				if (signal.aborted) {
 					return
 				}
-				this.activities = [...activities, ...otherEntries].sort((a, b) => b.timestamp - a.timestamp)
+
+				this.realActivities = reset ? activities : [...this.realActivities, ...activities]
+				this.otherEntries = otherEntries
+				if (reset || page.lastGiven !== undefined) {
+					this.lastGiven = page.lastGiven
+				}
+				this.hasMore = page.hasMore
+				this.activities = [...this.realActivities, ...this.otherEntries]
+					.sort((a, b) => b.timestamp - a.timestamp)
 			} catch (error) {
 				if (signal.aborted) {
 					// Cancelled in favour of a newer request, which owns the
@@ -212,9 +278,10 @@ const ActivityTab = defineComponent({
 				this.error = t('activity', 'Unable to load the activity list')
 				logger.error('Error loading the activity list', { error })
 			} finally {
-				// A newer request has already set this back to true
+				// A newer request has already set these
 				if (!signal.aborted) {
 					this.loading = false
+					this.loadingMore = false
 				}
 			}
 		},
@@ -224,18 +291,24 @@ const ActivityTab = defineComponent({
 		 */
 		resetState() {
 			this.loading = true
+			this.loadingMore = false
 			this.error = ''
 			this.activities = []
+			this.realActivities = []
+			this.otherEntries = []
+			this.lastGiven = undefined
+			this.hasMore = false
 		},
 
 		/**
-		 * Load activites from API
+		 * Load one page of activites from the API
 		 *
 		 * @param signal - Aborted when a newer request supersedes this one
+		 * @param since - Cursor from the previous page, omitted for the first one
 		 */
-		async loadRealActivities(signal?: AbortSignal) {
+		async loadRealActivities(signal?: AbortSignal, since?: string) {
 			try {
-				const { data } = await axios.get(
+				const response = await axios.get(
 					generateOcsUrl('apps/activity/api/v2/activity/filter'),
 					{
 						signal,
@@ -243,14 +316,23 @@ const ActivityTab = defineComponent({
 							format: 'json',
 							object_type: 'files',
 							object_id: this.node.fileid,
+							limit: ACTIVITY_PAGE_SIZE,
+							...(since === undefined ? {} : { since }),
 						},
 					},
 				)
-				return data.ocs.data
+				return {
+					activities: response.data.ocs.data,
+					lastGiven: response.headers['x-activity-last-given'],
+					// The server only sends a next page link while activities
+					// remain, so its presence is what decides whether there is
+					// more to offer rather than the size of this page
+					hasMore: String(response.headers.link ?? '').includes('rel="next"'),
+				}
 			} catch (error) {
-				// Status 304 is not an error.
+				// Status 304 is not an error, it means there is nothing (more) to show.
 				if (error.response !== undefined && error.response.status === 304) {
-					return []
+					return { activities: [], lastGiven: undefined, hasMore: false }
 				}
 				throw error
 			}
@@ -297,6 +379,14 @@ export type ActivityTabType = typeof ActivityTab
 	&__list {
 		flex-grow: 1;
 		overflow: scroll;
+	}
+
+	&__load-more {
+		// Sits at the end of the scrolled list rather than pinned below it, so
+		// it reads as the continuation of the list it extends
+		display: flex;
+		justify-content: center;
+		padding-block: calc(var(--default-grid-baseline) * 2);
 	}
 
 	&__empty-content {
