@@ -30,6 +30,16 @@ function expectLinkWithText(wrapper, text) {
 	return filtered
 }
 
+test('Entries carry an actions menu', async () => {
+	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[1]), showPreviews: true } })
+	await nextTick()
+
+	// Guards the wiring; what the menu offers is covered by
+	// ActivityEntryActions.test.ts
+	expect(wrapper.findComponent({ name: 'ActivityEntryActions' }).exists()).toBe(true)
+	expect(wrapper.find('.action-item__menutoggle').exists()).toBe(true)
+})
+
 test('Display relative date gets updated every minutes', async () => {
 	const wrapper = mount(ActivityComponent, { propsData: { activity: new ActivityModel(wsData.ocs.data[1]), showPreviews: true } })
 	await nextTick()

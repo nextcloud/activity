@@ -25,6 +25,7 @@
 			data-testid="activity-date"
 			:timestamp="timestamp"
 			:ignoreSeconds="true" />
+		<ActivityEntryActions :activity="activity" />
 	</li>
 </template>
 
@@ -38,6 +39,7 @@ import { computed } from 'vue'
 import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
 import NcRichText from '@nextcloud/vue/components/NcRichText'
+import ActivityEntryActions from '../ActivityEntryActions.vue'
 import { mapRichObjectsToRichArguments } from '../../utils/richObjects.ts'
 
 const props = defineProps<{
@@ -108,6 +110,14 @@ const subjectArguments = computed(() => mapRichObjectsToRichArguments(props.acti
 
 	&__date {
 		color: var(--color-text-maxcontrast);
+	}
+
+	// Reveal the entry's action menu while the row is hovered, as in
+	// GenericActivity. The menu handles fading itself back out.
+	@media (hover: hover) {
+		&:hover :deep(.activity-entry-actions) {
+			opacity: 1;
+		}
 	}
 }
 </style>

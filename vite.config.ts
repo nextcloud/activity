@@ -34,7 +34,10 @@ export default createAppConfig({
 			},
 			server: {
 				deps: {
-					inline: [/@nextcloud\/vue/, /@mdi\/svg/],
+					// These ship CSS imports, which Node cannot load on its own;
+					// inlining them routes the dependency through Vite so its
+					// stylesheets are handled instead of reaching Node as ".css"
+					inline: [/@nextcloud\/vue/, /@nextcloud\/dialogs/, /@mdi\/svg/],
 				},
 			},
 		} as UserConfig,

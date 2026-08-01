@@ -23,6 +23,7 @@
 			:timestamp="timestamp"
 			:ignoreSeconds="true"
 			data-testid="activity-date" />
+		<ActivityEntryActions class="activity-entry__actions" :activity="activity" />
 		<ul v-if="showPreviews" class="activity-entry__preview-wrapper">
 			<li
 				v-for="preview, index in activity.previews"
@@ -53,6 +54,7 @@ import { defineComponent } from 'vue'
 import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
 import NcRichText from '@nextcloud/vue/components/NcRichText'
+import ActivityEntryActions from '../ActivityEntryActions.vue'
 import ActivityModel from '../../models/ActivityModel.js'
 import logger from '../../utils/logger.js'
 import { mapRichObjectsToRichArguments } from '../../utils/richObjects.js'
@@ -60,6 +62,7 @@ import { mapRichObjectsToRichArguments } from '../../utils/richObjects.js'
 export default defineComponent({
 	name: 'GenericActivity',
 	components: {
+		ActivityEntryActions,
 		NcAvatar,
 		NcDateTime,
 		NcRichText,
@@ -208,6 +211,14 @@ export default defineComponent({
 
 	&__actions {
 		inset-block: -8px;
+	}
+
+	// Reveal the entry's action menu while the row is hovered. The menu fades
+	// itself back out and stays keyboard reachable regardless of hover.
+	@media (hover: hover) {
+		&:hover :deep(.activity-entry-actions) {
+			opacity: 1;
+		}
 	}
 
 	&__date {
