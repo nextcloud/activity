@@ -26,7 +26,8 @@
 		<ul v-if="showPreviews" class="activity-entry__preview-wrapper">
 			<li
 				v-for="preview, index in activity.previews"
-				:key="preview.fileId ?? `preview-${index}`">
+				:key="preview.fileId ?? `preview-${index}`"
+				class="activity-entry__preview-item">
 				<component
 					:is="preview.link ? 'a' : 'span'"
 					class="activity-entry__preview"
@@ -40,6 +41,7 @@
 						:src="preview.source"
 						:alt="preview.link ? t('activity', 'Open {filename}', { filename: preview.filename }) : ''">
 				</component>
+				<ActivityEntryActions :preview="preview" />
 			</li>
 		</ul>
 	</li>
@@ -53,6 +55,7 @@ import { defineComponent } from 'vue'
 import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
 import NcRichText from '@nextcloud/vue/components/NcRichText'
+import ActivityEntryActions from '../ActivityEntryActions.vue'
 import ActivityModel from '../../models/ActivityModel.js'
 import logger from '../../utils/logger.js'
 import { mapRichObjectsToRichArguments } from '../../utils/richObjects.js'
@@ -60,6 +63,7 @@ import { mapRichObjectsToRichArguments } from '../../utils/richObjects.js'
 export default defineComponent({
 	name: 'GenericActivity',
 	components: {
+		ActivityEntryActions,
 		NcAvatar,
 		NcDateTime,
 		NcRichText,
@@ -206,10 +210,6 @@ export default defineComponent({
 		}
 	}
 
-	&__actions {
-		inset-block: -8px;
-	}
-
 	&__date {
 		color: var(--color-text-lighter);
 		margin-left: 5px;
@@ -225,6 +225,24 @@ export default defineComponent({
 		padding-inline-start: 24px;
 		display: flex;
 		flex-wrap: wrap;
+	}
+
+	&__preview-item {
+		// Anchors the overlaid action menu to this thumbnail
+		position: relative;
+		// The link inside is inline by default, so the item's box would be taller
+		// than the image it wraps and the overlay would anchor above the
+		// thumbnail's real top edge
+		display: flex;
+		line-height: 0;
+
+		// Reveal that thumbnail's menu while it is hovered. The menu fades itself
+		// back out, and stays keyboard reachable regardless of hover.
+		@media (hover: hover) {
+			&:hover :deep(.activity-entry-actions) {
+				opacity: 1;
+			}
+		}
 	}
 
 	&__preview:hover {
