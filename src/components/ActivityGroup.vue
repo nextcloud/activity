@@ -74,15 +74,10 @@ const fullDate = computed(() => {
 		// Fade out so entries dissolve as they scroll under the heading
 		background: linear-gradient(to bottom, var(--color-main-background) 44%, transparent);
 
-		// Indent the heading to clear the app-navigation toggle, but only by the amount
-		// the centring gutter ((100cqi - column width) / 2) doesn't already cover.
-		// Clamped to 0 so wide layouts keep it aligned with the entries.
-		padding-inline-start: calc(max(
-			0px,
-			var(--app-navigation-padding) + var(--default-clickable-area)
-				- var(--default-grid-baseline)
-				- max(0px, (100cqi - var(--activity-feed-max-width)) / 2)
-		));
+		// Indent the heading to clear the app-navigation toggle. Defined once as
+		// --activity-feed-nav-indent in ActivityAppFeed.vue so the filter bar
+		// above the feed uses the exact same offset.
+		padding-inline-start: var(--activity-feed-nav-indent);
 	}
 }
 </style>

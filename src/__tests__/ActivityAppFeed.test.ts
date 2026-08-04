@@ -42,8 +42,12 @@ vi.mock(import('@nextcloud/router'), async (importOriginal) => {
 	}
 })
 
+const routerReplace = vi.hoisted(() => vi.fn(() => Promise.resolve()))
+const routeQuery = vi.hoisted(() => ({ current: {} as Record<string, string> }))
+
 vi.mock('vue-router', () => ({
-	useRoute: vi.fn(() => ({ params: { filter: 'all' } })),
+	useRoute: vi.fn(() => ({ params: { filter: 'all' }, query: routeQuery.current })),
+	useRouter: vi.fn(() => ({ replace: routerReplace })),
 }))
 
 vi.mock(import('@vueuse/core'), async (importOriginal) => {
@@ -107,10 +111,22 @@ function make304Error() {
 
 // --- Component stubs ---
 
+/**
+ * Stands in for the real filter bar so feed level tests can drive the filter
+ * state directly. The bar itself is covered by ActivityFilterBar.test.ts.
+ */
+const FilterBarStub = {
+	name: 'ActivityFilterBar',
+	template: '<div class="activity-filter-bar" />',
+	props: ['search', 'from', 'to', 'actor', 'actorOptions'],
+	emits: ['update:search', 'update:from', 'update:to', 'update:actor'],
+}
+
 const stubs = {
+	ActivityFilterBar: FilterBarStub,
 	NcAppContent: { template: '<div><slot /></div>' },
 	NcEmptyContent: {
-		template: '<div :data-name="name"><slot name="icon" /></div>',
+		template: '<div :data-name="name"><slot name="icon" /><slot name="action" /></div>',
 		props: ['name', 'description'],
 	},
 	NcButton: {
@@ -148,6 +164,7 @@ describe('ActivityAppFeed', () => {
 		// Exclude setImmediate from fake timers so flushPromises() keeps working
 		vi.useFakeTimers({ toFake: ['setTimeout', 'setInterval', 'clearTimeout', 'clearInterval'] })
 		visibilityRef.value = 'visible'
+		routeQuery.current = {}
 	})
 
 	afterEach(() => {
@@ -376,6 +393,17 @@ describe('ActivityAppFeed', () => {
 			wrapper.unmount()
 		})
 
+		it('keeps search, date range and account out of the picture when nothing is set', async () => {
+			const wrapper = await mountFeed()
+			const url = vi.mocked(ncAxios.get).mock.calls[0][0] as string
+
+			expect(url).not.toContain('search=')
+			expect(url).not.toContain('from=')
+			expect(url).not.toContain('to=')
+			expect(url).not.toContain('actor=')
+			wrapper.unmount()
+		})
+
 		it('aborts the in-flight load request when the filter changes', async () => {
 			let capturedSignal: AbortSignal | undefined
 			vi.mocked(ncAxios.get).mockImplementation((_url, config) => {
@@ -395,6 +423,190 @@ describe('ActivityAppFeed', () => {
 			await flushPromises()
 
 			expect(capturedSignal?.aborted).toBe(true)
+			wrapper.unmount()
+		})
+	})
+
+	// ---------------------------------------------------------------------------
+	describe('search and date range', () => {
+		/** Emit a filter update from the stubbed filter bar and settle the reload. */
+		async function setFilter(wrapper: VueWrapper, event: string, value: unknown) {
+			vi.mocked(ncAxios.get).mockClear()
+			vi.mocked(ncAxios.get).mockRejectedValue(make304Error())
+			wrapper.findComponent(FilterBarStub).vm.$emit(event, value)
+			await flushPromises()
+		}
+
+		it('sends the search term as a query parameter', async () => {
+			const wrapper = await mountFeed()
+			await setFilter(wrapper, 'update:search', 'quarterly report')
+
+			const url = vi.mocked(ncAxios.get).mock.calls[0][0] as string
+			// URLSearchParams encodes the space rather than breaking the query
+			expect(url).toContain('search=quarterly+report')
+			wrapper.unmount()
+		})
+
+		it('sends the range start as the first second of that day', async () => {
+			const wrapper = await mountFeed()
+			const from = new Date(2024, 0, 15)
+			await setFilter(wrapper, 'update:from', from)
+
+			const url = vi.mocked(ncAxios.get).mock.calls[0][0] as string
+			const expected = Math.floor(new Date(2024, 0, 15, 0, 0, 0, 0).getTime() / 1000)
+			expect(url).toContain(`from=${expected}`)
+			wrapper.unmount()
+		})
+
+		it('sends the range end as the last second of that day so the day is included', async () => {
+			const wrapper = await mountFeed()
+			const to = new Date(2024, 0, 15)
+			await setFilter(wrapper, 'update:to', to)
+
+			const url = vi.mocked(ncAxios.get).mock.calls[0][0] as string
+			const expected = Math.floor(new Date(2024, 0, 15, 23, 59, 59, 999).getTime() / 1000)
+			expect(url).toContain(`to=${expected}`)
+			wrapper.unmount()
+		})
+
+		it('discards already loaded activities when the search changes', async () => {
+			const wrapper = await mountFeed()
+			expect(wrapper.findAll('.activity-group').length).toBeGreaterThan(0)
+
+			await setFilter(wrapper, 'update:search', 'nothing matches this')
+
+			expect(wrapper.findAll('.activity-group').length).toBe(0)
+			wrapper.unmount()
+		})
+
+		it('shows a filter specific empty state that can clear the filters', async () => {
+			const wrapper = await mountFeed()
+			await setFilter(wrapper, 'update:search', 'nothing matches this')
+
+			expect(wrapper.find('[data-name="No matching activities"]').exists()).toBe(true)
+			expect(wrapper.find('[data-name="No activity yet"]').exists()).toBe(false)
+
+			vi.mocked(ncAxios.get).mockClear()
+			vi.mocked(ncAxios.get)
+				.mockResolvedValueOnce(makeResponse())
+				.mockRejectedValueOnce(make304Error())
+			await wrapper.find('[data-name="No matching activities"] button').trigger('click')
+			await flushPromises()
+
+			const url = vi.mocked(ncAxios.get).mock.calls[0][0] as string
+			expect(url).not.toContain('search=')
+			expect(wrapper.find('[data-name="No matching activities"]').exists()).toBe(false)
+			wrapper.unmount()
+		})
+
+		it('carries the active filters into the polling request', async () => {
+			const wrapper = await mountFeed()
+			await setFilter(wrapper, 'update:search', 'report')
+
+			vi.mocked(ncAxios.get).mockClear()
+			vi.mocked(ncAxios.get).mockResolvedValueOnce(makeResponse([makeActivityEntry(100)], '100'))
+			vi.advanceTimersByTime(POLL_INTERVAL)
+			await flushPromises()
+
+			const pollUrl = vi.mocked(ncAxios.get).mock.calls[0][0] as string
+			expect(pollUrl).toContain('sort=asc')
+			expect(pollUrl).toContain('search=report')
+			wrapper.unmount()
+		})
+
+		it('restores the filters from the URL on mount', async () => {
+			routeQuery.current = { search: 'budget', from: '2024-01-15' }
+			vi.mocked(ncAxios.get).mockRejectedValue(make304Error())
+
+			const wrapper = mount(ActivityAppFeed, { global: { stubs } })
+			await flushPromises()
+
+			const url = vi.mocked(ncAxios.get).mock.calls[0][0] as string
+			const expected = Math.floor(new Date(2024, 0, 15, 0, 0, 0, 0).getTime() / 1000)
+			expect(url).toContain('search=budget')
+			expect(url).toContain(`from=${expected}`)
+			wrapper.unmount()
+		})
+
+		it('ignores an unparseable date in the URL instead of failing to render', async () => {
+			routeQuery.current = { from: 'not-a-date' }
+			vi.mocked(ncAxios.get).mockRejectedValue(make304Error())
+
+			const wrapper = mount(ActivityAppFeed, { global: { stubs } })
+			await flushPromises()
+
+			const url = vi.mocked(ncAxios.get).mock.calls[0][0] as string
+			expect(url).not.toContain('from=')
+			expect(wrapper.find('[data-name="No activity yet"]').exists()).toBe(true)
+			wrapper.unmount()
+		})
+
+		it('sends the selected account as a query parameter', async () => {
+			const wrapper = await mountFeed()
+			await setFilter(wrapper, 'update:actor', 'alice')
+
+			const url = vi.mocked(ncAxios.get).mock.calls[0][0] as string
+			expect(url).toContain('actor=alice')
+			wrapper.unmount()
+		})
+
+		it('offers the accounts behind the loaded activities as options', async () => {
+			const wrapper = await mountFeed()
+
+			const options = wrapper.findComponent(FilterBarStub).props('actorOptions') as { id: string }[]
+			expect(options.length).toBeGreaterThan(0)
+			expect(options.every((option) => typeof option.id === 'string')).toBe(true)
+			wrapper.unmount()
+		})
+
+		it('keeps the other accounts selectable after filtering to one', async () => {
+			const wrapper = await mountFeed()
+			const before = (wrapper.findComponent(FilterBarStub).props('actorOptions') as unknown[]).length
+
+			await setFilter(wrapper, 'update:actor', 'alice')
+
+			// The stream now holds only one account, but the list must not shrink
+			// or there would be no way back to the others
+			const after = (wrapper.findComponent(FilterBarStub).props('actorOptions') as unknown[]).length
+			expect(after).toBe(before)
+			wrapper.unmount()
+		})
+
+		it('restores the account filter from the URL on mount', async () => {
+			routeQuery.current = { actor: 'alice' }
+			vi.mocked(ncAxios.get).mockRejectedValue(make304Error())
+
+			const wrapper = mount(ActivityAppFeed, { global: { stubs } })
+			await flushPromises()
+
+			const url = vi.mocked(ncAxios.get).mock.calls[0][0] as string
+			expect(url).toContain('actor=alice')
+			wrapper.unmount()
+		})
+
+		it('clears the account along with the other filters', async () => {
+			const wrapper = await mountFeed()
+			await setFilter(wrapper, 'update:actor', 'alice')
+			expect(wrapper.find('[data-name="No matching activities"]').exists()).toBe(true)
+
+			vi.mocked(ncAxios.get).mockClear()
+			vi.mocked(ncAxios.get)
+				.mockResolvedValueOnce(makeResponse())
+				.mockRejectedValueOnce(make304Error())
+			await wrapper.find('[data-name="No matching activities"] button').trigger('click')
+			await flushPromises()
+
+			const url = vi.mocked(ncAxios.get).mock.calls[0][0] as string
+			expect(url).not.toContain('actor=')
+			wrapper.unmount()
+		})
+
+		it('mirrors the active filters into the URL', async () => {
+			const wrapper = await mountFeed()
+			routerReplace.mockClear()
+			await setFilter(wrapper, 'update:search', 'report')
+
+			expect(routerReplace).toHaveBeenCalledWith({ query: { search: 'report' } })
 			wrapper.unmount()
 		})
 	})
