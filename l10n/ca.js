@@ -51,6 +51,7 @@ OC.L10N.register(
     "Loading activities" : "S'està carregant l'activitat",
     "This stream will show events like additions, changes & shares" : "Aquest registre mostrarà esdeveniments com ara elements afegits, canvis i elements compartits",
     "No activity yet" : "Encara no hi ha activitat",
+    "New activities" : "Noves activitats",
     "Loading more activities" : "S'està carregant més activitat",
     "No more activities." : "No hi ha més activitat.",
     "Could not enable RSS link" : "No s'ha pogut habilitar l'enllaç RSS",
