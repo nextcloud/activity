@@ -292,7 +292,7 @@ class Data {
 
 		$query = $this->connection->getQueryBuilder();
 		$query->select('*')
-			->from('activity');
+			->from('activity', 'a');
 
 		$this->applyStreamConditions($query, $userSettings, $user, $filter, $activeFilter, $objectType, $objectId, $search);
 
@@ -362,6 +362,30 @@ class Data {
 		} elseif ($filter === 'filter') {
 			$query->andWhere($query->expr()->eq('object_type', $query->createNamedParameter($objectType)));
 			$query->andWhere($query->expr()->eq('object_id', $query->createNamedParameter($objectId)));
+		} elseif ($filter === 'focused') {
+			// Only activity related to files owned by the user
+			$query->leftJoin('a', 'filecache', 'f',
+				$query->expr()->andX(
+					$query->expr()->eq('a.object_type', $query->createNamedParameter('files')),
+					$query->expr()->eq('a.object_id', 'f.fileid'),
+				));
+			$query->leftJoin('f', 'mounts', 'm',
+				$query->expr()->andX(
+					$query->expr()->eq('a.object_type', $query->createNamedParameter('files')),
+					$query->expr()->eq('f.storage', 'm.storage_id'),
+				));
+			// Filter out our own activity
+			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+			$query->andWhere(
+				$query->expr()->orX(
+					// Affected object is one of our files
+					$query->expr()->eq('m.mount_point', $query->createNamedParameter('/'.$user.'/')),
+					// There is no affected object, so the activity affects our user directly
+					$query->expr()->eq('object_type', $query->createNamedParameter('')),
+					// Show all sharing related events
+					$query->expr()->eq('app', $query->createNamedParameter('files_sharing')),
+				)
+			);
 		}
 
 		if ($activeFilter instanceof IFilter) {
