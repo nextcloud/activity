@@ -194,6 +194,11 @@ class APIv2Controller extends OCSController {
 		} catch (InvalidSearchCriteriaException $e) {
 			return new DataResponse(['message' => $e->getMessage()], Http::STATUS_BAD_REQUEST);
 		}
+		if (($object_type !== '' && $object_id === 0) || ($object_type === '' && $object_id !== 0)) {
+			// Only allowed together (mirrors validateParameters())
+			$object_type = '';
+			$object_id = 0;
+		}
 
 		// Window boundaries are resolved in the viewer's timezone so the last
 		// column is their today, not UTC's
