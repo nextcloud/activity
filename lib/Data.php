@@ -284,7 +284,7 @@ class Data {
 
 		$query = $this->connection->getQueryBuilder();
 		$query->select('*')
-			->from('activity');
+			->from('activity', 'a');
 
 		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)));
 
@@ -303,6 +303,19 @@ class Data {
 		} elseif ($filter === 'filter') {
 			$query->andWhere($query->expr()->eq('object_type', $query->createNamedParameter($objectType)));
 			$query->andWhere($query->expr()->eq('object_id', $query->createNamedParameter($objectId)));
+		} elseif ($filter === 'focused') {
+			// Only activity related to files owned by the user
+			$query->leftJoin('a', 'filecache', 'f',
+				$query->expr()->andX(
+					$query->expr()->eq('a.object_type', $query->createNamedParameter('files')),
+					$query->expr()->eq('a.object_id', 'f.fileid'),
+				));
+			$query->leftJoin('f', 'mounts', 'm',
+				$query->expr()->andX(
+					$query->expr()->eq('a.object_type', $query->createNamedParameter('files')),
+					$query->expr()->eq('f.storage', 'm.storage_id'),
+				));
+			$query->andWhere($query->expr()->eq('m.mount_point', $query->createNamedParameter('/'.$user.'/')));
 		}
 
 		if ($activeFilter instanceof IFilter) {
