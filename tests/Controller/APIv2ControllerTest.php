@@ -39,6 +39,7 @@ use OCP\Activity\IManager;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Files\IMimeTypeDetector;
+use OCP\IDateTimeZone;
 use OCP\IL10N;
 use OCP\IPreview;
 use OCP\IRequest;
@@ -68,6 +69,7 @@ class APIv2ControllerTest extends TestCase {
 	protected IMimeTypeDetector&MockObject $mimeTypeDetector;
 	protected ViewInfoCache&MockObject $infoCache;
 	protected INotificationManager&MockObject $notificationManager;
+	protected IDateTimeZone&MockObject $dateTimeZone;
 	protected IL10N $l10n;
 	protected APIv2Controller $controller;
 
@@ -88,6 +90,8 @@ class APIv2ControllerTest extends TestCase {
 		$notification->method($this->anything())->willReturnSelf();
 		$this->notificationManager->method('createNotification')->willReturn($notification);
 		$this->request = $this->createMock(IRequest::class);
+		$this->dateTimeZone = $this->createMock(IDateTimeZone::class);
+		$this->dateTimeZone->method('getTimeZone')->willReturn(new \DateTimeZone('UTC'));
 
 		$this->controller = $this->getController();
 	}
@@ -107,6 +111,7 @@ class APIv2ControllerTest extends TestCase {
 				$this->mimeTypeDetector,
 				$this->infoCache,
 				$this->notificationManager,
+				$this->dateTimeZone,
 			);
 		}
 
@@ -124,6 +129,7 @@ class APIv2ControllerTest extends TestCase {
 				$this->mimeTypeDetector,
 				$this->infoCache,
 				$this->notificationManager,
+				$this->dateTimeZone,
 			])
 			->onlyMethods($methods)
 			->getMock();
@@ -419,6 +425,166 @@ class APIv2ControllerTest extends TestCase {
 		$this->assertStringContainsString('from=1000', $headers['Link']);
 		$this->assertStringContainsString('to=2000', $headers['Link']);
 		$this->assertStringContainsString('actor=alice', $headers['Link']);
+	}
+
+	public function testGetHistogramReturnsCountsWithScaleAndTotal(): void {
+		$this->data->expects($this->once())
+			->method('validateFilter')
+			->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
+		$this->userSession->method('getUser')->willReturn($userMock);
+
+		$this->data->expects($this->once())
+			->method('getDailyCounts')
+			->willReturn(['counts' => ['2024-03-01' => 2, '2024-03-04' => 7], 'partialBefore' => null]);
+
+		$result = $this->controller->getHistogram('all');
+
+		$this->assertSame(Http::STATUS_OK, $result->getStatus());
+		$data = $result->getData();
+		$this->assertSame(['2024-03-01' => 2, '2024-03-04' => 7], $data['counts']);
+		// Both are derived server side so the client does not walk the data twice
+		$this->assertSame(7, $data['max']);
+		$this->assertSame(9, $data['total']);
+		$this->assertNull($data['partial_before']);
+	}
+
+	public function testGetHistogramReportsAnEmptyWindowWithoutDividingByZero(): void {
+		$this->data->method('validateFilter')->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
+		$this->userSession->method('getUser')->willReturn($userMock);
+		$this->data->method('getDailyCounts')->willReturn(['counts' => [], 'partialBefore' => null]);
+
+		$data = $this->controller->getHistogram('all')->getData();
+
+		// max() of an empty array would be a fatal, and the client divides by it
+		$this->assertSame([], $data['counts']);
+		$this->assertSame(0, $data['max']);
+		$this->assertSame(0, $data['total']);
+	}
+
+	public function testGetHistogramWindowEndsTodayAndSpansTheRequestedDays(): void {
+		$this->data->method('validateFilter')->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
+		$this->userSession->method('getUser')->willReturn($userMock);
+
+		$captured = [];
+		$this->data->expects($this->once())
+			->method('getDailyCounts')
+			->willReturnCallback(function ($settings, $user, $filter, $from, $to) use (&$captured) {
+				$captured = ['from' => $from, 'to' => $to];
+				return ['counts' => [], 'partialBefore' => null];
+			});
+
+		$today = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
+		$data = $this->controller->getHistogram('all', 7)->getData();
+
+		$this->assertSame($today->format('Y-m-d'), $data['to']);
+		$this->assertSame($today->modify('-6 days')->format('Y-m-d'), $data['from']);
+		// 7 days inclusive, from the first second to the last
+		$this->assertSame(7 * 86400 - 1, $captured['to'] - $captured['from']);
+	}
+
+	public static function dataHistogramDayClamping(): array {
+		return [
+			'below the minimum' => [0, 1],
+			'negative' => [-5, 1],
+			'above the maximum' => [10000, APIv2Controller::HISTOGRAM_MAX_DAYS],
+		];
+	}
+
+	#[DataProvider('dataHistogramDayClamping')]
+	public function testGetHistogramClampsTheWindow(int $requested, int $expectedDays): void {
+		$this->data->method('validateFilter')->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
+		$this->userSession->method('getUser')->willReturn($userMock);
+
+		$span = 0;
+		$this->data->method('getDailyCounts')
+			->willReturnCallback(function ($settings, $user, $filter, $from, $to) use (&$span) {
+				$span = $to - $from;
+				return ['counts' => [], 'partialBefore' => null];
+			});
+
+		$this->controller->getHistogram('all', $requested);
+
+		$this->assertSame($expectedDays * 86400 - 1, $span);
+	}
+
+	public function testGetHistogramPassesTheSearchAndActorButNotADateRange(): void {
+		$this->data->method('validateFilter')->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
+		$this->userSession->method('getUser')->willReturn($userMock);
+
+		$this->data->expects($this->once())
+			->method('getDailyCounts')
+			->willReturnCallback(function ($settings, $user, $filter, $from, $to, $tz, $objectType, $objectId, $criteria) {
+				// The histogram is the control a range is chosen with, so it must
+				// not be narrowed by the range that is currently selected
+				$this->assertSame('report', $criteria->term);
+				$this->assertSame('alice', $criteria->actor);
+				$this->assertNull($criteria->from);
+				$this->assertNull($criteria->to);
+				return ['counts' => [], 'partialBefore' => null];
+			});
+
+		$this->controller->getHistogram('all', 30, 'report', 'alice');
+	}
+
+	public function testGetHistogramRejectsAnUnknownFilter(): void {
+		$this->data->expects($this->once())
+			->method('validateFilter')
+			->willReturn('all');
+		$this->data->expects($this->never())
+			->method('getDailyCounts');
+
+		$result = $this->controller->getHistogram('not-a-filter');
+
+		$this->assertSame(Http::STATUS_NOT_FOUND, $result->getStatus());
+	}
+
+	public function testGetHistogramRejectsAnInvalidSearchTerm(): void {
+		$this->data->method('validateFilter')->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
+		$this->userSession->method('getUser')->willReturn($userMock);
+		$this->data->expects($this->never())
+			->method('getDailyCounts');
+
+		$result = $this->controller->getHistogram('all', 30, 'a');
+
+		$this->assertSame(Http::STATUS_BAD_REQUEST, $result->getStatus());
+	}
+
+	public function testGetHistogramRequiresALoggedInUser(): void {
+		$this->data->method('validateFilter')->willReturnArgument(0);
+		$this->userSession->method('getUser')->willReturn(null);
+		$this->data->expects($this->never())
+			->method('getDailyCounts');
+
+		$result = $this->controller->getHistogram('all');
+
+		$this->assertSame(Http::STATUS_FORBIDDEN, $result->getStatus());
+	}
+
+	public function testGetHistogramForwardsTheTruncationMarker(): void {
+		$this->data->method('validateFilter')->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
+		$this->userSession->method('getUser')->willReturn($userMock);
+		$this->data->method('getDailyCounts')
+			->willReturn(['counts' => ['2024-03-04' => 1], 'partialBefore' => '2024-03-02']);
+
+		$data = $this->controller->getHistogram('all')->getData();
+
+		// Surfaced rather than hidden, so the client can mark where the data
+		// stops being complete instead of drawing understated columns
+		$this->assertSame('2024-03-02', $data['partial_before']);
 	}
 
 	public static function dataParameters(): array {

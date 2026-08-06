@@ -26,6 +26,14 @@ use Psr\Log\LoggerInterface;
  * @brief Class for managing the data in the activities
  */
 class Data {
+	/**
+	 * Runaway guard for {@see self::getDailyCounts()}.
+	 *
+	 * A histogram window is already bounded to one user and a date range, so this
+	 * is not expected to bind; it exists so an extreme account cannot turn one
+	 * chart into an unbounded fetch. Reaching it is reported rather than hidden.
+	 */
+	public const MAX_HISTOGRAM_ROWS = 100000;
 
 	/** @var  */
 	protected ?IQueryBuilder $insertActivity = null;
@@ -287,6 +295,57 @@ class Data {
 		$query->select('*')
 			->from('activity');
 
+		$this->applyStreamConditions($query, $userSettings, $user, $filter, $activeFilter, $objectType, $objectId, $search);
+
+		/**
+		 * Order and specify the offset
+		 */
+		$sqlSort = ($sort === 'asc') ? 'ASC' : 'DESC';
+		$headers = $this->setOffsetFromSince($query, $user, $since, $sqlSort);
+		$query->orderBy('timestamp', $sqlSort)
+			->addOrderBy('activity_id', $sqlSort);
+
+		$query->setMaxResults($limit + 1);
+
+		$result = $query->executeQuery();
+		$hasMore = false;
+		while ($row = $result->fetch()) {
+			if ($limit === 0) {
+				$hasMore = true;
+				break;
+			}
+			$headers['X-Activity-Last-Given'] = (int)$row['activity_id'];
+			$groupHelper->addActivity($row);
+			$limit--;
+		}
+		$result->closeCursor();
+
+		if ($returnEvents) {
+			return $groupHelper->getEvents();
+		} else {
+			return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
+		}
+	}
+
+	/**
+	 * Restrict a query to the activities a user may see under a given filter.
+	 *
+	 * Shared by the stream itself and by {@see self::getDailyCounts()} so the two
+	 * can never disagree about what the stream contains: a histogram whose bars
+	 * count rows the feed below it does not list is worse than no histogram.
+	 *
+	 * @param IFilter|null $activeFilter The resolved filter, or null when unknown
+	 */
+	private function applyStreamConditions(
+		IQueryBuilder $query,
+		UserSettings $userSettings,
+		string $user,
+		string $filter,
+		?IFilter $activeFilter,
+		string $objectType,
+		int $objectId,
+		?SearchCriteria $search,
+	): void {
 		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)));
 
 		if ($activeFilter instanceof IFilter && !($activeFilter instanceof AllFilter)) {
@@ -326,35 +385,98 @@ class Data {
 		}
 
 		$this->applySearchCriteria($query, $search ?? SearchCriteria::empty());
+	}
 
-		/**
-		 * Order and specify the offset
-		 */
-		$sqlSort = ($sort === 'asc') ? 'ASC' : 'DESC';
-		$headers = $this->setOffsetFromSince($query, $user, $since, $sqlSort);
-		$query->orderBy('timestamp', $sqlSort)
-			->addOrderBy('activity_id', $sqlSort);
+	/**
+	 * Count the activities per calendar day within a window.
+	 *
+	 * Days are resolved in the given timezone rather than in UTC, because a
+	 * histogram is read against the reader's own calendar: an activity at 01:00
+	 * local time belongs to that day for them regardless of where the day
+	 * boundary falls in UTC. Passing a real DateTimeZone rather than a fixed
+	 * offset is what keeps this correct across a DST transition inside the
+	 * window.
+	 *
+	 * Bucketing happens in PHP on purpose. Grouping by day in SQL needs either
+	 * integer division or a modulo, and neither is expressible through
+	 * IQueryBuilder — a raw expression would have to be written differently for
+	 * MySQL, PostgreSQL, Oracle and SQLite, which this app supports all four of.
+	 * The query itself stays cheap: it selects one column, restricted to a single
+	 * `affecteduser` and a timestamp range, which is exactly the
+	 * `activity_user_time` index.
+	 *
+	 * `counts` is keyed by `Y-m-d` and omits days with no activity, so its size
+	 * tracks real activity rather than the length of the window. `partialBefore`
+	 * is the date from which counts are known to be incomplete, or null.
+	 *
+	 * @param int $from Start of the window as a Unix timestamp, inclusive
+	 * @param int $to End of the window as a Unix timestamp, inclusive
+	 *
+	 * @return array{counts: array<string, int>, partialBefore: ?string}
+	 */
+	public function getDailyCounts(
+		UserSettings $userSettings,
+		string $user,
+		string $filter,
+		int $from,
+		int $to,
+		\DateTimeZone $timezone,
+		string $objectType = '',
+		int $objectId = 0,
+		?SearchCriteria $search = null,
+	): array {
+		if ($user === '') {
+			throw new \OutOfBoundsException('Invalid user', 1);
+		}
 
-		$query->setMaxResults($limit + 1);
+		$activeFilter = null;
+		try {
+			$activeFilter = $this->activityManager->getFilterById($filter);
+		} catch (FilterNotFoundException) {
+			// Unknown filter => count everything, as the stream would show it
+		}
+
+		$query = $this->connection->getQueryBuilder();
+		$query->select('timestamp')
+			->from('activity');
+
+		$this->applyStreamConditions($query, $userSettings, $user, $filter, $activeFilter, $objectType, $objectId, $search);
+
+		$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($from, IQueryBuilder::PARAM_INT)));
+		$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($to, IQueryBuilder::PARAM_INT)));
+
+		// Newest first, so that hitting the guard below costs the oldest days
+		// rather than the recent ones a reader is actually looking at
+		$query->orderBy('timestamp', 'DESC');
+		$query->setMaxResults(self::MAX_HISTOGRAM_ROWS + 1);
 
 		$result = $query->executeQuery();
-		$hasMore = false;
+		$counts = [];
+		$rows = 0;
+		$oldestCounted = null;
 		while ($row = $result->fetch()) {
-			if ($limit === 0) {
-				$hasMore = true;
+			$rows++;
+			if ($rows > self::MAX_HISTOGRAM_ROWS) {
 				break;
 			}
-			$headers['X-Activity-Last-Given'] = (int)$row['activity_id'];
-			$groupHelper->addActivity($row);
-			$limit--;
+			$timestamp = (int)$row['timestamp'];
+			$day = (new \DateTimeImmutable('@' . $timestamp))->setTimezone($timezone)->format('Y-m-d');
+			$counts[$day] = ($counts[$day] ?? 0) + 1;
+			$oldestCounted = $day;
 		}
 		$result->closeCursor();
 
-		if ($returnEvents) {
-			return $groupHelper->getEvents();
-		} else {
-			return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
+		$partialBefore = null;
+		if ($rows > self::MAX_HISTOGRAM_ROWS && $oldestCounted !== null) {
+			// The day the guard cut off is only partly counted, so drop it and
+			// tell the client where the data stops being trustworthy instead of
+			// drawing a bar that understates the day
+			unset($counts[$oldestCounted]);
+			$partialBefore = $oldestCounted;
+			$this->logger->debug('Activity histogram truncated at ' . self::MAX_HISTOGRAM_ROWS . ' rows', ['app' => 'activity']);
 		}
+
+		return ['counts' => $counts, 'partialBefore' => $partialBefore];
 	}
 
 	/**
