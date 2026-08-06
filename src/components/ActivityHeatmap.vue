@@ -330,7 +330,7 @@ function select(from: string, to: string): void {
 }
 
 /**
- *
+ * Clear the current selection, emitting null for both bounds.
  */
 function clearSelection(): void {
 	emit('update:from', null)
