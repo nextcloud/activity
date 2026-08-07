@@ -315,7 +315,18 @@ class Data {
 					$query->expr()->eq('a.object_type', $query->createNamedParameter('files')),
 					$query->expr()->eq('f.storage', 'm.storage_id'),
 				));
-			$query->andWhere($query->expr()->eq('m.mount_point', $query->createNamedParameter('/'.$user.'/')));
+			// Filter out our own activity
+			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+			$query->andWhere(
+				$query->expr()->orX(
+					// Affected object is one of our files
+					$query->expr()->eq('m.mount_point', $query->createNamedParameter('/'.$user.'/')),
+					// There is no affected object, so the activity affects our user directly
+					$query->expr()->eq('object_type', $query->createNamedParameter('')),
+					// Show all sharing related events
+					$query->expr()->eq('app', $query->createNamedParameter('files_sharing')),
+				)
+			);
 		}
 
 		if ($activeFilter instanceof IFilter) {

@@ -61,6 +61,7 @@
 	<activity>
 		<filters>
 			<filter>OCA\Activity\Filter\AllFilter</filter>
+			<filter>OCA\Activity\Filter\FocusedFilter</filter>
 			<filter>OCA\Activity\Filter\SelfFilter</filter>
 			<filter>OCA\Activity\Filter\ByFilter</filter>
 		</filters>
