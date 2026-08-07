@@ -317,16 +317,22 @@ class Data {
 				));
 			// Filter out our own activity
 			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
-			$query->andWhere(
-				$query->expr()->orX(
-					// Affected object is one of our files
-					$query->expr()->eq('m.mount_point', $query->createNamedParameter('/'.$user.'/')),
-					// There is no affected object, so the activity affects our user directly
-					$query->expr()->eq('object_type', $query->createNamedParameter('')),
-					// Show all sharing related events
-					$query->expr()->eq('app', $query->createNamedParameter('files_sharing')),
-				)
-			);
+			$conditions = [
+				// Affected object is one of our files
+				$query->expr()->eq('m.mount_point', $query->createNamedParameter('/'.$user.'/')),
+				// There is no affected object, so the activity affects our user directly
+				$query->expr()->eq('object_type', $query->createNamedParameter('')),
+				// Show all sharing related events
+				$query->expr()->eq('app', $query->createNamedParameter('files_sharing')),
+			];
+			$activityFocusedSelectors = $this->activityManager->getActivityFocusedSelectors();
+			foreach ($activityFocusedSelectors as $activityFocusedSelector) {
+				array_push(
+					$conditions,
+					...$activityFocusedSelector->extendQuery($query, $user)
+				);
+			}
+			$query->andWhere($query->expr()->orX(...$conditions));
 		}
 
 		if ($activeFilter instanceof IFilter) {
