@@ -36,6 +36,8 @@ OC.L10N.register(
     "Activity notification configuration" : "Configuració de les notificacions d'activitat",
     "Today" : "Avui",
     "Yesterday" : "Ahir",
+    "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["Descarregat %n vegada (%s en els últims 30 dies)","Descarregat %n vegades (%sen els últims 30 dies)"],
+    "_Downloaded %n time_::_Downloaded %n times_" : ["Descarregat %n vegada","Descarregat %n vegades"],
     "You need to set up your email address before you can receive notification emails." : "Heu de definir la vostra adreça de correu electrònic per a poder rebre correus electrònics de notificació.",
     "Send activity emails" : "Envia correus electrònics sobre l'activitat",
     "As soon as possible" : "Tan aviat com sigui possible",
