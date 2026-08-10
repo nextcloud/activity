@@ -264,10 +264,11 @@ class Data {
 	 * @param int $objectId Allows to filter the activities to a given object. May only appear together with $objectType
 	 *
 	 * @param bool $returnEvents return only the events
+	 * @param SearchCriteria|null $search Additional search term and date range restrictions
 	 * @return array
 	 *
 	 */
-	public function get(GroupHelper $groupHelper, UserSettings $userSettings, string $user, int $since, int $limit, string $sort, string $filter, string $objectType = '', int $objectId = 0, bool $returnEvents = false): array {
+	public function get(GroupHelper $groupHelper, UserSettings $userSettings, string $user, int $since, int $limit, string $sort, string $filter, string $objectType = '', int $objectId = 0, bool $returnEvents = false, ?SearchCriteria $search = null): array {
 		// get current user
 		if ($user === '') {
 			throw new \OutOfBoundsException('Invalid user', 1);
@@ -324,6 +325,8 @@ class Data {
 			}
 		}
 
+		$this->applySearchCriteria($query, $search ?? SearchCriteria::empty());
+
 		/**
 		 * Order and specify the offset
 		 */
@@ -351,6 +354,30 @@ class Data {
 			return $groupHelper->getEvents();
 		} else {
 			return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
+		}
+	}
+
+	/**
+	 * Narrow a stream query down to a date range, a file path search term
+	 * and/or the account that authored the activity.
+	 */
+	private function applySearchCriteria(IQueryBuilder $query, SearchCriteria $criteria): void {
+		if ($criteria->from !== null) {
+			$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($criteria->from, IQueryBuilder::PARAM_INT)));
+		}
+
+		if ($criteria->to !== null) {
+			$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($criteria->to, IQueryBuilder::PARAM_INT)));
+		}
+
+		if ($criteria->term !== null) {
+			// escapeLikeParameter() keeps % and _ in the user's input literal
+			$pattern = '%' . $this->connection->escapeLikeParameter($criteria->term) . '%';
+			$query->andWhere($query->expr()->iLike('file', $query->createNamedParameter($pattern)));
+		}
+
+		if ($criteria->actor !== null) {
+			$query->andWhere($query->expr()->eq('user', $query->createNamedParameter($criteria->actor)));
 		}
 	}
 
