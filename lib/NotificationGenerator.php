@@ -31,6 +31,9 @@ class NotificationGenerator implements INotifier {
 	) {
 	}
 
+	/**
+	 * @psalm-pure
+	 */
 	private function sanitizeUrl(string $url): string {
 		if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://')) {
 			return $url;
