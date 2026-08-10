@@ -360,24 +360,6 @@ class Data {
 	/**
 	 * Narrow a stream query down to a date range, a file path search term
 	 * and/or the account that authored the activity.
-	 *
-	 * Every restriction is added with andWhere() so they compose with the
-	 * filter, object and pagination conditions the caller has already applied.
-	 *
-	 * On scalability: the date range is served by the existing
-	 * `activity_user_time` (affecteduser, timestamp) index, so it is a plain
-	 * index range scan and actually makes the query cheaper the narrower it
-	 * gets. The search term is a substring match and therefore cannot use an
-	 * index; it stays bounded because every stream query is already anchored to
-	 * a single `affecteduser`, and combining it with a date range narrows the
-	 * scan further. That is also why very short terms are rejected upfront in
-	 * {@see SearchCriteria::create()}.
-	 *
-	 * The actor restriction is served by `activity_filter_by`
-	 * (affecteduser, user, timestamp), so it stays index-ordered too. It
-	 * composes with the `self` and `by` filters, which restrict the same
-	 * column: `by` combined with an actor yields everyone else's activity
-	 * narrowed to that one account.
 	 */
 	private function applySearchCriteria(IQueryBuilder $query, SearchCriteria $criteria): void {
 		if ($criteria->from !== null) {

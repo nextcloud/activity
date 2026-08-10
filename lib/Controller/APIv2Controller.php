@@ -19,6 +19,7 @@ use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
 use OCP\Files\FileInfo;
@@ -94,36 +95,33 @@ class APIv2Controller extends OCSController {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 *
 	 * @param string $search Only return activities whose file path contains this substring
 	 * @param int $from Only return activities at or after this Unix timestamp
 	 * @param int $to Only return activities at or before this Unix timestamp
 	 * @param string $actor Only return activities authored by this account
 	 */
+	#[NoAdminRequired]
 	public function getDefault(int $since = 0, int $limit = 50, bool $previews = false, string $object_type = '', int $object_id = 0, string $sort = 'desc', string $search = '', int $from = 0, int $to = 0, string $actor = ''): DataResponse {
 		return $this->get('all', $since, $limit, $previews, $object_type, $object_id, $sort, $search, $from, $to, $actor);
 	}
 
 	/**
-	 * @NoAdminRequired
-	 *
 	 * @param string $search Only return activities whose file path contains this substring
 	 * @param int $from Only return activities at or after this Unix timestamp
 	 * @param int $to Only return activities at or before this Unix timestamp
 	 * @param string $actor Only return activities authored by this account
 	 */
+	#[NoAdminRequired]
 	public function getFilter(string $filter, int $since = 0, int $limit = 50, bool $previews = false, string $object_type = '', int $object_id = 0, string $sort = 'desc', string $search = '', int $from = 0, int $to = 0, string $actor = ''): DataResponse {
 		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort, $search, $from, $to, $actor);
 	}
 
 	/**
-	 * @NoAdminRequired
-	 *
 	 * @param string $object_type Object type to count downloads for (must be 'files')
 	 * @param int $object_id File ID
 	 * @return DataResponse
 	 */
+	#[NoAdminRequired]
 	public function getDownloadCount(string $object_type = 'files', int $object_id = 0): DataResponse {
 		$user = $this->userSession->getUser();
 		if (!$user instanceof IUser) {
@@ -141,10 +139,9 @@ class APIv2Controller extends OCSController {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 *
-	 * @return DataResponse
+	 * @return DataResponse<Http::STATUS_OK, list<array{id: string, name: string, icon: string, priority: int}>, array{}>
 	 */
+	#[NoAdminRequired]
 	public function listFilters(): DataResponse {
 		$filters = $this->activityManager->getFilters();
 
