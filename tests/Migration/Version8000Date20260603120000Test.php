@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Tests\Migration;
 
-use Doctrine\DBAL\Schema\Table;
 use OCA\Activity\Migration\Version8000Date20260603120000;
 use OCA\Activity\Tests\TestCase;
 use OCP\DB\ISchemaWrapper;
