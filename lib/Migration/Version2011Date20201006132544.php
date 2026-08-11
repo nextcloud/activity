@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace OCA\Activity\Migration;
 
 use Closure;
-use Doctrine\DBAL\Types\Type;
 use OCP\DB\ISchemaWrapper;
+use OCP\DB\Types;
 use OCP\IDBConnection;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
@@ -37,14 +37,14 @@ class Version2011Date20201006132544 extends SimpleMigrationStep {
 		$table = $schema->getTable('activity_mq');
 
 		$column = $table->getColumn('amq_appid');
-		$column->setType(Type::getType('string'));
+		$column->setType(Types::STRING);
 		$column->setNotnull(true);
 		$column->setLength(32);
 
 		$column = $table->getColumn('amq_subjectparams');
 		// Can't switch from Long to clob on Oracle, so we need an intermediate column
-		if ($column->getType() !== Type::getType('text')) {
-			$table->addColumn('amq_subjectparams2', 'text', [
+		if ($column->getType()->getName() !== Types::TEXT) {
+			$table->addColumn('amq_subjectparams2', Types::TEXT, [
 				'notnull' => false,
 			]);
 		}

@@ -7,8 +7,8 @@
 
 namespace OCA\Activity\Migration;
 
-use Doctrine\DBAL\Types\Types;
 use OCP\DB\ISchemaWrapper;
+use OCP\DB\Types;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
 
@@ -32,55 +32,55 @@ class Version2006Date20170808154933 extends SimpleMigrationStep {
 				'notnull' => true,
 				'length' => 20,
 			]);
-			$table->addColumn('timestamp', 'integer', [
+			$table->addColumn('timestamp', Types::INTEGER, [
 				'notnull' => true,
 				'length' => 4,
 				'default' => 0,
 			]);
-			$table->addColumn('priority', 'integer', [
+			$table->addColumn('priority', Types::INTEGER, [
 				'notnull' => true,
 				'length' => 4,
 				'default' => 0,
 			]);
-			$table->addColumn('type', 'string', [
+			$table->addColumn('type', Types::STRING, [
 				'notnull' => false,
 				'length' => 255,
 			]);
-			$table->addColumn('user', 'string', [
+			$table->addColumn('user', Types::STRING, [
 				'notnull' => false,
 				'length' => 64,
 			]);
-			$table->addColumn('affecteduser', 'string', [
+			$table->addColumn('affecteduser', Types::STRING, [
 				'notnull' => true,
 				'length' => 64,
 			]);
-			$table->addColumn('app', 'string', [
+			$table->addColumn('app', Types::STRING, [
 				'notnull' => true,
 				'length' => 32,
 			]);
-			$table->addColumn('subject', 'string', [
+			$table->addColumn('subject', Types::STRING, [
 				'notnull' => true,
 				'length' => 255,
 			]);
-			$table->addColumn('subjectparams', 'text', [
+			$table->addColumn('subjectparams', Types::TEXT, [
 				'notnull' => true,
 			]);
-			$table->addColumn('message', 'string', [
+			$table->addColumn('message', Types::STRING, [
 				'notnull' => false,
 				'length' => 255,
 			]);
-			$table->addColumn('messageparams', 'text', [
+			$table->addColumn('messageparams', Types::TEXT, [
 				'notnull' => false,
 			]);
-			$table->addColumn('file', 'string', [
-				'notnull' => false,
-				'length' => 4000,
-			]);
-			$table->addColumn('link', 'string', [
+			$table->addColumn('file', Types::STRING, [
 				'notnull' => false,
 				'length' => 4000,
 			]);
-			$table->addColumn('object_type', 'string', [
+			$table->addColumn('link', Types::STRING, [
+				'notnull' => false,
+				'length' => 4000,
+			]);
+			$table->addColumn('object_type', Types::STRING, [
 				'notnull' => false,
 				'length' => 255,
 			]);
@@ -105,33 +105,33 @@ class Version2006Date20170808154933 extends SimpleMigrationStep {
 				'notnull' => true,
 				'length' => 20,
 			]);
-			$table->addColumn('amq_timestamp', 'integer', [
+			$table->addColumn('amq_timestamp', Types::INTEGER, [
 				'notnull' => true,
 				'length' => 4,
 				'default' => 0,
 			]);
-			$table->addColumn('amq_latest_send', 'integer', [
+			$table->addColumn('amq_latest_send', Types::INTEGER, [
 				'notnull' => true,
 				'length' => 4,
 				'default' => 0,
 			]);
-			$table->addColumn('amq_type', 'string', [
+			$table->addColumn('amq_type', Types::STRING, [
 				'notnull' => true,
 				'length' => 255,
 			]);
-			$table->addColumn('amq_affecteduser', 'string', [
+			$table->addColumn('amq_affecteduser', Types::STRING, [
 				'notnull' => true,
 				'length' => 64,
 			]);
-			$table->addColumn('amq_appid', 'string', [
+			$table->addColumn('amq_appid', Types::STRING, [
 				'notnull' => true,
 				'length' => 255,
 			]);
-			$table->addColumn('amq_subject', 'string', [
+			$table->addColumn('amq_subject', Types::STRING, [
 				'notnull' => true,
 				'length' => 255,
 			]);
-			$table->addColumn('amq_subjectparams', 'text', [
+			$table->addColumn('amq_subjectparams', Types::TEXT, [
 				'notnull' => true,
 			]);
 			$table->setPrimaryKey(['mail_id']);

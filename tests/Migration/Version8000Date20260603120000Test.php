@@ -12,6 +12,7 @@ use Doctrine\DBAL\Schema\Table;
 use OCA\Activity\Migration\Version8000Date20260603120000;
 use OCA\Activity\Tests\TestCase;
 use OCP\DB\ISchemaWrapper;
+use OCP\DB\Schema\ITable;
 use OCP\Migration\IOutput;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -34,7 +35,7 @@ class Version8000Date20260603120000Test extends TestCase {
 	 * migration adds the covering composite index and drops the now-redundant one.
 	 */
 	public function testAddsCompositeIndexAndDropsRedundantOne(): void {
-		$table = $this->createMock(Table::class);
+		$table = $this->createMock(ITable::class);
 		$table->method('hasIndex')
 			->willReturnMap([
 				['amp_user_send', false],
@@ -58,7 +59,7 @@ class Version8000Date20260603120000Test extends TestCase {
 	 * must be a no-op so re-runs / fresh installs are not touched.
 	 */
 	public function testIsIdempotentWhenAlreadyMigrated(): void {
-		$table = $this->createMock(Table::class);
+		$table = $this->createMock(ITable::class);
 		$table->method('hasIndex')
 			->willReturnMap([
 				['amp_user_send', true],
@@ -91,7 +92,7 @@ class Version8000Date20260603120000Test extends TestCase {
 		$this->assertNull($result);
 	}
 
-	protected function getSchemaMock(Table&MockObject $table): ISchemaWrapper&MockObject {
+	protected function getSchemaMock(ITable&MockObject $table): ISchemaWrapper&MockObject {
 		$schema = $this->createMock(ISchemaWrapper::class);
 		$schema->method('hasTable')
 			->with('activity_mq')
