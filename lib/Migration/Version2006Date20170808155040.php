@@ -17,7 +17,7 @@ class Version2006Date20170808155040 extends SimpleMigrationStep {
 	 * @param \Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
 	 * @param array $options
 	 * @return null|ISchemaWrapper
-	 * @throws \Doctrine\DBAL\Schema\SchemaException
+	 * @throws \OCP\DB\Schema\SchemaException
 	 * @since 13.0.0
 	 */
 	#[\Override]

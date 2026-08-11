@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace OCA\Activity\Migration;
 
 use Closure;
-use Doctrine\DBAL\Types\Type;
 use OCP\DB\ISchemaWrapper;
+use OCP\DB\Types;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
 
@@ -28,7 +28,7 @@ class Version2011Date20201006132545 extends SimpleMigrationStep {
 
 		$table = $schema->getTable('activity_mq');
 		$column = $table->getColumn('amq_subjectparams');
-		if ($column->getType() !== Type::getType('text')) {
+		if ($column->getType()->getName() !== Types::TEXT) {
 			$table->dropColumn('amq_subjectparams');
 			return $schema;
 		}

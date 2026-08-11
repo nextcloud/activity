@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OCA\Activity;
 
-use Doctrine\DBAL\Platforms\MySQLPlatform;
 use OCA\Activity\Filter\AllFilter;
 use OCP\Activity\Exceptions\FilterNotFoundException;
 use OCP\Activity\IEvent;
@@ -526,8 +525,7 @@ class Data {
 	 * @psalm-param list<array{0: string, 1: mixed, 2?: string}> $conditions
 	 */
 	public function deleteActivities(array $conditions): void {
-		$platform = $this->connection->getDatabasePlatform();
-		if ($platform instanceof MySQLPlatform) {
+		if ($this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_MYSQL) {
 			$this->logger->debug('Choosing chunked activity delete for MySQL/MariaDB', ['app' => 'activity']);
 			$this->deleteActivitiesForMySQL($conditions);
 			return;
