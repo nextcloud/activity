@@ -4,8 +4,8 @@ OC.L10N.register(
     "Hello %s" : "Salam%s",
     "Activity" : "işjeňlik we hereket",
     "Notifications" : "Duýduryşlar",
-    "Send email" : "E-poçta iber",
     "Today" : "Şu gün",
+    "Send email" : "E-poçta iber",
     "Yesterday" : "Düýn",
     "Home" : "Baş sahypa",
     "No activity yet" : "Entek işjeňlik ýok"
