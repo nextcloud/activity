@@ -24,6 +24,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
 use OCP\Files\FileInfo;
 use OCP\Files\IMimeTypeDetector;
+use OCP\IDateTimeZone;
 use OCP\IPreview;
 use OCP\IRequest;
 use OCP\IURLGenerator;
@@ -42,6 +43,19 @@ class APIv2Controller extends OCSController {
 	protected bool $loadPreviews = false;
 	protected SearchCriteria $searchCriteria;
 
+	/**
+	 * Default histogram window: 52 weeks. At the grid's 16px column pitch that
+	 * is ~848px, which fills the stream's readable column without scrolling on a
+	 * desktop, and a year is the span that makes seasonal shape visible.
+	 */
+	public const HISTOGRAM_DEFAULT_DAYS = 364;
+
+	/**
+	 * A year and a leap day. Beyond this the columns stop being distinguishable
+	 * and the query stops being cheap.
+	 */
+	public const HISTOGRAM_MAX_DAYS = 366;
+
 	public function __construct(
 		$appName,
 		IRequest $request,
@@ -55,6 +69,7 @@ class APIv2Controller extends OCSController {
 		protected IMimeTypeDetector $mimeTypeDetector,
 		protected ViewInfoCache $infoCache,
 		protected INotificationManager $notificationManager,
+		protected IDateTimeZone $dateTimeZone,
 	) {
 		parent::__construct($appName, $request);
 		$this->activityManager = $activityManager;
@@ -136,6 +151,78 @@ class APIv2Controller extends OCSController {
 		$last30d = $this->data->countDownloads($user->getUID(), $object_id, time() - 30 * 24 * 3600);
 
 		return new DataResponse(['total' => $total, 'last30d' => $last30d]);
+	}
+
+	/**
+	 * Activity counts per calendar day, for the stream's histogram.
+	 *
+	 * @param string $filter The stream filter to count within
+	 * @param int $days Length of the window, ending today, in the viewer's timezone
+	 * @param string $search Only count activities whose file path contains this
+	 * @param string $actor Only count activities authored by this account
+	 */
+	#[NoAdminRequired]
+	public function getHistogram(
+		string $filter,
+		int $days = self::HISTOGRAM_DEFAULT_DAYS,
+		string $search = '',
+		string $actor = '',
+		string $object_type = '',
+		int $object_id = 0,
+	): DataResponse {
+		if ($filter !== $this->data->validateFilter($filter)) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		}
+
+		$user = $this->userSession->getUser();
+		if (!$user instanceof IUser) {
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
+		}
+
+		$days = max(1, min(self::HISTOGRAM_MAX_DAYS, $days));
+
+		try {
+			$criteria = SearchCriteria::create($search, 0, 0, $actor);
+		} catch (InvalidSearchCriteriaException $e) {
+			return new DataResponse(['message' => $e->getMessage()], Http::STATUS_BAD_REQUEST);
+		}
+		if (($object_type !== '' && $object_id === 0) || ($object_type === '' && $object_id !== 0)) {
+			// Only allowed together (mirrors validateParameters())
+			$object_type = '';
+			$object_id = 0;
+		}
+
+		// Window boundaries are resolved in the viewer's timezone so the last
+		// column is their today, not UTC's
+		$timezone = $this->dateTimeZone->getTimeZone();
+		$today = new \DateTimeImmutable('now', $timezone);
+		$last = $today->setTime(23, 59, 59);
+		$first = $today->modify('-' . ($days - 1) . ' days')->setTime(0, 0, 0);
+
+		$histogram = $this->data->getDailyCounts(
+			$this->settings,
+			$user->getUID(),
+			$filter,
+			$first->getTimestamp(),
+			$last->getTimestamp(),
+			$timezone,
+			$object_type,
+			$object_id,
+			$criteria,
+		);
+
+		$counts = $histogram['counts'];
+
+		return new DataResponse([
+			'from' => $first->format('Y-m-d'),
+			'to' => $last->format('Y-m-d'),
+			'counts' => $counts,
+			// Saves the client a pass over the data to scale the colour ramp,
+			// and gives it a headline figure for the window
+			'max' => $counts === [] ? 0 : max($counts),
+			'total' => array_sum($counts),
+			'partial_before' => $histogram['partialBefore'],
+		]);
 	}
 
 	/**

@@ -20,6 +20,18 @@
 						role="presentation">
 				</template>
 			</NcAppNavigationItem>
+			<!--
+				Last, and after the stream filters: this is an overview of the
+				activity rather than another way of filtering it
+			-->
+			<NcAppNavigationItem
+				data-navigation="heatmap"
+				:to="{ name: 'heatmap' }"
+				:name="t('activity', 'Heatmap')">
+				<template #icon>
+					<IconChartBoxOutline :size="20" />
+				</template>
+			</NcAppNavigationItem>
 		</template>
 		<template #footer>
 			<NcAppNavigationSettings :name="t('activity', 'Activity settings')">
@@ -63,6 +75,7 @@ import NcAppNavigationSettings from '@nextcloud/vue/components/NcAppNavigationSe
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
 import NcInputField from '@nextcloud/vue/components/NcInputField'
+import IconChartBoxOutline from 'vue-material-design-icons/ChartBoxOutline.vue'
 import IconContentCopy from 'vue-material-design-icons/ContentCopy.vue'
 import logger from '../utils/logger.ts'
 
