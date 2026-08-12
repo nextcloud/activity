@@ -43,6 +43,8 @@ OC.L10N.register(
     "Send push notification" : "푸시 알림 발송",
     "Activity notification configuration" : "활동 알림 설정",
     "Yesterday" : "어제",
+    "Less" : "덜 중요함",
+    "More" : "더 보기",
     "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["%n회 다운로드 됨 (지난 30일동안 %s회)"],
     "_Downloaded %n time_::_Downloaded %n times_" : ["%n회 다운로드 됨"],
     "You need to set up your email address before you can receive notification emails." : "알림 이메일을 받으려면 이메일 주소를 설정해야 합니다.",

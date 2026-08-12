@@ -40,6 +40,8 @@ OC.L10N.register(
     "Send push notification" : "Gửi thông báo đẩy",
     "Activity notification configuration" : "Cấu hình cho thông báo về hoạt động",
     "Yesterday" : "Hôm qua",
+    "Less" : "ít",
+    "More" : "Thêm",
     "You need to set up your email address before you can receive notification emails." : "Bạn cần phải thiết lập địa chỉ email trước khi nhận được email thông báo.",
     "Send activity emails" : "Gửi các thư báo về tình trạng hoạt động",
     "As soon as possible" : "Ngay khi có thể",

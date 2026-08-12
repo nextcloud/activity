@@ -27,6 +27,8 @@ OC.L10N.register(
     "Send email" : "Dërgo email",
     "Activity notification configuration" : "Konfigurim i njoftimeve të aktivitetit",
     "Yesterday" : "Dje",
+    "Less" : "Më pak",
+    "More" : "Më tepër",
     "You need to set up your email address before you can receive notification emails." : "Kërkohet të caktoni adresën tuaj email, përpara se të mund të merrni email-e njoftimesh.",
     "Send activity emails" : "Dërgo emaile rreth aktivitetit",
     "As soon as possible" : "Sa më shpejt të jetë e mundur",

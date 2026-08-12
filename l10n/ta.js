@@ -12,6 +12,7 @@ OC.L10N.register(
     "Hello %s," : "வணக்கம் %s,",
     "Today" : "இன்று",
     "Yesterday" : "நேற்று",
+    "Less" : "குறைவான",
     "Open {filename}" : "திற {கோப்பின் பெயர்}",
     "Home" : "அகம்"
 },

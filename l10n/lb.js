@@ -17,6 +17,7 @@ OC.L10N.register(
     "Notifications" : "Notifikatiounen",
     "Today" : "Haut",
     "Yesterday" : "Gëschter",
+    "Less" : "Manner",
     "You need to set up your email address before you can receive notification emails." : "Du muss deng E-Mail-Adress konfiguréieren ier s de Notifikatiouns-Maile kanns emfänken.",
     "Hourly" : "All Stonn",
     "Daily" : "All Dag",
