@@ -38,6 +38,8 @@ OC.L10N.register(
     "Send push notification" : "Trimite notificare push",
     "Activity notification configuration" : "Configurația notificărilor de activitate",
     "Yesterday" : "Ieri",
+    "Less" : "Mai puțin",
+    "More" : "Mai mult",
     "You need to set up your email address before you can receive notification emails." : "Trebuie să-ți configurezi adresa de email înainte de a putea primi emailurile de notificare.",
     "Send activity emails" : "Trimitere email-uri cu activitate",
     "As soon as possible" : "Cât mai curând posibil",

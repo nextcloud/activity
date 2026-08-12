@@ -39,6 +39,8 @@ OC.L10N.register(
     "Send push notification" : "ส่งแจ้งเตือนแบบเด้ง",
     "Activity notification configuration" : "กำหนดค่าการแจ้งเตือนกิจกรรม",
     "Yesterday" : "เมื่อวานนี้",
+    "Less" : "ย่อ",
+    "More" : "เพิ่มเติม",
     "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["ดาวน์โหลด %n ครั้ง (%s ครั้งใน 30 วันที่ผ่านมา)"],
     "_Downloaded %n time_::_Downloaded %n times_" : ["ดาวน์โหลด %n ครั้ง"],
     "You need to set up your email address before you can receive notification emails." : "คุณจะได้รับอีเมลแจ้งเตือนหลังจากที่คุณตั้งค่าที่อยู่อีเมลของคุณ",

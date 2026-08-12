@@ -18,6 +18,7 @@ OC.L10N.register(
     "Today" : "Hodie",
     "Send email" : "Inviar message de e-posta",
     "Yesterday" : "Heri",
+    "Less" : "Minus",
     "You need to set up your email address before you can receive notification emails." : "Tu necessita configurar tu adresse de e-posta ante que tu pote reciper messages de e-posta de notification.",
     "Hourly" : "Cata hora",
     "Daily" : "Cata die",

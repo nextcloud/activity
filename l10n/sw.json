@@ -41,6 +41,8 @@
     "Send push notification" : "Tuma arifa kwa kushinikiza",
     "Activity notification configuration" : "Usanidi wa arifa ya shughuli",
     "Yesterday" : "Jana",
+    "Less" : "Chini",
+    "More" : "Zaidi",
     "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["Downloaded %n time (%s in the last 30 days)","Imepakua %n mara (%s ndani ya siku 30 zilizopita)"],
     "_Downloaded %n time_::_Downloaded %n times_" : ["Downloaded %n time","Imepakua %n mara"],
     "You need to set up your email address before you can receive notification emails." : "Unahitaji kusanidi barua pepe yako kabla ya kupokea barua pepe za arifa.",
