@@ -20,6 +20,8 @@ OC.L10N.register(
     "Today" : "დღეს",
     "Send email" : "ელ-წერილის გაგზავნა",
     "Yesterday" : "გუშინ",
+    "Less" : "უფრო ნაკლები",
+    "More" : "უფრო მეტი",
     "You need to set up your email address before you can receive notification emails." : "ელ-ფოსტაზე შეტყობინების მიღებამდე, საჭიროა მიუთითოთ თქვენი მისამართი.",
     "Send activity emails" : "აქტივობის ელ-წერილების გაგზავნა.",
     "As soon as possible" : "რაც შეიძლება მალე",

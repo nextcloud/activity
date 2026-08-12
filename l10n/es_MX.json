@@ -39,6 +39,8 @@
     "Send push notification" : "Enviar notificación push",
     "Activity notification configuration" : "Configuración de las notificaciones de actividad",
     "Yesterday" : "Ayer",
+    "Less" : "Menos",
+    "More" : "Más",
     "You need to set up your email address before you can receive notification emails." : "Necesitas configurar tu dirección de correo electrónico antes de que puedas recibir correos de notificación",
     "Send activity emails" : "Enviar correos de actividad",
     "As soon as possible" : "Lo antes posible",

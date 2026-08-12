@@ -42,6 +42,8 @@ OC.L10N.register(
     "Send push notification" : "Kirim notifikasi push",
     "Activity notification configuration" : "Konfigurasi notifikasi aktivitas",
     "Yesterday" : "Kemarin",
+    "Less" : "Lebih sedikit",
+    "More" : "Lebih banyak",
     "You need to set up your email address before you can receive notification emails." : "Anda perlu mengatur alamat email sebelum dapat menerima email notifikasi.",
     "Send activity emails" : "Kirim email aktivitas",
     "As soon as possible" : "Secepatnya",

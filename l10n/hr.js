@@ -43,6 +43,8 @@ OC.L10N.register(
     "Send push notification" : "Pošalji \"push\" notifikaciju",
     "Activity notification configuration" : "Konfiguracija obavijesti o aktivnostima",
     "Yesterday" : "Jučer",
+    "Less" : "Manje",
+    "More" : "Više",
     "You need to set up your email address before you can receive notification emails." : "Morate navesti svoju adresu e-pošte kako biste primali poruke s obavijestima.",
     "Send activity emails" : "Šalji e-poštu s pregledom aktivnosti",
     "As soon as possible" : "Čim prije moguće",
