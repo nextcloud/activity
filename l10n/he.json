@@ -35,6 +35,8 @@
     "Send push notification" : "שליחת הודעת פוש",
     "Activity notification configuration" : "הגדרת התראות פעילות",
     "Yesterday" : "אתמול",
+    "Less" : "פחות:",
+    "More" : "יותר",
     "You need to set up your email address before you can receive notification emails." : "יש להגדיר כתובת דואר אלקטרוני לפני שניתן יהיה לקבל דיווחים.",
     "Send activity emails" : "שליחת הודעות פעילות בדוא״ל",
     "As soon as possible" : "מהר ככל האפשר",

@@ -27,6 +27,8 @@ OC.L10N.register(
     "To" : "A",
     "Send email" : "Imbia messàgiu de posta eletrònica",
     "Yesterday" : "Eris",
+    "Less" : "De mancu",
+    "More" : "Prus",
     "You need to set up your email address before you can receive notification emails." : "Depes cunfigurare s'indiritzu de posta eletrònica tuo pro retzire is messàgios de notìfica.",
     "Send activity emails" : "Imbia messàgios de atividade",
     "As soon as possible" : "Apena possìbile",

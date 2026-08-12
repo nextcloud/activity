@@ -41,6 +41,8 @@
     "Send push notification" : "Мэдэгдэл илгээх",
     "Activity notification configuration" : "Үйлдлийн мэдэгдлийн тохиргоо",
     "Yesterday" : "Өчигдөр",
+    "Less" : "Бага",
+    "More" : "Дэлгэрэнгүй",
     "You need to set up your email address before you can receive notification emails." : "Та Имэйлээр мэдэгдэл хүлээн авахын тулд имэйлээ тохируулна уу?",
     "Send activity emails" : "Үйлдлүүдийг мэйлээр илгээх.",
     "As soon as possible" : "Яаралтай",

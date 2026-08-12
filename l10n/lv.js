@@ -29,6 +29,8 @@ OC.L10N.register(
     "Send email" : "Nosūtīt e-pasta ziņojumu",
     "Activity notification configuration" : "Darbību paziņojumu konfigurācija",
     "Yesterday" : "Vakar",
+    "Less" : "Mazāk",
+    "More" : "Vairāk",
     "You need to set up your email address before you can receive notification emails." : "Ir nepieciešams iestatīt savu e-pasta adresi, lai varētu saņemt paziņojumus e-pastā.",
     "Send activity emails" : "Sūtīt darbību e-pasta ziņojumus",
     "As soon as possible" : "Pēc iespējas atrāk",

@@ -41,6 +41,7 @@ OC.L10N.register(
     "Send push notification" : "Push-bildirishnoma yuborish",
     "Activity notification configuration" : "Faolliklar bildirishnomalari konfiguratsiyasi",
     "Yesterday" : "Kecha",
+    "More" : "Ko'proq",
     "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["%n marta yuklab olindi (oxirgi 30 kun ichida %s marta)"],
     "_Downloaded %n time_::_Downloaded %n times_" : ["%n marta yuklab olindi"],
     "You need to set up your email address before you can receive notification emails." : "E-pochta xabarnomalarini olishdan oldin elektron pochta manzilingizni sozlashingiz kerak.",

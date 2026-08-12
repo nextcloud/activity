@@ -7,6 +7,7 @@ OC.L10N.register(
     "Today" : "Şu gün",
     "Send email" : "E-poçta iber",
     "Yesterday" : "Düýn",
+    "More" : "Has köp",
     "Home" : "Baş sahypa",
     "No activity yet" : "Entek işjeňlik ýok"
 },

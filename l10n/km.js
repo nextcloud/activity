@@ -24,6 +24,7 @@ OC.L10N.register(
     "Today" : "ថ្ងៃ​នេះ",
     "Send email" : "ផ្ញើ​អ៊ីមែល",
     "Yesterday" : "ម្សិលមិញ",
+    "Less" : "តិច",
     "You need to set up your email address before you can receive notification emails." : "អ្នក​ចាំបាច់​ត្រូវតែដំឡើង​អាសយដ្ឋាន​អ៊ីមែលរបស់អ្នកមុនពេល​ដែលអ្នកអាចទទួលបានការជូន​ដំណឹង​ទៅកាន់​អ៊ីមែល ។",
     "As soon as possible" : "កាន់តែឆាប់តាមដែលអាចធ្វើបាន",
     "Hourly" : "រាល់​ម៉ោង",

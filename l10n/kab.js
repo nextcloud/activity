@@ -31,6 +31,7 @@ OC.L10N.register(
     "To" : "Ɣer",
     "Send email" : "Azen imayl",
     "Yesterday" : "Iḍelli",
+    "More" : "Ugar",
     "You need to set up your email address before you can receive notification emails." : "Ilaq ad tesɣewreḍ tansa imayl iwakken ad tizmireḍ ad teṭṭfeḍ talɣut s imayl.",
     "Send activity emails" : "Azen imaylen n warmud",
     "Hourly" : "S usrag",

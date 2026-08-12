@@ -42,6 +42,8 @@ OC.L10N.register(
     "Send push notification" : "Senda sjálfvirka tilkynningu",
     "Activity notification configuration" : "Uppsetning á tilkynningum um athafnir",
     "Yesterday" : "Í gær",
+    "Less" : "Minna",
+    "More" : "Meira",
     "You need to set up your email address before you can receive notification emails." : "Þú verður að gefa upp netfangið þitt svo að þú farir að fá tilkynningapósta.",
     "Send activity emails" : "Senda tölvupósta um athafnir",
     "As soon as possible" : "Um leið og mögulegt er",
