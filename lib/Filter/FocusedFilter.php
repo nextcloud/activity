@@ -37,7 +37,7 @@ class FocusedFilter implements IFilter {
 
 	#[\Override]
 	public function getIcon(): string {
-		return $this->url->getAbsoluteURL($this->url->imagePath('activity', 'activity-dark.svg'));
+		return $this->url->getAbsoluteURL($this->url->imagePath('activity', 'focused-filter.svg'));
 	}
 
 	/**

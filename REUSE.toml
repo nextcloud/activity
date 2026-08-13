@@ -18,7 +18,7 @@ SPDX-FileCopyrightText = "2016 Nextcloud GmbH and Nextcloud contributors"
 SPDX-License-Identifier = "AGPL-3.0-or-later"
 
 [[annotations]]
-path = ["img/activity-dark.svg", "img/activity.svg", "img/add-color.svg", "img/change.svg", "img/delete-color.svg", "img/notifications-dark.svg"]
+path = ["img/activity-dark.svg", "img/activity.svg", "img/add-color.svg", "img/change.svg", "img/delete-color.svg", "img/notifications-dark.svg", "img/focused-filter.svg"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2018-2024 Google LLC"
 SPDX-License-Identifier = "Apache-2.0"
