@@ -20,6 +20,7 @@ OC.L10N.register(
     "Today" : "Hiziv",
     "Send email" : "Kas postel",
     "Yesterday" : "Dec'h",
+    "More" : "Muioc'h",
     "You need to set up your email address before you can receive notification emails." : "Ret eo dec'h merkañ ho chomlec'h postel a-raok gallout resev kemennadennoù dre bostel.",
     "Send activity emails" : "Kas posteloù obererezh",
     "As soon as possible" : "An abretañ ar gwellañ",

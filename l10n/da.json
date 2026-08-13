@@ -41,6 +41,8 @@
     "Send push notification" : "Send push-besked",
     "Activity notification configuration" : "Aktivitetsmeddelelseskonfiguration",
     "Yesterday" : "I går",
+    "Less" : "Mindre",
+    "More" : "Mere",
     "You need to set up your email address before you can receive notification emails." : "Du skal angive din e-mailadresse før du kan modtage notifikationer via e-mail.",
     "Send activity emails" : "Send aktivitets email",
     "As soon as possible" : "Så hurtigt som muligt",

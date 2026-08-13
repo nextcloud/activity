@@ -25,6 +25,7 @@ OC.L10N.register(
     "Send email" : "ইমেইল পাঠান ",
     "Send push notification" : "পুশ নোটিফিকেশন পাঠান ",
     "Yesterday" : "গতকাল",
+    "Less" : "কম",
     "You need to set up your email address before you can receive notification emails." : "ইমেইল বারতা পাওয়ার আগে আপনাকে নিজের ইমেইল ঠিকানা নিরধারন করতে হবে৷",
     "Send activity emails" : "ক্রিয়াকলাপ ইমেল প্রেরণ করুন",
     "As soon as possible" : "যত দ্রুত সম্ভব ",
