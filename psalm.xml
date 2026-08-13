@@ -21,6 +21,8 @@
 		<directory name="vendor-bin/psalm/vendor" />
 	</extraFiles>
 	<issueHandlers>
+		<MissingPureAnnotation errorLevel="suppress"/>
+		<MissingImmutableAnnotation errorLevel="suppress"/>
 		<UndefinedClass>
 			<errorLevel type="suppress">
 				<referencedClass name="Doctrine\DBAL\Platforms\AbstractMySQLPlatform" />
