@@ -36,6 +36,7 @@ OC.L10N.register(
     "Send push notification" : "Sendi puŝan atentigon",
     "Activity notification configuration" : "Agordoj de aktivaĵaj atentigoj",
     "Yesterday" : "Hieraŭ",
+    "Less" : "Malpli",
     "You need to set up your email address before you can receive notification emails." : "Vi devas agordi vian retpoŝtadreson por povi ricevi sciigojn retmesaĝe.",
     "Send activity emails" : "Sendi aktivaĵajn retmesaĝojn",
     "As soon as possible" : "Kiel eble plej baldaŭ",

@@ -42,6 +42,7 @@ OC.L10N.register(
     "Send push notification" : "Адправіць push-апавяшчэнне",
     "Activity notification configuration" : "Канфігурацыя апавяшчэнняў пра актыўнасць",
     "Yesterday" : "Учора",
+    "More" : "Яшчэ",
     "You need to set up your email address before you can receive notification emails." : "Вам трэба задаць адрас электроннай пошты, каб атрымліваць апавяшчэнні па пошце",
     "Send activity emails" : "Адпраўляць электронныя лісты пра актыўнасць",
     "As soon as possible" : "Як мага хутчэй",

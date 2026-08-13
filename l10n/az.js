@@ -18,6 +18,8 @@ OC.L10N.register(
     "Send email" : "Email yolla",
     "Send push notification" : "Push bildiriş göndər",
     "Yesterday" : "Dünən",
+    "Less" : "Az",
+    "More" : "Yenə",
     "You need to set up your email address before you can receive notification emails." : "Xəbərdarlıq məktubları almazdan öncə, siz mail ünvanınızı təyin etməlisiniz.",
     "Send activity emails" : "Aktivlik maili göndər",
     "Hourly" : "Saatlıq",

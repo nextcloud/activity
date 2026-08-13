@@ -43,6 +43,7 @@ OC.L10N.register(
     "Send push notification" : "Enviar notificación push",
     "Activity notification configuration" : "Configuración de las notificaciones de actividad",
     "Yesterday" : "Ayer",
+    "Less" : "Menos",
     "More" : "Más",
     "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["Descargado %n vez (%s en los últimos 30 días)","Descargado %n veces (%s en los últimos 30 días)","Descargado %n veces (%s en los últimos 30 días)"],
     "_Downloaded %n time_::_Downloaded %n times_" : ["Descargado %n vez","Descargado %n veces","Descargado %n veces"],

@@ -43,6 +43,7 @@ OC.L10N.register(
     "Send push notification" : "Αποστολή ειδοποίησης push",
     "Activity notification configuration" : "Ρύθμιση ειδοποιήσεων δραστηριότητας",
     "Yesterday" : "Χθες",
+    "Less" : "Λιγότερα",
     "More" : "Περισσότερα",
     "You need to set up your email address before you can receive notification emails." : "Πρέπει να ρυθμίσετε τη διεύθυνση email σας για να μπορείτε να λαμβάνετε ειδοποιήσεις μέσω email.",
     "Send activity emails" : "Αποστολή email δραστηριοτήτων",
