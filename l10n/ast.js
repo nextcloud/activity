@@ -36,6 +36,8 @@ OC.L10N.register(
     "Send push notification" : "Unviar un avisu push",
     "Activity notification configuration" : "Configuración de los avisos d'actividá",
     "Yesterday" : "Ayeri",
+    "Less" : "Menos",
+    "More" : "Más",
     "You need to set up your email address before you can receive notification emails." : "Tienes de configurar una direición de corréu electrónicu enantes de poder recibir mensaxes d'avisu.",
     "Send activity emails" : "Unviar correos electrónicos d'actividá",
     "As soon as possible" : "Namás que se pueda",
