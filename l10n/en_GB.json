@@ -41,6 +41,7 @@
     "Send push notification" : "Send push notification",
     "Activity notification configuration" : "Activity notification configuration",
     "Yesterday" : "Yesterday",
+    "Less" : "Less",
     "More" : "More",
     "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["Downloaded %n time (%s in the last 30 days)","Downloaded %n times (%s in the last 30 days)"],
     "_Downloaded %n time_::_Downloaded %n times_" : ["Downloaded %n time","Downloaded %n times"],

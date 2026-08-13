@@ -7,6 +7,7 @@ OC.L10N.register(
     "Today" : "Danas",
     "Send email" : "Pošalji e-poštu",
     "Yesterday" : "Jučer",
+    "Less" : "Manje",
     "Hourly" : "Svakog sata",
     "Daily" : "Dnevno",
     "Weekly" : "Sedmično",
