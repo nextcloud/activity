@@ -101,6 +101,8 @@ OC.L10N.register(
     "Pick a day to see what happened, or hold Shift and pick a second day for a period." : "選擇某一天來查看當天的狀況，或按住 Shift 鍵並選擇第二個日期以查看某段期間的情況。",
     "Clear selection" : "清除選取",
     "Unable to load the activity list" : "無法載入活動清單",
+    "Loading older activities…" : "正在載入較舊的活動⋯⋯",
+    "Load older activities" : "載入較舊的活動",
     "Choose for which activities you want to get an email or push notification." : "選擇哪些活動是您要透過電子郵件或推送所接收的通知。",
     "Choose for which activities you want to get a push notification." : "選擇你要推送哪些活動的通知。",
     "Notification" : "通知",
