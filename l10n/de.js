@@ -101,6 +101,8 @@ OC.L10N.register(
     "Pick a day to see what happened, or hold Shift and pick a second day for a period." : "Einen Tag auswählen, um zu sehen, was passiert ist, oder die Shift-Taste gedrückt halten und einen zweiten Tag für einen bestimmten Zeitraum auswählen.",
     "Clear selection" : "Auswahl leeren",
     "Unable to load the activity list" : "Liste mit Aktivitäten konnte nicht geladen werden",
+    "Loading older activities…" : "Lade ältere Aktivitäten …",
+    "Load older activities" : "Ältere Aktivitäten laden",
     "Choose for which activities you want to get an email or push notification." : "Wähle aus, für welche Aktivitäten du eine E-Mail oder eine Push-Benachrichtigung erhalten möchtest.",
     "Choose for which activities you want to get a push notification." : "Auswählen, für welche Aktivitäten du eine Push-Benachrichtigung erhalten möchtest.",
     "Notification" : "Benachrichtigung",

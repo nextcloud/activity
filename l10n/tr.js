@@ -101,6 +101,8 @@ OC.L10N.register(
     "Pick a day to see what happened, or hold Shift and pick a second day for a period." : "Ne olduğunu görmek için bir gün seçin veya Shift tuşuna basılı tutarak belirli bir dönem için ikinci bir gün seçin.",
     "Clear selection" : "Seçimi temizle",
     "Unable to load the activity list" : "İşlem listesi yüklenemedi",
+    "Loading older activities…" : "Daha eski işlemler yükleniyor…",
+    "Load older activities" : "Daha eski işlemleri yükle",
     "Choose for which activities you want to get an email or push notification." : "E-posta ya da anında bildirim almak istediğiniz işlemleri seçin.",
     "Choose for which activities you want to get a push notification." : "Anında bildirim almak istediğiniz işlemleri seçin.",
     "Notification" : "Bildirimler",
