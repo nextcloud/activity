@@ -36,6 +36,7 @@ OC.L10N.register(
     "Last 30 days" : "30 derniers jours",
     "Custom range" : "Plage personnalisée",
     "Clear search" : "Effacer la recherche",
+    "Filter activities by date" : "Filtrer les activités par dates",
     "Clear filters" : "Effacer les filtres",
     "From" : "De",
     "To" : "Pour",
