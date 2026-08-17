@@ -34,7 +34,7 @@
     "Last 7 days" : "Últimos 7 dias",
     "Last 30 days" : "Últimos 30 dias",
     "Custom range" : "Intervalo personalizado",
-    "{from} to {to}" : "Das {from} às {to}",
+    "{from} to {to}" : "Desde {from} até {to}",
     "Since {from}" : "Desde {from}",
     "Until {to}" : "Até {to}",
     "Enter at least {count} characters to search" : "Digite pelo menos {count} caracteres para pesquisar",
