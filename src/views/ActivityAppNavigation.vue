@@ -12,8 +12,12 @@
 				:data-navigation="navigationItem.id"
 				:to="navigationItem.id"
 				:name="navigationItem.name">
-				<template v-if="navigationItem.icon" #icon>
+				<template #icon="{ active }">
+					<NcIconSvgWrapper
+						v-if="FILTER_ICONS[navigationItem.id]"
+						:svg="iconFor(navigationItem.id, active)" />
 					<img
+						v-else-if="navigationItem.icon"
 						alt=""
 						:src="navigationItem.icon"
 						class="navigation-icon"
@@ -63,6 +67,28 @@
 </template>
 
 <script setup lang="ts">
+import accountGroupOutlineSvg from '@mdi/svg/svg/account-group-outline.svg?raw'
+import accountGroupSvg from '@mdi/svg/svg/account-group.svg?raw'
+import accountMultipleOutlineSvg from '@mdi/svg/svg/account-multiple-outline.svg?raw'
+import accountMultipleSvg from '@mdi/svg/svg/account-multiple.svg?raw'
+import accountOutlineSvg from '@mdi/svg/svg/account-outline.svg?raw'
+import accountPlusOutlineSvg from '@mdi/svg/svg/account-plus-outline.svg?raw'
+import accountPlusSvg from '@mdi/svg/svg/account-plus.svg?raw'
+import accountSvg from '@mdi/svg/svg/account.svg?raw'
+import calendarOutlineSvg from '@mdi/svg/svg/calendar-outline.svg?raw'
+import calendarSvg from '@mdi/svg/svg/calendar.svg?raw'
+import cardAccountDetailsOutlineSvg from '@mdi/svg/svg/card-account-details-outline.svg?raw'
+import cardAccountDetailsSvg from '@mdi/svg/svg/card-account-details.svg?raw'
+import folderOutlineSvg from '@mdi/svg/svg/folder-outline.svg?raw'
+import folderSvg from '@mdi/svg/svg/folder.svg?raw'
+import lightningBoltOutlineSvg from '@mdi/svg/svg/lightning-bolt-outline.svg?raw'
+import lightningBoltSvg from '@mdi/svg/svg/lightning-bolt.svg?raw'
+import lockOutlineSvg from '@mdi/svg/svg/lock-outline.svg?raw'
+import lockSvg from '@mdi/svg/svg/lock.svg?raw'
+import messageOutlineSvg from '@mdi/svg/svg/message-outline.svg?raw'
+import messageSvg from '@mdi/svg/svg/message.svg?raw'
+import starOutlineSvg from '@mdi/svg/svg/star-outline.svg?raw'
+import starSvg from '@mdi/svg/svg/star.svg?raw'
 import axios from '@nextcloud/axios'
 import { showError, showSuccess } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
@@ -74,6 +100,7 @@ import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem'
 import NcAppNavigationSettings from '@nextcloud/vue/components/NcAppNavigationSettings'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
 import NcInputField from '@nextcloud/vue/components/NcInputField'
 import IconChartBoxOutline from 'vue-material-design-icons/ChartBoxOutline.vue'
 import IconContentCopy from 'vue-material-design-icons/ContentCopy.vue'
@@ -91,6 +118,36 @@ interface IActivitySettings {
 	enableAvatars: boolean
 	rssLink: string
 	personalSettingsLink: string
+}
+
+interface IIconPair {
+	outline: string
+	filled: string
+}
+
+const FILTER_ICONS: Record<string, IIconPair> = {
+	all: { outline: lightningBoltOutlineSvg, filled: lightningBoltSvg },
+	by: { outline: accountMultipleOutlineSvg, filled: accountMultipleSvg },
+	calendar: { outline: calendarOutlineSvg, filled: calendarSvg },
+	circles: { outline: accountGroupOutlineSvg, filled: accountGroupSvg },
+	comments: { outline: messageOutlineSvg, filled: messageSvg },
+	contacts: { outline: cardAccountDetailsOutlineSvg, filled: cardAccountDetailsSvg },
+	files: { outline: folderOutlineSvg, filled: folderSvg },
+	files_favorites: { outline: starOutlineSvg, filled: starSvg },
+	files_sharing: { outline: accountPlusOutlineSvg, filled: accountPlusSvg },
+	security: { outline: lockOutlineSvg, filled: lockSvg },
+	self: { outline: accountOutlineSvg, filled: accountSvg },
+}
+
+/**
+ * Filled glyph when the entry is the selected one, outlined otherwise.
+ *
+ * @param id filter identifier
+ * @param active whether this entry is selected
+ */
+function iconFor(id: string, active: boolean): string | undefined {
+	const pair = FILTER_ICONS[id]
+	return active ? pair?.filled : pair?.outline
 }
 
 // Variables and methods
@@ -148,6 +205,7 @@ async function copyRSSLink() {
 	}
 
 	.app-navigation-entry {
+
 		// NC34+ active design uses --color-primary-element-light background
 		// with --color-main-text, so icons follow the same invert logic as non-active items.
 		// Legacy NC<34 used the full primary color background, requiring --primary-invert-if-dark.
@@ -162,8 +220,8 @@ async function copyRSSLink() {
 	}
 
 	.navigation-icon {
-		height: 16px;
-		width: 16px;
+		height: 20px;
+		width: 20px;
 	}
 }
 </style>
