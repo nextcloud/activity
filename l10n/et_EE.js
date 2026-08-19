@@ -35,6 +35,7 @@ OC.L10N.register(
     "Last 7 days" : "Viimase 7 päeva jooksul",
     "Last 30 days" : "Viimase 30 päeva jooksul",
     "Custom range" : "Valitud vahemik",
+    "Search by file name" : "Otsi failinime alusel",
     "Clear search" : "Tühjenda otsing",
     "Clear filters" : "Eemalda filtrid",
     "From" : "Saatja",
