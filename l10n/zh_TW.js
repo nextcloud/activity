@@ -17,6 +17,7 @@ OC.L10N.register(
     "You can disable daily digest emails in the settings: %s" : "您可以在設定中停用每日摘要電子郵件：%s",
     "All activities" : "所有活動",
     "By others" : "由其他人",
+    "Focused" : "焦點",
     "By you" : "由您",
     "Activity at %s" : "%s 上的活動",
     "Hello %s" : "%s你好",

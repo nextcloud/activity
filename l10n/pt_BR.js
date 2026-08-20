@@ -17,6 +17,7 @@ OC.L10N.register(
     "You can disable daily digest emails in the settings: %s" : "Você pode desativar os e-mails diários com resumos nas configurações: %s",
     "All activities" : "Todas as atividades",
     "By others" : "Por outros",
+    "Focused" : "Focado",
     "By you" : "Por você",
     "Activity at %s" : "Atividades em %s",
     "Hello %s" : "Olá %s",
