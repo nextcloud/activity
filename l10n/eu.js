@@ -17,6 +17,7 @@ OC.L10N.register(
     "You can disable daily digest emails in the settings: %s" : "Eguneroko mezu digitalak desaktiba ditzakezu ezarpenetan: %s",
     "All activities" : "Jarduera guztiak",
     "By others" : "Besteenak",
+    "Focused" : "Fokatuta",
     "By you" : "Zureak",
     "Activity at %s" : "Jarduera %s -n",
     "Hello %s" : "Kaixo %s",
