@@ -103,42 +103,57 @@ class CurrentUser {
 	 * Check if the current request is via a public share link
 	 */
 	public function isPublicShareToken(): bool {
-		/** @psalm-suppress NoInterfaceProperties */
-		if (!empty($this->request->server['PHP_AUTH_USER'])) {
-			$token = $this->request->server['PHP_AUTH_USER'];
-			try {
-				$share = $this->shareManager->getShareByToken($token);
-				return $share->getShareType() === IShare::TYPE_LINK
-					|| $share->getShareType() === IShare::TYPE_EMAIL;
-			} catch (ShareNotFound $e) {
-				// No share found for this token
-			}
-		}
-
-		return false;
+		return $this->getPublicShare() !== null;
 	}
 
 	/**
 	 * Get the cloud ID from the sharing token
 	 */
-	protected function getCloudIDFromToken() {
-		/** @psalm-suppress NoInterfaceProperties */
-		if (!empty($this->request->server['PHP_AUTH_USER'])) {
-			$token = $this->request->server['PHP_AUTH_USER'];
-			/**
-			 * Until https://github.com/nextcloud/server/pull/26681 is merged
-			 * @psalm-suppress InvalidCatch
-			 */
-			try {
-				$share = $this->shareManager->getShareByToken($token);
-				if ($share->getShareType() === IShare::TYPE_REMOTE) {
-					return $share->getSharedWith();
-				}
-			} catch (ShareNotFound $e) {
-				// No share, use the fallback
-			}
+	protected function getCloudIDFromToken(): ?string {
+		$share = $this->getPublicShare();
+
+		if ($share === null || $share->getShareType() !== IShare::TYPE_REMOTE) {
+			return null;
 		}
 
-		return null;
+		return $share->getSharedWith();
+	}
+
+	protected function getPublicShare(): ?IShare {
+		if (basename($this->request->getScriptName()) !== 'public.php') {
+			return null;
+		}
+
+		$token = $this->getShareToken();
+		if ($token === null) {
+			return null;
+		}
+
+		try {
+			return $this->shareManager->getShareByToken($token);
+		} catch (ShareNotFound $e) {
+			return null;
+		}
+	}
+
+	protected function getShareToken(): ?string {
+		// The legacy public endpoint receive the share token in the HTTP basic auth header.
+		/** @psalm-suppress NoInterfaceProperties */
+		$authUser = (string)($this->request->server['PHP_AUTH_USER'] ?? '');
+		if ($authUser !== '') {
+			return $authUser;
+		}
+
+		// The current public endpoint receives the share token in the path.
+		// Copied from apps/dav/lib/Connector/Sabre/PublicAuth::getToken()
+		$path = $this->request->getPathInfo() ?: '';
+		// ['', 'dav', 'files', 'token']
+		$splittedPath = explode('/', $path);
+
+		if (count($splittedPath) < 4 || $splittedPath[3] === '') {
+			return null;
+		}
+
+		return $splittedPath[3];
 	}
 }
