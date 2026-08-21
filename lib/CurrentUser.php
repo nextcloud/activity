@@ -18,10 +18,10 @@ use OCP\Share\IShare;
 class CurrentUser {
 
 	public function __construct(
-		protected IUserSession $userSession,
-		protected IRequest $request,
-		protected IManager $shareManager,
-		protected IFactory $l10nFactory,
+		protected readonly IUserSession $userSession,
+		protected readonly IRequest $request,
+		protected readonly IManager $shareManager,
+		protected readonly IFactory $l10nFactory,
 	) {
 	}
 
@@ -31,9 +31,8 @@ class CurrentUser {
 
 	/**
 	 * Get an identifier for the user, session or token
-	 * @return string
 	 */
-	public function getUserIdentifier() {
+	public function getUserIdentifier(): string {
 		$uid = $this->getUID();
 		if ($uid !== null) {
 			return $uid;
@@ -55,9 +54,8 @@ class CurrentUser {
 
 	/**
 	 * Get the current user id from the session
-	 * @return string|null
 	 */
-	public function getUID() {
+	public function getUID(): ?string {
 		$user = $this->userSession->getUser();
 		if ($user instanceof IUser) {
 			return $user->getUID();
@@ -67,9 +65,8 @@ class CurrentUser {
 
 	/**
 	 * Get the current user cloud id from the session
-	 * @return string|null
 	 */
-	public function getCloudId() {
+	public function getCloudId(): ?string {
 		$user = $this->userSession->getUser();
 		if ($user instanceof IUser) {
 			return $user->getCloudId();
@@ -99,7 +96,6 @@ class CurrentUser {
 
 	/**
 	 * Get the cloud ID from the sharing token
-	 * @return string|null
 	 */
 	protected function getCloudIDFromToken() {
 		/** @psalm-suppress NoInterfaceProperties */
