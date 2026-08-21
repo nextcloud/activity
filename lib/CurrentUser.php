@@ -25,10 +25,10 @@ class CurrentUser {
 	protected $sessionUser = false;
 
 	public function __construct(
-		protected IUserSession $userSession,
-		protected IRequest $request,
-		protected IManager $shareManager,
-		protected IFactory $l10nFactory,
+		protected readonly IUserSession $userSession,
+		protected readonly IRequest $request,
+		protected readonly IManager $shareManager,
+		protected readonly IFactory $l10nFactory,
 	) {
 	}
 
@@ -38,9 +38,8 @@ class CurrentUser {
 
 	/**
 	 * Get an identifier for the user, session or token
-	 * @return string
 	 */
-	public function getUserIdentifier() {
+	public function getUserIdentifier(): string {
 		if ($this->identifier !== null) {
 			return $this->identifier;
 		}
@@ -70,9 +69,8 @@ class CurrentUser {
 
 	/**
 	 * Get the current user id from the session
-	 * @return string|null
 	 */
-	public function getUID() {
+	public function getUID(): ?string {
 		if ($this->sessionUser === false) {
 			$user = $this->userSession->getUser();
 			if ($user instanceof IUser) {
@@ -87,9 +85,8 @@ class CurrentUser {
 
 	/**
 	 * Get the current user cloud id from the session
-	 * @return string|null
 	 */
-	public function getCloudId() {
+	public function getCloudId(): ?string {
 		if ($this->cloudId === false) {
 			$user = $this->userSession->getUser();
 			if ($user instanceof IUser) {
@@ -123,7 +120,6 @@ class CurrentUser {
 
 	/**
 	 * Get the cloud ID from the sharing token
-	 * @return string|null
 	 */
 	protected function getCloudIDFromToken() {
 		/** @psalm-suppress NoInterfaceProperties */
