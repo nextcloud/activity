@@ -17,6 +17,7 @@ OC.L10N.register(
     "You can disable daily digest emails in the settings: %s" : "Ви можете вимкнути щоденну розсилку ел. поштою у налаштуваннях: %s",
     "All activities" : "Всі події",
     "By others" : "Дії інших користувачів",
+    "Focused" : "Сфокусовано",
     "By you" : "Мої дії",
     "Activity at %s" : "Останні дії у %s",
     "Hello %s" : "Вітаємо %s",
