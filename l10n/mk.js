@@ -35,6 +35,7 @@ OC.L10N.register(
     "Last 7 days" : "Предходни 7 дена",
     "Last 30 days" : "Предходни 30 дена",
     "Custom range" : "Прилагоден опсег",
+    "Search by file name" : "Пребарај по име на датотека",
     "Clear search" : "Исчисти пребарување",
     "From" : "Од",
     "To" : "До",
