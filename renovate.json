@@ -15,7 +15,7 @@
   "rebaseWhen": "conflicted",
   "ignoreUnstable": false,
   "minimumReleaseAge": "4 days",
-  "baseBranchPatterns": ["master", "stable34", "stable33", "stable32"],
+  "baseBranchPatterns": ["master", "stable35", "stable34", "stable33", "stable32"],
   "enabledManagers": ["composer", "github-actions", "npm"],
   "ignoreDeps": ["node", "npm", "php"],
   "packageRules": [
