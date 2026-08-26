@@ -25,10 +25,10 @@ class CurrentUser {
 	protected $sessionUser = false;
 
 	public function __construct(
-		protected IUserSession $userSession,
-		protected IRequest $request,
-		protected IManager $shareManager,
-		protected IFactory $l10nFactory,
+		protected readonly IUserSession $userSession,
+		protected readonly IRequest $request,
+		protected readonly IManager $shareManager,
+		protected readonly IFactory $l10nFactory,
 	) {
 	}
 
@@ -38,9 +38,8 @@ class CurrentUser {
 
 	/**
 	 * Get an identifier for the user, session or token
-	 * @return string
 	 */
-	public function getUserIdentifier() {
+	public function getUserIdentifier(): string {
 		if ($this->identifier !== null) {
 			return $this->identifier;
 		}
@@ -70,9 +69,8 @@ class CurrentUser {
 
 	/**
 	 * Get the current user id from the session
-	 * @return string|null
 	 */
-	public function getUID() {
+	public function getUID(): ?string {
 		if ($this->sessionUser === false) {
 			$user = $this->userSession->getUser();
 			if ($user instanceof IUser) {
@@ -87,9 +85,8 @@ class CurrentUser {
 
 	/**
 	 * Get the current user cloud id from the session
-	 * @return string|null
 	 */
-	public function getCloudId() {
+	public function getCloudId(): ?string {
 		if ($this->cloudId === false) {
 			$user = $this->userSession->getUser();
 			if ($user instanceof IUser) {
@@ -106,43 +103,57 @@ class CurrentUser {
 	 * Check if the current request is via a public share link
 	 */
 	public function isPublicShareToken(): bool {
-		/** @psalm-suppress NoInterfaceProperties */
-		if (!empty($this->request->server['PHP_AUTH_USER'])) {
-			$token = $this->request->server['PHP_AUTH_USER'];
-			try {
-				$share = $this->shareManager->getShareByToken($token);
-				return $share->getShareType() === IShare::TYPE_LINK
-					|| $share->getShareType() === IShare::TYPE_EMAIL;
-			} catch (ShareNotFound $e) {
-				// No share found for this token
-			}
-		}
-
-		return false;
+		return $this->getPublicShare() !== null;
 	}
 
 	/**
 	 * Get the cloud ID from the sharing token
-	 * @return string|null
 	 */
-	protected function getCloudIDFromToken() {
-		/** @psalm-suppress NoInterfaceProperties */
-		if (!empty($this->request->server['PHP_AUTH_USER'])) {
-			$token = $this->request->server['PHP_AUTH_USER'];
-			/**
-			 * Until https://github.com/nextcloud/server/pull/26681 is merged
-			 * @psalm-suppress InvalidCatch
-			 */
-			try {
-				$share = $this->shareManager->getShareByToken($token);
-				if ($share->getShareType() === IShare::TYPE_REMOTE) {
-					return $share->getSharedWith();
-				}
-			} catch (ShareNotFound $e) {
-				// No share, use the fallback
-			}
+	protected function getCloudIDFromToken(): ?string {
+		$share = $this->getPublicShare();
+
+		if ($share === null || $share->getShareType() !== IShare::TYPE_REMOTE) {
+			return null;
 		}
 
-		return null;
+		return $share->getSharedWith();
+	}
+
+	protected function getPublicShare(): ?IShare {
+		if (basename($this->request->getScriptName()) !== 'public.php') {
+			return null;
+		}
+
+		$token = $this->getShareToken();
+		if ($token === null) {
+			return null;
+		}
+
+		try {
+			return $this->shareManager->getShareByToken($token);
+		} catch (ShareNotFound $e) {
+			return null;
+		}
+	}
+
+	protected function getShareToken(): ?string {
+		// The legacy public endpoint receive the share token in the HTTP basic auth header.
+		/** @psalm-suppress NoInterfaceProperties */
+		$authUser = (string)($this->request->server['PHP_AUTH_USER'] ?? '');
+		if ($authUser !== '') {
+			return $authUser;
+		}
+
+		// The current public endpoint receives the share token in the path.
+		// Copied from apps/dav/lib/Connector/Sabre/PublicAuth::getToken()
+		$path = $this->request->getPathInfo() ?: '';
+		// ['', 'dav', 'files', 'token']
+		$splittedPath = explode('/', $path);
+
+		if (count($splittedPath) < 4 || $splittedPath[3] === '') {
+			return null;
+		}
+
+		return $splittedPath[3];
 	}
 }
