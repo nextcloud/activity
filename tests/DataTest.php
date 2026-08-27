@@ -30,6 +30,7 @@ use OCA\Activity\UserSettings;
 use OCP\Activity\Exceptions\FilterNotFoundException;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\Files\IRootFolder;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IL10N;
@@ -52,6 +53,7 @@ class DataTest extends TestCase {
 	protected IManager $realActivityManager;
 	protected NullLogger $logger;
 	protected IConfig&MockObject $config;
+	protected IRootFolder&MockObject $rootFolder;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -63,12 +65,14 @@ class DataTest extends TestCase {
 
 		$activityManager = $this->createMock(IManager::class);
 		$this->config = $this->createMock(IConfig::class);
+		$this->rootFolder = $this->createMock(IRootFolder::class);
 
 		$this->data = new Data(
 			$activityManager,
 			$this->dbConnection,
 			$this->logger,
-			$this->config
+			$this->config,
+			$this->rootFolder,
 		);
 	}
 
@@ -516,7 +520,13 @@ class DataTest extends TestCase {
 		$activityManager->method('getFilterById')
 			->willThrowException(new FilterNotFoundException('all'));
 
-		return new Data($activityManager, $this->dbConnection, $this->logger, $this->config);
+		return new Data(
+			$activityManager,
+			$this->dbConnection,
+			$this->logger,
+			$this->config,
+			$this->rootFolder,
+		);
 	}
 
 	private function getHistogramUserSettings(): UserSettings&MockObject {

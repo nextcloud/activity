@@ -37,6 +37,7 @@ use OCA\Activity\UserSettings;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\Files\IRootFolder;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IL10N;
@@ -117,6 +118,7 @@ class APIv1ControllerTest extends TestCase {
 			Server::get(IDBConnection::class),
 			$this->createMock(LoggerInterface::class),
 			$this->createMock(IConfig::class),
+			$this->createMock(IRootFolder::class),
 		);
 
 		$this->deleteUser($data, 'activity-api-user1');
@@ -227,6 +229,7 @@ class APIv1ControllerTest extends TestCase {
 			Server::get(IDBConnection::class),
 			$this->createMock(LoggerInterface::class),
 			$this->createMock(IConfig::class),
+			$this->createMock(IRootFolder::class),
 		);
 
 		$controller = new APIv1Controller(
