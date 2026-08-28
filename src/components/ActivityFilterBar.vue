@@ -20,19 +20,19 @@
 				</template>
 			</NcTextField>
 
-			<template v-if="actorOptions.length > 0">
-				<label class="hidden-visually" :for="actorInputId">
-					{{ t('activity', 'Filter by account') }}
-				</label>
-				<NcSelectUsers
-					class="activity-filter__actor"
-					:inputId="actorInputId"
-					labelOutside
-					:options="actorOptions"
-					:modelValue="selectedActorOption"
-					:placeholder="t('activity', 'Anyone')"
-					@update:modelValue="onActorChange" />
-			</template>
+			<label class="hidden-visually" :for="actorInputId">
+				{{ t('activity', 'Filter by account') }}
+			</label>
+			<NcSelectUsers
+				class="activity-filter__actor"
+				:inputId="actorInputId"
+				labelOutside
+				:options="accountOptions"
+				:modelValue="selectedActorOption"
+				:loading="searchingAccounts"
+				:placeholder="t('activity', 'Anyone')"
+				@search="onAccountSearch"
+				@update:modelValue="onActorChange" />
 
 			<NcActions
 				class="activity-filter__range"
@@ -93,7 +93,9 @@ import NcSelectUsers from '@nextcloud/vue/components/NcSelectUsers'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
 import CalendarRange from 'vue-material-design-icons/CalendarRange.vue'
 import Magnify from 'vue-material-design-icons/Magnify.vue'
+import { searchAccounts } from '../utils/actors.ts'
 import { daysAgo, MIN_SEARCH_TERM_LENGTH, normalizeSearchTerm } from '../utils/dateRange.ts'
+import logger from '../utils/logger.ts'
 
 const props = defineProps<{
 	/**
@@ -128,6 +130,49 @@ const emit = defineEmits<{
 const actorInputId = useId()
 
 /**
+ * How long to wait after the last keystroke before querying the server.
+ */
+const SEARCH_DEBOUNCE_MS = 300
+
+/**
+ * Accounts found by searching the instance, on top of the ones the stream
+ * itself reported.
+ */
+const foundAccounts = ref<ActorOption[]>([])
+
+/**
+ * Whether a name search is in flight, so the select can say so.
+ */
+const searchingAccounts = ref(false)
+
+/**
+ * Aborts the search a newer keystroke has superseded.
+ */
+let accountSearchController: AbortController | undefined
+
+/**
+ * The last account picked, kept so its display name survives.
+ *
+ * A searched account is not among the stream's own options, and the search
+ * results are dropped as soon as the reader types again, so without this the
+ * selection would fall back to showing the bare account name.
+ */
+const pickedActor = ref<ActorOption | null>(null)
+
+/**
+ * Everything that can be picked: the accounts the stream contains first,
+ * because those are the ones that actually have activities to show, followed
+ * by whoever the name search turned up.
+ */
+const accountOptions = computed<ActorOption[]>(() => {
+	const fromStream = new Set(props.actorOptions.map((option) => option.id))
+	return [
+		...props.actorOptions,
+		...foundAccounts.value.filter((option) => !fromStream.has(option.id)),
+	]
+})
+
+/**
  * The option matching the active account.
  *
  * Synthesised when the account is not among the options, so an account
@@ -137,7 +182,10 @@ const selectedActorOption = computed<ActorOption | null>(() => {
 	if (props.actor === '') {
 		return null
 	}
-	return props.actorOptions.find((option) => option.id === props.actor)
+	if (pickedActor.value?.id === props.actor) {
+		return pickedActor.value
+	}
+	return accountOptions.value.find((option) => option.id === props.actor)
 		?? { id: props.actor, displayName: props.actor, user: props.actor }
 })
 
@@ -147,13 +195,50 @@ const selectedActorOption = computed<ActorOption | null>(() => {
  * @param option - The chosen account, or null when it was cleared
  */
 function onActorChange(option: ActorOption | null): void {
+	pickedActor.value = option
 	emit('update:actor', option?.id ?? '')
 }
 
 /**
- * How long to wait after the last keystroke before querying the server.
+ * Look up accounts by name as the reader types.
+ *
+ * The stream only knows the accounts that have authored something in it, so
+ * without this an account that has been quiet — or whose activities are simply
+ * further down than anyone has scrolled — could never be picked.
+ *
+ * Failures leave the accounts from the stream in place rather than emptying the
+ * dropdown, which would make a network hiccup look like "nobody by that name".
+ *
+ * @param term - What the reader typed
  */
-const SEARCH_DEBOUNCE_MS = 300
+const onAccountSearch = useDebounceFn(async (term: string) => {
+	accountSearchController?.abort()
+
+	if (term.trim() === '') {
+		foundAccounts.value = []
+		searchingAccounts.value = false
+		return
+	}
+
+	accountSearchController = new AbortController()
+	const { signal } = accountSearchController
+	searchingAccounts.value = true
+	try {
+		const accounts = await searchAccounts(term.trim(), signal)
+		if (signal.aborted) {
+			return
+		}
+		foundAccounts.value = accounts.map((account) => ({ ...account, user: account.id }))
+	} catch (error) {
+		if (!signal.aborted) {
+			logger.error('Could not search for accounts', { error })
+		}
+	} finally {
+		if (!signal.aborted) {
+			searchingAccounts.value = false
+		}
+	}
+}, SEARCH_DEBOUNCE_MS)
 
 type PresetId = 'any' | 'today' | 'week' | 'month' | 'custom'
 

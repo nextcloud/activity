@@ -5,10 +5,15 @@
 
 import type { VueWrapper } from '@vue/test-utils'
 
-import { mount } from '@vue/test-utils'
-import { describe, expect, it, vi } from 'vitest'
+import { flushPromises, mount } from '@vue/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import ActivityFilterBar from '../components/ActivityFilterBar.vue'
+import { searchAccounts } from '../utils/actors.ts'
 import { daysAgo } from '../utils/dateRange.ts'
+
+vi.mock('../utils/actors.ts', () => ({
+	searchAccounts: vi.fn(() => Promise.resolve([])),
+}))
 
 vi.mock(import('@vueuse/core'), async (importOriginal) => {
 	const actual = await importOriginal()
@@ -55,9 +60,15 @@ const NcButtonStub = {
 
 const NcSelectUsersStub = {
 	name: 'NcSelectUsers',
-	template: '<div class="select-users" :data-selected="modelValue ? modelValue.id : \'\'" :data-count="options.length" />',
-	props: ['modelValue', 'options', 'inputId', 'labelOutside', 'placeholder'],
-	emits: ['update:modelValue'],
+	template: `<div
+		class="select-users"
+		:data-selected="modelValue ? modelValue.id : ''"
+		:data-selected-name="modelValue ? modelValue.displayName : ''"
+		:data-options="options.map((option) => option.id).join(',')"
+		:data-loading="loading"
+		:data-count="options.length" />`,
+	props: ['modelValue', 'options', 'inputId', 'labelOutside', 'placeholder', 'loading'],
+	emits: ['update:modelValue', 'search'],
 }
 
 const NcDateTimePickerNativeStub = {
@@ -206,14 +217,84 @@ describe('ActivityFilterBar date presets', () => {
 })
 
 describe('ActivityFilterBar account', () => {
+	beforeEach(() => {
+		vi.mocked(searchAccounts).mockReset()
+		vi.mocked(searchAccounts).mockResolvedValue([])
+	})
+
 	it('offers every known account', () => {
 		const wrapper = mountBar()
 		expect(wrapper.find('.select-users').attributes('data-count')).toBe('2')
 	})
 
-	it('is hidden when no accounts are known yet', () => {
+	it('stays available when the stream reported no accounts', () => {
 		const wrapper = mountBar({ actorOptions: [] })
-		expect(wrapper.find('.select-users').exists()).toBe(false)
+		// Typing a name still has to be able to find someone, so an empty
+		// stream list is no reason to take the control away
+		expect(wrapper.find('.select-users').exists()).toBe(true)
+	})
+
+	it('offers accounts the name search found on top of the stream ones', async () => {
+		vi.mocked(searchAccounts).mockResolvedValue([{ id: 'carol', displayName: 'Carol' }])
+		const wrapper = mountBar()
+
+		wrapper.findComponent(NcSelectUsersStub).vm.$emit('search', 'car')
+		await flushPromises()
+
+		expect(searchAccounts).toHaveBeenCalledWith('car', expect.anything())
+		// The stream's own accounts come first: those are the ones with
+		// activities behind them
+		expect(wrapper.find('.select-users').attributes('data-options')).toBe('alice,bob,carol')
+	})
+
+	it('does not offer a found account twice', async () => {
+		vi.mocked(searchAccounts).mockResolvedValue([{ id: 'alice', displayName: 'Alice' }])
+		const wrapper = mountBar()
+
+		wrapper.findComponent(NcSelectUsersStub).vm.$emit('search', 'ali')
+		await flushPromises()
+
+		expect(wrapper.find('.select-users').attributes('data-options')).toBe('alice,bob')
+	})
+
+	it('drops the search results once the term is cleared', async () => {
+		vi.mocked(searchAccounts).mockResolvedValue([{ id: 'carol', displayName: 'Carol' }])
+		const wrapper = mountBar()
+		wrapper.findComponent(NcSelectUsersStub).vm.$emit('search', 'car')
+		await flushPromises()
+
+		wrapper.findComponent(NcSelectUsersStub).vm.$emit('search', '')
+		await flushPromises()
+
+		expect(searchAccounts).toHaveBeenCalledOnce()
+		expect(wrapper.find('.select-users').attributes('data-options')).toBe('alice,bob')
+	})
+
+	it('keeps the stream accounts when the search fails', async () => {
+		vi.mocked(searchAccounts).mockRejectedValue(new Error('Network error'))
+		const wrapper = mountBar()
+
+		wrapper.findComponent(NcSelectUsersStub).vm.$emit('search', 'car')
+		await flushPromises()
+
+		// An empty dropdown would read as "nobody by that name"
+		expect(wrapper.find('.select-users').attributes('data-options')).toBe('alice,bob')
+		expect(wrapper.find('.select-users').attributes('data-loading')).toBe('false')
+	})
+
+	it('keeps the display name of a searched account after picking it', async () => {
+		vi.mocked(searchAccounts).mockResolvedValue([{ id: 'carol', displayName: 'Carol' }])
+		const wrapper = mountBar()
+		wrapper.findComponent(NcSelectUsersStub).vm.$emit('search', 'car')
+		await flushPromises()
+
+		wrapper.findComponent(NcSelectUsersStub).vm.$emit('update:modelValue', { id: 'carol', displayName: 'Carol', user: 'carol' })
+		await wrapper.setProps({ actor: 'carol' })
+		// A new term drops the results the pick came from
+		wrapper.findComponent(NcSelectUsersStub).vm.$emit('search', '')
+		await flushPromises()
+
+		expect(wrapper.find('.select-users').attributes('data-selected-name')).toBe('Carol')
 	})
 
 	it('emits the account name when one is picked', async () => {

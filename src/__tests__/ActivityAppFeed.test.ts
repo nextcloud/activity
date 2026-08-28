@@ -24,6 +24,12 @@ vi.mock('@nextcloud/axios', () => ({
 
 vi.mock('@nextcloud/dialogs', () => ({ showError: vi.fn() }))
 
+// The account list has its own request, mocked here so the stream's queued
+// axios responses stay in the order the tests set them up in
+vi.mock('../utils/actors.ts', () => ({
+	fetchStreamActors: vi.fn(() => Promise.resolve([])),
+}))
+
 vi.mock('@nextcloud/initial-state', () => ({
 	loadState: vi.fn(() => [
 		{ id: 'all', name: 'All activities', url: '' },
@@ -65,6 +71,7 @@ vi.mock(import('@vueuse/core'), async (importOriginal) => {
 // Imported after mocks are registered
 import ncAxios from '@nextcloud/axios'
 import { showError } from '@nextcloud/dialogs'
+import { fetchStreamActors } from '../utils/actors.ts'
 
 // --- Constants ---
 
@@ -165,6 +172,7 @@ describe('ActivityAppFeed', () => {
 		vi.useFakeTimers({ toFake: ['setTimeout', 'setInterval', 'clearTimeout', 'clearInterval'] })
 		visibilityRef.value = 'visible'
 		routeQuery.current = {}
+		vi.mocked(fetchStreamActors).mockResolvedValue([])
 	})
 
 	afterEach(() => {
@@ -556,6 +564,44 @@ describe('ActivityAppFeed', () => {
 			const options = wrapper.findComponent(FilterBarStub).props('actorOptions') as { id: string }[]
 			expect(options.length).toBeGreaterThan(0)
 			expect(options.every((option) => typeof option.id === 'string')).toBe(true)
+			wrapper.unmount()
+		})
+
+		it('offers the accounts of the whole stream, not just the loaded page', async () => {
+			vi.mocked(fetchStreamActors).mockResolvedValue([
+				{ id: 'zoe', displayName: 'Zoe' },
+			])
+
+			const wrapper = await mountFeed()
+
+			// 'zoe' authored none of the loaded activities, but is still in the
+			// stream further down, so she has to be pickable
+			const options = wrapper.findComponent(FilterBarStub).props('actorOptions') as { id: string }[]
+			expect(options.map((option) => option.id)).toContain('zoe')
+			wrapper.unmount()
+		})
+
+		it('reloads the account list when the stream filter changes', async () => {
+			const wrapper = await mountFeed()
+			vi.mocked(fetchStreamActors).mockClear()
+
+			vi.mocked(ncAxios.get).mockRejectedValue(make304Error())
+			await wrapper.setProps({ filter: 'files' })
+			await flushPromises()
+
+			expect(vi.mocked(fetchStreamActors).mock.calls[0][0]).toBe('files')
+			wrapper.unmount()
+		})
+
+		it('keeps the accounts from the loaded activities when the list fails', async () => {
+			vi.mocked(fetchStreamActors).mockRejectedValue(new Error('Network error'))
+
+			const wrapper = await mountFeed()
+
+			// A missing list means fewer options, not a broken filter
+			const options = wrapper.findComponent(FilterBarStub).props('actorOptions') as unknown[]
+			expect(options.length).toBeGreaterThan(0)
+			expect(showError).not.toHaveBeenCalled()
 			wrapper.unmount()
 		})
 
