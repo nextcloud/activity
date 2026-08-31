@@ -17,13 +17,6 @@ use OCP\Share\IShare;
 
 class CurrentUser {
 
-	/** @var string|null */
-	protected $identifier = null;
-	/** @var string|false|null */
-	protected $cloudId = false;
-	/** @var string|false|null */
-	protected $sessionUser = false;
-
 	public function __construct(
 		protected readonly IUserSession $userSession,
 		protected readonly IRequest $request,
@@ -40,63 +33,46 @@ class CurrentUser {
 	 * Get an identifier for the user, session or token
 	 */
 	public function getUserIdentifier(): string {
-		if ($this->identifier !== null) {
-			return $this->identifier;
-		}
-
 		$uid = $this->getUID();
 		if ($uid !== null) {
-			$this->identifier = $uid;
-			return $this->identifier;
+			return $uid;
 		}
 
 		$cloudId = $this->getCloudIDFromToken();
 		if ($cloudId !== null) {
-			$this->identifier = $cloudId;
-			return $this->identifier;
+			return $cloudId;
 		}
 
 		$nickname = htmlspecialchars($this->request->getHeader('X-NC-Nickname'));
 		if ($nickname !== '') {
-			$this->identifier = $nickname . ' (' . $this->l10nFactory->get('comments')->t('remote user') . ')';
-			return $this->identifier;
+			return $nickname . ' (' . $this->l10nFactory->get('comments')->t('remote user') . ')';
 		}
 
 		// Nothing worked, fallback to empty string
-		$this->identifier = '';
-		return $this->identifier;
+		return '';
 	}
 
 	/**
 	 * Get the current user id from the session
 	 */
 	public function getUID(): ?string {
-		if ($this->sessionUser === false) {
-			$user = $this->userSession->getUser();
-			if ($user instanceof IUser) {
-				$this->sessionUser = (string)$user->getUID();
-			} else {
-				$this->sessionUser = null;
-			}
+		$user = $this->userSession->getUser();
+		if ($user instanceof IUser) {
+			return $user->getUID();
 		}
-
-		return $this->sessionUser;
+		return null;
 	}
 
 	/**
 	 * Get the current user cloud id from the session
 	 */
 	public function getCloudId(): ?string {
-		if ($this->cloudId === false) {
-			$user = $this->userSession->getUser();
-			if ($user instanceof IUser) {
-				$this->cloudId = (string)$user->getCloudId();
-			} else {
-				$this->cloudId = $this->getCloudIDFromToken();
-			}
+		$user = $this->userSession->getUser();
+		if ($user instanceof IUser) {
+			return $user->getCloudId();
+		} else {
+			return $this->getCloudIDFromToken();
 		}
-
-		return $this->cloudId;
 	}
 
 	/**
