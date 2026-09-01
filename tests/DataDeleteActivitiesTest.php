@@ -32,6 +32,7 @@ use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\IJobList;
 use OCP\DB\IPreparedStatement;
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\Files\IRootFolder;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\Server;
@@ -62,6 +63,7 @@ class DataDeleteActivitiesTest extends TestCase {
 			Server::get(IDBConnection::class),
 			$this->createMock(LoggerInterface::class),
 			$this->createMock(IConfig::class),
+			$this->createMock(IRootFolder::class),
 		);
 	}
 
@@ -154,6 +156,7 @@ class DataDeleteActivitiesTest extends TestCase {
 			Server::get(IDBConnection::class),
 			$this->createMock(LoggerInterface::class),
 			$config,
+			$this->createMock(IRootFolder::class),
 		);
 
 		$time = $this->createMock(ITimeFactory::class);
