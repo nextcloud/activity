@@ -35,6 +35,15 @@ class Data {
 	 */
 	public const MAX_HISTOGRAM_ROWS = 100000;
 
+	/**
+	 * Most accounts {@see self::getActors()} reports.
+	 *
+	 * The list feeds a dropdown, which stops being usable long before this, and
+	 * capping it is what keeps an account whose stream involves thousands of
+	 * others from turning the query into an unbounded fetch.
+	 */
+	public const MAX_ACTORS = 100;
+
 	/** @var  */
 	protected ?IQueryBuilder $insertActivity = null;
 	protected ?IQueryBuilder $insertMail = null;
@@ -499,6 +508,68 @@ class Data {
 		}
 
 		return ['counts' => $counts, 'partialBefore' => $partialBefore];
+	}
+
+	/**
+	 * The accounts that authored activities in a user's stream.
+	 *
+	 * Backs the stream's "filter by account" dropdown. Derived from the stream
+	 * itself rather than from the instance's account list, so the accounts that
+	 * do have something to show are the ones offered first.
+	 *
+	 * Deliberately takes no search term, date range or actor: this is the list a
+	 * reader picks a restriction *from*, so it has to stay the same while they
+	 * narrow the stream — a list that shrank to the accounts left in the current
+	 * result would be a dropdown that can only confirm what is already on screen.
+	 * The filter and object restrictions are honoured, because those select a
+	 * different stream rather than narrow this one.
+	 *
+	 * Ordered by account name and capped at {@see self::MAX_ACTORS}, which is
+	 * what lets the database stop reading as soon as the cap is met.
+	 *
+	 * @return list<string> Account names, ascending
+	 */
+	public function getActors(
+		UserSettings $userSettings,
+		string $user,
+		string $filter,
+		string $objectType = '',
+		int $objectId = 0,
+	): array {
+		if ($user === '') {
+			throw new \OutOfBoundsException('Invalid user', 1);
+		}
+
+		$activeFilter = null;
+		try {
+			$activeFilter = $this->activityManager->getFilterById($filter);
+		} catch (FilterNotFoundException) {
+			// Unknown filter => consider everything, as the stream would show it
+		}
+
+		$query = $this->connection->getQueryBuilder();
+		// Aliased like the stream query, because the `focused` filter joins
+		// `filecache` onto that alias
+		$query->selectDistinct('user')
+			->from('activity', 'a');
+
+		$this->applyStreamConditions($query, $userSettings, $user, $filter, $activeFilter, $objectType, $objectId, null);
+
+		// Activities without an author (system events) are not something one can
+		// filter by, so they would only ever be an empty entry in the dropdown
+		$query->andWhere($query->expr()->nonEmptyString('user'));
+
+		$query->orderBy('user', 'ASC');
+		$query->setMaxResults(self::MAX_ACTORS);
+
+		$result = $query->executeQuery();
+		$actors = [];
+		while ($row = $result->fetch()) {
+			$actors[] = (string)$row['user'];
+		}
+		$result->closeCursor();
+
+		return $actors;
 	}
 
 	/**

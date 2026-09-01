@@ -45,6 +45,7 @@ use OCP\IPreview;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUser;
+use OCP\IUserManager;
 use OCP\IUserSession;
 use OCP\Notification\IManager as INotificationManager;
 use OCP\Notification\INotification;
@@ -70,6 +71,7 @@ class APIv2ControllerTest extends TestCase {
 	protected ViewInfoCache&MockObject $infoCache;
 	protected INotificationManager&MockObject $notificationManager;
 	protected IDateTimeZone&MockObject $dateTimeZone;
+	protected IUserManager&MockObject $userManager;
 	protected IL10N $l10n;
 	protected APIv2Controller $controller;
 
@@ -91,6 +93,7 @@ class APIv2ControllerTest extends TestCase {
 		$this->notificationManager->method('createNotification')->willReturn($notification);
 		$this->request = $this->createMock(IRequest::class);
 		$this->dateTimeZone = $this->createMock(IDateTimeZone::class);
+		$this->userManager = $this->createMock(IUserManager::class);
 		$this->dateTimeZone->method('getTimeZone')->willReturn(new \DateTimeZone('UTC'));
 
 		$this->controller = $this->getController();
@@ -112,6 +115,7 @@ class APIv2ControllerTest extends TestCase {
 				$this->infoCache,
 				$this->notificationManager,
 				$this->dateTimeZone,
+				$this->userManager,
 			);
 		}
 
@@ -130,6 +134,7 @@ class APIv2ControllerTest extends TestCase {
 				$this->infoCache,
 				$this->notificationManager,
 				$this->dateTimeZone,
+				$this->userManager,
 			])
 			->onlyMethods($methods)
 			->getMock();
@@ -585,6 +590,82 @@ class APIv2ControllerTest extends TestCase {
 		// Surfaced rather than hidden, so the client can mark where the data
 		// stops being complete instead of drawing understated columns
 		$this->assertSame('2024-03-02', $data['partial_before']);
+	}
+
+	public function testGetActorsResolvesDisplayNamesAndSortsByThem(): void {
+		$this->data->method('validateFilter')->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
+		$this->userSession->method('getUser')->willReturn($userMock);
+
+		$this->data->expects($this->once())
+			->method('getActors')
+			->with($this->userSettings, 'testuser', 'all', '', 0)
+			->willReturn(['alice', 'bob']);
+		$this->userManager->method('getDisplayName')
+			->willReturnMap([['alice', 'Zoe Alice'], ['bob', 'Bob']]);
+
+		$result = $this->controller->getActors('all');
+
+		$this->assertSame(Http::STATUS_OK, $result->getStatus());
+		// Sorted by what the reader sees, not by the account name behind it
+		$this->assertSame([
+			['id' => 'bob', 'displayName' => 'Bob'],
+			['id' => 'alice', 'displayName' => 'Zoe Alice'],
+		], $result->getData());
+	}
+
+	public function testGetActorsKeepsAccountsWithoutADisplayName(): void {
+		$this->data->method('validateFilter')->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
+		$this->userSession->method('getUser')->willReturn($userMock);
+
+		$this->data->method('getActors')->willReturn(['deleted-account']);
+		// Deleted and non-local accounts resolve to null, but their activities
+		// are still in the stream and still filterable
+		$this->userManager->method('getDisplayName')->willReturn(null);
+
+		$data = $this->controller->getActors('all')->getData();
+
+		$this->assertSame([['id' => 'deleted-account', 'displayName' => 'deleted-account']], $data);
+	}
+
+	public function testGetActorsIgnoresAHalfGivenObject(): void {
+		$this->data->method('validateFilter')->willReturnArgument(0);
+		$userMock = $this->createMock(IUser::class);
+		$userMock->method('getUID')->willReturn('testuser');
+		$this->userSession->method('getUser')->willReturn($userMock);
+
+		$this->data->expects($this->once())
+			->method('getActors')
+			->with($this->userSettings, 'testuser', 'all', '', 0)
+			->willReturn([]);
+
+		$this->controller->getActors('all', 'files');
+	}
+
+	public function testGetActorsRejectsAnUnknownFilter(): void {
+		$this->data->expects($this->once())
+			->method('validateFilter')
+			->willReturn('all');
+		$this->data->expects($this->never())
+			->method('getActors');
+
+		$result = $this->controller->getActors('not-a-filter');
+
+		$this->assertSame(Http::STATUS_NOT_FOUND, $result->getStatus());
+	}
+
+	public function testGetActorsRequiresALoggedInUser(): void {
+		$this->data->method('validateFilter')->willReturnArgument(0);
+		$this->userSession->method('getUser')->willReturn(null);
+		$this->data->expects($this->never())
+			->method('getActors');
+
+		$result = $this->controller->getActors('all');
+
+		$this->assertSame(Http::STATUS_FORBIDDEN, $result->getStatus());
 	}
 
 	public static function dataParameters(): array {

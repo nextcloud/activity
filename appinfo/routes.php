@@ -15,6 +15,7 @@ return [
 		// Before the catch-all below, and a sub-path of it so `{filter}` cannot
 		// swallow it either way
 		['name' => 'APIv2#getHistogram', 'url' => '/api/v2/activity/{filter}/histogram', 'verb' => 'GET'],
+		['name' => 'APIv2#getActors', 'url' => '/api/v2/activity/{filter}/actors', 'verb' => 'GET'],
 		['name' => 'APIv2#getFilter', 'url' => '/api/v2/activity/{filter}', 'verb' => 'GET'],
 	],
 	'routes' => [

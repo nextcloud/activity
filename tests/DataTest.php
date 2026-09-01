@@ -538,14 +538,14 @@ class DataTest extends TestCase {
 	/**
 	 * Insert one activity for the given user at the given moment.
 	 */
-	private function insertActivityAt(string $affectedUser, int $timestamp): void {
+	private function insertActivityAt(string $affectedUser, int $timestamp, string $author = 'author'): void {
 		$query = $this->dbConnection->getQueryBuilder();
 		$query->insert('activity')
 			->values([
 				'app' => $query->createNamedParameter('test'),
 				'type' => $query->createNamedParameter('file_changed'),
 				'affecteduser' => $query->createNamedParameter($affectedUser),
-				'user' => $query->createNamedParameter('author'),
+				'user' => $query->createNamedParameter($author),
 				'timestamp' => $query->createNamedParameter($timestamp, IQueryBuilder::PARAM_INT),
 				'subject' => $query->createNamedParameter('subject'),
 				'subjectparams' => $query->createNamedParameter('[]'),
@@ -635,6 +635,60 @@ class DataTest extends TestCase {
 		$this->assertSame(['2024-03-20' => 1], $result['counts']);
 
 		$this->deleteTestActivities();
+	}
+
+	public function testGetActorsListsEveryAuthorInTheStream(): void {
+		$this->deleteTestActivities();
+		$user = self::getUniqueID('actors');
+		$time = time();
+
+		$this->insertActivityAt($user, $time, 'charlie');
+		$this->insertActivityAt($user, $time - 10, 'alice');
+		// A second activity by the same author is one entry, not two
+		$this->insertActivityAt($user, $time - 20, 'alice');
+		// Another account's stream must not leak into this one
+		$this->insertActivityAt(self::getUniqueID('other'), $time, 'mallory');
+
+		$actors = $this->getUnfilteredData()->getActors($this->getHistogramUserSettings(), $user, 'all');
+
+		$this->assertSame(['alice', 'charlie'], $actors);
+
+		$this->deleteTestActivities();
+	}
+
+	public function testGetActorsIsUnaffectedByTheDateOfTheActivity(): void {
+		$this->deleteTestActivities();
+		$user = self::getUniqueID('actors');
+
+		// An author whose only activity is old still has to be offerable, or a
+		// reader could never filter their way back to it
+		$this->insertActivityAt($user, time() - (300 * 86400), 'alice');
+
+		$actors = $this->getUnfilteredData()->getActors($this->getHistogramUserSettings(), $user, 'all');
+
+		$this->assertSame(['alice'], $actors);
+
+		$this->deleteTestActivities();
+	}
+
+	public function testGetActorsSkipsActivitiesWithoutAnAuthor(): void {
+		$this->deleteTestActivities();
+		$user = self::getUniqueID('actors');
+		$time = time();
+
+		$this->insertActivityAt($user, $time, '');
+		$this->insertActivityAt($user, $time - 10, 'alice');
+
+		$actors = $this->getUnfilteredData()->getActors($this->getHistogramUserSettings(), $user, 'all');
+
+		$this->assertSame(['alice'], $actors);
+
+		$this->deleteTestActivities();
+	}
+
+	public function testGetActorsRejectsAnEmptyUser(): void {
+		$this->expectException(\OutOfBoundsException::class);
+		$this->getUnfilteredData()->getActors($this->getHistogramUserSettings(), '', 'all');
 	}
 
 	public function testGetDailyCountsRejectsAnEmptyUser(): void {

@@ -96,6 +96,7 @@ import ActivityFilterBar from '../components/ActivityFilterBar.vue'
 import ActivityGroup from '../components/ActivityGroup.vue'
 import appIconSVG from '../../img/activity-dark.svg?raw'
 import ActivityModel from '../models/ActivityModel.ts'
+import { fetchStreamActors } from '../utils/actors.ts'
 import {
 	endOfDayTimestamp,
 	formatDateParameter,
@@ -149,7 +150,13 @@ const dateTo = ref<Date | null>(parseDateParameter(route.query.to))
 const actorFilter = ref(typeof route.query.actor === 'string' ? route.query.actor.trim() : '')
 
 /**
- * Accounts seen in the activities loaded so far, keyed by account name.
+ * Accounts that can be filtered by, keyed by account name.
+ *
+ * Seeded from the stream's account list, so every account the stream contains
+ * can be picked and not just the ones behind the activities currently loaded,
+ * then topped up from the activities as they come in — that covers accounts
+ * beyond the server's cap, and keeps the dropdown usable if the list request
+ * failed.
  *
  * Accumulated rather than derived from the current page: once an account has
  * been filtered to, the stream only contains that account, and a derived list
@@ -176,6 +183,42 @@ function rememberActors(activities: ActivityModel[]) {
 		if (activity.user !== '' && !knownActors.value.has(activity.user)) {
 			knownActors.value.set(activity.user, activity.authorDisplayName)
 		}
+	}
+}
+
+/**
+ * AbortController for the in-flight account list request, so a filter change
+ * cannot apply the previous stream's accounts to the new one.
+ */
+let actorsController = new AbortController()
+
+/**
+ * Load the accounts behind the whole stream, not just the loaded page.
+ *
+ * Failures are logged and otherwise ignored: the dropdown still works off the
+ * accounts collected from the activities themselves, so a missing list is a
+ * shorter set of options rather than a broken filter.
+ */
+async function loadActors() {
+	// Its own controller rather than the stream's: narrowing the stream aborts
+	// the in-flight activity requests, and the account list is deliberately
+	// unaffected by that narrowing, so it must not be cancelled along with them
+	actorsController.abort()
+	actorsController = new AbortController()
+	const { signal } = actorsController
+	try {
+		const actors = await fetchStreamActors(props.filter, signal)
+		if (signal.aborted) {
+			return
+		}
+		for (const actor of actors) {
+			knownActors.value.set(actor.id, actor.displayName)
+		}
+	} catch (error) {
+		if (axios.isCancel(error)) {
+			return
+		}
+		logger.error('Could not load the accounts to filter by', { error })
 	}
 }
 
@@ -433,12 +476,14 @@ function stopPolling() {
  */
 onMounted(() => {
 	loadActivities()
+	loadActors()
 	startPolling()
 })
 
 onUnmounted(() => {
 	stopPolling()
 	requestController.abort()
+	actorsController.abort()
 })
 
 watch(visibility, (value) => {
@@ -473,6 +518,7 @@ watch(props, () => {
 	// A different stream can involve entirely different accounts
 	knownActors.value.clear()
 	resetAndReload()
+	loadActors()
 })
 
 /**
