@@ -84,21 +84,18 @@ class CurrentUserTest extends TestCase {
 
 	public static function dataGetUserIdentifier(): array {
 		return [
-			[null, null, null, ''],
-			[null, 'uid', '-1', 'uid'],
-			[null, null, 'token', 'token'],
-			['cached', -1, -1, 'cached'],
+			[null, null, ''],
+			['uid', '-1', 'uid'],
+			[null, 'token', 'token'],
 		];
 	}
 
 	#[DataProvider('dataGetUserIdentifier')]
-	public function testGetUserIdentifier(?string $cachedIdentifier, string|int|null $uidResult, ?string $tokenResult, string $expected): void {
+	public function testGetUserIdentifier(string|int|null $uidResult, ?string $tokenResult, string $expected): void {
 		$instance = $this->getInstance([
 			'getUID',
 			'getCloudIDFromToken',
 		]);
-
-		self::invokePrivate($instance, 'identifier', [$cachedIdentifier]);
 
 		$instance->expects($uidResult !== -1 ? $this->once() : $this->never())
 			->method('getUID')
@@ -152,7 +149,6 @@ class CurrentUserTest extends TestCase {
 			return $share[0];
 		}
 		[$type, $shareWith] = $share;
-
 
 		$share = $this->createMock(IShare::class);
 		$share->expects($this->once())
