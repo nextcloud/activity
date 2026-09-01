@@ -150,7 +150,6 @@ class CurrentUserTest extends TestCase {
 		}
 		[$type, $shareWith] = $share;
 
-
 		$share = $this->createMock(IShare::class);
 		$share->expects($this->once())
 			->method('getShareType')
