@@ -1093,7 +1093,9 @@ class FilesHooks {
 		$query = $queryBuilder->executeQuery();
 
 		while ($row = $query->fetch()) {
-			$affectedUsers[$row['share_with']] = $row['file_target'];
+			if ($row['share_with'] !== null) {
+				$affectedUsers[$row['share_with']] = $row['file_target'];
+			}
 		}
 
 		return $affectedUsers;
