@@ -7,6 +7,7 @@
 
 namespace OCA\Activity;
 
+use OCP\Activity\IManager as IActivityManager;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserSession;
@@ -22,6 +23,7 @@ class CurrentUser {
 		protected readonly IRequest $request,
 		protected readonly IManager $shareManager,
 		protected readonly IFactory $l10nFactory,
+		protected readonly IActivityManager $activityManager,
 	) {
 	}
 
@@ -53,9 +55,23 @@ class CurrentUser {
 	}
 
 	/**
-	 * Get the current user id from the session
+	 * Get the current user id
+	 *
+	 * Apps can override who an action is attributed to with
+	 * IManager::setCurrentUserId(). That is the only way to name an actor when the
+	 * action happens outside of that user's session, e.g. from a background job.
+	 * Without an override this is the user of the session, as before.
 	 */
 	public function getUID(): ?string {
+		try {
+			$userId = $this->activityManager->getCurrentUserId();
+			if ($userId !== '') {
+				return $userId;
+			}
+		} catch (\UnexpectedValueException) {
+			// Neither a session nor a valid feed token, fall back to the session below
+		}
+
 		$user = $this->userSession->getUser();
 		if ($user instanceof IUser) {
 			return $user->getUID();

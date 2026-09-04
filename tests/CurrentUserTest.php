@@ -24,6 +24,7 @@ namespace OCA\Activity\Tests;
 
 use Exception;
 use OCA\Activity\CurrentUser;
+use OCP\Activity\IManager as IActivityManager;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserSession;
@@ -49,6 +50,7 @@ class CurrentUserTest extends TestCase {
 	protected IUserSession&MockObject $userSession;
 	protected IManager&MockObject $shareManager;
 	protected IFactory&MockObject $l10nFactory;
+	protected IActivityManager&MockObject $activityManager;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -57,6 +59,7 @@ class CurrentUserTest extends TestCase {
 		$this->userSession = $this->createMock(IUserSession::class);
 		$this->shareManager = $this->createMock(IManager::class);
 		$this->l10nFactory = $this->createMock(IFactory::class);
+		$this->activityManager = $this->createMock(IActivityManager::class);
 
 		$this->request->method('getScriptName')->willReturn('/public.php');
 	}
@@ -68,6 +71,7 @@ class CurrentUserTest extends TestCase {
 				$this->request,
 				$this->shareManager,
 				$this->l10nFactory,
+				$this->activityManager,
 			);
 		}
 
@@ -77,6 +81,7 @@ class CurrentUserTest extends TestCase {
 				$this->request,
 				$this->shareManager,
 				$this->l10nFactory,
+				$this->activityManager,
 			])
 			->onlyMethods($methods)
 			->getMock();
@@ -139,6 +144,28 @@ class CurrentUserTest extends TestCase {
 			->willReturn($user);
 
 		$this->assertSame($expected, $instance->getUID());
+	}
+
+	public function testGetUIDUsesTheActivityManagerOverride(): void {
+		$this->activityManager->method('getCurrentUserId')
+			->willReturn('attributed-user');
+		$this->userSession->expects($this->never())
+			->method('getUser');
+
+		$instance = $this->getInstance();
+		$this->assertSame('attributed-user', $instance->getUID());
+	}
+
+	public function testGetUIDFallsBackToTheSessionWithoutAToken(): void {
+		$this->activityManager->method('getCurrentUserId')
+			->willThrowException(new \UnexpectedValueException('The token is invalid'));
+
+		$instance = $this->getInstance();
+		$this->userSession->expects($this->once())
+			->method('getUser')
+			->willReturn($this->getUserMock('session-user'));
+
+		$this->assertSame('session-user', $instance->getUID());
 	}
 
 	protected function getShareMock(array $share): IShare|Exception|null {
