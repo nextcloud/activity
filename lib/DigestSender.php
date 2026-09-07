@@ -55,13 +55,22 @@ class DigestSender {
 			$timezone = (!empty($userTimezones[$user])) ? $userTimezones[$user] : $defaultTimeZone;
 
 			// Check if the user's timezone is after 6am already
-			if (!isset($timezoneDigestDay[$timezone])) {
-				$timezoneDate = new \DateTime('now', new \DateTimeZone($timezone));
-				if ($timezoneDate->format('H') < 6) {
-					// Still before 6am, so dont send yet.
-					$timezoneDate->sub(new \DateInterval('P1D'));
+			if (!array_key_exists($timezone, $timezoneDigestDay)) {
+				try {
+					$timezoneDate = new \DateTime('now', new \DateTimeZone($timezone));
+					if ($timezoneDate->format('H') < 6) {
+						// Still before 6am, so dont send yet.
+						$timezoneDate->sub(new \DateInterval('P1D'));
+					}
+					$timezoneDigestDay[$timezone] = $timezoneDate->format('Y.m.d');
+				} catch (\Exception $e) {
+					// A single broken user timezone must not abort the whole run
+					$this->logger->warning('Invalid timezone "' . $timezone . '", skipping digest', ['exception' => $e]);
+					$timezoneDigestDay[$timezone] = null;
 				}
-				$timezoneDigestDay[$timezone] = $timezoneDate->format('Y.m.d');
+			}
+			if ($timezoneDigestDay[$timezone] === null) {
+				continue;
 			}
 
 			$userDigestDate = $digestDate[$user] ?? '';
@@ -73,6 +82,10 @@ class DigestSender {
 			if (is_null($userObject)) {
 				// User does not exist
 				$this->logger->info("User $user could not be found when sending user digest emails");
+				continue;
+			}
+			if (empty($userObject->getEMailAddress())) {
+				$this->updateLastSentForUser($userObject, $now);
 				continue;
 			}
 			if (!$userObject->isEnabled()) {
@@ -236,7 +249,7 @@ class DigestSender {
 			}
 
 			if (isset($parameter['link'])) {
-				$replacements[] = '<a href="' . $parameter['link'] . '">' . htmlspecialchars($replacement) . '</a>';
+				$replacements[] = '<a href="' . htmlspecialchars((string)$parameter['link'], ENT_QUOTES) . '">' . htmlspecialchars($replacement) . '</a>';
 			} else {
 				$replacements[] = '<strong>' . htmlspecialchars($replacement) . '</strong>';
 			}
