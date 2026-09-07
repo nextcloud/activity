@@ -814,8 +814,8 @@ class FilesHooks {
 			return;
 		}
 
+		$this->teamManager->startSuperSession();
 		try {
-			$this->teamManager->startSuperSession();
 			$team = $this->teamManager->getCircle($shareWith);
 			$members = $team->getInheritedMembers();
 			$members = array_filter($members, fn ($member) => $member->getUserType() === Member::TYPE_USER);
@@ -824,6 +824,8 @@ class FilesHooks {
 			$this->logger->debug('Fetching team members for share activity failed', ['exception' => $e]);
 			// error in teams app - setting users list to empty
 			$userIds = [];
+		} finally {
+			$this->teamManager->stopSession();
 		}
 
 		// Activity for user performing the share
