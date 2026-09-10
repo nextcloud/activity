@@ -42,8 +42,7 @@ class Consumer implements IConsumer, IBulkConsumer {
 	public function receive(IEvent $event): void {
 		$selfAction = $event->getAffectedUser() === $event->getAuthor();
 		$notificationSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'notification', $event->getType());
-		$emailSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'email', $event->getType());
-		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'batchtime') : false;
+		$emailSetting = $this->userSettings->getEmailBatchTimeSetting($event->getAffectedUser(), $event->getType());
 
 		$activityId = $this->data->send($event);
 
