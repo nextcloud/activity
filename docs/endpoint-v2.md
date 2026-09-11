@@ -265,3 +265,53 @@ timestamp range, which is exactly the `activity_user_time` index. Bucketing into
 days happens in PHP rather than in SQL: grouping by day needs integer division or
 a modulo, neither of which `IQueryBuilder` can express, and a raw expression
 would have to be written four different ways for the databases this app supports.
+
+# Stream accounts
+
+`GET /ocs/v2.php/apps/activity/api/v2/activity/{filter}/actors`
+
+The accounts that authored activities in the stream, for the "filter by account"
+control. Derived from the stream itself rather than from the instance's account
+list, so it only ever names accounts the caller already sees activities from and
+picking one always yields results.
+
+Name | Type | Description
+---|---|---
+`object_type` / `object_id` | (Optional) | As on the stream endpoint, and only together
+
+Deliberately takes no `search`, `from`/`to` or `actor`. This is the list a
+restriction is picked *from*, so narrowing the stream must not narrow it — a
+list that shrank to the accounts left in the current result would only be able
+to offer what is already on screen. The filter and the object restriction are
+honoured, because those select a different stream rather than narrow this one.
+
+At most 100 accounts are returned, ordered by account name.
+
+## Response
+
+```json
+[
+  { "id": "alice", "displayName": "Alice Cooper" },
+  { "id": "bob", "displayName": "Bob" }
+]
+```
+
+Name | Description
+---|---
+`id` | The account name, to be passed back as the stream's `actor` parameter
+`displayName` | Human readable name, falling back to the account name for deleted and non-local accounts, whose activities stay in the stream and stay filterable
+
+## HTTP Status
+
+Status Code | Description
+---|---
+`200 OK` | The accounts
+`403 Forbidden` | The user is not logged in
+`404 Not Found` | The filter is unknown
+
+## Cost
+
+One indexed column, restricted to a single `affecteduser` and read in account
+name order, which is the `activity_filter_by` (affecteduser, user, timestamp)
+index. The result cap is applied in SQL, so the database stops reading as soon
+as it is met.
