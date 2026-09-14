@@ -6,7 +6,7 @@
 import { test, expect } from '@playwright/test'
 import { createRandomUser, login } from '@nextcloud/e2e-test-server/playwright'
 import { createFolder, getFileListRow, moveFile, navigateToFolder, renameFile } from './filesUtils.ts'
-import { addTag, closeToasts, createPublicShare, randHash, showActivityTab, toggleFavorite } from './sidebarUtils.ts'
+import { addTag, createPublicShare, randHash, showActivityTab, toggleFavorite } from './sidebarUtils.ts'
 
 // Each test gets a fresh user so activity logs are clean and isolated.
 test.beforeEach(async ({ page }) => {
@@ -51,7 +51,6 @@ test('Has rename activity', async ({ page }) => {
 test('Has move activity', async ({ page }) => {
 	await createFolder(page, 'Test folder')
 	await moveFile(page, 'welcome.txt', 'Test folder')
-	await closeToasts(page)
 	await navigateToFolder(page, 'Test folder')
 	await showActivityTab(page, 'welcome.txt')
 	await expect(page.locator('.activity-entry').first()).toContainText('You moved')
