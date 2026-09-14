@@ -27,6 +27,7 @@ use OCA\Activity\ViewInfoCache;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
+use OCP\Files\IUserFolder;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -230,7 +231,7 @@ class ViewInfoCacheTest extends TestCase {
 
 	#[DataProvider('dataFindInfoById')]
 	public function testFindInfoById(string $user, int $fileId, string $filename, ?string $path, ?string $pathTrash, string $isDirPath, bool $isDir, array $expected, array $expectedCache): void {
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 
 		$this->rootFolder
 			->method('getUserFolder')
