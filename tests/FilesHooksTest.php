@@ -38,6 +38,7 @@ use OCP\Files\Config\IUserMountCache;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
+use OCP\Files\IUserFolder;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\IConfig;
@@ -933,7 +934,7 @@ class FilesHooksTest extends TestCase {
 		if ($nodeFound) {
 			$this->rootFolder->method('getUserFolder')
 				->willReturnCallback(function (string $userId) {
-					$userFolder = $this->createMock(Folder::class);
+					$userFolder = $this->createMock(IUserFolder::class);
 					$resolvedNode = $this->getNodeMock(42, "/$userId/files/source-path");
 					$userFolder->method('getById')
 						->with(42)
@@ -977,7 +978,7 @@ class FilesHooksTest extends TestCase {
 
 		// The owner's view of the subfolder (resolved by file ID 99)
 		$ownerSubfolder = $this->getNodeMock(99, '/admin/files/ParentFolder/Subfolder', false);
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('getById')
 			->with(99)
 			->willReturn([$ownerSubfolder]);
@@ -1148,7 +1149,7 @@ class FilesHooksTest extends TestCase {
 	}
 
 	public function testGetUserPathsFromPathFileNotFound(): void {
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')
 			->with('/test/path')
 			->willThrowException(new NotFoundException());
@@ -1164,7 +1165,7 @@ class FilesHooksTest extends TestCase {
 	}
 
 	public function testGetUserPathsFromPathNotANode(): void {
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')
 			->with('/test/path')
 			->willReturn(null);
@@ -1184,7 +1185,7 @@ class FilesHooksTest extends TestCase {
 		$node->method('getPath')
 			->willReturn('/owner/files/test/path');
 
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')
 			->with('/test/path')
 			->willReturn($node);
@@ -1218,7 +1219,7 @@ class FilesHooksTest extends TestCase {
 
 	private function mockNodeNotDeleted(string $owner, int $nodeId): void {
 		$node = $this->createMock(File::class);
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('getFirstNodeById')->with($nodeId)->willReturn($node);
 		$this->rootFolder->method('getUserFolder')->with($owner)->willReturn($userFolder);
 	}
