@@ -12,11 +12,8 @@ namespace OCA\Activity;
  * The class to handle the filesystem hooks
  */
 class FilesHooksStatic {
-	/**
-	 * @return FilesHooks
-	 */
-	protected static function getHooks() {
-		return \OC::$server->query(FilesHooks::class);
+	protected static function getHooks(): FilesHooks {
+		return \OCP\Server::get(FilesHooks::class);
 	}
 
 	/**
