@@ -29,6 +29,7 @@ use OCP\IPreview;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUser;
+use OCP\IUserManager;
 use OCP\IUserSession;
 use OCP\Notification\IManager as INotificationManager;
 
@@ -70,6 +71,7 @@ class APIv2Controller extends OCSController {
 		protected ViewInfoCache $infoCache,
 		protected INotificationManager $notificationManager,
 		protected IDateTimeZone $dateTimeZone,
+		protected IUserManager $userManager,
 	) {
 		parent::__construct($appName, $request);
 		$this->activityManager = $activityManager;
@@ -223,6 +225,56 @@ class APIv2Controller extends OCSController {
 			'total' => array_sum($counts),
 			'partial_before' => $histogram['partialBefore'],
 		]);
+	}
+
+	/**
+	 * The accounts that authored activities in the viewer's stream.
+	 *
+	 * Backs the stream's "filter by account" dropdown, which would otherwise only
+	 * be able to offer the accounts behind the activities already on screen —
+	 * that is, the ones the reader can see anyway. Accounts that have been quiet
+	 * in this stream are found by the picker through core's autocomplete, so this
+	 * list stays the set that has something to show.
+	 *
+	 * Deliberately ignores `search`, `from`/`to` and `actor`: this is the list a
+	 * restriction is picked *from*, so narrowing the stream must not narrow it.
+	 *
+	 * @param string $filter The stream filter to list the accounts of
+	 *
+	 * @return DataResponse<Http::STATUS_OK, list<array{id: string, displayName: string}>, array{}>|DataResponse<Http::STATUS_FORBIDDEN|Http::STATUS_NOT_FOUND, list<empty>, array{}>
+	 */
+	#[NoAdminRequired]
+	public function getActors(string $filter, string $object_type = '', int $object_id = 0): DataResponse {
+		if ($filter !== $this->data->validateFilter($filter)) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		}
+
+		$user = $this->userSession->getUser();
+		if (!$user instanceof IUser) {
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
+		}
+
+		if (($object_type !== '' && $object_id === 0) || ($object_type === '' && $object_id !== 0)) {
+			// Only allowed together (mirrors validateParameters())
+			$object_type = '';
+			$object_id = 0;
+		}
+
+		$actors = $this->data->getActors($this->settings, $user->getUID(), $filter, $object_type, $object_id);
+
+		$actors = array_map(function (string $actor): array {
+			// Deleted accounts, and authors that were never local ones, keep the
+			// account name as their label rather than dropping out of the list:
+			// their activities are still in the stream and still filterable
+			return [
+				'id' => $actor,
+				'displayName' => $this->userManager->getDisplayName($actor) ?? $actor,
+			];
+		}, $actors);
+
+		usort($actors, static fn (array $a, array $b): int => strcasecmp($a['displayName'], $b['displayName']));
+
+		return new DataResponse($actors);
 	}
 
 	/**
