@@ -20,12 +20,6 @@ export async function closeSidebar(page: Page) {
 	await expect(page.locator('[data-cy-sidebar]')).not.toBeVisible()
 }
 
-export async function closeToasts(page: Page) {
-	for (const btn of await page.locator('button.toast-close').all()) {
-		await btn.click()
-	}
-}
-
 export async function showActivityTab(page: Page, fileName: string) {
 	const activitiesResponse = page.waitForResponse(/\/ocs\/v2\.php\/apps\/activity\/api\/v2\/activity\/filter/)
 
@@ -41,7 +35,6 @@ export async function toggleFavorite(page: Page, fileName: string) {
 	const tagResponse = page.waitForResponse(/\/index\.php\/apps\/files\/api\/v1\/files\//)
 	await toggleMenuAction(page, fileName, 'favorite')
 	await tagResponse
-	await page.locator('.toast-close').click()
 }
 
 export async function createPublicShare(page: Page, fileName: string) {
