@@ -615,15 +615,8 @@ class Data {
 
 	/**
 	 * Verify that the filter is valid
-	 *
-	 * @param string $filterValue
-	 * @return string
 	 */
-	public function validateFilter($filterValue) {
-		if (!isset($filterValue)) {
-			return 'all';
-		}
-
+	public function validateFilter(string $filterValue): string {
 		switch ($filterValue) {
 			case 'filter':
 				return $filterValue;
