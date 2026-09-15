@@ -96,6 +96,9 @@ class FeedControllerTest extends TestCase {
 		$this->data
 			->method('get')
 			->willReturn(['data' => []]);
+		$this->data
+			->method('validateFilter')
+			->willReturn('all');
 		if ($acceptHeader !== null) {
 			$this->request
 				->method('getHeader')
