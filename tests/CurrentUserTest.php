@@ -26,6 +26,7 @@ use Exception;
 use OCA\Activity\CurrentUser;
 use OCP\Activity\IManager as IActivityManager;
 use OCP\IRequest;
+use OCP\IUser;
 use OCP\IUserSession;
 use OCP\L10N\IFactory;
 use OCP\Share\Exceptions\ShareNotFound;
@@ -202,5 +203,24 @@ class CurrentUserTest extends TestCase {
 		}
 
 		$this->assertSame($expected, self::invokePrivate($instance, 'getCloudIDFromToken'));
+	}
+
+	public function testGetCloudIdFromUser(): void {
+		$user = $this->createMock(IUser::class);
+		$user->method('getCloudId')->willReturn('user@cloud.example.com');
+		$this->userSession->method('getUser')->willReturn($user);
+
+		$instance = $this->getInstance();
+
+		$this->assertSame('user@cloud.example.com', $instance->getCloudId());
+	}
+
+	public function testGetCloudIdFallsBackToToken(): void {
+		$this->userSession->method('getUser')->willReturn(null);
+
+		$instance = $this->getInstance(['getCloudIDFromToken']);
+		$instance->method('getCloudIDFromToken')->willReturn('token-cloud-id');
+
+		$this->assertSame('token-cloud-id', $instance->getCloudId());
 	}
 }

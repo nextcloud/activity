@@ -81,9 +81,9 @@ class CurrentUser {
 		$user = $this->userSession->getUser();
 		if ($user instanceof IUser) {
 			return $user->getCloudId();
-		} else {
-			return $this->getCloudIDFromToken();
 		}
+
+		return $this->getCloudIDFromToken();
 	}
 
 	/**
