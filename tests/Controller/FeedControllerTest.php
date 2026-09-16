@@ -83,7 +83,6 @@ class FeedControllerTest extends TestCase {
 		);
 	}
 
-
 	public static function showData(): array {
 		return [
 			['application/rss+xml', 'application/rss+xml'],
@@ -97,6 +96,9 @@ class FeedControllerTest extends TestCase {
 		$this->data
 			->method('get')
 			->willReturn(['data' => []]);
+		$this->data
+			->method('validateFilter')
+			->willReturn('all');
 		if ($acceptHeader !== null) {
 			$this->request
 				->method('getHeader')
@@ -142,6 +144,54 @@ class FeedControllerTest extends TestCase {
 		$l = Util::getL10N('activity');
 		$description = $l->t('Your feed URL is invalid');
 		$this->assertStringContainsString($description, $renderedResponse);
+	}
+
+	public function testShowWithFilter(): void {
+		$this->mockUserSession('test');
+		$this->data
+			->method('validateFilter')
+			->with('files')
+			->willReturn('files');
+		$this->data
+			->expects($this->once())
+			->method('get')
+			->with($this->helper, $this->userSettings, 'test', 0, FeedController::DEFAULT_PAGE_SIZE, 'desc', 'files')
+			->willReturn(['data' => []]);
+
+		$templateResponse = $this->controller->show('files');
+		$this->assertInstanceOf(TemplateResponse::class, $templateResponse);
+	}
+
+	public function testShowWithInvalidFilter(): void {
+		$this->mockUserSession('test');
+		$this->data
+			->method('validateFilter')
+			->with('invalid_filter')
+			->willReturn('all');
+		$this->data
+			->expects($this->once())
+			->method('get')
+			->with($this->helper, $this->userSettings, 'test', 0, FeedController::DEFAULT_PAGE_SIZE, 'desc', 'all')
+			->willReturn(['data' => []]);
+
+		$templateResponse = $this->controller->show('invalid_filter');
+		$this->assertInstanceOf(TemplateResponse::class, $templateResponse);
+	}
+
+	public function testShowDefaultsToAllFilter(): void {
+		$this->mockUserSession('test');
+		$this->data
+			->method('validateFilter')
+			->with('all')
+			->willReturn('all');
+		$this->data
+			->expects($this->once())
+			->method('get')
+			->with($this->helper, $this->userSettings, 'test', 0, FeedController::DEFAULT_PAGE_SIZE, 'desc', 'all')
+			->willReturn(['data' => []]);
+
+		$templateResponse = $this->controller->show();
+		$this->assertInstanceOf(TemplateResponse::class, $templateResponse);
 	}
 
 	protected function mockUserSession(string $user): void {

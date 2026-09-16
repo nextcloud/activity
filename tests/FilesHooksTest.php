@@ -38,6 +38,7 @@ use OCP\Files\Config\IUserMountCache;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
+use OCP\Files\IUserFolder;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\IConfig;
@@ -171,6 +172,8 @@ class FilesHooksTest extends TestCase {
 			['user', false, 'created_self', 'created_by', Files::TYPE_SHARE_CREATED],
 			['', true, '', 'created_public', Files_Sharing::TYPE_PUBLIC_UPLOAD],
 			['', false, 'created_self', 'created_by', Files::TYPE_SHARE_CREATED],
+			// logged-in user uploading to a public share link → treated as regular upload
+			['user', true, 'created_self', 'created_by', Files::TYPE_SHARE_CREATED],
 		];
 	}
 
@@ -486,6 +489,65 @@ class FilesHooksTest extends TestCase {
 		$this->assertEquals($addCalls, array_slice($receivedActivities, 0, count($addCalls)));
 	}
 
+	public function testFileMoveCollectsOldAccessList(): void {
+		$filesHooks = $this->getFilesHooks([
+			'getSourcePathAndOwner',
+			'getUserPathsFromPath',
+		]);
+
+		$filesHooks->expects($this->once())
+			->method('getSourcePathAndOwner')
+			->with('/folder')
+			->willReturn(['/folder', 'owner', 23]);
+		$filesHooks->expects($this->once())
+			->method('getUserPathsFromPath')
+			->with('/folder', 'owner')
+			->willReturn(['users' => ['user' => '/folder'], 'remotes' => []]);
+
+		$filesHooks->fileMove('/folder/file.txt', '/target/file.txt');
+
+		$this->assertSame('moveCross', self::invokePrivate($filesHooks, 'moveCase'));
+		$this->assertSame(['users' => ['user' => '/folder'], 'remotes' => []], self::invokePrivate($filesHooks, 'oldAccessList'));
+	}
+
+	public function testFileMoveOldPathNotResolvable(): void {
+		$filesHooks = $this->getFilesHooks([
+			'getSourcePathAndOwner',
+			'getUserPathsFromPath',
+			'fileRenaming',
+			'fileMoving',
+		]);
+
+		$filesHooks->expects($this->once())
+			->method('getSourcePathAndOwner')
+			->with('/folder')
+			->willThrowException(new NotFoundException('File with id "1337" has not been found.'));
+		$filesHooks->expects($this->never())
+			->method('getUserPathsFromPath');
+		$filesHooks->expects($this->never())
+			->method('fileRenaming');
+		$filesHooks->expects($this->never())
+			->method('fileMoving');
+
+		$filesHooks->fileMove('/folder/file.txt', '/target/file.txt');
+
+		$this->assertFalse(self::invokePrivate($filesHooks, 'moveCase'));
+
+		// the post hook must be a no-op instead of failing on the missing state
+		$filesHooks->fileMovePost('/folder/file.txt', '/target/file.txt');
+	}
+
+	public function testFileMovingWithoutOldAccessList(): void {
+		$filesHooks = $this->getFilesHooks([
+			'getSourcePathAndOwner',
+		]);
+
+		$filesHooks->expects($this->never())
+			->method('getSourcePathAndOwner');
+
+		self::invokePrivate($filesHooks, 'fileMoving', ['/folder/file.txt', '/target/file.txt']);
+	}
+
 	private function getNodeMock(int $fileId = 1337, string $path = 'path', bool $isFile = true): Node&MockObject {
 		if ($isFile) {
 			$node = $this->createMock(File::class);
@@ -720,8 +782,14 @@ class FilesHooksTest extends TestCase {
 
 		$this->settings->expects($this->exactly($settingCalls))
 			->method('filterUsersBySetting')
-			#->with($settingUsers, $this->anything(), Files_Sharing::TYPE_SHARED)
-			->willReturnMap($settingsReturn);
+			->willReturnCallback(function ($users, $method, $type) use ($settingsReturn): array {
+				foreach ($settingsReturn as [$u, $m, $t, $v]) {
+					if ($u === $users && $m === $method && $t === $type) {
+						return $v;
+					}
+				}
+				return [];
+			});
 
 		$filesHooks->expects($this->once())
 			->method('shareNotificationForSharer')
@@ -866,7 +934,7 @@ class FilesHooksTest extends TestCase {
 		if ($nodeFound) {
 			$this->rootFolder->method('getUserFolder')
 				->willReturnCallback(function (string $userId) {
-					$userFolder = $this->createMock(Folder::class);
+					$userFolder = $this->createMock(IUserFolder::class);
 					$resolvedNode = $this->getNodeMock(42, "/$userId/files/source-path");
 					$userFolder->method('getById')
 						->with(42)
@@ -910,7 +978,7 @@ class FilesHooksTest extends TestCase {
 
 		// The owner's view of the subfolder (resolved by file ID 99)
 		$ownerSubfolder = $this->getNodeMock(99, '/admin/files/ParentFolder/Subfolder', false);
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('getById')
 			->with(99)
 			->willReturn([$ownerSubfolder]);
@@ -970,6 +1038,31 @@ class FilesHooksTest extends TestCase {
 			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path', true, false, true, Files::TYPE_SHARE_CREATED, 'files', true],
 			['notAuthor', 'subject', ['parameter'], 0, 'path/subpath', 'path/subpath', false, false, true, Files::TYPE_SHARE_CREATED, 'files', true],
 		];
+	}
+
+	public function testAddNotificationsForUserSkipsInvalidEvent(): void {
+		$this->urlGenerator->method('linkToRouteAbsolute')
+			->willReturn('routeToFilesIndex');
+
+		$event = $this->createMock(IEvent::class);
+		$event->method('setApp')->willReturnSelf();
+		$event->method('setType')->willReturnSelf();
+		$event->method('setAffectedUser')->willReturnSelf();
+		$event->method('setTimestamp')->willReturnSelf();
+		$event->method('setSubject')
+			->willThrowException(new \InvalidArgumentException('invalid subject'));
+
+		$this->activityManager->expects($this->once())
+			->method('generateEvent')
+			->willReturn($event);
+
+		// A half-built event must never reach the stream or the mail queue
+		$this->data->expects($this->never())
+			->method('send');
+		$this->data->expects($this->never())
+			->method('storeMail');
+
+		self::invokePrivate($this->filesHooks, 'addNotificationsForUser', ['user1', 'subject', [], 42, '/file.txt', true, 3600, true, 'shared']);
 	}
 
 	#[DataProvider('dataAddNotificationsForUser')]
@@ -1081,7 +1174,7 @@ class FilesHooksTest extends TestCase {
 	}
 
 	public function testGetUserPathsFromPathFileNotFound(): void {
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')
 			->with('/test/path')
 			->willThrowException(new NotFoundException());
@@ -1097,7 +1190,7 @@ class FilesHooksTest extends TestCase {
 	}
 
 	public function testGetUserPathsFromPathNotANode(): void {
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')
 			->with('/test/path')
 			->willReturn(null);
@@ -1117,7 +1210,7 @@ class FilesHooksTest extends TestCase {
 		$node->method('getPath')
 			->willReturn('/owner/files/test/path');
 
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')
 			->with('/test/path')
 			->willReturn($node);
@@ -1138,5 +1231,86 @@ class FilesHooksTest extends TestCase {
 		$this->assertSame(['user1' => '/path1'], $result['users']);
 		$this->assertSame(['remote1' => ['token' => 'abc']], $result['remotes']);
 		$this->assertSame('/test/path', $result['ownerPath']);
+	}
+
+	private function getShareMock(string $nodeType, int $shareType, string $owner = 'owner', int $nodeId = 42): IShare&MockObject {
+		$share = $this->createMock(IShare::class);
+		$share->method('getNodeType')->willReturn($nodeType);
+		$share->method('getShareType')->willReturn($shareType);
+		$share->method('getShareOwner')->willReturn($owner);
+		$share->method('getNodeId')->willReturn($nodeId);
+		return $share;
+	}
+
+	private function mockNodeNotDeleted(string $owner, int $nodeId): void {
+		$node = $this->createMock(File::class);
+		$userFolder = $this->createMock(IUserFolder::class);
+		$userFolder->method('getFirstNodeById')->with($nodeId)->willReturn($node);
+		$this->rootFolder->method('getUserFolder')->with($owner)->willReturn($userFolder);
+	}
+
+	private function mockNodeDeleted(string $owner): void {
+		$this->rootFolder->method('getUserFolder')
+			->with($owner)
+			->willThrowException(new NotFoundException());
+	}
+
+	public function testUnShareIgnoresNonFileOrFolder(): void {
+		$filesHooks = $this->getFilesHooks(['unshareFromUser', 'unshareFromGroup', 'unshareLink']);
+		$share = $this->getShareMock('other', IShare::TYPE_USER);
+
+		$filesHooks->expects($this->never())->method('unshareFromUser');
+		$filesHooks->expects($this->never())->method('unshareFromGroup');
+		$filesHooks->expects($this->never())->method('unshareLink');
+
+		$filesHooks->unShare($share);
+	}
+
+	public function testUnShareIgnoresDeletedNode(): void {
+		$filesHooks = $this->getFilesHooks(['unshareFromUser', 'unshareFromGroup', 'unshareLink']);
+		$share = $this->getShareMock('file', IShare::TYPE_USER);
+		$this->mockNodeDeleted('owner');
+
+		$filesHooks->expects($this->never())->method('unshareFromUser');
+		$filesHooks->expects($this->never())->method('unshareFromGroup');
+		$filesHooks->expects($this->never())->method('unshareLink');
+
+		$filesHooks->unShare($share);
+	}
+
+	public function testUnShareUser(): void {
+		$filesHooks = $this->getFilesHooks(['unshareFromUser', 'unshareFromGroup', 'unshareLink']);
+		$share = $this->getShareMock('file', IShare::TYPE_USER);
+		$this->mockNodeNotDeleted('owner', 42);
+
+		$filesHooks->expects($this->once())->method('unshareFromUser')->with($share);
+		$filesHooks->expects($this->never())->method('unshareFromGroup');
+		$filesHooks->expects($this->never())->method('unshareLink');
+
+		$filesHooks->unShare($share);
+	}
+
+	public function testUnShareGroup(): void {
+		$filesHooks = $this->getFilesHooks(['unshareFromUser', 'unshareFromGroup', 'unshareLink']);
+		$share = $this->getShareMock('folder', IShare::TYPE_GROUP);
+		$this->mockNodeNotDeleted('owner', 42);
+
+		$filesHooks->expects($this->never())->method('unshareFromUser');
+		$filesHooks->expects($this->once())->method('unshareFromGroup')->with($share);
+		$filesHooks->expects($this->never())->method('unshareLink');
+
+		$filesHooks->unShare($share);
+	}
+
+	public function testUnShareLink(): void {
+		$filesHooks = $this->getFilesHooks(['unshareFromUser', 'unshareFromGroup', 'unshareLink']);
+		$share = $this->getShareMock('file', IShare::TYPE_LINK);
+		$this->mockNodeNotDeleted('owner', 42);
+
+		$filesHooks->expects($this->never())->method('unshareFromUser');
+		$filesHooks->expects($this->never())->method('unshareFromGroup');
+		$filesHooks->expects($this->once())->method('unshareLink')->with($share);
+
+		$filesHooks->unShare($share);
 	}
 }

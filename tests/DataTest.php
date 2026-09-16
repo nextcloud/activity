@@ -26,8 +26,11 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\AppInfo\Application;
 use OCA\Activity\Data;
+use OCA\Activity\UserSettings;
+use OCP\Activity\Exceptions\FilterNotFoundException;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\Files\IRootFolder;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IL10N;
@@ -50,6 +53,7 @@ class DataTest extends TestCase {
 	protected IManager $realActivityManager;
 	protected NullLogger $logger;
 	protected IConfig&MockObject $config;
+	protected IRootFolder&MockObject $rootFolder;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -61,12 +65,14 @@ class DataTest extends TestCase {
 
 		$activityManager = $this->createMock(IManager::class);
 		$this->config = $this->createMock(IConfig::class);
+		$this->rootFolder = $this->createMock(IRootFolder::class);
 
 		$this->data = new Data(
 			$activityManager,
 			$this->dbConnection,
 			$this->logger,
-			$this->config
+			$this->config,
+			$this->rootFolder,
 		);
 	}
 
@@ -341,9 +347,132 @@ class DataTest extends TestCase {
 
 		$this->assertEquals(1, $this->countActivitiesForAffectedUser($user1));
 		$this->assertEquals(1, $this->countActivitiesForAffectedUser($user2));
-		$this->data->deleteActivities(['affecteduser' => $user1]);
+		$this->data->deleteActivities([['affecteduser', $user1]]);
 		$this->assertEquals(0, $this->countActivitiesForAffectedUser($user1));
 		$this->assertEquals(1, $this->countActivitiesForAffectedUser($user2));
+		$this->deleteTestActivities();
+	}
+
+	public static function dataExcludedAuthor(): array {
+		return [
+			// author+type match → blocked
+			['alice', 'target', 'file_created', ['alice' => ['file_created']], false],
+			// type mismatch → allowed
+			['alice', 'target', 'file_created', ['alice' => ['file_deleted']], true],
+			// different user → allowed
+			['bob', 'target', 'file_created', ['alice' => ['file_created']], true],
+			// empty config → allowed
+			['alice', 'target', 'file_created', [], true],
+			// non-array rule → allowed
+			['alice', 'target', 'file_created', ['alice' => 'file_created'], true],
+		];
+	}
+
+	#[DataProvider('dataExcludedAuthor')]
+	public function testSendWithExcludedAuthor(string $author, string $affectedUser, string $type, array $excludedUsers, bool $expectedInsert): void {
+		$this->deleteTestActivities();
+
+		$this->config->method('getSystemValue')
+			->with('activity_log_exclude_users', [])
+			->willReturn($excludedUsers);
+
+		$event = $this->realActivityManager->generateEvent();
+		$event->setApp('test')
+			->setType($type)
+			->setAuthor($author)
+			->setAffectedUser($affectedUser)
+			->setSubject('subject');
+
+		$result = $this->data->send($event);
+		$this->assertSame($expectedInsert, $result !== 0);
+
+		$qb = $this->dbConnection->getQueryBuilder();
+		$row = $qb->select('user', 'affecteduser')
+			->from('activity')
+			->where($qb->expr()->eq('app', $qb->createNamedParameter('test')))
+			->orderBy('activity_id', 'DESC')
+			->executeQuery()
+			->fetch();
+
+		if ($expectedInsert) {
+			$this->assertEquals(['user' => $author, 'affecteduser' => $affectedUser], $row);
+		} else {
+			$this->assertFalse($row);
+		}
+
+		$this->deleteTestActivities();
+	}
+
+	#[DataProvider('dataExcludedAuthor')]
+	public function testStoreMailWithExcludedAuthor(string $author, string $affectedUser, string $type, array $excludedUsers, bool $expectedInsert): void {
+		$this->deleteTestMails();
+
+		$this->config->method('getSystemValue')
+			->with('activity_log_exclude_users', [])
+			->willReturn($excludedUsers);
+
+		$time = time();
+		$event = $this->realActivityManager->generateEvent();
+		$event->setApp('test')
+			->setType($type)
+			->setAuthor($author)
+			->setAffectedUser($affectedUser)
+			->setSubject('subject')
+			->setTimestamp($time);
+
+		$this->assertSame($expectedInsert, $this->data->storeMail($event, $time + 10));
+
+		$qb = $this->dbConnection->getQueryBuilder();
+		$row = $qb->select('amq_latest_send', 'amq_affecteduser')
+			->from('activity_mq')
+			->where($qb->expr()->eq('amq_appid', $qb->createNamedParameter('test')))
+			->orderBy('mail_id', 'DESC')
+			->executeQuery()
+			->fetch();
+
+		if ($expectedInsert) {
+			$this->assertEquals(['amq_latest_send' => $time + 10, 'amq_affecteduser' => $affectedUser], $row);
+		} else {
+			$this->assertFalse($row);
+		}
+
+		$this->deleteTestMails();
+	}
+
+	#[DataProvider('dataExcludedAuthor')]
+	public function testBulkSendWithExcludedAuthor(string $author, string $_affectedUser, string $type, array $excludedUsers, bool $expectedInsert): void {
+		$this->deleteTestActivities();
+
+		$this->config->method('getSystemValue')
+			->with('activity_log_exclude_users', [])
+			->willReturn($excludedUsers);
+
+		$event = $this->realActivityManager->generateEvent();
+		$event->setApp('test')
+			->setType($type)
+			->setAuthor($author)
+			->setSubject('subject')
+			->setTimestamp(time());
+
+		$bulkUsers = ['user1', 'user2'];
+		$result = $this->data->bulkSend($event, $bulkUsers);
+
+		if ($expectedInsert) {
+			$this->assertCount(2, $result);
+			$this->assertEqualsCanonicalizing($bulkUsers, array_values($result));
+		} else {
+			$this->assertEmpty($result);
+		}
+
+		$qb = $this->dbConnection->getQueryBuilder();
+		$count = (int)$qb->select($qb->func()->count('activity_id', 'count'))
+			->from('activity')
+			->where($qb->expr()->eq('app', $qb->createNamedParameter('test')))
+			->executeQuery()
+			->fetch()['count'];
+
+		$this->assertSame($expectedInsert ? 2 : 0, $count);
+
 		$this->deleteTestActivities();
 	}
 
@@ -379,6 +508,145 @@ class DataTest extends TestCase {
 				'priority' => 1,
 			])
 			->executeStatement();
+	}
+
+	/**
+	 * A Data whose filter lookup always misses, so only the user and the date
+	 * window restrict the query. Keeps these tests about the day bucketing
+	 * rather than about the filter plumbing, which the stream tests cover.
+	 */
+	private function getUnfilteredData(): Data {
+		$activityManager = $this->createMock(IManager::class);
+		$activityManager->method('getFilterById')
+			->willThrowException(new FilterNotFoundException('all'));
+
+		return new Data(
+			$activityManager,
+			$this->dbConnection,
+			$this->logger,
+			$this->config,
+			$this->rootFolder,
+		);
+	}
+
+	private function getHistogramUserSettings(): UserSettings&MockObject {
+		$userSettings = $this->createMock(UserSettings::class);
+		$userSettings->method('getUserSetting')->willReturn(false);
+		return $userSettings;
+	}
+
+	/**
+	 * Insert one activity for the given user at the given moment.
+	 */
+	private function insertActivityAt(string $affectedUser, int $timestamp): void {
+		$query = $this->dbConnection->getQueryBuilder();
+		$query->insert('activity')
+			->values([
+				'app' => $query->createNamedParameter('test'),
+				'type' => $query->createNamedParameter('file_changed'),
+				'affecteduser' => $query->createNamedParameter($affectedUser),
+				'user' => $query->createNamedParameter('author'),
+				'timestamp' => $query->createNamedParameter($timestamp, IQueryBuilder::PARAM_INT),
+				'subject' => $query->createNamedParameter('subject'),
+				'subjectparams' => $query->createNamedParameter('[]'),
+				'message' => $query->createNamedParameter(''),
+				'messageparams' => $query->createNamedParameter('[]'),
+				'priority' => $query->createNamedParameter(30, IQueryBuilder::PARAM_INT),
+				'object_type' => $query->createNamedParameter('files'),
+				'object_id' => $query->createNamedParameter(1, IQueryBuilder::PARAM_INT),
+			])
+			->executeStatement();
+	}
+
+	public function testGetDailyCountsGroupsByDayAndSkipsEmptyDays(): void {
+		$this->deleteTestActivities();
+		$user = self::getUniqueID('histogram');
+		$timezone = new \DateTimeZone('UTC');
+
+		$day = static fn (string $date, string $time = '12:00:00'): int
+			=> (new \DateTimeImmutable($date . ' ' . $time, new \DateTimeZone('UTC')))->getTimestamp();
+
+		$this->insertActivityAt($user, $day('2024-03-01', '00:00:00'));
+		$this->insertActivityAt($user, $day('2024-03-01', '23:59:59'));
+		$this->insertActivityAt($user, $day('2024-03-03'));
+		// Another account's activity must not be counted
+		$this->insertActivityAt(self::getUniqueID('other'), $day('2024-03-01'));
+
+		$result = $this->getUnfilteredData()->getDailyCounts(
+			$this->getHistogramUserSettings(),
+			$user,
+			'all',
+			$day('2024-03-01', '00:00:00'),
+			$day('2024-03-05', '23:59:59'),
+			$timezone,
+		);
+
+		// 2024-03-02 is absent rather than zero: the client fills the gaps, so
+		// the payload stays proportional to real activity
+		$counts = $result['counts'];
+		ksort($counts);
+		$this->assertSame(['2024-03-01' => 2, '2024-03-03' => 1], $counts);
+		$this->assertNull($result['partialBefore']);
+
+		$this->deleteTestActivities();
+	}
+
+	public function testGetDailyCountsResolvesDaysInTheGivenTimezone(): void {
+		$this->deleteTestActivities();
+		$user = self::getUniqueID('histogram');
+
+		// 23:30 UTC on 1 March is already 00:30 on 2 March in Berlin (UTC+1)
+		$moment = (new \DateTimeImmutable('2024-03-01 23:30:00', new \DateTimeZone('UTC')))->getTimestamp();
+		$this->insertActivityAt($user, $moment);
+
+		$from = $moment - 86400;
+		$to = $moment + 86400;
+		$data = $this->getUnfilteredData();
+
+		$utc = $data->getDailyCounts($this->getHistogramUserSettings(), $user, 'all', $from, $to, new \DateTimeZone('UTC'));
+		$berlin = $data->getDailyCounts($this->getHistogramUserSettings(), $user, 'all', $from, $to, new \DateTimeZone('Europe/Berlin'));
+
+		$this->assertSame(['2024-03-01' => 1], $utc['counts']);
+		$this->assertSame(['2024-03-02' => 1], $berlin['counts']);
+
+		$this->deleteTestActivities();
+	}
+
+	public function testGetDailyCountsExcludesActivityOutsideTheWindow(): void {
+		$this->deleteTestActivities();
+		$user = self::getUniqueID('histogram');
+		$timezone = new \DateTimeZone('UTC');
+
+		$at = static fn (string $date): int
+			=> (new \DateTimeImmutable($date . ' 12:00:00', new \DateTimeZone('UTC')))->getTimestamp();
+
+		$this->insertActivityAt($user, $at('2024-03-10'));
+		$this->insertActivityAt($user, $at('2024-03-20'));
+
+		$result = $this->getUnfilteredData()->getDailyCounts(
+			$this->getHistogramUserSettings(),
+			$user,
+			'all',
+			$at('2024-03-15'),
+			$at('2024-03-25'),
+			$timezone,
+		);
+
+		$this->assertSame(['2024-03-20' => 1], $result['counts']);
+
+		$this->deleteTestActivities();
+	}
+
+	public function testGetDailyCountsRejectsAnEmptyUser(): void {
+		$this->expectException(\OutOfBoundsException::class);
+		$this->getUnfilteredData()->getDailyCounts(
+			$this->getHistogramUserSettings(),
+			'',
+			'all',
+			0,
+			1,
+			new \DateTimeZone('UTC'),
+		);
 	}
 
 	private function countActivitiesForAffectedUser(string $user): int {

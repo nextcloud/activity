@@ -24,6 +24,7 @@ namespace OCA\Activity\Tests;
 
 use Exception;
 use OCA\Activity\CurrentUser;
+use OCP\Activity\IManager as IActivityManager;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserSession;
@@ -49,6 +50,7 @@ class CurrentUserTest extends TestCase {
 	protected IUserSession&MockObject $userSession;
 	protected IManager&MockObject $shareManager;
 	protected IFactory&MockObject $l10nFactory;
+	protected IActivityManager&MockObject $activityManager;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -57,6 +59,9 @@ class CurrentUserTest extends TestCase {
 		$this->userSession = $this->createMock(IUserSession::class);
 		$this->shareManager = $this->createMock(IManager::class);
 		$this->l10nFactory = $this->createMock(IFactory::class);
+		$this->activityManager = $this->createMock(IActivityManager::class);
+
+		$this->request->method('getScriptName')->willReturn('/public.php');
 	}
 
 	protected function getInstance(array $methods = []): CurrentUser|MockObject {
@@ -66,6 +71,7 @@ class CurrentUserTest extends TestCase {
 				$this->request,
 				$this->shareManager,
 				$this->l10nFactory,
+				$this->activityManager,
 			);
 		}
 
@@ -75,6 +81,7 @@ class CurrentUserTest extends TestCase {
 				$this->request,
 				$this->shareManager,
 				$this->l10nFactory,
+				$this->activityManager,
 			])
 			->onlyMethods($methods)
 			->getMock();
@@ -83,63 +90,67 @@ class CurrentUserTest extends TestCase {
 	public static function dataGetUserIdentifier(): array {
 		return [
 			[null, null, null, ''],
-			[null, 'uid', -1, 'uid'],
+			[null, 'uid', '-1', 'uid'],
 			[null, null, 'token', 'token'],
-			['cached', -1, -1, 'cached'],
 		];
 	}
 
 	#[DataProvider('dataGetUserIdentifier')]
-	public function testGetUserIdentifier(?string $cachedIdentifier, string|int|null $uidResult, string|int|null $tokenResult, string $expected): void {
+	public function testGetUserIdentifier(?string $cachedIdentifier, string|int|null $uidResult, ?string $tokenResult, string $expected): void {
 		$instance = $this->getInstance([
 			'getUID',
 			'getCloudIDFromToken',
 		]);
 
-		self::invokePrivate($instance, 'identifier', [$cachedIdentifier]);
-
 		$instance->expects($uidResult !== -1 ? $this->once() : $this->never())
 			->method('getUID')
 			->willReturn($uidResult);
 
-		$instance->expects($tokenResult !== -1 ? $this->once() : $this->never())
+		$instance->expects($tokenResult !== '-1' ? $this->once() : $this->never())
 			->method('getCloudIDFromToken')
 			->willReturn($tokenResult);
 
 		$this->assertSame($expected, $instance->getUserIdentifier());
 	}
 
-	protected function getUserMock(string $uid): IUser {
-		$user = $this->createMock(IUser::class);
-		$user->expects($this->once())
-			->method('getUID')
-			->willReturn($uid);
-		return $user;
-	}
-
 	public static function dataGetUID(): array {
 		return [
-			[null, null],
 			['uid', 'uid'],
 			['test', 'test'],
+			['', null],
 		];
 	}
 
 	#[DataProvider('dataGetUID')]
-	public function testGetUID(?string $uid, ?string $expected): void {
-		if ($uid === null) {
-			$this->userSession->expects($this->never())
-				->method('getUser');
-			return;
-		}
+	public function testGetUID(string $currentUserId, ?string $expected): void {
+		$this->activityManager->expects($this->once())
+			->method('getCurrentUserId')
+			->willReturn($currentUserId);
+		$this->userSession->expects($this->never())
+			->method('getUser');
 
-		$user = $this->getUserMock($uid);
 		$instance = $this->getInstance();
-		$this->userSession->expects($this->once())
-			->method('getUser')
-			->willReturn($user);
-
 		$this->assertSame($expected, $instance->getUID());
+	}
+
+	public function testGetUIDUsesTheActivityManagerOverride(): void {
+		$this->activityManager->method('getCurrentUserId')
+			->willReturn('attributed-user');
+		$this->userSession->expects($this->never())
+			->method('getUser');
+
+		$instance = $this->getInstance();
+		$this->assertSame('attributed-user', $instance->getUID());
+	}
+
+	public function testGetUIDIsNullWithoutASessionOrAToken(): void {
+		$this->activityManager->method('getCurrentUserId')
+			->willThrowException(new \UnexpectedValueException('The token is invalid'));
+		$this->userSession->expects($this->never())
+			->method('getUser');
+
+		$instance = $this->getInstance();
+		$this->assertNull($instance->getUID());
 	}
 
 	protected function getShareMock(array $share): IShare|Exception|null {
@@ -150,7 +161,6 @@ class CurrentUserTest extends TestCase {
 			return $share[0];
 		}
 		[$type, $shareWith] = $share;
-
 
 		$share = $this->createMock(IShare::class);
 		$share->expects($this->once())
@@ -195,15 +205,6 @@ class CurrentUserTest extends TestCase {
 		$this->assertSame($expected, self::invokePrivate($instance, 'getCloudIDFromToken'));
 	}
 
-	public function testGetCloudIdCached(): void {
-		$instance = $this->getInstance();
-		self::invokePrivate($instance, 'cloudId', ['cached-cloud-id']);
-
-		$this->userSession->expects($this->never())->method('getUser');
-
-		$this->assertSame('cached-cloud-id', $instance->getCloudId());
-	}
-
 	public function testGetCloudIdFromUser(): void {
 		$user = $this->createMock(IUser::class);
 		$user->method('getCloudId')->willReturn('user@cloud.example.com');
@@ -212,7 +213,6 @@ class CurrentUserTest extends TestCase {
 		$instance = $this->getInstance();
 
 		$this->assertSame('user@cloud.example.com', $instance->getCloudId());
-		$this->assertSame('user@cloud.example.com', $instance->getCloudId(), 'second call returns cached value');
 	}
 
 	public function testGetCloudIdFallsBackToToken(): void {

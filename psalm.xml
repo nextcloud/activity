@@ -7,7 +7,7 @@
 	xsi:schemaLocation="https://getpsalm.org/schema/config https://getpsalm.org/schema/config"
 	errorBaseline="tests/psalm-baseline.xml"
 	autoloader="vendor-bin/psalm/vendor/autoload.php"
-	phpVersion="8.2"
+	phpVersion="8.3"
 	findUnusedCode="false">
 	<projectFiles>
 		<directory name="lib" />
@@ -21,13 +21,10 @@
 		<directory name="vendor-bin/psalm/vendor" />
 	</extraFiles>
 	<issueHandlers>
+		<MissingPureAnnotation errorLevel="suppress"/>
+		<MissingImmutableAnnotation errorLevel="suppress"/>
 		<UndefinedClass>
 			<errorLevel type="suppress">
-				<referencedClass name="Doctrine\DBAL\Platforms\AbstractMySQLPlatform" />
-				<referencedClass name="Doctrine\DBAL\Platforms\MySQLPlatform" />
-				<referencedClass name="Doctrine\DBAL\Schema\SchemaException" />
-				<referencedClass name="Doctrine\DBAL\Types\Type" />
-				<referencedClass name="Doctrine\DBAL\Types\Types" />
 				<referencedClass name="OC" />
 				<referencedClass name="OCA\Files\Event\LoadSidebar" />
 				<referencedClass name="OCA\Files_Sharing\External\Storage" />
@@ -42,11 +39,6 @@
 		</UndefinedClass>
 		<UndefinedDocblockClass>
 			<errorLevel type="suppress">
-				<referencedClass name="Doctrine\DBAL\Driver\Statement" />
-				<referencedClass name="Doctrine\DBAL\Platforms\AbstractPlatform" />
-				<referencedClass name="Doctrine\DBAL\Schema\Schema" />
-				<referencedClass name="Doctrine\DBAL\Schema\SchemaException" />
-				<referencedClass name="Doctrine\DBAL\Schema\Table" />
 				<referencedClass name="OC\Files\View" />
 				<referencedClass name="OC\TagManager" />
 				<referencedClass name="OC\Hooks\Emitter" />

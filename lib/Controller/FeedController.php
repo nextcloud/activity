@@ -5,6 +5,7 @@
  * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+
 namespace OCA\Activity\Controller;
 
 use OCA\Activity\Data;
@@ -46,7 +47,7 @@ class FeedController extends Controller {
 	#[PublicPage]
 	#[NoCSRFRequired]
 	#[BruteForceProtection('activityRssFeed')]
-	public function show(): TemplateResponse {
+	public function show(string $filter = 'all'): TemplateResponse {
 		$response = new TemplateResponse('activity', 'rss', [], '');
 		try {
 			$user = $this->activityManager->getCurrentUserId();
@@ -56,8 +57,9 @@ class FeedController extends Controller {
 			$this->l = $this->l10nFactory->get('activity', $userLang);
 			$this->helper->setL10n($this->l);
 
+			$filter = $this->data->validateFilter($filter);
 			$description = $this->l->t('Personal activity feed for %s', $user);
-			$data = $this->data->get($this->helper, $this->settings, $user, 0, self::DEFAULT_PAGE_SIZE, 'desc', 'all');
+			$data = $this->data->get($this->helper, $this->settings, $user, 0, self::DEFAULT_PAGE_SIZE, 'desc', $filter);
 			$activities = $data['data'];
 		} catch (\UnexpectedValueException $e) {
 			$this->l = $this->l10nFactory->get('activity');

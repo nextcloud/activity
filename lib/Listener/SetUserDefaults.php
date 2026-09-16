@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Listener;
 
+use OCP\Config\Exceptions\UnknownKeyException;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\IAppConfig;
@@ -52,12 +53,16 @@ class SetUserDefaults implements IEventListener {
 				continue;
 			}
 
-			$this->config->setUserValue(
-				$user->getUID(),
-				'activity',
-				$key,
-				$this->appConfig->getValueString('activity', $key)
-			);
+			try {
+				$this->config->setUserValue(
+					$user->getUID(),
+					'activity',
+					$key,
+					$this->appConfig->getValueString('activity', $key)
+				);
+			} catch (UnknownKeyException) {
+				// ignore
+			}
 		}
 
 		// Mark settings as configured

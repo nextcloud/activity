@@ -55,13 +55,22 @@ class DigestSender {
 			$timezone = (!empty($userTimezones[$user])) ? $userTimezones[$user] : $defaultTimeZone;
 
 			// Check if the user's timezone is after 6am already
-			if (!isset($timezoneDigestDay[$timezone])) {
-				$timezoneDate = new \DateTime('now', new \DateTimeZone($timezone));
-				if ($timezoneDate->format('H') < 6) {
-					// Still before 6am, so dont send yet.
-					$timezoneDate->sub(new \DateInterval('P1D'));
+			if (!array_key_exists($timezone, $timezoneDigestDay)) {
+				try {
+					$timezoneDate = new \DateTime('now', new \DateTimeZone($timezone));
+					if ($timezoneDate->format('H') < 6) {
+						// Still before 6am, so dont send yet.
+						$timezoneDate->sub(new \DateInterval('P1D'));
+					}
+					$timezoneDigestDay[$timezone] = $timezoneDate->format('Y.m.d');
+				} catch (\Exception $e) {
+					// A single broken user timezone must not abort the whole run
+					$this->logger->warning('Invalid timezone "' . $timezone . '", skipping digest', ['exception' => $e]);
+					$timezoneDigestDay[$timezone] = null;
 				}
-				$timezoneDigestDay[$timezone] = $timezoneDate->format('Y.m.d');
+			}
+			if ($timezoneDigestDay[$timezone] === null) {
+				continue;
 			}
 
 			$userDigestDate = $digestDate[$user] ?? '';
@@ -73,6 +82,10 @@ class DigestSender {
 			if (is_null($userObject)) {
 				// User does not exist
 				$this->logger->info("User $user could not be found when sending user digest emails");
+				continue;
+			}
+			if (empty($userObject->getEMailAddress())) {
+				$this->updateLastSentForUser($userObject, $now);
 				continue;
 			}
 			if (!$userObject->isEnabled()) {
@@ -134,78 +147,79 @@ class DigestSender {
 			return;
 		}
 		$this->activityManager->setCurrentUserId($uid);
+		try {
+			['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
+			$count = (int)$count;
+			$lastActivityId = (int)$lastActivityId;
+			if ($count === 0) {
+				return;
+			}
 
-		['count' => $count, 'max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
-		$count = (int)$count;
-		$lastActivityId = (int)$lastActivityId;
-		if ($count === 0) {
-			return;
-		}
+			$activitiesLimit = self::ACTIVITY_LIMIT;
+			if ($count === $activitiesLimit + 1) {
+				// it makes no sense to have a "and 1 more" entry as it takes exactly the same space as the one entry more
+				$activitiesLimit += 1;
+			}
 
-		$activitiesLimit = self::ACTIVITY_LIMIT;
-		if ($count === $activitiesLimit + 1) {
-			// it makes no sense to have a "and 1 more" entry as it takes exactly the same space as the one entry more
-			$activitiesLimit += 1;
-		}
+			/** @var IEvent[] $activities */
+			$activities = $this->data->get(
+				$this->groupHelper,
+				$this->userSettings,
+				$uid,
+				$lastSend,
+				$activitiesLimit,
+				'asc',
+				'by',
+				'',
+				0,
+				true
+			);
+			$skippedCount = max(0, $count - $activitiesLimit);
 
-		/** @var IEvent[] $activities */
-		$activities = $this->data->get(
-			$this->groupHelper,
-			$this->userSettings,
-			$uid,
-			$lastSend,
-			$activitiesLimit,
-			'asc',
-			'by',
-			'',
-			0,
-			true
-		);
-		$skippedCount = max(0, $count - $activitiesLimit);
+			$template = $this->mailer->createEMailTemplate('activity.Notification', [
+				'displayname' => $user->getDisplayName(),
+				'url' => $this->urlGenerator->getAbsoluteURL('/'),
+				'activityEvents' => $activities,
+				'skippedCount' => $skippedCount,
+			]);
+			$template->setSubject($l10n->t('Daily activity summary for %s', $this->defaults->getName()));
+			$template->addHeader();
 
-		$template = $this->mailer->createEMailTemplate('activity.Notification', [
-			'displayname' => $user->getDisplayName(),
-			'url' => $this->urlGenerator->getAbsoluteURL('/'),
-			'activityEvents' => $activities,
-			'skippedCount' => $skippedCount,
-		]);
-		$template->setSubject($l10n->t('Daily activity summary for %s', $this->defaults->getName()));
-		$template->addHeader();
+			foreach ($activities as $event) {
+				$relativeDateTime = $this->dateTimeFormatter->formatDateTimeRelativeDay(
+					$event->getTimestamp(),
+					'long',
+					'short',
+					new \DateTimeZone($timezone),
+					$l10n
+				);
 
-		foreach ($activities as $event) {
-			$relativeDateTime = $this->dateTimeFormatter->formatDateTimeRelativeDay(
-				$event->getTimestamp(),
-				'long',
-				'short',
-				new \DateTimeZone($timezone),
-				$l10n
+				$template->addBodyListItem($this->getHTMLSubject($event), $relativeDateTime, $event->getIcon(), $event->getParsedSubject());
+			}
+
+			if ($skippedCount) {
+				$andMoreText = $l10n->n('and %n more…', 'and %n more…', $skippedCount);
+				$url = $this->urlGenerator->linkToRouteAbsolute('activity.Activities.showList', [ 'filter' => 'all' ]);
+				$template->addBodyListItem(
+					'<a href="' . $url . '">' . htmlspecialchars($andMoreText) . '</a>',
+					plainText: $andMoreText,
+				);
+			}
+
+			$template->addBodyText(
+				$l10n->t('You can disable daily digest emails in the <a href="%s">settings</a>.', $this->urlGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications'])),
+				$l10n->t('You can disable daily digest emails in the settings: %s', $this->urlGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications']))
 			);
 
-			$template->addBodyListItem($this->getHTMLSubject($event), $relativeDateTime, $event->getIcon(), $event->getParsedSubject());
+			$template->addFooter('', $language);
+
+			$message = $this->mailer->createMessage();
+			$message->setTo([$user->getEMailAddress() => $user->getDisplayName()]);
+			$message->useTemplate($template);
+			$message->setFrom([Util::getDefaultEmailAddress('no-reply') => $this->defaults->getName()]);
+		} finally {
+			$this->activityManager->setCurrentUserId(null);
 		}
-
-		if ($skippedCount) {
-			$andMoreText = $l10n->n('and %n more…', 'and %n more…', $skippedCount);
-			$url = $this->urlGenerator->linkToRouteAbsolute('activity.Activities.showList', [ 'filter' => 'all' ]);
-			$template->addBodyListItem(
-				'<a href="' . $url . '">' . htmlspecialchars($andMoreText) . '</a>',
-				plainText: $andMoreText,
-			);
-		}
-
-		$template->addBodyText(
-			$l10n->t('You can disable daily digest emails in the <a href="%s">settings</a>.', $this->urlGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications'])),
-			$l10n->t('You can disable daily digest emails in the settings: %s', $this->urlGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications']))
-		);
-
-		$template->addFooter('', $language);
-
-		$message = $this->mailer->createMessage();
-		$message->setTo([$user->getEMailAddress() => $user->getDisplayName()]);
-		$message->useTemplate($template);
-		$message->setFrom([Util::getDefaultEmailAddress('no-reply') => $this->defaults->getName()]);
-
-		$this->activityManager->setCurrentUserId(null);
 		try {
 			$this->mailer->send($message);
 			$this->config->setUserValue($uid, 'activity', 'activity_digest_last_send', (string)$lastActivityId);
@@ -235,7 +249,7 @@ class DigestSender {
 			}
 
 			if (isset($parameter['link'])) {
-				$replacements[] = '<a href="' . $parameter['link'] . '">' . htmlspecialchars($replacement) . '</a>';
+				$replacements[] = '<a href="' . htmlspecialchars((string)$parameter['link'], ENT_QUOTES) . '">' . htmlspecialchars($replacement) . '</a>';
 			} else {
 				$replacements[] = '<strong>' . htmlspecialchars($replacement) . '</strong>';
 			}

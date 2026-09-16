@@ -11,6 +11,7 @@ use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\Defaults;
+use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
@@ -35,8 +36,8 @@ use Psr\Log\LoggerInterface;
 class MailQueueHandler {
 	public const CLI_EMAIL_BATCH_SIZE = 500;
 	public const WEB_EMAIL_BATCH_SIZE = 25;
-	/** Number of entries we want to list in the email */
-	public const ENTRY_LIMIT = 200;
+	public const MAIL_MAX_ITEMS_DEFAULT = 200;
+	public const MAIL_MAX_ITEMS_CAP = 1000;
 
 	protected array $languages;
 	protected string $senderAddress;
@@ -51,6 +52,7 @@ class MailQueueHandler {
 		protected IFactory $lFactory,
 		protected IManager $activityManager,
 		protected IValidator $richObjectValidator,
+		protected IAppConfig $appConfig,
 		protected IConfig $config,
 		protected LoggerInterface $logger,
 		protected Data $data,
@@ -70,6 +72,10 @@ class MailQueueHandler {
 	 * @return int Number of users we sent an email to
 	 */
 	public function sendEmails(int $limit, int $sendTime, bool $forceSending = false, ?int $restrictEmails = null): int {
+		if (!$this->appConfig->getValueBool('activity', 'enable_email', true)) {
+			return 0;
+		}
+
 		// Get all users which should receive an email
 		$affectedUsers = $this->getAffectedUsers($limit, $sendTime, $forceSending, $restrictEmails);
 		if (empty($affectedUsers)) {
@@ -130,7 +136,10 @@ class MailQueueHandler {
 		// Delete all entries we dealt with
 		$this->deleteSentItems($deleteItemsForUsers, $sendTime);
 
-		return count($affectedUsers);
+		// Only count the users that were actually dealt with, so a batch of
+		// users whose lookup failed does not keep the CLI loops of the
+		// callers spinning on the same batch forever.
+		return count($deleteItemsForUsers);
 	}
 
 	/**
@@ -150,24 +159,15 @@ class MailQueueHandler {
 
 		if ($restrictEmails !== null) {
 			if ($restrictEmails === UserSettings::EMAIL_SEND_HOURLY) {
-				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(3600))));
+				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(UserSettings::BATCH_TIME_HOURLY))));
 			} elseif ($restrictEmails === UserSettings::EMAIL_SEND_DAILY) {
-				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(3600 * 24))));
+				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(UserSettings::BATCH_TIME_DAILY))));
 			} elseif ($restrictEmails === UserSettings::EMAIL_SEND_WEEKLY) {
-				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(3600 * 24 * 7))));
+				$query->where($query->expr()->eq('amq_timestamp', $query->func()->subtract('amq_latest_send', $query->expr()->literal(UserSettings::BATCH_TIME_WEEKLY))));
 			} elseif ($restrictEmails === UserSettings::EMAIL_SEND_ASAP) {
 				$query->where($query->expr()->eq('amq_timestamp', 'amq_latest_send'));
 			}
-
-			$result = $query->executeQuery();
-
-			$affectedUsers = [];
-			while ($row = $result->fetch()) {
-				$affectedUsers[] = $row['amq_affecteduser'];
-			}
-			$result->closeCursor();
-
-			return $affectedUsers;
+			return $this->fetchAffectedUsers($query);
 		}
 
 		if ($forceSending) {
@@ -176,14 +176,16 @@ class MailQueueHandler {
 			$query->where($query->expr()->lt('amq_latest_send', $query->createNamedParameter($latestSend)));
 		}
 
-		$result = $query->executeQuery();
+		return $this->fetchAffectedUsers($query);
+	}
 
+	private function fetchAffectedUsers(IQueryBuilder $query): array {
+		$result = $query->executeQuery();
 		$affectedUsers = [];
 		while ($row = $result->fetch()) {
 			$affectedUsers[] = $row['amq_affecteduser'];
 		}
 		$result->closeCursor();
-
 		return $affectedUsers;
 	}
 
@@ -192,7 +194,7 @@ class MailQueueHandler {
 	 *
 	 * @return array [data of the first max. 200 entries, total number of entries]
 	 */
-	protected function getItemsForUser(string $affectedUser, int $maxTime, int $maxNumItems = self::ENTRY_LIMIT): array {
+	protected function getItemsForUser(string $affectedUser, int $maxTime, int $maxNumItems = self::MAIL_MAX_ITEMS_DEFAULT): array {
 		$query = $this->connection->getQueryBuilder();
 		$query->select('*')
 			->from('activity_mq')
@@ -283,99 +285,100 @@ class MailQueueHandler {
 			return true;
 		}
 
-		[$mailData, $skippedCount] = $this->getItemsForUser($userName, $maxTime);
+		[$mailData, $skippedCount] = $this->getItemsForUser($userName, $maxTime, $this->getMailMaxItems());
 
 		$l = $this->getLanguage($lang);
 		$this->activityManager->setCurrentUserId($userName);
+		try {
+			$this->groupHelper->resetEvents();
+			$this->groupHelper->setL10n($l);
 
-		$this->groupHelper->resetEvents();
-		$this->groupHelper->setL10n($l);
+			foreach ($mailData as $activity) {
+				$event = $this->activityManager->generateEvent();
+				try {
+					$event->setApp((string)$activity['amq_appid'])
+						->setType((string)$activity['amq_type'])
+						->setAffectedUser((string)$activity['amq_affecteduser'])
+						->setTimestamp((int)$activity['amq_timestamp'])
+						->setSubject((string)$activity['amq_subject'], (array)json_decode($activity['amq_subjectparams'], true))
+						->setObject((string)$activity['object_type'], (int)$activity['object_id']);
+				} catch (\InvalidArgumentException $e) {
+					continue;
+				}
 
-		foreach ($mailData as $activity) {
-			$event = $this->activityManager->generateEvent();
-			try {
-				$event->setApp((string)$activity['amq_appid'])
-					->setType((string)$activity['amq_type'])
-					->setAffectedUser((string)$activity['amq_affecteduser'])
-					->setTimestamp((int)$activity['amq_timestamp'])
-					->setSubject((string)$activity['amq_subject'], (array)json_decode($activity['amq_subjectparams'], true))
-					->setObject((string)$activity['object_type'], (int)$activity['object_id']);
-			} catch (\InvalidArgumentException $e) {
-				continue;
+				$this->groupHelper->addEvent($activity['mail_id'], $event);
 			}
 
-			$this->groupHelper->addEvent($activity['mail_id'], $event);
-		}
+			$activityEvents = array_map(
+				function ($event) use ($timezone, $l) {
+					return [
+						'event' => $event,
+						'dateTime' => $this->dateFormatter->formatDateTime(
+							$event->getTimestamp(),
+							'long', 'short',
+							new \DateTimeZone($timezone), $l
+						)
+					];
+				},
+				$this->groupHelper->getEvents()
+			);
 
-		$activityEvents = array_map(
-			function ($event) use ($timezone, $l) {
-				return [
-					'event' => $event,
-					'dateTime' => $this->dateFormatter->formatDateTime(
-						$event->getTimestamp(),
-						'long', 'short',
-						new \DateTimeZone($timezone), $l
-					)
-				];
-			},
-			$this->groupHelper->getEvents()
-		);
-
-		$template = $this->mailer->createEMailTemplate('activity.Notification', [
-			'displayname' => $user->getDisplayName(),
-			'url' => $this->urlGenerator->getAbsoluteURL('/'),
-			'activityEvents' => $activityEvents,
-			'skippedCount' => $skippedCount,
-		]);
-		$template->setSubject($l->t('Activity at %s', $this->getSenderData('name')));
-		$template->addHeader();
-		$template->addHeading($l->t('Hello %s', [$user->getDisplayName()]), $l->t('Hello %s,', [$user->getDisplayName()]));
-
-		$homeLink = '<a href="' . $this->urlGenerator->getAbsoluteURL('/') . '">' . htmlspecialchars($this->getSenderData('name')) . '</a>';
-		$template->addBodyText(
-			$l->t('There was some activity at %s', [$homeLink]),
-			$l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')])
-		);
-
-		foreach ($activityEvents as $activity) {
-			$event = $activity['event'];
-			$activityDateTime = $activity['dateTime'];
-
-			$template->addBodyListItem($this->getHTMLSubject($event), $activityDateTime, $event->getIcon(), $event->getParsedSubject());
-		}
-
-		if ($skippedCount) {
-			$template->addBodyListItem($l->n('and %n more ', 'and %n more ', $skippedCount));
-		}
-
-		$template->addBodyText(
-			$l->t('You can change the frequency of these emails or disable them in the <a href="%s">settings</a>.', $this->urlGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications'])),
-			$l->t('You can change the frequency of these emails or disable them in the settings: %s', $this->urlGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications']))
-		);
-
-		$template->addFooter('', $lang);
-
-		$message = $this->mailer->createMessage();
-		$message->setTo([$email => $user->getDisplayName()]);
-		$message->useTemplate($template);
-		$message->setFrom([$this->getSenderData('email') => $this->getSenderData('name')]);
-
-		// We don't want auto generated responses to autogenerated activity notifications
-		$message->setAutoSubmitted(AutoSubmitted::VALUE_AUTO_GENERATED);
-
-		try {
-			$this->mailer->send($message);
-		} catch (\Exception $e) {
-			$this->logger->error('Failed sending activity email to user "{user}"', [
-				'exception' => $e,
-				'user' => $userName,
-				'app' => 'activity',
+			$template = $this->mailer->createEMailTemplate('activity.Notification', [
+				'displayname' => $user->getDisplayName(),
+				'url' => $this->urlGenerator->getAbsoluteURL('/'),
+				'activityEvents' => $activityEvents,
+				'skippedCount' => $skippedCount,
 			]);
-			return false;
-		}
+			$template->setSubject($l->t('Activity at %s', $this->getSenderData('name')));
+			$template->addHeader();
+			$template->addHeading($l->t('Hello %s', [$user->getDisplayName()]), $l->t('Hello %s,', [$user->getDisplayName()]));
 
-		$this->activityManager->setCurrentUserId(null);
-		return true;
+			$homeLink = '<a href="' . $this->urlGenerator->getAbsoluteURL('/') . '">' . htmlspecialchars($this->getSenderData('name')) . '</a>';
+			$template->addBodyText(
+				$l->t('There was some activity at %s', [$homeLink]),
+				$l->t('There was some activity at %s', [$this->urlGenerator->getAbsoluteURL('/')])
+			);
+
+			foreach ($activityEvents as $activity) {
+				$event = $activity['event'];
+				$activityDateTime = $activity['dateTime'];
+
+				$template->addBodyListItem($this->getHTMLSubject($event), $activityDateTime, $event->getIcon(), $event->getParsedSubject());
+			}
+
+			if ($skippedCount) {
+				$template->addBodyListItem($l->n('and %n more ', 'and %n more ', $skippedCount));
+			}
+
+			$template->addBodyText(
+				$l->t('You can change the frequency of these emails or disable them in the <a href="%s">settings</a>.', $this->urlGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications'])),
+				$l->t('You can change the frequency of these emails or disable them in the settings: %s', $this->urlGenerator->linkToRouteAbsolute('settings.PersonalSettings.index', ['section' => 'notifications']))
+			);
+
+			$template->addFooter('', $lang);
+
+			$message = $this->mailer->createMessage();
+			$message->setTo([$email => $user->getDisplayName()]);
+			$message->useTemplate($template);
+			$message->setFrom([$this->getSenderData('email') => $this->getSenderData('name')]);
+
+			// We don't want auto generated responses to autogenerated activity notifications
+			$message->setAutoSubmitted(AutoSubmitted::VALUE_AUTO_GENERATED);
+
+			try {
+				$this->mailer->send($message);
+			} catch (\Exception $e) {
+				$this->logger->error('Failed sending activity email to user "{user}"', [
+					'exception' => $e,
+					'user' => $userName,
+					'app' => 'activity',
+				]);
+				return false;
+			}
+			return true;
+		} finally {
+			$this->activityManager->setCurrentUserId(null);
+		}
 	}
 
 	protected function getHTMLSubject(IEvent $event): string {
@@ -394,7 +397,7 @@ class MailQueueHandler {
 			}
 
 			if (isset($parameter['link'])) {
-				$replacements[] = '<a href="' . $parameter['link'] . '">' . htmlspecialchars($replacement) . '</a>';
+				$replacements[] = '<a href="' . htmlspecialchars((string)$parameter['link'], ENT_QUOTES) . '">' . htmlspecialchars($replacement) . '</a>';
 			} else {
 				$replacements[] = '<strong>' . htmlspecialchars($replacement) . '</strong>';
 			}
@@ -416,5 +419,16 @@ class MailQueueHandler {
 			->where($query->expr()->lte('amq_timestamp', $query->createNamedParameter($maxTime, IQueryBuilder::PARAM_INT)))
 			->andWhere($query->expr()->in('amq_affecteduser', $query->createNamedParameter($affectedUsers, IQueryBuilder::PARAM_STR_ARRAY), IQueryBuilder::PARAM_STR));
 		$query->executeStatement();
+	}
+
+	private function getMailMaxItems(): int {
+		$maxItems = $this->appConfig->getValueInt('activity', 'mail_max_items', self::MAIL_MAX_ITEMS_DEFAULT);
+		if ($maxItems < 1) {
+			return 1;
+		}
+		if ($maxItems > self::MAIL_MAX_ITEMS_CAP) {
+			return self::MAIL_MAX_ITEMS_CAP;
+		}
+		return $maxItems;
 	}
 }

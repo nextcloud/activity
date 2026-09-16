@@ -23,6 +23,7 @@ OC.L10N.register(
     "Notifications" : "Obaveštenja",
     "Today" : "данас",
     "Yesterday" : "јуче",
+    "More" : "Ostalo",
     "You need to set up your email address before you can receive notification emails." : "Морате поставити адресу е-поште пре почетка пријема обавештења.",
     "Send activity emails" : "Шаљи е-пошту са активностима",
     "As soon as possible" : "Што је пре могуће",

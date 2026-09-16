@@ -7,6 +7,7 @@
 
 namespace OCA\Activity;
 
+use OCP\Activity\IManager as IActivityManager;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserSession;
@@ -17,18 +18,12 @@ use OCP\Share\IShare;
 
 class CurrentUser {
 
-	/** @var string|null */
-	protected $identifier = null;
-	/** @var string|false|null */
-	protected $cloudId = false;
-	/** @var string|false|null */
-	protected $sessionUser = false;
-
 	public function __construct(
-		protected IUserSession $userSession,
-		protected IRequest $request,
-		protected IManager $shareManager,
-		protected IFactory $l10nFactory,
+		protected readonly IUserSession $userSession,
+		protected readonly IRequest $request,
+		protected readonly IManager $shareManager,
+		protected readonly IFactory $l10nFactory,
+		protected readonly IActivityManager $activityManager,
 	) {
 	}
 
@@ -38,113 +33,114 @@ class CurrentUser {
 
 	/**
 	 * Get an identifier for the user, session or token
-	 * @return string
 	 */
-	public function getUserIdentifier() {
-		if ($this->identifier !== null) {
-			return $this->identifier;
-		}
-
+	public function getUserIdentifier(): string {
 		$uid = $this->getUID();
 		if ($uid !== null) {
-			$this->identifier = $uid;
-			return $this->identifier;
+			return $uid;
 		}
 
 		$cloudId = $this->getCloudIDFromToken();
 		if ($cloudId !== null) {
-			$this->identifier = $cloudId;
-			return $this->identifier;
+			return $cloudId;
 		}
 
 		$nickname = htmlspecialchars($this->request->getHeader('X-NC-Nickname'));
 		if ($nickname !== '') {
-			$this->identifier = $nickname . ' (' . $this->l10nFactory->get('comments')->t('remote user') . ')';
-			return $this->identifier;
+			return $nickname . ' (' . $this->l10nFactory->get('comments')->t('remote user') . ')';
 		}
 
 		// Nothing worked, fallback to empty string
-		$this->identifier = '';
-		return $this->identifier;
+		return '';
 	}
 
 	/**
-	 * Get the current user id from the session
-	 * @return string|null
+	 * Get the current user id
+	 *
+	 * Apps can override who an action is attributed to with
+	 * IManager::setCurrentUserId(). That is the only way to name an actor when the
+	 * action happens outside of that user's session, e.g. from a background job.
+	 * Without an override the manager reads the session, and on a request without
+	 * a session the owner of the activity feed token.
 	 */
-	public function getUID() {
-		if ($this->sessionUser === false) {
-			$user = $this->userSession->getUser();
-			if ($user instanceof IUser) {
-				$this->sessionUser = (string)$user->getUID();
-			} else {
-				$this->sessionUser = null;
-			}
+	public function getUID(): ?string {
+		try {
+			$userId = $this->activityManager->getCurrentUserId();
+		} catch (\UnexpectedValueException) {
+			// No override, no session and no valid feed token
+			return null;
 		}
 
-		return $this->sessionUser;
+		return $userId === '' ? null : $userId;
 	}
 
 	/**
 	 * Get the current user cloud id from the session
-	 * @return string|null
 	 */
-	public function getCloudId() {
-		if ($this->cloudId !== false) {
-			return $this->cloudId;
-		}
-
+	public function getCloudId(): ?string {
 		$user = $this->userSession->getUser();
 		if ($user instanceof IUser) {
-			$this->cloudId = (string)$user->getCloudId();
-		} else {
-			$this->cloudId = $this->getCloudIDFromToken();
+			return $user->getCloudId();
 		}
 
-		return $this->cloudId;
+		return $this->getCloudIDFromToken();
 	}
 
 	/**
 	 * Check if the current request is via a public share link
 	 */
 	public function isPublicShareToken(): bool {
-		/** @psalm-suppress NoInterfaceProperties */
-		if (!empty($this->request->server['PHP_AUTH_USER'])) {
-			$token = $this->request->server['PHP_AUTH_USER'];
-			try {
-				$share = $this->shareManager->getShareByToken($token);
-				return $share->getShareType() === IShare::TYPE_LINK
-					|| $share->getShareType() === IShare::TYPE_EMAIL;
-			} catch (ShareNotFound $e) {
-				// No share found for this token
-			}
-		}
-
-		return false;
+		return $this->getPublicShare() !== null;
 	}
 
 	/**
 	 * Get the cloud ID from the sharing token
-	 * @return string|null
 	 */
-	protected function getCloudIDFromToken() {
-		/** @psalm-suppress NoInterfaceProperties */
-		if (!empty($this->request->server['PHP_AUTH_USER'])) {
-			$token = $this->request->server['PHP_AUTH_USER'];
-			/**
-			 * Until https://github.com/nextcloud/server/pull/26681 is merged
-			 * @psalm-suppress InvalidCatch
-			 */
-			try {
-				$share = $this->shareManager->getShareByToken($token);
-				if ($share->getShareType() === IShare::TYPE_REMOTE) {
-					return $share->getSharedWith();
-				}
-			} catch (ShareNotFound $e) {
-				// No share, use the fallback
-			}
+	protected function getCloudIDFromToken(): ?string {
+		$share = $this->getPublicShare();
+
+		if ($share === null || $share->getShareType() !== IShare::TYPE_REMOTE) {
+			return null;
 		}
 
-		return null;
+		return $share->getSharedWith();
+	}
+
+	protected function getPublicShare(): ?IShare {
+		if (basename($this->request->getScriptName()) !== 'public.php') {
+			return null;
+		}
+
+		$token = $this->getShareToken();
+		if ($token === null) {
+			return null;
+		}
+
+		try {
+			return $this->shareManager->getShareByToken($token);
+		} catch (ShareNotFound $e) {
+			return null;
+		}
+	}
+
+	protected function getShareToken(): ?string {
+		// The legacy public endpoint receive the share token in the HTTP basic auth header.
+		/** @psalm-suppress NoInterfaceProperties */
+		$authUser = (string)($this->request->server['PHP_AUTH_USER'] ?? '');
+		if ($authUser !== '') {
+			return $authUser;
+		}
+
+		// The current public endpoint receives the share token in the path.
+		// Copied from apps/dav/lib/Connector/Sabre/PublicAuth::getToken()
+		$path = $this->request->getPathInfo() ?: '';
+		// ['', 'dav', 'files', 'token']
+		$splittedPath = explode('/', $path);
+
+		if (count($splittedPath) < 4 || $splittedPath[3] === '') {
+			return null;
+		}
+
+		return $splittedPath[3];
 	}
 }

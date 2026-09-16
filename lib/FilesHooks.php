@@ -43,7 +43,7 @@ class FilesHooks {
 
 	/** @var string|bool */
 	protected $moveCase = false;
-	/** @var array */
+	/** @var array|null */
 	protected $oldAccessList;
 	/** @var string */
 	protected $oldParentPath;
@@ -82,10 +82,10 @@ class FilesHooks {
 			return;
 		}
 
-		if ($this->currentUser->getUserIdentifier() !== '' || !$this->currentUser->isPublicShareToken()) {
-			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
-		} else {
+		if ($this->currentUser->getUserIdentifier() === '' && $this->currentUser->isPublicShareToken()) {
 			$this->addNotificationsForFileAction($path, Files_Sharing::TYPE_PUBLIC_UPLOAD, '', 'created_public');
+		} else {
+			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
 		}
 	}
 
@@ -275,24 +275,31 @@ class FilesHooks {
 			$this->moveCase = 'moveCross';
 		}
 
-		[$this->oldParentPath, $this->oldParentOwner, $this->oldParentId] = $this->getSourcePathAndOwner($oldDir);
-		if ($this->oldParentId === 0) {
-			// Could not find the file for the owner ...
+		try {
+			[$this->oldParentPath, $this->oldParentOwner, $this->oldParentId] = $this->getSourcePathAndOwner($oldDir);
+			if ($this->oldParentId === 0) {
+				// Could not find the file for the owner ...
+				$this->moveCase = false;
+				return;
+			}
+
+			$oldAccessList = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
+
+			// file can be shared using GroupFolders, including ACL check
+			if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
+				[, , $oldFileId] = $this->getSourcePathAndOwner($oldPath);
+				$oldAccessList['users'] = array_merge($oldAccessList['users'], $this->getAffectedUsersFromCachedMounts($oldFileId));
+			}
+
+			$this->oldAccessList = $oldAccessList;
+		} catch (NotFoundException $e) {
+			// The old location cannot be resolved (e.g. inconsistent mount or file
+			// cache state), so fileMovePost() would have no valid data to build
+			// activities from. Skip it instead of failing the move half-way.
+			$this->logger->warning('Could not resolve the old location of "' . $oldPath . '", no move activities will be created', ['exception' => $e]);
 			$this->moveCase = false;
-			return;
 		}
-
-		$oldAccessList = $this->getUserPathsFromPath($this->oldParentPath, $this->oldParentOwner);
-
-		// file can be shared using GroupFolders, including ACL check
-		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
-			[, , $oldFileId] = $this->getSourcePathAndOwner($oldPath);
-			$oldAccessList['users'] = array_merge($oldAccessList['users'], $this->getAffectedUsersFromCachedMounts($oldFileId));
-		}
-
-		$this->oldAccessList = $oldAccessList;
 	}
-
 
 	/**
 	 * Store the move hook events
@@ -319,7 +326,6 @@ class FilesHooks {
 
 		$this->moveCase = false;
 	}
-
 
 	/**
 	 * Renaming a file inside the same folder (a/b to a/c)
@@ -392,6 +398,12 @@ class FilesHooks {
 	 * @param string $newPath
 	 */
 	protected function fileMoving($oldPath, $newPath) {
+		if (!is_array($this->oldAccessList)) {
+			// fileMove() could not collect the old access list, so there is no
+			// base to compute the activities from
+			return;
+		}
+
 		$dirName = dirname($newPath);
 		$fileName = basename($newPath);
 		$oldFileName = basename($oldPath);
@@ -415,14 +427,23 @@ class FilesHooks {
 		$beforeUsers = array_keys($oldUsers);
 		$afterUsers = array_keys($affectedUsers);
 
+		// Resolve notification/email settings (and favorites) once for every user involved
+		// in the move, instead of recomputing them for each delete/add/move subset of the
+		// same file. The maps are keyed by user and each subset only reads its own keys.
+		$allUsers = array_values(array_unique(array_merge($beforeUsers, $afterUsers)));
+		$filteredEmailUsers = $filteredNotificationUsers = [];
+		if (!empty($allUsers)) {
+			[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $allUsers);
+		}
+
 		$deleteUsers = array_diff($beforeUsers, $afterUsers);
-		$this->generateDeleteActivities($deleteUsers, $oldUsers, $fileId, $oldFileName);
+		$this->generateDeleteActivities($deleteUsers, $oldUsers, $fileId, $oldFileName, $filteredEmailUsers, $filteredNotificationUsers);
 
 		$addUsers = array_diff($afterUsers, $beforeUsers);
-		$this->generateAddActivities($addUsers, $affectedUsers, $fileId, $fileName);
+		$this->generateAddActivities($addUsers, $affectedUsers, $fileId, $fileName, $filteredEmailUsers, $filteredNotificationUsers);
 
 		$moveUsers = array_intersect($beforeUsers, $afterUsers);
-		$this->generateMoveActivities($moveUsers, $oldUsers, $affectedUsers, $fileId, $oldFileName, $parentId, $fileName);
+		$this->generateMoveActivities($moveUsers, $oldUsers, $affectedUsers, $fileId, $oldFileName, $parentId, $fileName, $filteredEmailUsers, $filteredNotificationUsers);
 
 		$beforeRemotes = $this->oldAccessList['remotes'];
 		$afterRemotes = $accessList['remotes'];
@@ -457,35 +478,40 @@ class FilesHooks {
 	 * @param string[] $pathMap
 	 * @param int $fileId
 	 * @param string $oldFileName
+	 * @param array $filteredEmailUsers
+	 * @param array $filteredNotificationUsers
 	 */
-	protected function generateDeleteActivities($users, $pathMap, $fileId, $oldFileName) {
+	protected function generateDeleteActivities($users, $pathMap, $fileId, $oldFileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
 		if (empty($users)) {
 			return;
 		}
 
-		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
-
 		$shouldFlush = $this->startActivityTransaction();
-		foreach ($users as $user) {
-			$path = $pathMap[$user];
+		try {
+			foreach ($users as $user) {
+				$path = $pathMap[$user];
 
-			if ($user === $this->currentUser->getUID()) {
-				$userSubject = 'deleted_self';
-				$userParams = [[$fileId => $path . '/' . $oldFileName]];
-			} else {
-				$userSubject = 'deleted_by';
-				$userParams = [[$fileId => $path . '/' . $oldFileName], $this->currentUser->getUserIdentifier()];
+				if ($user === $this->currentUser->getUID()) {
+					$userSubject = 'deleted_self';
+					$userParams = [[$fileId => $path . '/' . $oldFileName]];
+				} else {
+					$userSubject = 'deleted_by';
+					$userParams = [[$fileId => $path . '/' . $oldFileName], $this->currentUser->getUserIdentifier()];
+				}
+
+				$this->addNotificationsForUser(
+					$user, $userSubject, $userParams,
+					$fileId, $path . '/' . $oldFileName, true,
+					$filteredEmailUsers[$user] ?? false,
+					$filteredNotificationUsers[$user] ?? false,
+					Files::TYPE_SHARE_DELETED,
+				);
 			}
-
-			$this->addNotificationsForUser(
-				$user, $userSubject, $userParams,
-				$fileId, $path . '/' . $oldFileName, true,
-				$filteredEmailUsers[$user] ?? false,
-				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_SHARE_DELETED,
-			);
+			$this->commitActivityTransaction($shouldFlush);
+		} catch (\Throwable $e) {
+			$this->rollbackActivityTransaction($shouldFlush);
+			throw $e;
 		}
-		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -493,35 +519,40 @@ class FilesHooks {
 	 * @param string[] $pathMap
 	 * @param int $fileId
 	 * @param string $fileName
+	 * @param array $filteredEmailUsers
+	 * @param array $filteredNotificationUsers
 	 */
-	protected function generateAddActivities($users, $pathMap, $fileId, $fileName) {
+	protected function generateAddActivities($users, $pathMap, $fileId, $fileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
 		if (empty($users)) {
 			return;
 		}
 
-		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
-
 		$shouldFlush = $this->startActivityTransaction();
-		foreach ($users as $user) {
-			$path = $pathMap[$user];
+		try {
+			foreach ($users as $user) {
+				$path = $pathMap[$user];
 
-			if ($user === $this->currentUser->getUID()) {
-				$userSubject = 'created_self';
-				$userParams = [[$fileId => $path . '/' . $fileName]];
-			} else {
-				$userSubject = 'created_by';
-				$userParams = [[$fileId => $path . '/' . $fileName], $this->currentUser->getUserIdentifier()];
+				if ($user === $this->currentUser->getUID()) {
+					$userSubject = 'created_self';
+					$userParams = [[$fileId => $path . '/' . $fileName]];
+				} else {
+					$userSubject = 'created_by';
+					$userParams = [[$fileId => $path . '/' . $fileName], $this->currentUser->getUserIdentifier()];
+				}
+
+				$this->addNotificationsForUser(
+					$user, $userSubject, $userParams,
+					$fileId, $path . '/' . $fileName, true,
+					$filteredEmailUsers[$user] ?? false,
+					$filteredNotificationUsers[$user] ?? false,
+					Files::TYPE_FILE_CHANGED,
+				);
 			}
-
-			$this->addNotificationsForUser(
-				$user, $userSubject, $userParams,
-				$fileId, $path . '/' . $fileName, true,
-				$filteredEmailUsers[$user] ?? false,
-				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_FILE_CHANGED,
-			);
+			$this->commitActivityTransaction($shouldFlush);
+		} catch (\Throwable $e) {
+			$this->rollbackActivityTransaction($shouldFlush);
+			throw $e;
 		}
-		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -532,39 +563,44 @@ class FilesHooks {
 	 * @param string $oldFileName
 	 * @param int $newParentId
 	 * @param string $fileName
+	 * @param array $filteredEmailUsers
+	 * @param array $filteredNotificationUsers
 	 */
-	protected function generateMoveActivities($users, $beforePathMap, $afterPathMap, $fileId, $oldFileName, $newParentId, $fileName) {
+	protected function generateMoveActivities($users, $beforePathMap, $afterPathMap, $fileId, $oldFileName, $newParentId, $fileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
 		if (empty($users)) {
 			return;
 		}
 
-		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, $users);
-
 		$shouldFlush = $this->startActivityTransaction();
-		foreach ($users as $user) {
-			if ($oldFileName === $fileName) {
-				$userParams = [[$newParentId => $afterPathMap[$user] . '/']];
-			} else {
-				$userParams = [[$fileId => $afterPathMap[$user] . '/' . $fileName]];
-			}
+		try {
+			foreach ($users as $user) {
+				if ($oldFileName === $fileName) {
+					$userParams = [[$newParentId => $afterPathMap[$user] . '/']];
+				} else {
+					$userParams = [[$fileId => $afterPathMap[$user] . '/' . $fileName]];
+				}
 
-			if ($user === $this->currentUser->getUID()) {
-				$userSubject = 'moved_self';
-			} else {
-				$userSubject = 'moved_by';
-				$userParams[] = $this->currentUser->getUserIdentifier();
-			}
-			$userParams[] = [$fileId => $beforePathMap[$user] . '/' . $oldFileName];
+				if ($user === $this->currentUser->getUID()) {
+					$userSubject = 'moved_self';
+				} else {
+					$userSubject = 'moved_by';
+					$userParams[] = $this->currentUser->getUserIdentifier();
+				}
+				$userParams[] = [$fileId => $beforePathMap[$user] . '/' . $oldFileName];
 
-			$this->addNotificationsForUser(
-				$user, $userSubject, $userParams,
-				$fileId, $afterPathMap[$user] . '/' . $fileName, true,
-				$filteredEmailUsers[$user] ?? false,
-				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_FILE_CHANGED,
-			);
+				$this->addNotificationsForUser(
+					$user, $userSubject, $userParams,
+					$fileId, $afterPathMap[$user] . '/' . $fileName, true,
+					$filteredEmailUsers[$user] ?? false,
+					$filteredNotificationUsers[$user] ?? false,
+					Files::TYPE_FILE_CHANGED,
+				);
+			}
+			$this->commitActivityTransaction($shouldFlush);
+		} catch (\Throwable $e) {
+			$this->rollbackActivityTransaction($shouldFlush);
+			throw $e;
 		}
-		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -778,8 +814,8 @@ class FilesHooks {
 			return;
 		}
 
+		$this->teamManager->startSuperSession();
 		try {
-			$this->teamManager->startSuperSession();
 			$team = $this->teamManager->getCircle($shareWith);
 			$members = $team->getInheritedMembers();
 			$members = array_filter($members, fn ($member) => $member->getUserType() === Member::TYPE_USER);
@@ -788,6 +824,8 @@ class FilesHooks {
 			$this->logger->debug('Fetching team members for share activity failed', ['exception' => $e]);
 			// error in teams app - setting users list to empty
 			$userIds = [];
+		} finally {
+			$this->teamManager->stopSession();
 		}
 
 		// Activity for user performing the share
@@ -807,14 +845,15 @@ class FilesHooks {
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	public function unShare(IShare $share) {
-		if (in_array($share->getNodeType(), ['file', 'folder'], true) && !$this->isDeletedNode($share->getShareOwner(), $share->getNodeId())) {
-			if ($share->getShareType() === IShare::TYPE_USER) {
-				$this->unshareFromUser($share);
-			} elseif ($share->getShareType() === IShare::TYPE_GROUP) {
-				$this->unshareFromGroup($share);
-			} elseif ($share->getShareType() === IShare::TYPE_LINK) {
-				$this->unshareLink($share);
-			}
+		if (!in_array($share->getNodeType(), ['file', 'folder'], true) || $this->isDeletedNode($share->getShareOwner(), $share->getNodeId())) {
+			return;
+		}
+		if ($share->getShareType() === IShare::TYPE_USER) {
+			$this->unshareFromUser($share);
+		} elseif ($share->getShareType() === IShare::TYPE_GROUP) {
+			$this->unshareFromGroup($share);
+		} elseif ($share->getShareType() === IShare::TYPE_LINK) {
+			$this->unshareLink($share);
 		}
 	}
 
@@ -825,12 +864,13 @@ class FilesHooks {
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	public function unShareSelf(IShare $share) {
-		if (in_array($share->getNodeType(), ['file', 'folder'], true)) {
-			if ($share->getShareType() === IShare::TYPE_GROUP) {
-				$this->unshareFromSelfGroup($share);
-			} elseif ($share->getShareType() === IShare::TYPE_USER) {
-				$this->unshareFromUser($share);
-			}
+		if (!in_array($share->getNodeType(), ['file', 'folder'], true)) {
+			return;
+		}
+		if ($share->getShareType() === IShare::TYPE_GROUP) {
+			$this->unshareFromSelfGroup($share);
+		} elseif ($share->getShareType() === IShare::TYPE_USER) {
+			$this->unshareFromUser($share);
 		}
 	}
 
@@ -921,13 +961,18 @@ class FilesHooks {
 		$offset = 0;
 		$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
 		$shouldFlush = $this->startActivityTransaction();
-		while (!empty($users)) {
-			$userIds = \array_map(fn (IUser $user) => $user->getUID(), $users);
-			$this->addNotificationsForUsers($userIds, $actionUser, $share->getNode(), $share->getTarget(), (int)$share->getId());
-			$offset += self::USER_BATCH_SIZE;
-			$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
+		try {
+			while (!empty($users)) {
+				$userIds = \array_map(fn (IUser $user) => $user->getUID(), $users);
+				$this->addNotificationsForUsers($userIds, $actionUser, $share->getNode(), $share->getTarget(), (int)$share->getId());
+				$offset += self::USER_BATCH_SIZE;
+				$users = $group->searchUsers('', self::USER_BATCH_SIZE, $offset);
+			}
+			$this->commitActivityTransaction($shouldFlush);
+		} catch (\Throwable $e) {
+			$this->rollbackActivityTransaction($shouldFlush);
+			throw $e;
 		}
-		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -1009,23 +1054,28 @@ class FilesHooks {
 
 		$affectedUsers = $this->fixPathsForShareExceptions($affectedUsers, $shareId);
 		$shouldFlush = $this->startActivityTransaction();
-		foreach ($affectedUsers as $user => $path) {
-			$emailSetting = $filteredEmailUsersInGroup[$user] ?? false;
-			$notificationSetting = $filteredNotificationUsers[$user] ?? false;
-			if ($emailSetting || $notificationSetting) {
-				$this->addNotificationsForUser(
-					$user,
-					$actionUser,
-					[[$fileSource->getId() => $path], $this->currentUser->getUserIdentifier()],
-					$fileSource->getId(),
-					$path,
-					$fileSource instanceof File,
-					$emailSetting,
-					$notificationSetting,
-				);
+		try {
+			foreach ($affectedUsers as $user => $path) {
+				$emailSetting = $filteredEmailUsersInGroup[$user] ?? false;
+				$notificationSetting = $filteredNotificationUsers[$user] ?? false;
+				if ($emailSetting || $notificationSetting) {
+					$this->addNotificationsForUser(
+						$user,
+						$actionUser,
+						[[$fileSource->getId() => $path], $this->currentUser->getUserIdentifier()],
+						$fileSource->getId(),
+						$path,
+						$fileSource instanceof File,
+						$emailSetting,
+						$notificationSetting,
+					);
+				}
 			}
+			$this->commitActivityTransaction($shouldFlush);
+		} catch (\Throwable $e) {
+			$this->rollbackActivityTransaction($shouldFlush);
+			throw $e;
 		}
-		$this->commitActivityTransaction($shouldFlush);
 	}
 
 	/**
@@ -1097,51 +1147,51 @@ class FilesHooks {
 	 */
 	protected function shareNotificationForOriginalOwners(string $sharedBy, string $subject, string $shareWith, Node $fileSource) {
 		$mount = $fileSource->getMountPoint();
-		if ($mount instanceof SharedMount) {
-			$sourceShare = $mount->getShare();
+		if (!$mount instanceof SharedMount) {
+			return;
+		}
 
-			$fileId = $fileSource->getId();
+		$sourceShare = $mount->getShare();
+		$fileId = $fileSource->getId();
 
-			if ($sourceShare->getShareOwner() !== $sharedBy) {
-				$owner = $sourceShare->getShareOwner();
-				try {
-					$ownerNode = $this->rootFolder->getUserFolder($owner)->getFirstNodeById($fileId);
-				} catch (NotFoundException) {
-					return;
-				}
-				if ($ownerNode === null) {
-					return;
-				}
-				$this->reshareNotificationForSharer(
-					$owner,
-					$subject,
-					$shareWith,
-					$fileId,
-					$this->getUserRelativePath($owner, $ownerNode->getPath()),
-					$fileSource instanceof File,
-				);
+		if ($sourceShare->getShareOwner() !== $sharedBy) {
+			$owner = $sourceShare->getShareOwner();
+			try {
+				$ownerNode = $this->rootFolder->getUserFolder($owner)->getFirstNodeById($fileId);
+			} catch (NotFoundException) {
+				return;
 			}
-
-			if ($sourceShare->getSharedBy() && $sourceShare->getSharedBy() !== $sharedBy && $sourceShare->getShareOwner() !== $sourceShare->getSharedBy()) {
-				$sharer = $sourceShare->getSharedBy();
-				try {
-					$sharerNode = $this->rootFolder->getUserFolder($sharer)->getFirstNodeById($fileId);
-				} catch (NotFoundException) {
-					return;
-				}
-				if ($sharerNode === null) {
-					return;
-				}
-
-				$this->reshareNotificationForSharer(
-					$sharer,
-					$subject,
-					$shareWith,
-					$fileId,
-					$this->getUserRelativePath($sharer, $sharerNode->getPath()),
-					$fileSource instanceof File,
-				);
+			if ($ownerNode === null) {
+				return;
 			}
+			$this->reshareNotificationForSharer(
+				$owner,
+				$subject,
+				$shareWith,
+				$fileId,
+				$this->getUserRelativePath($owner, $ownerNode->getPath()),
+				$fileSource instanceof File,
+			);
+		}
+
+		if ($sourceShare->getSharedBy() && $sourceShare->getSharedBy() !== $sharedBy && $sourceShare->getShareOwner() !== $sourceShare->getSharedBy()) {
+			$sharer = $sourceShare->getSharedBy();
+			try {
+				$sharerNode = $this->rootFolder->getUserFolder($sharer)->getFirstNodeById($fileId);
+			} catch (NotFoundException) {
+				return;
+			}
+			if ($sharerNode === null) {
+				return;
+			}
+			$this->reshareNotificationForSharer(
+				$sharer,
+				$subject,
+				$shareWith,
+				$fileId,
+				$this->getUserRelativePath($sharer, $sharerNode->getPath()),
+				$fileSource instanceof File,
+			);
 		}
 	}
 
@@ -1190,6 +1240,8 @@ class FilesHooks {
 					'exception' => $e,
 				],
 			);
+			// Do not publish the incompletely built event
+			return;
 		}
 
 		// Add activity to stream
@@ -1218,6 +1270,15 @@ class FilesHooks {
 		$this->connection->commit();
 	}
 
+	protected function rollbackActivityTransaction(bool $shouldFlush): void {
+		$this->connection->rollBack();
+		if ($shouldFlush) {
+			// The notification manager has no way to discard deferred
+			// notifications, so flush to reset its deferred state. Notifications
+			// of rolled back activities are dropped when they are prepared.
+			$this->notificationGenerator->flushNotifications();
+		}
+	}
 
 	/**
 	 * @param int $fileId
@@ -1246,7 +1307,6 @@ class FilesHooks {
 			return !in_array($userId, $unrelatedUsers);
 		}, ARRAY_FILTER_USE_KEY);
 	}
-
 
 	/**
 	 * returns an array of users that have confirmed no access to fileId
@@ -1371,7 +1431,6 @@ class FilesHooks {
 				$usersToCheck = array_values(array_unique(array_merge($usersToCheck, $userIds)));
 			}
 		}
-
 
 		// now that we have a list of eventuals filtered users, we confirm they have no access to the file
 		$filteredUsers = [];

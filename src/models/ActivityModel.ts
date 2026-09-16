@@ -70,6 +70,22 @@ export default class ActivityModel {
 	}
 
 	/**
+	 * Human readable name of the account that triggered this activity.
+	 *
+	 * Providers pass the actor as a rich object among the subject parameters,
+	 * which is the only place a display name is available. Falls back to the
+	 * account name when the subject does not reference the actor.
+	 */
+	get authorDisplayName(): string {
+		for (const richObject of Object.values(this.subjectRichObjects)) {
+			if (richObject.type === 'user' && String(richObject.id) === this._activity.user) {
+				return richObject.name
+			}
+		}
+		return this._activity.user
+	}
+
+	/**
 	 * Get the activity subject
 	 */
 	get subject(): string {

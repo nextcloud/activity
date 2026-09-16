@@ -5,6 +5,7 @@
  * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+
 namespace OCA\Activity\AppInfo;
 
 use OC\DB\ConnectionAdapter;
@@ -31,6 +32,8 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\DB\Events\AddMissingIndicesEvent;
+use OCP\Files\IRootFolder;
+use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
@@ -104,6 +107,7 @@ class Application extends App implements IBootstrap {
 				$c->get('ActivityConnectionAdapter'),
 				$c->get(LoggerInterface::class),
 				$c->get(IConfig::class),
+				$c->get(IRootFolder::class),
 			);
 		});
 
@@ -117,6 +121,7 @@ class Application extends App implements IBootstrap {
 				$c->get(IFactory::class),
 				$c->get(IManager::class),
 				$c->get(IValidator::class),
+				$c->get(IAppConfig::class),
 				$c->get(IConfig::class),
 				$c->get(LoggerInterface::class),
 				$c->get(Data::class),
@@ -152,16 +157,14 @@ class Application extends App implements IBootstrap {
 	 */
 	private function registerActivityConsumer(): void {
 		$c = $this->getContainer();
-		$server = $c->getServer();
 
-		$server->get(IManager::class)->registerConsumer(function () use ($c) {
+		$c->get(IManager::class)->registerConsumer(function () use ($c) {
 			return $c->get(Consumer::class);
 		});
 	}
 
 	public function registerNotifier(): void {
-		$server = $this->getContainer()->getServer();
-		$server->get(INotificationManager::class)->registerNotifierService(NotificationGenerator::class);
+		$this->getContainer()->get(INotificationManager::class)->registerNotifierService(NotificationGenerator::class);
 	}
 
 	/**

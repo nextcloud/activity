@@ -43,7 +43,7 @@ class UserDeleted implements IEventListener {
 	}
 
 	private function deleteUserStream(IUser $user): void {
-		$this->data->deleteActivities(['affecteduser' => $user->getUID()]);
+		$this->data->deleteActivities([['affecteduser', $user->getUID()]]);
 	}
 
 	private function deleteUserMailQueue(IUser $user): void {

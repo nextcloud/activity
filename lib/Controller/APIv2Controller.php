@@ -6,20 +6,25 @@ declare(strict_types=1);
  * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+
 namespace OCA\Activity\Controller;
 
 use OCA\Activity\Data;
 use OCA\Activity\Exception\InvalidFilterException;
+use OCA\Activity\Exception\InvalidSearchCriteriaException;
 use OCA\Activity\GroupHelper;
+use OCA\Activity\SearchCriteria;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
 use OCP\Files\FileInfo;
 use OCP\Files\IMimeTypeDetector;
+use OCP\IDateTimeZone;
 use OCP\IPreview;
 use OCP\IRequest;
 use OCP\IURLGenerator;
@@ -28,29 +33,28 @@ use OCP\IUserSession;
 use OCP\Notification\IManager as INotificationManager;
 
 class APIv2Controller extends OCSController {
-	/** @var string */
-	protected $filter;
+	protected string $filter = 'all';
+	protected int $since = 0;
+	protected int $limit = 50;
+	protected string $sort = 'desc';
+	protected string $objectType = '';
+	protected int $objectId = 0;
+	protected string $user = '';
+	protected bool $loadPreviews = false;
+	protected SearchCriteria $searchCriteria;
 
-	/** @var int */
-	protected $since;
+	/**
+	 * Default histogram window: 52 weeks. At the grid's 16px column pitch that
+	 * is ~848px, which fills the stream's readable column without scrolling on a
+	 * desktop, and a year is the span that makes seasonal shape visible.
+	 */
+	public const HISTOGRAM_DEFAULT_DAYS = 364;
 
-	/** @var int */
-	protected $limit;
-
-	/** @var string */
-	protected $sort;
-
-	/** @var string */
-	protected $objectType;
-
-	/** @var int */
-	protected $objectId;
-
-	/** @var string */
-	protected $user;
-
-	/** @var bool */
-	protected $loadPreviews;
+	/**
+	 * A year and a leap day. Beyond this the columns stop being distinguishable
+	 * and the query stops being cheap.
+	 */
+	public const HISTOGRAM_MAX_DAYS = 366;
 
 	public function __construct(
 		$appName,
@@ -65,33 +69,30 @@ class APIv2Controller extends OCSController {
 		protected IMimeTypeDetector $mimeTypeDetector,
 		protected ViewInfoCache $infoCache,
 		protected INotificationManager $notificationManager,
+		protected IDateTimeZone $dateTimeZone,
 	) {
 		parent::__construct($appName, $request);
 		$this->activityManager = $activityManager;
+		$this->searchCriteria = SearchCriteria::empty();
 	}
 
 	/**
-	 * @param string $filter
-	 * @param int $since
-	 * @param int $limit
-	 * @param bool $previews
-	 * @param string $objectType
-	 * @param int $objectId
-	 * @param string $sort
 	 * @throws InvalidFilterException when the filter is invalid
+	 * @throws InvalidSearchCriteriaException when the search term or date range is invalid
 	 * @throws \OutOfBoundsException when no user is given
 	 */
-	protected function validateParameters($filter, $since, $limit, $previews, $objectType, $objectId, $sort) {
-		$this->filter = \is_string($filter) ? $filter : 'all';
+	protected function validateParameters(string $filter, int $since, int $limit, bool $previews, string $objectType, int $objectId, string $sort, string $search = '', int $from = 0, int $to = 0, string $actor = ''): void {
+		$this->filter = $filter;
 		if ($this->filter !== $this->data->validateFilter($this->filter)) {
 			throw new InvalidFilterException('Invalid filter');
 		}
-		$this->since = (int)$since;
-		$this->limit = (int)$limit;
-		$this->loadPreviews = (bool)$previews;
-		$this->objectType = (string)$objectType;
-		$this->objectId = (int)$objectId;
+		$this->since = $since;
+		$this->limit = $limit;
+		$this->loadPreviews = $previews;
+		$this->objectType = $objectType;
+		$this->objectId = $objectId;
 		$this->sort = \in_array($sort, ['asc', 'desc'], true) ? $sort : 'desc';
+		$this->searchCriteria = SearchCriteria::create($search, $from, $to, $actor);
 
 		if (($this->objectType !== '' && $this->objectId === 0) || ($this->objectType === '' && $this->objectId !== 0)) {
 			// Only allowed together
@@ -109,43 +110,33 @@ class APIv2Controller extends OCSController {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 *
-	 * @param int $since
-	 * @param int $limit
-	 * @param bool $previews
-	 * @param string $object_type
-	 * @param int $object_id
-	 * @param string $sort
-	 * @return DataResponse
+	 * @param string $search Only return activities whose file path contains this substring
+	 * @param int $from Only return activities at or after this Unix timestamp
+	 * @param int $to Only return activities at or before this Unix timestamp
+	 * @param string $actor Only return activities authored by this account
 	 */
-	public function getDefault($since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc'): DataResponse {
-		return $this->get('all', $since, $limit, $previews, $object_type, $object_id, $sort);
+	#[NoAdminRequired]
+	public function getDefault(int $since = 0, int $limit = 50, bool $previews = false, string $object_type = '', int $object_id = 0, string $sort = 'desc', string $search = '', int $from = 0, int $to = 0, string $actor = ''): DataResponse {
+		return $this->get('all', $since, $limit, $previews, $object_type, $object_id, $sort, $search, $from, $to, $actor);
 	}
 
 	/**
-	 * @NoAdminRequired
-	 *
-	 * @param string $filter
-	 * @param int $since
-	 * @param int $limit
-	 * @param bool $previews
-	 * @param string $object_type
-	 * @param int $object_id
-	 * @param string $sort
-	 * @return DataResponse
+	 * @param string $search Only return activities whose file path contains this substring
+	 * @param int $from Only return activities at or after this Unix timestamp
+	 * @param int $to Only return activities at or before this Unix timestamp
+	 * @param string $actor Only return activities authored by this account
 	 */
-	public function getFilter($filter, $since = 0, $limit = 50, $previews = false, $object_type = '', $object_id = 0, $sort = 'desc'): DataResponse {
-		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort);
+	#[NoAdminRequired]
+	public function getFilter(string $filter, int $since = 0, int $limit = 50, bool $previews = false, string $object_type = '', int $object_id = 0, string $sort = 'desc', string $search = '', int $from = 0, int $to = 0, string $actor = ''): DataResponse {
+		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort, $search, $from, $to, $actor);
 	}
 
 	/**
-	 * @NoAdminRequired
-	 *
 	 * @param string $object_type Object type to count downloads for (must be 'files')
 	 * @param int $object_id File ID
 	 * @return DataResponse
 	 */
+	#[NoAdminRequired]
 	public function getDownloadCount(string $object_type = 'files', int $object_id = 0): DataResponse {
 		$user = $this->userSession->getUser();
 		if (!$user instanceof IUser) {
@@ -163,10 +154,81 @@ class APIv2Controller extends OCSController {
 	}
 
 	/**
-	 * @NoAdminRequired
+	 * Activity counts per calendar day, for the stream's histogram.
 	 *
-	 * @return DataResponse
+	 * @param string $filter The stream filter to count within
+	 * @param int $days Length of the window, ending today, in the viewer's timezone
+	 * @param string $search Only count activities whose file path contains this
+	 * @param string $actor Only count activities authored by this account
 	 */
+	#[NoAdminRequired]
+	public function getHistogram(
+		string $filter,
+		int $days = self::HISTOGRAM_DEFAULT_DAYS,
+		string $search = '',
+		string $actor = '',
+		string $object_type = '',
+		int $object_id = 0,
+	): DataResponse {
+		if ($filter !== $this->data->validateFilter($filter)) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		}
+
+		$user = $this->userSession->getUser();
+		if (!$user instanceof IUser) {
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
+		}
+
+		$days = max(1, min(self::HISTOGRAM_MAX_DAYS, $days));
+
+		try {
+			$criteria = SearchCriteria::create($search, 0, 0, $actor);
+		} catch (InvalidSearchCriteriaException $e) {
+			return new DataResponse(['message' => $e->getMessage()], Http::STATUS_BAD_REQUEST);
+		}
+		if (($object_type !== '' && $object_id === 0) || ($object_type === '' && $object_id !== 0)) {
+			// Only allowed together (mirrors validateParameters())
+			$object_type = '';
+			$object_id = 0;
+		}
+
+		// Window boundaries are resolved in the viewer's timezone so the last
+		// column is their today, not UTC's
+		$timezone = $this->dateTimeZone->getTimeZone();
+		$today = new \DateTimeImmutable('now', $timezone);
+		$last = $today->setTime(23, 59, 59);
+		$first = $today->modify('-' . ($days - 1) . ' days')->setTime(0, 0, 0);
+
+		$histogram = $this->data->getDailyCounts(
+			$this->settings,
+			$user->getUID(),
+			$filter,
+			$first->getTimestamp(),
+			$last->getTimestamp(),
+			$timezone,
+			$object_type,
+			$object_id,
+			$criteria,
+		);
+
+		$counts = $histogram['counts'];
+
+		return new DataResponse([
+			'from' => $first->format('Y-m-d'),
+			'to' => $last->format('Y-m-d'),
+			'counts' => $counts,
+			// Saves the client a pass over the data to scale the colour ramp,
+			// and gives it a headline figure for the window
+			'max' => $counts === [] ? 0 : max($counts),
+			'total' => array_sum($counts),
+			'partial_before' => $histogram['partialBefore'],
+		]);
+	}
+
+	/**
+	 * @return DataResponse<Http::STATUS_OK, list<array{id: string, name: string, icon: string, priority: int}>, array{}>
+	 */
+	#[NoAdminRequired]
 	public function listFilters(): DataResponse {
 		$filters = $this->activityManager->getFilters();
 
@@ -191,21 +253,13 @@ class APIv2Controller extends OCSController {
 		return new DataResponse($filters);
 	}
 
-	/**
-	 * @param string $filter
-	 * @param int $since
-	 * @param int $limit
-	 * @param bool $previews
-	 * @param string $filterObjectType
-	 * @param int $filterObjectId
-	 * @param string $sort
-	 * @return DataResponse
-	 */
-	protected function get($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort): DataResponse {
+	protected function get(string $filter, int $since, int $limit, bool $previews, string $filterObjectType, int $filterObjectId, string $sort, string $search = '', int $from = 0, int $to = 0, string $actor = ''): DataResponse {
 		try {
-			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort);
+			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort, $search, $from, $to, $actor);
 		} catch (InvalidFilterException $e) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		} catch (InvalidSearchCriteriaException $e) {
+			return new DataResponse(['message' => $e->getMessage()], Http::STATUS_BAD_REQUEST);
 		} catch (\OutOfBoundsException $e) {
 			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
@@ -223,7 +277,9 @@ class APIv2Controller extends OCSController {
 
 				$this->filter,
 				$this->objectType,
-				$this->objectId
+				$this->objectId,
+				false,
+				$this->searchCriteria
 			);
 		} catch (\OutOfBoundsException $e) {
 			// Invalid since argument
@@ -297,6 +353,9 @@ class APIv2Controller extends OCSController {
 				$nextPageParameters['object_type'] = $this->objectType;
 				$nextPageParameters['object_id'] = $this->objectId;
 			}
+			// Without these the next page would silently widen back to the
+			// unfiltered stream
+			$nextPageParameters += $this->searchCriteria->toParameters();
 			if ($this->request->getParam('format') !== null) {
 				$nextPageParameters['format'] = $this->request->getParam('format');
 			}

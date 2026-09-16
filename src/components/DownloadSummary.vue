@@ -15,7 +15,7 @@
 <script lang="ts">
 import downloadSVG from '@mdi/svg/svg/download-circle.svg?raw'
 import axios from '@nextcloud/axios'
-import { translate as t, n } from '@nextcloud/l10n'
+import { n, translate as t } from '@nextcloud/l10n'
 import { generateOcsUrl } from '@nextcloud/router'
 import { defineComponent } from 'vue'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'

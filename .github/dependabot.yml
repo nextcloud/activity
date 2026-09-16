@@ -8,7 +8,7 @@ updates:
     time: "03:00"
     timezone: Europe/Paris
   cooldown:
-    default-days: 6
+    default-days: 4
   open-pull-requests-limit: 10
   labels:
     - 3. to review
@@ -35,58 +35,8 @@ updates:
     time: "03:00"
     timezone: Europe/Paris
   cooldown:
-    default-days: 6
+    default-days: 4
   open-pull-requests-limit: 10
   labels:
     - 3. to review
     - dependencies
-- package-ecosystem: "npm"
-  directory: "/"
-  schedule:
-    interval: weekly
-    day: saturday
-    time: "03:00"
-    timezone: Europe/Paris
-  cooldown:
-    default-days: 6
-  open-pull-requests-limit: 10
-  # Disable automatic rebasing because without a build CI will likely fail anyway
-  rebase-strategy: "disabled"
-  labels:
-    - 3. to review
-    - dependencies
-  groups:
-    vue:
-      patterns:
-        - "*vue*"
-        - "*vite*"
-    prod:
-      dependency-type: "production"
-      update-types:
-        - "minor"
-        - "patch"
-    dev:
-      dependency-type: "development"
-      update-types:
-        - "minor"
-        - "patch"
-  # GitHub Actions
-- package-ecosystem: "github-actions"
-  directory: ".github/workflows"
-  commit-message:
-    prefix: "ci"
-    include: "scope"
-  schedule:
-    interval: weekly
-    day: saturday
-    time: "03:00"
-    timezone: Europe/Berlin
-  cooldown:
-    default-days: 6
-  labels:
-    - 3. to review
-    - github_actions
-  groups:
-    github-actions:
-      patterns:
-        - "*"

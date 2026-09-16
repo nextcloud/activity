@@ -27,6 +27,7 @@ use OCP\Federation\ICloudIdManager;
 use OCP\Files\Folder;
 use OCP\Files\InvalidPathException;
 use OCP\Files\IRootFolder;
+use OCP\Files\IUserFolder;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
 use OCP\IDBConnection;
@@ -128,7 +129,7 @@ class RemoteActivityControllerTest extends TestCase {
 		$node->method('getId')->willReturn($fileId);
 		$node->method('getStorage')->willReturn($storage);
 
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')->with($path)->willReturn($node);
 		$this->rootFolder->method('getUserFolder')->willReturn($userFolder);
 
@@ -453,7 +454,7 @@ class RemoteActivityControllerTest extends TestCase {
 		]);
 
 		if ($shouldMatch) {
-			$userFolder = $this->createMock(Folder::class);
+			$userFolder = $this->createMock(IUserFolder::class);
 			$userFolder->method('get')->willThrowException(new NotFoundException());
 			$this->rootFolder->method('getUserFolder')->willReturn($userFolder);
 		}
@@ -532,7 +533,7 @@ class RemoteActivityControllerTest extends TestCase {
 		$this->cloudIdManager->method('resolveCloudId')->willReturn($this->createCloudIdMock());
 		$this->setupDbQueryMock($this->validShare());
 
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')->willThrowException(new NotFoundException());
 		$this->rootFolder->method('getUserFolder')->willReturn($userFolder);
 
@@ -553,7 +554,7 @@ class RemoteActivityControllerTest extends TestCase {
 		$this->cloudIdManager->method('resolveCloudId')->willReturn($this->createCloudIdMock());
 		$this->setupDbQueryMock($this->validShare());
 
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')->willThrowException(new InvalidPathException());
 		$this->rootFolder->method('getUserFolder')->willReturn($userFolder);
 
@@ -684,7 +685,7 @@ class RemoteActivityControllerTest extends TestCase {
 		$node = $this->createMock(Node::class);
 		$node->method('getStorage')->willReturn($storage);
 
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')->willReturn($node);
 		$this->rootFolder->method('getUserFolder')->willReturn($userFolder);
 
@@ -717,7 +718,7 @@ class RemoteActivityControllerTest extends TestCase {
 		$node = $this->createMock(Node::class);
 		$node->method('getStorage')->willReturn($wrapperStorage);
 
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')->willReturn($node);
 		$this->rootFolder->method('getUserFolder')->willReturn($userFolder);
 
@@ -745,7 +746,7 @@ class RemoteActivityControllerTest extends TestCase {
 		$node = $this->createMock(Node::class);
 		$node->method('getStorage')->willReturn($storage);
 
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')->willReturn($node);
 		$this->rootFolder->method('getUserFolder')->willReturn($userFolder);
 
@@ -782,7 +783,7 @@ class RemoteActivityControllerTest extends TestCase {
 		$node->method('getParent')->willReturn($parent);
 		$node->method('getStorage')->willReturn($storage);
 
-		$userFolder = $this->createMock(Folder::class);
+		$userFolder = $this->createMock(IUserFolder::class);
 		$userFolder->method('get')->with($path)->willReturn($node);
 		$this->rootFolder->method('getUserFolder')->willReturn($userFolder);
 

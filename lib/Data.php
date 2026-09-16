@@ -6,9 +6,9 @@ declare(strict_types=1);
  * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+
 namespace OCA\Activity;
 
-use Doctrine\DBAL\Platforms\MySQLPlatform;
 use OCA\Activity\Filter\AllFilter;
 use OCP\Activity\Exceptions\FilterNotFoundException;
 use OCP\Activity\IEvent;
@@ -17,6 +17,7 @@ use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\DB\Exception;
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\Files\IRootFolder;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use Psr\Log\LoggerInterface;
@@ -25,6 +26,14 @@ use Psr\Log\LoggerInterface;
  * @brief Class for managing the data in the activities
  */
 class Data {
+	/**
+	 * Runaway guard for {@see self::getDailyCounts()}.
+	 *
+	 * A histogram window is already bounded to one user and a date range, so this
+	 * is not expected to bind; it exists so an extreme account cannot turn one
+	 * chart into an unbounded fetch. Reaching it is reported rather than hidden.
+	 */
+	public const MAX_HISTOGRAM_ROWS = 100000;
 
 	/** @var  */
 	protected ?IQueryBuilder $insertActivity = null;
@@ -35,7 +44,45 @@ class Data {
 		protected IDBConnection $connection,
 		protected LoggerInterface $logger,
 		protected IConfig $config,
+		protected IRootFolder $rootFolder,
 	) {
+	}
+
+	/**
+	 * Check if the event should be processed (not excluded and has valid target)
+	 *
+	 * @param IEvent $event
+	 * @return bool
+	 */
+	private function shouldSend(IEvent $event): bool {
+		return $event->getAffectedUser() !== '' && !$this->isExcludedAuthor($event);
+	}
+
+	/**
+	 * Check if the event's author is excluded from activity logging
+	 *
+	 * @param IEvent $event
+	 * @return bool
+	 */
+	private function isExcludedAuthor(IEvent $event): bool {
+		$excludedUsers = $this->config->getSystemValue('activity_log_exclude_users', []);
+		if (empty($excludedUsers)) {
+			return false;
+		}
+		$author = $event->getAuthor();
+		if ($author === '' || !isset($excludedUsers[$author])) {
+			return false;
+		}
+		$rule = $excludedUsers[$author];
+		if (is_array($rule)) {
+			return in_array($event->getType(), $rule, true);
+		} else {
+			$this->logger->warning(
+				'activity_log_exclude_users rule for user "{user}" is not an array, skipping!',
+				['app' => 'activity', 'user' => $author]
+			);
+		}
+		return false;
 	}
 
 	/**
@@ -45,7 +92,7 @@ class Data {
 	 * @return int
 	 */
 	public function send(IEvent $event): int {
-		if ($event->getAffectedUser() === '') {
+		if (!$this->shouldSend($event)) {
 			return 0;
 		}
 
@@ -103,6 +150,10 @@ class Data {
 	 * @throws Exception
 	 */
 	public function bulkSend(IEvent $event, array $affectedUsers): array {
+		if ($this->isExcludedAuthor($event)) {
+			return [];
+		}
+
 		$this->connection->beginTransaction();
 
 		$activityIds = [];
@@ -169,8 +220,7 @@ class Data {
 	 * @return bool
 	 */
 	public function storeMail(IEvent $event, int $latestSendTime): bool {
-		$affectedUser = $event->getAffectedUser();
-		if ($affectedUser === '') {
+		if (!$this->shouldSend($event)) {
 			return false;
 		}
 
@@ -194,7 +244,7 @@ class Data {
 			'amq_appid' => $event->getApp(),
 			'amq_subject' => $event->getSubject(),
 			'amq_subjectparams' => json_encode($event->getSubjectParameters()),
-			'amq_affecteduser' => $affectedUser,
+			'amq_affecteduser' => $event->getAffectedUser(),
 			'amq_timestamp' => $event->getTimestamp(),
 			'amq_type' => $event->getType(),
 			'amq_latest_send' => $latestSendTime,
@@ -223,10 +273,11 @@ class Data {
 	 * @param int $objectId Allows to filter the activities to a given object. May only appear together with $objectType
 	 *
 	 * @param bool $returnEvents return only the events
+	 * @param SearchCriteria|null $search Additional search term and date range restrictions
 	 * @return array
 	 *
 	 */
-	public function get(GroupHelper $groupHelper, UserSettings $userSettings, $user, $since, $limit, $sort, $filter, $objectType = '', $objectId = 0, bool $returnEvents = false) {
+	public function get(GroupHelper $groupHelper, UserSettings $userSettings, string $user, int $since, int $limit, string $sort, string $filter, string $objectType = '', int $objectId = 0, bool $returnEvents = false, ?SearchCriteria $search = null): array {
 		// get current user
 		if ($user === '') {
 			throw new \OutOfBoundsException('Invalid user', 1);
@@ -243,45 +294,9 @@ class Data {
 
 		$query = $this->connection->getQueryBuilder();
 		$query->select('*')
-			->from('activity');
+			->from('activity', 'a');
 
-		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)));
-
-		if ($activeFilter instanceof IFilter && !($activeFilter instanceof AllFilter)) {
-			$notificationTypes = $userSettings->getNotificationTypes();
-			$notificationTypes = $activeFilter->filterTypes($notificationTypes);
-			$notificationTypes = array_unique($notificationTypes);
-
-			$query->andWhere($query->expr()->in('type', $query->createNamedParameter($notificationTypes, IQueryBuilder::PARAM_STR_ARRAY)));
-		}
-
-		if ($filter === 'self') {
-			$query->andWhere($query->expr()->eq('user', $query->createNamedParameter($user)));
-		} elseif ($filter === 'by') {
-			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
-		} elseif ($filter === 'filter') {
-			$query->andWhere($query->expr()->eq('object_type', $query->createNamedParameter($objectType)));
-			$query->andWhere($query->expr()->eq('object_id', $query->createNamedParameter($objectId)));
-		}
-
-		if ($activeFilter instanceof IFilter) {
-			$apps = $activeFilter->allowedApps();
-			if (!empty($apps)) {
-				$query->andWhere($query->expr()->in('app', $query->createNamedParameter($apps, IQueryBuilder::PARAM_STR_ARRAY)));
-			}
-		}
-
-		if (
-			$filter === 'files_favorites'
-			|| (in_array($filter, ['all', 'by', 'self']) && $userSettings->getUserSetting($user, 'stream', 'files_favorites'))
-		) {
-			try {
-				$favoriteFilter = $this->activityManager->getFilterById('files_favorites');
-				/** @var \OCA\Files\Activity\Filter\Favorites $favoriteFilter */
-				$favoriteFilter->filterFavorites($query);
-			} catch (FilterNotFoundException) {
-			}
-		}
+		$this->applyStreamConditions($query, $userSettings, $user, $filter, $activeFilter, $objectType, $objectId, $search);
 
 		/**
 		 * Order and specify the offset
@@ -314,6 +329,203 @@ class Data {
 	}
 
 	/**
+	 * Restrict a query to the activities a user may see under a given filter.
+	 *
+	 * Shared by the stream itself and by {@see self::getDailyCounts()} so the two
+	 * can never disagree about what the stream contains: a histogram whose bars
+	 * count rows the feed below it does not list is worse than no histogram.
+	 *
+	 * @param IFilter|null $activeFilter The resolved filter, or null when unknown
+	 */
+	private function applyStreamConditions(
+		IQueryBuilder $query,
+		UserSettings $userSettings,
+		string $user,
+		string $filter,
+		?IFilter $activeFilter,
+		string $objectType,
+		int $objectId,
+		?SearchCriteria $search,
+	): void {
+		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)));
+
+		if ($activeFilter instanceof IFilter && !($activeFilter instanceof AllFilter)) {
+			$notificationTypes = $userSettings->getNotificationTypes();
+			$notificationTypes = $activeFilter->filterTypes($notificationTypes);
+			$notificationTypes = array_unique($notificationTypes);
+
+			$query->andWhere($query->expr()->in('type', $query->createNamedParameter($notificationTypes, IQueryBuilder::PARAM_STR_ARRAY)));
+		}
+
+		if ($filter === 'self') {
+			$query->andWhere($query->expr()->eq('user', $query->createNamedParameter($user)));
+		} elseif ($filter === 'by') {
+			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+		} elseif ($filter === 'filter') {
+			$query->andWhere($query->expr()->eq('object_type', $query->createNamedParameter($objectType)));
+			$query->andWhere($query->expr()->eq('object_id', $query->createNamedParameter($objectId)));
+		} elseif ($filter === 'focused') {
+			// Get home storage id
+			$storageId = $this->rootFolder->getUserFolder($user)->getMountPoint()->getNumericStorageId();
+			// Only activity related to files owned by the user
+			$query->leftJoin('a', 'filecache', 'f',
+				$query->expr()->andX(
+					$query->expr()->eq('a.object_type', $query->createNamedParameter('files')),
+					$query->expr()->eq('a.object_id', 'f.fileid'),
+				));
+			// Filter out our own activity
+			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+			$query->andWhere(
+				$query->expr()->orX(
+					// Affected object is one of our files
+					$query->expr()->eq('f.storage', $query->createNamedParameter($storageId, IQueryBuilder::PARAM_INT)),
+					// There is no affected object, so the activity affects our user directly
+					$query->expr()->eq('object_type', $query->createNamedParameter('')),
+					// Show all sharing related events
+					$query->expr()->eq('app', $query->createNamedParameter('files_sharing')),
+				)
+			);
+		}
+
+		if ($activeFilter instanceof IFilter) {
+			$apps = $activeFilter->allowedApps();
+			if (!empty($apps)) {
+				$query->andWhere($query->expr()->in('app', $query->createNamedParameter($apps, IQueryBuilder::PARAM_STR_ARRAY)));
+			}
+		}
+
+		if (
+			$filter === 'files_favorites'
+			|| (in_array($filter, ['all', 'by', 'self']) && $userSettings->getUserSetting($user, 'stream', 'files_favorites'))
+		) {
+			try {
+				$favoriteFilter = $this->activityManager->getFilterById('files_favorites');
+				/** @var \OCA\Files\Activity\Filter\Favorites $favoriteFilter */
+				$favoriteFilter->filterFavorites($query);
+			} catch (FilterNotFoundException) {
+			}
+		}
+
+		$this->applySearchCriteria($query, $search ?? SearchCriteria::empty());
+	}
+
+	/**
+	 * Count the activities per calendar day within a window.
+	 *
+	 * Days are resolved in the given timezone rather than in UTC, because a
+	 * histogram is read against the reader's own calendar: an activity at 01:00
+	 * local time belongs to that day for them regardless of where the day
+	 * boundary falls in UTC. Passing a real DateTimeZone rather than a fixed
+	 * offset is what keeps this correct across a DST transition inside the
+	 * window.
+	 *
+	 * Bucketing happens in PHP on purpose. Grouping by day in SQL needs either
+	 * integer division or a modulo, and neither is expressible through
+	 * IQueryBuilder — a raw expression would have to be written differently for
+	 * MySQL, PostgreSQL, Oracle and SQLite, which this app supports all four of.
+	 * The query itself stays cheap: it selects one column, restricted to a single
+	 * `affecteduser` and a timestamp range, which is exactly the
+	 * `activity_user_time` index.
+	 *
+	 * `counts` is keyed by `Y-m-d` and omits days with no activity, so its size
+	 * tracks real activity rather than the length of the window. `partialBefore`
+	 * is the date from which counts are known to be incomplete, or null.
+	 *
+	 * @param int $from Start of the window as a Unix timestamp, inclusive
+	 * @param int $to End of the window as a Unix timestamp, inclusive
+	 *
+	 * @return array{counts: array<string, int>, partialBefore: ?string}
+	 */
+	public function getDailyCounts(
+		UserSettings $userSettings,
+		string $user,
+		string $filter,
+		int $from,
+		int $to,
+		\DateTimeZone $timezone,
+		string $objectType = '',
+		int $objectId = 0,
+		?SearchCriteria $search = null,
+	): array {
+		if ($user === '') {
+			throw new \OutOfBoundsException('Invalid user', 1);
+		}
+
+		$activeFilter = null;
+		try {
+			$activeFilter = $this->activityManager->getFilterById($filter);
+		} catch (FilterNotFoundException) {
+			// Unknown filter => count everything, as the stream would show it
+		}
+
+		$query = $this->connection->getQueryBuilder();
+		$query->select('timestamp')
+			->from('activity');
+
+		$this->applyStreamConditions($query, $userSettings, $user, $filter, $activeFilter, $objectType, $objectId, $search);
+
+		$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($from, IQueryBuilder::PARAM_INT)));
+		$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($to, IQueryBuilder::PARAM_INT)));
+
+		// Newest first, so that hitting the guard below costs the oldest days
+		// rather than the recent ones a reader is actually looking at
+		$query->orderBy('timestamp', 'DESC');
+		$query->setMaxResults(self::MAX_HISTOGRAM_ROWS + 1);
+
+		$result = $query->executeQuery();
+		$counts = [];
+		$rows = 0;
+		$oldestCounted = null;
+		while ($row = $result->fetch()) {
+			$rows++;
+			if ($rows > self::MAX_HISTOGRAM_ROWS) {
+				break;
+			}
+			$timestamp = (int)$row['timestamp'];
+			$day = (new \DateTimeImmutable('@' . $timestamp))->setTimezone($timezone)->format('Y-m-d');
+			$counts[$day] = ($counts[$day] ?? 0) + 1;
+			$oldestCounted = $day;
+		}
+		$result->closeCursor();
+
+		$partialBefore = null;
+		if ($rows > self::MAX_HISTOGRAM_ROWS && $oldestCounted !== null) {
+			// The day the guard cut off is only partly counted, so drop it and
+			// tell the client where the data stops being trustworthy instead of
+			// drawing a bar that understates the day
+			unset($counts[$oldestCounted]);
+			$partialBefore = $oldestCounted;
+			$this->logger->debug('Activity histogram truncated at ' . self::MAX_HISTOGRAM_ROWS . ' rows', ['app' => 'activity']);
+		}
+
+		return ['counts' => $counts, 'partialBefore' => $partialBefore];
+	}
+
+	/**
+	 * Narrow a stream query down to a date range, a file path search term
+	 * and/or the account that authored the activity.
+	 */
+	private function applySearchCriteria(IQueryBuilder $query, SearchCriteria $criteria): void {
+		if ($criteria->from !== null) {
+			$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($criteria->from, IQueryBuilder::PARAM_INT)));
+		}
+
+		if ($criteria->to !== null) {
+			$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($criteria->to, IQueryBuilder::PARAM_INT)));
+		}
+
+		if ($criteria->term !== null) {
+			// escapeLikeParameter() keeps % and _ in the user's input literal
+			$pattern = '%' . $this->connection->escapeLikeParameter($criteria->term) . '%';
+			$query->andWhere($query->expr()->iLike('file', $query->createNamedParameter($pattern)));
+		}
+
+		if ($criteria->actor !== null) {
+			$query->andWhere($query->expr()->eq('user', $query->createNamedParameter($criteria->actor)));
+		}
+	}
+
+	/**
 	 * @param IQueryBuilder $query
 	 * @param string $user
 	 * @param int $since
@@ -323,36 +535,39 @@ class Data {
 	 *
 	 * @throws \OutOfBoundsException If $since is not owned by $user
 	 */
-	protected function setOffsetFromSince(IQueryBuilder $query, $user, $since, $sort) {
-		if ($since) {
-			$queryBuilder = $this->connection->getQueryBuilder();
-			$queryBuilder->select(['affecteduser', 'timestamp'])
-				->from('activity')
-				->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter((int)$since)));
-			$result = $queryBuilder->executeQuery();
-			$activity = $result->fetch();
-			$result->closeCursor();
-
-			if ($activity) {
-				if ($activity['affecteduser'] !== $user) {
-					throw new \OutOfBoundsException('Invalid since', 2);
-				}
-				$timestamp = (int)$activity['timestamp'];
-
-				if ($sort === 'DESC') {
-					$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($timestamp)));
-					$query->andWhere($query->expr()->lt('activity_id', $query->createNamedParameter($since)));
-				} else {
-					$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($timestamp)));
-					$query->andWhere($query->expr()->gt('activity_id', $query->createNamedParameter($since)));
-				}
-				return [];
-			}
+	protected function setOffsetFromSince(IQueryBuilder $query, string $user, int $since, string $sort): array {
+		if (!$since) {
+			return $this->getFirstKnownActivityHeader($user, $sort);
 		}
 
-		/**
-		 * Couldn't find the since, so find the oldest one and set the header
-		 */
+		$queryBuilder = $this->connection->getQueryBuilder();
+		$queryBuilder->select(['affecteduser', 'timestamp'])
+			->from('activity')
+			->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter($since)));
+		$result = $queryBuilder->executeQuery();
+		$activity = $result->fetch();
+		$result->closeCursor();
+
+		if (!$activity) {
+			return $this->getFirstKnownActivityHeader($user, $sort);
+		}
+
+		if ($activity['affecteduser'] !== $user) {
+			throw new \OutOfBoundsException('Invalid since', 2);
+		}
+
+		$timestamp = (int)$activity['timestamp'];
+		if ($sort === 'DESC') {
+			$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($timestamp)));
+			$query->andWhere($query->expr()->lt('activity_id', $query->createNamedParameter($since)));
+		} else {
+			$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($timestamp)));
+			$query->andWhere($query->expr()->gt('activity_id', $query->createNamedParameter($since)));
+		}
+		return [];
+	}
+
+	private function getFirstKnownActivityHeader(string $user, string $sort): array {
 		$fetchQuery = $this->connection->getQueryBuilder();
 		$fetchQuery->select('activity_id')
 			->from('activity')
@@ -364,11 +579,8 @@ class Data {
 		$result->closeCursor();
 
 		if ($activity !== false) {
-			return [
-				'X-Activity-First-Known' => (int)$activity['activity_id'],
-			];
+			return ['X-Activity-First-Known' => (int)$activity['activity_id']];
 		}
-
 		return [];
 	}
 
@@ -403,15 +615,8 @@ class Data {
 
 	/**
 	 * Verify that the filter is valid
-	 *
-	 * @param string $filterValue
-	 * @return string
 	 */
-	public function validateFilter($filterValue) {
-		if (!isset($filterValue)) {
-			return 'all';
-		}
-
+	public function validateFilter(string $filterValue): string {
 		switch ($filterValue) {
 			case 'filter':
 				return $filterValue;
@@ -434,15 +639,13 @@ class Data {
 		$ttl = (60 * 60 * 24 * max(1, $expireDays));
 		$timelimit = time() - $ttl;
 		$conditions = [
-			'timestamp' => [$timelimit, '<'],
+			['timestamp', $timelimit, '<'],
 		];
 
 		$excludedUsers = $this->config->getSystemValue('activity_expire_exclude_users', []);
-		if (!empty($excludedUsers)) {
+		if (is_array($excludedUsers)) {
 			foreach ($excludedUsers as $user) {
-				$conditions[] = [
-					'affecteduser' => [$user, '!=']
-				];
+				$conditions[] = ['affecteduser', $user, '!='];
 			}
 		}
 
@@ -452,13 +655,15 @@ class Data {
 	/**
 	 * Delete activities that match certain conditions
 	 *
-	 * @param array $conditions Array with conditions that have to be met
-	 *                          'field' => 'value'  => `field` = 'value'
-	 *                          'field' => array('value', 'operator') => `field` operator 'value'
+	 * @param array $conditions List of conditions that all have to be met (combined with AND).
+	 *                          Each condition is a [column, value, operator] tuple, where the
+	 *                          operator is optional and defaults to '=':
+	 *                          ['field', 'value']        => `field` = 'value'
+	 *                          ['field', 'value', '!=']  => `field` != 'value'
+	 * @psalm-param list<array{0: string, 1: mixed, 2?: string}> $conditions
 	 */
-	public function deleteActivities($conditions): void {
-		$platform = $this->connection->getDatabasePlatform();
-		if ($platform instanceof MySQLPlatform) {
+	public function deleteActivities(array $conditions): void {
+		if ($this->connection->getDatabaseProvider() === IDBConnection::PLATFORM_MYSQL) {
 			$this->logger->debug('Choosing chunked activity delete for MySQL/MariaDB', ['app' => 'activity']);
 			$this->deleteActivitiesForMySQL($conditions);
 			return;
@@ -467,19 +672,28 @@ class Data {
 		$deleteQuery = $this->connection->getQueryBuilder();
 		$deleteQuery->delete('activity');
 
-		foreach ($conditions as $column => $comparison) {
-			if (is_array($comparison)) {
-				$operation = $comparison[1] ?? '=';
-				$value = $comparison[0];
-			} else {
-				$operation = '=';
-				$value = $comparison;
-			}
-
-			$deleteQuery->andWhere($deleteQuery->expr()->comparison($column, $operation, $deleteQuery->createNamedParameter($value)));
-		}
+		$this->applyConditions($deleteQuery, $conditions);
 		// Dont use chunked delete - let the DB handle the large row count natively
 		$deleteQuery->executeStatement();
+	}
+
+	/**
+	 * Apply a list of conditions to a query, combined with AND.
+	 *
+	 * Using andWhere() for every condition is required: where() would replace any
+	 * previously set restriction, silently dropping all but the last condition.
+	 *
+	 * @param IQueryBuilder $query
+	 * @param array $conditions List of [column, value, operator] tuples; operator defaults to '='
+	 * @psalm-param list<array{0: string, 1: mixed, 2?: string}> $conditions
+	 */
+	private function applyConditions(IQueryBuilder $query, array $conditions): void {
+		foreach ($conditions as $condition) {
+			$column = $condition[0];
+			$value = $condition[1];
+			$operation = $condition[2] ?? '=';
+			$query->andWhere($query->expr()->comparison($column, $operation, $query->createNamedParameter($value)));
+		}
 	}
 
 	public function getById(int $activityId): ?IEvent {
@@ -563,16 +777,7 @@ class Data {
 		$query->select('activity_id')
 			->from('activity');
 
-		foreach ($conditions as $column => $comparison) {
-			if (is_array($comparison)) {
-				$operation = $comparison[1] ?? '=';
-				$value = $comparison[0];
-			} else {
-				$operation = '=';
-				$value = $comparison;
-			}
-			$query->where($query->expr()->comparison($column, $operation, $query->createNamedParameter($value)));
-		}
+		$this->applyConditions($query, $conditions);
 
 		$query->setMaxResults(50000);
 		$result = $query->executeQuery();

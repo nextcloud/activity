@@ -34,6 +34,7 @@ use OCA\Activity\MailQueueHandler;
 use OCA\Activity\UserSettings;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
+use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
 use OCP\IDBConnection;
@@ -65,6 +66,7 @@ class MailQueueHandlerTest extends TestCase {
 	protected IFactory&MockObject $lFactory;
 	protected IManager&MockObject $activityManager;
 	protected IValidator&MockObject $richObjectValidator;
+	protected IAppConfig&MockObject $appConfig;
 	protected IConfig&MockObject $config;
 	protected MockObject&LoggerInterface $logger;
 
@@ -74,13 +76,13 @@ class MailQueueHandlerTest extends TestCase {
 	protected UserSettings&MockObject $userSettings;
 	protected IEmailValidator&MockObject $emailValidator;
 
-
 	protected function setUp(): void {
 		parent::setUp();
 
 		$app = self::getUniqueID('MailQueueHandlerTest', 10);
 		$this->userManager = $this->createMock(IUserManager::class);
 		$this->lFactory = $this->createMock(IFactory::class);
+		$this->appConfig = $this->createMock(IAppConfig::class);
 		$this->config = $this->createMock(IConfig::class);
 		$this->logger = $this->createMock(LoggerInterface::class);
 		$this->dateTimeFormatter = $this->createMock(IDateTimeFormatter::class);
@@ -141,6 +143,7 @@ class MailQueueHandlerTest extends TestCase {
 			$this->lFactory,
 			$this->activityManager,
 			$this->richObjectValidator,
+			$this->appConfig,
 			$this->config,
 			$this->logger,
 			$this->data,
@@ -300,6 +303,10 @@ class MailQueueHandlerTest extends TestCase {
 	public function testSendEmailsDeletesQueueOnMailerFailure(): void {
 		$maxTime = 200;
 
+		$this->appConfig->method('getValueBool')
+			->with('activity', 'enable_email', true)
+			->willReturn(true);
+
 		$template = $this->createMock(IEMailTemplate::class);
 		$this->mailer->method('createEMailTemplate')
 			->willReturn($template);
@@ -340,6 +347,10 @@ class MailQueueHandlerTest extends TestCase {
 	public function testSendEmailsDeletesQueueOnSendReturnFalse(): void {
 		$maxTime = 200;
 
+		$this->appConfig->method('getValueBool')
+			->with('activity', 'enable_email', true)
+			->willReturn(true);
+
 		$template = $this->createMock(IEMailTemplate::class);
 		$this->mailer->method('createEMailTemplate')
 			->willReturn($template);
@@ -368,6 +379,70 @@ class MailQueueHandlerTest extends TestCase {
 			[$data,] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
 			$this->assertEmpty($data, "Queue entries for $user should be removed after sendEmailToUser returns false to prevent duplicate notifications");
 		}
+	}
+
+	public function testSendEmailsSkipsWhenAdminEmailDisabled(): void {
+		$maxTime = 200;
+
+		$this->appConfig->method('getValueBool')
+			->with('activity', 'enable_email', true)
+			->willReturn(false);
+
+		$this->mailer->expects($this->never())
+			->method('send');
+
+		$result = $this->mailQueueHandler->sendEmails(3, $maxTime);
+
+		$this->assertSame(0, $result);
+
+		// Queue must be untouched so emails can be sent if admin re-enables the toggle
+		foreach (['user1', 'user2', 'user3'] as $user) {
+			[$data,] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);
+			$this->assertNotEmpty($data, "Queue entries for $user must survive when email is globally disabled");
+		}
+	}
+
+	public function testGetHTMLSubjectEscapesParameters(): void {
+		$this->assertSame(
+			'Shared <strong>&lt;b&gt;secret&lt;/b&gt;.txt</strong>',
+			$this->formatSubject(['file' => ['type' => 'file', 'path' => '<b>secret</b>.txt']]),
+		);
+		$this->assertSame(
+			'Shared <a href="https://example.com/&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;">secret.txt</a>',
+			$this->formatSubject(['file' => [
+				'type' => 'file',
+				'path' => 'secret.txt',
+				'link' => 'https://example.com/"><script>alert(1)</script>',
+			]]),
+		);
+	}
+
+	protected function formatSubject(array $parameters): string {
+		$event = $this->createMock(IEvent::class);
+		$event->method('getRichSubject')->willReturn('Shared {file}');
+		$event->method('getRichSubjectParameters')->willReturn($parameters);
+
+		return self::invokePrivate($this->mailQueueHandler, 'getHTMLSubject', [$event]);
+	}
+
+	public function testGetMailMaxItemsReturnsCapWhenValueExceedsCap(): void {
+		$this->appConfig->method('getValueInt')
+			->with('activity', 'mail_max_items', $this->mailQueueHandler::MAIL_MAX_ITEMS_DEFAULT)
+			->willReturn(9999);
+
+		$result = self::invokePrivate($this->mailQueueHandler, 'getMailMaxItems', []);
+
+		$this->assertSame(MailQueueHandler::MAIL_MAX_ITEMS_CAP, $result);
+	}
+
+	public function testGetMailMaxItemsReturnsOneWhenValueIsBelowOne(): void {
+		$this->appConfig->method('getValueInt')
+			->with('activity', 'mail_max_items', $this->mailQueueHandler::MAIL_MAX_ITEMS_DEFAULT)
+			->willReturn(0);
+
+		$result = self::invokePrivate($this->mailQueueHandler, 'getMailMaxItems', []);
+
+		$this->assertSame(1, $result);
 	}
 
 	/**

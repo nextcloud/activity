@@ -45,48 +45,45 @@ class ViewInfoCache {
 			'view' => '',
 		];
 
-		$notFound = false;
 		try {
 			$userFolder = $this->rootFolder->getUserFolder($user);
 			$entry = $userFolder->getFirstNodeById($fileId);
 			if ($entry === null) {
 				throw new NotFoundException('No entries returned');
 			}
-
 			$cache['path'] = $userFolder->getRelativePath($entry->getPath());
 			$cache['is_dir'] = $entry instanceof Folder;
 			$cache['exists'] = true;
 			$cache['node'] = $entry;
+			$this->cacheId[$user][$fileId] = $cache;
+			return $cache;
 		} catch (NotFoundException) {
-			// The file was not found in the normal view,
-			// maybe it is in the trashbin?
-			try {
-				$userTrashBin = $this->rootFolder->get('/' . $user . '/files_trashbin');
-				if (!$userTrashBin instanceof Folder) {
-					throw new NotFoundException('No trash bin found for user: ' . $user);
-				}
-				$entry = $userTrashBin->getFirstNodeById($fileId);
-				if ($entry === null) {
-					throw new NotFoundException('No entries returned');
-				}
+			// The file was not found in the normal view, maybe it is in the trashbin?
+		}
 
-				$cache = [
-					'path' => $userTrashBin->getRelativePath($entry->getPath()),
-					'exists' => true,
-					'is_dir' => $entry instanceof Folder,
-					'view' => 'trashbin',
-					'node' => $entry,
-				];
-			} catch (NotFoundException) {
-				$notFound = true;
+		try {
+			$userTrashBin = $this->rootFolder->get('/' . $user . '/files_trashbin');
+			if (!$userTrashBin instanceof Folder) {
+				throw new NotFoundException('No trash bin found for user: ' . $user);
 			}
+			$entry = $userTrashBin->getFirstNodeById($fileId);
+			if ($entry === null) {
+				throw new NotFoundException('No entries returned');
+			}
+			$cache = [
+				'path' => $userTrashBin->getRelativePath($entry->getPath()),
+				'exists' => true,
+				'is_dir' => $entry instanceof Folder,
+				'view' => 'trashbin',
+				'node' => $entry,
+			];
+		} catch (NotFoundException) {
+			// Not found anywhere — cache path as null but return original filePath
+			$this->cacheId[$user][$fileId] = array_merge($cache, ['path' => null]);
+			return $cache;
 		}
 
 		$this->cacheId[$user][$fileId] = $cache;
-		if ($notFound) {
-			$this->cacheId[$user][$fileId]['path'] = null;
-		}
-
 		return $cache;
 	}
 }

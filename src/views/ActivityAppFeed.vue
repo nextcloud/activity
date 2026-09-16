@@ -4,9 +4,18 @@
 -->
 <template>
 	<NcAppContent class="activity-app">
-		<h1 class="activity-app__heading">
+		<!-- Kept for document semantics / screen readers, but visually hidden -->
+		<h1 class="activity-app__heading hidden-visually">
 			{{ headingTitle }}
 		</h1>
+		<div class="activity-app__filter">
+			<ActivityFilterBar
+				v-model:search="searchTerm"
+				v-model:from="dateFrom"
+				v-model:to="dateTo"
+				v-model:actor="actorFilter"
+				:actorOptions="actorOptions" />
+		</div>
 		<NcEmptyContent
 			v-if="hasMoreActivites && allActivities.length === 0"
 			class="activity-app__empty-content"
@@ -14,6 +23,20 @@
 			:description="t('activity', 'This stream will show events like additions, changes & shares')">
 			<template #icon>
 				<NcLoadingIcon :size="36" />
+			</template>
+		</NcEmptyContent>
+		<NcEmptyContent
+			v-else-if="allActivities.length === 0 && hasActiveFilters"
+			class="activity-app__empty-content"
+			:name="t('activity', 'No matching activities')"
+			:description="t('activity', 'No activity matches the current filters')">
+			<template #icon>
+				<NcIconSvgWrapper :svg="appIconSVG" :size="36" />
+			</template>
+			<template #action>
+				<NcButton variant="primary" @click="clearFilters">
+					{{ t('activity', 'Clear filters') }}
+				</NcButton>
 			</template>
 		</NcEmptyContent>
 		<NcEmptyContent
@@ -26,49 +49,60 @@
 			</template>
 		</NcEmptyContent>
 		<div ref="container" class="activity-app__container" @scroll="onScroll">
-			<NcButton
-				v-if="newActivitiesAvailable"
-				class="activity-app__new-activities-indicator"
-				type="button"
-				@click="scrollToTop">
-				{{ t('activity', 'New activities') }}
-			</NcButton>
-			<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
-			<!-- Only show if not showing the inital empty content for loading -->
-			<NcLoadingIcon
-				v-if="hasMoreActivites && allActivities.length > 0"
-				:name="t('activity', 'Loading more activities')"
-				:size="64"
-				class="activity-app__loading-indicator" />
-			<div
-				v-else-if="!hasMoreActivites && allActivities.length > 0"
-				class="activity-app__loading-indicator">
-				{{ t('activity', 'No more activities.') }}
+			<div class="activity-app__content">
+				<NcButton
+					v-if="newActivitiesAvailable"
+					class="activity-app__new-activities-indicator"
+					type="button"
+					@click="scrollToTop">
+					{{ t('activity', 'New activities') }}
+				</NcButton>
+				<ActivityGroup v-for="activities, date of groupedActivities" :key="date" :activities="activities" />
+				<!-- Only show if not showing the inital empty content for loading -->
+				<NcLoadingIcon
+					v-if="hasMoreActivites && allActivities.length > 0"
+					:name="t('activity', 'Loading more activities')"
+					:size="64"
+					class="activity-app__loading-indicator" />
+				<div
+					v-else-if="!hasMoreActivites && allActivities.length > 0"
+					class="activity-app__end-of-feed">
+					{{ t('activity', 'No more activities.') }}
+				</div>
 			</div>
 		</div>
 	</NcAppContent>
 </template>
 
 <script setup lang="ts">
+import type { IRawActivity } from '../models/types.ts'
+
 import ncAxios from '@nextcloud/axios'
 import { showError } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import { translate as t } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import { generateOcsUrl } from '@nextcloud/router'
-import { useDocumentVisibility, useInfiniteScroll, useDebounceFn } from '@vueuse/core'
+import { useDebounceFn, useDocumentVisibility, useInfiniteScroll } from '@vueuse/core'
 import axios from 'axios'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import NcAppContent from '@nextcloud/vue/components/NcAppContent'
+import NcButton from '@nextcloud/vue/components/NcButton'
 import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
 import NcIconSvgWrapper from '@nextcloud/vue/components/NcIconSvgWrapper'
-import NcButton from '@nextcloud/vue/components/NcButton'
 import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon'
+import ActivityFilterBar from '../components/ActivityFilterBar.vue'
 import ActivityGroup from '../components/ActivityGroup.vue'
 import appIconSVG from '../../img/activity-dark.svg?raw'
 import ActivityModel from '../models/ActivityModel.ts'
-import type { IRawActivity } from '../models/types.ts'
+import {
+	endOfDayTimestamp,
+	formatDateParameter,
+	normalizeSearchTerm,
+	parseDateParameter,
+	startOfDayTimestamp,
+} from '../utils/dateRange.ts'
 import logger from '../utils/logger.ts'
 
 interface INavigationEntry {
@@ -77,10 +111,6 @@ interface INavigationEntry {
 	name: string
 	url: string
 }
-
-const navigationList = loadState<INavigationEntry[]>(appName, 'navigationList')
-
-const route = useRoute()
 
 const props = withDefaults(defineProps<{
 	/**
@@ -91,6 +121,63 @@ const props = withDefaults(defineProps<{
 	// default to 'all'
 	filter: 'all',
 })
+
+const navigationList = loadState<INavigationEntry[]>(appName, 'navigationList')
+
+const route = useRoute()
+const router = useRouter()
+
+/**
+ * Active file name search term. Restored from the URL so a filtered view can
+ * be bookmarked and shared.
+ */
+const searchTerm = ref(typeof route.query.search === 'string' ? normalizeSearchTerm(route.query.search) : '')
+
+/**
+ * Start of the active date range, or null when unbounded
+ */
+const dateFrom = ref<Date | null>(parseDateParameter(route.query.from))
+
+/**
+ * End of the active date range, or null when unbounded
+ */
+const dateTo = ref<Date | null>(parseDateParameter(route.query.to))
+
+/**
+ * Account name the stream is restricted to, or an empty string
+ */
+const actorFilter = ref(typeof route.query.actor === 'string' ? route.query.actor.trim() : '')
+
+/**
+ * Accounts seen in the activities loaded so far, keyed by account name.
+ *
+ * Accumulated rather than derived from the current page: once an account has
+ * been filtered to, the stream only contains that account, and a derived list
+ * would collapse to a single entry with no way back to the others.
+ */
+const knownActors = ref(new Map<string, string>())
+
+const actorOptions = computed(() => [...knownActors.value.entries()]
+	.map(([id, displayName]) => ({ id, displayName, user: id }))
+	.sort((a, b) => a.displayName.localeCompare(b.displayName)))
+
+const hasActiveFilters = computed(() => searchTerm.value !== ''
+	|| dateFrom.value !== null
+	|| dateTo.value !== null
+	|| actorFilter.value !== '')
+
+/**
+ * Record the accounts behind a batch of activities so they can be filtered on.
+ *
+ * @param activities - The newly loaded activities
+ */
+function rememberActors(activities: ActivityModel[]) {
+	for (const activity of activities) {
+		if (activity.user !== '' && !knownActors.value.has(activity.user)) {
+			knownActors.value.set(activity.user, activity.authorDisplayName)
+		}
+	}
+}
 
 /**
  * Whether activities are currently being loaded
@@ -183,6 +270,35 @@ const headingTitle = computed(() => {
 })
 
 /**
+ * Build an API URL for the current filter, including the active search and
+ * date range.
+ *
+ * The query string is assembled with URLSearchParams so search terms
+ * containing spaces, slashes or `&` are encoded correctly.
+ *
+ * @param extra - Request specific parameters such as the pagination cursor
+ */
+function buildRequestUrl(extra: Record<string, string>): string {
+	const parameters = new URLSearchParams({ format: 'json', previews: 'true', ...extra })
+	if (searchTerm.value !== '') {
+		parameters.set('search', searchTerm.value)
+	}
+	const from = startOfDayTimestamp(dateFrom.value)
+	if (from > 0) {
+		parameters.set('from', String(from))
+	}
+	const to = endOfDayTimestamp(dateTo.value)
+	if (to > 0) {
+		parameters.set('to', String(to))
+	}
+	if (actorFilter.value !== '') {
+		parameters.set('actor', actorFilter.value)
+	}
+	const base = generateOcsUrl('apps/activity/api/v2/activity/{filter}', { filter: props.filter })
+	return `${base}?${parameters.toString()}`
+}
+
+/**
  * Load activities for current filter or load more if already loaded
  */
 async function loadActivities() {
@@ -195,11 +311,12 @@ async function loadActivities() {
 	try {
 		const since = lastActivityLoaded.value ?? '0'
 		loading.value = true
-		const response = await ncAxios.get(generateOcsUrl('apps/activity/api/v2/activity/{filter}?format=json&previews=true&since={since}', { filter: props.filter, since }), { signal })
+		const response = await ncAxios.get(buildRequestUrl({ since }), { signal })
 		if (signal.aborted) {
 			return
 		}
 		const newActivities = response.data.ocs.data.map((raw: IRawActivity) => new ActivityModel(raw))
+		rememberActors(newActivities)
 		allActivities.value.push(...newActivities)
 		lastActivityLoaded.value = response.headers['x-activity-last-given']
 		hasMoreActivites.value = true
@@ -245,9 +362,10 @@ async function pollNewActivities() {
 	const { signal } = requestController
 	try {
 		const since = String(newestActivityId.value ?? 0)
-		const response = await ncAxios.get(generateOcsUrl('apps/activity/api/v2/activity/{filter}?format=json&previews=true&since={since}&sort=asc', { filter: props.filter, since }), { signal })
+		const response = await ncAxios.get(buildRequestUrl({ since, sort: 'asc' }), { signal })
 		if (!signal.aborted && response.data.ocs.data.length > 0) {
 			const newActivities: ActivityModel[] = response.data.ocs.data.map((raw: IRawActivity) => new ActivityModel(raw))
+			rememberActors(newActivities)
 			// Sort newest first for prepending
 			newActivities.sort((a: ActivityModel, b: ActivityModel) => b.id - a.id)
 			newestActivityId.value = newActivities[0]!.id
@@ -290,6 +408,9 @@ const onScroll = useDebounceFn(() => {
 	}
 }, 100)
 
+/**
+ *
+ */
 function startPolling() {
 	stopPolling()
 	// Use a sentinel value so the self-scheduling logic in pollNewActivities
@@ -297,6 +418,9 @@ function startPolling() {
 	pollTimer = setTimeout(pollNewActivities, POLL_INTERVAL)
 }
 
+/**
+ *
+ */
 function stopPolling() {
 	if (pollTimer !== undefined) {
 		clearTimeout(pollTimer)
@@ -326,9 +450,12 @@ watch(visibility, (value) => {
 })
 
 /**
- * Reload activities when filter changed
+ * Discard everything loaded so far and start over.
+ *
+ * Aborting the in-flight requests first is what keeps a slow response for the
+ * previous filter from being appended to the new one's results.
  */
-watch(props, () => {
+function resetAndReload() {
 	requestController.abort()
 	requestController = new AbortController()
 	allActivities.value = []
@@ -337,17 +464,98 @@ watch(props, () => {
 	newestActivityId.value = undefined
 	hasMoreActivites.value = true
 	loadActivities()
+}
+
+/**
+ * Reload activities when filter changed
+ */
+watch(props, () => {
+	// A different stream can involve entirely different accounts
+	knownActors.value.clear()
+	resetAndReload()
 })
+
+/**
+ * Reload when the search term or date range changed, and mirror the criteria
+ * into the URL.
+ *
+ * `replace` rather than `push` so refining a search does not fill the back
+ * button with intermediate states, while the current view stays linkable.
+ */
+watch([searchTerm, dateFrom, dateTo, actorFilter], () => {
+	const query: Record<string, string> = {}
+	if (searchTerm.value !== '') {
+		query.search = searchTerm.value
+	}
+	if (actorFilter.value !== '') {
+		query.actor = actorFilter.value
+	}
+	const from = formatDateParameter(dateFrom.value)
+	if (from !== '') {
+		query.from = from
+	}
+	const to = formatDateParameter(dateTo.value)
+	if (to !== '') {
+		query.to = to
+	}
+	// A redundant navigation is not an error worth surfacing
+	router.replace({ query }).catch(() => {})
+	resetAndReload()
+})
+
+/**
+ * Drop every active search and date restriction
+ */
+function clearFilters() {
+	searchTerm.value = ''
+	dateFrom.value = null
+	dateTo.value = null
+	actorFilter.value = ''
+}
 </script>
 
 <style scoped lang="scss">
 .activity-app {
+	// Max width of the readable column, also read by the heading indent in ActivityGroup.vue
+	--activity-feed-max-width: 924px;
+	// How far content has to be indented to clear the app-navigation toggle,
+	// which is absolutely positioned at the inline start of the app content.
+	// Only the part the centring gutter ((100cqi - column) / 2) doesn't already
+	// cover, clamped to 0 so wide layouts stay flush with the entries.
+	// Consumed by the filter bar below and by the sticky date headings in
+	// ActivityGroup.vue, so the two always line up.
+	--activity-feed-nav-indent: max(
+		0px,
+		var(--app-navigation-padding) + var(--default-clickable-area)
+			- var(--default-grid-baseline)
+			- max(0px, (100cqi - var(--activity-feed-max-width)) / 2)
+	);
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	// Query container so the date headings track the content-area width (shrunk by the
+	// open app navigation), not the raw viewport
+	container: activity-feed / inline-size;
+
+	&__filter {
+		// Align the controls with the readable column below them. Deliberately
+		// outside the scroll container so it stays put while the feed scrolls
+		// and does not compete with the sticky date headings.
+		flex: 0 0 auto;
+		width: min(100%, var(--activity-feed-max-width));
+		max-width: var(--activity-feed-max-width);
+		margin: 0 auto;
+		padding-inline: 12px;
+		// Clear the app-navigation toggle so the first control starts where the
+		// date headings do instead of butting up against the toggle
+		padding-inline-start: calc(12px + var(--activity-feed-nav-indent));
+	}
 
 	&__empty-content {
-		height: 100%;
+		// Fill what the filter bar leaves rather than the full height of the
+		// app content, which would overflow the clipped parent
+		flex: 1 1 auto;
+		min-height: 0;
 	}
 
 	&__loading-indicator {
@@ -357,16 +565,32 @@ watch(props, () => {
 		text-align: center;
 	}
 
+	&__end-of-feed {
+		color: var(--color-text-maxcontrast);
+		text-align: center;
+		// Large bottom margin so the message isn't stuck to the viewport bottom
+		margin-block: 30px 30vh;
+	}
+
 	&__container {
+		// Scroll container, so the scrollbar sits at the edge of app-content
+		// rather than beside the narrower content column.
+		// min-height: 0 lets it shrink below its content so the filter bar
+		// above keeps its space instead of being pushed out.
+		flex: 1 1 auto;
+		min-height: 0;
+		overflow-y: scroll;
+	}
+
+	&__content {
+		// Clamp the readable column and centre it within the full-width scroller
 		display: flex;
 		flex-direction: column;
 
-		height: 100%;
-		width: min(100%, 924px);
-		max-width: 924px;
+		width: min(100%, var(--activity-feed-max-width));
+		max-width: var(--activity-feed-max-width);
 		margin: 0 auto;
 		padding-inline: 12px;
-		overflow-y: scroll;
 	}
 
 	&__new-activities-indicator {
@@ -386,15 +610,6 @@ watch(props, () => {
 		&:hover {
 			background-color: var(--color-primary-element-hover);
 		}
-	}
-
-	&__heading {
-		font-weight: bold;
-		font-size: 20px;
-		line-height: 44px; // to align height with the app navigation toggle
-		// Align with app navigation toggle
-		margin-top: 1px;
-		margin-inline: calc(2 * var(--app-navigation-padding, 8px) + 44px) var(--app-navigation-padding, 8px);
 	}
 }
 </style>

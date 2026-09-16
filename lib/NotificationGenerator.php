@@ -31,6 +31,17 @@ class NotificationGenerator implements INotifier {
 	) {
 	}
 
+	/**
+	 * @psalm-pure
+	 */
+	private function sanitizeUrl(string $url): string {
+		if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://')) {
+			return $url;
+		}
+
+		return '';
+	}
+
 	public function deferNotifications(): bool {
 		return $this->notificationManager->defer();
 	}
@@ -68,8 +79,9 @@ class NotificationGenerator implements INotifier {
 			$notification->setMessage($event->getMessage(), $event->getMessageParameters());
 		}
 
-		if ($event->getLink()) {
-			$notification->setLink($event->getLink());
+		$link = $event->getLink() ? $this->sanitizeUrl($event->getLink()) : '';
+		if ($link !== '') {
+			$notification->setLink($link);
 		}
 
 		return $notification;
@@ -115,10 +127,18 @@ class NotificationGenerator implements INotifier {
 			throw new AlreadyProcessedException();
 		}
 		$this->activityManager->setCurrentUserId($notification->getUser());
-		$event = $this->populateEvent($event, $languageCode);
-		$this->activityManager->setCurrentUserId(null);
+		try {
+			$event = $this->populateEvent($event, $languageCode);
+		} finally {
+			$this->activityManager->setCurrentUserId(null);
+		}
 
-		return $this->getDisplayNotificationForEvent($event, $event->getObjectId());
+		try {
+			return $this->getDisplayNotificationForEvent($event, $event->getObjectId());
+		} catch (\InvalidArgumentException $e) {
+			$this->logger->error('Failed to format activity notification', ['exception' => $e]);
+			throw new AlreadyProcessedException();
+		}
 	}
 
 	private function getDisplayNotificationForEvent(IEvent $event, int $activityId): INotification {
@@ -127,8 +147,9 @@ class NotificationGenerator implements INotifier {
 		$notification->setRichSubject($event->getRichSubject(), $event->getRichSubjectParameters());
 		$notification->setParsedSubject($event->getParsedSubject());
 
-		if ($event->getIcon()) {
-			$notification->setIcon($event->getIcon());
+		$icon = $event->getIcon() ? $this->sanitizeUrl($event->getIcon()) : '';
+		if ($icon !== '') {
+			$notification->setIcon($icon);
 		}
 
 		if ($event->getRichMessage()) {

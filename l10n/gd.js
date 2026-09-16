@@ -5,6 +5,7 @@ OC.L10N.register(
     "Notifications" : "Brathan",
     "Today" : "An-diugh",
     "Yesterday" : "An-dè",
+    "More" : "Barrachd",
     "Home" : "Dachaigh",
     "No activity yet" : "Gun ghnìomhachd fhathast"
 },

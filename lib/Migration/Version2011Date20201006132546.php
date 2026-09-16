@@ -5,10 +5,12 @@ declare(strict_types=1);
  * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+
 namespace OCA\Activity\Migration;
 
 use Closure;
 use OCP\DB\ISchemaWrapper;
+use OCP\DB\Types;
 use OCP\IDBConnection;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
@@ -34,7 +36,7 @@ class Version2011Date20201006132546 extends SimpleMigrationStep {
 
 		$table = $schema->getTable('activity_mq');
 		if (!$table->hasColumn('amq_subjectparams')) {
-			$table->addColumn('amq_subjectparams', 'text', [
+			$table->addColumn('amq_subjectparams', Types::TEXT, [
 				'notnull' => false,
 			]);
 			return $schema;

@@ -176,7 +176,6 @@ class GroupHelperTest extends TestCase {
 		$this->assertSame($event, $instance);
 	}
 
-
 	protected function createEvent(array $data): IEvent {
 		/** @var IEvent|MockObject $event */
 		$event = $this->createMock(IEvent::class);
