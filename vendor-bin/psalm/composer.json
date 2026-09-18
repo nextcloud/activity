@@ -1,7 +1,7 @@
 {
 	"require-dev": {
 		"nextcloud/ocp": "dev-master",
-		"vimeo/psalm": "^7.0.0-beta19"
+		"vimeo/psalm": "7.0.0-beta20"
 	},
 	"config": {
 		"platform": {
