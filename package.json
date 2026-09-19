@@ -65,7 +65,7 @@
     "stylelint": "^17.14.1",
     "typescript": "^6.0.3",
     "vite": "^7.3.6",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   },
   "engines": {
     "node": "^24.0.0",
