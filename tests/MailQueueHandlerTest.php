@@ -402,6 +402,29 @@ class MailQueueHandlerTest extends TestCase {
 		}
 	}
 
+	public function testGetHTMLSubjectEscapesParameters(): void {
+		$this->assertSame(
+			'Shared <strong>&lt;b&gt;secret&lt;/b&gt;.txt</strong>',
+			$this->formatSubject(['file' => ['type' => 'file', 'path' => '<b>secret</b>.txt']]),
+		);
+		$this->assertSame(
+			'Shared <a href="https://example.com/&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;">secret.txt</a>',
+			$this->formatSubject(['file' => [
+				'type' => 'file',
+				'path' => 'secret.txt',
+				'link' => 'https://example.com/"><script>alert(1)</script>',
+			]]),
+		);
+	}
+
+	protected function formatSubject(array $parameters): string {
+		$event = $this->createMock(IEvent::class);
+		$event->method('getRichSubject')->willReturn('Shared {file}');
+		$event->method('getRichSubjectParameters')->willReturn($parameters);
+
+		return self::invokePrivate($this->mailQueueHandler, 'getHTMLSubject', [$event]);
+	}
+
 	public function testGetMailMaxItemsReturnsCapWhenValueExceedsCap(): void {
 		$this->appConfig->method('getValueInt')
 			->with('activity', 'mail_max_items', $this->mailQueueHandler::MAIL_MAX_ITEMS_DEFAULT)
