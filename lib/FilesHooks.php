@@ -1303,8 +1303,8 @@ class FilesHooks {
 
 		$unrelatedUsers = $this->getUnrelatedUsers($fileId, $cachedMounts);
 
-		return array_filter($affectedUsers, function ($userId) use ($unrelatedUsers): bool {
-			return !in_array($userId, $unrelatedUsers);
+		return array_filter($affectedUsers, function (string $userId) use ($unrelatedUsers): bool {
+			return !in_array($userId, $unrelatedUsers, true);
 		}, ARRAY_FILTER_USE_KEY);
 	}
 
@@ -1410,13 +1410,13 @@ class FilesHooks {
 			$id = $mapping->getId();
 
 			// if mapping is about user
-			if ($mapping->getType() === 'user' && !in_array($id, $usersToCheck)) {
+			if ($mapping->getType() === 'user' && !in_array($id, $usersToCheck, true)) {
 				$usersToCheck[] = $id;
 			}
 
 			// if mapping is about group
 			if ($mapping->getType() === 'group'
-				&& !in_array($mapping->getId(), $knownGroupRules)) {
+				&& !in_array($mapping->getId(), $knownGroupRules, true)) {
 				$knownGroupRules[] = $mapping->getId();
 
 				$group = $this->groupManager->get($id);
