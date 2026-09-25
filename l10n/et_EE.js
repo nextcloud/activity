@@ -37,6 +37,7 @@ OC.L10N.register(
     "Custom range" : "Valitud vahemik",
     "Search by file name" : "Otsi failinime alusel",
     "Clear search" : "Tühjenda otsing",
+    "Anyone" : "Kõik",
     "Clear filters" : "Eemalda filtrid",
     "From" : "Saatja",
     "To" : "Saaja",
