@@ -185,7 +185,6 @@ export default defineComponent({
 		flex-grow: 1;
 		overflow-wrap: break-word;
 		white-space: pre-wrap;
-		word-break: break-word;
 		overflow: hidden;
 
 		&__subject {
