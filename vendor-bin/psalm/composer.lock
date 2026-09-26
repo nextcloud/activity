@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "635517f7cdde52b62379e4fe9dcfadd8",
+    "content-hash": "5f4527cb4b8f5a089322a5f8c1296590",
     "packages": [],
     "packages-dev": [
         {
@@ -3575,22 +3575,22 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "7.0.0-beta20",
+            "version": "7.0.0-beta22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "514c80271662166481959da46fb3094a53a901bb"
+                "reference": "de27e5724ee5997a1e3baee4d394ca6f4e46eba0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/514c80271662166481959da46fb3094a53a901bb",
-                "reference": "514c80271662166481959da46fb3094a53a901bb",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/de27e5724ee5997a1e3baee4d394ca6f4e46eba0",
+                "reference": "de27e5724ee5997a1e3baee4d394ca6f4e46eba0",
                 "shasum": ""
             },
             "require": {
                 "amphp/amp": "^3",
                 "amphp/byte-stream": "^2",
-                "amphp/parallel": "^2.3",
+                "amphp/parallel": "^2.4.0",
                 "composer-runtime-api": "^2",
                 "composer/semver": "^1.4 || ^2.0 || ^3.0",
                 "composer/xdebug-handler": "^2.0 || ^3.0",
@@ -3606,7 +3606,7 @@
                 "felixfbecker/language-server-protocol": "^1.5.3",
                 "fidry/cpu-core-counter": "^0.4.1 || ^0.5.1 || ^1.0.0",
                 "netresearch/jsonmapper": "^5.0",
-                "nikic/php-parser": "^5.0.0",
+                "nikic/php-parser": "^5.2.0",
                 "php": "~8.1.31 || ~8.2.27 || ~8.3.16 || ~8.4.3 || ~8.5.0",
                 "psalm/psalm-plugin-api": "0.2.0",
                 "sebastian/diff": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0",
@@ -3690,7 +3690,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2026-09-14T10:16:53+00:00"
+            "time": "2026-09-21T11:11:48+00:00"
         },
         {
             "name": "webmozart/assert",
