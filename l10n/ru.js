@@ -39,6 +39,7 @@ OC.L10N.register(
     "Until {to}" : "До {to}",
     "Search by file name" : "Поиск здесь по названию файла",
     "Clear search" : "Очистить поиск",
+    "Anyone" : "Кто угодно",
     "Filter activities by date" : "Фильтр событий по дате",
     "Clear filters" : "Сбросить фильтры",
     "From" : "От",
