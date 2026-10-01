@@ -9,7 +9,6 @@
 namespace OCA\Activity\AppInfo;
 
 use OC\DB\ConnectionAdapter;
-use OC\Files\View;
 use OC\SystemConfig;
 use OCA\Activity\Capabilities;
 use OCA\Activity\Consumer;
@@ -126,9 +125,6 @@ class Application extends App implements IBootstrap {
 			$c->get(UserSettings::class),
 			$c->get(IEmailValidator::class),
 		));
-
-		// Allow automatic DI for the View, until we migrated to Nodes API
-		$context->registerService(View::class, fn (): \OC\Files\View => new View(''), false);
 
 		$context->registerCapability(Capabilities::class);
 		$context->registerEventListener(AddMissingIndicesEvent::class, AddMissingIndicesListener::class);

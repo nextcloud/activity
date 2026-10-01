@@ -9,7 +9,6 @@
 namespace OCA\Activity;
 
 use OC\Files\Filesystem;
-use OC\Files\View;
 use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
@@ -57,7 +56,6 @@ class FilesHooks {
 		protected Data $activityData,
 		protected UserSettings $userSettings,
 		protected IGroupManager $groupManager,
-		protected View $view,
 		protected IRootFolder $rootFolder,
 		protected IShareHelper $shareHelper,
 		protected IDBConnection $connection,
@@ -671,12 +669,25 @@ class FilesHooks {
 
 		$info = Filesystem::getFileInfo($path);
 		if ($info !== false) {
-			$ownerView = new View('/' . $owner . '/files');
 			$fileId = (int)$info['fileid'];
-			$path = $ownerView->getPath($fileId);
+			$path = $this->getOwnerPathById($owner, $fileId);
 		}
 
 		return [$path, $owner, $fileId];
+	}
+
+	/**
+	 * @return string Path relative to the owner's files folder
+	 * @throws NotFoundException
+	 */
+	protected function getOwnerPathById(string $owner, int $fileId): string {
+		$userFolder = $this->rootFolder->getUserFolder($owner);
+		$node = $userFolder->getFirstNodeById($fileId);
+		$path = $node === null ? null : $userFolder->getRelativePath($node->getPath());
+		if ($path === null) {
+			throw new NotFoundException('File with id ' . $fileId . ' not found for ' . $owner);
+		}
+		return $path;
 	}
 
 	/**

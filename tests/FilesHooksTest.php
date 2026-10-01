@@ -25,7 +25,6 @@ declare(strict_types=1);
 namespace OCA\Activity;
 
 use OC\Files\Config\CachedMountFileInfo;
-use OC\Files\View;
 use OC\TagManager;
 use OC\Tags;
 use OCA\Activity\Extension\Files;
@@ -68,7 +67,6 @@ class FilesHooksTest extends TestCase {
 	protected Data&MockObject $data;
 	protected UserSettings&MockObject $settings;
 	protected IGroupManager&MockObject $groupManager;
-	protected View&MockObject $view;
 	protected IRootFolder&MockObject $rootFolder;
 	protected IShareHelper&MockObject $shareHelper;
 	protected IURLGenerator&MockObject $urlGenerator;
@@ -86,7 +84,6 @@ class FilesHooksTest extends TestCase {
 		$this->data = $this->createMock(Data::class);
 		$this->settings = $this->createMock(UserSettings::class);
 		$this->groupManager = $this->createMock(IGroupManager::class);
-		$this->view = $this->createMock(View::class);
 		$this->rootFolder = $this->createMock(IRootFolder::class);
 		$this->shareHelper = $this->createMock(IShareHelper::class);
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
@@ -122,7 +119,6 @@ class FilesHooksTest extends TestCase {
 					$this->data,
 					$this->settings,
 					$this->groupManager,
-					$this->view,
 					$this->rootFolder,
 					$this->shareHelper,
 					Server::get(IDBConnection::class),
@@ -144,7 +140,6 @@ class FilesHooksTest extends TestCase {
 			$this->data,
 			$this->settings,
 			$this->groupManager,
-			$this->view,
 			$this->rootFolder,
 			$this->shareHelper,
 			Server::get(IDBConnection::class),
@@ -192,7 +187,6 @@ class FilesHooksTest extends TestCase {
 				$this->data,
 				$this->settings,
 				$this->groupManager,
-				$this->view,
 				$this->rootFolder,
 				$this->shareHelper,
 				Server::get(IDBConnection::class),
@@ -557,6 +551,59 @@ class FilesHooksTest extends TestCase {
 		$node->method('getPath')
 			->willReturn($path);
 		return $node;
+	}
+
+	public static function dataGetOwnerPathById(): array {
+		return [
+			['/owner/files/folder/file.txt', '/folder/file.txt'],
+			['/owner/files', '/'],
+		];
+	}
+
+	#[DataProvider('dataGetOwnerPathById')]
+	public function testGetOwnerPathById(string $absolutePath, string $expected): void {
+		$node = $this->getNodeMock(42, $absolutePath);
+		$userFolder = $this->createMock(IUserFolder::class);
+		$userFolder->method('getFirstNodeById')
+			->with(42)
+			->willReturn($node);
+		$userFolder->method('getRelativePath')
+			->with($absolutePath)
+			->willReturn($expected);
+		$this->rootFolder->method('getUserFolder')
+			->with('owner')
+			->willReturn($userFolder);
+
+		$this->assertSame($expected, self::invokePrivate($this->filesHooks, 'getOwnerPathById', ['owner', 42]));
+	}
+
+	public function testGetOwnerPathByIdNotFound(): void {
+		$userFolder = $this->createMock(IUserFolder::class);
+		$userFolder->method('getFirstNodeById')
+			->with(42)
+			->willReturn(null);
+		$this->rootFolder->method('getUserFolder')
+			->with('owner')
+			->willReturn($userFolder);
+
+		$this->expectException(NotFoundException::class);
+		self::invokePrivate($this->filesHooks, 'getOwnerPathById', ['owner', 42]);
+	}
+
+	public function testGetOwnerPathByIdOutsideUserFolder(): void {
+		$node = $this->getNodeMock(42, '/other/files/file.txt');
+		$userFolder = $this->createMock(IUserFolder::class);
+		$userFolder->method('getFirstNodeById')
+			->with(42)
+			->willReturn($node);
+		$userFolder->method('getRelativePath')
+			->willReturn(null);
+		$this->rootFolder->method('getUserFolder')
+			->with('owner')
+			->willReturn($userFolder);
+
+		$this->expectException(NotFoundException::class);
+		self::invokePrivate($this->filesHooks, 'getOwnerPathById', ['owner', 42]);
 	}
 
 	public function testHookShareWithUser(): void {
