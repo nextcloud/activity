@@ -86,7 +86,7 @@ class FeedController extends Controller {
 			'activities' => $activities,
 		]);
 
-		if (stripos((string)$this->request->getHeader('accept'), 'application/rss+xml') !== false) {
+		if (stripos($this->request->getHeader('accept'), 'application/rss+xml') !== false) {
 			$response->addHeader('Content-Type', 'application/rss+xml');
 		} else {
 			$response->addHeader('Content-Type', 'text/xml; charset=UTF-8');

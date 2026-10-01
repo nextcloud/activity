@@ -119,7 +119,7 @@ class RemoteActivityController extends OCSController {
 			return $response;
 		}
 
-		$normalizedActorServer = rtrim(strtolower((string)preg_replace('/^https?:\/\//', '', (string)$actorServer)), '/');
+		$normalizedActorServer = rtrim(strtolower((string)preg_replace('/^https?:\/\//', '', $actorServer)), '/');
 		$normalizedShareRemote = rtrim(strtolower(preg_replace('/^https?:\/\//', '', $share['remote'])), '/');
 		if ($normalizedActorServer !== $normalizedShareRemote) {
 			return new DataResponse([], Http::STATUS_FORBIDDEN);
