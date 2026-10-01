@@ -253,11 +253,11 @@ class APIv2Controller extends OCSController {
 	protected function get(string $filter, int $since, int $limit, bool $previews, string $filterObjectType, int $filterObjectId, string $sort, string $search = '', int $from = 0, int $to = 0, string $actor = ''): DataResponse {
 		try {
 			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort, $search, $from, $to, $actor);
-		} catch (InvalidFilterException $e) {
+		} catch (InvalidFilterException) {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		} catch (InvalidSearchCriteriaException $e) {
 			return new DataResponse(['message' => $e->getMessage()], Http::STATUS_BAD_REQUEST);
-		} catch (\OutOfBoundsException $e) {
+		} catch (\OutOfBoundsException) {
 			return new DataResponse([], Http::STATUS_FORBIDDEN);
 		}
 

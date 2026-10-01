@@ -16,6 +16,7 @@ use OCP\Activity\IManager;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
+use OCP\Config\IUserConfig;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\IRequest;
@@ -33,6 +34,7 @@ class ActivitiesController extends Controller {
 		private readonly IInitialState $initialState,
 		private readonly IURLGenerator $urlGenerator,
 		private readonly IManager $activityManager,
+		private readonly IUserConfig $userConfig,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -88,7 +90,7 @@ class ActivitiesController extends Controller {
 	 * Link to RSS feed if there is a RSS token, empty string otherwise
 	 */
 	protected function getRSSLink(): string {
-		$rssToken = $this->config->getUserValue($this->userId, 'activity', 'rsstoken');
+		$rssToken = $this->userConfig->getValueString($this->userId, 'activity', 'rsstoken');
 		if ($rssToken) {
 			return $this->urlGenerator->linkToRouteAbsolute('activity.Feed.show', ['token' => $rssToken]);
 		} else {

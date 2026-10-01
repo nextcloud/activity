@@ -37,7 +37,9 @@ use OCA\Activity\UserSettings;
 use OCP\Activity\IExtension;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\Config\IUserConfig;
 use OCP\Files\IRootFolder;
+use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IL10N;
@@ -197,6 +199,14 @@ class APIv1ControllerTest extends TestCase {
 		$config
 			->method('getUserValue')
 			->willReturnArgument(3);
+		$appConfig = $this->createMock(IAppConfig::class);
+		$appConfig
+			->method('getValueString')
+			->willReturnArgument(2);
+		$userConfig = $this->createMock(IUserConfig::class);
+		$userConfig
+			->method('getValueString')
+			->willReturnArgument(3);
 
 		$l = $this->createMock(IL10N::class);
 		$l
@@ -235,7 +245,7 @@ class APIv1ControllerTest extends TestCase {
 			$this->createMock(IRequest::class),
 			$data,
 			new GroupHelper($l, $activityManager, $this->createMock(IValidator::class), $this->createMock(LoggerInterface::class)),
-			new UserSettings($activityManager, $config),
+			new UserSettings($activityManager, $appConfig, $userConfig),
 			$currentUser,
 			Server::get(IDBConnection::class),
 		);

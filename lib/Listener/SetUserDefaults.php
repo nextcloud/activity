@@ -9,10 +9,10 @@ declare(strict_types=1);
 namespace OCA\Activity\Listener;
 
 use OCP\Config\Exceptions\UnknownKeyException;
+use OCP\Config\IUserConfig;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\IAppConfig;
-use OCP\IConfig;
 use OCP\IUser;
 use OCP\User\Events\PostLoginEvent;
 
@@ -22,8 +22,8 @@ use OCP\User\Events\PostLoginEvent;
 class SetUserDefaults implements IEventListener {
 
 	public function __construct(
-		private readonly IConfig $config,
 		private readonly IAppConfig $appConfig,
+		private readonly IUserConfig $userConfig,
 	) {
 	}
 
@@ -38,7 +38,7 @@ class SetUserDefaults implements IEventListener {
 	}
 
 	private function setDefaultsForUser(IUser $user): void {
-		if ($this->config->getUserValue($user->getUID(), 'activity', 'configured', 'no') === 'yes') {
+		if ($this->userConfig->getValueString($user->getUID(), 'activity', 'configured', 'no') === 'yes') {
 			// Already has settings
 			return;
 		}
@@ -48,13 +48,13 @@ class SetUserDefaults implements IEventListener {
 				continue;
 			}
 
-			if ($this->config->getUserValue($user->getUID(), 'activity', $key, null) !== null) {
+			if ($this->userConfig->hasKey($user->getUID(), 'activity', $key)) {
 				// Already has this setting
 				continue;
 			}
 
 			try {
-				$this->config->setUserValue(
+				$this->userConfig->setValueString(
 					$user->getUID(),
 					'activity',
 					$key,
@@ -66,6 +66,6 @@ class SetUserDefaults implements IEventListener {
 		}
 
 		// Mark settings as configured
-		$this->config->setUserValue($user->getUID(), 'activity', 'configured', 'yes');
+		$this->userConfig->setValueString($user->getUID(), 'activity', 'configured', 'yes');
 	}
 }

@@ -13,7 +13,8 @@ use OCA\Activity\UserSettings;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\IConfig;
+use OCP\Config\IUserConfig;
+use OCP\IAppConfig;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
@@ -26,13 +27,14 @@ class SettingsController extends Controller {
 	public function __construct(
 		string $appName,
 		IRequest $request,
-		protected IConfig $config,
 		protected ISecureRandom $random,
 		protected IURLGenerator $urlGenerator,
 		protected IManager $manager,
 		protected UserSettings $userSettings,
 		protected IL10N $l10n,
 		CurrentUser $currentUser,
+		private readonly IAppConfig $appConfig,
+		private readonly IUserConfig $userConfig,
 	) {
 		parent::__construct($appName, $request);
 		$this->user = (string)$currentUser->getUID();
@@ -55,14 +57,14 @@ class SettingsController extends Controller {
 	) {
 		$settings = $this->manager->getSettings();
 		foreach ($settings as $setting) {
-			$this->config->setUserValue(
+			$this->userConfig->setValueString(
 				$this->user, 'activity',
 				'notify_notification_' . $setting->getIdentifier(),
 				(string)(int)$this->request->getParam($setting->getIdentifier() . '_notification', false)
 			);
 
 			if ($setting->canChangeMail()) {
-				$this->config->setUserValue(
+				$this->userConfig->setValueString(
 					$this->user, 'activity',
 					'notify_email_' . $setting->getIdentifier(),
 					(string)(int)$this->request->getParam($setting->getIdentifier() . '_email', false)
@@ -79,22 +81,22 @@ class SettingsController extends Controller {
 			$email_batch_time = 0;
 		}
 
-		$this->config->setUserValue(
+		$this->userConfig->setValueString(
 			$this->user, 'activity',
 			'notify_setting_batchtime',
 			(string)$email_batch_time
 		);
-		$this->config->setUserValue(
+		$this->userConfig->setValueString(
 			$this->user, 'activity',
 			'notify_setting_self',
 			(string)(int)$notify_setting_self
 		);
-		$this->config->setUserValue(
+		$this->userConfig->setValueString(
 			$this->user, 'activity',
 			'notify_setting_selfemail',
 			(string)(int)$notify_setting_selfemail
 		);
-		$this->config->setUserValue(
+		$this->userConfig->setValueString(
 			$this->user, 'activity',
 			'notify_setting_activity_digest',
 			(string)(int)$activity_digest
@@ -119,14 +121,14 @@ class SettingsController extends Controller {
 		$notify_setting_selfemail = false) {
 		$settings = $this->manager->getSettings();
 		foreach ($settings as $setting) {
-			$this->config->setAppValue(
+			$this->appConfig->setValueString(
 				'activity',
 				'notify_notification_' . $setting->getIdentifier(),
 				(string)(int)$this->request->getParam($setting->getIdentifier() . '_notification', false)
 			);
 
 			if ($setting->canChangeMail()) {
-				$this->config->setAppValue(
+				$this->appConfig->setValueString(
 					'activity',
 					'notify_email_' . $setting->getIdentifier(),
 					(string)(int)$this->request->getParam($setting->getIdentifier() . '_email', false)
@@ -143,17 +145,17 @@ class SettingsController extends Controller {
 			$email_batch_time = 0;
 		}
 
-		$this->config->setAppValue(
+		$this->appConfig->setValueString(
 			'activity',
 			'notify_setting_batchtime',
 			(string)$email_batch_time
 		);
-		$this->config->setAppValue(
+		$this->appConfig->setValueString(
 			'activity',
 			'notify_setting_self',
 			(string)(int)$notify_setting_self
 		);
-		$this->config->setAppValue(
+		$this->appConfig->setValueString(
 			'activity',
 			'notify_setting_selfemail',
 			(string)(int)$notify_setting_selfemail
@@ -181,13 +183,13 @@ class SettingsController extends Controller {
 			// Check for collisions
 			while (!empty($conflicts)) {
 				$token = $this->random->generate(30, ISecureRandom::CHAR_UPPER . ISecureRandom::CHAR_LOWER . ISecureRandom::CHAR_DIGITS);
-				$conflicts = $this->config->getUsersForUserValue('activity', 'rsstoken', $token);
+				$conflicts = iterator_to_array($this->userConfig->searchUsersByValueString('activity', 'rsstoken', $token));
 			}
 
 			$tokenUrl = $this->urlGenerator->linkToRouteAbsolute('activity.Feed.show', ['token' => $token]);
 		}
 
-		$this->config->setUserValue($this->user, 'activity', 'rsstoken', $token);
+		$this->userConfig->setValueString($this->user, 'activity', 'rsstoken', $token);
 
 		return new DataResponse([
 			'data' => [

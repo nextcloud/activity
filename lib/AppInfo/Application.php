@@ -30,6 +30,7 @@ use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\Config\IUserConfig;
 use OCP\DB\Events\AddMissingIndicesEvent;
 use OCP\Files\IRootFolder;
 use OCP\IAppConfig;
@@ -124,6 +125,7 @@ class Application extends App implements IBootstrap {
 			$c->get(GroupHelper::class),
 			$c->get(UserSettings::class),
 			$c->get(IEmailValidator::class),
+			$c->get(IUserConfig::class),
 		));
 
 		$context->registerCapability(Capabilities::class);

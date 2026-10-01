@@ -34,6 +34,7 @@ use OCA\Activity\MailQueueHandler;
 use OCA\Activity\UserSettings;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
+use OCP\Config\IUserConfig;
 use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
@@ -68,6 +69,7 @@ class MailQueueHandlerTest extends TestCase {
 	protected IValidator&MockObject $richObjectValidator;
 	protected IAppConfig&MockObject $appConfig;
 	protected IConfig&MockObject $config;
+	protected IUserConfig&MockObject $userConfig;
 	protected MockObject&LoggerInterface $logger;
 
 	protected IDateTimeFormatter&MockObject $dateTimeFormatter;
@@ -84,6 +86,7 @@ class MailQueueHandlerTest extends TestCase {
 		$this->lFactory = $this->createMock(IFactory::class);
 		$this->appConfig = $this->createMock(IAppConfig::class);
 		$this->config = $this->createMock(IConfig::class);
+		$this->userConfig = $this->createMock(IUserConfig::class);
 		$this->logger = $this->createMock(LoggerInterface::class);
 		$this->dateTimeFormatter = $this->createMock(IDateTimeFormatter::class);
 		$this->data = $this->createMock(Data::class);
@@ -150,6 +153,7 @@ class MailQueueHandlerTest extends TestCase {
 			$this->groupHelper,
 			$this->userSettings,
 			$this->emailValidator,
+			$this->userConfig,
 		);
 	}
 
@@ -322,7 +326,7 @@ class MailQueueHandlerTest extends TestCase {
 		$this->lFactory->method('get')
 			->willReturn($this->createMock(IL10N::class));
 
-		$this->config->method('getUserValueForUsers')
+		$this->userConfig->method('getValuesByUsers')
 			->willReturn([]);
 		$this->config->method('getSystemValue')
 			->willReturn('en');
@@ -362,7 +366,7 @@ class MailQueueHandlerTest extends TestCase {
 		$this->userManager->method('get')
 			->willReturn($userObject);
 
-		$this->config->method('getUserValueForUsers')
+		$this->userConfig->method('getValuesByUsers')
 			->willReturn([]);
 		$this->config->method('getSystemValue')
 			->willReturn('en');
