@@ -16,7 +16,7 @@ use OCP\Share\Events\ShareDeletedFromSelfEvent;
 
 /**
  * The class to handle the share events
- * @template-implements IEventListener<Event>
+ * @template-implements IEventListener<BeforeShareDeletedEvent|ShareDeletedFromSelfEvent|ShareCreatedEvent>
  */
 class ShareEventListener implements IEventListener {
 
