@@ -80,13 +80,17 @@ export async function navigateToFolder(page: Page, dirPath: string) {
 }
 
 export async function createFolder(page: Page, dirName: string) {
-	const mkcolResponse = page.waitForResponse(/\/remote\.php\/dav\/files\//)
+	const mkcolResponse = page.waitForResponse((response) => response.request().method() === 'MKCOL' && /\/remote\.php\/dav\/files\//.test(response.url()))
 
-	await page.locator('[data-cy-upload-picker] .action-item__menutoggle').first().click()
-	await page.locator('[data-cy-upload-picker-menu-entry="newFolder"] button').click()
-	await expect(page.locator('[data-cy-files-new-node-dialog]')).toBeVisible()
-	await page.locator('[data-cy-files-new-node-dialog-input]').fill(dirName)
-	await page.locator('[data-cy-files-new-node-dialog-submit]').click()
+	await page.locator('[data-cy-upload-picker]')
+		.getByRole('button', { name: 'New' })
+		.first()
+		.click()
+	await page.getByRole('menuitem', { name: 'New folder' }).click()
+	const dialog = page.getByRole('dialog', { name: /create new folder/i })
+	await expect(dialog).toBeVisible()
+	await dialog.getByRole('textbox', { name: 'Folder name' }).fill(dirName)
+	await dialog.getByRole('button', { name: 'Create' }).click()
 	await mkcolResponse
 
 	await expect(getRowForFile(page, dirName)).toBeVisible()
