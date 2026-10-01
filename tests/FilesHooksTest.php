@@ -259,9 +259,9 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
+			->with('/folder/file.txt', Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
 
-		$filesHooks->fileRestore('path');
+		$filesHooks->fileRestore($this->getNodeMock(42, '/user/files/folder/file.txt'));
 	}
 
 	public function testAddNotificationsForFileActionPartFile(): void {

@@ -18,6 +18,7 @@ use OCA\Activity\FilesHooksStatic;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Listener\AddMissingIndicesListener;
 use OCA\Activity\Listener\LoadSidebarScripts;
+use OCA\Activity\Listener\NodeRestoredListener;
 use OCA\Activity\Listener\SetUserDefaults;
 use OCA\Activity\Listener\ShareEventListener;
 use OCA\Activity\Listener\UserDeleted;
@@ -25,6 +26,7 @@ use OCA\Activity\MailQueueHandler;
 use OCA\Activity\NotificationGenerator;
 use OCA\Activity\UserSettings;
 use OCA\Files\Event\LoadSidebar;
+use OCA\Files_Trashbin\Events\NodeRestoredEvent;
 use OCP\Activity\IManager;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
@@ -167,10 +169,10 @@ class Application extends App implements IBootstrap {
 		Util::connectHook('OC_Filesystem', 'delete', FilesHooksStatic::class, 'fileDelete');
 		Util::connectHook('OC_Filesystem', 'rename', FilesHooksStatic::class, 'fileMove');
 		Util::connectHook('OC_Filesystem', 'post_rename', FilesHooksStatic::class, 'fileMovePost');
-		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', FilesHooksStatic::class, 'fileRestore');
 
 		$context->registerEventListener(ShareCreatedEvent::class, ShareEventListener::class);
 		$context->registerEventListener(BeforeShareDeletedEvent::class, ShareEventListener::class);
 		$context->registerEventListener(ShareDeletedFromSelfEvent::class, ShareEventListener::class);
+		$context->registerEventListener(NodeRestoredEvent::class, NodeRestoredListener::class);
 	}
 }

@@ -55,12 +55,4 @@ class FilesHooksStatic {
 	public static function fileMovePost(array $params): void {
 		self::getHooks()->fileMovePost($params['oldpath'], $params['newpath']);
 	}
-
-	/**
-	 * Store the restore hook events
-	 * @param array $params The hook params
-	 */
-	public static function fileRestore(array $params): void {
-		self::getHooks()->fileRestore($params['filePath']);
-	}
 }

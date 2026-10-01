@@ -106,12 +106,12 @@ class FilesHooks {
 	}
 
 	/**
-	 * Store the restore hook events
+	 * Store the restore events
 	 *
-	 * @param string $path Path of the file that has been restored
+	 * @param Node $node The node that has been restored
 	 */
-	public function fileRestore($path): void {
-		$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
+	public function fileRestore(Node $node): void {
+		$this->addNotificationsForFileAction($this->getVisiblePath($node->getPath()), Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
 	}
 
 	private function getFileChangeActivitySettings(int $fileId, array $users, string $type = Files::TYPE_FILE_CHANGED): array {
