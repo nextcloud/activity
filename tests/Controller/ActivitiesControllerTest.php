@@ -30,7 +30,6 @@ use OCP\Activity\IManager;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
-use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use PHPUnit\Framework\Attributes\Group;
@@ -46,7 +45,6 @@ class ActivitiesControllerTest extends TestCase {
 	protected IConfig&MockObject $config;
 	protected Data&MockObject $data;
 	protected IEventDispatcher&MockObject $eventDispatcher;
-	protected MockObject&IL10N $l10n;
 	protected IInitialState&MockObject $initialState;
 	protected MockObject&IURLGenerator $urlGenerator;
 	protected IManager&MockObject $activityManager;
@@ -59,7 +57,6 @@ class ActivitiesControllerTest extends TestCase {
 		$this->data = $this->createMock(Data::class);
 		$this->eventDispatcher = $this->createMock(IEventDispatcher::class);
 		$this->request = $this->createMock(IRequest::class);
-		$this->l10n = $this->createMock(IL10N::class);
 		$this->initialState = $this->createMock(IInitialState::class);
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->activityManager = $this->createMock(IManager::class);
@@ -75,7 +72,6 @@ class ActivitiesControllerTest extends TestCase {
 				'some-user',
 				$this->config,
 				$this->data,
-				$this->l10n,
 				$this->eventDispatcher,
 				$this->initialState,
 				$this->urlGenerator,
@@ -90,7 +86,6 @@ class ActivitiesControllerTest extends TestCase {
 				'some-user',
 				$this->config,
 				$this->data,
-				$this->l10n,
 				$this->eventDispatcher,
 				$this->initialState,
 				$this->urlGenerator,
