@@ -25,18 +25,18 @@ class DigestSender {
 	public const ACTIVITY_LIMIT = 20;
 
 	public function __construct(
-		private IConfig $config,
-		private Data $data,
-		private UserSettings $userSettings,
-		private GroupHelper $groupHelper,
-		private IMailer $mailer,
-		private IManager $activityManager,
-		private IUserManager $userManager,
-		private IURLGenerator $urlGenerator,
-		private Defaults $defaults,
-		private IFactory $l10nFactory,
-		private IDateTimeFormatter $dateTimeFormatter,
-		private LoggerInterface $logger,
+		private readonly IConfig $config,
+		private readonly Data $data,
+		private readonly UserSettings $userSettings,
+		private readonly GroupHelper $groupHelper,
+		private readonly IMailer $mailer,
+		private readonly IManager $activityManager,
+		private readonly IUserManager $userManager,
+		private readonly IURLGenerator $urlGenerator,
+		private readonly Defaults $defaults,
+		private readonly IFactory $l10nFactory,
+		private readonly IDateTimeFormatter $dateTimeFormatter,
+		private readonly LoggerInterface $logger,
 	) {
 	}
 
@@ -138,7 +138,7 @@ class DigestSender {
 		$this->config->setUserValue($uid, 'activity', 'activity_digest_last_send', (string)$lastActivityId);
 	}
 
-	public function sendDigestForUser(IUser $user, int $now, string $timezone, string $language) {
+	public function sendDigestForUser(IUser $user, int $now, string $timezone, string $language): void {
 		$uid = $user->getUID();
 		$l10n = $this->l10nFactory->get('activity', $language);
 		$this->groupHelper->setL10n($l10n);
@@ -201,7 +201,7 @@ class DigestSender {
 				$andMoreText = $l10n->n('and %n more…', 'and %n more…', $skippedCount);
 				$url = $this->urlGenerator->linkToRouteAbsolute('activity.Activities.showList', [ 'filter' => 'all' ]);
 				$template->addBodyListItem(
-					'<a href="' . $url . '">' . htmlspecialchars($andMoreText) . '</a>',
+					'<a href="' . $url . '">' . htmlspecialchars((string)$andMoreText) . '</a>',
 					plainText: $andMoreText,
 				);
 			}
@@ -229,10 +229,6 @@ class DigestSender {
 		}
 	}
 
-	/**
-	 * @param IEvent $event
-	 * @return string
-	 */
 	protected function getHTMLSubject(IEvent $event): string {
 		if ($event->getRichSubject() === '') {
 			return htmlspecialchars($event->getParsedSubject());

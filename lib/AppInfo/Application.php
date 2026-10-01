@@ -101,40 +101,34 @@ class Application extends App implements IBootstrap {
 			);
 		});
 
-		$context->registerService(Data::class, function (ContainerInterface $c) {
-			return new Data(
-				$c->get(IManager::class),
-				$c->get('ActivityConnectionAdapter'),
-				$c->get(LoggerInterface::class),
-				$c->get(IConfig::class),
-				$c->get(IRootFolder::class),
-			);
-		});
+		$context->registerService(Data::class, fn (ContainerInterface $c): \OCA\Activity\Data => new Data(
+			$c->get(IManager::class),
+			$c->get('ActivityConnectionAdapter'),
+			$c->get(LoggerInterface::class),
+			$c->get(IConfig::class),
+			$c->get(IRootFolder::class),
+		));
 
-		$context->registerService(MailQueueHandler::class, function (ContainerInterface $c) {
-			return new MailQueueHandler(
-				$c->get(IDateTimeFormatter::class),
-				$c->get('ActivityConnectionAdapter'),
-				$c->get(IMailer::class),
-				$c->get(IURLGenerator::class),
-				$c->get(IUserManager::class),
-				$c->get(IFactory::class),
-				$c->get(IManager::class),
-				$c->get(IValidator::class),
-				$c->get(IAppConfig::class),
-				$c->get(IConfig::class),
-				$c->get(LoggerInterface::class),
-				$c->get(Data::class),
-				$c->get(GroupHelper::class),
-				$c->get(UserSettings::class),
-				$c->get(IEmailValidator::class),
-			);
-		});
+		$context->registerService(MailQueueHandler::class, fn (ContainerInterface $c): \OCA\Activity\MailQueueHandler => new MailQueueHandler(
+			$c->get(IDateTimeFormatter::class),
+			$c->get('ActivityConnectionAdapter'),
+			$c->get(IMailer::class),
+			$c->get(IURLGenerator::class),
+			$c->get(IUserManager::class),
+			$c->get(IFactory::class),
+			$c->get(IManager::class),
+			$c->get(IValidator::class),
+			$c->get(IAppConfig::class),
+			$c->get(IConfig::class),
+			$c->get(LoggerInterface::class),
+			$c->get(Data::class),
+			$c->get(GroupHelper::class),
+			$c->get(UserSettings::class),
+			$c->get(IEmailValidator::class),
+		));
 
 		// Allow automatic DI for the View, until we migrated to Nodes API
-		$context->registerService(View::class, function () {
-			return new View('');
-		}, false);
+		$context->registerService(View::class, fn (): \OC\Files\View => new View(''), false);
 
 		$context->registerCapability(Capabilities::class);
 		$context->registerEventListener(AddMissingIndicesEvent::class, AddMissingIndicesListener::class);
@@ -158,9 +152,7 @@ class Application extends App implements IBootstrap {
 	private function registerActivityConsumer(): void {
 		$c = $this->getContainer();
 
-		$c->get(IManager::class)->registerConsumer(function () use ($c) {
-			return $c->get(Consumer::class);
-		});
+		$c->get(IManager::class)->registerConsumer(fn () => $c->get(Consumer::class));
 	}
 
 	public function registerNotifier(): void {

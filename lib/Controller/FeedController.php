@@ -61,7 +61,7 @@ class FeedController extends Controller {
 			$description = $this->l->t('Personal activity feed for %s', $user);
 			$data = $this->data->get($this->helper, $this->settings, $user, 0, self::DEFAULT_PAGE_SIZE, 'desc', $filter);
 			$activities = $data['data'];
-		} catch (\UnexpectedValueException $e) {
+		} catch (\UnexpectedValueException) {
 			$this->l = $this->l10nFactory->get('activity');
 			$description = $this->l->t('Your feed URL is invalid');
 			$activities = [
@@ -86,7 +86,7 @@ class FeedController extends Controller {
 			'activities' => $activities,
 		]);
 
-		if (stripos($this->request->getHeader('accept'), 'application/rss+xml') !== false) {
+		if (stripos((string)$this->request->getHeader('accept'), 'application/rss+xml') !== false) {
 			$response->addHeader('Content-Type', 'application/rss+xml');
 		} else {
 			$response->addHeader('Content-Type', 'text/xml; charset=UTF-8');

@@ -21,7 +21,7 @@ use OCP\Share\Events\ShareDeletedFromSelfEvent;
 class ShareEventListener implements IEventListener {
 
 	public function __construct(
-		private FilesHooks $fileHooks,
+		private readonly FilesHooks $fileHooks,
 	) {
 	}
 

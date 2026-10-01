@@ -173,10 +173,6 @@ class MailQueueHandlerTest extends TestCase {
 
 	/**
 	 * @dataProvider getAffectedUsersData
-	 *
-	 * @param int|null $limit
-	 * @param array $affected
-	 * @param array $untouched
 	 */
 	#[DataProvider('getAffectedUsersData')]
 	public function testGetAffectedUsers(?int $limit, array $affected, array $untouched): void {
@@ -445,11 +441,6 @@ class MailQueueHandlerTest extends TestCase {
 		$this->assertSame(1, $result);
 	}
 
-	/**
-	 * @param array $users
-	 * @param int $maxTime
-	 * @param string $explain
-	 */
 	protected function assertRemainingMailEntries(array $users, int $maxTime, string $explain): void {
 		foreach ($users as $user) {
 			[$data,] = self::invokePrivate($this->mailQueueHandler, 'getItemsForUser', [$user, $maxTime]);

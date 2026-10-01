@@ -19,7 +19,7 @@ class Capabilities implements ICapability {
 	 * Return this classes capabilities
 	 */
 	#[\Override]
-	public function getCapabilities() {
+	public function getCapabilities(): array {
 		return [
 			'activity' => [
 				'apiv2' => [

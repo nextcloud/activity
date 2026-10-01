@@ -34,9 +34,7 @@ class Consumer implements IConsumer, IBulkConsumer {
 	/**
 	 * Send an event to the notifications of a user
 	 *
-	 * @param IEvent $event
 	 *
-	 * @return void
 	 */
 	#[\Override]
 	public function receive(IEvent $event): void {
@@ -61,10 +59,6 @@ class Consumer implements IConsumer, IBulkConsumer {
 	/**
 	 * Send an event to the notifications of a bulk of users
 	 *
-	 * @param IEvent $event
-	 * @param array $affectedUserIds
-	 * @param ISetting $setting
-	 * @return void
 	 * @throws Exception
 	 */
 	#[\Override]

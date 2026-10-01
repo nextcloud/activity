@@ -20,25 +20,23 @@ use OCP\IUser;
 use OCP\Settings\ISettings;
 
 class Personal implements ISettings {
-	private IConfig $config;
-	private IManager $manager;
-	private UserSettings $userSettings;
-	private IL10N $l10n;
-	private string $userId;
-	private IUser $user;
-	private IInitialState $initialState;
+	private readonly IConfig $config;
+	private readonly IManager $manager;
+	private readonly IL10N $l10n;
+	private readonly string $userId;
+	private readonly IUser $user;
+	private readonly IInitialState $initialState;
 
 	public function __construct(
 		IConfig $config,
 		IManager $manager,
-		UserSettings $userSettings,
+		private readonly UserSettings $userSettings,
 		IL10N $l10n,
 		CurrentUser $currentUser,
 		IInitialState $initialState,
 	) {
 		$this->config = $config;
 		$this->manager = $manager;
-		$this->userSettings = $userSettings;
 		$this->l10n = $l10n;
 		$this->userId = (string)$currentUser->getUID();
 		$this->user = $currentUser->getUser();
@@ -145,7 +143,7 @@ class Personal implements ISettings {
 	 * @return string the section ID, e.g. 'sharing'
 	 */
 	#[\Override]
-	public function getSection() {
+	public function getSection(): string {
 		return 'notifications';
 	}
 
@@ -157,7 +155,7 @@ class Personal implements ISettings {
 	 * E.g.: 70
 	 */
 	#[\Override]
-	public function getPriority() {
+	public function getPriority(): int {
 		return 55;
 	}
 }

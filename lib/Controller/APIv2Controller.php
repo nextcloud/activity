@@ -134,7 +134,6 @@ class APIv2Controller extends OCSController {
 	/**
 	 * @param string $object_type Object type to count downloads for (must be 'files')
 	 * @param int $object_id File ID
-	 * @return DataResponse
 	 */
 	#[NoAdminRequired]
 	public function getDownloadCount(string $object_type = 'files', int $object_id = 0): DataResponse {
@@ -232,17 +231,15 @@ class APIv2Controller extends OCSController {
 	public function listFilters(): DataResponse {
 		$filters = $this->activityManager->getFilters();
 
-		$filters = array_map(function (IFilter $filter) {
-			return [
-				'id' => $filter->getIdentifier(),
-				'name' => $filter->getName(),
-				'icon' => $filter->getIcon(),
-				'priority' => $filter->getPriority(),
-			];
-		}, $filters);
+		$filters = array_map(fn (IFilter $filter): array => [
+			'id' => $filter->getIdentifier(),
+			'name' => $filter->getName(),
+			'icon' => $filter->getIcon(),
+			'priority' => $filter->getPriority(),
+		], $filters);
 
 		// php 5.6 has problems with usort and objects
-		usort($filters, static function (array $a, array $b) {
+		usort($filters, static function (array $a, array $b): int|float {
 			if ($a['priority'] === $b['priority']) {
 				return ($a['id'] > $b['id']) ? 1 : -1;
 			}
@@ -281,10 +278,10 @@ class APIv2Controller extends OCSController {
 				false,
 				$this->searchCriteria
 			);
-		} catch (\OutOfBoundsException $e) {
+		} catch (\OutOfBoundsException) {
 			// Invalid since argument
 			return new DataResponse([], Http::STATUS_FORBIDDEN);
-		} catch (\BadMethodCallException $e) {
+		} catch (\BadMethodCallException) {
 			// No activity settings enabled
 			return new DataResponse([], Http::STATUS_NO_CONTENT);
 		}
@@ -442,7 +439,7 @@ class APIv2Controller extends OCSController {
 
 	protected function getPreviewPathFromMimeType(string $mimeType): string {
 		$mimeTypeIcon = $this->mimeTypeDetector->mimeTypeIcon($mimeType);
-		if (substr($mimeTypeIcon, -4) === '.png') {
+		if (str_ends_with($mimeTypeIcon, '.png')) {
 			$mimeTypeIcon = substr($mimeTypeIcon, 0, -4) . '.svg';
 		}
 

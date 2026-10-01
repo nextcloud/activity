@@ -22,8 +22,8 @@ use OCP\User\Events\PostLoginEvent;
 class SetUserDefaults implements IEventListener {
 
 	public function __construct(
-		private IConfig $config,
-		private IAppConfig $appConfig,
+		private readonly IConfig $config,
+		private readonly IAppConfig $appConfig,
 	) {
 	}
 

@@ -19,7 +19,7 @@ use OCA\Activity\Exception\InvalidSearchCriteriaException;
  *
  * @psalm-immutable
  */
-final class SearchCriteria {
+final readonly class SearchCriteria {
 	/**
 	 * Single characters match such a large share of a stream that the query
 	 * degenerates into a scan of the whole user partition while still returning
@@ -48,10 +48,10 @@ final class SearchCriteria {
 	public const MAX_ACTOR_LENGTH = 64;
 
 	private function __construct(
-		public readonly ?string $term,
-		public readonly ?int $from,
-		public readonly ?int $to,
-		public readonly ?string $actor,
+		public ?string $term,
+		public ?int $from,
+		public ?int $to,
+		public ?string $actor,
 	) {
 	}
 

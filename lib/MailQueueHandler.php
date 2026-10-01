@@ -302,7 +302,7 @@ class MailQueueHandler {
 						->setTimestamp((int)$activity['amq_timestamp'])
 						->setSubject((string)$activity['amq_subject'], (array)json_decode($activity['amq_subjectparams'], true))
 						->setObject((string)$activity['object_type'], (int)$activity['object_id']);
-				} catch (\InvalidArgumentException $e) {
+				} catch (\InvalidArgumentException) {
 					continue;
 				}
 
@@ -310,16 +310,14 @@ class MailQueueHandler {
 			}
 
 			$activityEvents = array_map(
-				function ($event) use ($timezone, $l) {
-					return [
-						'event' => $event,
-						'dateTime' => $this->dateFormatter->formatDateTime(
-							$event->getTimestamp(),
-							'long', 'short',
-							new \DateTimeZone($timezone), $l
-						)
-					];
-				},
+				fn (\OCP\Activity\IEvent $event): array => [
+					'event' => $event,
+					'dateTime' => $this->dateFormatter->formatDateTime(
+						$event->getTimestamp(),
+						'long', 'short',
+						new \DateTimeZone($timezone), $l
+					)
+				],
 				$this->groupHelper->getEvents()
 			);
 

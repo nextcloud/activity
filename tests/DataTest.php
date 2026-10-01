@@ -265,9 +265,7 @@ class DataTest extends TestCase {
 			->willReturn($query->expr());
 		$mock
 			->method('createNamedParameter')
-			->willReturnCallback(function ($arg) use ($query) {
-				return $query->expr()->literal($arg);
-			});
+			->willReturnCallback(fn ($arg) => $query->expr()->literal($arg));
 		if ($timestampWhere !== null && $idWhere !== null) {
 			$mock->expects($this->exactly(2))
 				->method('andWhere');
@@ -302,7 +300,7 @@ class DataTest extends TestCase {
 		$objectId = 12345;
 		$now = time();
 
-		$insertRow = function (string $affectedUser, int $objectId, int $timestamp) {
+		$insertRow = function (string $affectedUser, int $objectId, int $timestamp): void {
 			$query = $this->dbConnection->getQueryBuilder();
 			$query->insert('activity')
 				->values([

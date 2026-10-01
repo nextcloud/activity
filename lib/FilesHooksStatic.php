@@ -20,7 +20,7 @@ class FilesHooksStatic {
 	 * Store the create hook events
 	 * @param array $params The hook params
 	 */
-	public static function fileCreate($params) {
+	public static function fileCreate(array $params): void {
 		self::getHooks()->fileCreate($params['path']);
 	}
 
@@ -28,7 +28,7 @@ class FilesHooksStatic {
 	 * Store the update hook events
 	 * @param array $params The hook params
 	 */
-	public static function fileUpdate($params) {
+	public static function fileUpdate(array $params): void {
 		self::getHooks()->fileUpdate($params['path']);
 	}
 
@@ -36,7 +36,7 @@ class FilesHooksStatic {
 	 * Store the delete hook events
 	 * @param array $params The hook params
 	 */
-	public static function fileDelete($params) {
+	public static function fileDelete(array $params): void {
 		self::getHooks()->fileDelete($params['path']);
 	}
 
@@ -44,7 +44,7 @@ class FilesHooksStatic {
 	 * Store the rename hook events
 	 * @param array $params The hook params
 	 */
-	public static function fileMove($params) {
+	public static function fileMove(array $params): void {
 		self::getHooks()->fileMove($params['oldpath'], $params['newpath']);
 	}
 
@@ -52,7 +52,7 @@ class FilesHooksStatic {
 	 * Store the rename hook events
 	 * @param array $params The hook params
 	 */
-	public static function fileMovePost($params) {
+	public static function fileMovePost(array $params): void {
 		self::getHooks()->fileMovePost($params['oldpath'], $params['newpath']);
 	}
 
@@ -60,7 +60,7 @@ class FilesHooksStatic {
 	 * Store the restore hook events
 	 * @param array $params The hook params
 	 */
-	public static function fileRestore($params) {
+	public static function fileRestore(array $params): void {
 		self::getHooks()->fileRestore($params['filePath']);
 	}
 }

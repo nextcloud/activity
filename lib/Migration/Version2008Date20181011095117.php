@@ -17,9 +17,7 @@ use OCP\Migration\SimpleMigrationStep;
 
 class Version2008Date20181011095117 extends SimpleMigrationStep {
 	/**
-	 * @param IOutput $output
 	 * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
-	 * @param array $options
 	 * @return null|ISchemaWrapper
 	 */
 	#[\Override]
@@ -29,7 +27,7 @@ class Version2008Date20181011095117 extends SimpleMigrationStep {
 
 		try {
 			$table = $schema->getTable('activity_mq');
-		} catch (SchemaException $e) {
+		} catch (SchemaException) {
 			return null;
 		}
 

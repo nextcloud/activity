@@ -64,12 +64,12 @@ class GroupHelper {
 				}
 
 				if (!$event->isValidParsed()) {
-					$this->logger->info('Activity event was claimed to be parsed, but was not fully parsed by ' . get_class($provider) . ' [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']', ['app' => $event->getApp()]);
+					$this->logger->info('Activity event was claimed to be parsed, but was not fully parsed by ' . $provider::class . ' [app: ' . $event->getApp() . ', subject: ' . $event->getSubject() . ']', ['app' => $event->getApp()]);
 				}
 			} catch (UnknownActivityException) {
 			} catch (\InvalidArgumentException) {
 				// todo 39.0.0 Log as error
-				$this->logger->warning(get_class($provider) . '::parse() threw \InvalidArgumentException which is deprecated. Throw \OCP\Activity\Exceptions\UnknownActivityException when the event is not known to your provider and otherwise handle all \InvalidArgumentException yourself.', ['app' => $event->getApp()]);
+				$this->logger->warning($provider::class . '::parse() threw \InvalidArgumentException which is deprecated. Throw \OCP\Activity\Exceptions\UnknownActivityException when the event is not known to your provider and otherwise handle all \InvalidArgumentException yourself.', ['app' => $event->getApp()]);
 			} catch (\Throwable $e) {
 				$this->logger->error('Error while parsing activity event', ['exception' => $e, 'app' => $event->getApp()]);
 			}

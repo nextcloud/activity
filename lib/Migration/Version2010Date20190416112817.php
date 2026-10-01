@@ -18,9 +18,7 @@ use OCP\Migration\SimpleMigrationStep;
  */
 class Version2010Date20190416112817 extends SimpleMigrationStep {
 	/**
-	 * @param IOutput $output
 	 * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
-	 * @param array $options
 	 * @return null|ISchemaWrapper
 	 */
 	#[\Override]

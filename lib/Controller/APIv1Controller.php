@@ -19,11 +19,6 @@ use OCP\IRequest;
 class APIv1Controller extends OCSController {
 	/**
 	 * @param string $appName
-	 * @param IRequest $request
-	 * @param Data $data
-	 * @param GroupHelper $groupHelper
-	 * @param UserSettings $userSettings
-	 * @param CurrentUser $currentUser
 	 */
 	public function __construct(
 		$appName,

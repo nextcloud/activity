@@ -77,7 +77,7 @@ class FilesHooksTest extends TestCase {
 	protected NotificationGenerator&MockObject $notificationGenerator;
 	protected TagManager&MockObject $tagManager;
 	protected Tags&MockObject $tags;
-	protected (OCA\Circles\CirclesManager&MockObject)|null $teamManager;
+	protected (OCA\Circles\CirclesManager&MockObject)|null $teamManager = null;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -459,9 +459,7 @@ class FilesHooksTest extends TestCase {
 
 		$this->settings->expects($this->exactly(2))
 			->method('filterUsersBySetting')
-			->willReturnCallback(function ($users, $method) use ($filterUsers) {
-				return $filterUsers[$method];
-			});
+			->willReturnCallback(fn ($users, $method) => $filterUsers[$method]);
 
 		$addCalls = [];
 		foreach ($addNotifications as $user => $arguments) {
@@ -480,7 +478,7 @@ class FilesHooksTest extends TestCase {
 		$receivedActivities = [];
 		$filesHooks
 			->method('addNotificationsForUser')
-			->willReturnCallback(function (...$params) use (&$receivedActivities) {
+			->willReturnCallback(function (...$params) use (&$receivedActivities): void {
 				$receivedActivities[] = $params;
 			});
 
@@ -820,7 +818,7 @@ class FilesHooksTest extends TestCase {
 		$receivedActivities = [];
 		$filesHooks
 			->method('addNotificationsForUser')
-			->willReturnCallback(function (...$params) use (&$receivedActivities) {
+			->willReturnCallback(function (...$params) use (&$receivedActivities): void {
 				$receivedActivities[] = $params;
 			});
 

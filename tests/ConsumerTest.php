@@ -265,9 +265,7 @@ class ConsumerTest extends TestCase {
 
 			if ($expectNotification) {
 				$this->userConfig->method('getValuesByUsers')
-					->willReturnCallback(function (string $app, string $key, mixed $type, array $users): array {
-						return array_fill_keys($users, true);
-					});
+					->willReturnCallback(fn (string $app, string $key, mixed $type, array $users): array => array_fill_keys($users, true));
 				$this->notificationGenerator->expects($this->atLeastOnce())
 					->method('sendNotificationForEvent');
 			} else {
@@ -363,9 +361,7 @@ class ConsumerTest extends TestCase {
 			->willReturn([1 => 'affectedUser']);
 
 		$this->userConfig->method('getValuesByUsers')
-			->willReturnCallback(function (string $app, string $key, mixed $type, array $users): array {
-				return array_fill_keys($users, true);
-			});
+			->willReturnCallback(fn (string $app, string $key, mixed $type, array $users): array => array_fill_keys($users, true));
 
 		$this->notificationGenerator->expects($this->once())
 			->method('deferNotifications')
@@ -398,9 +394,7 @@ class ConsumerTest extends TestCase {
 			->willReturn([1 => 'affectedUser']);
 
 		$this->userConfig->method('getValuesByUsers')
-			->willReturnCallback(function (string $app, string $key, mixed $type, array $users): array {
-				return array_fill_keys($users, true);
-			});
+			->willReturnCallback(fn (string $app, string $key, mixed $type, array $users): array => array_fill_keys($users, true));
 
 		$this->notificationGenerator->expects($this->once())
 			->method('deferNotifications')

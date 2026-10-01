@@ -41,8 +41,6 @@ class UserDeletedTest extends TestCase {
 	public const UID = 'myuser';
 
 	public function setUp(): void {
-		parent::setUp();
-
 		$user = $this->createMock(IUser::class);
 		$user->expects($this->exactly(2))->method('getUID')->with()->willReturn(self::UID);
 

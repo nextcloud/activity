@@ -201,9 +201,7 @@ class APIv1ControllerTest extends TestCase {
 		$l = $this->createMock(IL10N::class);
 		$l
 			->method('t')
-			->willReturnCallback(function ($text, $parameters = []) {
-				return vsprintf($text, $parameters);
-			});
+			->willReturnCallback(fn ($text, $parameters = []): string => vsprintf($text, $parameters));
 
 		$activityManager = new Manager(
 			$this->createMock(IRequest::class),

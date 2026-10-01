@@ -69,9 +69,7 @@ class DigestSenderTest extends TestCase {
 		$this->config->method('getUsersForUserValue')
 			->willReturn($users);
 		$this->config->method('getUserValueForUsers')
-			->willReturnCallback(static function (string $app, string $key) use ($timezones) {
-				return ($app === 'core' && $key === 'timezone') ? $timezones : [];
-			});
+			->willReturnCallback(static fn (string $app, string $key): array => ($app === 'core' && $key === 'timezone') ? $timezones : []);
 	}
 
 	protected function createUser(string $uid, string $email): IUser&MockObject {

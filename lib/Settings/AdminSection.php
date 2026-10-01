@@ -18,10 +18,6 @@ class AdminSection implements IIconSection {
 	/** @var IURLGenerator */
 	private $url;
 
-	/**
-	 * @param IURLGenerator $url
-	 * @param IL10N $l
-	 */
 	public function __construct(IURLGenerator $url, IL10N $l) {
 		$this->url = $url;
 		$this->l = $l;
@@ -47,7 +43,7 @@ class AdminSection implements IIconSection {
 	 * @since 9.1
 	 */
 	#[\Override]
-	public function getID() {
+	public function getID(): string {
 		return 'activity';
 	}
 
@@ -72,7 +68,7 @@ class AdminSection implements IIconSection {
 	 * @since 9.1
 	 */
 	#[\Override]
-	public function getPriority() {
+	public function getPriority(): int {
 		return 55;
 	}
 }

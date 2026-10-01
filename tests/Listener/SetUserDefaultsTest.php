@@ -42,7 +42,6 @@ class SetUserDefaultsTest extends TestCase {
 	public const UID = 'myuser';
 
 	public function setUp(): void {
-		parent::setUp();
 		$this->config = $this->createMock(IConfig::class);
 		$this->appConfig = $this->createMock(IAppConfig::class);
 		$user = $this->createMock(IUser::class);

@@ -27,23 +27,19 @@ use OCP\IURLGenerator;
 use OCP\Util;
 
 class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloadableWidget, IOptionWidget {
-	private Data $data;
-	private IL10N $l10n;
-	private GroupHelper $helper;
-	private UserSettings $settings;
-	private IDateTimeFormatter $dateTimeFormatter;
-	private IURLGenerator $urlGenerator;
+	private readonly IL10N $l10n;
+	private readonly IDateTimeFormatter $dateTimeFormatter;
+	private readonly IURLGenerator $urlGenerator;
 
-	public function __construct(IL10N $l10n,
-		Data $data,
-		GroupHelper $helper,
-		UserSettings $settings,
+	public function __construct(
+		IL10N $l10n,
+		private readonly Data $data,
+		private readonly GroupHelper $helper,
+		private readonly UserSettings $settings,
 		IURLGenerator $urlGenerator,
-		IDateTimeFormatter $dateTimeFormatter) {
-		$this->data = $data;
+		IDateTimeFormatter $dateTimeFormatter,
+	) {
 		$this->l10n = $l10n;
-		$this->helper = $helper;
-		$this->settings = $settings;
 		$this->dateTimeFormatter = $dateTimeFormatter;
 		$this->urlGenerator = $urlGenerator;
 	}
@@ -126,15 +122,13 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 			'',
 			0
 		);
-		return array_map(function (array $activity) {
-			return new WidgetItem(
-				$activity['subject'],
-				$this->dateTimeFormatter->formatTimeSpan($activity['timestamp']),
-				$activity['link'],
-				$activity['icon'],
-				(string)$activity['activity_id']
-			);
-		}, array_slice($activities['data'], 0, $limit));
+		return array_map(fn (array $activity): \OCP\Dashboard\Model\WidgetItem => new WidgetItem(
+			$activity['subject'],
+			$this->dateTimeFormatter->formatTimeSpan($activity['timestamp']),
+			$activity['link'],
+			$activity['icon'],
+			(string)$activity['activity_id']
+		), array_slice($activities['data'], 0, $limit));
 	}
 
 	/**
@@ -155,7 +149,7 @@ class ActivityWidget implements IAPIWidget, IButtonWidget, IIconWidget, IReloada
 			'',
 			0
 		);
-		$items = array_map(function (array $activity) {
+		$items = array_map(function (array $activity): \OCP\Dashboard\Model\WidgetItem {
 			$userAvatarUrl = '';
 			if ($activity['user'] !== '') {
 				$userAvatarUrl = $this->urlGenerator->getAbsoluteURL(

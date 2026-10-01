@@ -137,7 +137,7 @@ class RssTest extends TestCase {
 			$rendered
 		);
 
-		$rendered = substr($rendered, strlen($prefixStub), 0 - strlen($suffixStub));
+		$rendered = substr($rendered, strlen($prefixStub), -strlen($suffixStub));
 		$this->assertEquals($expected, $rendered);
 	}
 }
