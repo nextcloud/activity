@@ -28,9 +28,9 @@ use OCA\Activity\Data;
 use OCA\Activity\Tests\TestCase;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Services\IInitialState;
+use OCP\Config\IUserConfig;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
-use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use PHPUnit\Framework\Attributes\Group;
@@ -44,9 +44,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 class ActivitiesControllerTest extends TestCase {
 	protected MockObject&IRequest $request;
 	protected IConfig&MockObject $config;
+	protected IUserConfig&MockObject $userConfig;
 	protected Data&MockObject $data;
 	protected IEventDispatcher&MockObject $eventDispatcher;
-	protected MockObject&IL10N $l10n;
 	protected IInitialState&MockObject $initialState;
 	protected MockObject&IURLGenerator $urlGenerator;
 	protected IManager&MockObject $activityManager;
@@ -56,10 +56,10 @@ class ActivitiesControllerTest extends TestCase {
 		parent::setUp();
 
 		$this->config = $this->createMock(IConfig::class);
+		$this->userConfig = $this->createMock(IUserConfig::class);
 		$this->data = $this->createMock(Data::class);
 		$this->eventDispatcher = $this->createMock(IEventDispatcher::class);
 		$this->request = $this->createMock(IRequest::class);
-		$this->l10n = $this->createMock(IL10N::class);
 		$this->initialState = $this->createMock(IInitialState::class);
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->activityManager = $this->createMock(IManager::class);
@@ -75,11 +75,11 @@ class ActivitiesControllerTest extends TestCase {
 				'some-user',
 				$this->config,
 				$this->data,
-				$this->l10n,
 				$this->eventDispatcher,
 				$this->initialState,
 				$this->urlGenerator,
 				$this->activityManager,
+				$this->userConfig,
 			);
 		}
 
@@ -90,11 +90,11 @@ class ActivitiesControllerTest extends TestCase {
 				'some-user',
 				$this->config,
 				$this->data,
-				$this->l10n,
 				$this->eventDispatcher,
 				$this->initialState,
 				$this->urlGenerator,
 				$this->activityManager,
+				$this->userConfig,
 			])
 			->onlyMethods($methods)
 			->getMock();

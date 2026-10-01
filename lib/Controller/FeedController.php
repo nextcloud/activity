@@ -18,7 +18,7 @@ use OCP\AppFramework\Http\Attribute\BruteForceProtection;
 use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\Attribute\PublicPage;
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\IConfig;
+use OCP\Config\IUserConfig;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
@@ -38,8 +38,8 @@ class FeedController extends Controller {
 		protected IURLGenerator $urlGenerator,
 		protected IManager $activityManager,
 		protected IFactory $l10nFactory,
-		protected IConfig $config,
 		protected ThemingDefaults $themingDefaults,
+		private readonly IUserConfig $userConfig,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -51,7 +51,7 @@ class FeedController extends Controller {
 		$response = new TemplateResponse('activity', 'rss', [], '');
 		try {
 			$user = $this->activityManager->getCurrentUserId();
-			$userLang = $this->config->getUserValue($user, 'core', 'lang');
+			$userLang = $this->userConfig->getValueString($user, 'core', 'lang');
 
 			// Overwrite user and language in the helper
 			$this->l = $this->l10nFactory->get('activity', $userLang);
@@ -61,7 +61,7 @@ class FeedController extends Controller {
 			$description = $this->l->t('Personal activity feed for %s', $user);
 			$data = $this->data->get($this->helper, $this->settings, $user, 0, self::DEFAULT_PAGE_SIZE, 'desc', $filter);
 			$activities = $data['data'];
-		} catch (\UnexpectedValueException $e) {
+		} catch (\UnexpectedValueException) {
 			$this->l = $this->l10nFactory->get('activity');
 			$description = $this->l->t('Your feed URL is invalid');
 			$activities = [

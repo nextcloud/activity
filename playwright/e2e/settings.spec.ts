@@ -24,7 +24,7 @@ test.describe("User settings persist across reloads", () => {
 
 	test.beforeEach(async ({ page }) => {
 		await login(page.request, user)
-		await page.goto('/settings/user/notifications')
+		await page.goto('settings/user/notifications')
 	})
 
 	test('Form survives a reload', async ({ page }) => {

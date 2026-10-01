@@ -10,6 +10,8 @@ namespace OCA\Activity;
 
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
+use OCP\Config\IUserConfig;
+use OCP\Config\ValueType;
 use OCP\Defaults;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
@@ -25,26 +27,30 @@ class DigestSender {
 	public const ACTIVITY_LIMIT = 20;
 
 	public function __construct(
-		private IConfig $config,
-		private Data $data,
-		private UserSettings $userSettings,
-		private GroupHelper $groupHelper,
-		private IMailer $mailer,
-		private IManager $activityManager,
-		private IUserManager $userManager,
-		private IURLGenerator $urlGenerator,
-		private Defaults $defaults,
-		private IFactory $l10nFactory,
-		private IDateTimeFormatter $dateTimeFormatter,
-		private LoggerInterface $logger,
+		private readonly IConfig $config,
+		private readonly Data $data,
+		private readonly UserSettings $userSettings,
+		private readonly GroupHelper $groupHelper,
+		private readonly IMailer $mailer,
+		private readonly IManager $activityManager,
+		private readonly IUserManager $userManager,
+		private readonly IURLGenerator $urlGenerator,
+		private readonly Defaults $defaults,
+		private readonly IFactory $l10nFactory,
+		private readonly IDateTimeFormatter $dateTimeFormatter,
+		private readonly LoggerInterface $logger,
+		private readonly IUserConfig $userConfig,
 	) {
 	}
 
 	public function sendDigests(int $now): void {
 		$users = $this->getDigestUsers();
-		$userLanguages = $this->config->getUserValueForUsers('core', 'lang', $users);
-		$userTimezones = $this->config->getUserValueForUsers('core', 'timezone', $users);
-		$digestDate = $this->config->getUserValueForUsers('activity', 'digest', $users);
+		/** @var array<string, string> */
+		$userLanguages = $this->userConfig->getValuesByUsers('core', 'lang', ValueType::STRING, userIds: $users);
+		/** @var array<string, string> */
+		$userTimezones = $this->userConfig->getValuesByUsers('core', 'timezone', ValueType::STRING, userIds: $users);
+		/** @var array<string, string> */
+		$digestDate = $this->userConfig->getValuesByUsers('activity', 'digest', ValueType::STRING, userIds: $users);
 		$defaultLanguage = $this->config->getSystemValue('default_language', 'en');
 		$defaultTimeZone = date_default_timezone_get();
 		$timezoneDigestDay = [];
@@ -103,7 +109,7 @@ class DigestSender {
 			}
 			// We still update the digest time after an failed email,
 			// so it hopefully works tomorrow
-			$this->config->setUserValue($userObject->getUID(), 'activity', 'digest', $timezoneDigestDay[$timezone]);
+			$this->userConfig->setValueString($userObject->getUID(), 'activity', 'digest', $timezoneDigestDay[$timezone]);
 		}
 
 		$this->activityManager->setRequirePNG(false);
@@ -115,11 +121,11 @@ class DigestSender {
 	 * @return string[]
 	 */
 	private function getDigestUsers(): array {
-		return $this->config->getUsersForUserValue('activity', 'notify_setting_activity_digest', '1');
+		return iterator_to_array($this->userConfig->searchUsersByValueString('activity', 'notify_setting_activity_digest', '1'), false);
 	}
 
 	private function getLastSendActivity(string $user, int $now): int {
-		$lastSend = (int)$this->config->getUserValue($user, 'activity', 'activity_digest_last_send', 0);
+		$lastSend = (int)$this->userConfig->getValueString($user, 'activity', 'activity_digest_last_send', '0');
 		if ($lastSend > 0) {
 			return $lastSend;
 		}
@@ -135,10 +141,10 @@ class DigestSender {
 		['max' => $lastActivityId] = $this->data->getActivitySince($uid, $lastSend, true);
 		$lastActivityId = (int)$lastActivityId;
 
-		$this->config->setUserValue($uid, 'activity', 'activity_digest_last_send', (string)$lastActivityId);
+		$this->userConfig->setValueString($uid, 'activity', 'activity_digest_last_send', (string)$lastActivityId);
 	}
 
-	public function sendDigestForUser(IUser $user, int $now, string $timezone, string $language) {
+	public function sendDigestForUser(IUser $user, int $now, string $timezone, string $language): void {
 		$uid = $user->getUID();
 		$l10n = $this->l10nFactory->get('activity', $language);
 		$this->groupHelper->setL10n($l10n);
@@ -222,17 +228,13 @@ class DigestSender {
 		}
 		try {
 			$this->mailer->send($message);
-			$this->config->setUserValue($uid, 'activity', 'activity_digest_last_send', (string)$lastActivityId);
+			$this->userConfig->setValueString($uid, 'activity', 'activity_digest_last_send', (string)$lastActivityId);
 		} catch (\Exception $e) {
 			$this->logger->error($e->getMessage());
 			return;
 		}
 	}
 
-	/**
-	 * @param IEvent $event
-	 * @return string
-	 */
 	protected function getHTMLSubject(IEvent $event): string {
 		if ($event->getRichSubject() === '') {
 			return htmlspecialchars($event->getParsedSubject());

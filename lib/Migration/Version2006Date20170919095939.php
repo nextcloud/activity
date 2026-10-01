@@ -26,9 +26,7 @@ class Version2006Date20170919095939 extends BigIntMigration {
 	}
 
 	/**
-	 * @param IOutput $output
 	 * @param \Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
-	 * @param array $options
 	 * @return null|ISchemaWrapper
 	 * @since 13.0.0
 	 */

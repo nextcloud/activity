@@ -32,7 +32,7 @@ use OCA\Activity\UserSettings;
 use OCA\Theming\ThemingDefaults;
 use OCP\Activity\IManager;
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\IConfig;
+use OCP\Config\IUserConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\IUser;
@@ -45,7 +45,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use UnexpectedValueException;
 
 class FeedControllerTest extends TestCase {
-	protected IConfig&MockObject $config;
+	protected IUserConfig&MockObject $userConfig;
 	protected MockObject&IRequest $request;
 	protected Data&MockObject $data;
 	protected GroupHelper&MockObject $helper;
@@ -61,7 +61,7 @@ class FeedControllerTest extends TestCase {
 		$this->data = $this->createMock(Data::class);
 		$this->helper = $this->createMock(GroupHelper::class);
 		$this->userSettings = $this->createMock(UserSettings::class);
-		$this->config = $this->createMock(IConfig::class);
+		$this->userConfig = $this->createMock(IUserConfig::class);
 		$this->request = $this->createMock(IRequest::class);
 		$this->session = $this->createMock(IUserSession::class);
 		$this->manager = $this->createMock(IManager::class);
@@ -78,8 +78,8 @@ class FeedControllerTest extends TestCase {
 			$urlGenerator,
 			$this->manager,
 			Server::get(IFactory::class),
-			$this->config,
 			$this->themingDefault,
+			$this->userConfig,
 		);
 	}
 

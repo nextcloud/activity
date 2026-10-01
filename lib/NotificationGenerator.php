@@ -46,11 +46,11 @@ class NotificationGenerator implements INotifier {
 		return $this->notificationManager->defer();
 	}
 
-	public function flushNotifications() {
+	public function flushNotifications(): void {
 		$this->notificationManager->flush();
 	}
 
-	public function sendNotificationForEvent(IEvent $event, int $activityId, ?bool $notificationSetting = null) {
+	public function sendNotificationForEvent(IEvent $event, int $activityId, ?bool $notificationSetting = null): void {
 		$selfAction = $event->getAffectedUser() === $event->getAuthor();
 		$notifySetting = $notificationSetting ?? $this->userSettings->getUserSetting($event->getAffectedUser(), 'notification', $event->getType());
 
@@ -93,9 +93,9 @@ class NotificationGenerator implements INotifier {
 			try {
 				$event = $provider->parse($language, $event);
 			} catch (UnknownActivityException) {
-			} catch (\InvalidArgumentException $e) {
+			} catch (\InvalidArgumentException) {
 				// todo 39.0.0 Log as error
-				$this->logger->warning(get_class($provider) . '::parse() threw \InvalidArgumentException which is deprecated. Throw \OCP\Activity\Exceptions\UnknownActivityException when the event is not known to your provider and otherwise handle all \InvalidArgumentException yourself.');
+				$this->logger->warning($provider::class . '::parse() threw \InvalidArgumentException which is deprecated. Throw \OCP\Activity\Exceptions\UnknownActivityException when the event is not known to your provider and otherwise handle all \InvalidArgumentException yourself.');
 			}
 		}
 		$this->activityManager->setFormattingObject('', 0);

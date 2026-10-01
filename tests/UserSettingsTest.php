@@ -27,20 +27,23 @@ use OCA\Activity\UserSettings;
 use OCP\Activity\ActivitySettings;
 use OCP\Activity\Exceptions\SettingNotFoundException;
 use OCP\Activity\IManager;
-use OCP\IConfig;
+use OCP\Config\IUserConfig;
+use OCP\IAppConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class UserSettingsTest extends TestCase {
 	protected UserSettings $userSettings;
 	protected IManager&MockObject $activityManager;
-	protected IConfig&MockObject $config;
+	protected IAppConfig&MockObject $appConfig;
+	protected IUserConfig&MockObject $userConfig;
 
 	protected function setUp(): void {
 		parent::setUp();
 		$this->activityManager = $this->createMock(IManager::class);
-		$this->config = $this->createMock(IConfig::class);
-		$this->userSettings = new UserSettings($this->activityManager, $this->config);
+		$this->appConfig = $this->createMock(IAppConfig::class);
+		$this->userConfig = $this->createMock(IUserConfig::class);
+		$this->userSettings = new UserSettings($this->activityManager, $this->appConfig, $this->userConfig);
 	}
 
 	public static function getDefaultSettingData(): array {

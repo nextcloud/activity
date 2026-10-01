@@ -9,7 +9,6 @@
 namespace OCA\Activity;
 
 use OC\Files\Filesystem;
-use OC\Files\View;
 use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
@@ -57,7 +56,6 @@ class FilesHooks {
 		protected Data $activityData,
 		protected UserSettings $userSettings,
 		protected IGroupManager $groupManager,
-		protected View $view,
 		protected IRootFolder $rootFolder,
 		protected IShareHelper $shareHelper,
 		protected IDBConnection $connection,
@@ -77,7 +75,7 @@ class FilesHooks {
 	 *
 	 * @param string $path Path of the file that has been created
 	 */
-	public function fileCreate($path) {
+	public function fileCreate($path): void {
 		if ($path === '/' || $path === '' || $path === null) {
 			return;
 		}
@@ -94,7 +92,7 @@ class FilesHooks {
 	 *
 	 * @param string $path Path of the file that has been modified
 	 */
-	public function fileUpdate($path) {
+	public function fileUpdate($path): void {
 		$this->addNotificationsForFileAction($path, Files::TYPE_FILE_CHANGED, 'changed_self', 'changed_by');
 	}
 
@@ -103,20 +101,20 @@ class FilesHooks {
 	 *
 	 * @param string $path Path of the file that has been deleted
 	 */
-	public function fileDelete($path) {
+	public function fileDelete($path): void {
 		$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
 	}
 
 	/**
-	 * Store the restore hook events
+	 * Store the restore events
 	 *
-	 * @param string $path Path of the file that has been restored
+	 * @param Node $node The node that has been restored
 	 */
-	public function fileRestore($path) {
-		$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
+	public function fileRestore(Node $node): void {
+		$this->addNotificationsForFileAction($this->getVisiblePath($node->getPath()), Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
 	}
 
-	private function getFileChangeActivitySettings(int $fileId, array $users, $type = Files::TYPE_FILE_CHANGED): array {
+	private function getFileChangeActivitySettings(int $fileId, array $users, string $type = Files::TYPE_FILE_CHANGED): array {
 		$filteredEmailUsers = $this->userSettings->filterUsersBySetting($users, 'email', $type);
 		$filteredNotificationUsers = $this->userSettings->filterUsersBySetting($users, 'notification', $type);
 
@@ -143,7 +141,7 @@ class FilesHooks {
 	 */
 	protected function addNotificationsForFileAction($filePath, $activityType, $subject, $subjectBy) {
 		// Do not add activities for .part-files
-		if (substr($filePath, -5) === '.part') {
+		if (str_ends_with($filePath, '.part')) {
 			return;
 		}
 
@@ -200,7 +198,7 @@ class FilesHooks {
 			$arguments = [
 				$remoteUser,
 				$info['token'],
-				$ownerPath !== false ? substr($ownerPath, strlen($info['node_path'])) : $info['node_path'],
+				$ownerPath !== false ? substr((string)$ownerPath, strlen($info['node_path'])) : $info['node_path'],
 				$type,
 				$time,
 				$actor,
@@ -220,8 +218,8 @@ class FilesHooks {
 	 * @param string $oldPath Path of the file that has been moved
 	 * @param string $newPath Path of the file that has been moved
 	 */
-	public function fileMove($oldPath, $newPath) {
-		if (substr($oldPath, -5) === '.part' || substr($newPath, -5) === '.part') {
+	public function fileMove($oldPath, $newPath): void {
+		if (str_ends_with($oldPath, '.part') || str_ends_with($newPath, '.part')) {
 			// Do not add activities for .part-files
 			$this->moveCase = false;
 			return;
@@ -242,7 +240,7 @@ class FilesHooks {
 			return;
 		}
 
-		if (strpos($oldDir, $newDir) === 0) {
+		if (str_starts_with($oldDir, $newDir)) {
 			/**
 			 * a/b/c moved to a/c
 			 *
@@ -252,7 +250,7 @@ class FilesHooks {
 			 * - a/ shared: move/rename
 			 */
 			$this->moveCase = 'moveUp';
-		} elseif (strpos($newDir, $oldDir) === 0) {
+		} elseif (str_starts_with($newDir, $oldDir)) {
 			/**
 			 * a/b moved to a/c/b
 			 *
@@ -307,7 +305,7 @@ class FilesHooks {
 	 * @param string $oldPath Path of the file that has been moved
 	 * @param string $newPath Path of the file that has been moved
 	 */
-	public function fileMovePost($oldPath, $newPath) {
+	public function fileMovePost($oldPath, $newPath): void {
 		// Do not add activities for .part-files
 		if ($this->moveCase === false) {
 			return;
@@ -478,10 +476,8 @@ class FilesHooks {
 	 * @param string[] $pathMap
 	 * @param int $fileId
 	 * @param string $oldFileName
-	 * @param array $filteredEmailUsers
-	 * @param array $filteredNotificationUsers
 	 */
-	protected function generateDeleteActivities($users, $pathMap, $fileId, $oldFileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
+	protected function generateDeleteActivities($users, array $pathMap, $fileId, $oldFileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
 		if (empty($users)) {
 			return;
 		}
@@ -519,10 +515,8 @@ class FilesHooks {
 	 * @param string[] $pathMap
 	 * @param int $fileId
 	 * @param string $fileName
-	 * @param array $filteredEmailUsers
-	 * @param array $filteredNotificationUsers
 	 */
-	protected function generateAddActivities($users, $pathMap, $fileId, $fileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
+	protected function generateAddActivities($users, array $pathMap, $fileId, $fileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
 		if (empty($users)) {
 			return;
 		}
@@ -563,10 +557,8 @@ class FilesHooks {
 	 * @param string $oldFileName
 	 * @param int $newParentId
 	 * @param string $fileName
-	 * @param array $filteredEmailUsers
-	 * @param array $filteredNotificationUsers
 	 */
-	protected function generateMoveActivities($users, $beforePathMap, $afterPathMap, $fileId, $oldFileName, $newParentId, $fileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
+	protected function generateMoveActivities($users, array $beforePathMap, array $afterPathMap, $fileId, $oldFileName, $newParentId, $fileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
 		if (empty($users)) {
 			return;
 		}
@@ -615,7 +607,7 @@ class FilesHooks {
 
 		try {
 			$node = $this->rootFolder->getUserFolder($uidOwner)->get($path);
-		} catch (NotFoundException $e) {
+		} catch (NotFoundException) {
 			return $emptyResult;
 		}
 
@@ -646,14 +638,13 @@ class FilesHooks {
 	 * Return the source
 	 *
 	 * @param string $path
-	 * @return array
 	 */
-	protected function getSourcePathAndOwner($path) {
+	protected function getSourcePathAndOwner($path): array {
 		$view = Filesystem::getView();
 		try {
 			$owner = $view->getOwner($path);
-			$owner = !is_string($owner) || $owner === '' ? null : $owner;
-		} catch (NotFoundException $e) {
+			$owner = $owner === '' ? null : $owner;
+		} catch (NotFoundException) {
 			$owner = null;
 		}
 		$fileId = 0;
@@ -663,7 +654,7 @@ class FilesHooks {
 			/** @var \OCP\Files\Storage\IStorage $storage */
 			[$storage,] = $view->resolvePath($path);
 
-			if ($owner !== null && !$storage->instanceOfStorage('OCA\Files_Sharing\External\Storage')) {
+			if ($owner !== null && !$storage->instanceOfStorage(\OCA\Files_Sharing\External\Storage::class)) {
 				Filesystem::initMountPoints($owner);
 			} else {
 				// Probably a remote user, let's try to at least generate activities
@@ -678,12 +669,25 @@ class FilesHooks {
 
 		$info = Filesystem::getFileInfo($path);
 		if ($info !== false) {
-			$ownerView = new View('/' . $owner . '/files');
 			$fileId = (int)$info['fileid'];
-			$path = $ownerView->getPath($fileId);
+			$path = $this->getOwnerPathById($owner, $fileId);
 		}
 
 		return [$path, $owner, $fileId];
+	}
+
+	/**
+	 * @return string Path relative to the owner's files folder
+	 * @throws NotFoundException
+	 */
+	protected function getOwnerPathById(string $owner, int $fileId): string {
+		$userFolder = $this->rootFolder->getUserFolder($owner);
+		$node = $userFolder->getFirstNodeById($fileId);
+		$path = $node === null ? null : $userFolder->getRelativePath($node->getPath());
+		if ($path === null) {
+			throw new NotFoundException('File with id ' . $fileId . ' not found for ' . $owner);
+		}
+		return $path;
 	}
 
 	/**
@@ -691,7 +695,7 @@ class FilesHooks {
 	 *
 	 * @param IShare $share the share from the event
 	 */
-	public function share($share) {
+	public function share($share): void {
 		switch ($share->getShareType()) {
 			case IShare::TYPE_USER:
 				$this->shareWithUser(
@@ -732,7 +736,6 @@ class FilesHooks {
 	/**
 	 * Sharing a file or folder with a user
 	 *
-	 * @param string $shareWith
 	 * @param Node $fileSource File that is being shared
 	 * @param string $fileTarget File path
 	 */
@@ -755,7 +758,6 @@ class FilesHooks {
 	/**
 	 * Sharing a file or folder with a group
 	 *
-	 * @param string $shareWith
 	 * @param Node $fileSource File that is being shared
 	 * @param string $fileTarget File path
 	 * @param int $shareId The Share ID of this share
@@ -787,7 +789,6 @@ class FilesHooks {
 	 * Sharing a file or folder via link/public
 	 *
 	 * @param Node $fileSource File that is being shared
-	 * @param string $sharedBy
 	 */
 	protected function shareByLink(Node $fileSource, string $sharedBy) {
 		$relativePath = $this->getUserRelativePath($sharedBy, $fileSource->getPath());
@@ -804,7 +805,6 @@ class FilesHooks {
 	/**
 	 * Sharing a file or folder with a team
 	 *
-	 * @param string $shareWith
 	 * @param Node $fileSource File that is being shared
 	 * @param string $fileTarget File path
 	 * @param int $shareId The Share ID of this share
@@ -818,7 +818,7 @@ class FilesHooks {
 		try {
 			$team = $this->teamManager->getCircle($shareWith);
 			$members = $team->getInheritedMembers();
-			$members = array_filter($members, fn ($member) => $member->getUserType() === Member::TYPE_USER);
+			$members = array_filter($members, fn ($member): bool => $member->getUserType() === Member::TYPE_USER);
 			$userIds = array_map(fn ($member) => $member->getUserId(), $members);
 		} catch (\Throwable $e) {
 			$this->logger->debug('Fetching team members for share activity failed', ['exception' => $e]);
@@ -841,10 +841,9 @@ class FilesHooks {
 	/**
 	 * Manage unsharing events
 	 *
-	 * @param IShare $share
 	 * @throws \OCP\Files\NotFoundException
 	 */
-	public function unShare(IShare $share) {
+	public function unShare(IShare $share): void {
 		if (!in_array($share->getNodeType(), ['file', 'folder'], true) || $this->isDeletedNode($share->getShareOwner(), $share->getNodeId())) {
 			return;
 		}
@@ -860,10 +859,9 @@ class FilesHooks {
 	/**
 	 * Manage unsharing a share from self only events
 	 *
-	 * @param IShare $share
 	 * @throws \OCP\Files\NotFoundException
 	 */
-	public function unShareSelf(IShare $share) {
+	public function unShareSelf(IShare $share): void {
 		if (!in_array($share->getNodeType(), ['file', 'folder'], true)) {
 			return;
 		}
@@ -877,7 +875,6 @@ class FilesHooks {
 	/**
 	 * Unharing a file or folder from a user
 	 *
-	 * @param IShare $share
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	protected function unshareFromUser(IShare $share) {
@@ -916,7 +913,6 @@ class FilesHooks {
 	/**
 	 * Unharing a file or folder from a user
 	 *
-	 * @param IShare $share
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	protected function selfUnshareFromUser(IShare $share) {
@@ -932,7 +928,6 @@ class FilesHooks {
 	/**
 	 * Unsharing a file or folder from a group
 	 *
-	 * @param IShare $share
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	protected function unshareFromGroup(IShare $share) {
@@ -978,7 +973,6 @@ class FilesHooks {
 	/**
 	 * Unsharing a file or folder from self from a group share
 	 *
-	 * @param IShare $share
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	protected function unshareFromSelfGroup(IShare $share) {
@@ -994,7 +988,6 @@ class FilesHooks {
 	/**
 	 * Sharing a file or folder via link/public
 	 *
-	 * @param IShare $share
 	 * @throws \OCP\Files\NotFoundException
 	 */
 	protected function unshareLink(IShare $share) {
@@ -1029,7 +1022,6 @@ class FilesHooks {
 
 	/**
 	 * @param string[] $usersIds
-	 * @param string $actionUser
 	 * @param Node $fileSource File that is being shared
 	 * @param string $fileTarget File path
 	 * @param int $shareId The Share ID of this share
@@ -1082,11 +1074,9 @@ class FilesHooks {
 	 * Check when there was a naming conflict and the target is different
 	 * for some of the users
 	 *
-	 * @param array $affectedUsers
 	 * @param int $shareId
-	 * @return mixed
 	 */
-	protected function fixPathsForShareExceptions(array $affectedUsers, $shareId) {
+	protected function fixPathsForShareExceptions(array $affectedUsers, $shareId): array {
 		$queryBuilder = $this->connection->getQueryBuilder();
 		$queryBuilder->select(['share_with', 'file_target'])
 			->from('share')
@@ -1103,10 +1093,6 @@ class FilesHooks {
 
 	/**
 	 * Add notifications for the user that shares a file/folder
-	 *
-	 * @param string $subject
-	 * @param string $shareWith
-	 * @param Node $fileSource
 	 */
 	protected function shareNotificationForSharer(string $subject, string $shareWith, Node $fileSource, ?string $path = null) {
 		$sharer = $this->currentUser->getUID();
@@ -1139,11 +1125,6 @@ class FilesHooks {
 
 	/**
 	 * Add notifications for the owners whose files have been reshared
-	 *
-	 * @param string $sharedBy
-	 * @param string $subject
-	 * @param string $shareWith
-	 * @param Node $fileSource
 	 */
 	protected function shareNotificationForOriginalOwners(string $sharedBy, string $subject, string $shareWith, Node $fileSource) {
 		$mount = $fileSource->getMountPoint();
@@ -1280,11 +1261,6 @@ class FilesHooks {
 		}
 	}
 
-	/**
-	 * @param int $fileId
-	 *
-	 * @return array
-	 */
 	private function getAffectedUsersFromCachedMounts(int $fileId): array {
 		$affectedUsers = $cachedMounts = [];
 		$mountsForFile = $this->userMountCache->getMountsForFileId($fileId);
@@ -1301,28 +1277,24 @@ class FilesHooks {
 			];
 		}
 
-		$unrelatedUsers = $this->getUnrelatedUsers($fileId, $cachedMounts);
+		$unrelatedUsers = $this->getUnrelatedUsers($cachedMounts);
 
-		return array_filter($affectedUsers, function (string $userId) use ($unrelatedUsers): bool {
-			return !in_array($userId, $unrelatedUsers, true);
-		}, ARRAY_FILTER_USE_KEY);
+		return array_filter($affectedUsers, fn (string $userId): bool => !in_array($userId, $unrelatedUsers, true), ARRAY_FILTER_USE_KEY);
 	}
 
 	/**
 	 * returns an array of users that have confirmed no access to fileId
 	 *
-	 * @param int $fileId
-	 * @param array $cachedMounts
 	 *
 	 * @return string[] list of unrelated userIds
 	 */
-	private function getUnrelatedUsers(int $fileId, array $cachedMounts): array {
+	private function getUnrelatedUsers(array $cachedMounts): array {
 		/** @var \OCA\GroupFolders\ACL\RuleManager $ruleManager */
 		/** @var \OCA\GroupFolders\Folder\FolderManager $folderManager */
 		try {
 			$ruleManager = \OCP\Server::get(\OCA\GroupFolders\ACL\RuleManager::class);
 			$folderManager = \OCP\Server::get(\OCA\GroupFolders\Folder\FolderManager::class);
-		} catch (\Throwable $e) {
+		} catch (\Throwable) {
 			return []; // if we have no access to RuleManager, we cannot filter unrelated users
 		}
 
@@ -1363,7 +1335,7 @@ class FilesHooks {
 
 					$folderPath = '/' . $cachedMount['rootInternalPath'];
 					$path = $cachedMount['internalPath'];
-				} catch (\Exception $e) {
+				} catch (\Exception) {
 					// in case of issue during the process, we can imagine the user have no access to the file
 					$usersToCheck[] = $cachedMount['userId'];
 					continue; // we'll catch rules on next user with access to the file
@@ -1373,7 +1345,7 @@ class FilesHooks {
 				$paths = [$folderPath];
 				while ($path !== '') {
 					$paths[] = $folderPath . '/' . $path;
-					$path = dirname($path);
+					$path = dirname((string)$path);
 					if ($path === '.' || $path === '/') {
 						$path = '';
 					}
@@ -1423,9 +1395,7 @@ class FilesHooks {
 				if ($group === null) {
 					continue;
 				}
-				$userIds = array_map(function (IUser $user): string {
-					return $user->getUID();
-				}, $group->getUsers());
+				$userIds = array_map(fn (IUser $user): string => $user->getUID(), $group->getUsers());
 
 				// merge current user list with members of the group
 				$usersToCheck = array_values(array_unique(array_merge($usersToCheck, $userIds)));
@@ -1446,7 +1416,7 @@ class FilesHooks {
 				if ($node->isReadable()) {
 					continue; // overkill ? as rootFolder->get() would throw an exception if file is not available
 				}
-			} catch (\Throwable $e) {
+			} catch (\Throwable) {
 			}
 
 			$filteredUsers[] = $userId;
@@ -1460,7 +1430,7 @@ class FilesHooks {
 			$userFolder = $this->rootFolder->getUserFolder($owner);
 			$node = $userFolder->getFirstNodeById($nodeId);
 			return $node === null;
-		} catch (NotFoundException $e) {
+		} catch (NotFoundException) {
 			return true;
 		}
 	}

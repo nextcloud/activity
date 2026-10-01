@@ -9,7 +9,6 @@
 namespace OCA\Activity\AppInfo;
 
 use OC\DB\ConnectionAdapter;
-use OC\Files\View;
 use OC\SystemConfig;
 use OCA\Activity\Capabilities;
 use OCA\Activity\Consumer;
@@ -19,6 +18,7 @@ use OCA\Activity\FilesHooksStatic;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Listener\AddMissingIndicesListener;
 use OCA\Activity\Listener\LoadSidebarScripts;
+use OCA\Activity\Listener\NodeRestoredListener;
 use OCA\Activity\Listener\SetUserDefaults;
 use OCA\Activity\Listener\ShareEventListener;
 use OCA\Activity\Listener\UserDeleted;
@@ -26,11 +26,13 @@ use OCA\Activity\MailQueueHandler;
 use OCA\Activity\NotificationGenerator;
 use OCA\Activity\UserSettings;
 use OCA\Files\Event\LoadSidebar;
+use OCA\Files_Trashbin\Events\NodeRestoredEvent;
 use OCP\Activity\IManager;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\Config\IUserConfig;
 use OCP\DB\Events\AddMissingIndicesEvent;
 use OCP\Files\IRootFolder;
 use OCP\IAppConfig;
@@ -101,40 +103,32 @@ class Application extends App implements IBootstrap {
 			);
 		});
 
-		$context->registerService(Data::class, function (ContainerInterface $c) {
-			return new Data(
-				$c->get(IManager::class),
-				$c->get('ActivityConnectionAdapter'),
-				$c->get(LoggerInterface::class),
-				$c->get(IConfig::class),
-				$c->get(IRootFolder::class),
-			);
-		});
+		$context->registerService(Data::class, fn (ContainerInterface $c): \OCA\Activity\Data => new Data(
+			$c->get(IManager::class),
+			$c->get('ActivityConnectionAdapter'),
+			$c->get(LoggerInterface::class),
+			$c->get(IConfig::class),
+			$c->get(IRootFolder::class),
+		));
 
-		$context->registerService(MailQueueHandler::class, function (ContainerInterface $c) {
-			return new MailQueueHandler(
-				$c->get(IDateTimeFormatter::class),
-				$c->get('ActivityConnectionAdapter'),
-				$c->get(IMailer::class),
-				$c->get(IURLGenerator::class),
-				$c->get(IUserManager::class),
-				$c->get(IFactory::class),
-				$c->get(IManager::class),
-				$c->get(IValidator::class),
-				$c->get(IAppConfig::class),
-				$c->get(IConfig::class),
-				$c->get(LoggerInterface::class),
-				$c->get(Data::class),
-				$c->get(GroupHelper::class),
-				$c->get(UserSettings::class),
-				$c->get(IEmailValidator::class),
-			);
-		});
-
-		// Allow automatic DI for the View, until we migrated to Nodes API
-		$context->registerService(View::class, function () {
-			return new View('');
-		}, false);
+		$context->registerService(MailQueueHandler::class, fn (ContainerInterface $c): \OCA\Activity\MailQueueHandler => new MailQueueHandler(
+			$c->get(IDateTimeFormatter::class),
+			$c->get('ActivityConnectionAdapter'),
+			$c->get(IMailer::class),
+			$c->get(IURLGenerator::class),
+			$c->get(IUserManager::class),
+			$c->get(IFactory::class),
+			$c->get(IManager::class),
+			$c->get(IValidator::class),
+			$c->get(IAppConfig::class),
+			$c->get(IConfig::class),
+			$c->get(LoggerInterface::class),
+			$c->get(Data::class),
+			$c->get(GroupHelper::class),
+			$c->get(UserSettings::class),
+			$c->get(IEmailValidator::class),
+			$c->get(IUserConfig::class),
+		));
 
 		$context->registerCapability(Capabilities::class);
 		$context->registerEventListener(AddMissingIndicesEvent::class, AddMissingIndicesListener::class);
@@ -158,9 +152,7 @@ class Application extends App implements IBootstrap {
 	private function registerActivityConsumer(): void {
 		$c = $this->getContainer();
 
-		$c->get(IManager::class)->registerConsumer(function () use ($c) {
-			return $c->get(Consumer::class);
-		});
+		$c->get(IManager::class)->registerConsumer(fn () => $c->get(Consumer::class));
 	}
 
 	public function registerNotifier(): void {
@@ -177,10 +169,10 @@ class Application extends App implements IBootstrap {
 		Util::connectHook('OC_Filesystem', 'delete', FilesHooksStatic::class, 'fileDelete');
 		Util::connectHook('OC_Filesystem', 'rename', FilesHooksStatic::class, 'fileMove');
 		Util::connectHook('OC_Filesystem', 'post_rename', FilesHooksStatic::class, 'fileMovePost');
-		Util::connectHook('\OCA\Files_Trashbin\Trashbin', 'post_restore', FilesHooksStatic::class, 'fileRestore');
 
 		$context->registerEventListener(ShareCreatedEvent::class, ShareEventListener::class);
 		$context->registerEventListener(BeforeShareDeletedEvent::class, ShareEventListener::class);
 		$context->registerEventListener(ShareDeletedFromSelfEvent::class, ShareEventListener::class);
+		$context->registerEventListener(NodeRestoredEvent::class, NodeRestoredListener::class);
 	}
 }

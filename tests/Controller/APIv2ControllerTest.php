@@ -474,7 +474,7 @@ class APIv2ControllerTest extends TestCase {
 		$captured = [];
 		$this->data->expects($this->once())
 			->method('getDailyCounts')
-			->willReturnCallback(function ($settings, $user, $filter, $from, $to) use (&$captured) {
+			->willReturnCallback(function ($settings, $user, $filter, $from, $to) use (&$captured): array {
 				$captured = ['from' => $from, 'to' => $to];
 				return ['counts' => [], 'partialBefore' => null];
 			});
@@ -505,7 +505,7 @@ class APIv2ControllerTest extends TestCase {
 
 		$span = 0;
 		$this->data->method('getDailyCounts')
-			->willReturnCallback(function ($settings, $user, $filter, $from, $to) use (&$span) {
+			->willReturnCallback(function ($settings, $user, $filter, $from, $to) use (&$span): array {
 				$span = $to - $from;
 				return ['counts' => [], 'partialBefore' => null];
 			});
@@ -523,7 +523,7 @@ class APIv2ControllerTest extends TestCase {
 
 		$this->data->expects($this->once())
 			->method('getDailyCounts')
-			->willReturnCallback(function ($settings, $user, $filter, $from, $to, $tz, $objectType, $objectId, $criteria) {
+			->willReturnCallback(function ($settings, $user, $filter, $from, $to, $tz, $objectType, $objectId, $criteria): array {
 				// The histogram is the control a range is chosen with, so it must
 				// not be narrowed by the range that is currently selected
 				$this->assertSame('report', $criteria->term);
@@ -1038,9 +1038,7 @@ class APIv2ControllerTest extends TestCase {
 		$node = $this->createMock(\OCP\Files\File::class);
 		$this->urlGenerator
 			->method('linkToRouteAbsolute')
-			->willReturnCallback(function ($url, $params) {
-				return $url . '#' . ($params['fileid'] ?? $params['fileId']);
-			});
+			->willReturnCallback(fn ($url, array $params): string => $url . '#' . ($params['fileid'] ?? $params['fileId']));
 
 		if ($isDir) {
 			$controller->expects($this->once())
@@ -1130,9 +1128,7 @@ class APIv2ControllerTest extends TestCase {
 			->willReturn('mime-type-icon');
 		$this->urlGenerator
 			->method('linkToRouteAbsolute')
-			->willReturnCallback(function ($url, $params) {
-				return $url . '#' . ($params['fileid'] ?? $params['fileId']);
-			});
+			->willReturnCallback(fn ($url, array $params): string => $url . '#' . ($params['fileid'] ?? $params['fileId']));
 		$this->mimeTypeDetector->expects($isDir ? $this->never() : $this->once())
 			->method('detectPath')
 			->willReturn($mimeType);
@@ -1168,9 +1164,7 @@ class APIv2ControllerTest extends TestCase {
 
 		$this->urlGenerator->expects($this->once())
 			->method('getAbsoluteURL')
-			->willReturnCallback(function ($url) {
-				return 'absolute-' . $url;
-			});
+			->willReturnCallback(fn ($url): string => 'absolute-' . $url);
 
 		$this->assertSame(
 			$expected,

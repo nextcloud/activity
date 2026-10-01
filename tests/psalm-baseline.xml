@@ -5,12 +5,6 @@
       <code><![CDATA[ClientException]]></code>
     </UndefinedClass>
   </file>
-  <file src="lib/Controller/RemoteActivityController.php">
-    <UndefinedClass>
-      <code><![CDATA[$storage]]></code>
-      <code><![CDATA[Wrapper]]></code>
-    </UndefinedClass>
-  </file>
   <file src="lib/Data.php">
     <UndefinedDocblockClass>
       <code><![CDATA[$favoriteFilter->filterFavorites($query);]]></code>
@@ -27,15 +21,7 @@
       <code><![CDATA[$this->teamManager]]></code>
       <code><![CDATA[$this->teamManager]]></code>
       <code><![CDATA[Member]]></code>
-      <code><![CDATA[\OCA\GroupFolders\ACL\RuleManager]]></code>
-      <code><![CDATA[\OCA\GroupFolders\Folder\FolderManager]]></code>
       <code><![CDATA[protected]]></code>
     </UndefinedClass>
-    <UndefinedDocblockClass>
-      <code><![CDATA[$rule]]></code>
-      <code><![CDATA[$rule]]></code>
-      <code><![CDATA[$rule]]></code>
-      <code><![CDATA[$rules]]></code>
-    </UndefinedDocblockClass>
   </file>
 </files>

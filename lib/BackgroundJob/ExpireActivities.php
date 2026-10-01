@@ -9,27 +9,24 @@ declare(strict_types=1);
 
 namespace OCA\Activity\BackgroundJob;
 
-use OCA\Activity\Data;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
 use OCP\IConfig;
 
 class ExpireActivities extends TimedJob {
-	/** @var Data */
-	protected $data;
 	/** @var IConfig */
 	protected $config;
 
-	public function __construct(ITimeFactory $time,
-		Data $data,
-		IConfig $config) {
+	public function __construct(
+		ITimeFactory $time,
+		protected \OCA\Activity\Data $data,
+		IConfig $config,
+	) {
 		parent::__construct($time);
 
 		// Run once per day
 		$this->setInterval(60 * 60 * 24);
 		$this->setTimeSensitivity(self::TIME_INSENSITIVE);
-
-		$this->data = $data;
 		$this->config = $config;
 	}
 

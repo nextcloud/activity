@@ -18,10 +18,6 @@ class ByFilter implements IFilter {
 	/** @var IURLGenerator */
 	protected $url;
 
-	/**
-	 * @param IL10N $l
-	 * @param IURLGenerator $url
-	 */
 	public function __construct(IL10N $l, IURLGenerator $url) {
 		$this->l = $l;
 		$this->url = $url;
@@ -32,7 +28,7 @@ class ByFilter implements IFilter {
 	 * @since 9.2.0
 	 */
 	#[\Override]
-	public function getIdentifier() {
+	public function getIdentifier(): string {
 		return 'by';
 	}
 
@@ -46,11 +42,10 @@ class ByFilter implements IFilter {
 	}
 
 	/**
-	 * @return int
 	 * @since 9.2.0
 	 */
 	#[\Override]
-	public function getPriority() {
+	public function getPriority(): int {
 		return 2;
 	}
 
@@ -69,7 +64,7 @@ class ByFilter implements IFilter {
 	 * @since 9.2.0
 	 */
 	#[\Override]
-	public function filterTypes(array $types) {
+	public function filterTypes(array $types): array {
 		return $types;
 	}
 
@@ -78,7 +73,7 @@ class ByFilter implements IFilter {
 	 * @since 9.2.0
 	 */
 	#[\Override]
-	public function allowedApps() {
+	public function allowedApps(): array {
 		return [];
 	}
 }

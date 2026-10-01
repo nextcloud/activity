@@ -8,8 +8,6 @@ declare(strict_types=1);
 
 namespace OCA\Activity\Listener;
 
-use OCA\Activity\Data;
-use OCA\Activity\MailQueueHandler;
 use OCP\EventDispatcher\Event;
 use OCP\EventDispatcher\IEventListener;
 use OCP\IUser;
@@ -19,16 +17,10 @@ use OCP\User\Events\UserDeletedEvent;
  * @template-implements IEventListener<Event>
  */
 class UserDeleted implements IEventListener {
-	/** @var Data */
-	private $data;
-	/**
-	 * @var MailQueueHandler
-	 */
-	private $mailQueueHandler;
-
-	public function __construct(Data $data, MailQueueHandler $mailQueueHandler) {
-		$this->data = $data;
-		$this->mailQueueHandler = $mailQueueHandler;
+	public function __construct(
+		private readonly \OCA\Activity\Data $data,
+		private readonly \OCA\Activity\MailQueueHandler $mailQueueHandler,
+	) {
 	}
 
 	#[\Override]

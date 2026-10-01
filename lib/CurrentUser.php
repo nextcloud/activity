@@ -118,7 +118,7 @@ class CurrentUser {
 
 		try {
 			return $this->shareManager->getShareByToken($token);
-		} catch (ShareNotFound $e) {
+		} catch (ShareNotFound) {
 			return null;
 		}
 	}

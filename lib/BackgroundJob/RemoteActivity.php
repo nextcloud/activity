@@ -26,7 +26,7 @@ class RemoteActivity extends QueuedJob {
 
 	#[\Override]
 	protected function run($argument) {
-		call_user_func_array([$this, 'sendActivity'], $argument);
+		call_user_func_array($this->sendActivity(...), $argument);
 	}
 
 	protected function sendActivity($target, $token, $path, $internalType, $time, $actor, $secondPath = '') {
@@ -73,18 +73,17 @@ class RemoteActivity extends QueuedJob {
 					'connect_timeout' => 10,
 				]
 			);
-		} catch (ClientException $e) {
+		} catch (ClientException) {
 		}
 	}
 
 	/**
-	 * @param ICloudId $cloudId
 	 * @param string $token
 	 * @return string
 	 */
 	protected function getServerURL(ICloudId $cloudId, $token) {
 		$remote = $cloudId->getRemote();
-		if (strpos($remote, 'http') !== 0) {
+		if (!str_starts_with($remote, 'http')) {
 			$remote = 'https://' . $remote;
 		}
 

@@ -19,11 +19,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class SendEmails extends Base {
-	/**
-	 * @param MailQueueHandler $queueHandler
-	 * @param IConfig $config
-	 * @param LoggerInterface $logger
-	 */
 	public function __construct(
 		protected MailQueueHandler $queueHandler,
 		protected IConfig $config,
@@ -36,6 +31,7 @@ class SendEmails extends Base {
 		$this->logger = $logger;
 	}
 
+	#[\Override]
 	protected function configure() {
 		$this
 			->setName('activity:send-mails')
@@ -56,11 +52,7 @@ class SendEmails extends Base {
 		;
 	}
 
-	/**
-	 * @param InputInterface $input
-	 * @param OutputInterface $output
-	 * @return int
-	 */
+	#[\Override]
 	protected function execute(InputInterface $input, OutputInterface $output): int {
 		// We don't use time() but "time() - 1" here, so we don't run into
 		// runtime issues later and delete emails, which were created in the
@@ -95,10 +87,10 @@ class SendEmails extends Base {
 
 	/**
 	 * @param string $argumentName
-	 * @param CompletionContext $context
 	 * @return string[]
 	 */
-	public function completeArgumentValues($argumentName, CompletionContext $context) {
+	#[\Override]
+	public function completeArgumentValues($argumentName, CompletionContext $context): array {
 		if ($argumentName === 'restrict-batching') {
 			return ['asap', 'hourly', 'daily', 'weekly'];
 		}

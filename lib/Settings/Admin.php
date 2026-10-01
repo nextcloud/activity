@@ -18,17 +18,21 @@ use OCP\IL10N;
 use OCP\Settings\ISettings;
 
 class Admin implements ISettings {
-	private IConfig $config;
-	private IL10N $l10n;
-	private IManager $manager;
-	private UserSettings $userSettings;
-	private IInitialState $initialState;
+	private readonly IConfig $config;
+	private readonly IL10N $l10n;
+	private readonly IManager $manager;
+	private readonly IInitialState $initialState;
 
-	public function __construct(IConfig $config, IL10N $l10n, UserSettings $userSettings, IManager $manager, IInitialState $initialState) {
+	public function __construct(
+		IConfig $config,
+		IL10N $l10n,
+		private readonly UserSettings $userSettings,
+		IManager $manager,
+		IInitialState $initialState,
+	) {
 		$this->config = $config;
 		$this->l10n = $l10n;
 		$this->manager = $manager;
-		$this->userSettings = $userSettings;
 		$this->initialState = $initialState;
 	}
 

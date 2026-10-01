@@ -50,9 +50,6 @@ class Data {
 
 	/**
 	 * Check if the event should be processed (not excluded and has valid target)
-	 *
-	 * @param IEvent $event
-	 * @return bool
 	 */
 	private function shouldSend(IEvent $event): bool {
 		return $event->getAffectedUser() !== '' && !$this->isExcludedAuthor($event);
@@ -60,9 +57,6 @@ class Data {
 
 	/**
 	 * Check if the event's author is excluded from activity logging
-	 *
-	 * @param IEvent $event
-	 * @return bool
 	 */
 	private function isExcludedAuthor(IEvent $event): bool {
 		$excludedUsers = $this->config->getSystemValue('activity_log_exclude_users', []);
@@ -87,9 +81,6 @@ class Data {
 
 	/**
 	 * Send an event into the activity stream
-	 *
-	 * @param IEvent $event
-	 * @return int
 	 */
 	public function send(IEvent $event): int {
 		if (!$this->shouldSend($event)) {
@@ -144,8 +135,6 @@ class Data {
 	 * for a batch of users that are affected by the same event
 	 * (ex. Call Started, Call ended)
 	 *
-	 * @param IEvent $event
-	 * @param array $affectedUsers
 	 * @return array<int, string>
 	 * @throws Exception
 	 */
@@ -215,9 +204,7 @@ class Data {
 	/**
 	 * Send an event as email
 	 *
-	 * @param IEvent $event
 	 * @param int $latestSendTime Activity $timestamp + batch setting of $affectedUser
-	 * @return bool
 	 */
 	public function storeMail(IEvent $event, int $latestSendTime): bool {
 		if (!$this->shouldSend($event)) {
@@ -274,7 +261,6 @@ class Data {
 	 *
 	 * @param bool $returnEvents return only the events
 	 * @param SearchCriteria|null $search Additional search term and date range restrictions
-	 * @return array
 	 *
 	 */
 	public function get(GroupHelper $groupHelper, UserSettings $userSettings, string $user, int $since, int $limit, string $sort, string $filter, string $objectType = '', int $objectId = 0, bool $returnEvents = false, ?SearchCriteria $search = null): array {
@@ -526,10 +512,6 @@ class Data {
 	}
 
 	/**
-	 * @param IQueryBuilder $query
-	 * @param string $user
-	 * @param int $since
-	 * @param string $sort
 	 *
 	 * @return array Headers that should be set on the response
 	 *
@@ -590,7 +572,6 @@ class Data {
 	 * @param string $user The affected user (file owner)
 	 * @param int $objectId The file ID
 	 * @param int|null $since Optional Unix timestamp; only count activities at or after this time
-	 * @return int
 	 */
 	public function countDownloads(string $user, int $objectId, ?int $since = null): int {
 		$query = $this->connection->getQueryBuilder();
@@ -635,7 +616,7 @@ class Data {
 	 *
 	 * @param int $expireDays Minimum 1 day
 	 */
-	public function expire($expireDays = 365) {
+	public function expire($expireDays = 365): void {
 		$ttl = (60 * 60 * 24 * max(1, $expireDays));
 		$timelimit = time() - $ttl;
 		$conditions = [
@@ -683,7 +664,6 @@ class Data {
 	 * Using andWhere() for every condition is required: where() would replace any
 	 * previously set restriction, silently dropping all but the last condition.
 	 *
-	 * @param IQueryBuilder $query
 	 * @param array $conditions List of [column, value, operator] tuples; operator defaults to '='
 	 * @psalm-param list<array{0: string, 1: mixed, 2?: string}> $conditions
 	 */
@@ -723,10 +703,6 @@ class Data {
 
 	/**
 	 * Get the id of the first activity in the stream since a specified time
-	 *
-	 * @param string $user
-	 * @param int $timestamp
-	 * @return int
 	 */
 	public function getFirstActivitySince(string $user, int $timestamp): int {
 		$query = $this->connection->getQueryBuilder();
@@ -744,9 +720,6 @@ class Data {
 	/**
 	 * Get the number of activity items and the latest activity id since the specified activity
 	 *
-	 * @param string $user
-	 * @param int $since
-	 * @param bool $byOthers
 	 * @return array
 	 */
 	public function getActivitySince(string $user, int $since, bool $byOthers) {
@@ -768,9 +741,6 @@ class Data {
 	/**
 	 * Add galera safe delete chunking if using mysql
 	 * Stops us hitting wsrep_max_ws_rows when large row counts are deleted
-	 *
-	 * @param array $conditions
-	 * @return void
 	 */
 	private function deleteActivitiesForMySQL(array $conditions): void {
 		$query = $this->connection->getQueryBuilder();
@@ -785,9 +755,7 @@ class Data {
 		if ($count === 0) {
 			return;
 		}
-		$ids = array_map(static function (array $id) {
-			return (int)$id[0];
-		}, $result->fetchAll(\PDO::FETCH_NUM));
+		$ids = array_map(static fn (array $id): int => (int)$id[0], $result->fetchAll(\PDO::FETCH_NUM));
 		$result->closeCursor();
 
 		$queryResult = 0;

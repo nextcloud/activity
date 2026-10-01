@@ -14,6 +14,7 @@ use OCA\Activity\GroupHelper;
 use OCA\Activity\UserSettings;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
+use OCP\Config\IUserConfig;
 use OCP\Defaults;
 use OCP\IConfig;
 use OCP\IDateTimeFormatter;
@@ -28,6 +29,7 @@ use Psr\Log\LoggerInterface;
 
 class DigestSenderTest extends TestCase {
 	protected IConfig&MockObject $config;
+	protected IUserConfig&MockObject $userConfig;
 	protected Data&MockObject $data;
 	protected IMailer&MockObject $mailer;
 	protected IManager&MockObject $activityManager;
@@ -39,6 +41,7 @@ class DigestSenderTest extends TestCase {
 		parent::setUp();
 
 		$this->config = $this->createMock(IConfig::class);
+		$this->userConfig = $this->createMock(IUserConfig::class);
 		$this->data = $this->createMock(Data::class);
 		$this->mailer = $this->createMock(IMailer::class);
 		$this->activityManager = $this->createMock(IManager::class);
@@ -62,16 +65,15 @@ class DigestSenderTest extends TestCase {
 			$l10nFactory,
 			$this->createMock(IDateTimeFormatter::class),
 			$this->logger,
+			$this->userConfig,
 		);
 	}
 
 	protected function expectDigestUsers(array $users, array $timezones): void {
-		$this->config->method('getUsersForUserValue')
-			->willReturn($users);
-		$this->config->method('getUserValueForUsers')
-			->willReturnCallback(static function (string $app, string $key) use ($timezones) {
-				return ($app === 'core' && $key === 'timezone') ? $timezones : [];
-			});
+		$this->userConfig->method('searchUsersByValueString')
+			->willReturnCallback(static fn (): \Generator => yield from $users);
+		$this->userConfig->method('getValuesByUsers')
+			->willReturnCallback(static fn (string $app, string $key): array => ($app === 'core' && $key === 'timezone') ? $timezones : []);
 	}
 
 	protected function createUser(string $uid, string $email): IUser&MockObject {
@@ -132,8 +134,8 @@ class DigestSenderTest extends TestCase {
 		$this->mailer->expects($this->never())
 			->method('send');
 		// The marker still moves so enabling an address later does not flood them
-		$this->config->expects($this->once())
-			->method('setUserValue')
+		$this->userConfig->expects($this->once())
+			->method('setValueString')
 			->with('noMailUser', 'activity', 'activity_digest_last_send', $this->anything());
 
 		$this->digestSender->sendDigests(1700000000);
@@ -142,7 +144,7 @@ class DigestSenderTest extends TestCase {
 	public function testCurrentUserIsResetWhenThereIsNothingToSend(): void {
 		$user = $this->createUser('someUser', 'user@example.com');
 
-		$this->config->method('getUserValue')
+		$this->userConfig->method('getValueString')
 			->willReturn('5');
 		$this->data->method('getActivitySince')
 			->willReturn(['count' => 0, 'max' => 5]);

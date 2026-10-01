@@ -11,7 +11,8 @@ use OCA\Activity\Extension\Files;
 use OCP\Activity\ActivitySettings;
 use OCP\Activity\Exceptions\SettingNotFoundException;
 use OCP\Activity\IManager;
-use OCP\IConfig;
+use OCP\Config\IUserConfig;
+use OCP\IAppConfig;
 
 /**
  * Class UserSettings
@@ -30,13 +31,10 @@ class UserSettings {
 	public const BATCH_TIME_DAILY = 3600 * 24;
 	public const BATCH_TIME_WEEKLY = 3600 * 24 * 7;
 
-	/**
-	 * @param IManager $manager
-	 * @param IConfig $config
-	 */
 	public function __construct(
 		protected IManager $manager,
-		protected IConfig $config,
+		private readonly IAppConfig $appConfig,
+		private readonly IUserConfig $userConfig,
 	) {
 	}
 
@@ -46,13 +44,11 @@ class UserSettings {
 	 *
 	 * Falls back to some good default values if the user does not have a preference
 	 *
-	 * @param string $user
 	 * @param string $method Should be one of 'stream', 'email' or 'setting'
 	 * @param string $type One of the activity types, 'batchtime' or 'self'
-	 * @return bool|int
 	 */
 	public function getUserSetting(string $user, string $method, string $type): bool|int {
-		if ($method === 'email' && $this->config->getAppValue('activity', 'enable_email', 'yes') === 'no') {
+		if ($method === 'email' && $this->appConfig->getValueString('activity', 'enable_email', 'yes') === 'no') {
 			return false;
 		}
 
@@ -62,41 +58,37 @@ class UserSettings {
 		}
 
 		if (is_bool($defaultSetting)) {
-			return (bool)$this->config->getUserValue(
+			return (bool)$this->userConfig->getValueString(
 				$user,
 				'activity',
 				'notify_' . $method . '_' . $type,
-				$defaultSetting
+				(string)(int)$defaultSetting
 			);
 		}
 
-		return (int)$this->config->getUserValue(
+		return (int)$this->userConfig->getValueString(
 			$user,
 			'activity',
 			'notify_' . $method . '_' . $type,
-			$defaultSetting
+			(string)$defaultSetting
 		);
 	}
 
 	/**
 	 * Get the admin configured default for the setting
 	 * Falling back to the implementation default if not set by the admin
-	 *
-	 * @param string $method
-	 * @param string $type
-	 * @return bool|int
 	 */
 	public function getAdminSetting(string $method, string $type): bool|int {
 		$defaultSetting = $this->getDefaultSetting($method, $type);
 		if (is_bool($defaultSetting)) {
-			return (bool)$this->config->getAppValue(
+			return (bool)$this->appConfig->getValueString(
 				'activity',
 				'notify_' . $method . '_' . $type,
 				(string)$defaultSetting
 			);
 		}
 
-		return (int)$this->config->getAppValue(
+		return (int)$this->appConfig->getValueString(
 			'activity',
 			'notify_' . $method . '_' . $type,
 			(string)$defaultSetting
@@ -108,7 +100,6 @@ class UserSettings {
 	 *
 	 * @param string $method Should be one of 'stream', 'email' or 'setting'
 	 * @param string $type One of the activity types, 'batchtime', 'self' or 'selfemail'
-	 * @return bool|int
 	 */
 	protected function getDefaultSetting(string $method, string $type): bool|int {
 		if ($method === 'setting') {
@@ -120,23 +111,16 @@ class UserSettings {
 				return true;
 			}
 
-			if ($type === 'selfemail') {
-				return false;
-			}
-
 			return false;
 		}
 
 		try {
 			$setting = $this->manager->getSettingById($type);
-			switch ($method) {
-				case 'email':
-					return $setting->isDefaultEnabledMail();
-				case 'notification':
-					return $setting->isDefaultEnabledNotification();
-				default:
-					return false;
-			}
+			return match ($method) {
+				'email' => $setting->isDefaultEnabledMail(),
+				'notification' => $setting->isDefaultEnabledNotification(),
+				default => false,
+			};
 		} catch (SettingNotFoundException) {
 			return false;
 		}
@@ -147,7 +131,6 @@ class UserSettings {
 	 *
 	 * @param string $method Should be one of 'stream', 'email' or 'setting'
 	 * @param string $type One of the activity types, 'batchtime', 'self' or 'selfemail'
-	 * @return bool
 	 */
 	protected function canModifySetting(string $method, string $type): bool {
 		if ($method === 'setting') {
@@ -156,14 +139,11 @@ class UserSettings {
 
 		try {
 			$setting = $this->manager->getSettingById($type);
-			switch ($method) {
-				case 'email':
-					return $setting->canChangeMail();
-				case 'notification':
-					return $setting->canChangeNotification();
-				default:
-					return false;
-			}
+			return match ($method) {
+				'email' => $setting->canChangeMail(),
+				'notification' => $setting->canChangeNotification(),
+				default => false,
+			};
 		} catch (SettingNotFoundException) {
 			return false;
 		}
@@ -175,9 +155,7 @@ class UserSettings {
 	public function getNotificationTypes(): array {
 		$settings = $this->manager->getSettings();
 
-		$return = array_map(function (ActivitySettings $setting) {
-			return $setting->getIdentifier();
-		}, $settings);
+		$return = array_map(fn (ActivitySettings $setting) => $setting->getIdentifier(), $settings);
 
 		// TYPE_FILE_CHANGED is used to group all file changes together
 		// But we still differentiate between file_created, file_deleted and file_restored
@@ -192,9 +170,6 @@ class UserSettings {
 	/**
 	 * Filters the given user array by their notification setting
 	 *
-	 * @param array $users
-	 * @param string $method
-	 * @param string $type
 	 * @return array Returns a "username => b:true" Map for method = notification
 	 *               Returns a "username => i:batchtime" Map for method = email
 	 */
@@ -203,7 +178,7 @@ class UserSettings {
 			return [];
 		}
 
-		if ($method === 'email' && $this->config->getAppValue('activity', 'enable_email', 'yes') === 'no') {
+		if ($method === 'email' && $this->appConfig->getValueString('activity', 'enable_email', 'yes') === 'no') {
 			return [];
 		}
 
@@ -213,7 +188,7 @@ class UserSettings {
 		}
 
 		$filteredUsers = [];
-		$potentialUsers = $this->config->getUserValueForUsers('activity', 'notify_' . $method . '_' . $type, $users);
+		$potentialUsers = $this->userConfig->getValuesByUsers('activity', 'notify_' . $method . '_' . $type, userIds: $users);
 		foreach ($potentialUsers as $user => $value) {
 			if ($value) {
 				$filteredUsers[$user] = true;
@@ -223,7 +198,7 @@ class UserSettings {
 
 		// Get the batch time setting from the database
 		if ($method === 'email') {
-			$potentialUsers = $this->config->getUserValueForUsers('activity', 'notify_setting_batchtime', array_keys($filteredUsers));
+			$potentialUsers = $this->userConfig->getValuesByUsers('activity', 'notify_setting_batchtime', userIds: array_keys($filteredUsers));
 			foreach ($potentialUsers as $user => $value) {
 				$filteredUsers[$user] = $value;
 			}

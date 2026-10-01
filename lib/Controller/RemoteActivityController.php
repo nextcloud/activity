@@ -54,7 +54,6 @@ class RemoteActivityController extends OCSController {
 	 * @param string[] $object
 	 * @param string[] $target
 	 * @param string[] $origin
-	 * @return DataResponse
 	 */
 	#[BruteForceProtection(action: 'receiveActivity')]
 	public function receiveActivity($token, array $to, array $actor, $type, $updated, array $object = [], array $target = [], array $origin = []): DataResponse {
@@ -120,7 +119,7 @@ class RemoteActivityController extends OCSController {
 			return $response;
 		}
 
-		$normalizedActorServer = rtrim(strtolower(preg_replace('/^https?:\/\//', '', $actorServer)), '/');
+		$normalizedActorServer = rtrim(strtolower((string)preg_replace('/^https?:\/\//', '', $actorServer)), '/');
 		$normalizedShareRemote = rtrim(strtolower(preg_replace('/^https?:\/\//', '', $share['remote'])), '/');
 		if ($normalizedActorServer !== $normalizedShareRemote) {
 			return new DataResponse([], Http::STATUS_FORBIDDEN);
@@ -208,9 +207,6 @@ class RemoteActivityController extends OCSController {
 		return new DataResponse();
 	}
 
-	/**
-	 * @param null|string $path2
-	 */
 	protected function getSubject(string $type, string $path, ?string $path2) {
 		switch ($type) {
 			case 'Create':
@@ -236,15 +232,11 @@ class RemoteActivityController extends OCSController {
 	 * @return string
 	 */
 	protected function translateType($type) {
-		switch ($type) {
-			case 'Create':
-				return Files::TYPE_SHARE_CREATED;
-			case 'Move':
-			case 'Update':
-				return Files::TYPE_FILE_CHANGED;
-			case 'Delete':
-				return Files::TYPE_SHARE_DELETED;
-		}
-		return '';
+		return match ($type) {
+			'Create' => Files::TYPE_SHARE_CREATED,
+			'Move', 'Update' => Files::TYPE_FILE_CHANGED,
+			'Delete' => Files::TYPE_SHARE_DELETED,
+			default => '',
+		};
 	}
 }

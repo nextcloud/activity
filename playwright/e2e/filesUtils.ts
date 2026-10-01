@@ -53,6 +53,9 @@ export const toggleMenuAction = async (
 	await menuItem.click({ force: true })
 }
 
+const waitForDavRequest = (page: Page, method: string) =>
+	page.waitForResponse((response) => response.request().method() === method && /\/(remote|public)\.php\/dav\/files\//.test(response.url()))
+
 export const getFileListRow = (page: Page, filename: string) =>
 	page.locator(`[data-cy-files-list-row-name="${cssEscape(filename)}"]`)
 
@@ -63,7 +66,7 @@ export async function renameFile(page: Page, fileName: string, newName: string) 
 
 	await triggerActionForFile(page, fileName, 'rename')
 
-	const moveResponse = page.waitForResponse(/\/(remote|public)\.php\/dav\/files\//)
+	const moveResponse = waitForDavRequest(page, 'MOVE')
 	await getRowForFile(page, fileName).locator('[data-cy-files-list-row-name] input').clear()
 	await getRowForFile(page, fileName).locator('[data-cy-files-list-row-name] input').fill(`${newName}`)
 	await getRowForFile(page, fileName).locator('[data-cy-files-list-row-name] input').press('Enter')
@@ -73,20 +76,24 @@ export async function renameFile(page: Page, fileName: string, newName: string) 
 export async function navigateToFolder(page: Page, dirPath: string) {
 	const directories = dirPath.split('/').filter(Boolean)
 	for (const directory of directories) {
-		const navResponse = page.waitForResponse(/\/remote\.php\/dav\/files\//)
+		const navResponse = waitForDavRequest(page, 'PROPFIND')
 		await getRowForFile(page, directory).locator('[data-cy-files-list-row-name-link]').click()
 		await navResponse
 	}
 }
 
 export async function createFolder(page: Page, dirName: string) {
-	const mkcolResponse = page.waitForResponse(/\/remote\.php\/dav\/files\//)
+	const mkcolResponse = waitForDavRequest(page, 'MKCOL')
 
-	await page.locator('[data-cy-upload-picker] .action-item__menutoggle').first().click()
-	await page.locator('[data-cy-upload-picker-menu-entry="newFolder"] button').click()
-	await expect(page.locator('[data-cy-files-new-node-dialog]')).toBeVisible()
-	await page.locator('[data-cy-files-new-node-dialog-input]').fill(dirName)
-	await page.locator('[data-cy-files-new-node-dialog-submit]').click()
+	await page.locator('[data-cy-upload-picker]')
+		.getByRole('button', { name: 'New' })
+		.first()
+		.click()
+	await page.getByRole('menuitem', { name: 'New folder' }).click()
+	const dialog = page.getByRole('dialog', { name: /create new folder/i })
+	await expect(dialog).toBeVisible()
+	await dialog.getByRole('textbox', { name: 'Folder name' }).fill(dirName)
+	await dialog.getByRole('button', { name: 'Create' }).click()
 	await mkcolResponse
 
 	await expect(getRowForFile(page, dirName)).toBeVisible()
@@ -97,7 +104,7 @@ export async function moveFile(page: Page, fileName: string, dirName: string) {
 
 	await page.locator('.file-picker').waitFor()
 
-	const moveResponse = page.waitForResponse(/\/(remote|public)\.php\/dav\/files\//)
+	const moveResponse = waitForDavRequest(page, 'MOVE')
 
 	if (dirName === '/') {
 		await page.locator('.file-picker').getByRole('button', { name: 'Home' }).click()

@@ -24,7 +24,7 @@ test.beforeEach(async ({ page }) => {
 	const user = await createRandomUser()
 	await login(page.request, user)
 	// Seed activity: visiting the files app triggers file creation events
-	await page.goto('/apps/files')
+	await page.goto('apps/files')
 	await expect(getFileListRow(page, 'welcome.txt')).toBeVisible()
 })
 

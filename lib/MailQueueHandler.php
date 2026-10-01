@@ -9,6 +9,8 @@ namespace OCA\Activity;
 
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
+use OCP\Config\IUserConfig;
+use OCP\Config\ValueType;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\Defaults;
 use OCP\IAppConfig;
@@ -59,6 +61,7 @@ class MailQueueHandler {
 		protected GroupHelper $groupHelper,
 		protected UserSettings $userSettings,
 		protected IEmailValidator $emailValidator,
+		private readonly IUserConfig $userConfig,
 	) {
 	}
 
@@ -83,9 +86,12 @@ class MailQueueHandler {
 			return 0;
 		}
 
-		$userLanguages = $this->config->getUserValueForUsers('core', 'lang', $affectedUsers);
-		$userTimezones = $this->config->getUserValueForUsers('core', 'timezone', $affectedUsers);
-		$userEnabled = $this->config->getUserValueForUsers('core', 'enabled', $affectedUsers);
+		/** @var array<string, string> */
+		$userLanguages = $this->userConfig->getValuesByUsers('core', 'lang', ValueType::STRING, userIds: $affectedUsers);
+		/** @var array<string, string> */
+		$userTimezones = $this->userConfig->getValuesByUsers('core', 'timezone', ValueType::STRING, userIds: $affectedUsers);
+		/** @var array<string, string> */
+		$userEnabled = $this->userConfig->getValuesByUsers('core', 'enabled', ValueType::STRING, userIds: $affectedUsers);
 
 		// Send Email
 		$default_lang = $this->config->getSystemValue('default_language', 'en');
@@ -302,7 +308,7 @@ class MailQueueHandler {
 						->setTimestamp((int)$activity['amq_timestamp'])
 						->setSubject((string)$activity['amq_subject'], (array)json_decode($activity['amq_subjectparams'], true))
 						->setObject((string)$activity['object_type'], (int)$activity['object_id']);
-				} catch (\InvalidArgumentException $e) {
+				} catch (\InvalidArgumentException) {
 					continue;
 				}
 
@@ -310,16 +316,14 @@ class MailQueueHandler {
 			}
 
 			$activityEvents = array_map(
-				function ($event) use ($timezone, $l) {
-					return [
-						'event' => $event,
-						'dateTime' => $this->dateFormatter->formatDateTime(
-							$event->getTimestamp(),
-							'long', 'short',
-							new \DateTimeZone($timezone), $l
-						)
-					];
-				},
+				fn (\OCP\Activity\IEvent $event): array => [
+					'event' => $event,
+					'dateTime' => $this->dateFormatter->formatDateTime(
+						$event->getTimestamp(),
+						'long', 'short',
+						new \DateTimeZone($timezone), $l
+					)
+				],
 				$this->groupHelper->getEvents()
 			);
 

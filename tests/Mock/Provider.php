@@ -33,7 +33,6 @@ class Provider implements IProvider {
 	 * @param IEvent|null $previousEvent A potential previous event which you can combine with the current one.
 	 *                                   To do so, simply use setChildEvent($previousEvent) after setting the
 	 *                                   combined subject on the current event.
-	 * @return IEvent
 	 * @throws \InvalidArgumentException Should be thrown if your provider does not know this event
 	 * @since 11.0.0
 	 */
@@ -42,20 +41,12 @@ class Provider implements IProvider {
 			throw new \InvalidArgumentException();
 		}
 
-		switch ($event->getSubject()) {
-			case 'subject1':
-				$event->setParsedSubject(vsprintf('Subject1 #%1$s', $event->getSubjectParameters()));
-				break;
-			case 'subject2':
-				$event->setParsedSubject(vsprintf('Subject2 @%2$s #%1$s', $event->getSubjectParameters()));
-				break;
-			case 'subject3':
-				$event->setParsedSubject(vsprintf('Subject3 #%1$s @%2$s', $event->getSubjectParameters()));
-				break;
-
-			default:
-				throw new \InvalidArgumentException();
-		}
+		match ($event->getSubject()) {
+			'subject1' => $event->setParsedSubject(vsprintf('Subject1 #%1$s', $event->getSubjectParameters())),
+			'subject2' => $event->setParsedSubject(vsprintf('Subject2 @%2$s #%1$s', $event->getSubjectParameters())),
+			'subject3' => $event->setParsedSubject(vsprintf('Subject3 #%1$s @%2$s', $event->getSubjectParameters())),
+			default => throw new \InvalidArgumentException(),
+		};
 
 		return $event;
 	}

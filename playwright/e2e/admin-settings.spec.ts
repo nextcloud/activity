@@ -20,7 +20,7 @@ async function toggleCheckbox(page: Page, cb: Locator) {
 test.describe('Admin settings', () => {
 	test.beforeEach(async ({ page }) => {
 		await login(page.request, admin)
-		await page.goto('/settings/admin/activity')
+		await page.goto('settings/admin/activity')
 	})
 
 	test('Email enable toggle is visible', async ({ page }) => {

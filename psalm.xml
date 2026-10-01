@@ -23,34 +23,15 @@
 	<issueHandlers>
 		<MissingPureAnnotation errorLevel="suppress"/>
 		<MissingImmutableAnnotation errorLevel="suppress"/>
-		<UndefinedClass>
-			<errorLevel type="suppress">
-				<referencedClass name="OC" />
-				<referencedClass name="OCA\Files\Event\LoadSidebar" />
-				<referencedClass name="OCA\Files_Sharing\External\Storage" />
-				<referencedClass name="OCA\Files_Sharing\SharedStorage" />
-				<referencedClass name="OC\Core\Command\Base" />
-				<referencedClass name="OC\Files\Filesystem" />
-				<referencedClass name="OC\Files\View" />
-				<referencedClass name="OC\Hooks\Emitter" />
-				<referencedClass name="OC\TagManager" />
-				<referencedClass name="OC_Template" />
-			</errorLevel>
-		</UndefinedClass>
-		<UndefinedDocblockClass>
-			<errorLevel type="suppress">
-				<referencedClass name="OC\Files\View" />
-				<referencedClass name="OC\TagManager" />
-				<referencedClass name="OC\Hooks\Emitter" />
-				<referencedClass name="OCA\GroupFolders\ACL\RuleManager" />
-				<referencedClass name="OCA\GroupFolders\Folder\FolderManager" />
-			</errorLevel>
-		</UndefinedDocblockClass>
 	</issueHandlers>
 	<stubs>
+		<file name="tests/stubs/oc_core_command_base.php" preloadClasses="true" />
+		<file name="tests/stubs/oc_files.php" preloadClasses="true" />
 		<file name="tests/stubs/oc_hooks_emitter.php" />
 		<file name="tests/stubs/oca_files_event.php" preloadClasses="true" />
 		<file name="tests/stubs/oca_files_sharing.php" preloadClasses="true" />
+		<file name="tests/stubs/oca_files_trashbin_events.php" preloadClasses="true" />
+		<file name="tests/stubs/oca_groupfolders.php" preloadClasses="true" />
 		<file name="tests/stubs/oca_viewer_event.php" preloadClasses="true" />
 		<file name="tests/stubs/oca_theming_defaults.php" preloadClasses="true" />
 	</stubs>

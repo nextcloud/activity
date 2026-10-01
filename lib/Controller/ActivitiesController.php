@@ -16,9 +16,9 @@ use OCP\Activity\IManager;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
+use OCP\Config\IUserConfig;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
-use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 
@@ -27,14 +27,14 @@ class ActivitiesController extends Controller {
 	public function __construct(
 		string $appName,
 		IRequest $request,
-		private ?string $userId,
-		private IConfig $config,
-		private Data $data,
-		private IL10N $l10n,
-		private IEventDispatcher $eventDispatcher,
-		private IInitialState $initialState,
-		private IURLGenerator $urlGenerator,
-		private IManager $activityManager,
+		private readonly ?string $userId,
+		private readonly IConfig $config,
+		private readonly Data $data,
+		private readonly IEventDispatcher $eventDispatcher,
+		private readonly IInitialState $initialState,
+		private readonly IURLGenerator $urlGenerator,
+		private readonly IManager $activityManager,
+		private readonly IUserConfig $userConfig,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -44,7 +44,6 @@ class ActivitiesController extends Controller {
 	 * @NoCSRFRequired
 	 *
 	 * @param string $filter
-	 * @return TemplateResponse
 	 */
 	public function index(): TemplateResponse {
 		return $this->showList('all');
@@ -53,9 +52,6 @@ class ActivitiesController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
-	 *
-	 * @param string $filter
-	 * @return TemplateResponse
 	 */
 	public function showList(string $filter = 'all'): TemplateResponse {
 		$filter = $this->data->validateFilter($filter);
@@ -94,7 +90,7 @@ class ActivitiesController extends Controller {
 	 * Link to RSS feed if there is a RSS token, empty string otherwise
 	 */
 	protected function getRSSLink(): string {
-		$rssToken = $this->config->getUserValue($this->userId, 'activity', 'rsstoken');
+		$rssToken = $this->userConfig->getValueString($this->userId, 'activity', 'rsstoken');
 		if ($rssToken) {
 			return $this->urlGenerator->linkToRouteAbsolute('activity.Feed.show', ['token' => $rssToken]);
 		} else {
@@ -109,7 +105,7 @@ class ActivitiesController extends Controller {
 	 */
 	protected function getLinkList(): array {
 		$filters = $this->activityManager->getFilters();
-		usort($filters, static function (IFilter $a, IFilter $b) {
+		usort($filters, static function (IFilter $a, IFilter $b): int {
 			if ($a->getPriority() === $b->getPriority()) {
 				return (int)($a->getIdentifier() > $b->getIdentifier());
 			}
