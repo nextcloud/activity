@@ -25,8 +25,13 @@ export async function showActivityTab(page: Page, fileName: string) {
 
 	await showSidebarForFile(page, fileName)
 
-	await page.locator('#app-sidebar-vue').getByRole('tab', { name: 'Activity' }).click({ force: true })
-	await expect(page.locator('#app-sidebar-vue').getByRole('tabpanel', { name: 'Activity' })).toBeVisible()
+	// The sidebar can still switch to its default tab right after opening, so retry until the selection sticks
+	const activityTab = page.locator('#app-sidebar-vue').getByRole('tab', { name: 'Activity' })
+	await expect(async () => {
+		await activityTab.click()
+		await expect(activityTab).toHaveAttribute('aria-selected', 'true', { timeout: 1000 })
+		await expect(page.locator('#app-sidebar-vue').getByRole('tabpanel', { name: 'Activity' })).toBeVisible({ timeout: 1000 })
+	}).toPass()
 
 	await activitiesResponse
 }
