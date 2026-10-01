@@ -1295,9 +1295,7 @@ class FilesHooks {
 				'provider' => str_replace('\\\\', '\\', $mount->getMountProvider()),
 				'path' => $mount->getPath(),
 				'visiblePath' => $this->getVisiblePath($mount->getPath()),
-				'storageId' => $mount->getStorageId(),
-				'internalPath' => $mount->getInternalPath(),
-				'rootInternalPath' => $mount->getRootInternalPath(),
+				'storageId' => $mount->getStorageId()
 			];
 		}
 
@@ -1348,21 +1346,16 @@ class FilesHooks {
 			if (!array_key_exists($cachedMount['visiblePath'], $knownRules[$storageId])) {
 				// we need mountPoint and folderId to generate the correct path
 				try {
-					// only check for groupfolders
-					if (!str_starts_with($cachedMount['rootInternalPath'], '__groupfolders')) {
-						continue;
-					}
+					$node = $this->rootFolder->get($fullPath);
+					$mountPoint = $node->getMountPoint();
 
-					$folderId = (int)basename($cachedMount['rootInternalPath']);
-					if (!isset($groupFolderAclStatus[$folderId])) {
-						$groupFolderAclStatus[$folderId] = $folderManager->getFolderAclEnabled($folderId);
-					}
-					if (!$groupFolderAclStatus[$folderId]) {
+					if (!$mountPoint instanceof \OCA\GroupFolders\Mount\GroupMountPoint
+						|| !$folderManager->getFolderAclEnabled($mountPoint->getFolderId())) {
 						continue; // acl are disable
 					}
 
-					$folderPath = '/' . $cachedMount['rootInternalPath'];
-					$path = $cachedMount['internalPath'];
+					$folderPath = $mountPoint->getSourcePath();
+					$path = substr($fullPath, strlen($mountPoint->getMountPoint()));
 				} catch (\Exception $e) {
 					// in case of issue during the process, we can imagine the user have no access to the file
 					$usersToCheck[] = $cachedMount['userId'];
