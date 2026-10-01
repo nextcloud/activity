@@ -204,9 +204,9 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', $type, $selfSubject, $othersSubject);
+			->with('/path', $type, $selfSubject, $othersSubject);
 
-		$filesHooks->fileCreate('path');
+		$filesHooks->fileCreate($this->getNodeMock(42, '/user/files/path'));
 	}
 
 	public static function dataFileCreateUser(): array {
@@ -225,7 +225,7 @@ class FilesHooksTest extends TestCase {
 		$filesHooks->expects($this->never())
 			->method('addNotificationsForFileAction');
 
-		$filesHooks->fileCreate('/');
+		$filesHooks->fileCreate($this->getNodeMock(42, '/user/files', false));
 	}
 
 	public function testFileUpdate(): void {
@@ -235,9 +235,9 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', Files::TYPE_FILE_CHANGED, 'changed_self', 'changed_by');
+			->with('/path', Files::TYPE_FILE_CHANGED, 'changed_self', 'changed_by');
 
-		$filesHooks->fileUpdate('path');
+		$filesHooks->fileUpdate($this->getNodeMock(42, '/user/files/path'));
 	}
 
 	public function testFileDelete(): void {
@@ -247,9 +247,9 @@ class FilesHooksTest extends TestCase {
 
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('path', Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
+			->with('/path', Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
 
-		$filesHooks->fileDelete('path');
+		$filesHooks->fileDelete($this->getNodeMock(42, '/user/files/path'));
 	}
 
 	public function testFileRestore(): void {
@@ -496,7 +496,7 @@ class FilesHooksTest extends TestCase {
 			->with('/folder', 'owner')
 			->willReturn(['users' => ['user' => '/folder'], 'remotes' => []]);
 
-		$filesHooks->fileMove('/folder/file.txt', '/target/file.txt');
+		$filesHooks->fileMove($this->getNodeMock(42, '/user/files/folder/file.txt'), $this->getNodeMock(42, '/user/files/target/file.txt'));
 
 		$this->assertSame('moveCross', self::invokePrivate($filesHooks, 'moveCase'));
 		$this->assertSame(['users' => ['user' => '/folder'], 'remotes' => []], self::invokePrivate($filesHooks, 'oldAccessList'));
@@ -521,12 +521,32 @@ class FilesHooksTest extends TestCase {
 		$filesHooks->expects($this->never())
 			->method('fileMoving');
 
-		$filesHooks->fileMove('/folder/file.txt', '/target/file.txt');
+		$filesHooks->fileMove($this->getNodeMock(42, '/user/files/folder/file.txt'), $this->getNodeMock(42, '/user/files/target/file.txt'));
 
 		$this->assertFalse(self::invokePrivate($filesHooks, 'moveCase'));
 
 		// the post hook must be a no-op instead of failing on the missing state
-		$filesHooks->fileMovePost('/folder/file.txt', '/target/file.txt');
+		$filesHooks->fileMovePost($this->getNodeMock(42, '/user/files/folder/file.txt'), $this->getNodeMock(42, '/user/files/target/file.txt'));
+	}
+
+	public function testFileMovePostRename(): void {
+		$filesHooks = $this->getFilesHooks([
+			'fileRenaming',
+			'fileMoving',
+		]);
+
+		$filesHooks->expects($this->once())
+			->method('fileRenaming')
+			->with('/folder/old.txt', '/folder/new.txt');
+		$filesHooks->expects($this->never())
+			->method('fileMoving');
+
+		$source = $this->getNodeMock(42, '/user/files/folder/old.txt');
+		$target = $this->getNodeMock(42, '/user/files/folder/new.txt');
+		$filesHooks->fileMove($source, $target);
+		$filesHooks->fileMovePost($source, $target);
+
+		$this->assertFalse(self::invokePrivate($filesHooks, 'moveCase'));
 	}
 
 	public function testFileMovingWithoutOldAccessList(): void {

@@ -14,10 +14,10 @@ use OCA\Activity\Capabilities;
 use OCA\Activity\Consumer;
 use OCA\Activity\Dashboard\ActivityWidget;
 use OCA\Activity\Data;
-use OCA\Activity\FilesHooksStatic;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\Listener\AddMissingIndicesListener;
 use OCA\Activity\Listener\LoadSidebarScripts;
+use OCA\Activity\Listener\NodeEventListener;
 use OCA\Activity\Listener\NodeRestoredListener;
 use OCA\Activity\Listener\SetUserDefaults;
 use OCA\Activity\Listener\ShareEventListener;
@@ -34,6 +34,12 @@ use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\Config\IUserConfig;
 use OCP\DB\Events\AddMissingIndicesEvent;
+use OCP\Files\Events\Node\BeforeNodeDeletedEvent;
+use OCP\Files\Events\Node\BeforeNodeRenamedEvent;
+use OCP\Files\Events\Node\BeforeNodeWrittenEvent;
+use OCP\Files\Events\Node\NodeCreatedEvent;
+use OCP\Files\Events\Node\NodeRenamedEvent;
+use OCP\Files\Events\Node\NodeWrittenEvent;
 use OCP\Files\IRootFolder;
 use OCP\IAppConfig;
 use OCP\IConfig;
@@ -51,7 +57,6 @@ use OCP\Share\Events\ShareCreatedEvent;
 use OCP\Share\Events\ShareDeletedFromSelfEvent;
 use OCP\User\Events\PostLoginEvent;
 use OCP\User\Events\UserDeletedEvent;
-use OCP\Util;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -160,15 +165,16 @@ class Application extends App implements IBootstrap {
 	}
 
 	/**
-	 * Register the hooks for filesystem operations
+	 * Register the listeners for filesystem operations
 	 */
 	private function registerFilesActivity(IRegistrationContext $context): void {
 		// All other events from other apps have to be send via the Consumer
-		Util::connectHook('OC_Filesystem', 'post_create', FilesHooksStatic::class, 'fileCreate');
-		Util::connectHook('OC_Filesystem', 'post_update', FilesHooksStatic::class, 'fileUpdate');
-		Util::connectHook('OC_Filesystem', 'delete', FilesHooksStatic::class, 'fileDelete');
-		Util::connectHook('OC_Filesystem', 'rename', FilesHooksStatic::class, 'fileMove');
-		Util::connectHook('OC_Filesystem', 'post_rename', FilesHooksStatic::class, 'fileMovePost');
+		$context->registerEventListener(NodeCreatedEvent::class, NodeEventListener::class);
+		$context->registerEventListener(BeforeNodeWrittenEvent::class, NodeEventListener::class);
+		$context->registerEventListener(NodeWrittenEvent::class, NodeEventListener::class);
+		$context->registerEventListener(BeforeNodeDeletedEvent::class, NodeEventListener::class);
+		$context->registerEventListener(BeforeNodeRenamedEvent::class, NodeEventListener::class);
+		$context->registerEventListener(NodeRenamedEvent::class, NodeEventListener::class);
 
 		$context->registerEventListener(ShareCreatedEvent::class, ShareEventListener::class);
 		$context->registerEventListener(BeforeShareDeletedEvent::class, ShareEventListener::class);

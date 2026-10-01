@@ -71,12 +71,13 @@ class FilesHooks {
 	}
 
 	/**
-	 * Store the create hook events
+	 * Store the create events
 	 *
-	 * @param string $path Path of the file that has been created
+	 * @param Node $node The node that has been created
 	 */
-	public function fileCreate($path): void {
-		if ($path === '/' || $path === '' || $path === null) {
+	public function fileCreate(Node $node): void {
+		$path = $this->getVisiblePath($node->getPath());
+		if ($path === '/') {
 			return;
 		}
 
@@ -88,21 +89,21 @@ class FilesHooks {
 	}
 
 	/**
-	 * Store the update hook events
+	 * Store the update events
 	 *
-	 * @param string $path Path of the file that has been modified
+	 * @param Node $node The node that has been modified
 	 */
-	public function fileUpdate($path): void {
-		$this->addNotificationsForFileAction($path, Files::TYPE_FILE_CHANGED, 'changed_self', 'changed_by');
+	public function fileUpdate(Node $node): void {
+		$this->addNotificationsForFileAction($this->getVisiblePath($node->getPath()), Files::TYPE_FILE_CHANGED, 'changed_self', 'changed_by');
 	}
 
 	/**
-	 * Store the delete hook events
+	 * Store the delete events
 	 *
-	 * @param string $path Path of the file that has been deleted
+	 * @param Node $node The node that is about to be deleted
 	 */
-	public function fileDelete($path): void {
-		$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
+	public function fileDelete(Node $node): void {
+		$this->addNotificationsForFileAction($this->getVisiblePath($node->getPath()), Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
 	}
 
 	/**
@@ -215,10 +216,13 @@ class FilesHooks {
 	/**
 	 * Collect some information for move/renames
 	 *
-	 * @param string $oldPath Path of the file that has been moved
-	 * @param string $newPath Path of the file that has been moved
+	 * @param Node $source The node that is about to be moved
+	 * @param Node $target The location the node is moved to
 	 */
-	public function fileMove($oldPath, $newPath): void {
+	public function fileMove(Node $source, Node $target): void {
+		$oldPath = $this->getVisiblePath($source->getPath());
+		$newPath = $this->getVisiblePath($target->getPath());
+
 		if (str_ends_with($oldPath, '.part') || str_ends_with($newPath, '.part')) {
 			// Do not add activities for .part-files
 			$this->moveCase = false;
@@ -300,16 +304,19 @@ class FilesHooks {
 	}
 
 	/**
-	 * Store the move hook events
+	 * Store the move events
 	 *
-	 * @param string $oldPath Path of the file that has been moved
-	 * @param string $newPath Path of the file that has been moved
+	 * @param Node $source The node at its old location
+	 * @param Node $target The node that has been moved
 	 */
-	public function fileMovePost($oldPath, $newPath): void {
+	public function fileMovePost(Node $source, Node $target): void {
 		// Do not add activities for .part-files
 		if ($this->moveCase === false) {
 			return;
 		}
+
+		$oldPath = $this->getVisiblePath($source->getPath());
+		$newPath = $this->getVisiblePath($target->getPath());
 
 		switch ($this->moveCase) {
 			case 'rename':
