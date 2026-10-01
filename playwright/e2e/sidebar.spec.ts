@@ -12,7 +12,7 @@ import { addTag, createPublicShare, randHash, showActivityTab, toggleFavorite } 
 test.beforeEach(async ({ page }) => {
 	const user = await createRandomUser()
 	await login(page.request, user)
-	await page.goto('/apps/files')
+	await page.goto('apps/files')
 	await expect(getFileListRow(page, 'welcome.txt')).toBeVisible()
 })
 
@@ -26,7 +26,7 @@ test('Has favorite activity', async ({ page }) => {
 	await showActivityTab(page, 'welcome.txt')
 	await expect(page.locator('.activity-entry').first()).toContainText('Added to favorites')
 
-	await page.goto('/apps/files')
+	await page.goto('apps/files')
 	await expect(getFileListRow(page, 'welcome.txt')).toBeVisible()
 
 	await toggleFavorite(page, 'welcome.txt')
@@ -58,7 +58,7 @@ test('Has move activity', async ({ page }) => {
 
 test('Has tag activity', async ({ page }) => {
 	await addTag(page, 'welcome.txt', `my_tag_${randHash()}`)
-	await page.goto('/apps/files')
+	await page.goto('apps/files')
 
 	await showActivityTab(page, 'welcome.txt')
 	await expect(page.locator('.activity-entry').first()).toContainText('Added system tag')
