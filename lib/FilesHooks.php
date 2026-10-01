@@ -652,7 +652,7 @@ class FilesHooks {
 		$view = Filesystem::getView();
 		try {
 			$owner = $view->getOwner($path);
-			$owner = !is_string($owner) || $owner === '' ? null : $owner;
+			$owner = $owner === '' ? null : $owner;
 		} catch (NotFoundException $e) {
 			$owner = null;
 		}
