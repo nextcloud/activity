@@ -46,7 +46,7 @@
     "@nextcloud/paths": "^3.1.0",
     "@nextcloud/router": "^3.2.0",
     "@nextcloud/vue": "^9.13.1",
-    "@vueuse/core": "^14.4.0",
+    "@vueuse/core": "^15.0.0",
     "vue": "^3.5.43",
     "vue-material-design-icons": "^5.3.1",
     "vue-router": "^5.3.1",
