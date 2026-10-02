@@ -205,6 +205,34 @@ class CurrentUserTest extends TestCase {
 		$this->assertSame($expected, self::invokePrivate($instance, 'getCloudIDFromToken'));
 	}
 
+	public static function dataPublicShareIsLoadedOnce(): array {
+		return [
+			[IShare::TYPE_LINK, true],
+			[new ShareNotFound(), false],
+		];
+	}
+
+	#[DataProvider('dataPublicShareIsLoadedOnce')]
+	public function testPublicShareIsLoadedOnce(int|ShareNotFound $result, bool $expected): void {
+		$this->request->server = ['PHP_AUTH_USER' => 'token'];
+		$method = $this->shareManager->expects($this->once())
+			->method('getShareByToken')
+			->with('token');
+		if ($result instanceof ShareNotFound) {
+			$method->willThrowException($result);
+		} else {
+			$share = $this->createMock(IShare::class);
+			$share->method('getShareType')
+				->willReturn($result);
+			$method->willReturn($share);
+		}
+
+		$instance = $this->getInstance();
+		$this->assertSame($expected, $instance->isPublicShareToken());
+		$this->assertSame($expected, $instance->isPublicShareToken());
+		$this->assertNull(self::invokePrivate($instance, 'getCloudIDFromToken'));
+	}
+
 	public function testGetCloudIdFromUser(): void {
 		$user = $this->createMock(IUser::class);
 		$user->method('getCloudId')->willReturn('user@cloud.example.com');
