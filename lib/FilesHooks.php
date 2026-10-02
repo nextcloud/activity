@@ -8,7 +8,6 @@
 
 namespace OCA\Activity;
 
-use OC\Files\Filesystem;
 use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
@@ -48,7 +47,7 @@ class FilesHooks {
 	protected $oldParentPath;
 	/** @var string */
 	protected $oldParentOwner;
-	/** @var string */
+	/** @var int */
 	protected $oldParentId;
 
 	public function __construct(
@@ -76,15 +75,14 @@ class FilesHooks {
 	 * @param Node $node The node that has been created
 	 */
 	public function fileCreate(Node $node): void {
-		$path = $this->getVisiblePath($node->getPath());
-		if ($path === '/') {
+		if ($this->getVisiblePath($node->getPath()) === '/') {
 			return;
 		}
 
 		if ($this->currentUser->getUserIdentifier() === '' && $this->currentUser->isPublicShareToken()) {
-			$this->addNotificationsForFileAction($path, Files_Sharing::TYPE_PUBLIC_UPLOAD, '', 'created_public');
+			$this->addNotificationsForFileAction($node, Files_Sharing::TYPE_PUBLIC_UPLOAD, '', 'created_public');
 		} else {
-			$this->addNotificationsForFileAction($path, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
+			$this->addNotificationsForFileAction($node, Files::TYPE_SHARE_CREATED, 'created_self', 'created_by');
 		}
 	}
 
@@ -94,7 +92,7 @@ class FilesHooks {
 	 * @param Node $node The node that has been modified
 	 */
 	public function fileUpdate(Node $node): void {
-		$this->addNotificationsForFileAction($this->getVisiblePath($node->getPath()), Files::TYPE_FILE_CHANGED, 'changed_self', 'changed_by');
+		$this->addNotificationsForFileAction($node, Files::TYPE_FILE_CHANGED, 'changed_self', 'changed_by');
 	}
 
 	/**
@@ -103,7 +101,7 @@ class FilesHooks {
 	 * @param Node $node The node that is about to be deleted
 	 */
 	public function fileDelete(Node $node): void {
-		$this->addNotificationsForFileAction($this->getVisiblePath($node->getPath()), Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
+		$this->addNotificationsForFileAction($node, Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
 	}
 
 	/**
@@ -112,7 +110,7 @@ class FilesHooks {
 	 * @param Node $node The node that has been restored
 	 */
 	public function fileRestore(Node $node): void {
-		$this->addNotificationsForFileAction($this->getVisiblePath($node->getPath()), Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
+		$this->addNotificationsForFileAction($node, Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
 	}
 
 	private function getFileChangeActivitySettings(int $fileId, array $users, string $type = Files::TYPE_FILE_CHANGED): array {
@@ -133,20 +131,20 @@ class FilesHooks {
 	}
 
 	/**
-	 * Creates the entries for file actions on $file_path
+	 * Creates the entries for file actions on $node
 	 *
-	 * @param string $filePath The file that is being changed
+	 * @param Node $node The node that is being changed
 	 * @param string $activityType The activity type
 	 * @param string $subject The subject for the actor
 	 * @param string $subjectBy The subject for other users (with "by $actor")
 	 */
-	protected function addNotificationsForFileAction($filePath, $activityType, $subject, $subjectBy) {
+	protected function addNotificationsForFileAction(Node $node, string $activityType, string $subject, string $subjectBy): void {
 		// Do not add activities for .part-files
-		if (str_ends_with($filePath, '.part')) {
+		if (str_ends_with($node->getName(), '.part')) {
 			return;
 		}
 
-		[$filePath, $uidOwner, $fileId] = $this->getSourcePathAndOwner($filePath);
+		[$filePath, $uidOwner, $fileId] = $this->getSourcePathAndOwner($node);
 		if ($fileId === 0) {
 			// Could not find the file for the owner ...
 			return;
@@ -278,7 +276,7 @@ class FilesHooks {
 		}
 
 		try {
-			[$this->oldParentPath, $this->oldParentOwner, $this->oldParentId] = $this->getSourcePathAndOwner($oldDir);
+			[$this->oldParentPath, $this->oldParentOwner, $this->oldParentId] = $this->getSourcePathAndOwner($source->getParent());
 			if ($this->oldParentId === 0) {
 				// Could not find the file for the owner ...
 				$this->moveCase = false;
@@ -289,7 +287,7 @@ class FilesHooks {
 
 			// file can be shared using GroupFolders, including ACL check
 			if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
-				[, , $oldFileId] = $this->getSourcePathAndOwner($oldPath);
+				[, , $oldFileId] = $this->getSourcePathAndOwner($source);
 				$oldAccessList['users'] = array_merge($oldAccessList['users'], $this->getAffectedUsersFromCachedMounts($oldFileId));
 			}
 
@@ -315,17 +313,14 @@ class FilesHooks {
 			return;
 		}
 
-		$oldPath = $this->getVisiblePath($source->getPath());
-		$newPath = $this->getVisiblePath($target->getPath());
-
 		switch ($this->moveCase) {
 			case 'rename':
-				$this->fileRenaming($oldPath, $newPath);
+				$this->fileRenaming($source, $target);
 				break;
 			case 'moveUp':
 			case 'moveDown':
 			case 'moveCross':
-				$this->fileMoving($oldPath, $newPath);
+				$this->fileMoving($source, $target);
 				break;
 		}
 
@@ -335,16 +330,17 @@ class FilesHooks {
 	/**
 	 * Renaming a file inside the same folder (a/b to a/c)
 	 *
-	 * @param string $oldPath
-	 * @param string $newPath
+	 * @param Node $source The node at its old location
+	 * @param Node $target The node that has been renamed
 	 */
-	protected function fileRenaming($oldPath, $newPath) {
-		$dirName = dirname($newPath);
-		$fileName = basename($newPath);
-		$oldFileName = basename($oldPath);
+	protected function fileRenaming(Node $source, Node $target): void {
+		$oldPath = $this->getVisiblePath($source->getPath());
+		$newPath = $this->getVisiblePath($target->getPath());
+		$fileName = $target->getName();
+		$oldFileName = $source->getName();
 
-		[, , $fileId] = $this->getSourcePathAndOwner($newPath);
-		[$parentPath, $parentOwner, $parentId] = $this->getSourcePathAndOwner($dirName);
+		[, , $fileId] = $this->getSourcePathAndOwner($target);
+		[$parentPath, $parentOwner, $parentId] = $this->getSourcePathAndOwner($target->getParent());
 		if ($fileId === 0 || $parentId === 0) {
 			// Could not find the file for the owner ...
 			return;
@@ -399,22 +395,23 @@ class FilesHooks {
 	/**
 	 * Moving a file from one folder to another
 	 *
-	 * @param string $oldPath
-	 * @param string $newPath
+	 * @param Node $source The node at its old location
+	 * @param Node $target The node that has been moved
 	 */
-	protected function fileMoving($oldPath, $newPath) {
+	protected function fileMoving(Node $source, Node $target): void {
 		if (!is_array($this->oldAccessList)) {
 			// fileMove() could not collect the old access list, so there is no
 			// base to compute the activities from
 			return;
 		}
 
-		$dirName = dirname($newPath);
-		$fileName = basename($newPath);
-		$oldFileName = basename($oldPath);
+		$oldPath = $this->getVisiblePath($source->getPath());
+		$newPath = $this->getVisiblePath($target->getPath());
+		$fileName = $target->getName();
+		$oldFileName = $source->getName();
 
-		[, , $fileId] = $this->getSourcePathAndOwner($newPath);
-		[$parentPath, $parentOwner, $parentId] = $this->getSourcePathAndOwner($dirName);
+		[, , $fileId] = $this->getSourcePathAndOwner($target);
+		[$parentPath, $parentOwner, $parentId] = $this->getSourcePathAndOwner($target->getParent());
 		if ($fileId === 0 || $parentId === 0) {
 			// Could not find the file for the owner ...
 			return;
@@ -642,45 +639,34 @@ class FilesHooks {
 	}
 
 	/**
-	 * Return the source
+	 * Return the path relative to the owner's files folder, the owner and the file id of a node
 	 *
-	 * @param string $path
+	 * The file id is 0 when the node does not exist.
+	 *
+	 * @return array{0: string, 1: string, 2: int}
+	 * @throws NotFoundException
 	 */
-	protected function getSourcePathAndOwner($path): array {
-		$view = Filesystem::getView();
+	protected function getSourcePathAndOwner(Node $node): array {
 		try {
-			$owner = $view->getOwner($path);
-			$owner = $owner === '' ? null : $owner;
+			$owner = $node->getOwner()?->getUID();
+			$fileId = $node->getId();
 		} catch (NotFoundException) {
 			$owner = null;
-		}
-		$fileId = 0;
-		$currentUser = $this->currentUser->getUID();
-
-		if ($owner === null || $owner !== $currentUser) {
-			/** @var \OCP\Files\Storage\IStorage $storage */
-			[$storage,] = $view->resolvePath($path);
-
-			if ($owner !== null && !$storage->instanceOfStorage(\OCA\Files_Sharing\External\Storage::class)) {
-				Filesystem::initMountPoints($owner);
-			} else {
-				// Probably a remote user, let's try to at least generate activities
-				// for the current user
-				if ($currentUser === null) {
-					[, $owner,] = explode('/', $view->getAbsolutePath($path), 3);
-				} else {
-					$owner = $currentUser;
-				}
-			}
+			$fileId = 0;
 		}
 
-		$info = Filesystem::getFileInfo($path);
-		if ($info !== false) {
-			$fileId = (int)$info['fileid'];
-			$path = $this->getOwnerPathById($owner, $fileId);
+		if ($owner === null || $node->getStorage()->instanceOfStorage(\OCA\Files_Sharing\External\Storage::class)) {
+			// Probably a remote user, let's try to at least generate activities
+			// for the current user
+			[, $owner,] = explode('/', $node->getPath(), 3);
+			$owner = $this->currentUser->getUID() ?? $owner;
 		}
 
-		return [$path, $owner, $fileId];
+		if ($fileId === 0) {
+			return [$this->getVisiblePath($node->getPath()), $owner, 0];
+		}
+
+		return [$this->getOwnerPathById($owner, $fileId), $owner, $fileId];
 	}
 
 	/**
