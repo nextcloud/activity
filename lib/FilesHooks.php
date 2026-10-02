@@ -169,24 +169,31 @@ class FilesHooks {
 		[$filteredEmailUsers, $filteredNotificationUsers]
 			= $this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers), $activityType);
 
-		foreach ($affectedUsers as $user => $path) {
-			$user = (string)$user;
+		$shouldFlush = $this->startActivityTransaction();
+		try {
+			foreach ($affectedUsers as $user => $path) {
+				$user = (string)$user;
 
-			if ($user === $this->currentUser->getUID()) {
-				$userSubject = $subject;
-				$userParams = [[$fileId => $path]];
-			} else {
-				$userSubject = $subjectBy;
-				$userParams = [[$fileId => $path], $this->currentUser->getUserIdentifier()];
+				if ($user === $this->currentUser->getUID()) {
+					$userSubject = $subject;
+					$userParams = [[$fileId => $path]];
+				} else {
+					$userSubject = $subjectBy;
+					$userParams = [[$fileId => $path], $this->currentUser->getUserIdentifier()];
+				}
+
+				$this->addNotificationsForUser(
+					$user, $userSubject, $userParams,
+					$fileId, $path, true,
+					$filteredEmailUsers[$user] ?? false,
+					$filteredNotificationUsers[$user] ?? false,
+					$activityType,
+				);
 			}
-
-			$this->addNotificationsForUser(
-				$user, $userSubject, $userParams,
-				$fileId, $path, true,
-				$filteredEmailUsers[$user] ?? false,
-				$filteredNotificationUsers[$user] ?? false,
-				$activityType,
-			);
+			$this->commitActivityTransaction($shouldFlush);
+		} catch (\Throwable $e) {
+			$this->rollbackActivityTransaction($shouldFlush);
+			throw $e;
 		}
 	}
 
@@ -365,29 +372,36 @@ class FilesHooks {
 
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers));
 
-		foreach ($affectedUsers as $user => $path) {
-			if ($user === $this->currentUser->getUID()) {
-				$userSubject = 'renamed_self';
-				$userParams = [
-					[$fileId => $path . '/' . $fileName],
-					[$fileId => $path . '/' . $oldFileName],
-				];
-			} else {
-				$userSubject = 'renamed_by';
-				$userParams = [
-					[$fileId => $path . '/' . $fileName],
-					$this->currentUser->getUserIdentifier(),
-					[$fileId => $path . '/' . $oldFileName],
-				];
-			}
+		$shouldFlush = $this->startActivityTransaction();
+		try {
+			foreach ($affectedUsers as $user => $path) {
+				if ($user === $this->currentUser->getUID()) {
+					$userSubject = 'renamed_self';
+					$userParams = [
+						[$fileId => $path . '/' . $fileName],
+						[$fileId => $path . '/' . $oldFileName],
+					];
+				} else {
+					$userSubject = 'renamed_by';
+					$userParams = [
+						[$fileId => $path . '/' . $fileName],
+						$this->currentUser->getUserIdentifier(),
+						[$fileId => $path . '/' . $oldFileName],
+					];
+				}
 
-			$this->addNotificationsForUser(
-				$user, $userSubject, $userParams,
-				$fileId, $path . '/' . $fileName, true,
-				$filteredEmailUsers[$user] ?? false,
-				$filteredNotificationUsers[$user] ?? false,
-				Files::TYPE_FILE_CHANGED,
-			);
+				$this->addNotificationsForUser(
+					$user, $userSubject, $userParams,
+					$fileId, $path . '/' . $fileName, true,
+					$filteredEmailUsers[$user] ?? false,
+					$filteredNotificationUsers[$user] ?? false,
+					Files::TYPE_FILE_CHANGED,
+				);
+			}
+			$this->commitActivityTransaction($shouldFlush);
+		} catch (\Throwable $e) {
+			$this->rollbackActivityTransaction($shouldFlush);
+			throw $e;
 		}
 	}
 
