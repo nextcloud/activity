@@ -40,6 +40,7 @@ use OCP\Files\IRootFolder;
 use OCP\Files\IUserFolder;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
+use OCP\Files\Storage\IStorage;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IGroup;
@@ -101,14 +102,14 @@ class FilesHooksTest extends TestCase {
 		$this->filesHooks = $this->getFilesHooks();
 	}
 
-	protected function getFilesHooks(array $mockedMethods = [], string $user = 'user'): FilesHooks {
+	protected function getFilesHooks(array $mockedMethods = [], ?string $user = 'user'): FilesHooks {
 		$currentUser = $this->createMock(CurrentUser::class);
 		$currentUser
 			->method('getUID')
 			->willReturn($user);
 		$currentUser
 			->method('getUserIdentifier')
-			->willReturn($user);
+			->willReturn($user ?? '');
 		/** @var LoggerInterface $logger */
 		$logger = $this->createMock(LoggerInterface::class);
 
@@ -202,11 +203,12 @@ class FilesHooksTest extends TestCase {
 			->onlyMethods(['addNotificationsForFileAction'])
 			->getMock();
 
+		$node = $this->getNodeMock(42, '/user/files/path');
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('/path', $type, $selfSubject, $othersSubject);
+			->with($node, $type, $selfSubject, $othersSubject);
 
-		$filesHooks->fileCreate($this->getNodeMock(42, '/user/files/path'));
+		$filesHooks->fileCreate($node);
 	}
 
 	public static function dataFileCreateUser(): array {
@@ -233,11 +235,12 @@ class FilesHooksTest extends TestCase {
 			'addNotificationsForFileAction',
 		]);
 
+		$node = $this->getNodeMock(42, '/user/files/path');
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('/path', Files::TYPE_FILE_CHANGED, 'changed_self', 'changed_by');
+			->with($node, Files::TYPE_FILE_CHANGED, 'changed_self', 'changed_by');
 
-		$filesHooks->fileUpdate($this->getNodeMock(42, '/user/files/path'));
+		$filesHooks->fileUpdate($node);
 	}
 
 	public function testFileDelete(): void {
@@ -245,11 +248,12 @@ class FilesHooksTest extends TestCase {
 			'addNotificationsForFileAction',
 		]);
 
+		$node = $this->getNodeMock(42, '/user/files/path');
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('/path', Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
+			->with($node, Files::TYPE_SHARE_DELETED, 'deleted_self', 'deleted_by');
 
-		$filesHooks->fileDelete($this->getNodeMock(42, '/user/files/path'));
+		$filesHooks->fileDelete($node);
 	}
 
 	public function testFileRestore(): void {
@@ -257,11 +261,12 @@ class FilesHooksTest extends TestCase {
 			'addNotificationsForFileAction',
 		]);
 
+		$node = $this->getNodeMock(42, '/user/files/folder/file.txt');
 		$filesHooks->expects($this->once())
 			->method('addNotificationsForFileAction')
-			->with('/folder/file.txt', Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
+			->with($node, Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by');
 
-		$filesHooks->fileRestore($this->getNodeMock(42, '/user/files/folder/file.txt'));
+		$filesHooks->fileRestore($node);
 	}
 
 	public function testAddNotificationsForFileActionPartFile(): void {
@@ -272,7 +277,7 @@ class FilesHooksTest extends TestCase {
 		$filesHooks->expects($this->never())
 			->method('getSourcePathAndOwner');
 
-		self::invokePrivate($filesHooks, 'addNotificationsForFileAction', ['/test.txt.part', '', '', '']);
+		self::invokePrivate($filesHooks, 'addNotificationsForFileAction', [$this->getNodeMock(42, '/user/files/test.txt.part'), '', '', '']);
 	}
 
 	public static function dataAddNotificationsForFileAction(): array {
@@ -389,9 +394,10 @@ class FilesHooksTest extends TestCase {
 				->willReturn(['user', 'user1', 'user2']);
 		}
 
+		$node = $this->getNodeMock(1337, '/user/files/path');
 		$filesHooks->expects($this->once())
 			->method('getSourcePathAndOwner')
-			->with('path')
+			->with($node)
 			->willReturn(['/owner/path', 'owner', 1337]);
 		$filesHooks->expects($this->once())
 			->method('getUserPathsFromPath')
@@ -476,7 +482,7 @@ class FilesHooksTest extends TestCase {
 				$receivedActivities[] = $params;
 			});
 
-		self::invokePrivate($filesHooks, 'addNotificationsForFileAction', ['path', Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by']);
+		self::invokePrivate($filesHooks, 'addNotificationsForFileAction', [$node, Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by']);
 
 		$this->assertEquals($addCalls, array_slice($receivedActivities, 0, count($addCalls)));
 	}
@@ -487,16 +493,20 @@ class FilesHooksTest extends TestCase {
 			'getUserPathsFromPath',
 		]);
 
+		$parent = $this->getNodeMock(23, '/user/files/folder', false);
+		$source = $this->getNodeMock(42, '/user/files/folder/file.txt');
+		$source->method('getParent')
+			->willReturn($parent);
 		$filesHooks->expects($this->once())
 			->method('getSourcePathAndOwner')
-			->with('/folder')
+			->with($parent)
 			->willReturn(['/folder', 'owner', 23]);
 		$filesHooks->expects($this->once())
 			->method('getUserPathsFromPath')
 			->with('/folder', 'owner')
 			->willReturn(['users' => ['user' => '/folder'], 'remotes' => []]);
 
-		$filesHooks->fileMove($this->getNodeMock(42, '/user/files/folder/file.txt'), $this->getNodeMock(42, '/user/files/target/file.txt'));
+		$filesHooks->fileMove($source, $this->getNodeMock(42, '/user/files/target/file.txt'));
 
 		$this->assertSame('moveCross', self::invokePrivate($filesHooks, 'moveCase'));
 		$this->assertSame(['users' => ['user' => '/folder'], 'remotes' => []], self::invokePrivate($filesHooks, 'oldAccessList'));
@@ -510,10 +520,11 @@ class FilesHooksTest extends TestCase {
 			'fileMoving',
 		]);
 
-		$filesHooks->expects($this->once())
-			->method('getSourcePathAndOwner')
-			->with('/folder')
+		$source = $this->getNodeMock(42, '/user/files/folder/file.txt');
+		$source->method('getParent')
 			->willThrowException(new NotFoundException('File with id "1337" has not been found.'));
+		$filesHooks->expects($this->never())
+			->method('getSourcePathAndOwner');
 		$filesHooks->expects($this->never())
 			->method('getUserPathsFromPath');
 		$filesHooks->expects($this->never())
@@ -521,7 +532,7 @@ class FilesHooksTest extends TestCase {
 		$filesHooks->expects($this->never())
 			->method('fileMoving');
 
-		$filesHooks->fileMove($this->getNodeMock(42, '/user/files/folder/file.txt'), $this->getNodeMock(42, '/user/files/target/file.txt'));
+		$filesHooks->fileMove($source, $this->getNodeMock(42, '/user/files/target/file.txt'));
 
 		$this->assertFalse(self::invokePrivate($filesHooks, 'moveCase'));
 
@@ -535,14 +546,14 @@ class FilesHooksTest extends TestCase {
 			'fileMoving',
 		]);
 
+		$source = $this->getNodeMock(42, '/user/files/folder/old.txt');
+		$target = $this->getNodeMock(42, '/user/files/folder/new.txt');
 		$filesHooks->expects($this->once())
 			->method('fileRenaming')
-			->with('/folder/old.txt', '/folder/new.txt');
+			->with($source, $target);
 		$filesHooks->expects($this->never())
 			->method('fileMoving');
 
-		$source = $this->getNodeMock(42, '/user/files/folder/old.txt');
-		$target = $this->getNodeMock(42, '/user/files/folder/new.txt');
 		$filesHooks->fileMove($source, $target);
 		$filesHooks->fileMovePost($source, $target);
 
@@ -557,7 +568,7 @@ class FilesHooksTest extends TestCase {
 		$filesHooks->expects($this->never())
 			->method('getSourcePathAndOwner');
 
-		self::invokePrivate($filesHooks, 'fileMoving', ['/folder/file.txt', '/target/file.txt']);
+		self::invokePrivate($filesHooks, 'fileMoving', [$this->getNodeMock(42, '/user/files/folder/file.txt'), $this->getNodeMock(42, '/user/files/target/file.txt')]);
 	}
 
 	private function getNodeMock(int $fileId = 1337, string $path = 'path', bool $isFile = true): Node&MockObject {
@@ -570,7 +581,66 @@ class FilesHooksTest extends TestCase {
 			->willReturn($fileId);
 		$node->method('getPath')
 			->willReturn($path);
+		$node->method('getName')
+			->willReturn(basename($path));
 		return $node;
+	}
+
+	public static function dataGetSourcePathAndOwner(): array {
+		return [
+			'own file' => ['user', 'user', false, 'user'],
+			'file shared by another user' => ['user', 'owner', false, 'owner'],
+			'node without owner' => ['user', null, false, 'user'],
+			'federated share' => ['user', 'owner', true, 'user'],
+			'no current user' => [null, null, false, 'pathuser'],
+		];
+	}
+
+	#[DataProvider('dataGetSourcePathAndOwner')]
+	public function testGetSourcePathAndOwner(?string $currentUser, ?string $owner, bool $isExternalStorage, string $expectedOwner): void {
+		$filesHooks = $this->getFilesHooks(['getOwnerPathById'], $currentUser);
+
+		$node = $this->getNodeMock(42, '/pathuser/files/folder/file.txt');
+		$ownerUser = null;
+		if ($owner !== null) {
+			$ownerUser = $this->createMock(IUser::class);
+			$ownerUser->method('getUID')
+				->willReturn($owner);
+		}
+		$node->method('getOwner')
+			->willReturn($ownerUser);
+		$storage = $this->createMock(IStorage::class);
+		$storage->method('instanceOfStorage')
+			->with(\OCA\Files_Sharing\External\Storage::class)
+			->willReturn($isExternalStorage);
+		$node->method('getStorage')
+			->willReturn($storage);
+
+		$filesHooks->expects($this->once())
+			->method('getOwnerPathById')
+			->with($expectedOwner, 42)
+			->willReturn('/owner/path');
+
+		$this->assertSame(['/owner/path', $expectedOwner, 42], self::invokePrivate($filesHooks, 'getSourcePathAndOwner', [$node]));
+	}
+
+	public function testGetSourcePathAndOwnerNodeNotFound(): void {
+		$filesHooks = $this->getFilesHooks(['getOwnerPathById']);
+
+		$node = $this->createMock(File::class);
+		$node->method('getPath')
+			->willReturn('/user/files/folder/file.txt');
+		$node->method('getOwner')
+			->willThrowException(new NotFoundException());
+		$node->method('getId')
+			->willThrowException(new NotFoundException());
+		$node->method('getStorage')
+			->willReturn($this->createMock(IStorage::class));
+
+		$filesHooks->expects($this->never())
+			->method('getOwnerPathById');
+
+		$this->assertSame(['/folder/file.txt', 'user', 0], self::invokePrivate($filesHooks, 'getSourcePathAndOwner', [$node]));
 	}
 
 	public static function dataGetOwnerPathById(): array {
