@@ -1,6 +1,7 @@
 SPDX-License-Identifier: AGPL-3.0-or-later
 SPDX-License-Identifier: Apache-2.0
 SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: Anthony Fu <https://github.com/antfu>
 SPDX-FileCopyrightText: Antoni Andre <antoniandre.web@gmail.com>
 SPDX-FileCopyrightText: Austin Andrews
 SPDX-FileCopyrightText: Julius Härtl <jus@bitgrid.net>
@@ -12,8 +13,14 @@ This file is generated from multiple sources. Included packages:
 	- version: 7.4.47
 	- license: Apache-2.0
 - @nextcloud/vue
-	- version: 9.11.0
+	- version: 9.13.1
 	- license: AGPL-3.0-or-later
+- @vueuse/core
+	- version: 15.0.0
+	- license: MIT
+- @vueuse/shared
+	- version: 15.0.0
+	- license: MIT
 - activity
 	- version: 9.0.0-dev.0
 	- license: AGPL-3.0-or-later
