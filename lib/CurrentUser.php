@@ -18,6 +18,9 @@ use OCP\Share\IShare;
 
 class CurrentUser {
 
+	private bool $publicShareLoaded = false;
+	private ?IShare $publicShare = null;
+
 	public function __construct(
 		protected readonly IUserSession $userSession,
 		protected readonly IRequest $request,
@@ -107,6 +110,15 @@ class CurrentUser {
 	}
 
 	protected function getPublicShare(): ?IShare {
+		if (!$this->publicShareLoaded) {
+			$this->publicShare = $this->loadPublicShare();
+			$this->publicShareLoaded = true;
+		}
+
+		return $this->publicShare;
+	}
+
+	private function loadPublicShare(): ?IShare {
 		if (basename($this->request->getScriptName()) !== 'public.php') {
 			return null;
 		}
