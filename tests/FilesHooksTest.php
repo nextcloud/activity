@@ -1039,6 +1039,31 @@ class FilesHooksTest extends TestCase {
 		];
 	}
 
+	public function testAddNotificationsForUserSkipsInvalidEvent(): void {
+		$this->urlGenerator->method('linkToRouteAbsolute')
+			->willReturn('routeToFilesIndex');
+
+		$event = $this->createMock(IEvent::class);
+		$event->method('setApp')->willReturnSelf();
+		$event->method('setType')->willReturnSelf();
+		$event->method('setAffectedUser')->willReturnSelf();
+		$event->method('setTimestamp')->willReturnSelf();
+		$event->method('setSubject')
+			->willThrowException(new \InvalidArgumentException('invalid subject'));
+
+		$this->activityManager->expects($this->once())
+			->method('generateEvent')
+			->willReturn($event);
+
+		// A half-built event must never reach the stream or the mail queue
+		$this->data->expects($this->never())
+			->method('send');
+		$this->data->expects($this->never())
+			->method('storeMail');
+
+		self::invokePrivate($this->filesHooks, 'addNotificationsForUser', ['user1', 'subject', [], 42, '/file.txt', true, 3600, true, 'shared']);
+	}
+
 	#[DataProvider('dataAddNotificationsForUser')]
 	public function testAddNotificationsForUser(string $user, string $subject, array $parameter, int $fileId, string $path, string $urlPath, bool $isFile, bool $notification, bool $email, string $type, string $app, bool $sentEmail): void {
 		$this->urlGenerator->expects($this->once())
