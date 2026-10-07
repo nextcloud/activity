@@ -25,6 +25,7 @@
     <UndefinedClass>
       <code><![CDATA[$this->teamManager]]></code>
       <code><![CDATA[$this->teamManager]]></code>
+      <code><![CDATA[$this->teamManager]]></code>
       <code><![CDATA[Member]]></code>
       <code><![CDATA[\OCA\GroupFolders\ACL\RuleManager]]></code>
       <code><![CDATA[\OCA\GroupFolders\Folder\FolderManager]]></code>
