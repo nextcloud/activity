@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace OCA\GroupFolders\ACL;
 
 use OCA\GroupFolders\ACL\UserMapping\IUserMapping;
-use OCA\GroupFolders\ACL\UserMapping\UserMapping;
 use OCP\Constants;
 use Sabre\Xml\Reader;
 use Sabre\Xml\Writer;
@@ -37,48 +36,45 @@ class Rule implements XmlSerializable, XmlDeserializable, \JsonSerializable {
 	 *                  these 3 values are stored as 2 bitmaps, one that masks out all inherit values (1 -> set permission, 0 -> inherit)
 	 *                  and one that specifies the permissions to set for non inherited values (1-> allow, 0 -> deny)
 	 */
-	public function __construct(private readonly IUserMapping $userMapping, private readonly int $fileId, private int $mask, int $permissions)
- {
- }
+	public function __construct(
+		private readonly IUserMapping $userMapping,
+		private readonly int $fileId,
+		private int $mask,
+		int $permissions,
+	) {
+	}
 
-	public function getUserMapping(): IUserMapping
- {
- }
+	public function getUserMapping(): IUserMapping {
+	}
 
-	public function getFileId(): int
- {
- }
+	public function getFileId(): int {
+	}
 
-	public function getMask(): int
- {
- }
+	public function getMask(): int {
+	}
 
-	public function getPermissions(): int
- {
- }
+	public function getPermissions(): int {
+	}
 
 	/**
 	 * Apply this rule to an existing permission set, returning the resulting permissions
 	 *
 	 * All permissions included in the current mask will overwrite the existing permissions
 	 */
-	public function applyPermissions(int $permissions): int
- {
- }
+	public function applyPermissions(int $permissions): int {
+	}
 
 	/**
 	 * Apply the deny permissions this rule to an existing permission set, returning the resulting permissions
 	 *
 	 * Only the deny permissions included in the current mask will overwrite the existing permissions
 	 */
-	public function applyDenyPermissions(int $permissions): int
- {
- }
+	public function applyDenyPermissions(int $permissions): int {
+	}
 
 	#[\Override]
- public function xmlSerialize(Writer $writer): void
- {
- }
+	public function xmlSerialize(Writer $writer): void {
+	}
 
 	/**
 	 * @return array{
@@ -91,44 +87,37 @@ class Rule implements XmlSerializable, XmlDeserializable, \JsonSerializable {
 	 * }
 	 */
 	#[\Override]
- public function jsonSerialize(): array
- {
- }
+	public function jsonSerialize(): array {
+	}
 
 	#[\Override]
- public static function xmlDeserialize(Reader $reader): Rule
- {
- }
+	public static function xmlDeserialize(Reader $reader): Rule {
+	}
 
 	/**
 	 * merge multiple rules that apply on the same file where allow overwrites deny
 	 * @param Rule[] $rules
 	 */
-	public static function mergeRules(array $rules): Rule
- {
- }
+	public static function mergeRules(array $rules): Rule {
+	}
 
 	/**
 	 * apply a new rule on top of the existing
 	 *
 	 * All non-inherit fields of the new rule will overwrite the current permissions
 	 */
-	public function applyRule(Rule $rule): void
- {
- }
+	public function applyRule(Rule $rule): void {
+	}
 
 	/**
 	 * Create a default, no-op rule
 	 */
-	public static function defaultRule(): Rule
- {
- }
+	public static function defaultRule(): Rule {
+	}
 
-	public static function formatRulePermissions(int $mask, int $permissions): string
- {
- }
+	public static function formatRulePermissions(int $mask, int $permissions): string {
+	}
 
-	public function formatPermissions(): string
- {
- }
+	public function formatPermissions(): string {
+	}
 }

@@ -9,39 +9,20 @@ declare (strict_types=1);
 namespace OCA\GroupFolders\Folder;
 
 use OC\Files\Cache\Cache;
-use OC\Files\Filesystem;
-use OC\Files\Node\Node;
 use OCA\Circles\CirclesManager;
-use OCA\Circles\Exceptions\CircleNotFoundException;
 use OCA\Circles\Model\Circle;
 use OCA\Circles\Model\Member;
-use OCA\Circles\Model\Probes\CircleProbe;
-use OCA\GroupFolders\ACL\UserMapping\IUserMapping;
 use OCA\GroupFolders\ACL\UserMapping\IUserMappingManager;
-use OCA\GroupFolders\ACL\UserMapping\UserMapping;
-use OCA\GroupFolders\AppInfo\Application;
 use OCA\GroupFolders\Mount\FolderStorageManager;
-use OCA\GroupFolders\Mount\GroupMountPoint;
 use OCA\GroupFolders\ResponseDefinitions;
-use OCP\AppFramework\OCS\OCSBadRequestException;
-use OCP\AutoloadNotAllowedException;
-use OCP\Constants;
 use OCP\DB\Exception;
-use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\EventDispatcher\IEventDispatcher;
-use OCP\Files\FileInfo;
 use OCP\Files\IMimeTypeLoader;
-use OCP\Files\IRootFolder;
 use OCP\IAppConfig;
 use OCP\IConfig;
 use OCP\IDBConnection;
-use OCP\IGroup;
 use OCP\IGroupManager;
 use OCP\IUser;
-use OCP\IUserManager;
-use OCP\Log\Audit\CriticalActionPerformedEvent;
-use OCP\Server;
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -76,42 +57,36 @@ class FolderManager {
 	 * @return array<int, FolderDefinitionWithMappings>
 	 * @throws Exception
 	 */
-	public function getAllFolders(): array
- {
- }
+	public function getAllFolders(): array {
+	}
 
 	/**
 	 * @return array<int, FolderWithMappingsAndCache>
 	 * @throws Exception
 	 */
-	public function getAllFoldersWithSize(int $offset = 0, ?int $limit = null, string $orderBy = 'mount_point', \SortDirection $order = \SortDirection::Ascending, ?string $mountPoint = null): array
- {
- }
+	public function getAllFoldersWithSize(int $offset = 0, ?int $limit = null, string $orderBy = 'mount_point', \SortDirection $order = \SortDirection::Ascending, ?string $mountPoint = null): array {
+	}
 
 	/**
 	 * @return array<int, FolderWithMappingsAndCache>
 	 * @throws Exception
 	 */
-	public function getAllFoldersForUserWithSize(IUser $user): array
- {
- }
+	public function getAllFoldersForUserWithSize(IUser $user): array {
+	}
 
-	public function getFolder(int $id): ?FolderWithMappingsAndCache
- {
- }
+	public function getFolder(int $id): ?FolderWithMappingsAndCache {
+	}
 
 	/**
 	 * Return just the ACL for the folder.
 	 *
 	 * @throws Exception
 	 */
-	public function getFolderAclEnabled(int $id): bool
- {
- }
+	public function getFolderAclEnabled(int $id): bool {
+	}
 
-	public function getFolderByPath(string $path): int
- {
- }
+	public function getFolderByPath(string $path): int {
+	}
 
 	/**
 	 * Check if the user is able to configure the advanced folder permissions. This
@@ -120,37 +95,32 @@ class FolderManager {
 	 *
 	 * @throws Exception
 	 */
-	public function canManageACL(int $folderId, IUser $user, bool $excludeAdmins = false): bool
- {
- }
+	public function canManageACL(int $folderId, IUser $user, bool $excludeAdmins = false): bool {
+	}
 
-	public function mountPointExists(string $mountPoint): bool
- {
- }
+	public function mountPointExists(string $mountPoint): bool {
+	}
 
 	/**
 	 * @return list<GroupFoldersGroup>
 	 * @throws Exception
 	 */
-	public function searchGroups(int $id, string $search = ''): array
- {
- }
+	public function searchGroups(int $id, string $search = ''): array {
+	}
 
 	/**
 	 * @return list<GroupFoldersCircle>
 	 * @throws Exception
 	 */
-	public function searchCircles(int $id, string $search = ''): array
- {
- }
+	public function searchCircles(int $id, string $search = ''): array {
+	}
 
 	/**
 	 * @return list<GroupFoldersUser>
 	 * @throws Exception
 	 */
-	public function searchUsers(int $id, string $search = '', int $limit = 10, int $offset = 0): array
- {
- }
+	public function searchUsers(int $id, string $search = '', int $limit = 10, int $offset = 0): array {
+	}
 
 	/**
 	 * @param string[] $groupIds
@@ -158,25 +128,22 @@ class FolderManager {
 	 * @return list<FolderDefinitionWithPermissions>
 	 * @throws Exception
 	 */
-	public function getFoldersForGroups(array $groupIds, ?int $folderId = null, ?array $paths = null): array
- {
- }
+	public function getFoldersForGroups(array $groupIds, ?int $folderId = null, ?array $paths = null): array {
+	}
 
 	/**
 	 * @throws \InvalidArgumentException
 	 * @throws Exception
 	 */
-	public function hasFolderForGroup(string $groupId): bool
- {
- }
+	public function hasFolderForGroup(string $groupId): bool {
+	}
 
 	/**
 	 * @throws \InvalidArgumentException
 	 * @throws Exception
 	 */
-	public function hasFolderForCircle(string $circleId): bool
- {
- }
+	public function hasFolderForCircle(string $circleId): bool {
+	}
 
 	/**
 	 * Return all group folders directly assigned to or owned by a circle.
@@ -184,72 +151,62 @@ class FolderManager {
 	 * @return list<FolderDefinition>
 	 * @throws Exception
 	 */
-	public function getFoldersForCircle(string $circleId): array
- {
- }
+	public function getFoldersForCircle(string $circleId): array {
+	}
 
 	/**
 	 * @param list<string> $paths
 	 * @return list<FolderDefinitionWithPermissions>
 	 * @throws Exception
 	 */
-	public function getFoldersFromCircleMemberships(IUser $user, ?int $folderId = null, ?array $paths = null): array
- {
- }
+	public function getFoldersFromCircleMemberships(IUser $user, ?int $folderId = null, ?array $paths = null): array {
+	}
 
-	public function trimMountpoint(string $mountpoint): string
- {
- }
+	public function trimMountpoint(string $mountpoint): string {
+	}
 
 	/**
 	 * @param array{separate-storage?: bool} $options
 	 * @throws Exception
 	 */
-	public function createFolder(string $mountPoint, array $options = [], bool $aclDefaultNoPermission = false): int
- {
- }
+	public function createFolder(string $mountPoint, array $options = [], bool $aclDefaultNoPermission = false): int {
+	}
 
 	/**
 	 * @throws Exception
 	 */
-	public function addApplicableGroup(int $folderId, string $groupId): void
- {
- }
+	public function addApplicableGroup(int $folderId, string $groupId): void {
+	}
 
 	/**
 	 * @throws Exception
 	 */
-	public function removeApplicableGroup(int $folderId, string $groupId): void
- {
- }
+	public function removeApplicableGroup(int $folderId, string $groupId): void {
+	}
 
 	/**
 	 * @throws Exception
 	 */
-	public function setGroupPermissions(int $folderId, string $groupId, int $permissions): void
- {
- }
+	public function setGroupPermissions(int $folderId, string $groupId, int $permissions): void {
+	}
 
 	/**
 	 * @throws Exception
 	 */
-	public function setManageACL(int $folderId, string $type, string $id, bool $manageAcl): void
- {
- }
+	public function setManageACL(int $folderId, string $type, string $id, bool $manageAcl): void {
+	}
 
 	/**
 	 * @throws Exception
 	 */
-	public function removeFolder(int $folderId): void
- {
- }
+	public function removeFolder(int $folderId): void {
+	}
 
 	/**
 	 * @throws Exception
 	 */
-	public function setFolderQuota(int $folderId, int $quota): void
- {
- }
+	public function setFolderQuota(int $folderId, int $quota): void {
+	}
 
 	/**
 	 * Update the JSON-encoded options of a folder.
@@ -258,37 +215,32 @@ class FolderManager {
 	 * @param array{separate-storage?: bool} $options
 	 * @throws Exception
 	 */
-	public function setFolderOptions(int $folderId, array $options): void
- {
- }
+	public function setFolderOptions(int $folderId, array $options): void {
+	}
 
 	/**
 	 * @throws Exception
 	 */
-	public function renameFolder(int $folderId, string $newMountPoint): void
- {
- }
+	public function renameFolder(int $folderId, string $newMountPoint): void {
+	}
 
 	/**
 	 * @throws Exception
 	 */
-	public function deleteGroup(string $groupId): void
- {
- }
+	public function deleteGroup(string $groupId): void {
+	}
 
 	/**
 	 * @throws Exception
 	 */
-	public function deleteUser(string $userId): void
- {
- }
+	public function deleteUser(string $userId): void {
+	}
 
 	/**
 	 * @throws Exception
 	 */
-	public function deleteCircle(string $circleId): void
- {
- }
+	public function deleteCircle(string $circleId): void {
+	}
 
 	/**
 	 * Look up the team folder that belongs to the given team (circle single id)
@@ -301,17 +253,15 @@ class FolderManager {
 	 *
 	 * @return int|null The folder id, or null if no folder belongs to this team.
 	 */
-	public function getFolderIdByTeamCircleId(string $circleId): ?int
- {
- }
+	public function getFolderIdByTeamCircleId(string $circleId): ?int {
+	}
 
 	/**
 	 * Mark a team folder as belonging to a team by setting the `team_circle_id`
 	 * column.
 	 */
-	public function setTeamCircleId(int $folderId, string $circleId): void
- {
- }
+	public function setTeamCircleId(int $folderId, string $circleId): void {
+	}
 
 	/**
 	 * Whether the folder is assigned exclusively to the given circle. A folder
@@ -320,76 +270,64 @@ class FolderManager {
 	 *
 	 * @throws Exception
 	 */
-	public function isExclusivelyAssignedToCircle(int $folderId, string $circleId): bool
- {
- }
+	public function isExclusivelyAssignedToCircle(int $folderId, string $circleId): bool {
+	}
 
 	/**
 	 * Clear the team ownership of a team folder by resetting the
 	 * `team_circle_id` column to null.
 	 */
-	public function clearTeamCircleId(int $folderId): void
- {
- }
+	public function clearTeamCircleId(int $folderId): void {
+	}
 
 	/**
 	 * @throws Exception
 	 */
-	public function setFolderACL(int $folderId, bool $acl): void
- {
- }
+	public function setFolderACL(int $folderId, bool $acl): void {
+	}
 
 	/**
 	 * @param list<string> $paths
 	 * @return list<FolderDefinitionWithPermissions>
 	 * @throws Exception
 	 */
-	public function getFoldersForUser(IUser $user, ?int $folderId = null, ?array $paths = null): array
- {
- }
+	public function getFoldersForUser(IUser $user, ?int $folderId = null, ?array $paths = null): array {
+	}
 
 	/**
 	 * @throws Exception
 	 */
-	public function getFolderPermissionsForUser(IUser $user, int $folderId): int
- {
- }
+	public function getFolderPermissionsForUser(IUser $user, int $folderId): int {
+	}
 
 	/**
 	 * returns if the groupId is in fact the singleId of an existing Circle
 	 */
-	public function isACircle(string $groupId): bool
- {
- }
+	public function isACircle(string $groupId): bool {
+	}
 
 	/**
 	 * returns the Circle from its single Id, or NULL if not available
 	 */
-	public function getCircle(string $groupId): ?Circle
- {
- }
+	public function getCircle(string $groupId): ?Circle {
+	}
 
-	public function getCirclesManager(): ?CirclesManager
- {
- }
+	public function getCirclesManager(): ?CirclesManager {
+	}
 
-	public function updateOverwriteHomeFolders(): void
- {
- }
+	public function updateOverwriteHomeFolders(): void {
+	}
 
-	public function hasFolderACLDefaultNoPermission(int $folderId): bool
- {
- }
+	public function hasFolderACLDefaultNoPermission(int $folderId): bool {
+	}
 
 	/**
 	 * Seed the cache from an already-loaded folder so bulk callers (the mount
 	 * provider) skip one `getBasePermission()` lookup per folder.
 	 */
-	public function primeAclDefaultNoPermission(FolderDefinition $folder): void
- {
- }
+	public function primeAclDefaultNoPermission(FolderDefinition $folder): void {
+	}
 
-	public function countAllFolders(): int
- {
- }
+	public function countAllFolders(): int {
+	}
 }

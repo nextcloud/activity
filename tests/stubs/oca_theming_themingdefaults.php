@@ -7,13 +7,10 @@
 
 namespace OCA\Theming;
 
-use OCA\Theming\AppInfo\Application;
 use OCA\Theming\Service\BackgroundService;
-use OCP\App\AppPathNotFoundException;
 use OCP\App\IAppManager;
 use OCP\AppFramework\Services\IAppConfig;
 use OCP\Config\IUserConfig;
-use OCP\Files\NotFoundException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\ICacheFactory;
 use OCP\IL10N;
@@ -26,39 +23,44 @@ class ThemingDefaults extends \OC_Defaults {
 	/**
 	 * ThemingDefaults constructor.
 	 */
-	public function __construct(private readonly IAppConfig $appConfig, private readonly IUserConfig $userConfig, private readonly IL10N $l, private readonly IUserSession $userSession, private readonly IURLGenerator $urlGenerator, private readonly ICacheFactory $cacheFactory, private readonly Util $util, private readonly ImageManager $imageManager, private readonly IAppManager $appManager, private readonly INavigationManager $navigationManager, private readonly BackgroundService $backgroundService)
- {
- }
+	public function __construct(
+		private readonly IAppConfig $appConfig,
+		private readonly IUserConfig $userConfig,
+		private readonly IL10N $l,
+		private readonly IUserSession $userSession,
+		private readonly IURLGenerator $urlGenerator,
+		private readonly ICacheFactory $cacheFactory,
+		private readonly Util $util,
+		private readonly ImageManager $imageManager,
+		private readonly IAppManager $appManager,
+		private readonly INavigationManager $navigationManager,
+		private readonly BackgroundService $backgroundService,
+	) {
+	}
 
 	#[\Override]
- public function getName()
- {
- }
+	public function getName() {
+	}
 
 	#[\Override]
- public function getHTMLName()
- {
- }
+	public function getHTMLName() {
+	}
 
 	#[\Override]
- public function getTitle()
- {
- }
+	public function getTitle() {
+	}
 
 	#[\Override]
- public function getEntity()
- {
- }
+	public function getEntity() {
+	}
 
 	#[\Override]
- public function getProductName(): string
- {
- }
+	public function getProductName(): string {
+	}
 
 	#[\Override]
- public function getBaseUrl()
- {
- }
+	public function getBaseUrl() {
+	}
 
 	/**
 	 * We pass a string and sanitizeHTML will return a string too in that case
@@ -66,59 +68,50 @@ class ThemingDefaults extends \OC_Defaults {
 	 * @psalm-suppress InvalidReturnType
 	 */
 	#[\Override]
- public function getSlogan(?string $lang = null): string
- {
- }
+	public function getSlogan(?string $lang = null): string {
+	}
 
-	public function getImprintUrl(): string
- {
- }
+	public function getImprintUrl(): string {
+	}
 
-	public function getPrivacyUrl(): string
- {
- }
+	public function getPrivacyUrl(): string {
+	}
 
 	#[\Override]
- public function getDocBaseUrl(): string
- {
- }
+	public function getDocBaseUrl(): string {
+	}
 
 	#[\Override]
- public function getShortFooter()
- {
- }
+	public function getShortFooter() {
+	}
 
 	/**
 	 * Color that is used for highlighting elements like important buttons
 	 * If user theming is enabled then the user defined value is returned
 	 */
 	#[\Override]
- public function getColorPrimary(): string
- {
- }
+	public function getColorPrimary(): string {
+	}
 
 	/**
 	 * Color that is used for the page background (e.g. the header)
 	 * If user theming is enabled then the user defined value is returned
 	 */
 	#[\Override]
- public function getColorBackground(): string
- {
- }
+	public function getColorBackground(): string {
+	}
 
 	/**
 	 * Return the default primary color - only taking admin setting into account
 	 */
-	public function getDefaultColorPrimary(): string
- {
- }
+	public function getDefaultColorPrimary(): string {
+	}
 
 	/**
 	 * Default background color only taking admin setting into account
 	 */
-	public function getDefaultColorBackground(): string
- {
- }
+	public function getDefaultColorBackground(): string {
+	}
 
 	/**
 	 * Themed logo url
@@ -127,14 +120,12 @@ class ThemingDefaults extends \OC_Defaults {
 	 * @return string
 	 */
 	#[\Override]
- public function getLogo($useSvg = true): string
- {
- }
+	public function getLogo($useSvg = true): string {
+	}
 
 	#[\Override]
- public function getLogoImage(): ?array
- {
- }
+	public function getLogoImage(): ?array {
+	}
 
 	/**
 	 * Themed background image url
@@ -142,50 +133,44 @@ class ThemingDefaults extends \OC_Defaults {
 	 * @param bool $darkVariant if the dark variant (if available) of the background should be used
 	 * @return string
 	 */
-	public function getBackground(bool $darkVariant = false): string
- {
- }
+	public function getBackground(bool $darkVariant = false): string {
+	}
 
 	/**
 	 * @return string
 	 */
 	#[\Override]
- public function getiTunesAppId()
- {
- }
+	public function getiTunesAppId() {
+	}
 
 	/**
 	 * @return string
 	 */
 	#[\Override]
- public function getiOSClientUrl()
- {
- }
+	public function getiOSClientUrl() {
+	}
 
 	/**
 	 * @return string
 	 */
 	#[\Override]
- public function getAndroidClientUrl()
- {
- }
+	public function getAndroidClientUrl() {
+	}
 
 	/**
 	 * @return string
 	 */
 	#[\Override]
- public function getFDroidClientUrl()
- {
- }
+	public function getFDroidClientUrl() {
+	}
 
 	/**
 	 * @return array scss variables to overwrite
 	 * @deprecated since Nextcloud 22 - https://github.com/nextcloud/server/issues/9940
 	 */
 	#[\Override]
- public function getScssVariables()
- {
- }
+	public function getScssVariables() {
+	}
 
 	/**
 	 * Check if the image should be replaced by the theming app
@@ -195,20 +180,17 @@ class ThemingDefaults extends \OC_Defaults {
 	 * @param string $image filename of the image
 	 * @return bool|string false if image should not replaced, otherwise the location of the image
 	 */
-	public function replaceImagePath($app, $image)
- {
- }
+	public function replaceImagePath($app, $image) {
+	}
 
-	protected function getCustomFavicon(): ?ISimpleFile
- {
- }
+	protected function getCustomFavicon(): ?ISimpleFile {
+	}
 
 	/**
 	 * Increases the cache buster key
 	 */
-	public function increaseCacheBuster(): void
- {
- }
+	public function increaseCacheBuster(): void {
+	}
 
 	/**
 	 * Update setting in the database
@@ -216,16 +198,14 @@ class ThemingDefaults extends \OC_Defaults {
 	 * @param string $setting
 	 * @param string $value
 	 */
-	public function set($setting, $value): void
- {
- }
+	public function set($setting, $value): void {
+	}
 
 	/**
 	 * Revert all settings to the default value
 	 */
-	public function undoAll(): void
- {
- }
+	public function undoAll(): void {
+	}
 
 	/**
 	 * Revert admin settings to the default value
@@ -233,18 +213,16 @@ class ThemingDefaults extends \OC_Defaults {
 	 * @param string $setting setting which should be reverted
 	 * @return string default value
 	 */
-	public function undo($setting): string
- {
- }
+	public function undo($setting): string {
+	}
 
 	/**
 	 * Color of text in the header menu
 	 *
 	 * @return string
 	 */
-	public function getTextColorBackground()
- {
- }
+	public function getTextColorBackground() {
+	}
 
 	/**
 	 * Color of text on primary buttons and other elements
@@ -252,23 +230,20 @@ class ThemingDefaults extends \OC_Defaults {
 	 * @return string
 	 */
 	#[\Override]
- public function getTextColorPrimary()
- {
- }
+	public function getTextColorPrimary() {
+	}
 
 	/**
 	 * Color of text in the header and primary buttons
 	 *
 	 * @return string
 	 */
-	public function getDefaultTextColorPrimary()
- {
- }
+	public function getDefaultTextColorPrimary() {
+	}
 
 	/**
 	 * Has the admin disabled user customization
 	 */
-	public function isUserThemingDisabled(): bool
- {
- }
+	public function isUserThemingDisabled(): bool {
+	}
 }
