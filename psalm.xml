@@ -25,13 +25,18 @@
 		<MissingImmutableAnnotation errorLevel="suppress"/>
 	</issueHandlers>
 	<stubs>
-		<file name="tests/stubs/oc_core_command_base.php" preloadClasses="true" />
-		<file name="tests/stubs/oc_files.php" preloadClasses="true" />
-		<file name="tests/stubs/oca_files_event.php" preloadClasses="true" />
-		<file name="tests/stubs/oca_files_sharing.php" preloadClasses="true" />
-		<file name="tests/stubs/oca_files_trashbin_events.php" preloadClasses="true" />
-		<file name="tests/stubs/oca_groupfolders.php" preloadClasses="true" />
-		<file name="tests/stubs/oca_viewer_event.php" preloadClasses="true" />
-		<file name="tests/stubs/oca_theming_defaults.php" preloadClasses="true" />
+		<file name="tests/stubs/oc_core_command_base.php" preloadClasses="true"/>
+		<file name="tests/stubs/oc_files_storage_wrapper_wrapper.php" preloadClasses="true"/>
+		<file name="tests/stubs/oca_files_event_loadsidebar.php" preloadClasses="true"/>
+		<file name="tests/stubs/oca_files_sharing_external_storage.php" preloadClasses="true"/>
+		<file name="tests/stubs/oca_files_sharing_sharedmount.php" preloadClasses="true"/>
+		<file name="tests/stubs/oca_files_trashbin_events_noderestoredevent.php" preloadClasses="true"/>
+		<file name="tests/stubs/oca_groupfolders_acl_rule.php" preloadClasses="true"/>
+		<file name="tests/stubs/oca_groupfolders_acl_rulemanager.php" preloadClasses="true"/>
+		<file name="tests/stubs/oca_groupfolders_acl_usermapping_iusermapping.php" preloadClasses="true"/>
+		<file name="tests/stubs/oca_groupfolders_folder_foldermanager.php" preloadClasses="true"/>
+		<file name="tests/stubs/oca_groupfolders_mount_groupmountpoint.php" preloadClasses="true"/>
+		<file name="tests/stubs/oca_theming_themingdefaults.php" preloadClasses="true"/>
+		<file name="tests/stubs/oca_viewer_event_loadviewer.php" preloadClasses="true"/>
 	</stubs>
 </psalm>

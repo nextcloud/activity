@@ -1332,6 +1332,7 @@ class FilesHooks {
 							continue;
 						}
 						$providerArgs = new MountProviderArgs($cachedMount, $rootMetadata);
+						/** @psalm-suppress UndefinedInterfaceMethod Could not find a public API for this */
 						$mounts = $this->mountProviderCollection->getUserMountsFromProviderByPath(
 							$cachedMount->getMountProvider(),
 							'',

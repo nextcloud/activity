@@ -1,49 +1,107 @@
 <?php
 
-namespace Stecman\Component\Symfony\Console\BashCompletion {
-	class CompletionContext {
-	}
-}
+/**
+ * SPDX-FileCopyrightText: 2016-2024 Nextcloud GmbH and Nextcloud contributors
+ * SPDX-FileCopyrightText: 2016 ownCloud, Inc.
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
 
-namespace Stecman\Component\Symfony\Console\BashCompletion\Completion {
-	interface CompletionAwareInterface {
-		/**
-		 * @param string $optionName
-		 * @return array
-		 */
-		public function completeOptionValues($optionName, \Stecman\Component\Symfony\Console\BashCompletion\CompletionContext $context);
+namespace OC\Core\Command;
 
-		/**
-		 * @param string $argumentName
-		 * @return array
-		 */
-		public function completeArgumentValues($argumentName, \Stecman\Component\Symfony\Console\BashCompletion\CompletionContext $context);
-	}
-}
+use OC\Core\Command\User\ListCommand;
+use OCP\Defaults;
+use OCP\Server;
+use Stecman\Component\Symfony\Console\BashCompletion\Completion\CompletionAwareInterface;
+use Stecman\Component\Symfony\Console\BashCompletion\CompletionContext;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
-namespace OC\Core\Command {
-	use Stecman\Component\Symfony\Console\BashCompletion\Completion\CompletionAwareInterface;
-	use Stecman\Component\Symfony\Console\BashCompletion\CompletionContext;
+class Base extends Command implements CompletionAwareInterface {
+	public const OUTPUT_FORMAT_PLAIN = 'plain';
+	public const OUTPUT_FORMAT_JSON = 'json';
+	public const OUTPUT_FORMAT_JSON_PRETTY = 'json_pretty';
 
-	class Base extends \Symfony\Component\Console\Command\Command implements CompletionAwareInterface {
-		public const OUTPUT_FORMAT_PLAIN = 'plain';
-		public const OUTPUT_FORMAT_JSON = 'json';
-		public const OUTPUT_FORMAT_JSON_PRETTY = 'json_pretty';
+	protected string $defaultOutputFormat = self::OUTPUT_FORMAT_PLAIN;
 
-		protected string $defaultOutputFormat = self::OUTPUT_FORMAT_PLAIN;
+	#[\Override]
+ protected function configure()
+ {
+ }
 
-		/**
-		 * @param string $optionName
-		 * @return string[]
-		 */
-		public function completeOptionValues($optionName, CompletionContext $context) {
-		}
+	protected function writeArrayInOutputFormat(InputInterface $input, OutputInterface $output, iterable $items, string $prefix = '  - '): void
+ {
+ }
 
-		/**
-		 * @param string $argumentName
-		 * @return string[]
-		 */
-		public function completeArgumentValues($argumentName, CompletionContext $context) {
-		}
-	}
+	protected function writeTableInOutputFormat(InputInterface $input, OutputInterface $output, array $items): void
+ {
+ }
+
+	protected function writeStreamingTableInOutputFormat(InputInterface $input, OutputInterface $output, \Iterator $items, int $tableGroupSize): void
+ {
+ }
+
+	protected function writeStreamingJsonArray(InputInterface $input, OutputInterface $output, \Iterator $items): void
+ {
+ }
+
+	public function chunkIterator(\Iterator $iterator, int $count): \Iterator
+ {
+ }
+
+	/**
+	 * @param mixed $item
+	 */
+	protected function writeMixedInOutputFormat(InputInterface $input, OutputInterface $output, $item)
+ {
+ }
+
+	protected function valueToString($value, bool $returnNull = true): ?string
+ {
+ }
+
+	/**
+	 * Throw InterruptedException when interrupted by user
+	 *
+	 * @throws InterruptedException
+	 */
+	protected function abortIfInterrupted()
+ {
+ }
+
+	/**
+	 * Changes the status of the command to "interrupted" if ctrl-c has been pressed
+	 *
+	 * Gives a chance to the command to properly terminate what it's doing
+	 */
+	public function cancelOperation(): void
+ {
+ }
+
+	#[\Override]
+ public function run(InputInterface $input, OutputInterface $output): int
+ {
+ }
+
+	/**
+	 * @param string $optionName
+	 * @param CompletionContext $context
+	 * @return string[]
+	 */
+	#[\Override]
+ public function completeOptionValues($optionName, CompletionContext $context)
+ {
+ }
+
+	/**
+	 * @param string $argumentName
+	 * @param CompletionContext $context
+	 * @return string[]
+	 */
+	#[\Override]
+ public function completeArgumentValues($argumentName, CompletionContext $context)
+ {
+ }
 }
