@@ -33,6 +33,8 @@ use OCA\Activity\Tests\TestCase;
 use OCA\Files_Sharing\SharedMount;
 use OCP\Activity\IEvent;
 use OCP\Activity\IManager;
+use OCP\Files\Cache\IFileAccess;
+use OCP\Files\Config\IMountProviderCollection;
 use OCP\Files\Config\IUserMountCache;
 use OCP\Files\File;
 use OCP\Files\Folder;
@@ -77,6 +79,8 @@ class FilesHooksTest extends TestCase {
 	protected TagManager&MockObject $tagManager;
 	protected Tags&MockObject $tags;
 	protected (OCA\Circles\CirclesManager&MockObject)|null $teamManager = null;
+	private IFileAccess&MockObject $fileAccess;
+	private IMountProviderCollection&MockObject $mountProviderCollection;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -98,6 +102,8 @@ class FilesHooksTest extends TestCase {
 			->willReturn([]);
 		$this->tagManager->method('load')
 			->willReturn($this->tags);
+		$this->fileAccess = $this->createMock(IFileAccess::class);
+		$this->mountProviderCollection = $this->createMock(IMountProviderCollection::class);
 
 		$this->filesHooks = $this->getFilesHooks();
 	}
@@ -131,6 +137,8 @@ class FilesHooksTest extends TestCase {
 					$this->notificationGenerator,
 					$this->tagManager,
 					$this->teamManager,
+					$this->fileAccess,
+					$this->mountProviderCollection,
 				])
 				->onlyMethods($mockedMethods)
 				->getMock();
@@ -152,6 +160,8 @@ class FilesHooksTest extends TestCase {
 			$this->notificationGenerator,
 			$this->tagManager,
 			$this->teamManager,
+			$this->fileAccess,
+			$this->mountProviderCollection,
 		);
 	}
 
@@ -199,6 +209,8 @@ class FilesHooksTest extends TestCase {
 				$this->notificationGenerator,
 				$this->tagManager,
 				$this->teamManager,
+				$this->fileAccess,
+				$this->mountProviderCollection,
 			])
 			->onlyMethods(['addNotificationsForFileAction'])
 			->getMock();
