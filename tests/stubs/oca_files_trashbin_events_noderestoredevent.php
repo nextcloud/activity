@@ -16,7 +16,6 @@ use OCP\Files\Node;
  * @since 28.0.0
  */
 class NodeRestoredEvent extends AbstractNodesEvent {
-	public function __construct(Node $source, Node $target)
- {
- }
+	public function __construct(Node $source, Node $target) {
+	}
 }

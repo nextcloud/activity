@@ -8,15 +8,10 @@
 
 namespace OC\Core\Command;
 
-use OC\Core\Command\User\ListCommand;
-use OCP\Defaults;
-use OCP\Server;
 use Stecman\Component\Symfony\Console\BashCompletion\Completion\CompletionAwareInterface;
 use Stecman\Component\Symfony\Console\BashCompletion\CompletionContext;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Base extends Command implements CompletionAwareInterface {
@@ -27,63 +22,52 @@ class Base extends Command implements CompletionAwareInterface {
 	protected string $defaultOutputFormat = self::OUTPUT_FORMAT_PLAIN;
 
 	#[\Override]
- protected function configure()
- {
- }
+	protected function configure() {
+	}
 
-	protected function writeArrayInOutputFormat(InputInterface $input, OutputInterface $output, iterable $items, string $prefix = '  - '): void
- {
- }
+	protected function writeArrayInOutputFormat(InputInterface $input, OutputInterface $output, iterable $items, string $prefix = '  - '): void {
+	}
 
-	protected function writeTableInOutputFormat(InputInterface $input, OutputInterface $output, array $items): void
- {
- }
+	protected function writeTableInOutputFormat(InputInterface $input, OutputInterface $output, array $items): void {
+	}
 
-	protected function writeStreamingTableInOutputFormat(InputInterface $input, OutputInterface $output, \Iterator $items, int $tableGroupSize): void
- {
- }
+	protected function writeStreamingTableInOutputFormat(InputInterface $input, OutputInterface $output, \Iterator $items, int $tableGroupSize): void {
+	}
 
-	protected function writeStreamingJsonArray(InputInterface $input, OutputInterface $output, \Iterator $items): void
- {
- }
+	protected function writeStreamingJsonArray(InputInterface $input, OutputInterface $output, \Iterator $items): void {
+	}
 
-	public function chunkIterator(\Iterator $iterator, int $count): \Iterator
- {
- }
+	public function chunkIterator(\Iterator $iterator, int $count): \Iterator {
+	}
 
 	/**
 	 * @param mixed $item
 	 */
-	protected function writeMixedInOutputFormat(InputInterface $input, OutputInterface $output, $item)
- {
- }
+	protected function writeMixedInOutputFormat(InputInterface $input, OutputInterface $output, $item) {
+	}
 
-	protected function valueToString($value, bool $returnNull = true): ?string
- {
- }
+	protected function valueToString($value, bool $returnNull = true): ?string {
+	}
 
 	/**
 	 * Throw InterruptedException when interrupted by user
 	 *
 	 * @throws InterruptedException
 	 */
-	protected function abortIfInterrupted()
- {
- }
+	protected function abortIfInterrupted() {
+	}
 
 	/**
 	 * Changes the status of the command to "interrupted" if ctrl-c has been pressed
 	 *
 	 * Gives a chance to the command to properly terminate what it's doing
 	 */
-	public function cancelOperation(): void
- {
- }
+	public function cancelOperation(): void {
+	}
 
 	#[\Override]
- public function run(InputInterface $input, OutputInterface $output): int
- {
- }
+	public function run(InputInterface $input, OutputInterface $output): int {
+	}
 
 	/**
 	 * @param string $optionName
@@ -91,9 +75,8 @@ class Base extends Command implements CompletionAwareInterface {
 	 * @return string[]
 	 */
 	#[\Override]
- public function completeOptionValues($optionName, CompletionContext $context)
- {
- }
+	public function completeOptionValues($optionName, CompletionContext $context) {
+	}
 
 	/**
 	 * @param string $argumentName
@@ -101,7 +84,6 @@ class Base extends Command implements CompletionAwareInterface {
 	 * @return string[]
 	 */
 	#[\Override]
- public function completeArgumentValues($argumentName, CompletionContext $context)
- {
- }
+	public function completeArgumentValues($argumentName, CompletionContext $context) {
+	}
 }
