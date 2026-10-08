@@ -19,13 +19,15 @@ use OCA\Files_Sharing\SharedMount;
 use OCP\Activity\IManager;
 use OCP\BackgroundJob\IJobList;
 use OCP\Constants;
-use OCP\Files\Config\IUserMountCache;
+use OCP\Files\Cache\IFileAccess;
+use OCP\Files\Config\ICachedMountFileInfo;
 use OCP\Files\Config\IMountProviderCollection;
+use OCP\Files\Config\IUserMountCache;
+use OCP\Files\Config\MountProviderArgs;
 use OCP\Files\File;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
-use OCP\Files\Cache\IFileAccess;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IGroup;
@@ -35,7 +37,6 @@ use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
-use OCP\Files\Config\MountProviderArgs;
 use Psr\Log\LoggerInterface;
 
 /**
