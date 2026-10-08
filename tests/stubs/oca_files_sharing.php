@@ -5,3 +5,10 @@ namespace OCA\Files_Sharing {
 		public function getShare(): \OCP\Share\IShare;
 	}
 }
+
+namespace OCA\Files_Sharing\External {
+	abstract class Storage implements \OCP\Files\Storage\ISharedStorage {
+		public function getToken(): string {
+		}
+	}
+}
