@@ -18,10 +18,12 @@ use OCP\Activity\IManager;
 use OCP\BackgroundJob\IJobList;
 use OCP\Constants;
 use OCP\Files\Config\IUserMountCache;
+use OCP\Files\Config\IMountProviderCollection;
 use OCP\Files\File;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
+use OCP\Files\Cache\IFileAccess;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IGroup;
@@ -31,6 +33,7 @@ use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
+use OCP\Files\Config\MountProviderArgs;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -66,6 +69,8 @@ class FilesHooks {
 		protected NotificationGenerator $notificationGenerator,
 		protected ITagManager $tagManager,
 		protected ?CirclesManager $teamManager,
+		private IFileAccess $fileAccess,
+		private IMountProviderCollection $mountProviderCollection,
 	) {
 	}
 
@@ -1273,18 +1278,9 @@ class FilesHooks {
 		$mountsForFile = $this->userMountCache->getMountsForFileId($fileId);
 		foreach ($mountsForFile as $mount) {
 			$affectedUsers[$mount->getUser()->getUID()] = $this->getVisiblePath($mount->getPath());
-			$cachedMounts[] = [
-				'userId' => $mount->getUser()->getUID(),
-				'provider' => str_replace('\\\\', '\\', $mount->getMountProvider()),
-				'path' => $mount->getPath(),
-				'visiblePath' => $this->getVisiblePath($mount->getPath()),
-				'storageId' => $mount->getStorageId(),
-				'internalPath' => $mount->getInternalPath(),
-				'rootInternalPath' => $mount->getRootInternalPath(),
-			];
 		}
 
-		$unrelatedUsers = $this->getUnrelatedUsers($cachedMounts);
+		$unrelatedUsers = $this->getUnrelatedUsers($mountsForFile);
 
 		return array_filter($affectedUsers, fn (string $userId): bool => !in_array($userId, $unrelatedUsers, true), ARRAY_FILTER_USE_KEY);
 	}
@@ -1292,6 +1288,7 @@ class FilesHooks {
 	/**
 	 * returns an array of users that have confirmed no access to fileId
 	 *
+	 * @param ICachedMonutinfomachin[] $cachedMounts
 	 *
 	 * @return string[] list of unrelated userIds
 	 */
@@ -1311,28 +1308,40 @@ class FilesHooks {
 		$rules = $knownRules = $knownGroupRules = $usersToCheck = $cachedPath = [];
 		foreach ($cachedMounts as $cachedMount) {
 			// we are only interested in filtering GroupFolders ACL
-			if ($cachedMount['provider'] !== 'OCA\GroupFolders\Mount\MountProvider') {
+			if ($cachedMount->getMountProvider() !== 'OCA\GroupFolders\Mount\MountProvider') {
 				continue;
 			}
 
 			// caching rules based on storage id
-			$storageId = $cachedMount['storageId'];
+			$storageId = $cachedMount->getStorageId();
 			if (!array_key_exists($storageId, $knownRules)) {
 				$knownRules[$storageId] = [];
 			}
 
-			$cachedPath[$cachedMount['userId']] = $fullPath = $cachedMount['path'];
+			$cachedPath[$cachedMount->getUser()->getUID()] = $fullPath = $cachedMount->getPath();
 
 			// caching rules based on storage+path to file
-			if (!array_key_exists($cachedMount['visiblePath'], $knownRules[$storageId])) {
+			$visiblePath = $this->getVisiblePath($cachedMount->getPath());
+			if (!array_key_exists($visiblePath, $knownRules[$storageId])) {
 				// we need mountPoint and folderId to generate the correct path
 				try {
-					// only check for groupfolders
-					if (!str_starts_with($cachedMount['rootInternalPath'], '__groupfolders')) {
+					$rootId = $cachedMount->getRootId();
+					$rootMetadata = $this->fileAccess->getByFileId($rootId);
+					if (!$rootMetadata) {
 						continue;
 					}
-
-					$folderId = (int)basename($cachedMount['rootInternalPath']);
+					$providerArgs = new MountProviderArgs($cachedMount, $rootMetadata);
+					$mounts = $this->mountProviderCollection->getUserMountsFromProviderByPath(
+						$cachedMount->getMountProvider(),
+						'',
+						false,
+						[$providerArgs]
+					);
+					$mount = reset($mounts);
+					if (!($mount instanceof \OCA\GroupFolders\Mount\GroupMountPoint)) {
+						continue;
+					}
+					$folderId = $mount->getFolderId();
 					if (!isset($groupFolderAclStatus[$folderId])) {
 						$groupFolderAclStatus[$folderId] = $folderManager->getFolderAclEnabled($folderId);
 					}
@@ -1340,11 +1349,11 @@ class FilesHooks {
 						continue; // acl are disable
 					}
 
-					$folderPath = '/' . $cachedMount['rootInternalPath'];
-					$path = $cachedMount['internalPath'];
+					$folderPath = '/' . $cachedMount->getRootInternalPath();
+					$path = $cachedMount->getInternalPath();
 				} catch (\Exception) {
 					// in case of issue during the process, we can imagine the user have no access to the file
-					$usersToCheck[] = $cachedMount['userId'];
+					$usersToCheck[] = $cachedMount->getUser()->getUID();
 					continue; // we'll catch rules on next user with access to the file
 				}
 
@@ -1373,7 +1382,7 @@ class FilesHooks {
 					$rules = array_merge($rules, $rulesPerPath[$path]);
 				}
 
-				$knownRules[$storageId][$cachedMount['visiblePath']] = true;
+				$knownRules[$storageId][$visiblePath] = true;
 			}
 		}
 
