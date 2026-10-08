@@ -1280,7 +1280,7 @@ class FilesHooks {
 			$affectedUsers[$mount->getUser()->getUID()] = $this->getVisiblePath($mount->getPath());
 		}
 
-		$unrelatedUsers = $this->getUnrelatedUsers($mountsForFile);
+		$unrelatedUsers = $this->getBlockedGroupfoldersAclUsers($mountsForFile);
 
 		return array_filter($affectedUsers, fn (string $userId): bool => !in_array($userId, $unrelatedUsers, true), ARRAY_FILTER_USE_KEY);
 	}
@@ -1288,11 +1288,11 @@ class FilesHooks {
 	/**
 	 * returns an array of users that have confirmed no access to fileId
 	 *
-	 * @param ICachedMonutinfomachin[] $cachedMounts
+	 * @param ICachedMountFileInfo[] $cachedMounts
 	 *
-	 * @return string[] list of unrelated userIds
+	 * @return string[] list of blocked userIds
 	 */
-	private function getUnrelatedUsers(array $cachedMounts): array {
+	private function getBlockedGroupfoldersAclUsers(array $cachedMounts): array {
 		/** @var \OCA\GroupFolders\ACL\RuleManager $ruleManager */
 		/** @var \OCA\GroupFolders\Folder\FolderManager $folderManager */
 		try {
@@ -1302,10 +1302,9 @@ class FilesHooks {
 			return []; // if we have no access to RuleManager, we cannot filter unrelated users
 		}
 
-		$groupFolderAclStatus = [];
-
 		/** @var \OCA\GroupFolders\ACL\Rule[] $rules */
 		$rules = $knownRules = $knownGroupRules = $usersToCheck = $cachedPath = [];
+		$groupfolderId = null;
 		foreach ($cachedMounts as $cachedMount) {
 			// we are only interested in filtering GroupFolders ACL
 			if ($cachedMount->getMountProvider() !== 'OCA\GroupFolders\Mount\MountProvider') {
@@ -1325,28 +1324,28 @@ class FilesHooks {
 			if (!array_key_exists($visiblePath, $knownRules[$storageId])) {
 				// we need mountPoint and folderId to generate the correct path
 				try {
-					$rootId = $cachedMount->getRootId();
-					$rootMetadata = $this->fileAccess->getByFileId($rootId);
-					if (!$rootMetadata) {
-						continue;
-					}
-					$providerArgs = new MountProviderArgs($cachedMount, $rootMetadata);
-					$mounts = $this->mountProviderCollection->getUserMountsFromProviderByPath(
-						$cachedMount->getMountProvider(),
-						'',
-						false,
-						[$providerArgs]
-					);
-					$mount = reset($mounts);
-					if (!($mount instanceof \OCA\GroupFolders\Mount\GroupMountPoint)) {
-						continue;
-					}
-					$folderId = $mount->getFolderId();
-					if (!isset($groupFolderAclStatus[$folderId])) {
-						$groupFolderAclStatus[$folderId] = $folderManager->getFolderAclEnabled($folderId);
-					}
-					if (!$groupFolderAclStatus[$folderId]) {
-						continue; // acl are disable
+					if ($groupfolderId === null) {
+						$rootId = $cachedMount->getRootId();
+						$rootMetadata = $this->fileAccess->getByFileId($rootId);
+						if (!$rootMetadata) {
+							continue;
+						}
+						$providerArgs = new MountProviderArgs($cachedMount, $rootMetadata);
+						$mounts = $this->mountProviderCollection->getUserMountsFromProviderByPath(
+							$cachedMount->getMountProvider(),
+							'',
+							false,
+							[$providerArgs]
+						);
+						$mount = reset($mounts);
+						if (!($mount instanceof \OCA\GroupFolders\Mount\GroupMountPoint)) {
+							continue;
+						}
+						$groupfolderId = $mount->getFolderId();
+						if (!$folderManager->getFolderAclEnabled($groupfolderId)) {
+							// ACL are disabled for the groupfolder, we can stop here
+							break;
+						}
 					}
 
 					$folderPath = '/' . $cachedMount->getRootInternalPath();
