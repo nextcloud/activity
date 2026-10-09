@@ -31,6 +31,8 @@ use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\Exception\InvalidSearchCriteriaException;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\SearchCriteria;
+use OCA\Activity\TeamActivityResolver;
+use OCA\Activity\TeamActivityScope;
 use OCA\Activity\Tests\TestCase;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
@@ -70,6 +72,7 @@ class APIv2ControllerTest extends TestCase {
 	protected ViewInfoCache&MockObject $infoCache;
 	protected INotificationManager&MockObject $notificationManager;
 	protected IDateTimeZone&MockObject $dateTimeZone;
+	protected TeamActivityResolver&MockObject $teamActivityResolver;
 	protected IL10N $l10n;
 	protected APIv2Controller $controller;
 
@@ -92,6 +95,7 @@ class APIv2ControllerTest extends TestCase {
 		$this->request = $this->createMock(IRequest::class);
 		$this->dateTimeZone = $this->createMock(IDateTimeZone::class);
 		$this->dateTimeZone->method('getTimeZone')->willReturn(new \DateTimeZone('UTC'));
+		$this->teamActivityResolver = $this->createMock(TeamActivityResolver::class);
 
 		$this->controller = $this->getController();
 	}
@@ -112,6 +116,7 @@ class APIv2ControllerTest extends TestCase {
 				$this->infoCache,
 				$this->notificationManager,
 				$this->dateTimeZone,
+				$this->teamActivityResolver,
 			);
 		}
 
@@ -130,6 +135,7 @@ class APIv2ControllerTest extends TestCase {
 				$this->infoCache,
 				$this->notificationManager,
 				$this->dateTimeZone,
+				$this->teamActivityResolver,
 			])
 			->onlyMethods($methods)
 			->getMock();
@@ -361,6 +367,37 @@ class APIv2ControllerTest extends TestCase {
 			->with('files', 0, 50, false, '', 0, 'desc', 'report', 1000, 2000, 'alice');
 
 		$controller->getFilter('files', 0, 50, false, '', 0, 'desc', 'report', 1000, 2000, 'alice');
+	}
+
+	public function testGetTeamForwardsTheResolvedScope(): void {
+		$controller = $this->getController(['get']);
+		$user = $this->createMock(IUser::class);
+		$user->method('getUID')->willReturn('alice');
+		$this->userSession->method('getUser')->willReturn($user);
+		$scope = new TeamActivityScope(42, [7, 8]);
+		$this->teamActivityResolver->expects($this->once())
+			->method('getScope')
+			->with('team-single-id', 'alice')
+			->willReturn($scope);
+		$controller->expects($this->once())
+			->method('get')
+			->with('all', 0, 50, false, '', 0, 'desc', 'report', 1000, 2000, 'bob', $scope);
+
+		$controller->getTeam('team-single-id', 0, 50, false, 'desc', 'report', 1000, 2000, 'bob');
+	}
+
+	public function testGetTeamHidesAnInaccessibleTeam(): void {
+		$user = $this->createMock(IUser::class);
+		$user->method('getUID')->willReturn('alice');
+		$this->userSession->method('getUser')->willReturn($user);
+		$this->teamActivityResolver->expects($this->once())
+			->method('getScope')
+			->with('team-single-id', 'alice')
+			->willReturn(null);
+
+		$result = $this->controller->getTeam('team-single-id');
+
+		$this->assertSame(Http::STATUS_NOT_FOUND, $result->getStatus());
 	}
 
 	public function testGetPassesSearchCriteriaToData(): void {
