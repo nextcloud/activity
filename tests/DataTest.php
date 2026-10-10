@@ -26,6 +26,9 @@ namespace OCA\Activity\Tests;
 
 use OCA\Activity\AppInfo\Application;
 use OCA\Activity\Data;
+use OCA\Activity\GroupHelper;
+use OCA\Activity\SearchCriteria;
+use OCA\Activity\TeamActivityScope;
 use OCA\Activity\UserSettings;
 use OCP\Activity\Exceptions\FilterNotFoundException;
 use OCP\Activity\IManager;
@@ -121,6 +124,71 @@ class DataTest extends TestCase {
 		} else {
 			$this->assertFalse($row);
 		}
+
+		$this->deleteTestActivities();
+	}
+
+	public function testTeamStreamIncludesEventsPublishedBeforeTheViewerJoined(): void {
+		$this->deleteTestActivities();
+
+		$event = $this->realActivityManager->generateEvent();
+		$event->setApp('test')
+			->setType('type')
+			->setSubject('subject')
+			->setAuthor('bob')
+			->setAffectedUser('bob')
+			->setObject('circles', 42, 'Activity 3');
+		$this->data->send($event);
+
+		$helper = $this->createMock(GroupHelper::class);
+		$helper->expects($this->once())
+			->method('addActivity')
+			->with($this->callback(static fn (array $activity): bool => $activity['affecteduser'] === 'bob'));
+		$helper->expects($this->once())
+			->method('getActivities')
+			->willReturn([]);
+
+		$result = $this->data->getTeam(
+			$helper,
+			$this->createMock(UserSettings::class),
+			'alice',
+			0,
+			50,
+			'desc',
+			new TeamActivityScope(42, []),
+		);
+
+		$this->assertFalse($result['has_more']);
+		$this->deleteTestActivities();
+	}
+
+	public function testTeamStreamSearchesRosterSubjectsAndFiltersByAuthor(): void {
+		$this->deleteTestActivities();
+
+		$event = $this->realActivityManager->generateEvent();
+		$event->setApp('test')
+			->setType('member_added')
+			->setSubject('member_added', ['initiator' => ['userId' => 'admin'], 'member' => 'Alice'])
+			->setAffectedUser('bob')
+			->setObject('circles', 42, 'Activity 3');
+		$this->data->send($event);
+
+		$helper = $this->createMock(GroupHelper::class);
+		$helper->expects($this->once())
+			->method('addActivity')
+			->with($this->callback(static fn (array $activity): bool => $activity['subject'] === 'member_added' && $activity['user'] === ''));
+		$helper->expects($this->once())->method('getActivities')->willReturn([]);
+
+		$this->data->getTeam(
+			$helper,
+			$this->createMock(UserSettings::class),
+			'alice',
+			0,
+			50,
+			'desc',
+			new TeamActivityScope(42, []),
+			SearchCriteria::create('member', 0, 0, 'admin'),
+		);
 
 		$this->deleteTestActivities();
 	}
