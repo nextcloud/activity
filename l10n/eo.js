@@ -30,6 +30,7 @@ OC.L10N.register(
     "Today" : "Hodiaŭ",
     "Last 7 days" : "Lastaj 7 tagoj",
     "Last 30 days" : "Lastaj 30 tagoj",
+    "Clear search" : "Viŝi serĉon",
     "From" : "De",
     "To" : "Al",
     "Send email" : "Sendi retpoŝtmesaĝon",
