@@ -222,6 +222,12 @@ const POLL_INTERVAL = 30000
 let pollTimer: ReturnType<typeof setTimeout> | undefined
 
 /**
+ * Identifies the current polling chain, so one that was superseded while its
+ * request was in flight stops instead of running alongside its replacement.
+ */
+let pollGeneration = 0
+
+/**
  * AbortController for in-flight load and poll requests.
  * Replaced on filter change and aborted on unmount so stale responses
  * are never applied to the wrong filter's state.
@@ -266,7 +272,9 @@ const groupedActivities = computed(() => {
 })
 
 const headingTitle = computed(() => {
-	return navigationList.find((navigationEl) => navigationEl.id === route.params.filter).name
+	// Unknown filters fall back to 'all', matching Data::validateFilter() server-side
+	const match = (id: unknown) => navigationList.find((entry) => entry.id === id)
+	return (match(route.params.filter) ?? match('all'))?.name ?? ''
 })
 
 /**
@@ -357,8 +365,10 @@ async function loadActivities() {
 /**
  * Poll for new activities and either prepend them directly (when near top)
  * or queue them so the user can load them without disrupting their scroll position
+ *
+ * @param generation - Identifier of the polling chain this call belongs to
  */
-async function pollNewActivities() {
+async function pollNewActivities(generation: number) {
 	const { signal } = requestController
 	try {
 		const since = String(newestActivityId.value ?? 0)
@@ -385,9 +395,9 @@ async function pollNewActivities() {
 		}
 	}
 
-	// Self-schedule only if polling wasn't stopped while the request was in flight
-	if (pollTimer !== undefined) {
-		pollTimer = setTimeout(pollNewActivities, POLL_INTERVAL)
+	// Self-schedule only if this chain is still the current one
+	if (generation === pollGeneration) {
+		pollTimer = setTimeout(() => pollNewActivities(generation), POLL_INTERVAL)
 	}
 }
 
@@ -413,19 +423,16 @@ const onScroll = useDebounceFn(() => {
  */
 function startPolling() {
 	stopPolling()
-	// Use a sentinel value so the self-scheduling logic in pollNewActivities
-	// knows polling is active even before the first tick fires
-	pollTimer = setTimeout(pollNewActivities, POLL_INTERVAL)
+	const generation = ++pollGeneration
+	pollTimer = setTimeout(() => pollNewActivities(generation), POLL_INTERVAL)
 }
 
 /**
  *
  */
 function stopPolling() {
-	if (pollTimer !== undefined) {
-		clearTimeout(pollTimer)
-		pollTimer = undefined
-	}
+	pollGeneration++
+	clearTimeout(pollTimer)
 }
 
 /**
@@ -458,6 +465,9 @@ watch(visibility, (value) => {
 function resetAndReload() {
 	requestController.abort()
 	requestController = new AbortController()
+	// The aborted request leaves `loading` set (its `finally` deliberately skips
+	// the reset), so clear it here or the reload below hits the re-entrancy guard
+	loading.value = false
 	allActivities.value = []
 	newActivitiesAvailable.value = false
 	lastActivityLoaded.value = undefined
