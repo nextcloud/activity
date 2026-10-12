@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.15.1@28dc127af1b5aecd52314f6f645bafc10d0e11f9">
+<files psalm-version="7.0.0-beta22@de27e5724ee5997a1e3baee4d394ca6f4e46eba0">
   <file src="lib/BackgroundJob/RemoteActivity.php">
     <UndefinedClass>
       <code><![CDATA[ClientException]]></code>
-    </UndefinedClass>
-  </file>
-  <file src="lib/Controller/RemoteActivityController.php">
-    <UndefinedClass>
-      <code><![CDATA[$storage]]></code>
-      <code><![CDATA[Wrapper]]></code>
     </UndefinedClass>
   </file>
   <file src="lib/Data.php">
@@ -27,15 +21,7 @@
       <code><![CDATA[$this->teamManager]]></code>
       <code><![CDATA[$this->teamManager]]></code>
       <code><![CDATA[Member]]></code>
-      <code><![CDATA[\OCA\GroupFolders\ACL\RuleManager]]></code>
-      <code><![CDATA[\OCA\GroupFolders\Folder\FolderManager]]></code>
       <code><![CDATA[protected]]></code>
     </UndefinedClass>
-    <UndefinedDocblockClass>
-      <code><![CDATA[$rule]]></code>
-      <code><![CDATA[$rule]]></code>
-      <code><![CDATA[$rule]]></code>
-      <code><![CDATA[$rules]]></code>
-    </UndefinedDocblockClass>
   </file>
 </files>
