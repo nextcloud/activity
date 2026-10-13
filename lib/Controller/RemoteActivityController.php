@@ -9,7 +9,9 @@ namespace OCA\Activity\Controller;
 
 use DateTimeInterface;
 use OC\Files\Storage\Wrapper\Wrapper;
+use OCA\Activity\ConfigLexicon;
 use OCA\Activity\Extension\Files;
+use OCA\Federation\TrustedServers;
 use OCA\Files_Sharing\External\Storage as ExternalStorage;
 use OCP\Activity\IManager as IActivityManager;
 use OCP\App\IAppManager;
@@ -17,6 +19,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\BruteForceProtection;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
+use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Federation\ICloudIdManager;
 use OCP\Files\InvalidPathException;
@@ -26,6 +29,7 @@ use OCP\IDBConnection;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserManager;
+use OCP\Server;
 
 class RemoteActivityController extends OCSController {
 	public function __construct(
@@ -35,6 +39,7 @@ class RemoteActivityController extends OCSController {
 		protected IUserManager $userManager,
 		protected IAppManager $appManager,
 		protected IRootFolder $rootFolder,
+		protected readonly IAppConfig $appConfig,
 		protected IActivityManager $activityManager,
 		protected ICloudIdManager $cloudIdManager,
 		protected ITimeFactory $timeFactory,
@@ -61,10 +66,7 @@ class RemoteActivityController extends OCSController {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
-		$date = \DateTime::createFromFormat(DateTimeInterface::W3C, $updated);
-		if ($date === false || abs($date->getTimestamp() - $this->timeFactory->getTime()) > 600) {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
-		}
+        // manage Collection!
 
 		if (!isset($to['type'], $to['name']) || $to['type'] !== 'Person') {
 			return new DataResponse([], Http::STATUS_BAD_REQUEST);
@@ -112,6 +114,11 @@ class RemoteActivityController extends OCSController {
 		$result = $query->executeQuery();
 		$share = $result->fetch();
 		$result->closeCursor();
+
+		$date = \DateTime::createFromFormat(DateTimeInterface::W3C, $updated);
+		if ($date === false || abs($date->getTimestamp() - $this->timeFactory->getTime()) > $this->calculateTTL($share['remote'])) {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+		}
 
 		if (!is_array($share) || str_starts_with($share['mountpoint'], '{{TemporaryMountPointName#')) {
 			$response = new DataResponse([], Http::STATUS_NOT_FOUND);
@@ -238,5 +245,22 @@ class RemoteActivityController extends OCSController {
 			'Delete' => Files::TYPE_SHARE_DELETED,
 			default => '',
 		};
+	}
+
+	/**
+	 * returns 600, or a higher value if the remote server is trusted
+	 */
+	private function calculateTTL(string $remote): int {
+		if ($this->appManager->isEnabledForAnyone('federation') && class_exists(TrustedServers::class)) {
+			if (str_starts_with('https://', $remote) || str_starts_with('http://', $remote)) {
+				$remote = parse_url($remote, PHP_URL_HOST);
+			}
+			$trustedServers = Server::get(TrustedServers::class);
+			if ($trustedServers->isTrusted($remote)) {
+				return $this->appConfig->getAppValueInt(ConfigLexicon::THRUSTED_SERVER_TTL);
+			}
+		}
+
+		return 600;
 	}
 }
