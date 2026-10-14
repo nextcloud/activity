@@ -34,6 +34,7 @@ class Data {
 	 * chart into an unbounded fetch. Reaching it is reported rather than hidden.
 	 */
 	public const MAX_HISTOGRAM_ROWS = 100000;
+	private const TEAM_RESOURCE_OBJECT_CHUNK_SIZE = 500;
 
 	/** @var  */
 	protected ?IQueryBuilder $insertActivity = null;
@@ -315,6 +316,189 @@ class Data {
 	}
 
 	/**
+	 * Read activities for a Team and its current resources.
+	 *
+	 * @return array{data: array, has_more: bool, headers: array}
+	 */
+	public function getTeam(GroupHelper $groupHelper, UserSettings $userSettings, string $user, int $since, int $limit, string $sort, TeamActivityScope $scope, ?SearchCriteria $search = null): array {
+		if ($user === '') {
+			throw new \OutOfBoundsException('Invalid user', 1);
+		}
+
+		$limit = max(1, min(200, $limit));
+		$activeFilter = null;
+		try {
+			$activeFilter = $this->activityManager->getFilterById('all');
+		} catch (FilterNotFoundException) {
+			// Unknown filter => ignore app filtering, as get() does.
+		}
+
+		$scopes = [['circles', [$scope->circleObjectId]]];
+		foreach ($scope->resourceScopes as $resourceScope) {
+			foreach (array_chunk($resourceScope->getObjectIds(), self::TEAM_RESOURCE_OBJECT_CHUNK_SIZE) as $objectIds) {
+				if ($objectIds !== []) {
+					$scopes[] = [$resourceScope->getObjectType(), $objectIds];
+				}
+			}
+		}
+
+		$cursorTimestamp = null;
+		if ($since !== 0) {
+			$cursorQuery = $this->connection->getQueryBuilder();
+			$cursorQuery->select('timestamp')->from('activity')
+				->where($cursorQuery->expr()->eq('activity_id', $cursorQuery->createNamedParameter($since, IQueryBuilder::PARAM_INT)));
+			$cursorTimestamp = $cursorQuery->executeQuery()->fetchOne();
+			if ($cursorTimestamp === false) {
+				throw new \OutOfBoundsException('Unknown Team Activity cursor');
+			}
+			$cursorTimestamp = (int)$cursorTimestamp;
+		}
+
+		$sqlSort = ($sort === 'asc') ? 'ASC' : 'DESC';
+		$queries = [];
+		$timestamps = [];
+		foreach ($scopes as [$objectType, $objectIds]) {
+			$createQuery = function () use ($userSettings, $user, $activeFilter, $search, $objectType, $objectIds, $cursorTimestamp, $sqlSort): IQueryBuilder {
+				$query = $this->connection->getQueryBuilder();
+				$query->select('*')->from('activity', 'a');
+				$this->applyStreamConditions($query, $userSettings, $user, 'all', $activeFilter, '', 0, null, false);
+				$this->applyTeamSearchCriteria($query, $search ?? SearchCriteria::empty(), $objectType === 'circles');
+				$query->andWhere($query->expr()->eq('object_type', $query->createNamedParameter($objectType)));
+				$query->andWhere($query->expr()->in('object_id', $query->createNamedParameter($objectIds, IQueryBuilder::PARAM_INT_ARRAY)));
+				if ($cursorTimestamp !== null) {
+					$parameter = $query->createNamedParameter($cursorTimestamp, IQueryBuilder::PARAM_INT);
+					$query->andWhere($sqlSort === 'DESC' ? $query->expr()->lte('timestamp', $parameter) : $query->expr()->gte('timestamp', $parameter));
+				}
+				return $query;
+			};
+			$queries[] = $createQuery;
+			$timestampQuery = $createQuery();
+			$timestampQuery->select('timestamp')->groupBy('timestamp')->orderBy('timestamp', $sqlSort)->setMaxResults($limit + 2);
+			$result = $timestampQuery->executeQuery();
+			foreach ($result->fetchAllAssociative() as $row) {
+				$timestamps[(int)$row['timestamp']] = (int)$row['timestamp'];
+			}
+			$result->closeCursor();
+		}
+		$sqlSort === 'DESC' ? rsort($timestamps) : sort($timestamps);
+		$rows = [];
+		foreach ($timestamps as $timestamp) {
+			$bucket = [];
+			foreach ($queries as $createQuery) {
+				$bucketQuery = $createQuery();
+				$bucketQuery->andWhere($bucketQuery->expr()->eq('timestamp', $bucketQuery->createNamedParameter($timestamp, IQueryBuilder::PARAM_INT)));
+				$result = $bucketQuery->executeQuery();
+				while ($row = $result->fetch()) {
+					$bucket[] = $this->normaliseTeamFileActivity($row, $scope->filePaths);
+				}
+				$result->closeCursor();
+			}
+			$bucket = $this->deduplicateTeamActivities($bucket);
+			usort($bucket, static fn (array $left, array $right): int => $sqlSort === 'DESC'
+				? (int)$right['activity_id'] <=> (int)$left['activity_id']
+				: (int)$left['activity_id'] <=> (int)$right['activity_id']);
+			foreach ($bucket as $row) {
+				if ($timestamp === $cursorTimestamp && ($sqlSort === 'DESC' ? (int)$row['activity_id'] >= $since : (int)$row['activity_id'] <= $since)) {
+					continue;
+				}
+				$rows[] = $row;
+				if (count($rows) > $limit) {
+					break 2;
+				}
+			}
+		}
+
+		$hasMore = count($rows) > $limit;
+		$rows = array_slice($rows, 0, $limit);
+		$headers = [];
+		foreach ($rows as $row) {
+			if ($row['object_type'] === 'files') {
+				$row['affecteduser'] = $user;
+			}
+			$headers['X-Activity-Last-Given'] = (int)$row['activity_id'];
+			$groupHelper->addActivity($row);
+		}
+
+		return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
+	}
+
+	/**
+	 * Files publishes one recipient-specific row per user. A Team stream has no
+	 * single recipient, so turn the self-only wording into its actor form before
+	 * collapsing otherwise identical rows.
+	 */
+	private function normaliseTeamFileActivity(array $row, array $filePaths = []): array {
+		if ($row['app'] !== 'files' || $row['object_type'] !== 'files' || !preg_match('/^(created|changed|deleted|restored|renamed|moved)_(self|by)(_enc)?$/', (string)$row['subject'], $matches)) {
+			return $row;
+		}
+
+		$parameters = json_decode((string)$row['subjectparams'], true);
+		if (!is_array($parameters)) {
+			return $row;
+		}
+
+		$action = $matches[1];
+		if ($matches[2] === 'self') {
+			$parameters = in_array($action, ['renamed', 'moved'], true)
+				? [$parameters[0] ?? [], $row['user'], $parameters[1] ?? []]
+				: [$parameters[0] ?? [], $row['user']];
+		}
+		$sourcePath = is_array($parameters[0] ?? null) ? reset($parameters[0]) : ($parameters[0] ?? '');
+		foreach ($parameters as &$parameter) {
+			if (!is_array($parameter)) {
+				continue;
+			}
+			foreach ($parameter as $fileId => &$path) {
+				if (is_string($path) && is_numeric($fileId)) {
+					$path = isset($filePaths[$fileId]) && is_string($sourcePath)
+						? $this->normaliseTeamFilePath($path, $sourcePath, $filePaths[$fileId])
+						: basename($path);
+				}
+			}
+			unset($path);
+		}
+		unset($parameter);
+		$row['file'] = $filePaths[$row['object_id']] ?? basename($row['file']);
+		$row['link'] = '';
+		$row['subject'] = $action . '_by' . ($matches[3] ?? '');
+		$row['subjectparams'] = json_encode($parameters, JSON_THROW_ON_ERROR);
+
+		return $row;
+	}
+
+	private function normaliseTeamFilePath(string $path, string $sourcePath, string $viewerPath): string {
+		$source = explode('/', trim(dirname($sourcePath), '/'));
+		$target = explode('/', trim(dirname($viewerPath), '/'));
+		$relative = explode('/', trim($path, '/'));
+		while ($source !== [] && $relative !== [] && $source[0] === $relative[0]) {
+			array_shift($source);
+			array_shift($relative);
+		}
+		$target = array_slice($target, 0, max(0, count($target) - count($source)));
+		return '/' . implode('/', array_merge($target, $relative));
+	}
+
+	/**
+	 * @param list<array<string, mixed>> $rows
+	 * @return list<array<string, mixed>>
+	 */
+	private function deduplicateTeamActivities(array $rows): array {
+		$deduplicated = [];
+		foreach ($rows as $row) {
+			$key = implode("\0", [
+				$row['app'], $row['subject'], $row['subjectparams'], $row['message'], $row['messageparams'],
+				$row['file'], $row['link'], $row['user'], $row['timestamp'], $row['priority'], $row['type'],
+				$row['object_type'], $row['object_id'],
+			]);
+			if (!isset($deduplicated[$key]) || (int)$row['activity_id'] < (int)$deduplicated[$key]['activity_id']) {
+				$deduplicated[$key] = $row;
+			}
+		}
+
+		return array_values($deduplicated);
+	}
+
+	/**
 	 * Restrict a query to the activities a user may see under a given filter.
 	 *
 	 * Shared by the stream itself and by {@see self::getDailyCounts()} so the two
@@ -332,8 +516,11 @@ class Data {
 		string $objectType,
 		int $objectId,
 		?SearchCriteria $search,
+		bool $restrictToAffectedUser = true,
 	): void {
-		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)));
+		if ($restrictToAffectedUser) {
+			$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)));
+		}
 
 		if ($activeFilter instanceof IFilter && !($activeFilter instanceof AllFilter)) {
 			$notificationTypes = $userSettings->getNotificationTypes();
@@ -508,6 +695,42 @@ class Data {
 
 		if ($criteria->actor !== null) {
 			$query->andWhere($query->expr()->eq('user', $query->createNamedParameter($criteria->actor)));
+		}
+	}
+
+	/**
+	 * Apply Team stream restrictions. Unlike the personal stream, Team Activity
+	 * includes roster events without a file path, so a text search also covers
+	 * their subject identifier and serialized rich-subject parameters.
+	 */
+	private function applyTeamSearchCriteria(IQueryBuilder $query, SearchCriteria $criteria, bool $includeHistoricalInitiator): void {
+		if ($criteria->from !== null) {
+			$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($criteria->from, IQueryBuilder::PARAM_INT)));
+		}
+
+		if ($criteria->to !== null) {
+			$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($criteria->to, IQueryBuilder::PARAM_INT)));
+		}
+
+		if ($criteria->term !== null) {
+			$pattern = '%' . $this->connection->escapeLikeParameter($criteria->term) . '%';
+			$query->andWhere($query->expr()->orX(
+				$query->expr()->iLike('file', $query->createNamedParameter($pattern)),
+				$query->expr()->iLike('subject', $query->createNamedParameter($pattern)),
+				$query->expr()->iLike('subjectparams', $query->createNamedParameter($pattern)),
+			));
+		}
+
+		if ($criteria->actor !== null) {
+			$authorCondition = $query->expr()->eq('user', $query->createNamedParameter($criteria->actor));
+			if ($includeHistoricalInitiator) {
+				$initiatorPattern = '%"initiator":{"userId":"' . $this->connection->escapeLikeParameter($criteria->actor) . '"%';
+				$authorCondition = $query->expr()->orX(
+					$authorCondition,
+					$query->expr()->iLike('subjectparams', $query->createNamedParameter($initiatorPattern)),
+				);
+			}
+			$query->andWhere($authorCondition);
 		}
 	}
 
