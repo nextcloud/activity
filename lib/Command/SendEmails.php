@@ -36,6 +36,7 @@ class SendEmails extends Base {
 		$this->logger = $logger;
 	}
 
+	#[\Override]
 	protected function configure() {
 		$this
 			->setName('activity:send-mails')
@@ -61,6 +62,7 @@ class SendEmails extends Base {
 	 * @param OutputInterface $output
 	 * @return int
 	 */
+	#[\Override]
 	protected function execute(InputInterface $input, OutputInterface $output): int {
 		// We don't use time() but "time() - 1" here, so we don't run into
 		// runtime issues later and delete emails, which were created in the
@@ -98,6 +100,7 @@ class SendEmails extends Base {
 	 * @param CompletionContext $context
 	 * @return string[]
 	 */
+	#[\Override]
 	public function completeArgumentValues($argumentName, CompletionContext $context) {
 		if ($argumentName === 'restrict-batching') {
 			return ['asap', 'hourly', 'daily', 'weekly'];
