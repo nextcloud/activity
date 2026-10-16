@@ -29,7 +29,7 @@
     "Activity" : "Aktiviteter",
     "Notifications" : "Notiser",
     "This application enables people to view a log of activities about them, their files or other data." : "Denna applikation låter användare se en aktivitetslogg om sig själva, sina filer eller annan information.",
-    "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Appen tillåter användare att se åtgärder relaterade till sina filer och data i Nextcloud.\n\t\tAlla användare kan välja egna inställningar,\n\t\tatt välja vilka aktiviteter som skall skickas vidare till mobiler, skickas med e-post\n\t\teller om dagliga sammanställningar skall skicka varje morgon.\n\t\tYtterligare information finns dokumentationen Aktivitet.",
+    "This app allows people to see actions related to their files and data in Nextcloud.\n\t\tEach person can configure their individual activity settings in the personal settings,\n\t\tto choose which activity should be pushed to mobile phones, sent via email\n\t\tor whether a daily summary is sent each morning.\n\t\tMore information is available in the Activity documentation." : "Appen låter användare se händelser som rör deras filer och data i Nextcloud.\nVarje användare kan konfigurera sina egna aktivitetsinställningar under de personliga inställningarna\nför att välja vilka aktiviteter som ska aviseras på mobilen eller skickas via e-post\noch om en daglig sammanfattning ska skickas varje morgon.\nMer information finns i dokumentationen för Aktiviteter.",
     "Any time" : "När som helst",
     "Today" : "Idag",
     "Last 7 days" : "Senaste 7 dagarna",
@@ -65,8 +65,8 @@
     "More" : "Mer",
     "_Downloaded %n time (%s in the last 30 days)_::_Downloaded %n times (%s in the last 30 days)_" : ["Nedladdad %n gång (%s de senaste 30 dagarna)","Nedladdad %n gånger (%s de senaste 30 dagarna)"],
     "_Downloaded %n time_::_Downloaded %n times_" : ["Nedladdad %n gång","Nedladdad %n gånger"],
-    "You need to set up your email address before you can receive notification emails." : "Du måste ställa in din e-postadress innan du kan ta emot e-postmeddelanden.",
-    "Send activity emails" : "Skicka aktivitets-epost",
+    "You need to set up your email address before you can receive notification emails." : "Du måste ställa in din e-postadress innan du kan ta emot aviseringar via e-post.",
+    "Send activity emails" : "Skicka e-post om aktiviteter",
     "As soon as possible" : "Så snart som möjligt",
     "Hourly" : "Varje timme",
     "Daily" : "Varje dag",
@@ -109,7 +109,7 @@
     "Daily activity summary" : "Daglig aktivitetsöversikt",
     "Send daily activity summary in the morning" : "Skicka daglig aktivitetsöversikt på morgonen",
     "Default settings" : "Förvalda inställningar",
-    "Configure the default notification settings for new accounts." : "Konfigurera standardinställningar av notifieringar för nya konton.",
+    "Configure the default notification settings for new accounts." : "Konfigurera standardinställningar för aviseringar för nya konton.",
     "Unable to save the settings" : "Kunde inte spara inställningarna",
     "No more events to load" : "Inga fler aktiviteter."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
