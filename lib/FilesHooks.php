@@ -1031,25 +1031,25 @@ class FilesHooks {
 	}
 
 	/**
-	 * Check when there was a naming conflict and the target is different
-	 * for some of the users
+	 * Adjust affected users' paths when their share target differs from the base target,
+	 * e.g. when the shared item's name conflicts with a pre-existing item in the recipient's files.
 	 *
-	 * @param array $affectedUsers
-	 * @param int $shareId
-	 * @return mixed
+	 * @param array<string, string> $affectedUsers User ID => target path map
+	 * @param int $shareId ID of the parent share
+	 * @return array<string, string> Updated user ID => target path map
 	 */
-	protected function fixPathsForShareExceptions(array $affectedUsers, $shareId) {
+	protected function fixPathsForShareExceptions(array $affectedUsers, int $shareId): array {
 		$queryBuilder = $this->connection->getQueryBuilder();
 		$queryBuilder->select(['share_with', 'file_target'])
 			->from('share')
 			->where($queryBuilder->expr()->eq('parent', $queryBuilder->createParameter('parent')))
-			->setParameter('parent', (int)$shareId);
+			// Ignore shares without a recipient (e.g. public-link shares).
+			->andWhere($queryBuilder->expr()->isNotNull('share_with'))
+			->setParameter('parent', $shareId);
 		$query = $queryBuilder->executeQuery();
 
 		while ($row = $query->fetch()) {
-			if ($row['share_with'] !== null) {
-				$affectedUsers[$row['share_with']] = $row['file_target'];
-			}
+			$affectedUsers[$row['share_with']] = $row['file_target'];
 		}
 
 		return $affectedUsers;
