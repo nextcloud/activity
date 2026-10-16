@@ -22,12 +22,15 @@ class AddMissingIndicesListener implements IEventListener {
 			return;
 		}
 
-		$event->replaceIndex(
+		$event->addMissingIndex(
 			'activity',
-			['activity_object'],
+			'activity_object',
+			['object_type', 'object_id'],
+		);
+		$event->addMissingIndex(
+			'activity',
 			'activity_object_user',
 			['affecteduser', 'object_type', 'object_id', 'timestamp'],
-			false,
 		);
 	}
 }
