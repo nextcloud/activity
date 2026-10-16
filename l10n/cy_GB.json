@@ -1,6 +1,7 @@
 { "translations": {
     "Personal activity feed for %s" : "Llif gweithgarwch personol ar gyfer %s",
     "Your feed URL is invalid" : "Mae eich URL llif yn annilys",
+    "Activity feed for %1$s" : "Llif gweithgaredd i %1$s",
     "Activity feed" : "Llif gweithgaredd",
     "Your settings have been updated." : "Mae eich gosodiadau wedi'u diweddaru.",
     "Settings have been updated." : "Mae'r gosodiadau wedi'u diweddaru.",
