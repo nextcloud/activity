@@ -11,31 +11,21 @@ namespace OCA\Activity;
 
 /**
  * The internal Activity objects visible in a Team's stream.
- *
- * @psalm-type FileObjectIds = list<int>
  */
 class TeamActivityScope {
 	/**
-	 * @param FileObjectIds $fileObjectIds Filecache IDs reachable through Team resources
-	 * @param array<int, string> $filePaths Readable paths relative to the viewer's files
+	 * @param list<TeamActivityFileScope> $fileScopes Accessible file roots, without enumerating their descendants
 	 * @param list<\OCP\Teams\TeamActivityScope> $resourceScopes Activity objects reachable through Team resources
 	 */
 	public function __construct(
 		public readonly int $circleObjectId,
-		public readonly array $fileObjectIds = [],
-		public readonly array $filePaths = [],
-		array $resourceScopes = [],
+		public readonly array $fileScopes = [],
+		public readonly array $resourceScopes = [],
 	) {
 		foreach ($resourceScopes as $resourceScope) {
 			if (!$resourceScope instanceof \OCP\Teams\TeamActivityScope) {
 				throw new \InvalidArgumentException('Team resource scopes must be Teams Activity scopes');
 			}
 		}
-		$this->resourceScopes = $resourceScopes !== []
-			? $resourceScopes
-			: ($this->fileObjectIds === [] ? [] : [new \OCP\Teams\TeamActivityScope('files', $this->fileObjectIds)]);
 	}
-
-	/** @var list<\OCP\Teams\TeamActivityScope> */
-	public readonly array $resourceScopes;
 }

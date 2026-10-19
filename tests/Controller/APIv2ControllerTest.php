@@ -374,7 +374,7 @@ class APIv2ControllerTest extends TestCase {
 		$user = $this->createMock(IUser::class);
 		$user->method('getUID')->willReturn('alice');
 		$this->userSession->method('getUser')->willReturn($user);
-		$scope = new TeamActivityScope(42, [7, 8]);
+		$scope = new TeamActivityScope(42);
 		$this->teamActivityResolver->expects($this->once())
 			->method('getScope')
 			->with('team-single-id', 'alice')

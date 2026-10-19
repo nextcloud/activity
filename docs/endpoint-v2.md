@@ -47,6 +47,14 @@ those files. A file resource is included directly; a folder resource includes
 its full readable subtree. Deleted files, files no longer reachable through any
 Team resource, and nested external mounts are not part of this scope.
 
+File scopes are resolved from their roots without recursively listing all
+descendants. Activity queries join `filecache` and restrict candidates to the
+resource's storage and subtree. Roots are queried in bounded chunks, so Teams
+with many file resources do not produce unbounded queries. Candidates are then
+checked through the member's mounts, including read access to intermediate
+folders. Pagination continues past inaccessible candidates until another
+visible activity is found or the matching activities are exhausted.
+
 Other Team resource providers can opt in to the stream by resolving their
 resources into Activity object scopes. Activity then filters on those object
 types and IDs without inferring scope from the Team's member roster. A resource

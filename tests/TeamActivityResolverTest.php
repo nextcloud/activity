@@ -10,16 +10,16 @@ declare(strict_types=1);
 namespace OCA\Activity\Tests;
 
 use OCA\Activity\TeamActivityResolver;
-use OCP\Files\Folder;
+use OCP\DB\IResult;
+use OCP\DB\QueryBuilder\IExpressionBuilder;
+use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\Files\File;
+use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\IUserFolder;
 use OCP\Files\Mount\IMountPoint;
 use OCP\Files\NotFoundException;
 use OCP\IDBConnection;
-use OCP\DB\IResult;
-use OCP\DB\QueryBuilder\IExpressionBuilder;
-use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\Teams\ITeamActivityResourceProvider;
 use OCP\Teams\ITeamManager;
 use OCP\Teams\ITeamResourceProvider;
@@ -43,11 +43,10 @@ class TeamActivityResolverTest extends TestCase {
 		self::assertNull($resolver->getScope('team-1', 'alice'));
 	}
 
-	public function testFolderScopeExcludesUnreadableSubtrees(): void {
+	public function testFolderScopeDoesNotEnumerateDescendants(): void {
 		$rootFolder = $this->createMock(IRootFolder::class);
 		$userFolder = $this->createMock(IUserFolder::class);
 		$folder = $this->createMock(Folder::class);
-		$denied = $this->createMock(Folder::class);
 		$mount = $this->createMock(IMountPoint::class);
 		$mount->method('getMountPoint')->willReturn('/alice/files/Team/');
 		$rootFolder->method('getUserFolder')->with('alice')->willReturn($userFolder);
@@ -56,17 +55,17 @@ class TeamActivityResolverTest extends TestCase {
 		$folder->method('getId')->willReturn(200);
 		$folder->method('isReadable')->willReturn(true);
 		$folder->method('getMountPoint')->willReturn($mount);
-		$folder->method('getDirectoryListing')->willReturn([$denied]);
-		$denied->method('getId')->willReturn(201);
-		$denied->method('isReadable')->willReturn(false);
-		$denied->expects($this->never())->method('getDirectoryListing');
+		$folder->expects($this->never())->method('getDirectoryListing');
 		$resolver = new TeamActivityResolver($this->createMock(ITeamManager::class), $this->createMock(IDBConnection::class), $rootFolder, $this->createMock(LoggerInterface::class));
 
 		$method = new \ReflectionMethod($resolver, 'getResourceObjects');
-		self::assertSame([200 => '/Team'], $method->invoke($resolver, [200], 'alice'));
+		$scopes = $method->invoke($resolver, [200], 'alice');
+		self::assertCount(1, $scopes);
+		self::assertSame($folder, $scopes[0]->root);
+		self::assertSame('/Team', $scopes[0]->viewerPath);
 	}
 
-	public function testEachMountIsCheckedAndNestedMountsAreExcluded(): void {
+	public function testEachMountIsKeptWithoutEnumeratingDescendants(): void {
 		$rootFolder = $this->createMock(IRootFolder::class);
 		$userFolder = $this->createMock(IUserFolder::class);
 		$rootFolder->method('getUserFolder')->willReturn($userFolder);
@@ -80,25 +79,15 @@ class TeamActivityResolverTest extends TestCase {
 			$root->method('getPath')->willReturn($path);
 			$root->method('isReadable')->willReturn(true);
 			$root->method('getMountPoint')->willReturn($mount);
-			$child = $this->createMock(Folder::class);
-			$child->method('getId')->willReturn(201);
-			$child->method('getPath')->willReturn($path . '/Child');
-			$child->method('isReadable')->willReturn($path === '/Second');
-			$child->method('getMountPoint')->willReturn($mount);
-			$foreign = $this->createMock(Folder::class);
-			$foreign->method('getId')->willReturn(300);
-			$foreign->method('isReadable')->willReturn(true);
-			$foreignMount = $this->createMock(IMountPoint::class);
-			$foreignMount->method('getMountPoint')->willReturn($path . '/Shared');
-			$foreign->method('getMountPoint')->willReturn($foreignMount);
-			$foreign->expects($this->never())->method('getDirectoryListing');
-			$root->method('getDirectoryListing')->willReturn([$child, $foreign]);
+			$root->expects($this->never())->method('getDirectoryListing');
 			$roots[] = $root;
 		}
 		$userFolder->method('getById')->willReturn($roots);
 		$resolver = new TeamActivityResolver($this->createMock(ITeamManager::class), $this->createMock(IDBConnection::class), $rootFolder, $this->createMock(LoggerInterface::class));
 		$method = new \ReflectionMethod($resolver, 'getResourceObjects');
-		self::assertSame([200 => '/First', 201 => '/Second/Child'], $method->invoke($resolver, [200], 'alice'));
+		$scopes = $method->invoke($resolver, [200], 'alice');
+		self::assertSame($roots, array_column($scopes, 'root'));
+		self::assertSame(['/First', '/Second'], array_column($scopes, 'viewerPath'));
 	}
 
 	public function testMissingUserFolderHasNoFileScope(): void {
@@ -109,12 +98,11 @@ class TeamActivityResolverTest extends TestCase {
 		self::assertSame([], $method->invoke($resolver, [200], 'alice'));
 	}
 
-	public function testResourceScopeIncludesFileRootsAndFolderSubtrees(): void {
+	public function testResourceScopeIncludesOnlyReadableRoots(): void {
 		$rootFolder = $this->createMock(IRootFolder::class);
 		$userFolder = $this->createMock(IUserFolder::class);
 		$folder = $this->createMock(Folder::class);
 		$file = $this->createMock(File::class);
-		$child = $this->createMock(File::class);
 		$mount = $this->createMock(IMountPoint::class);
 		$mount->method('getMountPoint')->willReturn('/alice/files/');
 		$rootFolder->method('getUserFolder')->with('alice')->willReturn($userFolder);
@@ -122,19 +110,20 @@ class TeamActivityResolverTest extends TestCase {
 		$userFolder->method('getRelativePath')->willReturnMap([
 			['/alice/files/readme.md', '/readme.md'],
 			['/alice/files/Shared', '/Shared'],
-			['/alice/files/Shared/note.md', '/Shared/note.md'],
 		]);
-		foreach ([[$file, 100, '/alice/files/readme.md'], [$folder, 200, '/alice/files/Shared'], [$child, 201, '/alice/files/Shared/note.md']] as [$node, $id, $path]) {
+		foreach ([[$file, 100, '/alice/files/readme.md'], [$folder, 200, '/alice/files/Shared']] as [$node, $id, $path]) {
 			$node->method('getId')->willReturn($id);
 			$node->method('getPath')->willReturn($path);
-			$node->method('isReadable')->willReturn(true);
+			$node->method('isReadable')->willReturn($node !== $folder);
 			$node->method('getMountPoint')->willReturn($mount);
 		}
-		$folder->method('getDirectoryListing')->willReturn([$child]);
+		$folder->expects($this->never())->method('getDirectoryListing');
 		$resolver = new TeamActivityResolver($this->createMock(ITeamManager::class), $this->createMock(IDBConnection::class), $rootFolder, $this->createMock(LoggerInterface::class));
 
 		$method = new \ReflectionMethod($resolver, 'getResourceObjects');
-		self::assertSame([100 => '/readme.md', 200 => '/Shared', 201 => '/Shared/note.md'], $method->invoke($resolver, [100, 200], 'alice'));
+		$scopes = $method->invoke($resolver, [100, 200], 'alice');
+		self::assertCount(1, $scopes);
+		self::assertSame($file, $scopes[0]->root);
 	}
 
 	public function testScopeUsesOnlyVisibleFileResources(): void {
@@ -203,14 +192,12 @@ class TeamActivityResolverTest extends TestCase {
 
 		self::assertNotNull($scope);
 		self::assertSame(42, $scope->circleObjectId);
-		self::assertSame([100, 200], $scope->fileObjectIds);
-		self::assertSame([100 => '/readme.md', 200 => '/Team/readme.md'], $scope->filePaths);
-		self::assertSame('files', $scope->resourceScopes[0]->getObjectType());
-		self::assertSame([100, 200], $scope->resourceScopes[0]->getObjectIds());
-		self::assertSame('deck_board', $scope->resourceScopes[1]->getObjectType());
-		self::assertSame([200], $scope->resourceScopes[1]->getObjectIds());
-		self::assertSame('deck_card', $scope->resourceScopes[2]->getObjectType());
-		self::assertSame([300, 301], $scope->resourceScopes[2]->getObjectIds());
+		self::assertSame([$file, $groupFolderFile], array_column($scope->fileScopes, 'root'));
+		self::assertSame(['/readme.md', '/Team/readme.md'], array_column($scope->fileScopes, 'viewerPath'));
+		self::assertSame('deck_board', $scope->resourceScopes[0]->getObjectType());
+		self::assertSame([200], $scope->resourceScopes[0]->getObjectIds());
+		self::assertSame('deck_card', $scope->resourceScopes[1]->getObjectType());
+		self::assertSame([300, 301], $scope->resourceScopes[1]->getObjectIds());
 	}
 
 	public function testProviderFailureIsLoggedAndOtherScopesAreKept(): void {

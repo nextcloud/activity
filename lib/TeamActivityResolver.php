@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OCA\Activity;
 
-use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
 use OCP\Files\Node;
 use OCP\Files\NotFoundException;
@@ -18,7 +17,6 @@ use OCP\IDBConnection;
 use OCP\Teams\ITeamActivityResourceProvider;
 use OCP\Teams\ITeamManager;
 use OCP\Teams\TeamActivityScope as ResourceActivityScope;
-use OCP\Teams\TeamResource;
 use Psr\Log\LoggerInterface;
 
 class TeamActivityResolver {
@@ -75,12 +73,8 @@ class TeamActivityResolver {
 				]);
 			}
 		}
-		$filePaths = $this->getResourceObjects(array_values(array_unique($fileResourceIds)), $userId);
-		if ($filePaths !== []) {
-			array_unshift($resourceScopes, new ResourceActivityScope('files', array_keys($filePaths)));
-		}
-
-		return new TeamActivityScope($circleObjectId, array_keys($filePaths), $filePaths, $resourceScopes);
+		$fileScopes = $this->getResourceObjects(array_values(array_unique($fileResourceIds)), $userId);
+		return new TeamActivityScope($circleObjectId, $fileScopes, $resourceScopes);
 	}
 
 	private function isMember(string $teamId, string $userId): bool {
@@ -100,16 +94,19 @@ class TeamActivityResolver {
 
 	/**
 	 * @param list<int> $resourceIds
-	 * @return array<int, string>
+	 * @return list<TeamActivityFileScope>
 	 */
 	private function getResourceObjects(array $resourceIds, string $userId): array {
+		if ($resourceIds === []) {
+			return [];
+		}
 		try {
 			$userFolder = $this->rootFolder->getUserFolder($userId);
 		} catch (NotFoundException|NotPermittedException) {
 			return [];
 		}
 
-		$paths = [];
+		$scopes = [];
 		foreach ($resourceIds as $resourceId) {
 			try {
 				$roots = $userFolder->getById($resourceId);
@@ -120,32 +117,20 @@ class TeamActivityResolver {
 				if (!$root instanceof Node) {
 					continue;
 				}
-				$visited = [];
-				$pending = [$root];
-				while ($pending !== []) {
-					$node = array_pop($pending);
-					try {
-						$id = $node->getId();
-						if ($id === null || isset($visited[$id]) || !$node->isReadable()
-							|| $node->getMountPoint()->getMountPoint() !== $root->getMountPoint()->getMountPoint()) {
-							continue;
-						}
-						$visited[$id] = true;
-						$path = $userFolder->getRelativePath($node->getPath());
-						if ($path === null) {
-							continue;
-						}
-						$paths[$id] ??= $path;
-						if ($node instanceof Folder) {
-							array_push($pending, ...$node->getDirectoryListing());
-						}
-					} catch (NotFoundException|NotPermittedException) {
+				try {
+					if ($root->getId() === null || !$root->isReadable()) {
 						continue;
 					}
+					$path = $userFolder->getRelativePath($root->getPath());
+					if ($path !== null) {
+						$scopes[] = new TeamActivityFileScope($root, $path);
+					}
+				} catch (NotFoundException|NotPermittedException) {
+					continue;
 				}
 			}
 		}
 
-		return $paths;
+		return $scopes;
 	}
 }

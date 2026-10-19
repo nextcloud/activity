@@ -17,7 +17,11 @@ use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\DB\Exception;
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\Files\Folder;
+use OCP\Files\IHomeStorage;
 use OCP\Files\IRootFolder;
+use OCP\Files\Node;
+use OCP\Files\NotFoundException;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use Psr\Log\LoggerInterface;
@@ -35,6 +39,8 @@ class Data {
 	 */
 	public const MAX_HISTOGRAM_ROWS = 100000;
 	private const TEAM_RESOURCE_OBJECT_CHUNK_SIZE = 500;
+	private const TEAM_FILE_ROOT_CHUNK_SIZE = 100;
+	private const TEAM_TIMESTAMP_BATCH_SIZE = 50;
 
 	/** @var  */
 	protected ?IQueryBuilder $insertActivity = null;
@@ -333,13 +339,17 @@ class Data {
 			// Unknown filter => ignore app filtering, as get() does.
 		}
 
-		$scopes = [['circles', [$scope->circleObjectId]]];
+		$scopes = [['circles', [$scope->circleObjectId], []]];
 		foreach ($scope->resourceScopes as $resourceScope) {
 			foreach (array_chunk($resourceScope->getObjectIds(), self::TEAM_RESOURCE_OBJECT_CHUNK_SIZE) as $objectIds) {
-				if ($objectIds !== []) {
-					$scopes[] = [$resourceScope->getObjectType(), $objectIds];
-				}
+				$scopes[] = [$resourceScope->getObjectType(), $objectIds, []];
 			}
+		}
+		$fileRoots = $this->getTeamFileRoots($scope);
+		$singleFiles = array_values(array_filter($fileRoots, static fn (array $root): bool => !$root['folder']));
+		$folders = array_values(array_filter($fileRoots, static fn (array $root): bool => $root['folder']));
+		foreach ([...array_chunk($singleFiles, self::TEAM_RESOURCE_OBJECT_CHUNK_SIZE), ...array_chunk($folders, self::TEAM_FILE_ROOT_CHUNK_SIZE)] as $chunk) {
+			$scopes[] = ['files', [], $chunk];
 		}
 
 		$cursorTimestamp = null;
@@ -356,15 +366,18 @@ class Data {
 
 		$sqlSort = ($sort === 'asc') ? 'ASC' : 'DESC';
 		$queries = [];
-		$timestamps = [];
-		foreach ($scopes as [$objectType, $objectIds]) {
-			$createQuery = function () use ($userSettings, $user, $activeFilter, $search, $objectType, $objectIds, $cursorTimestamp, $sqlSort): IQueryBuilder {
+		foreach ($scopes as [$objectType, $objectIds, $chunkRoots]) {
+			$createQuery = function () use ($userSettings, $user, $activeFilter, $search, $objectType, $objectIds, $chunkRoots, $cursorTimestamp, $sqlSort): IQueryBuilder {
 				$query = $this->connection->getQueryBuilder();
-				$query->select('*')->from('activity', 'a');
+				$query->select('a.*')->from('activity', 'a');
 				$this->applyStreamConditions($query, $userSettings, $user, 'all', $activeFilter, '', 0, null, false);
 				$this->applyTeamSearchCriteria($query, $search ?? SearchCriteria::empty(), $objectType === 'circles');
 				$query->andWhere($query->expr()->eq('object_type', $query->createNamedParameter($objectType)));
-				$query->andWhere($query->expr()->in('object_id', $query->createNamedParameter($objectIds, IQueryBuilder::PARAM_INT_ARRAY)));
+				if ($objectType === 'files') {
+					$this->applyTeamFileRoots($query, $chunkRoots);
+				} else {
+					$query->andWhere($query->expr()->in('object_id', $query->createNamedParameter($objectIds, IQueryBuilder::PARAM_INT_ARRAY)));
+				}
 				if ($cursorTimestamp !== null) {
 					$parameter = $query->createNamedParameter($cursorTimestamp, IQueryBuilder::PARAM_INT);
 					$query->andWhere($sqlSort === 'DESC' ? $query->expr()->lte('timestamp', $parameter) : $query->expr()->gte('timestamp', $parameter));
@@ -372,39 +385,76 @@ class Data {
 				return $query;
 			};
 			$queries[] = $createQuery;
-			$timestampQuery = $createQuery();
-			$timestampQuery->select('timestamp')->groupBy('timestamp')->orderBy('timestamp', $sqlSort)->setMaxResults($limit + 2);
-			$result = $timestampQuery->executeQuery();
-			foreach ($result->fetchAllAssociative() as $row) {
-				$timestamps[(int)$row['timestamp']] = (int)$row['timestamp'];
-			}
-			$result->closeCursor();
 		}
-		$sqlSort === 'DESC' ? rsort($timestamps) : sort($timestamps);
 		$rows = [];
-		foreach ($timestamps as $timestamp) {
-			$bucket = [];
+		$filePaths = [];
+		$scannedTimestamp = null;
+		while (count($rows) <= $limit) {
+			$timestamps = [];
+			$mayHaveMore = false;
 			foreach ($queries as $createQuery) {
-				$bucketQuery = $createQuery();
-				$bucketQuery->andWhere($bucketQuery->expr()->eq('timestamp', $bucketQuery->createNamedParameter($timestamp, IQueryBuilder::PARAM_INT)));
-				$result = $bucketQuery->executeQuery();
+				$timestampQuery = $createQuery();
+				if ($scannedTimestamp !== null) {
+					$parameter = $timestampQuery->createNamedParameter($scannedTimestamp, IQueryBuilder::PARAM_INT);
+					$timestampQuery->andWhere($sqlSort === 'DESC'
+						? $timestampQuery->expr()->lt('timestamp', $parameter)
+						: $timestampQuery->expr()->gt('timestamp', $parameter));
+				}
+				$timestampQuery->select('timestamp')->groupBy('timestamp')->orderBy('timestamp', $sqlSort)->setMaxResults(self::TEAM_TIMESTAMP_BATCH_SIZE);
+				$result = $timestampQuery->executeQuery();
+				$found = $result->fetchAllAssociative();
+				$result->closeCursor();
+				$mayHaveMore = $mayHaveMore || count($found) === self::TEAM_TIMESTAMP_BATCH_SIZE;
+				foreach ($found as $row) {
+					$timestamps[(int)$row['timestamp']] = (int)$row['timestamp'];
+				}
+			}
+			if ($timestamps === []) {
+				break;
+			}
+			$sqlSort === 'DESC' ? rsort($timestamps) : sort($timestamps);
+			$batch = array_slice($timestamps, 0, self::TEAM_TIMESTAMP_BATCH_SIZE);
+			// No scope filled its page and the union fits one batch: nothing is left after this batch.
+			$exhausted = !$mayHaveMore && count($timestamps) <= self::TEAM_TIMESTAMP_BATCH_SIZE;
+			// Every timestamp of any scope inside the batch range is part of the batch.
+			$buckets = array_fill_keys($batch, []);
+			foreach ($queries as $createQuery) {
+				$rangeQuery = $createQuery();
+				$rangeQuery->andWhere(
+					$rangeQuery->expr()->gte('timestamp', $rangeQuery->createNamedParameter(min($batch), IQueryBuilder::PARAM_INT)),
+					$rangeQuery->expr()->lte('timestamp', $rangeQuery->createNamedParameter(max($batch), IQueryBuilder::PARAM_INT)),
+				);
+				$result = $rangeQuery->executeQuery();
 				while ($row = $result->fetch()) {
-					$bucket[] = $this->normaliseTeamFileActivity($row, $scope->filePaths);
+					$buckets[(int)$row['timestamp']][] = $row;
 				}
 				$result->closeCursor();
 			}
-			$bucket = $this->deduplicateTeamActivities($bucket);
-			usort($bucket, static fn (array $left, array $right): int => $sqlSort === 'DESC'
-				? (int)$right['activity_id'] <=> (int)$left['activity_id']
-				: (int)$left['activity_id'] <=> (int)$right['activity_id']);
-			foreach ($bucket as $row) {
-				if ($timestamp === $cursorTimestamp && ($sqlSort === 'DESC' ? (int)$row['activity_id'] >= $since : (int)$row['activity_id'] <= $since)) {
-					continue;
+			foreach ($batch as $timestamp) {
+				$scannedTimestamp = $timestamp;
+				$bucket = [];
+				foreach ($buckets[$timestamp] as $row) {
+					$row = $this->prepareTeamActivity($scope, $row, $filePaths);
+					if ($row !== null) {
+						$bucket[] = $row;
+					}
 				}
-				$rows[] = $row;
-				if (count($rows) > $limit) {
-					break 2;
+				$bucket = $this->deduplicateTeamActivities($bucket);
+				usort($bucket, static fn (array $left, array $right): int => $sqlSort === 'DESC'
+					? (int)$right['activity_id'] <=> (int)$left['activity_id']
+					: (int)$left['activity_id'] <=> (int)$right['activity_id']);
+				foreach ($bucket as $row) {
+					if ($timestamp === $cursorTimestamp && ($sqlSort === 'DESC' ? (int)$row['activity_id'] >= $since : (int)$row['activity_id'] <= $since)) {
+						continue;
+					}
+					$rows[] = $row;
+					if (count($rows) > $limit) {
+						break 3;
+					}
 				}
+			}
+			if ($exhausted) {
+				break;
 			}
 		}
 
@@ -420,6 +470,122 @@ class Data {
 		}
 
 		return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
+	}
+
+	/**
+	 * Read raw cache paths rather than mount-relative paths, which may be jailed.
+	 * Single files need no cache lookup.
+	 *
+	 * @return list<array{fileid: int, storage: int, path: string, folder: bool}>
+	 */
+	private function getTeamFileRoots(TeamActivityScope $scope): array {
+		$nodes = [];
+		foreach ($scope->fileScopes as $fileScope) {
+			$id = $fileScope->root->getId();
+			if ($id !== null) {
+				$nodes[$id] = $fileScope->root;
+			}
+		}
+		$roots = [];
+		$folderIds = [];
+		foreach ($nodes as $id => $node) {
+			if ($node instanceof Folder) {
+				$folderIds[] = $id;
+			} else {
+				$roots[] = ['fileid' => $id, 'storage' => 0, 'path' => '', 'folder' => false];
+			}
+		}
+		foreach (array_chunk($folderIds, self::TEAM_RESOURCE_OBJECT_CHUNK_SIZE) as $ids) {
+			$query = $this->connection->getQueryBuilder();
+			$query->select('fileid', 'storage', 'path')->from('filecache')
+				->where($query->expr()->in('fileid', $query->createNamedParameter($ids, IQueryBuilder::PARAM_INT_ARRAY)));
+			$result = $query->executeQuery();
+			while ($row = $result->fetch()) {
+				$id = (int)$row['fileid'];
+				$path = (string)$row['path'];
+				if ($path === '' && $this->isHomeStorage($nodes[$id])) {
+					// Keep trash, versions and caches of a home storage out of the candidate set.
+					$path = 'files';
+				}
+				$roots[] = ['fileid' => $id, 'storage' => (int)$row['storage'], 'path' => $path, 'folder' => true];
+			}
+			$result->closeCursor();
+		}
+		return $roots;
+	}
+
+	private function isHomeStorage(Node $node): bool {
+		try {
+			return $node->getStorage()->instanceOfStorage(IHomeStorage::class);
+		} catch (NotFoundException) {
+			return false;
+		}
+	}
+
+	/** @param non-empty-list<array{fileid: int, storage: int, path: string, folder: bool}> $roots */
+	private function applyTeamFileRoots(IQueryBuilder $query, array $roots): void {
+		$fileIds = [];
+		$conditions = [];
+		foreach ($roots as $root) {
+			if (!$root['folder']) {
+				$fileIds[] = $root['fileid'];
+				continue;
+			}
+			$storageCondition = $query->expr()->eq('f.storage', $query->createNamedParameter($root['storage'], IQueryBuilder::PARAM_INT));
+			$conditions[] = $root['path'] === '' ? $storageCondition : $query->expr()->andX(
+				$storageCondition,
+				$query->expr()->orX(
+					$query->expr()->eq('f.fileid', $query->createNamedParameter($root['fileid'], IQueryBuilder::PARAM_INT)),
+					$query->expr()->like('f.path', $query->createNamedParameter($this->connection->escapeLikeParameter($root['path'] . '/') . '%')),
+				),
+			);
+		}
+		if ($conditions !== []) {
+			$query->innerJoin('a', 'filecache', 'f', $query->expr()->eq('a.object_id', 'f.fileid'));
+		}
+		if ($fileIds !== []) {
+			$conditions[] = $query->expr()->in('a.object_id', $query->createNamedParameter($fileIds, IQueryBuilder::PARAM_INT_ARRAY));
+		}
+		$query->andWhere($query->expr()->orX(...$conditions));
+	}
+
+	/**
+	 * Drop file activities the viewer cannot see and resolve the viewer's path
+	 * for the file and every file referenced in its parameters.
+	 *
+	 * @param array<int, string|null> $filePaths
+	 */
+	private function prepareTeamActivity(TeamActivityScope $scope, array $row, array &$filePaths): ?array {
+		if ($row['object_type'] === 'files') {
+			if ($this->getTeamFilePath($scope, (int)$row['object_id'], $filePaths) === null) {
+				return null;
+			}
+			$parameters = json_decode((string)$row['subjectparams'], true);
+			foreach (is_array($parameters) ? $parameters : [] as $parameter) {
+				foreach (is_array($parameter) ? array_keys($parameter) : [] as $id) {
+					if (is_numeric($id)) {
+						$this->getTeamFilePath($scope, (int)$id, $filePaths);
+					}
+				}
+			}
+		}
+
+		return $this->normaliseTeamFileActivity($row, $filePaths);
+	}
+
+	/** @param array<int, string|null> $paths */
+	private function getTeamFilePath(TeamActivityScope $scope, int $fileId, array &$paths): ?string {
+		if (!array_key_exists($fileId, $paths)) {
+			$paths[$fileId] = null;
+			foreach ($scope->fileScopes as $fileScope) {
+				$path = $fileScope->getVisiblePath($fileId);
+				if ($path !== null) {
+					$paths[$fileId] = $path;
+					break;
+				}
+			}
+		}
+		return $paths[$fileId];
 	}
 
 	/**
