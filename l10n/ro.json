@@ -1,6 +1,6 @@
 { "translations": {
     "Personal activity feed for %s" : "Fluxul personal de activitate pentru %s",
-    "Your feed URL is invalid" : "URL-ul fluxului este invalid",
+    "Your feed URL is invalid" : "URL-ul fluxului este nevalid",
     "Activity feed for %1$s" : "Flux de activitate pentru %1$s",
     "Activity feed" : "Flux de activitate",
     "Your settings have been updated." : "Setările tale au fost actualizate.",
