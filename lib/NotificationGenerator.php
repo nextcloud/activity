@@ -116,8 +116,11 @@ class NotificationGenerator implements INotifier {
 			throw new AlreadyProcessedException();
 		}
 		$this->activityManager->setCurrentUserId($notification->getUser());
-		$event = $this->populateEvent($event, $languageCode);
-		$this->activityManager->setCurrentUserId(null);
+		try {
+			$event = $this->populateEvent($event, $languageCode);
+		} finally {
+			$this->activityManager->setCurrentUserId(null);
+		}
 
 		return $this->getDisplayNotificationForEvent($event, $event->getObjectId());
 	}
