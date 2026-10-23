@@ -17,6 +17,7 @@ use OCA\Files_Sharing\SharedMount;
 use OCP\Activity\IManager;
 use OCP\BackgroundJob\IJobList;
 use OCP\Constants;
+use OCP\Federation\ICloudIdManager;
 use OCP\Files\Cache\IFileAccess;
 use OCP\Files\Config\ICachedMountFileInfo;
 use OCP\Files\Config\IMountProviderCollection;
@@ -70,6 +71,7 @@ class FilesHooks {
 		protected NotificationGenerator $notificationGenerator,
 		protected ITagManager $tagManager,
 		protected ?CirclesManager $teamManager,
+		protected readonly ICloudIdManager $cloudIdManager,
 		private IFileAccess $fileAccess,
 		private IMountProviderCollection $mountProviderCollection,
 	) {
@@ -201,10 +203,16 @@ class FilesHooks {
 	}
 
 	protected function generateRemoteActivity(array $remoteUsers, string $type, int $time, $actor, $ownerPath = false) {
+		$instances = [];
 		foreach ($remoteUsers as $remoteUser => $info) {
 			if ($actor === $remoteUser) {
 				// Current user receives the notification on their own instance already
 				continue;
+			}
+
+			$instance = $this->cloudIdManager->resolveCloudId($remoteUser)->getRemote();
+			if (!array_key_exists($instance, $instances)) {
+				$instances[$instance] = [];
 			}
 
 			$arguments = [
@@ -220,8 +228,10 @@ class FilesHooks {
 				$arguments[] = $info['second_path'];
 			}
 
-			\OCP\Server::get(IJobList::class)->add(RemoteActivity::class, $arguments);
+			$instances[$instance][] = $arguments;
 		}
+
+		\OCP\Server::get(IJobList::class)->add(RemoteActivity::class, ['instances' => $instances]);
 	}
 
 	/**
