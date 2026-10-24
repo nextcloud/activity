@@ -17,7 +17,11 @@ use OCP\Activity\IFilter;
 use OCP\Activity\IManager;
 use OCP\DB\Exception;
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\Files\Folder;
+use OCP\Files\IHomeStorage;
 use OCP\Files\IRootFolder;
+use OCP\Files\Node;
+use OCP\Files\NotFoundException;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use Psr\Log\LoggerInterface;
@@ -34,6 +38,9 @@ class Data {
 	 * chart into an unbounded fetch. Reaching it is reported rather than hidden.
 	 */
 	public const MAX_HISTOGRAM_ROWS = 100000;
+	private const TEAM_RESOURCE_OBJECT_CHUNK_SIZE = 500;
+	private const TEAM_FILE_ROOT_CHUNK_SIZE = 100;
+	private const TEAM_TIMESTAMP_BATCH_SIZE = 50;
 
 	/** @var  */
 	protected ?IQueryBuilder $insertActivity = null;
@@ -315,6 +322,349 @@ class Data {
 	}
 
 	/**
+	 * Read activities for a Team and its current resources.
+	 *
+	 * @return array{data: array, has_more: bool, headers: array}
+	 */
+	public function getTeam(GroupHelper $groupHelper, UserSettings $userSettings, string $user, int $since, int $limit, string $sort, TeamActivityScope $scope, ?SearchCriteria $search = null): array {
+		if ($user === '') {
+			throw new \OutOfBoundsException('Invalid user', 1);
+		}
+
+		$limit = max(1, min(200, $limit));
+		$activeFilter = null;
+		try {
+			$activeFilter = $this->activityManager->getFilterById('all');
+		} catch (FilterNotFoundException) {
+			// Unknown filter => ignore app filtering, as get() does.
+		}
+
+		$scopes = [['circles', [$scope->circleObjectId], []]];
+		foreach ($scope->resourceScopes as $resourceScope) {
+			foreach (array_chunk($resourceScope->getObjectIds(), self::TEAM_RESOURCE_OBJECT_CHUNK_SIZE) as $objectIds) {
+				$scopes[] = [$resourceScope->getObjectType(), $objectIds, []];
+			}
+		}
+		$fileRoots = $this->getTeamFileRoots($scope);
+		$singleFiles = array_values(array_filter($fileRoots, static fn (array $root): bool => !$root['folder']));
+		$folders = array_values(array_filter($fileRoots, static fn (array $root): bool => $root['folder']));
+		foreach ([...array_chunk($singleFiles, self::TEAM_RESOURCE_OBJECT_CHUNK_SIZE), ...array_chunk($folders, self::TEAM_FILE_ROOT_CHUNK_SIZE)] as $chunk) {
+			$scopes[] = ['files', [], $chunk];
+		}
+
+		$cursorTimestamp = null;
+		if ($since !== 0) {
+			$cursorQuery = $this->connection->getQueryBuilder();
+			$cursorQuery->select('timestamp')->from('activity')
+				->where($cursorQuery->expr()->eq('activity_id', $cursorQuery->createNamedParameter($since, IQueryBuilder::PARAM_INT)));
+			$cursorTimestamp = $cursorQuery->executeQuery()->fetchOne();
+			if ($cursorTimestamp === false) {
+				throw new \OutOfBoundsException('Unknown Team Activity cursor');
+			}
+			$cursorTimestamp = (int)$cursorTimestamp;
+		}
+
+		$sqlSort = ($sort === 'asc') ? 'ASC' : 'DESC';
+		$queries = [];
+		foreach ($scopes as [$objectType, $objectIds, $chunkRoots]) {
+			$createQuery = function () use ($userSettings, $user, $activeFilter, $search, $objectType, $objectIds, $chunkRoots, $cursorTimestamp, $sqlSort): IQueryBuilder {
+				$query = $this->connection->getQueryBuilder();
+				$query->select('a.*')->from('activity', 'a');
+				$this->applyStreamConditions($query, $userSettings, $user, 'all', $activeFilter, '', 0, null, false);
+				$this->applyTeamSearchCriteria($query, $search ?? SearchCriteria::empty(), $objectType === 'circles');
+				$query->andWhere($query->expr()->eq('object_type', $query->createNamedParameter($objectType)));
+				if ($objectType === 'files') {
+					$this->applyTeamFileRoots($query, $chunkRoots);
+				} else {
+					$query->andWhere($query->expr()->in('object_id', $query->createNamedParameter($objectIds, IQueryBuilder::PARAM_INT_ARRAY)));
+				}
+				if ($cursorTimestamp !== null) {
+					$parameter = $query->createNamedParameter($cursorTimestamp, IQueryBuilder::PARAM_INT);
+					$query->andWhere($sqlSort === 'DESC' ? $query->expr()->lte('timestamp', $parameter) : $query->expr()->gte('timestamp', $parameter));
+				}
+				return $query;
+			};
+			$queries[] = $createQuery;
+		}
+		$rows = [];
+		$filePaths = [];
+		$scannedTimestamp = null;
+		while (count($rows) <= $limit) {
+			$timestamps = [];
+			$mayHaveMore = false;
+			foreach ($queries as $createQuery) {
+				$timestampQuery = $createQuery();
+				if ($scannedTimestamp !== null) {
+					$parameter = $timestampQuery->createNamedParameter($scannedTimestamp, IQueryBuilder::PARAM_INT);
+					$timestampQuery->andWhere($sqlSort === 'DESC'
+						? $timestampQuery->expr()->lt('timestamp', $parameter)
+						: $timestampQuery->expr()->gt('timestamp', $parameter));
+				}
+				$timestampQuery->select('timestamp')->groupBy('timestamp')->orderBy('timestamp', $sqlSort)->setMaxResults(self::TEAM_TIMESTAMP_BATCH_SIZE);
+				$result = $timestampQuery->executeQuery();
+				$found = $result->fetchAllAssociative();
+				$result->closeCursor();
+				$mayHaveMore = $mayHaveMore || count($found) === self::TEAM_TIMESTAMP_BATCH_SIZE;
+				foreach ($found as $row) {
+					$timestamps[(int)$row['timestamp']] = (int)$row['timestamp'];
+				}
+			}
+			if ($timestamps === []) {
+				break;
+			}
+			$sqlSort === 'DESC' ? rsort($timestamps) : sort($timestamps);
+			$batch = array_slice($timestamps, 0, self::TEAM_TIMESTAMP_BATCH_SIZE);
+			// No scope filled its page and the union fits one batch: nothing is left after this batch.
+			$exhausted = !$mayHaveMore && count($timestamps) <= self::TEAM_TIMESTAMP_BATCH_SIZE;
+			// Every timestamp of any scope inside the batch range is part of the batch.
+			$buckets = array_fill_keys($batch, []);
+			foreach ($queries as $createQuery) {
+				$rangeQuery = $createQuery();
+				$rangeQuery->andWhere(
+					$rangeQuery->expr()->gte('timestamp', $rangeQuery->createNamedParameter(min($batch), IQueryBuilder::PARAM_INT)),
+					$rangeQuery->expr()->lte('timestamp', $rangeQuery->createNamedParameter(max($batch), IQueryBuilder::PARAM_INT)),
+				);
+				$result = $rangeQuery->executeQuery();
+				while ($row = $result->fetch()) {
+					$buckets[(int)$row['timestamp']][] = $row;
+				}
+				$result->closeCursor();
+			}
+			foreach ($batch as $timestamp) {
+				$scannedTimestamp = $timestamp;
+				$bucket = [];
+				foreach ($buckets[$timestamp] as $row) {
+					$row = $this->prepareTeamActivity($scope, $row, $filePaths);
+					if ($row !== null) {
+						$bucket[] = $row;
+					}
+				}
+				$bucket = $this->deduplicateTeamActivities($bucket);
+				usort($bucket, static fn (array $left, array $right): int => $sqlSort === 'DESC'
+					? (int)$right['activity_id'] <=> (int)$left['activity_id']
+					: (int)$left['activity_id'] <=> (int)$right['activity_id']);
+				foreach ($bucket as $row) {
+					if ($timestamp === $cursorTimestamp && ($sqlSort === 'DESC' ? (int)$row['activity_id'] >= $since : (int)$row['activity_id'] <= $since)) {
+						continue;
+					}
+					$rows[] = $row;
+					if (count($rows) > $limit) {
+						break 3;
+					}
+				}
+			}
+			if ($exhausted) {
+				break;
+			}
+		}
+
+		$hasMore = count($rows) > $limit;
+		$rows = array_slice($rows, 0, $limit);
+		$headers = [];
+		foreach ($rows as $row) {
+			if ($row['object_type'] === 'files') {
+				$row['affecteduser'] = $user;
+			}
+			$headers['X-Activity-Last-Given'] = (int)$row['activity_id'];
+			$groupHelper->addActivity($row);
+		}
+
+		return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
+	}
+
+	/**
+	 * Read raw cache paths rather than mount-relative paths, which may be jailed.
+	 * Single files need no cache lookup.
+	 *
+	 * @return list<array{fileid: int, storage: int, path: string, folder: bool}>
+	 */
+	private function getTeamFileRoots(TeamActivityScope $scope): array {
+		$nodes = [];
+		foreach ($scope->fileScopes as $fileScope) {
+			$id = $fileScope->root->getId();
+			if ($id !== null) {
+				$nodes[$id] = $fileScope->root;
+			}
+		}
+		$roots = [];
+		$folderIds = [];
+		foreach ($nodes as $id => $node) {
+			if ($node instanceof Folder) {
+				$folderIds[] = $id;
+			} else {
+				$roots[] = ['fileid' => $id, 'storage' => 0, 'path' => '', 'folder' => false];
+			}
+		}
+		foreach (array_chunk($folderIds, self::TEAM_RESOURCE_OBJECT_CHUNK_SIZE) as $ids) {
+			$query = $this->connection->getQueryBuilder();
+			$query->select('fileid', 'storage', 'path')->from('filecache')
+				->where($query->expr()->in('fileid', $query->createNamedParameter($ids, IQueryBuilder::PARAM_INT_ARRAY)));
+			$result = $query->executeQuery();
+			while ($row = $result->fetch()) {
+				$id = (int)$row['fileid'];
+				$path = (string)$row['path'];
+				if ($path === '' && $this->isHomeStorage($nodes[$id])) {
+					// Keep trash, versions and caches of a home storage out of the candidate set.
+					$path = 'files';
+				}
+				$roots[] = ['fileid' => $id, 'storage' => (int)$row['storage'], 'path' => $path, 'folder' => true];
+			}
+			$result->closeCursor();
+		}
+		return $roots;
+	}
+
+	private function isHomeStorage(Node $node): bool {
+		try {
+			return $node->getStorage()->instanceOfStorage(IHomeStorage::class);
+		} catch (NotFoundException) {
+			return false;
+		}
+	}
+
+	/** @param non-empty-list<array{fileid: int, storage: int, path: string, folder: bool}> $roots */
+	private function applyTeamFileRoots(IQueryBuilder $query, array $roots): void {
+		$fileIds = [];
+		$conditions = [];
+		foreach ($roots as $root) {
+			if (!$root['folder']) {
+				$fileIds[] = $root['fileid'];
+				continue;
+			}
+			$storageCondition = $query->expr()->eq('f.storage', $query->createNamedParameter($root['storage'], IQueryBuilder::PARAM_INT));
+			$conditions[] = $root['path'] === '' ? $storageCondition : $query->expr()->andX(
+				$storageCondition,
+				$query->expr()->orX(
+					$query->expr()->eq('f.fileid', $query->createNamedParameter($root['fileid'], IQueryBuilder::PARAM_INT)),
+					$query->expr()->like('f.path', $query->createNamedParameter($this->connection->escapeLikeParameter($root['path'] . '/') . '%')),
+				),
+			);
+		}
+		if ($conditions !== []) {
+			$query->innerJoin('a', 'filecache', 'f', $query->expr()->eq('a.object_id', 'f.fileid'));
+		}
+		if ($fileIds !== []) {
+			$conditions[] = $query->expr()->in('a.object_id', $query->createNamedParameter($fileIds, IQueryBuilder::PARAM_INT_ARRAY));
+		}
+		$query->andWhere($query->expr()->orX(...$conditions));
+	}
+
+	/**
+	 * Drop file activities the viewer cannot see and resolve the viewer's path
+	 * for the file and every file referenced in its parameters.
+	 *
+	 * @param array<int, string|null> $filePaths
+	 */
+	private function prepareTeamActivity(TeamActivityScope $scope, array $row, array &$filePaths): ?array {
+		if ($row['object_type'] === 'files') {
+			if ($this->getTeamFilePath($scope, (int)$row['object_id'], $filePaths) === null) {
+				return null;
+			}
+			$parameters = json_decode((string)$row['subjectparams'], true);
+			foreach (is_array($parameters) ? $parameters : [] as $parameter) {
+				foreach (is_array($parameter) ? array_keys($parameter) : [] as $id) {
+					if (is_numeric($id)) {
+						$this->getTeamFilePath($scope, (int)$id, $filePaths);
+					}
+				}
+			}
+		}
+
+		return $this->normaliseTeamFileActivity($row, $filePaths);
+	}
+
+	/** @param array<int, string|null> $paths */
+	private function getTeamFilePath(TeamActivityScope $scope, int $fileId, array &$paths): ?string {
+		if (!array_key_exists($fileId, $paths)) {
+			$paths[$fileId] = null;
+			foreach ($scope->fileScopes as $fileScope) {
+				$path = $fileScope->getVisiblePath($fileId);
+				if ($path !== null) {
+					$paths[$fileId] = $path;
+					break;
+				}
+			}
+		}
+		return $paths[$fileId];
+	}
+
+	/**
+	 * Files publishes one recipient-specific row per user. A Team stream has no
+	 * single recipient, so turn the self-only wording into its actor form before
+	 * collapsing otherwise identical rows.
+	 */
+	private function normaliseTeamFileActivity(array $row, array $filePaths = []): array {
+		if ($row['app'] !== 'files' || $row['object_type'] !== 'files' || !preg_match('/^(created|changed|deleted|restored|renamed|moved)_(self|by)(_enc)?$/', (string)$row['subject'], $matches)) {
+			return $row;
+		}
+
+		$parameters = json_decode((string)$row['subjectparams'], true);
+		if (!is_array($parameters)) {
+			return $row;
+		}
+
+		$action = $matches[1];
+		if ($matches[2] === 'self') {
+			$parameters = in_array($action, ['renamed', 'moved'], true)
+				? [$parameters[0] ?? [], $row['user'], $parameters[1] ?? []]
+				: [$parameters[0] ?? [], $row['user']];
+		}
+		$sourcePath = is_array($parameters[0] ?? null) ? reset($parameters[0]) : ($parameters[0] ?? '');
+		foreach ($parameters as &$parameter) {
+			if (!is_array($parameter)) {
+				continue;
+			}
+			foreach ($parameter as $fileId => &$path) {
+				if (is_string($path) && is_numeric($fileId)) {
+					$path = isset($filePaths[$fileId]) && is_string($sourcePath)
+						? $this->normaliseTeamFilePath($path, $sourcePath, $filePaths[$fileId])
+						: basename($path);
+				}
+			}
+			unset($path);
+		}
+		unset($parameter);
+		$row['file'] = $filePaths[$row['object_id']] ?? basename($row['file']);
+		$row['link'] = '';
+		$row['subject'] = $action . '_by' . ($matches[3] ?? '');
+		$row['subjectparams'] = json_encode($parameters, JSON_THROW_ON_ERROR);
+
+		return $row;
+	}
+
+	private function normaliseTeamFilePath(string $path, string $sourcePath, string $viewerPath): string {
+		$source = explode('/', trim(dirname($sourcePath), '/'));
+		$target = explode('/', trim(dirname($viewerPath), '/'));
+		$relative = explode('/', trim($path, '/'));
+		while ($source !== [] && $relative !== [] && $source[0] === $relative[0]) {
+			array_shift($source);
+			array_shift($relative);
+		}
+		$target = array_slice($target, 0, max(0, count($target) - count($source)));
+		return '/' . implode('/', array_merge($target, $relative));
+	}
+
+	/**
+	 * @param list<array<string, mixed>> $rows
+	 * @return list<array<string, mixed>>
+	 */
+	private function deduplicateTeamActivities(array $rows): array {
+		$deduplicated = [];
+		foreach ($rows as $row) {
+			$key = implode("\0", [
+				$row['app'], $row['subject'], $row['subjectparams'], $row['message'], $row['messageparams'],
+				$row['file'], $row['link'], $row['user'], $row['timestamp'], $row['priority'], $row['type'],
+				$row['object_type'], $row['object_id'],
+			]);
+			if (!isset($deduplicated[$key]) || (int)$row['activity_id'] < (int)$deduplicated[$key]['activity_id']) {
+				$deduplicated[$key] = $row;
+			}
+		}
+
+		return array_values($deduplicated);
+	}
+
+	/**
 	 * Restrict a query to the activities a user may see under a given filter.
 	 *
 	 * Shared by the stream itself and by {@see self::getDailyCounts()} so the two
@@ -332,8 +682,11 @@ class Data {
 		string $objectType,
 		int $objectId,
 		?SearchCriteria $search,
+		bool $restrictToAffectedUser = true,
 	): void {
-		$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)));
+		if ($restrictToAffectedUser) {
+			$query->where($query->expr()->eq('affecteduser', $query->createNamedParameter($user)));
+		}
 
 		if ($activeFilter instanceof IFilter && !($activeFilter instanceof AllFilter)) {
 			$notificationTypes = $userSettings->getNotificationTypes();
@@ -508,6 +861,42 @@ class Data {
 
 		if ($criteria->actor !== null) {
 			$query->andWhere($query->expr()->eq('user', $query->createNamedParameter($criteria->actor)));
+		}
+	}
+
+	/**
+	 * Apply Team stream restrictions. Unlike the personal stream, Team Activity
+	 * includes roster events without a file path, so a text search also covers
+	 * their subject identifier and serialized rich-subject parameters.
+	 */
+	private function applyTeamSearchCriteria(IQueryBuilder $query, SearchCriteria $criteria, bool $includeHistoricalInitiator): void {
+		if ($criteria->from !== null) {
+			$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($criteria->from, IQueryBuilder::PARAM_INT)));
+		}
+
+		if ($criteria->to !== null) {
+			$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($criteria->to, IQueryBuilder::PARAM_INT)));
+		}
+
+		if ($criteria->term !== null) {
+			$pattern = '%' . $this->connection->escapeLikeParameter($criteria->term) . '%';
+			$query->andWhere($query->expr()->orX(
+				$query->expr()->iLike('file', $query->createNamedParameter($pattern)),
+				$query->expr()->iLike('subject', $query->createNamedParameter($pattern)),
+				$query->expr()->iLike('subjectparams', $query->createNamedParameter($pattern)),
+			));
+		}
+
+		if ($criteria->actor !== null) {
+			$authorCondition = $query->expr()->eq('user', $query->createNamedParameter($criteria->actor));
+			if ($includeHistoricalInitiator) {
+				$initiatorPattern = '%"initiator":{"userId":"' . $this->connection->escapeLikeParameter($criteria->actor) . '"%';
+				$authorCondition = $query->expr()->orX(
+					$authorCondition,
+					$query->expr()->iLike('subjectparams', $query->createNamedParameter($initiatorPattern)),
+				);
+			}
+			$query->andWhere($authorCondition);
 		}
 	}
 
