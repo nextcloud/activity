@@ -17,6 +17,7 @@ OC.L10N.register(
     "You can disable daily digest emails in the settings: %s" : "Je kunt de dagelijkse digest berichten uitschakelen onder <a href=\"%s\">instellingen</a>.",
     "All activities" : "Alle activiteiten",
     "By others" : "Van anderen",
+    "Focused" : "Gericht",
     "By you" : "Van jou",
     "Activity at %s" : "Activiteit op %s",
     "Hello %s" : "Hallo %s",
