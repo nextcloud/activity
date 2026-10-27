@@ -36,6 +36,7 @@ OC.L10N.register(
     "No activity yet" : "Још нема активности",
     "Enable RSS feed" : "Укључи РСС довод",
     "RSS feed" : "РСС довод",
+    "Notification" : "Obaveštenje",
     "Default settings" : "Подразумеване поставке",
     "No more events to load" : "Нема више догађаја за приказ"
 },
