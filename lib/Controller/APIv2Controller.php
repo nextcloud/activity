@@ -355,6 +355,7 @@ class APIv2Controller extends OCSController {
 					'y' => 250,
 					'fileId' => $fileId,
 					'c' => $fileInfo->getEtag(),
+					'mimeFallback' => 1,
 				];
 
 				$preview['source'] = $this->urlGenerator->linkToRouteAbsolute('core.Preview.getPreviewByFileId', $params);
