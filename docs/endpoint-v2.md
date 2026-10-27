@@ -32,6 +32,39 @@ With type filter
 GET /ocs/v2.php/apps/activity/api/v2/activity/{filter}
 ```
 
+With a Team's roster and resource activity
+
+```
+GET /ocs/v2.php/apps/activity/api/v2/activity/team/{teamId}
+```
+
+The Team endpoint is available only to current Team members. It accepts the
+same pagination, ordering, search, date, and actor parameters as the default
+stream. It includes roster activity from before the current member's join date.
+File activity is limited to the Team's current `files` resources that are
+readable through the member's own mounts and ACLs, including older events for
+those files. A file resource is included directly; a folder resource includes
+its full readable subtree. Deleted files, files no longer reachable through any
+Team resource, and nested external mounts are not part of this scope.
+
+File scopes are resolved from their roots without recursively listing all
+descendants. Activity queries join `filecache` and restrict candidates to the
+resource's storage and subtree. Roots are queried in bounded chunks, so Teams
+with many file resources do not produce unbounded queries. Candidates are then
+checked through the member's mounts, including read access to intermediate
+folders. Pagination continues past inaccessible candidates until another
+visible activity is found or the matching activities are exhausted.
+
+Other Team resource providers can opt in to the stream by resolving their
+resources into Activity object scopes. Activity then filters on those object
+types and IDs without inferring scope from the Team's member roster. A resource
+may be shared with other Teams or accounts; it only needs to be currently
+reachable through this Team's resources.
+
+Recipient copies are normalized to the viewer's file paths and deduplicated
+before pagination. An empty Team page returns `200 OK`; a matching ETag returns
+`304 Not Modified`. The existing personal stream retains its empty-page `304`.
+
 Supported type filters can be obtained from:
 
 ```
@@ -93,11 +126,11 @@ Status Code | Description
 ----------- | -----------
 `200 OK` |  Activities
 `204 No Content` |  The user has selected no activities to be listed in the stream
-`304 Not Modified` | ETag/If-None-Match are the same or the end of the activity list was reached
+`304 Not Modified` | ETag/If-None-Match are the same, or the personal stream is empty
 `400 Bad Request` | The search term is too short or too long, or `from` is after `to`
 `403 Forbidden` | The offset activity belongs to a different user
 `403 Forbidden` | The user is not logged in
-`404 Not Found` | The filter is unknown
+`404 Not Found` | The filter is unknown, or the Team does not exist or the user is not one of its members
 
 ## Headers
 

@@ -14,6 +14,8 @@ use OCA\Activity\Exception\InvalidFilterException;
 use OCA\Activity\Exception\InvalidSearchCriteriaException;
 use OCA\Activity\GroupHelper;
 use OCA\Activity\SearchCriteria;
+use OCA\Activity\TeamActivityResolver;
+use OCA\Activity\TeamActivityScope;
 use OCA\Activity\UserSettings;
 use OCA\Activity\ViewInfoCache;
 use OCP\Activity\IFilter;
@@ -70,6 +72,7 @@ class APIv2Controller extends OCSController {
 		protected ViewInfoCache $infoCache,
 		protected INotificationManager $notificationManager,
 		protected IDateTimeZone $dateTimeZone,
+		protected TeamActivityResolver $teamActivityResolver,
 	) {
 		parent::__construct($appName, $request);
 		$this->activityManager = $activityManager;
@@ -129,6 +132,27 @@ class APIv2Controller extends OCSController {
 	#[NoAdminRequired]
 	public function getFilter(string $filter, int $since = 0, int $limit = 50, bool $previews = false, string $object_type = '', int $object_id = 0, string $sort = 'desc', string $search = '', int $from = 0, int $to = 0, string $actor = ''): DataResponse {
 		return $this->get($filter, $since, $limit, $previews, $object_type, $object_id, $sort, $search, $from, $to, $actor);
+	}
+
+	/**
+	 * @param string $search Only return activities whose file path contains this substring
+	 * @param int $from Only return activities at or after this Unix timestamp
+	 * @param int $to Only return activities at or before this Unix timestamp
+	 * @param string $actor Only return activities authored by this account
+	 */
+	#[NoAdminRequired]
+	public function getTeam(string $teamId, int $since = 0, int $limit = 50, bool $previews = false, string $sort = 'desc', string $search = '', int $from = 0, int $to = 0, string $actor = ''): DataResponse {
+		$user = $this->userSession->getUser();
+		if (!$user instanceof IUser) {
+			return new DataResponse([], Http::STATUS_FORBIDDEN);
+		}
+
+		$scope = $this->teamActivityResolver->getScope($teamId, $user->getUID());
+		if ($scope === null) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		}
+
+		return $this->get('all', $since, $limit, $previews, '', 0, $sort, $search, $from, $to, $actor, $scope);
 	}
 
 	/**
@@ -250,7 +274,7 @@ class APIv2Controller extends OCSController {
 		return new DataResponse($filters);
 	}
 
-	protected function get(string $filter, int $since, int $limit, bool $previews, string $filterObjectType, int $filterObjectId, string $sort, string $search = '', int $from = 0, int $to = 0, string $actor = ''): DataResponse {
+	protected function get(string $filter, int $since, int $limit, bool $previews, string $filterObjectType, int $filterObjectId, string $sort, string $search = '', int $from = 0, int $to = 0, string $actor = '', ?TeamActivityScope $teamScope = null): DataResponse {
 		try {
 			$this->validateParameters($filter, $since, $limit, $previews, $filterObjectType, $filterObjectId, $sort, $search, $from, $to, $actor);
 		} catch (InvalidFilterException) {
@@ -263,21 +287,32 @@ class APIv2Controller extends OCSController {
 
 		$this->activityManager->setRequirePNG(false);
 		try {
-			$response = $this->data->get(
-				$this->helper,
-				$this->settings,
-				$this->user,
+			$response = $teamScope === null
+				? $this->data->get(
+					$this->helper,
+					$this->settings,
+					$this->user,
 
-				$this->since,
-				$this->limit,
-				$this->sort,
+					$this->since,
+					$this->limit,
+					$this->sort,
 
-				$this->filter,
-				$this->objectType,
-				$this->objectId,
-				false,
-				$this->searchCriteria
-			);
+					$this->filter,
+					$this->objectType,
+					$this->objectId,
+					false,
+					$this->searchCriteria
+				)
+				: $this->data->getTeam(
+					$this->helper,
+					$this->settings,
+					$this->user,
+					$this->since,
+					$this->limit,
+					$this->sort,
+					$teamScope,
+					$this->searchCriteria
+				);
 		} catch (\OutOfBoundsException) {
 			// Invalid since argument
 			return new DataResponse([], Http::STATUS_FORBIDDEN);
@@ -288,7 +323,7 @@ class APIv2Controller extends OCSController {
 		$this->activityManager->setRequirePNG(false);
 
 		$headers = $this->generateHeaders($response['headers'], $response['has_more'], $response['data']);
-		if (empty($response['data']) || $this->request->getHeader('If-None-Match') === $headers['ETag']) {
+		if (($teamScope === null && empty($response['data'])) || $this->request->getHeader('If-None-Match') === $headers['ETag']) {
 			return new DataResponse([], Http::STATUS_NOT_MODIFIED, $headers);
 		}
 
