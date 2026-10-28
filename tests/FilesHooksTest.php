@@ -173,6 +173,19 @@ class FilesHooksTest extends TestCase {
 		return $user;
 	}
 
+	protected function getCachedMountFileInfo(string $uid): CachedMountFileInfo {
+		return new CachedMountFileInfo(
+			$this->getUserMock($uid),
+			1,
+			1,
+			'/' . $uid . '/files',
+			null,
+			'',
+			'path',
+			'files/path'
+		);
+	}
+
 	public static function dataFileCreate(): array {
 		return [
 			['user', false, 'created_self', 'created_by', Files::TYPE_SHARE_CREATED],
@@ -497,6 +510,191 @@ class FilesHooksTest extends TestCase {
 		self::invokePrivate($filesHooks, 'addNotificationsForFileAction', [$node, Files::TYPE_SHARE_RESTORED, 'restored_self', 'restored_by']);
 
 		$this->assertEquals($addCalls, array_slice($receivedActivities, 0, count($addCalls)));
+	}
+
+	public static function dataAddNotificationsForFileActionNumericUserIds(): array {
+		return [
+			'access list only' => [
+				false,
+				[
+					['56', 'created_self', false, false],
+					['55', 'created_by', 20, true],
+				],
+			],
+			'access list and cached mounts' => [
+				true,
+				[
+					['56', 'created_self', false, false],
+					['55', 'created_by', 20, true],
+					['232', 'created_by', 30, true],
+				],
+			],
+		];
+	}
+
+	/**
+	 * Numeric user IDs become integer array keys, they must not be renumbered
+	 * when the recipient lists and the notification settings are merged.
+	 */
+	#[DataProvider('dataAddNotificationsForFileActionNumericUserIds')]
+	public function testAddNotificationsForFileActionNumericUserIds(bool $mountCacheUsed, array $expected): void {
+		// User 55 favorited the file, so their settings are merged from two lookups
+		$this->tagManager = $this->createMock(TagManager::class);
+		$this->tagManager->method('getUsersFavoritingObject')
+			->willReturn(['55']);
+		$filesHooks = $this->getFilesHooks([
+			'getSourcePathAndOwner',
+			'getUserPathsFromPath',
+			'addNotificationsForUser',
+		], '56');
+
+		$filesHooks->method('getSourcePathAndOwner')
+			->willReturn(['/path', '56', 1337]);
+		$filesHooks->method('getUserPathsFromPath')
+			->willReturn([
+				'ownerPath' => '/path',
+				'users' => ['56' => '/path', '55' => '/path'],
+				'remotes' => [],
+			]);
+
+		$this->config->expects($this->once())
+			->method('getSystemValueBool')
+			->with('activity_use_cached_mountpoints', false)
+			->willReturn($mountCacheUsed);
+		$this->userMountCache->method('getMountsForFileId')
+			->willReturn([
+				$this->getCachedMountFileInfo('56'),
+				$this->getCachedMountFileInfo('232'),
+			]);
+
+		$settings = [
+			'email' => ['55' => 20, '232' => 30],
+			'notification' => ['232' => true],
+		];
+		$favoriteSettings = [
+			'email' => [],
+			'notification' => ['55' => true],
+		];
+		$this->settings->method('filterUsersBySetting')
+			->willReturnCallback(fn (array $users, string $method, string $type): array => array_intersect_key(
+				$type === Files::TYPE_FAVORITE_CHANGED ? $favoriteSettings[$method] : $settings[$method],
+				array_flip($users),
+			));
+
+		$received = [];
+		$filesHooks->method('addNotificationsForUser')
+			->willReturnCallback(function ($user, $subject, $subjectParams, $fileId, $path, $isFile, $email, $notification) use (&$received): void {
+				$received[] = [$user, $subject, $email, $notification];
+			});
+
+		self::invokePrivate($filesHooks, 'addNotificationsForFileAction', [$this->getNodeMock(1337, '/56/files/path'), Files::TYPE_SHARE_CREATED, 'created_self', 'created_by']);
+
+		$this->assertSame($expected, $received);
+	}
+
+	public function testFileRenamingNumericUserIdsWithMountCache(): void {
+		$filesHooks = $this->getFilesHooks([
+			'getSourcePathAndOwner',
+			'getUserPathsFromPath',
+			'addNotificationsForUser',
+		], '56');
+
+		$filesHooks->method('getSourcePathAndOwner')
+			->willReturn(['/folder', '56', 42]);
+		$filesHooks->method('getUserPathsFromPath')
+			->willReturn([
+				'users' => ['56' => '/folder', '55' => '/folder'],
+				'remotes' => [],
+			]);
+
+		$this->config->expects($this->once())
+			->method('getSystemValueBool')
+			->with('activity_use_cached_mountpoints', false)
+			->willReturn(true);
+		$this->userMountCache->method('getMountsForFileId')
+			->willReturn([
+				$this->getCachedMountFileInfo('56'),
+				$this->getCachedMountFileInfo('232'),
+			]);
+		$this->settings->method('filterUsersBySetting')
+			->willReturn([]);
+
+		$received = [];
+		$filesHooks->method('addNotificationsForUser')
+			->willReturnCallback(function ($user, $subject) use (&$received): void {
+				$received[] = [$user, $subject];
+			});
+
+		$target = $this->getNodeMock(42, '/56/files/folder/new.txt');
+		$target->method('getParent')
+			->willReturn($this->getNodeMock(23, '/56/files/folder', false));
+
+		self::invokePrivate($filesHooks, 'fileRenaming', [$this->getNodeMock(42, '/56/files/folder/old.txt'), $target]);
+
+		$this->assertSame([
+			['56', 'renamed_self'],
+			['55', 'renamed_by'],
+			['232', 'renamed_by'],
+		], $received);
+	}
+
+	public function testFileMoveNumericUserIdsWithMountCache(): void {
+		$filesHooks = $this->getFilesHooks([
+			'getSourcePathAndOwner',
+			'getUserPathsFromPath',
+			'addNotificationsForUser',
+		], '56');
+
+		$sourceParent = $this->getNodeMock(10, '/56/files/a', false);
+		$targetParent = $this->getNodeMock(11, '/56/files/b', false);
+		$source = $this->getNodeMock(42, '/56/files/a/file.txt');
+		$source->method('getParent')
+			->willReturn($sourceParent);
+		$target = $this->getNodeMock(42, '/56/files/b/file.txt');
+		$target->method('getParent')
+			->willReturn($targetParent);
+
+		$filesHooks->method('getSourcePathAndOwner')
+			->willReturnCallback(fn (Node $node): array => match ($node) {
+				$sourceParent => ['/a', '56', 10],
+				$targetParent => ['/b', '56', 11],
+				$source => ['/a/file.txt', '56', 42],
+				$target => ['/b/file.txt', '56', 42],
+			});
+		$filesHooks->method('getUserPathsFromPath')
+			->willReturnCallback(fn (string $path): array => [
+				'users' => $path === '/a' ? ['56' => '/a', '55' => '/a'] : ['56' => '/b'],
+				'remotes' => [],
+			]);
+
+		$this->config->method('getSystemValueBool')
+			->with('activity_use_cached_mountpoints', false)
+			->willReturn(true);
+		$this->userMountCache->expects($this->exactly(2))
+			->method('getMountsForFileId')
+			->with(42)
+			->willReturnOnConsecutiveCalls(
+				[$this->getCachedMountFileInfo('232')],
+				[$this->getCachedMountFileInfo('77')],
+			);
+		$this->settings->method('filterUsersBySetting')
+			->willReturn([]);
+
+		$received = [];
+		$filesHooks->method('addNotificationsForUser')
+			->willReturnCallback(function ($user, $subject) use (&$received): void {
+				$received[] = [$user, $subject];
+			});
+
+		$filesHooks->fileMove($source, $target);
+		$filesHooks->fileMovePost($source, $target);
+
+		$this->assertSame([
+			['55', 'deleted_by'],
+			['232', 'deleted_by'],
+			['77', 'created_by'],
+			['56', 'moved_self'],
+		], $received);
 	}
 
 	public function testFileMoveCollectsOldAccessList(): void {
