@@ -48,7 +48,10 @@
 <script lang="ts">
 import type { IPreview } from '../../models/types.ts'
 
+import { File, Permission } from '@nextcloud/files'
+import { getRemoteURL, getRootPath } from '@nextcloud/files/dav'
 import { translate as t } from '@nextcloud/l10n'
+import { canView, getViewer } from '@nextcloud/viewer'
 import { defineComponent } from 'vue'
 import NcAvatar from '@nextcloud/vue/components/NcAvatar'
 import NcDateTime from '@nextcloud/vue/components/NcDateTime'
@@ -134,21 +137,34 @@ export default defineComponent({
 
 		/**
 		 * Handle clicking a preview
-		 * Check if viewer is available and can open the file, if not navigate to it
+		 * Open it in the viewer when the viewer shows it, alone, or navigate to it
 		 *
 		 * @param event The click event
 		 * @param preview The preview to open
 		 */
 		handlePreviewClick(event: MouseEvent, preview: IPreview) {
-			if (preview.filePath && window?.OCA?.Viewer?.open !== undefined && window.OCA.Viewer.mimetypes.includes(preview.mimeType)) {
-				try {
-					window.OCA.Viewer.open({ path: preview.filePath.replace(/^\/[^/]+\/files/, '') })
-					event.preventDefault()
-					event.stopPropagation()
-				} catch (error) {
-					logger.debug(error as Error)
-				}
+			if (!preview.filePath) {
+				return
 			}
+			// The activity says nothing of the permissions, so read only: the
+			// viewer then offers no edit it cannot save
+			const file = new File({
+				id: preview.fileId,
+				source: getRemoteURL() + getRootPath() + preview.filePath.replace(/^\/[^/]+\/files/, ''),
+				root: getRootPath(),
+				mime: preview.mimeType,
+				owner: null,
+				permissions: Permission.READ,
+				attributes: { hasPreview: !preview.isMimeTypeIcon },
+			})
+			if (!canView(file)) {
+				return
+			}
+			event.preventDefault()
+			event.stopPropagation()
+			getViewer().open([file], file).catch((error) => {
+				logger.error('Could not open the file in the viewer', { error })
+			})
 		},
 	},
 })
