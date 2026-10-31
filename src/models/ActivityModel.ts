@@ -128,7 +128,7 @@ export default class ActivityModel {
 	 * Get the activity message_rich objects
 	 */
 	get messageRichObjects(): Record<string, IRichObject> {
-		if (!Array.isArray(this._activity.message_rich[1])) {
+		if (Array.isArray(this._activity.message_rich[1])) {
 			return {}
 		}
 
