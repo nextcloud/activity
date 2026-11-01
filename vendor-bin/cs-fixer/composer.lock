@@ -57,7 +57,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-19T20:46:56+00:00"
+            "time": "2026-09-19T20:46:56+00:00",
+            "published-time": "2026-09-19T20:48:20+00:00"
         },
         {
             "name": "nextcloud/coding-standard",
@@ -102,7 +103,8 @@
                 "issues": "https://github.com/nextcloud/coding-standard/issues",
                 "source": "https://github.com/nextcloud/coding-standard/tree/v1.5.0"
             },
-            "time": "2026-05-19T18:30:09+00:00"
+            "time": "2026-05-19T18:30:09+00:00",
+            "published-time": "2026-05-20T06:24:52+00:00"
         },
         {
             "name": "php-cs-fixer/shim",
@@ -160,7 +162,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-22T09:55:22+00:00"
+            "time": "2026-09-22T09:55:22+00:00",
+            "published-time": "2026-09-22T09:55:30+00:00"
         }
     ],
     "aliases": [],
@@ -170,5 +173,5 @@
     "prefer-lowest": false,
     "platform": {},
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }
