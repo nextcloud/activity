@@ -1,0 +1,2 @@
+import{l as s}from"./ActivityComponent.vue_vue_type_script_setup_true_lang-BjOgZsKc.chunk.mjs";function a(t){if(typeof t!="string")return t??[];try{return JSON.parse(t||"[]")}catch(e){s.error("Could not read the share attributes of a file",{attributes:t,error:e});return}}function d(t){const e=t.attributes,o=e?.["hide-download"];if(o===!0||o==="true")return!1;const r=a(e?.["share-attributes"]);return r===void 0?!1:r.length>0?r.find(({scope:i,key:n})=>i==="permissions"&&n==="download")?.value!==!1:!0}export{d as c};
+//# sourceMappingURL=canDownload-kTdfCEun.chunk.mjs.map
