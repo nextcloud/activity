@@ -18,6 +18,7 @@ use OCP\Activity\IEvent;
 use OCP\Activity\IManager as IActivityManager;
 use OCP\App\IAppManager;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\DB\IResult;
 use OCP\DB\QueryBuilder\IExpressionBuilder;
@@ -36,6 +37,7 @@ use OCP\IUser;
 use OCP\IUserManager;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\LoggerInterface;
 
 class RemoteActivityControllerTest extends TestCase {
 	private IRequest&MockObject $request;
@@ -47,7 +49,7 @@ class RemoteActivityControllerTest extends TestCase {
 	private ICloudIdManager&MockObject $cloudIdManager;
 	private ITimeFactory&MockObject $timeFactory;
 
-	private RemoteActivityController $controller;
+	private RemoteActivityController&MockObject $controller;
 
 	protected function setUp(): void {
 		parent::setUp();
@@ -62,17 +64,25 @@ class RemoteActivityControllerTest extends TestCase {
 		$this->timeFactory = $this->createMock(ITimeFactory::class);
 		$this->timeFactory->method('getTime')->willReturn(time());
 
-		$this->controller = new RemoteActivityController(
-			'activity',
-			$this->request,
-			$this->db,
-			$this->userManager,
-			$this->appManager,
-			$this->rootFolder,
-			$this->activityManager,
-			$this->cloudIdManager,
-			$this->timeFactory,
-		);
+		$this->controller = $this->getMockBuilder(RemoteActivityController::class)
+			->setConstructorArgs([
+				'activity',
+				$this->request,
+				$this->db,
+				$this->userManager,
+				$this->appManager,
+				$this->rootFolder,
+				$this->createMock(IAppConfig::class),
+				$this->activityManager,
+				$this->cloudIdManager,
+				$this->timeFactory,
+				$this->createMock(LoggerInterface::class),
+			])
+			->onlyMethods(['calculateTTL'])
+			->getMock();
+
+		$this->controller->method('calculateTTL')
+			->willReturn(600);
 	}
 
 	private function validTimestamp(): string {
@@ -180,7 +190,12 @@ class RemoteActivityControllerTest extends TestCase {
 	#[DataProvider('dataInvalidTimestamps')]
 	public function testInvalidTimestamp(string $updated): void {
 		$this->appManager->method('isEnabledForAnyone')->willReturn(true);
-		$this->db->expects($this->never())->method('getQueryBuilder');
+		$this->userManager->method('get')->willReturn($this->createUserMock());
+		$this->setupDbQueryMock([
+			'mountpoint' => '/SharedFolder',
+			'remote' => 'https://remote.example.net/',
+		]);
+		$this->db->expects($this->once())->method('getQueryBuilder');
 
 		$response = $this->controller->receiveActivity(
 			'token',
