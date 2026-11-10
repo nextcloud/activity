@@ -9,7 +9,10 @@ namespace OCA\Activity\Controller;
 
 use DateTimeInterface;
 use OC\Files\Storage\Wrapper\Wrapper;
+use OCA\Activity\ConfigLexicon;
+use OCA\Activity\Exception\RemoteActivityException;
 use OCA\Activity\Extension\Files;
+use OCA\Federation\TrustedServers;
 use OCA\Files_Sharing\External\Storage as ExternalStorage;
 use OCP\Activity\IManager as IActivityManager;
 use OCP\App\IAppManager;
@@ -17,6 +20,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\BruteForceProtection;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
+use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Federation\ICloudIdManager;
 use OCP\Files\InvalidPathException;
@@ -26,6 +30,8 @@ use OCP\IDBConnection;
 use OCP\IRequest;
 use OCP\IUser;
 use OCP\IUserManager;
+use OCP\Server;
+use Psr\Log\LoggerInterface;
 
 class RemoteActivityController extends OCSController {
 	public function __construct(
@@ -35,9 +41,11 @@ class RemoteActivityController extends OCSController {
 		protected IUserManager $userManager,
 		protected IAppManager $appManager,
 		protected IRootFolder $rootFolder,
+		protected readonly IAppConfig $appConfig,
 		protected IActivityManager $activityManager,
 		protected ICloudIdManager $cloudIdManager,
 		protected ITimeFactory $timeFactory,
+		protected readonly LoggerInterface $logger,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -61,32 +69,74 @@ class RemoteActivityController extends OCSController {
 			return new DataResponse([], Http::STATUS_NOT_FOUND);
 		}
 
-		$date = \DateTime::createFromFormat(DateTimeInterface::W3C, $updated);
-		if ($date === false || abs($date->getTimestamp() - $this->timeFactory->getTime()) > 600) {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
-		}
-
-		if (!isset($to['type'], $to['name']) || $to['type'] !== 'Person') {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
-		}
-
-		$user = $this->userManager->get($to['name']);
-		if (!$user instanceof IUser) {
-			$response = new DataResponse([], Http::STATUS_NOT_FOUND);
+		try {
+			$this->manageActivity($token, $type, $to, $actor, $updated, $object, $target, $origin);
+		} catch (RemoteActivityException $e) {
+			$this->logger->warning('issue with data from a remote activity', ['exception' => $e]);
+			$response = new DataResponse($e->getResponse(), $e->getCode());
 			$response->throttle();
 			return $response;
 		}
 
-		if (!isset($actor['type'], $actor['name']) || $actor['type'] !== 'Person') {
+		return new DataResponse();
+	}
+
+	/**
+	 * @PublicPage
+	 * @NoCSRFRequired
+	 *
+	 * @param string $token
+	 * @param string[] $to
+	 * @param string[] $actor
+	 * @param string $type
+	 * @param string $updated
+	 * @param string[] $object
+	 * @param string[] $target
+	 * @param string[] $origin
+	 */
+	#[BruteForceProtection(action: 'receiveActivity')]
+	public function receiveActivities(string $type, array $items = [], int $totalItems = 0): DataResponse {
+		if (!$this->appManager->isEnabledForAnyone('federatedfilesharing')) {
+			return new DataResponse([], Http::STATUS_NOT_FOUND);
+		}
+
+		if ($type !== 'Collection' || count($items) <> $totalItems) {
 			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+		}
+
+		$this->manageCollection($items);
+		return new DataResponse();
+	}
+
+	protected function manageActivity(
+		string $token,
+		string $type,
+		array $to,
+		array $actor,
+		string $updated,
+		array $object,
+		array $target,
+		array $origin = [],
+	): void {
+		if (!isset($to['type'], $to['name']) || $to['type'] !== 'Person') {
+			throw new RemoteActivityException('issue with to/type entry', Http::STATUS_BAD_REQUEST);
+		}
+
+		$user = $this->userManager->get($to['name']);
+		if (!$user instanceof IUser) {
+			throw new RemoteActivityException('user not found', Http::STATUS_NOT_FOUND);
+		}
+
+		if (!isset($actor['type'], $actor['name']) || $actor['type'] !== 'Person') {
+			throw new RemoteActivityException('issue with actor/type entry', Http::STATUS_BAD_REQUEST);
 		}
 
 		if ($user->getCloudId() === $actor['name']) {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+			throw new RemoteActivityException('issue with actor/name entry', Http::STATUS_BAD_REQUEST);
 		}
 
 		if (isset($object['name']) && preg_match('/(^|\/)\.\.(\/|$)/', $object['name'])) {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+			throw new RemoteActivityException('issue with object/name entry', Http::STATUS_BAD_REQUEST);
 		}
 
 		try {
@@ -94,12 +144,12 @@ class RemoteActivityController extends OCSController {
 			$actorServer = $resolved->getRemote();
 			$actorUser = $resolved->getUser();
 		} catch (\InvalidArgumentException) {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+			throw new RemoteActivityException('issue with actor/name cloudId', Http::STATUS_BAD_REQUEST);
 		}
 
 		$internalType = $this->translateType($type);
 		if ($internalType === '') {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+			throw new RemoteActivityException('internal type', Http::STATUS_BAD_REQUEST);
 		}
 
 		$query = $this->db->getQueryBuilder();
@@ -113,40 +163,43 @@ class RemoteActivityController extends OCSController {
 		$share = $result->fetch();
 		$result->closeCursor();
 
+		$date = \DateTime::createFromFormat(DateTimeInterface::W3C, $updated);
 		if (!is_array($share) || str_starts_with($share['mountpoint'], '{{TemporaryMountPointName#')) {
-			$response = new DataResponse([], Http::STATUS_NOT_FOUND);
-			$response->throttle();
-			return $response;
+			throw new RemoteActivityException('issue with share mountpoint', Http::STATUS_NOT_FOUND);
+		}
+
+		if ($date === false || abs($date->getTimestamp() - $this->timeFactory->getTime()) > $this->calculateTTL($share['remote'] ?? '')) {
+			throw new RemoteActivityException('date/TTL is out of range', Http::STATUS_BAD_REQUEST);
 		}
 
 		$normalizedActorServer = rtrim(strtolower((string)preg_replace('/^https?:\/\//', '', $actorServer)), '/');
 		$normalizedShareRemote = rtrim(strtolower(preg_replace('/^https?:\/\//', '', $share['remote'])), '/');
 		if ($normalizedActorServer !== $normalizedShareRemote) {
-			return new DataResponse([], Http::STATUS_FORBIDDEN);
+			throw new RemoteActivityException('', Http::STATUS_FORBIDDEN);
 		}
 
 		$path2 = null;
 		if ($type === 'Move') {
 			if (!isset($target['type'], $target['name']) || $target['type'] !== 'Document') {
-				return new DataResponse([], Http::STATUS_BAD_REQUEST);
+				throw new RemoteActivityException('issue with move/target/type', Http::STATUS_BAD_REQUEST);
 			}
 
 			if (!isset($origin['type'], $origin['name']) || $origin['type'] !== 'Document') {
-				return new DataResponse([], Http::STATUS_BAD_REQUEST);
+				throw new RemoteActivityException('issue with move/origin/type', Http::STATUS_BAD_REQUEST);
 			}
 
 			$path = $share['mountpoint'] . $target['name'];
 			$path2 = $share['mountpoint'] . $origin['name'];
 		} else {
 			if (!isset($object['type'], $object['name']) || $object['type'] !== 'Document') {
-				return new DataResponse([], Http::STATUS_BAD_REQUEST);
+				throw new RemoteActivityException('issue with object/type', Http::STATUS_BAD_REQUEST);
 			}
 			$path = $share['mountpoint'] . $object['name'];
 		}
 
 		$subject = $this->getSubject($type, $path, $path2);
 		if ($subject === '') {
-			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+			throw new RemoteActivityException('empty subject', Http::STATUS_BAD_REQUEST);
 		}
 
 		$userFolder = $this->rootFolder->getUserFolder($user->getUID());
@@ -156,22 +209,16 @@ class RemoteActivityController extends OCSController {
 
 			$storage = $node->getStorage();
 			if (!$storage->instanceOfStorage(ExternalStorage::class)) {
-				$response = new DataResponse([], Http::STATUS_FORBIDDEN);
-				$response->throttle();
-				return $response;
+				throw new RemoteActivityException('incompatible storage', Http::STATUS_FORBIDDEN);
 			}
 			while ($storage instanceof Wrapper) {
 				$storage = $storage->getWrapperStorage();
 			}
 			if (!($storage instanceof ExternalStorage) || $storage->getToken() !== $token) {
-				$response = new DataResponse([], Http::STATUS_FORBIDDEN);
-				$response->throttle();
-				return $response;
+				throw new RemoteActivityException('incompatible token', Http::STATUS_FORBIDDEN);
 			}
-		} catch (NotFoundException|InvalidPathException) {
-			$response = new DataResponse([], Http::STATUS_NOT_FOUND);
-			$response->throttle();
-			return $response;
+		} catch (NotFoundException|InvalidPathException $e) {
+			throw new RemoteActivityException('node not found', Http::STATUS_NOT_FOUND, $e);
 		}
 
 		if ($path2 !== null) {
@@ -188,6 +235,7 @@ class RemoteActivityController extends OCSController {
 			$subjectParams = [[$fileId => $path], $actor['name']];
 		}
 
+		$this->logger->debug('generating new activity from remote instance', ['token' => $token, 'type' => $type, 'to' => $to, 'actor' => $actor, 'updated' => $updated, 'object' => $object, 'target' => $target, 'origin' => $origin]);
 		$event = $this->activityManager->generateEvent();
 		try {
 			$event->setAffectedUser($user->getUID())
@@ -199,12 +247,20 @@ class RemoteActivityController extends OCSController {
 				->setTimestamp($date->getTimestamp());
 			$this->activityManager->publish($event);
 		} catch (\InvalidArgumentException) {
-			return new DataResponse(['activity'], Http::STATUS_BAD_REQUEST);
+			throw new RemoteActivityException('activity', Http::STATUS_BAD_REQUEST, response: ['activity']);
 		} catch (\BadMethodCallException) {
-			return new DataResponse(['sending'], Http::STATUS_BAD_REQUEST);
+			throw new RemoteActivityException('sending', Http::STATUS_BAD_REQUEST, response: ['sending']);
 		}
+	}
 
-		return new DataResponse();
+	protected function manageCollection(array $collection): void {
+		foreach ($collection as $item) {
+			try {
+				$this->manageActivity($item['share']['token'] ?? '', $item['type'] ?? [], $item['to'] ?? [], $item['actor'] ?? [], $item['updated'] ?? '', $item['object'] ?? [], $item['target'] ?? [], $item['origin'] ?? []);
+			} catch (RemoteActivityException $e) {
+				$this->logger->warning('issue with a collection item from a remote activity', ['exception' => $e]);
+			}
+		}
 	}
 
 	protected function getSubject(string $type, string $path, ?string $path2) {
@@ -238,5 +294,20 @@ class RemoteActivityController extends OCSController {
 			'Delete' => Files::TYPE_SHARE_DELETED,
 			default => '',
 		};
+	}
+
+	/**
+	 * returns 600, or a higher value if the remote server is trusted
+	 */
+	protected function calculateTTL(string $remote): int {
+		/** @psalm-suppress UndefinedClass \OCA\Federation\TrustedServers */
+		if ($remote !== '' && $this->appManager->isEnabledForAnyone('federation') && class_exists(TrustedServers::class)) {
+			$trustedServers = Server::get(TrustedServers::class);
+			if ($trustedServers->isTrustedServer($remote)) {
+				return $this->appConfig->getAppValueInt(ConfigLexicon::TRUSTED_SERVER_TTL);
+			}
+		}
+
+		return 600;
 	}
 }
