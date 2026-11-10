@@ -167,7 +167,7 @@ class SettingsController extends Controller {
 		$this->eventDispatcher->dispatchTyped(
 			new CriticalActionPerformedEvent(
 				'Activity admin settings were updated',
-				operation: 'activity.settings.update'
+				operation: 'activity.admin_settings.updated'
 			)
 		);
 
