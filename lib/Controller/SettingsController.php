@@ -14,10 +14,12 @@ use OCP\Activity\IManager;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\Config\IUserConfig;
+use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IAppConfig;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
+use OCP\Log\Audit\CriticalActionPerformedEvent;
 use OCP\Security\ISecureRandom;
 
 class SettingsController extends Controller {
@@ -35,6 +37,7 @@ class SettingsController extends Controller {
 		CurrentUser $currentUser,
 		private readonly IAppConfig $appConfig,
 		private readonly IUserConfig $userConfig,
+		private readonly IEventDispatcher $eventDispatcher,
 	) {
 		parent::__construct($appName, $request);
 		$this->user = (string)$currentUser->getUID();
@@ -159,6 +162,13 @@ class SettingsController extends Controller {
 			'activity',
 			'notify_setting_selfemail',
 			(string)(int)$notify_setting_selfemail
+		);
+
+		$this->eventDispatcher->dispatchTyped(
+			new CriticalActionPerformedEvent(
+				'Activity admin settings were updated',
+				operation: 'activity.settings.update'
+			)
 		);
 
 		return new DataResponse([
