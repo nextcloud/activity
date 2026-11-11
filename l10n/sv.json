@@ -1,6 +1,6 @@
 { "translations": {
     "Personal activity feed for %s" : "Personligt aktivitetsflöde för %s",
-    "Your feed URL is invalid" : "URL:en för flödet är felaktig.",
+    "Your feed URL is invalid" : "URL:en för flödet är felaktig",
     "Activity feed for %1$s" : "Aktivitetsflöde för %1$s",
     "Activity feed" : "Aktivitetsflöde",
     "Your settings have been updated." : "Dina inställningar har uppdaterats.",
