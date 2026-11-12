@@ -248,6 +248,39 @@ class Data {
 			// Unknown filter => ignore and show all activities
 		}
 
+		$generator = $this->getActivityRows($query, $userSettings, $user, $filter, $activeFilter, $objectType, $objectId, $search, $limit, $sort);
+
+		$headers = $this->setOffsetFromSince($query, $user, $since, $sqlSort);
+		foreach ($generator as $row) {
+			$headers['X-Activity-Last-Given'] = (int)$row['activity_id'];
+			$groupHelper->addActivity($row);
+		}
+		$hasMore = $generator->getReturn();
+
+		if ($returnEvents) {
+			return $groupHelper->getEvents();
+		} else {
+			return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
+		}
+	}
+
+	/**
+	 * Query the activities a user may see under a given filter.
+	 *
+	 * @param ?IFilter $activeFilter The applied filter, or null when unknown
+	 * @return \Generator<array> activity rows from DB
+	 */
+	private function getActivityRows(
+		UserSettings $userSettings,
+		string $user,
+		string $filter,
+		?IFilter $activeFilter,
+		string $objectType,
+		int $objectId,
+		?SearchCriteria $search,
+		int $limit,
+		string $sort,
+	): \Generator {
 		$query = $this->connection->getQueryBuilder();
 		$query->select('*')
 			->from('activity', 'a');
@@ -258,7 +291,6 @@ class Data {
 		 * Order and specify the offset
 		 */
 		$sqlSort = ($sort === 'asc') ? 'ASC' : 'DESC';
-		$headers = $this->setOffsetFromSince($query, $user, $since, $sqlSort);
 		$query->orderBy('timestamp', $sqlSort)
 			->addOrderBy('activity_id', $sqlSort);
 
@@ -271,17 +303,12 @@ class Data {
 				$hasMore = true;
 				break;
 			}
-			$headers['X-Activity-Last-Given'] = (int)$row['activity_id'];
-			$groupHelper->addActivity($row);
+			yield $row;
 			$limit--;
 		}
 		$result->closeCursor();
 
-		if ($returnEvents) {
-			return $groupHelper->getEvents();
-		} else {
-			return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
-		}
+		return $hasMore;
 	}
 
 	/**
