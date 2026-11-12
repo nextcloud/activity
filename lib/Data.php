@@ -248,9 +248,13 @@ class Data {
 			// Unknown filter => ignore and show all activities
 		}
 
-		$generator = $this->getActivityRows($query, $userSettings, $user, $filter, $activeFilter, $objectType, $objectId, $search, $limit, $sort);
+		$generator = $this->getActivityRows($userSettings, $user, $filter, $activeFilter, $objectType, $objectId, $search, $limit, $sort, $since);
 
-		$headers = $this->setOffsetFromSince($query, $user, $since, $sqlSort);
+		if (!$since) {
+			$headers = $this->getFirstKnownActivityHeader($user, $sort);
+		} else {
+			$headers = [];
+		}
 		foreach ($generator as $row) {
 			$headers['X-Activity-Last-Given'] = (int)$row['activity_id'];
 			$groupHelper->addActivity($row);
@@ -280,12 +284,21 @@ class Data {
 		?SearchCriteria $search,
 		int $limit,
 		string $sort,
+		int $since,
 	): \Generator {
 		$query = $this->connection->getQueryBuilder();
 		$query->select('*')
 			->from('activity', 'a');
 
 		$this->applyStreamConditions($query, $userSettings, $user, $filter, $activeFilter, $objectType, $objectId, $search);
+
+		if ($since) {
+			if ($sort === 'asc') {
+				$query->andWhere($query->expr()->gt('activity_id', $query->createNamedParameter($since)));
+			} else {
+				$query->andWhere($query->expr()->lt('activity_id', $query->createNamedParameter($since)));
+			}
+		}
 
 		/**
 		 * Order and specify the offset
@@ -508,50 +521,12 @@ class Data {
 		}
 	}
 
-	/**
-	 *
-	 * @return array Headers that should be set on the response
-	 *
-	 * @throws \OutOfBoundsException If $since is not owned by $user
-	 */
-	protected function setOffsetFromSince(IQueryBuilder $query, string $user, int $since, string $sort): array {
-		if (!$since) {
-			return $this->getFirstKnownActivityHeader($user, $sort);
-		}
-
-		$queryBuilder = $this->connection->getQueryBuilder();
-		$queryBuilder->select(['affecteduser', 'timestamp'])
-			->from('activity')
-			->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter($since)));
-		$result = $queryBuilder->executeQuery();
-		$activity = $result->fetch();
-		$result->closeCursor();
-
-		if (!$activity) {
-			return $this->getFirstKnownActivityHeader($user, $sort);
-		}
-
-		if ($activity['affecteduser'] !== $user) {
-			throw new \OutOfBoundsException('Invalid since', 2);
-		}
-
-		$timestamp = (int)$activity['timestamp'];
-		if ($sort === 'DESC') {
-			$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($timestamp)));
-			$query->andWhere($query->expr()->lt('activity_id', $query->createNamedParameter($since)));
-		} else {
-			$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($timestamp)));
-			$query->andWhere($query->expr()->gt('activity_id', $query->createNamedParameter($since)));
-		}
-		return [];
-	}
-
 	private function getFirstKnownActivityHeader(string $user, string $sort): array {
 		$fetchQuery = $this->connection->getQueryBuilder();
 		$fetchQuery->select('activity_id')
 			->from('activity')
 			->where($fetchQuery->expr()->eq('affecteduser', $fetchQuery->createNamedParameter($user)))
-			->orderBy('timestamp', $sort)
+			->orderBy('timestamp', ($sort === 'asc' ? 'ASC' : 'DESC'))
 			->setMaxResults(1);
 		$result = $fetchQuery->executeQuery();
 		$activity = $result->fetch();
