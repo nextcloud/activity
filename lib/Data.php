@@ -272,6 +272,7 @@ class Data {
 	 * Query the activities a user may see under a given filter.
 	 *
 	 * @param ?IFilter $activeFilter The applied filter, or null when unknown
+	 * @param int $since an activity id
 	 * @return \Generator<array> activity rows from DB
 	 */
 	private function getActivityRows(
@@ -286,6 +287,26 @@ class Data {
 		string $sort,
 		int $since,
 	): \Generator {
+		if ($filter === 'focused') {
+			$hasMore = false;
+			foreach (['files','sharing','account'] as $subquery) {
+				$generator = $this->getActivityRows(
+					$userSettings,
+					$user,
+					$filter.'-'.$subquery,
+					$activeFilter,
+					$objectType,
+					$objectId,
+					$search,
+					$limit,
+					$sort,
+					$since,
+				);
+				yield from $generator;
+				$hasMore = $hasMore || $generator->getReturn();
+			}
+			return $hasMore;
+		}
 		$query = $this->connection->getQueryBuilder();
 		$query->select('*')
 			->from('activity', 'a');
@@ -360,7 +381,7 @@ class Data {
 		} elseif ($filter === 'filter') {
 			$query->andWhere($query->expr()->eq('object_type', $query->createNamedParameter($objectType)));
 			$query->andWhere($query->expr()->eq('object_id', $query->createNamedParameter($objectId)));
-		} elseif ($filter === 'focused') {
+		} elseif ($filter === 'focused-files') {
 			// Get home storage id
 			$storageId = $this->rootFolder->getUserFolder($user)->getMountPoint()->getNumericStorageId();
 			// Only activity related to files owned by the user
@@ -371,15 +392,23 @@ class Data {
 				));
 			// Filter out our own activity
 			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+			// Affected object is one of our files
 			$query->andWhere(
-				$query->expr()->orX(
-					// Affected object is one of our files
-					$query->expr()->eq('f.storage', $query->createNamedParameter($storageId, IQueryBuilder::PARAM_INT)),
-					// There is no affected object, so the activity affects our user directly
-					$query->expr()->eq('object_type', $query->createNamedParameter('')),
-					// Show all sharing related events
-					$query->expr()->eq('app', $query->createNamedParameter('files_sharing')),
-				)
+				$query->expr()->eq('f.storage', $query->createNamedParameter($storageId, IQueryBuilder::PARAM_INT)),
+			);
+		} elseif ($filter === 'focused-sharing') {
+			// Filter out our own activity
+			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+			// Show all sharing related events
+			$query->andWhere(
+				$query->expr()->eq('app', $query->createNamedParameter('files_sharing')),
+			);
+		} elseif ($filter === 'focused-account') {
+			// Filter out our own activity
+			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+			// There is no affected object, so the activity affects our user directly
+			$query->andWhere(
+				$query->expr()->eq('object_type', $query->createNamedParameter('')),
 			);
 		}
 
