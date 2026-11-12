@@ -128,8 +128,8 @@ class FilesHooks {
 		if (!empty($favoriteUsers)) {
 			$favoriteUsers = array_intersect($users, $favoriteUsers);
 			if (!empty($favoriteUsers)) {
-				$filteredEmailUsers = array_merge($filteredEmailUsers, $this->userSettings->filterUsersBySetting($favoriteUsers, 'email', Files::TYPE_FAVORITE_CHANGED));
-				$filteredNotificationUsers = array_merge($filteredNotificationUsers, $this->userSettings->filterUsersBySetting($favoriteUsers, 'notification', Files::TYPE_FAVORITE_CHANGED));
+				$filteredEmailUsers = array_replace($filteredEmailUsers, $this->userSettings->filterUsersBySetting($favoriteUsers, 'email', Files::TYPE_FAVORITE_CHANGED));
+				$filteredNotificationUsers = array_replace($filteredNotificationUsers, $this->userSettings->filterUsersBySetting($favoriteUsers, 'notification', Files::TYPE_FAVORITE_CHANGED));
 			}
 		}
 
@@ -166,7 +166,7 @@ class FilesHooks {
 
 		// file can be shared using GroupFolders, including ACL check
 		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
-			$affectedUsers = array_merge($affectedUsers, $this->getAffectedUsersFromCachedMounts($fileId));
+			$affectedUsers = array_replace($affectedUsers, $this->getAffectedUsersFromCachedMounts($fileId));
 		}
 
 		[$filteredEmailUsers, $filteredNotificationUsers]
@@ -301,7 +301,7 @@ class FilesHooks {
 			// file can be shared using GroupFolders, including ACL check
 			if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
 				[, , $oldFileId] = $this->getSourcePathAndOwner($source);
-				$oldAccessList['users'] = array_merge($oldAccessList['users'], $this->getAffectedUsersFromCachedMounts($oldFileId));
+				$oldAccessList['users'] = array_replace($oldAccessList['users'], $this->getAffectedUsersFromCachedMounts($oldFileId));
 			}
 
 			$this->oldAccessList = $oldAccessList;
@@ -374,7 +374,7 @@ class FilesHooks {
 
 		// file can be shared using GroupFolders, including ACL check
 		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
-			$affectedUsers = array_merge($affectedUsers, $this->getAffectedUsersFromCachedMounts($fileId));
+			$affectedUsers = array_replace($affectedUsers, $this->getAffectedUsersFromCachedMounts($fileId));
 		}
 
 		[$filteredEmailUsers, $filteredNotificationUsers] = $this->getFileChangeActivitySettings($fileId, array_keys($affectedUsers));
@@ -382,6 +382,8 @@ class FilesHooks {
 		$shouldFlush = $this->startActivityTransaction();
 		try {
 			foreach ($affectedUsers as $user => $path) {
+				$user = (string)$user;
+
 				if ($user === $this->currentUser->getUID()) {
 					$userSubject = 'renamed_self';
 					$userParams = [
@@ -443,7 +445,7 @@ class FilesHooks {
 		// file can be shared using GroupFolders, including ACL check
 		if ($this->config->getSystemValueBool('activity_use_cached_mountpoints', false)) {
 			$this->userMountCache->clear(); // clear cache for new data
-			$affectedUsers = array_merge($affectedUsers, $this->getAffectedUsersFromCachedMounts($fileId));
+			$affectedUsers = array_replace($affectedUsers, $this->getAffectedUsersFromCachedMounts($fileId));
 		}
 
 		$beforeUsers = array_keys($oldUsers);
@@ -509,6 +511,7 @@ class FilesHooks {
 		$shouldFlush = $this->startActivityTransaction();
 		try {
 			foreach ($users as $user) {
+				$user = (string)$user;
 				$path = $pathMap[$user];
 
 				if ($user === $this->currentUser->getUID()) {
@@ -548,6 +551,7 @@ class FilesHooks {
 		$shouldFlush = $this->startActivityTransaction();
 		try {
 			foreach ($users as $user) {
+				$user = (string)$user;
 				$path = $pathMap[$user];
 
 				if ($user === $this->currentUser->getUID()) {
@@ -590,6 +594,8 @@ class FilesHooks {
 		$shouldFlush = $this->startActivityTransaction();
 		try {
 			foreach ($users as $user) {
+				$user = (string)$user;
+
 				if ($oldFileName === $fileName) {
 					$userParams = [[$newParentId => $afterPathMap[$user] . '/']];
 				} else {
