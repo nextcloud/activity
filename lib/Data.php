@@ -248,17 +248,83 @@ class Data {
 			// Unknown filter => ignore and show all activities
 		}
 
+		$generator = $this->getActivityRows($userSettings, $user, $filter, $activeFilter, $objectType, $objectId, $search, $limit, $sort, $since);
+
+		if (!$since) {
+			$headers = $this->getFirstKnownActivityHeader($user, $sort);
+		} else {
+			$headers = [];
+		}
+		foreach ($generator as $row) {
+			$headers['X-Activity-Last-Given'] = (int)$row['activity_id'];
+			$groupHelper->addActivity($row);
+		}
+		$hasMore = $generator->getReturn();
+
+		if ($returnEvents) {
+			return $groupHelper->getEvents();
+		} else {
+			return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
+		}
+	}
+
+	/**
+	 * Query the activities a user may see under a given filter.
+	 *
+	 * @param ?IFilter $activeFilter The applied filter, or null when unknown
+	 * @param int $since an activity id
+	 * @return \Generator<array> activity rows from DB
+	 */
+	private function getActivityRows(
+		UserSettings $userSettings,
+		string $user,
+		string $filter,
+		?IFilter $activeFilter,
+		string $objectType,
+		int $objectId,
+		?SearchCriteria $search,
+		int $limit,
+		string $sort,
+		int $since,
+	): \Generator {
+		if ($filter === 'focused') {
+			$hasMore = false;
+			foreach (['files','sharing','account'] as $subquery) {
+				$generator = $this->getActivityRows(
+					$userSettings,
+					$user,
+					$filter.'-'.$subquery,
+					$activeFilter,
+					$objectType,
+					$objectId,
+					$search,
+					$limit,
+					$sort,
+					$since,
+				);
+				yield from $generator;
+				$hasMore = $hasMore || $generator->getReturn();
+			}
+			return $hasMore;
+		}
 		$query = $this->connection->getQueryBuilder();
 		$query->select('*')
 			->from('activity', 'a');
 
 		$this->applyStreamConditions($query, $userSettings, $user, $filter, $activeFilter, $objectType, $objectId, $search);
 
+		if ($since) {
+			if ($sort === 'asc') {
+				$query->andWhere($query->expr()->gt('activity_id', $query->createNamedParameter($since)));
+			} else {
+				$query->andWhere($query->expr()->lt('activity_id', $query->createNamedParameter($since)));
+			}
+		}
+
 		/**
 		 * Order and specify the offset
 		 */
 		$sqlSort = ($sort === 'asc') ? 'ASC' : 'DESC';
-		$headers = $this->setOffsetFromSince($query, $user, $since, $sqlSort);
 		$query->orderBy('timestamp', $sqlSort)
 			->addOrderBy('activity_id', $sqlSort);
 
@@ -271,17 +337,12 @@ class Data {
 				$hasMore = true;
 				break;
 			}
-			$headers['X-Activity-Last-Given'] = (int)$row['activity_id'];
-			$groupHelper->addActivity($row);
+			yield $row;
 			$limit--;
 		}
 		$result->closeCursor();
 
-		if ($returnEvents) {
-			return $groupHelper->getEvents();
-		} else {
-			return ['data' => $groupHelper->getActivities(), 'has_more' => $hasMore, 'headers' => $headers];
-		}
+		return $hasMore;
 	}
 
 	/**
@@ -320,7 +381,7 @@ class Data {
 		} elseif ($filter === 'filter') {
 			$query->andWhere($query->expr()->eq('object_type', $query->createNamedParameter($objectType)));
 			$query->andWhere($query->expr()->eq('object_id', $query->createNamedParameter($objectId)));
-		} elseif ($filter === 'focused') {
+		} elseif ($filter === 'focused-files') {
 			// Get home storage id
 			$storageId = $this->rootFolder->getUserFolder($user)->getMountPoint()->getNumericStorageId();
 			// Only activity related to files owned by the user
@@ -331,15 +392,23 @@ class Data {
 				));
 			// Filter out our own activity
 			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+			// Affected object is one of our files
 			$query->andWhere(
-				$query->expr()->orX(
-					// Affected object is one of our files
-					$query->expr()->eq('f.storage', $query->createNamedParameter($storageId, IQueryBuilder::PARAM_INT)),
-					// There is no affected object, so the activity affects our user directly
-					$query->expr()->eq('object_type', $query->createNamedParameter('')),
-					// Show all sharing related events
-					$query->expr()->eq('app', $query->createNamedParameter('files_sharing')),
-				)
+				$query->expr()->eq('f.storage', $query->createNamedParameter($storageId, IQueryBuilder::PARAM_INT)),
+			);
+		} elseif ($filter === 'focused-sharing') {
+			// Filter out our own activity
+			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+			// Show all sharing related events
+			$query->andWhere(
+				$query->expr()->eq('app', $query->createNamedParameter('files_sharing')),
+			);
+		} elseif ($filter === 'focused-account') {
+			// Filter out our own activity
+			$query->andWhere($query->expr()->neq('user', $query->createNamedParameter($user)));
+			// There is no affected object, so the activity affects our user directly
+			$query->andWhere(
+				$query->expr()->eq('object_type', $query->createNamedParameter('')),
 			);
 		}
 
@@ -481,50 +550,12 @@ class Data {
 		}
 	}
 
-	/**
-	 *
-	 * @return array Headers that should be set on the response
-	 *
-	 * @throws \OutOfBoundsException If $since is not owned by $user
-	 */
-	protected function setOffsetFromSince(IQueryBuilder $query, string $user, int $since, string $sort): array {
-		if (!$since) {
-			return $this->getFirstKnownActivityHeader($user, $sort);
-		}
-
-		$queryBuilder = $this->connection->getQueryBuilder();
-		$queryBuilder->select(['affecteduser', 'timestamp'])
-			->from('activity')
-			->where($queryBuilder->expr()->eq('activity_id', $queryBuilder->createNamedParameter($since)));
-		$result = $queryBuilder->executeQuery();
-		$activity = $result->fetch();
-		$result->closeCursor();
-
-		if (!$activity) {
-			return $this->getFirstKnownActivityHeader($user, $sort);
-		}
-
-		if ($activity['affecteduser'] !== $user) {
-			throw new \OutOfBoundsException('Invalid since', 2);
-		}
-
-		$timestamp = (int)$activity['timestamp'];
-		if ($sort === 'DESC') {
-			$query->andWhere($query->expr()->lte('timestamp', $query->createNamedParameter($timestamp)));
-			$query->andWhere($query->expr()->lt('activity_id', $query->createNamedParameter($since)));
-		} else {
-			$query->andWhere($query->expr()->gte('timestamp', $query->createNamedParameter($timestamp)));
-			$query->andWhere($query->expr()->gt('activity_id', $query->createNamedParameter($since)));
-		}
-		return [];
-	}
-
 	private function getFirstKnownActivityHeader(string $user, string $sort): array {
 		$fetchQuery = $this->connection->getQueryBuilder();
 		$fetchQuery->select('activity_id')
 			->from('activity')
 			->where($fetchQuery->expr()->eq('affecteduser', $fetchQuery->createNamedParameter($user)))
-			->orderBy('timestamp', $sort)
+			->orderBy('timestamp', ($sort === 'asc' ? 'ASC' : 'DESC'))
 			->setMaxResults(1);
 		$result = $fetchQuery->executeQuery();
 		$activity = $result->fetch();
