@@ -1,9 +1,9 @@
 SPDX-License-Identifier: AGPL-3.0-or-later
 SPDX-License-Identifier: Apache-2.0
 SPDX-License-Identifier: MIT
-SPDX-FileCopyrightText: Anthony Fu <https://github.com/antfu>
 SPDX-FileCopyrightText: Antoni Andre <antoniandre.web@gmail.com>
 SPDX-FileCopyrightText: Austin Andrews
+SPDX-FileCopyrightText: Eduardo San Martin Morote
 SPDX-FileCopyrightText: Julius Härtl <jus@bitgrid.net>
 SPDX-FileCopyrightText: Nextcloud GmbH and Nextcloud contributors
 SPDX-FileCopyrightText: Rob Cresswell <robcresswell@pm.me>
@@ -13,14 +13,8 @@ This file is generated from multiple sources. Included packages:
 	- version: 7.4.47
 	- license: Apache-2.0
 - @nextcloud/vue
-	- version: 9.13.1
+	- version: 9.14.1
 	- license: AGPL-3.0-or-later
-- @vueuse/core
-	- version: 15.0.0
-	- license: MIT
-- @vueuse/shared
-	- version: 15.0.0
-	- license: MIT
 - activity
 	- version: 9.0.0-dev.0
 	- license: AGPL-3.0-or-later
@@ -29,4 +23,7 @@ This file is generated from multiple sources. Included packages:
 	- license: MIT
 - vue-material-design-icons
 	- version: 5.3.1
+	- license: MIT
+- vue-router
+	- version: 5.5.1
 	- license: MIT
