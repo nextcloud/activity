@@ -7,7 +7,7 @@ OC.L10N.register(
     "Activity feed" : "Activiteitenkanaal",
     "Your settings have been updated." : "Je instellingen zijn bijgewerkt",
     "Settings have been updated." : "Instellingen zijn bijgewerkt",
-    "remote user" : "gebruiker op afstand",
+    "remote user" : "externe gebruiker",
     "Recent activity" : "Recente activiteit",
     "No activities" : "Geen activiteiten",
     "More activities" : "Meer activiteiten",
