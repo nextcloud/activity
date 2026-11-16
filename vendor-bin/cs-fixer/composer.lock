@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a71ee8d13ff7672fa20a05f3384dfd5",
+    "content-hash": "4f7147c73191588a704874d2ecc032ed",
     "packages": [],
     "packages-dev": [
         {
@@ -57,8 +57,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-08T13:53:27+00:00",
-            "published-time": "2026-11-08T14:14:17+00:00"
+            "time": "2026-11-08T13:53:27+00:00"
         },
         {
             "name": "nextcloud/coding-standard",
@@ -103,21 +102,20 @@
                 "issues": "https://github.com/nextcloud/coding-standard/issues",
                 "source": "https://github.com/nextcloud/coding-standard/tree/v1.5.0"
             },
-            "time": "2026-05-19T18:30:09+00:00",
-            "published-time": "2026-05-20T06:24:52+00:00"
+            "time": "2026-05-19T18:30:09+00:00"
         },
         {
             "name": "php-cs-fixer/shim",
-            "version": "v3.95.15",
+            "version": "v3.95.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/shim.git",
-                "reference": "64a33558b1b581470c8c8489048efaf9ceeb8415"
+                "reference": "413c9705404163fa3e5f7854208c5e9ae1a4590d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/64a33558b1b581470c8c8489048efaf9ceeb8415",
-                "reference": "64a33558b1b581470c8c8489048efaf9ceeb8415",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/shim/zipball/413c9705404163fa3e5f7854208c5e9ae1a4590d",
+                "reference": "413c9705404163fa3e5f7854208c5e9ae1a4590d",
                 "shasum": ""
             },
             "require": {
@@ -154,10 +152,15 @@
             "description": "A tool to automatically fix PHP code style",
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/shim/issues",
-                "source": "https://github.com/PHP-CS-Fixer/shim/tree/v3.95.15"
+                "source": "https://github.com/PHP-CS-Fixer/shim/tree/v3.95.30"
             },
-            "time": "2026-07-15T09:52:14+00:00",
-            "published-time": "2026-07-15T09:52:22+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/keradus",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-11-09T14:32:47+00:00"
         }
     ],
     "aliases": [],
@@ -167,5 +170,5 @@
     "prefer-lowest": false,
     "platform": {},
     "platform-dev": {},
-    "plugin-api-version": "2.11.0"
+    "plugin-api-version": "2.9.0"
 }
