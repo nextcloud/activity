@@ -282,14 +282,17 @@ const store = new createStore({
 				},
 			)
 
-			try {
-				OCP.AppConfig.setValue('activity', 'enable_email', emailEnabled ? 'yes' : 'no')
-
-				showSuccess(t('activity', 'Your settings have been updated.'))
-			} catch (error) {
-				showError(t('activity', 'Unable to save the settings'))
-				logger.error('An error occurred while saving the activity settings', { error })
-			}
+			// setValue reports failures through the error callback, never by throwing
+			OCP.AppConfig.setValue('activity', 'enable_email', emailEnabled ? 'yes' : 'no', {
+				success() {
+					showSuccess(t('activity', 'Your settings have been updated.'))
+				},
+				error(error: unknown) {
+					commit('TOGGLE_EMAIL_ENABLED', { emailEnabled: !emailEnabled })
+					showError(t('activity', 'Unable to save the settings'))
+					logger.error('An error occurred while saving the activity settings', { error })
+				},
+			})
 		},
 
 		/**
