@@ -252,7 +252,7 @@ This file is generated from multiple sources. Included packages:
 	- version: 4.0.2
 	- license: MIT
 - vite
-	- version: 7.3.7
+	- version: 7.3.8
 	- license: MIT
 - vue-router
 	- version: 5.5.1
