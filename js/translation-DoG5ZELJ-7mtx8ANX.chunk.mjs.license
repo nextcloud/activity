@@ -12,16 +12,16 @@ This file is generated from multiple sources. Included packages:
 	- version: 3.4.1
 	- license: GPL-3.0-or-later
 - @vue/reactivity
-	- version: 3.5.40
+	- version: 3.5.43
 	- license: MIT
 - @vue/runtime-core
-	- version: 3.5.40
+	- version: 3.5.43
 	- license: MIT
 - @vue/runtime-dom
-	- version: 3.5.40
+	- version: 3.5.43
 	- license: MIT
 - @vue/shared
-	- version: 3.5.40
+	- version: 3.5.43
 	- license: MIT
 - dompurify
 	- version: 3.4.13
