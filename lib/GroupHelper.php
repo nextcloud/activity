@@ -125,6 +125,16 @@ class GroupHelper {
 		$this->lastEvent = $id;
 	}
 
+	public function sortEvents(): void {
+		// Sort activities with newest first
+		krsort($this->event);
+		$this->lastEvent = array_key_last($this->event) ?? 0;
+	}
+
+	public function getLastId(): int {
+		return $this->lastEvent;
+	}
+
 	/**
 	 * Get the prepared activities
 	 *

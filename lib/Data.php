@@ -294,16 +294,18 @@ class Data {
 
 		$generator = $this->getActivityRows($userSettings, $user, $filter, $activeFilter, $objectType, $objectId, $search, $limit, $sort, $since);
 
+		foreach ($generator as $row) {
+			$groupHelper->addActivity($row);
+		}
+		$hasMore = $generator->getReturn();
+		$groupHelper->sortEvents();
+
 		if (!$since) {
 			$headers = $this->getFirstKnownActivityHeader($user, $sort);
 		} else {
 			$headers = [];
 		}
-		foreach ($generator as $row) {
-			$headers['X-Activity-Last-Given'] = (int)$row['activity_id'];
-			$groupHelper->addActivity($row);
-		}
-		$hasMore = $generator->getReturn();
+		$headers['X-Activity-Last-Given'] = $groupHelper->getLastId();
 
 		if ($returnEvents) {
 			return $groupHelper->getEvents();
