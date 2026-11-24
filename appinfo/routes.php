@@ -7,6 +7,7 @@
 
 return [
 	'ocs' => [
+		['name' => 'RemoteActivity#receiveActivities', 'url' => '/api/v2/remote', 'verb' => 'POST'],
 		['name' => 'RemoteActivity#receiveActivity', 'url' => '/api/v2/remote/{token}', 'verb' => 'POST'],
 		['name' => 'APIv1#get', 'url' => '/activity', 'verb' => 'GET', 'root' => '/cloud'],
 		['name' => 'APIv2#getDefault', 'url' => '/api/v2/activity', 'verb' => 'GET'],

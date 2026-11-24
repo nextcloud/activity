@@ -11,6 +11,7 @@ namespace OCA\Activity\AppInfo;
 use OC\DB\ConnectionAdapter;
 use OC\SystemConfig;
 use OCA\Activity\Capabilities;
+use OCA\Activity\ConfigLexicon;
 use OCA\Activity\Consumer;
 use OCA\Activity\Dashboard\ActivityWidget;
 use OCA\Activity\Data;
@@ -141,7 +142,7 @@ class Application extends App implements IBootstrap {
 		$context->registerEventListener(UserDeletedEvent::class, UserDeleted::class);
 		$context->registerEventListener(PostLoginEvent::class, SetUserDefaults::class);
 		$context->registerDashboardWidget(ActivityWidget::class);
-
+		$context->registerConfigLexicon(ConfigLexicon::class);
 		$this->registerFilesActivity($context);
 	}
 
