@@ -65,6 +65,7 @@ vi.mock(import('@vueuse/core'), async (importOriginal) => {
 // Imported after mocks are registered
 import ncAxios from '@nextcloud/axios'
 import { showError } from '@nextcloud/dialogs'
+import { useRoute } from 'vue-router'
 
 // --- Constants ---
 
@@ -298,6 +299,34 @@ describe('ActivityAppFeed', () => {
 			wrapper.unmount()
 		})
 
+		it('does not start a second polling chain when visibility toggles mid-request', async () => {
+			const wrapper = await mountFeed()
+
+			let resolvePoll: (value: unknown) => void = () => {}
+			vi.mocked(ncAxios.get).mockReturnValueOnce(new Promise((resolve) => {
+				resolvePoll = resolve
+			}))
+			vi.advanceTimersByTime(POLL_INTERVAL)
+			await nextTick()
+
+			// Hiding cannot cancel the request that is already in flight
+			visibilityRef.value = 'hidden'
+			await nextTick()
+			visibilityRef.value = 'visible'
+			await nextTick()
+
+			resolvePoll(makeResponse([], '1'))
+			await flushPromises()
+
+			vi.mocked(ncAxios.get).mockClear()
+			vi.mocked(ncAxios.get).mockResolvedValueOnce(makeResponse([], '1'))
+			vi.advanceTimersByTime(POLL_INTERVAL)
+			await flushPromises()
+
+			expect(vi.mocked(ncAxios.get)).toHaveBeenCalledOnce()
+			wrapper.unmount()
+		})
+
 		it('stops polling when the tab becomes hidden and resumes when visible', async () => {
 			const wrapper = await mountFeed()
 
@@ -401,6 +430,38 @@ describe('ActivityAppFeed', () => {
 			expect(url).not.toContain('from=')
 			expect(url).not.toContain('to=')
 			expect(url).not.toContain('actor=')
+			wrapper.unmount()
+		})
+
+		it('loads the new filter when it changes while a request is still in flight', async () => {
+			// A stuck `loading` flag would swallow the reload, not just delay it
+			vi.mocked(ncAxios.get).mockReturnValueOnce(new Promise(() => {}))
+			const wrapper = mount(ActivityAppFeed, { props: { filter: 'all' }, global: { stubs } })
+			await nextTick()
+
+			vi.mocked(ncAxios.get)
+				.mockResolvedValueOnce(makeResponse())
+				.mockRejectedValueOnce(make304Error())
+			await wrapper.setProps({ filter: 'files' })
+			await flushPromises()
+
+			const urls = vi.mocked(ncAxios.get).mock.calls.map((call) => String(call[0]))
+			expect(urls.some((url) => url.includes('/files?'))).toBe(true)
+			expect(wrapper.findAll('.activity-group').length).toBeGreaterThan(0)
+			wrapper.unmount()
+		})
+
+		it('renders a heading for a filter that is not in the navigation list', async () => {
+			vi.mocked(useRoute).mockReturnValueOnce({
+				params: { filter: 'does-not-exist' },
+				query: routeQuery.current,
+			} as never)
+			vi.mocked(ncAxios.get).mockRejectedValueOnce(make304Error())
+
+			const wrapper = mount(ActivityAppFeed, { props: { filter: 'does-not-exist' }, global: { stubs } })
+			await flushPromises()
+
+			expect(wrapper.find('.activity-app__heading').text()).toBe('All activities')
 			wrapper.unmount()
 		})
 
