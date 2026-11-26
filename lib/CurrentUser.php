@@ -22,17 +22,11 @@ class CurrentUser {
 	private ?IShare $publicShare = null;
 
 	public function __construct(
-		protected readonly IUserSession $userSession,
 		protected readonly IRequest $request,
 		protected readonly IFactory $l10nFactory,
 		protected readonly IActivityManager $activityManager,
 	) {
 	}
-
-	public function getUser(): ?IUser {
-		return $this->userSession->getUser();
-	}
-
 	/**
 	 * Get an identifier for the user, session or token
 	 */
