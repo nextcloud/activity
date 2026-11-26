@@ -18,6 +18,7 @@ use OCP\Config\IUserConfig;
 use OCP\Config\ValueType;
 use OCP\DB\Exception;
 use OCP\IAppConfig;
+use OCP\Notification\IManager as NotificationManager;
 
 class Consumer implements IConsumer, IBulkConsumer {
 
@@ -25,7 +26,7 @@ class Consumer implements IConsumer, IBulkConsumer {
 		protected Data $data,
 		protected IManager $manager,
 		protected UserSettings $userSettings,
-		protected NotificationGenerator $notificationGenerator,
+		protected NotificationManager $notificationManager,
 		protected IUserConfig $userConfig,
 		protected IAppConfig $appConfig,
 	) {
@@ -39,14 +40,14 @@ class Consumer implements IConsumer, IBulkConsumer {
 	#[\Override]
 	public function receive(IEvent $event): void {
 		$selfAction = $event->getAffectedUser() === $event->getAuthor();
-		$notificationSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'notification', $event->getType());
+		$notificationSetting = $this->event->getShouldSendNotification()) ?? $this->userSettings->getUserSetting($event->getAffectedUser(), 'notification', $event->getType());
 		$emailSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'email', $event->getType());
 		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'batchtime') : false;
 
 		$activityId = $this->data->send($event);
 
 		if (!$selfAction && $notificationSetting && $activityId) {
-			$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
+			$this->notificationGenerator->sendNotificationForEvent($event, $activityId, $notificationSetting);
 		}
 
 		// Add activity to mail queue and user is not the author
@@ -89,7 +90,7 @@ class Consumer implements IConsumer, IBulkConsumer {
 			$batchTimeSettings = $this->userConfig->getValuesByUsers('activity', 'notify_setting_batchtime', ValueType::INT, $affectedUserIds);
 		}
 
-		$shouldFlush = $this->notificationGenerator->deferNotifications();
+		$shouldFlush = $this->notificationManager->defer();
 		foreach ($activityIds as $activityId => $affectedUser) {
 			if ($event->getAuthor() === $affectedUser) {
 				continue;
@@ -115,7 +116,7 @@ class Consumer implements IConsumer, IBulkConsumer {
 			}
 		}
 		if ($shouldFlush === true) {
-			$this->notificationGenerator->flushNotifications();
+			$this->notificationManager->flush();
 		}
 	}
 }
