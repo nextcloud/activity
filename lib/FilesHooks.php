@@ -11,8 +11,6 @@ namespace OCA\Activity;
 use OCA\Activity\BackgroundJob\RemoteActivity;
 use OCA\Activity\Extension\Files;
 use OCA\Activity\Extension\Files_Sharing;
-use OCA\Circles\CirclesManager;
-use OCA\Circles\Model\Member;
 use OCA\Files_Sharing\SharedMount;
 use OCP\Activity\IManager;
 use OCP\BackgroundJob\IJobList;
@@ -36,6 +34,7 @@ use OCP\IUser;
 use OCP\Notification\IManager as NotificationManager;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
+use OCP\Teams\ITeamManager;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -66,7 +65,7 @@ class FilesHooks {
 		protected readonly NotificationGenerator $notificationGenerator,
 		protected readonly NotificationManager $notificationManager,
 		protected readonly ITagManager $tagManager,
-		protected readonly ?CirclesManager $teamManager,
+		protected readonly ITeamManager $teamManager,
 		protected readonly IFileAccess $fileAccess,
 		protected readonly IMountProviderCollection $mountProviderCollection,
 	) {
@@ -819,22 +818,14 @@ class FilesHooks {
 	 * @param int $shareId The Share ID of this share
 	 */
 	protected function shareWithTeam(string $shareWith, Node $fileSource, string $fileTarget, int $shareId, string $sharer): void {
-		if ($this->teamManager === null) {
-			return;
-		}
-
-		$this->teamManager->startSuperSession();
 		try {
-			$team = $this->teamManager->getCircle($shareWith);
-			$members = $team->getInheritedMembers();
-			$members = array_filter($members, fn ($member): bool => $member->getUserType() === Member::TYPE_USER);
-			$userIds = array_map(fn ($member) => $member->getUserId(), $members);
+			$currentUserId = $this->getUID();
+			$members = $this->teamManager->getMembersOfTeam($shareWith, $currentUserId);
+			$userIds = array_keys($members);
 		} catch (\Throwable $e) {
 			$this->logger->debug('Fetching team members for share activity failed', ['exception' => $e]);
 			// error in teams app - setting users list to empty
 			$userIds = [];
-		} finally {
-			$this->teamManager->stopSession();
 		}
 
 		// Activity for user performing the share
