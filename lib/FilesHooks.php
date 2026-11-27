@@ -43,35 +43,30 @@ use Psr\Log\LoggerInterface;
 class FilesHooks {
 	public const USER_BATCH_SIZE = 50;
 
-	/** @var string|bool */
-	protected $moveCase = false;
-	/** @var array|null */
-	protected $oldAccessList;
-	/** @var string */
-	protected $oldParentPath;
-	/** @var string */
-	protected $oldParentOwner;
-	/** @var int */
-	protected $oldParentId;
+	protected string|bool $moveCase = false;
+	protected ?array $oldAccessList = null;
+	protected string $oldParentPath;
+	protected string $oldParentOwner;
+	protected int $oldParentId;
 
 	public function __construct(
-		protected IManager $manager,
-		protected Data $activityData,
-		protected UserSettings $userSettings,
-		protected IGroupManager $groupManager,
-		protected IRootFolder $rootFolder,
-		protected IShareHelper $shareHelper,
-		protected IDBConnection $connection,
-		protected IURLGenerator $urlGenerator,
-		protected LoggerInterface $logger,
-		protected CurrentUser $currentUser,
-		protected IUserMountCache $userMountCache,
-		protected IConfig $config,
-		protected NotificationGenerator $notificationGenerator,
-		protected ITagManager $tagManager,
-		protected ?CirclesManager $teamManager,
-		private IFileAccess $fileAccess,
-		private IMountProviderCollection $mountProviderCollection,
+		protected readonly IManager $manager,
+		protected readonly Data $activityData,
+		protected readonly UserSettings $userSettings,
+		protected readonly IGroupManager $groupManager,
+		protected readonly IRootFolder $rootFolder,
+		protected readonly IShareHelper $shareHelper,
+		protected readonly IDBConnection $connection,
+		protected readonly IURLGenerator $urlGenerator,
+		protected readonly LoggerInterface $logger,
+		protected readonly CurrentUser $currentUser,
+		protected readonly IUserMountCache $userMountCache,
+		protected readonly IConfig $config,
+		protected readonly NotificationGenerator $notificationGenerator,
+		protected readonly ITagManager $tagManager,
+		protected readonly ?CirclesManager $teamManager,
+		protected readonly IFileAccess $fileAccess,
+		protected readonly IMountProviderCollection $mountProviderCollection,
 	) {
 	}
 
@@ -498,10 +493,8 @@ class FilesHooks {
 	/**
 	 * @param string[] $users
 	 * @param string[] $pathMap
-	 * @param int $fileId
-	 * @param string $oldFileName
 	 */
-	protected function generateDeleteActivities($users, array $pathMap, $fileId, $oldFileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
+	protected function generateDeleteActivities(array $users, array $pathMap, int $fileId, string $oldFileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
 		if (empty($users)) {
 			return;
 		}
@@ -537,10 +530,8 @@ class FilesHooks {
 	/**
 	 * @param string[] $users
 	 * @param string[] $pathMap
-	 * @param int $fileId
-	 * @param string $fileName
 	 */
-	protected function generateAddActivities($users, array $pathMap, $fileId, $fileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
+	protected function generateAddActivities(array $users, array $pathMap, int $fileId, string $fileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
 		if (empty($users)) {
 			return;
 		}
@@ -577,12 +568,18 @@ class FilesHooks {
 	 * @param string[] $users
 	 * @param string[] $beforePathMap
 	 * @param string[] $afterPathMap
-	 * @param int $fileId
-	 * @param string $oldFileName
-	 * @param int $newParentId
-	 * @param string $fileName
 	 */
-	protected function generateMoveActivities($users, array $beforePathMap, array $afterPathMap, $fileId, $oldFileName, $newParentId, $fileName, array $filteredEmailUsers, array $filteredNotificationUsers) {
+	protected function generateMoveActivities(
+		array $users,
+		array $beforePathMap,
+		array $afterPathMap,
+		int $fileId,
+		string $oldFileName,
+		int $newParentId,
+		string $fileName,
+		array $filteredEmailUsers,
+		array $filteredNotificationUsers,
+	) {
 		if (empty($users)) {
 			return;
 		}
@@ -621,12 +618,9 @@ class FilesHooks {
 
 	/**
 	 * Returns a "username => path" map for all affected users
-	 *
-	 * @param string $path
-	 * @param string $uidOwner
 	 * @return array{ownerPath?: string, remotes: array<string, array{node_path: string, token: string}>, users: array<string, string>}
 	 */
-	protected function getUserPathsFromPath($path, $uidOwner) {
+	protected function getUserPathsFromPath(string $path, string $uidOwner): array {
 		$emptyResult = ['users' => [], 'remotes' => []];
 
 		try {
@@ -708,7 +702,7 @@ class FilesHooks {
 	 *
 	 * @param IShare $share the share from the event
 	 */
-	public function share($share): void {
+	public function share(IShare $share): void {
 		switch ($share->getShareType()) {
 			case IShare::TYPE_USER:
 				$this->shareWithUser(
@@ -1196,18 +1190,19 @@ class FilesHooks {
 	/**
 	 * Adds the activity and email for a user when the settings require it
 	 *
-	 * @param string $user
-	 * @param string $subject
-	 * @param array $subjectParams
-	 * @param int $fileId
-	 * @param string $path
-	 * @param bool $isFile If the item is a file, we link to the parent directory
 	 * @param int|false $emailSetting
-	 * @param bool $notificationSetting
-	 * @param string $type
 	 */
-	protected function addNotificationsForUser($user, $subject, $subjectParams, $fileId, $path, $isFile, $emailSetting, $notificationSetting, $type = Files_Sharing::TYPE_SHARED) {
-		$user = (string)$user;
+	protected function addNotificationsForUser(
+		string $user,
+		string $subject,
+		array $subjectParams,
+		int $fileId,
+		string $path,
+		bool $isFile,
+		int|bool $emailSetting,
+		bool $notificationSetting,
+		string $type = Files_Sharing::TYPE_SHARED,
+	) {
 		$selfAction = $user === $this->currentUser->getUID();
 		$app = $type === Files_Sharing::TYPE_SHARED ? 'files_sharing' : 'files';
 		$link = $this->urlGenerator->linkToRouteAbsolute('files.view.index', [
