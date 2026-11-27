@@ -33,6 +33,7 @@ use OCP\IGroupManager;
 use OCP\ITagManager;
 use OCP\IURLGenerator;
 use OCP\IUser;
+use OCP\Notification\IManager as NotificationManager;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
 use Psr\Log\LoggerInterface;
@@ -63,6 +64,7 @@ class FilesHooks {
 		protected readonly IUserMountCache $userMountCache,
 		protected readonly IConfig $config,
 		protected readonly NotificationGenerator $notificationGenerator,
+		protected readonly NotificationManager $notificationManager,
 		protected readonly ITagManager $tagManager,
 		protected readonly ?CirclesManager $teamManager,
 		protected readonly IFileAccess $fileAccess,
@@ -1253,12 +1255,12 @@ class FilesHooks {
 
 	protected function startActivityTransaction(): bool {
 		$this->connection->beginTransaction();
-		return $this->notificationGenerator->deferNotifications();
+		return $this->notificationManager->defer();
 	}
 
 	protected function commitActivityTransaction(bool $shouldFlush): void {
 		if ($shouldFlush) {
-			$this->notificationGenerator->flushNotifications();
+			$this->notificationManager->flush();
 		}
 		$this->connection->commit();
 	}
@@ -1269,7 +1271,7 @@ class FilesHooks {
 			// The notification manager has no way to discard deferred
 			// notifications, so flush to reset its deferred state. Notifications
 			// of rolled back activities are dropped when they are prepared.
-			$this->notificationGenerator->flushNotifications();
+			$this->notificationManager->flush();
 		}
 	}
 
