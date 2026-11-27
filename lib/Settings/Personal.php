@@ -20,27 +20,19 @@ use OCP\IUser;
 use OCP\Settings\ISettings;
 
 class Personal implements ISettings {
-	private readonly IConfig $config;
-	private readonly IManager $manager;
-	private readonly IL10N $l10n;
 	private readonly string $userId;
 	private readonly IUser $user;
-	private readonly IInitialState $initialState;
 
 	public function __construct(
-		IConfig $config,
-		IManager $manager,
-		private readonly UserSettings $userSettings,
-		IL10N $l10n,
+		protected readonly IConfig $config,
+		protected readonly IManager $manager,
+		protected readonly UserSettings $userSettings,
+		protected readonly IL10N $l10n,
 		CurrentUser $currentUser,
-		IInitialState $initialState,
+		protected readonly IInitialState $initialState,
 	) {
-		$this->config = $config;
-		$this->manager = $manager;
-		$this->l10n = $l10n;
 		$this->userId = (string)$currentUser->getUID();
 		$this->user = $currentUser->getUser();
-		$this->initialState = $initialState;
 	}
 
 	#[\Override]
