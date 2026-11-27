@@ -17,6 +17,7 @@ use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IUser;
+use OCP\IUserSession;
 use OCP\Settings\ISettings;
 
 class Personal implements ISettings {
@@ -30,12 +31,13 @@ class Personal implements ISettings {
 		protected readonly IL10N $l10n,
 		CurrentUser $currentUser,
 		protected readonly IInitialState $initialState,
+		protected readonly IUserSession $userSession,
 	) {
 		$this->config = $config;
 		$this->manager = $manager;
 		$this->l10n = $l10n;
 		$this->userId = (string)$currentUser->getUID();
-		$this->user = $currentUser->getUser();
+		$this->user = $this->userSession->getUser();
 		$this->initialState = $initialState;
 	}
 
