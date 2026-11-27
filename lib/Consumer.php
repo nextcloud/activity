@@ -39,14 +39,14 @@ class Consumer implements IConsumer, IBulkConsumer {
 	#[\Override]
 	public function receive(IEvent $event): void {
 		$selfAction = $event->getAffectedUser() === $event->getAuthor();
-		$notificationSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'notification', $event->getType());
+		$notificationSetting = $event->getShouldSendNotification() ?? $this->userSettings->getUserSetting($event->getAffectedUser(), 'notification', $event->getType());
 		$emailSetting = $this->userSettings->getUserSetting($event->getAffectedUser(), 'email', $event->getType());
 		$emailSetting = ($emailSetting) ? $this->userSettings->getUserSetting($event->getAffectedUser(), 'setting', 'batchtime') : false;
 
 		$activityId = $this->data->send($event);
 
 		if (!$selfAction && $notificationSetting && $activityId) {
-			$this->notificationGenerator->sendNotificationForEvent($event, $activityId);
+			$this->notificationGenerator->sendNotificationForEvent($event, $activityId, $notificationSetting);
 		}
 
 		// Add activity to mail queue and user is not the author
