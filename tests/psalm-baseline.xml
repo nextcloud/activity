@@ -15,13 +15,4 @@
       <code><![CDATA[[$user->getEMailAddress() => $user->getDisplayName()]]]></code>
     </InvalidArrayOffset>
   </file>
-  <file src="lib/FilesHooks.php">
-    <UndefinedClass>
-      <code><![CDATA[$this->teamManager]]></code>
-      <code><![CDATA[$this->teamManager]]></code>
-      <code><![CDATA[$this->teamManager]]></code>
-      <code><![CDATA[Member]]></code>
-      <code><![CDATA[protected]]></code>
-    </UndefinedClass>
-  </file>
 </files>
