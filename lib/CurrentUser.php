@@ -24,7 +24,6 @@ class CurrentUser {
 	public function __construct(
 		protected readonly IUserSession $userSession,
 		protected readonly IRequest $request,
-		protected readonly IManager $shareManager,
 		protected readonly IFactory $l10nFactory,
 		protected readonly IActivityManager $activityManager,
 	) {
@@ -75,84 +74,5 @@ class CurrentUser {
 		}
 
 		return $userId === '' ? null : $userId;
-	}
-
-	/**
-	 * Get the current user cloud id from the session
-	 */
-	public function getCloudId(): ?string {
-		$user = $this->userSession->getUser();
-		if ($user instanceof IUser) {
-			return $user->getCloudId();
-		}
-
-		return $this->getCloudIDFromToken();
-	}
-
-	/**
-	 * Check if the current request is via a public share link
-	 */
-	public function isPublicShareToken(): bool {
-		return $this->getPublicShare() !== null;
-	}
-
-	/**
-	 * Get the cloud ID from the sharing token
-	 */
-	protected function getCloudIDFromToken(): ?string {
-		$share = $this->getPublicShare();
-
-		if ($share === null || $share->getShareType() !== IShare::TYPE_REMOTE) {
-			return null;
-		}
-
-		return $share->getSharedWith();
-	}
-
-	protected function getPublicShare(): ?IShare {
-		if (!$this->publicShareLoaded) {
-			$this->publicShare = $this->loadPublicShare();
-			$this->publicShareLoaded = true;
-		}
-
-		return $this->publicShare;
-	}
-
-	private function loadPublicShare(): ?IShare {
-		if (basename($this->request->getScriptName()) !== 'public.php') {
-			return null;
-		}
-
-		$token = $this->getShareToken();
-		if ($token === null) {
-			return null;
-		}
-
-		try {
-			return $this->shareManager->getShareByToken($token);
-		} catch (ShareNotFound) {
-			return null;
-		}
-	}
-
-	protected function getShareToken(): ?string {
-		// The legacy public endpoint receive the share token in the HTTP basic auth header.
-		/** @psalm-suppress NoInterfaceProperties */
-		$authUser = (string)($this->request->server['PHP_AUTH_USER'] ?? '');
-		if ($authUser !== '') {
-			return $authUser;
-		}
-
-		// The current public endpoint receives the share token in the path.
-		// Copied from apps/dav/lib/Connector/Sabre/PublicAuth::getToken()
-		$path = $this->request->getPathInfo() ?: '';
-		// ['', 'dav', 'files', 'token']
-		$splittedPath = explode('/', $path);
-
-		if (count($splittedPath) < 4 || $splittedPath[3] === '') {
-			return null;
-		}
-
-		return $splittedPath[3];
 	}
 }
