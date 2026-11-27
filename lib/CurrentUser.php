@@ -30,10 +30,6 @@ class CurrentUser {
 	) {
 	}
 
-	public function getUser(): ?IUser {
-		return $this->userSession->getUser();
-	}
-
 	/**
 	 * Get an identifier for the user, session or token
 	 */
