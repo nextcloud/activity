@@ -49,6 +49,7 @@ use OCP\IGroup;
 use OCP\IGroupManager;
 use OCP\IURLGenerator;
 use OCP\IUser;
+use OCP\Notification\IManager as NotificationManager;
 use OCP\Server;
 use OCP\Share\IManager as ShareIManager;
 use OCP\Share\IShare;
@@ -76,6 +77,7 @@ class FilesHooksTest extends TestCase {
 	protected IUserMountCache&MockObject $userMountCache;
 	protected IConfig&MockObject $config;
 	protected NotificationGenerator&MockObject $notificationGenerator;
+	protected NotificationManager&MockObject $notificationManager;
 	protected TagManager&MockObject $tagManager;
 	protected Tags&MockObject $tags;
 	protected (OCA\Circles\CirclesManager&MockObject)|null $teamManager = null;
@@ -95,6 +97,7 @@ class FilesHooksTest extends TestCase {
 		$this->userMountCache = $this->createMock(IUserMountCache::class);
 		$this->config = $this->createMock(IConfig::class);
 		$this->notificationGenerator = $this->createMock(NotificationGenerator::class);
+		$this->notificationManager = $this->createMock(NotificationManager::class);
 		$this->tags = $this->createMock(Tags::class);
 		$this->teamManager = null;
 		$this->tagManager = $this->createMock(TagManager::class);
@@ -135,6 +138,7 @@ class FilesHooksTest extends TestCase {
 					$this->userMountCache,
 					$this->config,
 					$this->notificationGenerator,
+					$this->notificationManager,
 					$this->tagManager,
 					$this->teamManager,
 					$this->fileAccess,
@@ -158,6 +162,7 @@ class FilesHooksTest extends TestCase {
 			$this->userMountCache,
 			$this->config,
 			$this->notificationGenerator,
+			$this->notificationManager,
 			$this->tagManager,
 			$this->teamManager,
 			$this->fileAccess,
@@ -207,6 +212,7 @@ class FilesHooksTest extends TestCase {
 				$this->userMountCache,
 				$this->config,
 				$this->notificationGenerator,
+				$this->notificationManager,
 				$this->tagManager,
 				$this->teamManager,
 				$this->fileAccess,

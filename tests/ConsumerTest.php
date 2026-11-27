@@ -37,6 +37,7 @@ use OCP\IAppConfig;
 use OCP\IDBConnection;
 use OCP\IL10N;
 use OCP\L10N\IFactory;
+use OCP\Notification\IManager as NotificationManager;
 use OCP\Server;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -52,6 +53,7 @@ class ConsumerTest extends TestCase {
 	protected MockObject&IFactory $l10nFactory;
 	protected IManager&MockObject $activityManager;
 	protected NotificationGenerator&MockObject $notificationGenerator;
+	protected NotificationManager&MockObject $notificationManager;
 	protected UserSettings $userSettings;
 	private IUserConfig&MockObject $userConfig;
 	private IAppConfig&MockObject $appConfig;
@@ -70,6 +72,7 @@ class ConsumerTest extends TestCase {
 			->getMock();
 		$l10n = $this->createMock(IL10N::class);
 		$this->notificationGenerator = $this->createMock(NotificationGenerator::class);
+		$this->notificationManager = $this->createMock(NotificationManager::class);
 		$this->l10nFactory = $this->createMock(IFactory::class);
 		$this->userConfig = $this->createMock(IUserConfig::class);
 		$this->appConfig = $this->createMock(IAppConfig::class);
@@ -107,6 +110,7 @@ class ConsumerTest extends TestCase {
 			$this->activityManager,
 			$this->userSettings,
 			$this->notificationGenerator,
+			$this->notificationManager,
 			$this->userConfig,
 			$this->appConfig,
 		);
@@ -156,6 +160,7 @@ class ConsumerTest extends TestCase {
 			$this->activityManager,
 			$this->userSettings,
 			$this->notificationGenerator,
+			$this->notificationManager,
 			$this->userConfig,
 			$this->appConfig,
 		);
@@ -363,11 +368,11 @@ class ConsumerTest extends TestCase {
 		$this->userConfig->method('getValuesByUsers')
 			->willReturnCallback(fn (string $app, string $key, mixed $type, array $users): array => array_fill_keys($users, true));
 
-		$this->notificationGenerator->expects($this->once())
-			->method('deferNotifications')
+		$this->notificationManager->expects($this->once())
+			->method('defer')
 			->willReturn(true);
-		$this->notificationGenerator->expects($this->once())
-			->method('flushNotifications');
+		$this->notificationManager->expects($this->once())
+			->method('flush');
 		$this->notificationGenerator->expects($this->once())
 			->method('sendNotificationForEvent');
 
@@ -396,11 +401,11 @@ class ConsumerTest extends TestCase {
 		$this->userConfig->method('getValuesByUsers')
 			->willReturnCallback(fn (string $app, string $key, mixed $type, array $users): array => array_fill_keys($users, true));
 
-		$this->notificationGenerator->expects($this->once())
-			->method('deferNotifications')
+		$this->notificationManager->expects($this->once())
+			->method('defer')
 			->willReturn(false);
-		$this->notificationGenerator->expects($this->never())
-			->method('flushNotifications');
+		$this->notificationManager->expects($this->never())
+			->method('flush');
 
 		$this->consumer->bulkReceive($this->event, ['affectedUser'], $settings);
 	}
@@ -473,6 +478,7 @@ class ConsumerTest extends TestCase {
 			$this->activityManager,
 			$this->userSettings,
 			$this->notificationGenerator,
+			$this->notificationManager,
 			$this->userConfig,
 			$appConfig,
 		);
