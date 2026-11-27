@@ -1242,18 +1242,7 @@ class FilesHooks {
 			return;
 		}
 
-		// Add activity to stream
-		$activityId = $this->activityData->send($event);
-
-		if ($activityId && !$selfAction && $notificationSetting) {
-			$this->notificationGenerator->sendNotificationForEvent($event, $activityId, $notificationSetting);
-		}
-
-		// Add activity to mail queue
-		if ($emailSetting !== false && !$selfAction) {
-			$latestSend = time() + $emailSetting;
-			$this->activityData->storeMail($event, $latestSend);
-		}
+		$this->manager->publish($event);
 	}
 
 	protected function startActivityTransaction(): bool {
