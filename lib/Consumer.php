@@ -18,6 +18,7 @@ use OCP\Config\IUserConfig;
 use OCP\Config\ValueType;
 use OCP\DB\Exception;
 use OCP\IAppConfig;
+use OCP\Notification\IManager as NotificationManager;
 
 class Consumer implements IConsumer, IBulkConsumer {
 
@@ -26,6 +27,7 @@ class Consumer implements IConsumer, IBulkConsumer {
 		protected IManager $manager,
 		protected UserSettings $userSettings,
 		protected NotificationGenerator $notificationGenerator,
+		protected NotificationManager $notificationManager,
 		protected IUserConfig $userConfig,
 		protected IAppConfig $appConfig,
 	) {
@@ -89,7 +91,7 @@ class Consumer implements IConsumer, IBulkConsumer {
 			$batchTimeSettings = $this->userConfig->getValuesByUsers('activity', 'notify_setting_batchtime', ValueType::INT, $affectedUserIds);
 		}
 
-		$shouldFlush = $this->notificationGenerator->deferNotifications();
+		$shouldFlush = $this->notificationManager->defer();
 		foreach ($activityIds as $activityId => $affectedUser) {
 			if ($event->getAuthor() === $affectedUser) {
 				continue;
@@ -115,7 +117,7 @@ class Consumer implements IConsumer, IBulkConsumer {
 			}
 		}
 		if ($shouldFlush === true) {
-			$this->notificationGenerator->flushNotifications();
+			$this->notificationManager->flush();
 		}
 	}
 }
