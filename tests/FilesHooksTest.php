@@ -54,6 +54,7 @@ use OCP\Server;
 use OCP\Share\IManager as ShareIManager;
 use OCP\Share\IShare;
 use OCP\Share\IShareHelper;
+use OCP\Teams\ITeamManager;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -80,7 +81,7 @@ class FilesHooksTest extends TestCase {
 	protected NotificationManager&MockObject $notificationManager;
 	protected TagManager&MockObject $tagManager;
 	protected Tags&MockObject $tags;
-	protected (OCA\Circles\CirclesManager&MockObject)|null $teamManager = null;
+	protected ITeamManager&MockObject $teamManager;
 	private IFileAccess&MockObject $fileAccess;
 	private IMountProviderCollection&MockObject $mountProviderCollection;
 
@@ -99,7 +100,7 @@ class FilesHooksTest extends TestCase {
 		$this->notificationGenerator = $this->createMock(NotificationGenerator::class);
 		$this->notificationManager = $this->createMock(NotificationManager::class);
 		$this->tags = $this->createMock(Tags::class);
-		$this->teamManager = null;
+		$this->teamManager = $this->createMock(ITeamManager::class);
 		$this->tagManager = $this->createMock(TagManager::class);
 		$this->tagManager->method('getUsersFavoritingObject')
 			->willReturn([]);
